@@ -1,0 +1,29 @@
+{
+  "name": "@alipay/gi-site",
+  "version": "0.1.0",
+  "description": "GraphInsight Site",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "umi dev",
+    "build": "umi build"
+  },
+  "dependencies": {
+    "@alipay/graphinsight": "*",
+    "@alipay/gi-meta": "*",
+    "@ant-design/charts": "^1.0.21",
+    "@ant-design/compatible": "^1.0.2",
+    "@ant-design/icons": "^4.0.6",
+    "@types/classnames": "^2.2.9",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@umijs/plugin-antd": "^0.9.1",
+    "antd": "^4.2.4",
+    "classnames": "^2.2.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.1.1",
+    "umi": "^3.4.4"
+  },
+  "author": "AntV",
+  "license": "MIT"
+}
