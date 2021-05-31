@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@antv/graphin": "^2.0.7",
+    "@antv/graphin-components": "^2.0.7",
+    "husky": "^6.0.0",
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "list": "lerna list",
+    "link": "lerna link"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
