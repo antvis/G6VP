@@ -6,9 +6,13 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
+    "canvas": "cd packages/gi-canvas && npm run start",
+    "meta": "cd packages/gi-meta && npm run start",
+    "site": "cd packages/gi-site && npm run start",
     "bootstrap": "lerna bootstrap",
     "list": "lerna list",
-    "link": "lerna link"
+    "link": "lerna link",
+    "clean": "lerna clean"
   },
   "husky": {
     "hooks": {
