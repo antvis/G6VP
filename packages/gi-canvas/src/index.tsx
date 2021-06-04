@@ -1,4 +1,5 @@
-import Graphin, { GraphinData } from '@antv/graphin';
+import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
+import { Legend } from '@antv/graphin-components';
 import React from 'react';
 
 export interface Props {
@@ -14,6 +15,7 @@ export interface Props {
     /** 获取一度下钻数据 */
     getExploreGraphByDegree?: (degree: number, id: string) => Promise<any>;
   };
+  children?: React.ReactChildren;
 }
 
 const getMapping = () => {
@@ -80,9 +82,16 @@ const transform = (s, config) => {
     edges,
   };
 };
-
+/** 根据用户配置的颜色，获取Legend的映射字段 */
+const getLegendMappingKey = config => {
+  const { node: NodeConfig } = config;
+  /** 解构配置项 */
+  const MathNodeConfig = NodeConfig.find(cfg => cfg.enable);
+  const Color = MathNodeConfig?.color.find(s => s.enable);
+  return `data.${Color.key}`;
+};
 const GISDK = (props: Props) => {
-  const { config, services } = props;
+  const { config, services, children } = props;
 
   const [state, setState] = React.useState({
     data: {} as GraphinData,
@@ -100,15 +109,39 @@ const GISDK = (props: Props) => {
       });
     });
   }, []);
+  React.useEffect(() => {
+    const { components } = config;
+    const componentsMap = components
+      .filter(c => c.enable)
+      .reduce((acc, curr) => {
+        return {
+          ...acc,
+          [curr.id]: curr,
+        };
+      }, {});
+    console.log('componentsMap ***', componentsMap);
+  }, [config]);
 
   const { data, layout } = state;
 
-  console.log('config', config);
+  console.log('config', config, data);
+  const legendKey = getLegendMappingKey(config);
   return (
     <div>
-      <Graphin data={data} layout={layout}></Graphin>
+      <Graphin data={data} layout={layout}>
+        <Legend
+          bindType="node"
+          sortKey={legendKey}
+          colorKey="style.keyshape.stroke" // 如果是GraphinNode，则可以硬编码写死
+          style={{ position: 'absolute', left: '10px', top: '10px' }}
+        >
+          <Legend.Node />
+        </Legend>
+        {children}
+      </Graphin>
     </div>
   );
 };
 
+export const GIContext = GraphinContext;
 export default GISDK;
