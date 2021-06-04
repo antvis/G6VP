@@ -1,5 +1,5 @@
 import GIMetaPanel from '@alipay/gi-meta';
-import GISDK from '@alipay/graphinsight';
+import GISDK, { GIContext } from '@alipay/graphinsight';
 import { Layout } from 'antd';
 import React from 'react';
 import { getGraphData } from '../../services/index';
@@ -20,6 +20,13 @@ const config = {
       props: {},
       enable: false,
     },
+    {
+      id: 'Click-Entity-Node',
+      categoryId: 'interaction',
+      meta: {},
+      props: {},
+      enable: true,
+    },
   ],
   node: [
     {
@@ -33,7 +40,7 @@ const config = {
         {
           mode: 'mapping',
           key: 'type',
-          enum: ['grey', 'blue', 'green', 'yellow'],
+          enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
           enable: true,
         },
         /** 第二种是固定模式 */
@@ -49,7 +56,7 @@ const config = {
         {
           mode: 'mapping',
           key: 'type',
-          enum: [50, 20, 30, 40, 10, 60],
+          enum: [40, 20, 30, 20, 10],
           enable: true,
         },
         /** 第二种是固定模式 */
@@ -97,6 +104,12 @@ const config = {
 };
 export type Config = typeof config;
 
+const TestComponents = () => {
+  const gi = React.useContext(GIContext);
+  console.log(gi);
+  return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
+};
+
 const Analysis = () => {
   return (
     <Layout>
@@ -104,7 +117,9 @@ const Analysis = () => {
       <GIMetaPanel />
       <h1>GraphInsight 核心画布渲染区域</h1>
 
-      <GISDK config={config} services={{ getGraphData }} />
+      <GISDK config={config} services={{ getGraphData }}>
+        <TestComponents />
+      </GISDK>
     </Layout>
   );
 };
