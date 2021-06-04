@@ -31,6 +31,28 @@ const db = new GraphDataBase(data);
 export const getGraphData = () => {
   return new Promise(resolve => {
     const data = db.graph();
-    return resolve(data); //这里需要一个规范的图结构
+
+    // 这里需要用户从组件市场里定义初始化逻辑
+
+    const nodes = data.nodes.filter(node => {
+      return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
+    });
+    const edges = getEdgesByNodes(nodes, data.edges);
+
+    return resolve({
+      nodes,
+      edges,
+    }); //这里需要一个规范的图结构
   });
 };
+
+export function getEdgesByNodes(nodes, edges) {
+  const ids = nodes.map(node => node.id);
+  return edges.filter(edge => {
+    const { source, target } = edge;
+    if (ids.indexOf(source) !== -1 && ids.indexOf(target) !== -1) {
+      return true;
+    }
+    return false;
+  });
+}
