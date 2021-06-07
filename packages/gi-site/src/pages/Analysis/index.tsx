@@ -1,8 +1,9 @@
-import GIMetaPanel from '@alipay/gi-meta';
 import GISDK, { GIContext } from '@alipay/graphinsight';
-import { Layout } from 'antd';
+import { Input, Layout } from 'antd';
 import React from 'react';
 import { getGraphData } from '../../services/index';
+
+const { TextArea } = Input;
 
 const config = {
   components: [
@@ -21,7 +22,7 @@ const config = {
       enable: false,
     },
     {
-      id: 'Click-Entity-Node',
+      id: 'Liaoyuan-Click-Entity',
       categoryId: 'interaction',
       meta: {},
       props: {},
@@ -106,15 +107,20 @@ export type Config = typeof config;
 
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
-  console.log(gi);
   return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
+};
+
+const handleChange = e => {
+  console.log('e', e.target.value);
 };
 
 const Analysis = () => {
   return (
     <Layout>
-      <h1>GraphInsight 属性面板配置区域</h1>
-      <GIMetaPanel />
+      <h1>GraphInsight 组件市场</h1>
+      <TextArea onChange={handleChange} autoSize={{ minRows: 10, maxRows: 20 }}></TextArea>
+      {/* <h1>GraphInsight 属性面板配置区域</h1>
+      <GIMetaPanel /> */}
       <h1>GraphInsight 核心画布渲染区域</h1>
 
       <GISDK config={config} services={{ getGraphData }}>
