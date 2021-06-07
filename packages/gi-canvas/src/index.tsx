@@ -1,6 +1,8 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
-import { Legend } from '@antv/graphin-components';
 import React from 'react';
+import CanvasClick from './components/CanvasClick';
+import getComponentsFromMarket from './components/index';
+import transform from './transfrom';
 
 export interface Props {
   /**
@@ -15,81 +17,9 @@ export interface Props {
     /** 获取一度下钻数据 */
     getExploreGraphByDegree?: (degree: number, id: string) => Promise<any>;
   };
-  children?: React.ReactChildren;
+  children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
-const getMapping = () => {
-  const Mapping = new Map();
-  return (enumValue, value) => {
-    const current = Mapping.get(enumValue);
-    if (current) {
-      Mapping.set(enumValue, [...current, value]);
-    } else {
-      Mapping.set(enumValue, [value]);
-    }
-    return Mapping;
-  };
-};
-
-/** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, config) => {
-  const { node: NodeConfig, edge: EdgeConfig } = config;
-  /** 解构配置项 */
-  const MathNodeConfig = NodeConfig.find(cfg => cfg.enable);
-  const Size = MathNodeConfig?.size.find(s => s.enable);
-  const Color = MathNodeConfig?.color.find(s => s.enable);
-  const Label = MathNodeConfig?.label;
-  /** 分别生成Size和Color的Mapping */
-  const mappingBySize = getMapping();
-  const mappingByColor = getMapping();
-
-  const nodes = s.nodes.map(node => {
-    const { id, data } = node;
-
-    /** 根据Size字段映射的枚举值 */
-    const enumValueBySize = data[Size?.key || 0];
-    const MappingBySize = mappingBySize(enumValueBySize, node);
-    /** 根据Color字段映射的枚举值 */
-    const enumValueByColor = data[Color?.key || 0];
-    const MappingByColor = mappingByColor(enumValueByColor, node);
-
-    /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
-    const colorKeys = MappingByColor.keys();
-    const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
-    const sizeKeys = MappingBySize.keys();
-    const matchSizeIndex = [...sizeKeys].findIndex(c => c === enumValueBySize);
-
-    return {
-      id: node.id,
-      data: node.data,
-      style: {
-        keyshape: {
-          stroke: Color?.enum?.[matchColorIndex],
-          fill: Color?.enum?.[matchColorIndex],
-          size: Size?.enum?.[matchSizeIndex],
-        },
-        label: {
-          value: data[Label?.key || 'id'],
-        },
-      },
-    };
-  });
-  const edges = s.edges.map(edge => {
-    return edge;
-  });
-  return {
-    nodes,
-    edges,
-  };
-};
-/** 根据用户配置的颜色，获取Legend的映射字段 */
-const getLegendMappingKey = config => {
-  const { node: NodeConfig } = config;
-  /** 解构配置项 */
-  const MathNodeConfig = NodeConfig.find(cfg => cfg.enable);
-  const Color = MathNodeConfig?.color.find(s => s.enable);
-  return `data.${Color.key}`;
-};
 const GISDK = (props: Props) => {
   const { config, services, children } = props;
 
@@ -99,44 +29,57 @@ const GISDK = (props: Props) => {
       type: config.layout.id,
       ...config.layout.options,
     },
+    components: [],
   });
+  const { data, layout, components } = state;
 
   React.useEffect(() => {
+    console.log('did mount');
     services.getGraphData().then(res => {
-      setState({
-        ...state,
-        data: transform(res, config),
+      setState(preState => {
+        return {
+          ...preState,
+          data: transform(res, config),
+        };
       });
     });
   }, []);
+
   React.useEffect(() => {
+    console.log('config change..');
     const { components } = config;
-    const componentsMap = components
-      .filter(c => c.enable)
-      .reduce((acc, curr) => {
-        return {
-          ...acc,
-          [curr.id]: curr,
-        };
-      }, {});
-    console.log('componentsMap ***', componentsMap);
+    const filteredComponents = components.filter(c => c.enable);
+    setState(preState => {
+      return {
+        ...preState,
+        components: filteredComponents,
+      };
+    });
   }, [config]);
 
-  const { data, layout } = state;
+  /** 计算 用户选择的组件 */
+  const componentsMarket = getComponentsFromMarket(config);
 
-  console.log('config', config, data);
-  const legendKey = getLegendMappingKey(config);
   return (
     <div>
       <Graphin data={data} layout={layout}>
-        <Legend
-          bindType="node"
-          sortKey={legendKey}
-          colorKey="style.keyshape.stroke" // 如果是GraphinNode，则可以硬编码写死
-          style={{ position: 'absolute', left: '10px', top: '10px' }}
-        >
-          <Legend.Node />
-        </Legend>
+        {/** 内置组件  */}
+        <CanvasClick />
+
+        {/** 用户从组件市场里选择的组件  */}
+        {components.map(c => {
+          const { id } = c;
+          const {
+            component: Component,
+            props: defaultProps,
+          }: {
+            component: typeof React.Component;
+            props: any;
+          } = componentsMarket[id];
+          return <Component key={id} {...defaultProps} {...props} />;
+        })}
+
+        {/** 用户二次定制开发的组件  */}
         {children}
       </Graphin>
     </div>
