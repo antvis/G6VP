@@ -56,3 +56,42 @@ export function getEdgesByNodes(nodes, edges) {
     return false;
   });
 }
+
+/** 根据节点获取其一度关系 */
+export const getSubGraphData = (ids: string[]) => {
+  return new Promise(resolve => {
+    const data = db.graph();
+
+    /** Start：组件市场里定义的逻辑;*/
+
+    const propertiesNodes = data.nodes
+      .filter(node => {
+        return ids.indexOf(node.id) !== -1;
+      })
+      .map(node => {
+        return node.data.properties.map(n => {
+          return {
+            data: n,
+            id: n.uri,
+          };
+        });
+      })
+      .reduce((acc, curr) => {
+        return [...acc, ...curr];
+      }, []);
+
+    /**初始化图的节点*/
+    const graphOriginNodes = data.nodes.filter(node => {
+      return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
+    });
+    const nodes = [...propertiesNodes, ...graphOriginNodes];
+    const edges = getEdgesByNodes(nodes, data.edges);
+
+    /** End：组件市场里定义的逻辑;*/
+
+    return resolve({
+      nodes: propertiesNodes,
+      edges,
+    }); //这里需要一个规范的图结构
+  });
+};

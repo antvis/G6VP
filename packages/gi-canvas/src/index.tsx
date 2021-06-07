@@ -12,8 +12,8 @@ export interface Props {
   services: {
     /** 获取初始化接口 */
     getGraphData: () => Promise<any>;
-    /** 根据ID获取节点或边的详情信息 */
-    getGraphDataById?: (id: string) => Promise<any>;
+    /** 根据ID集合获取节点或边的详情信息 */
+    getsubGraphData?: (ids: string[]) => Promise<any>;
     /** 获取一度下钻数据 */
     getExploreGraphByDegree?: (degree: number, id: string) => Promise<any>;
   };
@@ -59,6 +59,20 @@ const GISDK = (props: Props) => {
 
   /** 计算 用户选择的组件 */
   const componentsMarket = getComponentsFromMarket(config);
+
+  //@ts-ignore 临时方案
+  GraphinContext.services = services;
+  //@ts-ignore 临时方案
+  GraphinContext.dispatch = {
+    changeData: inputData => {
+      setState(preState => {
+        return {
+          ...preState,
+          data: transform(inputData, config),
+        };
+      });
+    },
+  };
 
   return (
     <div>
