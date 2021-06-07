@@ -1,7 +1,7 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import { Input, Layout } from 'antd';
 import React from 'react';
-import { getGraphData } from '../../services/index';
+import { getGraphData, getSubGraphData } from '../../services/index';
 
 const { TextArea } = Input;
 
@@ -22,7 +22,14 @@ const config = {
       enable: false,
     },
     {
-      id: 'Liaoyuan-Click-Entity',
+      id: 'Liaoyuan-Click-Entity-Node',
+      categoryId: 'interaction',
+      meta: {},
+      props: {},
+      enable: true,
+    },
+    {
+      id: 'Liaoyuan-Click-Event-Node',
       categoryId: 'interaction',
       meta: {},
       props: {},
@@ -94,11 +101,15 @@ const config = {
   ],
   layout: {
     categoryId: 'layout',
-    id: 'graphin-force',
+    id: 'dagre', //'graphin-force',
     options: {
-      preset: {
-        type: 'concentric',
-      },
+      rankdir: 'LR', // 可选，默认为图的中心
+      align: undefined, // 可选
+      nodesep: 15, // 可选
+      ranksep: 40, // 可选
+      // preset: {
+      //   type: 'concentric',
+      // },
     },
   },
   graph: {},
@@ -123,8 +134,8 @@ const Analysis = () => {
       <GIMetaPanel /> */}
       <h1>GraphInsight 核心画布渲染区域</h1>
 
-      <GISDK config={config} services={{ getGraphData }}>
-        <TestComponents />
+      <GISDK config={config} services={{ getGraphData, getSubGraphData }}>
+        {/* <TestComponents /> */}
       </GISDK>
     </Layout>
   );

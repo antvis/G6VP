@@ -1,6 +1,7 @@
 import getLegendMappingKey from './Legend/getLegendMappingKey';
 import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
+import ClickEvent from './Liaoyuan/ClickEvent';
 
 /**
  * 组件市场
@@ -16,10 +17,15 @@ const getComponentsFromMarket: any = config => {
         sortKey: legendSortKey,
       },
     },
-    'Liaoyuan-Click-Entity': {
-      id: 'Liaoyuan-Click-Entity',
+    'Liaoyuan-Click-Entity-Node': {
+      id: 'Liaoyuan-Click-Entity-Node',
       props: {},
       component: ClickEntity,
+    },
+    'Liaoyuan-Click-Event-Node': {
+      id: 'Liaoyuan-Click-Event-Node',
+      props: {},
+      component: ClickEvent,
     },
   };
 };
