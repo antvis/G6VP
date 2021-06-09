@@ -121,15 +121,11 @@ const TestComponents = () => {
   return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
 };
 
-const handleChange = e => {
-  console.log('e', e.target.value);
-};
-
 const Analysis = () => {
   return (
     <Layout>
       <h1>GraphInsight 组件市场</h1>
-      <TextArea onChange={handleChange} autoSize={{ minRows: 10, maxRows: 20 }}></TextArea>
+
       {/* <h1>GraphInsight 属性面板配置区域</h1>
       <GIMetaPanel /> */}
       <h1>GraphInsight 核心画布渲染区域</h1>
