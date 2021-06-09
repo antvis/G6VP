@@ -8,8 +8,8 @@
     "build": "umi build"
   },
   "dependencies": {
-    "@alipay/graphinsight": "*",
     "@alipay/gi-meta": "*",
+    "@alipay/graphinsight": "*",
     "@ant-design/charts": "^1.0.21",
     "@ant-design/compatible": "^1.0.2",
     "@ant-design/icons": "^4.0.6",
@@ -19,9 +19,13 @@
     "@umijs/plugin-antd": "^0.9.1",
     "antd": "^4.2.4",
     "classnames": "^2.2.6",
+    "lockr": "^0.8.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-monaco-editor": "^0.43.0",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.1",
+    "redux": "^4.1.0",
     "umi": "^3.4.4"
   },
   "author": "AntV",
