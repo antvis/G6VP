@@ -1,18 +1,3 @@
-const str = `
-const b = ()=>{
-  console.log('hello world')
-  return 2
-}
-b()
-`;
-
-function looseJsonParse(obj) {
-  return Function('"use strict";return (' + obj + ')')();
-}
-
-// const a = looseJsonParse(str);
-// console.log(a, typeof a, { components: a });
-
 const components = {
   legend: {
     component: function DumiDemo() {

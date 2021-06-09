@@ -13,7 +13,7 @@ export interface Props {
     /** 获取初始化接口 */
     getGraphData: () => Promise<any>;
     /** 根据ID集合获取节点或边的详情信息 */
-    getsubGraphData?: (ids: string[]) => Promise<any>;
+    getSubGraphData?: (ids: string[]) => Promise<any>;
     /** 获取一度下钻数据 */
     getExploreGraphByDegree?: (degree: number, id: string) => Promise<any>;
   };
