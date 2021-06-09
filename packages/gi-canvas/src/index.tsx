@@ -75,28 +75,26 @@ const GISDK = (props: Props) => {
   };
 
   return (
-    <div>
-      <Graphin data={data} layout={layout}>
-        {/** 内置组件  */}
-        <CanvasClick />
+    <Graphin data={data} layout={layout}>
+      {/** 内置组件  */}
+      <CanvasClick />
 
-        {/** 用户从组件市场里选择的组件  */}
-        {components.map(c => {
-          const { id } = c;
-          const {
-            component: Component,
-            props: defaultProps,
-          }: {
-            component: typeof React.Component;
-            props: any;
-          } = componentsMarket[id];
-          return <Component key={id} {...defaultProps} {...props} />;
-        })}
+      {/** 用户从组件市场里选择的组件  */}
+      {components.map(c => {
+        const { id } = c;
+        const {
+          component: Component,
+          props: defaultProps,
+        }: {
+          component: typeof React.Component;
+          props: any;
+        } = componentsMarket[id];
+        return <Component key={id} {...defaultProps} {...props} />;
+      })}
 
-        {/** 用户二次定制开发的组件  */}
-        {children}
-      </Graphin>
-    </div>
+      {/** 用户二次定制开发的组件  */}
+      {children}
+    </Graphin>
   );
 };
 
