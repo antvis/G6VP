@@ -5,7 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 import { getEdgesByNodes } from '../../services';
-import { getGraphData, getSubGraphData } from '../../services/index';
+import { getGraphData, getSubGraphData, getProfileData } from '../../services/index';
 import { configSchema, navbarOptions } from './Constants';
 import './index.less';
 import store from './redux';
@@ -189,6 +189,35 @@ const configs = {
       options: {},
     },
   },
+  wangshang: {
+    components: [],
+    node: [{
+        id: 'graphin-node',
+        categoryId: 'node',
+        enable: true, 
+        color: [
+        {
+            mode: 'mapping',
+            key: 'entityTypeName',
+            enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
+            enable: true,
+          }],
+        size: [{
+            mode: 'fixed',
+            value: 30,
+            enable: true,
+        }]
+    }],
+    layout: {
+        categoryId: 'layout',
+        id: 'graphin-force',
+        options: {
+            preset: {
+            type: 'concentric',
+            },
+        }
+    }
+  }
 };
 
 const services = {
@@ -210,6 +239,9 @@ const services = {
   demo: {
     getGraphData: getGraphData,
   },
+  wangshang: {
+    getGraphData: getGraphData
+  }
 };
 export type Config = typeof config;
 

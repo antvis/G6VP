@@ -73,3 +73,18 @@ export const getSubGraphData = (ids: string[]) => {
     }); //这里需要一个规范的图结构
   });
 };
+
+/** 企业图谱获取数据 */
+export const getProfileData = () => {
+  return new Promise(resolve => {
+    const { nodes, edges } = enterprise.graphData;
+
+    const renderNodes = nodes.map(n => {
+      return { data: n, id: n.id }; // 这里需要在数据处理层，让用户自己指定ID
+    })
+    return resolve({
+      nodes: renderNodes,
+      edges
+    })
+  })
+}

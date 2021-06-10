@@ -59,17 +59,17 @@ console.log('B', B);
 //   default: require('react'),
 // };
 
-const C = () => {
-  var _interopRequireDefault = require('/Users/pomelo/Desktop/github/temp/node_modules/@umijs/babel-preset-umi/node_modules/@babel/runtime/helpers/interopRequireDefault');
+// const C = () => {
+//   var _interopRequireDefault = require('/Users/pomelo/Desktop/github/temp/node_modules/@umijs/babel-preset-umi/node_modules/@babel/runtime/helpers/interopRequireDefault');
 
-  var _react = _interopRequireDefault(require('react'));
+//   var _react = _interopRequireDefault(require('react'));
 
-  var _default = function _default() {
-    return /*#__PURE__*/ _react['default'].createElement('h1', null, 'hello world');
-  };
+//   var _default = function _default() {
+//     return /*#__PURE__*/ _react['default'].createElement('h1', null, 'hello world');
+//   };
 
-  return _react['default'].createElement(_default);
-};
+//   return _react['default'].createElement(_default);
+// };
 
 const handleChange = e => {
   console.log('e', e.target.value);
@@ -81,7 +81,7 @@ const ComponentMarket = () => {
       <h1>组件市场：（第一期先不做）</h1>
       <TextArea onChange={handleChange}></TextArea>
       {/* <B /> */}
-      <C />
+      {/* <C /> */}
     </div>
   );
 };

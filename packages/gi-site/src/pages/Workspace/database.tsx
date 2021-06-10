@@ -1,6 +1,7 @@
 import Lockr from 'lockr';
 import demo from '../../mock/demo.json';
 import liaoyuan from '../../mock/liaoyuan.json';
+import enterprise from '../../mock/enterprise.json';
 
 /**
  * 数据的预处理
@@ -37,6 +38,15 @@ const transform = {
       }),
     };
   },
+  wangshang: source => {
+    const { nodes, edges } = source;
+    return {
+      nodes: nodes.map(n => {
+        return { data: n, id: n.id };
+      }),
+      edges
+    };
+  }
 };
 
 /**
@@ -51,10 +61,12 @@ const storeData = (projectId, data) => {
 Lockr.set('project', [
   { id: 'liaoyuan', title: '燎原计划' },
   { id: 'demo', title: '演示案例' },
+  { id: 'wangshang', title: '网商企业图谱' },
 ]);
 
 storeData('liaoyuan', { nodes: liaoyuan.result.nodes, edges: liaoyuan.result.edges });
 storeData('demo', { nodes: demo.nodes, edges: demo.edges });
+storeData('wangshang', { nodes: enterprise.graphData.nodes, edges: enterprise.graphData.edges });
 
 // console.log(localStorage.getItem('gi_liaoyuan'));
 // console.log(Lockr.get('liaoyuan'));
