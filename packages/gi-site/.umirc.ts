@@ -7,6 +7,7 @@ export default {
   },
   routes: [
     { exact: true, path: '/', component: 'Home' },
+    { exact: true, path: '/workspace', component: 'Workspace' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/market', component: 'Components' },
   ],
