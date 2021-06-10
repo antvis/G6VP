@@ -1,7 +1,9 @@
+import { MiniMap } from '@antv/graphin-components';
 import getLegendMappingKey from './Legend/getLegendMappingKey';
 import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
+import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
 /**
  * 组件市场
@@ -10,13 +12,31 @@ import ClickEvent from './Liaoyuan/ClickEvent';
 const getComponentsFromMarket: any = config => {
   const legendSortKey = getLegendMappingKey(config);
   return {
-    'LEGEND-A': {
-      id: 'LEGEND-A',
+    /*** 官方组件 */
+    Legend: {
+      id: 'Legend',
       component: LegendA,
       props: {
         sortKey: legendSortKey,
       },
     },
+    MiniMap: {
+      id: 'MiniMap',
+      props: {},
+      component: MiniMap,
+    },
+    NodeTooltip: {
+      id: 'NodeTooltip',
+      props: {},
+      component: NodeTooltip,
+    },
+    EdgeTooltip: {
+      id: 'EdgeTooltip',
+      props: {},
+      component: EdgeTooltip,
+    },
+    /** 第三方组件 */
+
     'Liaoyuan-Click-Entity-Node': {
       id: 'Liaoyuan-Click-Entity-Node',
       props: {},
