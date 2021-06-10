@@ -48,6 +48,10 @@ Lockr.prefix = 'gi_';
 const storeData = (projectId, data) => {
   Lockr.set(projectId, transform[projectId](data));
 };
+Lockr.set('project', [
+  { id: 'liaoyuan', title: '燎原计划' },
+  { id: 'demo', title: '演示案例' },
+]);
 
 storeData('liaoyuan', { nodes: liaoyuan.result.nodes, edges: liaoyuan.result.edges });
 storeData('demo', { nodes: demo.nodes, edges: demo.edges });

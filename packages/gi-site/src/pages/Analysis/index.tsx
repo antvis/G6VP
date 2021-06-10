@@ -7,7 +7,6 @@ import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
 import { configSchema, navbarOptions } from './Constants';
-import './database';
 import './index.less';
 import store from './redux';
 
@@ -212,7 +211,8 @@ const TestComponents = () => {
 };
 
 const Analysis = props => {
-  const { projectId } = props.match.params;
+  const { history, match } = props;
+  const { projectId } = match.params;
   console.log('props', props, projectId);
   Lockr.set('projectId', projectId);
   const [state, setState] = React.useState({
@@ -235,7 +235,7 @@ const Analysis = props => {
     <Provider store={store}>
       <div className="gi">
         <div className="gi-navbar">
-          <Navbar />
+          <Navbar history={history} />
         </div>
         <div className="gi-analysis">
           <div className="gi-analysis-sidebar">
