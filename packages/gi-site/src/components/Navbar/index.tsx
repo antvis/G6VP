@@ -10,7 +10,7 @@ const content = (
     <DataSource />
   </div>
 );
-const Navbar = () => {
+const Navbar = ({ history }) => {
   const [visible, setVisible] = React.useState(false);
   const handleClose = () => {
     setVisible(false);
@@ -20,7 +20,12 @@ const Navbar = () => {
   };
   return (
     <div className="navbar">
-      <div className="navbar-logo">
+      <div
+        className="navbar-logo"
+        onClick={() => {
+          history.push('/');
+        }}
+      >
         <img src="https://gw.alipayobjects.com/zos/bmw-prod/77ceaf76-5315-480f-b285-db12b1507030.svg" alt="logo" />
       </div>
 
