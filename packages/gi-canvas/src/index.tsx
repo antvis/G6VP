@@ -81,7 +81,7 @@ const GISDK = (props: Props) => {
 
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
-        const { id } = c;
+        const { id, props: itemProps } = c;
         const {
           component: Component,
           props: defaultProps,
@@ -89,7 +89,7 @@ const GISDK = (props: Props) => {
           component: typeof React.Component;
           props: any;
         } = componentsMarket[id];
-        return <Component key={id} {...defaultProps} {...props} />;
+        return <Component key={id} {...defaultProps} {...itemProps} />;
       })}
 
       {/** 用户二次定制开发的组件  */}
