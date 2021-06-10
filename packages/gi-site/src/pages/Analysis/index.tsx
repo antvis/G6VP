@@ -16,18 +16,26 @@ const configs = {
   liaoyuan: {
     components: [
       {
-        id: 'LEGEND-A',
+        id: 'Legend',
         categoryId: 'legend',
         meta: {},
         props: {},
         enable: true,
       },
       {
-        id: 'LEGEND-Offical',
-        categoryId: 'legend',
+        id: 'NodeTooltip',
+        categoryId: 'tooltip',
+        meta: {},
+        props: {
+          mappingKeys: ['name', 'type'],
+        },
+        enable: true,
+      },
+      {
+        id: 'MiniMap',
         meta: {},
         props: {},
-        enable: false,
+        enable: true,
       },
       {
         id: 'Liaoyuan-Click-Entity-Node',
@@ -125,7 +133,7 @@ const configs = {
   demo: {
     components: [
       {
-        id: 'LEGEND-A',
+        id: 'Legend',
         categoryId: 'legend',
         meta: {},
         props: {},
