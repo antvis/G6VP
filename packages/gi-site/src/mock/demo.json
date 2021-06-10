@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "user"
+    },
+    {
+      "id": "node-2",
+      "type": "company"
+    },
+    {
+      "id": "node-3",
+      "type": "company"
+    },
+    {
+      "id": "node-4",
+      "type": "company"
+    }
+  ],
+  "edges": [
+    {
+      "source": "node-1",
+      "target": "node-2",
+      "weight": 1
+    },
+    {
+      "source": "node-1",
+      "target": "node-3",
+      "weight": 10
+    },
+    {
+      "source": "node-1",
+      "target": "node-4"
+    }
+  ]
+}

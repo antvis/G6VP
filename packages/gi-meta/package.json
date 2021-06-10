@@ -1,0 +1,20 @@
+{
+  "name": "@alipay/gi-meta",
+  "version": "0.1.0",
+  "description": "GraphInsight 配置面板",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "start": "npm run clean && father build --watch",
+    "build": "npm run clean && father build && npm run build:umd",
+    "test": "jest",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "clean": "rimraf es esm lib dist"
+  },
+  "dependencies": {
+    "@alipay/nemo-panel": "^0.1.7",
+    "father": "^2.30.6",
+    "rimraf": "^3.0.2"
+  }
+}
