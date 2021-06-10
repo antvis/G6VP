@@ -1,9 +1,10 @@
-import { Button, message, Steps } from 'antd';
+import { Button, message, Steps, Select, Row, Col } from 'antd';
 import * as React from 'react';
 
 interface CreatePanelProps {}
 
 const { Step } = Steps;
+const { Option } = Select;
 
 const steps = [
   {
@@ -40,9 +41,22 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       </Steps>
       <div className="steps-content">{steps[current].content}</div>
       <div className="steps-action">
+      {current === 0 && (     
+        <Row>
+            <span>
+              选择解决方案：
+            </span>
+            <Select
+              style={{ width: 200 }}
+              placeholder="Select a program"
+            >
+              <Option value="knowledgeGraph">图谱</Option>
+              <Option value="riskControl">风控</Option>
+            </Select>
+          </Row>)}
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
-            Next
+              Next
           </Button>
         )}
         {current === steps.length - 1 && (
