@@ -1,0 +1,22 @@
+{
+  "name": "@alipay/graphinsight",
+  "version": "0.1.0",
+  "description": "GraphInsight 核心画布渲染",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "start": "npm run clean && father build --watch",
+    "build": "npm run clean && father build && npm run build:umd",
+    "test": "jest",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "clean": "rimraf es esm lib dist"
+  },
+  "dependencies": {
+    "@antv/graphin": "^2.0.7",
+    "@antv/graphin-components": "^2.0.7",
+    "@babel/standalone": "^7.14.4",
+    "father": "^2.30.6",
+    "rimraf": "^3.0.2"
+  }
+}
