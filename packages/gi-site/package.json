@@ -19,6 +19,7 @@
     "@umijs/plugin-antd": "^0.9.1",
     "antd": "^4.2.4",
     "classnames": "^2.2.6",
+    "immutability-helper-x": "^1.0.5",
     "lockr": "^0.8.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
