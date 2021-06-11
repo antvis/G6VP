@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Lockr from 'lockr';
 import { createStore } from 'redux';
 
 interface Action {
@@ -7,9 +6,8 @@ interface Action {
   payload: any;
 }
 
-const project = Lockr.get('project');
-
 const initialState = {
+  id: '',
   config: {
     components: [
       {

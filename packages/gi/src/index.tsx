@@ -24,16 +24,15 @@ const GISDK = (props: Props) => {
   const { config, services, children } = props;
 
   const [state, setState] = React.useState({
-    data: {} as GraphinData,
-    source: {} as GraphinData,
-    layout: {
-      type: config.layout.id,
-      ...config.layout.options,
-    },
+    data: { nodes: [], edges: [] } as GraphinData,
+    source: { nodes: [], edges: [] } as GraphinData,
+    layout: {},
     components: [],
   });
-  const { data, layout, components } = state;
 
+  const { data: dataCfg, layout: layoutCfg, components: componentsCfg, node: nodeCfg, edge: edgeCfg } = config;
+
+  /** 数据发生改变 */
   React.useEffect(() => {
     console.log('did mount');
     services.getGraphData().then(res => {
@@ -47,23 +46,47 @@ const GISDK = (props: Props) => {
     });
   }, []);
 
+  /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    console.log('config change...');
-    const { components, layout } = config;
-    const filteredComponents = components.filter(c => c.enable);
+    console.log('COMPONENT config change...');
+    const filteredComponents = componentsCfg.filter(c => c.enable);
     setState(preState => {
-      console.log('preState....', preState);
       return {
         ...preState,
         components: filteredComponents,
-        layout: {
-          type: layout.id,
-          ...layout.options,
-        },
-        // data: transform(preState.source, config),
       };
     });
-  }, [config]);
+  }, [componentsCfg]);
+  /** 布局发生改变 */
+  React.useEffect(() => {
+    console.log('LAYOUT config change...');
+    setState(preState => {
+      return {
+        ...preState,
+        layout: {
+          type: layoutCfg.id,
+          ...layoutCfg.options,
+        },
+      };
+    });
+  }, [layoutCfg]);
+
+  React.useEffect(() => {
+    console.log('STYLE config change...');
+    setState(preState => {
+      const { source } = preState;
+      if (source.nodes.length === 0) {
+        return preState;
+      }
+      return {
+        ...preState,
+        data: transform(preState.source, { node: nodeCfg, edge: edgeCfg }),
+      };
+    });
+  }, [nodeCfg, edgeCfg]);
+
+  const { data, layout, components } = state;
+  console.log('STATE', state);
 
   /** 计算 用户选择的组件 */
   const componentsMarket = getComponentsFromMarket(config);

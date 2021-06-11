@@ -70,6 +70,7 @@ const Analysis = props => {
     });
     dispatch({
       type: 'Update:Config',
+      id: projectId,
       config,
     });
   }, [projectId]);
