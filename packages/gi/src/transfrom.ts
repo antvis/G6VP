@@ -25,7 +25,6 @@ const transform = (s, config) => {
 
   const nodes = s.nodes.map(node => {
     const { id, data } = node;
-
     /** 根据Size字段映射的枚举值 */
     const enumValueBySize = data[Size?.key || 0];
     const MappingBySize = mappingBySize(enumValueBySize, node);

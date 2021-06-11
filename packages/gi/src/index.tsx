@@ -25,6 +25,7 @@ const GISDK = (props: Props) => {
 
   const [state, setState] = React.useState({
     data: {} as GraphinData,
+    source: {} as GraphinData,
     layout: {
       type: config.layout.id,
       ...config.layout.options,
@@ -40,19 +41,26 @@ const GISDK = (props: Props) => {
         return {
           ...preState,
           data: transform(res, config),
+          source: { ...res },
         };
       });
     });
   }, []);
 
   React.useEffect(() => {
-    console.log('config change..');
-    const { components } = config;
+    console.log('config change...');
+    const { components, layout } = config;
     const filteredComponents = components.filter(c => c.enable);
     setState(preState => {
+      console.log('preState....', preState);
       return {
         ...preState,
         components: filteredComponents,
+        layout: {
+          type: layout.id,
+          ...layout.options,
+        },
+        // data: transform(preState.source, config),
       };
     });
   }, [config]);
