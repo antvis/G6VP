@@ -5,7 +5,7 @@ const getLegendMappingKey = config => {
   /** 解构配置项 */
   const MathNodeConfig = NodeConfig.find(cfg => cfg.enable);
   const Color = MathNodeConfig?.color.find(s => s.enable) || null;
-  return `data.${Color?.key}`;
+  return `${Color?.key}`;
 };
 
 export default getLegendMappingKey;

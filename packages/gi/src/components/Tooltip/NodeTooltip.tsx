@@ -21,7 +21,6 @@ const NodeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
             <div>
               <ul className="tooltip-content">
                 {mappingKeys.map((key: string) => {
-                  console.log(mappingKeys, model.data, model.data[key]);
                   return (
                     <li key={key}>
                       {key.toUpperCase()} : {model.data[key]}

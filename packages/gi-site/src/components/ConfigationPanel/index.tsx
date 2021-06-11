@@ -21,13 +21,12 @@ interface ConfigationPanelProps {
 const ConfigationPanel: React.FunctionComponent<ConfigationPanelProps> = props => {
   const { options, value } = props;
   const state = useSelector(state => state);
-  console.log('state', state, options, value);
+
   const MatchContent = options.find(opt => {
     return opt.id === value;
   }) || {
     components: Empty,
   };
-  console.log(MatchContent);
 
   return (
     <div className="gi-config-pannel">
