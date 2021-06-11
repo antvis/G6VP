@@ -10,8 +10,10 @@ interface WorkspaceProps {}
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const project = Lockr.get('project') || [];
+  window.Lockr = Lockr;
   //@ts-ignore
   const { history } = props;
+  console.log(project);
 
   const lists = project.map(p => {
     return {

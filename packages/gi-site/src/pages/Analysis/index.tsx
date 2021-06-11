@@ -3,35 +3,35 @@ import Lockr from 'lockr';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
-import { getEdgesByNodes } from '../../services';
+// import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
 import { configSchema, navbarOptions } from './Constants';
 import './index.less';
 import store from './redux';
 
-const services = {
-  liaoyuan: {
-    getGraphData: () => {
-      return getGraphData(data => {
-        const nodes = data.nodes.filter(node => {
-          return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
-        });
-        const edges = getEdgesByNodes(nodes, data.edges);
-        return {
-          nodes,
-          edges,
-        };
-      });
-    },
-    getSubGraphData,
-  },
-  demo: {
-    getGraphData: getGraphData,
-  },
-  wangshang: {
-    getGraphData: getGraphData,
-  },
-};
+// const services = {
+//   liaoyuan: {
+//     getGraphData: () => {
+//       return getGraphData(data => {
+//         const nodes = data.nodes.filter(node => {
+//           return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
+//         });
+//         const edges = getEdgesByNodes(nodes, data.edges);
+//         return {
+//           nodes,
+//           edges,
+//         };
+//       });
+//     },
+//     getSubGraphData,
+//   },
+//   demo: {
+//     getGraphData: getGraphData,
+//   },
+//   wangshang: {
+//     getGraphData: getGraphData,
+//   },
+// };
 
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
@@ -65,16 +65,15 @@ const Analysis = props => {
   };
   React.useEffect(() => {
     const project = Lockr.get('project');
-    const { config } = project.find(p => {
-      return p.id === projectId;
-    });
+    const {config} = Lockr.get(projectId);
+ 
     dispatch({
       type: 'Update:Config',
       id: projectId,
       config,
     });
   }, [projectId]);
-  const service = services[projectId];
+  // const service = services[projectId];
   // const config = configs[projectId];
 
   return (
@@ -91,7 +90,10 @@ const Analysis = props => {
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            <GISDK config={config} services={service}>
+            <GISDK config={config} services={{
+              getGraphData,
+              getSubGraphData,
+            }}>
               <TestComponents />
             </GISDK>
           </div>

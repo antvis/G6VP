@@ -112,11 +112,29 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     Lockr.set(id, { 
       data:transform(data),
       ...userConfig,
-      /** 临时方案 */
+      /** 
+       * 临时方案
+       * 数据标准化节点，需要在「上传数据」阶段就准备好
+       * 数据过滤的阶段，需要在数据服务模块添加
+       */
       service:{
         transform:`
           function(data){
-            return data
+ 
+            const nodes = data.nodes.map(n=>{
+              return {
+                id:n.id,
+                data:n
+              }
+            })
+            const edges = data.edges.map(e=>{
+              return {
+                source:e.source,
+                target:e.target,
+                data:e
+              }
+            })
+            return {nodes,edges}
           }
         `
       }
