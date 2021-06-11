@@ -1,6 +1,6 @@
 import { DatabaseOutlined } from '@ant-design/icons';
 import React from 'react';
-import { ComponentPanel, LayoutPanel, StylePanel } from '../../components';
+import { Panel } from '../../components';
 
 export const navbarOptions = [
   {
@@ -26,19 +26,19 @@ export const configSchema = [
     id: 'style',
     name: '样式',
     icon: <DatabaseOutlined />,
-    components: StylePanel,
+    components: Panel,
   },
   {
     id: 'layout',
     name: '布局',
     icon: <DatabaseOutlined />,
-    components: LayoutPanel,
+    components: Panel,
   },
 
   {
     id: 'components',
     name: '组件',
     icon: <DatabaseOutlined />,
-    components: ComponentPanel,
+    components: Panel,
   },
 ];
