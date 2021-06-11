@@ -1,28 +1,80 @@
-import { Button, message, Steps, Select, Row, Col } from 'antd';
+import { 
+  Button,
+  Steps,
+  Radio,
+  Row,
+  Col,
+  Card,
+  Tooltip,
+  Upload,
+  Table,
+  Tabs,
+  Form,
+  Input
+} from 'antd';
 import * as React from 'react';
+import MonacoEditor from 'react-monaco-editor';
+import { UploadOutlined } from '@ant-design/icons';
+import Lockr from 'lockr';
+import { getUid } from './utils';
+import { defaultConfig } from './defaultConfig';
 
 interface CreatePanelProps {}
 
 const { Step } = Steps;
-const { Option } = Select;
+const { Meta } = Card;
+const { TabPane } = Tabs;
 
-const steps = [
+const lists = [
   {
-    title: 'First',
-    content: 'First-content',
+    id: 'GIConfig',
+    title: '空白模版'
   },
   {
-    title: 'Second',
-    content: 'Second-content',
+    id: 'knowledgeGraph',
+    title: '知识图谱'
   },
   {
-    title: 'Last',
-    content: 'Last-content',
+    id: 'riskControl',
+    title: '风控'
+  }
+]
+
+const nodeColumns = [
+  {
+    title: 'id',
+    dataIndex: 'id',
+    key: 'id',
+  }
+]
+
+const edgeColumns = [
+  {
+    title: 'source',
+    dataIndex: 'source',
+    key: 'source',
   },
-];
+  {
+    title: 'target',
+    dataIndex: 'target',
+    key: 'target',
+  }
+]
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const [current, setCurrent] = React.useState(0);
+  const [userConfig, setUserConfig] = React.useState({});
+  const [viewMode, setViewMode] = React.useState('code');
+  const [data, setData] = React.useState({ nodes: [], edges: [] });
 
   const next = () => {
     setCurrent(current + 1);
@@ -32,6 +84,136 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     setCurrent(current - 1);
   };
 
+  const setDefaultConfig = (id) => {
+    setUserConfig({
+      ...userConfig,
+      config: defaultConfig[id]
+    })
+    next();
+  };
+
+  const handleViewChange = e => {
+    setViewMode(e.target.value);
+  }
+
+  const transform = (data) => {
+    return data;
+  }
+
+  const creatProgram = () => {
+    let id = getUid();
+    Lockr.sadd('project',  { id, ...userConfig});
+    Lockr.set(id, transform(data));
+  }
+
+  const getUserInfo = (value) => {
+    setUserConfig({
+      ...userConfig,
+      ...value
+    });
+    next();
+  }
+
+  const uploadProps = {
+    name: 'file',
+    customRequest: options => {
+      const { file, onSuccess } = options;
+      const reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = fileReader => {
+        const fileData = fileReader.target.result;
+        setData(JSON.parse(fileData as string));
+        onSuccess("Ok");
+      }
+    }
+  };
+
+  const steps = [
+    {
+      title: 'First',
+      content: (
+      <Form
+        {...layout}
+        name="basic"
+        onFinish={getUserInfo}
+      >
+        <Form.Item
+          label="项目名称"
+          name="title"
+          rules={[{ required: true, message: 'Please input project title!' }]}
+        >
+          <Input />
+        </Form.Item>
+  
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            创建
+          </Button>
+        </Form.Item>
+      </Form>)
+    },
+    {
+      title: 'Second',
+      content: (
+        <Row gutter={16}>
+            {lists.map(item => {
+              const { id, title } = item;
+              return (
+                <Col key={id} span={6}>
+                  <Card
+                    style={{ width: '100%' }}
+                    hoverable
+                    onClick={() => setDefaultConfig(id)}
+                  >
+                  <Meta title={title} description="文本描述文本描述文本描述文本描述" />
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>),
+    },
+    {
+      title: 'Last',
+      content: (
+        <>
+        <Row gutter={16}>
+          数据源    
+          <Tooltip title="上传数据源">
+            <Upload {...uploadProps}>
+              <Button icon={<UploadOutlined />}>select file</Button>
+            </Upload>
+          </Tooltip>
+        </Row>
+        <Row gutter={16}>
+          <Radio.Group value={viewMode} onChange={handleViewChange}>
+            <Radio.Button value="table">表格视图</Radio.Button>
+            <Radio.Button value="code">代码视图</Radio.Button>
+          </Radio.Group>
+        </Row>
+        <Row gutter={16}>
+          {viewMode === 'code' && (      
+          <MonacoEditor
+            width="100%"
+            height="80vh"
+            language="json"
+            theme="vs-dark"
+            value={JSON.stringify(data, null, 2)}
+          />)}
+          {viewMode === 'table' && (
+            <Tabs defaultActiveKey="node">
+            <TabPane tab="Tab 1" key="node">
+              <Table dataSource={data?.nodes} columns={nodeColumns} />
+            </TabPane>
+            <TabPane tab="Tab 2" key="edge">
+              <Table dataSource={data?.edges} columns={edgeColumns} />
+            </TabPane>
+          </Tabs>)}
+        </Row>
+        </>
+      ),
+    }
+  ];
   return (
     <div>
       <Steps current={current}>
@@ -41,26 +223,8 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       </Steps>
       <div className="steps-content">{steps[current].content}</div>
       <div className="steps-action">
-      {current === 0 && (     
-        <Row>
-            <span>
-              选择解决方案：
-            </span>
-            <Select
-              style={{ width: 200 }}
-              placeholder="Select a program"
-            >
-              <Option value="knowledgeGraph">图谱</Option>
-              <Option value="riskControl">风控</Option>
-            </Select>
-          </Row>)}
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-              Next
-          </Button>
-        )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('Processing complete!')}>
+          <Button type="primary" onClick={creatProgram}>
             Done
           </Button>
         )}
