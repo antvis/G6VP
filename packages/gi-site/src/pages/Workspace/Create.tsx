@@ -72,7 +72,11 @@ const tailLayout = {
 
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const [current, setCurrent] = React.useState(0);
-  const [userConfig, setUserConfig] = React.useState({});
+  const [userConfig, setUserConfig] = React.useState({
+    id:"",
+    title:"",
+    config:{}
+  });
   const [viewMode, setViewMode] = React.useState('code');
   const [data, setData] = React.useState({ nodes: [], edges: [] });
 
@@ -102,8 +106,23 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
 
   const creatProgram = () => {
     let id = getUid();
-    Lockr.sadd('project',  { id, ...userConfig});
-    Lockr.set(id, transform(data));
+    debugger
+    const {config,...others } = userConfig;
+    Lockr.sadd('project', {...others, id});
+    Lockr.set(id, { 
+      data:transform(data),
+      ...userConfig,
+      /** 临时方案 */
+      service:{
+        transform:`
+          function(data){
+            return data
+          }
+        `
+      }
+    } );
+   
+    
   }
 
   const getUserInfo = (value) => {
