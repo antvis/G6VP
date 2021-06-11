@@ -9,9 +9,14 @@ const callback = () => {};
 export interface StylePanelProps {}
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const dispatch = useDispatch();
-  const config = useSelector(state => state.config);
+  const state = useSelector(state => state);
+  const { config, id } = state;
+  console.log('id', id);
 
   const handleClick = () => {
+    if (id !== 'wangshang') {
+      return null;
+    }
     dispatch({
       type: 'Update:Config',
       config: {
@@ -30,6 +35,20 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
                 enable: true,
               },
             ],
+
+            /** style.keyshape.size */
+            size: [
+              {
+                mode: 'mapping',
+                key: 'entityTypeName',
+                enum: [10, 20, 30, 40, 50, 20, 30],
+                enable: true,
+              },
+            ],
+            /** style.label */
+            label: {
+              key: 'label',
+            },
           },
         ],
       },
@@ -40,7 +59,7 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
     <div>
       <Tabs defaultActiveKey="node" onChange={callback}>
         <TabPane tab="节点样式" key="node">
-          <button onClick={handleClick}> Node</button>
+          <button onClick={handleClick}>change style </button>
         </TabPane>
         <TabPane tab="边的样式" key="edge">
           Edge
