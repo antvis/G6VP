@@ -1,190 +1,191 @@
-const knowledgeGraph = {
-  components: [],
-  node: [
-    {
-      id: 'graphin-node',
-      categoryId: 'node',
-      enable: true,
-      color: [
-        {
-          mode: 'mapping',
-          key: 'entityTypeName',
-          enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
-          enable: true,
-        },
-      ],
-      size: [
-        {
-          mode: 'fixed',
-          value: 30,
-          enable: true,
-        },
-      ],
-    },
-  ],
-  layout: {
-    categoryId: 'layout',
-    id: 'graphin-force',
-    options: {
-      preset: {
-        type: 'concentric',
-      },
-    },
-  },
-};
+export const defaultConfig = {
 
-const riskControl = {
-  components: [
-    {
-      id: 'Legend',
-      categoryId: 'legend',
-      meta: {},
-      props: {},
-      enable: true,
+    knowledgeGraph: {
+        components: [],
+        node: [
+            {
+            id: 'graphin-node',
+            categoryId: 'node',
+            enable: true,
+            color: [
+                {
+                mode: 'mapping',
+                key: 'entityTypeName',
+                enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
+                enable: true,
+                },
+            ],
+            size: [
+                {
+                mode: 'fixed',
+                value: 30,
+                enable: true,
+                },
+            ],
+            },
+        ],
+        layout: {
+            categoryId: 'layout',
+            id: 'graphin-force',
+            options: {
+            preset: {
+                type: 'concentric',
+            },
+            },
+        },
     },
-  ],
-  node: [
-    {
-      id: 'graphin-node',
 
-      categoryId: 'node',
-      enable: true,
-      /** style.keyshape.color */
-      color: [
-        /** 第一种是映射模式 */
-        {
-          mode: 'mapping',
-          key: 'type',
-          enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
-          enable: true,
-        },
-        /** 第二种是固定模式 */
-        {
-          mode: 'fixed',
-          value: 'red',
-          enable: false,
-        },
-      ],
-      size: [
-        {
-          mode: 'fixed',
-          value: 30,
-          enable: false,
-        },
-      ],
-      /** style.label */
-      label: {
-        key: 'name',
-      },
-    },
-  ],
-  edge: [
-    {
-      id: 'graphin-edge',
-      categoryId: 'edge',
-      /** style.keyshape.stroke */
-      color: {
-        key: 'type',
-        enum: ['red', 'blue', 'green', 'yellow'],
-      },
-      /** style.keyshape.size */
-      size: {
-        key: 'weight',
-      },
-      /** style.label */
-      label: {
-        key: 'name',
-      },
-    },
-  ],
-  layout: {
-    categoryId: 'layout',
-    id: 'dagre',
-    options: {
-      rankdir: 'LR',
-    },
-  },
-  graph: {},
-};
+    riskControl: {
+        components: [
+            {
+            id: 'Legend',
+            categoryId: 'legend',
+            meta: {},
+            props: {},
+            enable: true,
+            },
+        ],
+        node: [
+            {
+            id: 'graphin-node',
 
-const GIConfig = {
-  components: [
-    {
-      id: 'Legend',
-      meta: {},
-      props: {},
-      enable: true,
-    },
-  ],
-  node: [
-    {
-      id: 'graphin-node',
-      enable: true,
-      /** style.keyshape.color */
-      color: [
-        /** 第一种是映射模式 */
-        {
-          mode: 'mapping',
-          key: 'type',
-          enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
-          enable: true,
+            categoryId: 'node',
+            enable: true,
+            /** style.keyshape.color */
+            color: [
+                /** 第一种是映射模式 */
+                {
+                mode: 'mapping',
+                key: 'type',
+                enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
+                enable: true,
+                },
+                /** 第二种是固定模式 */
+                {
+                mode: 'fixed',
+                value: 'red',
+                enable: false,
+                },
+            ],
+            size: [
+                {
+                mode: 'fixed',
+                value: 30,
+                enable: false,
+                },
+            ],
+            /** style.label */
+            label: {
+                key: 'name',
+            },
+            },
+        ],
+        edge: [
+            {
+            id: 'graphin-edge',
+            categoryId: 'edge',
+            /** style.keyshape.stroke */
+            color: {
+                key: 'type',
+                enum: ['red', 'blue', 'green', 'yellow'],
+            },
+            /** style.keyshape.size */
+            size: {
+                key: 'weight',
+            },
+            /** style.label */
+            label: {
+                key: 'name',
+            },
+            },
+        ],
+        layout: {
+            categoryId: 'layout',
+            id: 'dagre',
+            options: {
+            rankdir: 'LR',
+            },
         },
-        /** 第二种是固定模式 */
-        {
-          mode: 'fixed',
-          value: 'red',
-          enable: false,
-        },
-      ],
-      /** style.keyshape.size */
-      size: [
-        /** 第一种是映射模式 */
-        {
-          mode: 'mapping',
-          key: 'type',
-          enum: [40, 20, 30, 20, 10],
-          enable: true,
-        },
-        /** 第二种是固定模式 */
-        {
-          mode: 'fixed',
-          value: 30,
-          enable: false,
-        },
-      ],
-      /** style.label */
-      label: {
-        key: 'id',
-      },
+        graph: {},
     },
-  ],
-  edge: [
-    {
-      id: 'graphin-edge',
-      /** style.keyshape.stroke */
-      color: {
-        key: 'type',
-        enum: ['red', 'blue', 'green', 'yellow'],
-      },
-      /** style.keyshape.size */
-      size: {
-        key: 'weight',
-      },
-      /** style.label */
-      label: {
-        key: 'id',
-      },
-    },
-  ],
-  layout: {
-    id: 'graphin-force',
-    options: {
-      animation: false,
-      preset: {
-        type: 'concentric',
-      },
-    },
-  },
-};
 
-export default { knowledgeGraph, riskControl, GIConfig };
+    GIConfig: {
+        components: [
+            {
+            id: 'Legend',
+            meta: {},
+            props: {},
+            enable: true,
+            },
+        ],
+        node: [
+            {
+            id: 'graphin-node',
+            enable: true,
+            /** style.keyshape.color */
+            color: [
+                /** 第一种是映射模式 */
+                {
+                mode: 'mapping',
+                key: 'type',
+                enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
+                enable: true,
+                },
+                /** 第二种是固定模式 */
+                {
+                mode: 'fixed',
+                value: 'red',
+                enable: false,
+                },
+            ],
+            /** style.keyshape.size */
+            size: [
+                /** 第一种是映射模式 */
+                {
+                mode: 'mapping',
+                key: 'type',
+                enum: [40, 20, 30, 20, 10],
+                enable: true,
+                },
+                /** 第二种是固定模式 */
+                {
+                mode: 'fixed',
+                value: 30,
+                enable: false,
+                },
+            ],
+            /** style.label */
+            label: {
+                key: 'id',
+            },
+            },
+        ],
+        edge: [
+            {
+            id: 'graphin-edge',
+            /** style.keyshape.stroke */
+            color: {
+                key: 'type',
+                enum: ['red', 'blue', 'green', 'yellow'],
+            },
+            /** style.keyshape.size */
+            size: {
+                key: 'weight',
+            },
+            /** style.label */
+            label: {
+                key: 'id',
+            },
+            },
+        ],
+        layout: {
+            id: 'graphin-force',
+            options: {
+            animation: false,
+            preset: {
+                type: 'concentric',
+            },
+            },
+        },
+    }
+}
