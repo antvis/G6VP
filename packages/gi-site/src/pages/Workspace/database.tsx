@@ -59,60 +59,60 @@ Lockr.prefix = 'gi_';
 const storeData = (projectId, data) => {
   Lockr.set(projectId, transform[projectId](data));
 };
-Lockr.set('project', [
-  /**
-   * 如果选择了解决方案，则config设置为解决方案的Config
-   */
-  {
-    id: 'liaoyuan',
-    title: '燎原计划',
-    config: {
-      ...GIConfig,
-      components: [
-        ...GIConfig.components,
-        {
-          id: 'Liaoyuan-Click-Entity-Node',
-          meta: {},
-          props: {},
-          enable: true,
-        },
-        {
-          id: 'Liaoyuan-Click-Event-Node',
-          meta: {},
-          props: {},
-          enable: true,
-        },
-      ],
-      layout: {
-        id: 'dagre', //'graphin-force',
-        options: {
-          rankdir: 'LR', // 可选，默认为图的中心
-          align: undefined, // 可选
-          nodesep: 15, // 可选
-          ranksep: 40, // 可选
-        },
-      },
-    },
-  },
-  { id: 'demo', title: '演示案例', config: GIConfig },
-  {
-    id: 'wangshang',
-    title: '网商企业图谱',
-    config: {
-      ...GIConfig,
-      components: [
-        {
-          id: 'Legend',
-          props: {
-            sortKey: 'entityTypeName', //TODO:这里Graphin的Legend没有做异常处理，如果sortKey不对的话
-          },
-          meta: {},
-          enable: true,
-        },
-      ],
-    },
-  },
-]);
+// Lockr.set('project', [
+//   /**
+//    * 如果选择了解决方案，则config设置为解决方案的Config
+//    */
+//   {
+//     id: 'liaoyuan',
+//     title: '燎原计划',
+//     config: {
+//       ...GIConfig,
+//       components: [
+//         ...GIConfig.components,
+//         {
+//           id: 'Liaoyuan-Click-Entity-Node',
+//           meta: {},
+//           props: {},
+//           enable: true,
+//         },
+//         {
+//           id: 'Liaoyuan-Click-Event-Node',
+//           meta: {},
+//           props: {},
+//           enable: true,
+//         },
+//       ],
+//       layout: {
+//         id: 'dagre', //'graphin-force',
+//         options: {
+//           rankdir: 'LR', // 可选，默认为图的中心
+//           align: undefined, // 可选
+//           nodesep: 15, // 可选
+//           ranksep: 40, // 可选
+//         },
+//       },
+//     },
+//   },
+//   { id: 'demo', title: '演示案例', config: GIConfig },
+//   {
+//     id: 'wangshang',
+//     title: '网商企业图谱',
+//     config: {
+//       ...GIConfig,
+//       components: [
+//         {
+//           id: 'Legend',
+//           props: {
+//             sortKey: 'entityTypeName', //TODO:这里Graphin的Legend没有做异常处理，如果sortKey不对的话
+//           },
+//           meta: {},
+//           enable: true,
+//         },
+//       ],
+//     },
+//   },
+// ]);
 
 storeData('liaoyuan', { nodes: liaoyuan.result.nodes, edges: liaoyuan.result.edges });
 storeData('demo', { nodes: demo.nodes, edges: demo.edges });
