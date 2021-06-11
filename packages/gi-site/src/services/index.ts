@@ -11,9 +11,20 @@ export class GraphDataBase {
 /** 未来 GraphDataBase 可以换成 neo4j 或者 geabase 等数据库服务 */
 // const db = new GraphDataBase();
 
+
+function looseJsonParse(obj){
+  return Function('"use strict";return (' + obj + ')')();
+}
+
 export const getGraphData = transFn => {
   return new Promise(resolve => {
-    let data = Lockr.get(Lockr.get('projectId')); // db.graph();
+    const id = Lockr.get('projectId');
+    let  {data,config,service} = Lockr.get(id);// db.graph();
+    
+    debugger
+    const transFn = looseJsonParse(service.transform)
+
+ 
 
     // 这里需要用户从组件市场里定义初始化逻辑
 
