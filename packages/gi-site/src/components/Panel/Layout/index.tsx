@@ -11,7 +11,6 @@ const LayoutPanel: React.FunctionComponent<LayoutPanelProps> = props => {
   const dispatch = useDispatch();
 
   const handleChange = value => {
-    console.log('value', value);
     dispatch({
       type: 'Update_Layout',
       layout: value,

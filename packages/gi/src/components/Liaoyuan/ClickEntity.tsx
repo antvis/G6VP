@@ -38,14 +38,7 @@ const handleClickEntity = (graph, e) => {
   });
 
   const result = [e.item, ...sources, ...targets, ...entitys];
-  console.log(
-    result.map(n => {
-      return n.getModel().data.name;
-    }),
-    entitys.map((n: any) => {
-      return n.getModel().data.name;
-    }),
-  );
+
   const highlightIds = result.map(n => {
     return n.getModel().id;
   });

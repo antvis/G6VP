@@ -26,7 +26,6 @@ const Basic = () => {
       </Option>
     );
   });
-  console.log('allkeys', allKeys, children, 'keys', keys);
 
   return (
     <div>
@@ -79,7 +78,6 @@ const Basic = () => {
             placeholder="选择需要映射的字段"
             defaultValue={keys}
             onChange={checked => {
-              console.log('checked', checked);
               handleChange('keys', checked);
             }}
           >
