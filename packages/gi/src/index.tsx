@@ -30,7 +30,7 @@ const GISDK = (props: Props) => {
     components: [],
   });
 
-  const { data: dataCfg, layout: layoutCfg, components: componentsCfg, node: nodeCfg, edge: edgeCfg } = config;
+  const {  layout: layoutCfg, components: componentsCfg, node: nodeCfg, edge: edgeCfg } = config;
 
   /** 数据发生改变 */
   React.useEffect(() => {
