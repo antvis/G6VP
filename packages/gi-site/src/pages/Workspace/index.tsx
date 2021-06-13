@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Navbar } from '../../components';
 import CreatePanel from './Create';
 import './database';
+import './index.less';
 
 interface WorkspaceProps {}
 
