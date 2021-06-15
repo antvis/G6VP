@@ -49,7 +49,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
         visible={visible}
         width={'80%'}
       >
-        <CreatePanel />
+        <CreatePanel history={history} />
       </Drawer>
       <Card title="我的项目">
         <Row gutter={16}>

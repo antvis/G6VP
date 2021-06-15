@@ -5,12 +5,14 @@ import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
-import { defaultData } from './defaultData';
+import { defaultData, defaultTrans } from './defaultData';
 import { getUid } from './utils';
 
 Lockr.prefix = 'gi_';
 
-interface CreatePanelProps {}
+interface CreatePanelProps {
+  history: any;
+}
 
 const { Step } = Steps;
 const { TabPane } = Tabs;
@@ -72,25 +74,6 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const defaultTrans = `
-data => {
-  const nodes = data.nodes.map(n=>{
-    return {
-      id:n.id,
-      data:n
-    }
-  })
-  const edges = data.edges.map(e=>{
-    return {
-      source:e.source,
-      target:e.target,
-      data:e
-    }
-  })
-  return { nodes, edges }
-}
-`;
-
 const services = {
   getGraphDataTransform: `
   data => {
@@ -112,7 +95,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       data: defaultData.GIConfig,
     },
   ]);
-  const [transform, setTransform] = React.useState(defaultTrans);
+  const [transform, setTransform] = React.useState(defaultTrans.GIConfig);
   const [data, setData] = React.useState({ nodes: [], edges: [] });
   const dataRef = React.useRef(null);
   const transformRef = React.useRef(null);
@@ -121,6 +104,9 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     setCurrent(current + 1);
   };
 
+  const prev = () => {
+    setCurrent(current - 1);
+  };
   const setDefaultConfig = id => {
     setUserConfig({
       ...userConfig,
@@ -132,11 +118,14 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
         data: defaultData[id],
       },
     ]);
+    setTransform(defaultTrans[id]);
   };
 
   const creatProgram = () => {
+    const { history } = props;
     let id = getUid();
     const { config, ...others } = userConfig;
+    debugger;
     Lockr.sadd('project', { ...others, id });
 
     Lockr.set(id, {
@@ -149,6 +138,8 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
        */
       services,
     });
+
+    history.push(`/workspace/${id}`);
   };
 
   const getUserInfo = value => {
@@ -230,10 +221,21 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       edges = [...edges, ...d.data.edges];
     });
 
-    console.log({ nodes, edges });
     setData(eval(value)({ nodes, edges }));
   };
 
+  const nodeTableData = data?.nodes.map((d, i) => {
+    return {
+      ...d,
+      key: i,
+    };
+  });
+  const edgeTableData = data?.edges.map((d, i) => {
+    return {
+      ...d,
+      key: i,
+    };
+  });
   const steps = [
     {
       title: 'First',
@@ -316,10 +318,10 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
           <Row>
             <Tabs defaultActiveKey="node">
               <TabPane tab="nodes" key="node">
-                <Table dataSource={data?.nodes} columns={nodeColumns} />
+                <Table dataSource={nodeTableData} columns={nodeColumns} />
               </TabPane>
               <TabPane tab="edges" key="edge">
-                <Table dataSource={data?.edges} columns={edgeColumns} />
+                <Table dataSource={edgeTableData} columns={edgeColumns} />
               </TabPane>
             </Tabs>
           </Row>
@@ -341,11 +343,11 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       </Steps>
       <div className="steps-content">{steps[current].content}</div>
       <div className="steps-action">
-        {/* {current > 0 && (
+        {current > 0 && (
           <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
             上一步
           </Button>
-        )} */}
+        )}
       </div>
     </div>
   );
