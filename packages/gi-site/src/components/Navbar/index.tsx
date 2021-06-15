@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { DatabaseOutlined } from '@ant-design/icons';
-import { Popover } from 'antd';
+import { Drawer } from 'antd';
+import Lockr from 'lockr';
 import * as React from 'react';
 import DataSource from '../DataSource';
 import './index.less';
@@ -18,6 +19,8 @@ const Navbar = ({ history }) => {
   const handleOpen = () => {
     setVisible(true);
   };
+  const { id, title, data } = Lockr.get('projectId');
+
   return (
     <div className="navbar">
       <div
@@ -29,11 +32,13 @@ const Navbar = ({ history }) => {
         <img src="https://gw.alipayobjects.com/zos/bmw-prod/77ceaf76-5315-480f-b285-db12b1507030.svg" alt="logo" />
       </div>
 
-      <Popover placement="bottomLeft" title={''} content={content} trigger="click">
-        <span className="navbar-db" onClick={handleOpen}>
-          <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} /> 燎原项目
-        </span>
-      </Popover>
+      <span className="navbar-db" onClick={handleOpen}>
+        <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} /> {title}
+      </span>
+
+      <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
+        <DataSource />
+      </Drawer>
 
       <ul className="navbar-action">
         <li>主题</li>
