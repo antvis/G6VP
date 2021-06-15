@@ -3,7 +3,6 @@
 // import * as Babel from '@babel/standalone';
 // import { Input } from 'antd';
 // const TextArea = Input;
-<<<<<<< HEAD
 
 // // import React from 'react';
 // // import ReactDOM from 'react-dom';
@@ -23,28 +22,6 @@
 // const extraStr = `
 
 // ${inputStr}
-=======
-
-// // import React from 'react';
-// // import ReactDOM from 'react-dom';
-
-// const inputStr = `
-
-// import React from 'react';
-
-// const App =()=>{
-//   return <div>App</div>
-// }
-
-// export default App;
-
-// `;
-
-// const extraStr = `
-
-// ${inputStr}
-
->>>>>>> ee335b2 (add component config flow)
 
 // `;
 
