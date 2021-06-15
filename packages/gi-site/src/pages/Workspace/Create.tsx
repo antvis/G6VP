@@ -269,7 +269,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
             description="输入数据格式为{ nodes: { id, data }[], edges: { source, target, data}[]}且上传文件暂只支持json"
             type="info"
           />
-          <Row>
+          <Row align="middle" style={{ padding: '10px 0px' }}>
             上传数据源
             <Tooltip title="上传数据源">
               <Upload {...uploadProps}>
@@ -302,7 +302,10 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row style={{ padding: '10px 0px' }}>
+            <Button style={{ margin: '0 10px' }} onClick={() => prev()}>
+              上一步
+            </Button>
             <Button type="primary" onClick={checkData}>
               下一步
             </Button>
@@ -326,6 +329,9 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
             </Tabs>
           </Row>
           <Row>
+            <Button style={{ margin: '0 10px' }} onClick={() => prev()}>
+              上一步
+            </Button>
             <Button type="primary" onClick={creatProgram}>
               进入分析
             </Button>
@@ -342,13 +348,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
         ))}
       </Steps>
       <div className="steps-content">{steps[current].content}</div>
-      <div className="steps-action">
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            上一步
-          </Button>
-        )}
-      </div>
+      <div className="steps-action"></div>
     </div>
   );
 };

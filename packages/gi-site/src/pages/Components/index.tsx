@@ -1,88 +1,53 @@
-// // // 组件市场
-// //@ts-nocheck
-// import * as Babel from '@babel/standalone';
-// import { Input } from 'antd';
-// const TextArea = Input;
+// 组件市场
+import React from 'react';
+import { Tabs } from 'antd';
+import TabContent from '../../components/TabContent';
+import { getComponets, initMasket } from './services/services';
+import './index.less';
 
-// // import React from 'react';
-// // import ReactDOM from 'react-dom';
+const { TabPane } = Tabs;
 
-// const inputStr = `
+const defaultList = {
+  analysis: {
+    title: '分析组件',
+    children: [],
+  },
+  events: {
+    title: '交互组件',
+    children: [],
+  },
+  materials: {
+    title: '物料',
+    children: [],
+  },
+};
 
-// import React from 'react';
+const ComponentMarket = () => {
+  const [list, setList] = React.useState(defaultList);
 
-// const App =()=>{
-//   return <div>App</div>
-// }
+  React.useEffect(() => {
+    initMasket();
+    const components = getComponets();
 
-// export default App;
+    let menuList = { ...list };
+    components.map(item => {
+      menuList[item.category].children.push(item);
+    });
 
-// `;
+    setList(menuList);
+  }, []);
 
-// const extraStr = `
+  return (
+    <div className="componet-market">
+      <Tabs defaultActiveKey="component">
+        {Object.keys(list).map(key => (
+          <TabPane tab={list[key].title} key={key}>
+            <TabContent list={list[key]} />
+          </TabPane>
+        ))}
+      </Tabs>
+    </div>
+  );
+};
 
-// ${inputStr}
-
-// `;
-
-// const jsxCodeTransform = input => {
-//   console.log(Babel.availablePlugins);
-//   return Babel.transform(input, {
-//     presets: ['react', 'es2015'],
-//     plugins: [Babel.availablePlugins['transform-modules-umd']],
-//   }).code;
-// };
-
-// const reactStr = jsxCodeTransform(extraStr);
-
-// function looseJsonParse(obj) {
-//   return eval(obj); // Function('return (' + obj + ')')();
-// }
-
-// const evalString = `
-// ()=>{
-//  return ()=>{
-//   ${reactStr}
-// }
-// }
-// `;
-// const A = looseJsonParse(evalString);
-// const B = A();
-
-// console.log('string', reactStr);
-// console.log('A', A);
-// console.log('TypeOf A', typeof A);
-// console.log('B', B);
-
-// // window._react = {
-// //   default: require('react'),
-// // };
-
-// // const C = () => {
-// //   var _interopRequireDefault = require('/Users/pomelo/Desktop/github/temp/node_modules/@umijs/babel-preset-umi/node_modules/@babel/runtime/helpers/interopRequireDefault');
-
-// //   var _react = _interopRequireDefault(require('react'));
-
-// //   var _default = function _default() {
-// //     return /*#__PURE__*/ _react['default'].createElement('h1', null, 'hello world');
-// //   };
-
-// //   return _react['default'].createElement(_default);
-// // };
-
-// const handleChange = e => {
-//   console.log('e', e.target.value);
-// };
-
-// const ComponentMarket = () => {
-//   return (
-//     <div>
-//       <h1>组件市场：（第一期先不做）</h1>
-//       <TextArea onChange={handleChange}></TextArea>
-//       {/* <B /> */}
-//       {/* <C /> */}
-//     </div>
-//   );
-// };
-
-// export default ComponentMarket;
+export default ComponentMarket;

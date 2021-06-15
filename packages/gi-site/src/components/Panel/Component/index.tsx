@@ -1,5 +1,6 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Tabs } from 'antd';
+import { Collapse, Tabs, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import * as React from 'react';
 import './index.less';
 
@@ -124,6 +125,9 @@ const Statistics: React.FunctionComponent<StatisticsProps> = props => {
                 );
               })}
             </Collapse>
+            <Button type="link" block>
+              <Link to="/market">组件市场</Link>
+            </Button>
           </TabPane>
         );
       })}
