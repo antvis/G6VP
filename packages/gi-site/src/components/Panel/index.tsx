@@ -4,7 +4,7 @@ import StylePanel from './Style';
 import Meta from '@alipay/gi-meta'
 
 const Panel = (props) => {
-  return (<Meta configObj={props.configObj} valueObj={props.valueObj} />);
+  return (<Meta {...props}/>);
 };
 
 export default Panel;

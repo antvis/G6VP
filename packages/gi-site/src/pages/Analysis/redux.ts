@@ -12,7 +12,9 @@ const initialState = {
     components: [
       {
         id: 'Legend',
-        meta: {},
+        meta: {
+          sortkey: 'type',
+        },
         props: {},
         enable: true,
       },

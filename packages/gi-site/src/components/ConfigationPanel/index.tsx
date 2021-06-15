@@ -28,7 +28,7 @@ interface ConfigationPanelProps {
 }
 
 const ConfigationPanel: React.FunctionComponent<ConfigationPanelProps> = props => {
-  const { options, value } = props;
+  const { options, value, onChange} = props;
   const state = useSelector(state => state);
 
   const MatchContent = options.find(opt => {
@@ -42,7 +42,7 @@ const ConfigationPanel: React.FunctionComponent<ConfigationPanelProps> = props =
   if (config) {
     return (
       <div className="gi-config-pannel">
-        <MatchContent.components  {...config}/>
+        <MatchContent.components  {...config} onChange={onChange}/>
       </div>
     ); 
   }
