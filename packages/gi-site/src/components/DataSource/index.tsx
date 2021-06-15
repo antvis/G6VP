@@ -43,19 +43,26 @@ const DataSource: React.FunctionComponent<DataSourceProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}> save</button>
-      <MonacoEditor
-        ref={node => {
-          monacoRef = node;
-        }}
-        width="100%"
-        height="80vh"
-        language="json"
-        theme="vs-dark"
-        value={code}
-        options={{}}
-        editorDidMount={editorDidMount}
-      />
+      <Tabs tabPosition={'left'}>
+        <TabPane tab="原始数据" key="source">
+          <button onClick={handleSave}> save</button>
+          <MonacoEditor
+            ref={node => {
+              monacoRef = node;
+            }}
+            width="100%"
+            height="80vh"
+            language="json"
+            theme="vs-dark"
+            value={code}
+            options={{}}
+            editorDidMount={editorDidMount}
+          />
+        </TabPane>
+        <TabPane tab="数据服务" key="initial">
+          初始化加载数据
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
