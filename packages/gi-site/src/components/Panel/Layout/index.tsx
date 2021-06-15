@@ -7,7 +7,8 @@ const { Panel } = Collapse;
 interface LayoutPanelProps {}
 
 const LayoutPanel: React.FunctionComponent<LayoutPanelProps> = props => {
-  const layout = useSelector(state => state.layout);
+  const { config } = useSelector(state => state);
+  const { layout } = config;
   const dispatch = useDispatch();
 
   const handleChange = value => {
