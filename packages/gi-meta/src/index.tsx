@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import GUI from '@ali/react-datav-gui';
 
 
-const GIMetaPanel = (configObj, valueObj) => {
-  return (<GUI configObj={configObj} valueObj={valueObj} />);
+const GIMetaPanel = (props) => {
+  return (<GUI configObj={props.configObj} valueObj={props.valueObj} />);
 };
 
 export default GIMetaPanel;

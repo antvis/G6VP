@@ -1,6 +1,15 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import './index.less';
+import ComponentsConfig from './components';
+import LayoutConfig from './layout';
+import StyleConfig from './style';
+
+const ConfigMap = {
+  components: ComponentsConfig,
+  layout: LayoutConfig,
+  style: StyleConfig,
+}
 
 const Empty = () => {
   return <div>Empty</div>;
@@ -28,11 +37,15 @@ const ConfigationPanel: React.FunctionComponent<ConfigationPanelProps> = props =
     components: Empty,
   };
 
-  return (
-    <div className="gi-config-pannel">
-      <MatchContent.components />
-    </div>
-  );
+  const config = typeof (ConfigMap[value]) !== undefined ? ConfigMap[value] : null;
+
+  if (config) {
+    return (
+      <div className="gi-config-pannel">
+        <MatchContent.components  {...config}/>
+      </div>
+    ); 
+  }
 };
 
 export default ConfigationPanel;
