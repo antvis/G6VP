@@ -11,21 +11,16 @@ export class GraphDataBase {
 /** 未来 GraphDataBase 可以换成 neo4j 或者 geabase 等数据库服务 */
 // const db = new GraphDataBase();
 
-
-function looseJsonParse(obj){
+function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
 export const getGraphData = transFn => {
   return new Promise(resolve => {
     const id = Lockr.get('projectId');
-    let  {data,config,service} = Lockr.get(id);// db.graph();
-    
-    debugger
-    const transFn = looseJsonParse(service.transform)
+    let { data, config, services } = Lockr.get(id); // db.graph();
 
- 
-
+    const transFn = looseJsonParse(services.getGraphDataTransform);
     // 这里需要用户从组件市场里定义初始化逻辑
 
     if (transFn) {
@@ -92,10 +87,10 @@ export const getProfileData = () => {
 
     const renderNodes = nodes.map(n => {
       return { data: n, id: n.id }; // 这里需要在数据处理层，让用户自己指定ID
-    })
+    });
     return resolve({
       nodes: renderNodes,
-      edges
-    })
-  })
-}
+      edges,
+    });
+  });
+};
