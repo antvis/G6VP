@@ -2,7 +2,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Card, Col, Drawer, Row } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
-import { Navbar } from '../../components';
 import CreatePanel from './Create';
 import './database';
 import './index.less';
@@ -40,7 +39,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { visible } = state;
   return (
     <div>
-      <Navbar history={history} />
+      {/* <Navbar history={history} /> */}
 
       <Drawer
         title="创建项目"

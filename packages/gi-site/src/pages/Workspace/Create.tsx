@@ -8,6 +8,8 @@ import { defaultConfig } from './defaultConfig';
 import { defaultData } from './defaultData';
 import { getUid } from './utils';
 
+Lockr.prefix = 'gi_';
+
 interface CreatePanelProps {}
 
 const { Step } = Steps;
@@ -102,7 +104,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const [userConfig, setUserConfig] = React.useState({
     id: '',
     title: '',
-    config: {},
+    config: defaultConfig.GIConfig,
   });
   const [inputData, setInputData] = React.useState([
     {
@@ -136,6 +138,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     let id = getUid();
     const { config, ...others } = userConfig;
     Lockr.sadd('project', { ...others, id });
+
     Lockr.set(id, {
       data,
       ...userConfig,
