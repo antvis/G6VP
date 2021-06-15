@@ -19,6 +19,7 @@ const Analysis = props => {
   const { projectId } = match.params;
 
   const config = useSelector(state => state.config);
+  console.log('Analysis',config);
 
   const dispatch = useDispatch();
 
@@ -41,13 +42,17 @@ const Analysis = props => {
   };
   React.useEffect(() => {
     const { config } = Lockr.get(projectId);
-    debugger;
+    // debugger;
     dispatch({
       type: 'Update:Config',
       id: projectId,
       config,
     });
   }, [projectId]);
+
+  const onChange = (evt) => {
+    console.log("onChange", evt);
+  }
 
   return (
     <div className="gi">
@@ -59,7 +64,7 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel value={state.activeNavbar} options={configSchema} />
+          <ConfigationPanel value={state.activeNavbar} options={configSchema} onChange={onChange} />
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">

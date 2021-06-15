@@ -4,7 +4,7 @@ import GUI from '@ali/react-datav-gui';
 
 
 const GIMetaPanel = (props) => {
-  return (<GUI configObj={props.configObj} valueObj={props.valueObj} />);
+  return (<GUI {...props} />);
 };
 
 export default GIMetaPanel;

@@ -3,7 +3,7 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
 
 const configObj = {
-  options: {
+  components: {
     name: 'components',
     type: 'menu',
     children: {
@@ -14,8 +14,8 @@ const configObj = {
           "legend": {
             "name": "图例",
             "type": "group",
+            fold: false,
             "enableHide": false,
-            fold: true,
             "children": {
               "sortkey": {
                 "name": "分类字段",
