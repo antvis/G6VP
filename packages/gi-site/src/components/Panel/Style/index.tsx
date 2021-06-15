@@ -2,7 +2,6 @@ import { Tabs } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './index.less';
-
 const { TabPane } = Tabs;
 const callback = () => {};
 
@@ -10,6 +9,7 @@ export interface StylePanelProps {}
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const dispatch = useDispatch();
   const state = useSelector(state => state);
+
   const { config, id } = state;
   console.log('id', id);
 
@@ -18,7 +18,7 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
       return null;
     }
     dispatch({
-      type: 'Update:Config',
+      type: 'update:config',
       config: {
         ...config,
         node: [
