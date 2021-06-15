@@ -1,12 +1,12 @@
-import { Button, Steps, Alert, Row, Col, notification, Tooltip, Upload, Table, Tabs, Form, Input } from 'antd';
 import { CheckCard } from '@alipay/tech-ui';
+import { RightOutlined, UploadOutlined } from '@ant-design/icons';
+import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
+import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { UploadOutlined, RightOutlined } from '@ant-design/icons';
-import Lockr from 'lockr';
-import { getUid } from './utils';
 import { defaultConfig } from './defaultConfig';
 import { defaultData } from './defaultData';
+import { getUid } from './utils';
 
 interface CreatePanelProps {}
 
@@ -88,6 +88,15 @@ data => {
   return { nodes, edges }
 }
 `;
+
+const services = {
+  getGraphDataTransform: `
+  data => {
+    return data
+  }
+  `,
+};
+
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const [current, setCurrent] = React.useState(0);
   const [userConfig, setUserConfig] = React.useState({
@@ -135,9 +144,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
        * 数据标准化节点，需要在「上传数据」阶段就准备好
        * 数据过滤的阶段，需要在数据服务模块添加
        */
-      service: {
-        transform,
-      },
+      services,
     });
   };
 
