@@ -8,6 +8,7 @@ interface Action {
 
 const initialState = {
   id: '',
+  key: Math.random(),
   config: {
     components: [
       {
@@ -89,20 +90,21 @@ const initialState = {
   },
 };
 
+export type StateType = typeof initialState;
 const RootReducers = (state = initialState, action: Action) => {
   const { type, ...payload } = action;
   switch (type) {
-    case 'Update:Config':
+    case 'update:config':
       return {
         ...state,
         ...payload,
       };
-    case 'Update_Layout':
+    case 'update:data':
       return {
         ...state,
         ...payload,
       };
-    case 'Update_Tooltip':
+    case 'update:key':
       return {
         ...state,
         ...payload,
