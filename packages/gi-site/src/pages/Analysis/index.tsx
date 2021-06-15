@@ -9,30 +9,6 @@ import { configSchema, navbarOptions } from './Constants';
 import './index.less';
 import store from './redux';
 
-// const services = {
-//   liaoyuan: {
-//     getGraphData: () => {
-//       return getGraphData(data => {
-//         const nodes = data.nodes.filter(node => {
-//           return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
-//         });
-//         const edges = getEdgesByNodes(nodes, data.edges);
-//         return {
-//           nodes,
-//           edges,
-//         };
-//       });
-//     },
-//     getSubGraphData,
-//   },
-//   demo: {
-//     getGraphData: getGraphData,
-//   },
-//   wangshang: {
-//     getGraphData: getGraphData,
-//   },
-// };
-
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
   return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
@@ -64,17 +40,14 @@ const Analysis = props => {
     });
   };
   React.useEffect(() => {
-    const project = Lockr.get('project');
-    const {config} = Lockr.get(projectId);
- 
+    const { config } = Lockr.get(projectId);
+
     dispatch({
       type: 'Update:Config',
       id: projectId,
       config,
     });
   }, [projectId]);
-  // const service = services[projectId];
-  // const config = configs[projectId];
 
   return (
     <div className="gi">
@@ -90,10 +63,13 @@ const Analysis = props => {
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            <GISDK config={config} services={{
-              getGraphData,
-              getSubGraphData,
-            }}>
+            <GISDK
+              config={config}
+              services={{
+                getGraphData,
+                getSubGraphData,
+              }}
+            >
               <TestComponents />
             </GISDK>
           </div>
