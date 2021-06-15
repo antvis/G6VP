@@ -41,7 +41,7 @@ const Analysis = props => {
   };
   React.useEffect(() => {
     const { config } = Lockr.get(projectId);
-
+    debugger;
     dispatch({
       type: 'Update:Config',
       id: projectId,
