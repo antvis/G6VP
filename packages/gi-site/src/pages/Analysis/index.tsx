@@ -18,7 +18,8 @@ const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
 
-  const config = useSelector(state => state.config);
+  const st = useSelector(state => state);
+  const { config, key } = st;
 
   const dispatch = useDispatch();
 
@@ -43,11 +44,13 @@ const Analysis = props => {
     const { config } = Lockr.get(projectId);
     debugger;
     dispatch({
-      type: 'Update:Config',
+      type: 'update:config',
       id: projectId,
       config,
     });
   }, [projectId]);
+
+  console.log('<<<<<<< render', st);
 
   return (
     <div className="gi">
@@ -64,6 +67,7 @@ const Analysis = props => {
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
             <GISDK
+              key={key}
               config={config}
               services={{
                 getGraphData,

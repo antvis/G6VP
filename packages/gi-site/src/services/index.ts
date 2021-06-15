@@ -15,13 +15,17 @@ function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
-export const getGraphData = transFn => {
+export const getGraphData = () => {
   return new Promise(resolve => {
     const id = Lockr.get('projectId');
-    let { data, config, services } = Lockr.get(id); // db.graph();
-
-    const transFn = looseJsonParse(services.getGraphDataTransform);
-    // 这里需要用户从组件市场里定义初始化逻辑
+    let { data, services } = Lockr.get(id); // db.graph();
+    let transFn = data => {
+      return data;
+    };
+    try {
+      transFn = looseJsonParse(services.getGraphDataTransform);
+      // 这里需要用户从组件市场里定义初始化逻辑
+    } catch (error) {}
 
     if (transFn) {
       data = transFn(data);
