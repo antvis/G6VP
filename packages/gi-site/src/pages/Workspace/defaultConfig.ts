@@ -205,6 +205,12 @@ export const defaultConfig = {
         id: 'Legend',
         meta: {},
         props: {},
+        enable: false,
+      },
+      {
+        id: 'NodeContextMenu',
+        meta: {},
+        props: {},
         enable: true,
       },
     ],
@@ -269,9 +275,13 @@ export const defaultConfig = {
       },
     ],
     layout: {
+      // id: 'dagre',
+      // options: {
+      //   rankdir: 'LR',
+      // },
       id: 'graphin-force',
       options: {
-        animation: false,
+        animation: true,
         preset: {
           type: 'concentric',
         },
