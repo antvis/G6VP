@@ -13,12 +13,12 @@ interface DataSourceProps {
 }
 let monacoRef;
 
-const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
+const GetSubGraph: React.FunctionComponent<DataSourceProps> = props => {
   const { handleClose } = props;
   const { config, id } = useSelector(state => state);
   const project = Lockr.get(id);
   const { data, services } = project;
-  const { getGraphDataTransform } = services;
+  const { getSubGraphDataTransform } = services;
 
   const dispatch = useDispatch();
 
@@ -33,10 +33,9 @@ const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
         ...project,
         services: {
           ...project.services,
-          getGraphDataTransform: value,
+          getSubGraphDataTransform: value,
         },
       });
-
       dispatch({
         type: 'update:key',
         key: Math.random(),
@@ -49,7 +48,7 @@ const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>初始化接口：在此可以完成初始化数据的过滤，筛选，转化等任务</button>
+      <button onClick={handleSave}>根据ID集合，获取子图的接口</button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;
@@ -58,7 +57,7 @@ const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
         height="80vh"
         language="json"
         theme="vs-dark"
-        value={getGraphDataTransform}
+        value={getSubGraphDataTransform}
         options={{}}
         editorDidMount={editorDidMount}
       />
@@ -66,4 +65,4 @@ const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
   );
 };
 
-export default GetGraph;
+export default GetSubGraph;
