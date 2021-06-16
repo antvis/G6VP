@@ -47,6 +47,8 @@ const getComponentsFromMarket: any = config => {
     NodeContextMenu: {
       id: 'NodeContextMenu',
       props: {},
+      category: 'analysis',
+      label: '节点右键菜单',
       component: NodeContextMenu,
     },
     /** 第三方组件 */
