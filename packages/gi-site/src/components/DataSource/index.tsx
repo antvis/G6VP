@@ -3,6 +3,7 @@ import Lockr from 'lockr';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GetGraph from './GetGraph';
+import GetSubGraph from './GetSubGraph';
 import './index.less';
 import SourceCode from './SourceCode';
 
@@ -30,6 +31,9 @@ const DataSource: React.FunctionComponent<DataSourceProps> = props => {
         </TabPane>
         <TabPane tab="初始化接口" key="initial">
           <GetGraph handleClose={handleClose} />
+        </TabPane>
+        <TabPane tab="子图下钻接口" key="subgraph">
+          <GetSubGraph handleClose={handleClose} />
         </TabPane>
       </Tabs>
     </div>
