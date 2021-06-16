@@ -4,8 +4,8 @@ import liaoyuan from '../../mock/liaoyuan.json';
 
 export const defaultData = {
   GIConfig: demo,
-  knowledgeGraph: enterprise.graphData,
-  riskControl: liaoyuan.result,
+  knowledgeGraph: enterprise,
+  riskControl: liaoyuan,
 };
 
 const GIDefaultTrans = `
