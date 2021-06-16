@@ -130,4 +130,5 @@ const GISDK = (props: Props) => {
 };
 
 export const GIContext = GraphinContext;
+export const GIComponents = getComponentsFromMarket;
 export default GISDK;

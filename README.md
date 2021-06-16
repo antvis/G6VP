@@ -4,7 +4,7 @@ GraphInsight 采用 lerna 管理仓库，packages 中包含以下 3 个 package�
 
 ```bash
 /packages
-    gi-canvas duy
+    gi
     gi-meta
     gi-site
 ```
@@ -13,13 +13,16 @@ GraphInsight 采用 lerna 管理仓库，packages 中包含以下 3 个 package�
 
 | 文件路径           | 包名                   | 说明                   |
 | ------------------ | ---------------------- | ---------------------- |
-| packages/gi-canvas | `@alipay/graphinsight` | GI 图可视分析 SDK      |
+| packages/gi        | `@alipay/graphinsight` | GI 图可视分析 SDK      |
 | packages/gi-meta   | `@alipay/gi-meta`      | GI 平台 的属性配置面板 |
 | packages/gi-site   | `-`                    | GI 平台 的官方站点     |
 
 - 设置 npmClient
 
-在 lerna.json 中设置你的 npmClient 为 yarn 或者 tnpm ，根据你本地的网络情况（在家用 yarn，在公司可以用 tnpm）
+在 `lerna.json` 中设置你的 npmClient，可选：
+1. `npm` 默认
+1. `yarn` 
+2. `tnpm` 公司内可使用
 
 ```json
   "packages": ["packages/*"],
@@ -30,10 +33,10 @@ GraphInsight 采用 lerna 管理仓库，packages 中包含以下 3 个 package�
 
 - 安装依赖
 
-在`该项目根目录`下安装 node_modules
+在`该项目根目录`下执行命令：
 
 ```bash
-yarn
+npm i
 ```
 
 - 安装各 packages 的依赖
@@ -46,11 +49,12 @@ npm run bootstrap
 
 - 启动 依赖包 的本地编译
 
-在`该项目根目录`启动 `gi-canvas` `gi-meta` 的本地编译.
+在`该项目根目录`启动 `gi` `gi-meta` `gi-site` 的本地编译.
 
 ```bash
-npm run canvas //本地编译`@alipay/graphinsight`的产物
-npm run meta //本地编译`@alipay/gi-meta`的产物
+npm run core   //本地编译`@alipay/graphinsight`的产物
+npm run meta   //本地编译`@alipay/gi-meta`的产物
+npm run site   //本地编译`@alipay/gi-site`的产物，需先执行上面步骤
 ```
 
 - 启动 GraphInsight 官方站点
