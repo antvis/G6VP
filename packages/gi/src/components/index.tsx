@@ -1,4 +1,5 @@
 import { MiniMap } from '@antv/graphin-components';
+import { NodeContextMenu } from './ContextMenu';
 import getLegendMappingKey from './Legend/getLegendMappingKey';
 import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
@@ -43,8 +44,12 @@ const getComponentsFromMarket: any = config => {
       props: {},
       component: EdgeTooltip,
     },
+    NodeContextMenu: {
+      id: 'NodeContextMenu',
+      props: {},
+      component: NodeContextMenu,
+    },
     /** 第三方组件 */
-
     'Liaoyuan-Click-Entity-Node': {
       id: 'Liaoyuan-Click-Entity-Node',
       label: '燎原项目-节点下钻',
