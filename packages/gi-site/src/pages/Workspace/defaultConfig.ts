@@ -79,7 +79,14 @@ export const defaultConfig = {
     },
   },
   knowledgeGraph: {
-    components: [],
+    components: [
+      {
+        id: 'NodeContextMenu',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+    ],
     node: [
       {
         id: 'graphin-node',
