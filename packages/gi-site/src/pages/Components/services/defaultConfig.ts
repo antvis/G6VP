@@ -1,12 +1,7 @@
-export default {
-  components: [
-    {
-      id: 'Legend',
-      meta: {},
-      props: {},
-      enable: true,
-    },
-  ],
+import data from '../../../mock/demo.json';
+
+export const defaultConfig = {
+  components: [],
   node: [
     {
       id: 'graphin-node',
@@ -76,4 +71,23 @@ export default {
       },
     },
   },
+};
+
+export const getGraphData = () => {
+  return new Promise(resolve => {
+    const nodes = data.nodes.map(n => {
+      return {
+        id: n.id,
+        data: n,
+      };
+    });
+    const edges = data.edges.map(e => {
+      return {
+        source: e.source,
+        target: e.target,
+        data: e,
+      };
+    });
+    resolve({ nodes, edges });
+  });
 };
