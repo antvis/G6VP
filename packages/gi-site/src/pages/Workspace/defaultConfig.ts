@@ -122,6 +122,18 @@ export const defaultConfig = {
         props: {},
         enable: true,
       },
+      {
+        id: 'Liaoyuan-Click-Entity-Node',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'Liaoyuan-Click-Event-Node',
+        meta: {},
+        props: {},
+        enable: true,
+      },
     ],
     node: [
       {
