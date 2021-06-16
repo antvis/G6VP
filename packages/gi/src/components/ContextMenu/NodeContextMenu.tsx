@@ -16,13 +16,18 @@ const NodeMenu = () => {
       edges: any[];
     };
     const { id } = context.item.getModel();
+    if (!services.getSubGraphData) {
+      return null;
+    }
     services.getSubGraphData([id]).then(res => {
       console.log('ContextMenu', res);
-
+      if (!res) {
+        return {
+          nodes,
+          edges,
+        };
+      }
       dispatch.changeData({
-        // nodes: [...nodes, res.nodes],
-        // edges: [...edges, res.edges],
-
         nodes: uniqueElementsBy([...nodes, ...res.nodes], (a, b) => {
           return a.id === b.id;
         }),
