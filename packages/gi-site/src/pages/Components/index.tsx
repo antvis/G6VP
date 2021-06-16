@@ -1,88 +1,73 @@
-// // // 组件市场
-// //@ts-nocheck
-// import * as Babel from '@babel/standalone';
-// import { Input } from 'antd';
-// const TextArea = Input;
+// 组件市场
+import React from 'react';
+import { Tabs } from 'antd';
+import GISDK, { GIContext } from '@alipay/graphinsight';
+import TabContent from '../../components/TabContent';
+import { getComponets, initMasket } from './services/services';
+import { defaultConfig, getGraphData } from './services/defaultConfig';
+import { getUid } from '../Workspace/utils';
+import './index.less';
 
-// // import React from 'react';
-// // import ReactDOM from 'react-dom';
+const { TabPane } = Tabs;
 
-// const inputStr = `
+const ComponentMarket = () => {
+  const defaultList = {
+    analysis: {
+      title: '分析组件',
+      children: [],
+    },
+    events: {
+      title: '交互组件',
+      children: [],
+    },
+    materials: {
+      title: '物料',
+      children: [],
+    },
+  };
+  const [list, setList] = React.useState(defaultList);
+  const [component, setComponent] = React.useState({ id: 'Legend', enable: true });
 
-// import React from 'react';
+  React.useEffect(() => {
+    initMasket();
+    const components = getComponets();
 
-// const App =()=>{
-//   return <div>App</div>
-// }
+    let menuList = { ...list };
+    components.map(item => {
+      menuList[item.category].children.push(item);
+    });
 
-// export default App;
+    setList(menuList);
+  }, []);
 
-// `;
+  const onChange = e => {
+    setComponent(list[e].children[0] ? { id: list[e].children[0].id, enable: true } : { id: '', enable: false });
+  };
 
-// const extraStr = `
+  return (
+    <div className="componet-market">
+      <Tabs defaultActiveKey="component" onChange={onChange}>
+        {Object.keys(list).map(key => (
+          <TabPane tab={list[key].title} key={key}>
+            <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
+              <div className="gi-sdk-wrapper">
+                <div className="content view">
+                  <GISDK
+                    key={getUid()}
+                    config={{ ...defaultConfig, components: [{ ...component }] }}
+                    services={{
+                      getGraphData,
+                    }}
+                  ></GISDK>
+                </div>
+                <div className="content config">配置面板</div>
+              </div>
+            </TabContent>
+          </TabPane>
+        ))}
+      </Tabs>
+    </div>
+  );
+};
 
-// ${inputStr}
-
-// `;
-
-// const jsxCodeTransform = input => {
-//   console.log(Babel.availablePlugins);
-//   return Babel.transform(input, {
-//     presets: ['react', 'es2015'],
-//     plugins: [Babel.availablePlugins['transform-modules-umd']],
-//   }).code;
-// };
-
-// const reactStr = jsxCodeTransform(extraStr);
-
-// function looseJsonParse(obj) {
-//   return eval(obj); // Function('return (' + obj + ')')();
-// }
-
-// const evalString = `
-// ()=>{
-//  return ()=>{
-//   ${reactStr}
-// }
-// }
-// `;
-// const A = looseJsonParse(evalString);
-// const B = A();
-
-// console.log('string', reactStr);
-// console.log('A', A);
-// console.log('TypeOf A', typeof A);
-// console.log('B', B);
-
-// // window._react = {
-// //   default: require('react'),
-// // };
-
-// // const C = () => {
-// //   var _interopRequireDefault = require('/Users/pomelo/Desktop/github/temp/node_modules/@umijs/babel-preset-umi/node_modules/@babel/runtime/helpers/interopRequireDefault');
-
-// //   var _react = _interopRequireDefault(require('react'));
-
-// //   var _default = function _default() {
-// //     return /*#__PURE__*/ _react['default'].createElement('h1', null, 'hello world');
-// //   };
-
-// //   return _react['default'].createElement(_default);
-// // };
-
-// const handleChange = e => {
-//   console.log('e', e.target.value);
-// };
-
-// const ComponentMarket = () => {
-//   return (
-//     <div>
-//       <h1>组件市场：（第一期先不做）</h1>
-//       <TextArea onChange={handleChange}></TextArea>
-//       {/* <B /> */}
-//       {/* <C /> */}
-//     </div>
-//   );
-// };
-
-// export default ComponentMarket;
+export default ComponentMarket;
