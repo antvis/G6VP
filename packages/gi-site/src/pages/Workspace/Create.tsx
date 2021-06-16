@@ -80,6 +80,9 @@ const services = {
     return data
   }
   `,
+  getSubGraphDataTransform: `(data,ids) => {
+    return data
+  }`,
 };
 
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
