@@ -71,6 +71,67 @@ const configObj = {
               //   "col": 12
               // }
             }
+          },
+          "legendA": {
+            "name": "图例",
+            "type": "group",
+            fold: false,
+            "enableHide": false,
+            "children": {
+              "sortkey": {
+                "name": "分类字段",
+                "type": "select",
+                "useFont": true,
+                "default": "type",
+                col: 16,
+                "options": [
+                  {
+                    "value": "description",
+                    "label": "description"
+                  },
+                  {
+                    "value": "displayName",
+                    "label": "displayName"
+                  },
+                  {
+                    "value": "displayType",
+                    "label": "displayType"
+                  },
+                  {
+                    "value": "globalEntityId",
+                    "label": "globalEntityId"
+                  },
+                  {
+                    "value": "name",
+                    "label": "name"
+                  },
+                  {
+                    "value": "properties",
+                    "label": "properties"
+                  },
+                  {
+                    "value": "sceneId",
+                    "label": "sceneId"
+                  },
+                  {
+                    "value": "type",
+                    "label": "type"
+                  },
+                  {
+                    "value": "uri",
+                    "label": "uri"
+                  }
+                ],
+              },
+              // "size": {
+              //   "type": "stepper",
+              //   "caption": "大小",
+              //   "min": 0,
+              //   "max": 10,
+              //   "step": 1,
+              //   "col": 12
+              // }
+            }
           }
         },
       },
