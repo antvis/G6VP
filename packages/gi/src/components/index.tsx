@@ -24,7 +24,7 @@ const getComponentsFromMarket: any = config => {
     },
     MiniMap: {
       id: 'MiniMap',
-      label: 'minemap',
+      label: 'minimap',
       category: 'analysis',
       props: {},
       component: MiniMap,

@@ -1,10 +1,10 @@
 import Lockr from 'lockr';
 import { GIComponents } from '@alipay/graphinsight';
-import defalutConfig from './defaultConfig';
+import { defaultConfig } from './defaultConfig';
 
 // 组件存入localstorage
 export const initMasket = () => {
-  const components = GIComponents(defalutConfig);
+  const components = GIComponents(defaultConfig);
   let list = [];
   Object.keys(components).forEach(key => {
     list.push(components[key]);
