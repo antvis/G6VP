@@ -1,1525 +1,1517 @@
 {
-  "hostName": "mdatadecision-40.gz00b.dev.alipay.net",
-  "result": {
-    "edges": [
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429112804130711",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429112804625946"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429112850153143",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429112850272374"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429112850151225",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429112850579175"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429112850046172",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429112850946429"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429112850789332",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429112850096745"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429113052271031",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113052689978"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113052271031",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113052572365"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113052271031",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429113052541290",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113052598690"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113052541290",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429113052507395",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113052026258"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429113330791574",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113330302905"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113330791574",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113330470852"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113330791574",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429113330343727",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113330222712"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113330343727",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429113330203489",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113330137862"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429113415490026",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113415765122"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113415490026",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113415477917"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429113415490026",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429113415499765",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113415575610"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113415499765",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429113415644105",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429113415898757"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429154801972097",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429154801379667"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429154801831866",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429154801931916"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228240998"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228380031"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228344163"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155228958756",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228121176"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155228500212",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228659432"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155228726517",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228431949"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155228982111",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228288283"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155228724784",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155228051859"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429155537761633",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155537289558"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429155537761633",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155537303091"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155608049998"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155608346636"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155608354314"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155608782579",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155608456498"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429155608656137",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155608444645"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429155618134813",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155618651721"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429155628976702",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155628499432"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155641810206",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429155641279380",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155641074362"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429155653065501",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155653889409"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429155703211853",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429155703072092"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429162905385435",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162905944565"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429162905385435",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162905241527"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429162905385435",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429162905629916",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162905059272"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429162905629916",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429162905074798",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162905225454"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
-        "name": "属于",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "enable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162937567419"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "name": "属于",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "type": "enable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162945422378"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "name": "属于",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429155641810206",
-        "type": "enable",
-        "uri": "RELATION_ELEMENT_RULE_20210429162951422086"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429163020183797",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163020329376",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163020950856"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "name": "属于",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
-        "type": "enable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163037467863"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
-        "name": "属于",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429163020183797",
-        "type": "enable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163042504588"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163107645269"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163107376344"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163107797887"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429163107056945",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163107974034"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "INDICATOR_NODE_RULE_20210429163107358955",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163107658852"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163224379396",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163224335396"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163224508862",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163224863472"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163224595552",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163224971329"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163224329093",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163224901121"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromNodeName": "",
-        "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
-        "name": "",
-        "toNodeName": "",
-        "toNodeUri": "PROPERTY_NODE_RULE_20210429163224957010",
-        "type": "disable",
-        "uri": "RELATION_ELEMENT_RULE_20210429163224468735"
-      }
-    ],
-    "graphName": "景区数据化战役",
-    "graphUri": "GRAPH_RULE_20210429112723879909",
-    "nodes": [
-      {
-        "description": "",
-        "displayName": "BD",
-        "displayType": "DEFAULT",
-        "globalEntityId": 440,
-        "name": "BD",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429155703211853"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429155703021279"
-      },
-      {
-        "description": "",
-        "displayName": "isv",
-        "displayType": "DEFAULT",
-        "globalEntityId": 446,
-        "name": "isv",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163020329376"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429163020183797"
-      },
-      {
-        "description": "",
-        "displayName": "作业方",
-        "displayType": "DEFAULT",
-        "globalEntityId": 429,
-        "name": "作业方",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "一号位",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429112850151225"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "是否地网可作业",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429112850046172"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "是否飞猪可作业",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429112850789332"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429112850153143"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429112850203060"
-      },
-      {
-        "description": "",
-        "displayName": "商户",
-        "displayType": "DEFAULT",
-        "globalEntityId": 438,
-        "name": "商户",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429155641279380"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429155641810206"
-      },
-      {
-        "description": "",
-        "displayName": "地域",
-        "displayType": "DEFAULT",
-        "globalEntityId": 437,
-        "name": "地域",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "AOI",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163224379396"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "POI",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163224508862"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "区县",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163224595552"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "城市",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163224329093"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429155628976702"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "省事",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429163224957010"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429155628392268"
-      },
-      {
-        "description": "",
-        "displayName": "小程序",
-        "displayType": "DEFAULT",
-        "globalEntityId": 436,
-        "name": "小程序",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429155618134813"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429155618882328"
-      },
-      {
-        "description": "",
-        "displayName": "景区",
-        "displayType": "DEFAULT",
-        "globalEntityId": 428,
-        "name": "景区",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429112804130711"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429112804611013"
-      },
-      {
-        "description": "",
-        "displayName": "物料",
-        "displayType": "DEFAULT",
-        "globalEntityId": 439,
-        "name": "物料",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429155653065501"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429155653769951"
-      },
-      {
-        "description": "",
-        "displayName": "用户",
-        "displayType": "DEFAULT",
-        "globalEntityId": 435,
-        "name": "用户",
-        "properties": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "enable",
-            "name": "名称",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429154801831866"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "frontFlag": "disable",
-            "name": "标识",
-            "type": "PROPERTY",
-            "uri": "PROPERTY_NODE_RULE_20210429154801972097"
-          }
-        ],
-        "sceneId": 0,
-        "type": "ENTITY",
-        "uri": "ENTITY_NODE_RULE_20210429154801089524"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429113415490026",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "上线小程序景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429113415644105"
-          }
-        ],
-        "name": "上线小程序",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429113415490026"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "交易景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155608782579"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "围栏交易景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155608656137"
-          }
-        ],
-        "name": "交易",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429155608647632"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429162905385435",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "已创建物料景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429162905074798"
-          }
-        ],
-        "name": "创建",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429162905385435"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "扫码景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155228958756"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "围栏扫码景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155228500212"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "扫码次数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155228726517"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "围栏内扫码次数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155228982111"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "扫码用户数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429155228724784"
-          }
-        ],
-        "name": "扫码",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429155228510984"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429113330791574",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "签约景区数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429113330203489"
-          }
-        ],
-        "name": "签约",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429113330791574"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "访问PV",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429163107056945"
-          },
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "访问UV",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429163107358955"
-          }
-        ],
-        "name": "访问",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429163107642848"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
-        "indicators": [],
-        "name": "预约",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429155537761633"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
-        "indicators": [
-          {
-            "description": "",
-            "displayType": "DEFAULT",
-            "eventNodeUri": "EVENT_NODE_RULE_20210429113052271031",
-            "indicatorType": "SIMP",
-            "kgEventFullName": "",
-            "kgEventUri": "",
-            "kgIndicatorUri": "",
-            "name": "意向指标数",
-            "type": "INDICATOR",
-            "uri": "INDICATOR_NODE_RULE_20210429113052507395"
-          }
-        ],
-        "name": "领取",
-        "orderSeq": "",
-        "properties": [],
-        "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
-        "type": "EVENT",
-        "uri": "EVENT_NODE_RULE_20210429113052271031"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429113052541290"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429113330343727"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429113415499765"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429155228219493"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429155608637509"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429162905629916"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "name": "指标",
-        "type": "VIRTUAL",
-        "uri": "VIRTUAL_NODE_RULE_20210429163107056833"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429113052271031",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "意向指标数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429113052507395"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429113330791574",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "签约景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429113330203489"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429113415490026",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "上线小程序景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429113415644105"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "扫码景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155228958756"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "围栏扫码景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155228500212"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "扫码次数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155228726517"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "围栏内扫码次数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155228982111"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "扫码用户数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155228724784"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "交易景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155608782579"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "围栏交易景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429155608656137"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429162905385435",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "已创建物料景区数",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429162905074798"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "访问PV",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429163107056945"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
-        "indicatorType": "SIMP",
-        "kgEventFullName": "",
-        "kgEventUri": "",
-        "kgIndicatorUri": "",
-        "name": "访问UV",
-        "type": "INDICATOR",
-        "uri": "INDICATOR_NODE_RULE_20210429163107358955"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429155703211853"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163020329376"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "一号位",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429112850151225"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "是否地网可作业",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429112850046172"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "是否飞猪可作业",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429112850789332"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429112850153143"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429155641279380"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "AOI",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163224379396"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "POI",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163224508862"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "区县",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163224595552"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "城市",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163224329093"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429155628976702"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "省事",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429163224957010"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429155618134813"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429112804130711"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429155653065501"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "enable",
-        "name": "名称",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429154801831866"
-      },
-      {
-        "description": "",
-        "displayType": "DEFAULT",
-        "frontFlag": "disable",
-        "name": "标识",
-        "type": "PROPERTY",
-        "uri": "PROPERTY_NODE_RULE_20210429154801972097"
-      }
-    ],
-    "sceneId": 108
-  },
-  "rtnCode": "",
-  "rtnDesp": "",
-  "success": true,
-  "traceId": "0b7ca69c16196855433038324368724"
+  "edges": [
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429112804130711",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429112804625946"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429112850153143",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429112850272374"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429112850151225",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429112850579175"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429112850046172",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429112850946429"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429112850789332",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429112850096745"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429113052271031",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113052689978"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113052271031",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113052572365"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113052271031",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429113052541290",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113052598690"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113052541290",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429113052507395",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113052026258"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429113330791574",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113330302905"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113330791574",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113330470852"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113330791574",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429113330343727",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113330222712"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113330343727",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429113330203489",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113330137862"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429113415490026",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113415765122"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113415490026",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113415477917"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429113415490026",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429113415499765",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113415575610"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429113415499765",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429113415644105",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429113415898757"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429154801972097",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429154801379667"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429154801831866",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429154801931916"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228240998"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228380031"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228344163"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155228958756",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228121176"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155228500212",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228659432"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155228726517",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228431949"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155228982111",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228288283"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155228219493",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155228724784",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155228051859"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429155537761633",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155537289558"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429155537761633",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155537303091"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155608049998"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155608346636"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155608354314"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155608782579",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155608456498"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429155608637509",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429155608656137",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155608444645"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429155618134813",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155618651721"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429155628976702",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155628499432"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155641810206",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429155641279380",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155641074362"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429155653065501",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155653889409"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429155703211853",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429155703072092"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429162905385435",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162905944565"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429162905385435",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162905241527"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429162905385435",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429162905629916",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162905059272"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429162905629916",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429162905074798",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162905225454"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
+      "name": "属于",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "enable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162937567419"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "name": "属于",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "type": "enable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162945422378"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "name": "属于",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429155641810206",
+      "type": "enable",
+      "uri": "RELATION_ELEMENT_RULE_20210429162951422086"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429163020183797",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163020329376",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163020950856"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "name": "属于",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
+      "type": "enable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163037467863"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
+      "name": "属于",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429163020183797",
+      "type": "enable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163042504588"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163107645269"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163107376344"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163107797887"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429163107056945",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163107974034"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "VIRTUAL_NODE_RULE_20210429163107056833",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "INDICATOR_NODE_RULE_20210429163107358955",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163107658852"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163224379396",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163224335396"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163224508862",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163224863472"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163224595552",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163224971329"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163224329093",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163224901121"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromNodeName": "",
+      "fromNodeUri": "ENTITY_NODE_RULE_20210429155628392268",
+      "name": "",
+      "toNodeName": "",
+      "toNodeUri": "PROPERTY_NODE_RULE_20210429163224957010",
+      "type": "disable",
+      "uri": "RELATION_ELEMENT_RULE_20210429163224468735"
+    }
+  ],
+  "graphName": "景区数据化战役",
+  "graphUri": "GRAPH_RULE_20210429112723879909",
+  "nodes": [
+    {
+      "description": "",
+      "displayName": "BD",
+      "displayType": "DEFAULT",
+      "globalEntityId": 440,
+      "name": "BD",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429155703211853"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429155703021279"
+    },
+    {
+      "description": "",
+      "displayName": "isv",
+      "displayType": "DEFAULT",
+      "globalEntityId": 446,
+      "name": "isv",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163020329376"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429163020183797"
+    },
+    {
+      "description": "",
+      "displayName": "作业方",
+      "displayType": "DEFAULT",
+      "globalEntityId": 429,
+      "name": "作业方",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "一号位",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429112850151225"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "是否地网可作业",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429112850046172"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "是否飞猪可作业",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429112850789332"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429112850153143"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429112850203060"
+    },
+    {
+      "description": "",
+      "displayName": "商户",
+      "displayType": "DEFAULT",
+      "globalEntityId": 438,
+      "name": "商户",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429155641279380"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429155641810206"
+    },
+    {
+      "description": "",
+      "displayName": "地域",
+      "displayType": "DEFAULT",
+      "globalEntityId": 437,
+      "name": "地域",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "AOI",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163224379396"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "POI",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163224508862"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "区县",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163224595552"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "城市",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163224329093"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429155628976702"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "省事",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429163224957010"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429155628392268"
+    },
+    {
+      "description": "",
+      "displayName": "小程序",
+      "displayType": "DEFAULT",
+      "globalEntityId": 436,
+      "name": "小程序",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429155618134813"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429155618882328"
+    },
+    {
+      "description": "",
+      "displayName": "景区",
+      "displayType": "DEFAULT",
+      "globalEntityId": 428,
+      "name": "景区",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429112804130711"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429112804611013"
+    },
+    {
+      "description": "",
+      "displayName": "物料",
+      "displayType": "DEFAULT",
+      "globalEntityId": 439,
+      "name": "物料",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429155653065501"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429155653769951"
+    },
+    {
+      "description": "",
+      "displayName": "用户",
+      "displayType": "DEFAULT",
+      "globalEntityId": 435,
+      "name": "用户",
+      "properties": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "enable",
+          "name": "名称",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429154801831866"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "frontFlag": "disable",
+          "name": "标识",
+          "type": "PROPERTY",
+          "uri": "PROPERTY_NODE_RULE_20210429154801972097"
+        }
+      ],
+      "sceneId": 0,
+      "type": "ENTITY",
+      "uri": "ENTITY_NODE_RULE_20210429154801089524"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429113415490026",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "上线小程序景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429113415644105"
+        }
+      ],
+      "name": "上线小程序",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429113415490026"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "交易景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155608782579"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "围栏交易景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155608656137"
+        }
+      ],
+      "name": "交易",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429155608647632"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429155703021279",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429162905385435",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "已创建物料景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429162905074798"
+        }
+      ],
+      "name": "创建",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429155653769951",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429162905385435"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "扫码景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155228958756"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "围栏扫码景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155228500212"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "扫码次数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155228726517"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "围栏内扫码次数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155228982111"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "扫码用户数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429155228724784"
+        }
+      ],
+      "name": "扫码",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429155228510984"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429113330791574",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "签约景区数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429113330203489"
+        }
+      ],
+      "name": "签约",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429113330791574"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "访问PV",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429163107056945"
+        },
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "访问UV",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429163107358955"
+        }
+      ],
+      "name": "访问",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429155618882328",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429163107642848"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429154801089524",
+      "indicators": [],
+      "name": "预约",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429155537761633"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "fromEntityNodeUri": "ENTITY_NODE_RULE_20210429112850203060",
+      "indicators": [
+        {
+          "description": "",
+          "displayType": "DEFAULT",
+          "eventNodeUri": "EVENT_NODE_RULE_20210429113052271031",
+          "indicatorType": "SIMP",
+          "kgEventFullName": "",
+          "kgEventUri": "",
+          "kgIndicatorUri": "",
+          "name": "意向指标数",
+          "type": "INDICATOR",
+          "uri": "INDICATOR_NODE_RULE_20210429113052507395"
+        }
+      ],
+      "name": "领取",
+      "orderSeq": "",
+      "properties": [],
+      "toEntityNodeUri": "ENTITY_NODE_RULE_20210429112804611013",
+      "type": "EVENT",
+      "uri": "EVENT_NODE_RULE_20210429113052271031"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429113052541290"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429113330343727"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429113415499765"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429155228219493"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429155608637509"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429162905629916"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "name": "指标",
+      "type": "VIRTUAL",
+      "uri": "VIRTUAL_NODE_RULE_20210429163107056833"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429113052271031",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "意向指标数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429113052507395"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429113330791574",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "签约景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429113330203489"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429113415490026",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "上线小程序景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429113415644105"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "扫码景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155228958756"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "围栏扫码景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155228500212"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "扫码次数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155228726517"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "围栏内扫码次数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155228982111"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155228510984",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "扫码用户数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155228724784"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "交易景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155608782579"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429155608647632",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "围栏交易景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429155608656137"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429162905385435",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "已创建物料景区数",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429162905074798"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "访问PV",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429163107056945"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "eventNodeUri": "EVENT_NODE_RULE_20210429163107642848",
+      "indicatorType": "SIMP",
+      "kgEventFullName": "",
+      "kgEventUri": "",
+      "kgIndicatorUri": "",
+      "name": "访问UV",
+      "type": "INDICATOR",
+      "uri": "INDICATOR_NODE_RULE_20210429163107358955"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429155703211853"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163020329376"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "一号位",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429112850151225"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "是否地网可作业",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429112850046172"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "是否飞猪可作业",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429112850789332"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429112850153143"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429155641279380"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "AOI",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163224379396"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "POI",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163224508862"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "区县",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163224595552"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "城市",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163224329093"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429155628976702"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "省事",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429163224957010"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429155618134813"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429112804130711"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429155653065501"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "enable",
+      "name": "名称",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429154801831866"
+    },
+    {
+      "description": "",
+      "displayType": "DEFAULT",
+      "frontFlag": "disable",
+      "name": "标识",
+      "type": "PROPERTY",
+      "uri": "PROPERTY_NODE_RULE_20210429154801972097"
+    }
+  ]
 }
