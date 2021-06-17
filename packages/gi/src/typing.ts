@@ -40,12 +40,15 @@ export interface GIComponentConfig {
   id: string;
   label: string;
   category: string;
-  // 组件名称或唯一标识值
-  component: string;
+  // 组件名称或唯一标识值，暂时使用 any
+  // component: string;
+  component: any;
   props: {
     [key: string]: any;
   };
   meta: GIMeta[];
+  // 是否可用
+  enable: boolean;
 }
 
 export interface GINodeConfig {
@@ -61,7 +64,8 @@ export interface GIEdgeConfig {
 
 export interface GIConfig {
   // 支持配置多布局，如子图布局
-  layouts?: GILayoutConfig[];
+  // layouts?: GILayoutConfig[] | GILayoutConfig;
+  layouts?: GILayoutConfig;
   components?: GIComponentConfig[];
   nodeConfig?: GINodeConfig;
   edgeConfig?: GIEdgeConfig;
