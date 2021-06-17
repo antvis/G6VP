@@ -1,9 +1,8 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
-import CanvasClick from './components/CanvasClick';
 import getComponentsFromMarket from './components/index';
 import transform from './transfrom';
-import { GIService, GIConfig } from './typing'
+import { GIService, GIConfig, GIComponentConfig } from './typing'
 
 export interface Props {
   /**
@@ -21,10 +20,10 @@ const GISDK = (props: Props) => {
     data: { nodes: [], edges: [] } as GraphinData,
     source: { nodes: [], edges: [] } as GraphinData,
     layout: {},
-    components: [],
+    components: [] as GIComponentConfig[],
   });
 
-  const { layouts: layoutCfg, components: componentsCfg = [], nodeConfig: nodeCfg, edgeConfig: edgeCfg } = config;
+  const { layout: layoutCfg, components: componentsCfg = [], nodeConfig: nodeCfg, edgeConfig: edgeCfg } = config;
 
   /** 数据发生改变 */
   React.useEffect(() => {
@@ -58,7 +57,7 @@ const GISDK = (props: Props) => {
       return {
         ...preState,
         layout: {
-          type: layoutCfg?.id,
+          type: layoutCfg?.type,
           ...layoutCfg?.options,
         },
       };
@@ -101,9 +100,6 @@ const GISDK = (props: Props) => {
 
   return (
     <Graphin data={data} layout={layout}>
-      {/** 内置组件  */}
-      <CanvasClick />
-
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;
