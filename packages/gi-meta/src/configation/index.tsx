@@ -1,12 +1,12 @@
 import componentPanel from "./componentPanel";
-import layoutPanel from "./layoutPanel";
-import stylePanel from "./stylePanel";
+// import layoutPanel from "./layoutPanel";
+// import stylePanel from "./stylePanel";
 
 import layout from "./layout";
 import style from "./style";
 
 const getComponentsConfig = (data, config) => {
-  return componentPanel('components', config)
+  return componentPanel('components', config);
 }
 
 const getLayoutConfig = (data, config) => {
