@@ -88,9 +88,9 @@ export interface GIServiceResponseDetailData {
 }
 
 export interface GIService {
-  /** 获取初始化接口 */
+  /** 获取初始化接口，获取初始图数据 */
   getGraphData: () => Promise<GIServiceResponseData>;
-  /** 根据ID集合获取节点或边的详情信息 */
+  /** 根据ID集合获取子图数据 */
   getSubGraphData?: (ids: string[]) => Promise<GIServiceResponseData>;
   /** 获取关系扩散数据 */
   getExploreGraphByDegree?: (id: string, degree?: number) => Promise<GIServiceResponseData>;
