@@ -37,7 +37,7 @@ const Navbar = ({ history }) => {
       </span>
 
       <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
-        <DataSource />
+        {visible && <DataSource handleClose={handleClose} />}
       </Drawer>
 
       <ul className="navbar-action">

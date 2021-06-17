@@ -19,7 +19,8 @@ const componentPanel = (name, children) => {
     children: {...childConfig},
   }
 
-  return {
+  const config = {};
+  config[name] = {
     ...menu,
     name,
     children: {
@@ -27,6 +28,8 @@ const componentPanel = (name, children) => {
       interactive,
     }
   }
+
+  return config;
 }
 
 export default componentPanel;

@@ -1,4 +1,5 @@
 import { MiniMap } from '@antv/graphin-components';
+import { NodeContextMenu } from './ContextMenu';
 import getLegendMappingKey from './Legend/getLegendMappingKey';
 import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
@@ -15,6 +16,8 @@ const getComponentsFromMarket: any = config => {
     /*** 官方组件 */
     Legend: {
       id: 'Legend',
+      label: '图例',
+      category: 'analysis',
       component: LegendA,
       props: {
         sortKey: legendSortKey,
@@ -22,28 +25,44 @@ const getComponentsFromMarket: any = config => {
     },
     MiniMap: {
       id: 'MiniMap',
+      label: 'minimap',
+      category: 'analysis',
       props: {},
       component: MiniMap,
     },
     NodeTooltip: {
       id: 'NodeTooltip',
+      label: '节点提示框',
+      category: 'analysis',
       props: {},
       component: NodeTooltip,
     },
     EdgeTooltip: {
       id: 'EdgeTooltip',
+      label: '边提示框',
+      category: 'analysis',
       props: {},
       component: EdgeTooltip,
     },
+    NodeContextMenu: {
+      id: 'NodeContextMenu',
+      props: {},
+      category: 'analysis',
+      label: '节点右键菜单',
+      component: NodeContextMenu,
+    },
     /** 第三方组件 */
-
     'Liaoyuan-Click-Entity-Node': {
       id: 'Liaoyuan-Click-Entity-Node',
+      label: '燎原项目-节点下钻',
+      category: 'events',
       props: {},
       component: ClickEntity,
     },
     'Liaoyuan-Click-Event-Node': {
       id: 'Liaoyuan-Click-Event-Node',
+      label: '燎原项目-高亮下游',
+      category: 'events',
       props: {},
       component: ClickEvent,
     },

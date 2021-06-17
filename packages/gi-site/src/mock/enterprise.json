@@ -1,205 +1,244 @@
 {
-    "type": "INIT",
-    "graphData": {
-    "nodes": [
-      {
-        "id": "node1",
-        "label": "node1",
-        "entityTypeName": "RiskEnterprise",
-        "coord": [112.345, 30.455],
-        "level": 0
-      },
-      {
-        "id": "node2",
-        "label": "node2",
-        "entityTypeName": "Province",
-        "coord": [114.345, 32.455],
-        "level": 1
-      },
-      {
-        "id": "node3",
-        "label": "node3",
-        "entityTypeName": "RiskEnterprise",
-        "coord": [113.345, 31.455],
-        "level": 1
-      },
-      {
-        "id": "node4",
-        "label": "node4",
-        "entityTypeName": "RiskEnterprise",
-        "coord": [113.145, 32.455],
-        "level": 1
-      },
-      {
-        "id": "node5",
-        "label": "node5",
-        "coord": [113.345, 30.455],
-        "entityTypeName": "AlipayAccount2"
-      },
-      {
-        "id": "node6",
-        "label": "node6",
-        "coord": [112.345, 31.455],
-        "entityTypeName": "IndustryStd"
-      },
-      {
-        "id": "node7",
-        "label": "node7",
-        "coord": [112.345, 30.855],
-        "entityTypeName": "District"
-      },
-      {
-        "id": "node8",
-        "label": "node8",
-        "coord": [112.345, 31.455],
-        "entityTypeName": "City"
-      },
-      {
-        "id": "node9",
-        "label": "node9",
-        "coord": [113.345, 31.455],
-        "entityTypeName": "RiskEnterprise",
-        "level": 0
-      },
-      {
-        "id": "node10",
-        "label": "node10",
-        "coord": [110.845, 31.455],
-        "entityTypeName": "Province",
-        "level": 1
-      },
-      {
-        "id": "node11",
-        "label": "node11",
-        "coord": [110.145, 31.655],
-        "entityTypeName": "RiskEnterprise",
-        "level": 1
-      },
-      {
-        "id": "node12",
-        "label": "node12",
-        "coord": [110.395, 31.655],
-        "entityTypeName": "RiskEnterprise",
-        "level": 1
-      },
-      {
-        "id": "node13",
-        "label": "node13",
-        "coord": [110.145, 31.755],
-        "entityTypeName": "AlipayAccount2"
-      },
-      {
-        "id": "node14",
-        "label": "node14",
-        "coord": [110.945, 31.255],
-        "entityTypeName": "IndustryStd"
-      },
-      {
-        "id": "node15",
-        "label": "node15",
-        "coord": [111.245, 31.955],
-        "entityTypeName": "District"
-      }
-    ],
-    "edges": [
-      {
-        "id": "1",
-        "source": "node1",
-        "target": "node2",
-        "coord":[[112.345, 30.455], [114.345, 32.455]],
-        "relationTypeName": "legalAlipayAccount"
-      },
-      {
-        "id": "2",
-        "source": "node1",
-        "target": "node3",
-        "coord":[[112.345, 30.455], [113.345, 31.455]],
-        "relationTypeName": "legalAlipayAccount"
-      },
-      {
-        "id": "3",
-        "source": "node1",
-        "target": "node4",
-        "coord":[[112.345, 30.455], [113.145, 32.455]],
-        "relationTypeName": "shareHolder"
-      },
-      {
-        "id": "4",
-        "source": "node1",
-        "target": "node5",
-        "coord":[[112.345, 30.455], [113.345, 30.455]],
-        "relationTypeName": "competeGridRelation"
-      },
-      {
-        "id": "5",
-        "source": "node1",
-        "target": "node6",
-        "coord":[[112.345, 30.455], [112.345, 31.455]],
-        "relationTypeName": "guaranteeRelation"
-      },
-      {
-        "id": "6",
-        "source": "node1",
-        "target": "node7",
-        "coord":[[112.345, 30.455], [112.345, 30.855]],
-        "relationTypeName": "guaranteeRelation"
-      },
-      {
-        "id": "7",
-        "source": "node1",
-        "target": "node8",
-        "coord":[[112.345, 30.455], [112.345, 31.455]],
-        "relationTypeName": "guaranteeRelation"
-      },
-      {
-        "id": "8",
-        "source": "node1",
-        "target": "node9",
-        "coord":[[112.345, 30.455], [113.345, 31.455]],
-        "relationTypeName": "legalAlipayAccount"
-      },
-      {
-        "id": "9",
-        "source": "node1",
-        "target": "node10",
-        "coord":[[112.345, 30.455], [110.845, 31.455]],
-        "relationTypeName": "legalAlipayAccount"
-      },
-      {
-        "id": "9",
-        "source": "node1",
-        "target": "node11",
-        "coord":[[112.345, 30.455], [110.145, 31.655]],
-        "relationTypeName": "shareHolder"
-      },
-      {
-        "id": "10",
-        "source": "node1",
-        "target": "node12",
-        "coord":[[112.345, 30.455], [110.395, 31.655]],
-        "relationTypeName": "competeGridRelation"
-      },
-      {
-        "id": "11",
-        "source": "node1",
-        "target": "node13",
-        "coord": [[112.345, 30.455],[110.145, 31.755]],
-        "relationTypeName": "guaranteeRelation"
-      },
-      {
-        "id": "12",
-        "source": "node1",
-        "target": "node14",
-        "coord": [[112.345, 30.455],[110.945, 31.255]],
-        "relationTypeName": "guaranteeRelation"
-      },
-      {
-        "id": "13",
-        "source": "node1",
-        "target": "node15",
-        "coord": [[112.345, 30.455],[111.245, 31.955]],
-        "relationTypeName": "guaranteeRelation"
-      }
-    ]
-  }
+  "nodes": [
+    {
+      "id": "node1",
+      "label": "node1",
+      "entityTypeName": "RiskEnterprise",
+      "coord": [112.345, 30.455],
+      "level": 0
+    },
+    {
+      "id": "node2",
+      "label": "node2",
+      "entityTypeName": "Province",
+      "coord": [114.345, 32.455],
+      "level": 1
+    },
+    {
+      "id": "node3",
+      "label": "node3",
+      "entityTypeName": "RiskEnterprise",
+      "coord": [113.345, 31.455],
+      "level": 1
+    },
+    {
+      "id": "node4",
+      "label": "node4",
+      "entityTypeName": "RiskEnterprise",
+      "coord": [113.145, 32.455],
+      "level": 1
+    },
+    {
+      "id": "node5",
+      "label": "node5",
+      "coord": [113.345, 30.455],
+      "entityTypeName": "AlipayAccount2"
+    },
+    {
+      "id": "node6",
+      "label": "node6",
+      "coord": [112.345, 31.455],
+      "entityTypeName": "IndustryStd"
+    },
+    {
+      "id": "node7",
+      "label": "node7",
+      "coord": [112.345, 30.855],
+      "entityTypeName": "District"
+    },
+    {
+      "id": "node8",
+      "label": "node8",
+      "coord": [112.345, 31.455],
+      "entityTypeName": "City"
+    },
+    {
+      "id": "node9",
+      "label": "node9",
+      "coord": [113.345, 31.455],
+      "entityTypeName": "RiskEnterprise",
+      "level": 0
+    },
+    {
+      "id": "node10",
+      "label": "node10",
+      "coord": [110.845, 31.455],
+      "entityTypeName": "Province",
+      "level": 1
+    },
+    {
+      "id": "node11",
+      "label": "node11",
+      "coord": [110.145, 31.655],
+      "entityTypeName": "RiskEnterprise",
+      "level": 1
+    },
+    {
+      "id": "node12",
+      "label": "node12",
+      "coord": [110.395, 31.655],
+      "entityTypeName": "RiskEnterprise",
+      "level": 1
+    },
+    {
+      "id": "node13",
+      "label": "node13",
+      "coord": [110.145, 31.755],
+      "entityTypeName": "AlipayAccount2"
+    },
+    {
+      "id": "node14",
+      "label": "node14",
+      "coord": [110.945, 31.255],
+      "entityTypeName": "IndustryStd"
+    },
+    {
+      "id": "node15",
+      "label": "node15",
+      "coord": [111.245, 31.955],
+      "entityTypeName": "District"
+    }
+  ],
+  "edges": [
+    {
+      "id": "1",
+      "source": "node1",
+      "target": "node2",
+      "coord": [
+        [112.345, 30.455],
+        [114.345, 32.455]
+      ],
+      "relationTypeName": "legalAlipayAccount"
+    },
+    {
+      "id": "2",
+      "source": "node1",
+      "target": "node3",
+      "coord": [
+        [112.345, 30.455],
+        [113.345, 31.455]
+      ],
+      "relationTypeName": "legalAlipayAccount"
+    },
+    {
+      "id": "3",
+      "source": "node1",
+      "target": "node4",
+      "coord": [
+        [112.345, 30.455],
+        [113.145, 32.455]
+      ],
+      "relationTypeName": "shareHolder"
+    },
+    {
+      "id": "4",
+      "source": "node1",
+      "target": "node5",
+      "coord": [
+        [112.345, 30.455],
+        [113.345, 30.455]
+      ],
+      "relationTypeName": "competeGridRelation"
+    },
+    {
+      "id": "5",
+      "source": "node1",
+      "target": "node6",
+      "coord": [
+        [112.345, 30.455],
+        [112.345, 31.455]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    },
+    {
+      "id": "6",
+      "source": "node1",
+      "target": "node7",
+      "coord": [
+        [112.345, 30.455],
+        [112.345, 30.855]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    },
+    {
+      "id": "7",
+      "source": "node1",
+      "target": "node8",
+      "coord": [
+        [112.345, 30.455],
+        [112.345, 31.455]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    },
+    {
+      "id": "8",
+      "source": "node1",
+      "target": "node9",
+      "coord": [
+        [112.345, 30.455],
+        [113.345, 31.455]
+      ],
+      "relationTypeName": "legalAlipayAccount"
+    },
+    {
+      "id": "9",
+      "source": "node1",
+      "target": "node10",
+      "coord": [
+        [112.345, 30.455],
+        [110.845, 31.455]
+      ],
+      "relationTypeName": "legalAlipayAccount"
+    },
+    {
+      "id": "9",
+      "source": "node1",
+      "target": "node11",
+      "coord": [
+        [112.345, 30.455],
+        [110.145, 31.655]
+      ],
+      "relationTypeName": "shareHolder"
+    },
+    {
+      "id": "10",
+      "source": "node1",
+      "target": "node12",
+      "coord": [
+        [112.345, 30.455],
+        [110.395, 31.655]
+      ],
+      "relationTypeName": "competeGridRelation"
+    },
+    {
+      "id": "11",
+      "source": "node1",
+      "target": "node13",
+      "coord": [
+        [112.345, 30.455],
+        [110.145, 31.755]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    },
+    {
+      "id": "12",
+      "source": "node1",
+      "target": "node14",
+      "coord": [
+        [112.345, 30.455],
+        [110.945, 31.255]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    },
+    {
+      "id": "13",
+      "source": "node1",
+      "target": "node15",
+      "coord": [
+        [112.345, 30.455],
+        [111.245, 31.955]
+      ],
+      "relationTypeName": "guaranteeRelation"
+    }
+  ]
 }

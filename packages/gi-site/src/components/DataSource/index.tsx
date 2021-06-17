@@ -1,66 +1,39 @@
-import { Collapse, notification, Tabs } from 'antd';
+import { Collapse, Tabs } from 'antd';
+import Lockr from 'lockr';
 import * as React from 'react';
-import MonacoEditor from 'react-monaco-editor';
 import { useDispatch, useSelector } from 'react-redux';
+import GetGraph from './GetGraph';
+import GetSubGraph from './GetSubGraph';
+import './index.less';
+import SourceCode from './SourceCode';
+
 const { Panel } = Collapse;
 
 const { TabPane } = Tabs;
 
 interface DataSourceProps {}
-let monacoRef;
+let sourceCodeRef;
+let intialInterfaceRef;
 
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
-  const data = useSelector(state => state.data);
-
+  const { handleClose } = props;
+  const { config, id } = useSelector(state => state);
+  const project = Lockr.get(id);
+  const { data } = project;
   const dispatch = useDispatch();
-
-  const editorDidMount = editor => {
-    console.log('editorDidMount', editor);
-    editor.focus();
-  };
-  const handleSave = () => {
-    const model = monacoRef.editor.getModel();
-    const value = model.getValue();
-
-    let data = { nodes: [], edges: [] };
-    try {
-      data = JSON.parse(value);
-      dispatch({
-        type: 'Update_Data',
-        data,
-      });
-    } catch (error) {
-      console.log(error);
-      notification.error({
-        message: `解析出错`,
-        description: `请检查数据是否为严格JSON格式:${error}`,
-        placement: 'topLeft',
-      });
-    }
-  };
-
-  const code = JSON.stringify(data, null, 2);
+  console.log('project', project);
 
   return (
     <div>
       <Tabs tabPosition={'left'}>
         <TabPane tab="原始数据" key="source">
-          <button onClick={handleSave}> save</button>
-          <MonacoEditor
-            ref={node => {
-              monacoRef = node;
-            }}
-            width="100%"
-            height="80vh"
-            language="json"
-            theme="vs-dark"
-            value={code}
-            options={{}}
-            editorDidMount={editorDidMount}
-          />
+          <SourceCode handleClose={handleClose} />
         </TabPane>
-        <TabPane tab="数据服务" key="initial">
-          初始化加载数据
+        <TabPane tab="初始化接口" key="initial">
+          <GetGraph handleClose={handleClose} />
+        </TabPane>
+        <TabPane tab="子图下钻接口" key="subgraph">
+          <GetSubGraph handleClose={handleClose} />
         </TabPane>
       </Tabs>
     </div>
