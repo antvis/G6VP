@@ -10,6 +10,7 @@
   "dependencies": {
     "@alipay/gi-meta": "*",
     "@alipay/graphinsight": "*",
+    "@alipay/tech-ui": "^2.12.1",
     "@ant-design/charts": "^1.0.21",
     "@ant-design/compatible": "^1.0.2",
     "@ant-design/icons": "^4.0.6",
