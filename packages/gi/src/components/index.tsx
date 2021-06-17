@@ -6,6 +6,7 @@ import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
 import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import CanvasClick from './CanvasClick';
+import ToolbarA from './Toolbar';
 
 /**
  * 组件市场
@@ -60,18 +61,25 @@ const getComponentsFromMarket: any = config => {
       label: '点击画布',
       component: CanvasClick,
     },
+    Toolbar: {
+      id: 'Toolbar',
+      label: '工具栏',
+      category: 'analysis',
+      props: {},
+      component: ToolbarA,
+    },
     /** 第三方组件 */
     'Liaoyuan-Click-Entity-Node': {
       id: 'Liaoyuan-Click-Entity-Node',
       label: '燎原项目-节点下钻',
-      category: 'events',
+      category: 'behavior',
       props: {},
       component: ClickEntity,
     },
     'Liaoyuan-Click-Event-Node': {
       id: 'Liaoyuan-Click-Event-Node',
       label: '燎原项目-高亮下游',
-      category: 'events',
+      category: 'behavior',
       props: {},
       component: ClickEvent,
     },
