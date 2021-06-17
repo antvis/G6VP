@@ -6,7 +6,7 @@ import layout from "./layout";
 import style from "./style";
 
 const getComponentsConfig = (data, config) => {
-  return componentPanel('components', config);
+  return componentPanel('components', config, data);
 }
 
 const getLayoutConfig = (data, config) => {

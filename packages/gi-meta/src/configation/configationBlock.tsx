@@ -1,13 +1,27 @@
 import defaultConfig from "../defaultConfigation";
 
 // 临时方案，待 gi-compomnent 创建好迁移
-const getComponentsMeta = id => {
+const getComponentsMeta = ( id, data ) => {
   if (id === "Legend") {
+    const option = [];
+    const nodes = data.nodes;
+
+    if (nodes.length > 1 && typeof(nodes[0].data) !== undefined) {
+      let props = '';
+      for (props in nodes[0]) {
+        option.push({
+          value: props,
+          label: props,
+        })
+      }
+    }
+
     return {
       id: 'sortkey',
       name: '分类字段',
       default: 'type',
       type: 'select',
+      options: option,
     }
   }
 
@@ -19,16 +33,15 @@ const getComponentsMeta = id => {
   };
 }
 
-const configationBlock = (id, children) => {
+const configationBlock = (id, children, data) => {
   const group = defaultConfig.group;
-  const meta = getComponentsMeta(id);
+  const meta = getComponentsMeta(id, data);
   const childDefaultConfig = defaultConfig[meta.type];
   const childConfig = {};
   
   childConfig[meta.id] = {
     ...childDefaultConfig,
-    name: meta.name,
-    default: meta.default,
+    ...meta,
   }
 
   return{
