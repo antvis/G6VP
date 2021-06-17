@@ -22,20 +22,20 @@ const getComponentsMeta = id => {
 const configationBlock = (id, children) => {
   const group = defaultConfig.group;
   const meta = getComponentsMeta(id);
-  const childConfig = defaultConfig[meta.type];
-
-  const config = {};
-  config[id] = {
-    ...group,
-    name: children.name,
-    children: {
-      ...childConfig,
-      name: meta.name,
-      default: meta.default,
-    }
+  const childDefaultConfig = defaultConfig[meta.type];
+  const childConfig = {};
+  
+  childConfig[meta.id] = {
+    ...childDefaultConfig,
+    name: meta.name,
+    default: meta.default,
   }
 
-  return config;
+  return{
+    ...group,
+    name: children.name,
+    children: childConfig,
+  }
 }
 
 export default configationBlock;

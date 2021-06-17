@@ -3,6 +3,7 @@ import GUI from '@ali/react-datav-gui';
 import ComponentsConfig from './configation/components';
 import LayoutConfig from './configation/layout';
 import StyleConfig from './configation/style';
+import configation from './configation';
 import './index.less';
 
 const ConfigMap = {
@@ -26,16 +27,20 @@ interface ConfigationPanelProps {
   value: Option['id'];
   onChange: Function;
   data: Object;
+  config: Object;
 }
 
 
 const GIMetaPanel = props => {
-  const {value, onChange, data} = props;
+  const {value, onChange, data, config} = props;
 
-  const config = typeof (ConfigMap[value]) !== undefined ? ConfigMap[value] : null;
+  const aconfig = typeof (ConfigMap[value]) !== undefined ? ConfigMap[value] : null;
+  const newConfig = configation(value, data, config);
+
+  console.log('GIMetaPanel', aconfig, newConfig);
 
   if (config) {
-    return <GUI {...config} onChange={onChange}/>; 
+    return <GUI {...aconfig} onChange={onChange}/>; 
   }
 };
 
