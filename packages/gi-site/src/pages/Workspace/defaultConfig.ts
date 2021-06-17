@@ -69,7 +69,7 @@ export const defaultConfig = {
       },
     ],
     layout: {
-      id: 'dagre', //'graphin-force',
+      type: 'dagre', //'graphin-force',
       options: {
         rankdir: 'LR', // 可选，默认为图的中心
         align: undefined, // 可选
@@ -111,7 +111,7 @@ export const defaultConfig = {
     ],
     layout: {
       categoryId: 'layout',
-      id: 'graphin-force',
+      type: 'graphin-force',
       options: {
         preset: {
           type: 'concentric',
@@ -286,7 +286,7 @@ export const defaultConfig = {
       // options: {
       //   rankdir: 'LR',
       // },
-      id: 'graphin-force',
+      type: 'graphin-force',
       options: {
         animation: true,
         preset: {
