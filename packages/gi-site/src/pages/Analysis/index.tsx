@@ -60,7 +60,7 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel value={state.activeNavbar} data={ data }/>
+          <ConfigationPanel config={ config } value={state.activeNavbar} data={ data }/>
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">

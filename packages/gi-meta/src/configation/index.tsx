@@ -24,5 +24,7 @@ const ConfigMap = {
 }
 
 const getConfig = (id, data, config) => {
-  return getComponentsConfig(data, config[id]);
+  return ConfigMap[id](data, config[id]);
 }
+
+export default getConfig;
