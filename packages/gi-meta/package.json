@@ -13,7 +13,7 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/nemo-panel": "^0.1.7",
+    "@ali/react-datav-gui": "^4.1.6",
     "father": "^2.30.6",
     "rimraf": "^3.0.2"
   }

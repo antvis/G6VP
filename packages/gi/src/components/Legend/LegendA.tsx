@@ -1,5 +1,6 @@
 import { Legend } from '@antv/graphin-components';
 import * as React from 'react';
+import Meta from './meta';
 
 interface LegendAProps {
   sortKey: string;
@@ -21,5 +22,7 @@ const LegendA: React.FunctionComponent<LegendAProps> = props => {
     </div>
   );
 };
+
+LegendA.Meta = Meta;
 
 export default LegendA;

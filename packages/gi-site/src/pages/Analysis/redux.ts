@@ -13,8 +13,23 @@ const initialState = {
     components: [
       {
         id: 'Legend',
-        meta: {},
-        props: {},
+        name: '图例',
+        meta: [
+          {
+          id: 'sortkey',
+          default: 'type',
+          type: 'select',
+        }, 
+        {
+          id: 'background',
+          default: '#ffffff',
+          type:'colorpick'
+          },
+        ],
+        props: {
+          sortkey: 'type',
+          background : '#ffffff',
+        },
         enable: true,
       },
     ],

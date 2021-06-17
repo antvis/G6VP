@@ -5,7 +5,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 // import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
-import { configSchema, navbarOptions } from './Constants';
+import {navbarOptions } from './Constants';
 import './index.less';
 import store from './redux';
 
@@ -23,9 +23,9 @@ const Analysis = props => {
 
   const dispatch = useDispatch();
 
-  console.log('props', props, projectId);
-
   Lockr.set('projectId', projectId);
+
+  const data = useSelector(state => state.data) || null;
 
   const [state, setState] = React.useState({
     activeNavbar: 'style',
@@ -40,13 +40,15 @@ const Analysis = props => {
       collapse: isSame ? !state.collapse : false,
     });
   };
-  React.useEffect(() => {
-    const { config } = Lockr.get(projectId);
 
+  React.useEffect(() => {
+    const { config, data } = Lockr.get(projectId);
+    // debugger;
     dispatch({
       type: 'update:config',
       id: projectId,
       config,
+      data: data,
     });
   }, [projectId]);
 
@@ -62,7 +64,7 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel value={state.activeNavbar} options={configSchema} />
+          <ConfigationPanel config={ config } value={state.activeNavbar} data={ data }/>
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
