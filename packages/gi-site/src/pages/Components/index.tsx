@@ -16,7 +16,7 @@ const ComponentMarket = () => {
       title: '分析组件',
       children: [],
     },
-    events: {
+    behavior: {
       title: '交互组件',
       children: [],
     },

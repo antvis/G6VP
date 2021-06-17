@@ -2,7 +2,7 @@ import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
 import getComponentsFromMarket from './components/index';
 import transform from './transfrom';
-import { GIService, GIConfig, GIComponentConfig } from './typing'
+import { GIService, GIConfig, GIComponentConfig } from './typing';
 
 export interface Props {
   /**
@@ -99,7 +99,7 @@ const GISDK = (props: Props) => {
   };
 
   return (
-    <Graphin data={data} layout={layout}>
+    <Graphin data={data} layout={layout} enabledStack={true}>
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;

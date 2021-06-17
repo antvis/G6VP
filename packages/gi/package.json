@@ -13,6 +13,7 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "^2.0.7",
     "@antv/graphin-components": "^2.0.7",
     "@babel/standalone": "^7.14.4",
