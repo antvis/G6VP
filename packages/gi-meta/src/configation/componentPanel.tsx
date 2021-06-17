@@ -1,10 +1,12 @@
+import { extractDefault } from '@ali/react-datav-gui-utils';
 import menu from "../defaultConfigation/menu";
 import configationBlock from "./configationBlock";
 
-const componentPanel = (name, children) => {
+
+const componentPanel = (name, children, data) => {
   let childConfig = {};
   children.forEach(element => {
-    childConfig[element.id] = configationBlock(element.id, element)
+    childConfig[element.id] = configationBlock(element.id, element, data)
   });
 
   const analyze = {
@@ -19,8 +21,8 @@ const componentPanel = (name, children) => {
     children: {...childConfig},
   }
 
-  const config = {};
-  config[name] = {
+  const configObj = {};
+  configObj[name] = {
     ...menu,
     name,
     children: {
@@ -29,7 +31,10 @@ const componentPanel = (name, children) => {
     }
   }
 
-  return config;
+  const valueObj = extractDefault({ config: configObj });
+  const props = { configObj, valueObj };
+
+  return props;
 }
 
 export default componentPanel;
