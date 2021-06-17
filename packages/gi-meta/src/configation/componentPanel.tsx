@@ -11,13 +11,13 @@ const componentPanel = (name, children) => {
   const analyze = {
     name: '分析',
     mode: 'single',
-    children: configationBlock(),
+    children: childConfig,
   }
 
   const interactive = {
     name: '交互',
     mode: 'single',
-    children: children.interactive,
+    children: childConfig,
   }
 
   return {

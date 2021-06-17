@@ -1,18 +1,22 @@
 import defaultConfig from "../defaultConfigation";
 
 // 临时方案，待 gi-compomnent 创建好迁移
-const getComponentsMeta = (id) => {
-  if (id !== "Legend") {
+const getComponentsMeta = id => {
+  if (id === "Legend") {
     return {
       id: 'sortkey',
       name: '分类字段',
       default: 'type',
       type: 'select',
-      
     }
   }
 
-  return null;
+  return {
+    id: 'none',
+    name: 'block',
+    default: true,
+    type: 'boolean',
+  };
 }
 
 const configationBlock = (id, children) => {
@@ -31,11 +35,7 @@ const configationBlock = (id, children) => {
     }
   }
 
-  return {
-    ...group,
-    name,
-    children,
-  }
+  return config;
 }
 
 export default configationBlock;
