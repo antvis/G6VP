@@ -5,6 +5,7 @@ import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
 import { EdgeTooltip, NodeTooltip } from './Tooltip';
+import CanvasClick from './CanvasClick';
 
 /**
  * 组件市场
@@ -50,6 +51,14 @@ const getComponentsFromMarket: any = config => {
       category: 'analysis',
       label: '节点右键菜单',
       component: NodeContextMenu,
+    },
+    /** 交互组件 */
+    CanvasClick: {
+      id: 'CanvasClick',
+      props: {},
+      category: 'behavior',
+      label: '点击画布',
+      component: CanvasClick,
     },
     /** 第三方组件 */
     'Liaoyuan-Click-Entity-Node': {

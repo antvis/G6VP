@@ -63,7 +63,7 @@ export const defaultConfig = {
     },
   ],
   layout: {
-    id: 'graphin-force',
+    type: 'graphin-force',
     options: {
       animation: false,
       preset: {

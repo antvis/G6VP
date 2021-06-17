@@ -65,7 +65,7 @@ export interface GIEdgeConfig {
 export interface GIConfig {
   // 支持配置多布局，如子图布局
   // layouts?: GILayoutConfig[] | GILayoutConfig;
-  layouts?: GILayoutConfig;
+  layout?: GILayoutConfig;
   components?: GIComponentConfig[];
   nodeConfig?: GINodeConfig;
   edgeConfig?: GIEdgeConfig;
