@@ -16,13 +16,15 @@ const TestComponents = () => {
 
 const Analysis = props => {
   const { history, match } = props;
-  
+  const { projectId } = match.params;
+
+  const st = useSelector(state => state);
+  const { config, key } = st;
+
   const dispatch = useDispatch();
 
-  const { projectId } = match.params;
   Lockr.set('projectId', projectId);
 
-  const config = useSelector(state => state.config);
   const data = useSelector(state => state.data) || null;
 
   const [state, setState] = React.useState({
@@ -43,12 +45,14 @@ const Analysis = props => {
     const { config, data } = Lockr.get(projectId);
     // debugger;
     dispatch({
-      type: 'Update:Config',
+      type: 'update:config',
       id: projectId,
       config,
       data: data,
     });
   }, [projectId]);
+
+  console.log('<<<<<<< render', st);
 
   return (
     <div className="gi">
@@ -65,6 +69,7 @@ const Analysis = props => {
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
             <GISDK
+              key={key}
               config={config}
               services={{
                 getGraphData,

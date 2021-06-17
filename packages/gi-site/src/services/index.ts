@@ -15,18 +15,22 @@ function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
-export const getGraphData = transFn => {
+export const getGraphData = () => {
   return new Promise(resolve => {
     const id = Lockr.get('projectId');
-    let { data, config, services } = Lockr.get(id); // db.graph();
-
-    const transFn = looseJsonParse(services.getGraphDataTransform);
-    // 这里需要用户从组件市场里定义初始化逻辑
+    let { data, services } = Lockr.get(id); // db.graph();
+    let transFn = data => {
+      return data;
+    };
+    try {
+      transFn = looseJsonParse(services.getGraphDataTransform);
+    } catch (error) {}
 
     if (transFn) {
       data = transFn(data);
     }
     return resolve(data); //这里需要一个规范的图结构
+    // 这里需要用户从组件市场里定义初始化逻辑
   });
 };
 
@@ -44,39 +48,21 @@ export function getEdgesByNodes(nodes, edges) {
 /** 根据节点获取其一度关系 */
 export const getSubGraphData = (ids: string[]) => {
   return new Promise(resolve => {
-    const data = Lockr.get(Lockr.get('projectId')); // db.graph();
+    const id = Lockr.get('projectId');
+    let { data, services } = Lockr.get(id); // db.graph();
+    let transFn = (data, ids) => {
+      return data;
+    };
+    debugger;
+    try {
+      transFn = looseJsonParse(services.getSubGraphDataTransform);
+      // 这里需要用户从组件市场里定义初始化逻辑
+    } catch (error) {}
 
-    /** Start：组件市场里定义的逻辑;*/
-
-    const propertiesNodes = data.nodes
-      .filter(node => {
-        return ids.indexOf(node.id) !== -1;
-      })
-      .map(node => {
-        return node.data.properties.map(n => {
-          return {
-            data: n,
-            id: n.uri,
-          };
-        });
-      })
-      .reduce((acc, curr) => {
-        return [...acc, ...curr];
-      }, []);
-
-    /**初始化图的节点*/
-    const graphOriginNodes = data.nodes.filter(node => {
-      return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
-    });
-    const nodes = [...propertiesNodes, ...graphOriginNodes];
-    const edges = getEdgesByNodes(nodes, data.edges);
-
-    /** End：组件市场里定义的逻辑;*/
-
-    return resolve({
-      nodes: propertiesNodes,
-      edges,
-    }); //这里需要一个规范的图结构
+    if (transFn) {
+      data = transFn(data, ids);
+    }
+    return resolve(data); //这里需要一个规范的图结构
   });
 };
 

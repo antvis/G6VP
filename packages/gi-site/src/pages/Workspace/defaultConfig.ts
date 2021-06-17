@@ -79,7 +79,14 @@ export const defaultConfig = {
     },
   },
   knowledgeGraph: {
-    components: [],
+    components: [
+      {
+        id: 'NodeContextMenu',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+    ],
     node: [
       {
         id: 'graphin-node',
@@ -118,6 +125,18 @@ export const defaultConfig = {
       {
         id: 'Legend',
         categoryId: 'legend',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'Liaoyuan-Click-Entity-Node',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'Liaoyuan-Click-Event-Node',
         meta: {},
         props: {},
         enable: true,
@@ -193,6 +212,12 @@ export const defaultConfig = {
         id: 'Legend',
         meta: {},
         props: {},
+        enable: false,
+      },
+      {
+        id: 'NodeContextMenu',
+        meta: {},
+        props: {},
         enable: true,
       },
     ],
@@ -257,9 +282,13 @@ export const defaultConfig = {
       },
     ],
     layout: {
+      // id: 'dagre',
+      // options: {
+      //   rankdir: 'LR',
+      // },
       id: 'graphin-force',
       options: {
-        animation: false,
+        animation: true,
         preset: {
           type: 'concentric',
         },
