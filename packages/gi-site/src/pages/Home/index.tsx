@@ -1,11 +1,12 @@
-import { Button, Layout, Avatar, Row, Col } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
+import { Avatar, Button, Layout } from 'antd';
 import React from 'react';
-import FeatureCard from './FeatureCard';
-import SolutionCard from './SolutionCard';
+import { Link } from 'react-router-dom';
 import { levelTitleMapping } from './constant';
+import FeatureCard from './FeatureCard';
 import logoSvg from './image/logo.svg';
 import styles from './index.less';
+import SolutionCard from './SolutionCard';
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,7 +17,9 @@ const Home = () => (
         <img src={logoSvg} alt="" />
       </div>
       <div className={styles.right}>
-        <span style={{ marginRight: '36px', cursor: 'pointer' }}>组件市场</span>
+        <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+          <Link to="/market">组件市场</Link>
+        </span>
         <span style={{ marginRight: '36px', cursor: 'pointer' }}>
           支持与服务
           <CaretDownOutlined style={{ marginLeft: '5px' }} />
@@ -37,8 +40,12 @@ const Home = () => (
             <h1>图可视分析平台</h1>
             <p>一款在线图分析平台，帮助用户在关联数据中发现业务价值</p>
             <div>
-              <Button className={styles.leftButton}>组件市场</Button>
-              <Button className={styles.rightButton}>立即使用</Button>
+              <Button className={styles.leftButton}>
+                <Link to="/market">组件市场</Link>
+              </Button>
+              <Button className={styles.rightButton}>
+                <Link to="/workspace">立即使用</Link>
+              </Button>
             </div>
           </div>
         </div>

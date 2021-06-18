@@ -22,7 +22,7 @@ const LegendA: React.FunctionComponent<LegendAProps> = props => {
     </div>
   );
 };
-
+//@ts-ignore
 LegendA.Meta = Meta;
 
 export default LegendA;
