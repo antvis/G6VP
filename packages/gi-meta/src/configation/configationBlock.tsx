@@ -3,7 +3,7 @@ import defaultConfig from "../defaultConfigation";
 // 临时方案，待 gi-compomnent 创建好迁移
 const getComponentsMeta = ( id, data ) => {
   if (id === "Legend") {
-    const option = [];
+    const option:any[] = [];
     const nodes = data.nodes;
 
     if (nodes.length > 1 && typeof(nodes[0].data) !== undefined) {
