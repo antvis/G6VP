@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="1594px" viewBox="0 0 1440 1594" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Combined Shape</title>
+    <defs>
+        <path d="M1440,552 L1439.99409,1989.74878 C1257.14344,1974.41207 1026.87722,1974.6661 778.150815,1994.06949 C465.885634,2018.4296 188.152738,2068.00863 0.00762213873,2127 L3.41060513e-13,627.645611 C197.390359,660.330287 492.750926,667.960441 820.083566,642.424905 C1053.74736,624.196567 1268.07541,591.847331 1440,552 Z" id="path-1"></path>
+        <filter x="-1.2%" y="-1.3%" width="102.4%" height="102.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="-4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页-Light固定" transform="translate(0.000000, -538.000000)" fill-rule="nonzero">
+            <g id="Combined-Shape">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#EBEBEB" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>
