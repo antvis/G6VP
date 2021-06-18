@@ -13,6 +13,8 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
+    "@ali/datav-gui-color-scale": "^1.0.9",
+    "@ali/datav-gui-size-scale": "^1.0.5",
     "@ali/react-datav-gui": "^4.1.6",
     "father": "^2.30.6",
     "rimraf": "^3.0.2"
