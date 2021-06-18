@@ -2,13 +2,13 @@ import defaultConfig from "../defaultConfigation";
 
 // 临时方案，待 gi-compomnent 创建好迁移
 const getComponentsMeta = ( id, data ) => {
-  if (id === "Legend") {
-    const option = [];
+  if (id === "Legend" || "channel") {
+    const option:any[] = [];
     const nodes = data.nodes;
 
     if (nodes.length > 1 && typeof(nodes[0].data) !== undefined) {
       let props = '';
-      for (props in nodes[0]) {
+      for (props in nodes[0].data) {
         option.push({
           value: props,
           label: props,
