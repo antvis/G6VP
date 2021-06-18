@@ -4,6 +4,7 @@ import React from 'react';
 import FeatureCard from './FeatureCard';
 import SolutionCard from './SolutionCard';
 import { levelTitleMapping } from './constant';
+import logoSvg from './image/logo.svg';
 import styles from './index.less';
 
 const { Header, Content, Footer } = Layout;
@@ -12,11 +13,7 @@ const Home = () => (
   <Layout>
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
-        <img
-          className={styles.image}
-          src="https://gw-pre.alipayobjects.com/a/g/Ant_Graph/graph-platform/static/GeaMaker.light.32a35c51.png"
-          alt=""
-        />
+        <img src={logoSvg} alt="" />
       </div>
       <div className={styles.right}>
         <span style={{ marginRight: '36px', cursor: 'pointer' }}>组件市场</span>
@@ -35,13 +32,7 @@ const Home = () => (
       <div className={styles.contentContaniner}>
         <div className={styles.videoContainer}>
           <div></div>
-          <div className={styles.fillTop}>
-            {/* <img
-              style={{ width: '100%', height: '112px' }}
-              src="https://gw.alipayobjects.com/os/sa/cms/images/k7k4tcke/73dbe4db-56df-4742-9ec9-b4485c085afb_w876_h536.png"
-              alt=""
-            /> */}
-          </div>
+          <div className={styles.fillTop}></div>
           <div className={styles.text}>
             <h1>图可视分析平台</h1>
             <p>一款在线图分析平台，帮助用户在关联数据中发现业务价值</p>
