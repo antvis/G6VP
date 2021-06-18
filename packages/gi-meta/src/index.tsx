@@ -1,16 +1,16 @@
-import * as React from 'react';
 import GUI from '@ali/react-datav-gui';
-import ComponentsConfig from './configation/components';
-import LayoutConfig from './configation/layout';
-import StyleConfig from './configation/style';
+import * as React from 'react';
+import ComponentsConfig from './components/componentPanel';
 import configation from './configation';
 import './index.less';
+import LayoutConfig from './layout/layout';
+import StyleConfig from './style/style';
 
 const ConfigMap = {
   components: ComponentsConfig,
   layout: LayoutConfig,
   style: StyleConfig,
-}
+};
 
 const Empty = () => {
   return <div>Empty</div>;
@@ -30,16 +30,15 @@ interface ConfigationPanelProps {
   config: Object;
 }
 
-
 const GIMetaPanel = props => {
-  const {value, onChange, data, config} = props;
+  const { value, onChange, data, config } = props;
 
   const configObj = configation(value, data, config);
 
   console.log('GIMetaPanel', configObj);
 
   if (config) {
-    return <GUI {...configObj} onChange={onChange}/>; 
+    return <GUI {...configObj} onChange={onChange} />;
   }
 };
 
