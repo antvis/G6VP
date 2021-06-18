@@ -45,13 +45,7 @@ const initialState = {
             key: 'type',
             enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
             enable: true,
-          },
-          /** 第二种是固定模式 */
-          {
-            mode: 'fixed',
-            value: 'red',
-            enable: false,
-          },
+          }
         ],
         /** style.keyshape.size */
         size: [
@@ -61,13 +55,7 @@ const initialState = {
             key: 'type',
             enum: [40, 20, 30, 20, 10],
             enable: true,
-          },
-          /** 第二种是固定模式 */
-          {
-            mode: 'fixed',
-            value: 30,
-            enable: false,
-          },
+          }
         ],
         /** style.label */
         label: {
