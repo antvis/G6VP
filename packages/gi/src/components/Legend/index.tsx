@@ -1,3 +1,3 @@
-import LegendA from './LegendA';
+import NodeLegend from './NodeLegend';
 
-export default LegendA;
+export default NodeLegend;
