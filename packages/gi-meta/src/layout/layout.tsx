@@ -3,45 +3,240 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
 
 const configObj = {
-  "layout": {
-    "name": "布局",
-    "type": "group",
+  layout: {
+    name: '布局',
+    type: 'group',
     fold: false,
-    "enableHide": false,
-    "children": {
-      "font": {
-        "name": "字体",
-        "type": "select",
-        "useFont": true,
-        "default": "SimSun",
-        "options": [
+    enableHide: false,
+    children: {
+      toggle: {
+        name: '切换布局',
+        type: 'select',
+        useFont: true,
+        default: 'force',
+        options: [
           {
-            "value": "Microsoft Yahei",
-            "label": "微软雅黑"
+            value: 'force',
+            label: '经典力导向布局',
           },
           {
-            "value": "SimSun",
-            "label": "宋体"
+            value: 'concentric',
+            label: '同心圆布局',
           },
           {
-            "value": "SimHei",
-            "label": "黑体"
-          }
-        ]
+            value: 'circular',
+            label: '圆形布局',
+          },
+          {
+            value: 'dagre',
+            label: 'Dagre布局',
+          },
+          {
+            value: 'radial',
+            label: '辐射布局',
+          },
+          {
+            value: 'grid',
+            label: '网格布局',
+          },
+        ],
       },
-      "size": {
-        "type": "stepper",
-        "caption": "大小",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "col": 12
-      }
-    }
-  }   
+      forceGroup: {
+        name: '配置参数',
+        type: 'group',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'force']],
+          logicalType: '$or',
+        },
+        children: {
+          linkDistance: {
+            type: 'slider',
+            caption: '边长度',
+            min: 1,
+            max: 500,
+            step: 1,
+            default: 100,
+          },
+          nodeStrength: {
+            type: 'slider',
+            caption: '节点作用力',
+            min: -100,
+            max: 500,
+            step: 5,
+            default: 100,
+          },
+          edgeStrength: {
+            type: 'slider',
+            caption: '边作用力',
+            default: 0.2,
+            step: 0.1,
+            min: 0,
+            max: 1,
+          },
+          nodeSpacing: {
+            type: 'slider',
+            caption: '节点间距',
+            default: 15,
+            min: 0,
+            max: 200,
+          },
+          preventOverlap: {
+            type: 'switch',
+            caption: '防止重叠',
+            default: true,
+            statusText: false,
+          },
+        },
+      },
+      concentricGroup: {
+        type: 'group',
+        name: '配置参数',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'concentric']],
+          logicalType: '$or',
+        },
+        children: {
+          sortBy: {
+            type: 'select',
+            useFont: true,
+            default: null,
+            options: [
+              { label: '请选择', value: null },
+              { label: 'topology', value: 'topology' },
+              { label: 'degree', value: 'degree' },
+            ],
+          },
+          nodeSize: {
+            type: 'slider',
+            caption: '节点大小',
+            default: 15,
+            min: 0,
+            max: 200,
+          },
+          minNodeSpacing: {
+            type: 'slider',
+            caption: '最小间距',
+            default: 10,
+            min: 5,
+            max: 50,
+          },
+          equidistant: {
+            type: 'switch',
+            caption: '是否等间距',
+            default: false,
+          },
+        },
+      },
+      circularGroup: {
+        type: 'group',
+        name: '配置参数',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'circular']],
+          logicalType: '$or',
+        },
+        children: {
+          radius: {
+            type: 'slider',
+            caption: '半径',
+            default: 100,
+            min: 5,
+            max: 2500,
+          },
+          divisions: {
+            type: 'slider',
+            caption: '分段数',
+            default: 1,
+            step: 1,
+            min: 1,
+            max: 10,
+          },
+          ordering: {
+            type: 'select',
+            caption: '排序依据',
+            default: null,
+            options: [
+              { label: '请选择', value: null },
+              { label: 'topology', value: 'topology' },
+              { label: 'degree', value: 'degree' },
+            ],
+          },
+        },
+      },
+      dagreGroup: {
+        type: 'group',
+        name: '配置参数',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'dagre']],
+          logicalType: '$or',
+        },
+        children: {
+          rankdir: {
+            type: 'select',
+            caption: '布局方向',
+            default: 'TB',
+            options: [
+              { label: '自上而下', value: 'TB' },
+              { label: '自下而上', value: 'BT' },
+              { label: '自左而右', value: 'LR' },
+              { label: '自右而左', value: 'RL' },
+            ],
+          },
+          align: {
+            type: 'select',
+            caption: '对齐方式',
+            default: null,
+            options: [
+              { label: '请选择', value: null },
+              { label: 'UL', value: 'UL' },
+              { label: 'UR', value: 'UR' },
+              { label: 'DL', value: 'DL' },
+              { label: 'DR', value: 'DR' },
+            ],
+          },
+          nodesep: {
+            type: 'slider',
+            caption: '节点间距',
+            default: 10,
+            min: 1,
+            max: 200,
+          },
+          ranksep: {
+            type: 'slider',
+            caption: '层间距',
+            default: 10,
+            min: 1,
+            max: 200,
+          },
+        },
+      },
+      gridGroup: {
+        type: 'group',
+        name: '配置参数',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'grid']],
+          logicalType: '$or',
+        },
+        children: {
+          text: {
+            type: 'stepper',
+            caption: '网格',
+            min: 0,
+            max: 10,
+            step: 1,
+            col: 12,
+          },
+        },
+      },
+    },
+  },
 };
 
 const valueObj = extractDefault({ config: configObj });
 const props = { configObj, valueObj };
 
-export  default props;
+export default props;
