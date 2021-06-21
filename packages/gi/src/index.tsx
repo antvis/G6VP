@@ -1,6 +1,7 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
 import getComponentsFromMarket from './components/index';
+import meta from './components/meta';
 import transform from './transfrom';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
 
@@ -125,4 +126,5 @@ const GISDK = (props: Props) => {
 
 export const GIContext = GraphinContext;
 export const GIComponents = getComponentsFromMarket;
+export const GIComponentsMeta = meta;
 export default GISDK;
