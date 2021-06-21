@@ -8,7 +8,7 @@ const getMeta = context => {
   });
   return {
     type: 'group',
-    name: '节点图例',
+    name: '右键菜单',
     fold: false,
     children: {
       sortkey: {
