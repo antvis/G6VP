@@ -128,12 +128,13 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     const { history } = props;
     let id = getUid();
     const { config, ...others } = userConfig;
-    debugger;
-    Lockr.sadd('project', { ...others, id });
+
+    Lockr.sadd('project', { ...others, id, time: new Date().toLocaleString() });
 
     Lockr.set(id, {
       data,
       ...userConfig,
+      // id,
       /**
        * 临时方案
        * 数据标准化节点，需要在「上传数据」阶段就准备好
@@ -142,6 +143,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       services,
     });
 
+    console.log(Lockr.get(id));
     history.push(`/workspace/${id}`);
   };
 
