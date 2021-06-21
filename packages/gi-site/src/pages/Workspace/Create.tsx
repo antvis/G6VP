@@ -1,17 +1,15 @@
 import { CheckCard } from '@alipay/tech-ui';
 import { RightOutlined, UploadOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
-import Lockr from 'lockr';
+import localforage from 'localforage';
 import * as React from 'react';
+import { useHistory } from '@alipay/bigfish';
 import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
 import { getUid } from './utils';
-
-Lockr.prefix = 'gi_';
-
+import { updateProjectById, addProject } from "../../services"
 interface CreatePanelProps {
-  history: any;
 }
 
 const { Step } = Steps;
@@ -90,6 +88,7 @@ const services = {
 };
 
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
+  const history = useHistory();
   const [current, setCurrent] = React.useState(0);
   const [userConfig, setUserConfig] = React.useState({
     id: '',
@@ -129,13 +128,9 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   };
 
   const creatProgram = () => {
-    const { history } = props;
     let id = getUid();
-    // const { config, ...others } = userConfig;
 
-    // Lockr.sadd('project', { ...others, id, time: new Date().toLocaleString() });
-
-    Lockr.set(id, {
+    updateProjectById(id, {
       isProject: true,
       data,
       ...userConfig,
@@ -147,9 +142,9 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
        * 数据过滤的阶段，需要在数据服务模块添加
        */
       services,
+    }).then(() => {
+      history.push(`/workspace/${id}`);
     });
-
-    history.push(`/workspace/${id}`);
   };
 
   const getUserInfo = value => {

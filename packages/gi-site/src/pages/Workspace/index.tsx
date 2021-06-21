@@ -1,23 +1,26 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Card, Col, Drawer, Modal, Row } from 'antd';
-import Lockr from 'lockr';
-import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import * as React from 'react';
+import { useHistory, useRequest } from '@alipay/bigfish'
 import CreatePanel from './Create';
+import { getProjectList, removeProjectById } from '../../services';
+import './database';
 import './index.less';
 
 interface WorkspaceProps {}
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
-  const project = Lockr.get('project') || [];
-  window.Lockr = Lockr;
-  //@ts-ignore
-  const { history } = props;
-  const getProjects = () => {
-    return Lockr.getAll().filter(d => d.isProject);
-  };
-  const [lists, setLists] = React.useState(getProjects());
-  React.useEffect(() => {}, []);
+  const history = useHistory();
+  const { data: defaultProjects = [], getProjects } = useRequest(getProjectList);
+
+  const [lists, setLists] = React.useState(defaultProjects);
+  React.useEffect(() => {
+    getProjects().then(data => {
+      const list =  data.map(d => d.isProject);
+      setLists(list);
+    })
+  }, []);
 
   const [state, setState] = React.useState({
     visible: false,
@@ -39,7 +42,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       onOk() {
         const items = lists.filter(d => d.id !== id);
         setLists(items);
-        Lockr.rm(id);
+        removeProjectById(id);
       },
     });
   };
@@ -57,7 +60,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
           visible={visible}
           width={'80%'}
         >
-          <CreatePanel history={history} />
+          <CreatePanel />
         </Drawer>
         <Card title="我的项目">
           <Row gutter={[16, 16]}>
@@ -68,7 +71,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
               </Card>
             </Col>
             {lists.map(item => {
-              const { id, title, time, data } = item;
+              const { id, title, time } = item;
               return (
                 <Col key={id} span={6}>
                   <Card

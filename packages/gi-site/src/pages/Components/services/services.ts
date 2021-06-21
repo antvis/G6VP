@@ -1,17 +1,18 @@
-import Lockr from 'lockr';
+import localforage from 'localforage';
 import { GIComponents } from '@alipay/graphinsight';
 import { defaultConfig } from './defaultConfig';
 
 // 组件存入localstorage
-export const initMasket = () => {
+export const initMarket = () => {
   const components = GIComponents(defaultConfig);
   let list = [];
   Object.keys(components).forEach(key => {
     list.push(components[key]);
   });
-  Lockr.set('market', list);
+  localforage.setItem('market', list);
+  return list;
 };
 
-export const getComponets = () => {
-  return Lockr.get('market') || [];
+export const getComponents = async () => {
+  return (await localforage.getItem('market')) || [];
 };
