@@ -5,9 +5,10 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 // import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
-import {navbarOptions } from './Constants';
+import { navbarOptions } from './Constants';
 import './index.less';
 import store from './redux';
+import { isObjectEmpty } from './utils';
 
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
@@ -64,20 +65,22 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel config={ config } value={state.activeNavbar} data={ data }/>
+          <ConfigationPanel config={config} value={state.activeNavbar} data={data} />
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            <GISDK
-              key={key}
-              config={config}
-              services={{
-                getGraphData,
-                getSubGraphData,
-              }}
-            >
-              <TestComponents />
-            </GISDK>
+            {!isObjectEmpty(config) && (
+              <GISDK
+                key={key}
+                config={config}
+                services={{
+                  getGraphData,
+                  getSubGraphData,
+                }}
+              >
+                <TestComponents />
+              </GISDK>
+            )}
           </div>
         </div>
       </div>

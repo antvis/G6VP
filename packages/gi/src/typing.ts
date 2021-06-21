@@ -1,4 +1,4 @@
-export interface GILayoutConfig {
+export interface LayoutConfig {
   // 支持的布局类型，默认为 force
   type?: 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
   options?: {
@@ -28,6 +28,11 @@ export interface GILayoutConfig {
     rows: number;
     cols: number;
   };
+}
+export interface GILayoutConfig {
+  id: string;
+  name: string;
+  props: LayoutConfig;
 }
 
 export interface GIMeta {
@@ -67,8 +72,8 @@ export interface GIConfig {
   // layouts?: GILayoutConfig[] | GILayoutConfig;
   layout?: GILayoutConfig;
   components?: GIComponentConfig[];
-  nodeConfig?: GINodeConfig;
-  edgeConfig?: GIEdgeConfig;
+  node?: GINodeConfig;
+  edge?: GIEdgeConfig;
 }
 
 interface GINodeData {

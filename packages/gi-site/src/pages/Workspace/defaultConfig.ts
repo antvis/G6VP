@@ -1,4 +1,5 @@
 export const defaultConfig = {
+  /** 燎原计划 */
   dataKg: {
     components: [
       {
@@ -26,7 +27,6 @@ export const defaultConfig = {
         enable: true,
         /** style.keyshape.color */
         color: [
-          /** 第一种是映射模式 */
           {
             mode: 'mapping',
             key: 'type',
@@ -78,6 +78,7 @@ export const defaultConfig = {
       },
     },
   },
+  /** 　网商图谱 */
   knowledgeGraph: {
     components: [
       {
@@ -119,93 +120,7 @@ export const defaultConfig = {
       },
     },
   },
-
-  riskControl: {
-    components: [
-      {
-        id: 'Legend',
-        categoryId: 'legend',
-        meta: {},
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'Liaoyuan-Click-Entity-Node',
-        meta: {},
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'Liaoyuan-Click-Event-Node',
-        meta: {},
-        props: {},
-        enable: true,
-      },
-    ],
-    node: [
-      {
-        id: 'graphin-node',
-
-        categoryId: 'node',
-        enable: true,
-        /** style.keyshape.color */
-        color: [
-          /** 第一种是映射模式 */
-          {
-            mode: 'mapping',
-            key: 'type',
-            enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
-            enable: true,
-          },
-          /** 第二种是固定模式 */
-          {
-            mode: 'fixed',
-            value: 'red',
-            enable: false,
-          },
-        ],
-        size: [
-          {
-            mode: 'fixed',
-            value: 30,
-            enable: false,
-          },
-        ],
-        /** style.label */
-        label: {
-          key: 'name',
-        },
-      },
-    ],
-    edge: [
-      {
-        id: 'graphin-edge',
-        categoryId: 'edge',
-        /** style.keyshape.stroke */
-        color: {
-          key: 'type',
-          enum: ['red', 'blue', 'green', 'yellow'],
-        },
-        /** style.keyshape.size */
-        size: {
-          key: 'weight',
-        },
-        /** style.label */
-        label: {
-          key: 'name',
-        },
-      },
-    ],
-    layout: {
-      categoryId: 'layout',
-      id: 'dagre',
-      options: {
-        rankdir: 'LR',
-      },
-    },
-    graph: {},
-  },
-
+  /** 前端大学图谱 */
   GIConfig: {
     components: [
       {
@@ -291,6 +206,89 @@ export const defaultConfig = {
         animation: true,
         preset: {
           type: 'concentric',
+        },
+      },
+    },
+  },
+  /** 空白模版 */
+  Empty: {
+    components: [
+      {
+        id: 'Legend',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'NodeContextMenu',
+        meta: {},
+        props: {},
+        enable: true,
+      },
+    ],
+    node: [
+      {
+        id: 'graphin-node',
+        enable: true,
+        name: '官方内置节点',
+        props: {
+          /** style.keyshape.color */
+          color: {
+            mode: 'mapping', // fixed value
+            key: 'type',
+            enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
+            enable: true,
+          },
+          /** style.keyshape.size */
+          size: {
+            mode: 'mapping',
+            key: 'type',
+            enum: [40, 20, 30, 20, 10],
+            enable: true,
+          },
+          label: {
+            key: 'id',
+          },
+        },
+      },
+    ],
+
+    edge: [
+      {
+        id: 'graphin-edge',
+        name: '官方内置边',
+        enable: true,
+        props: {
+          /** style.keyshape.stroke */
+          color: {
+            key: 'type',
+            enum: ['red', 'blue', 'green', 'yellow'],
+          },
+          /** style.keyshape.size */
+          size: {
+            key: 'weight',
+          },
+          /** style.label */
+          label: {
+            key: 'id',
+          },
+        },
+      },
+    ],
+    layout: {
+      // id: 'dagre',
+      // options: {
+      //   rankdir: 'LR',
+      // },
+      id: 'Layout',
+      name: '官方内置布局',
+      props: {
+        type: 'graphin-force',
+        options: {
+          animation: true,
+          preset: {
+            type: 'concentric',
+          },
         },
       },
     },

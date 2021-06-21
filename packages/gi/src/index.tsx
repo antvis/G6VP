@@ -2,7 +2,7 @@ import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
 import getComponentsFromMarket from './components/index';
 import transform from './transfrom';
-import { GIService, GIConfig, GIComponentConfig } from './typing';
+import { GIComponentConfig, GIConfig, GIService } from './typing';
 
 export interface Props {
   /**
@@ -23,7 +23,7 @@ const GISDK = (props: Props) => {
     components: [] as GIComponentConfig[],
   });
 
-  const { layout: layoutCfg, components: componentsCfg = [], nodeConfig: nodeCfg, edgeConfig: edgeCfg } = config;
+  const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = config;
 
   /** 数据发生改变 */
   React.useEffect(() => {
@@ -53,12 +53,13 @@ const GISDK = (props: Props) => {
   /** 布局发生改变 */
   React.useEffect(() => {
     console.log('LAYOUT config change...');
+    const { type, options } = layoutCfg?.props || {};
     setState(preState => {
       return {
         ...preState,
         layout: {
-          type: layoutCfg?.type,
-          ...layoutCfg?.options,
+          type: type,
+          ...options,
         },
       };
     });
@@ -82,7 +83,10 @@ const GISDK = (props: Props) => {
   console.log('STATE', state);
 
   /** 计算 用户选择的组件 */
-  const componentsMarket = getComponentsFromMarket(config);
+  let componentsMarket = [];
+  if (components.length !== 0) {
+    componentsMarket = getComponentsFromMarket(config);
+  }
 
   //@ts-ignore 临时方案
   GraphinContext.services = services;
