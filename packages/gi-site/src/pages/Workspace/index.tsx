@@ -1,10 +1,9 @@
-import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Card, Col, Drawer, Row, Modal } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Card, Col, Drawer, Modal, Row } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import CreatePanel from './Create';
-import './database';
 import './index.less';
 
 interface WorkspaceProps {}
