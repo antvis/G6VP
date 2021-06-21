@@ -6,6 +6,7 @@ export const defaultData = {
   GIConfig: demo,
   knowledgeGraph: enterprise,
   riskControl: liaoyuan,
+  Empty: demo,
 };
 
 const GIDefaultTrans = `
@@ -49,4 +50,5 @@ export const defaultTrans = {
   GIConfig: GIDefaultTrans,
   knowledgeGraph: GIDefaultTrans,
   riskControl: riskControlTrans,
+  Empty: GIDefaultTrans,
 };

@@ -13,15 +13,16 @@ const getMapping = () => {
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, config) => {
-  const { nodeConfig } = config;
+  const { node: nodeConfig } = config;
   try {
     /** 解构配置项 */
     const mathNodeConfig = nodeConfig.find(cfg => cfg.enable);
-    const Size = mathNodeConfig?.size.find(s => s.enable);
-    const Color = mathNodeConfig?.color.find(s => s.enable);
-    const Label = mathNodeConfig?.label;
+
+    const { color: Color, label: Label, size: Size } = mathNodeConfig.props;
+
     /** 分别生成Size和Color的Mapping */
     const mappingBySize = getMapping();
+
     const mappingByColor = getMapping();
 
     const nodes = s.nodes.map(node => {

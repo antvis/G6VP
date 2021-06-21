@@ -20,6 +20,10 @@ const { TabPane } = Tabs;
 const lists = [
   {
     id: 'GIConfig',
+    title: '前端大学图谱模版',
+  },
+  {
+    id: 'Empty',
     title: '空白模版',
   },
   {
@@ -81,7 +85,7 @@ const services = {
   }
   `,
   getSubGraphDataTransform: `(data,ids) => {
-    return data
+    return {nodes:[],edges:[]}
   }`,
 };
 
