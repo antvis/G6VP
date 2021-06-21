@@ -4,6 +4,7 @@ import { Drawer } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
 import DataSource from '../DataSource';
+import BaseNavbar from './BaseNavbar';
 import './index.less';
 
 const content = (
@@ -22,16 +23,7 @@ const Navbar = ({ history }) => {
   const { id, title, data } = Lockr.get('projectId');
 
   return (
-    <div className="navbar">
-      <div
-        className="navbar-logo"
-        onClick={() => {
-          history.push('/');
-        }}
-      >
-        <img src="https://gw.alipayobjects.com/zos/bmw-prod/77ceaf76-5315-480f-b285-db12b1507030.svg" alt="logo" />
-      </div>
-
+    <BaseNavbar history={history}>
       <span className="navbar-db" onClick={handleOpen}>
         <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} /> {title}
       </span>
@@ -41,11 +33,10 @@ const Navbar = ({ history }) => {
       </Drawer>
 
       <ul className="navbar-action">
-        <li>主题</li>
         <li>保存</li>
         <li>导出</li>
       </ul>
-    </div>
+    </BaseNavbar>
   );
 };
 

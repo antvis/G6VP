@@ -1,7 +1,8 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Card, Col, Drawer, Row } from 'antd';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Card, Col, Drawer, Row, Modal } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import CreatePanel from './Create';
 import './database';
 import './index.less';
@@ -13,14 +14,15 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   window.Lockr = Lockr;
   //@ts-ignore
   const { history } = props;
-  console.log(project);
 
-  const lists = project.map(p => {
-    return {
-      ...p,
-      data: Lockr.get(p.id),
-    };
-  });
+  const [lists, setLists] = React.useState(
+    project.map(p => {
+      return {
+        ...p,
+        data: Lockr.get(p.id),
+      };
+    }),
+  );
   React.useEffect(() => {}, []);
 
   const [state, setState] = React.useState({
@@ -36,49 +38,74 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       return { ...preState, visible: true };
     });
   };
+  const handleDelete = id => {
+    Modal.warning({
+      title: '确定删除',
+      content: '是否删除该项目？',
+      onOk() {
+        const items = Lockr.get('project').filter(d => d.id !== id);
+        setLists(items);
+        Lockr.rm(id);
+        Lockr.set('project', items);
+      },
+    });
+  };
   const { visible } = state;
   return (
-    <div>
-      {/* <Navbar history={history} /> */}
+    <>
+      <div className="workspace">
+        <BaseNavbar history={history} />
 
-      <Drawer
-        title="创建项目"
-        placement={'right'}
-        closable={false}
-        onClose={handleClose}
-        visible={visible}
-        width={'80%'}
-      >
-        <CreatePanel history={history} />
-      </Drawer>
-      <Card title="我的项目">
-        <Row gutter={16}>
-          <Col key={'new'} span={6}>
-            <Card style={{ width: '100%' }} hoverable onClick={handleOpen}>
-              <PlusOutlined style={{ fontSize: '50px' }} />
-              创建项目
-            </Card>
-          </Col>
-          {lists.map(item => {
-            const { id, title, data } = item;
-            return (
-              <Col key={id} span={6}>
-                <Card
-                  title={title}
-                  style={{ width: '100%' }}
-                  hoverable
-                  onClick={() => {
-                    history.push(`/workspace/${id}`);
-                  }}
-                >
-                  test..
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Card>
-    </div>
+        <Drawer
+          title="创建项目"
+          placement={'right'}
+          closable={false}
+          onClose={handleClose}
+          visible={visible}
+          width={'80%'}
+        >
+          <CreatePanel history={history} />
+        </Drawer>
+        <Card title="我的项目">
+          <Row gutter={[16, 16]}>
+            <Col key={'new'} span={6}>
+              <Card style={{ height: '100%', width: '100%' }} hoverable onClick={handleOpen} className="new">
+                <PlusOutlined style={{ fontSize: '22px', opacity: 0.85 }} />
+                <span className="new-title">新增项目</span>
+              </Card>
+            </Col>
+            {lists.map(item => {
+              const { id, title, time, data } = item;
+              return (
+                <Col key={id} span={6}>
+                  <Card
+                    // style={{ height: 284, width: 321 }}
+                    hoverable
+                    cover={
+                      <img
+                        onClick={() => {
+                          history.push(`/workspace/${id}`);
+                        }}
+                        alt="example"
+                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                      />
+                    }
+                  >
+                    <div className="card-content">
+                      <p>{title}</p>
+                      <div>
+                        <span>{time}</span>
+                        <DeleteOutlined key="ellipsis" className="more" onClick={() => handleDelete(id)} />
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+        </Card>
+      </div>
+    </>
   );
 };
 
