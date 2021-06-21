@@ -32,7 +32,7 @@ const lists = [
   },
   {
     id: 'riskControl',
-    title: '风控',
+    title: '企业风控',
   },
 ];
 
@@ -131,14 +131,16 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const creatProgram = () => {
     const { history } = props;
     let id = getUid();
-    const { config, ...others } = userConfig;
+    // const { config, ...others } = userConfig;
 
-    Lockr.sadd('project', { ...others, id, time: new Date().toLocaleString() });
+    // Lockr.sadd('project', { ...others, id, time: new Date().toLocaleString() });
 
     Lockr.set(id, {
+      isProject: true,
       data,
       ...userConfig,
-      // id,
+      id,
+      time: new Date().toLocaleString(),
       /**
        * 临时方案
        * 数据标准化节点，需要在「上传数据」阶段就准备好
@@ -147,7 +149,6 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       services,
     });
 
-    console.log(Lockr.get(id));
     history.push(`/workspace/${id}`);
   };
 
@@ -176,19 +177,22 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
 
       reader.onload = fileReader => {
         const fileData = fileReader.target.result;
-        setInputData([
+        const renderData = [
           ...inputData,
           {
             uid: file.uid,
             data: JSON.parse(fileData as string),
           },
-        ]);
+        ];
+        setInputData(renderData);
         onSuccess('Ok');
+        runTransform(renderData);
       };
     },
     onRemove: file => {
       const renderData = inputData.filter(d => d.uid !== file.uid);
       setInputData(renderData);
+      runTransform(renderData);
     },
   };
 
@@ -219,13 +223,13 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     }
   };
 
-  const runTransform = () => {
+  const runTransform = (data = inputData) => {
     const model = transformRef.current.editor.getModel();
     const value = model.getValue();
     setTransform(value);
     let nodes = [];
     let edges = [];
-    inputData.map(d => {
+    data.map(d => {
       nodes = [...nodes, ...d.data.nodes];
       edges = [...edges, ...d.data.edges];
     });
@@ -247,11 +251,11 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   });
   const steps = [
     {
-      title: 'First',
+      title: '填写项目信息',
       content: (
         <Form {...layout} name="basic" onFinish={getUserInfo}>
           <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请输入项目名称' }]}>
-            <Input value={userConfig.title} />
+            <Input value={userConfig.title} maxLength={100} />
           </Form.Item>
           <Form.Item label="解决方案">
             <CheckCard.Group onChange={setDefaultConfig} defaultValue={lists[0].id}>
@@ -270,7 +274,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       ),
     },
     {
-      title: 'Second',
+      title: '上传数据',
       content: (
         <>
           <Alert
@@ -323,7 +327,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       ),
     },
     {
-      title: 'Last',
+      title: '数据格式校验',
       content: (
         <>
           <Row>数据格式校验成功！</Row>

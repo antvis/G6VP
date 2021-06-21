@@ -13,15 +13,10 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   window.Lockr = Lockr;
   //@ts-ignore
   const { history } = props;
-
-  const [lists, setLists] = React.useState(
-    project.map(p => {
-      return {
-        ...p,
-        data: Lockr.get(p.id),
-      };
-    }),
-  );
+  const getProjects = () => {
+    return Lockr.getAll().filter(d => d.isProject);
+  };
+  const [lists, setLists] = React.useState(getProjects());
   React.useEffect(() => {}, []);
 
   const [state, setState] = React.useState({
@@ -42,10 +37,9 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       title: '确定删除',
       content: '是否删除该项目？',
       onOk() {
-        const items = Lockr.get('project').filter(d => d.id !== id);
+        const items = lists.filter(d => d.id !== id);
         setLists(items);
         Lockr.rm(id);
-        Lockr.set('project', items);
       },
     });
   };
