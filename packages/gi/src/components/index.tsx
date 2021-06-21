@@ -2,7 +2,7 @@ import { MiniMap } from '@antv/graphin-components';
 import CanvasClick from './CanvasClick';
 import { NodeContextMenu } from './ContextMenu';
 import getLegendMappingKey from './Legend/getLegendMappingKey';
-import LegendA from './Legend/LegendA';
+import NodeLegend from './Legend/NodeLegend';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
 import ToolbarA from './Toolbar';
@@ -14,13 +14,23 @@ import { EdgeTooltip, NodeTooltip } from './Tooltip';
  */
 const getComponentsFromMarket: any = config => {
   const legendSortKey = getLegendMappingKey(config);
+
   return {
     /*** 官方组件 */
     Legend: {
       id: 'Legend',
       label: '图例',
       category: 'analysis',
-      component: LegendA,
+      component: NodeLegend,
+      props: {
+        sortKey: legendSortKey,
+      },
+    },
+    NodeLegend: {
+      id: 'Legend',
+      label: '节点图例',
+      category: 'analysis',
+      component: NodeLegend,
       props: {
         sortKey: legendSortKey,
       },

@@ -2,6 +2,17 @@
 // 分析组件分为两种 分析组件和分析交互
 import { extractDefault } from '@ali/react-datav-gui-utils';
 
+const container = {
+  components: {
+    name: 'components',
+    type: 'menu',
+    children: {
+      analyze: {},
+      interactive: {},
+    },
+  },
+};
+
 const configObj = {
   components: {
     name: 'components',
@@ -11,55 +22,53 @@ const configObj = {
         name: '分析',
         mode: 'single',
         children: {
-          "legend": {
-            "name": "图例",
-            "type": "group",
+          legend: {
+            name: '图例',
+            type: 'group',
             fold: false,
-            "enableHide": false,
-            "children": {
-              "sortkey": {
-                "name": "分类字段",
-                "type": "select",
-                "useFont": true,
-                "default": "type",
-                col: 16,
-                "options": [
+            enableHide: false,
+            children: {
+              sortkey: {
+                name: '分类字段pomelo',
+                type: 'select',
+                default: 'type',
+                options: [
                   {
-                    "value": "description",
-                    "label": "description"
+                    value: 'description',
+                    label: 'description',
                   },
                   {
-                    "value": "displayName",
-                    "label": "displayName"
+                    value: 'displayName',
+                    label: 'displayName',
                   },
                   {
-                    "value": "displayType",
-                    "label": "displayType"
+                    value: 'displayType',
+                    label: 'displayType',
                   },
                   {
-                    "value": "globalEntityId",
-                    "label": "globalEntityId"
+                    value: 'globalEntityId',
+                    label: 'globalEntityId',
                   },
                   {
-                    "value": "name",
-                    "label": "name"
+                    value: 'name',
+                    label: 'name',
                   },
                   {
-                    "value": "properties",
-                    "label": "properties"
+                    value: 'properties',
+                    label: 'properties',
                   },
                   {
-                    "value": "sceneId",
-                    "label": "sceneId"
+                    value: 'sceneId',
+                    label: 'sceneId',
                   },
                   {
-                    "value": "type",
-                    "label": "type"
+                    value: 'type',
+                    label: 'type',
                   },
                   {
-                    "value": "uri",
-                    "label": "uri"
-                  }
+                    value: 'uri',
+                    label: 'uri',
+                  },
                 ],
               },
               // "size": {
@@ -70,57 +79,57 @@ const configObj = {
               //   "step": 1,
               //   "col": 12
               // }
-            }
+            },
           },
-          "legendA": {
-            "name": "图例",
-            "type": "group",
+          legendA: {
+            name: '图例',
+            type: 'group',
             fold: false,
-            "enableHide": false,
-            "children": {
-              "sortkey": {
-                "name": "分类字段",
-                "type": "select",
-                "useFont": true,
-                "default": "type",
+            enableHide: false,
+            children: {
+              sortkey: {
+                name: '分类字段',
+                type: 'select',
+                useFont: true,
+                default: 'type',
                 col: 16,
-                "options": [
+                options: [
                   {
-                    "value": "description",
-                    "label": "description"
+                    value: 'description',
+                    label: 'description',
                   },
                   {
-                    "value": "displayName",
-                    "label": "displayName"
+                    value: 'displayName',
+                    label: 'displayName',
                   },
                   {
-                    "value": "displayType",
-                    "label": "displayType"
+                    value: 'displayType',
+                    label: 'displayType',
                   },
                   {
-                    "value": "globalEntityId",
-                    "label": "globalEntityId"
+                    value: 'globalEntityId',
+                    label: 'globalEntityId',
                   },
                   {
-                    "value": "name",
-                    "label": "name"
+                    value: 'name',
+                    label: 'name',
                   },
                   {
-                    "value": "properties",
-                    "label": "properties"
+                    value: 'properties',
+                    label: 'properties',
                   },
                   {
-                    "value": "sceneId",
-                    "label": "sceneId"
+                    value: 'sceneId',
+                    label: 'sceneId',
                   },
                   {
-                    "value": "type",
-                    "label": "type"
+                    value: 'type',
+                    label: 'type',
                   },
                   {
-                    "value": "uri",
-                    "label": "uri"
-                  }
+                    value: 'uri',
+                    label: 'uri',
+                  },
                 ],
               },
               // "size": {
@@ -131,8 +140,8 @@ const configObj = {
               //   "step": 1,
               //   "col": 12
               // }
-            }
-          }
+            },
+          },
         },
       },
       interactive: {
@@ -153,5 +162,4 @@ const configObj = {
 const valueObj = extractDefault({ config: configObj });
 const props = { configObj, valueObj };
 
-export  default props;
-
+export default props;

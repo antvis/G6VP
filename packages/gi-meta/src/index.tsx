@@ -31,11 +31,10 @@ interface ConfigationPanelProps {
 }
 
 const GIMetaPanel = props => {
-  const { value, onChange, data, config } = props;
+  const { value, onChange, data, config, meta } = props;
+  const configObj = configation(value, data, config, meta);
 
-  const configObj = configation(value, data, config);
-
-  console.log('GIMetaPanel', configObj);
+  console.log('GIMetaPanel', configObj, meta);
 
   if (config) {
     return <GUI {...configObj} onChange={onChange} />;
