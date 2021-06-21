@@ -4,8 +4,8 @@ import componentPanel from '../components/componentPanel';
 import layout from '../layout/layout';
 import style from '../style/style';
 
-const getComponentsConfig = (data, config) => {
-  return componentPanel('components', config, data);
+const getComponentsConfig = (data, config, meta) => {
+  return componentPanel({ name: 'components', children: config, data, meta });
 };
 
 const getLayoutConfig = (data, config) => {
@@ -22,8 +22,8 @@ const ConfigMap = {
   style: getStyleConfig,
 };
 
-const getConfig = (id, data, config) => {
-  return ConfigMap[id](data, config[id]);
+const getConfig = (id, data, config, meta) => {
+  return ConfigMap[id](data, config[id], meta);
 };
 
 export default getConfig;

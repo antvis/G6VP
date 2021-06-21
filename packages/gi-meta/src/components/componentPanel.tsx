@@ -1,32 +1,44 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
-import configationBlock from '../configation/configationBlock';
-import menu from '../defaultConfigation/menu';
 
-const componentPanel = (name, children, data) => {
+const componentPanel = ({ name, children, data, meta }) => {
   let childConfig = {};
+  let keys = ['id'];
+  try {
+    keys = Object.keys(data.nodes[0].data);
+  } catch (error) {}
+
   children.forEach(element => {
-    childConfig[element.id] = configationBlock(element.id, element, data);
+    const finalMeta = meta[element.id]({ data, keys });
+    console.log('finalMeta', element, finalMeta);
+
+    finalMeta.children['enable'] = {
+      name: '是否加载',
+      type: 'switch',
+      default: true,
+      statusText: true,
+    };
+    childConfig[element.id] = finalMeta;
   });
 
-  const analyze = {
-    name: '分析',
+  const analysis = {
+    name: '分析组件',
     mode: 'single',
     children: { ...childConfig },
   };
 
-  const interactive = {
-    name: '交互',
+  const interaction = {
+    name: '交互组件',
     mode: 'single',
-    children: { ...childConfig },
+    children: {},
   };
 
   const configObj = {};
-  configObj[name] = {
-    ...menu,
-    name,
+  configObj['components'] = {
+    type: 'menu',
+    name: 'components',
     children: {
-      analyze,
-      interactive,
+      analysis,
+      interaction,
     },
   };
 
