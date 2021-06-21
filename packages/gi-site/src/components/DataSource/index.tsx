@@ -1,7 +1,5 @@
 import { Collapse, Tabs } from 'antd';
-import Lockr from 'lockr';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import GetGraph from './GetGraph';
 import GetSubGraph from './GetSubGraph';
 import './index.less';
@@ -14,17 +12,9 @@ const { TabPane } = Tabs;
 interface DataSourceProps {
   handleClose: () => void;
 }
-let sourceCodeRef;
-let intialInterfaceRef;
 
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
   const { handleClose } = props;
-  const { config, id } = useSelector(state => state);
-  const project = Lockr.get(id);
-  const { data } = project;
-  const dispatch = useDispatch();
-  console.log('project', project);
-
   return (
     <div>
       <Tabs tabPosition={'left'}>

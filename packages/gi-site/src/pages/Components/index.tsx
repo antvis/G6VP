@@ -3,7 +3,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import TabContent from '../../components/TabContent';
-import { getComponets, initMasket } from './services/services';
+import { initMarket } from './services/services';
 import { defaultConfig, getGraphData } from './services/defaultConfig';
 import { getUid } from '../Workspace/utils';
 import './index.less';
@@ -29,9 +29,7 @@ const ComponentMarket = () => {
   const [component, setComponent] = React.useState({ id: 'Legend', enable: true });
 
   React.useEffect(() => {
-    initMasket();
-    const components = getComponets();
-
+    const components = initMarket();
     let menuList = { ...list };
     components.map(item => {
       menuList[item.category].children.push(item);

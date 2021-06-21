@@ -1,23 +1,28 @@
 import { Collapse, Tabs } from 'antd';
-import Lockr from 'lockr';
+import localforage from 'localforage';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRequest } from "@alipay/bigfish";
+import { getProjectById, updateProjectById } from '../../services';
 import './index.less';
 const { Panel } = Collapse;
 
 const { TabPane } = Tabs;
 
 interface DataSourceProps {
-  handleClose: () => voild;
+  handleClose: () => void;
 }
 let monacoRef;
 
 const GetSubGraph: React.FunctionComponent<DataSourceProps> = props => {
   const { handleClose } = props;
-  const { config, id } = useSelector(state => state);
-  const project = Lockr.get(id);
-  const { data, services } = project;
+  //@ts-ignore
+  const { id } = useSelector(state => state);
+  const { data: project = {}, run } = useRequest(() => {
+    return getProjectById(id)
+  })
+  const { services = {} } = project;
   const { getSubGraphDataTransform } = services;
 
   const dispatch = useDispatch();
@@ -29,22 +34,26 @@ const GetSubGraph: React.FunctionComponent<DataSourceProps> = props => {
     const model = monacoRef.editor.getModel();
     const value = model.getValue();
     try {
-      Lockr.set(id, {
+      updateProjectById(id, {
         ...project,
         services: {
           ...project.services,
           getSubGraphDataTransform: value,
         },
+      }).then(() => {
+        dispatch({
+          type: 'update:key',
+          key: Math.random(),
+        });
+        handleClose && handleClose();
       });
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
-      });
-      handleClose && handleClose();
     } catch (error) {
       console.log(error);
     }
   };
+  React.useEffect(() => {
+    run();
+  }, [])
 
   return (
     <div>
