@@ -5,7 +5,6 @@ import * as React from 'react';
 import { useHistory, useRequest } from '@alipay/bigfish'
 import CreatePanel from './Create';
 import { getProjectList, removeProjectById } from '../../services';
-import './database';
 import './index.less';
 
 interface WorkspaceProps {}
