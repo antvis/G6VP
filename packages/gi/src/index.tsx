@@ -53,7 +53,7 @@ const GISDK = (props: Props) => {
   /** 布局发生改变 */
   React.useEffect(() => {
     console.log('LAYOUT config change...');
-    const { type, options } = layoutCfg || {};
+    const { type, options } = layoutCfg?.props || {};
     setState(preState => {
       return {
         ...preState,
