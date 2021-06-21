@@ -80,6 +80,7 @@ const configObj = {
             default: 15,
             min: 0,
             max: 200,
+            step: 1,
           },
           preventOverlap: {
             type: 'switch',
@@ -100,6 +101,7 @@ const configObj = {
         children: {
           sortBy: {
             type: 'select',
+            caption: '排序依据',
             useFont: true,
             default: null,
             options: [
@@ -114,6 +116,7 @@ const configObj = {
             default: 15,
             min: 0,
             max: 200,
+            step: 1,
           },
           minNodeSpacing: {
             type: 'slider',
@@ -121,11 +124,18 @@ const configObj = {
             default: 10,
             min: 5,
             max: 50,
+            step: 1,
           },
           equidistant: {
             type: 'switch',
             caption: '是否等间距',
             default: false,
+          },
+          preventOverlap: {
+            type: 'switch',
+            caption: '防止重叠',
+            default: true,
+            statusText: false,
           },
         },
       },
@@ -144,6 +154,7 @@ const configObj = {
             default: 100,
             min: 5,
             max: 2500,
+            step: 1,
           },
           divisions: {
             type: 'slider',
@@ -162,6 +173,12 @@ const configObj = {
               { label: 'topology', value: 'topology' },
               { label: 'degree', value: 'degree' },
             ],
+          },
+          preventOverlap: {
+            type: 'switch',
+            caption: '防止重叠',
+            default: true,
+            statusText: false,
           },
         },
       },
@@ -203,6 +220,7 @@ const configObj = {
             default: 10,
             min: 1,
             max: 200,
+            step: 1,
           },
           ranksep: {
             type: 'slider',
@@ -210,6 +228,44 @@ const configObj = {
             default: 10,
             min: 1,
             max: 200,
+            step: 1,
+          },
+        },
+      },
+      radialGroup: {
+        type: 'group',
+        name: '配置参数',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'radial']],
+          logicalType: '$or',
+        },
+        children: {
+          unitRadius: {
+            type: 'slider',
+            caption: '层级距离',
+            default: 100,
+            min: 1,
+            max: 500,
+            step: 1,
+          },
+          focusNode: {
+            type: 'text',
+            caption: '中心节点',
+          },
+          nodeSpacing: {
+            type: 'slider',
+            caption: '节点间距',
+            default: 15,
+            min: 0,
+            max: 200,
+            step: 1,
+          },
+          preventOverlap: {
+            type: 'switch',
+            caption: '防止重叠',
+            default: true,
+            statusText: false,
           },
         },
       },
@@ -222,13 +278,30 @@ const configObj = {
           logicalType: '$or',
         },
         children: {
-          text: {
-            type: 'stepper',
-            caption: '网格',
-            min: 0,
-            max: 10,
+          rows: {
+            type: 'slider',
+            caption: '网格行数',
+            min: 1,
+            max: 15,
             step: 1,
-            col: 12,
+          },
+          cols: {
+            type: 'slider',
+            caption: '网格列数',
+            min: 1,
+            max: 15,
+            step: 1,
+          },
+          sortBy: {
+            type: 'select',
+            caption: '排序依据',
+            useFont: true,
+            default: null,
+            options: [
+              { label: '请选择', value: null },
+              { label: 'topology', value: 'topology' },
+              { label: 'degree', value: 'degree' },
+            ],
           },
         },
       },
