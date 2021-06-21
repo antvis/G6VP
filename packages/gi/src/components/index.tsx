@@ -1,12 +1,12 @@
 import { MiniMap } from '@antv/graphin-components';
+import CanvasClick from './CanvasClick';
 import { NodeContextMenu } from './ContextMenu';
 import getLegendMappingKey from './Legend/getLegendMappingKey';
 import LegendA from './Legend/LegendA';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
-import { EdgeTooltip, NodeTooltip } from './Tooltip';
-import CanvasClick from './CanvasClick';
 import ToolbarA from './Toolbar';
+import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
 /**
  * 组件市场
