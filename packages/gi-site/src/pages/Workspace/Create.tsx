@@ -81,7 +81,7 @@ const services = {
   }
   `,
   getSubGraphDataTransform: `(data,ids) => {
-    return data
+    return {nodes:[],edges:[]}
   }`,
 };
 
