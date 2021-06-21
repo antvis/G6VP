@@ -67,8 +67,8 @@ export interface GIConfig {
   // layouts?: GILayoutConfig[] | GILayoutConfig;
   layout?: GILayoutConfig;
   components?: GIComponentConfig[];
-  nodeConfig?: GINodeConfig;
-  edgeConfig?: GIEdgeConfig;
+  node?: GINodeConfig;
+  edge?: GIEdgeConfig;
 }
 
 interface GINodeData {

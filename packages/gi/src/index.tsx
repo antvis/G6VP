@@ -23,7 +23,7 @@ const GISDK = (props: Props) => {
     components: [] as GIComponentConfig[],
   });
 
-  const { layout: layoutCfg, components: componentsCfg = [], nodeConfig: nodeCfg, edgeConfig: edgeCfg } = config;
+  const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = config;
 
   /** 数据发生改变 */
   React.useEffect(() => {
