@@ -1,5 +1,5 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
-import Lockr from 'lockr';
+import localforage from 'localforage';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
@@ -24,8 +24,6 @@ const Analysis = props => {
 
   const dispatch = useDispatch();
 
-  Lockr.set('projectId', projectId);
-
   const data = useSelector(state => state.data) || null;
 
   const [state, setState] = React.useState({
@@ -42,15 +40,19 @@ const Analysis = props => {
     });
   };
 
-  React.useEffect(() => {
-    const { config, data } = Lockr.get(projectId);
-    // debugger;
+  const loadProjectById = async (id: string) => {
+    const { config, data } = await localforage.getItem(projectId);
+    console.log(config, data)
     dispatch({
       type: 'update:config',
       id: projectId,
       config,
       data: data,
     });
+    localforage.setItem('projectId', projectId);
+  }
+  React.useEffect(() => {
+    loadProjectById(projectId);
   }, [projectId]);
 
   console.log('<<<<<<< render', st);
@@ -58,7 +60,7 @@ const Analysis = props => {
   return (
     <div className="gi">
       <div className="gi-navbar">
-        <Navbar history={history} projectId={projectId} />
+        <Navbar projectId={projectId} />
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">

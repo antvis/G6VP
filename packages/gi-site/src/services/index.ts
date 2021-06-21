@@ -1,8 +1,8 @@
-import Lockr from 'lockr';
+import localforage from 'localforage';
 
 export class GraphDataBase {
   source: any;
-  constructor() {}
+  constructor() { }
   graph() {
     return this.source;
   }
@@ -16,15 +16,15 @@ function looseJsonParse(obj) {
 }
 
 export const getGraphData = () => {
-  return new Promise(resolve => {
-    const id = Lockr.get('projectId');
-    let { data, services } = Lockr.get(id); // db.graph();
+  return new Promise(async resolve => {
+    const id = await localforage.getItem('projectId') as string;
+    let { data, services } = await localforage.getItem(id); // db.graph();
     let transFn = data => {
       return data;
     };
     try {
       transFn = looseJsonParse(services.getGraphDataTransform);
-    } catch (error) {}
+    } catch (error) { }
 
     if (transFn) {
       data = transFn(data);
@@ -47,9 +47,9 @@ export function getEdgesByNodes(nodes, edges) {
 
 /** 根据节点获取其一度关系 */
 export const getSubGraphData = (ids: string[]) => {
-  return new Promise(resolve => {
-    const id = Lockr.get('projectId');
-    let { data, services } = Lockr.get(id); // db.graph();
+  return new Promise(async resolve => {
+    const id = await localforage.getItem('projectId') as string;
+    let { data, services } = await localforage.getItem(id); // db.graph();
     let transFn = (data, ids) => {
       return data;
     };
@@ -57,7 +57,7 @@ export const getSubGraphData = (ids: string[]) => {
     try {
       transFn = looseJsonParse(services.getSubGraphDataTransform);
       // 这里需要用户从组件市场里定义初始化逻辑
-    } catch (error) {}
+    } catch (error) { }
 
     if (transFn) {
       data = transFn(data, ids);
@@ -80,3 +80,44 @@ export const getProfileData = () => {
     });
   });
 };
+
+/**
+ * 获取指定项目
+ * @param id 项目id
+ * @returns 
+ */
+export const getProjectById = async (id: string) => {
+  const p = await localforage.getItem(id);
+  return p;
+}
+
+/**
+ * 更新或保存指定项目
+ * @param id 项目id
+ * @param p 项目配置
+ * @returns 
+ */
+export const updateProjectById = async (id: string, p: any) => {
+  return await localforage.setItem(id, p);
+}
+
+export const removeProjectById = async (id: string) => {
+  return await localforage.removeItem(id);
+}
+
+/**
+ * 获取所有项目
+ * @returns 
+ */
+export const getProjectList = async () => {
+  const list = await localforage.getItem('projects')
+  return list || [];
+}
+
+/**
+ * 增加项目
+ */
+export const addProject = async (p: any) => {
+  const all = await getProjectList() as any[];
+  return await localforage.setItem('projects', [...all, p]);
+}
