@@ -253,26 +253,28 @@ export const defaultConfig = {
       },
     ],
 
-    edge: {
-      id: 'graphin-edge',
-      name: '官方内置边',
-      enable: true,
-      props: {
-        /** style.keyshape.stroke */
-        color: {
-          key: 'type',
-          enum: ['red', 'blue', 'green', 'yellow'],
-        },
-        /** style.keyshape.size */
-        size: {
-          key: 'weight',
-        },
-        /** style.label */
-        label: {
-          key: 'id',
+    edge: [
+      {
+        id: 'graphin-edge',
+        name: '官方内置边',
+        enable: true,
+        props: {
+          /** style.keyshape.stroke */
+          color: {
+            key: 'type',
+            enum: ['red', 'blue', 'green', 'yellow'],
+          },
+          /** style.keyshape.size */
+          size: {
+            key: 'weight',
+          },
+          /** style.label */
+          label: {
+            key: 'id',
+          },
         },
       },
-    },
+    ],
     layout: {
       // id: 'dagre',
       // options: {
