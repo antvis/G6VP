@@ -58,7 +58,7 @@ const Analysis = props => {
   return (
     <div className="gi">
       <div className="gi-navbar">
-        <Navbar history={history} />
+        <Navbar history={history} projectId={projectId} />
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">

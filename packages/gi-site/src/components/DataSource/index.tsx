@@ -11,7 +11,9 @@ const { Panel } = Collapse;
 
 const { TabPane } = Tabs;
 
-interface DataSourceProps {}
+interface DataSourceProps {
+  handleClose: () => void;
+}
 let sourceCodeRef;
 let intialInterfaceRef;
 

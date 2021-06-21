@@ -5,7 +5,7 @@ import { UserOutlined, BgColorsOutlined } from '@ant-design/icons';
 import './index.less';
 
 const BaseNavbar = props => {
-  const { history, children } = props;
+  const { history, children, menu } = props;
   return (
     <div className="navbar">
       <div
@@ -18,10 +18,11 @@ const BaseNavbar = props => {
       </div>
       {children}
       <div className="navbar-menu">
-        <Button icon={<UserOutlined />}>用户名01</Button>
+        {menu}
         <Tooltip title="切换主题">
           <Button icon={<BgColorsOutlined />}></Button>
         </Tooltip>
+        <Button icon={<UserOutlined />}></Button>
       </div>
     </div>
   );
