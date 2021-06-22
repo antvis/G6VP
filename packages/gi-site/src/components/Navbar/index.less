@@ -38,6 +38,9 @@
     }
   }
   .navbar-db {
+    flex: none;
+    position: absolute;
+    left: 200px;
     padding: 0px 10px;
     &:hover {
       background: #177ddc1a;
@@ -46,6 +49,8 @@
   }
   .navbar-title {
     // flex: 1;
+    min-width: 150px;
+    padding: 0 10px;
   }
   .navbar-menu {
     position: relative;
@@ -62,4 +67,24 @@
 
 .ant-drawer.ant-drawer-top.ant-drawer-open {
   top: 44px;
+}
+
+.export-panel {
+  height: 100%;
+  .export-panel-editor {
+    height: calc(100% - 52px);
+    overflow: scroll;
+
+    .react-monaco-editor-container {
+      .monaco-editor {
+        height: 100% !important;
+      }
+    }
+  }
+  .export-panel-footer {
+    padding-top: 20px;
+    .ant-btn {
+      margin-right: 10px;
+    }
+  }
 }
