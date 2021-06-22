@@ -9,7 +9,7 @@ const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 interface DataSourceProps {
-  handleClose: () => voild;
+  handleClose: () => void;
 }
 let monacoRef;
 

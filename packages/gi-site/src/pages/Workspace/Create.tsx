@@ -223,13 +223,13 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     }
   };
 
-  const runTransform = (data = inputData) => {
+  const runTransform = (renderData = inputData) => {
     const model = transformRef.current.editor.getModel();
     const value = model.getValue();
     setTransform(value);
     let nodes = [];
     let edges = [];
-    data.map(d => {
+    renderData.map(d => {
       nodes = [...nodes, ...d.data.nodes];
       edges = [...edges, ...d.data.edges];
     });
@@ -278,7 +278,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       content: (
         <>
           <Alert
-            message="提示信息"
+            message=""
             description="输入数据格式为{ nodes: { id, data }[], edges: { source, target, data}[]}且上传文件暂只支持json"
             type="info"
           />
@@ -302,7 +302,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
               />
             </Col>
             <Col span={1.5}>
-              <Button type="primary" icon={<RightOutlined />} onClick={runTransform} />
+              <Button type="primary" icon={<RightOutlined />} onClick={() => runTransform} />
             </Col>
             <Col span={11}>
               <MonacoEditor
