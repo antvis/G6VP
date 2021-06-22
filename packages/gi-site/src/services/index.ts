@@ -18,7 +18,9 @@ function looseJsonParse(obj) {
 export const getGraphData = () => {
   return new Promise(async resolve => {
     const id = await localforage.getItem('projectId') as string;
-    let { data, services } = await localforage.getItem(id); // db.graph();
+    console.log(id);
+    const project = await localforage.getItem(id);
+    let { data, services } = project // db.graph();
     let transFn = data => {
       return data;
     };
@@ -110,7 +112,13 @@ export const removeProjectById = async (id: string) => {
  * @returns 
  */
 export const getProjectList = async () => {
-  const list = await localforage.getItem('projects')
+  const list = [];
+  const iter = await localforage.iterate((value) => {
+    //@ts-ignore
+    if (value.isProject) {
+      list.push(value);
+    }
+  })
   return list || [];
 }
 
