@@ -11,12 +11,12 @@ interface WorkspaceProps {}
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const history = useHistory();
-  const { data: defaultProjects = [], getProjects } = useRequest(getProjectList);
+  const { data: defaultProjects = [], run: getProjects } = useRequest(getProjectList);
 
   const [lists, setLists] = React.useState(defaultProjects);
   React.useEffect(() => {
     getProjects().then(data => {
-      const list =  data.map(d => d.isProject);
+      const list =  data.filter(d => d.isProject);
       setLists(list);
     })
   }, []);
