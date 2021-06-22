@@ -11,6 +11,7 @@ import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './ComponentMeta';
 import { getComponentMetaInfo } from './componentMetaInfo';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import './index.less';
 
 const { TabPane } = Tabs;
@@ -65,46 +66,51 @@ const ComponentMarket = () => {
   };
 
   return (
-    <div className="componet-market">
-      <Tabs defaultActiveKey="component" onChange={onChange}>
-        {Object.keys(list).map(key => (
-          <TabPane tab={list[key].title} key={key}>
-            <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
-              <div className="gi-sdk-wrapper">
-                <div className="content view">
-                  <GISDK
-                    key={getUid()}
-                    config={{ ...defaultConfig, components: [{ ...component }] }}
-                    services={{
-                      getGraphData,
-                    }}
-                  ></GISDK>
+    <>
+      <BaseNavbar>
+        <h4>物料中心</h4>
+      </BaseNavbar>
+      <div className="componet-market">
+        <Tabs defaultActiveKey="component" onChange={onChange}>
+          {Object.keys(list).map(key => (
+            <TabPane tab={list[key].title} key={key}>
+              <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
+                <div className="gi-sdk-wrapper">
+                  <div className="content view">
+                    <GISDK
+                      key={getUid()}
+                      config={{ ...defaultConfig, components: [{ ...component }] }}
+                      services={{
+                        getGraphData,
+                      }}
+                    ></GISDK>
+                  </div>
+                  <div className="content config">
+                    <ComponentMetaPanel
+                      onChange={handleMetaInfoChange}
+                      config={getComponentMetaInfo(component.id, data)}
+                    />
+                  </div>
                 </div>
-                <div className="content config">
-                  <ComponentMetaPanel
-                    onChange={handleMetaInfoChange}
-                    config={getComponentMetaInfo(component.id, data)}
+                <div>
+                  <MonacoEditor
+                    // ref={node => {
+                    //   monacoRef = node;
+                    // }}
+                    height="200px"
+                    language="js"
+                    theme="vs-dark"
+                    // value={}
+                    options={{}}
+                    // editorDidMount={editorDidMount}
                   />
                 </div>
-              </div>
-              <div>
-                <MonacoEditor
-                  // ref={node => {
-                  //   monacoRef = node;
-                  // }}
-                  height="200px"
-                  language="js"
-                  theme="vs-dark"
-                  // value={}
-                  options={{}}
-                  // editorDidMount={editorDidMount}
-                />
-              </div>
-            </TabContent>
-          </TabPane>
-        ))}
-      </Tabs>
-    </div>
+              </TabContent>
+            </TabPane>
+          ))}
+        </Tabs>
+      </div>
+    </>
   );
 };
 
