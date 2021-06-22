@@ -1,12 +1,11 @@
 import * as React from 'react';
 import ComponentPanel from './ComponentPanel';
 import './index.less';
-import LayoutConfig from './layout/layout';
+import LayoutPanel from './LayoutPanel';
 import StyleConfig from './style/style';
 import StylePanel from './StylePanel';
 
 const ConfigMap = {
-  layout: LayoutConfig,
   style: StyleConfig,
 };
 
@@ -40,6 +39,9 @@ const GIMetaPanel = props => {
   }
   if (value === 'components') {
     return <ComponentPanel {...props} />;
+  }
+  if (value === 'layout') {
+    return <LayoutPanel {...props} />;
   }
   return <StylePanel {...props} />;
 
