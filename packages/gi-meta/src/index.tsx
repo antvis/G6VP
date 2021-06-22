@@ -1,13 +1,11 @@
-import GUI from '@ali/react-datav-gui';
 import * as React from 'react';
-import ComponentsConfig from './components/componentPanel';
-import configation from './configation';
+import ComponentPanel from './ComponentPanel';
 import './index.less';
 import LayoutConfig from './layout/layout';
 import StyleConfig from './style/style';
+import StylePanel from './StylePanel';
 
 const ConfigMap = {
-  components: ComponentsConfig,
   layout: LayoutConfig,
   style: StyleConfig,
 };
@@ -32,13 +30,37 @@ interface ConfigationPanelProps {
 
 const GIMetaPanel = props => {
   const { value, onChange, data, config, meta } = props;
-  const configObj = configation(value, data, config, meta);
+  // const configObj = configation(value, data, config, meta);
 
-  console.log('GIMetaPanel', configObj, meta);
+  const { components, layout, node, edge } = config;
 
-  if (config) {
-    return <GUI {...configObj} onChange={onChange} />;
+  // console.log('GIMetaPanel', configObj, meta, props);
+  if (!config) {
+    return null;
   }
+  if (value === 'components') {
+    return <ComponentPanel {...props} />;
+  }
+  return <StylePanel {...props} />;
+
+  // return (
+  //   <div>
+  //     <div className={`gi-tab ${'style' === value}`}>
+  //       <GUI {...configObj} onChange={onChange} />
+  //     </div>
+  //     <div className={`gi-tab ${'layout' === value}`}>
+  //       <GUI {...configObj} onChange={onChange} />
+  //     </div>
+  //     <div className={`gi-tab ${'components' === value}`}>
+  //       <GUI {...configObj} onChange={onChange} />
+  //     </div>
+  //   </div>
+  // );
 };
 
-export default GIMetaPanel;
+export default React.memo(GIMetaPanel, (prevProps, nextProps) => {
+  if (prevProps.value !== nextProps.value) {
+    return false;
+  }
+  return true;
+});
