@@ -34,7 +34,7 @@ const ConfigationPanel = props => {
     console.log('ConfigationPanel onChange', evt);
 
     const { rootValue } = evt;
-    const { components } = rootValue;
+    const { components, layout } = rootValue;
     if (components) {
       /** 分析组件 */
       const comps = getComponents(components);
@@ -43,6 +43,27 @@ const ConfigationPanel = props => {
         config: {
           ...config,
           components: comps,
+        },
+      });
+    }
+
+    if (layout) {
+      /** 布局设置 */
+      const { toggle } = layout;
+      const layoutType = `${toggle}Group`;
+      const layoutOptions = layout[layoutType];
+      dispatch({
+        type: 'update:config',
+        config: {
+          ...config,
+          layout: {
+            id: 'Layout',
+            name: '官方内置布局',
+            props: {
+              type: toggle,
+              options: layoutOptions,
+            },
+          },
         },
       });
     }
