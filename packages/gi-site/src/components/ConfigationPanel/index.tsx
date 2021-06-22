@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 const getComponentsByMap = componentMap => {
   const componentKeys = Object.keys(componentMap);
   return componentKeys.map(id => {
-    const { enable, ...props } = componentMap[id];
+    const props = componentMap[id];
+    const { giEnable } = props;
     return {
       id,
       props,
-      enable,
+      enable: giEnable,
     };
   });
 };
@@ -54,7 +55,4 @@ const ConfigationPanel = props => {
   );
 };
 
-export default React.memo(ConfigationPanel, (prevProps, nextProps) => {
-  console.log('prevProps', prevProps);
-  return false;
-});
+export default ConfigationPanel;
