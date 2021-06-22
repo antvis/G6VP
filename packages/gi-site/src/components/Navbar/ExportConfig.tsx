@@ -9,7 +9,6 @@ import { copyText, saveAs, generatorconfigToCode } from './utils';
 import './index.less';
 
 const ExportConfig = props => {
-  console.log(123);
   const config = useSelector(state => state.config);
   const exampleCode = generatorconfigToCode(config);
   /** 复制 */
