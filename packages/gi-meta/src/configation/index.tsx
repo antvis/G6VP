@@ -5,7 +5,7 @@ import layout from '../layout/layout';
 import style from '../style/style';
 
 const getComponentsConfig = (data, config, meta) => {
-  return componentPanel({ name: 'components', children: config, data, meta });
+  return componentPanel({ name: 'components', config, data, meta });
 };
 
 const getLayoutConfig = (data, config) => {
