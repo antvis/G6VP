@@ -4,17 +4,6 @@ import './index.less';
 import layoutConfig from './layout/layout';
 
 const { valueObj: defaultValueObj, configObj } = layoutConfig;
-/** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
-const getDefaultValues = meta => {
-  const { children } = meta;
-  const keys = Object.keys(children);
-  const values = {};
-  keys.forEach(key => {
-    const { default: defaultValue } = children[key];
-    values[key] = defaultValue;
-  });
-  return values;
-};
 
 /** 组件模块 配置面板 */
 const LayoutPanel = props => {
@@ -32,7 +21,6 @@ const LayoutPanel = props => {
       },
     },
   };
-  console.log('layoutConfig', layoutConfig, defaultValueObj, valueObj);
 
   return (
     <div>
