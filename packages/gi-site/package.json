@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "umi dev",
-    "build": "umi build"
+    "build": "NODE_OPTIONS=--max_old_space_size=8192 && umi build"
   },
   "dependencies": {
     "@alipay/gi-meta": "*",
