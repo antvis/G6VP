@@ -7,6 +7,9 @@ const getMeta = context => {
     };
   });
   return {
+    /** 分类信息 */
+    categoryId: 'components-interaction',
+    id: 'NodeContextMenu',
     type: 'group',
     name: '右键菜单',
     fold: false,
