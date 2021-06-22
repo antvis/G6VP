@@ -19,4 +19,7 @@ export default {
   request: {
     dataField: '',
   },
+  nodeModulesTransform: {
+    type: 'none',
+  },
 };

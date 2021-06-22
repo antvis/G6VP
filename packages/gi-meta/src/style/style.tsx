@@ -12,11 +12,13 @@ const configObj = {
       node: {
         name: '节点',
         mode: 'single',
+
         children: {
           'node-select': {
             name: '节点物料',
             type: 'group',
             enableHide: false,
+            fold: false,
             children: {
               font: {
                 name: '选择节点',
@@ -28,18 +30,6 @@ const configObj = {
                     value: 'thenode',
                     label: '官方节点',
                   },
-                  {
-                    value: 'graphin-node',
-                    label: 'Graphin内置节点',
-                  },
-                  {
-                    value: 'light-node',
-                    label: '浅色节点',
-                  },
-                  {
-                    value: 'dark-node',
-                    label: '深色节点',
-                  },
                 ],
               },
             },
@@ -48,6 +38,7 @@ const configObj = {
             name: '大小',
             type: 'group',
             enableHide: false,
+            fold: false,
             children: {
               channel: {
                 name: '映射字段',
@@ -68,6 +59,7 @@ const configObj = {
               size: {
                 name: '半径',
                 type: 'sizeMapping',
+
                 min: 0,
                 max: 50,
                 step: 1,
@@ -89,6 +81,7 @@ const configObj = {
             name: '颜色',
             type: 'group',
             enableHide: false,
+            fold: false,
             children: {
               channel: {
                 name: '映射字段',
@@ -140,6 +133,7 @@ const configObj = {
           'edge-select': {
             name: '边物料',
             type: 'group',
+            fold: false,
             enableHide: false,
             children: {
               edges: {
@@ -171,6 +165,7 @@ const configObj = {
           'size-edge': {
             name: '大小',
             type: 'group',
+            fold: false,
             enableHide: false,
             children: {
               channel: {
@@ -212,6 +207,7 @@ const configObj = {
           'color-edge': {
             name: '颜色',
             type: 'group',
+            fold: false,
             enableHide: false,
             children: {
               channel: {
