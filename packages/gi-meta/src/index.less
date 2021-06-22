@@ -80,3 +80,16 @@
   --datav-gui-transition-time: 0.3s;
   --datav-gui-transition-easing: ease-in-out;
 }
+
+.gi-tab{
+  visibility:hidden;
+  position: absolute;
+  top: 40px;
+  width: 300px;
+  &.true {
+    visibility:visible;
+  }
+  &.false {
+    visibility:hidden;
+  }
+}
