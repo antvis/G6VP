@@ -7,6 +7,7 @@ import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
 import { getUid } from './utils';
+import './index.less';
 
 Lockr.prefix = 'gi_';
 
@@ -276,45 +277,47 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     {
       title: '上传数据',
       content: (
-        <>
+        <div className="upload-panel" >
           <Alert
             message=""
             description="输入数据格式为{ nodes: { id, data }[], edges: { source, target, data}[]}且上传文件暂只支持json"
             type="info"
           />
-          <Row align="middle" style={{ padding: '10px 0px' }}>
-            上传数据源
+          <div className="upload-panel-section" >
+            <Row align="middle" style={{ padding: '10px 10px' }}>
+              上传数据源
             <Tooltip title="上传数据源">
-              <Upload {...uploadProps}>
-                <Button icon={<UploadOutlined />}>select file</Button>
-              </Upload>
-            </Tooltip>
-          </Row>
-          <Row align="middle" justify="space-around">
-            <Col span={11}>
-              <MonacoEditor
-                ref={transformRef}
-                width="100%"
-                height="70vh"
-                language="javascript"
-                theme="vs-dark"
-                value={transform}
-              />
-            </Col>
-            <Col span={1.5}>
-              <Button type="primary" icon={<RightOutlined />} onClick={() => runTransform} />
-            </Col>
-            <Col span={11}>
-              <MonacoEditor
-                ref={dataRef}
-                width="100%"
-                height="70vh"
-                language="json"
-                theme="vs-dark"
-                value={JSON.stringify(data, null, 2)}
-              />
-            </Col>
-          </Row>
+                <Upload {...uploadProps}>
+                  <Button icon={<UploadOutlined />}>select file</Button>
+                </Upload>
+              </Tooltip>
+            </Row>
+            <Row align="middle" justify="space-around">
+              <Col span={11}>
+                <MonacoEditor
+                  ref={transformRef}
+                  width="100%"
+                  height="70vh"
+                  language="javascript"
+                  theme="vs-dark"
+                  value={transform}
+                />
+              </Col>
+              <Col span={1.5}>
+                <Button type="primary" icon={<RightOutlined />} onClick={runTransform} />
+              </Col>
+              <Col span={11}>
+                <MonacoEditor
+                  ref={dataRef}
+                  width="100%"
+                  height="70vh"
+                  language="json"
+                  theme="vs-dark"
+                  value={JSON.stringify(data, null, 2)}
+                />
+              </Col>
+            </Row>
+          </div>
           <Row style={{ padding: '10px 0px' }}>
             <Button style={{ margin: '0 10px' }} onClick={() => prev()}>
               上一步
@@ -323,13 +326,13 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
               下一步
             </Button>
           </Row>
-        </>
+        </div>
       ),
     },
     {
       title: '数据格式校验',
       content: (
-        <>
+        <div className='dataCheck-panel'>
           <Row>数据格式校验成功！</Row>
           <Row>
             <Tabs defaultActiveKey="node">
@@ -349,12 +352,12 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
               进入分析
             </Button>
           </Row>
-        </>
+        </div>
       ),
     },
   ];
   return (
-    <div>
+    <div className="create-panel-wrap">
       <Steps current={current}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
