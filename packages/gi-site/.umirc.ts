@@ -15,4 +15,7 @@ export default {
     dark: false,
     compact: false,
   },
+  nodeModulesTransform: {
+    type: 'none',
+  },
 };
