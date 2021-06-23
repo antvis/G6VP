@@ -50,7 +50,7 @@ const ConfigationPanel = props => {
     if (layout) {
       /** 布局设置 */
       const { toggle } = layout;
-      const layoutType = `${toggle}Group`;
+      const layoutType = `${toggle}`;
       const layoutOptions = layout[layoutType];
       dispatch({
         type: 'update:config',

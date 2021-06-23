@@ -11,12 +11,11 @@ const LayoutPanel = props => {
   const { layout } = config;
   const { type, options } = layout.props;
 
-  const layoutTypeName = `${type}Group`;
   const valueObj = {
     layout: {
       ...defaultValueObj.layout,
       toggle: type,
-      [layoutTypeName]: {
+      [type]: {
         ...options,
       },
     },

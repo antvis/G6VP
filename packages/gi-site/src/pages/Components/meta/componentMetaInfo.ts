@@ -1,5 +1,5 @@
 const componentMetas = {
-  Legend: {
+  NodeLegend: {
     options: {
       type: 'group',
       name: '图例',
@@ -121,7 +121,7 @@ const componentMetas = {
 };
 
 export const getComponentMetaInfo = (id: string, data: Object) => {
-  if (id === 'Legend' && componentMetas[id]) {
+  if (id === 'NodeLegend' && componentMetas[id]) {
     const { nodes = [] } = data;
     const options = nodes.map(node => {
       return {
