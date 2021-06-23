@@ -1,6 +1,6 @@
 export default {
   base: '/',
-  publicPath: '/public/',
+  publicPath: '/',
   hash: true,
   history: {
     type: 'hash',
@@ -14,5 +14,8 @@ export default {
   antd: {
     dark: false,
     compact: false,
+  },
+  nodeModulesTransform: {
+    type: 'none',
   },
 };

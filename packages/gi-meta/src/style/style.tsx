@@ -12,6 +12,7 @@ const configObj = {
       node: {
         name: '节点',
         mode: 'single',
+
         children: {
           'market': {
             name: '节点物料',
@@ -28,18 +29,6 @@ const configObj = {
                   {
                     value: 'thenode',
                     label: '官方节点',
-                  },
-                  {
-                    value: 'graphin-node',
-                    label: 'Graphin内置节点',
-                  },
-                  {
-                    value: 'light-node',
-                    label: '浅色节点',
-                  },
-                  {
-                    value: 'dark-node',
-                    label: '深色节点',
                   },
                 ],
               },
@@ -70,6 +59,7 @@ const configObj = {
               sizeMapping: {
                 name: '半径',
                 type: 'sizeMapping',
+
                 min: 0,
                 max: 50,
                 step: 1,
@@ -91,7 +81,7 @@ const configObj = {
             name: '颜色',
             type: 'group',
             enableHide: false,
-            "fold": true,
+            fold: false,
             children: {
               keyMapping: {
                 name: '映射字段',
@@ -143,6 +133,7 @@ const configObj = {
           'market': {
             name: '边物料',
             type: 'group',
+            fold: false,
             enableHide: false,
             "fold": false,
             children: {
@@ -175,6 +166,7 @@ const configObj = {
           'size': {
             name: '边宽',
             type: 'group',
+            fold: false,
             enableHide: false,
             "fold": true,
             children: {
@@ -217,6 +209,7 @@ const configObj = {
           'color': {
             name: '颜色',
             type: 'group',
+            fold: false,
             enableHide: false,
             "fold": false,
             children: {

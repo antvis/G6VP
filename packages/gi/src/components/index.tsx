@@ -1,7 +1,6 @@
 import { MiniMap } from '@antv/graphin-components';
 import CanvasClick from './CanvasClick';
 import { NodeContextMenu } from './ContextMenu';
-import getLegendMappingKey from './Legend/getLegendMappingKey';
 import NodeLegend from './Legend/NodeLegend';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
@@ -28,7 +27,7 @@ const getComponentsFromMarket: any = () => {
       },
     },
     NodeLegend: {
-      id: 'Legend',
+      id: 'NodeLegend',
       label: '节点图例',
       category: 'analysis',
       component: NodeLegend,
