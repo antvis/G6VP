@@ -73,7 +73,7 @@ const baseConfig = {
 
 export const defaultConfig = {
   /** 燎原计划 */
-  dataKg: {
+  knowledgeGraph: {
     ...baseConfig,
     components: [
       {
@@ -94,7 +94,7 @@ export const defaultConfig = {
     ],
   },
   /** 　网商图谱 */
-  knowledgeGraph: {
+  riskControl: {
     ...baseConfig,
     components: [
       {
