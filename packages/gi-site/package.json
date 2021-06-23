@@ -8,6 +8,7 @@
     "build": "NODE_OPTIONS=--max_old_space_size=8192 && umi build"
   },
   "dependencies": {
+    "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/gi-meta": "*",
     "@alipay/graphinsight": "*",
     "@alipay/tech-ui": "^2.12.1",
