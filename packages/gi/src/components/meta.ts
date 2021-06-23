@@ -1,8 +1,8 @@
 import NodeContextMenu from './ContextMenu/meta';
-import Legend from './Legend/meta';
+import NodeLegend from './Legend/meta';
 
 const meta = {
-  Legend,
+  NodeLegend,
   NodeContextMenu,
 };
 
