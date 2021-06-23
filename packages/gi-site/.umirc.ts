@@ -1,6 +1,6 @@
 export default {
   base: '/',
-  publicPath: '/public/',
+  publicPath: '/',
   hash: true,
   history: {
     type: 'hash',
