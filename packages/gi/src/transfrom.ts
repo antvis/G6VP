@@ -40,13 +40,15 @@ const transform = (s, config) => {
       const sizeKeys = MappingBySize.keys();
       const matchSizeIndex = [...sizeKeys].findIndex(c => c === enumValueBySize);
 
+      debugger
+
       return {
         id: node.id,
         data: node.data,
         style: {
           keyshape: {
-            stroke: Color?.enum?.[matchColorIndex],
-            fill: Color?.enum?.[matchColorIndex],
+            stroke: Color?.scale?.range?.[matchColorIndex],
+            fill: Color?.scale?.range?.[matchColorIndex],
             size: Size?.enum?.[matchSizeIndex],
           },
           label: {

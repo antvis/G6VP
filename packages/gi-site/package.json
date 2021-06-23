@@ -22,7 +22,7 @@
     "classnames": "^2.2.6",
     "dayjs": "^1.10.5",
     "immutability-helper-x": "^1.0.5",
-    "js-beautify": "^1.11.0",
+    "js-beautify": "^1.14.0",
     "lockr": "^0.8.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
