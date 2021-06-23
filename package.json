@@ -12,10 +12,11 @@
     "meta": "cd packages/gi-meta && npm run start",
     "site": "cd packages/gi-site && npm run start",
     "bootstrap": "lerna bootstrap",
-    "build": "npm run bootstrap && npm run build:core && npm run build:meta && npm run build:site",
+    "build": "npm run bootstrap && npm run build:core && npm run build:meta && npm run build:site && npm run move:dist",
     "build:core": "cd packages/gi && npm run build",
     "build:meta": "cd packages/gi-meta && npm run build",
     "build:site": "cd packages/gi-site && npm run build",
+    "move:dist": "node ./deploy.js",
     "list": "lerna list",
     "link": "lerna link",
     "clean": "lerna clean"
