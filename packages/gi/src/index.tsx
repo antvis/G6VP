@@ -1,5 +1,6 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
+import CanvasClick from './components/CanvasClick';
 import getComponentsFromMarket from './components/index';
 import meta from './components/meta';
 import transform from './transfrom';
@@ -105,6 +106,8 @@ const GISDK = (props: Props) => {
 
   return (
     <Graphin data={data} layout={layout} enabledStack={true}>
+      {/** 内置的组件 */}
+      <CanvasClick />
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;
