@@ -27,7 +27,7 @@ const getComponentsFromMarket: any = config => {
       },
     },
     NodeLegend: {
-      id: 'Legend',
+      id: 'NodeLegend',
       label: '节点图例',
       category: 'analysis',
       component: NodeLegend,

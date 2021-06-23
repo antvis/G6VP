@@ -48,10 +48,6 @@ const componentMetas = {
           name: '配置参数',
           type: 'group',
           fold: false,
-          // showInPanel: {
-          //   conditions: [['layout.toggle', '$eq', 'force']],
-          //   logicalType: '$or',
-          // },
           children: {
             linkDistance: {
               type: 'slider',
@@ -92,6 +88,32 @@ const componentMetas = {
               statusText: false,
             },
           },
+        },
+      },
+    },
+  },
+  MiniMap: {
+    options: {
+      name: 'minimap',
+      type: 'group',
+      fold: false,
+      enableHide: false,
+      children: {
+        width: {
+          type: 'slider',
+          caption: '宽',
+          min: 1,
+          max: 500,
+          step: 1,
+          default: 100,
+        },
+        height: {
+          type: 'slider',
+          caption: '高',
+          min: 1,
+          max: 500,
+          step: 1,
+          default: 100,
         },
       },
     },
