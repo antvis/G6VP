@@ -13,16 +13,21 @@ const configObj = {
         name: '切换布局',
         type: 'select',
         useFont: true,
-        default: 'force',
+        default: 'concentric',
         options: [
-          {
-            value: 'force',
-            label: '经典力导向布局',
-          },
           {
             value: 'concentric',
             label: '同心圆布局',
           },
+          {
+            value: 'graphin-force',
+            label: '力导向布局',
+          },
+          {
+            value: 'force',
+            label: '经典力导向布局',
+          },
+
           {
             value: 'circular',
             label: '圆形布局',
@@ -41,7 +46,56 @@ const configObj = {
           },
         ],
       },
-      forceGroup: {
+      'graphin-force': {
+        name: '配置参数',
+        type: 'group',
+        fold: false,
+        showInPanel: {
+          conditions: [['layout.toggle', '$eq', 'graphin-force']],
+          logicalType: '$or',
+        },
+        children: {
+          stiffness: {
+            type: 'slider',
+            caption: '边作用力',
+            min: 1,
+            max: 500,
+            step: 1,
+            default: 200,
+          },
+          repulsion: {
+            type: 'slider',
+            caption: '节点作用力',
+            min: -100,
+            max: 2000,
+            step: 10,
+            default: 1000,
+          },
+          damping: {
+            type: 'slider',
+            caption: '阻尼系数',
+            default: 0.9,
+            step: 0.1,
+            min: 0,
+            max: 1,
+          },
+          MaxIterations: {
+            type: 'slider',
+            caption: '最大迭代数',
+            default: 10000,
+            min: 1000,
+            max: 20000,
+            step: 100,
+          },
+          animation: {
+            type: 'switch',
+            caption: '是否开启动画',
+            default: true,
+            statusText: false,
+          },
+        },
+      },
+      force: {
         name: '配置参数',
         type: 'group',
         fold: false,
@@ -90,7 +144,7 @@ const configObj = {
           },
         },
       },
-      concentricGroup: {
+      concentric: {
         type: 'group',
         name: '配置参数',
         fold: false,
@@ -139,7 +193,7 @@ const configObj = {
           },
         },
       },
-      circularGroup: {
+      circular: {
         type: 'group',
         name: '配置参数',
         fold: false,
@@ -182,7 +236,7 @@ const configObj = {
           },
         },
       },
-      dagreGroup: {
+      dagre: {
         type: 'group',
         name: '配置参数',
         fold: false,
@@ -232,7 +286,7 @@ const configObj = {
           },
         },
       },
-      radialGroup: {
+      radial: {
         type: 'group',
         name: '配置参数',
         fold: false,
@@ -269,7 +323,7 @@ const configObj = {
           },
         },
       },
-      gridGroup: {
+      grid: {
         type: 'group',
         name: '配置参数',
         fold: false,
