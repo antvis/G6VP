@@ -8,6 +8,7 @@
     "build": "NODE_OPTIONS=--max_old_space_size=8192 && umi build"
   },
   "dependencies": {
+    "@ali/datav-gui-color-scale": "^1.0.9",
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/gi-meta": "*",
     "@alipay/graphinsight": "*",
@@ -23,7 +24,7 @@
     "classnames": "^2.2.6",
     "dayjs": "^1.10.5",
     "immutability-helper-x": "^1.0.5",
-    "js-beautify": "^1.11.0",
+    "js-beautify": "^1.14.0",
     "lockr": "^0.8.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

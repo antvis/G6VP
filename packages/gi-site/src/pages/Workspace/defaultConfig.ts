@@ -135,5 +135,90 @@ export const defaultConfig = {
         enable: true,
       },
     ],
+    node: [
+      {
+        id: 'graphin-node',
+        enable: true,
+        name: '官方内置节点',
+        props: {
+          /** style.keyshape.color */
+          color: {
+            fixed: "#2483ff",
+            mapping: true,
+            scale:{
+              custom: false,
+              range:["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
+            },
+            key: 'type',
+          },
+          /** style.keyshape.size */
+          size: {
+            key: 'weight',
+            fixed: 5,
+            mapping: true,
+            scale: {
+              custom: false,
+              domain: [0, 1000],
+              range: [7, 30],
+            },
+          },
+          label: {
+            key: 'id',
+          },
+        },
+      },
+    ],
+
+    edge: [
+      {
+        id: 'graphin-edge',
+        name: '官方内置边',
+        enable: true,
+        props: {
+          /** style.keyshape.stroke */
+          color: {
+            fixed: "#2483ff",
+            mapping: true,
+            scale: {
+              custom: false,
+              range: ["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
+            },
+            key: 'type',
+          },
+          /** style.keyshape.size */
+          size: {
+            key: 'weight',
+            fixed: 5,
+            mapping: true,
+            scale: {
+              custom: false,
+              domain: [0, 1000],
+              range: [7, 30],
+            },
+          },
+          /** style.label */
+          label: {
+            key: 'id',
+          },
+        },
+      },
+    ],
+    layout: {
+      // id: 'dagre',
+      // options: {
+      //   rankdir: 'LR',
+      // },
+      id: 'Layout',
+      name: '官方内置布局',
+      props: {
+        type: 'graphin-force',
+        options: {
+          animation: true,
+          preset: {
+            type: 'concentric',
+          },
+        },
+      },
+    },
   },
 };

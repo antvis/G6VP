@@ -22,6 +22,8 @@ const Analysis = props => {
   const st = useSelector(state => state);
   const { config, key } = st;
 
+  console.log('Analysis', st);
+
   const dispatch = useDispatch();
 
   Lockr.set('projectId', projectId);
@@ -52,8 +54,6 @@ const Analysis = props => {
       data: data,
     });
   }, [projectId]);
-
-  console.log('<<<<<<< render', st);
 
   return (
     <div className="gi">
