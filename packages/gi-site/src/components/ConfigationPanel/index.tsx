@@ -1,5 +1,5 @@
 import Meta from '@alipay/gi-meta';
-import { GIComponentsMeta } from '@alipay/graphinsight';
+import { GIComponentsMeta, GIComponents } from '@alipay/graphinsight';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,6 +27,8 @@ const getComponents = components => {
   return [...analysisComponents, ...interactionComponents];
 };
 
+const market = GIComponents('id');
+
 const ConfigationPanel = props => {
   const dispatch = useDispatch();
   const { config } = useSelector(state => state);
@@ -34,7 +36,7 @@ const ConfigationPanel = props => {
     console.log('ConfigationPanel onChange', evt);
 
     const { rootValue } = evt;
-    const { components, layout } = rootValue;
+    const { components, layout, style } = rootValue;
     if (components) {
       /** 分析组件 */
       const comps = getComponents(components);
@@ -67,11 +69,46 @@ const ConfigationPanel = props => {
         },
       });
     }
+
+    if (style) {
+      let { node, edge } = style;
+      const nodeConfig = config.node.map(c => {
+        // 后续需要根据节点来判断是否需要覆盖
+        return {
+          ...c,
+          ...node,
+        }
+      });
+
+      const edgeConfig = config.edge.map(c => {
+        // 后续需要根据节点来判断是否需要覆盖
+        return {
+          ...c,
+          ...edge,
+        }
+      });
+
+      dispatch({
+        type: 'update:config',
+        config: {
+          ...config,
+          node: {
+            ...nodeConfig,
+          },
+          edge: {
+            ...edgeConfig,
+          }
+        },
+      });
+    }
   };
 
+  
+
+  console.log('ConfigationPanel', config, props);
   return (
     <div className="gi-config-pannel">
-      <Meta {...props} onChange={onChange} meta={GIComponentsMeta} />
+      <Meta {...props} onChange={onChange} meta={GIComponentsMeta} market={market} />
     </div>
   );
 };
