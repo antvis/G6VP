@@ -1,4 +1,4 @@
-import { Collapse, Tabs } from 'antd';
+import { Collapse, Tabs, Button } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
@@ -49,7 +49,7 @@ const GetGraph: React.FunctionComponent<DataSourceProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>初始化接口：在此可以完成初始化数据的过滤，筛选，转化等任务</button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>初始化接口：在此可以完成初始化数据的过滤，筛选，转化等任务</Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;

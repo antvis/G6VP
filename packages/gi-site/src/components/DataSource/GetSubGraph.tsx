@@ -1,4 +1,4 @@
-import { Collapse, Tabs } from 'antd';
+import { Collapse, Tabs, Button } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
@@ -9,7 +9,7 @@ const { Panel } = Collapse;
 const { TabPane } = Tabs;
 
 interface DataSourceProps {
-  handleClose: () => voild;
+  handleClose: () => void;
 }
 let monacoRef;
 
@@ -48,7 +48,7 @@ const GetSubGraph: React.FunctionComponent<DataSourceProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>根据ID集合，获取子图的接口</button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>根据ID集合，获取子图的接口</Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;

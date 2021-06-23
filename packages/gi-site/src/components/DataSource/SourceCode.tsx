@@ -1,4 +1,4 @@
-import { Collapse, Tabs } from 'antd';
+import { Collapse, Tabs, Button } from 'antd';
 import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
@@ -50,7 +50,7 @@ const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>更新源数据</button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>更新源数据</Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;
