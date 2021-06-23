@@ -5,8 +5,8 @@ import liaoyuan from '../../mock/liaoyuan.json';
 
 export const defaultData = {
   GIConfig: daxue,
-  knowledgeGraph: enterprise,
-  riskControl: liaoyuan,
+  knowledgeGraph: liaoyuan,
+  riskControl: enterprise,
   Empty: demo,
 };
 
@@ -28,7 +28,7 @@ data => {
   return { nodes, edges }
 }
 `;
-const riskControlTrans = `
+const knowledgeGraph = `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
@@ -49,7 +49,7 @@ data => {
 
 export const defaultTrans = {
   GIConfig: GIDefaultTrans,
-  knowledgeGraph: GIDefaultTrans,
-  riskControl: riskControlTrans,
+  knowledgeGraph: knowledgeGraph,
+  riskControl: GIDefaultTrans,
   Empty: GIDefaultTrans,
 };

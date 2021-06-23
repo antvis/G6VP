@@ -6,8 +6,8 @@ import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
-import { getUid } from './utils';
 import './index.less';
+import { getUid } from './utils';
 
 Lockr.prefix = 'gi_';
 
@@ -29,7 +29,7 @@ const lists = [
   },
   {
     id: 'knowledgeGraph',
-    title: '知识图谱',
+    title: '数据图谱',
   },
   {
     id: 'riskControl',
