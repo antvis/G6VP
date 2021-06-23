@@ -44,7 +44,18 @@ const ComponentPanel = props => {
 
   components.forEach(element => {
     const { id, props } = element;
-    const componentMeta = meta[id]({ data, keys });
+    const defaultFunction = params => {
+      return {
+        categoryId: 'components-analysis',
+        id: id,
+        type: 'group', //这个可以不写
+        fold: false, // 这个可以不写
+        name: id,
+        children: {},
+      };
+    };
+    const metaFunction = meta[id] || defaultFunction;
+    const componentMeta = metaFunction({ data, keys });
 
     componentMeta.children['giEnable'] = {
       name: '是否加载',
