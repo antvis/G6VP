@@ -1,11 +1,12 @@
+import daxue from '../../mock/daxue.json';
 import demo from '../../mock/demo.json';
 import enterprise from '../../mock/enterprise.json';
 import liaoyuan from '../../mock/liaoyuan.json';
 
 export const defaultData = {
-  GIConfig: demo,
-  knowledgeGraph: enterprise,
-  riskControl: liaoyuan,
+  GIConfig: daxue,
+  knowledgeGraph: liaoyuan,
+  riskControl: enterprise,
   Empty: demo,
 };
 
@@ -27,7 +28,7 @@ data => {
   return { nodes, edges }
 }
 `;
-const riskControlTrans = `
+const knowledgeGraph = `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
@@ -48,7 +49,7 @@ data => {
 
 export const defaultTrans = {
   GIConfig: GIDefaultTrans,
-  knowledgeGraph: GIDefaultTrans,
-  riskControl: riskControlTrans,
+  knowledgeGraph: knowledgeGraph,
+  riskControl: GIDefaultTrans,
   Empty: GIDefaultTrans,
 };

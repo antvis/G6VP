@@ -1,5 +1,6 @@
-import { Legend } from '@antv/graphin-components';
+// import { Legend } from '@antv/graphin-components';
 import * as React from 'react';
+import Legend from './GraphinLegend/index';
 
 interface LegendAProps {
   sortKey: string;

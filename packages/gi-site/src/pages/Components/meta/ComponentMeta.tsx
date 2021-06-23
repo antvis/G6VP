@@ -1,6 +1,8 @@
 import React from 'react';
 import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
+import ColorMapping from '@ali/datav-gui-color-scale';
+import SizeMapping from '@ali/datav-gui-size-scale';
 
 const Empty = () => {
   return <div>暂无可配置的信息</div>;
@@ -16,9 +18,13 @@ const ComponentMetaPanel: React.FC<ComponentMetaPanelProps> = ({ config, onChang
   if (!config) {
     return <Empty />;
   }
-  debugger;
+
+  const freeExtensions = {
+    sizeMapping: SizeMapping,
+    colorMapping: ColorMapping,
+  };
   const valueObj = extractDefault({ config });
-  const props = { configObj: config, valueObj };
+  const props = { configObj: config, valueObj, freeExtensions };
 
   return <GUI {...props} onChange={onChange} />;
 };
