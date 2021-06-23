@@ -2,7 +2,7 @@ import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 export default {
   base: '/',
-  publicPath: '/public/',
+  publicPath: '/',
   hash: true,
   history: {
     type: 'hash',
@@ -23,5 +23,8 @@ export default {
         languages: ['javascript', 'json'],
       }),
     );
+  },
+  nodeModulesTransform: {
+    type: 'none',
   },
 };

@@ -9,11 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 const getComponentsByMap = componentMap => {
   const componentKeys = Object.keys(componentMap);
   return componentKeys.map(id => {
-    const { enable, ...props } = componentMap[id];
+    const props = componentMap[id];
+    const { giEnable } = props;
     return {
       id,
       props,
-      enable,
+      enable: giEnable,
     };
   });
 };
@@ -33,7 +34,7 @@ const ConfigationPanel = props => {
     console.log('ConfigationPanel onChange', evt);
 
     const { rootValue } = evt;
-    const { components } = rootValue;
+    const { components, layout } = rootValue;
     if (components) {
       /** 分析组件 */
       const comps = getComponents(components);
@@ -42,6 +43,27 @@ const ConfigationPanel = props => {
         config: {
           ...config,
           components: comps,
+        },
+      });
+    }
+
+    if (layout) {
+      /** 布局设置 */
+      const { toggle } = layout;
+      const layoutType = `${toggle}`;
+      const layoutOptions = layout[layoutType];
+      dispatch({
+        type: 'update:config',
+        config: {
+          ...config,
+          layout: {
+            id: 'Layout',
+            name: '官方内置布局',
+            props: {
+              type: toggle,
+              options: layoutOptions,
+            },
+          },
         },
       });
     }
@@ -54,7 +76,4 @@ const ConfigationPanel = props => {
   );
 };
 
-export default React.memo(ConfigationPanel, (prevProps, nextProps) => {
-  console.log('prevProps', prevProps);
-  return false;
-});
+export default ConfigationPanel;
