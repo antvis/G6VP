@@ -4,7 +4,7 @@ import { Button, message } from 'antd';
 import MonacoEditor from 'react-monaco-editor';
 import dayjs from 'dayjs';
 
-import { copyText, saveAs, generatorconfigToCode } from './utils';
+import { copyText, saveAs, generatorconfigToCode } from '../utils';
 
 import './index.less';
 
@@ -36,7 +36,7 @@ const ExportConfig = props => {
             theme="vs-dark"
             options={{
               minimap: { enabled: false },
-              readOnly: true
+              readOnly: true,
             }}
             value={exampleCode}
           />
@@ -48,7 +48,7 @@ const ExportConfig = props => {
         </Button>
         <Button type="primary" onClick={handleExport}>
           <UploadOutlined /> 导出
-      </Button>
+        </Button>
       </div>
       {/* <span>{exampleCode}</span> */}
     </div>

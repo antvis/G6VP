@@ -11,6 +11,7 @@ import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import { getComponentMetaInfo } from './meta/componentMetaInfo';
+import { generatorconfigToCode } from '../../components/utils';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import './index.less';
 
@@ -93,13 +94,15 @@ const ComponentMarket = props => {
                     />
                   </div>
                 </div>
-                <div>
+                <div style={{ marginTop: 20 }}>
                   <MonacoEditor
                     height="200px"
                     language="js"
-                    theme="vs-dark"
-                    // value={}
-                    options={{}}
+                    options={{
+                      minimap: { enabled: false },
+                      readOnly: true,
+                    }}
+                    value={generatorconfigToCode({ ...defaultConfig, components: [{ ...component }] })}
                   />
                 </div>
               </TabContent>

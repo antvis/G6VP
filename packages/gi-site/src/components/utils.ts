@@ -36,8 +36,7 @@ export function saveAs(content: string, filename: string) {
   eleLink.click();
   // 然后移除
   document.body.removeChild(eleLink);
-};
-
+}
 
 /** 格式化代码   配置项：https://beautifier.io/
  * @param {String} code
@@ -58,9 +57,9 @@ export function beautifyCode(code: string) {
     wrap_line_length: 120,
     e4x: false,
   });
-};
+}
 
-export function generatorconfigToCode(config: string = '') {
+export function generatorconfigToCode(config: object) {
   const temaplteCode = beautifyCode(JSON.stringify(config));
   return `import React, { useState } from "react";
   
@@ -77,6 +76,5 @@ const Example = (props) => {
     />
   )
 };
-  `
-};
-
+  `;
+}
