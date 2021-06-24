@@ -20,7 +20,7 @@ interface ConfigationPanelProps {
 }
 
 const getMaterialByCategoryId = (market, categoryId) => {
-  let materials = [];
+  let materials: any[] = [];
   
   const keys = Object.keys(market);
   keys.map(k => {
@@ -113,6 +113,7 @@ const StylePanel = props => {
     }
   };
 
+  console.log('nodeConfig', nodeConfig, typeof (nodeConfig), config);
   nodeConfig.forEach(element => {
     const { id, props } = element;
     const nodeMeta = meta[id]({ data, keys });

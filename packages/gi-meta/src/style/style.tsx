@@ -12,13 +12,12 @@ const configObj = {
       node: {
         name: '节点',
         mode: 'single',
-
         children: {
           'market': {
             name: '节点物料',
             type: 'group',
             enableHide: false,
-            "fold": true,
+            fold: true,
             children: {
               material: {
                 name: '选择节点',
@@ -38,7 +37,7 @@ const configObj = {
             name: '大小',
             type: 'group',
             enableHide: false,
-            "fold": true,
+            fold: true,
             children: {
               keyMapping: {
                 name: '映射字段',
@@ -135,7 +134,6 @@ const configObj = {
             type: 'group',
             fold: false,
             enableHide: false,
-            "fold": false,
             children: {
               edges: {
                 name: '选择边',
@@ -166,9 +164,8 @@ const configObj = {
           'size': {
             name: '边宽',
             type: 'group',
-            fold: false,
             enableHide: false,
-            "fold": true,
+            fold: true,
             children: {
               mappingKey: {
                 name: '映射字段',
@@ -209,9 +206,8 @@ const configObj = {
           'color': {
             name: '颜色',
             type: 'group',
-            fold: false,
             enableHide: false,
-            "fold": false,
+            fold: false,
             children: {
               mappingKey: {
                 name: '映射字段',
