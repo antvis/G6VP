@@ -20,7 +20,7 @@ interface ConfigationPanelProps {
 }
 
 const getMaterialByCategoryId = (market, categoryId) => {
-  let materials = [];
+  let materials: any[] = [];
   
   const keys = Object.keys(market);
   keys.map(k => {
