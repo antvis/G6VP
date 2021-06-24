@@ -1,6 +1,8 @@
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+
 export default {
   base: '/',
-  publicPath: '/public/',
+  publicPath: '/',
   hash: true,
   history: {
     type: 'hash',
@@ -18,6 +20,13 @@ export default {
   },
   request: {
     dataField: '',
+  },
+  chainWebpack(config: any) {
+    config.plugin('monaco-editor').use(
+      new MonacoWebpackPlugin({
+        languages: ['javascript', 'json'],
+      }),
+    );
   },
   nodeModulesTransform: {
     type: 'none',

@@ -9,14 +9,16 @@ import { initMarket } from './services/services';
 import { defaultConfig, getGraphData } from './services/defaultConfig';
 import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
-import ComponentMetaPanel from './ComponentMeta';
-import { getComponentMetaInfo } from './componentMetaInfo';
+import ComponentMetaPanel from './meta/ComponentMeta';
+import { getComponentMetaInfo } from './meta/componentMetaInfo';
+import { generatorconfigToCode } from '../../components/utils';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import './index.less';
 
 const { TabPane } = Tabs;
 
-const ComponentMarket = () => {
+const ComponentMarket = props => {
+  const { history } = props;
   const defaultList = {
     analysis: {
       title: '分析组件',
@@ -65,7 +67,7 @@ const ComponentMarket = () => {
 
   return (
     <>
-      <BaseNavbar>
+      <BaseNavbar history={history}>
         <h4>物料中心</h4>
       </BaseNavbar>
       <div className="componet-market">
@@ -90,17 +92,15 @@ const ComponentMarket = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div style={{ marginTop: 20 }}>
                   <MonacoEditor
-                    // ref={node => {
-                    //   monacoRef = node;
-                    // }}
                     height="200px"
                     language="js"
-                    theme="vs-dark"
-                    // value={}
-                    options={{}}
-                    // editorDidMount={editorDidMount}
+                    options={{
+                      minimap: { enabled: false },
+                      readOnly: true,
+                    }}
+                    value={generatorconfigToCode({ ...defaultConfig, components: [{ ...component }] })}
                   />
                 </div>
               </TabContent>

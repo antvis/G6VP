@@ -1,5 +1,4 @@
-import { Collapse, Tabs } from 'antd';
-import localforage from 'localforage';
+import { Collapse, Tabs, Button } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,7 +56,7 @@ const GetSubGraph: React.FunctionComponent<DataSourceProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>根据ID集合，获取子图的接口</button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>根据ID集合，获取子图的接口</Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;

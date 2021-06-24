@@ -1,6 +1,5 @@
-import { Collapse, Tabs } from 'antd';
-import localforage from 'localforage';
 import { useRequest } from "@alipay/bigfish"
+import { Collapse, Tabs, Button } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,7 +58,7 @@ const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
 
   return (
     <div>
-      <button onClick={handleSave}>更新源数据</button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>更新源数据</Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;

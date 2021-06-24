@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@alipay/bigfish": "^3.6.10",
+    "@ali/datav-gui-color-scale": "^1.0.9",
+    "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/gi-meta": "*",
     "@alipay/graphinsight": "*",
     "@alipay/tech-ui": "^2.12.1",
@@ -25,6 +27,7 @@
     "immutability-helper-x": "^1.0.5",
     "js-beautify": "^1.11.0",
     "localforage": "^1.9.0",
+    "monaco-editor-webpack-plugin": "^4.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-monaco-editor": "^0.43.0",

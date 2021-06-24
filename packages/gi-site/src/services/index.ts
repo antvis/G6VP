@@ -55,7 +55,6 @@ export const getSubGraphData = (ids: string[]) => {
     let transFn = (data, ids) => {
       return data;
     };
-    debugger;
     try {
       transFn = looseJsonParse(services.getSubGraphDataTransform);
       // 这里需要用户从组件市场里定义初始化逻辑

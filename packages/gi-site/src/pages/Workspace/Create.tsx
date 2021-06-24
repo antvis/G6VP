@@ -7,9 +7,9 @@ import { useHistory } from '@alipay/bigfish';
 import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
-import { getUid } from './utils';
 import './index.less';
 import { updateProjectById } from "../../services"
+import { getUid } from './utils';
 interface CreatePanelProps {
 }
 
@@ -27,7 +27,7 @@ const lists = [
   },
   {
     id: 'knowledgeGraph',
-    title: '知识图谱',
+    title: '数据图谱',
   },
   {
     id: 'riskControl',
@@ -272,16 +272,16 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     {
       title: '上传数据',
       content: (
-        <div className="upload-panel" >
+        <div className="upload-panel">
           <Alert
             message=""
             description="输入数据格式为{ nodes: { id, data }[], edges: { source, target, data}[]}且上传文件暂只支持json"
             type="info"
           />
-          <div className="upload-panel-section" >
+          <div className="upload-panel-section">
             <Row align="middle" style={{ padding: '10px 10px' }}>
               上传数据源
-            <Tooltip title="上传数据源">
+              <Tooltip title="上传数据源">
                 <Upload {...uploadProps}>
                   <Button icon={<UploadOutlined />}>select file</Button>
                 </Upload>
@@ -299,7 +299,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
                 />
               </Col>
               <Col span={1.5}>
-                <Button type="primary" icon={<RightOutlined />} onClick={runTransform} />
+                <Button type="primary" icon={<RightOutlined />} onClick={() => runTransform} />
               </Col>
               <Col span={11}>
                 <MonacoEditor
@@ -327,7 +327,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     {
       title: '数据格式校验',
       content: (
-        <div className='dataCheck-panel'>
+        <div className="dataCheck-panel">
           <Row>数据格式校验成功！</Row>
           <Row>
             <Tabs defaultActiveKey="node">
