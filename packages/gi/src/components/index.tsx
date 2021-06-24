@@ -1,7 +1,6 @@
 import { MiniMap } from '@antv/graphin-components';
 import CanvasClick from './CanvasClick';
 import { NodeContextMenu } from './ContextMenu';
-import getLegendMappingKey from './Legend/getLegendMappingKey';
 import NodeLegend from './Legend/NodeLegend';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
@@ -12,8 +11,9 @@ import { EdgeTooltip, NodeTooltip } from './Tooltip';
  * 组件市场
  * 当前为临时方案：未来这部分组件的定义，需要存储在服务器端，拆包到 gi-components
  */
-const getComponentsFromMarket: any = config => {
-  const legendSortKey = getLegendMappingKey(config);
+const getComponentsFromMarket: any = () => {
+  // 这个不应该放在这里，sortKey 默认值为 type
+  // const legendSortKey = getLegendMappingKey(config);
 
   return {
     /*** 官方组件 */
@@ -23,16 +23,16 @@ const getComponentsFromMarket: any = config => {
       category: 'analysis',
       component: NodeLegend,
       props: {
-        sortKey: legendSortKey,
+        sortKey: 'type',
       },
     },
     NodeLegend: {
-      id: 'Legend',
+      id: 'NodeLegend',
       label: '节点图例',
       category: 'analysis',
       component: NodeLegend,
       props: {
-        sortKey: legendSortKey,
+        sortKey: 'type',
       },
     },
     MiniMap: {
@@ -92,6 +92,20 @@ const getComponentsFromMarket: any = config => {
       category: 'behavior',
       props: {},
       component: ClickEvent,
+    },
+    'graphin-node': {
+      id: 'graphin-node',
+      label: 'Graphin节点',
+      category: 'NODE',
+      props: {},
+      component: 'node',
+    },
+    'graphin-edge': {
+      id: 'graphin-edge',
+      label: 'Graphin边',
+      category: 'EDGE',
+      props: {},
+      component: 'edge',
     },
   };
 };

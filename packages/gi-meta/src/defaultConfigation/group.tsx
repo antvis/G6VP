@@ -1,6 +1,6 @@
 export default {
   "name": "组",
   "type": "group",
-  "fold": false,
+  "fold": true,
   "children": {}
 }

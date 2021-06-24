@@ -5,22 +5,21 @@ import SizeMapping from '@ali/datav-gui-size-scale';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 
 const configObj = {
-  options: {
+  style: {
     name: 'style',
     type: 'menu',
     children: {
       node: {
         name: '节点',
         mode: 'single',
-
         children: {
-          'node-select': {
+          'market': {
             name: '节点物料',
             type: 'group',
             enableHide: false,
-            fold: false,
+            fold: true,
             children: {
-              font: {
+              material: {
                 name: '选择节点',
                 type: 'select',
                 useFont: true,
@@ -34,13 +33,13 @@ const configObj = {
               },
             },
           },
-          'size-node': {
+          'size': {
             name: '大小',
             type: 'group',
             enableHide: false,
-            fold: false,
+            fold: true,
             children: {
-              channel: {
+              keyMapping: {
                 name: '映射字段',
                 type: 'select',
                 useFont: true,
@@ -56,7 +55,7 @@ const configObj = {
                   },
                 ],
               },
-              size: {
+              sizeMapping: {
                 name: '半径',
                 type: 'sizeMapping',
 
@@ -77,13 +76,13 @@ const configObj = {
               },
             },
           },
-          'color-node': {
+          'color': {
             name: '颜色',
             type: 'group',
             enableHide: false,
             fold: false,
             children: {
-              channel: {
+              keyMapping: {
                 name: '映射字段',
                 type: 'select',
                 useFont: true,
@@ -103,7 +102,7 @@ const configObj = {
                   },
                 ],
               },
-              color: {
+              colorMapping: {
                 name: '填充颜色',
                 type: 'colorMapping',
                 fixedComponents: ['flat'],
@@ -130,7 +129,7 @@ const configObj = {
         name: '边',
         mode: 'single',
         children: {
-          'edge-select': {
+          'market': {
             name: '边物料',
             type: 'group',
             fold: false,
@@ -162,13 +161,13 @@ const configObj = {
               },
             },
           },
-          'size-edge': {
-            name: '大小',
+          'size': {
+            name: '边宽',
             type: 'group',
-            fold: false,
             enableHide: false,
+            fold: true,
             children: {
-              channel: {
+              mappingKey: {
                 name: '映射字段',
                 type: 'select',
                 useFont: true,
@@ -204,13 +203,13 @@ const configObj = {
               },
             },
           },
-          'color-edge': {
+          'color': {
             name: '颜色',
             type: 'group',
-            fold: false,
             enableHide: false,
+            fold: false,
             children: {
-              channel: {
+              mappingKey: {
                 name: '映射字段',
                 type: 'select',
                 useFont: true,

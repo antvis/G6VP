@@ -34,7 +34,7 @@ const GIMetaPanel = props => {
   const { components, layout, node, edge } = config;
 
   // console.log('GIMetaPanel', configObj, meta, props);
-  if (!config) {
+  if (Object.keys(config).length === 0) {
     return null;
   }
   if (value === 'components') {

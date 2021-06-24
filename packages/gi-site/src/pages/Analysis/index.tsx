@@ -22,6 +22,8 @@ const Analysis = props => {
   const st = useSelector(state => state);
   const { config, key } = st;
 
+  console.log('Analysis', st);
+
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.data) || null;
@@ -54,8 +56,6 @@ const Analysis = props => {
   React.useEffect(() => {
     loadProjectById(projectId);
   }, [projectId]);
-
-  console.log('<<<<<<< render', st);
 
   return (
     <div className="gi">
