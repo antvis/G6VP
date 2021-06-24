@@ -21,6 +21,7 @@ const getMeta = (context) => {
           max: 50,
           step: 1,
           suffix: 'px',
+          "valuePath": "style.node.size",
           default: {
             mapping: false,
             fixed: 5,
@@ -38,6 +39,14 @@ const getMeta = (context) => {
           useFont: true,
           default: 'amount',
           options,
+          showInPanel: {
+            "conditions": [
+              ["style.node.size.scale.custom", "$eq", true],
+              ["style.node.size.mapping", "$eq", true],
+            ],
+            "logicalType": '$and',
+          },
+          "valuePath": "style.node.size.key",
         },
       },
     },
@@ -51,6 +60,7 @@ const getMeta = (context) => {
           name: '填充颜色',
           type: 'colorMapping',
           fixedComponents: ['flat'],
+          "valuePath": "style.node.color",
           default: {
             mapping: false,
             fixed: 'skyblue',
@@ -73,9 +83,12 @@ const getMeta = (context) => {
           default: 'type',
           showInPanel:{
             "conditions": [
-              ["color.colorMapping.scale.custom", "$eq", true],
+              ["style.node.color.scale.custom", "$eq", true],
+              ["style.node.color.mapping", "$eq", true],
             ],
+            "logicalType": '$and',
           },
+          "valuePath": "style.node.color.key",
           options,
         },
       },

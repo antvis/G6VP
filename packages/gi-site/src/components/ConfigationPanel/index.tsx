@@ -73,10 +73,15 @@ const ConfigationPanel = props => {
     if (style) {
       let { node, edge } = style;
       const nodeConfig = config.node.map(c => {
+
+        console.log('nodeConfig', node, c);
         // 后续需要根据节点来判断是否需要覆盖
         return {
           ...c,
-          ...node,
+          props: {
+            ...c.props,
+            ...node,
+          }
         }
       });
 
@@ -84,7 +89,10 @@ const ConfigationPanel = props => {
         // 后续需要根据节点来判断是否需要覆盖
         return {
           ...c,
-          ...edge,
+          props: {
+            ...c.props,
+            ...edge,
+          }
         }
       });
 
@@ -92,12 +100,8 @@ const ConfigationPanel = props => {
         type: 'update:config',
         config: {
           ...config,
-          node: {
-            ...nodeConfig,
-          },
-          edge: {
-            ...edgeConfig,
-          }
+          node: nodeConfig,
+          edge: edgeConfig,
         },
       });
     }

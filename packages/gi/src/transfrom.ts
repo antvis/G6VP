@@ -40,7 +40,7 @@ const transform = (s, config) => {
       const sizeKeys = MappingBySize.keys();
       const matchSizeIndex = [...sizeKeys].findIndex(c => c === enumValueBySize);
 
-      debugger
+      // debugger
 
       return {
         id: node.id,
