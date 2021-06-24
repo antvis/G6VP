@@ -38,12 +38,15 @@
   overflow: scroll;
   transition: all 0.2s ease;
   opacity: 1;
+  border-right: 1px solid #ddd;
+  box-shadow: 3px 1px 4px 0 rgb(0 21 41 / 12%);
   &.collapse {
     flex-basis: 0px;
     width: 0px;
     opacity: 0;
     transition: all 0.2s ease;
   }
+  &::-webkit-scrollbar { width: 0 !important }
 }
 .gi-analysis-workspace {
   display: flex;

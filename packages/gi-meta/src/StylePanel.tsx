@@ -113,6 +113,7 @@ const StylePanel = props => {
     }
   };
 
+  console.log('nodeConfig', nodeConfig, typeof (nodeConfig), config);
   nodeConfig.forEach(element => {
     const { id, props } = element;
     const nodeMeta = meta[id]({ data, keys });
