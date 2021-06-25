@@ -18,7 +18,7 @@ const getMeta = (context) => {
           name: '半径',
           type: 'sizeMapping',
           min: 0,
-          max: 50,
+          max: 100,
           step: 1,
           suffix: 'px',
           "valuePath": "style.node.size",
@@ -41,10 +41,8 @@ const getMeta = (context) => {
           options,
           showInPanel: {
             "conditions": [
-              ["style.node.size.scale.custom", "$eq", true],
               ["style.node.size.mapping", "$eq", true],
             ],
-            "logicalType": '$and',
           },
           "valuePath": "style.node.size.key",
         },

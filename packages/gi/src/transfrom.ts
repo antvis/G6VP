@@ -11,6 +11,11 @@ const getMapping = () => {
   };
 };
 
+// 大小映射
+const sizeMapping = (value, domain, range) => {
+  
+}
+
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, config) => {
   const { node: nodeConfig } = config;
@@ -47,9 +52,9 @@ const transform = (s, config) => {
         data: node.data,
         style: {
           keyshape: {
-            stroke: Color?.scale?.range?.[matchColorIndex],
-            fill: Color?.scale?.range?.[matchColorIndex],
-            size: Size?.enum?.[matchSizeIndex],
+            stroke: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
+            fill: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
+            size: Size?.fixed,
           },
           label: {
             value: data[Label?.key || 'id'],
@@ -57,6 +62,7 @@ const transform = (s, config) => {
         },
       };
     });
+
     const edges = s.edges.map(edge => {
       return edge;
     });

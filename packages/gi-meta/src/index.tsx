@@ -9,6 +9,8 @@ const ConfigMap = {
   style: StyleConfig,
 };
 
+let hasInit = false;
+
 const Empty = () => {
   return <div>Empty</div>;
 };
@@ -37,6 +39,9 @@ const GIMetaPanel = props => {
   if (Object.keys(config).length === 0) {
     return null;
   }
+  
+  hasInit = true;
+
   if (value === 'components') {
     return <ComponentPanel {...props} />;
   }
@@ -44,25 +49,11 @@ const GIMetaPanel = props => {
     return <LayoutPanel {...props} />;
   }
   return <StylePanel {...props} />;
-
-  // return (
-  //   <div>
-  //     <div className={`gi-tab ${'style' === value}`}>
-  //       <GUI {...configObj} onChange={onChange} />
-  //     </div>
-  //     <div className={`gi-tab ${'layout' === value}`}>
-  //       <GUI {...configObj} onChange={onChange} />
-  //     </div>
-  //     <div className={`gi-tab ${'components' === value}`}>
-  //       <GUI {...configObj} onChange={onChange} />
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default React.memo(GIMetaPanel, (prevProps, nextProps) => {
-  if (prevProps.value !== nextProps.value) {
-    return false;
-  }
-  return true;
+  // if (prevProps.value !== nextProps.value) {
+  //   return false;
+  // }
+  // return true;
 });
