@@ -37,10 +37,8 @@ const getMarketConfig = (value, materials, categoryId) => {
     'NODE': '节点物料',
     'EDGE': '边物料',
   }
-
   
   const options = materials.map(m => {
-    console.log('materials', m)
     return {
       value: m.id,
       label: m.label,
@@ -48,7 +46,7 @@ const getMarketConfig = (value, materials, categoryId) => {
   });
 
   const material = {
-    name: '选择节点',
+    name: categoryId === 'NODE'? '选择节点' : '选择边',
     type: 'select',
     useFont: true,
     default: value,
@@ -59,7 +57,7 @@ const getMarketConfig = (value, materials, categoryId) => {
     name: nameMap[categoryId],
     type: 'group',
     enableHide: false,
-    "fold": false,
+    fold: false,
     children: {
       material,
     }
@@ -118,9 +116,9 @@ const StylePanel = props => {
     const { id, props } = element;
     const nodeMeta = meta[id]({ data, keys });
 
-    const defaultValues = extractDefault({ nodeMeta });
+    // const defaultValues = extractDefault({ nodeMeta });
     
-    console.log('node defaultValues', defaultValues, nodeMeta);
+    console.log('node defaultValues', props, nodeMeta);
   
     node.children = {
       ...node.children,
@@ -128,19 +126,22 @@ const StylePanel = props => {
     }
 
     valueObj.style.node = {
-      ...defaultValues,
+      market: {
+        material: curNodeId,
+      },
+      // ...defaultValues,
       ...props,
     }
 
   });
 
-  nodeConfig.forEach(element => {
+  edgeConfig.forEach(element => {
     const { id, props } = element;
     const edgeMeta = meta[id]({ data, keys });
 
-    const defaultValues = extractDefault({ edgeMeta });
+    // const defaultValues = extractDefault({ edgeMeta });
 
-    console.log('defaultValues', defaultValues, edgeMeta);
+    console.log('defaultValues', props, edgeMeta);
 
     edge.children = {
       ...edge.children,
@@ -148,7 +149,10 @@ const StylePanel = props => {
     }
 
     valueObj.style.edge = {
-      ...defaultValues,
+      market: {
+        material: curEdgeId,
+      },
+      // ...defaultValues,
       ...props,
     }
   });
