@@ -9,8 +9,6 @@ const ConfigMap = {
   style: StyleConfig,
 };
 
-let hasInit = false;
-
 const Empty = () => {
   return <div>Empty</div>;
 };
@@ -39,8 +37,6 @@ const GIMetaPanel = props => {
   if (Object.keys(config).length === 0) {
     return null;
   }
-  
-  hasInit = true;
 
   if (value === 'components') {
     return <ComponentPanel {...props} />;
