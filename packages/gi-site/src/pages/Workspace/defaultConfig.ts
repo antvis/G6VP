@@ -155,7 +155,7 @@ export const defaultConfig = {
           size: {
             key: 'weight',
             fixed: 5,
-            mapping: true,
+            mapping: false,
             scale: {
               custom: false,
               domain: [0, 1000],
@@ -178,7 +178,7 @@ export const defaultConfig = {
           /** style.keyshape.stroke */
           color: {
             fixed: "#2483ff",
-            mapping: true,
+            mapping: false,
             scale: {
               custom: false,
               range: ["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
