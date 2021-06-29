@@ -144,9 +144,9 @@ export const defaultConfig = {
           /** style.keyshape.color */
           color: {
             fixed: "#2483ff",
-            mapping: true,
+            mapping: false,
             scale:{
-              custom: false,
+              custom: true,
               range:["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
             },
             key: 'type',
@@ -164,6 +164,7 @@ export const defaultConfig = {
           },
           label: {
             key: 'id',
+            showlabel: true,
           },
         },
       },
@@ -189,9 +190,9 @@ export const defaultConfig = {
           size: {
             key: 'weight',
             fixed: 5,
-            mapping: true,
+            mapping: false,
             scale: {
-              custom: false,
+              custom: true,
               domain: [0, 1000],
               range: [7, 30],
             },
@@ -199,6 +200,7 @@ export const defaultConfig = {
           /** style.label */
           label: {
             key: 'id',
+            showlabel: true,
           },
         },
       },

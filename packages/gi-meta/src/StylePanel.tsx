@@ -168,7 +168,7 @@ const StylePanel = props => {
     },
   };
 
-  console.log('style', configObj, valueObj)
+  console.log('Style configObj', configObj, valueObj)
 
   const freeExtensions = {
     sizeMapping: SizeMapping,
