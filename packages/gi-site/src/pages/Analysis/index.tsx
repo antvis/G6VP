@@ -43,19 +43,21 @@ const Analysis = props => {
   };
 
   const loadProjectById = async (id: string) => {
-    const { config, data } = await localforage.getItem(projectId);
-    console.log(config, data)
+    const { config, data } = await localforage.getItem(id);
     dispatch({
       type: 'update:config',
       id: projectId,
       config,
       data: data,
     });
-    localforage.setItem('projectId', projectId);
   }
+  React.useLayoutEffect(() => {
+    localforage.setItem('projectId', projectId);
+  }, [])
+
   React.useEffect(() => {
     loadProjectById(projectId);
-  }, [projectId]);
+  }, []);
 
   return (
     <div className="gi">

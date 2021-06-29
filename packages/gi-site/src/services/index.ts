@@ -18,7 +18,6 @@ function looseJsonParse(obj) {
 export const getGraphData = () => {
   return new Promise(async resolve => {
     const id = await localforage.getItem('projectId') as string;
-    console.log(id);
     const project = await localforage.getItem(id);
     let { data, services } = project // db.graph();
     let transFn = data => {
