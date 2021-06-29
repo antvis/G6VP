@@ -1,6 +1,7 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import Lockr from 'lockr';
 import React from 'react';
+import { useLocation, Prompt } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 // import { getEdgesByNodes } from '../../services';
@@ -18,7 +19,6 @@ const TestComponents = () => {
 const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
-
   const st = useSelector(state => state);
   const { config, key } = st;
 
@@ -34,6 +34,7 @@ const Analysis = props => {
     activeNavbar: 'style',
     collapse: false,
   });
+  const [isSave, setIsSave] = React.useState(true);
 
   const handleChangeNavbar = opt => {
     const isSame = state.activeNavbar === opt.id;
@@ -46,7 +47,6 @@ const Analysis = props => {
 
   React.useEffect(() => {
     const { config, data } = Lockr.get(projectId);
-    // debugger;
     dispatch({
       type: 'update:config',
       id: projectId,
@@ -55,10 +55,22 @@ const Analysis = props => {
     });
   }, [projectId]);
 
+  React.useEffect(() => {
+    setIsSave(false);
+  }, [config]);
+
+  React.useEffect(() => {
+    window.addEventListener('beforeunload', ev => {
+      ev.preventDefault();
+      ev.returnValue = '配置未保存，确定离开吗？';
+    });
+  }, []);
+
   return (
     <div className="gi">
+      <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
       <div className="gi-navbar">
-        <Navbar history={history} projectId={projectId} />
+        <Navbar history={history} projectId={projectId} clickSave={() => setIsSave(true)} />
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">

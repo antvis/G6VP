@@ -9,7 +9,7 @@ import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
 import './index.less';
 
-const Navbar = ({ history, projectId }) => {
+const Navbar = ({ history, projectId, clickSave }) => {
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const config = useSelector(state => state.config);
@@ -32,6 +32,8 @@ const Navbar = ({ history, projectId }) => {
   };
 
   const handleSave = () => {
+    clickSave();
+
     const info = Lockr.get(projectId);
     Lockr.set(projectId, {
       ...info,
