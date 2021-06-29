@@ -51,7 +51,7 @@ const ComponentMarket = props => {
 
     let menuList = { ...list };
     components.map(item => {
-      menuList[item.category].children.push(item);
+      menuList[item.category]?.children.push(item);
     });
 
     setList(menuList);

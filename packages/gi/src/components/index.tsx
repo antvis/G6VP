@@ -15,6 +15,7 @@ const getComponentsFromMarket: any = () => {
   // 这个不应该放在这里，sortKey 默认值为 type
   // const legendSortKey = getLegendMappingKey(config);
 
+  // category 分为 analysis behavior materials
   return {
     /*** 官方组件 */
     Legend: {
