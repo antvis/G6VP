@@ -65,7 +65,7 @@ const getMeta = (context) => {
             scale: {
               type: 'ordinal',
               scheme: 'cat-1',
-              custom: false,
+              custom: true,
               range: ['#00FF95', '#588ee9'],
               domain: [],
               excepted: '#666',
@@ -87,6 +87,33 @@ const getMeta = (context) => {
             "logicalType": '$and',
           },
           "valuePath": "style.node.color.key",
+          options,
+        },
+      },
+    },
+    'label': {
+      name: '标签',
+      type: 'group',
+      enableHide: false,
+      "fold": false,
+      children: {
+        showlabel: {
+          "name": "开关",
+          "type": "switch",
+          "default": true,
+          "statusText": true
+        },
+        keyLabel: {
+          name: '映射字段',
+          type: 'select',
+          useFont: true,
+          default: 'type',
+          valuePath: "style.node.label.key",
+          showInPanel: {
+            "conditions": [
+              ["style.node.label.showlabel", "$eq", true],
+            ],
+          },
           options,
         },
       },
