@@ -21,7 +21,7 @@ const getMeta = (context) => {
           max: 50,
           step: 1,
           suffix: 'px',
-          "valuePath": "style.node.size",
+          "valuePath": "style.edge.size",
           default: {
             mapping: false,
             fixed: 5,
@@ -41,12 +41,12 @@ const getMeta = (context) => {
           options,
           showInPanel: {
             "conditions": [
-              ["style.node.size.scale.custom", "$eq", true],
-              ["style.node.size.mapping", "$eq", true],
+              ["style.edge.size.scale.custom", "$eq", true],
+              ["style.edge.size.mapping", "$eq", true],
             ],
             "logicalType": '$and',
           },
-          "valuePath": "style.node.size.key",
+          "valuePath": "style.edge.size.key",
         },
       },
     },
@@ -90,6 +90,33 @@ const getMeta = (context) => {
             "logicalType": '$and',
           },
           "valuePath": "style.node.color.key",
+        },
+      },
+    },
+    'label': {
+      name: '标签',
+      type: 'group',
+      enableHide: false,
+      "fold": false,
+      children: {
+        showlabel: {
+          "name": "开关",
+          "type": "switch",
+          "default": true,
+          "statusText": true
+        },
+        keyLabel: {
+          name: '映射字段',
+          type: 'select',
+          useFont: true,
+          default: 'type',
+          "valuePath": "style.edge.label.key",
+          showInPanel: {
+            "conditions": [
+              ["style.edge.label.showlabel", "$eq", true],
+            ],
+          },
+          options,
         },
       },
     },
