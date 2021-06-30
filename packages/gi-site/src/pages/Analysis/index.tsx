@@ -1,8 +1,8 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import Lockr from 'lockr';
 import React from 'react';
-import { useLocation, Prompt } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Prompt } from 'react-router-dom';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 // import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
@@ -31,7 +31,7 @@ const Analysis = props => {
   const data = useSelector(state => state.data) || null;
 
   const [state, setState] = React.useState({
-    activeNavbar: 'style',
+    activeNavbar: '',
     collapse: false,
   });
   const [isSave, setIsSave] = React.useState(true);
@@ -52,6 +52,12 @@ const Analysis = props => {
       id: projectId,
       config,
       data: data,
+    });
+    setState(preState => {
+      return {
+        ...preState,
+        activeNavbar: 'style',
+      };
     });
   }, [projectId]);
 

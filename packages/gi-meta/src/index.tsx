@@ -48,8 +48,9 @@ const GIMetaPanel = props => {
 };
 
 export default React.memo(GIMetaPanel, (prevProps, nextProps) => {
-  // if (prevProps.value !== nextProps.value) {
-  //   return false;
-  // }
-  // return true;
+  if (prevProps.value !== nextProps.value) {
+    return false;
+  }
+  return true;
+  // return false;
 });
