@@ -1,4 +1,5 @@
 import beautify from 'js-beautify';
+import liaoyuan from '../mock/liaoyuan.json';
 /**
  * 复制功能
  * @param {String} value
@@ -61,13 +62,116 @@ export function beautifyCode(code: string) {
 
 export function generatorconfigToCode(config: object) {
   const temaplteCode = beautifyCode(JSON.stringify(config));
-  return `import React, { useState } from "react";
+  const sourceCode = beautifyCode(JSON.stringify(liaoyuan));
+  return `
+import GISDK from '@alipay/graphinsight';
   
 const config = ${temaplteCode};
+const liaoyuan = ${sourceCode};
+
+/** 转化函数：这些都是后处理 **/
+const transform =  data => {
+  const nodes = data.nodes.map(n=>{
+    return {
+      id:n.uri,
+      data:n
+    }
+  })
+  const edges = data.edges.map(e=>{
+    return {
+      source:e.fromNodeUri,
+      target:e.toNodeUri,
+      data:e
+    }
+  })
+  return { nodes, edges }
+}
+
+
+const getGraphDataTrans = data => {
+  const getEdgesByNodes = (nodes, edges) => {
+    const ids = nodes.map(node => node.id);
+    return edges.filter(edge => {
+      const { source, target } = edge;
+      if (ids.indexOf(source) !== -1 && ids.indexOf(target) !== -1) {
+        return true;
+      }
+      return false;
+    });
+  };
+
+  const nodes = data.nodes.filter(node => {
+    return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
+  });
+
+  const edges = getEdgesByNodes(nodes, data.edges);
+
+  return {
+    nodes,
+    edges,
+  };
+};
+
+const getSubGraphDataTrans = (data, ids) => {
+  const getEdgesByNodes = (nodes, edges) => {
+    const ids = nodes.map(node => node.id);
+    return edges.filter(edge => {
+      const { source, target } = edge;
+      if (ids.indexOf(source) !== -1 && ids.indexOf(target) !== -1) {
+        return true;
+      }
+      return false;
+    });
+  };
+
+  const propertiesNodes = data.nodes
+    .filter(node => {
+      return ids.indexOf(node.id) !== -1;
+    })
+    .map(node => {
+      return node.data.properties.map(n => {
+        return {
+          data: n,
+          id: n.uri,
+        };
+      });
+    })
+    .reduce((acc, curr) => {
+      return [...acc, ...curr];
+    }, []);
+
+  /**初始化图的节点*/
+  const graphOriginNodes = data.nodes.filter(node => {
+    return node.data.type === 'ENTITY' || node.data.type === 'EVENT';
+  });
+  const nodes = [...propertiesNodes, ...graphOriginNodes];
+  const edges = getEdgesByNodes(nodes, data.edges);
+
+  /** End：组件市场里定义的逻辑;*/
+
+  return {
+    nodes: propertiesNodes,
+    edges,
+  };
+};
+
+
+const getGraphData = () => {
+  return new Promise(resolve => {
+    const data = getGraphDataTrans(transform(liaoyuan))
+    return resolve(data);  
+  });
+};
+const getSubGraphData = (ids) => {
+  return new Promise(resolve => {
+    const data = getSubGraphDataTrans(transform(liaoyuan),ids)
+    return resolve(data);  
+  });
+};
+
 const Example = (props) => {
   return (
     <GISDK
-      key={key}
       config={config}
       services={{
       getGraphData,
@@ -76,5 +180,7 @@ const Example = (props) => {
     />
   )
 };
+
+ReactDOM.render(<Example/>, mountNode);
   `;
 }
