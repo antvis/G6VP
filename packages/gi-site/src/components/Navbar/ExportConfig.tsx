@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
 import { CopyOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
-import MonacoEditor from 'react-monaco-editor';
 import dayjs from 'dayjs';
-
-import { copyText, saveAs, generatorconfigToCode } from '../utils';
-
+import MonacoEditor from 'react-monaco-editor';
+import { useSelector } from 'react-redux';
+import { copyText, generatorconfigToCode, saveAs } from '../utils';
 import './index.less';
 
 const ExportConfig = props => {
