@@ -13,7 +13,7 @@ const configObj = {
         name: '节点',
         mode: 'single',
         children: {
-          'market': {
+          market: {
             name: '节点物料',
             type: 'group',
             enableHide: false,
@@ -33,7 +33,7 @@ const configObj = {
               },
             },
           },
-          'size': {
+          size: {
             name: '大小',
             type: 'group',
             enableHide: false,
@@ -65,7 +65,7 @@ const configObj = {
                 suffix: 'px',
                 default: {
                   mapping: true,
-                  fixed: 5,
+                  fixed: 30,
                   scale: {
                     custom: true, // 是否采取自定义映射
                     range: [3, 30], // 值域
@@ -76,7 +76,7 @@ const configObj = {
               },
             },
           },
-          'color': {
+          color: {
             name: '颜色',
             type: 'group',
             enableHide: false,
@@ -129,7 +129,7 @@ const configObj = {
         name: '边',
         mode: 'single',
         children: {
-          'market': {
+          market: {
             name: '边物料',
             type: 'group',
             fold: false,
@@ -161,7 +161,7 @@ const configObj = {
               },
             },
           },
-          'size': {
+          size: {
             name: '边宽',
             type: 'group',
             enableHide: false,
@@ -203,7 +203,7 @@ const configObj = {
               },
             },
           },
-          'color': {
+          color: {
             name: '颜色',
             type: 'group',
             enableHide: false,

@@ -24,11 +24,14 @@ export const getGraphData = () => {
     };
     try {
       transFn = looseJsonParse(services.getGraphDataTransform);
-    } catch (error) {}
 
-    if (transFn) {
-      data = transFn(data);
+      if (transFn) {
+        data = transFn(data);
+      }
+    } catch (error) {
+      console.error(error);
     }
+
     return resolve(data); //这里需要一个规范的图结构
     // 这里需要用户从组件市场里定义初始化逻辑
   });
@@ -56,11 +59,17 @@ export const getSubGraphData = (ids: string[]) => {
     try {
       transFn = looseJsonParse(services.getSubGraphDataTransform);
       // 这里需要用户从组件市场里定义初始化逻辑
-    } catch (error) {}
-
-    if (transFn) {
-      data = transFn(data, ids);
+      if (transFn) {
+        data = transFn(data, ids);
+      }
+    } catch (error) {
+      console.error(error);
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
+
     return resolve(data); //这里需要一个规范的图结构
   });
 };

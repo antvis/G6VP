@@ -13,7 +13,15 @@ import { isObjectEmpty } from './utils';
 
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
-  return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
+  const { graph } = gi;
+  const { nodes, edges } = graph.save() as { nodes: any[]; edges: any[] };
+
+  return (
+    <div style={{ position: 'absolute', top: '80px', left: '20px', background: '#ddd' }}>
+      Node: {nodes.length}
+      Edge: {nodes.length}
+    </div>
+  );
 };
 
 const Analysis = props => {

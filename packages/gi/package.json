@@ -19,5 +19,8 @@
     "@babel/standalone": "^7.14.4",
     "father": "^2.30.6",
     "rimraf": "^3.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }
