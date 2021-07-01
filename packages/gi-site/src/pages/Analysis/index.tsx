@@ -1,8 +1,8 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import localforage from 'localforage';
 import React from 'react';
-import { useLocation, Prompt } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Prompt } from 'react-router-dom';
 import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 // import { getEdgesByNodes } from '../../services';
 import { getGraphData, getSubGraphData } from '../../services/index';
@@ -13,7 +13,15 @@ import { isObjectEmpty } from './utils';
 
 const TestComponents = () => {
   const gi = React.useContext(GIContext);
-  return <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'red' }}>测试自定义组件</div>;
+  const { graph } = gi;
+  const { nodes, edges } = graph.save() as { nodes: any[]; edges: any[] };
+
+  return (
+    <div style={{ position: 'absolute', top: '80px', left: '20px', background: '#ddd' }}>
+      Node: {nodes.length}
+      Edge: {nodes.length}
+    </div>
+  );
 };
 
 const Analysis = props => {
@@ -29,7 +37,7 @@ const Analysis = props => {
   const data = useSelector(state => state.data) || null;
 
   const [state, setState] = React.useState({
-    activeNavbar: 'style',
+    activeNavbar: '',
     collapse: false,
   });
   const [isSave, setIsSave] = React.useState(true);
@@ -58,7 +66,13 @@ const Analysis = props => {
 
   React.useEffect(() => {
     loadProjectById(projectId);
-  }, []);
+    setState(preState => {
+      return {
+        ...preState,
+        activeNavbar: 'style',
+      };
+    });
+  }, [projectId]);
 
   React.useEffect(() => {
     setIsSave(false);
