@@ -6,20 +6,28 @@ const baseNodeConfig = [
     props: {
       /** style.keyshape.color */
       color: {
-        mode: 'mapping', // fixed value
+        fixed: '#2483ff',
+        mapping: false,
+        scale: {
+          custom: true,
+          range: ['#ffffcc', '#d8fbcd', '#b0f7ce', '#89f4d0', '#61f0d1'],
+        },
         key: 'type',
-        enum: ['grey', 'blue', 'green', 'yellow', 'pink'],
-        enable: true,
       },
       /** style.keyshape.size */
       size: {
-        mode: 'mapping',
-        key: 'type',
-        enum: [40, 20, 30, 20, 10],
-        enable: true,
+        key: 'weight',
+        fixed: 5,
+        mapping: false,
+        scale: {
+          custom: false,
+          domain: [0, 1000],
+          range: [7, 30],
+        },
       },
       label: {
         key: 'id',
+        showlabel: true,
       },
     },
   },
@@ -32,16 +40,29 @@ const baseEdgeConfig = [
     props: {
       /** style.keyshape.stroke */
       color: {
+        fixed: '#2483ff',
+        mapping: false,
+        scale: {
+          custom: false,
+          range: ['#ffffcc', '#d8fbcd', '#b0f7ce', '#89f4d0', '#61f0d1'],
+        },
         key: 'type',
-        enum: ['red', 'blue', 'green', 'yellow'],
       },
       /** style.keyshape.size */
       size: {
         key: 'weight',
+        fixed: 5,
+        mapping: false,
+        scale: {
+          custom: true,
+          domain: [0, 1000],
+          range: [7, 30],
+        },
       },
       /** style.label */
       label: {
         key: 'id',
+        showlabel: true,
       },
     },
   },
@@ -135,92 +156,5 @@ export const defaultConfig = {
         enable: true,
       },
     ],
-    node: [
-      {
-        id: 'graphin-node',
-        enable: true,
-        name: '官方内置节点',
-        props: {
-          /** style.keyshape.color */
-          color: {
-            fixed: "#2483ff",
-            mapping: false,
-            scale:{
-              custom: true,
-              range:["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
-            },
-            key: 'type',
-          },
-          /** style.keyshape.size */
-          size: {
-            key: 'weight',
-            fixed: 5,
-            mapping: false,
-            scale: {
-              custom: false,
-              domain: [0, 1000],
-              range: [7, 30],
-            },
-          },
-          label: {
-            key: 'id',
-            showlabel: true,
-          },
-        },
-      },
-    ],
-
-    edge: [
-      {
-        id: 'graphin-edge',
-        name: '官方内置边',
-        enable: true,
-        props: {
-          /** style.keyshape.stroke */
-          color: {
-            fixed: "#2483ff",
-            mapping: false,
-            scale: {
-              custom: false,
-              range: ["#ffffcc", "#d8fbcd", "#b0f7ce", "#89f4d0", "#61f0d1"]
-            },
-            key: 'type',
-          },
-          /** style.keyshape.size */
-          size: {
-            key: 'weight',
-            fixed: 5,
-            mapping: false,
-            scale: {
-              custom: true,
-              domain: [0, 1000],
-              range: [7, 30],
-            },
-          },
-          /** style.label */
-          label: {
-            key: 'id',
-            showlabel: true,
-          },
-        },
-      },
-    ],
-    layout: {
-      // id: 'dagre',
-      // options: {
-      //   rankdir: 'LR',
-      // },
-      id: 'Layout',
-      name: '官方内置布局',
-      props: {
-        type: 'graphin-force',
-        options: {
-          animation: true,
-          preset: {
-            type: 'concentric',
-          },
-        },
-      },
-    },
   },
 };
