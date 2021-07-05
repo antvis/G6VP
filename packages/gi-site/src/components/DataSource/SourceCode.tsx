@@ -1,8 +1,9 @@
+import { useRequest } from "@alipay/bigfish"
 import { Collapse, Tabs, Button } from 'antd';
-import Lockr from 'lockr';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { useDispatch, useSelector } from 'react-redux';
+import { getProjectById, updateProjectById } from '../../services';
 import './index.less';
 const { Panel } = Collapse;
 
@@ -15,11 +16,14 @@ let monacoRef;
 
 const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
   const { handleClose } = props;
-  const { config, id } = useSelector(state => state);
-  const project = Lockr.get(id);
+  //@ts-ignore
+  const { id } = useSelector(state => state);
+  const {data: project = {}, run } = useRequest(() => {
+    return getProjectById(id)
+  })
+  console.log(project)
   const { data } = project;
   const dispatch = useDispatch();
-  console.log('project', project);
 
   const editorDidMount = editor => {
     console.log('editorDidMount', editor);
@@ -31,19 +35,23 @@ const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
     try {
       console.log(value);
       const newData = JSON.parse(value);
-      Lockr.set(id, {
+      updateProjectById(id, {
         ...project,
         data: newData,
+      }).then(() => {
+        dispatch({
+          type: 'update:key',
+          key: Math.random(),
+        });
+        handleClose && handleClose();
       });
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
-      });
-      handleClose && handleClose();
     } catch (error) {
       console.log(error);
     }
   };
+  React.useEffect(() => {
+    run();
+  }, [])
 
   const code = JSON.stringify(data, null, 2);
   console.log('code *****', code);

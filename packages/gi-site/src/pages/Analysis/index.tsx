@@ -1,5 +1,5 @@
 import GISDK, { GIContext } from '@alipay/graphinsight';
-import Lockr from 'lockr';
+import localforage from 'localforage';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
@@ -28,13 +28,11 @@ const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
   const st = useSelector(state => state);
-  const { config, key } = st;
+  const { config, key, isReady } = st;
 
   console.log('Analysis', st);
 
   const dispatch = useDispatch();
-
-  Lockr.set('projectId', projectId);
 
   const data = useSelector(state => state.data) || null;
 
@@ -53,14 +51,23 @@ const Analysis = props => {
     });
   };
 
-  React.useEffect(() => {
-    const { config, data } = Lockr.get(projectId);
-    dispatch({
-      type: 'update:config',
-      id: projectId,
-      config,
-      data: data,
-    });
+  React.useLayoutEffect(() => {
+    localforage
+      .setItem('projectId', projectId)
+      .then(id => {
+        console.log('id', id, projectId);
+        return localforage.getItem(projectId);
+      })
+      .then(res => {
+        const { config, data } = res as any;
+        dispatch({
+          type: 'update:config',
+          id: projectId,
+          config,
+          data: data,
+          isReady: true,
+        });
+      });
     setState(preState => {
       return {
         ...preState,
@@ -84,7 +91,7 @@ const Analysis = props => {
     <div className="gi">
       <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
       <div className="gi-navbar">
-        <Navbar history={history} projectId={projectId} clickSave={() => setIsSave(true)} />
+        <Navbar projectId={projectId} clickSave={() => setIsSave(true)} />
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">
@@ -95,7 +102,7 @@ const Analysis = props => {
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            {!isObjectEmpty(config) && (
+            {!isObjectEmpty(config) && isReady && (
               <GISDK
                 key={key}
                 config={config}

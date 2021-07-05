@@ -12,10 +12,14 @@ export default {
     { exact: true, path: '/workspace', component: 'Workspace' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/market', component: 'Components' },
+    { component: '404' }
   ],
   antd: {
     dark: false,
     compact: false,
+  },
+  request: {
+    dataField: '',
   },
   chainWebpack(config: any) {
     config.plugin('monaco-editor').use(
