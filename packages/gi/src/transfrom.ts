@@ -1,3 +1,5 @@
+import { scaleLinear } from 'd3-scale';
+
 const getMapping = () => {
   const Mapping = new Map();
   return (enumValue, value) => {
@@ -12,9 +14,7 @@ const getMapping = () => {
 };
 
 // 大小映射
-const sizeMapping = (value, domain, range) => {
-  
-}
+const sizeMapping = (value, domain, range) => {};
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, config) => {
@@ -26,7 +26,7 @@ const transform = (s, config) => {
     const { color: Color, label: Label, size: Size } = mathNodeConfig.props;
 
     /** 分别生成Size和Color的Mapping */
-    const mappingBySize = getMapping();
+    const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
 
     const mappingByColor = getMapping();
 
@@ -34,7 +34,7 @@ const transform = (s, config) => {
       const { id, data } = node;
       /** 根据Size字段映射的枚举值 */
       const enumValueBySize = data[Size?.key || 0];
-      const MappingBySize = mappingBySize(enumValueBySize, node);
+
       /** 根据Color字段映射的枚举值 */
       const enumValueByColor = data[Color?.key || 0];
       const MappingByColor = mappingByColor(enumValueByColor, node);
@@ -42,10 +42,6 @@ const transform = (s, config) => {
       /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
       const colorKeys = MappingByColor.keys();
       const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
-      const sizeKeys = MappingBySize.keys();
-      const matchSizeIndex = [...sizeKeys].findIndex(c => c === enumValueBySize);
-
-      // debugger
 
       return {
         id: node.id,
@@ -54,7 +50,7 @@ const transform = (s, config) => {
           keyshape: {
             stroke: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
             fill: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
-            size: Size?.fixed,
+            size: Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed,
           },
           label: {
             value: data[Label?.key || 'id'],
