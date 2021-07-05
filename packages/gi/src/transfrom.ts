@@ -53,7 +53,7 @@ const transform = (s, config) => {
             size: Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed,
           },
           label: {
-            value: data[Label?.key || 'id'],
+            value: Label?.showlabel ? data[Label?.key || 'id'] : '',
           },
         },
       };
