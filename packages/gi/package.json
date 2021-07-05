@@ -17,6 +17,7 @@
     "@antv/graphin": "^2.0.7",
     "@antv/graphin-components": "^2.0.7",
     "@babel/standalone": "^7.14.4",
+    "d3-scale": "^4.0.0",
     "father": "^2.30.6",
     "rimraf": "^3.0.2"
   },
