@@ -5,7 +5,7 @@ import MonacoEditor from 'react-monaco-editor';
 import { useSelector, Provider } from 'react-redux';
 import GISDK, { GIContext } from '@alipay/graphinsight';
 import TabContent from '../../components/TabContent';
-import { getComponets, initMasket } from './services/services';
+import { initMarket } from './services/services';
 import { defaultConfig, getGraphData } from './services/defaultConfig';
 import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
@@ -46,9 +46,7 @@ const ComponentMarket = props => {
   };
 
   React.useEffect(() => {
-    initMasket();
-    const components = getComponets();
-
+    const components = initMarket();
     let menuList = { ...list };
     components.map(item => {
       menuList[item.category]?.children.push(item);

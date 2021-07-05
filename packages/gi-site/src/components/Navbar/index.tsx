@@ -1,19 +1,33 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { DatabaseOutlined, SaveOutlined, ExportOutlined } from '@ant-design/icons';
 import { Drawer, Tooltip, Button, Modal } from 'antd';
-import Lockr from 'lockr';
 import * as React from 'react';
+import { useHistory, useRequest } from '@alipay/bigfish';
 import { useSelector } from 'react-redux';
 import ExportConfig from './ExportConfig';
 import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
+import { getProjectById, updateProjectById } from '../../services';
 import './index.less';
 
-const Navbar = ({ history, projectId, clickSave }) => {
+interface NavbarProps {
+  projectId: string;
+}
+/**
+ * 顶部导航
+ * @see {NavbarProps}
+ * @returns 
+ */
+const Navbar = ({ projectId }: NavbarProps) => {
+  const history = useHistory();
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const config = useSelector(state => state.config);
-  const contentEditable = React.createRef();
+  const contentEditable = React.createRef<HTMLSpanElement>();
+
+  const {data: initProject = {}, run} = useRequest(() => {
+    return getProjectById(projectId)
+  })
 
   const handleClose = () => {
     setVisible(false);
@@ -31,11 +45,9 @@ const Navbar = ({ history, projectId, clickSave }) => {
     setOutVisible(true);
   };
 
-  const handleSave = () => {
-    clickSave();
-
-    const info = Lockr.get(projectId);
-    Lockr.set(projectId, {
+  const handleSave = async () => {
+    const info = await getProjectById(projectId) as object;
+    updateProjectById(projectId, {
       ...info,
       config,
     });
@@ -48,10 +60,10 @@ const Navbar = ({ history, projectId, clickSave }) => {
     });
   };
 
-  const changeTitle = () => {
+  const changeTitle = async () => {
     const newTitle = contentEditable.current.innerHTML;
-    const info = Lockr.get(projectId);
-    Lockr.set(projectId, {
+    const info = await getProjectById(projectId) as object;
+    updateProjectById(projectId, {
       ...info,
       title: newTitle,
     });
@@ -61,7 +73,11 @@ const Navbar = ({ history, projectId, clickSave }) => {
     history.push(`/workspace`);
   };
 
-  const { title } = Lockr.get(projectId);
+  React.useEffect(() => {
+    run();
+  }, [])
+
+  const { title } = initProject;
 
   const menu = (
     <>
