@@ -43,7 +43,7 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    console.log('COMPONENT config change...');
+    console.log('COMPONENT config change...', componentsCfg);
     const filteredComponents = componentsCfg.filter(c => c.enable);
     setState(preState => {
       return {
