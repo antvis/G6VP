@@ -74,6 +74,7 @@ const ComponentPanel = props => {
         [id]: componentMeta,
       };
       valueObj.components.analysis = {
+        ...valueObj.components.analysis,
         [id]: {
           ...defaultValues,
           ...props,
@@ -87,6 +88,7 @@ const ComponentPanel = props => {
         [id]: componentMeta,
       };
       valueObj.components.interaction = {
+        ...valueObj.components.interaction,
         [id]: {
           ...defaultValues,
           ...props,
@@ -106,6 +108,7 @@ const ComponentPanel = props => {
       },
     },
   };
+  console.log('%c  **** components', 'color:red', configObj.components, valueObj);
 
   return (
     <div>
