@@ -10,6 +10,7 @@ const initialState = {
   id: '',
   key: Math.random(),
   config: {},
+  isReady: false,
 };
 
 export type StateType = typeof initialState;

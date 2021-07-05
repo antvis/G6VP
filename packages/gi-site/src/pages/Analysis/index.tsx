@@ -28,7 +28,7 @@ const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
   const st = useSelector(state => state);
-  const { config, key } = st;
+  const { config, key, isReady } = st;
 
   console.log('Analysis', st);
 
@@ -51,21 +51,23 @@ const Analysis = props => {
     });
   };
 
-  const loadProjectById = async (id: string) => {
-    const { config, data } = await localforage.getItem(id);
-    dispatch({
-      type: 'update:config',
-      id: projectId,
-      config,
-      data: data,
-    });
-  }
   React.useLayoutEffect(() => {
-    localforage.setItem('projectId', projectId);
-  }, [])
-
-  React.useEffect(() => {
-    loadProjectById(projectId);
+    localforage
+      .setItem('projectId', projectId)
+      .then(id => {
+        console.log('id', id, projectId);
+        return localforage.getItem(projectId);
+      })
+      .then(res => {
+        const { config, data } = res as any;
+        dispatch({
+          type: 'update:config',
+          id: projectId,
+          config,
+          data: data,
+          isReady: true,
+        });
+      });
     setState(preState => {
       return {
         ...preState,
@@ -100,7 +102,7 @@ const Analysis = props => {
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            {!isObjectEmpty(config) && (
+            {!isObjectEmpty(config) && isReady && (
               <GISDK
                 key={key}
                 config={config}
