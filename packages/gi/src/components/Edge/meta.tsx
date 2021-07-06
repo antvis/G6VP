@@ -83,13 +83,10 @@ const getMeta = context => {
           default: 'type',
           options,
           showInPanel: {
-            conditions: [
-              ['style.node.color.scale.custom', '$eq', true],
-              ['style.node.color.mapping', '$eq', true],
-            ],
+            conditions: [['style.edge.color.mapping', '$eq', true]],
             logicalType: '$and',
           },
-          valuePath: 'style.node.color.key',
+          valuePath: 'style.edge.color.key',
         },
       },
     },
