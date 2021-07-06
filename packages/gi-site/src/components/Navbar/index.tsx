@@ -12,22 +12,23 @@ import './index.less';
 
 interface NavbarProps {
   projectId: string;
+  clickSave: () => void;
 }
 /**
  * 顶部导航
  * @see {NavbarProps}
- * @returns 
+ * @returns
  */
-const Navbar = ({ projectId }: NavbarProps) => {
+const Navbar = ({ projectId, clickSave }: NavbarProps) => {
   const history = useHistory();
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const config = useSelector(state => state.config);
   const contentEditable = React.createRef<HTMLSpanElement>();
 
-  const {data: initProject = {}, run} = useRequest(() => {
-    return getProjectById(projectId)
-  })
+  const { data: initProject = {}, run } = useRequest(() => {
+    return getProjectById(projectId);
+  });
 
   const handleClose = () => {
     setVisible(false);
@@ -46,7 +47,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
   };
 
   const handleSave = async () => {
-    const info = await getProjectById(projectId) as object;
+    const info = (await getProjectById(projectId)) as object;
     updateProjectById(projectId, {
       ...info,
       config,
@@ -58,15 +59,24 @@ const Navbar = ({ projectId }: NavbarProps) => {
         history.push(`/workspace`);
       },
     });
+
+    clickSave();
   };
 
   const changeTitle = async () => {
     const newTitle = contentEditable.current.innerHTML;
-    const info = await getProjectById(projectId) as object;
+    const info = (await getProjectById(projectId)) as object;
     updateProjectById(projectId, {
       ...info,
       title: newTitle,
     });
+  };
+
+  const handleKeyDown = e => {
+    //禁用回车的默认事件
+    if (e.keyCode == 13) {
+      e.preventDefault();
+    }
   };
 
   const backWorkspace = () => {
@@ -75,7 +85,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
 
   React.useEffect(() => {
     run();
-  }, [])
+  }, []);
 
   const { title } = initProject;
 
@@ -101,6 +111,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
         ref={contentEditable}
         contentEditable={true}
         onBlur={changeTitle}
+        onKeyDown={handleKeyDown}
         suppressContentEditableWarning={true}
       >
         {title}
