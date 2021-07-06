@@ -73,16 +73,14 @@ const ConfigationPanel = props => {
     if (style) {
       let { node, edge } = style;
       const nodeConfig = config.node.map(c => {
-
-        console.log('nodeConfig', node, c);
         // 后续需要根据节点来判断是否需要覆盖
         return {
           ...c,
           props: {
             ...c.props,
             ...node,
-          }
-        }
+          },
+        };
       });
 
       const edgeConfig = config.edge.map(c => {
@@ -92,8 +90,8 @@ const ConfigationPanel = props => {
           props: {
             ...c.props,
             ...edge,
-          }
-        }
+          },
+        };
       });
 
       dispatch({
@@ -107,9 +105,6 @@ const ConfigationPanel = props => {
     }
   };
 
-  
-
-  console.log('ConfigationPanel', config, props);
   return (
     <div className="gi-config-pannel">
       <Meta {...props} onChange={onChange} meta={GIComponentsMeta} market={market} />

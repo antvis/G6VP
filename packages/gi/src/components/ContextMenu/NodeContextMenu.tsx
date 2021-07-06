@@ -20,7 +20,6 @@ const NodeMenu = () => {
       return null;
     }
     services.getSubGraphData([id]).then(res => {
-      console.log('ContextMenu', res);
       if (!res) {
         return {
           nodes,

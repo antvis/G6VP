@@ -171,7 +171,6 @@ const Legend: React.FunctionComponent<LegendProps> & { Node: typeof Node } = pro
   const { graph } = graphin;
   const { bindType, sortKey, children, colorKey = 'style.stroke', style } = props;
   const { dataMap, options } = calculate({ bindType, sortKey, graph, colorKey });
-  console.log('dataMap, options', dataMap, options);
 
   graphin.legend = {
     ...graphin.legend,

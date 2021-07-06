@@ -29,7 +29,6 @@ const GISDK = (props: Props) => {
 
   /** 数据发生改变 */
   React.useEffect(() => {
-    console.log('did mount');
     services.getGraphData().then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
         return {
@@ -43,7 +42,6 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    console.log('COMPONENT config change...', componentsCfg);
     const filteredComponents = componentsCfg.filter(c => c.enable);
     setState(preState => {
       return {
@@ -54,7 +52,6 @@ const GISDK = (props: Props) => {
   }, [componentsCfg]);
   /** 布局发生改变 */
   React.useEffect(() => {
-    console.log('LAYOUT config change...');
     const { type, options } = layoutCfg?.props || {};
     setState(preState => {
       return {
@@ -68,7 +65,6 @@ const GISDK = (props: Props) => {
   }, [layoutCfg]);
 
   React.useEffect(() => {
-    console.log('STYLE config change...');
     setState(preState => {
       const { source } = preState;
       if (source.nodes.length === 0) {
@@ -82,7 +78,6 @@ const GISDK = (props: Props) => {
   }, [nodeCfg, edgeCfg]);
 
   const { data, layout, components } = state;
-  console.log('STATE', state);
 
   /** 计算 用户选择的组件 */
   let componentsMarket = [];

@@ -52,10 +52,14 @@ const Analysis = props => {
   };
 
   React.useLayoutEffect(() => {
+    dispatch({
+      type: 'update:config',
+      isReady: false,
+    });
+
     localforage
       .setItem('projectId', projectId)
       .then(id => {
-        console.log('id', id, projectId);
         return localforage.getItem(projectId);
       })
       .then(res => {
@@ -98,7 +102,7 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel config={config} value={state.activeNavbar} data={data} />
+          {isReady && <ConfigationPanel config={config} value={state.activeNavbar} data={data} />}
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
