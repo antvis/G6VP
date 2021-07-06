@@ -42,6 +42,7 @@ const ConfigationPanel = props => {
       const comps = getComponents(components);
       dispatch({
         type: 'update:config',
+        isSave: false,
         config: {
           ...config,
           components: comps,
@@ -56,6 +57,7 @@ const ConfigationPanel = props => {
       const layoutOptions = layout[layoutType];
       dispatch({
         type: 'update:config',
+        isSave: false,
         config: {
           ...config,
           layout: {
@@ -96,6 +98,7 @@ const ConfigationPanel = props => {
 
       dispatch({
         type: 'update:config',
+        isSave: false,
         config: {
           ...config,
           node: nodeConfig,

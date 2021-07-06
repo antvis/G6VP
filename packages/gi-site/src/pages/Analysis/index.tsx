@@ -28,26 +28,18 @@ const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
   const st = useSelector(state => state);
-  const { config, key, isReady } = st;
+  const { config, key, isReady, isSave, activeNavbar, collapse, data } = st;
 
   console.log('Analysis', st);
 
   const dispatch = useDispatch();
 
-  const data = useSelector(state => state.data) || null;
-
-  const [state, setState] = React.useState({
-    activeNavbar: '',
-    collapse: false,
-  });
-  const [isSave, setIsSave] = React.useState(true);
-
   const handleChangeNavbar = opt => {
-    const isSame = state.activeNavbar === opt.id;
-    setState({
-      ...state,
+    const isSame = activeNavbar === opt.id;
+    dispatch({
+      type: 'update:config',
       activeNavbar: opt.id,
-      collapse: isSame ? !state.collapse : false,
+      collapse: isSame ? !collapse : false,
     });
   };
 
@@ -72,17 +64,12 @@ const Analysis = props => {
           isReady: true,
         });
       });
-    setState(preState => {
-      return {
-        ...preState,
-        activeNavbar: 'style',
-      };
+
+    dispatch({
+      type: 'update:config',
+      activeNavbar: 'style',
     });
   }, [projectId]);
-
-  React.useEffect(() => {
-    setIsSave(false);
-  }, [config]);
 
   React.useEffect(() => {
     window.addEventListener('beforeunload', ev => {
@@ -95,14 +82,14 @@ const Analysis = props => {
     <div className="gi">
       <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
       <div className="gi-navbar">
-        <Navbar projectId={projectId} clickSave={() => setIsSave(true)} />
+        <Navbar projectId={projectId} />
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">
-          <Sidebar options={navbarOptions} value={state.activeNavbar} onChange={handleChangeNavbar} />
+          <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
         </div>
-        <div className={`gi-analysis-conf ${state.collapse ? 'collapse' : ''}`}>
-          {isReady && <ConfigationPanel config={config} value={state.activeNavbar} data={data} />}
+        <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
+          {isReady && <ConfigationPanel config={config} value={activeNavbar} data={data} />}
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
