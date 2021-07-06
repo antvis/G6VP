@@ -29,11 +29,9 @@ interface ConfigationPanelProps {
 
 const GIMetaPanel = props => {
   const { value, onChange, data, config, meta } = props;
-  // const configObj = configation(value, data, config, meta);
 
   const { components, layout, node, edge } = config;
 
-  // console.log('GIMetaPanel', configObj, meta, props);
   if (Object.keys(config).length === 0) {
     return null;
   }

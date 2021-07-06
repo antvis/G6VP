@@ -48,6 +48,7 @@ const Navbar = ({ projectId, clickSave }: NavbarProps) => {
 
   const handleSave = async () => {
     const info = (await getProjectById(projectId)) as object;
+
     updateProjectById(projectId, {
       ...info,
       config,
