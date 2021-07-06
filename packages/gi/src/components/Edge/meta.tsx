@@ -1,4 +1,4 @@
-const getMeta = (context) => {
+const getMeta = context => {
   const { data, keys = ['id', 'type'] } = context;
   const options = keys.map(c => {
     return {
@@ -8,11 +8,11 @@ const getMeta = (context) => {
   });
 
   return {
-    'size': {
+    size: {
       name: '边宽',
       type: 'group',
       enableHide: false,
-      "fold": false,
+      fold: false,
       children: {
         sizeMapping: {
           name: '宽度',
@@ -21,7 +21,7 @@ const getMeta = (context) => {
           max: 50,
           step: 1,
           suffix: 'px',
-          "valuePath": "style.edge.size",
+          valuePath: 'style.edge.size',
           default: {
             mapping: false,
             fixed: 5,
@@ -40,27 +40,27 @@ const getMeta = (context) => {
           default: 'amount',
           options,
           showInPanel: {
-            "conditions": [
-              ["style.edge.size.scale.custom", "$eq", true],
-              ["style.edge.size.mapping", "$eq", true],
+            conditions: [
+              ['style.edge.size.scale.custom', '$eq', true],
+              ['style.edge.size.mapping', '$eq', true],
             ],
-            "logicalType": '$and',
+            logicalType: '$and',
           },
-          "valuePath": "style.edge.size.key",
+          valuePath: 'style.edge.size.key',
         },
       },
     },
-    'color': {
+    color: {
       name: '颜色',
       type: 'group',
       enableHide: false,
-      "fold": false,
+      fold: false,
       children: {
         colorMapping: {
           name: '填充颜色',
           type: 'colorMapping',
           fixedComponents: ['flat'],
-          "valuePath": "style.node.color",
+          valuePath: 'style.edge.color',
           default: {
             mapping: false,
             fixed: 'skyblue',
@@ -83,44 +83,42 @@ const getMeta = (context) => {
           default: 'type',
           options,
           showInPanel: {
-            "conditions": [
-              ["style.node.color.scale.custom", "$eq", true],
-              ["style.node.color.mapping", "$eq", true],
+            conditions: [
+              ['style.node.color.scale.custom', '$eq', true],
+              ['style.node.color.mapping', '$eq', true],
             ],
-            "logicalType": '$and',
+            logicalType: '$and',
           },
-          "valuePath": "style.node.color.key",
+          valuePath: 'style.node.color.key',
         },
       },
     },
-    'label': {
+    label: {
       name: '标签',
       type: 'group',
       enableHide: false,
-      "fold": false,
+      fold: false,
       children: {
         showlabel: {
-          "name": "开关",
-          "type": "switch",
-          "default": true,
-          "statusText": true
+          name: '开关',
+          type: 'switch',
+          default: true,
+          statusText: true,
         },
         keyLabel: {
           name: '映射字段',
           type: 'select',
           useFont: true,
           default: 'type',
-          "valuePath": "style.edge.label.key",
+          valuePath: 'style.edge.label.key',
           showInPanel: {
-            "conditions": [
-              ["style.edge.label.showlabel", "$eq", true],
-            ],
+            conditions: [['style.edge.label.showlabel', '$eq', true]],
           },
           options,
         },
       },
     },
-  }
-}
+  };
+};
 
 export default getMeta;
