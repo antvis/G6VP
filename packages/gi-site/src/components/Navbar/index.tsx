@@ -3,7 +3,7 @@ import { DatabaseOutlined, SaveOutlined, ExportOutlined } from '@ant-design/icon
 import { Drawer, Tooltip, Button, Modal } from 'antd';
 import * as React from 'react';
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ExportConfig from './ExportConfig';
 import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
@@ -12,18 +12,18 @@ import './index.less';
 
 interface NavbarProps {
   projectId: string;
-  clickSave: () => void;
 }
 /**
  * 顶部导航
  * @see {NavbarProps}
  * @returns
  */
-const Navbar = ({ projectId, clickSave }: NavbarProps) => {
+const Navbar = ({ projectId }: NavbarProps) => {
   const history = useHistory();
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
-  const config = useSelector(state => state.config);
+  const dispatch = useDispatch();
+  const { config, isSave } = useSelector(state => state);
   const contentEditable = React.createRef<HTMLSpanElement>();
 
   const { data: initProject = {}, run } = useRequest(() => {
@@ -48,9 +48,15 @@ const Navbar = ({ projectId, clickSave }: NavbarProps) => {
 
   const handleSave = async () => {
     const info = (await getProjectById(projectId)) as object;
+
     updateProjectById(projectId, {
       ...info,
       config,
+    });
+
+    dispatch({
+      type: 'update:config',
+      isSave: true,
     });
 
     Modal.success({
@@ -59,8 +65,6 @@ const Navbar = ({ projectId, clickSave }: NavbarProps) => {
         history.push(`/workspace`);
       },
     });
-
-    clickSave();
   };
 
   const changeTitle = async () => {

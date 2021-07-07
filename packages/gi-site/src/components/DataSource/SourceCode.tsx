@@ -1,4 +1,4 @@
-import { useRequest } from "@alipay/bigfish"
+import { useRequest } from '@alipay/bigfish';
 import { Collapse, Tabs, Button } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
@@ -18,22 +18,20 @@ const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
   const { handleClose } = props;
   //@ts-ignore
   const { id } = useSelector(state => state);
-  const {data: project = {}, run } = useRequest(() => {
-    return getProjectById(id)
-  })
-  console.log(project)
+  const { data: project = {}, run } = useRequest(() => {
+    return getProjectById(id);
+  });
+
   const { data } = project;
   const dispatch = useDispatch();
 
   const editorDidMount = editor => {
-    console.log('editorDidMount', editor);
     editor.focus();
   };
   const handleSave = () => {
     const model = monacoRef.editor.getModel();
     const value = model.getValue();
     try {
-      console.log(value);
       const newData = JSON.parse(value);
       updateProjectById(id, {
         ...project,
@@ -51,14 +49,15 @@ const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
   };
   React.useEffect(() => {
     run();
-  }, [])
+  }, []);
 
   const code = JSON.stringify(data, null, 2);
-  console.log('code *****', code);
 
   return (
     <div>
-      <Button onClick={handleSave} style={{ marginBottom: 15 }}>更新源数据</Button>
+      <Button onClick={handleSave} style={{ marginBottom: 15 }}>
+        更新源数据
+      </Button>
       <MonacoEditor
         ref={node => {
           monacoRef = node;

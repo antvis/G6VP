@@ -11,6 +11,9 @@ const initialState = {
   key: Math.random(),
   config: {},
   isReady: false,
+  isSave: true,
+  activeNavbar: '',
+  collapse: false,
 };
 
 export type StateType = typeof initialState;
