@@ -108,7 +108,6 @@ const ComponentPanel = props => {
       },
     },
   };
-  console.log('%c  **** components', 'color:red', configObj.components, valueObj);
 
   return (
     <div>
