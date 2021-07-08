@@ -8,10 +8,9 @@ import MonacoEditor from 'react-monaco-editor';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
 import './index.less';
-import { updateProjectById } from "../../services"
+import { updateProjectById } from '../../services';
 import { getUid } from './utils';
-interface CreatePanelProps {
-}
+interface CreatePanelProps {}
 
 const { Step } = Steps;
 const { TabPane } = Tabs;
@@ -330,7 +329,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
         <div className="dataCheck-panel">
           <Row>数据格式校验成功！</Row>
           <Row>
-            <Tabs defaultActiveKey="node">
+            <Tabs defaultActiveKey="edge">
               <TabPane tab="nodes" key="node">
                 <Table dataSource={nodeTableData} columns={nodeColumns} />
               </TabPane>
