@@ -27,6 +27,7 @@
     "immutability-helper-x": "^1.0.5",
     "js-beautify": "^1.11.0",
     "localforage": "^1.9.0",
+    "lz-string": "^1.4.4",
     "monaco-editor-webpack-plugin": "^4.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
