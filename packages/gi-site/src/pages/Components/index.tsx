@@ -11,7 +11,7 @@ import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import { getComponentMetaInfo } from './meta/componentMetaInfo';
-import { generatorconfigToCode } from '../../components/utils';
+import { getRiddleAppCode } from '../../hooks';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import './index.less';
 
@@ -100,7 +100,7 @@ const ComponentMarket = props => {
                       minimap: { enabled: false },
                       readOnly: true,
                     }}
-                    value={generatorconfigToCode({ ...defaultConfig, components: [{ ...component }] })}
+                    value={getRiddleAppCode({ ...defaultConfig, components: [{ ...component }] })}
                   />
                 </div>
               </TabContent>
