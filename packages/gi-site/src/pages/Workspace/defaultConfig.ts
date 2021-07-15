@@ -17,7 +17,7 @@ const baseNodeConfig = [
       /** style.keyshape.size */
       size: {
         key: 'weight',
-        fixed: 5,
+        fixed: 26,
         mapping: false,
         scale: {
           custom: false,
@@ -40,7 +40,7 @@ const baseEdgeConfig = [
     props: {
       /** style.keyshape.stroke */
       color: {
-        fixed: '#2483ff',
+        fixed: '#ddd',
         mapping: false,
         scale: {
           custom: false,
@@ -51,7 +51,7 @@ const baseEdgeConfig = [
       /** style.keyshape.size */
       size: {
         key: 'weight',
-        fixed: 5,
+        fixed: 1,
         mapping: false,
         scale: {
           custom: true,
@@ -70,6 +70,11 @@ const baseEdgeConfig = [
 const baseComponentsConfig = [
   {
     id: 'NodeLegend',
+    props: {},
+    enable: true,
+  },
+  {
+    id: 'DrillingOne',
     props: {},
     enable: true,
   },
@@ -112,6 +117,11 @@ export const defaultConfig = {
         props: {},
         enable: true,
       },
+      {
+        id: 'DrillingOne',
+        props: {},
+        enable: true,
+      },
     ],
   },
   /** 　网商图谱 */
@@ -120,6 +130,11 @@ export const defaultConfig = {
     components: [
       {
         id: 'NodeContextMenu',
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'DrillingOne',
         props: {},
         enable: true,
       },
@@ -136,6 +151,11 @@ export const defaultConfig = {
       },
       {
         id: 'NodeContextMenu',
+        props: {},
+        enable: true,
+      },
+      {
+        id: 'DrillingOne',
         props: {},
         enable: true,
       },
