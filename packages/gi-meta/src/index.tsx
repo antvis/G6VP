@@ -28,7 +28,7 @@ interface ConfigationPanelProps {
 }
 
 const GIMetaPanel = props => {
-  const { value, onChange, data, config, meta } = props;
+  const { value, onChange, data, config, meta, services } = props;
 
   const { components, layout, node, edge } = config;
 
