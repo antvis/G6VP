@@ -16,7 +16,7 @@ const getDefaultValues = meta => {
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { value, onChange, data, config, meta } = props;
+  const { value, onChange, data, config, meta, services } = props;
   const { components } = config;
   const valueObj = {
     components: {
@@ -55,7 +55,7 @@ const ComponentPanel = props => {
       };
     };
     const metaFunction = meta[id] || defaultFunction;
-    const componentMeta = metaFunction({ data, keys });
+    const componentMeta = metaFunction({ data, keys, services });
 
     componentMeta.children['giEnable'] = {
       name: '是否加载',
