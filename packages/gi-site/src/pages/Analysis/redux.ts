@@ -14,6 +14,7 @@ const initialState = {
   isSave: true,
   activeNavbar: '',
   collapse: false,
+  services: [],
 };
 
 export type StateType = typeof initialState;
