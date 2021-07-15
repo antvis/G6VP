@@ -1,6 +1,7 @@
 import { MiniMap } from '@antv/graphin-components';
 import CanvasClick from './CanvasClick';
 import { NodeContextMenu } from './ContextMenu';
+import DrillingOne from './DrillingOne';
 import NodeLegend from './Legend/NodeLegend';
 import ClickEntity from './Liaoyuan/ClickEntity';
 import ClickEvent from './Liaoyuan/ClickEvent';
@@ -107,6 +108,15 @@ const getComponentsFromMarket: any = () => {
       category: 'EDGE',
       props: {},
       component: 'edge',
+    },
+    DrillingOne: {
+      id: 'DrillingOne',
+      label: '一度下钻',
+      category: 'behavior',
+      props: {
+        service: '',
+      },
+      component: DrillingOne,
     },
   };
 };
