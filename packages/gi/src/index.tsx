@@ -11,7 +11,7 @@ export interface Props {
    * @description 配置信息
    */
   config: GIConfig;
-  services: GIService;
+  services: GIService[];
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
@@ -29,7 +29,9 @@ const GISDK = (props: Props) => {
 
   /** 数据发生改变 */
   React.useEffect(() => {
-    services.getGraphData().then((res = { nodes: [], edges: [] }) => {
+    const { service } = services.find(s => s.id === 'get_initial_graph') as GIService;
+
+    service.then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
         return {
           ...preState,
