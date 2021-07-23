@@ -4,12 +4,13 @@ import { GIContext } from '../../';
 import { uniqueElementsBy } from '../Liaoyuan/utils';
 interface DrillingOneProps {
   serviceName: 'gi-drilling-one';
+  container?: 'contextmenu' | 'toolbar';
 }
 
 const DrillingOne: React.FunctionComponent<DrillingOneProps> = props => {
   //@ts-ignore
   const { services, dispatch } = GIContext;
-  const { serviceName } = props;
+  const { serviceName, container } = props;
 
   const handleClick = () => {
     const { service } = services.find(sr => sr.id === serviceName);
