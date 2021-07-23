@@ -36,7 +36,9 @@
     "react-router-dom": "^5.1.1",
     "redux": "^4.1.0",
     "umi": "^3.4.4",
-    "use-immer": "latest"
+    "use-immer": "latest",
+    "systemjs": "latest",
+    "@types/systemjs": "latest"
   },
   "author": "AntV",
   "license": "MIT"
