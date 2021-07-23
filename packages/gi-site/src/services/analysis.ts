@@ -8,5 +8,6 @@ export const getProjectById = (projectId: string) => {
   if (isMock) {
     return localforage.getItem(projectId);
   }
+  return fetch('xxx');
   // oneApi 接口
 };

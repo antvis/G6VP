@@ -1,19 +1,17 @@
 // 组件市场
-import React from 'react';
 import { Tabs } from 'antd';
+import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { useSelector, Provider } from 'react-redux';
-import GISDK, { GIContext } from '@alipay/graphinsight';
+import { Provider } from 'react-redux';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import TabContent from '../../components/TabContent';
-import { initMarket } from './services/services';
-import { defaultConfig, getGraphData } from './services/defaultConfig';
-import { getUid } from '../Workspace/utils';
+import { getRiddleAppCode } from '../../hooks';
 import store from '../Analysis/redux';
+import './index.less';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import { getComponentMetaInfo } from './meta/componentMetaInfo';
-import { getRiddleAppCode } from '../../hooks';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import './index.less';
+import { defaultConfig, getGraphData } from './services/defaultConfig';
+import { initMarket } from './services/services';
 
 const { TabPane } = Tabs;
 
@@ -77,13 +75,13 @@ const ComponentMarket = props => {
               <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
                 <div className="gi-sdk-wrapper">
                   <div className="content view">
-                    <GISDK
+                    {/* <GISDK
                       key={getUid()}
                       config={{ ...defaultConfig, components: [{ ...component }] }}
                       services={{
                         getGraphData,
                       }}
-                    ></GISDK>
+                    ></GISDK> */}
                   </div>
                   <div className="content config">
                     <ComponentMetaPanel
