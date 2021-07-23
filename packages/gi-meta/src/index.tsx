@@ -2,8 +2,8 @@ import * as React from 'react';
 import ComponentPanel from './ComponentPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
-import StyleConfig from './style/style';
-import StylePanel from './StylePanel';
+import StylePanel from './Style';
+import StyleConfig from './Style/style';
 
 const ConfigMap = {
   style: StyleConfig,
