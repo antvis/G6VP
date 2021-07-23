@@ -9,9 +9,6 @@ const ConfigMap = {
   style: StyleConfig,
 };
 
-const Empty = () => {
-  return <div>Empty</div>;
-};
 interface Option {
   /** 配置的内容 */
   content: React.ReactElement | JSX.Element | JSX.Element[];
@@ -46,9 +43,8 @@ const GIMetaPanel = props => {
 };
 
 export default React.memo(GIMetaPanel, (prevProps, nextProps) => {
-  if (prevProps.value !== nextProps.value) {
+  if (prevProps.value !== nextProps.value || prevProps.refreshKey !== nextProps.refreshKey) {
     return false;
   }
   return true;
-  // return false;
 });
