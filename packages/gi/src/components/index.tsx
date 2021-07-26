@@ -15,7 +15,6 @@ import { EdgeTooltip, NodeTooltip } from './Tooltip';
 const getComponentsFromMarket: any = () => {
   // 这个不应该放在这里，sortKey 默认值为 type
   // const legendSortKey = getLegendMappingKey(config);
-
   // category 分为 analysis behavior materials
   return {
     /*** 官方组件 */
@@ -95,20 +94,7 @@ const getComponentsFromMarket: any = () => {
       props: {},
       component: ClickEvent,
     },
-    'graphin-node': {
-      id: 'graphin-node',
-      label: 'Graphin节点',
-      category: 'NODE',
-      props: {},
-      component: 'node',
-    },
-    'graphin-edge': {
-      id: 'graphin-edge',
-      label: 'Graphin边',
-      category: 'EDGE',
-      props: {},
-      component: 'edge',
-    },
+
     DrillingOne: {
       id: 'DrillingOne',
       label: '一度下钻',
