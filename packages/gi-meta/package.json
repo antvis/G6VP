@@ -19,6 +19,9 @@
     "@ali/react-datav-gui-utils": "^0.1.18",
     "@alipay/tech-ui": "latest",
     "father": "^2.30.6",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "react":"latest",
+    "@types/react":"latest",
+    "antd":"latest"
   }
 }
