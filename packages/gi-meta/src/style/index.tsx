@@ -1,60 +1,34 @@
-import GUI from '@ali/react-datav-gui';
-import { Select } from 'antd';
-import React, { useState } from 'react';
+import { Tabs } from 'antd';
+import React from 'react';
+import NodeStylePanel from './Node';
 
-const { Option } = Select;
+const { TabPane } = Tabs;
 
-const defaultOptions = [
-  {
-    id: 'graphin-node',
-    name: '官方内置节点',
-    props: {},
-    meta: {},
-  },
-  {
-    name: '第三刚节点',
-    id: 'custom-node',
-    props: {},
-  },
-];
+function callback(key) {
+  console.log(key);
+}
 
-interface StylePanelProps {}
+
+interface StylePanelProps {
+  meta: any;
+  data: any;
+  elements: any;
+  config: any;
+  dispatch: any;
+}
 
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
-  console.log('props', props);
-  const [state, setState] = useState({
-    options: defaultOptions,
-    currentId: 'graphin-node',
-  });
-  const configObj = { useGUI: { name: '使用GUI', type: 'switch' } };
-  const valueObj = { useGUI: true };
-
-  const handleChange = value => {
-    console.log(`selected ${value}`);
-    setState(preState => {
-      return {
-        ...preState,
-        currentId: value,
-      };
-    });
-  };
-
-  const { options, currentId } = state;
-  console.log('currentId', currentId);
+ 
   return (
-    <div>
-      <h1>Node</h1>
-      <Select onChange={handleChange} value={currentId}>
-        {options.map(c => {
-          return (
-            <Option value={c.id} key={c.id}>
-              {c.name}
-            </Option>
-          );
-        })}
-      </Select>
-      <GUI configObj={configObj} valueObj={valueObj} />
-    </div>
+ 
+    <Tabs defaultActiveKey="1" onChange={callback}>
+    <TabPane tab="Node" key="1">
+     <NodeStylePanel {...props}/>
+    </TabPane>
+    <TabPane tab="Edge" key="2">
+      Content of Tab Pane 2
+    </TabPane>
+  </Tabs>
   );
 };
 
