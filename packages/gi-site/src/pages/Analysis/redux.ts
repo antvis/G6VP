@@ -62,6 +62,17 @@ const RootReducers = (state: StateType = initialState, action: Action): StateTyp
         ...state,
         ...payload,
       };
+    case 'update:config:node':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          node: {
+            ...state.config.node,
+            ...payload,
+          },
+        },
+      };
     case 'update:data':
       return {
         ...state,

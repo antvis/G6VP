@@ -1,4 +1,4 @@
-import GISDK, { GIComponents } from '@alipay/graphinsight';
+import GISDK, { GIComponents, GIElements } from '@alipay/graphinsight';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { navbarOptions } from './Constants';
 import './index.less';
 import store, { StateType } from './redux';
 import { isObjectEmpty } from './utils';
+
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
 
@@ -116,12 +117,12 @@ const Analysis = props => {
     });
   }, [projectId]);
 
-  React.useEffect(() => {
-    window.addEventListener('beforeunload', ev => {
-      ev.preventDefault();
-      ev.returnValue = '配置未保存，确定离开吗？';
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   window.addEventListener('beforeunload', ev => {
+  //     ev.preventDefault();
+  //     ev.returnValue = '配置未保存，确定离开吗？';
+  //   });
+  // }, []);
 
   const isLoading = isObjectEmpty(config) || !isReady;
   if (isLoading) {
@@ -151,6 +152,7 @@ const Analysis = props => {
             dispatch={dispatch}
             components={components}
             refreshKey={refreshComponentKey}
+            elements={GIElements}
           />
         </div>
         <div className="gi-analysis-workspace">
