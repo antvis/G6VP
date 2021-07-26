@@ -57,14 +57,22 @@ export interface GIComponentConfig {
 }
 
 export interface GINodeConfig {
-  size: number;
-  color: string;
-  label: string;
+  id: string;
+  name: string;
+  props: {
+    size: number;
+    color: string;
+    label: string;
+  };
 }
 
 export interface GIEdgeConfig {
-  color: string;
-  lineWidth: number;
+  id: string;
+  name: string;
+  props: {
+    color: string;
+    lineWidth: number;
+  };
 }
 
 export interface GIConfig {
