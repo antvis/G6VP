@@ -4,8 +4,7 @@ export const defaultConfig = {
   components: [],
   node: [
     {
-      id: 'graphin-node',
-      enable: true,
+      id: 'GraphinNode',
       /** style.keyshape.color */
       color: [
         /** 第一种是映射模式 */
@@ -46,7 +45,7 @@ export const defaultConfig = {
   ],
   edge: [
     {
-      id: 'graphin-edge',
+      id: 'GraphinEdge',
       /** style.keyshape.stroke */
       color: {
         key: 'type',
