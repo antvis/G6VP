@@ -3,11 +3,6 @@ import ComponentPanel from './ComponentPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
 import StylePanel from './Style';
-import StyleConfig from './Style/style';
-
-const ConfigMap = {
-  style: StyleConfig,
-};
 
 interface Option {
   /** 配置的内容 */
