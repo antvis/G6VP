@@ -3,7 +3,8 @@ import React from 'react';
 import CanvasClick from './components/CanvasClick';
 import getComponentsFromMarket from './components/index';
 import meta from './components/meta';
-import transform from './transfrom';
+/** 物料 */
+import * as Element from './elements';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
 
 export interface Props {
@@ -14,6 +15,10 @@ export interface Props {
   services: GIService[];
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
+
+Object.keys(Element).forEach(type => {
+  Element[type].registerShape(Graphin);
+});
 
 const GISDK = (props: Props) => {
   const { config, services, children } = props;
@@ -26,6 +31,21 @@ const GISDK = (props: Props) => {
   });
 
   const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = config;
+  /** 根据注册的图元素，生成Transform函数 */
+
+  const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
+  const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
+
+  const NodeElement = Element[NodeElementId];
+  const EdgeElement = Element[EdgeElementId];
+  const transform = (data, config) => {
+    const nodes = NodeElement.registerTransform(data, config);
+    const edges = EdgeElement.registerTransform(data, config);
+    return {
+      nodes,
+      edges,
+    };
+  };
 
   /** 数据发生改变 */
   React.useEffect(() => {
@@ -33,9 +53,10 @@ const GISDK = (props: Props) => {
 
     service.then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
+        const newData = transform(res, config);
         return {
           ...preState,
-          data: transform(res, config),
+          data: newData,
           source: { ...res },
         };
       });
@@ -72,9 +93,10 @@ const GISDK = (props: Props) => {
       if (source.nodes.length === 0) {
         return preState;
       }
+      const newData = transform(preState.source, { node: nodeCfg, edge: edgeCfg });
       return {
         ...preState,
-        data: transform(preState.source, { node: nodeCfg, edge: edgeCfg }),
+        data: newData,
       };
     });
   }, [nodeCfg, edgeCfg]);
@@ -126,5 +148,6 @@ const GISDK = (props: Props) => {
 
 export const GIContext = GraphinContext;
 export const GIComponents = getComponentsFromMarket;
+export const GIElements = Element;
 export const GIComponentsMeta = meta;
 export default GISDK;
