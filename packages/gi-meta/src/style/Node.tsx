@@ -54,22 +54,26 @@ const getKeysByData = data => {
 const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   console.log('props', props);
   const {  data, elements, config = { node: { props: {} } }, dispatch } = props;
-  const defaultValue = config.node.props;
-  console.log(defaultValue, 'defaultValue');
+ 
+  const {props:NodeShapeProps,id:NodeShapeId} =config.node;
+
+  
   const [state, setState] = useState({
     options: defaultOptions,
-    currentNodeId: 'GraphinNode',
+    currentNodeId: NodeShapeId,
   });
 
   const handleChange = value => {
-    console.log(`selected ${value}`);
+    
     setState(preState => {
       return {
         ...preState,
         currentNodeId: value,
       };
     });
-    const currentNode = options.find(opt=>opt.id===value)
+    const currentNode = options.find(opt=>opt.id===value);
+    console.log(`selected ${value}`,currentNode);
+
     dispatch({
       type:"update:config:node",
       ...currentNode,
@@ -83,7 +87,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { registerMeta } = NodeElement;
   const configObj = registerMeta({ keys, data });
 
-  const valueObj = extractDefault({ config: configObj, value: defaultValue });
+  const valueObj = extractDefault({ config: configObj, value: NodeShapeProps });
 
   console.log('currentNodeId', currentNodeId, configObj, valueObj);
   const handleGUIChange = evt => {
@@ -92,7 +96,6 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     dispatch({
       type: 'update:config:node',
        props: rootValue,
-     
     });
   };
 
