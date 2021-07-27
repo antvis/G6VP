@@ -11,10 +11,12 @@ const getEntityByEventNode = eventNode => {
   return [...sources, ...targets];
 };
 
-const ClickEventNode = () => {
+const ClickEventNode = props => {
   const { graph } = React.useContext(GIContext);
   //@ts-ignore
   const { services, dispatch } = GIContext;
+  const { serviceId } = props;
+
   React.useEffect(() => {
     const handleClick = (e: any) => {
       if (e.item.getModel().data.type === 'EVENT') {
@@ -27,6 +29,9 @@ const ClickEventNode = () => {
           return node.getModel().id;
         });
 
+        //@TODO
+        const { service } = services.find(sr => sr.id === serviceId);
+
         services.getSubGraphData(entityIds).then(res => {
           const ids = res.nodes.map(node => {
             return node.id;
@@ -36,6 +41,7 @@ const ClickEventNode = () => {
           //   nodes: any[];
           //   edges: any[];
           // };
+
           services.getGraphData().then(r => {
             const { nodes, edges } = r;
             /** 修改数据 */
