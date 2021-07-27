@@ -1,33 +1,7 @@
 const baseNodeConfig = {
   id: 'GraphinNode',
   name: '官方内置节点',
-  props: {
-    /** style.keyshape.color */
-    color: {
-      fixed: '#2483ff',
-      mapping: false,
-      scale: {
-        custom: true,
-        range: ['#ffffcc', '#d8fbcd', '#b0f7ce', '#89f4d0', '#61f0d1'],
-      },
-      key: 'type',
-    },
-    /** style.keyshape.size */
-    size: {
-      key: 'weight',
-      fixed: 26,
-      mapping: false,
-      scale: {
-        custom: false,
-        domain: [0, 1000],
-        range: [7, 30],
-      },
-    },
-    label: {
-      key: 'id',
-      showlabel: true,
-    },
-  },
+  props: {},
 };
 const baseEdgeConfig = {
   id: 'GraphinEdge',
