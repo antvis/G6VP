@@ -1,4 +1,5 @@
 import { scaleLinear } from 'd3-scale';
+import { defaultProps } from './registerMeta';
 
 const getMapping = () => {
   const Mapping = new Map();
@@ -13,16 +14,11 @@ const getMapping = () => {
   };
 };
 
-// 大小映射
-const sizeMapping = (value, domain, range) => {};
-
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, metaConfig) => {
-  const { node: mathNodeConfig } = metaConfig;
   try {
     /** 解构配置项 */
-
-    const { color: Color, label: Label, size: Size } = mathNodeConfig.props;
+    const { color: Color, label: Label, size: Size } = Object.assign({}, defaultProps, metaConfig.node.props);
 
     /** 分别生成Size和Color的Mapping */
     const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
@@ -32,10 +28,10 @@ const transform = (s, metaConfig) => {
     const nodes = s.nodes.map(node => {
       const { id, data } = node;
       /** 根据Size字段映射的枚举值 */
-      const enumValueBySize = data[Size?.key || 0];
+      const enumValueBySize = data[Size.key || 0];
 
       /** 根据Color字段映射的枚举值 */
-      const enumValueByColor = data[Color?.key || 0];
+      const enumValueByColor = data[Color.key || 0];
       const MappingByColor = mappingByColor(enumValueByColor, node);
 
       /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */

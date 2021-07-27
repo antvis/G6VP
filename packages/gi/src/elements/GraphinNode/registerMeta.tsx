@@ -1,3 +1,5 @@
+import { extractDefault } from '@ali/react-datav-gui-utils';
+
 const registerMeta = context => {
   const { data, keys = ['id', 'type'] } = context;
   const options = keys.map(c => {
@@ -24,7 +26,7 @@ const registerMeta = context => {
           valuePath: 'size',
           default: {
             mapping: false,
-            fixed: 5,
+            fixed: 26,
             scale: {
               custom: false, // 是否采取自定义映射
               range: [3, 30], // 值域
@@ -59,12 +61,12 @@ const registerMeta = context => {
           valuePath: 'color',
           default: {
             mapping: false,
-            fixed: 'skyblue',
+            fixed: '#1E5D23',
             scale: {
               type: 'ordinal',
               scheme: 'cat-1',
               custom: true,
-              range: ['#00FF95', '#588ee9'],
+              range: ['#1E5D23', '#d8fbcd', '#b0f7ce', '#89f4d0', '#61f0d1'],
               domain: [],
               excepted: '#666',
               abnormal: '#f31200',
@@ -116,5 +118,9 @@ const registerMeta = context => {
     },
   };
 };
+
+const configObj = registerMeta({ data: {}, keys: ['id'] });
+/** 默认的配置值 */
+export const defaultProps = extractDefault({ config: configObj, value: {} });
 
 export default registerMeta;
