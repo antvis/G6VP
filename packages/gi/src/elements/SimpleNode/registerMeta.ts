@@ -1,4 +1,5 @@
-const getMeta = context => {
+import { extractDefault } from '@ali/react-datav-gui-utils';
+const registerMeta = context => {
   const { data, keys = ['id', 'type'] } = context;
   const options = keys.map(c => {
     return {
@@ -113,4 +114,8 @@ const getMeta = context => {
   };
 };
 
-export default getMeta;
+const configObj = registerMeta({ data: {}, keys: ['id'] });
+/** 默认的配置值 */
+export const defaultProps = extractDefault({ config: configObj, value: {} });
+
+export default registerMeta;
