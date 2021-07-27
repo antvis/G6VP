@@ -1,97 +1,80 @@
-import { scaleLinear } from 'd3-scale';
+import Graphin from '@antv/graphin';
+import IconLoader from '@antv/graphin-icons';
+import '@antv/graphin-icons/dist/index.css';
+import { defaultProps } from './registerMeta';
 
-const getMapping = () => {
-  const Mapping = new Map();
-  return (enumValue, value) => {
-    const current = Mapping.get(enumValue);
-    if (current) {
-      Mapping.set(enumValue, [...current, value]);
-    } else {
-      Mapping.set(enumValue, [value]);
-    }
-    return Mapping;
-  };
-};
-
-// 大小映射
-const sizeMapping = (value, domain, range) => {};
+const icons = Graphin.registerFontFamily(IconLoader);
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, metaConfig) => {
-  const { node: nodeConfig, edge: edgeConfig } = metaConfig;
+  const { node: nodeConfig } = metaConfig;
   try {
     /** 解构配置项 */
-    const mathNodeConfig = nodeConfig.find(cfg => cfg.enable);
-
-    const { color: Color, label: Label, size: Size } = mathNodeConfig.props;
-
-    /** 分别生成Size和Color的Mapping */
-    const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
-
-    const mappingByColor = getMapping();
+    const props = Object.assign({}, defaultProps, nodeConfig.props);
+    console.log('%c props', 'color:red', props);
+    const primaryColor = '#f44336';
+    const nodeSize = 26;
+    const badgeSize = 8;
 
     const nodes = s.nodes.map(node => {
       const { id, data } = node;
-      /** 根据Size字段映射的枚举值 */
-      const enumValueBySize = data[Size?.key || 0];
-
-      /** 根据Color字段映射的枚举值 */
-      const enumValueByColor = data[Color?.key || 0];
-      const MappingByColor = mappingByColor(enumValueByColor, node);
-
-      /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
-      const colorKeys = MappingByColor.keys();
-      const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
+      const badgeNumber = data?.properties?.length;
+      let badgesShape = {};
+      if (badgeNumber) {
+        badgesShape = {
+          badges: [
+            {
+              position: 'RT',
+              type: 'text',
+              value: badgeNumber,
+              size: [badgeSize, badgeSize],
+              fill: primaryColor,
+              stroke: primaryColor,
+              color: '#fff',
+              fontSize: badgeSize * 0.8,
+              padding: 0,
+              offset: [0, 0],
+            },
+          ],
+        };
+      }
 
       return {
         id: node.id,
         data: node.data,
-        type: 'graphin-node',
+        type: 'graphin-circle',
         style: {
           keyshape: {
-            stroke: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
-            fill: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
-            size: Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed,
+            fill: primaryColor,
+            fillOpacity: 0.1,
+            strokeWidth: 1.2,
+            stroke: primaryColor,
+            size: nodeSize,
+          },
+          icon: {
+            fontFamily: 'graphin',
+            type: 'font',
+            value: icons.team,
+            fill: primaryColor,
+            size: nodeSize / 1.6,
           },
           label: {
-            value: Label?.showlabel ? data[Label?.key || 'id'] : '',
+            value: data.name,
+            fill: '#000',
+            fillOpacity: 0.85,
           },
+          halo: {
+            visible: true,
+            stroke: '#ddd',
+          },
+          ...badgesShape,
         },
       };
     });
 
-    const mathEdgeConfig = edgeConfig.find(cfg => cfg.enable);
-    const mappingEdgeByColor = getMapping();
-    const { color: edgeColor, label: edgeLabel, size: edgeSize } = mathEdgeConfig.props;
-
-    /** 分别生成Size和Color的Mapping */
-    const mappingEdgeBySize = scaleLinear().domain(edgeSize.scale.domain).range(edgeSize.scale.range);
-
-    const edges = s.edges.map(edge => {
-      const { data } = edge;
-      const enumValueBySize = data[edgeSize?.key || 0];
-      /** 根据Color字段映射的枚举值 */
-      const enumValueByColor = data[edgeColor?.key || 0];
-      const MappingByColor = mappingEdgeByColor(enumValueByColor, edge);
-
-      /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
-      const colorKeys = MappingByColor.keys();
-      const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
-      return {
-        ...edge,
-        style: {
-          keyshape: {
-            stroke: edgeColor?.mapping ? edgeColor?.scale?.range?.[matchColorIndex] : edgeColor?.fixed,
-            lineWidth: edgeSize?.mapping ? mappingEdgeBySize(enumValueBySize) : edgeSize?.fixed,
-          },
-          label: {
-            value: edgeLabel?.showlabel ? data[edgeLabel?.key || 'id'] : '',
-          },
-        },
-      };
-    });
     return nodes;
   } catch (error) {
+    console.error('parse transform error:', error);
     return s.nodes;
   }
 };

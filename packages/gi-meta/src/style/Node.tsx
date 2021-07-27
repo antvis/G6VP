@@ -11,7 +11,6 @@ function callback(key) {
   console.log(key);
 }
 
-
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
@@ -22,13 +21,18 @@ const { Option } = Select;
 const defaultOptions = [
   {
     id: 'GraphinNode',
-    name: '官方内置节点',
+    name: 'Graphin Node',
     props: {},
     meta: {},
   },
   {
-    name: '第三刚节点',
+    name: 'Rect Node',
     id: 'RectNode',
+    props: {},
+  },
+  {
+    name: 'Simple Node',
+    id: 'SimpleNode',
     props: {},
   },
 ];

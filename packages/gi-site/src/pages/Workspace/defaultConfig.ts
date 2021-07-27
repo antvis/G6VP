@@ -75,16 +75,7 @@ export const defaultConfig = {
         props: {},
         enable: true,
       },
-      {
-        id: 'Liaoyuan-Click-Entity-Node',
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'Liaoyuan-Click-Event-Node',
-        props: {},
-        enable: true,
-      },
+
       {
         id: 'DrillingOne',
         props: {},
