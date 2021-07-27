@@ -1,8 +1,6 @@
 import registerMeta from './registerMeta';
+import registerShape from './registerShape';
 import registerTransform from './registerTransform';
-const registerShape = Graphin => {
-  // graphinNode 已经注册成功
-};
 
 export default {
   registerShape,
