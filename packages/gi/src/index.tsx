@@ -124,7 +124,7 @@ const GISDK = (props: Props) => {
   };
 
   return (
-    <Graphin data={data} layout={layout} enabledStack={true}>
+    <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
       {/** 内置的组件 */}
       <CanvasClick />
       {/** 用户从组件市场里选择的组件  */}
