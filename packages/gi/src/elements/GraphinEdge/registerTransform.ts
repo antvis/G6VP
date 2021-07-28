@@ -52,6 +52,7 @@ const transform = (s, config) => {
     });
     return edges;
   } catch (error) {
+    console.error('parse transform error:', error);
     return s.edges;
   }
 };
