@@ -71,7 +71,7 @@ const transform = (s, metaConfig) => {
         },
       };
     });
-
+    console.log('%c Simple Nodes', 'color:red', nodes);
     return nodes;
   } catch (error) {
     console.error('parse transform error:', error);

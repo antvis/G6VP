@@ -55,8 +55,11 @@ const transform = (s, metaConfig) => {
       };
     });
 
+    console.log('%c Graphin Nodes', 'color:red', nodes);
+
     return nodes;
   } catch (error) {
+    console.error('parse transform error:', error);
     return s.nodes;
   }
 };
