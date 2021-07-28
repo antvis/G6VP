@@ -35,6 +35,11 @@ const defaultOptions = [
     id: 'SimpleNode',
     props: {},
   },
+  {
+    name: 'Donut Node',
+    id: 'DonutNode',
+    props: {},
+  },
 ];
 
 interface NodeStylePanelProps {
