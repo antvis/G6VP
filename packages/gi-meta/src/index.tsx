@@ -2,16 +2,8 @@ import * as React from 'react';
 import ComponentPanel from './ComponentPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
-import StyleConfig from './style/style';
-import StylePanel from './StylePanel';
+import StylePanel from './Style';
 
-const ConfigMap = {
-  style: StyleConfig,
-};
-
-const Empty = () => {
-  return <div>Empty</div>;
-};
 interface Option {
   /** 配置的内容 */
   content: React.ReactElement | JSX.Element | JSX.Element[];
@@ -28,7 +20,7 @@ interface ConfigationPanelProps {
 }
 
 const GIMetaPanel = props => {
-  const { value, onChange, data, config, meta } = props;
+  const { value, onChange, data, config, meta, services } = props;
 
   const { components, layout, node, edge } = config;
 
@@ -46,9 +38,8 @@ const GIMetaPanel = props => {
 };
 
 export default React.memo(GIMetaPanel, (prevProps, nextProps) => {
-  if (prevProps.value !== nextProps.value) {
+  if (prevProps.value !== nextProps.value || prevProps.refreshKey !== nextProps.refreshKey) {
     return false;
   }
   return true;
-  // return false;
 });

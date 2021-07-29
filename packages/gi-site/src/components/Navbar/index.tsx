@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { DatabaseOutlined, SaveOutlined, ExportOutlined } from '@ant-design/icons';
-import { Drawer, Tooltip, Button, Modal } from 'antd';
-import * as React from 'react';
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { useSelector, useDispatch } from 'react-redux';
-import ExportConfig from './ExportConfig';
+import { DatabaseOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { Button, Drawer, Modal, Tooltip } from 'antd';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjectById, updateProjectById } from '../../services';
 import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
-import { getProjectById, updateProjectById } from '../../services';
+import ExportConfig from './ExportConfig';
 import './index.less';
 
 interface NavbarProps {
@@ -109,6 +109,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
     <BaseNavbar history={history} menu={menu}>
       <span className="navbar-db" onClick={handleOpen}>
         <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
+        数据服务
       </span>
       <span
         className="navbar-title"

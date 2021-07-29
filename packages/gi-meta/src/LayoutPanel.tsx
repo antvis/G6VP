@@ -24,7 +24,6 @@ const LayoutPanel = props => {
   return (
     <div>
       <GUI configObj={configObj} valueObj={valueObj} onChange={onChange} />
-      {/* <h5>高级配置</h5> */}
     </div>
   );
 };
