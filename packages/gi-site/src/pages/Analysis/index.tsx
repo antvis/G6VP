@@ -1,4 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
 import GISDK, { GIComponents, GIElements } from '@alipay/graphinsight';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -7,6 +6,7 @@ import { ConfigationPanel, Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getProjectById } from '../../services/analysis';
 import { navbarOptions } from './Constants';
+import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import './index.less';
 import store, { StateType } from './redux';
 import { isObjectEmpty } from './utils';
@@ -14,106 +14,18 @@ import { isObjectEmpty } from './utils';
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
 
-const getServices = id => {
-  return [
-    {
-      id: 'get_initial_graph',
-      content: `(data)=>{return data}`,
-      mode: 'mock',
-    },
-    {
-      id: 'gi_drilling_one',
-      content: `(data)=>{ console.log('drilling'); return data}`,
-      mode: 'mock',
-    },
-  ];
-};
-const getComponents = id => {
-  return GIComponents(id);
-};
-const getKeysByData = data => {
-  try {
-    return Object.keys(data.nodes[0].data);
-  } catch (error) {
-    return ['id'];
-  }
-};
-
-const getElements = (projectId, data) => {
-  let nodeElements = {};
-  let edgeElements = {};
-  Object.keys(GIElements).forEach(key => {
-    const element = GIElements[key];
-    //@ts-ignore
-    const { info, registerMeta } = element;
-    const keys = getKeysByData(data);
-    const configObj = registerMeta({ data, keys });
-    /** 默认的配置值 */
-    const defaultProps = extractDefault({ config: configObj, value: {} });
-    const { id, name, category } = info;
-
-    const item = {
-      id,
-      props: defaultProps,
-      name,
-      info,
-      meta: { configObj },
-    };
-    if (category === 'node') {
-      nodeElements = {
-        ...nodeElements,
-        [id]: item,
-      };
-    }
-    if (category === 'edge') {
-      edgeElements = {
-        ...edgeElements,
-        [id]: item,
-      };
-    }
-  });
-
-  return {
-    node: nodeElements,
-    edge: edgeElements,
-  };
-};
-
-function looseJsonParse(obj) {
-  return Function('"use strict";return (' + obj + ')')();
-}
-
-const genServices = (services, sourceData) => {
-  let data = sourceData;
-  return services.map(s => {
-    const { id, content, mode } = s;
-    if (mode === 'mock') {
-      const service = new Promise(async resolve => {
-        let transFn = data => {
-          return data;
-        };
-        try {
-          transFn = looseJsonParse(content);
-          if (transFn) {
-            data = transFn(data);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        return resolve(data);
-      });
-      return {
-        id,
-        service,
-      };
-    }
-    // if mode==='api'
-    return {
-      id,
-      service: fetch(content),
-    };
-  });
-};
+const GIServices = [
+  {
+    id: 'get_initial_graph',
+    content: `(data)=>{return data}`,
+    mode: 'mock',
+  },
+  {
+    id: 'gi_drilling_one',
+    content: `(data)=>{ console.log('drilling'); return data}`,
+    mode: 'mock',
+  },
+];
 
 const Analysis = props => {
   const { history, match } = props;
@@ -158,20 +70,19 @@ const Analysis = props => {
 
     getProjectById(projectId).then(res => {
       const { config, data } = res as any;
-      /** 目前先Mock，都需要直接从服务端获取services和components，即数据服务和组件市场 */
-      const sers = getServices(projectId);
-      const components = getComponents(projectId);
-      const elements = getElements(projectId, data);
-      /** 动态生成自己的服务实例 */
-      const services = genServices(sers, data);
+      /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
+      const components = getComponentsByAssets(GIComponents, data);
+      const elements = getElementsByAssets(GIElements, data);
+      const services = getServicesByAssets(GIServices, data);
+
       dispatch({
         type: 'update:config',
         id: projectId,
         config,
         data: data,
-        services,
         isReady: true,
         activeNavbar: 'style',
+        services,
         components,
         elements,
       });
