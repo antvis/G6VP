@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@antv/graphin": "latest",
-    "@antv/graphin-components": "latest",
-    "@antv/graphin-icons": "latest",
+    "@antv/graphin": "2.x",
+    "@antv/graphin-components": "2.x",
+    "@antv/graphin-icons": "1.x",
     "@babel/standalone": "^7.14.4",
     "d3-scale": "^4.0.0",
     "father": "^2.30.6",
