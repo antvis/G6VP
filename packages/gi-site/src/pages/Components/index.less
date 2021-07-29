@@ -2,10 +2,25 @@
   padding: 16px;
   height: calc(100vh - 40px);
   padding-top: 0;
+  display: flex;
 
   .gi-sdk-wrapper {
     height: 57%;
-    display: flex;
+    // display: flex;
+    justify-content: space-around;
+  }
+
+  .gi-ide-wrapper {
+    width: 60%;
+    height: 100%;
+    // display: flex;
+    justify-content: space-around;
+  }
+
+  .gi-config-wrapper {
+    width: 40%;
+    height: 100%;
+    flex: 1;
     justify-content: space-around;
   }
 
@@ -21,13 +36,14 @@
     background: #fafafa;
   }
   .content.config {
-    height: 100%;
-    width: 35%;
+    height: 30%;
+    width: 100%;
     overflow: auto;
   }
 
   .content.view {
-    height: 100%;
-    width: 45%;
+    padding: 16px;
+    height: 70%;
+    width: 100%;
   }
 }
