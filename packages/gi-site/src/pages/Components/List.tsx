@@ -1,17 +1,10 @@
 // 组件市场
 import React from 'react';
 import { Tabs } from 'antd';
-import MonacoEditor from 'react-monaco-editor';
-import { useSelector, Provider } from 'react-redux';
-import GISDK, { GIContext } from '@alipay/graphinsight';
+import { Provider } from 'react-redux';
 import TabContent from '../../components/TabContent';
 import { initMarket } from './services/services';
-import { defaultConfig, getGraphData } from './services/defaultConfig';
-import { getUid } from '../Workspace/utils';
 import store from '../Analysis/redux';
-import ComponentMetaPanel from './meta/ComponentMeta';
-import { getComponentMetaInfo } from './meta/componentMetaInfo';
-import { getRiddleAppCode } from '../../hooks';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import './index.less';
 
@@ -33,17 +26,9 @@ const ComponentMarket = props => {
       children: [],
     },
   };
+
   const [list, setList] = React.useState(defaultList);
   const [component, setComponent] = React.useState({ id: 'Legend', enable: true });
-
-  const [data, setData] = React.useState({});
-
-  const setDefaultComponentInfo = async () => {
-    // 获取初始图数据
-    const result = await getGraphData();
-
-    setData(result);
-  };
 
   React.useEffect(() => {
     const components = initMarket();
@@ -54,17 +39,12 @@ const ComponentMarket = props => {
 
     setList(menuList);
 
-    setDefaultComponentInfo();
   }, []);
 
   const onChange = e => {
     setComponent(list[e].children[0] ? { id: list[e].children[0].id, enable: true } : { id: '', enable: false });
   };
-
-  const handleMetaInfoChange = evt => {
-    console.log(evt);
-  };
-
+  
   return (
     <>
       <BaseNavbar history={history}>
@@ -76,32 +56,10 @@ const ComponentMarket = props => {
             <TabPane tab={list[key].title} key={key}>
               <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
                 <div className="gi-sdk-wrapper">
-                  <div className="content view">
-                    <GISDK
-                      key={getUid()}
-                      config={{ ...defaultConfig, components: [{ ...component }] }}
-                      services={{
-                        getGraphData,
-                      }}
-                    ></GISDK>
-                  </div>
-                  <div className="content config">
-                    <ComponentMetaPanel
-                      onChange={handleMetaInfoChange}
-                      config={getComponentMetaInfo(component.id, data)}
-                    />
-                  </div>
+                
                 </div>
                 <div style={{ marginTop: 20 }}>
-                  <MonacoEditor
-                    height="200px"
-                    language="js"
-                    options={{
-                      minimap: { enabled: false },
-                      readOnly: true,
-                    }}
-                    value={getRiddleAppCode({ ...defaultConfig, components: [{ ...component }] })}
-                  />
+                
                 </div>
               </TabContent>
             </TabPane>
