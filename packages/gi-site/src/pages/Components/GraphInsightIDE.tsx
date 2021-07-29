@@ -265,8 +265,11 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
               case 'package.json':
                 mod = 'json';
                 break;
-              case 'index.ts':
-                mod = 'ts';
+              // case 'index.ts':
+              //   mod = 'ts';
+              //   break;
+              case 'meta.ts':
+                mod = 'meta';
                 break;
               default:
                 mod = 'tsx';
