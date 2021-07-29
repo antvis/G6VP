@@ -1,12 +1,12 @@
 // 组件市场
-import React from 'react';
 import { Tabs } from 'antd';
+import React from 'react';
 import { Provider } from 'react-redux';
-import TabContent from '../../components/TabContent';
-import { initMarket } from './services/services';
-import store from '../Analysis/redux';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import TabContent from '../../components/TabContent';
+import store from '../Analysis/redux';
 import './index.less';
+import { initMarket } from './services/services';
 
 const { TabPane } = Tabs;
 

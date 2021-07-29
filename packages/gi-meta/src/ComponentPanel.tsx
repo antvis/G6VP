@@ -1,5 +1,6 @@
 import GUI from '@ali/react-datav-gui';
-import * as React from 'react';
+import React, { useState } from 'react';
+import ComponentMarket from './components';
 import './index.less';
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
@@ -16,8 +17,12 @@ const getDefaultValues = meta => {
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { value, onChange, data, config, meta } = props;
+  const { value, onChange, data, config, meta, services, dispatch, components: componentMarkets } = props;
+  console.log('dispatch', dispatch);
   const { components } = config;
+  const [state, setState] = useState({
+    isModalVisible: false,
+  });
   const valueObj = {
     components: {
       analysis: {},
@@ -55,7 +60,7 @@ const ComponentPanel = props => {
       };
     };
     const metaFunction = meta[id] || defaultFunction;
-    const componentMeta = metaFunction({ data, keys });
+    const componentMeta = metaFunction({ data, keys, services });
 
     componentMeta.children['giEnable'] = {
       name: '是否加载',
@@ -109,10 +114,13 @@ const ComponentPanel = props => {
     },
   };
 
+  console.log('components', componentMarkets);
+
   return (
     <div>
       <GUI configObj={configObj} valueObj={valueObj} onChange={onChange} />
-      {/* <h5>高级配置</h5> */}
+
+      <ComponentMarket components={componentMarkets} dispatch={dispatch} config={config} />
     </div>
   );
 };
