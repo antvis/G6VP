@@ -2,15 +2,9 @@ import ColorMapping from '@ali/datav-gui-color-scale';
 import SizeMapping from '@ali/datav-gui-size-scale';
 import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
-import { Select, Tabs } from 'antd';
+import { Select } from 'antd';
 import React, { useState } from 'react';
-
-const { TabPane } = Tabs;
-
-function callback(key) {
-  console.log(key);
-}
-
+ 
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
@@ -18,29 +12,6 @@ const freeExtensions = {
 
 const { Option } = Select;
 
-const defaultOptions = [
-  {
-    id: 'GraphinNode',
-    name: 'Graphin Node',
-    props: {},
-    meta: {},
-  },
-  {
-    name: 'Rect Node',
-    id: 'RectNode',
-    props: {},
-  },
-  {
-    name: 'Simple Node',
-    id: 'SimpleNode',
-    props: {},
-  },
-  {
-    name: 'Donut Node',
-    id: 'DonutNode',
-    props: {},
-  },
-];
 
 interface NodeStylePanelProps {
   meta: any;
@@ -50,77 +21,66 @@ interface NodeStylePanelProps {
   dispatch: any;
 }
 
-// const extractDefault = ()=>{
-
-// }
-const getKeysByData = data => {
-  try {
-    return Object.keys(data.nodes[0].data);
-  } catch (error) {
-    return ['id'];
-  }
-};
-const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-  console.log('props', props);
-  const {  data, elements, config = { node: { props: {} } }, dispatch } = props;
  
-  const {props:NodeShapeProps,id:NodeShapeId} =config.node;
+const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
-  
+  const { data, elements, config = { node: { props: {} } }, dispatch } = props;
+  const { node: nodeConfig } = config;
   const [state, setState] = useState({
-    options: defaultOptions,
-    currentNodeId: NodeShapeId,
+    /** 当前元素的ID */
+    elementId: nodeConfig.id,
   });
 
-  const handleChange = value => {
-    
-    setState(preState => {
-      return {
-        ...preState,
-        currentNodeId: value,
-      };
-    });
-    const currentNode = options.find(opt=>opt.id===value);
-    console.log(`selected ${value}`,currentNode);
+  const { elementId } = state;
 
-    dispatch({
-      type:"update:config:node",
-      ...currentNode,
-    })
-  };
+  /*** 当前元素物料 */
+  const element = elements[elementId]
+  const { configObj } = element.meta;
+  const valueObj = extractDefault({ config: configObj, value: nodeConfig.props });
 
-  const { options, currentNodeId } = state;
-
-  const keys = getKeysByData(data);
-  const NodeElement = elements[currentNodeId];
-  const { registerMeta } = NodeElement;
-  const configObj = registerMeta({ keys, data });
-
-  const valueObj = extractDefault({ config: configObj, value: NodeShapeProps });
-
-  console.log('currentNodeId', currentNodeId, configObj, valueObj);
-  const handleGUIChange = evt => {
+  const handleChangeConfig = evt => {
     const { rootValue } = evt;
     console.log('evt', rootValue);
     dispatch({
       type: 'update:config:node',
-       props: rootValue,
+      ...element,
+      props: rootValue,
     });
   };
+  const handleChangeShape = value => {
+    setState(preState => {
+      return {
+        ...preState,
+        elementId: value,
+      };
+    });
+    dispatch({
+      type: "update:config:node",
+      ...elements[value],
+    })
+  };
+  const elementOptions = Object.values(elements);
+ 
+  const GUIComponent = React.useMemo(() => {
+    console.log('%c Render.GUI', 'color:blue', elementId, configObj, valueObj)
+    return <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
+  }, [elementId])
 
   return (
     <div>
-   
-    <Select onChange={handleChange} value={currentNodeId}>
-        {options.map(c => {
+
+      <Select onChange={handleChangeShape} value={elementId} style={{ width: "100%" }} size='large'>
+
+        {elementOptions.map((c: any) => {
           return (
             <Option value={c.id} key={c.id}>
-              {c.name}
+              <img src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ" alt="" width={40} height={40} />  {c.name}
             </Option>
           );
         })}
-      </Select>
-      <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleGUIChange} />
+      </Select><br />
+      {GUIComponent}
+      {/* <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} /> */}
     </div>
   );
 };

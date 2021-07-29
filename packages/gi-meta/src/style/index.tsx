@@ -1,3 +1,4 @@
+import { FallOutlined, SmileOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import React from 'react';
 import NodeStylePanel from './Node';
@@ -17,18 +18,28 @@ interface StylePanelProps {
   dispatch: any;
 }
 
+const NodeTab = <span>
+  <SmileOutlined />
+  Node
+</span>
+const EdgeTab = <span>
+  <FallOutlined  />
+  Edge
+</span>
+
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
- 
+  const { elements } = props;
+ const {node:NodeElements ,edge:EdgeElements} = elements
   return (
- 
-    <Tabs defaultActiveKey="1" onChange={callback}>
-    <TabPane tab="Node" key="1">
-     <NodeStylePanel {...props}/>
-    </TabPane>
-    <TabPane tab="Edge" key="2">
-      Content of Tab Pane 2
-    </TabPane>
-  </Tabs>
+
+    <Tabs defaultActiveKey="node" onChange={callback} centered>
+      <TabPane tab={NodeTab} key="node">
+        <NodeStylePanel {...props} elements={NodeElements}/>
+      </TabPane>
+      <TabPane tab={EdgeTab} key="edge">
+        Content of Tab Pane 2
+      </TabPane>
+    </Tabs>
   );
 };
 
