@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GIComponentConfig, GIConfig, GIService } from '@alipay/graphinsight';
+import { GIComponentConfig, GIConfig, GIService } from '@alipay/graphinsight/src/typing';
 import { createStore } from 'redux';
 interface Action {
   type: string;
@@ -25,6 +25,7 @@ const initialState = {
   services: [],
   /** 组件市场的所有组件 */
   components: [],
+  elements: [],
   data: {},
   refreshComponentKey: Math.random(),
 };
@@ -52,6 +53,8 @@ export interface StateType {
   services: GIService[];
   /** 组件市场的所有组件 */
   components: GIComponentConfig[];
+  /** 资产中心的 元素 */
+  elements: GIComponentConfig[];
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
