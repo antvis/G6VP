@@ -40,10 +40,9 @@ const transform = (s, metaConfig) => {
       }, {});
       const donutSumCount = dountKeys.reduce((acc, curr) => {
         return acc + data[curr];
-      }, 0);
-      console.log(donutSumCount);
-      const size = Math.sqrt(donutSumCount) * 5;
+      }, 16);
 
+      const size = Math.sqrt(donutSumCount) * 5;
       return {
         id: node.id,
         data: node.data,
@@ -61,8 +60,6 @@ const transform = (s, metaConfig) => {
         },
       };
     });
-
-    console.log('%c Donut Nodes', 'color:red', nodes);
 
     return nodes;
   } catch (error) {
