@@ -1,16 +1,23 @@
-import GISDK, { GIComponents, GIElements } from '@alipay/graphinsight';
+import GISDK from '@alipay/graphinsight';
+/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
+import * as ComponentAssets from '@alipay/graphinsight/es/components';
+import * as ElementAssets from '@alipay/graphinsight/es/elements';
+/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
-import { ConfigationPanel, Navbar, Sidebar } from '../../components';
+import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getProjectById } from '../../services/analysis';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import './index.less';
+/** gi-meta废弃，属于gi-site的一部分 */
+import MetaPanel from './MetaPanel';
 import store, { StateType } from './redux';
 import { isObjectEmpty } from './utils';
 
+console.log(ComponentAssets, ElementAssets);
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
 
@@ -71,8 +78,8 @@ const Analysis = props => {
     getProjectById(projectId).then(res => {
       const { config, data } = res as any;
       /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-      const components = getComponentsByAssets(GIComponents, data);
-      const elements = getElementsByAssets(GIElements, data);
+      const components = getComponentsByAssets(ComponentAssets, data);
+      const elements = getElementsByAssets(ElementAssets, data);
       const services = getServicesByAssets(GIServices, data);
 
       dispatch({
@@ -116,20 +123,38 @@ const Analysis = props => {
           <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
         </div>
         <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
-          <ConfigationPanel
-            config={config}
+          <MetaPanel
             value={activeNavbar}
             data={data}
-            services={services}
             dispatch={dispatch}
-            components={components}
             refreshKey={refreshComponentKey}
+            /** 配置文件 */
+            config={config}
+            /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
+            components={components}
+            /** 全量的的元素 */
             elements={elements}
+            /** 全量的的服务 */
+            services={services}
+            assets={{
+              elements: ElementAssets,
+              components: ComponentAssets,
+              services,
+            }}
           />
         </div>
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
-            <GISDK key={key} config={config} services={services}></GISDK>
+            <GISDK
+              key={key}
+              config={config}
+              /** 资产以Props的方式按需引入 */
+              assets={{
+                elements: ElementAssets,
+                components: ComponentAssets,
+                services,
+              }}
+            ></GISDK>
           </div>
         </div>
       </div>

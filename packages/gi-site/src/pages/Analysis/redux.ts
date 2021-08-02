@@ -76,6 +76,25 @@ const RootReducers = (state: StateType = initialState, action: Action): StateTyp
           },
         },
       };
+    case 'update:config:layout':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          layout: {
+            ...state.config.layout,
+            ...payload,
+          },
+        },
+      };
+    case 'update:config:components':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          ...payload,
+        },
+      };
     case 'update:data':
       return {
         ...state,
