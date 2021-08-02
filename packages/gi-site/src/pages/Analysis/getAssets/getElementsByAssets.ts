@@ -1,11 +1,5 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
-const getKeysByData = data => {
-  try {
-    return Object.keys(data.nodes[0].data);
-  } catch (error) {
-    return ['id'];
-  }
-};
+import { getKeysByData } from './utils';
 
 /**
  *
@@ -19,7 +13,7 @@ const getElementsByAssets = (assets, data) => {
   Object.keys(assets).forEach(key => {
     const element = assets[key];
     //@ts-ignore
-    const { info, registerMeta } = element;
+    const { info, registerMeta, registerShape, registerTransform } = element;
     const keys = getKeysByData(data);
     const configObj = registerMeta({ data, keys });
     /** 默认的配置值 */
@@ -32,6 +26,8 @@ const getElementsByAssets = (assets, data) => {
       name,
       info,
       meta: { configObj },
+      registerShape,
+      registerTransform,
     };
     if (category === 'node') {
       nodeElements = {
