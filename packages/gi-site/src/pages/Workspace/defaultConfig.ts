@@ -41,11 +41,6 @@ const baseComponentsConfig = [
     props: {},
     enable: true,
   },
-  {
-    id: 'DrillingOne',
-    props: {},
-    enable: true,
-  },
 ];
 const baseLayoutConfig = {
   id: 'Layout',
@@ -69,71 +64,17 @@ export const defaultConfig = {
   /** 燎原计划 */
   knowledgeGraph: {
     ...baseConfig,
-    components: [
-      {
-        id: 'NodeLegend',
-        props: {},
-        enable: true,
-      },
-
-      {
-        id: 'DrillingOne',
-        props: {},
-        enable: true,
-      },
-    ],
   },
   /** 　网商图谱 */
   riskControl: {
     ...baseConfig,
-    components: [
-      {
-        id: 'NodeContextMenu',
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'DrillingOne',
-        props: {},
-        enable: true,
-      },
-    ],
   },
   /** 前端大学图谱 */
   GIConfig: {
     ...baseConfig,
-    components: [
-      {
-        id: 'NodeLegend',
-        props: {},
-        enable: false,
-      },
-      {
-        id: 'NodeContextMenu',
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'DrillingOne',
-        props: {},
-        enable: true,
-      },
-    ],
   },
   /** 空白模版 */
   Empty: {
     ...baseConfig,
-    components: [
-      {
-        id: 'NodeLegend',
-        props: {},
-        enable: true,
-      },
-      {
-        id: 'NodeContextMenu',
-        props: {},
-        enable: true,
-      },
-    ],
   },
 };
