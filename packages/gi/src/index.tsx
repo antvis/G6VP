@@ -1,10 +1,10 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
+/** 组件 */
+// import * as Components from './components';
 import CanvasClick from './components/CanvasClick';
-import getComponentsFromMarket from './components/index';
-import meta from './components/meta';
-/** 物料 */
-import * as Element from './elements';
+/** 元素 */
+// import * as Elements from './elements';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
 
 export interface Props {
@@ -12,16 +12,36 @@ export interface Props {
    * @description 配置信息
    */
   config: GIConfig;
-  services: GIService[];
+  /**
+   * assets 资产
+   */
+  assets: {
+    /** 从服务端获取的数据服务：Services */
+    services: GIService[];
+    /** 从服务端获取的组件：Components */
+    components: any;
+    /** 从服务端获取的元素：Elements */
+    elements: any;
+  };
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
-Object.keys(Element).forEach(type => {
-  Element[type].registerShape(Graphin);
-});
+let registered = false;
+const registerShapes = Elements => {
+  if (!registered) {
+    console.log('%c register! ', 'color:green');
+    Object.keys(Elements).forEach(type => {
+      Elements[type].registerShape(Graphin);
+    });
+    registered = true;
+  }
+};
 
 const GISDK = (props: Props) => {
-  const { config, services, children } = props;
+  const { config, children, assets } = props;
+  console.log('assets', assets);
+  const { components: Components, elements: Elements, services: Services } = assets;
+  registerShapes(Element);
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] } as GraphinData,
@@ -36,8 +56,8 @@ const GISDK = (props: Props) => {
   const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
   const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
 
-  const NodeElement = Element[NodeElementId];
-  const EdgeElement = Element[EdgeElementId];
+  const NodeElement = Elements[NodeElementId];
+  const EdgeElement = Elements[EdgeElementId];
   const transform = (data, config) => {
     const nodes = NodeElement.registerTransform(data, config);
     const edges = EdgeElement.registerTransform(data, config);
@@ -49,7 +69,7 @@ const GISDK = (props: Props) => {
 
   /** 数据发生改变 */
   React.useEffect(() => {
-    const { service } = services.find(s => s.id === 'get_initial_graph') as GIService;
+    const { service } = Services.find(s => s.id === 'get_initial_graph') as GIService;
 
     service.then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
@@ -103,14 +123,8 @@ const GISDK = (props: Props) => {
 
   const { data, layout, components } = state;
 
-  /** 计算 用户选择的组件 */
-  let componentsMarket = [];
-  if (components.length !== 0) {
-    componentsMarket = getComponentsFromMarket(config);
-  }
-
   //@ts-ignore 临时方案
-  GraphinContext.services = services;
+  GraphinContext.services = Services;
   //@ts-ignore 临时方案
   GraphinContext.dispatch = {
     changeData: inputData => {
@@ -130,13 +144,15 @@ const GISDK = (props: Props) => {
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;
+        const matchComponent = Components[id];
+
         const {
           component: Component,
           props: defaultProps,
         }: {
           component: typeof React.Component;
           props: any;
-        } = componentsMarket[id];
+        } = matchComponent;
         return <Component key={id} {...defaultProps} {...itemProps} />;
       })}
 
@@ -147,7 +163,5 @@ const GISDK = (props: Props) => {
 };
 
 export const GIContext = GraphinContext;
-export const GIComponents = getComponentsFromMarket;
-export const GIElements = Element;
-export const GIComponentsMeta = meta;
+
 export default GISDK;
