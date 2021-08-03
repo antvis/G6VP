@@ -2,7 +2,6 @@ import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
 /** 组件 */
 // import * as Components from './components';
-import CanvasClick from './components/CanvasClick';
 /** 元素 */
 // import * as Elements from './elements';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
@@ -39,7 +38,6 @@ const registerShapes = Elements => {
 
 const GISDK = (props: Props) => {
   const { config, children, assets } = props;
-  console.log('assets', assets);
   const { components: Components, elements: Elements, services: Services } = assets;
   registerShapes(Element);
 
@@ -140,7 +138,7 @@ const GISDK = (props: Props) => {
   return (
     <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
       {/** 内置的组件 */}
-      <CanvasClick />
+
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;
@@ -162,6 +160,15 @@ const GISDK = (props: Props) => {
   );
 };
 
-export const GIContext = GraphinContext;
+// export const useContext = () => {
+//   const context = React.useContext(GraphinContext);
+//   //@ts-ignore
+//   const { dispatch, services } = GraphinContext;
+//   return {
+//     ...context,
+//     dispatch,
+//     services,
+//   };
+// };
 
 export default GISDK;
