@@ -8,7 +8,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
-import { getProjectById } from '../../services/analysis';
+import { getProjectById } from '../../services/';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import './index.less';
