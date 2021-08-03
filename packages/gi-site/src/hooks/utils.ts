@@ -35,9 +35,11 @@ export const getRiddleAppCode = opts => {
 
   return `
   import GISDK from '@alipay/graphinsight';
-  import * as ComponentAssets from '@alipay/graphinsight/es/components';
-  import * as ElementAssets from '@alipay/graphinsight/es/elements';
-  import getServicesByAssets from '@alipay/graphinsight/es/services'
+  import ASSETS from '@alipay/gi-assets';
+ 
+  const {components,elements,utils}= ASSETS;
+  const {getServicesByAssets} = utils;
+
 
   const config = ${temaplteCode};
   const data = ${dataStr};
@@ -49,13 +51,12 @@ export const getRiddleAppCode = opts => {
     },
   ];
   const assets = {
-    components: ComponentAssets,
-    elements:ElementAssets,
+    components,
+    elements,
     services:getServicesByAssets(servicesOpt,data)
   }
   
- 
-  
+
   const Example = (props) => {
     return (
       <GISDK
