@@ -136,6 +136,7 @@ const GISDK = (props: Props) => {
   };
 
   return (
+    //@ts-ignore
     <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
       {/** 内置的组件 */}
 

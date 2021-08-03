@@ -1,0 +1,33 @@
+{
+  "name": "@alipay/gi-assets",
+  "version": "0.2.1",
+  "description": "GraphInsight 离线资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "start": "npm run clean && father build --watch",
+    "build": "npm run clean && father build",
+    "test": "jest",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "clean": "rimraf es esm lib dist"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "d3-scale": "^4.0.0",
+    "@ali/react-datav-gui-utils": "latest",
+    "@antv/graphin-icons": "1.x",
+    "@antv/graphin-components": "2.x"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "@antv/graphin": "2.x"
+  },
+  "devDependencies": {
+    "father": "^2.30.6",
+    "rimraf": "^3.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npm.alibaba-inc.com"
+  }
+}
