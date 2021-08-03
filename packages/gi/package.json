@@ -1,6 +1,6 @@
 {
   "name": "@alipay/graphinsight",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -14,13 +14,19 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@antv/graphin": "2.x",
     "@antv/graphin-components": "2.x",
     "@antv/graphin-icons": "1.x",
     "@babel/standalone": "^7.14.4",
     "d3-scale": "^4.0.0",
     "father": "^2.30.6",
     "rimraf": "^3.0.2"
+  },
+  "peerDependencies": {
+    "react": "17.x",
+    "@antv/graphin": "2.x"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
