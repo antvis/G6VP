@@ -1,76 +1,145 @@
 // 组件市场
-import { Tabs } from 'antd';
+import { AppstoreOutlined, BranchesOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Tabs } from 'antd';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import TabContent from '../../components/TabContent';
+import { queryAssets } from '../../services/assets.market';
+import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
 import './index.less';
-import { initMarket } from './services/services';
 
 const { TabPane } = Tabs;
 
 const ComponentMarket = props => {
   const { history } = props;
-  const defaultList = {
-    analysis: {
-      title: '分析组件',
-      children: [],
-    },
-    behavior: {
-      title: '交互组件',
-      children: [],
-    },
-    materials: {
-      title: '物料',
-      children: [],
-    },
-  };
 
-  const [list, setList] = React.useState(defaultList);
-  const [component, setComponent] = React.useState({ id: 'Legend', enable: true });
+  const [state, setState] = useImmer({
+    components: [],
+    elements: { node: {}, edge: {} },
+  });
 
   React.useEffect(() => {
-    const components = initMarket();
-    let menuList = { ...list };
-    components.map(item => {
-      menuList[item.category]?.children.push(item);
+    queryAssets('userId').then(res => {
+      const data = {};
+      const { components: ComponentAssets, elements: ElementAssets, services: ServicesAssets } = res;
+      const components = getComponentsByAssets(ComponentAssets, data);
+      const elements = getElementsByAssets(ElementAssets, data);
+
+      setState(draft => {
+        draft.components = components;
+        draft.elements = elements;
+      });
     });
-
-    setList(menuList);
-
   }, []);
+  const { components, elements } = state;
 
-  const onChange = e => {
-    setComponent(list[e].children[0] ? { id: list[e].children[0].id, enable: true } : { id: '', enable: false });
+  const NodeElements = Object.values(elements.node);
+  const EdgeElements = Object.values(elements.edge);
+  const handleClickComponent = componentId => {
+    history.push(`/market/${componentId}`);
   };
-  
   return (
     <>
       <BaseNavbar history={history}>
-        <h4>物料中心</h4>
+        <h4>资产中心</h4>
       </BaseNavbar>
-      <div className="componet-market">
-        <Tabs defaultActiveKey="component" onChange={onChange}>
-          {Object.keys(list).map(key => (
-            <TabPane tab={list[key].title} key={key}>
-              <TabContent list={list[key]} onChange={id => setComponent({ id, enable: true })}>
-                <div className="gi-sdk-wrapper">
-                
-                </div>
-                <div style={{ marginTop: 20 }}>
-                
-                </div>
-              </TabContent>
-            </TabPane>
-          ))}
+      <div>
+        <Tabs defaultActiveKey="component" centered>
+          <TabPane
+            key="components"
+            tab={
+              <span>
+                <AppstoreOutlined />
+                组件
+              </span>
+            }
+          >
+            <Row
+              gutter={[
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+              ]}
+            >
+              {components.map(c => {
+                const { id, name } = c;
+                return (
+                  <Col key={id} style={{ width: '300px' }}>
+                    <Card
+                      hoverable
+                      title={name}
+                      onClick={() => {
+                        handleClickComponent(id);
+                      }}
+                    >
+                      {id} <br />
+                      {name}
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                <BranchesOutlined />
+                元素
+              </span>
+            }
+            key="elements"
+          >
+            <Row>
+              <Col span={12}>
+                <Card title={'节点元素 Node'}>
+                  <Row
+                    gutter={[
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                    ]}
+                  >
+                    {NodeElements.map(c => {
+                      //@ts-ignore
+                      const { id, name } = c;
+                      return (
+                        <Col key={id} style={{ width: '300px' }}>
+                          <Card title={name}>{name}</Card>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card title={'边元素 Edge'}>
+                  <Row
+                    gutter={[
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                    ]}
+                  >
+                    {EdgeElements.map(c => {
+                      //@ts-ignore
+                      const { id, name } = c;
+                      return (
+                        <Col key={id} style={{ width: '300px' }}>
+                          <Card title={name}>{name}</Card>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                </Card>
+              </Col>
+            </Row>
+          </TabPane>
         </Tabs>
       </div>
     </>
   );
 };
 
-const WrapAnalysis = props => {
+const WrapAssetsMarket = props => {
   return (
     <Provider store={store}>
       <ComponentMarket {...props} />
@@ -78,4 +147,4 @@ const WrapAnalysis = props => {
   );
 };
 
-export default WrapAnalysis;
+export default WrapAssetsMarket;
