@@ -26,8 +26,8 @@ const getElementsByAssets = (assets, data) => {
       name,
       info,
       meta: { configObj },
-      registerShape,
-      registerTransform,
+      // registerShape,
+      // registerTransform,
     };
     if (category === 'node') {
       nodeElements = {
