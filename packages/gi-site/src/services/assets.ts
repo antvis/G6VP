@@ -23,7 +23,7 @@ interface UpdateAssetParams extends CreateAssetParams {
   id?: string;
 }
 
-const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net'; //'http://dev.alipay.net:7001';
 
 /**
  * 资产中心 service 文件
