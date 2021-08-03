@@ -4,14 +4,13 @@ import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
- 
+
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
 };
 
 const { Option } = Select;
-
 
 interface NodeStylePanelProps {
   meta: any;
@@ -21,9 +20,7 @@ interface NodeStylePanelProps {
   dispatch: any;
 }
 
- 
 const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-
   const { data, elements, config = { node: { props: {} } }, dispatch } = props;
   const { node: nodeConfig } = config;
   const [state, setState] = useState({
@@ -34,7 +31,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { elementId } = state;
 
   /*** 当前元素物料 */
-  const element = elements[elementId]
+  const element = elements[elementId];
   const { configObj } = element.meta;
   const valueObj = extractDefault({ config: configObj, value: nodeConfig.props });
 
@@ -55,30 +52,37 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
       };
     });
     dispatch({
-      type: "update:config:node",
+      type: 'update:config:node',
       ...elements[value],
-    })
+    });
   };
   const elementOptions = Object.values(elements);
- 
+
   const GUIComponent = React.useMemo(() => {
-    console.log('%c Render.GUI', 'color:blue', elementId, configObj, valueObj)
-    return <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
-  }, [elementId])
+    console.log('%c Render.GUI', 'color:blue', elementId, configObj, valueObj);
+    return (
+      <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
+    );
+  }, [elementId]);
 
   return (
     <div>
-
-      <Select onChange={handleChangeShape} value={elementId} style={{ width: "100%" }} size='large'>
-
+      <Select onChange={handleChangeShape} value={elementId} style={{ width: '100%' }} size="large">
         {elementOptions.map((c: any) => {
           return (
             <Option value={c.id} key={c.id}>
-              <img src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ" alt="" width={40} height={40} />  {c.name}
+              <img
+                src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ"
+                alt=""
+                width={40}
+                height={40}
+              />{' '}
+              {c.name}
             </Option>
           );
         })}
-      </Select><br />
+      </Select>
+      <br />
       {GUIComponent}
       {/* <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} /> */}
     </div>

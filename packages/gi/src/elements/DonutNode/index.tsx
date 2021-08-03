@@ -10,6 +10,7 @@ const info = {
   desc: '甜甜圈组件，用于数据有分布的情况',
   cover: 'http://xxxx.jpg',
 };
+
 export default {
   info,
   registerShape,

@@ -65,7 +65,7 @@ const ComponentMarket: React.FunctionComponent<ComponentMarketProps> = props => 
       if (matchComponentIds.indexOf(key) !== -1) {
         return matchComponents.find(c => c.id === key);
       }
-      const { props, id } = components[key];
+      const { props, id } = components.find(c => c.id === key);
       return {
         props,
         id,
@@ -114,10 +114,10 @@ const ComponentMarket: React.FunctionComponent<ComponentMarketProps> = props => 
             ]}
           >
             {displayComponents.map(c => {
-              const { id, label } = c;
+              const { id, name } = c;
               return (
                 <Col key={id}>
-                  <CheckCard title={label} description="GI提供的组件" value={id} />
+                  <CheckCard title={name} description="GI提供的组件" value={id} />
                 </Col>
               );
             })}

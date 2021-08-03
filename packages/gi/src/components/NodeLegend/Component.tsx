@@ -1,12 +1,11 @@
-// import { Legend } from '@antv/graphin-components';
-import * as React from 'react';
-import Legend from './GraphinLegend/index';
+import { Legend } from '@antv/graphin-components';
+import React from 'react';
 
-interface LegendAProps {
+export interface ComponentProps {
   sortKey: string;
 }
 
-const NodeLegend: React.FunctionComponent<LegendAProps> = props => {
+const Component: React.FunctionComponent<ComponentProps> = props => {
   const { sortKey } = props;
 
   return (
@@ -23,4 +22,4 @@ const NodeLegend: React.FunctionComponent<LegendAProps> = props => {
   );
 };
 
-export default NodeLegend;
+export default Component;
