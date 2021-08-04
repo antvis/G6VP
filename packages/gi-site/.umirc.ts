@@ -7,6 +7,9 @@ export default {
   history: {
     type: 'hash',
   },
+
+  // mfsu: {},//https://github.com/umijs/umi/issues/6766
+
   routes: [
     { exact: true, path: '/', component: 'Home' },
     { exact: true, path: '/workspace', component: 'Workspace' },

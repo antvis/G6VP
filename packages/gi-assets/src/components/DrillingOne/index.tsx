@@ -1,6 +1,6 @@
 import { ExpandAltOutlined } from '@ant-design/icons';
+import { GraphinContext } from '@antv/graphin';
 import React from 'react';
-import { GIContext } from '../../';
 import { uniqueElementsBy } from '../Liaoyuan/utils';
 interface DrillingOneProps {
   serviceName: 'gi-drilling-one';
@@ -8,8 +8,7 @@ interface DrillingOneProps {
 }
 
 const DrillingOne: React.FunctionComponent<DrillingOneProps> = props => {
-  //@ts-ignore
-  const { services, dispatch } = GIContext;
+  const { services, dispatch } = GraphinContext as any;
   const { serviceName, container } = props;
 
   const handleClick = () => {

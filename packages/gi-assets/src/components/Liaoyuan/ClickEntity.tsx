@@ -1,5 +1,5 @@
+import { GraphinContext } from '@antv/graphin';
 import React from 'react';
-import { GIContext } from '../../index';
 import { getSourcesByNode, getTargetsByNode, highlightNodeById, uniqueElementsBy } from './utils';
 /** 点击实体节点的交互 */
 const handleClickEntity = (graph, e) => {
@@ -46,7 +46,7 @@ const handleClickEntity = (graph, e) => {
 };
 
 const ClickEntity = () => {
-  const { graph } = React.useContext(GIContext);
+  const { graph } = React.useContext(GraphinContext);
   React.useEffect(() => {
     const handleClick = (e: any) => {
       if (e.item.getModel().data.type !== 'EVENT') {

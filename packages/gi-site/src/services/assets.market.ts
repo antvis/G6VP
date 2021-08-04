@@ -1,7 +1,10 @@
-/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
-import * as ComponentAssets from '@alipay/graphinsight/es/components';
-import * as ElementAssets from '@alipay/graphinsight/es/elements';
+// /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
+// import * as ComponentAssets from '@alipay/graphinsight/es/components';
+// import * as ElementAssets from '@alipay/graphinsight/es/elements';
+import assets from '@alipay/gi-assets';
 import request from 'umi-request';
+
+const { components, elements } = assets;
 
 const isLocal = true;
 
@@ -26,8 +29,8 @@ export const queryAssets = async (id: string) => {
     return await new Promise(resolve => {
       resolve({
         services: ServicesAssets,
-        components: ComponentAssets,
-        elements: ElementAssets,
+        components: components,
+        elements: elements,
       });
     });
   }

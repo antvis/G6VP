@@ -7,9 +7,12 @@
     "husky": "^6.0.0",
     "lerna": "^4.0.0"
   },
+  "devDependencies": {
+    "@antv/graphin": "^2.2.0"
+  },
   "scripts": {
     "core": "cd packages/gi && npm run start",
-    "meta": "cd packages/gi-meta && npm run start",
+    "assets": "cd packages/gi-assets && npm run start",
     "site": "cd packages/gi-site && npm run start",
     "bootstrap": "lerna bootstrap",
     "build": "npm run bootstrap && npm run build:core && npm run build:meta && npm run build:site && npm run move:dist",

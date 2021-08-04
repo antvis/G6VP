@@ -1,14 +1,12 @@
+import ASSETS from '@alipay/gi-assets';
 import GISDK from '@alipay/graphinsight';
-/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
-import * as ComponentAssets from '@alipay/graphinsight/es/components';
-import * as ElementAssets from '@alipay/graphinsight/es/elements';
-/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getProjectById } from '../../services/';
+import { queryAssets } from '../../services/assets.market'
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import './index.less';
@@ -17,7 +15,6 @@ import MetaPanel from './MetaPanel';
 import store, { StateType } from './redux';
 import { isObjectEmpty } from './utils';
 
-console.log(ComponentAssets, ElementAssets);
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
 
@@ -50,6 +47,7 @@ const Analysis = props => {
     components,
     refreshComponentKey,
     elements,
+    assets,
   } = state;
 
   console.log('Analysis', state);
@@ -77,22 +75,26 @@ const Analysis = props => {
 
     getProjectById(projectId).then(res => {
       const { config, data } = res as any;
-      /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-      const components = getComponentsByAssets(ComponentAssets, data);
-      const elements = getElementsByAssets(ElementAssets, data);
-      const services = getServicesByAssets(GIServices, data);
+      queryAssets().then(assets => {
+        /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
+        const components = getComponentsByAssets(assets.components, data);
+        const elements = getElementsByAssets(assets.elements, data);
+        const services = getServicesByAssets(assets.services, data);
 
-      dispatch({
-        type: 'update:config',
-        id: projectId,
-        config,
-        data: data,
-        isReady: true,
-        activeNavbar: 'style',
-        services,
-        components,
-        elements,
-      });
+        dispatch({
+          type: 'update:config',
+          id: projectId,
+          config,
+          data: data,
+          isReady: true,
+          activeNavbar: 'style',
+          services,
+          components,
+          elements,
+          assets,
+        });
+      })
+
     });
   }, [projectId]);
 
@@ -136,11 +138,6 @@ const Analysis = props => {
             elements={elements}
             /** 全量的的服务 */
             services={services}
-            assets={{
-              elements: ElementAssets,
-              components: ComponentAssets,
-              services,
-            }}
           />
         </div>
         <div className="gi-analysis-workspace">
@@ -150,8 +147,7 @@ const Analysis = props => {
               config={config}
               /** 资产以Props的方式按需引入 */
               assets={{
-                elements: ElementAssets,
-                components: ComponentAssets,
+                ...ASSETS,
                 services,
               }}
             ></GISDK>

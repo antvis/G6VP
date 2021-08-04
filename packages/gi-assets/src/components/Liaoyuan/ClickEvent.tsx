@@ -1,5 +1,5 @@
+import { GraphinContext } from '@antv/graphin';
 import React from 'react';
-import { GIContext } from '../../index';
 import { clearAllStates, getSourcesByNode, highlightNodeById, traverseTargetsByNode, uniqueElementsBy } from './utils';
 const getEntityByEventNode = eventNode => {
   /** 递归遍历下游节点 */
@@ -12,9 +12,9 @@ const getEntityByEventNode = eventNode => {
 };
 
 const ClickEventNode = props => {
-  const { graph } = React.useContext(GIContext);
+  const { graph } = React.useContext(GraphinContext);
   //@ts-ignore
-  const { services, dispatch } = GIContext;
+  const { services, dispatch } = GraphinContext;
   const { serviceId } = props;
 
   React.useEffect(() => {

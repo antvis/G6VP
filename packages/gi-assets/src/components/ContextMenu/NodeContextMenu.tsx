@@ -1,13 +1,14 @@
+import { GraphinContext } from '@antv/graphin';
 import { ContextMenu } from '@antv/graphin-components';
 import React from 'react';
-import { GIContext } from '../..';
 import { uniqueElementsBy } from '../Liaoyuan/utils';
+
 // Do not forget to import CSS
 const { Menu } = ContextMenu;
 
 const NodeMenu = () => {
-  const { services, dispatch } = GIContext as any;
-  const { graph, contextmenu } = React.useContext(GIContext);
+  const { services, dispatch } = GraphinContext as any;
+  const { graph, contextmenu } = React.useContext(GraphinContext);
   const context = contextmenu.node;
 
   const handleExpand = () => {
