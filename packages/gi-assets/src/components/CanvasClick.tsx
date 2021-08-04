@@ -1,6 +1,5 @@
-import { Graph } from '@antv/graphin';
+import { Graph, GraphinContext } from '@antv/graphin';
 import React from 'react';
-import { GIContext } from '../index';
 /**
  * 清除所有的样式
  * @param graph G6的Graph实例
@@ -23,7 +22,7 @@ export const clearAllStates = (graph: Graph) => {
  * @returns 点击Canvas的交互逻辑
  */
 const CanvasClick = () => {
-  const { graph } = React.useContext(GIContext);
+  const { graph } = React.useContext(GraphinContext);
 
   React.useEffect(() => {
     const handleClear = () => {

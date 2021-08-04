@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-site",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "GraphInsight Site",
   "main": "dist/app.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "@alipay/alex": "^1.5.0",
     "@alipay/bigfish": "^3.6.10",
     "@alipay/graphinsight": "*",
+    "@alipay/gi-assets": "*",
     "@alipay/gravity-demo-sdk": "^4.6.1",
     "@alipay/tech-ui": "^2.12.1",
     "@ant-design/charts": "^1.0.21",
@@ -38,7 +39,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.1",
     "redux": "^4.1.0",
-    "umi": "^3.4.4",
+    "umi": "latest",
     "use-immer": "latest",
     "systemjs": "latest",
     "@types/systemjs": "latest",

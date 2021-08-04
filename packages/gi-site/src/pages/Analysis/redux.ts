@@ -28,6 +28,7 @@ const initialState = {
   elements: [],
   data: {},
   refreshComponentKey: Math.random(),
+  assets: {},
 };
 
 export interface StateType {
@@ -55,6 +56,8 @@ export interface StateType {
   components: GIComponentConfig[];
   /** 资产中心的 元素 */
   elements: GIComponentConfig[];
+  /** 原始资产 */
+  assets: any;
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
