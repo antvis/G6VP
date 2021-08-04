@@ -19,7 +19,8 @@ import json from '@alipay/alex/extensions/alex.json-language-features-worker';
 
 // #region 获取内置模块，提供 IDE 层面的控制能力
 import { IEditorDocumentModelService } from '@alipay/alex/modules/ide-editor';
-import { CommandService, EDITOR_COMMANDS, URI, FileType } from '@alipay/alex/modules/ide-core-browser';
+import { CommandService, EDITOR_COMMANDS, URI } from '@alipay/alex/modules/ide-core-browser';
+import { getFileDirectory, getFileBlob } from '../../services/assets';
 
 // 布局配置
 const layoutConfig = {
@@ -164,41 +165,11 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
     );
   };
 
-  useImperativeHandle(appRef, () => ({
-    isDirty,
-    saveAll,
-    fallbackToLast,
-  }));
-
-  // const [sourceCode, setSourceCode] = useState({});
-  const handleSourceCodeChange = (type: string, source: string) => {
-    // console.log(type, source)
-    let fileType = type;
-    if (type === 'ts') {
-      fileType = 'meta';
-    }
-    codeChange({
-      ...code,
-      [fileType]: source,
-    });
-  };
-
-  // console.log('源代码', sourceCode);
-
-  const dirMap: Record<string, [string, FileType][]> = {
-    '/': [
-      ['lib', FileType.Directory],
-      ['Readme.md', FileType.File],
-      ['LICENSE', FileType.File],
-      ['package.json', FileType.File],
-    ],
-    '/lib': [
-      ['application.js', FileType.File],
-      ['context.js', FileType.File],
-      ['request.js', FileType.File],
-      ['response.js', FileType.File],
-    ],
-  };
+  // useImperativeHandle(appRef, () => ({
+  //   isDirty,
+  //   saveAll,
+  //   fallbackToLast,
+  // }));
 
   return (
     <AppRenderer
@@ -208,7 +179,7 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
         app.current = _app;
       }}
       appConfig={{
-        workspaceDir: `${id}/Riddle-workerspace`,
+        workspaceDir: `${id}/gi-workerspace`,
         layoutConfig,
         layoutComponent: LayoutComponent,
         defaultPreferences,
@@ -218,37 +189,45 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
         extensionMetadata: readOnly ? [] : [html, css, typescript, json],
       }}
       runtimeConfig={{
-        biz: 'riddle',
+        biz: 'gi',
         disableModifyFileTree: true,
         defaultOpenFile: m,
         workspace: {
           filesystem: {
-            // fs: 'DynamicRequest',
-            // options: {
-            //   readDirectory(p: string) {
-            //     console.log('readDirectory', p);
-            //     return dirMap[p];
-            //   },
-            //   async readFile(p, data?) {
-            //     console.log('ide', p);
-            //     const res = await fetch(
-            //       `http://alipay-rmsdeploy-image.cn-hangzhou.alipay.aliyun-inc.com/green-trail-test/a87fb80d-3028-4b19-93a9-2da6f871f369/koa${p}`,
-            //     );
-            //     console.log('返回来的是什么res', res);
-            //     return Buffer.from(await res.arrayBuffer());
-            //   },
-            // },
-            fs: 'FileIndexSystem',
+            fs: 'DynamicRequest',
             options: {
-              requestFileIndex() {
-                return Promise.resolve({
-                  'index.html': code.html || '',
-                  'index.less': code.css || '',
-                  'index.tsx': code.tsx || '',
-                  'meta.ts': code.meta || '',
-                  'demo.tsx': code.demo || '',
-                  'package.json': code.json || '',
+              async readDirectory(p: string, data1) {
+                console.log('xxx', p, data1);
+                // TODO: projectName 和 branchName 需要从组件里面读取
+                const result = await getFileDirectory({
+                  projectName: 'test_legend',
+                  branchName: 'master',
+                  path: p.slice(1),
                 });
+                const { data, success } = result;
+                if (!success) {
+                  return null;
+                }
+
+                if (p === '/') {
+                  return data[p];
+                }
+                return data[p.slice(1)];
+              },
+              async readFile(p) {
+                console.log('file', p);
+                // TODO: projectName 和 branchName 需要从组件里面读取
+                const res = await getFileBlob({
+                  projectName: 'test_legend',
+                  branchName: 'master',
+                  path: p.slice(1),
+                });
+                const { data, success } = res;
+                if (!success) {
+                  return null;
+                }
+
+                return data.data;
               },
             },
           },
