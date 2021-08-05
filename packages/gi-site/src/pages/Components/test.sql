@@ -1,1 +1,0 @@
-INSERT INTO `gi`.`gi_assets` (`type`,`meta`,`source_code`) VALUES ('component','{}','import React from \'react\'');

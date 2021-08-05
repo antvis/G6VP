@@ -24,8 +24,19 @@ interface UpdateAssetParams extends CreateAssetParams {
   id?: string;
 }
 
-// const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
-const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net';
+interface DirectoryBlob {
+  projectName: string;
+  branchName: string;
+  path: string;
+}
+
+interface FilrParams extends DirectoryBlob {
+  content: string;
+  commitMsg: string;
+}
+
+const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+// const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net';
 
 /**
  * 资产中心 service 文件
@@ -100,11 +111,6 @@ export const queryAssetList = async (param?: { name?: string; limit?: number }) 
     });
 };
 
-interface DirectoryBlob {
-  projectName: string;
-  branchName: string;
-  path: string;
-}
 /**
  * 根据项目名称、分支名称及路径查询目录结构
  * @param param
@@ -116,10 +122,10 @@ export const getFileDirectory = async (param: DirectoryBlob) => {
     params: others,
   })
     .then(response => {
-      const { result } = response;
+      const { data = [] } = response;
       // 拼接成 Alex 要求的格式
       const arr: string[][] = [];
-      result.forEach(item => {
+      data.forEach(item => {
         arr.push([item.name, item.type === 'blob' ? BrowserFSFileType.FILE : BrowserFSFileType.DIRECTORY]);
       });
 
@@ -151,16 +157,66 @@ export const getFileBlob = async (param: DirectoryBlob) => {
     params: others,
   })
     .then(response => {
-      const { result } = response;
-      debugger;
+      const { data, success, errorMsg } = response;
       return {
-        data: result,
-        success: true,
-        errorMsg: null,
+        data,
+        success,
+        errorMsg,
       };
     })
     .catch(error => {
       debugger;
+      return {
+        data: null,
+        success: false,
+        errorMsg: error,
+      };
+    });
+};
+
+export const updateFileContent = async (fileParams: FilrParams) => {
+  return request(`${SERVICE_URL_PREFIX}/asset/updatefile`, {
+    method: 'put',
+    data: fileParams,
+  })
+    .then(response => {
+      const { data, success, errorMsg } = response;
+      return {
+        data,
+        success,
+        errorMsg,
+      };
+    })
+    .catch(error => {
+      return {
+        data: null,
+        success: false,
+        errorMsg: error,
+      };
+    });
+};
+
+/**
+ * 以文本的形式获取指定路径下文件的源代码
+ * @param fileParams
+ */
+export const getFileSourceCode = async (fileParams: DirectoryBlob) => {
+  const { projectName, branchName, path } = fileParams;
+  return request(`${SERVICE_URL_PREFIX}/asset/sourcecode/${projectName}/${branchName}`, {
+    method: 'get',
+    params: {
+      path,
+    },
+  })
+    .then(response => {
+      const { data, success, errorMsg } = response;
+      return {
+        data,
+        success,
+        errorMsg,
+      };
+    })
+    .catch(error => {
       return {
         data: null,
         success: false,
