@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "GraphInsight 离线资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,7 +16,6 @@
     "@ant-design/icons": "^4.6.2",
     "d3-scale": "^4.0.0",
     "@ali/react-datav-gui-utils": "latest",
-    "@antv/graphin-icons": "1.x",
     "@antv/graphin-components": "2.x"
   },
   "peerDependencies": {
