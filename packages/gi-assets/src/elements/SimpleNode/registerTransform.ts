@@ -1,9 +1,8 @@
-import Graphin from '@antv/graphin';
-import IconLoader from '@antv/graphin-icons';
-import '@antv/graphin-icons/dist/index.css';
+// import IconLoader from '@antv/graphin-icons';
+// import '@antv/graphin-icons/dist/index.css';
 import { defaultProps } from './registerMeta';
 
-const icons = Graphin.registerFontFamily(IconLoader);
+// const icons = Graphin.registerFontFamily(IconLoader);
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, metaConfig) => {
@@ -54,7 +53,7 @@ const transform = (s, metaConfig) => {
           icon: {
             fontFamily: 'graphin',
             type: 'font',
-            value: icons.team,
+            value: '', //icons.team,
             fill: primaryColor,
             size: nodeSize / 1.6,
           },
