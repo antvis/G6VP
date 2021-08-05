@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
+import React, { useRef } from 'react';
 import { AppRenderer, SlotLocation, SlotRenderer, SplitPanel, BoxPanel } from '@alipay/alex/bundle';
 import '@alipay/alex/bundle/alex.css';
 // 语法高亮
@@ -17,9 +17,6 @@ import css from '@alipay/alex/extensions/alex.css-language-features-worker';
 import typescript from '@alipay/alex/extensions/alex.typescript-language-features-worker';
 import json from '@alipay/alex/extensions/alex.json-language-features-worker';
 
-// #region 获取内置模块，提供 IDE 层面的控制能力
-import { IEditorDocumentModelService } from '@alipay/alex/modules/ide-editor';
-import { CommandService, EDITOR_COMMANDS, URI } from '@alipay/alex/modules/ide-core-browser';
 import { getFileDirectory, getFileBlob } from '../../services/assets';
 
 // 布局配置
@@ -60,29 +57,12 @@ interface GraphInsightIDEProps {
   id: string;
   readOnly: boolean;
   mode: string;
-  code: Partial<{
-    html: string;
-    json: string;
-    tsx: string;
-    jsx: string;
-    ts: string;
-    css: string;
-  }>;
   appRef: any;
-  codeChange: (type: string, source: string) => void;
+  codeChange: (filepath: string, source: string) => void;
 }
 
 const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
-  const {
-    id,
-    readOnly,
-    mode,
-    code,
-    appRef,
-    codeChange,
-    // actions: { updateStatus, updateCode },
-    // onSave,
-  } = props;
+  const { id, readOnly, mode, appRef, codeChange } = props;
 
   const app = useRef(null);
 
@@ -91,85 +71,6 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
     'editor.previewMode': false,
     'editor.forceReadOnly': readOnly,
   };
-
-  let m = mode;
-  switch (m) {
-    case 'html':
-      m = 'index.html';
-      break;
-    case 'css':
-      m = 'index.css';
-      break;
-    case 'json':
-      m = 'package.json';
-      break;
-    case 'meta':
-      m = 'meta.ts';
-    case 'tsx':
-      m = 'index.tsx';
-    default:
-      m = 'demo.tsx';
-  }
-
-  const isDirty = () => {
-    if (!app.current) return false;
-
-    const docModelService = app.current.injector.get(IEditorDocumentModelService);
-    const modelList = docModelService
-      .getAllModels()
-      .filter(model => model.uri.codeUri.path.startsWith(app.current.config.workspaceDir) && model.dirty);
-
-    return !!modelList.length;
-  };
-
-  const saveAll = () => {
-    if (!app.current) return;
-    debugger;
-    const commandService = app.current.injector.get(CommandService);
-    commandService.executeCommand(EDITOR_COMMANDS.SAVE_ALL.id);
-  };
-
-  const fallbackToLast = stashCode => {
-    if (!app.current) return;
-
-    const docModelService = app.current.injector.get(IEditorDocumentModelService);
-    const workspaceUri = URI.file(app.current.config.workspaceDir);
-
-    Promise.all(
-      [
-        {
-          filepath: 'index.html',
-          content: stashCode.html,
-        },
-        {
-          filepath: 'index.tsx',
-          content: stashCode.tsx,
-        },
-        {
-          filepath: 'meta.ts',
-          content: stashCode.ts,
-        },
-        {
-          filepath: 'index.less',
-          content: stashCode.css,
-        },
-        {
-          filepath: 'package.json',
-          content: stashCode.json,
-        },
-      ].map(item => {
-        return docModelService.createModelReference(workspaceUri.resolve(item.filepath)).then(reference => {
-          reference.instance.updateContent(item.content);
-        });
-      }),
-    );
-  };
-
-  // useImperativeHandle(appRef, () => ({
-  //   isDirty,
-  //   saveAll,
-  //   fallbackToLast,
-  // }));
 
   return (
     <AppRenderer
@@ -191,76 +92,55 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
       runtimeConfig={{
         biz: 'gi',
         disableModifyFileTree: true,
-        defaultOpenFile: m,
+        defaultOpenFile: mode,
         workspace: {
           filesystem: {
-            fs: 'DynamicRequest',
+            fs: 'OverlayFS',
             options: {
-              async readDirectory(p: string, data1) {
-                console.log('xxx', p, data1);
-                // TODO: projectName 和 branchName 需要从组件里面读取
-                const result = await getFileDirectory({
-                  projectName: 'test_legend',
-                  branchName: 'master',
-                  path: p.slice(1),
-                });
-                const { data, success } = result;
-                if (!success) {
-                  return null;
-                }
+              writable: { fs: 'InMemory' },
+              readable: {
+                fs: 'DynamicRequest',
+                options: {
+                  async readDirectory(p: string) {
+                    // TODO: projectName 和 branchName 需要从组件里面读取
+                    const result = await getFileDirectory({
+                      projectName: 'test_legend',
+                      branchName: 'master',
+                      path: p.slice(1),
+                    });
+                    const { data, success } = result;
+                    if (!success) {
+                      return null;
+                    }
 
-                if (p === '/') {
-                  return data[p];
-                }
-                return data[p.slice(1)];
-              },
-              async readFile(p) {
-                console.log('file', p);
-                // TODO: projectName 和 branchName 需要从组件里面读取
-                const res = await getFileBlob({
-                  projectName: 'test_legend',
-                  branchName: 'master',
-                  path: p.slice(1),
-                });
-                const { data, success } = res;
-                if (!success) {
-                  return null;
-                }
+                    if (p === '/') {
+                      return data[p];
+                    }
+                    return data[p.slice(1)];
+                  },
+                  async readFile(p) {
+                    // TODO: projectName 和 branchName 需要从组件里面读取
+                    const res = await getFileBlob({
+                      projectName: 'test_legend',
+                      branchName: 'master',
+                      path: p.slice(1),
+                    });
+                    const { data, success } = res;
+                    if (!success) {
+                      return null;
+                    }
 
-                return data.data;
+                    return data.data;
+                  },
+                },
               },
             },
           },
           onDidSaveTextDocument(e) {
             const { filepath, content } = e;
-            let mod = '';
-            switch (filepath) {
-              case 'index.html':
-                mod = 'html';
-                break;
-              case 'index.less':
-                mod = 'css';
-                break;
-              case 'package.json':
-                mod = 'json';
-                break;
-              // case 'index.ts':
-              //   mod = 'ts';
-              //   break;
-              case 'meta.ts':
-                mod = 'meta';
-                break;
-              default:
-                mod = 'tsx';
-            }
-            // handleSourceCodeChange(mod, content);
             if (codeChange) {
-              codeChange(mod, content);
+              codeChange(filepath, content);
             }
-            // console.log('修改后的代码', content, mod);
-            // updateStatus();
-            // updateCode(content, mod);
-            // onSave(mod);
           },
         },
         // 隐藏左侧 tabbar
