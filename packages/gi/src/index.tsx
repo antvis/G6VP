@@ -39,7 +39,7 @@ const registerShapes = Elements => {
 const GISDK = (props: Props) => {
   const { config, children, assets } = props;
   const { components: Components, elements: Elements, services: Services } = assets;
-  registerShapes(Element);
+  registerShapes(Elements);
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] } as GraphinData,
@@ -136,6 +136,7 @@ const GISDK = (props: Props) => {
   };
 
   return (
+    //@ts-ignore
     <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
       {/** 内置的组件 */}
 

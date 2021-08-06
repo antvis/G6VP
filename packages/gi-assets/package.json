@@ -19,7 +19,7 @@
     "@antv/graphin-components": "2.x"
   },
   "peerDependencies": {
-    "react": "*",
+    "react": "17.x",
     "@antv/graphin": "2.x"
   },
   "devDependencies": {

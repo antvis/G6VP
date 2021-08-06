@@ -36,6 +36,7 @@ export const getRiddleAppCode = opts => {
   return `
   import GISDK from '@alipay/graphinsight';
   import ASSETS from '@alipay/gi-assets';
+  import Graphin from '@antv/graphin';
  
   const {components,elements,utils}= ASSETS;
   const {getServicesByAssets} = utils;
@@ -43,6 +44,7 @@ export const getRiddleAppCode = opts => {
 
   const config = ${temaplteCode};
   const data = ${dataStr};
+  
   const servicesOpt = [
     {
       id: 'get_initial_graph',
