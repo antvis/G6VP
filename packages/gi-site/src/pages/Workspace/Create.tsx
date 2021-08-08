@@ -1,14 +1,14 @@
+import { useHistory } from '@alipay/bigfish';
 import { CheckCard } from '@alipay/tech-ui';
 import { RightOutlined, UploadOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
-import localforage from 'localforage';
 import * as React from 'react';
-import { useHistory } from '@alipay/bigfish';
 import MonacoEditor from 'react-monaco-editor';
+import { updateProjectById } from '../../services';
+import { serviceLists } from './const';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
 import './index.less';
-import { updateProjectById } from '../../services';
 import { getUid } from './utils';
 interface CreatePanelProps {}
 
@@ -76,17 +76,6 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const services = {
-  getGraphDataTransform: `
-  data => {
-    return data
-  }
-  `,
-  getSubGraphDataTransform: `(data,ids) => {
-    return {nodes:[],edges:[]}
-  }`,
-};
-
 const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const history = useHistory();
   const [current, setCurrent] = React.useState(0);
@@ -141,7 +130,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
        * 数据标准化节点，需要在「上传数据」阶段就准备好
        * 数据过滤的阶段，需要在数据服务模块添加
        */
-      services,
+      serviceLists,
     }).then(() => {
       history.push(`/workspace/${id}`);
     });

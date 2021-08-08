@@ -8,14 +8,6 @@ const { components, elements } = assets;
 
 const isLocal = true;
 
-const ServicesAssets = [
-  {
-    id: 'get_initial_graph',
-    content: `(data)=>{return data}`,
-    mode: 'mock',
-  },
-];
-
 /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 
 /**
@@ -28,7 +20,6 @@ export const queryAssets = async (id: string) => {
   if (isLocal) {
     return await new Promise(resolve => {
       resolve({
-        services: ServicesAssets,
         components: components,
         elements: elements,
       });

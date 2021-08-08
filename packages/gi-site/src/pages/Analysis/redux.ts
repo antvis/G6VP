@@ -13,6 +13,7 @@ const initialState = {
   key: Math.random(),
   /** 画布渲染的配置 */
   config: {},
+
   /** 是否准备完毕 */
   isReady: false,
   /** 是否保存 */
@@ -29,6 +30,8 @@ const initialState = {
   data: {},
   refreshComponentKey: Math.random(),
   assets: {},
+  /** 数据服务列表 */
+  serviceLists: [],
 };
 
 export interface StateType {
@@ -58,6 +61,12 @@ export interface StateType {
   elements: GIComponentConfig[];
   /** 原始资产 */
   assets: any;
+  /** 数据服务列表 */
+  serviceLists: {
+    id: string;
+    mode: string;
+    content: string;
+  }[];
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
