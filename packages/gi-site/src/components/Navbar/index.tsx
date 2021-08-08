@@ -9,7 +9,6 @@ import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
-
 interface NavbarProps {
   projectId: string;
 }
@@ -23,14 +22,22 @@ const Navbar = ({ projectId }: NavbarProps) => {
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const dispatch = useDispatch();
-  const { config, isSave } = useSelector(state => state);
+  const { config, isSave, serviceLists } = useSelector(state => state);
   const contentEditable = React.createRef<HTMLSpanElement>();
+
+  const servicesRef = React.useRef({
+    options: serviceLists,
+  });
 
   const { data: initProject = {}, run } = useRequest(() => {
     return getProjectById(projectId);
   });
 
   const handleClose = () => {
+    console.log(servicesRef.current.options, '%%%%%%%%%', serviceLists);
+    updateProjectById(projectId, {
+      serviceLists: servicesRef.current.options,
+    });
     setVisible(false);
   };
 
@@ -121,8 +128,9 @@ const Navbar = ({ projectId }: NavbarProps) => {
       >
         {title}
       </span>
+
       <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
-        {visible && <DataSource handleClose={handleClose} />}
+        <DataSource ref={servicesRef} defaultOptions={serviceLists} />
       </Drawer>
 
       <Drawer
