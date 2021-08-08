@@ -1,3 +1,27 @@
-.monaco-editor {
-  // width: 100% !important;
+@line-height: 40px;
+.gi-services {
+  display: flex;
+  flex-direction: row;
+}
+
+ul.gi-services-sidebar {
+  flex-basis: 300px;
+  width: 300px;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  li {
+    height: @line-height;
+    line-height: @line-height;
+    cursor: pointer;
+
+    &.active {
+      background: rgba(221, 221, 221, 0.794);
+      border-right: 2px solid rgb(66, 110, 81);
+    }
+  }
+}
+.gi-services-editor {
+  flex: 1;
+  width: 300px;
 }
