@@ -32,10 +32,18 @@ const getServicesByAssets = (assets, data) => {
       };
     }
     // if mode==='api'
-    return {
-      id,
-      service: fetch(content),
-    };
+    try {
+      return {
+        id,
+        service: fetch(content),
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        id,
+        service: {},
+      };
+    }
   });
 };
 
