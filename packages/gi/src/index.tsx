@@ -67,7 +67,7 @@ const GISDK = (props: Props) => {
 
   /** 数据发生改变 */
   React.useEffect(() => {
-    const { service } = Services.find(s => s.id === 'get_initial_graph') as GIService;
+    const { service } = Services.find(s => s.id === 'GI_SERVICE_INTIAL_GRAPH') as GIService;
 
     service.then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
