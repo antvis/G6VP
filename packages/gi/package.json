@@ -1,6 +1,6 @@
 {
   "name": "@alipay/graphinsight",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -12,21 +12,15 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
   },
-  "dependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "@antv/graphin-components": "2.x",
-    "@antv/graphin-icons": "1.x",
-    "@babel/standalone": "^7.14.4",
-    "d3-scale": "^4.0.0",
-    "father": "^2.30.6",
-    "rimraf": "^3.0.2"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "17.x",
     "@antv/graphin": "2.x"
   },
   "devDependencies": {
-    "@types/react": "^17.0.3"
+    "@types/react": "^17.0.3",
+    "father": "^2.30.6",
+    "rimraf": "^3.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"

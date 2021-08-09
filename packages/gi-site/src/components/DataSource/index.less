@@ -1,3 +1,37 @@
-.monaco-editor {
-  // width: 100% !important;
+@line-height: 40px;
+.gi-services {
+  display: flex;
+  flex-direction: row;
+}
+
+ul.gi-services-sidebar {
+  flex-basis: 300px;
+  width: 300px;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  li {
+    height: @line-height;
+    padding: 0px 8px;
+    line-height: @line-height;
+    cursor: pointer;
+    .delete {
+      float: right;
+      padding-right: 8px;
+    }
+
+    &.active {
+      background: rgba(221, 221, 221, 0.794);
+      border-right: 3px solid #2483ff;
+    }
+    &.plus {
+      color: #2483ff;
+      text-align: center;
+      border: 1px dashed rgba(221, 221, 221, 0.794);
+    }
+  }
+}
+.gi-services-editor {
+  flex: 1;
+  width: 300px;
 }

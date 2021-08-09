@@ -4,7 +4,7 @@
   "description": "GraphInsight Site",
   "main": "dist/app.js",
   "scripts": {
-    "start": "umi dev",
+    "start": "NODE_OPTIONS=--max_old_space_size=8192 && umi dev",
     "build": "NODE_OPTIONS=--max_old_space_size=8192 && umi build"
   },
   "dependencies": {

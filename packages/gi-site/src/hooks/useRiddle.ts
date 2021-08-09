@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getRiddleAppCode } from './utils';
 
 const RIDDLE_API_ENDPOINT = 'https://riddle.alibaba-inc.com/riddles/define';
@@ -52,6 +52,17 @@ export default opts => {
         title: '',
         js: getRiddleAppCode(opts),
         css: '',
+        json: `
+        {
+          "name": "riddle",
+          "dependencies": {
+           "@alipay/gi-assets": "^0.2.x",
+            "@alipay/graphinsight": "^0.2.x",
+            "@antv/graphin": "^2.x",
+            "react":"17.x"
+          }
+        }
+        `,
       });
 
       document.body.appendChild(form);

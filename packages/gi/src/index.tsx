@@ -39,7 +39,7 @@ const registerShapes = Elements => {
 const GISDK = (props: Props) => {
   const { config, children, assets } = props;
   const { components: Components, elements: Elements, services: Services } = assets;
-  registerShapes(Element);
+  registerShapes(Elements);
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] } as GraphinData,
@@ -67,7 +67,7 @@ const GISDK = (props: Props) => {
 
   /** 数据发生改变 */
   React.useEffect(() => {
-    const { service } = Services.find(s => s.id === 'get_initial_graph') as GIService;
+    const { service } = Services.find(s => s.id === 'GI_SERVICE_INTIAL_GRAPH') as GIService;
 
     service.then((res = { nodes: [], edges: [] }) => {
       setState(preState => {

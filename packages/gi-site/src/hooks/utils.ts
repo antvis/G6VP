@@ -36,13 +36,20 @@ export const getRiddleAppCode = opts => {
   return `
   import GISDK from '@alipay/graphinsight';
   import ASSETS from '@alipay/gi-assets';
+  import Graphin from '@antv/graphin';
  
+  /**
+   * 注意：新开Riddle 会遇到依赖加载报错问题，
+   * 请先保存此Riddle，重新命名，然后刷新浏览器，重新加载即可。
+  **/
+
   const {components,elements,utils}= ASSETS;
   const {getServicesByAssets} = utils;
 
 
   const config = ${temaplteCode};
   const data = ${dataStr};
+  
   const servicesOpt = [
     {
       id: 'get_initial_graph',
