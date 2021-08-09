@@ -19,7 +19,7 @@ const transform = (s, metaConfig) => {
     /** 解构配置项 */
     const props = Object.assign({}, defaultProps, metaConfig.node.props);
     const { donut = {}, label = {} } = props;
-    console.log('props', props);
+ 
     /** Mock */
     const dountKeys = donut.mappingKey || [];
     const colorKeys = ['#61DDAA', '#F08BB4', '#65789B'];

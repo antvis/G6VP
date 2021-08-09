@@ -44,7 +44,7 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
     const mode = 'mock'; //serviceModeRef.target.value;
     const monacoModel = monacoRef.editor.getModel();
     const content = monacoModel.getValue();
-    console.log(id, name, content, mode);
+
     props.handleSave({
       id,
       name,
