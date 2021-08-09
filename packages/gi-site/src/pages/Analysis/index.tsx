@@ -6,7 +6,7 @@ import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getProjectById } from '../../services/';
-import { queryAssets } from '../../services/assets.market'
+import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import './index.less';
@@ -17,19 +17,6 @@ import { isObjectEmpty } from './utils';
 
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
-
-const GIServices = [
-  {
-    id: 'get_initial_graph',
-    content: `(data)=>{return data}`,
-    mode: 'mock',
-  },
-  {
-    id: 'gi_drilling_one',
-    content: `(data)=>{ console.log('drilling'); return data}`,
-    mode: 'mock',
-  },
-];
 
 const Analysis = props => {
   const { history, match } = props;
@@ -74,12 +61,12 @@ const Analysis = props => {
     // });
 
     getProjectById(projectId).then(res => {
-      const { config, data } = res as any;
-      queryAssets().then(assets => {
+      const { config, data, serviceLists } = res as any;
+      queryAssets('userId').then(assets => {
         /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
         const components = getComponentsByAssets(assets.components, data);
         const elements = getElementsByAssets(assets.elements, data);
-        const services = getServicesByAssets(assets.services, data);
+        const services = getServicesByAssets(serviceLists, data);
 
         dispatch({
           type: 'update:config',
@@ -88,13 +75,13 @@ const Analysis = props => {
           data: data,
           isReady: true,
           activeNavbar: 'style',
+          serviceLists,
           services,
           components,
           elements,
           assets,
         });
-      })
-
+      });
     });
   }, [projectId]);
 

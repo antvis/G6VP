@@ -14,7 +14,6 @@ const DrillingOne: React.FunctionComponent<DrillingOneProps> = props => {
   const handleClick = () => {
     const { service } = services.find(sr => sr.id === serviceName);
     service.then(res => {
-      console.log('res', res);
       const { nodes, edges } = res;
       if (!res) {
         return {

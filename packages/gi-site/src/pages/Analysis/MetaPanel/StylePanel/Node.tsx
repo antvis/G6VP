@@ -37,7 +37,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
-    console.log('evt', rootValue);
+
     dispatch({
       type: 'update:config:node',
       ...element,
@@ -59,7 +59,6 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const elementOptions = Object.values(elements);
 
   const GUIComponent = React.useMemo(() => {
-    console.log('%c Render.GUI', 'color:blue', elementId, configObj, valueObj);
     return (
       <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
     );

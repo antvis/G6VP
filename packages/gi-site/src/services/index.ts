@@ -32,7 +32,8 @@ export const getProjectById = async (id: string) => {
  */
 export const updateProjectById = async (id: string, p: any) => {
   if (isMock) {
-    return await localforage.setItem(id, p);
+    const origin: any = await localforage.getItem(id);
+    return await localforage.setItem(id, { ...origin, ...p });
   }
   return await fetch('api:updateProject');
 };
