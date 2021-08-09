@@ -12,12 +12,22 @@ ul.gi-services-sidebar {
   list-style: none;
   li {
     height: @line-height;
+    padding: 0px 8px;
     line-height: @line-height;
     cursor: pointer;
+    .delete {
+      float: right;
+      padding-right: 8px;
+    }
 
     &.active {
       background: rgba(221, 221, 221, 0.794);
-      border-right: 2px solid rgb(66, 110, 81);
+      border-right: 3px solid #2483ff;
+    }
+    &.plus {
+      color: #2483ff;
+      text-align: center;
+      border: 1px dashed rgba(221, 221, 221, 0.794);
     }
   }
 }

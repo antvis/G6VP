@@ -1,4 +1,4 @@
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import React from 'react';
 import './index.less';
 
@@ -19,6 +19,7 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
         const { id } = opt;
         const isActive = id === activeId;
         const classes = isActive ? 'active' : '';
+        const isShowDelete = isActive && id !== options[0].id;
         return (
           <li
             className={classes}
@@ -29,8 +30,9 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
           >
             {id}
 
-            {id !== options[0].id && (
+            {isShowDelete && (
               <span
+                className="delete"
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -43,8 +45,8 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
           </li>
         );
       })}
-      <li key="plus" onClick={handleAdd}>
-        +
+      <li key="plus" onClick={handleAdd} className="plus">
+        自定义数据服务 <PlusOutlined />
       </li>
     </ul>
   );
