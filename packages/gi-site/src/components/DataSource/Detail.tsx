@@ -67,6 +67,7 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
           ref={node => {
             serviceIDRef = node;
           }}
+          disabled={id === 'GI_SERVICE_INTIAL_GRAPH'}
         />
         <br />
         服务名称:
