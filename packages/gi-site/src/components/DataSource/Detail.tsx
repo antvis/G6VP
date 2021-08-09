@@ -1,4 +1,4 @@
-import { Card, Input, Radio } from 'antd';
+import { Button, Card, Input, Radio } from 'antd';
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import './index.less';
@@ -55,7 +55,11 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
 
   const { id, mode, content, name } = props;
 
-  const extra = <div onClick={handleSave}> save | delete </div>;
+  const extra = (
+    <Button type="primary" size="small" onClick={handleSave}>
+      保存
+    </Button>
+  );
 
   return (
     <div className="gi-services-editor">
@@ -93,8 +97,8 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
             ref={node => {
               monacoRef = node;
             }}
-            width="500px"
-            height="500px"
+            width="calc(80vw - 400px)"
+            height="400px"
             language="json"
             theme="vs-dark"
             defaultValue={content}
