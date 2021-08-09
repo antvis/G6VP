@@ -16,7 +16,6 @@ const isLocal = true;
  * @returns
  */
 export const queryAssets = async (id: string) => {
-  console.log('isLocal', isLocal);
   if (isLocal) {
     return await new Promise(resolve => {
       resolve({

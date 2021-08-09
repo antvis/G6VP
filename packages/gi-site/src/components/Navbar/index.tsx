@@ -34,7 +34,6 @@ const Navbar = ({ projectId }: NavbarProps) => {
   });
 
   const handleClose = () => {
-    console.log(servicesRef.current.options, '%%%%%%%%%', serviceLists);
     updateProjectById(projectId, {
       serviceLists: servicesRef.current.options,
     });

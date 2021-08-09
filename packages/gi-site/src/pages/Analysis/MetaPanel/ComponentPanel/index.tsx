@@ -30,7 +30,6 @@ const getComponentsByMap = componentMap => {
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
   const { value, onChange, data, config, meta, services, dispatch, components } = props;
-  console.log('dispatch', dispatch);
 
   const { components: choosedComponents } = config;
 
@@ -79,11 +78,10 @@ const ComponentPanel = props => {
     };
   });
 
-  console.log('components', configObj, valueObj);
   const handleChange = e => {
     const { rootValue } = e;
     const com = getComponentsByMap(rootValue);
-    console.log('com', com);
+
     dispatch({
       type: 'update:config:components',
       components: com,
