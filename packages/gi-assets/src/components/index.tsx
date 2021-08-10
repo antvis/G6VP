@@ -4,12 +4,13 @@
 // import DrillingOne from './DrillingOne';
 import MiniMap from './MiniMap';
 import NodeLegend from './NodeLegend';
+import NodeToggle from './NodeToggle';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 // import ToolbarA from './Toolbar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap };
+export { NodeLegend, MiniMap, NodeToggle };
 
 // /**
 //  * 组件市场
