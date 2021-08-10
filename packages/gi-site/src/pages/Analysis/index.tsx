@@ -64,7 +64,8 @@ const Analysis = props => {
       const { config, data, serviceLists } = res as any;
       queryAssets('userId').then(assets => {
         /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-        const components = getComponentsByAssets(assets.components, data);
+
+        const components = getComponentsByAssets(assets.components, data, serviceLists);
         const elements = getElementsByAssets(assets.elements, data);
         const services = getServicesByAssets(serviceLists, data);
 
