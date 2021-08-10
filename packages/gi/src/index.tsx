@@ -69,7 +69,7 @@ const GISDK = (props: Props) => {
   React.useEffect(() => {
     const { service } = Services.find(s => s.id === 'GI_SERVICE_INTIAL_GRAPH') as GIService;
 
-    service.then((res = { nodes: [], edges: [] }) => {
+    service().then((res = { nodes: [], edges: [] }) => {
       setState(preState => {
         const newData = transform(res, config);
         return {
@@ -107,11 +107,10 @@ const GISDK = (props: Props) => {
 
   React.useEffect(() => {
     setState(preState => {
-      const { source } = preState;
-      if (source.nodes.length === 0) {
+      if (preState.data.nodes.length === 0) {
         return preState;
       }
-      const newData = transform(preState.source, { node: nodeCfg, edge: edgeCfg });
+      const newData = transform(preState.data, { node: nodeCfg, edge: edgeCfg });
       return {
         ...preState,
         data: newData,
@@ -134,6 +133,8 @@ const GISDK = (props: Props) => {
       });
     },
   };
+  GraphinContext.GiState = state;
+  GraphinContext.setGiState = setState;
 
   return (
     //@ts-ignore
