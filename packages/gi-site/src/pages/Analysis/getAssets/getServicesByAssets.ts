@@ -12,20 +12,22 @@ const getServicesByAssets = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
     if (mode === 'mock') {
-      const service = new Promise(async resolve => {
-        let transFn = opt => {
-          return opt;
-        };
-        try {
-          transFn = looseJsonParse(content);
-          if (transFn) {
-            res = transFn(res);
+      const service = (params: any) => {
+        return new Promise(async resolve => {
+          let transFn = (opt, params) => {
+            return opt;
+          };
+          try {
+            transFn = looseJsonParse(content);
+            if (transFn) {
+              res = transFn(res, params);
+            }
+          } catch (error) {
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
-        }
-        return resolve(res);
-      });
+          return resolve(res);
+        });
+      };
       return {
         id,
         service,
@@ -35,7 +37,9 @@ const getServicesByAssets = (assets, data) => {
     try {
       return {
         id,
-        service: fetch(content),
+        service: params => {
+          return fetch(content, params);
+        },
       };
     } catch (error) {
       console.error(error);
