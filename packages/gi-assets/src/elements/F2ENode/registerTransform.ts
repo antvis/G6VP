@@ -37,20 +37,44 @@ const transform = (s, metaConfig) => {
       /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
       const colorKeys = MappingByColor.keys();
       const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
-
+      const keyshapeSize = Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed;
+      const keyShapeColor = Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed;
+      const halo = {
+        visible: true,
+        size: keyshapeSize + 8,
+        stroke: keyShapeColor,
+        lineWidth: 2,
+        opacity: 1,
+      };
       return {
         id: node.id,
         data: node.data,
         type: 'graphin-circle',
         style: {
           keyshape: {
-            stroke: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
-            fill: Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed,
-            size: Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed,
+            stroke: keyShapeColor,
+            fill: keyShapeColor,
+            size: keyshapeSize,
+            fillOpacity: 1,
+            strokeOpacity: 1,
           },
           label: {
             value: Label?.showlabel ? data[Label?.key || 'id'] : '',
             offset: [0, 10],
+          },
+          halo,
+        },
+        status: {
+          hover: {
+            halo: {
+              ...halo,
+              opacity: 0.6,
+            },
+          },
+          select: {
+            halo: {
+              lineWidth: 0,
+            },
           },
         },
       };
