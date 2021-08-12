@@ -107,5 +107,5 @@ export interface GIServiceResponseDetailData {
 export interface GIService {
   /** 获取初始化接口，获取初始图数据 */
   id: string;
-  service: Promise<GIServiceResponseData>;
+  service: (params?: any) => Promise<GIServiceResponseData>;
 }
