@@ -88,6 +88,17 @@ const RootReducers = (state: StateType = initialState, action: Action): StateTyp
           },
         },
       };
+    case 'update:config:edge':
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          edge: {
+            ...state.config.edge,
+            ...payload,
+          },
+        },
+      };
     case 'update:config:layout':
       return {
         ...state,
