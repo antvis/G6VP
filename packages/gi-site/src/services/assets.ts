@@ -85,30 +85,42 @@ export const updateAssets = async (id: string, param: UpdateAssetParams) => {
     });
 };
 
+const convertResponse = response => {
+  const { data, success, errorMsg } = response;
+  let msg = errorMsg;
+  if (!success && data.message) {
+    msg = `${errorMsg}:${data.message}`;
+  }
+  return {
+    data,
+    success,
+    errorMsg: msg,
+  };
+};
+
 /**
  * 查询资产列表
  * @param param 查询参数
  */
 export const queryAssetList = async (param?: { name?: string; limit?: number }) => {
-  return request(`${SERVICE_URL_PREFIX}/asset/list`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/list`, {
     method: 'get',
     params: param,
-  })
-    .then(response => {
-      const { result } = response;
-      return {
-        data: result,
-        success: true,
-        errorMsg: null,
-      };
-    })
-    .catch(error => {
-      return {
-        data: null,
-        success: false,
-        errorMsg: error,
-      };
-    });
+  });
+
+  return convertResponse(response);
+};
+
+/**
+ * 根据资产 ID 查询资产
+ * @param id 资产 ID
+ */
+export const queryAssetById = async (id: string) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/list/${id}`, {
+    method: 'GET',
+  });
+  debugger;
+  return convertResponse(response);
 };
 
 /**
@@ -223,4 +235,32 @@ export const getFileSourceCode = async (fileParams: DirectoryBlob) => {
         errorMsg: error,
       };
     });
+};
+
+interface BranchParams {
+  projectName: string;
+  branchName: string;
+  refBranchName: string;
+}
+
+/**
+ * 以文本的形式获取指定路径下文件的源代码
+ * @param fileParams
+ */
+export const createNewBranch = async (branchParams: BranchParams) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/createBranch`, {
+    method: 'post',
+    data: branchParams,
+  });
+
+  const { data, success, errorMsg } = response;
+  let msg = errorMsg;
+  if (!success) {
+    msg = `${errorMsg}:${data.message}`;
+  }
+  return {
+    data,
+    success,
+    errorMsg: msg,
+  };
 };

@@ -2,10 +2,12 @@
 import { AppstoreOutlined, BranchesOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Tabs } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { queryAssets } from '../../services/assets.market';
+import { queryAssetList } from '../../services/assets';
 import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
 import './index.less';
@@ -20,19 +22,35 @@ const ComponentMarket = props => {
     elements: { node: {}, edge: {} },
   });
 
-  React.useEffect(() => {
-    queryAssets('userId').then(res => {
-      const data = {};
-      const { components: ComponentAssets, elements: ElementAssets, services: ServicesAssets } = res;
-      const components = getComponentsByAssets(ComponentAssets, data);
-      const elements = getElementsByAssets(ElementAssets, data);
+  // React.useEffect(() => {
+  //   queryAssets('userId').then(res => {
+  //     const data = {};
+  //     const { components: ComponentAssets, elements: ElementAssets, services: ServicesAssets } = res;
+  //     const components = getComponentsByAssets(ComponentAssets, data);
+  //     const elements = getElementsByAssets(ElementAssets, data);
 
+  //     setState(draft => {
+  //       draft.components = components;
+  //       draft.elements = elements;
+  //     });
+  //   });
+  // }, []);
+
+  const getAssertList = async () => {
+    const result = await queryAssetList();
+    console.log('查询到的数据', result);
+    const { data, success } = result;
+    if (success) {
       setState(draft => {
-        draft.components = components;
-        draft.elements = elements;
+        draft.components = data;
       });
-    });
+    }
+  };
+  React.useEffect(() => {
+    // 通过调用服务端接口，获取资产列表
+    getAssertList();
   }, []);
+
   const { components, elements } = state;
 
   const NodeElements = Object.values(elements.node);
@@ -56,26 +74,26 @@ const ComponentMarket = props => {
               </span>
             }
           >
-            <Row
-              gutter={[
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-              ]}
-            >
+            <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
               {components.map(c => {
-                const { id, name } = c;
+                const { id, name, displayName, description, branchName } = c;
                 return (
                   <Col key={id} style={{ width: '300px' }}>
-                    <Card
-                      hoverable
-                      title={name}
-                      onClick={() => {
-                        handleClickComponent(id);
-                      }}
+                    <Link
+                      to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}`}
+                      style={{ color: '#424447' }}
                     >
-                      {id} <br />
-                      {name}
-                    </Card>
+                      <Card
+                        hoverable
+                        title={displayName}
+                        onClick={() => {
+                          handleClickComponent(id);
+                        }}
+                      >
+                        {name}「{branchName}」 <br />
+                        {description}
+                      </Card>
+                    </Link>
                   </Col>
                 );
               })}
@@ -93,12 +111,7 @@ const ComponentMarket = props => {
             <Row>
               <Col span={12}>
                 <Card title={'节点元素 Node'}>
-                  <Row
-                    gutter={[
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                    ]}
-                  >
+                  <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
                     {NodeElements.map(c => {
                       //@ts-ignore
                       const { id, name } = c;
@@ -113,12 +126,7 @@ const ComponentMarket = props => {
               </Col>
               <Col span={12}>
                 <Card title={'边元素 Edge'}>
-                  <Row
-                    gutter={[
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                    ]}
-                  >
+                  <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
                     {EdgeElements.map(c => {
                       //@ts-ignore
                       const { id, name } = c;
