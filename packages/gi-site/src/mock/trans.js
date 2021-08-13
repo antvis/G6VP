@@ -9,8 +9,10 @@ const walk = schema => {
   if (isRoot) {
     schema.topic = '根节点';
   }
+  const childCount = schema.children && schema.children.length;
+  schema.badges = childCount;
   nodes.push(schema);
-  if (schema.children && schema.children.length) {
+  if (childCount) {
     schema.children.forEach(child => {
       if (isRoot) {
         child.topic = child.name;
