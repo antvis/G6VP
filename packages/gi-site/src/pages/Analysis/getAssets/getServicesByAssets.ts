@@ -1,3 +1,5 @@
+import request from 'umi-request';
+
 function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
@@ -33,20 +35,22 @@ const getServicesByAssets = (assets, data) => {
       };
     }
     // if mode==='api'
-    try {
-      return {
-        id,
-        service: params => {
-          return fetch(content, params);
-        },
-      };
-    } catch (error) {
-      console.error(error);
-      return {
-        id,
-        service: {},
-      };
-    }
+    const service = params => {
+      try {
+        return request(content, {
+          method: 'post',
+          data: params,
+        });
+      } catch (error) {
+        return new Promise(resolve => {
+          resolve({});
+        });
+      }
+    };
+    return {
+      id,
+      service,
+    };
   });
 };
 
