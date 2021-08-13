@@ -129,6 +129,46 @@ const registerMeta = context => {
           },
           options,
         },
+        color: {
+          name: '颜色',
+          type: 'fill',
+          default: '#000',
+          valuePath: 'label.color',
+        },
+      },
+    },
+    icon: {
+      name: '图标',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        type: {
+          name: '类型',
+          type: 'buttonRadio',
+          useFont: true,
+          default: 'text',
+          options: [
+            {
+              value: 'text',
+              label: '文本',
+            },
+            {
+              value: 'image',
+              label: '图片',
+            },
+            {
+              value: 'font',
+              label: '字体图标',
+            },
+          ],
+        },
+        key: {
+          name: '映射字段',
+          type: 'select',
+          default: 'id',
+          options,
+        },
       },
     },
   };

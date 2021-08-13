@@ -52,6 +52,9 @@ const transform = (s, metaConfig) => {
             value: Label?.showlabel ? data[Label?.key || 'id'] : '',
             offset: [0, 10],
           },
+          halo: {
+            visible: false,
+          },
         },
       };
     });
