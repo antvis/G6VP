@@ -18,13 +18,18 @@ const getMapping = () => {
 const transform = (s, metaConfig) => {
   try {
     /** 解构配置项 */
-    const { color: Color, label: Label, size: Size } = Object.assign({}, defaultProps, metaConfig.node.props);
+    const {
+      color: Color,
+      label: Label,
+      size: Size,
+      icon: Icon,
+    } = Object.assign({}, defaultProps, metaConfig.node.props);
 
     /** 分别生成Size和Color的Mapping */
     const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
 
     const mappingByColor = getMapping();
-
+    console.log('label', Label);
     const nodes = s.nodes.map(node => {
       const { id, data } = node;
       /** 根据Size字段映射的枚举值 */
@@ -46,6 +51,7 @@ const transform = (s, metaConfig) => {
         lineWidth: 2,
         opacity: 1,
       };
+
       return {
         id: node.id,
         data: node.data,
@@ -61,8 +67,14 @@ const transform = (s, metaConfig) => {
           label: {
             value: Label?.showlabel ? data[Label?.key || 'id'] : '',
             offset: [0, 10],
+            fill: Label.color,
           },
           halo,
+          icon: {
+            type: Icon.type,
+            value: data[Icon.key] || '',
+            fill: '#fff',
+          },
         },
         status: {
           hover: {

@@ -37,7 +37,6 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
-
     dispatch({
       type: 'update:config:node',
       ...element,
@@ -62,7 +61,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     return (
       <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
     );
-  }, [elementId]);
+  }, [elementId, handleChangeConfig]);
 
   return (
     <div>
@@ -75,7 +74,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
                 alt=""
                 width={40}
                 height={40}
-              />{' '}
+              />
               {c.name}
             </Option>
           );
