@@ -6,7 +6,7 @@ import { getKeysByData } from './utils';
  * @param data 图数据
  * @returns
  */
-const getComponentsByAssets = (assets, data) => {
+const getComponentsByAssets = (assets, data, services) => {
   const components = Object.keys(assets).map(key => {
     const component = assets[key];
     const {
@@ -17,7 +17,7 @@ const getComponentsByAssets = (assets, data) => {
       info = {},
     } = component;
     const keys = getKeysByData(data);
-    const configObj = registerMeta({ data, keys });
+    const configObj = registerMeta({ data, keys, services });
     /** 默认的配置值 */
     const defaultProps = extractDefault({ config: configObj, value: {} });
     const { id, name, category } = info;

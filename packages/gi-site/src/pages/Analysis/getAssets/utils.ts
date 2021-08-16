@@ -1,6 +1,6 @@
-export const getKeysByData = data => {
+export const getKeysByData = (data, category) => {
   try {
-    return Object.keys(data.nodes[0].data);
+    return category === 'node' ? Object.keys(data.nodes[0].data) : Object.keys(data.edges[0].data);
   } catch (error) {
     return ['id'];
   }

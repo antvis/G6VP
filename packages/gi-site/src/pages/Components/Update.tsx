@@ -5,12 +5,15 @@ import { Provider } from 'react-redux';
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { queryAssetList, updateAssets, updateFileContent, getFileSourceCode } from '../../services/assets'
+import { queryAssetList, updateAssets, updateFileContent, getFileSourceCode, createNewBranch, queryAssetById } from '../../services/assets'
 import { useImmer } from 'use-immer'
+import { Project, ScriptTarget } from 'ts-morph'
+import moment from 'moment'
 import JSON5 from 'json5'
 import GraphInsightIDE from './GraphInsightIDE'
 import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
 import { usePersistFn } from 'ahooks'
+import queryString from 'querystring'
 import './index.less';
 
 window.React = React
@@ -29,6 +32,12 @@ const ComponentMarket = props => {
 
   const { currentSelectAsset} =state;
 
+  const queryParams = queryString.parse(location.hash.split('?')[1])
+  const projectName = queryParams.project as string
+  const branchName = queryParams.branch as string
+  const assetId = queryParams.assetId as string
+  
+
   const setSourceCode = (value) => {
     setState(draft => {
       draft.sourceCode = value
@@ -36,6 +45,7 @@ const ComponentMarket = props => {
   }
 
   const updateAssetById = async (options) => {
+    debugger
     const currentId: string = state.currentSelectAsset?.id
     
     const result = await updateAssets(currentId, options)
@@ -46,9 +56,8 @@ const ComponentMarket = props => {
     }
   }
 
-  const queryList = async () => {
-    const result = await queryAssetList()
-    console.log('列表', result)
+  const queryAssetDetailById = async () => {
+    const result = await queryAssetById(assetId)
     const { data, success, errorMsg } = result
     if (!success) {
       // 接口执行失败
@@ -56,10 +65,8 @@ const ComponentMarket = props => {
       return
     }
     
-    // 获取资产列表以后，点击某一项就可以拿到 ID，更新对应的数据即可
-    // TODO: 这里 mock 处理一下，我们拿第一条数据测试
     setState(draft => {
-      draft.currentSelectAsset = data[0]
+      draft.currentSelectAsset = data
     })
   }
 
@@ -125,32 +132,32 @@ const ComponentMarket = props => {
   const queryInitSourceCode = async () => {
     // 加载所有的源文件，构造实时预览需要的初始数据
     const demoFile = await getFileSourceCode({
-      projectName: 'test_legend',
-      branchName: 'master',
+      projectName,
+      branchName,
       path: 'demo.tsx'
     })
 
     const styleFile = await getFileSourceCode({
-      projectName: 'test_legend',
-      branchName: 'master',
-      path: 'index.less'
+      projectName,
+      branchName,
+      path: 'index.module.less'
     })
 
     const componentFile = await getFileSourceCode({
-      projectName: 'test_legend',
-      branchName: 'master',
+      projectName,
+      branchName,
       path: 'component.tsx'
     })
 
     const packageFile = await getFileSourceCode({
-      projectName: 'test_legend',
-      branchName: 'master',
+      projectName,
+      branchName,
       path: 'package.json'
     })
 
     const initSourceCode = {
       'demo.tsx': demoFile.data,
-      'index.less': styleFile.data,
+      'index.module.less': styleFile.data,
       'component.tsx': componentFile.data,
       'package.json': packageFile.data
     }
@@ -166,16 +173,25 @@ const ComponentMarket = props => {
   }
 
   React.useEffect(() => {
-    queryList()
+    queryAssetDetailById()
     // 查询 preview 所需要的 code
+    
     queryInitSourceCode()
+    // TODO: 查询构建状态，如果有在构建中的组件，进行提示
   }, []);
+
+  const projectBuild = new Project({
+    useInMemoryFileSystem: true,
+    compilerOptions: {
+      target: ScriptTarget.ES3,
+  },
+  });
 
   const handleSourceCodeChange = async (filepath: string, source: string) => {
     // 如果修改的是 meta 信息，需要存储到数据库中
     const result = await updateFileContent({
-      projectName: 'test_legend',
-      branchName: 'master',
+      projectName,
+      branchName,
       path: filepath,
       content: source,
       commitMsg: '测试修改文件'
@@ -190,21 +206,26 @@ const ComponentMarket = props => {
     // 更新 gitlab 上文件成功，且为 meta 时候需要存储到数据库中
     if (success && filepath === 'meta.ts') {
       await updateAssetById({
-        name: '测试名称',
         meta: source,
-        version: '0.0.1',
-        type: 1
+        // version: '0.0.1',
+        // type: 1
       })
 
       // 更新 metainfo，触发右侧面板重新渲染
       // TODO: 临时处理，meta 信息需要换成 function
-      const metaInfo = source.replace(/\;/g, '').split('=')
-      if (metaInfo[1]) {
-        const metaObj = JSON5.parse(metaInfo[1])
-        setState(draft => {
-          draft.metaInfo = metaObj
-        })
-      }
+
+      const filesystem = projectBuild.getFileSystem()
+      const sourceFile = projectBuild.createSourceFile('metaInfo.ts', source.split('export default')[0])
+      sourceFile.saveSync()
+      
+      console.log('xxx', filesystem.readFileSync('metaInfo.ts'))
+      // const metaInfo = source.replace(/\;/g, '').split('=')
+      // if (metaInfo[1]) {
+      //   const metaObj = JSON5.parse(metaInfo[1])
+      //   setState(draft => {
+      //     draft.metaInfo = metaObj
+      //   })
+      // }
     }
     setSourceCode({
       ...state.sourceCode,
@@ -221,15 +242,16 @@ const ComponentMarket = props => {
 
   useEffect(() => {
     if (state.currentSelectAsset && state.currentSelectAsset.meta) {
+      
       // 从 Meta 中解析出 Meta 对象
       // TODO: 临时处理，meta 信息需要换成 function
-      const metaInfo = state.currentSelectAsset.meta.replace(/\;/g, '').split('=')
-      if (metaInfo[1]) {
-        const metaObj = JSON5.parse(metaInfo[1])
-        setState(draft => {
-          draft.metaInfo = metaObj
-        })
-      }
+      // const metaInfo = state.currentSelectAsset.meta.replace(/\;/g, '').split('=')
+      // if (metaInfo[1]) {
+      //   const metaObj = JSON5.parse(metaInfo[1])
+      //   setState(draft => {
+      //     draft.metaInfo = metaObj
+      //   })
+      // }
     }
   }, [currentSelectAsset])
 
@@ -246,10 +268,29 @@ const ComponentMarket = props => {
       })
     }
   }, [state.sourceCode])
+
+  // 发布组件，需要先创建分支，然后构建
+  const handlePublish = async () => {
+    const uuid = `${Math.random()
+      .toString(36)
+      .substr(2)}`;
+    const currentDate = moment(new Date()).format('YYYYMMDD')
+    const newBranchName = `sprint_${projectName}_${uuid}_${currentDate}`
+    
+    // step1: 创建新的分支
+    const result = await createNewBranch({
+      projectName,
+      branchName: newBranchName,
+      refBranchName: 'master'
+    })
+    
+    // step2: 构建
+    console.log('页面创建分支', result)
+  }
   
   return (
     <>
-      <BaseNavbar history={history}>
+      <BaseNavbar history={history} hasPublish={true} handlePublish={handlePublish}>
         <h4>物料中心</h4>
       </BaseNavbar>
       <div className="componet-market">
@@ -257,15 +298,18 @@ const ComponentMarket = props => {
           <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode='demo.tsx' codeChange={codeChangeCallback}  />
         </div>
         <div style={{ marginTop: 20 }} className='gi-config-wrapper'> 
-        {
-          state.metaInfo &&
-          <div className="content config">
+        <div className="content config">
+          {
+            state.metaInfo
+            ?
             <ComponentMetaPanel
               onChange={handleMetaInfoChange}
               config={state.metaInfo}
             />
-          </div>
-        }
+            :
+            '暂无 Meta 信息'
+          }
+        </div>
           <div className="content view">
           {
             state.previewCode &&

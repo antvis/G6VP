@@ -10,15 +10,17 @@ import { getKeysByData } from './utils';
 const getElementsByAssets = (assets, data) => {
   let nodeElements = {};
   let edgeElements = {};
+
   Object.keys(assets).forEach(key => {
     const element = assets[key];
     //@ts-ignore
     const { info, registerMeta, registerShape, registerTransform } = element;
-    const keys = getKeysByData(data);
+    const { id, name, category } = info;
+
+    const keys = getKeysByData(data, category);
     const configObj = registerMeta({ data, keys });
     /** 默认的配置值 */
     const defaultProps = extractDefault({ config: configObj, value: {} });
-    const { id, name, category } = info;
 
     const item = {
       id,
