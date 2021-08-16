@@ -4,7 +4,7 @@ import { RightOutlined, UploadOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { updateProjectById } from '../../services';
+import { addProject, updateProjectById } from '../../services';
 import { serviceLists } from './const';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
@@ -117,12 +117,34 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   };
 
   const creatProgram = () => {
-    let id = getUid();
+    let id = addProject({
+      name: userConfig.title,
+      // description: '',
+      // status: '',
+      // tag: '',
+      version: '',
+      projectConfig: userConfig.config,
+      serviceConfig: serviceLists,
+      data: data,
+      // ownerId: ,
+      // members,
+      // coverImg,
+      // expandInfo,
+    }).then((res) => {
+      console.log('creatProgram', res);
+      history.push(`/workspace/${id}`);
+    });
 
-    updateProjectById(id, {
+    
+    // history.push(`/workspace/${id}`);
+
+
+    // let id = getUid();
+
+    console.log('creatProgram',{
       isProject: true,
       data,
-      ...userConfig,
+      userConfig,
       id,
       time: new Date().toLocaleString(),
       /**
@@ -131,9 +153,24 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
        * 数据过滤的阶段，需要在数据服务模块添加
        */
       serviceLists,
-    }).then(() => {
-      history.push(`/workspace/${id}`);
     });
+
+
+    // updateProjectById(id, {
+    //   isProject: true,
+    //   data,
+    //   ...userConfig,
+    //   id,
+    //   time: new Date().toLocaleString(),
+    //   /**
+    //    * 临时方案
+    //    * 数据标准化节点，需要在「上传数据」阶段就准备好
+    //    * 数据过滤的阶段，需要在数据服务模块添加
+    //    */
+    //   serviceLists,
+    // }).then(() => {
+    //   history.push(`/workspace/${id}`);
+    // });
   };
 
   const getUserInfo = value => {
