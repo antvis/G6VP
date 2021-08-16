@@ -11,7 +11,7 @@ export function getEdgesByNodes(nodes, edges) {
   });
 }
 
-export const isMock = true;
+export const isMock = false;
 /**
  * 获取指定项目
  * @param id 项目id
@@ -71,5 +71,5 @@ export const addProject = async (p: any) => {
     const all = (await getProjectList()) as any[];
     return await localforage.setItem('projects', [...all, p]);
   }
-  return await fetch('api:addProject');
+  return await fetch('http://127.0.0.1:7001/create');
 };
