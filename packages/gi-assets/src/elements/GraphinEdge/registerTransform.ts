@@ -21,7 +21,7 @@ const transform = (s, config) => {
     /** 分别生成Size和Color的Mapping */
 
     const mappingEdgeByColor = getMapping();
-    const { color: edgeColor, label: edgeLabel, size: edgeSize } = mathEdgeConfig.props;
+    const { color: edgeColor, label: edgeLabel, size: edgeSize, dash: dash, halo: edgeHalo } = mathEdgeConfig.props;
 
     /** 分别生成Size和Color的Mapping */
     const mappingEdgeBySize = scaleLinear().domain(edgeSize.scale.domain).range(edgeSize.scale.range);
@@ -43,9 +43,19 @@ const transform = (s, config) => {
           keyshape: {
             stroke: edgeColor?.mapping ? edgeColor?.scale?.range?.[matchColorIndex] : edgeColor?.fixed,
             lineWidth: edgeSize?.mapping ? mappingEdgeBySize(enumValueBySize) : edgeSize?.fixed,
+            lineDash: dash?.showdash ? [dash?.length?.fixed, dash?.length.fixed] : '',
           },
           label: {
             value: edgeLabel?.showlabel ? data[edgeLabel?.key || 'id'] : '',
+            fill: edgeLabel?.showlabel ? edgeLabel?.fill?.fixed : '',
+            offset: edgeLabel?.showlabel ? [0, edgeLabel?.offest?.fixed] : [0, 0],
+            background: {
+              fill: edgeLabel?.background?.fixed,
+              stroke: edgeLabel?.border?.fixed,
+            },
+          },
+          halo: {
+            visible: edgeHalo?.showhalo,
           },
         },
       };
