@@ -11,11 +11,13 @@ import '@alipay/alex/languages/javascript';
 import '@alipay/alex/languages/typescript';
 import '@alipay/alex/languages/json';
 
+import queryString from 'querystring';
+
 // 语言功能
-import html from '@alipay/alex/extensions/alex.html-language-features-worker';
-import css from '@alipay/alex/extensions/alex.css-language-features-worker';
-import typescript from '@alipay/alex/extensions/alex.typescript-language-features-worker';
-import json from '@alipay/alex/extensions/alex.json-language-features-worker';
+// import html from '@alipay/alex/extensions/alex.html-language-features-worker';
+// import css from '@alipay/alex/extensions/alex.css-language-features-worker';
+// import typescript from '@alipay/alex/extensions/alex.typescript-language-features-worker';
+// import json from '@alipay/alex/extensions/alex.json-language-features-worker';
 
 import { getFileDirectory, getFileBlob } from '../../services/assets';
 
@@ -72,6 +74,10 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
     'editor.forceReadOnly': readOnly,
   };
 
+  const queryParams = queryString.parse(location.hash.split('?')[1]);
+  const projectName = queryParams.project as string;
+  const branchName = queryParams.branch as string;
+
   return (
     <AppRenderer
       ref={appRef}
@@ -87,7 +93,7 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
         panelSizes: {
           [SlotLocation.left]: 220,
         },
-        extensionMetadata: readOnly ? [] : [html, css, typescript, json],
+        extensionMetadata: [], //readOnly ? [] : [html, css, typescript, json],
       }}
       runtimeConfig={{
         biz: 'gi',
@@ -104,8 +110,8 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
                   async readDirectory(p: string) {
                     // TODO: projectName 和 branchName 需要从组件里面读取
                     const result = await getFileDirectory({
-                      projectName: 'test_legend',
-                      branchName: 'master',
+                      projectName,
+                      branchName,
                       path: p.slice(1),
                     });
                     const { data, success } = result;
@@ -121,8 +127,8 @@ const GraphInsightIDE: React.FC<GraphInsightIDEProps> = props => {
                   async readFile(p) {
                     // TODO: projectName 和 branchName 需要从组件里面读取
                     const res = await getFileBlob({
-                      projectName: 'test_legend',
-                      branchName: 'master',
+                      projectName,
+                      branchName,
                       path: p.slice(1),
                     });
                     const { data, success } = res;
