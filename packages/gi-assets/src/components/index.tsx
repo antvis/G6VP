@@ -2,14 +2,16 @@
 // import CanvasClick from './CanvasClick';
 // import { NodeContextMenu } from './ContextMenu';
 // import DrillingOne from './DrillingOne';
+import CanvasSetting from './CanvasSetting';
 import MiniMap from './MiniMap';
 import NodeLegend from './NodeLegend';
+import NodeToggle from './NodeToggle';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 // import ToolbarA from './Toolbar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap };
+export { NodeLegend, MiniMap, NodeToggle, CanvasSetting };
 
 // /**
 //  * 组件市场

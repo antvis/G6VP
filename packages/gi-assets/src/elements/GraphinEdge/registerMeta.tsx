@@ -21,7 +21,7 @@ const getMeta = context => {
           max: 50,
           step: 1,
           suffix: 'px',
-          valuePath: 'style.edge.size',
+          valuePath: 'size',
           default: {
             mapping: false,
             fixed: 5,
@@ -41,12 +41,12 @@ const getMeta = context => {
           options,
           showInPanel: {
             conditions: [
-              ['style.edge.size.scale.custom', '$eq', true],
-              ['style.edge.size.mapping', '$eq', true],
+              ['size.scale.custom', '$eq', true],
+              ['size.mapping', '$eq', true],
             ],
             logicalType: '$and',
           },
-          valuePath: 'style.edge.size.key',
+          valuePath: 'size.key',
         },
       },
     },
@@ -60,7 +60,7 @@ const getMeta = context => {
           name: '填充颜色',
           type: 'colorMapping',
           fixedComponents: ['flat'],
-          valuePath: 'style.edge.color',
+          valuePath: 'color',
           default: {
             mapping: false,
             fixed: 'skyblue',
@@ -83,10 +83,39 @@ const getMeta = context => {
           default: 'type',
           options,
           showInPanel: {
-            conditions: [['style.edge.color.mapping', '$eq', true]],
+            conditions: [['color.mapping', '$eq', true]],
             logicalType: '$and',
           },
-          valuePath: 'style.edge.color.key',
+          valuePath: 'color.key',
+        },
+      },
+    },
+    dash: {
+      name: '虚线样式',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        showdash: {
+          name: '虚线样式',
+          type: 'switch',
+          default: false,
+          statusText: true,
+        },
+        dashMapping: {
+          name: '虚线长度',
+          type: 'sizeMapping',
+          min: 0,
+          max: 10,
+          step: 1,
+          suffix: 'px',
+          valuePath: 'dash.length',
+          default: {
+            fixed: 3,
+          },
+          showInPanel: {
+            conditions: [['dash.showdash', '$eq', true]],
+          },
         },
       },
     },
@@ -106,12 +135,80 @@ const getMeta = context => {
           name: '映射字段',
           type: 'select',
           useFont: true,
-          default: 'type',
-          valuePath: 'style.edge.label.key',
+          default: 'source',
+          valuePath: 'label.key',
           showInPanel: {
-            conditions: [['style.edge.label.showlabel', '$eq', true]],
+            conditions: [['label.showlabel', '$eq', true]],
           },
           options,
+        },
+        labelColor: {
+          name: '颜色',
+          valuePath: 'label.fill',
+          type: 'colorMapping',
+          fixedComponents: ['flat'],
+          default: {
+            mapping: false,
+            fixed: '#d9d9d9',
+          },
+          showInPanel: {
+            conditions: [['label.showlabel', '$eq', true]],
+          },
+        },
+        labelBg: {
+          name: '背景色',
+          valuePath: 'label.background',
+          type: 'colorMapping',
+          fixedComponents: ['flat'],
+          default: {
+            mapping: false,
+            fixed: '',
+          },
+          showInPanel: {
+            conditions: [['label.showlabel', '$eq', true]],
+          },
+        },
+        labelBorder: {
+          name: '边框',
+          valuePath: 'label.border',
+          type: 'colorMapping',
+          fixedComponents: ['flat'],
+          default: {
+            mapping: false,
+            fixed: '',
+          },
+          showInPanel: {
+            conditions: [['label.showlabel', '$eq', true]],
+          },
+        },
+        labelPos: {
+          name: '偏移',
+          type: 'sizeMapping',
+          min: -10,
+          max: 10,
+          step: 1,
+          suffix: 'px',
+          valuePath: 'label.offest',
+          default: {
+            fixed: 0,
+          },
+          showInPanel: {
+            conditions: [['label.showlabel', '$eq', true]],
+          },
+        },
+      },
+    },
+    halo: {
+      name: '光晕',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        showhalo: {
+          name: '开关',
+          type: 'switch',
+          default: false,
+          statusText: true,
         },
       },
     },

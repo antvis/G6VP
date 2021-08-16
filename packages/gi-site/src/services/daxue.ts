@@ -20,8 +20,8 @@ data => {
 
 // 一度下钻
 
-(data, ids) => {
-  const [id] = ids;
+(data, params) => {
+  const { id } = params;
   const matchNode = data.nodes.find(n => {
     return n.id === id;
   });

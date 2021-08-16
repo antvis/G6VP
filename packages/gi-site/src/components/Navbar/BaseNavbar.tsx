@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import * as React from 'react';
 import { Button, Tooltip } from 'antd';
-import { UserOutlined, BgColorsOutlined } from '@ant-design/icons';
+import { UserOutlined, BgColorsOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import './index.less';
 
 const BaseNavbar = props => {
-  const { history, children, menu } = props;
+  const { history, children, menu, hasPublish = false, handlePublish = null } = props;
   return (
     <div className="navbar">
       <div
@@ -19,6 +19,11 @@ const BaseNavbar = props => {
       {children}
       <div className="navbar-menu">
         {menu}
+        {hasPublish && (
+          <Button onClick={handlePublish} icon={<PlayCircleOutlined />}>
+            发布
+          </Button>
+        )}
         <Tooltip title="切换主题">
           <Button icon={<BgColorsOutlined />}></Button>
         </Tooltip>

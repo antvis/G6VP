@@ -12,8 +12,8 @@
   flex-basis: 40px;
 }
 .gi-analysis {
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: row;
   width: 100%;
   height: 100%;
@@ -34,19 +34,21 @@
 .gi-analysis-conf {
   flex-basis: 300px;
   width: 300px;
-  background: #fafafa;
   overflow: scroll;
-  transition: all 0.2s ease;
-  opacity: 1;
+  background: #fafafa;
   border-right: 1px solid #ddd;
   box-shadow: 3px 1px 4px 0 rgb(0 21 41 / 12%);
+  opacity: 1;
+  transition: all 0.2s ease;
   &.collapse {
     flex-basis: 0px;
     width: 0px;
     opacity: 0;
     transition: all 0.2s ease;
   }
-  &::-webkit-scrollbar { width: 0 !important }
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
 }
 .gi-analysis-workspace {
   display: flex;
@@ -60,9 +62,6 @@
   width: 100%;
   height: 100%;
   background: lightgreen;
-  .graphin-core {
-    background: #fff !important;
-  }
 }
 
 .gi-analysis-footer {
