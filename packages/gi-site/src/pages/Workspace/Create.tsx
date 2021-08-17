@@ -116,63 +116,28 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     setTransform(defaultTrans[id]);
   };
 
+  // 创建项目，返回项目ID
   const creatProgram = () => {
     let id = addProject({
       name: userConfig.title,
-      // description: '',
+      description: '空',
       // status: '',
       // tag: '',
-      version: '',
-      projectConfig: userConfig.config,
-      serviceConfig: serviceLists,
-      data: data,
-      // ownerId: ,
-      // members,
-      // coverImg,
-      // expandInfo,
-    }).then((res) => {
-      console.log('creatProgram', res);
+      // version: '',
+      projectConfig: JSON.stringify(userConfig.config),
+      serviceConfig: JSON.stringify(serviceLists),
+      data: JSON.stringify(data),
+      // ownerId: '',
+      // members: '',
+      // coverImg: '',
+      // expandInfo: '',
+    }).then((id) => {
+      console.log('creatProgram', id);
       history.push(`/workspace/${id}`);
     });
-
-    
-    // history.push(`/workspace/${id}`);
-
-
-    // let id = getUid();
-
-    console.log('creatProgram',{
-      isProject: true,
-      data,
-      userConfig,
-      id,
-      time: new Date().toLocaleString(),
-      /**
-       * 临时方案
-       * 数据标准化节点，需要在「上传数据」阶段就准备好
-       * 数据过滤的阶段，需要在数据服务模块添加
-       */
-      serviceLists,
-    });
-
-
-    // updateProjectById(id, {
-    //   isProject: true,
-    //   data,
-    //   ...userConfig,
-    //   id,
-    //   time: new Date().toLocaleString(),
-    //   /**
-    //    * 临时方案
-    //    * 数据标准化节点，需要在「上传数据」阶段就准备好
-    //    * 数据过滤的阶段，需要在数据服务模块添加
-    //    */
-    //   serviceLists,
-    // }).then(() => {
-    //   history.push(`/workspace/${id}`);
-    // });
   };
 
+  
   const getUserInfo = value => {
     setUserConfig({
       ...userConfig,
