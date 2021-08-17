@@ -61,28 +61,35 @@ const Analysis = props => {
     // });
 
     getProjectById(projectId).then(res => {
-      const { config, data, serviceLists } = res as any;
-      queryAssets('userId').then(assets => {
-        /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
+      console.log('getProjectById', res);
+      if(res.length > 0){
+      
+        const config = JSON.parse(res[0].projectConfig);
+        const data = JSON.parse(res[0].data);
+        const serviceLists = JSON.parse(res[0].serviceConfig);
 
-        const components = getComponentsByAssets(assets.components, data, serviceLists);
-        const elements = getElementsByAssets(assets.elements, data);
-        const services = getServicesByAssets(serviceLists, data);
+        queryAssets('userId').then(assets => {
+          /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
 
-        dispatch({
-          type: 'update:config',
-          id: projectId,
-          config,
-          data: data,
-          isReady: true,
-          activeNavbar: 'style',
-          serviceLists,
-          services,
-          components,
-          elements,
-          assets,
+          const components = getComponentsByAssets(assets.components, data, serviceLists);
+          const elements = getElementsByAssets(assets.elements, data);
+          const services = getServicesByAssets(serviceLists, data);
+
+          dispatch({
+            type: 'update:config',
+            id: projectId,
+            config,
+            data: data,
+            isReady: true,
+            activeNavbar: 'style',
+            serviceLists,
+            services,
+            components,
+            elements,
+            assets,
+          });
         });
-      });
+      }
     });
   }, [projectId]);
 

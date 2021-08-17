@@ -16,7 +16,7 @@ const getServicesByAssets = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
     if (mode === 'mock') {
-      const service = (params: any) => {
+      const fn = (params: any) => {
         return new Promise(async resolve => {
           try {
             const transFn = looseJsonParse(content);
@@ -29,9 +29,11 @@ const getServicesByAssets = (assets, data) => {
           }
         });
       };
+
+      console.log('getServicesByAssets',fn)
       return {
         id,
-        service,
+        service: fn,
       };
     }
     // if mode==='api'

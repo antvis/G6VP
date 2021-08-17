@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+import request from 'umi-request';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -12,6 +13,7 @@ export function getEdgesByNodes(nodes, edges) {
 }
 
 export const isMock = false;
+const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 /**
  * 获取指定项目
  * @param id 项目id
@@ -21,7 +23,12 @@ export const getProjectById = async (id: string) => {
   if (isMock) {
     return await localforage.getItem(id);
   }
-  return await fetch('api:getProject');
+  
+  const response = await request(`${SERVICE_URL_PREFIX}/project/get/${id}`, {
+    method: 'get',
+  });
+
+  return response;
 };
 
 /**
@@ -35,14 +42,25 @@ export const updateProjectById = async (id: string, p: any) => {
     const origin: any = await localforage.getItem(id);
     return await localforage.setItem(id, { ...origin, ...p });
   }
-  return await fetch('api:updateProject');
+
+  const response = await request(`${SERVICE_URL_PREFIX}/project/update/${id}`, {
+    method: 'post',
+    data: p,
+  });
+
+  return response;
 };
 
+// 软删除项目
 export const removeProjectById = async (id: string) => {
   if (isMock) {
     return await localforage.removeItem(id);
   }
-  return await fetch('api:removeProjectById');
+  const response = await request(`${SERVICE_URL_PREFIX}/project/get/${id}`, {
+    method: 'get',
+  });
+
+  return response;
 };
 
 /**
@@ -60,16 +78,29 @@ export const getProjectList = async () => {
     });
     return list || [];
   }
-  return await fetch('api:getAllProjectList');
+
+  const response = await request(`${SERVICE_URL_PREFIX}/project/getall`, {
+    method: 'get',
+  });
+
+  return response;
 };
 
 /**
  * 增加项目
  */
-export const addProject = async (p: any) => {
+export const addProject = async (param: any) => {
   if (isMock) {
     const all = (await getProjectList()) as any[];
     return await localforage.setItem('projects', [...all, p]);
   }
-  return await fetch('http://127.0.0.1:7001/create');
+
+  const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
+    method: 'post',
+    data: param,
+  });
+
+  console.log('addProject', response);
+
+  return response;
 };
