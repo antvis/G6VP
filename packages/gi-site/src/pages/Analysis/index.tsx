@@ -84,7 +84,7 @@ const Analysis = props => {
         });
       });
     });
-  }, [projectId]);
+  }, [projectId, key]);
 
   // React.useEffect(() => {
   //   window.addEventListener('beforeunload', ev => {
@@ -131,7 +131,7 @@ const Analysis = props => {
         <div className="gi-analysis-workspace">
           <div className="gi-analysis-canvas">
             <GISDK
-              key={key}
+              // key={key}
               config={config}
               /** 资产以Props的方式按需引入 */
               assets={{
