@@ -25,7 +25,7 @@ export const getProjectById = async (id: string) => {
   }
   
   // TODO response 返回为数组，应该返回为对象
-  const response = await request(`${SERVICE_URL_PREFIX}/project/get/${id}`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/project/list/${id}`, {
     method: 'get',
   });
 
@@ -58,9 +58,11 @@ export const removeProjectById = async (id: string) => {
     return await localforage.removeItem(id);
   }
 
-  console.log('removeProjectById', id);
-  const response = await request(`${SERVICE_URL_PREFIX}/project/delete/${id}`, {
-    method: 'get',
+  const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
+    method: 'post',
+    data:{
+      id,
+    }
   });
 
   return response;
@@ -82,7 +84,7 @@ export const getProjectList = async () => {
     return list || [];
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/getall`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {
     method: 'get',
   });
 
@@ -102,8 +104,6 @@ export const addProject = async (param: any) => {
     method: 'post',
     data: param,
   });
-
-  console.log('addProject', response);
 
   return response;
 };
