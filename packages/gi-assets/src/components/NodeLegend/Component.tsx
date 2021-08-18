@@ -3,10 +3,12 @@ import React from 'react';
 
 export interface ComponentProps {
   sortKey: string;
+  textColor: string;
 }
 
 const Component: React.FunctionComponent<ComponentProps> = props => {
-  const { sortKey } = props;
+  const { sortKey, textColor } = props;
+  console.log(textColor);
 
   return (
     <div>
