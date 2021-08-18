@@ -120,8 +120,8 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   const creatProgram = () => {
     let id = addProject({
       name: userConfig.title,
-      description: '空',
-      // status: '',
+      // description: '空',
+      status: 0,  // 0 正常项目， 1删除项目
       // tag: '',
       // version: '',
       projectConfig: JSON.stringify(userConfig.config),
@@ -137,7 +137,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     });
   };
 
-  
+
   const getUserInfo = value => {
     setUserConfig({
       ...userConfig,
