@@ -56,7 +56,9 @@ export const removeProjectById = async (id: string) => {
   if (isMock) {
     return await localforage.removeItem(id);
   }
-  const response = await request(`${SERVICE_URL_PREFIX}/project/get/${id}`, {
+
+  console.log('removeProjectById', id);
+  const response = await request(`${SERVICE_URL_PREFIX}/project/delete/${id}`, {
     method: 'get',
   });
 
