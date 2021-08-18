@@ -25,10 +25,9 @@ data => {
   const matchNode = data.nodes.find(n => {
     return n.id === id;
   });
-  console.log('matchnode', matchNode);
 
   const nodes =
-    matchNode.data?.children.map(n => {
+    matchNode.data?.children?.map(n => {
       return {
         id: n.id,
         data: n,
