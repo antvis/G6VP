@@ -38,15 +38,17 @@ export const getProjectById = async (id: string) => {
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (id: string, p: any) => {
+export const updateProjectById = async (id: string, data: any) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
     return await localforage.setItem(id, { ...origin, ...p });
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/update/${id}`, {
+  data.id = id;
+
+  const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
     method: 'post',
-    data: p,
+    data,
   });
 
   return response;
