@@ -5,6 +5,36 @@ export interface NodeToggleProps {
   serviceId: '';
 }
 
+const handleExpand = (data, responseData) => {
+  const { nodes, edges } = responseData;
+  return {
+    nodes: uniqueElementsBy([...data.nodes, ...nodes], (a, b) => {
+      return a.id === b.id;
+    }),
+    edges: uniqueElementsBy([...data.edges, ...edges], (a, b) => {
+      return a.source === b.source && a.target === b.target;
+    }),
+  };
+};
+const handleCollaspe = (data, responseData) => {
+  const nodeIds = responseData.nodes.map(c => c.id);
+  const edgeIds = responseData.edges.map(c => `${c.source}-${c.target}`);
+  const nodes = data.nodes.filter(c => {
+    return nodeIds.indexOf(c.id) === -1;
+  });
+  const edges = data.edges.filter(c => {
+    const id = `${c.source}-${c.target}`;
+    return edgeIds.indexOf(id) === -1;
+  });
+  console.log(nodes, edges);
+
+  return {
+    nodes,
+    edges,
+  };
+};
+
+const NodeExpandStatus = {};
 const NodeToggle: React.FunctionComponent<NodeToggleProps> = props => {
   const { services, dispatch, GiState } = GraphinContext as any;
 
@@ -14,11 +44,10 @@ const NodeToggle: React.FunctionComponent<NodeToggleProps> = props => {
   const { data } = GiState;
 
   React.useEffect(() => {
-    console.log('toggle effect...');
     const handleClick = e => {
       const nodeId = e.item.getModel().id;
+      NodeExpandStatus[nodeId] = !NodeExpandStatus[nodeId];
       const { service } = services.find(sr => sr.id === serviceId);
-
       service({
         id: nodeId,
       }).then(res => {
@@ -29,16 +58,14 @@ const NodeToggle: React.FunctionComponent<NodeToggleProps> = props => {
             edges,
           };
         }
-        dispatch.changeData({
-          nodes: uniqueElementsBy([...data.nodes, ...nodes], (a, b) => {
-            return a.id === b.id;
-          }),
-          edges: uniqueElementsBy([...data.edges, ...edges], (a, b) => {
-            return a.source === b.source && a.target === b.target;
-          }),
-        });
+        if (NodeExpandStatus[nodeId]) {
+          dispatch.changeData(handleExpand(data, res));
+        } else {
+          dispatch.changeData(handleCollaspe(data, res));
+        }
       });
     };
+
     graph.on('node:click', handleClick);
     return () => {
       graph.off('node:click', handleClick);

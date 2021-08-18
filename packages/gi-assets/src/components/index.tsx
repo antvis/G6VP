@@ -4,6 +4,7 @@
 // import DrillingOne from './DrillingOne';
 import CanvasSetting from './CanvasSetting';
 import MiniMap from './MiniMap';
+import NodeAttrs from './NodeAttrs';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 // import ClickEntity from './Liaoyuan/ClickEntity';
@@ -11,7 +12,7 @@ import NodeToggle from './NodeToggle';
 // import ToolbarA from './Toolbar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap, NodeToggle, CanvasSetting };
+export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs };
 
 // /**
 //  * 组件市场
