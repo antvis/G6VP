@@ -24,6 +24,7 @@ export const getProjectById = async (id: string) => {
     return await localforage.getItem(id);
   }
   
+  // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/get/${id}`, {
     method: 'get',
   });
