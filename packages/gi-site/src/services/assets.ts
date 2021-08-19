@@ -2,6 +2,7 @@ import request from 'umi-request';
 import { BrowserFSFileType } from '@alipay/alex-core';
 
 interface CreateAssetParams {
+  displayName: string;
   name: string;
   sourceCodeUrl?: string;
   members?: string;
@@ -18,6 +19,7 @@ interface CreateAssetParams {
   meta?: string;
   ownerNickname: string;
   ownerId: string;
+  branchName: string;
 }
 
 interface UpdateAssetParams extends CreateAssetParams {
@@ -41,8 +43,8 @@ interface BranchParams {
   refBranchName: string;
 }
 
-// const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
-const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net';
+const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+// const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net';
 
 const convertResponse = response => {
   const { data, success, errorMsg } = response;
@@ -177,9 +179,22 @@ export const getFileSourceCode = async (fileParams: DirectoryBlob) => {
  * @param fileParams
  */
 export const createNewBranch = async (branchParams: BranchParams) => {
-  const response = await request(`${SERVICE_URL_PREFIX}/asset/createBranch`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/createbranch`, {
     method: 'post',
     data: branchParams,
+  });
+
+  return convertResponse(response);
+};
+
+/**
+ * 在 AntCode 上创建项目
+ * @param projectParams 创建项目的参数
+ */
+export const createNewProjectOnAntCode = async projectParams => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/createproject`, {
+    method: 'post',
+    data: projectParams,
   });
 
   return convertResponse(response);
