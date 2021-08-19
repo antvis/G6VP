@@ -51,3 +51,12 @@ export const materials = {
     },
   ],
 };
+
+export const TYPE_MAPPING = {
+  // 1 表示组件
+  comopnent: 1,
+  // 2 表示图元素
+  element: 2,
+  // 3 表示数据服务
+  service: 3,
+};
