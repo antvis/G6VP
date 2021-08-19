@@ -15,10 +15,11 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const [lists, setLists] = React.useState(defaultProjects);
   React.useEffect(() => {
-    getProjects().then(data => {
-      console.log('Workspace', data)
+    getProjects().then(list => {
+      console.log('Workspace', list)
       // const list =  data.filter(d => d.isProject);
-      setLists(data);
+      setLists(list);
+      
     })
   }, []);
 
