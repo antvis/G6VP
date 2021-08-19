@@ -1,5 +1,5 @@
 // 组件市场
-import { AppstoreOutlined, BranchesOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, BranchesOutlined, PlusOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Tabs } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { queryAssets } from '../../services/assets.market';
 import { queryAssetList } from '../../services/assets';
+import CreateAsset from './Create';
 import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
 import './index.less';
@@ -20,6 +21,7 @@ const ComponentMarket = props => {
   const [state, setState] = useImmer({
     components: [],
     elements: { node: {}, edge: {} },
+    visible: false,
   });
 
   // React.useEffect(() => {
@@ -55,8 +57,17 @@ const ComponentMarket = props => {
 
   const NodeElements = Object.values(elements.node);
   const EdgeElements = Object.values(elements.edge);
-  const handleClickComponent = componentId => {
-    history.push(`/market/${componentId}`);
+
+  const handleShowCreateModel = () => {
+    setState(draft => {
+      draft.visible = true;
+    });
+  };
+
+  const handleClose = () => {
+    setState(draft => {
+      draft.visible = false;
+    });
   };
   return (
     <>
@@ -75,6 +86,12 @@ const ComponentMarket = props => {
             }
           >
             <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
+              <Col key="create-asset" style={{ width: '300px' }}>
+                <Card hoverable title="新建资产" onClick={handleShowCreateModel}>
+                  <PlusOutlined /> <br />
+                  点击创建新的资产
+                </Card>
+              </Col>
               {components.map(c => {
                 const { id, name, displayName, description, branchName } = c;
                 return (
@@ -83,13 +100,7 @@ const ComponentMarket = props => {
                       to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}`}
                       style={{ color: '#424447' }}
                     >
-                      <Card
-                        hoverable
-                        title={displayName}
-                        onClick={() => {
-                          handleClickComponent(id);
-                        }}
-                      >
+                      <Card hoverable title={displayName}>
                         {name}「{branchName}」 <br />
                         {description}
                       </Card>
@@ -143,6 +154,7 @@ const ComponentMarket = props => {
           </TabPane>
         </Tabs>
       </div>
+      <CreateAsset visible={state.visible} close={handleClose} history={history} />
     </>
   );
 };
