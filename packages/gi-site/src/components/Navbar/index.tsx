@@ -60,9 +60,10 @@ const Navbar = ({ projectId }: NavbarProps) => {
   const handleSave = async () => {
     const info = (await getProjectById(projectId)) as object;
 
+    console.log('handleSave', info, config);
     updateProjectById(projectId, {
-      ...info,
-      config,
+      ...info[0],
+      projectConfig: JSON.stringify(config),
     });
 
     dispatch({

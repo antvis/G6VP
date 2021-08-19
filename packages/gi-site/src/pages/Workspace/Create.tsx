@@ -4,7 +4,7 @@ import { RightOutlined, UploadOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { updateProjectById } from '../../services';
+import { addProject, updateProjectById } from '../../services';
 import { serviceLists } from './const';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
@@ -116,25 +116,27 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
     setTransform(defaultTrans[id]);
   };
 
+  // 创建项目，返回项目ID
   const creatProgram = () => {
-    let id = getUid();
-
-    updateProjectById(id, {
-      isProject: true,
-      data,
-      ...userConfig,
-      id,
-      time: new Date().toLocaleString(),
-      /**
-       * 临时方案
-       * 数据标准化节点，需要在「上传数据」阶段就准备好
-       * 数据过滤的阶段，需要在数据服务模块添加
-       */
-      serviceLists,
-    }).then(() => {
+    let id = addProject({
+      name: userConfig.title,
+      // description: '空',
+      status: 0,  // 0 正常项目， 1删除项目
+      // tag: '',
+      // version: '',
+      projectConfig: JSON.stringify(userConfig.config),
+      serviceConfig: JSON.stringify(serviceLists),
+      data: JSON.stringify(data),
+      // ownerId: '',
+      // members: '',
+      // coverImg: '',
+      // expandInfo: '',
+    }).then((id) => {
+      console.log('creatProgram', id);
       history.push(`/workspace/${id}`);
     });
   };
+
 
   const getUserInfo = value => {
     setUserConfig({
