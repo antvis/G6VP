@@ -36,8 +36,13 @@ const Navbar = ({ projectId }: NavbarProps) => {
   const handleClose = () => {
     updateProjectById(projectId, {
       serviceConfig: JSON.stringify(servicesRef.current.options),
+    }).then(res => {
+      dispatch({
+        type: 'update:key',
+        key: Math.random(),
+      });
+      setVisible(false);
     });
-    setVisible(false);
   };
 
   const handleOpen = () => {
