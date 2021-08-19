@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
-import { Drawer, Button, Form, Input, Select, message } from 'antd';
+import React from 'react';
+import { Drawer, Button, Form, Input, message } from 'antd';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
-
+import { TYPE_MAPPING } from './Constants';
 interface IProps {
+  type: string;
   visible: boolean;
   close: () => void;
   history: any;
 }
 
-const TYPE_MAPPING = {
-  comopnent: 1,
-  ui_component: 2,
-  elements: 3,
-};
-
-const CreateAssets: React.FC<IProps> = ({ visible, close, history }) => {
+const CreateAssets: React.FC<IProps> = ({ visible, close, history, type }) => {
   const [form] = Form.useForm();
 
   const handleCreate = async () => {
     console.log('value', form.getFieldsValue());
     const assetParams = form.getFieldsValue();
-    const { name, type, description, displayName } = assetParams;
+    const { name, description, displayName } = assetParams;
 
     // step1: 在 antcode 上创建仓库
     const createResult = await createNewProjectOnAntCode({
       projectName: name,
       description,
+      type: TYPE_MAPPING[type],
     });
 
     if (!createResult || !createResult.success) {
@@ -54,11 +50,13 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history }) => {
     const { data } = dbResponse;
 
     // step3: 跳转到资产编辑页面
-    history.push(`/market/${data.insertId}?assetId=${data.insertId}&project=${name}&branch=master`);
+    history.push(
+      `/market/${data.insertId}?assetId=${data.insertId}&project=${name}&branch=master&type=${TYPE_MAPPING[type]}`,
+    );
   };
   return (
     <Drawer
-      title="新建资产"
+      title={type === 'component' ? '新建资产' : type === 'element' ? '新建图元素' : '新建数据服务'}
       placement="right"
       closable={false}
       onClose={close}
@@ -85,13 +83,6 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history }) => {
         </Form.Item>
         <Form.Item label="资产名称" name="name">
           <Input />
-        </Form.Item>
-        <Form.Item label="资产类别" name="type">
-          <Select>
-            <Select.Option value="component">交互组件</Select.Option>
-            <Select.Option value="ui-component">UI 组件</Select.Option>
-            <Select.Option value="element">图元素</Select.Option>
-          </Select>
         </Form.Item>
         <Form.Item label="资产描述" name="description">
           <Input.TextArea rows={4} />
