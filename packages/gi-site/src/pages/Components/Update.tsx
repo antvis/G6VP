@@ -51,6 +51,7 @@ const ComponentMarket = props => {
   const projectName = queryParams.project as string
   const branchName = queryParams.branch as string
   const assetId = queryParams.assetId as string
+  const assetType = queryParams.type
   
 
   const setSourceCode = (value) => {
@@ -60,7 +61,6 @@ const ComponentMarket = props => {
   }
 
   const updateAssetById = async (options) => {
-    debugger
     const currentId: string = state.currentSelectAsset?.id
     
     const result = await updateAssets(currentId, options)
@@ -191,7 +191,10 @@ const ComponentMarket = props => {
     queryAssetDetailById()
     // 查询 preview 所需要的 code
     
-    queryInitSourceCode()
+    // 当为组件时初始化源码
+    if (assetType === '1') {
+      queryInitSourceCode()
+    }
     // TODO: 查询构建状态，如果有在构建中的组件，进行提示
   }, []);
 
@@ -274,7 +277,7 @@ const ComponentMarket = props => {
 
   
   useEffect(() => {
-    if (state.sourceCode) {
+    if (state.sourceCode && assetType === '1') {
       const previewCodeModules = fileMapToModules(state.sourceCode)
       setState(draft => {
         draft.sourceCode = state.sourceCode
@@ -311,33 +314,36 @@ const ComponentMarket = props => {
         <h4>物料中心</h4>
       </BaseNavbar>
       <div className="componet-market">
-        <div className="gi-ide-wrapper">
-          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode='demo.tsx' codeChange={codeChangeCallback}  />
+        <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? 'demo.tsx' : 'index.ts' } codeChange={codeChangeCallback}  />
         </div>
-        <div style={{ marginTop: 20 }} className='gi-config-wrapper'> 
-        <div className="content config">
-          {
-            state.metaInfo
-            ?
-            <ComponentMetaPanel
-              onChange={handleMetaInfoChange}
-              config={state.metaInfo}
-            />
-            :
-            '暂无 Meta 信息'
-          }
-        </div>
-          <div className="content view">
-          {
-            state.previewCode &&
-            <GravityDemoSDK
-              code={state.previewCode}
-              width="100%"
-              height="300px"
-              src="https://gw.alipayobjects.com/as/g/Gravity/gravity/3.10.3/gravityDemoSdk/index.html"/>
-          }
+        {
+          assetType !== '3' &&
+          <div style={{ marginTop: 20 }} className='gi-config-wrapper'> 
+            <div className="content config">
+              {
+                state.metaInfo
+                ?
+                <ComponentMetaPanel
+                  onChange={handleMetaInfoChange}
+                  config={state.metaInfo}
+                />
+                :
+                '暂无 Meta 信息'
+              }
+            </div>
+            <div className="content view">
+            {
+              state.previewCode &&
+              <GravityDemoSDK
+                code={state.previewCode}
+                width="100%"
+                height="300px"
+                src="https://gw.alipayobjects.com/as/g/Gravity/gravity/3.10.3/gravityDemoSdk/index.html"/>
+            }
+            </div>
           </div>
-        </div>
+        }
       </div>
     </>
   );
