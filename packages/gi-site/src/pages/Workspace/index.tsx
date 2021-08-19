@@ -16,24 +16,28 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const [lists, setLists] = React.useState(defaultProjects);
   React.useEffect(() => {
     getProjects().then(data => {
-      const list =  data.filter(d => d.isProject);
-      setLists(list);
+      console.log('Workspace', data)
+      // const list =  data.filter(d => d.isProject);
+      setLists(data);
     })
   }, []);
 
   const [state, setState] = React.useState({
     visible: false,
   });
+
   const handleClose = () => {
     setState(preState => {
       return { ...preState, visible: false };
     });
   };
+
   const handleOpen = () => {
     setState(preState => {
       return { ...preState, visible: true };
     });
   };
+
   const handleDelete = id => {
     Modal.warning({
       title: '确定删除',
@@ -70,7 +74,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
               </Card>
             </Col>
             {lists.map(item => {
-              const { id, title, time } = item;
+              const { id, name, gmtCreate } = item;
               return (
                 <Col key={id} span={6}>
                   <Card
@@ -87,9 +91,9 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                     }
                   >
                     <div className="card-content">
-                      <p>{title}</p>
+                      <p>{name}</p>
                       <div>
-                        <span>{time}</span>
+                        <span>{gmtCreate}</span>
                         <DeleteOutlined key="ellipsis" className="more" onClick={() => handleDelete(id)} />
                       </div>
                     </div>
