@@ -1,5 +1,6 @@
 const registerMeta = context => {
-  const { data, keys = ['id', 'type'] } = context;
+  const { data } = context;
+  const keys = Object.keys(data.nodes[0].data);
   const options = keys.map(c => {
     return {
       value: c,
@@ -13,6 +14,11 @@ const registerMeta = context => {
       type: 'select',
       default: 'type',
       options,
+    },
+    textColor: {
+      name: '字体颜色',
+      type: 'fill',
+      default: '#ddd',
     },
   };
 };

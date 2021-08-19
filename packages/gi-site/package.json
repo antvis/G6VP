@@ -4,8 +4,8 @@
   "description": "GraphInsight Site",
   "main": "dist/app.js",
   "scripts": {
-    "start": "NODE_OPTIONS=--max_old_space_size=8192 && umi dev",
-    "build": "NODE_OPTIONS=--max_old_space_size=8192 && umi build"
+    "start": "umi dev",
+    "build": "umi build"
   },
   "dependencies": {
     "@ali/datav-gui-color-scale": "^1.0.9",
@@ -30,7 +30,6 @@
     "dayjs": "^1.10.5",
     "immutability-helper-x": "^1.0.5",
     "js-beautify": "^1.11.0",
-    "json5": "^2.2.0",
     "localforage": "^1.9.0",
     "lz-string": "^1.4.4",
     "monaco-editor-webpack-plugin": "^4.0.0",
@@ -41,7 +40,6 @@
     "react-router-dom": "^5.1.1",
     "redux": "^4.1.0",
     "systemjs": "latest",
-    "ts-morph": "^11.0.3",
     "umi": "latest",
     "umi-request": "^1.3.9",
     "use-immer": "latest"

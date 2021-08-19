@@ -2,14 +2,14 @@
 import React, { useEffect } from 'react';
 import { message } from 'antd';
 import { Provider } from 'react-redux';
+import { Utils } from "@antv/graphin";
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { queryAssetList, updateAssets, updateFileContent, getFileSourceCode, createNewBranch, queryAssetById } from '../../services/assets'
+import { updateAssets, updateFileContent, getFileSourceCode, createNewBranch, queryAssetById } from '../../services/assets'
 import { useImmer } from 'use-immer'
-import { Project, ScriptTarget } from 'ts-morph'
+import * as ts from 'typescript'
 import moment from 'moment'
-import JSON5 from 'json5'
 import GraphInsightIDE from './GraphInsightIDE'
 import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
 import { usePersistFn } from 'ahooks'
@@ -17,6 +17,21 @@ import queryString from 'querystring'
 import './index.less';
 
 window.React = React
+
+function looseCodeParse(source) {
+  const compileCode = ts.transpileModule(source.split('export default')[0], {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS
+    }
+  })
+
+  // 变成成 JS 后的格式是 var registerMeta = function (context) {}，需要将 function 之前的部分去掉
+  const functionCode = compileCode.outputText.slice(19)
+
+  const tmpCode = functionCode.slice(0, functionCode.length-3)
+
+  return Function('"use strict";return (' + tmpCode + ')')();
+}
 
 const ComponentMarket = props => {
   const { history } = props;
@@ -36,6 +51,7 @@ const ComponentMarket = props => {
   const projectName = queryParams.project as string
   const branchName = queryParams.branch as string
   const assetId = queryParams.assetId as string
+  const assetType = queryParams.type
   
 
   const setSourceCode = (value) => {
@@ -45,7 +61,6 @@ const ComponentMarket = props => {
   }
 
   const updateAssetById = async (options) => {
-    debugger
     const currentId: string = state.currentSelectAsset?.id
     
     const result = await updateAssets(currentId, options)
@@ -176,16 +191,12 @@ const ComponentMarket = props => {
     queryAssetDetailById()
     // 查询 preview 所需要的 code
     
-    queryInitSourceCode()
+    // 当为组件时初始化源码
+    if (assetType === '1') {
+      queryInitSourceCode()
+    }
     // TODO: 查询构建状态，如果有在构建中的组件，进行提示
   }, []);
-
-  const projectBuild = new Project({
-    useInMemoryFileSystem: true,
-    compilerOptions: {
-      target: ScriptTarget.ES3,
-  },
-  });
 
   const handleSourceCodeChange = async (filepath: string, source: string) => {
     // 如果修改的是 meta 信息，需要存储到数据库中
@@ -207,25 +218,25 @@ const ComponentMarket = props => {
     if (success && filepath === 'meta.ts') {
       await updateAssetById({
         meta: source,
-        // version: '0.0.1',
-        // type: 1
       })
 
-      // 更新 metainfo，触发右侧面板重新渲染
-      // TODO: 临时处理，meta 信息需要换成 function
+      try {
+        // 更新 metainfo，触发右侧面板重新渲染
+        const registerMeta = looseCodeParse(source)
 
-      const filesystem = projectBuild.getFileSystem()
-      const sourceFile = projectBuild.createSourceFile('metaInfo.ts', source.split('export default')[0])
-      sourceFile.saveSync()
-      
-      console.log('xxx', filesystem.readFileSync('metaInfo.ts'))
-      // const metaInfo = source.replace(/\;/g, '').split('=')
-      // if (metaInfo[1]) {
-      //   const metaObj = JSON5.parse(metaInfo[1])
-      //   setState(draft => {
-      //     draft.metaInfo = metaObj
-      //   })
-      // }
+        // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
+        const metaInfo = registerMeta({
+          data: Utils.mock(5)
+          .circle()
+          .graphin()
+        })
+
+        setState(draft => {
+          draft.metaInfo = metaInfo
+        })
+      } catch (error) {
+        console.error('Meta 数据格式不对，请检查：' + error)
+      }
     }
     setSourceCode({
       ...state.sourceCode,
@@ -242,22 +253,31 @@ const ComponentMarket = props => {
 
   useEffect(() => {
     if (state.currentSelectAsset && state.currentSelectAsset.meta) {
-      
+      // 更新 metainfo，触发右侧面板重新渲染
       // 从 Meta 中解析出 Meta 对象
-      // TODO: 临时处理，meta 信息需要换成 function
-      // const metaInfo = state.currentSelectAsset.meta.replace(/\;/g, '').split('=')
-      // if (metaInfo[1]) {
-      //   const metaObj = JSON5.parse(metaInfo[1])
-      //   setState(draft => {
-      //     draft.metaInfo = metaObj
-      //   })
-      // }
+      try {
+        const registerMeta = looseCodeParse(state.currentSelectAsset.meta)
+
+        // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
+        const metaInfo = registerMeta({
+          data: Utils.mock(5)
+          .circle()
+          .graphin()
+        })
+
+        setState(draft => {
+          draft.metaInfo = metaInfo
+        })
+      } catch (error) {
+        console.error('Meta 数据格式不对，请检查：' + error)
+      }
+      
     }
   }, [currentSelectAsset])
 
   
   useEffect(() => {
-    if (state.sourceCode) {
+    if (state.sourceCode && assetType === '1') {
       const previewCodeModules = fileMapToModules(state.sourceCode)
       setState(draft => {
         draft.sourceCode = state.sourceCode
@@ -294,33 +314,36 @@ const ComponentMarket = props => {
         <h4>物料中心</h4>
       </BaseNavbar>
       <div className="componet-market">
-        <div className="gi-ide-wrapper">
-          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode='demo.tsx' codeChange={codeChangeCallback}  />
+        <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? 'demo.tsx' : 'index.ts' } codeChange={codeChangeCallback}  />
         </div>
-        <div style={{ marginTop: 20 }} className='gi-config-wrapper'> 
-        <div className="content config">
-          {
-            state.metaInfo
-            ?
-            <ComponentMetaPanel
-              onChange={handleMetaInfoChange}
-              config={state.metaInfo}
-            />
-            :
-            '暂无 Meta 信息'
-          }
-        </div>
-          <div className="content view">
-          {
-            state.previewCode &&
-            <GravityDemoSDK
-              code={state.previewCode}
-              width="100%"
-              height="300px"
-              src="https://gw.alipayobjects.com/as/g/Gravity/gravity/3.10.3/gravityDemoSdk/index.html"/>
-          }
+        {
+          assetType !== '3' &&
+          <div style={{ marginTop: 20 }} className='gi-config-wrapper'> 
+            <div className="content config">
+              {
+                state.metaInfo
+                ?
+                <ComponentMetaPanel
+                  onChange={handleMetaInfoChange}
+                  config={state.metaInfo}
+                />
+                :
+                '暂无 Meta 信息'
+              }
+            </div>
+            <div className="content view">
+            {
+              state.previewCode &&
+              <GravityDemoSDK
+                code={state.previewCode}
+                width="100%"
+                height="300px"
+                src="https://gw.alipayobjects.com/as/g/Gravity/gravity/3.10.3/gravityDemoSdk/index.html"/>
+            }
+            </div>
           </div>
-        </div>
+        }
       </div>
     </>
   );
