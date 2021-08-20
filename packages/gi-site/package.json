@@ -4,8 +4,8 @@
   "description": "GraphInsight Site",
   "main": "dist/app.js",
   "scripts": {
-    "start": "umi dev",
-    "build": "umi build"
+    "start": "NODE_OPTIONS=--max_old_space_size=4096 umi dev",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build"
   },
   "dependencies": {
     "@ali/datav-gui-color-scale": "^1.0.9",

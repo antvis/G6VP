@@ -48,7 +48,7 @@ package-lock.json
 yarn.lock
 
 .umi
-
+.umi-production
 
 # ignore dist files
 .vscode/
