@@ -1,11 +1,11 @@
 import { useHistory } from '@alipay/bigfish';
 import { CheckCard } from '@alipay/tech-ui';
 import { RightOutlined, UploadOutlined } from '@ant-design/icons';
-import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload } from 'antd';
+import { Alert, Button, Col, Form, Input, notification, Row, Steps, Table, Tabs, Tooltip, Upload, message } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { addProject } from '../../services';
-import { createAssets } from '../../services/assets';
+import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { serviceLists } from './const';
 import { defaultConfig } from './defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
@@ -118,8 +118,8 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   };
 
   // 创建项目，返回项目ID
-  const creatProgram = () => {
-    let id = addProject({
+  const creatProgram = async () => {
+    const projectId = await addProject({
       name: userConfig.title,
       // description: '空',
       status: 0, // 0 正常项目， 1删除项目
@@ -132,27 +132,39 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       // members: '',
       // coverImg: '',
       // expandInfo: '',
-    }).then(id => {
-      createAssets({
-        displayName: 'GI 初始化服务',
-        name: `${id}_GI_SERVICE_INTIAL_GRAPH`,
-        type: 3, //数据服务
-        description: 'GI 初始化服务',
-        version: '0.0.1',
-        // 这两个字段需要从登陆信息中获取，目前没有接入登陆
-        ownerNickname: '聚则',
-        ownerId: '195094',
-        branchName: 'master',
-        projectId: id,
-      }).then(res => {
-        if (res.success) {
-          history.push(`/workspace/${id}`);
-        } else {
-          console.error(res);
-          history.push(`/workspace`);
-        }
-      });
-    });
+    })
+
+    const createResult = await createNewProjectOnAntCode({
+      projectName: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
+      description: '创建 GI 初始化服务代码仓库',
+      type: 3,
+    })
+
+    if (!createResult || !createResult.success) {
+      message.error('创建项目失败：' + createResult.errorMsg);
+      return;
+    } 
+
+    const dbResponse = await createAssets({
+      displayName: 'GI 初始化服务',
+      name: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
+      type: 3, //数据服务
+      description: 'GI 初始化服务',
+      version: '0.0.1',
+      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
+      ownerNickname: '聚则',
+      ownerId: '195094',
+      branchName: 'master',
+      projectId,
+      sourceCode: 'export default (data) => {\n return data \n}'
+    })
+
+    if (dbResponse.success) {
+      history.push(`/workspace/${projectId}`);
+    } else {
+      console.error(dbResponse);
+      history.push(`/workspace`);
+    }
   };
 
   const getUserInfo = value => {

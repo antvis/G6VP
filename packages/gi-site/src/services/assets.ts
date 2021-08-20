@@ -22,6 +22,7 @@ interface CreateAssetParams {
   ownerId: string;
   branchName: string;
   projectId?: string;
+  sourceCode?: string;
 }
 
 interface UpdateAssetParams extends CreateAssetParams {
