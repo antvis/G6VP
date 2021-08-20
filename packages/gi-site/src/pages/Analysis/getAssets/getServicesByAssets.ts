@@ -30,7 +30,7 @@ const getServicesByAssets = (assets, data) => {
         });
       };
 
-      console.log('getServicesByAssets',fn)
+      console.log('getServicesByAssets', fn);
       return {
         id,
         service: fn,

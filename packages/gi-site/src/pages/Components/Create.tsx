@@ -17,6 +17,7 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type }) => {
     const assetParams = form.getFieldsValue();
     const { name, description, displayName } = assetParams;
 
+    // 数据服务不需要在 antcode 上创建仓库
     // step1: 在 antcode 上创建仓库
     const createResult = await createNewProjectOnAntCode({
       projectName: name,
