@@ -26,20 +26,6 @@ const ComponentMarket = props => {
     type: null,
   });
 
-  // React.useEffect(() => {
-  //   queryAssets('userId').then(res => {
-  //     const data = {};
-  //     const { components: ComponentAssets, elements: ElementAssets, services: ServicesAssets } = res;
-  //     const components = getComponentsByAssets(ComponentAssets, data);
-  //     const elements = getElementsByAssets(ElementAssets, data);
-
-  //     setState(draft => {
-  //       draft.components = components;
-  //       draft.elements = elements;
-  //     });
-  //   });
-  // }, []);
-
   const getAssertList = async () => {
     const result = await queryAssetList();
     console.log('查询到的数据', result);

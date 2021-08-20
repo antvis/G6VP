@@ -52,7 +52,7 @@ const ComponentMarket = props => {
   const branchName = queryParams.branch as string
   const assetId = queryParams.assetId as string
   const assetType = queryParams.type
-  
+  const projectId = queryParams.projectId
 
   const setSourceCode = (value) => {
     setState(draft => {
@@ -199,7 +199,7 @@ const ComponentMarket = props => {
   }, []);
 
   const handleSourceCodeChange = async (filepath: string, source: string) => {
-    // 如果修改的是 meta 信息，需要存储到数据库中
+    // 更新 antcode 上文件的内容，只有当不是 service 时才需要修改
     const result = await updateFileContent({
       projectName,
       branchName,
@@ -213,29 +213,38 @@ const ComponentMarket = props => {
       // 保存失败，提示用户
       message.warn(`更改的内容未保存成功，错误原因: ${errorMsg}，请再次尝试`)
     }
-
-    // 更新 gitlab 上文件成功，且为 meta 时候需要存储到数据库中
-    if (success && filepath === 'meta.ts') {
+    
+    // 当修改的为 service 的文件时，不需要更新 antcode 上的内容
+    if (assetType == '3') {
       await updateAssetById({
-        meta: source,
+        sourceCode: source,
+        projectId
       })
-
-      try {
-        // 更新 metainfo，触发右侧面板重新渲染
-        const registerMeta = looseCodeParse(source)
-
-        // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
-        const metaInfo = registerMeta({
-          data: Utils.mock(5)
-          .circle()
-          .graphin()
+    } else {
+  
+      // 更新 gitlab 上文件成功，且为 meta 时候需要存储到数据库中
+      if (success && filepath === 'meta.ts') {
+        await updateAssetById({
+          meta: source,
         })
-
-        setState(draft => {
-          draft.metaInfo = metaInfo
-        })
-      } catch (error) {
-        console.error('Meta 数据格式不对，请检查：' + error)
+  
+        try {
+          // 更新 metainfo，触发右侧面板重新渲染
+          const registerMeta = looseCodeParse(source)
+  
+          // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
+          const metaInfo = registerMeta({
+            data: Utils.mock(5)
+            .circle()
+            .graphin()
+          })
+  
+          setState(draft => {
+            draft.metaInfo = metaInfo
+          })
+        } catch (error) {
+          console.error('Meta 数据格式不对，请检查：' + error)
+        }
       }
     }
     setSourceCode({
