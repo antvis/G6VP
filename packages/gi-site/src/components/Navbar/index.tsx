@@ -22,11 +22,11 @@ const Navbar = ({ projectId }: NavbarProps) => {
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const dispatch = useDispatch();
-  const { config, isSave, serviceLists } = useSelector(state => state);
+  const { config, isSave, serviceConfig } = useSelector(state => state);
   const contentEditable = React.createRef<HTMLSpanElement>();
 
   const servicesRef = React.useRef({
-    options: serviceLists,
+    options: serviceConfig,
   });
 
   const { data: initProject = {}, run } = useRequest(() => {
@@ -35,7 +35,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
 
   const handleClose = () => {
     updateProjectById(projectId, {
-      serviceLists: servicesRef.current.options,
+      serviceConfig: JSON.stringify(servicesRef.current.options),
     }).then(res => {
       dispatch({
         type: 'update:key',
@@ -58,11 +58,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
   };
 
   const handleSave = async () => {
-    const info = (await getProjectById(projectId)) as object;
-
-    console.log('handleSave', info, config);
     updateProjectById(projectId, {
-      ...info[0],
       projectConfig: JSON.stringify(config),
     });
 
@@ -81,10 +77,9 @@ const Navbar = ({ projectId }: NavbarProps) => {
 
   const changeTitle = async () => {
     const newTitle = contentEditable.current.innerHTML;
-    const info = (await getProjectById(projectId)) as object;
+    
     updateProjectById(projectId, {
-      ...info,
-      title: newTitle,
+      name: newTitle,
     });
   };
 
@@ -103,7 +98,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
     run();
   }, []);
 
-  const { title } = initProject;
+  const { name } = initProject;
 
   const menu = (
     <>
@@ -131,11 +126,11 @@ const Navbar = ({ projectId }: NavbarProps) => {
         onKeyDown={handleKeyDown}
         suppressContentEditableWarning={true}
       >
-        {title}
+        {name}
       </span>
 
       <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
-        <DataSource ref={servicesRef} defaultOptions={serviceLists} />
+        <DataSource ref={servicesRef} defaultOptions={serviceConfig} />
       </Drawer>
 
       <Drawer
