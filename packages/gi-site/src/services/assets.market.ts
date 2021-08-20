@@ -2,7 +2,6 @@
 // import * as ComponentAssets from '@alipay/graphinsight/es/components';
 // import * as ElementAssets from '@alipay/graphinsight/es/elements';
 import assets from '@alipay/gi-assets';
-import request from 'umi-request';
 import { queryAssetList } from './assets';
 
 const { components, elements } = assets;
@@ -34,8 +33,10 @@ export const queryAssets = async (id: string) => {
     .filter(d => d.type === 3 && d.projectId === id)
     .map(service => {
       const { name, sourceCode, displayName } = service;
+      const serviceId = name.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1 ? 'GI_SERVICE_INTIAL_GRAPH' : name;
+
       return {
-        id: name,
+        id: serviceId,
         content: sourceCode.split('export default')[1],
         mode: 'mock',
         name: displayName,

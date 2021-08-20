@@ -1,5 +1,6 @@
-import request from 'umi-request';
 import { BrowserFSFileType } from '@alipay/alex-core';
+import request from 'umi-request';
+import { SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -20,6 +21,7 @@ interface CreateAssetParams {
   ownerNickname: string;
   ownerId: string;
   branchName: string;
+  projectId?: string;
 }
 
 interface UpdateAssetParams extends CreateAssetParams {
@@ -42,9 +44,6 @@ interface BranchParams {
   branchName: string;
   refBranchName: string;
 }
-
-const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
-// const SERVICE_URL_PREFIX = 'http://storehouse-afx-18554.gz00b.dev.alipay.net';
 
 const convertResponse = response => {
   const { data, success, errorMsg } = response;

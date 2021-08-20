@@ -1,0 +1,54 @@
+{
+  "nodes": [
+    {
+      "id": "xiaosuo",
+      "node_id": "MDQ6VXNlcjEwNTAzMw==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105033?v=4",
+      "name": "Changli Gao",
+      "company": "@bytedance ",
+      "email": "xiaosuo@gmail.com",
+      "location": "Beijing China",
+      "hireable": null,
+      "created_at": "2009-07-15T01:50:34Z",
+      "type": "User"
+    },
+    {
+      "id": "veris-pr",
+      "node_id": "MDQ6VXNlcjQwNTYzODU1",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40563855?v=4",
+      "name": "Peeyush Raj",
+      "company": "DigiCred",
+      "email": null,
+      "location": null,
+      "hireable": null,
+      "created_at": "2018-06-25T09:40:31Z",
+      "type": "User"
+    },
+    { "id": "arrow", "type": "Repository", "name": "arrow", "stargazers_count": 8241 },
+    { "id": "etcd", "type": "Repository", "name": "etcd", "stargazers_count": 36839 },
+    { "id": "graphscope", "type": "Repository", "name": "graphscope", "stargazers_count": 883 },
+    { "id": "mysql", "type": "Repository", "name": "mysql", "stargazers_count": 6782 },
+    { "id": "numpy", "type": "Repository", "name": "numpy", "stargazers_count": 17885 },
+    { "id": "pandas", "type": "Repository", "name": "pandas", "stargazers_count": 30638 },
+    { "id": "pytorch", "type": "Repository", "name": "pytorch", "stargazers_count": 50009 },
+    { "id": "tikv", "type": "Repository", "name": "tikv", "stargazers_count": 9698 }
+  ],
+  "edges": [
+    { "source": "xiaosuo", "target": "arrow", "type": "Starred" },
+    { "source": "xiaosuo", "target": "etcd", "type": "Starred" },
+    { "source": "xiaosuo", "target": "graphscope", "type": "Starred" },
+    { "source": "xiaosuo", "target": "mysql", "type": "Starred" },
+    { "source": "xiaosuo", "target": "numpy", "type": "Starred" },
+    { "source": "xiaosuo", "target": "pandas", "type": "Starred" },
+    { "source": "xiaosuo", "target": "pytorch", "type": "Starred" },
+    { "source": "xiaosuo", "target": "tikv", "type": "Starred" },
+    { "source": "veris-pr", "target": "arrow", "type": "Starred" },
+    { "source": "veris-pr", "target": "etcd", "type": "Starred" },
+    { "source": "veris-pr", "target": "graphscope", "type": "Starred" },
+    { "source": "veris-pr", "target": "mysql", "type": "Starred" },
+    { "source": "veris-pr", "target": "numpy", "type": "Starred" },
+    { "source": "veris-pr", "target": "pandas", "type": "Starred" },
+    { "source": "veris-pr", "target": "pytorch", "type": "Starred" },
+    { "source": "veris-pr", "target": "tikv", "type": "Starred" }
+  ]
+}
