@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "start": "npm run clean && father build --watch",
-    "build": "npm run clean && father build",
+    "build": "NODE_OPTIONS=--max_old_space_size=2048 npm run clean && father build",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
