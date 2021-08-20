@@ -60,14 +60,14 @@ const Analysis = props => {
 
     getProjectById(projectId).then(project => {
       console.log('getProjectById', project);
-      
+
       const config = JSON.parse(project.projectConfig);
       const data = JSON.parse(project.data);
-      const serviceLists = JSON.parse(project.serviceConfig);
+      // const serviceLists = JSON.parse(project.serviceConfig);
 
-      queryAssets('userId').then(assets => {
+      queryAssets(projectId).then(assets => {
+        const serviceLists = assets.services;
         /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-
         const components = getComponentsByAssets(assets.components, data, serviceLists);
         const elements = getElementsByAssets(assets.elements, data);
         const services = getServicesByAssets(serviceLists, data);
