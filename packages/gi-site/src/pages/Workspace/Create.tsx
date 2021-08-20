@@ -132,7 +132,6 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       // coverImg: '',
       // expandInfo: '',
     }).then((id) => {
-      console.log('creatProgram', id);
       history.push(`/workspace/${id}`);
     });
   };

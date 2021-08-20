@@ -29,7 +29,9 @@ export const getProjectById = async (id: string) => {
     method: 'get',
   });
 
-  return response;
+  if(response.success && response.data?.length > 0){
+    return response.data[0];
+  }
 };
 
 /**
@@ -41,7 +43,7 @@ export const getProjectById = async (id: string) => {
 export const updateProjectById = async (id: string, data: any) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
-    return await localforage.setItem(id, { ...origin, ...p });
+    return await localforage.setItem(id, { ...origin, ...data });
   }
 
   data.id = id;
@@ -51,7 +53,7 @@ export const updateProjectById = async (id: string, data: any) => {
     data,
   });
 
-  return response;
+  return response.success;
 };
 
 // 软删除项目
@@ -67,7 +69,7 @@ export const removeProjectById = async (id: string) => {
     }
   });
 
-  return response;
+  return response.success;
 };
 
 /**
@@ -90,7 +92,11 @@ export const getProjectList = async () => {
     method: 'get',
   });
 
-  return response;
+  if(response.success){
+    return response.data;
+  }
+  return [];
+  
 };
 
 /**
@@ -107,5 +113,7 @@ export const addProject = async (param: any) => {
     data: param,
   });
 
-  return response;
+  if(response.success && response.data?.insertId){
+    return response.data?.insertId;
+  }
 };

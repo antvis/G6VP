@@ -37,8 +37,6 @@ const Analysis = props => {
     assets,
   } = state;
 
-  console.log('Analysis', state);
-
   const dispatch = useDispatch();
 
   const handleChangeNavbar = opt => {
@@ -60,36 +58,34 @@ const Analysis = props => {
     //   console.log('res', res);
     // });
 
-    getProjectById(projectId).then(res => {
-      console.log('getProjectById', res);
-      if(res.length > 0){
+    getProjectById(projectId).then(project => {
+      console.log('getProjectById', project);
       
-        const config = JSON.parse(res[0].projectConfig);
-        const data = JSON.parse(res[0].data);
-        const serviceLists = JSON.parse(res[0].serviceConfig);
+      const config = JSON.parse(project.projectConfig);
+      const data = JSON.parse(project.data);
+      const serviceLists = JSON.parse(project.serviceConfig);
 
-        queryAssets('userId').then(assets => {
-          /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
+      queryAssets('userId').then(assets => {
+        /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
 
-          const components = getComponentsByAssets(assets.components, data, serviceLists);
-          const elements = getElementsByAssets(assets.elements, data);
-          const services = getServicesByAssets(serviceLists, data);
+        const components = getComponentsByAssets(assets.components, data, serviceLists);
+        const elements = getElementsByAssets(assets.elements, data);
+        const services = getServicesByAssets(serviceLists, data);
 
-          dispatch({
-            type: 'update:config',
-            id: projectId,
-            config,
-            data: data,
-            isReady: true,
-            activeNavbar: 'style',
-            serviceLists,
-            services,
-            components,
-            elements,
-            assets,
-          });
+        dispatch({
+          type: 'update:config',
+          id: projectId,
+          config,
+          data: data,
+          isReady: true,
+          activeNavbar: 'style',
+          serviceLists,
+          services,
+          components,
+          elements,
+          assets,
         });
-      }
+      });
     });
   }, [projectId, key]);
 
