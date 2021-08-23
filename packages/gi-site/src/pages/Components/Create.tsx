@@ -1,5 +1,5 @@
+import { Button, Drawer, Form, Input, message } from 'antd';
 import React from 'react';
-import { Drawer, Button, Form, Input, message } from 'antd';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { TYPE_MAPPING } from './Constants';
 interface IProps {
@@ -7,9 +7,10 @@ interface IProps {
   visible: boolean;
   close: () => void;
   history: any;
+  projectId?: string;
 }
 
-const CreateAssets: React.FC<IProps> = ({ visible, close, history, type }) => {
+const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, projectId }) => {
   const [form] = Form.useForm();
 
   const handleCreate = async () => {
@@ -41,6 +42,8 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type }) => {
       ownerNickname: '聚则',
       ownerId: '195094',
       branchName: 'master',
+      projectId,
+      sourceCode: 'export default (data) => {\n return data \n}',
     });
 
     if (!dbResponse || !dbResponse.success) {

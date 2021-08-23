@@ -1,5 +1,12 @@
 //  初始化
 
+/**
+ *
+ * background: #02024a
+ * bg:https://img.alicdn.com/imgextra/i2/O1CN01X2QkBc22Mb7mxeQeE_!!6000000007106-2-tps-3840-1904.png
+ *
+ */
+
 data => {
   const root = data.nodes[0];
   const nodes = root.data.children.map(node => {

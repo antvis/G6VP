@@ -5,7 +5,6 @@ import { Button, Drawer, Modal, Tooltip } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjectById, updateProjectById } from '../../services';
-import DataSource from '../DataSource';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
@@ -77,7 +76,7 @@ const Navbar = ({ projectId }: NavbarProps) => {
 
   const changeTitle = async () => {
     const newTitle = contentEditable.current.innerHTML;
-    
+
     updateProjectById(projectId, {
       name: newTitle,
     });
@@ -114,9 +113,11 @@ const Navbar = ({ projectId }: NavbarProps) => {
 
   return (
     <BaseNavbar history={history} menu={menu}>
-      <span className="navbar-db" onClick={handleOpen}>
-        <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
-        数据服务
+      <span className="navbar-db">
+        <a href={`#/market/services/${projectId}`} target="_blank">
+          <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
+          数据服务
+        </a>
       </span>
       <span
         className="navbar-title"
@@ -129,9 +130,9 @@ const Navbar = ({ projectId }: NavbarProps) => {
         {name}
       </span>
 
-      <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
+      {/* <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
         <DataSource ref={servicesRef} defaultOptions={serviceConfig} />
-      </Drawer>
+      </Drawer> */}
 
       <Drawer
         title="导出配置"
