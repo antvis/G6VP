@@ -59,7 +59,8 @@ export default opts => {
            "@alipay/gi-assets": "^0.2.x",
             "@alipay/graphinsight": "^0.2.x",
             "@antv/graphin": "^2.x",
-            "react":"17.x"
+            "react":"17.x",
+            "react-dom":"17.x"
           }
         }
         `,
