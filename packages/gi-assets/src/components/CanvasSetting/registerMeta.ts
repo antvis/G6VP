@@ -44,12 +44,12 @@ const registerMeta = context => {
         background: {
           name: '背景色',
           type: 'fill',
-          default: '#fff',
+          default: '#02024a',
         },
         backgroundImage: {
           name: '背景图片',
           type: 'image',
-          default: '',
+          default: 'https://img.alicdn.com/imgextra/i2/O1CN01X2QkBc22Mb7mxeQeE_!!6000000007106-2-tps-3840-1904.png',
         },
       },
     },
