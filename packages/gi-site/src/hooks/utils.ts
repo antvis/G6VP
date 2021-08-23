@@ -22,7 +22,7 @@ export function beautifyCode(code: string) {
  * @param opts  previewer props
  */
 export const getRiddleAppCode = opts => {
-  const { config, data } = opts;
+  const { config, data, id, serviceConfig } = opts;
   try {
     delete config.node.meta;
     delete config.node.info;
@@ -32,6 +32,8 @@ export const getRiddleAppCode = opts => {
 
   const temaplteCode = beautifyCode(JSON.stringify(config));
   const dataStr = beautifyCode(JSON.stringify(data));
+  const projectIdStr = beautifyCode(JSON.stringify(id));
+  const serviceConfigStr = beautifyCode(JSON.stringify(serviceConfig));
 
   return `
   import GISDK from '@alipay/graphinsight';
@@ -46,25 +48,56 @@ export const getRiddleAppCode = opts => {
   const {components,elements,utils}= ASSETS;
   const {getServicesByAssets} = utils;
 
-
+  const projectId = ${id};
   const config = ${temaplteCode};
-  const data = ${dataStr};
   
-  const servicesOpt = [
-    {
-      id: 'get_initial_graph',
-      content: '(data)=>{return data}',
-      mode: 'mock',
-    },
-  ];
-  const assets = {
-    components,
-    elements,
-    services:getServicesByAssets(servicesOpt,data)
+  const servicesOpt = ${serviceConfigStr};
+  const basicTrans = data => {
+    const nodes = data.nodes.map(n=>{
+      return {
+        id:n.id,
+        data:n
+      }
+    })
+    const edges = data.edges.map(e=>{
+      return {
+        source:e.source,
+        target:e.target,
+        data:e
+      }
+    })
+    return { nodes, edges }
   }
   
 
   const Example = (props) => {
+    const [state,setState]= React.useState({
+      isReady:false,
+      data:{},
+      assets:{}
+    })
+    React.useEffect(()=>{
+      fetch('https://gw.alipayobjects.com/os/bmw-prod/1bdc5f25-70f1-4ed1-ba05-b04a2b855076.json').then(res=>res.json()).then(res=>{
+      const data = basicTrans(res); 
+      const assets = {
+          components,
+          elements,
+          services:getServicesByAssets(servicesOpt,data)
+        }
+        setState(preState=>{
+          return {
+            data:res,
+            isReady:true,
+            assets,
+          }
+        })
+      })
+    },[]);
+
+    const {assets,isReady} =state;
+    if(!isReady){
+      return <div> graph is loading... </div>
+    }
     return (
       <GISDK
         config={config}

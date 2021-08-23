@@ -1,47 +1,57 @@
+// import request from 'umi-request';
+
 function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
+const defaultTransFn = (data, params) => {
+  return data;
+};
 /**
  *
  * @param assets  服务端拿到的资产：Services
  * @param data  图数据
  * @returns
  */
-
-export interface ServiceOpt {
-  id: string;
-  content: string;
-  mode: string;
-}
-
-const getServicesByAssets = (assets: ServiceOpt[], data) => {
-  let res = data;
+const getServicesByAssets = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
     if (mode === 'mock') {
-      const service = new Promise(async resolve => {
-        let transFn = opt => {
-          return opt;
-        };
-        try {
-          transFn = looseJsonParse(content);
-          if (transFn) {
-            res = transFn(res);
+      const fn = (params: any) => {
+        return new Promise(async resolve => {
+          try {
+            const transFn = looseJsonParse(content);
+            const transData = transFn(data, params);
+            return resolve(transData);
+          } catch (error) {
+            console.error(error);
+            const transData = defaultTransFn(data, params);
+            return resolve(transData);
           }
-        } catch (error) {
-          console.error(error);
-        }
-        return resolve(res);
-      });
+        });
+      };
+
+      console.log('getServicesByAssets', fn);
       return {
         id,
-        service,
+        service: fn,
       };
     }
     // if mode==='api'
+    const service = params => {
+      try {
+        return fetch(content, {
+          method: 'post',
+          // data: params,
+        });
+      } catch (error) {
+        return new Promise(resolve => {
+          resolve({});
+        });
+      }
+    };
     return {
       id,
-      service: fetch(content),
+      service,
     };
   });
 };

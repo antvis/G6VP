@@ -1,5 +1,6 @@
 import localforage from 'localforage';
 import request from 'umi-request';
+import { isMock, SERVICE_URL_PREFIX } from './const';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -12,8 +13,6 @@ export function getEdgesByNodes(nodes, edges) {
   });
 }
 
-export const isMock = false;
-const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 /**
  * 获取指定项目
  * @param id 项目id
@@ -23,13 +22,13 @@ export const getProjectById = async (id: string) => {
   if (isMock) {
     return await localforage.getItem(id);
   }
-  
+
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/list/${id}`, {
     method: 'get',
   });
 
-  if(response.success && response.data?.length > 0){
+  if (response.success && response.data?.length > 0) {
     return response.data[0];
   }
 };
@@ -64,9 +63,9 @@ export const removeProjectById = async (id: string) => {
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
     method: 'post',
-    data:{
+    data: {
       id,
-    }
+    },
   });
 
   return response.success;
@@ -92,11 +91,10 @@ export const getProjectList = async () => {
     method: 'get',
   });
 
-  if(response.success){
+  if (response.success) {
     return response.data;
   }
   return [];
-  
 };
 
 /**
@@ -113,7 +111,7 @@ export const addProject = async (param: any) => {
     data: param,
   });
 
-  if(response.success && response.data?.insertId){
+  if (response.success && response.data?.insertId) {
     return response.data?.insertId;
   }
 };
