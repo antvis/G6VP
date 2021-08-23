@@ -37,9 +37,10 @@ export const queryAssets = async (id: string) => {
 
       return {
         id: serviceId,
-        content: sourceCode.split('export default')[1],
+        content: sourceCode?.split('export default')[1] || ``,
         mode: 'mock',
         name: displayName,
+        others: service,
       };
     });
 

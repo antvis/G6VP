@@ -63,14 +63,14 @@ const Analysis = props => {
 
       const config = JSON.parse(project.projectConfig);
       const data = JSON.parse(project.data);
-      // const serviceLists = JSON.parse(project.serviceConfig);
+      // const serviceConfig = JSON.parse(project.serviceConfig);
 
       queryAssets(projectId).then(assets => {
-        const serviceLists = assets.services;
+        const serviceConfig = assets.services;
         /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-        const components = getComponentsByAssets(assets.components, data, serviceLists);
+        const components = getComponentsByAssets(assets.components, data, serviceConfig);
         const elements = getElementsByAssets(assets.elements, data);
-        const services = getServicesByAssets(serviceLists, data);
+        const services = getServicesByAssets(serviceConfig, data);
 
         dispatch({
           type: 'update:config',
@@ -79,7 +79,7 @@ const Analysis = props => {
           data: data,
           isReady: true,
           activeNavbar: 'style',
-          serviceLists,
+          serviceConfig,
           services,
           components,
           elements,
