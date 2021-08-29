@@ -3,6 +3,7 @@
 // import { NodeContextMenu } from './ContextMenu';
 // import DrillingOne from './DrillingOne';
 import CanvasSetting from './CanvasSetting';
+import GraphScope from './GraphScope';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeLegend from './NodeLegend';
@@ -12,7 +13,7 @@ import NodeToggle from './NodeToggle';
 // import ToolbarA from './Toolbar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs };
+export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope };
 
 // /**
 //  * 组件市场

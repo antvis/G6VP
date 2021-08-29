@@ -73,7 +73,8 @@ const transform = (s, metaConfig) => {
           icon: {
             type: Icon.type,
             value: data[Icon.key] || '',
-            fill: '#fff',
+            fill: Icon.type === 'image' ? 'transparent' : '#fff',
+            size: Icon.type === 'image' ? [keyshapeSize, keyshapeSize] : undefined,
           },
         },
         status: {
