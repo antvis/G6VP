@@ -1,10 +1,10 @@
+import { useHistory, useRequest } from '@alipay/bigfish';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Card, Col, Drawer, Modal, Row } from 'antd';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import * as React from 'react';
-import { useHistory, useRequest } from '@alipay/bigfish'
-import CreatePanel from './Create';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getProjectList, removeProjectById } from '../../services';
+import CreatePanel from './Create';
 import './index.less';
 
 interface WorkspaceProps {}
@@ -16,11 +16,10 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const [lists, setLists] = React.useState(defaultProjects);
   React.useEffect(() => {
     getProjects().then(list => {
-      console.log('Workspace', list)
+      console.log('Workspace', list);
       // const list =  data.filter(d => d.isProject);
       setLists(list);
-      
-    })
+    });
   }, []);
 
   const [state, setState] = React.useState({
@@ -51,6 +50,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     });
   };
   const { visible } = state;
+  console.log('id', lists);
   return (
     <>
       <div className="workspace">

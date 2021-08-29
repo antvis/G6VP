@@ -1,6 +1,6 @@
 import { BrowserFSFileType } from '@alipay/alex-core';
 import request from 'umi-request';
-import { SERVICE_URL_PREFIX } from './const';
+import { isMock, SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -63,6 +63,13 @@ const convertResponse = response => {
  * 资产中心 service 文件
  */
 export const createAssets = async (param: CreateAssetParams) => {
+  if (isMock) {
+    return new Promise(resolve => {
+      resolve({
+        success: true,
+      });
+    });
+  }
   const response = await request(`${SERVICE_URL_PREFIX}/asset/create`, {
     method: 'post',
     data: param,
@@ -192,6 +199,13 @@ export const createNewBranch = async (branchParams: BranchParams) => {
  * @param projectParams 创建项目的参数
  */
 export const createNewProjectOnAntCode = async projectParams => {
+  if (isMock) {
+    return new Promise(resolve => {
+      resolve({
+        success: true,
+      });
+    });
+  }
   const response = await request(`${SERVICE_URL_PREFIX}/asset/createproject`, {
     method: 'post',
     data: projectParams,
