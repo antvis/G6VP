@@ -2,12 +2,10 @@
 // import * as ComponentAssets from '@alipay/graphinsight/es/components';
 // import * as ElementAssets from '@alipay/graphinsight/es/elements';
 import assets from '@alipay/gi-assets';
+import localforage from 'localforage';
 import { queryAssetList } from './assets';
-
+import { isMock } from './const';
 const { components, elements } = assets;
-
-const isLocal = false;
-
 /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 
 /**
@@ -16,9 +14,11 @@ const isLocal = false;
  * @returns
  */
 export const queryAssets = async (id: string) => {
-  if (isLocal) {
+  if (isMock) {
+    const { serviceConfig } = await localforage.getItem(id);
     return await new Promise(resolve => {
       resolve({
+        services: JSON.parse(serviceConfig),
         components: components,
         elements: elements,
       });
