@@ -1,5 +1,6 @@
 import localforage from 'localforage';
 import request from 'umi-request';
+import { getUid } from '../pages/Workspace/utils';
 import { isMock, SERVICE_URL_PREFIX } from './const';
 
 export function getEdgesByNodes(nodes, edges) {
@@ -102,8 +103,15 @@ export const getProjectList = async () => {
  */
 export const addProject = async (param: any) => {
   if (isMock) {
-    const all = (await getProjectList()) as any[];
-    return await localforage.setItem('projects', [...all, p]);
+    const projectId = getUid();
+    const p = { ...param, id: projectId, isProject: true };
+    // const all = (await getProjectList()) as any[];
+    // localforage.setItem('projects', [...all, p]);
+
+    localforage.setItem(projectId, p);
+    return new Promise(resolve => {
+      resolve(projectId);
+    });
   }
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
