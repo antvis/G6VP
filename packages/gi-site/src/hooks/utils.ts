@@ -28,11 +28,12 @@ export const getRiddleAppCode = opts => {
     delete config.node.info;
     delete config.edge.meta;
     delete config.edge.info;
+    serviceConfig.forEach(s => {
+      delete s.others;
+    });
   } catch (error) {}
 
   const temaplteCode = beautifyCode(JSON.stringify(config));
-  const dataStr = beautifyCode(JSON.stringify(data));
-  const projectIdStr = beautifyCode(JSON.stringify(id));
   const serviceConfigStr = beautifyCode(JSON.stringify(serviceConfig));
 
   return `
@@ -48,10 +49,11 @@ export const getRiddleAppCode = opts => {
   const {components,elements,utils}= ASSETS;
   const {getServicesByAssets} = utils;
 
-  const projectId = ${id};
   const config = ${temaplteCode};
-  
+  const giProjectURL = "http://storehouse-afx-18554.gz00b.dev.alipay.net/project/list/${id}";
   const servicesOpt = ${serviceConfigStr};
+ 
+
   const basicTrans = data => {
     const nodes = data.nodes.map(n=>{
       return {
@@ -77,8 +79,9 @@ export const getRiddleAppCode = opts => {
       assets:{}
     })
     React.useEffect(()=>{
-      fetch('https://gw.alipayobjects.com/os/bmw-prod/1bdc5f25-70f1-4ed1-ba05-b04a2b855076.json').then(res=>res.json()).then(res=>{
-      const data = basicTrans(res); 
+      fetch(giProjectURL).then(res=>res.json()).then(res=>{
+      console.log(res)
+      const data = JSON.parse(res.data)
       const assets = {
           components,
           elements,
