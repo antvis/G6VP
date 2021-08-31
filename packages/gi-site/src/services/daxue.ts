@@ -19,6 +19,11 @@ data => {
     return {
       source: root.id,
       target: n.id,
+      data: {
+        source: root.id,
+        target: n.id,
+        topic: n.topic,
+      },
     };
   });
   //return data;
@@ -45,6 +50,11 @@ data => {
     return {
       source: id,
       target: n.id,
+      data: {
+        source: id,
+        target: n.id,
+        topic: n.topic,
+      },
     };
   });
   return {

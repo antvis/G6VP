@@ -23,6 +23,7 @@ const walk = schema => {
       edges.push({
         source: schema.id,
         target: child.id,
+        topic: child.topic,
       });
       walk(child);
     });
