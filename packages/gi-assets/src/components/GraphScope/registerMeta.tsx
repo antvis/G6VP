@@ -8,8 +8,8 @@ const registerMeta = context => {
   });
   const userOptions = ['xiaosuo', 'pmuens', 'veris-pr', 'yecol', 'savage69kr', 'piggybox'].map(c => {
     return {
-      value: c.id,
-      label: c.id,
+      value: c,
+      label: c,
     };
   });
 
