@@ -50,7 +50,7 @@ export const getRiddleAppCode = opts => {
   const {getServicesByAssets} = utils;
 
   const config = ${temaplteCode};
-  const giProjectURL = "http://storehouse-afx-18554.gz00b.dev.alipay.net/project/list/${id}";
+  const giProjectURL = "https://storehouse.test.alipay.net/project/list/${id}";
   const servicesOpt = ${serviceConfigStr};
  
 
