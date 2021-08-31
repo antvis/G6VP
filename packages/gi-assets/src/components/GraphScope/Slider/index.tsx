@@ -1,37 +1,17 @@
+import { CheckCircleOutlined, SmileOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import { Collapse } from 'antd';
+import { Collapse, Select } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
 import Code from './Code';
+import { userList } from './config';
+import { getCodeConfig } from './getCodeConfig';
+import RenderList from './RenderList';
 import './style.less';
 
 const { Panel } = Collapse;
-const defaultUserList = [
-  {
-    id: 'xiaosuo',
-    avatar_url: 'https://avatars.githubusercontent.com/u/105033?v=4',
-  },
-  {
-    id: 'pmuens',
-    avatar_url: 'https://avatars.githubusercontent.com/u/1606004?v=4',
-  },
-  {
-    id: 'veris-pr',
-    avatar_url: 'https://avatars.githubusercontent.com/u/40563855?v=4',
-  },
-  {
-    id: 'yecol',
-    avatar_url: 'https://avatars.githubusercontent.com/u/426463?v=4',
-  },
-  {
-    id: 'savage69kr',
-    avatar_url: 'https://avatars.githubusercontent.com/u/54208?v=4',
-  },
-  {
-    id: 'piggybox',
-    avatar_url: 'https://avatars.githubusercontent.com/u/54140?v=4',
-  },
-];
+const { Option } = Select;
+
 const trans = data => {
   return {
     nodes: data.nodes.map(node => {
@@ -84,13 +64,38 @@ const getParams = (type, user) => {
   return params;
 };
 
-export default props => {
-  const { services, dispatch, GiState } = GraphinContext as any;
-  const { serviceId, currentUser = 'xiaosuo' } = props;
+const getRenderList = (obj, type) => {
+  // type === 'Repository'时为项目节点，没有type 属性时为用户节点
+  const { nodes = [], ids } = obj;
+  return type === 'Repository' ? ids : nodes.filter(item => item.type !== 'Repository');
+};
 
+export default props => {
+  /** GI*/
+  const { services, dispatch } = GraphinContext as any;
   const graphin = React.useContext(GraphinContext);
   const { graph } = graphin as any;
-  const { data } = GiState;
+
+  /** STATE */
+  const [state, setState] = React.useState<{
+    isLoading: boolean;
+    activeKey: string;
+    res: {
+      nodes: any[];
+      edges: any[];
+      [key: string]: any;
+    };
+  }>({
+    isLoading: false,
+    activeKey: '',
+    res: {
+      nodes: [],
+      edges: [],
+    },
+  });
+
+  const { serviceId, currentUser = 'xiaosuo' } = props;
+  const codeConfig = getCodeConfig(currentUser);
 
   const { service } =
     services.find(sr => sr.id === serviceId) ||
@@ -103,39 +108,78 @@ export default props => {
     const params = getParams(key, currentUser);
 
     console.log('key', key, params);
+
     if (service) {
-      const res = await service(params);
-      dispatch.changeData(trans(res));
+      const result = await service(params);
+      setState(preState => {
+        return {
+          ...preState,
+          res: result,
+        };
+      });
+      /** 回调给GI */
+      dispatch.changeData(trans(result));
     }
   };
+
+  const handleSelectChange = val => {};
+
+  const { isLoading, res, activeKey } = state;
 
   return (
     <div className="graphinSight_sider_box">
       <Collapse onChange={onChange} expandIconPosition="right" defaultActiveKey={['find-hops']} accordion>
         <Panel header={'View the number of steps to Tensorflow'} key="find-hops">
-          <Code />
+          <Code codeList={codeConfig.findHops} />
+          {isLoading ? (
+            <SmileOutlined style={{ fontSize: 14 }} spin />
+          ) : (
+            <p>
+              <CheckCircleOutlined style={{ color: '#00AB34', marginRight: 8, fontSize: 14 }} />
+              <span>{res.hops}</span>
+            </p>
+          )}
           <p>123</p>
         </Panel>
-
         <Panel header="View the users who are also following" key="find-common-nbrs">
-          <Code />
-          {/* <UserList userList={defaultUserList} /> */}
+          <Code codeList={codeConfig.findCommonNbrs} />
+          <RenderList loading={isLoading} userList={getRenderList(res, activeKey)} />
         </Panel>
         <Panel header="View the number of commonly starred projects with the specified user" key="find-common-stars">
-          <Code />
-          {/* <UserList userList={defaultUserList} /> */}
+          <div className="user_search" id="user_search">
+            <Select
+              style={{ width: '100%' }}
+              showSearch
+              filterOption={(val, option: any) =>
+                option.props.children.toLocaleUpperCase().includes(val.toLocaleUpperCase())
+              }
+              placeholder="查找用户"
+              onChange={val => handleSelectChange(val)}
+              //@ts-ignore
+              getPopupContainer={() => document.getElementById('user_search')}
+            >
+              {userList.map(item => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
+              ))}
+            </Select>
+          </div>
+
+          <Code codeList={codeConfig.findCommonStars} />
+          <RenderList isRepository userList={getRenderList(res, 'Repository')} loading={isLoading} />
         </Panel>
         <Panel header="View other users of the same company that also starred GraphScope" key="find-same-company">
-          <Code />
-          {/* <UserList userList={defaultUserList} /> */}
+          <Code codeList={codeConfig.findSameCompany} />
+          <RenderList userList={getRenderList(res, activeKey)} loading={isLoading} />
         </Panel>
         <Panel header="View other users of the same location that also starred GraphScope" key="find-same-location">
-          <Code />
-          {/* <UserList userList={defaultUserList} /> */}
+          <Code codeList={codeConfig.findSameLocation} />
+          <RenderList userList={getRenderList(res, activeKey)} loading={isLoading} />
         </Panel>
-        <Panel header="View the number of commonly starred projects with the specified user" key="find-earlier-users">
-          <Code />
-          {/* <UserList userList={defaultUserList} /> */}
+        <Panel header="find earlier users" key="find-earlier-users">
+          <Code codeList={codeConfig.findEarlierUsers} />
+          <RenderList userList={getRenderList(res, activeKey)} loading={isLoading} />
         </Panel>
       </Collapse>
     </div>
