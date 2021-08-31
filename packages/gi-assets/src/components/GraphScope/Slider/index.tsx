@@ -42,17 +42,51 @@ const trans = data => {
     }),
   };
 };
-const defaultService = {
-  service: () => {
-    return new Promise(resolve => {
-      resolve({});
-    });
-  },
-  id: '',
+
+const getParams = (type, user) => {
+  const params = {
+    type,
+    src: user,
+  };
+  if (type === 'find-common-nbrs') {
+    return { ...params };
+  }
+  if (type === 'find-hops') {
+    return {
+      ...params,
+      dst: 'tensorflow',
+    };
+  }
+  if (type === 'find-common-stars') {
+    return {
+      ...params,
+      friend: 'veris-pr',
+    };
+  }
+  if (type === 'find-same-company') {
+    return {
+      ...params,
+      project: 'graphscope',
+    };
+  }
+  if (type === 'find-same-location') {
+    return {
+      ...params,
+      project: 'graphscope',
+    };
+  }
+  if (type === 'find-earlier-users') {
+    return {
+      ...params,
+      project: 'graphscope',
+    };
+  }
+  return params;
 };
+
 export default props => {
   const { services, dispatch, GiState } = GraphinContext as any;
-  const { serviceId } = props;
+  const { serviceId, currentUser = 'xiaosuo' } = props;
 
   const graphin = React.useContext(GraphinContext);
   const { graph } = graphin as any;
@@ -66,10 +100,9 @@ export default props => {
     });
 
   const onChange = async key => {
-    console.log('key', key);
-    const params = {
-      type: key,
-    };
+    const params = getParams(key, currentUser);
+
+    console.log('key', key, params);
     if (service) {
       const res = await service(params);
       dispatch.changeData(trans(res));
