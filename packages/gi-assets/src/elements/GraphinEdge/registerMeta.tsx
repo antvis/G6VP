@@ -1,5 +1,11 @@
 const getMeta = context => {
-  const { data, keys = ['id', 'type'] } = context;
+  const { data } = context;
+  let keys = ['source', 'target'];
+  try {
+    keys = Object.keys(data.edges[1].data);
+  } catch (error) {
+    console.error(error);
+  }
   const options = keys.map(c => {
     return {
       value: c,
@@ -63,12 +69,28 @@ const getMeta = context => {
           valuePath: 'color',
           default: {
             mapping: false,
-            fixed: 'skyblue',
+            fixed: '#ddd',
             scale: {
               type: 'ordinal',
               scheme: 'cat-1',
-              custom: false,
-              range: ['#00FF95', '#588ee9'],
+              custom: true,
+              range: [
+                '#ddd',
+                '#CB6EF8',
+                '#82E6C7',
+                '#F6D87B',
+                '#F69F7F',
+                '#E96075',
+                '#F58CCB',
+                '#795AE1',
+                '#622CD8',
+                '#85C98E',
+                '#3E34E5',
+                '#2959C1',
+                '#4D92DE',
+                '#5CB5D4',
+                '#B9D569',
+              ],
               domain: [],
               excepted: '#666',
               abnormal: '#f31200',
