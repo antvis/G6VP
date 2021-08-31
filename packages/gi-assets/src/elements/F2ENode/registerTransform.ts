@@ -51,6 +51,17 @@ const transform = (s, metaConfig) => {
         lineWidth: 2,
         opacity: 1,
       };
+      const icon: { [key: string]: any } = {
+        type: Icon.type,
+        value: data[Icon.key] || '',
+      };
+      if (Icon.type === 'image') {
+        icon.fill = 'transparent';
+        icon.size = [keyshapeSize, keyshapeSize];
+        icon.clip = { r: keyshapeSize / 2 };
+      } else {
+        icon.fill = '#fff';
+      }
 
       return {
         id: node.id,
@@ -70,12 +81,7 @@ const transform = (s, metaConfig) => {
             fill: Label.color,
           },
           halo,
-          icon: {
-            type: Icon.type,
-            value: data[Icon.key] || '',
-            fill: Icon.type === 'image' ? 'transparent' : '#fff',
-            size: Icon.type === 'image' ? [keyshapeSize, keyshapeSize] : undefined,
-          },
+          icon,
         },
         status: {
           hover: {

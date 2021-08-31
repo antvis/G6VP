@@ -6,34 +6,7 @@ const baseNodeConfig = {
 const baseEdgeConfig = {
   id: 'GraphinEdge',
   name: '官方内置边',
-  props: {
-    /** style.keyshape.stroke */
-    color: {
-      fixed: '#ddd',
-      mapping: false,
-      scale: {
-        custom: false,
-        range: ['#ffffcc', '#d8fbcd', '#b0f7ce', '#89f4d0', '#61f0d1'],
-      },
-      key: 'type',
-    },
-    /** style.keyshape.size */
-    size: {
-      key: 'weight',
-      fixed: 1,
-      mapping: false,
-      scale: {
-        custom: true,
-        domain: [0, 1000],
-        range: [7, 30],
-      },
-    },
-    /** style.label */
-    label: {
-      key: 'id',
-      showlabel: true,
-    },
-  },
+  props: {},
 };
 const baseComponentsConfig = [
   {
