@@ -50,7 +50,7 @@ export const getRiddleAppCode = opts => {
   const {getServicesByAssets} = utils;
 
   const config = ${temaplteCode};
-  const giProjectURL = "http://storehouse-afx-18554.gz00b.dev.alipay.net/project/list/${id}";
+  const giProjectURL = "https://storehouse.test.alipay.net/project/list/${id}";
   const servicesOpt = ${serviceConfigStr};
  
 
@@ -81,7 +81,7 @@ export const getRiddleAppCode = opts => {
     React.useEffect(()=>{
       fetch(giProjectURL).then(res=>res.json()).then(res=>{
       console.log(res)
-      const data = JSON.parse(res.data)
+      const data = JSON.parse(res?.data[0].data)
       const assets = {
           components,
           elements,
