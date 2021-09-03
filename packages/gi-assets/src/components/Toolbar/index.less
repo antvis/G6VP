@@ -1,3 +1,19 @@
 .disabel {
   background: green;
 }
+
+ul.graphin-components-toolbar-content > li {
+  display: flex;
+  .toolbar-item {
+    display: block;
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+    &:not(.disabled):hover {
+      color: #177ddc;
+      transform: scale(1.1);
+      transition: 0.3s all;
+    }
+  }
+}
