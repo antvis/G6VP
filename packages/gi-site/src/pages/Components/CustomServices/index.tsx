@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
 import { queryAssets } from '../../../services/assets.market';
-import CreateAssets from '../Create';
+import CreateServices from './CreateServices';
 
 interface CustomServicesProps {}
 
@@ -86,7 +86,8 @@ const CustomServices: React.FunctionComponent<CustomServicesProps> = props => {
           );
         })}
       </Row>
-      <CreateAssets
+
+      <CreateServices
         type="service"
         history={history}
         visible={state.visible}
