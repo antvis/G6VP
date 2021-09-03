@@ -94,7 +94,7 @@ const ComponentMarket: React.FunctionComponent<ComponentMarketProps> = props => 
 
   return (
     <div>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={showModal} style={{ width: '100%' }}>
         自选组件
       </Button>
       <Drawer

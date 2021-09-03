@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import * as React from 'react';
+import { BgColorsOutlined, PlayCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
-import { UserOutlined, BgColorsOutlined, PlayCircleOutlined } from '@ant-design/icons';
+import * as React from 'react';
 import './index.less';
 
 const BaseNavbar = props => {

@@ -81,7 +81,7 @@ export const getRiddleAppCode = opts => {
     React.useEffect(()=>{
       fetch(giProjectURL).then(res=>res.json()).then(res=>{
       console.log(res)
-      const data = JSON.parse(res?.data[0].data)
+      const data = JSON.parse(res.data[0].data)
       const assets = {
           components,
           elements,
