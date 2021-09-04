@@ -1,4 +1,3 @@
-import ASSETS from '@alipay/gi-assets';
 import GISDK from '@alipay/graphinsight';
 import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -138,7 +137,7 @@ const Analysis = props => {
               config={config}
               /** 资产以Props的方式按需引入 */
               assets={{
-                ...ASSETS,
+                ...assets,
                 services,
               }}
             ></GISDK>

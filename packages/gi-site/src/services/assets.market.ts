@@ -1,11 +1,21 @@
 // /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 // import * as ComponentAssets from '@alipay/graphinsight/es/components';
 // import * as ElementAssets from '@alipay/graphinsight/es/elements';
-import assets from '@alipay/gi-assets';
+
+import giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { queryAssetList } from './assets';
 import { isMock } from './const';
-const { components, elements } = assets;
+const { components: GiComponents, elements } = giAssets;
+
+/** 临时方案：第三方组件库的图资产 */
+const GeaMakerComponents = {};
+
+const components = {
+  ...GiComponents,
+  ...GeaMakerComponents,
+};
+
 /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
 
 /**
@@ -33,6 +43,7 @@ export const queryAssets = async (id: string) => {
     .filter(d => d.type === 3 && d.projectId === id)
     .map(service => {
       const { name, sourceCode, displayName } = service;
+      console.log('%c service!!', service);
       const serviceId = name.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1 ? 'GI_SERVICE_INTIAL_GRAPH' : name;
 
       return {
