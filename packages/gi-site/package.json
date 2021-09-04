@@ -16,6 +16,7 @@
     "@alipay/graphinsight": "*",
     "@alipay/gravity-demo-sdk": "^4.6.1",
     "@alipay/tech-ui": "^2.12.1",
+    "@alipay/theme-tools": "^0.2.1",
     "@ant-design/charts": "^1.0.21",
     "@ant-design/compatible": "^1.0.2",
     "@ant-design/icons": "^4.0.6",
