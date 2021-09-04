@@ -102,10 +102,14 @@ const Navbar = ({ projectId }: NavbarProps) => {
   const menu = (
     <>
       <Tooltip title="保存">
-        <Button icon={<SaveOutlined />} onClick={handleSave}>保存</Button>
+        <Button icon={<SaveOutlined />} onClick={handleSave}>
+          保存
+        </Button>
       </Tooltip>
       <Tooltip title="导出">
-        <Button icon={<ExportOutlined />} onClick={handleOutOpen}>导出</Button>
+        <Button icon={<ExportOutlined />} onClick={handleOutOpen}>
+          导出
+        </Button>
       </Tooltip>
       <Button onClick={backWorkspace}>返回列表</Button>
     </>
