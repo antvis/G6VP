@@ -1,5 +1,6 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
+import * as mock from './mock';
 /** 组件 */
 // import * as Components from './components';
 /** 元素 */
@@ -172,5 +173,7 @@ const GISDK = (props: Props) => {
 //     services,
 //   };
 // };
+
+export const Mock = mock;
 
 export default GISDK;
