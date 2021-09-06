@@ -8,7 +8,9 @@
     "lerna": "^4.0.0"
   },
   "devDependencies": {
-    "@antv/graphin": "^2.3.6"
+    "@antv/graphin": "^2.3.6",
+    "@ant-design/icons": "^4.6.2",
+    "@antv/graphin-components": "2.x"
   },
   "scripts": {
     "core": "cd packages/gi && npm run start",
