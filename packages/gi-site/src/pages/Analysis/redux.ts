@@ -32,6 +32,10 @@ const initialState = {
   assets: {},
   /** 数据服务列表 */
   serviceLists: [],
+  /** 是否开启智能推荐 */
+  enableAI: false,
+  /** 原始渲染的配置，用于取消智能推荐时还原 */
+  projectConfig: {},
 };
 
 export interface StateType {
@@ -67,6 +71,10 @@ export interface StateType {
     mode: string;
     content: string;
   }[];
+  /** 是否开启智能推荐 */
+  enableAI: boolean;
+  /** 原始渲染的配置，用于取消智能推荐时还原 */
+  projectConfig: GIConfig;
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
@@ -133,6 +141,11 @@ const RootReducers = (state: StateType = initialState, action: Action): StateTyp
         ...state,
         ...payload,
       };
+    case 'update:enableAI':
+      return {
+        ...state,
+        ...payload,
+      }
 
     default:
       return state;

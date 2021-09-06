@@ -13,6 +13,8 @@ import './index.less';
 import MetaPanel from './MetaPanel';
 import store, { StateType } from './redux';
 import { isObjectEmpty } from './utils';
+import { ConfigRecommedor } from './recommendTools';
+import { IGraphData, INodeData, IEdgeData, IGraphProps, INodeCfg, ILayoutConfig, IEdgeCfg } from './recommendTools/types';
 
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
@@ -34,6 +36,8 @@ const Analysis = props => {
     refreshComponentKey,
     elements,
     assets,
+    enableAI,
+    projectConfig
   } = state;
 
   const dispatch = useDispatch();
@@ -75,6 +79,7 @@ const Analysis = props => {
           type: 'update:config',
           id: projectId,
           config,
+          projectConfig: config,
           data: data,
           isReady: true,
           activeNavbar: 'style',
@@ -87,6 +92,56 @@ const Analysis = props => {
       });
     });
   }, [projectId, key]);
+
+  React.useLayoutEffect(() => {
+    const { config, projectConfig } = state
+    console.log('original cfgs', config)
+    if(isReady && data && enableAI ) {
+      const Recommender = new ConfigRecommedor(data)
+      const layoutCfg = Recommender.recLayoutCfg()
+      const nodeCfg = Recommender.recNodeCfg()
+      const edgeCfg = Recommender.recEdgeCfg()
+      const newGraphData = Recommender.graphData
+      // console.log('newGraphData', newGraphData)
+      const newConfig = {
+        ...config,
+        node: {
+          ...config.node,
+          props: {
+            ...config.node.props,
+            ...nodeCfg
+          }
+        },
+        edge: {
+          ...config.edge,
+          props: {
+            ...config.edge.props,
+            ...edgeCfg
+          }
+        },
+        layout: {
+          ...config.layout,
+          props: {
+            ...config.layout.props,
+            ...layoutCfg
+          }
+        }
+      }
+      console.log('recommended cfgs', layoutCfg, nodeCfg, edgeCfg)
+      dispatch({
+        type: 'update:config',
+        id: projectId,
+        config: newConfig,
+        data: newGraphData // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+      })
+    } else if(!enableAI) {
+      dispatch({
+        type: 'update:config',
+        id: projectId,
+        config: projectConfig,
+      })
+    }
+  }, [projectId, isReady, enableAI]);
 
   // React.useEffect(() => {
   //   window.addEventListener('beforeunload', ev => {
@@ -108,7 +163,7 @@ const Analysis = props => {
     <div className="gi">
       <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
       <div className="gi-navbar">
-        <Navbar projectId={projectId} />
+        <Navbar projectId={projectId} enableAI={enableAI}/>
       </div>
       <div className="gi-analysis">
         <div className="gi-analysis-sidebar">
