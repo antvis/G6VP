@@ -146,6 +146,9 @@ const GISDK = (props: Props) => {
       {components.map(c => {
         const { id, props: itemProps } = c;
         const matchComponent = Components[id];
+        if (!matchComponent) {
+          return null;
+        }
 
         const {
           component: Component,
