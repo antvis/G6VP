@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { DatabaseOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, ExportOutlined, SaveOutlined, createFromIconfontCN } from '@ant-design/icons';
 import { Button, Drawer, Modal, Tooltip } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,22 +8,34 @@ import { getProjectById, updateProjectById } from '../../services';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
+
+interface SvgIconProps {
+  type: string; // 必传
+  [field: string]: any; // 与antd的icon一致
+}
+const SvgIcon: React.FC<SvgIconProps> = (props) => {
+  const Icon = createFromIconfontCN({
+    scriptUrl: '//at.alicdn.com/t/font_241110_bw0oh2dqbb8.js',
+  });
+  return <Icon {...props} />;
+};
+
 interface NavbarProps {
   projectId: string;
+  enableAI: boolean;
 }
 /**
  * 顶部导航
  * @see {NavbarProps}
  * @returns
  */
-const Navbar = ({ projectId }: NavbarProps) => {
+const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const history = useHistory();
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const dispatch = useDispatch();
   const { config, isSave, serviceConfig } = useSelector(state => state);
   const contentEditable = React.createRef<HTMLSpanElement>();
-
   const servicesRef = React.useRef({
     options: serviceConfig,
   });
@@ -89,6 +101,14 @@ const Navbar = ({ projectId }: NavbarProps) => {
     }
   };
 
+  // 点击智能推荐 Icon
+  const handleAiIconClick = () => {
+    dispatch({
+      type: 'update:enableAI',
+      enableAI: !enableAI,
+    });
+  };
+
   const backWorkspace = () => {
     history.push(`/workspace`);
   };
@@ -98,7 +118,6 @@ const Navbar = ({ projectId }: NavbarProps) => {
   }, []);
 
   const { name } = initProject;
-
   const menu = (
     <>
       <Tooltip title="保存">
@@ -112,6 +131,11 @@ const Navbar = ({ projectId }: NavbarProps) => {
         </Button>
       </Tooltip>
       <Button onClick={backWorkspace}>返回列表</Button>
+      <Tooltip title="自动推荐样式">
+        <Button onClick={handleAiIconClick} >
+          <SvgIcon type="icon-magic1" style={{ color: enableAI?'#3471f9':'' }}/>
+        </Button>
+      </Tooltip>
     </>
   );
 
