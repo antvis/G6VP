@@ -5,9 +5,9 @@ export default {
   entry: './src/index.tsx',
   esm: 'babel',
   cjs: 'babel',
-  umd: {
-    name: 'GIAssets',
-    minFile: true,
-  },
+  // umd: {
+  //   name: 'GIAssets',
+  //   minFile: true,
+  // },
   lessInBabelMode: true,
 };
