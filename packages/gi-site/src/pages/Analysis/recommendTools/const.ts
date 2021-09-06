@@ -20,7 +20,7 @@ export const MAX_DISTINCT_COLOR = DEFAULT_COLORS.length
 
 export const MAX_DISTINCT_CLUSTER = DEFAULT_COLORS.length
 
-export const DEFAULT_NODE_SIZE_RANGE = [3, 30]
+export const DEFAULT_NODE_SIZE_RANGE = [10, 50]
 export const DEFAULT_EDGE_WIDTH_RANGE = [1, 10]
 export const MAX_NUM_NODES_A_LEVEL = 16
 export const DEGREE_FOR_SPARSE_GRAPH = 3
