@@ -1,6 +1,30 @@
 .gi-node-attrs-container {
   position: absolute;
-  top: 30px;
-  right: 30px;
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: 300px;
+
+  padding: 12px;
+  overflow-y: scroll;
+  color: var(--primary-text-color);
   background: var(--component-background);
+  border: 1px solid var(--border-color);
+
+  ul {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    li {
+      padding: 6px 0px;
+      .key {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+      .value {
+        font-size: 14px;
+      }
+    }
+  }
 }
