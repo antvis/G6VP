@@ -1,6 +1,7 @@
 import { testRule, optimizeByRule } from '../rules/index'
 import { ILayoutConfig, INodeCfg, IExtendFieldInfo, IGraphProps, IGraphData, NumMappingCfg } from '../types'
 import { DEFAULT_COLORS, DEFAULT_NODE_SIZE_RANGE, DEFAULT_EDGE_WIDTH_RANGE, DEFAULT_LAYOUT_TYPE } from '../const'
+import { scaleLinear } from 'd3-scale';
 // import { GraphLayoutPredict } from '@antv/vis-predict-engine';
 
 /**
@@ -67,15 +68,13 @@ export function nodeFields2Cfg(nodeFields: IExtendFieldInfo[]): Partial<INodeCfg
   return { color, size, label }
 }
 
-export function setNodeAttr(nodes, fieldNameForCluster: string, fieldInfoForSize: IExtendFieldInfo, sizeCfg: NumMappingCfg) {
-  const { key: sizeFieldName, scale: sizeScale} = sizeCfg
-  // const nodeVal = fieldInfoForSize.samples[i]
-  // node['size'] = sizeMapFunc.map(nodeVal)
+export function setNodeAttr(nodes, fieldNameForCluster:string, sizeCfg: NumMappingCfg, ) {
+  const mappingBySize = scaleLinear().domain(sizeCfg.scale.domain).range(sizeCfg.scale.range);
   nodes.forEach( node => {
-    return {
-      ...node,
+    node.data = {
+      ...node.data,
       cluster: node[fieldNameForCluster],
-      // size: 
+      size: mappingBySize[node.data[sizeCfg.key]]
     }
   })
 }

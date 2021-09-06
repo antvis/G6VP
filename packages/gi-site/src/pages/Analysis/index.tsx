@@ -96,11 +96,13 @@ const Analysis = props => {
   React.useLayoutEffect(() => {
     const { config, projectConfig } = state
     console.log('original cfgs', config)
-    if(data && enableAI ) {
+    if(isReady && data && enableAI ) {
       const Recommender = new ConfigRecommedor(data)
       const layoutCfg = Recommender.recLayoutCfg()
       const nodeCfg = Recommender.recNodeCfg()
       const edgeCfg = Recommender.recEdgeCfg()
+      const newGraphData = Recommender.graphData
+      // console.log('newGraphData', newGraphData)
       const newConfig = {
         ...config,
         node: {
@@ -130,6 +132,7 @@ const Analysis = props => {
         type: 'update:config',
         id: projectId,
         config: newConfig,
+        data: newGraphData // 改变 data 是为了能把衍生出的属性加进去，比如 degree
       })
     } else if(!enableAI) {
       dispatch({
@@ -138,7 +141,7 @@ const Analysis = props => {
         config: projectConfig,
       })
     }
-  }, [data, enableAI]);
+  }, [projectId, isReady, enableAI]);
 
   // React.useEffect(() => {
   //   window.addEventListener('beforeunload', ev => {

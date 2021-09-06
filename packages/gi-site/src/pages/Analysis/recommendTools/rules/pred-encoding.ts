@@ -30,7 +30,7 @@ export const fieldForSizeRule: RuleModule = {
 
 // TODO 暂时和颜色字段规则一致
 export const fieldForCluster: RuleModule = {
-  id: 'field-for-node-cluster',
+  id: 'field-for-cluster',
   type: 'HARD',
   docs: {
     detailedText: '',
@@ -51,6 +51,6 @@ export const fieldForLabel: RuleModule = {
 export const encodingRules = {
   'field-for-color': fieldForColorRule,
   'field-for-size': fieldForSizeRule,
-  'field-for-node-cluster': fieldForCluster,
+  'field-for-cluster': fieldForCluster,
   'field-for-label': fieldForLabel
 }

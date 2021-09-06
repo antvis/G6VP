@@ -88,11 +88,19 @@ export function getAllStructFeats(nodes: INodeData[], edges: IEdgeData[]) {
       pageRank: pageRanks[node.id],
       cycleCount: cycleCountMap[node.id] || 0
     }
+    node.data = {
+      ...node.data,
+      ...nodeFeat
+    }
     nodeStructFeats.push(nodeFeat)
   }
   for(let edge of edges) {
     const edgeFeat = {
 
+    }
+    edge.data = {
+      ...edge.data,
+      ...edgeFeat
     }
     edgeStructFeats.push(edgeFeat)
   }
