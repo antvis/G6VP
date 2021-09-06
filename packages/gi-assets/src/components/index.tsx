@@ -10,10 +10,10 @@ import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
-// import ToolbarA from './Toolbar';
+import Toolbar from './Toolbar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope };
+export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope, Toolbar };
 
 // /**
 //  * 组件市场
