@@ -3,6 +3,8 @@ import { GraphinContext } from '@antv/graphin';
 import { Input } from 'antd';
 import React from 'react';
 import './index.less';
+import NodeProfile from './NodeProfile';
+import NodeProperties from './NodeProperties';
 import registerMeta from './registerMeta';
 const { Search } = Input;
 export interface NodeAttrsProps {
@@ -20,54 +22,49 @@ const NodeAttrs: React.FunctionComponent<NodeAttrsProps> = props => {
   const { graph } = React.useContext(GraphinContext);
   const [state, setState] = React.useState({
     visible: false,
-    modal: {},
+    nodes: [],
   });
 
   React.useLayoutEffect(() => {
-    const handleClick = e => {
-      console.log('e', e);
-      const modal = e.item.getModel();
+    const handleSelect = e => {
+      const nodes = e.selectedItems.nodes.map(item => {
+        return item?.getModel();
+      });
+      const isEmpty = nodes.length === 0;
       setState({
-        visible: true,
-        modal,
+        visible: isEmpty ? false : true,
+        nodes,
       });
     };
     const handleClose = e => {
       setState({
         visible: false,
-        modal: {},
+        nodes: [],
       });
     };
-    graph.on('node:click', handleClick);
-    graph.on('canvas:click', handleClose);
+
+    graph.on('nodeselectchange', handleSelect);
+    // graph.on('canvas:click', handleClose);
     return () => {
-      graph.off('node:click', handleClick);
-      graph.off('canvas:click', handleClose);
+      graph.off('nodeselectchange', handleSelect);
+      // graph.off('canvas:click', handleClose);
     };
   }, [graph, setState]);
-  const { visible, modal } = state;
-  const { data } = modal as any;
+  const { visible, nodes } = state;
 
-  const onSearch = () => {};
+  const isMultiple = nodes.length >= 2;
+
   if (visible) {
+    if (isMultiple) {
+      return (
+        <div className="gi-node-attrs-container">
+          <NodeProfile nodes={nodes}></NodeProfile>
+        </div>
+      );
+    }
     return (
       <div className="gi-node-attrs-container">
-        <h1>{data.id}</h1>
-        <Search placeholder="Search in the properties" onSearch={onSearch} style={{ width: '100%' }} />
-        <ul>
-          {Object.keys(data).map(key => {
-            let content = data[key];
-            if (typeof content == 'object') {
-              content = JSON.stringify(content, null, 2);
-            }
-            return (
-              <li key={key}>
-                <div className="key">{key}</div>
-                <div className="value">{content}</div>
-              </li>
-            );
-          })}
-        </ul>
+        <NodeProperties node={nodes[0]}></NodeProperties>
       </div>
     );
   }
