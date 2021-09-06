@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@ali/react-datav-gui-utils": "latest",
-    "@ant-design/icons": "^4.6.2",
-    "@antv/graphin-components": "2.x",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2"
   },
   "peerDependencies": {
     "react": "17.x",
-    "@antv/graphin": "2.x"
+    "@antv/graphin": "2.x",
+    "@ant-design/icons": "^4.6.2",
+    "@antv/graphin-components": "2.x"
   },
   "devDependencies": {
     "father": "^2.30.6",
