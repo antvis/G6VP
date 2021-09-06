@@ -13,10 +13,11 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "d3-scale": "^4.0.0",
     "@ali/react-datav-gui-utils": "latest",
-    "@antv/graphin-components": "2.x"
+    "@ant-design/icons": "^4.6.2",
+    "@antv/graphin-components": "2.x",
+    "d3-scale": "^4.0.0",
+    "deepmerge": "^4.2.2"
   },
   "peerDependencies": {
     "react": "17.x",
