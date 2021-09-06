@@ -132,18 +132,18 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       // members: '',
       // coverImg: '',
       // expandInfo: '',
-    })
+    });
 
     const createResult = await createNewProjectOnAntCode({
       projectName: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
       description: '创建 GI 初始化服务代码仓库',
       type: 3,
-    })
+    });
 
     if (!createResult || !createResult.success) {
       message.error('创建项目失败：' + createResult.errorMsg);
       return;
-    } 
+    }
 
     const dbResponse = await createAssets({
       displayName: 'GI 初始化服务',
@@ -156,8 +156,8 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
       ownerId: '195094',
       branchName: 'master',
       projectId,
-      sourceCode: 'export default (data) => {\n return data \n}'
-    })
+      sourceCode: 'export default (data) => {\n return data \n}',
+    });
 
     if (dbResponse.success) {
       history.push(`/workspace/${projectId}`);
@@ -318,7 +318,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
                 />
               </Col>
               <Col span={1.5}>
-                <Button type="primary" icon={<RightOutlined />} onClick={() => runTransform} />
+                <Button type="primary" icon={<RightOutlined />} onClick={() => runTransform()} />
               </Col>
               <Col span={11}>
                 <MonacoEditor
