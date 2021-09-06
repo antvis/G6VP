@@ -48,6 +48,9 @@ const NodeToggle: React.FunctionComponent<NodeToggleProps> = props => {
       const nodeId = e.item.getModel().id;
       NodeExpandStatus[nodeId] = !NodeExpandStatus[nodeId];
       const { service } = services.find(sr => sr.id === serviceId);
+      if (!service) {
+        return;
+      }
       service({
         id: nodeId,
       }).then(res => {

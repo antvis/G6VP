@@ -14,6 +14,16 @@ const baseComponentsConfig = [
     props: {},
     enable: true,
   },
+  {
+    id: 'CanvasSetting',
+    props: {},
+    enable: true,
+  },
+  {
+    id: 'NodeAttrs',
+    props: {},
+    enable: true,
+  },
 ];
 const baseLayoutConfig = {
   id: 'Layout',

@@ -54,6 +54,9 @@ const ComponentPanel = props => {
       };
     };
     const defaultComponent = components.find(c => c.id === id);
+    if (!defaultComponent) {
+      return;
+    }
     const { meta: defaultConfigObj, props: defaultProps, name: defaultName } = defaultComponent;
 
     valueObj[id] = {
