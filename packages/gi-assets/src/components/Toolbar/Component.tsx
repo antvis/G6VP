@@ -1,15 +1,15 @@
-import { Toolbar } from '@antv/graphin-components';
-import { GraphinContext } from '@antv/graphin';
-import * as React from 'react';
 import {
-  ZoomOutOutlined,
-  ZoomInOutlined,
-  UndoOutlined,
-  RedoOutlined,
-  FullscreenOutlined,
-  FullscreenExitOutlined,
   DownloadOutlined,
+  FullscreenExitOutlined,
+  FullscreenOutlined,
+  RedoOutlined,
+  UndoOutlined,
+  ZoomInOutlined,
+  ZoomOutOutlined,
 } from '@ant-design/icons';
+import { GraphinContext } from '@antv/graphin';
+import { Toolbar } from '@antv/graphin-components';
+import * as React from 'react';
 import './index.less';
 
 type direction = 'vertical' | 'horizontal';

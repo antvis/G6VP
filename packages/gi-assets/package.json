@@ -13,19 +13,19 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@ali/react-datav-gui-utils": "latest",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
+    "@ant-design/icons": "^4.6.2",
     "@antv/l7-react": "^2.3.0",
     "@antv/l7": "^2.3.10",
     "@antv/l7-maps": "^2.3.10"
   },
   "peerDependencies": {
-    "react": "17.x",
-    "@antv/graphin": "2.x",
-    "@ant-design/icons": "^4.6.2",
     "@ant-design/charts": "^1.2.11",
-    "@antv/graphin-components": "2.x"
+    "@antv/graphin": "2.x",
+    "@antv/graphin-components": "2.x",
+    "@ali/react-datav-gui-utils": "latest",
+    "react": "17.x"
   },
   "devDependencies": {
     "father": "^2.30.6",
