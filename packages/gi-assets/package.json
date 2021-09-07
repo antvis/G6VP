@@ -15,7 +15,10 @@
   "dependencies": {
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
-    "@ant-design/icons": "^4.6.2"
+    "@ant-design/icons": "^4.6.2",
+    "@antv/l7-react": "^2.3.0",
+    "@antv/l7": "^2.3.10",
+    "@antv/l7-maps": "^2.3.10"
   },
   "peerDependencies": {
     "@ant-design/charts": "^1.2.11",
