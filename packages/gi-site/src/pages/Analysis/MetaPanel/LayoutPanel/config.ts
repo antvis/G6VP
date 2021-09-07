@@ -44,6 +44,10 @@ const configObj = {
             value: 'grid',
             label: '网格布局',
           },
+          {
+            value: 'circular',
+            label: '圆形布局',
+          },
         ],
       },
       'graphin-force': {
