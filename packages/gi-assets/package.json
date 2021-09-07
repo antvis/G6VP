@@ -21,6 +21,7 @@
     "react": "17.x",
     "@antv/graphin": "2.x",
     "@ant-design/icons": "^4.6.2",
+    "@ant-design/charts": "^1.2.11",
     "@antv/graphin-components": "2.x"
   },
   "devDependencies": {
