@@ -15,7 +15,10 @@
   "dependencies": {
     "@ali/react-datav-gui-utils": "latest",
     "d3-scale": "^4.0.0",
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+    "@antv/l7-react": "^2.3.0",
+    "@antv/l7": "^2.3.10",
+    "@antv/l7-maps": "^2.3.10"
   },
   "peerDependencies": {
     "react": "17.x",
