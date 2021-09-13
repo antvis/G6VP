@@ -19,7 +19,6 @@ export interface FilterProps {
 const FilterPanel: React.FunctionComponent<FilterProps> = props => {
   const { graph } = React.useContext(GraphinContext);
   const { node, edge } = props;
-  console.log('props', props);
   const [state, setState] = React.useState({
     nodeType: [] as TypeConfig[],
     edgeType: [] as TypeConfig[],
