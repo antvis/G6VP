@@ -4,9 +4,9 @@ import GraphinEdge from './GraphinEdge';
 import GraphinNode from './GraphinNode';
 import RectNode from './RectNode';
 import SimpleNode from './SimpleNode';
+import MarkerNode from './MarkerNode';
 
 // TODO fs文件自动写入
 
 /** 图元素市场 */
-export { F2ENode, GraphinNode, RectNode, GraphinEdge, DonutNode, SimpleNode };
-
+export { F2ENode, GraphinNode, RectNode, GraphinEdge, DonutNode, SimpleNode, MarkerNode };
