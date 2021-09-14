@@ -11,11 +11,12 @@ const Mapmode = ({ visible, updateMapLayout, source }) => {
 
   const posRef = useRef({ x: 0, y: 0 });
 
-  // useEffect(() => {
-  //   //   updateMapLayout(pos => map?.lngLatToContainer(pos));
-  // }, []);
+  useEffect(() => {
+    return function cleanup() {
+      // 地图插入
+    };
+  });
   const initLayout = (val, lngToContainer) => {
-    console.log('data', val);
     const { nodes, edges } = val;
     const renderNodes = nodes.map(node => {
       const pos = lngToContainer(node.data.coord);
@@ -36,7 +37,6 @@ const Mapmode = ({ visible, updateMapLayout, source }) => {
         type: 'preset',
       },
     });
-    // dispatch.changeData({ nodes: renderNodes, edges });
   };
 
   const transGraph = (ratio, center, trans) => {
@@ -48,7 +48,6 @@ const Mapmode = ({ visible, updateMapLayout, source }) => {
 
   const onSceneLoaded = React.useCallback(
     scene => {
-      console.log('init map ', GiState);
       const mapContainer = scene.getContainer().parentNode;
       const graphinContainer = document.querySelector('#graphin-container');
       graphinContainer?.parentNode?.insertBefore(mapContainer, graphinContainer);
@@ -77,7 +76,7 @@ const Mapmode = ({ visible, updateMapLayout, source }) => {
     },
     [GiState],
   );
-  console.log('gistate', GiState);
+
   if (GiState.data.nodes.length === 0) {
     return null;
   }

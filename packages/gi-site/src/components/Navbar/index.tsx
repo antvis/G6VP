@@ -13,7 +13,7 @@ interface SvgIconProps {
   type: string; // 必传
   [field: string]: any; // 与antd的icon一致
 }
-const SvgIcon: React.FC<SvgIconProps> = (props) => {
+const SvgIcon: React.FC<SvgIconProps> = props => {
   const Icon = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_241110_bw0oh2dqbb8.js',
   });
@@ -81,7 +81,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     Modal.success({
       content: '保存成功',
       onOk() {
-        history.push(`/workspace`);
+        // history.push(`/workspace`);
       },
     });
   };
@@ -132,8 +132,8 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       </Tooltip>
       <Button onClick={backWorkspace}>返回列表</Button>
       <Tooltip title="自动推荐样式">
-        <Button onClick={handleAiIconClick} >
-          <SvgIcon type="icon-magic1" style={{ color: enableAI?'#3471f9':'' }}/>
+        <Button onClick={handleAiIconClick}>
+          <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
         </Button>
       </Tooltip>
     </>

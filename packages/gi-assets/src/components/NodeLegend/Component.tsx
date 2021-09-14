@@ -8,7 +8,6 @@ export interface ComponentProps {
 
 const Component: React.FunctionComponent<ComponentProps> = props => {
   const { sortKey, textColor } = props;
-  console.log(textColor);
 
   return (
     <div>
