@@ -1,12 +1,12 @@
 // 组件市场
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import { message, Button } from 'antd';
 import { Provider } from 'react-redux';
 import { Utils } from "@antv/graphin";
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { updateAssets, updateFileContent, getFileSourceCode, createNewBranch, queryAssetById } from '../../services/assets'
+import { updateAssets, updateFileContent, getFileSourceCode, createNewBranch, queryAssetById, buildAssetWithTask } from '../../services/assets'
 import { useImmer } from 'use-immer'
 import * as ts from 'typescript'
 import moment from 'moment'
@@ -307,21 +307,44 @@ const ComponentMarket = props => {
     const newBranchName = `sprint_${projectName}_${uuid}_${currentDate}`
     
     // step1: 创建新的分支
-    const result = await createNewBranch({
-      projectName,
-      branchName: newBranchName,
-      refBranchName: 'master'
-    })
+    // const result = await createNewBranch({
+    //   projectName,
+    //   branchName: newBranchName,
+    //   refBranchName: 'master'
+    // })
     
     // step2: 构建
-    console.log('页面创建分支', result)
+    const buildResult = await buildAssetWithTask({
+      assetId,
+      projectName,
+      branchName
+    })
+
+    if (buildResult) {
+      const { status, logUrl, id } = buildResult
+      // 更新数据库中构建状态及构建日志字段
+      updateAssets(assetId, {
+        yuyanBuildId: id,
+        /* status 状态值： 
+          0: 默认值
+          1: 已删除
+          2: 构建中
+          3: 发布/构建失败
+          4: 发布/构建成功
+        */
+        status: 2,
+        buildLogUrl: logUrl,
+        version: newBranchName
+      })
+    }
   }
   
   return (
     <>
-      <BaseNavbar history={history} hasPublish={true} handlePublish={handlePublish}>
+      <BaseNavbar history={history} hasPublish={false} handlePublish={handlePublish}>
         <h4>物料中心</h4>
       </BaseNavbar>
+      <Button onClick={handlePublish} style={{ position: 'absolute', right: 8, top: 1 }}>发布</Button>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
           <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? 'demo.tsx' : 'index.ts' } codeChange={codeChangeCallback}  />

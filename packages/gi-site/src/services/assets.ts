@@ -29,9 +29,12 @@ interface UpdateAssetParams extends CreateAssetParams {
   id?: string;
 }
 
-interface DirectoryBlob {
+interface BaseParams {
   projectName: string;
   branchName: string;
+}
+
+interface DirectoryBlob extends BaseParams {
   path: string;
 }
 
@@ -40,10 +43,12 @@ interface FilrParams extends DirectoryBlob {
   commitMsg: string;
 }
 
-interface BranchParams {
-  projectName: string;
-  branchName: string;
+interface BranchParams extends BaseParams {
   refBranchName: string;
+}
+
+interface BuildParams extends BaseParams {
+  assetId: string;
 }
 
 const convertResponse = response => {
@@ -213,3 +218,12 @@ export const createNewProjectOnAntCode = async projectParams => {
 
   return convertResponse(response);
 };
+
+export const buildAssetWithTask = async (buildParams: BuildParams) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/buildasset`, {
+    method: 'post',
+    data: buildParams
+  })
+
+  return response
+}
