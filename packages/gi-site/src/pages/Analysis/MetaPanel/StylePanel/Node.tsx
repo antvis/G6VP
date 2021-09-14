@@ -1,5 +1,6 @@
 import ColorMapping from '@ali/datav-gui-color-scale';
 import SizeMapping from '@ali/datav-gui-size-scale';
+import MarkerMapping from '@ali/datav-gui-marker-scale';
 import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
@@ -8,6 +9,7 @@ import React, { useState } from 'react';
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
+  markerMapping: MarkerMapping,
 };
 
 const { Option } = Select;
