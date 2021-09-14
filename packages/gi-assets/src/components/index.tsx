@@ -11,10 +11,11 @@ import NodeToggle from './NodeToggle';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 import Toolbar from './Toolbar';
-import Mapmode from './Mapmode';
+// import Mapmode from './Mapmode';
+import FilterPanel from './FilterPanel';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope, Toolbar, Mapmode };
+export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope, Toolbar, FilterPanel };
 
 // /**
 //  * 组件市场

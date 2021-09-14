@@ -24,7 +24,7 @@ const transform = (s, config) => {
     const { color: edgeColor, label: edgeLabel, size: edgeSize, dash: dash, halo: edgeHalo } = mathEdgeConfig.props;
 
     /** 分别生成Size和Color的Mapping */
-    const mappingEdgeBySize = scaleLinear().domain(edgeSize.scale.domain).range(edgeSize.scale.range);
+    const mappingEdgeBySize = scaleLinear().domain(edgeSize?.scale?.domain).range(edgeSize?.scale?.range);
 
     const edges = s.edges.map(edge => {
       const { data } = edge;
