@@ -39,7 +39,7 @@ export interface ToolbarProps {
 
 const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
   const { apis, graph } = React.useContext(GraphinContext);
-  const { handleZoomIn, handleZoomOut, downloadImage } = apis;
+  const { handleZoomIn, handleZoomOut } = apis;
   const [btnDisable, setBtnDisable] = React.useState({
     undo: true,
     todu: true,
@@ -231,7 +231,7 @@ const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
 
   React.useEffect(() => {
     graph.on('stackchange', evt => {
-      const { undoStack, redoStack } = evt;
+      const { undoStack, redoStack } = evt as any;
       const undoStackLen = undoStack.length;
       const redoStackLen = redoStack.length;
 
