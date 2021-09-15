@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@ali/datav-gui-color-scale": "^1.0.9",
+    "@ali/datav-gui-marker-scale": "^1.1.0",
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@ali/react-datav-gui": "^4.1.7",
     "@ali/react-datav-gui-utils": "^0.1.18",
@@ -11,8 +12,13 @@
     "react": "17.x"
   },
   "devDependencies": {
+    "@umijs/plugin-antd": "^0.11.0",
+    "@umijs/plugin-layout": "^0.17.2",
+    "@umijs/plugin-locale": "^0.14.2",
+    "@umijs/plugin-test": "^1.0.2",
     "husky": "^6.0.0",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "umi": "^3.5.18"
   },
   "scripts": {
     "core": "cd packages/gi && npm run start",

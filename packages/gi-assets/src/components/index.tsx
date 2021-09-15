@@ -3,19 +3,36 @@
 // import { NodeContextMenu } from './ContextMenu';
 // import DrillingOne from './DrillingOne';
 import CanvasSetting from './CanvasSetting';
+// import Mapmode from './Mapmode';
+import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
+import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
+import OperatorBar from './OperatorBar';
+// import { EdgeTooltip, NodeTooltip } from './Tooltip';
+import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 import Toolbar from './Toolbar';
-// import Mapmode from './Mapmode';
-import FilterPanel from './FilterPanel';
+
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 
-export { NodeLegend, MiniMap, NodeToggle, CanvasSetting, NodeAttrs, GraphScope, Toolbar, FilterPanel };
+export {
+  Timeline,
+  OperatorBar,
+  NodeLegend,
+  MiniMap,
+  NodeToggle,
+  CanvasSetting,
+  NodeAttrs,
+  GraphScope,
+  Toolbar,
+  Mapmode,
+  FilterPanel,
+};
 
 // /**
 //  * 组件市场
