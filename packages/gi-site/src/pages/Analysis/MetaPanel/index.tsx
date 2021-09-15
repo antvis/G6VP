@@ -1,10 +1,15 @@
 import * as React from 'react';
 import ComponentPanel from './ComponentPanel';
+import DataPanel from './DataPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
 import StylePanel from './StylePanel';
-
 const navbarOptions = [
+  {
+    id: 'data',
+    name: '数据',
+    component: DataPanel,
+  },
   {
     id: 'style',
     name: '样式',
@@ -22,6 +27,12 @@ const navbarOptions = [
     component: ComponentPanel,
   },
 ];
+const navbarOptionsMap = navbarOptions.reduce((acc,curr)=>{
+  return {
+    ...acc,
+    [curr.id]:curr
+  }
+},{}) 
 
 const MetaPanel = props => {
   const { value, onChange, data, config, meta, services } = props;
@@ -31,7 +42,7 @@ const MetaPanel = props => {
   if (Object.keys(config).length === 0) {
     return null;
   }
-  const Match = navbarOptions.find(c => c.id === value);
+  const Match = navbarOptionsMap[value];
 
   const { component: Component } = Match;
 
