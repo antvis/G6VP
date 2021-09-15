@@ -85,10 +85,25 @@ const GISDK = (props: Props) => {
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
     const filteredComponents = componentsCfg.filter(c => c.enable);
+    /** start 针对容器组件特殊处理 */
+    const containerComponents = filteredComponents.filter(c => {
+      return c.props.GI_CONTAINER;
+    });
+    const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
+      const { GI_CONTAINER } = curr.props;
+      return [...acc, ...GI_CONTAINER];
+    }, []);
+
+    const finalComponents = filteredComponents.filter(c => {
+      const { id } = c;
+      return needContainerComponentIds.indexOf(id) === -1;
+    });
+    /** end */
+
     setState(preState => {
       return {
         ...preState,
-        components: filteredComponents,
+        components: finalComponents,
       };
     });
   }, [componentsCfg]);
@@ -134,9 +149,17 @@ const GISDK = (props: Props) => {
       });
     },
   };
+  //@ts-ignore
   GraphinContext.GiState = state;
+  //@ts-ignore
   GraphinContext.setGiState = setState;
 
+  const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.id]: curr,
+    };
+  }, {});
   return (
     //@ts-ignore
     <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
@@ -145,9 +168,23 @@ const GISDK = (props: Props) => {
       {/** 用户从组件市场里选择的组件  */}
       {components.map(c => {
         const { id, props: itemProps } = c;
+
         const matchComponent = Components[id];
         if (!matchComponent) {
           return null;
+        }
+        /** 特殊处理Container组件 */
+        const { GI_CONTAINER } = itemProps;
+        console.log('GI_CONTAINER', itemProps);
+        let GIProps = {};
+        if (GI_CONTAINER) {
+          GIProps = {
+            components: GI_CONTAINER.map(c => {
+              return ComponentCfgMap[c];
+            }),
+            assets: Components,
+          };
+          console.log('GIProps', GIProps);
         }
 
         const {
@@ -157,7 +194,7 @@ const GISDK = (props: Props) => {
           component: typeof React.Component;
           props: any;
         } = matchComponent;
-        return <Component key={id} {...defaultProps} {...itemProps} />;
+        return <Component key={id} {...defaultProps} {...itemProps} {...GIProps} />;
       })}
 
       {/** 用户二次定制开发的组件  */}
