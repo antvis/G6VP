@@ -6,7 +6,7 @@ import CanvasSetting from './CanvasSetting';
 // import Mapmode from './Mapmode';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
-import Mapmode from './Mapmode';
+// import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeLegend from './NodeLegend';
@@ -18,7 +18,7 @@ import Timeline from './Timeline';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 import Toolbar from './Toolbar';
 
-// import { EdgeTooltip, NodeTooltip } from './Tooltip';
+import Tooltip from './Tooltip';
 
 export {
   Timeline,
@@ -30,8 +30,9 @@ export {
   NodeAttrs,
   GraphScope,
   Toolbar,
-  Mapmode,
+  // Mapmode,
   FilterPanel,
+  Tooltip,
 };
 
 // /**

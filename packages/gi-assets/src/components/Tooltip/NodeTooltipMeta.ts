@@ -1,5 +1,6 @@
-const getMeta = context => {
-  const { data, keys = ['id', 'type'] } = context;
+const registerMeta = context => {
+  const { data } = context;
+  const keys = Object.keys(data.nodes[0].data);
   const options = keys.map(c => {
     return {
       value: c,
@@ -7,22 +8,51 @@ const getMeta = context => {
     };
   });
   return {
-    /** 分类信息 */
-    categoryId: 'components-analysis',
-    id: 'NodeTooltip',
-    type: 'group', //这个可以不写
-    fold: false, // 这个可以不写
-    name: '节点提示框',
-    children: {
-      mappingKeys: {
-        name: '映射字段',
-        type: 'checkbox',
-        optionCol: 8,
-        default: keys,
-        options,
-      },
+    mappingKeys: {
+      type: 'checkbox',
+      name: '显示字段',
+      options,
+    },
+    placement: {
+      name: '位置',
+      type: 'buttonRadio',
+      default: 'top',
+      options: [
+        {
+          value: 'left',
+          label: '左侧',
+        },
+        {
+          value: 'right',
+          label: '右侧',
+        },
+        {
+          value: 'top',
+          label: '上侧',
+        },
+        {
+          value: 'bottom',
+          label: '下侧',
+        },
+      ],
+    },
+    hasArrow: {
+      name: '箭头',
+      type: 'switch',
+      default: true,
+      statusText: true,
+    },
+    background: {
+      name: '背景色',
+      type: 'fill',
+      default: '#f8f9fb',
+    },
+    color: {
+      name: '字体颜色',
+      type: 'fill',
+      default: '#f8f9fb',
     },
   };
 };
 
-export default getMeta;
+export default registerMeta;
