@@ -9,12 +9,15 @@ export interface NodeTooltipProps {
   hasArrow?: boolean;
   /** 映射的字段 */
   mappingKeys?: string[];
+  background?: string;
+  color?: string;
 }
 
 const NodeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
-  const { placement = 'top', hasArrow = true, mappingKeys = ['id'] } = props;
+  const { placement = 'top', hasArrow = true, mappingKeys = ['id'], background = '#fff', color = 'black' } = props;
+
   return (
-    <Tooltip bindType="node" placement={placement} hasArrow={hasArrow}>
+    <Tooltip bindType="node" placement={placement} hasArrow={hasArrow} style={{ background, color }}>
       <Tooltip.Node>
         {model => {
           return (
