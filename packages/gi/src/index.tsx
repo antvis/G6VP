@@ -1,10 +1,6 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
 import * as mock from './mock';
-/** 组件 */
-// import * as Components from './components';
-/** 元素 */
-// import * as Elements from './elements';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
 
 export interface Props {
@@ -47,6 +43,7 @@ const GISDK = (props: Props) => {
     source: { nodes: [], edges: [] } as GraphinData,
     layout: {},
     components: [] as GIComponentConfig[],
+    isReady: false,
   });
 
   const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = config;
@@ -77,6 +74,7 @@ const GISDK = (props: Props) => {
           ...preState,
           data: newData,
           source: { ...res },
+          isReady: true,
         };
       });
     });
@@ -134,7 +132,7 @@ const GISDK = (props: Props) => {
     });
   }, [nodeCfg, edgeCfg]);
 
-  const { data, layout, components } = state;
+  const { data, layout, components, isReady } = state;
 
   //@ts-ignore 临时方案
   GraphinContext.services = Services;
@@ -160,6 +158,10 @@ const GISDK = (props: Props) => {
       [curr.id]: curr,
     };
   }, {});
+  console.log('%c gi render...', 'color:red', props);
+  if (!isReady) {
+    return <div>render...</div>;
+  }
   return (
     //@ts-ignore
     <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
@@ -175,7 +177,7 @@ const GISDK = (props: Props) => {
         }
         /** 特殊处理Container组件 */
         const { GI_CONTAINER } = itemProps;
-        console.log('GI_CONTAINER', itemProps);
+
         let GIProps = {};
         if (GI_CONTAINER) {
           GIProps = {
@@ -184,7 +186,6 @@ const GISDK = (props: Props) => {
             }),
             assets: Components,
           };
-          console.log('GIProps', GIProps);
         }
 
         const {
