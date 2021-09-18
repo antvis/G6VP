@@ -25,11 +25,13 @@
     "@antv/graphin": "2.x",
     "@antv/graphin-components": "2.x",
     "@ali/react-datav-gui-utils": "latest",
-    "react": "17.x"
+    "react": "17.x",
+    "antd": "^4.16.13"
   },
   "devDependencies": {
     "father": "^2.30.6",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "antd": "^4.16.13"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
