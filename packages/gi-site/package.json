@@ -70,5 +70,8 @@
       "name": "typescript-language-features-worker",
       "version": "1.53.0-patch.2"
     }
-  ]
+  ],
+  "devDependencies": {
+    "perf_hooks": "^0.0.1"
+  }
 }

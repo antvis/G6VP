@@ -5,11 +5,12 @@
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@ali/react-datav-gui": "^4.1.7",
     "@ali/react-datav-gui-utils": "^0.1.18",
-    "@ant-design/charts": "^1.2.11",
-    "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "^2.3.6",
     "@antv/graphin-components": "2.x",
-    "react": "17.x"
+    "react": "17.x",
+    "antd": "^4.2.4",
+    "@ant-design/charts": "^1.2.11",
+    "@ant-design/icons": "^4.6.2"
   },
   "devDependencies": {
     "@umijs/plugin-antd": "^0.11.0",
