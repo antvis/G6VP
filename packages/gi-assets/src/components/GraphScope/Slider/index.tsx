@@ -1,7 +1,6 @@
 import { CheckCircleOutlined, SmileOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { Collapse, Select } from 'antd';
-import 'antd/dist/antd.css';
 import React from 'react';
 import Code from './Code';
 import { userList } from './config';
