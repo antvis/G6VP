@@ -1,55 +1,40 @@
 import { GraphinContext } from '@antv/graphin';
 import { ContextMenu } from '@antv/graphin-components';
 import React from 'react';
-import { uniqueElementsBy } from '../Liaoyuan/utils';
 
 // Do not forget to import CSS
 const { Menu } = ContextMenu;
 
-const NodeMenu = () => {
-  const { services, dispatch } = GraphinContext as any;
-  const { graph, contextmenu } = React.useContext(GraphinContext);
+const NodeMenu = props => {
+  const { contextmenu, graph } = React.useContext(GraphinContext);
   const context = contextmenu.node;
-
-  const handleExpand = () => {
-    const { nodes, edges } = graph.save() as {
-      nodes: any[];
-      edges: any[];
-    };
-    const { id } = context.item.getModel();
-    if (!services.getSubGraphData) {
-      return null;
-    }
-    services.getSubGraphData([id]).then(res => {
-      if (!res) {
-        return {
-          nodes,
-          edges,
-        };
-      }
-      dispatch.changeData({
-        nodes: uniqueElementsBy([...nodes, ...res.nodes], (a, b) => {
-          return a.id === b.id;
-        }),
-        edges: uniqueElementsBy([...edges, ...res.edges], (a, b) => {
-          return a.source === b.source && a.target === b.target;
-        }),
-      });
-    });
-    context.handleClose();
-  };
+  const { assets, components } = props;
 
   return (
     <Menu bindType="node">
-      <Menu.Item onClick={handleExpand}>一度扩散</Menu.Item>
+      {components.map(item => {
+        if (!item) {
+          return null;
+        }
+        const { props, id, enable } = item;
+        if (!enable) {
+          return null;
+        }
+        const { component: Component } = assets[id];
+        return (
+          <Menu.Item key={id}>
+            <Component {...props} />
+          </Menu.Item>
+        );
+      })}
     </Menu>
   );
 };
 
-const NodeContextMenu = () => {
+const NodeContextMenu = props => {
   return (
     <ContextMenu style={{ width: '80px' }} bindType="node">
-      <NodeMenu />
+      <NodeMenu {...props} />
     </ContextMenu>
   );
 };

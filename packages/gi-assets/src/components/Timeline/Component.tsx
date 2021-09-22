@@ -1,7 +1,8 @@
 import { FieldTimeOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import './index.less';
+
 export interface TimelineProps {
   visible: boolean;
 }
@@ -33,9 +34,12 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
 
   return (
     <div>
-      <Button icon={<FieldTimeOutlined />} onClick={handleClick}>
-        时序分析
-      </Button>
+      <div onClick={handleClick} className="gi-component-timeline">
+        <div>
+          <FieldTimeOutlined />
+        </div>
+        <div> 时序分析</div>
+      </div>
       {visible &&
         //@ts-ignore
         ReactDOM.createPortal(TimelineCore, document.getElementById('graphin-container'))}

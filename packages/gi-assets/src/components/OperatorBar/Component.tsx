@@ -1,4 +1,4 @@
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import * as React from 'react';
 import './index.less';
 export interface OperatorBarProps {}
@@ -21,9 +21,9 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
           }
           const { component: Component } = assets[id];
           return (
-            <Typography.Link key={id}>
+            <span key={id}>
               <Component {...props} />
-            </Typography.Link>
+            </span>
           );
         })}
       </Space>
