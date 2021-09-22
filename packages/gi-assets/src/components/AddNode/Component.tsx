@@ -55,9 +55,10 @@ const AddNode: React.FunctionComponent<AddNode> = props => {
         <div> 添加节点</div>
       </div>
       {
-        //@ts-ignore
+        
         ReactDOM.createPortal(
           <Content visible={visible} handleOk={handleOk} handleCancel={handleCancel} />,
+          //@ts-ignore
           document.getElementById('graphin-container'),
         )
       }
