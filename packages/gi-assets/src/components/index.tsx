@@ -1,8 +1,9 @@
 // import { MiniMap } from '@antv/graphin-components';
 // import CanvasClick from './CanvasClick';
-// import { NodeContextMenu } from './ContextMenu';
 // import DrillingOne from './DrillingOne';
+import AddNode from './AddNode';
 import CanvasSetting from './CanvasSetting';
+import ContextMenu from './ContextMenu';
 // import Mapmode from './Mapmode';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
@@ -32,6 +33,8 @@ export {
   Toolbar,
   Mapmode,
   FilterPanel,
+  AddNode,
+  ContextMenu, //节点的右键菜单
 };
 
 // /**
