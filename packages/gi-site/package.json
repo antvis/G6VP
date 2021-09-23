@@ -5,7 +5,8 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "NODE_OPTIONS=--max_old_space_size=4096 umi dev",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build"
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "analyse": "ANALYZE=1 umi dev"
   },
   "dependencies": {
     "@ali/datav-gui-color-scale": "^1.0.9",
