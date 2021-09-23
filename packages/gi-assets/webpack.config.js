@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = (env,argv) => {
+module.exports = (env, argv) => {
   return {
     entry: {
       index: './src/index.ts',
@@ -85,15 +85,15 @@ module.exports = (env,argv) => {
     },
     plugins: [
       new MiniCssExtractPlugin(),
-      new BundleAnalyzerPlugin()
+      // new BundleAnalyzerPlugin()
     ],
     externals: {
-        react: 'React',
-        "react-dom": 'ReactDOM',
-        '@antv/graphin': 'Graphin',
-        '@antv/graphin-components': 'GraphinComponents',
-        '@antv/g6': 'G6',
-        antd: 'antd',
-      },
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      '@antv/graphin': 'Graphin',
+      '@antv/graphin-components': 'GraphinComponents',
+      '@antv/g6': 'G6',
+      antd: 'antd',
+    },
   };
 };
