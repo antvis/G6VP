@@ -28,7 +28,7 @@ const ComponentMarket = props => {
 
   const getAssertList = async () => {
     const result = await queryAssetList();
-    console.log('查询到的数据', result);
+    
     const { data, success } = result;
     if (success) {
       const componentList = data.filter(d => d.type === 1);
@@ -39,6 +39,7 @@ const ComponentMarket = props => {
       });
     }
   };
+
   React.useEffect(() => {
     // 通过调用服务端接口，获取资产列表
     getAssertList();
