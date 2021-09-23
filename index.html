@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--- REACT DEPENDENCIES-->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--- GRAPHIN DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
+    <!--- GI DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.3.1/dist/index.min.js"></script>
+    <!--- CSS -->
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      window.onload = () => {
+        console.log("Graphin & GIAssets & GISDK", Graphin, GIAssets, GISDK);
+
+        // Mock 的 Config 配置
+        const config = {
+          node: {
+            id: "GraphinNode",
+            props: {},
+          },
+          edge: {
+            id: "GraphinEdge",
+            props: {},
+          },
+          components: [
+            {
+              id: "NodeCount",
+              props: {
+                enable: true,
+              },
+            },
+          ],
+          layout: {
+            id: "graphin-force",
+            props: {
+              type: "graphin-force",
+            },
+          },
+        };
+
+        const MyAssets = {
+          elements: {},
+          components: {
+            NodeCount: {
+              component: () => {
+                return <div>NodeCount</div>;
+              },
+              info: {
+                id: "NodeCount",
+              },
+              registerMeta: () => {},
+            },
+          },
+        };
+
+        const MyServices = [
+          {
+            id: "GI_SERVICE_INTIAL_GRAPH",
+            service: () => {
+              return new Promise((resolve) => {
+                resolve({
+                  nodes: [{ id: "node-1" }, { id: "node-2" }],
+                  edges: [{ source: "node-1", target: "node-2" }],
+                });
+              });
+            },
+          },
+        ];
+
+        const ASSETS = {
+          elements: { ...GIAssets.default.elements, ...MyAssets.elements },
+          components: {
+            ...GIAssets.default.components,
+            ...MyAssets.components,
+          },
+          services: [...MyServices],
+        };
+
+        const DEMO = () => {
+          return <GISDK.default config={config} assets={ASSETS} />;
+        };
+
+        const LoadGraphSDK = () => {
+          const giProjectURL = "https://storehouse.test.alipay.net/project/list/100004";
+          const servicesOpt = [
+            {
+              id: "GI_SERVICE_INTIAL_GRAPH",
+              content: " (data) => {\n return data \n}",
+              mode: "mock",
+              name: "GI 初始化服务",
+            },
+          ];
+          const [state, setState] = React.useState({
+            isReady: false,
+            data: {},
+            assets: {},
+          });
+          React.useEffect(() => {
+            fetch(giProjectURL)
+              .then((res) => res.json())
+              .then((res) => {
+                const data = JSON.parse(res.data[0].data);
+                const projectConfig = JSON.parse(res.data[0].projectConfig);
+                const serviceConfig = JSON.parse(res.data[0].serviceConfig);
+                const services = GIAssets.default.utils.getServicesByAssets(serviceConfig, data);
+
+                const assets = {
+                  ...ASSETS,
+                  services,
+                };
+                console.log(res, data, assets, ASSETS, projectConfig);
+                setState((preState) => {
+                  return {
+                    data: res,
+                    isReady: true,
+                    assets,
+                    config: projectConfig,
+                  };
+                });
+              });
+          }, []);
+
+          const { assets, isReady, config } = state;
+          if (!isReady) {
+            return <div> graph is loading... </div>;
+          }
+          return <GISDK.default config={config} assets={assets} />;
+        };
+
+        const Header = ({ text }) => {
+          const { Utils, default: GraphinClass } = Graphin;
+          const data = Utils.mock(10).circle().graphin();
+          return (
+            <div>
+              <h1>GISDK Load from Remote Server</h1>
+              <LoadGraphSDK />
+              <h1>{text}</h1>
+              <div>{<GraphinClass data={data} />}</div>
+              <h1>GISDK</h1>
+              <div>{<DEMO />}</div>
+            </div>
+          );
+        };
+
+        ReactDOM.render(<Header text="graph insight" />, document.getElementById("root"));
+      };
+    </script>
+  </body>
+</html>

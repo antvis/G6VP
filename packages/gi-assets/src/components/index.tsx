@@ -1,8 +1,9 @@
 // import { MiniMap } from '@antv/graphin-components';
 // import CanvasClick from './CanvasClick';
-// import { NodeContextMenu } from './ContextMenu';
 // import DrillingOne from './DrillingOne';
+import AddNode from './AddNode';
 import CanvasSetting from './CanvasSetting';
+import ContextMenu from './ContextMenu';
 // import Mapmode from './Mapmode';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
@@ -17,7 +18,6 @@ import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 // import ClickEvent from './Liaoyuan/ClickEvent';
 import Toolbar from './Toolbar';
-
 import Tooltip from './Tooltip';
 
 export {
@@ -32,6 +32,8 @@ export {
   Toolbar,
   // Mapmode,
   FilterPanel,
+  AddNode,
+  ContextMenu,
   Tooltip,
 };
 
