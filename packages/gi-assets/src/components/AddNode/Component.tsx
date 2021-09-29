@@ -36,7 +36,7 @@ const AddNode: React.FunctionComponent<AddNode> = props => {
   }, [defaultVisible]);
   const handleClick = () => {
     setVisible(!visible);
-    graphin.contextmenu = {};
+    (graphin as any).contextmenu = {};
     console.log('click.........', graphin);
   };
 
@@ -54,14 +54,11 @@ const AddNode: React.FunctionComponent<AddNode> = props => {
         </div>
         <div> 添加节点</div>
       </div>
-      {
-        
-        ReactDOM.createPortal(
-          <Content visible={visible} handleOk={handleOk} handleCancel={handleCancel} />,
-          //@ts-ignore
-          document.getElementById('graphin-container'),
-        )
-      }
+      {ReactDOM.createPortal(
+        <Content visible={visible} handleOk={handleOk} handleCancel={handleCancel} />,
+        //@ts-ignore
+        document.getElementById('graphin-container'),
+      )}
     </div>
   );
 };
