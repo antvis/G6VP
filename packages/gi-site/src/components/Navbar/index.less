@@ -1,75 +1,35 @@
-.gi{
-.navbar {
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
+.headerContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
-  border-bottom: none;
-  z-index: 999;
-  .navbar-logo {
-    // padding: 5px 10px;
-    cursor: pointer;
-    img {
-      height: 28px;
-      margin: 0px 10px;
-    }
-    span {
-      height: 40px;
-      line-height: 40px;
-      font-weight: 600;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  .left {
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    opacity: 0.85;
+    a {
+      color: white;
+      font-size: 14px;
     }
   }
-  ul.navbar-action {
-    cursor: pointer;
-    flex: 1;
-    justify-content: flex-end;
-    height: 40px;
-    line-height: 40px;
-    margin: 0px;
-    padding: 0px;
-    & > li {
-      padding: 0px 10px;
-      display: inline-block;
-      text-align: top;
-    }
-  }
-  .navbar-db {
-    flex: none;
-    position: absolute;
-    left: 200px;
-    padding: 0px 10px;
-    &:hover {
-      background: #177ddc1a;
-      cursor: pointer;
-    }
-  }
-  .navbar-title {
-    // flex: 1;
-    min-width: 150px;
-    padding: 0 10px;
-  }
-  .navbar-menu {
-    position: relative;
-    right: 10px;
+  .right {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    // width: 70px;
-    button {
-      margin-left: 10px;
+    color: white;
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    opacity: 0.85;
+    a {
+      color: #000000;
+      font-size: 14px;
     }
   }
-}
-}
-
-.ant-drawer.ant-drawer-top.ant-drawer-open {
-  top: 44px;
+  .right span:hover {
+    color: #597ef7;
+  }
 }
 
 .export-panel {
@@ -91,4 +51,3 @@
     }
   }
 }
-

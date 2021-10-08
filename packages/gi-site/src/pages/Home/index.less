@@ -2,21 +2,28 @@
   display: flex;
   height: 64px;
   padding: 0 40px;
-  background: #ebebeb;
+  // background: #ebebeb;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   .left {
     flex: 1;
+    font-size: 14px;
+    font-family: PingFangSC-Medium;
+    opacity: 0.85;
+    a {
+      color: white;
+      font-size: 14px;
+    }
   }
   .right {
     display: flex;
     align-items: center;
-    opacity: 0.85;
-    font-family: PingFangSC-Medium;
+    color: white;
     font-size: 14px;
-    color: #000000;
+    font-family: PingFangSC-Medium;
+    opacity: 0.85;
     a {
-      font-size: 14px;
       color: #000000;
+      font-size: 14px;
     }
   }
   .right span:hover {
@@ -28,14 +35,14 @@
   margin: 0 auto;
 
   .videoContainer {
+    position: relative;
     height: 600px;
     background: #ccc;
-    position: relative;
     .fillTop {
       position: absolute;
       bottom: 0;
-      height: 130px;
       width: 100%;
+      height: 130px;
       overflow: hidden;
       background-image: url('./image//Combined\ Shape.svg');
       background-repeat: no-repeat;
@@ -45,34 +52,34 @@
       position: absolute;
       top: 157px;
       left: 50%;
-      transform: translate(-50%, 0);
-      text-align: center;
       color: #000000;
+      text-align: center;
+      transform: translate(-50%, 0);
       h1 {
-        font-family: PingFangSC-Semibold;
-        font-size: 64px;
-        letter-spacing: 1.6px;
-        line-height: 64px;
-        font-weight: 600;
         margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 64px;
+        font-family: PingFangSC-Semibold;
+        line-height: 64px;
+        letter-spacing: 1.6px;
       }
       p {
         width: 572px;
-        font-family: PingFangSC-Regular;
-        font-size: 22px;
-        line-height: 40px;
         margin-bottom: 62px;
+        font-size: 22px;
+        font-family: PingFangSC-Regular;
+        line-height: 40px;
       }
       button {
-        height: 40px;
         width: 107px;
-        border-radius: 20px;
+        height: 40px;
         border: 2px solid #597ef7;
+        border-radius: 20px;
       }
       .leftButton {
         margin-right: 10px;
-        background: #597ef7;
         color: #fff;
+        background: #597ef7;
       }
       .rightButton {
         margin-left: 10px;
@@ -82,64 +89,64 @@
   }
 
   .h2 {
-    font-family: PingFangSC-Semibold;
-    font-size: 56px;
-    color: rgba(0, 0, 0, 0.85);
-    line-height: 64px;
-    font-weight: 600;
     margin-bottom: 24px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    font-size: 56px;
+    font-family: PingFangSC-Semibold;
+    line-height: 64px;
     text-align: center;
   }
 
   .p2 {
-    opacity: 0.64;
-    font-family: PingFangSC-Regular;
-    font-size: 28px;
-    color: rgba(0, 0, 0, 0.85);
-    text-align: center;
-    line-height: 28px;
     margin-bottom: 48px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    line-height: 28px;
+    text-align: center;
+    opacity: 0.64;
   }
 
   .productContainer {
+    padding: 64px 0 90px;
     background: #ebebeb;
     box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, 0.1);
-    padding: 64px 0 90px;
     .cardContainer {
-      max-width: 1296px;
-      margin: 0 auto;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-around;
+      max-width: 1296px;
+      margin: 0 auto;
       .featrueCard {
-        height: 495px;
         width: 632px;
-        background: #f9f9fb;
-        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        text-align: center;
+        height: 495px;
         margin-bottom: 16px;
-        cursor: pointer;
         color: #000000;
+        text-align: center;
+        background: #f9f9fb;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
         img {
-          height: 372px;
           width: 632px;
+          height: 372px;
           background: #f9f9fb;
           border-radius: 10px 10px 0 0;
         }
         h3 {
-          font-family: PingFangSC-Medium;
-          font-size: 28px;
-          line-height: 28px;
-          font-weight: 600;
           margin: 32px 0 9px;
+          font-weight: 600;
+          font-size: 28px;
+          font-family: PingFangSC-Medium;
+          line-height: 28px;
         }
         p {
-          opacity: 0.85;
-          font-family: PingFangSC-Regular;
           font-size: 16px;
+          font-family: PingFangSC-Regular;
           line-height: 22px;
+          opacity: 0.85;
         }
       }
     }
@@ -151,66 +158,66 @@
     .fillTop {
       position: absolute;
       top: 0;
-      height: 170px;
       width: 100%;
+      height: 170px;
       overflow: hidden;
       background-image: url('./image//Combined\ Shape.svg');
       background-repeat: no-repeat;
-      background-size: cover;
       background-position-y: bottom;
+      background-size: cover;
     }
     .cardContainer {
-      max-width: 1296px;
-      margin: 0 auto;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-around;
+      max-width: 1296px;
+      margin: 0 auto;
       .SolutionCard {
-        height: 510px;
         width: 416px;
-        background: #ffffff;
-        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
+        height: 510px;
         margin-bottom: 16px;
         color: #000000;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
         cursor: pointer;
         img {
-          height: 260px;
           width: 416px;
+          height: 260px;
           background: #131821;
           border-radius: 10px 10px 0 0;
         }
         h3 {
-          font-family: PingFangSC-Semibold;
-          font-size: 28px;
-          line-height: 32px;
-          font-weight: 600;
           margin-bottom: 9px;
+          font-weight: 600;
+          font-size: 28px;
+          font-family: PingFangSC-Semibold;
+          line-height: 32px;
         }
         p {
-          height: 72px;
           width: 352px;
-          opacity: 0.65;
-          font-family: PingFangSC-Regular;
-          font-size: 16px;
-          line-height: 24px;
+          height: 72px;
           margin-bottom: 40px;
+          font-size: 16px;
+          font-family: PingFangSC-Regular;
+          line-height: 24px;
+          opacity: 0.65;
         }
         .useBtn {
-          height: 40px;
           width: 107px;
+          height: 40px;
+          color: #597ef7;
           border: 2px solid #597ef7;
           border-radius: 20px;
-          color: #597ef7;
         }
       }
     }
     .fillBottom {
       position: absolute;
       bottom: 0;
-      height: 130px;
       width: 100%;
+      height: 130px;
       background-image: url('./image//Combined\ Shape.svg');
       background-repeat: no-repeat;
       background-size: cover;
@@ -218,38 +225,38 @@
   }
 
   .clientContainer {
+    padding: 57px 0 20px;
     background: #ebebeb;
     box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, 0.1);
-    padding: 57px 0 20px;
     .clientCard {
-      color: #000000;
-      max-width: 1280px;
-      margin: 0 auto;
       display: flex;
-      margin-bottom: 80px;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-around;
+      max-width: 1280px;
+      margin: 0 auto;
+      margin-bottom: 80px;
+      color: #000000;
       img {
-        height: 530px;
         width: 848px;
+        height: 530px;
         background: #ffffff;
-        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
         border-radius: 10px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
       }
       h3 {
-        font-family: PingFangSC-Semibold;
-        font-size: 28px;
-        line-height: 32px;
-        font-weight: 600;
         margin-bottom: 24px;
+        font-weight: 600;
+        font-size: 28px;
+        font-family: PingFangSC-Semibold;
+        line-height: 32px;
       }
       p {
-        opacity: 0.65;
-        font-family: PingFangSC-Regular;
-        font-size: 16px;
-        line-height: 24px;
         width: 352px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        line-height: 24px;
+        opacity: 0.65;
       }
       .text {
         margin: auto;
@@ -261,22 +268,22 @@
 .footerContainer {
   position: relative;
   padding: 100px 0 95px;
-  background: #fff;
-  font-family: PingFangSC-Medium;
-  font-size: 16px;
   color: #000000;
-  opacity: 0.65;
-  letter-spacing: 0;
+  font-size: 16px;
+  font-family: PingFangSC-Medium;
   line-height: 24px;
+  letter-spacing: 0;
+  background: #fff;
+  opacity: 0.65;
   .fillTop {
     position: absolute;
     top: 0;
-    height: 170px;
     width: 100%;
+    height: 170px;
     overflow: hidden;
     background-image: url('./image//Combined\ Shape.svg');
     background-repeat: no-repeat;
-    background-size: cover;
     background-position-y: bottom;
+    background-size: cover;
   }
 }

@@ -1,36 +1,37 @@
 import { CaretDownOutlined } from '@ant-design/icons';
 import { Avatar, Button, Layout } from 'antd';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { levelTitleMapping } from './constant';
 import FeatureCard from './FeatureCard';
-import logoSvg from './image/logo.svg';
 import styles from './index.less';
 import SolutionCard from './SolutionCard';
 
-const { Header, Content, Footer } = Layout;
-
+const { Content, Footer } = Layout;
+const leftContent = (
+  <>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+      <Link to="/">首页</Link>
+    </span>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+      <Link to="/">解决方案</Link>
+    </span>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+      <Link to="/market">组件市场</Link>
+    </span>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+      <Link to="/">最佳实践</Link>
+    </span>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+      <Link to="/">学习中心</Link>
+    </span>
+  </>
+);
+const rightContent = <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>;
 const Home = () => (
   <Layout>
-    <Header className={styles.headerContainer}>
-      <div className={styles.left}>
-        <img src={logoSvg} alt="" />
-      </div>
-      <div className={styles.right}>
-        <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-          <Link to="/market">组件市场</Link>
-        </span>
-        <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-          支持与服务
-          <CaretDownOutlined style={{ marginLeft: '5px' }} />
-        </span>
-        <Avatar
-          style={{ width: '21px', height: '21px' }}
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        />
-      </div>
-    </Header>
-
+    <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
     <Content style={{ background: '#fff' }}>
       <div className={styles.contentContaniner}>
         <div className={styles.videoContainer}>
