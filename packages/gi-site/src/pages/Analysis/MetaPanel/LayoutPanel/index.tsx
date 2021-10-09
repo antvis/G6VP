@@ -1,7 +1,7 @@
 import GUI from '@ali/react-datav-gui';
 import * as React from 'react';
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import layoutConfig from './config';
-
 const { valueObj: defaultValueObj, configObj } = layoutConfig;
 
 /** 组件模块 配置面板 */
@@ -41,6 +41,7 @@ const LayoutPanel = props => {
 
   return (
     <div>
+      <AssetsCenterHandler title="布局" id="layouts" />
       <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} />
     </div>
   );

@@ -1,8 +1,9 @@
 import { FallOutlined, SmileOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import React from 'react';
-import NodeStylePanel from './Node';
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import EdgeStylePanel from './Edge';
+import NodeStylePanel from './Node';
 
 const { TabPane } = Tabs;
 
@@ -34,15 +35,20 @@ const EdgeTab = (
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const { elements } = props;
   const { node: NodeElements, edge: EdgeElements } = elements;
+
   return (
-    <Tabs defaultActiveKey="node" onChange={callback} centered>
-      <TabPane tab={NodeTab} key="node">
-        <NodeStylePanel {...props} elements={NodeElements} />
-      </TabPane>
-      <TabPane tab={EdgeTab} key="edge">
-        <EdgeStylePanel {...props} elements={EdgeElements} />
-      </TabPane>
-    </Tabs>
+    <>
+      <AssetsCenterHandler title="元素" id="elements" />
+
+      <Tabs defaultActiveKey="node" onChange={callback} centered>
+        <TabPane tab={NodeTab} key="node">
+          <NodeStylePanel {...props} elements={NodeElements} />
+        </TabPane>
+        <TabPane tab={EdgeTab} key="edge">
+          <EdgeStylePanel {...props} elements={EdgeElements} />
+        </TabPane>
+      </Tabs>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ export const navbarOptions = [
     id: 'data',
     name: '数据',
     icon: <DatabaseOutlined />,
-  }, 
+  },
   {
     id: 'style',
     name: '样式',
