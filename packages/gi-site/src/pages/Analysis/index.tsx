@@ -56,10 +56,6 @@ const Analysis = props => {
       isReady: false,
     });
 
-    // System.import('https://gw.alipayobjects.com/os/lib/antd/4.16.8/dist/antd.min.js').then(res => {
-    //   console.log('res', res);
-    // });
-
     getProjectById(projectId).then(project => {
       console.log('getProjectById', project);
 
@@ -78,6 +74,7 @@ const Analysis = props => {
           type: 'update:config',
           id: projectId,
           config,
+
           projectConfig: config,
           data: data,
           isReady: true,

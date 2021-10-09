@@ -1,12 +1,12 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
-import ComponentMarket from '../ComponentMarket';
 import Group from '../../../../components/DataVGui/Group';
 
 const extensions = {
   group: Group,
   test: Group,
 };
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -99,7 +99,7 @@ const ComponentPanel = props => {
 
   return (
     <div>
-      <ComponentMarket components={components} dispatch={dispatch} config={config} />
+      <AssetsCenterHandler title="组件" id="components" />
       <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
     </div>
   );
