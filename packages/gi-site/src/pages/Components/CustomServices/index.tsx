@@ -46,7 +46,7 @@ const CustomServices: React.FunctionComponent<CustomServicesProps> = props => {
   const { services, visible } = state;
   return (
     <div>
-      <BaseNavbar history={history}>
+      <BaseNavbar>
         <h4>资产中心</h4>
       </BaseNavbar>
       <Breadcrumb>

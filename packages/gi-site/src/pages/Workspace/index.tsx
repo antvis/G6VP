@@ -1,6 +1,7 @@
 import { useHistory, useRequest } from '@alipay/bigfish';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Card, Col, Drawer, Modal, Row } from 'antd';
+import { Link } from 'react-router-dom';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getProjectList, removeProjectById } from '../../services';
@@ -16,8 +17,6 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const [lists, setLists] = React.useState(defaultProjects);
   React.useEffect(() => {
     getProjects().then(list => {
-      console.log('Workspace', list);
-      // const list =  data.filter(d => d.isProject);
       setLists(list);
     });
   }, []);
@@ -49,12 +48,22 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       },
     });
   };
+  const leftContent = (
+    <>
+      <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+        <Link to="/workspace">项目列表</Link>
+      </span>
+      <span style={{ marginRight: '36px', cursor: 'pointer' }}>
+        <Link to="/market">资产市场</Link>
+      </span>
+    </>
+  );
   const { visible } = state;
-  console.log('id', lists);
+
   return (
     <>
       <div className="workspace">
-        <BaseNavbar history={history} />
+        <BaseNavbar leftContent={leftContent} />
 
         <Drawer
           title="创建项目"

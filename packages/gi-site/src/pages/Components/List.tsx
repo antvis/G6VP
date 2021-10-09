@@ -64,7 +64,7 @@ const ComponentMarket = props => {
   };
   return (
     <>
-      <BaseNavbar history={history}>
+      <BaseNavbar>
         <h4>资产中心</h4>
       </BaseNavbar>
       <div>
@@ -78,7 +78,12 @@ const ComponentMarket = props => {
               </span>
             }
           >
-            <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
+            <Row
+              gutter={[
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+              ]}
+            >
               <Col key="create-asset" style={{ width: '300px' }}>
                 <Card hoverable title="新建资产" onClick={() => handleShowCreateModel('component')}>
                   <PlusOutlined /> <br />
@@ -115,7 +120,12 @@ const ComponentMarket = props => {
             <Row>
               <Col span={12}>
                 <Card title={'节点元素 Node'}>
-                  <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
+                  <Row
+                    gutter={[
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                    ]}
+                  >
                     {NodeElements.map(c => {
                       //@ts-ignore
                       const { id, name } = c;
@@ -130,7 +140,12 @@ const ComponentMarket = props => {
               </Col>
               <Col span={12}>
                 <Card title={'边元素 Edge'}>
-                  <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
+                  <Row
+                    gutter={[
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                      { xs: 8, sm: 16, md: 16, lg: 16 },
+                    ]}
+                  >
                     {EdgeElements.map(c => {
                       //@ts-ignore
                       const { id, name } = c;
@@ -154,7 +169,12 @@ const ComponentMarket = props => {
             }
             key="service"
           >
-            <Row gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}>
+            <Row
+              gutter={[
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+                { xs: 8, sm: 16, md: 16, lg: 16 },
+              ]}
+            >
               <Col key="create-asset" style={{ width: '300px' }}>
                 <Card hoverable title="新建数据服务" onClick={() => handleShowCreateModel('service')}>
                   <PlusOutlined /> <br />
