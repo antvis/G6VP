@@ -1,25 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mapbox, GaodeMap } from '@antv/l7-maps';
-import { Scene, PointLayer } from '@antv/l7';
-import { AMapScene } from '@antv/l7-react';
-import { GraphinContext } from '@antv/graphin';
-import './index.less';
+import { Mapbox } from '@antv/l7-maps';
+import { Scene } from '@antv/l7';
+import { GraphinContext, Behaviors } from '@antv/graphin';
 
-const Mapmode = ({ visible, updateMapLayout, source }) => {
-  const [map, setMap] = useState({ lngLatToContainer: d => d });
-  const { GiState, dispatch, setGiState } = GraphinContext as any;
+const { ZoomCanvas, DragCanvas } = Behaviors;
+
+const Mapmode = () => {
+  const { GiState, setGiState } = GraphinContext as any;
 
   const posRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    return function cleanup() {
-      // 地图插入
-    };
-  });
+    const scene = new Scene({
+      id: document.querySelector('.graphin-core') as HTMLDivElement,
+      map: new Mapbox({
+        style: 'dark',
+        pitch: 43,
+        center: [120.13383079335335, 29.651873105004427],
+        zoom: 7.068989519212174,
+      }),
+    });
+    scene.on('load', () => {
+      onSceneLoaded(scene);
+    });
+    return () => cleanup(scene);
+  }, []);
+  const cleanup = scene => {
+    scene.destroy();
+  };
   const initLayout = (val, lngToContainer) => {
     const { nodes, edges } = val;
     const renderNodes = nodes.map(node => {
-      const pos = lngToContainer(node.data.coord);
+      const pos = lngToContainer(node.data.coord || [120.13383079335335, 29.651873105004427]);
 
       return {
         ...node,
@@ -39,66 +51,46 @@ const Mapmode = ({ visible, updateMapLayout, source }) => {
     });
   };
 
-  const transGraph = (ratio, center, trans) => {
-    const canvas = document.querySelector('.graphin-core canvas');
+  const transGraph = (ratio, center, trans, canvas) => {
     (canvas as any).style.transform = `translate(${center.x}px, ${
       center.y
     }px)scale(${ratio}, ${ratio})translate(${-center.x}px, ${-center.y}px)translate(${trans.x}px, ${trans.y}px)`;
   };
 
-  const onSceneLoaded = React.useCallback(
-    scene => {
-      const mapContainer = scene.getContainer().parentNode;
-      const graphinContainer = document.querySelector('#graphin-container');
-      graphinContainer?.parentNode?.insertBefore(mapContainer, graphinContainer);
+  const onSceneLoaded = scene => {
+    // 图画布移动到地图上侧
+    const graphCanvas = document.querySelector('.graphin-core canvas') as HTMLElement;
+    graphCanvas.style.position = 'relative';
+    const mapCanvas = document.querySelector('.mapboxgl-canvas');
+    mapCanvas?.parentNode?.appendChild(graphCanvas);
 
-      const zoom = Math.pow(2, scene.mapService.map.getZoom());
-      const center = scene.mapService.map.getCenter();
+    const zoom = Math.pow(2, scene.mapService.map.getZoom());
+    const center = scene.mapService.map.getCenter();
 
-      const centerPos = scene.mapService.map.lngLatToContainer(center);
-      setMap(scene.mapService.map);
+    const centerPos = scene.mapService.map.project(center);
 
-      initLayout(GiState.data, pos => scene.mapService.map.lngLatToContainer(pos));
+    initLayout(GiState.data, pos => scene.mapService.map.project(pos));
 
-      scene.mapService.map.on('mapmove', () => {
-        const z = Math.pow(2, scene.mapService.map.getZoom());
-        const c = scene.mapService.map.getCenter();
-        const cP = scene.mapService.map.lngLatToContainer(center);
-        transGraph(
-          z / zoom,
-          { x: cP.x - centerPos.x, y: cP.y - centerPos.y },
-          { x: cP.x - centerPos.x, y: cP.y - centerPos.y },
-        );
-      });
-      scene.mapService.map.on('mousemove', event => {
-        posRef.current = { x: event.originEvent.x, y: event.originEvent.y };
-      });
-    },
-    [GiState],
-  );
-
-  if (GiState.data.nodes.length === 0) {
-    return null;
-  }
+    scene.mapService.map.on('move', () => {
+      const z = Math.pow(2, scene.mapService.map.getZoom());
+      const c = scene.mapService.map.getCenter();
+      const cP = scene.mapService.map.project(center);
+      transGraph(
+        z / zoom,
+        { x: cP.x - centerPos.x, y: cP.y - centerPos.y },
+        { x: cP.x - centerPos.x, y: cP.y - centerPos.y },
+        graphCanvas,
+      );
+    });
+    scene.mapService.map.on('mousemove', event => {
+      posRef.current = { x: event.originalEvent.x, y: event.originalEvent.y };
+    });
+  };
   return (
-    <AMapScene
-      map={{
-        center: [110.19382669582967, 31.258134],
-        id: 'testtt',
-        pitch: 0,
-        style: 'dark',
-        zoom: 7,
-      }}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        // visibility: visible ? 'initial' : 'hidden',
-      }}
-      onSceneLoaded={onSceneLoaded}
-    ></AMapScene>
+    <>
+      <ZoomCanvas disabled={true} />
+      <DragCanvas disabled={true} />
+    </>
   );
 };
 

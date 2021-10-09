@@ -4,10 +4,9 @@
 import AddNode from './AddNode';
 import CanvasSetting from './CanvasSetting';
 import ContextMenu from './ContextMenu';
-// import Mapmode from './Mapmode';
+import Mapmode from './Mapmode';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
-// import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeLegend from './NodeLegend';
@@ -16,9 +15,9 @@ import OperatorBar from './OperatorBar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
-// import ClickEvent from './Liaoyuan/ClickEvent';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
+// import ContextMenu from './ContextMenu';
 
 export {
   Timeline,
@@ -30,7 +29,7 @@ export {
   NodeAttrs,
   GraphScope,
   Toolbar,
-  // Mapmode,
+  Mapmode,
   FilterPanel,
   AddNode,
   ContextMenu,

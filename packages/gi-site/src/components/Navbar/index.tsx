@@ -118,7 +118,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   }, []);
 
   const { name } = initProject;
-  const menu = (
+  const rightContent = (
     <>
       <Tooltip title="保存">
         <Button icon={<SaveOutlined />} onClick={handleSave}>
@@ -138,15 +138,16 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       </Tooltip>
     </>
   );
-
+  // const leftContent = (
+  //   <span className="navbar-db">
+  //     <a href={`#/market/services/${projectId}`} target="_blank">
+  //       <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
+  //       数据服务
+  //     </a>
+  //   </span>
+  // );
   return (
-    <BaseNavbar history={history} menu={menu}>
-      <span className="navbar-db">
-        <a href={`#/market/services/${projectId}`} target="_blank">
-          <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
-          数据服务
-        </a>
-      </span>
+    <BaseNavbar rightContent={rightContent}>
       <span
         className="navbar-title"
         ref={contentEditable}
@@ -157,10 +158,6 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       >
         {name}
       </span>
-
-      {/* <Drawer title="数据服务" placement="right" closable={false} onClose={handleClose} visible={visible} width={'80%'}>
-        <DataSource ref={servicesRef} defaultOptions={serviceConfig} />
-      </Drawer> */}
 
       <Drawer
         title="导出配置"
