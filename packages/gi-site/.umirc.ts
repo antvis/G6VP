@@ -7,7 +7,9 @@ export default {
   history: {
     type: 'hash',
   },
-
+  alias: {
+    '@': './src',
+  },
   //mfsu: {}, //https://github.com/umijs/umi/issues/6766
 
   routes: [
