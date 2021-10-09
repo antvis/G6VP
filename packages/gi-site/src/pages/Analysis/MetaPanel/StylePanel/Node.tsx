@@ -1,15 +1,20 @@
 import ColorMapping from '@ali/datav-gui-color-scale';
-import SizeMapping from '@ali/datav-gui-size-scale';
 import MarkerMapping from '@ali/datav-gui-marker-scale';
+import SizeMapping from '@ali/datav-gui-size-scale';
 import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
+import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
   markerMapping: MarkerMapping,
+};
+
+const extensions = {
+  TagsSelect,
 };
 
 const { Option } = Select;
@@ -61,7 +66,13 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   const GUIComponent = React.useMemo(() => {
     return (
-      <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
+      <GUI
+        configObj={configObj}
+        valueObj={valueObj}
+        freeExtensions={freeExtensions}
+        onChange={handleChangeConfig}
+        extensions={extensions}
+      />
     );
   }, [elementId, handleChangeConfig]);
 
