@@ -1,17 +1,17 @@
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Card, Col, Drawer, Modal, Row } from 'antd';
+import { Card, Col, Drawer, Modal, Row, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
+import { QuestionCircleOutlined, BellOutlined } from '@ant-design/icons';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getProjectList, removeProjectById } from '../../services';
 import CreatePanel from './Create';
+import ProjectList from './projectList';
 import './index.less';
 
 interface WorkspaceProps {}
-
+const { TabPane } = Tabs;
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
-  const history = useHistory();
   const { data: defaultProjects = [], run: getProjects } = useRequest(getProjectList);
 
   const [lists, setLists] = React.useState(defaultProjects);
@@ -58,62 +58,40 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       </span>
     </>
   );
+  const rightContent = (
+    <>
+      <QuestionCircleOutlined />
+      <BellOutlined />
+    </>
+  );
   const { visible } = state;
 
   return (
     <>
       <div className="workspace">
-        <BaseNavbar leftContent={leftContent} />
-
-        <Drawer
-          title="创建项目"
-          placement={'right'}
-          closable={false}
-          onClose={handleClose}
-          visible={visible}
-          width={'80%'}
-        >
-          <CreatePanel />
-        </Drawer>
-        <Card title="我的项目">
-          <Row gutter={[16, 16]}>
-            <Col key={'new'} span={6}>
-              <Card style={{ height: '100%', width: '100%' }} hoverable onClick={handleOpen} className="new">
-                <PlusOutlined style={{ fontSize: '22px', opacity: 0.85 }} />
-                <span className="new-title">新增项目</span>
-              </Card>
-            </Col>
-            {lists.map(item => {
-              const { id, name, gmtCreate } = item;
-              return (
-                <Col key={id} span={6}>
-                  <Card
-                    // style={{ height: 284, width: 321 }}
-                    hoverable
-                    cover={
-                      <img
-                        onClick={() => {
-                          history.push(`/workspace/${id}`);
-                        }}
-                        alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                      />
-                    }
-                  >
-                    <div className="card-content">
-                      <p>{name}</p>
-                      <div>
-                        <span>{gmtCreate}</span>
-                        <DeleteOutlined key="ellipsis" className="more" onClick={() => handleDelete(id)} />
-                      </div>
-                    </div>
-                  </Card>
-                </Col>
-              );
-            })}
-          </Row>
-        </Card>
+        <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
+        <Tabs style={{ margin: 15 }}>
+          <TabPane tab={'我的项目'} key={'project'}>
+            <ProjectList data={lists} handleOpen={handleOpen} handleDelete={handleDelete} type="project" />
+          </TabPane>
+          <TabPane tab={'我的收藏'} key={'collect'}>
+            <ProjectList data={lists} type="collect" />
+          </TabPane>
+          <TabPane tab={'行业案例'} key={'case'}>
+            <ProjectList data={lists} type="case" />
+          </TabPane>
+        </Tabs>
       </div>
+      <Drawer
+        title="创建项目"
+        placement={'right'}
+        closable={false}
+        onClose={handleClose}
+        visible={visible}
+        width={'80%'}
+      >
+        <CreatePanel />
+      </Drawer>
     </>
   );
 };
