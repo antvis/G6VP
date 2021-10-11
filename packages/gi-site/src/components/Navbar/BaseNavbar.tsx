@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import ThemeSwitch from '@alipay/theme-tools';
-import { PlayCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from '@alipay/bigfish';
-import { Button, Tooltip, Avatar, Layout } from 'antd';
+import { Tooltip, Avatar, Layout } from 'antd';
 import * as React from 'react';
 import ThemeVars from '../ThemeVars';
 import styles from './index.less';
@@ -27,22 +26,21 @@ const BaseNavbar = props => {
       {children}
       <div className={styles.right}>
         {rightContent}
+        <Tooltip title="切换主题">
+          <ThemeSwitch
+            themeVars={ThemeVars}
+            antdCssLinks={{
+              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/dark.css',
+              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/light.css',
+            }}
+          ></ThemeSwitch>
+        </Tooltip>
         <Avatar
           style={{ width: '21px', height: '21px' }}
           src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         />
       </div>
     </Header>
-    //     <Tooltip title="切换主题">
-    //       <ThemeSwitch
-    //         themeVars={ThemeVars}
-    //         antdCssLinks={{
-    //           dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/dark.css',
-    //           light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/light.css',
-    //         }}
-    //       ></ThemeSwitch>
-    //       {/* <Button icon={<BgColorsOutlined />}></Button> */}
-    //     </Tooltip>
   );
 };
 
