@@ -104,27 +104,28 @@ const ComponentMarket = props => {
       if (typeof prev === 'string') {
         if (prev === 'demo.tsx') {
           pervObj = {
-            [`/index.js`]: {
+            [`/src/demo.tsx`]: {
               code: isc[prev],
-              fpath: `/index.js`,
-              entry: 1,
-            },
-          };
+              // fpath: `src/index.js`,
+              fpath: `/src/${prev}`,
+              entry: 1
+            }
+          }
         } else {
           pervObj = {
-            [`/${prev}`]: {
+            [`/src/${prev}`]: {
               code: isc[prev],
-              fpath: `/${prev}`,
-            },
-          };
+              fpath: `/src/${prev}`
+            }
+          }
         }
       }
 
       const fileObj = {
         code: isc[file],
-        fpath: `/${file}`,
-      };
-
+        fpath: `/src/${file}`
+      }
+      
       if (file === 'demo.tsx') {
         // @ts-ignore
         fileObj.entry = 1;
@@ -142,9 +143,9 @@ const ComponentMarket = props => {
 
       return {
         ...pervObj,
-        [`/${file}`]: fileObj,
-      };
-    });
+        [`/src/${file}`]: fileObj
+      }
+    })
 
     return previewCodeMap;
   };
@@ -157,20 +158,26 @@ const ComponentMarket = props => {
     const demoFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'demo.tsx',
-    });
+      path: 'src/demo.tsx'
+    })
 
-    const styleFile = await getFileSourceCode({
+    const demoStyleFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'index.module.less',
-    });
+      path: 'src/demo.module.less'
+    })
+
+    const componentStyleFile = await getFileSourceCode({
+      projectName,
+      branchName,
+      path: 'src/styles.less'
+    })
 
     const componentFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'component.tsx',
-    });
+      path: 'src/Component.tsx'
+    })
 
     const packageFile = await getFileSourceCode({
       projectName,
@@ -180,10 +187,11 @@ const ComponentMarket = props => {
 
     const initSourceCode = {
       'demo.tsx': demoFile.data,
-      'index.module.less': styleFile.data,
-      'component.tsx': componentFile.data,
-      'package.json': packageFile.data,
-    };
+      'demo.module.less': demoStyleFile.data,
+      'styles.less': componentStyleFile.data,
+      'Component.tsx': componentFile.data,
+      'package.json': packageFile.data
+    }
 
     const previewCodeModules = fileMapToModules(initSourceCode);
     setState(draft => {
@@ -352,13 +360,7 @@ const ComponentMarket = props => {
       </Button>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
-          <GraphInsightIDE
-            id="test"
-            readOnly={false}
-            appRef={appRef}
-            mode={assetType === '1' ? 'demo.tsx' : 'index.ts'}
-            codeChange={codeChangeCallback}
-          />
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? '/src/demo.tsx' : '/src/index.ts' } codeChange={codeChangeCallback}  />
         </div>
         {assetType !== '3' && (
           <div style={{ marginTop: 20 }} className="gi-config-wrapper">

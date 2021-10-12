@@ -2,22 +2,14 @@
 // import * as ComponentAssets from '@alipay/graphinsight/es/components';
 // import * as ElementAssets from '@alipay/graphinsight/es/elements';
 
-// import giAssets from '@alipay/gi-assets';
+import giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { queryAssetList } from './assets';
 import { isMock } from './const';
 import { dynamicLoadModules } from '../loader'
-// const { components: GiComponents, elements } = giAssets;
 
-/** 临时方案：第三方组件库的图资产 */
-// const GeaMakerComponents = {};
-
-// const components = {
-//   ...GiComponents,
-//   ...GeaMakerComponents,
-// };
-
-/** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
+// TODO 临时方案，需要换成和 Component 一样的方案
+const { elements } = giAssets;
 
 /**
  * 获取指定项目
@@ -25,20 +17,32 @@ import { dynamicLoadModules } from '../loader'
  * @returns
  */
 export const queryAssets = async (id: string) => {
+  // 解压资产，获取脚本路径
+
   // TODO: 动态加载 GI 资产，临时使用 GI 发布的资产包，需要改成从数据库中读取资产，然后按需加载
   const dlm = await dynamicLoadModules([
     {
-      name: 'GIAssets',
-      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js'
-    }
+      name: 'NodeLegend',
+      // url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js'
+      url: 'http://alipay-rmsdeploy-image.cn-hangzhou.alipay.aliyun-inc.com/GraphInsight/test_legend-5e0ece9910fc7e3c9a7e2d228453e330.js'
+    },
+    // {
+    //   name: 'NodeLegend1',
+    //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js'
+    //   // url: 'http://alipay-rmsdeploy-image.cn-hangzhou.alipay.aliyun-inc.com/GraphInsight/test_legend-5e0ece9910fc7e3c9a7e2d228453e330.js'
+    // },
   ])
   let components = {}
-  let elements = {}
+  // let elements = {}
   if (dlm && dlm.length > 0) {
-    components = dlm[0]?.components?.default?.components
-    elements = dlm[0]?.components?.default?.elements
+    components = dlm.reduce((acc, curr) => {
+      return {
+        ...acc,
+        ...curr.components
+      }
+    }, {})
   }
-  
+
   if (isMock) {
     const { serviceConfig } = await localforage.getItem(id);
     return await new Promise(resolve => {
