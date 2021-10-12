@@ -17,7 +17,8 @@ const { TabPane } = Tabs;
 
 const ComponentMarket = props => {
   const { history } = props;
-
+  console.log('useImmer', useImmer);
+  debugger;
   const [state, setState] = useImmer({
     components: [],
     elements: { node: {}, edge: {} },
@@ -28,7 +29,7 @@ const ComponentMarket = props => {
 
   const getAssertList = async () => {
     const result = await queryAssetList();
-    
+
     const { data, success } = result;
     if (success) {
       const componentList = data.filter(d => d.type === 1);
