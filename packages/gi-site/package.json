@@ -32,6 +32,7 @@
     "antd": "^4.2.4",
     "classnames": "^2.2.6",
     "dayjs": "^1.10.5",
+    "immer": "^9.0.6",
     "immutability-helper-x": "^1.0.5",
     "js-beautify": "^1.11.0",
     "localforage": "^1.9.0",
@@ -43,7 +44,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.1",
     "redux": "^4.1.0",
-    "systemjs": "latest",
+    "systemjs": "^0.21.6",
     "umi": "latest",
     "umi-request": "^1.3.9",
     "use-immer": "latest"

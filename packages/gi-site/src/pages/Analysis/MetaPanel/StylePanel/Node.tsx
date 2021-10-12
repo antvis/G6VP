@@ -34,7 +34,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   /*** 当前元素物料 */
   const element = elements[elementId];
-  const { configObj } = element.meta;
+  const { configObj } = element?.meta;
   const valueObj = extractDefault({ config: configObj, value: nodeConfig.props });
 
   const handleChangeConfig = evt => {
