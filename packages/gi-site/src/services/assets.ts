@@ -219,11 +219,15 @@ export const createNewProjectOnAntCode = async projectParams => {
   return convertResponse(response);
 };
 
+/**
+ * 使用 Chair Task 进行在线构建
+ * @param buildParams 构建参数
+ */
 export const buildAssetWithTask = async (buildParams: BuildParams) => {
   const response = await request(`${SERVICE_URL_PREFIX}/asset/buildasset`, {
     method: 'post',
-    data: buildParams
-  })
+    data: buildParams,
+  });
 
-  return response
-}
+  return response;
+};
