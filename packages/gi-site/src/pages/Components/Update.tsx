@@ -345,14 +345,14 @@ const ComponentMarket = props => {
       });
     }
   };
-  const rightContent = (
-    <Button onClick={handlePublish} icon={<PlayCircleOutlined />}>
-      发布
-    </Button>
-  );
+  // const rightContent = (
+  //   <Button onClick={handlePublish} icon={<PlayCircleOutlined />}>
+  //     发布
+  //   </Button>
+  // );
   return (
     <>
-      <BaseNavbar rightContent={rightContent}>
+      <BaseNavbar>
         <h4>物料中心</h4>
       </BaseNavbar>
       <Button onClick={handlePublish} style={{ position: 'absolute', right: 8, top: 1 }}>

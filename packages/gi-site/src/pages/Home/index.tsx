@@ -28,7 +28,15 @@ const leftContent = (
     </span>
   </>
 );
-const rightContent = <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>;
+const rightContent = (
+  <>
+    <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>
+    <Avatar
+      style={{ width: '21px', height: '21px' }}
+      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+    />
+  </>
+);
 const Home = () => (
   <Layout>
     <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
