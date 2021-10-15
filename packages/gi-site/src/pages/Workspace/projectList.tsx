@@ -16,8 +16,8 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const addButton = (
     <Col key={'new'} span={6}>
       <Card style={{ height: '100%', width: '100%', minHeight: 236 }} hoverable onClick={handleOpen} className="new">
-        <PlusOutlined style={{ fontSize: '22px', opacity: 0.85 }} />
-        <span className="new-title">新增项目</span>
+        <PlusOutlined style={{ fontSize: '100px', opacity: 0.15, color: '#177DDC' }} />
+        <span className="new-title">创建项目</span>
       </Card>
     </Col>
   );
@@ -65,9 +65,8 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 }
               >
                 <div className="card-content">
-                  <p>{name}</p>
-                  <div>
-                    <span>{gmtCreate}</span>
+                  <div className="card-title">
+                    <p>{name}</p>
                     <span>
                       {type === 'project' ? projectButton : collectButton}
                       <Dropdown overlay={menu(id)} placement="bottomCenter">
@@ -75,6 +74,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                       </Dropdown>
                     </span>
                   </div>
+                  <span>{gmtCreate}</span>
                 </div>
               </Card>
             </Col>

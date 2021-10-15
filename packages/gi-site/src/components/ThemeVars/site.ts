@@ -6,6 +6,8 @@ export default {
     // 主要文本颜色
     '--primary-text-color': 'rgba(0, 0, 0, 0.85)',
     '--border-color': '#ddd',
+    // 导航栏文本颜色
+    '--primary-title-text-color': 'rgba(0, 0, 0, 0.65)',
   },
   dark: {
     '--primary-color': '#363b40',
@@ -14,5 +16,7 @@ export default {
     // 主要文本颜色
     '--primary-text-color': 'rgba(255, 255, 255, 0.85)',
     '--border-color': '#303030',
+    // 导航栏文本颜色
+    '--primary-title-text-color': 'rgba(255, 255, 255, 0.65)',
   },
 };

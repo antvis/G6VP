@@ -1,49 +1,84 @@
-.componet-market {
-  padding: 16px;
-  height: calc(100vh - 40px);
-  padding-top: 0;
-  display: flex;
-
-  .gi-sdk-wrapper {
-    height: 57%;
-    // display: flex;
-    justify-content: space-around;
+.container {
+  height: 258px;
+  background: #d8d8d8;
+  .title {
+    position: absolute;
+    top: 89px;
+    left: 120px;
+    color: #ffffff;
+    font-size: 40px;
+    letter-spacing: 0;
   }
-
-  .gi-ide-wrapper {
-    width: 60%;
-    height: 100%;
-    // display: flex;
-    justify-content: space-around;
+  .buttongroup {
+    position: relative;
+    top: 108px;
+    left: 120px;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
   }
+}
 
-  .gi-config-wrapper {
-    width: 40%;
-    height: 100%;
-    flex: 1;
-    justify-content: space-around;
+.lists {
+  .ant-radio-button-wrapper {
+    border-left-width: 1px;
   }
-
-  .ant-tabs {
-    height: 100%;
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before,
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    background-color: transparent;
   }
-
-  .ant-tabs-content {
-    height: 100%;
-  }
-
-  .config {
-    background: #fafafa;
-  }
-  .content.config {
-    height: 30%;
-    width: 100%;
-    overflow: auto;
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: transparent;
   }
 
-  .content.view {
-    padding: 16px;
-    height: 70%;
-    width: 100%;
+  .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap,
+  .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-wrap {
+    margin: 10px 50px;
   }
+
+  .ant-tabs-content-holder {
+    margin: 0px 50px;
+  }
+  .ant-tabs-tab-active {
+    border-bottom-color: none;
+  }
+
+  .ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar,
+  .ant-tabs-top > div > .ant-tabs-nav .ant-tabs-ink-bar {
+    background: transparent;
+  }
+
+  .ant-tabs-top > .ant-tabs-nav::before,
+  .ant-tabs-bottom > .ant-tabs-nav::before,
+  .ant-tabs-top > div > .ant-tabs-nav::before,
+  .ant-tabs-bottom > div > .ant-tabs-nav::before {
+    border-bottom: none;
+  }
+  .fliter {
+    .ant-radio-button-wrapper:focus-within {
+      box-shadow: none;
+    }
+  }
+}
+
+.control {
+  height: 171px;
+  padding-top: 85px;
+  padding-left: 120px;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.05);
+}
+
+.background {
+  position: relative;
+  top: -40px;
+  float: right;
+  width: calc(100% - 100px);
+  height: 90px;
+  padding-top: 20px;
+  padding-left: 54px;
+  color: #ffffff;
+  font-size: 30px;
+  font-family: PingFangSC-Medium;
+  background-color: rgb(74, 124, 249);
+  border-radius: 8px;
 }

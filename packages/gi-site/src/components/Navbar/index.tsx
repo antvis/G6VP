@@ -2,8 +2,10 @@
 import { useHistory, useRequest } from '@alipay/bigfish';
 import { DatabaseOutlined, ExportOutlined, SaveOutlined, createFromIconfontCN } from '@ant-design/icons';
 import { Button, Drawer, Modal, Tooltip } from 'antd';
+import ThemeSwitch from '@alipay/theme-tools';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ThemeVars from '../ThemeVars';
 import { getProjectById, updateProjectById } from '../../services';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
@@ -109,10 +111,6 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     });
   };
 
-  const backWorkspace = () => {
-    history.push(`/workspace`);
-  };
-
   React.useEffect(() => {
     run();
   }, []);
@@ -130,24 +128,24 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
           导出
         </Button>
       </Tooltip>
-      <Button onClick={backWorkspace}>返回列表</Button>
       <Tooltip title="自动推荐样式">
         <Button onClick={handleAiIconClick}>
           <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
         </Button>
       </Tooltip>
+      <Tooltip title="切换主题">
+        <ThemeSwitch
+          themeVars={ThemeVars}
+          antdCssLinks={{
+            dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/dark.css',
+            light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/light.css',
+          }}
+        ></ThemeSwitch>
+      </Tooltip>
     </>
   );
-  // const leftContent = (
-  //   <span className="navbar-db">
-  //     <a href={`#/market/services/${projectId}`} target="_blank">
-  //       <DatabaseOutlined style={{ padding: '12px 5px', paddingLeft: '0px' }} />
-  //       数据服务
-  //     </a>
-  //   </span>
-  // );
   return (
-    <BaseNavbar rightContent={rightContent}>
+    <BaseNavbar rightContent={rightContent} leftContent={<></>}>
       <span
         className="navbar-title"
         ref={contentEditable}
