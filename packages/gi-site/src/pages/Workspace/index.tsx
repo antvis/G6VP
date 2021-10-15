@@ -1,8 +1,6 @@
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { Card, Col, Drawer, Modal, Row, Tabs } from 'antd';
-import { Link } from 'react-router-dom';
+import { Drawer, Modal, Tabs } from 'antd';
 import * as React from 'react';
-import { QuestionCircleOutlined, BellOutlined } from '@ant-design/icons';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getProjectList, removeProjectById } from '../../services';
 import CreatePanel from './Create';
@@ -48,29 +46,14 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       },
     });
   };
-  const leftContent = (
-    <>
-      <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-        <Link to="/workspace">项目列表</Link>
-      </span>
-      <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-        <Link to="/market">资产市场</Link>
-      </span>
-    </>
-  );
-  const rightContent = (
-    <>
-      <QuestionCircleOutlined />
-      <BellOutlined />
-    </>
-  );
+
   const { visible } = state;
 
   return (
     <>
       <div className="workspace">
-        <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
-        <Tabs style={{ margin: 15 }}>
+        <BaseNavbar />
+        <Tabs>
           <TabPane tab={'我的项目'} key={'project'}>
             <ProjectList data={lists} handleOpen={handleOpen} handleDelete={handleDelete} type="project" />
           </TabPane>
