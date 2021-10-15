@@ -1,15 +1,36 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import ThemeSwitch from '@alipay/theme-tools';
 import { useHistory } from '@alipay/bigfish';
 import { Tooltip, Avatar, Layout } from 'antd';
 import * as React from 'react';
-import ThemeVars from '../ThemeVars';
+import { Link } from 'react-router-dom';
+import { QuestionCircleOutlined, BellOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
 const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
-  const { children, leftContent, rightContent } = props;
+  const { active = 'workspace' } = props;
+  const defaultLeft = (
+    <>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
+        <Link to="/workspace">项目列表</Link>
+      </div>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
+        <Link to="/market">资产市场</Link>
+      </div>
+    </>
+  );
+  const defaultRight = (
+    <>
+      <QuestionCircleOutlined style={{ marginRight: 26 }} />
+      <BellOutlined style={{ marginRight: 26 }} />
+      <Avatar
+        style={{ width: '21px', height: '21px' }}
+        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      />
+    </>
+  );
+
+  const { children, leftContent = defaultLeft, rightContent = defaultRight } = props;
   return (
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
@@ -18,28 +39,13 @@ const BaseNavbar = props => {
           alt="logo"
           style={{ marginRight: '36px' }}
           onClick={() => {
-            history.push('/');
+            history.push('/workspace');
           }}
         />
         {leftContent}
       </div>
       {children}
-      <div className={styles.right}>
-        {rightContent}
-        <Tooltip title="切换主题">
-          <ThemeSwitch
-            themeVars={ThemeVars}
-            antdCssLinks={{
-              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/dark.css',
-              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/light.css',
-            }}
-          ></ThemeSwitch>
-        </Tooltip>
-        <Avatar
-          style={{ width: '21px', height: '21px' }}
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        />
-      </div>
+      <div className={styles.right}>{rightContent}</div>
     </Header>
   );
 };

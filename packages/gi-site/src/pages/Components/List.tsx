@@ -1,6 +1,6 @@
 // 组件市场
 import { AppstoreOutlined, BranchesOutlined, PlusOutlined, DatabaseOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Tabs } from 'antd';
+import { Card, Col, Radio, Tabs, Button, Row } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -11,7 +11,7 @@ import { queryAssetList } from '../../services/assets';
 import CreateAsset from './Create';
 import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
-import './index.less';
+import styles from './index.less';
 
 const { TabPane } = Tabs;
 
@@ -64,144 +64,73 @@ const ComponentMarket = props => {
       draft.type = null;
     });
   };
+
+  const fliterGroup = (
+    <div className={styles.control}>
+      <Radio.Group defaultValue="asserts" size="middle" className="fliter">
+        <Radio.Button value="asserts" style={{ marginRight: 10, border: 'none' }}>
+          全部资产
+        </Radio.Button>
+        <Radio.Button value="elements" style={{ marginRight: 10, border: 'none' }}>
+          我收藏的
+        </Radio.Button>
+      </Radio.Group>
+      <div style={{ position: 'relative', top: 10, left: 12 }}>
+        <Radio.Group defaultValue="components" size="small" className={styles.assetType}>
+          <Radio.Button value="components" style={{ marginRight: 10, borderRadius: 17 }}>
+            组件
+          </Radio.Button>
+          <Radio.Button value="elements" style={{ marginRight: 10, borderRadius: 17 }}>
+            元素
+          </Radio.Button>
+          <Radio.Button value="layout" style={{ marginRight: 10, borderRadius: 17 }}>
+            布局
+          </Radio.Button>
+        </Radio.Group>
+      </div>
+    </div>
+  );
   return (
     <>
-      <BaseNavbar>
-        <h4>资产中心</h4>
-      </BaseNavbar>
-      <div>
-        <Tabs defaultActiveKey="component" centered>
-          <TabPane
-            key="components"
-            tab={
-              <span>
-                <AppstoreOutlined />
-                组件
-              </span>
-            }
-          >
-            <Row
-              gutter={[
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-              ]}
-            >
-              <Col key="create-asset" style={{ width: '300px' }}>
-                <Card hoverable title="新建资产" onClick={() => handleShowCreateModel('component')}>
-                  <PlusOutlined /> <br />
-                  点击创建新的资产
-                </Card>
+      <BaseNavbar active="market"></BaseNavbar>
+      <div className={styles.container}>
+        <div className={styles.title}>图可视分析资产市场</div>
+        <div className={styles.buttongroup}>
+          <Button type="primary" shape="round" onClick={() => handleShowCreateModel('component')}>
+            创建资产
+          </Button>
+          <Button shape="round" ghost>
+            我的资产
+          </Button>
+        </div>
+      </div>
+      <div className={styles.background}>官方知识图谱样板间资产上线！</div>
+      <div className="lists">
+        {fliterGroup}
+        <Row
+          gutter={[
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+          ]}
+          style={{ marginLeft: 120, marginTop: 15 }}
+        >
+          {services.map(c => {
+            const { id, name, displayName, description, branchName, type } = c;
+            return (
+              <Col key={id} style={{ width: '300px' }}>
+                <Link
+                  to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
+                  style={{ color: '#424447' }}
+                >
+                  <Card hoverable title={displayName}>
+                    {name}「{branchName}」 <br />
+                    {description}
+                  </Card>
+                </Link>
               </Col>
-              {components.map(c => {
-                const { id, name, displayName, description, branchName, type } = c;
-                return (
-                  <Col key={id} style={{ width: '300px' }}>
-                    <Link
-                      to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
-                      style={{ color: '#424447' }}
-                    >
-                      <Card hoverable title={displayName}>
-                        {name}「{branchName}」 <br />
-                        {description}
-                      </Card>
-                    </Link>
-                  </Col>
-                );
-              })}
-            </Row>
-          </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <BranchesOutlined />
-                元素
-              </span>
-            }
-            key="elements"
-          >
-            <Row>
-              <Col span={12}>
-                <Card title={'节点元素 Node'}>
-                  <Row
-                    gutter={[
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                    ]}
-                  >
-                    {NodeElements.map(c => {
-                      //@ts-ignore
-                      const { id, name } = c;
-                      return (
-                        <Col key={id} style={{ width: '300px' }}>
-                          <Card title={name}>{name}</Card>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </Card>
-              </Col>
-              <Col span={12}>
-                <Card title={'边元素 Edge'}>
-                  <Row
-                    gutter={[
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                      { xs: 8, sm: 16, md: 16, lg: 16 },
-                    ]}
-                  >
-                    {EdgeElements.map(c => {
-                      //@ts-ignore
-                      const { id, name } = c;
-                      return (
-                        <Col key={id} style={{ width: '300px' }}>
-                          <Card title={name}>{name}</Card>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </Card>
-              </Col>
-            </Row>
-          </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <DatabaseOutlined />
-                数据服务
-              </span>
-            }
-            key="service"
-          >
-            <Row
-              gutter={[
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-                { xs: 8, sm: 16, md: 16, lg: 16 },
-              ]}
-            >
-              <Col key="create-asset" style={{ width: '300px' }}>
-                <Card hoverable title="新建数据服务" onClick={() => handleShowCreateModel('service')}>
-                  <PlusOutlined /> <br />
-                  点击创建新的数据服务
-                </Card>
-              </Col>
-              {services.map(c => {
-                const { id, name, displayName, description, branchName, type } = c;
-                return (
-                  <Col key={id} style={{ width: '300px' }}>
-                    <Link
-                      to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
-                      style={{ color: '#424447' }}
-                    >
-                      <Card hoverable title={displayName}>
-                        {name}「{branchName}」 <br />
-                        {description}
-                      </Card>
-                    </Link>
-                  </Col>
-                );
-              })}
-            </Row>
-          </TabPane>
-        </Tabs>
+            );
+          })}
+        </Row>
       </div>
       <CreateAsset visible={state.visible} close={handleClose} type={state.type} history={history} />
     </>
