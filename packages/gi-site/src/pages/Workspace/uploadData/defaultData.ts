@@ -1,7 +1,7 @@
-import daxue from '../../mock/daxue.json';
-import demo from '../../mock/demo.json';
-import enterprise from '../../mock/enterprise.json';
-import liaoyuan from '../../mock/liaoyuan.json';
+import daxue from '../../../mock/daxue.json';
+import demo from '../../../mock/demo.json';
+import enterprise from '../../../mock/enterprise.json';
+import liaoyuan from '../../../mock/liaoyuan.json';
 
 export const defaultData = {
   GIConfig: daxue,

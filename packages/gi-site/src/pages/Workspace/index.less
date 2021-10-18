@@ -120,3 +120,16 @@
     background: transparent;
   }
 }
+
+.round {
+  .ant-radio-button-wrapper {
+    border-left-width: 1px;
+  }
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before,
+  .ant-radio-button-wrapper:not(:first-child)::before {
+    background-color: transparent;
+  }
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+    background-color: transparent;
+  }
+}

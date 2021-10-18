@@ -119,17 +119,17 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const rightContent = (
     <>
       <Tooltip title="保存">
-        <Button icon={<SaveOutlined />} onClick={handleSave}>
+        <Button icon={<SaveOutlined />} onClick={handleSave} size="small">
           保存
         </Button>
       </Tooltip>
       <Tooltip title="导出">
-        <Button icon={<ExportOutlined />} onClick={handleOutOpen}>
+        <Button icon={<ExportOutlined />} onClick={handleOutOpen} size="small">
           导出
         </Button>
       </Tooltip>
       <Tooltip title="自动推荐样式">
-        <Button onClick={handleAiIconClick}>
+        <Button onClick={handleAiIconClick} size="small">
           <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
         </Button>
       </Tooltip>
