@@ -65,16 +65,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
           </TabPane>
         </Tabs>
       </div>
-      <Drawer
-        title="创建项目"
-        placement={'right'}
-        closable={false}
-        onClose={handleClose}
-        visible={visible}
-        width={'80%'}
-      >
-        <CreatePanel />
-      </Drawer>
+      <CreatePanel visible={visible} handleClose={handleClose} />
     </>
   );
 };
