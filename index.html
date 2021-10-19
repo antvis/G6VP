@@ -5,18 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!--- REACT DEPENDENCIES-->
-    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!--- GRAPHIN DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
-    <!--- GI DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.3.1/dist/index.min.js"></script>
+
     <!--- CSS -->
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
@@ -28,30 +17,30 @@
 
     <script type="text/babel">
       window.onload = () => {
-        console.log("Graphin & GIAssets & GISDK", Graphin, GIAssets, GISDK);
+        console.log('Graphin & GIAssets & GISDK', Graphin, GIAssets, GISDK);
 
         // Mock 的 Config 配置
         const config = {
           node: {
-            id: "GraphinNode",
+            id: 'GraphinNode',
             props: {},
           },
           edge: {
-            id: "GraphinEdge",
+            id: 'GraphinEdge',
             props: {},
           },
           components: [
             {
-              id: "NodeCount",
+              id: 'NodeCount',
               props: {
                 enable: true,
               },
             },
           ],
           layout: {
-            id: "graphin-force",
+            id: 'graphin-force',
             props: {
-              type: "graphin-force",
+              type: 'graphin-force',
             },
           },
         };
@@ -64,7 +53,7 @@
                 return <div>NodeCount</div>;
               },
               info: {
-                id: "NodeCount",
+                id: 'NodeCount',
               },
               registerMeta: () => {},
             },
@@ -73,12 +62,12 @@
 
         const MyServices = [
           {
-            id: "GI_SERVICE_INTIAL_GRAPH",
+            id: 'GI_SERVICE_INTIAL_GRAPH',
             service: () => {
-              return new Promise((resolve) => {
+              return new Promise(resolve => {
                 resolve({
-                  nodes: [{ id: "node-1" }, { id: "node-2" }],
-                  edges: [{ source: "node-1", target: "node-2" }],
+                  nodes: [{ id: 'node-1' }, { id: 'node-2' }],
+                  edges: [{ source: 'node-1', target: 'node-2' }],
                 });
               });
             },
@@ -99,13 +88,13 @@
         };
 
         const LoadGraphSDK = () => {
-          const giProjectURL = "https://storehouse.test.alipay.net/project/list/100004";
+          const giProjectURL = 'https://storehouse.test.alipay.net/project/list/100004';
           const servicesOpt = [
             {
-              id: "GI_SERVICE_INTIAL_GRAPH",
-              content: " (data) => {\n return data \n}",
-              mode: "mock",
-              name: "GI 初始化服务",
+              id: 'GI_SERVICE_INTIAL_GRAPH',
+              content: ' (data) => {\n return data \n}',
+              mode: 'mock',
+              name: 'GI 初始化服务',
             },
           ];
           const [state, setState] = React.useState({
@@ -115,8 +104,8 @@
           });
           React.useEffect(() => {
             fetch(giProjectURL)
-              .then((res) => res.json())
-              .then((res) => {
+              .then(res => res.json())
+              .then(res => {
                 const data = JSON.parse(res.data[0].data);
                 const projectConfig = JSON.parse(res.data[0].projectConfig);
                 const serviceConfig = JSON.parse(res.data[0].serviceConfig);
@@ -127,7 +116,7 @@
                   services,
                 };
                 console.log(res, data, assets, ASSETS, projectConfig);
-                setState((preState) => {
+                setState(preState => {
                   return {
                     data: res,
                     isReady: true,
@@ -160,8 +149,44 @@
           );
         };
 
-        ReactDOM.render(<Header text="graph insight" />, document.getElementById("root"));
+        ReactDOM.render(<Header text="graph insight" />, document.getElementById('root'));
       };
     </script>
+    <script>
+      const loadScript = src =>
+        new Promise((resolve, reject) => {
+          if (document.querySelector(`[src="${src}"]`)) {
+            return resolve();
+          }
+          const e = document.createElement('script');
+          e.src = src;
+          e.onload = resolve;
+          e.onerror = reject;
+          document.head.appendChild(e);
+        });
+
+      const flow = tasks => tasks.reduce((p, t) => p.then(t), Promise.resolve());
+
+      // flow([
+      //   () => loadScript('https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js'),
+      //   () => loadScript('https://g.alipay.com/@alipay/alex@latest/languages/languages.global.min.js'),
+      // ]);
+    </script>
+    <!--- REACT DEPENDENCIES-->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--- GRAPHIN DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
+    <!--- GI DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.3.1/dist/index.min.js"></script>
+    <!-- <script src="https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js"></script> -->
+
+    <script src="https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js"></script>
+    <script src="https://g.alipay.com/@alipay/alex@latest/languages/languages.global.min.js"></script>
   </body>
 </html>

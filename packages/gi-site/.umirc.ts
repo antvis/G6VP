@@ -46,6 +46,7 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
+    '@alipay/alex': 'Alex',
   },
   scripts: [
     'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
@@ -57,11 +58,15 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
+
+    'https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js',
+    'https://g.alipay.com/@alipay/alex@latest/languages/languages.global.min.js',
   ],
   styles: [
     // "https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css",
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css',
+    'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
   analyze: {
     analyzerMode: 'server',
