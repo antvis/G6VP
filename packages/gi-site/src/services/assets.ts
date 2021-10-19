@@ -1,4 +1,5 @@
-import { BrowserFSFileType } from '@alipay/alex-core';
+// import { BrowserFSFileType } from '@alipay/alex-core';
+type BrowserFSFileType = any;
 import request from 'umi-request';
 import { isMock, SERVICE_URL_PREFIX } from './const';
 
