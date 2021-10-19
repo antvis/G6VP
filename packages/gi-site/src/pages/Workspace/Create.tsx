@@ -1,6 +1,6 @@
 import { Button, Modal, Form, Input, Space, Radio, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import './index.less';
 
@@ -12,12 +12,25 @@ interface IProps {
 const { Option } = Select;
 const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   const [form] = Form.useForm();
-
+  const defaultData = [
+    {
+      name: 'test',
+      id: 1,
+      state: 'master',
+    },
+  ];
+  const [dataSource, setDataSource] = useState(() => defaultData);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
   const columns = [
     {
       title: '用户名',
       dataIndex: 'name',
       width: '40%',
+      formItemProps: (form, { rowIndex }) => {
+        return {
+          rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
     },
     {
       title: '权限',
@@ -25,18 +38,23 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       dataIndex: 'state',
       valueType: 'select',
       valueEnum: {
-        all: { text: '全部', status: 'Default' },
-        open: {
-          text: '未解决',
-          status: 'Error',
+        master: { text: 'master' },
+        developer: {
+          text: '可编辑',
         },
-        closed: {
-          text: '已解决',
-          status: 'Success',
+        reporter: {
+          text: '仅可见',
         },
       },
     },
+    {
+      title: '操作',
+      valueType: 'option',
+      width: 250,
+      render: () => null,
+    },
   ];
+
   const onFinish = values => {
     console.log('form values', values);
   };
@@ -44,12 +62,35 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   return (
     <Modal title={'创建项目'} visible={visible} width={846} footer={null} onCancel={handleClose}>
       <Form form={form} labelCol={{ span: 4 }} layout="vertical" onFinish={onFinish}>
-        <Form.Item label="项目名称" name="displayName">
+        <Form.Item label="项目名称" name="displayName" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="成员设置" name="name">
-          <EditableProTable headerTitle="可编辑表格" columns={columns} />
-          {/* <Form.List name="users">
+        {/* <Form.Item label="成员设置" name="name"> */}
+        <EditableProTable
+          headerTitle="可编辑表格"
+          columns={columns}
+          value={dataSource}
+          rowKey="id"
+          recordCreatorProps={{
+            creatorButtonText: '添加成员',
+            newRecordType: 'dataSource',
+            record: () => ({
+              id: Date.now(),
+            }),
+          }}
+          editable={{
+            type: 'multiple',
+            editableKeys,
+            actionRender: (row, config, defaultDoms) => {
+              return [defaultDoms.delete];
+            },
+            onValuesChange: (record, recordList) => {
+              setDataSource(recordList);
+            },
+            onChange: setEditableRowKeys,
+          }}
+        />
+        {/* <Form.List name="users">
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, fieldKey, ...restField }) => (
@@ -85,7 +126,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
               </>
             )}
           </Form.List> */}
-        </Form.Item>
+        {/* </Form.Item> */}
         <Form.Item label="项目类型" name="description" className="round">
           <Radio.Group defaultValue="Empty" size="small">
             <Radio.Button value="GIConfig" style={{ marginRight: 10, borderRadius: 17 }}>
