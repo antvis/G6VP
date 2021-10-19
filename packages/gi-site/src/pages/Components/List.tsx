@@ -1,5 +1,5 @@
 // 组件市场
-import { AppstoreOutlined, BranchesOutlined, PlusOutlined, DatabaseOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, FireFilled, PlusOutlined, DatabaseOutlined } from '@ant-design/icons';
 import { Card, Col, Radio, Tabs, Button, Row } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,7 @@ const { TabPane } = Tabs;
 
 const ComponentMarket = props => {
   const { history } = props;
-  console.log('useImmer', useImmer);
-  debugger;
+
   const [state, setState] = useImmer({
     components: [],
     elements: { node: {}, edge: {} },
@@ -115,16 +114,29 @@ const ComponentMarket = props => {
           style={{ marginLeft: 120, marginTop: 15 }}
         >
           {services.map(c => {
-            const { id, name, displayName, description, branchName, type } = c;
+            const { id, version, ownerNickname, displayName, gmtModified, branchName, type } = c;
             return (
               <Col key={id} style={{ width: '300px' }}>
                 <Link
                   to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
                   style={{ color: '#424447' }}
                 >
-                  <Card hoverable title={displayName}>
-                    {name}「{branchName}」 <br />
-                    {description}
+                  <Card hoverable>
+                    <div className={styles.card}>
+                      <div className={styles.icon}>
+                        <AppstoreOutlined />
+                      </div>
+                      <div className={styles.desc}>
+                        <h4>{displayName}</h4>
+                        <div>作者：{ownerNickname}</div>
+                        <div>版本：{version}</div>
+                        <div>更新：{gmtModified}</div>
+                      </div>
+                      <div className={styles.fire}>
+                        {'12'}
+                        <FireFilled />
+                      </div>
+                    </div>
                   </Card>
                 </Link>
               </Col>
