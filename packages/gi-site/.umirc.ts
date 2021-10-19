@@ -47,8 +47,16 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    lodash: 'lodash',
-    'lodash-es': 'lodash',
+    // 'lodash-es': {
+    //   commonjs: 'lodash',
+    //   amd: 'lodash',
+    //   root: '_',
+    // },
+    // lodash: {
+    //   commonjs: 'lodash',
+    //   amd: 'lodash',
+    //   root: '_',
+    // },
     //资产中心那块的依赖大包
     '@alipay/alex': 'Alex',
     typescript: 'ts',
@@ -66,6 +74,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
     /** 资产中心那块的依赖大包 */
+    'https://gw.alipayobjects.com/os/lib/require.js/1.0.0/require.min.js',
     'https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/min/vs/editor/editor.main.js',
     'https://gw.alipayobjects.com/os/lib/typescript/4.4.3/lib/typescript.js',
     'https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js',
