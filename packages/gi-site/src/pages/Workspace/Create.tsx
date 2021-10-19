@@ -1,7 +1,9 @@
-import { Button, Modal, Form, Input, Space, Radio, Select } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, Modal, Form, Input, Radio, message } from 'antd';
 import React, { useState } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
+import { useHistory } from '@alipay/bigfish';
+import { addProject } from '../../services';
+import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import './index.less';
 
 interface IProps {
@@ -9,9 +11,9 @@ interface IProps {
   handleClose: () => void;
 }
 
-const { Option } = Select;
 const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   const [form] = Form.useForm();
+  const history = useHistory();
   const defaultData = [
     {
       name: 'test',
@@ -55,19 +57,62 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     },
   ];
 
-  const onFinish = values => {
-    console.log('form values', values);
+  const onFinish = async value => {
+    const projectId = await addProject({
+      name: value.title,
+      // description: '空',
+      status: 0, // 0 正常项目， 1删除项目
+      tag: value.tag,
+      user: dataSource,
+      // version: '',
+      //   projectConfig: JSON.stringify(userConfig.config),
+      // ownerId: '',
+      // members: '',
+      // coverImg: '',
+      // expandInfo: '',
+    });
+
+    const createResult = await createNewProjectOnAntCode({
+      projectName: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
+      description: '创建 GI 初始化服务代码仓库',
+      type: 3,
+    });
+
+    if (!createResult || !createResult.success) {
+      message.error('创建项目失败：' + createResult.errorMsg);
+      return;
+    }
+
+    const dbResponse = await createAssets({
+      displayName: 'GI 初始化服务',
+      name: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
+      type: 3, //数据服务
+      description: 'GI 初始化服务',
+      version: '0.0.1',
+      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
+      ownerNickname: '聚则',
+      ownerId: '195094',
+      branchName: 'master',
+      projectId,
+      sourceCode: 'export default (data) => {\n return data \n}',
+    });
+
+    // if (dbResponse.success) {
+    //   history.push(`/workspace/${projectId}`);
+    // } else {
+    //   console.error(dbResponse);
+    // history.push(`/workspace`);
+    // }
   };
 
   return (
     <Modal title={'创建项目'} visible={visible} width={846} footer={null} onCancel={handleClose}>
-      <Form form={form} labelCol={{ span: 4 }} layout="vertical" onFinish={onFinish}>
-        <Form.Item label="项目名称" name="displayName" rules={[{ required: true, message: '请填写用户名' }]}>
+      <Form form={form} labelCol={{ span: 4 }} layout="vertical" onFinish={onFinish} initialValues={{ tag: 'Empty' }}>
+        <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
-        {/* <Form.Item label="成员设置" name="name"> */}
+        <Form.Item label="成员设置" name="users"></Form.Item>
         <EditableProTable
-          headerTitle="可编辑表格"
           columns={columns}
           value={dataSource}
           rowKey="id"
@@ -75,12 +120,13 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
             creatorButtonText: '添加成员',
             newRecordType: 'dataSource',
             record: () => ({
-              id: Date.now(),
+              id: dataSource.length + 1,
             }),
           }}
           editable={{
             type: 'multiple',
             editableKeys,
+            formProps: {},
             actionRender: (row, config, defaultDoms) => {
               return [defaultDoms.delete];
             },
@@ -90,44 +136,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
             onChange: setEditableRowKeys,
           }}
         />
-        {/* <Form.List name="users">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(({ key, name, fieldKey, ...restField }) => (
-                  <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'first']}
-                      fieldKey={[fieldKey, 'first']}
-                      rules={[{ required: true, message: '请填写用户名' }]}
-                    >
-                      <Input />
-                    </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[name, 'last']}
-                      fieldKey={[fieldKey, 'last']}
-                      rules={[{ required: true, message: '请选择权限' }]}
-                    >
-                      <Select placeholder="请选择" allowClear>
-                        <Option value="developer">可编辑</Option>
-                        <Option value="reporter">仅可见</Option>
-                        <Option value="master">master</Option>
-                      </Select>
-                    </Form.Item>
-                    <Button type="link" onClick={() => remove(name)}>
-                      删除
-                    </Button>
-                  </Space>
-                ))}
-                <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                  Add field
-                </Button>
-              </>
-            )}
-          </Form.List> */}
-        {/* </Form.Item> */}
-        <Form.Item label="项目类型" name="description" className="round">
+        <Form.Item label="项目类型" name="tag" className="round">
           <Radio.Group defaultValue="Empty" size="small">
             <Radio.Button value="GIConfig" style={{ marginRight: 10, borderRadius: 17 }}>
               前端大学图谱模版
