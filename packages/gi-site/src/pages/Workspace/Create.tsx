@@ -63,11 +63,10 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       // description: '空',
       status: 0, // 0 正常项目， 1删除项目
       tag: value.tag,
-      user: dataSource,
+      members: dataSource,
       // version: '',
       //   projectConfig: JSON.stringify(userConfig.config),
       // ownerId: '',
-      // members: '',
       // coverImg: '',
       // expandInfo: '',
     });

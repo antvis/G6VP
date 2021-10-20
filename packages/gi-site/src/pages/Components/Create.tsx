@@ -1,6 +1,7 @@
-import { Button, Drawer, Form, Input, message } from 'antd';
-import React from 'react';
+import { Button, Modal, Form, Input, message, Radio, Select } from 'antd';
+import React, { useState } from 'react';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
+import { EditableProTable } from '@ant-design/pro-table';
 import { TYPE_MAPPING } from './Constants';
 interface IProps {
   type: string;
@@ -10,11 +11,52 @@ interface IProps {
   projectId?: string;
 }
 
+const { Option } = Select;
 const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, projectId }) => {
   const [form] = Form.useForm();
-
+  const defaultData = [
+    {
+      name: 'test',
+      id: 1,
+      state: 'master',
+    },
+  ];
+  const columns = [
+    {
+      title: '用户名',
+      dataIndex: 'name',
+      width: '40%',
+      formItemProps: (form, { rowIndex }) => {
+        return {
+          rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+    },
+    {
+      title: '权限',
+      key: 'state',
+      dataIndex: 'state',
+      valueType: 'select',
+      valueEnum: {
+        master: { text: 'master' },
+        developer: {
+          text: '可编辑',
+        },
+        reporter: {
+          text: '仅可见',
+        },
+      },
+    },
+    {
+      title: '操作',
+      valueType: 'option',
+      width: 250,
+      render: () => null,
+    },
+  ];
+  const [dataSource, setDataSource] = useState(() => defaultData);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
   const handleCreate = async () => {
-    console.log('value', form.getFieldsValue());
     const assetParams = form.getFieldsValue();
     const { name, description, displayName } = assetParams;
 
@@ -24,10 +66,11 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
       projectName: name,
       description,
       type: TYPE_MAPPING[type],
+      members: dataSource,
     });
 
     if (!createResult || !createResult.success) {
-      message.error('创建项目失败：' + createResult.errorMsg);
+      message.error('创建资产失败：' + createResult.errorMsg);
       return;
     }
 
@@ -59,40 +102,75 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
     );
   };
   return (
-    <Drawer
+    <Modal
       title={type === 'component' ? '新建资产' : type === 'element' ? '新建图元素' : '新建数据服务'}
-      placement="right"
-      closable={false}
-      onClose={close}
       visible={visible}
-      width={500}
-      footer={
-        <div
-          style={{
-            textAlign: 'right',
-          }}
-        >
-          <Button onClick={close} style={{ marginRight: 8 }}>
-            取消
-          </Button>
-          <Button onClick={handleCreate} type="primary">
-            确定
-          </Button>
-        </div>
-      }
+      width={846}
+      footer={null}
+      onCancel={close}
     >
-      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="horizontal">
-        <Form.Item label="显示名称" name="displayName">
+      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="vertical" onFinish={handleCreate}>
+        <Form.Item label="资产名称" name="name" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="资产名称" name="name">
-          <Input />
+        <Form.Item label="资产类型" name="type" className="round">
+          <Radio.Group defaultValue="Empty" size="small">
+            <Radio.Button value="layout" style={{ marginRight: 10, borderRadius: 17 }}>
+              布局
+            </Radio.Button>
+            <Radio.Button value="element" style={{ marginRight: 10, borderRadius: 17 }}>
+              元素
+            </Radio.Button>
+            <Radio.Button value="component" style={{ marginRight: 10, borderRadius: 17 }}>
+              组件
+            </Radio.Button>
+            <Radio.Button value="other" style={{ marginRight: 10, borderRadius: 17 }}>
+              其他
+            </Radio.Button>
+          </Radio.Group>
         </Form.Item>
-        <Form.Item label="资产描述" name="description">
-          <Input.TextArea rows={4} />
+        <Form.Item label="权限类型" name="authority">
+          <Select>
+            <Option value="private">仅自己可见</Option>
+            <Option value="public">部分人可见</Option>
+          </Select>
+        </Form.Item>
+        {/* <Form.Item label="成员管理" name="members"> */}
+        <EditableProTable
+          columns={columns}
+          value={dataSource}
+          rowKey="id"
+          recordCreatorProps={{
+            creatorButtonText: '添加成员',
+            newRecordType: 'dataSource',
+            record: () => ({
+              id: dataSource.length + 1,
+            }),
+          }}
+          editable={{
+            type: 'multiple',
+            editableKeys,
+            formProps: {},
+            actionRender: (row, config, defaultDoms) => {
+              return [defaultDoms.delete];
+            },
+            onValuesChange: (record, recordList) => {
+              setDataSource(recordList);
+            },
+            onChange: setEditableRowKeys,
+          }}
+        />
+        {/* </Form.Item> */}
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button style={{ marginRight: 8 }} shape="round">
+            保存并返回
+          </Button>
+          <Button type="primary" shape="round" htmlType="submit">
+            立即去创建分析
+          </Button>
         </Form.Item>
       </Form>
-    </Drawer>
+    </Modal>
   );
 };
 
