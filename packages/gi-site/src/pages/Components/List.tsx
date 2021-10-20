@@ -64,6 +64,12 @@ const ComponentMarket = props => {
     });
   };
 
+  const handleChangeType = evt => {
+    setState(draft => {
+      draft.type = evt.target.value;
+    });
+  };
+
   const fliterGroup = (
     <div className={styles.control}>
       <Radio.Group defaultValue="asserts" size="middle" className="fliter">
@@ -75,7 +81,10 @@ const ComponentMarket = props => {
         </Radio.Button>
       </Radio.Group>
       <div style={{ position: 'relative', top: 10, left: 12 }}>
-        <Radio.Group defaultValue="components" size="small" className={styles.assetType}>
+        <Radio.Group defaultValue="services" size="small" className={styles.assetType} onChange={handleChangeType}>
+          <Radio.Button value="services" style={{ marginRight: 10, borderRadius: 17 }}>
+            服务
+          </Radio.Button>
           <Radio.Button value="components" style={{ marginRight: 10, borderRadius: 17 }}>
             组件
           </Radio.Button>
@@ -89,13 +98,15 @@ const ComponentMarket = props => {
       </div>
     </div>
   );
+
+  const listData = state.type === 'components' ? components : services;
   return (
     <>
       <BaseNavbar active="market"></BaseNavbar>
       <div className={styles.container}>
         <div className={styles.title}>图可视分析资产市场</div>
         <div className={styles.buttongroup}>
-          <Button type="primary" shape="round" onClick={() => handleShowCreateModel('component')}>
+          <Button type="primary" shape="round" onClick={() => handleShowCreateModel('components')}>
             创建资产
           </Button>
           <Button shape="round" ghost>
@@ -107,14 +118,11 @@ const ComponentMarket = props => {
       <div className="lists">
         {fliterGroup}
         <Row
-          gutter={[
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-          ]}
+          gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
-          {services.map(c => {
-            const { id, version, ownerNickname, displayName, gmtModified, branchName, type } = c;
+          {listData.map(c => {
+            const { id, version, name, ownerNickname, displayName, gmtModified, branchName, type } = c;
             return (
               <Col key={id} style={{ width: '300px' }}>
                 <Link
