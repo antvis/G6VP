@@ -66,6 +66,7 @@ export default React.memo(MetaPanel, (prevProps, nextProps) => {
     prevProps.refreshKey !== nextProps.refreshKey ||
     JSON.stringify(prevProps.config) !== JSON.stringify(nextProps.config)
   ) {
+    debugger;
     return false;
   }
   return true;

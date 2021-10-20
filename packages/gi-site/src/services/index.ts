@@ -20,17 +20,38 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string) => {
-  if (isMock) {
-    return await localforage.getItem(id);
-  }
+  const getResult = project => {
+    //TODO :这里应该不用处理JSON.parse 吧
+    const config = JSON.parse(project.projectConfig);
+    const data = JSON.parse(project.data);
+    let activeAssetsKeys;
+    if (project.activeAssetsKeys) {
+      activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
+    } else {
+      activeAssetsKeys = {
+        elements: [config.node.id, config.edge.id],
+        components: [...config.components.map(c => c.id), 'NodeLegend', 'CanvasSetting'],
+        layouts: [config.layout.id],
+      };
+    }
+    return {
+      config,
+      data,
+      activeAssetsKeys,
+    };
+  };
 
+  if (isMock) {
+    const project = await localforage.getItem(id);
+    return getResult(project);
+  }
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/list/${id}`, {
     method: 'get',
   });
-
   if (response.success && response.data?.length > 0) {
-    return response.data[0];
+    const res = response.data[0];
+    return getResult(res);
   }
 };
 

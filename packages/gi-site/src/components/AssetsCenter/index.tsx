@@ -1,32 +1,67 @@
 import { CheckCard } from '@alipay/tech-ui';
 import { Button, Col, Drawer, Row, Tabs } from 'antd';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
+import { queryAssetList } from '../../services/assets';
 import useAssetsCenter from './useHook';
 
 const { TabPane } = Tabs;
 
 interface AssetsCenterProps {}
+const options = [
+  {
+    name: '组件',
+    key: 'components',
+  },
+  {
+    name: '元素',
+    key: 'elements',
+  },
+  {
+    name: '布局',
+    key: 'layouts',
+  },
+];
+let ref = {
+  components: [],
+  elements: [],
+  layouts: [],
+};
 
 const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const state = useSelector((state: StateType) => state);
-  // const dispatch = useDispatch();
-  const { handleCloseAssetsCenter } = useAssetsCenter();
-  const { assetsCenter, components, config } = state;
+  const dispatch = useDispatch();
+  const { id } = state;
 
+  const { handleCloseAssetsCenter } = useAssetsCenter();
+  const { assetsCenter, config, activeAssetsInformation, activeAssetsKeys } = state;
+  const [assets, setAssets] = React.useState({
+    components: [],
+    elements: [],
+    layouts: [],
+  });
+  React.useEffect(() => {
+    (async () => {
+      const ASSET_LIST = await queryAssetList({
+        projectId: id,
+      });
+      setAssets({ ...ASSET_LIST, layouts: [] });
+      ref = activeAssetsKeys;
+    })();
+  }, [id, setAssets, activeAssetsKeys]);
   /** 默认选中config中的components */
-  const defaultValue = config.components.map(c => c.id);
-  const componentKeys = Object.keys(components).filter(c => {
-    return c !== 'graphin-node' && c !== 'graphin-edge';
-  });
-  const displayComponents = componentKeys.map(key => {
-    return components[key];
-  });
+
   console.log(assetsCenter, 'assetsCenter', state);
 
   const handleCancel = () => {};
-  const handleOk = () => {};
+  const handleOk = () => {
+    dispatch({
+      type: 'update:config',
+      activeAssetsKeys: ref,
+      assetsCenter: { visible: false },
+    });
+  };
   const Footer = (
     <div>
       <Button onClick={handleCancel}>取消</Button>
@@ -35,8 +70,12 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       </Button>
     </div>
   );
-  const handleChange = () => {};
-
+  const handleChange = (key, val) => {
+    console.log(key, val);
+    ref[key] = val;
+    console.log('ref', ref);
+  };
+  console.log(options, assets, ref);
   return (
     <div>
       <Drawer
@@ -49,31 +88,37 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       >
         {assetsCenter.visible && (
           <Tabs defaultActiveKey={assetsCenter.hash}>
-            <TabPane tab="组件" key="components">
-              <CheckCard.Group multiple onChange={handleChange} defaultValue={defaultValue}>
-                <Row
-                  gutter={[
-                    { xs: 8, sm: 16, md: 16, lg: 16 },
-                    { xs: 8, sm: 16, md: 16, lg: 16 },
-                  ]}
-                >
-                  {displayComponents.map(c => {
-                    const { id, name } = c;
-                    return (
-                      <Col key={id}>
-                        <CheckCard title={name} description="GI提供的组件" value={id} />
-                      </Col>
-                    );
-                  })}
-                </Row>
-              </CheckCard.Group>
-            </TabPane>
-            <TabPane tab="元素" key="elements">
-              Content of Tab Pane 2
-            </TabPane>
-            <TabPane tab="布局" key="layouts">
-              Content of Tab Pane 3
-            </TabPane>
+            {options.map(category => {
+              const { name, key } = category;
+              const defaultValue = activeAssetsKeys[key];
+              return (
+                <TabPane tab={name} key={key}>
+                  <CheckCard.Group
+                    multiple
+                    onChange={val => {
+                      handleChange(key, val);
+                    }}
+                    defaultValue={defaultValue}
+                  >
+                    <Row
+                      gutter={[
+                        { xs: 8, sm: 16, md: 16, lg: 16 },
+                        { xs: 8, sm: 16, md: 16, lg: 16 },
+                      ]}
+                    >
+                      {assets[key].map(c => {
+                        const { id: AssetId, name: AssetName } = c;
+                        return (
+                          <Col key={AssetId}>
+                            <CheckCard title={AssetName} description="GI官方资产" value={AssetId} />
+                          </Col>
+                        );
+                      })}
+                    </Row>
+                  </CheckCard.Group>
+                </TabPane>
+              );
+            })}
           </Tabs>
         )}
       </Drawer>

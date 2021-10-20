@@ -47,8 +47,8 @@ const ComponentPanel = props => {
   const configObj = {};
   const valueObj = {};
 
-  choosedComponents.forEach(element => {
-    const { id, props, enable } = element;
+  components.forEach(component => {
+    const { id, meta, props } = component;
     const defaultFunction = params => {
       return {
         categoryId: 'components',
@@ -66,23 +66,17 @@ const ComponentPanel = props => {
     const { meta: defaultConfigObj, props: defaultProps, name: defaultName } = defaultComponent;
 
     valueObj[id] = {
-      ...defaultProps,
       ...props,
-      giEnable: enable,
+      ...defaultProps,
     };
 
     configObj[id] = {
       name: defaultName,
-      type: 'test',
+      type: 'group',
       fold: false,
       children: {
+        ...meta,
         ...defaultConfigObj,
-        giEnable: {
-          name: '是否加载',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
       },
     };
   });
@@ -96,6 +90,8 @@ const ComponentPanel = props => {
       components: com,
     });
   };
+
+  console.log('XXXX', configObj, valueObj);
 
   return (
     <div>
