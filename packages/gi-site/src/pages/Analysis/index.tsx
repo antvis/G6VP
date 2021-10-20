@@ -37,6 +37,9 @@ const Analysis = props => {
     assets,
     enableAI,
     projectConfig,
+    activeAssetsInformation,
+    activeAssetsKeys,
+    activeAssets,
   } = state;
 
   const dispatch = useDispatch();
@@ -50,85 +53,115 @@ const Analysis = props => {
     });
   };
 
+  const queryActiveAssetsInformation = ({ assets, data, config }) => {
+    const serviceConfig = assets.services;
+    /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
+    const components = getComponentsByAssets(assets.components, data, serviceConfig, config);
+    const elements = getElementsByAssets(assets.elements, data);
+    const services = getServicesByAssets(serviceConfig, data);
+    return {
+      components,
+      elements,
+      services,
+    };
+  };
+
   React.useLayoutEffect(() => {
-    dispatch({
-      type: 'update:config',
-      isReady: false,
-    });
-
-    getProjectById(projectId).then(project => {
-      console.log('getProjectById', project);
-
-      const config = JSON.parse(project.projectConfig);
-      const data = JSON.parse(project.data);
-      // const serviceConfig = JSON.parse(project.serviceConfig);
-
-      queryAssets(projectId).then(assets => {
-        const serviceConfig = assets.services;
-        /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-        const components = getComponentsByAssets(assets.components, data, serviceConfig, config);
-        const elements = getElementsByAssets(assets.elements, data);
-        const services = getServicesByAssets(serviceConfig, data);
-
-        dispatch({
-          type: 'update:config',
-          id: projectId,
-          config,
-
-          projectConfig: config,
-          data: data,
-          isReady: true,
-          activeNavbar: 'style',
-          serviceConfig,
-          services,
-          components,
-          elements,
-          assets,
-        });
+    (async () => {
+      dispatch({
+        type: 'update:config',
+        isReady: false,
       });
-    });
+      const { data, config, activeAssetsKeys } = await getProjectById(projectId);
+      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
+      dispatch({
+        type: 'update:config',
+        id: projectId,
+        config,
+        projectConfig: config,
+        data: data,
+        isReady: true,
+        activeNavbar: 'style',
+        //@ts-ignore
+        serviceConfig: activeAssets.services,
+        // services,
+        // components,
+        // elements,
+        assets,
+        activeAssets,
+        activeAssetsKeys,
+        activeAssetsInformation,
+      });
+    })();
   }, [projectId, key]);
 
+  const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
+  React.useEffect(() => {
+    //TODO 依赖还有问题
+    console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
+    (async () => {
+      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
+      dispatch({
+        type: 'update:config',
+        activeAssets,
+        activeAssetsInformation,
+        refreshComponentKey: Math.random(),
+      });
+    })();
+  }, [ACTIVE_ASSETS_KEYS]);
+
+  const getRecommenderCfg = params => {
+    const { config, data } = params;
+    const Recommender = new ConfigRecommedor(data);
+    const layoutCfg = Recommender.recLayoutCfg();
+    const nodeCfg = Recommender.recNodeCfg();
+    const edgeCfg = Recommender.recEdgeCfg();
+    const newGraphData = Recommender.graphData;
+    // console.log('newGraphData', newGraphData)
+    const newConfig = {
+      ...config,
+      node: {
+        ...config.node,
+        props: {
+          ...config.node.props,
+          ...nodeCfg,
+        },
+      },
+      edge: {
+        ...config.edge,
+        props: {
+          ...config.edge.props,
+          ...edgeCfg,
+        },
+      },
+      layout: {
+        ...config.layout,
+        props: {
+          ...config.layout.props,
+          ...layoutCfg,
+        },
+      },
+    };
+    return {
+      newConfig: newConfig,
+      newData: newGraphData,
+    };
+  };
   React.useLayoutEffect(() => {
-    const { config, projectConfig } = state;
+    const { config, projectConfig, data } = state;
     console.log('original cfgs', config);
     if (isReady && data && enableAI) {
-      const Recommender = new ConfigRecommedor(data);
-      const layoutCfg = Recommender.recLayoutCfg();
-      const nodeCfg = Recommender.recNodeCfg();
-      const edgeCfg = Recommender.recEdgeCfg();
-      const newGraphData = Recommender.graphData;
-      // console.log('newGraphData', newGraphData)
-      const newConfig = {
-        ...config,
-        node: {
-          ...config.node,
-          props: {
-            ...config.node.props,
-            ...nodeCfg,
-          },
-        },
-        edge: {
-          ...config.edge,
-          props: {
-            ...config.edge.props,
-            ...edgeCfg,
-          },
-        },
-        layout: {
-          ...config.layout,
-          props: {
-            ...config.layout.props,
-            ...layoutCfg,
-          },
-        },
-      };
-      console.log('recommended cfgs', layoutCfg, nodeCfg, edgeCfg);
+      const { newData, newConfig } = getRecommenderCfg({
+        data,
+        config,
+      });
       dispatch({
         type: 'update:config',
         id: projectId,
         config: newConfig,
-        data: newGraphData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+        data: newData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
       });
     } else if (!enableAI) {
       dispatch({
@@ -145,8 +178,9 @@ const Analysis = props => {
   //     ev.returnValue = '配置未保存，确定离开吗？';
   //   });
   // }, []);
-
+  console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', state);
   const isLoading = isObjectEmpty(config) || !isReady;
+
   if (isLoading) {
     return (
       <div className="gi">
@@ -170,15 +204,16 @@ const Analysis = props => {
             value={activeNavbar}
             data={data}
             dispatch={dispatch}
+            activeAssetsKeys={activeAssetsKeys}
             refreshKey={refreshComponentKey}
             /** 配置文件 */
             config={config}
             /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
-            components={components}
+            components={activeAssetsInformation.components}
             /** 全量的的元素 */
-            elements={elements}
+            elements={activeAssetsInformation.elements}
             /** 全量的的服务 */
-            services={services}
+            services={activeAssetsInformation.services}
           />
         </div>
         <div className="gi-analysis-workspace">
@@ -188,8 +223,8 @@ const Analysis = props => {
               config={config}
               /** 资产以Props的方式按需引入 */
               assets={{
-                ...assets,
-                services,
+                ...activeAssets,
+                services: activeAssetsInformation.services,
               }}
             ></GISDK>
           </div>

@@ -15,6 +15,8 @@ const initialState = {
   config: {},
   /** 资产Map */
   assets: {},
+  /** 资产Map */
+  totalAssets: {},
   siteConfig: {},
   /** 是否准备完毕 */
   isReady: false,
@@ -43,6 +45,17 @@ const initialState = {
     visible: false,
     hash: 'components',
   },
+  activeAssets: {},
+  activeAssetsKeys: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
+  activeAssetsInformation: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
 };
 
 export interface StateType {
@@ -56,14 +69,27 @@ export interface StateType {
   data: any;
   /** 画布渲染的配置 */
   config: GIConfig;
-  /** 原始资产 */
+
+  /** 全部资产 */
   assets: {
     components: any[];
     elements: any[];
     layouts: any[];
   };
-  /** 用户配置面板的展示 */
-  siteConfig: {
+  /** 用户选择的资产,活跃资产 */
+  activeAssets: {
+    components: any[];
+    elements: any[];
+    layouts: any[];
+  };
+  /** 用户选择的资产的Key值,活跃资产 */
+  activeAssetsKeys: {
+    components: string[];
+    elements: string[];
+    layouts: string[];
+  };
+
+  activeAssetsInformation: {
     components: any[];
     elements: any[];
     layouts: any[];

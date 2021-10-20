@@ -82,7 +82,7 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    const filteredComponents = componentsCfg.filter(c => c.enable);
+    const filteredComponents = componentsCfg;//.filter(c => c.enable);
     /** start 针对容器组件特殊处理 */
     const containerComponents = filteredComponents.filter(c => {
       return c.props.GI_CONTAINER;
