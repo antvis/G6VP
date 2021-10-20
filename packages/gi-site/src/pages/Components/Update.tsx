@@ -54,7 +54,7 @@ const ComponentMarket = props => {
     loading: true,
     buildStatus: null,
     // 定时器
-    interval: null,
+    interval: null
   });
 
   const { currentSelectAsset, buildStatus, loading, interval } = state;
@@ -96,13 +96,13 @@ const ComponentMarket = props => {
       draft.currentSelectAsset = data;
       // 不是构建中时，就不需要再进行轮询
       if (data.status !== 2) {
-        draft.interval = null;
-        draft.loading = false;
-        draft.buildStatus = data.status === 3 ? 'error' : 'success';
+        draft.interval = null
+        draft.loading = false
+        draft.buildStatus = data.status === 3 ? 'error' : 'success'
       } else {
         // 构建中
-        draft.loading = true;
-        draft.buildStatus = 'info';
+        draft.loading = true
+        draft.buildStatus = 'info'
       }
     });
   };
@@ -332,8 +332,8 @@ const ComponentMarket = props => {
   // 发布组件，需要先创建分支，然后构建
   const handlePublish = async () => {
     setState(draft => {
-      draft.loading = true;
-    });
+      draft.loading = true
+    })
 
     const uuid = `${Math.random().toString(36).substr(2)}`;
     const currentDate = moment(new Date()).format('YYYYMMDD');
@@ -373,71 +373,48 @@ const ComponentMarket = props => {
 
       // 启动定时器
       setState(draft => {
-        draft.buildStatus = 'info';
-        draft.interval = 30000;
-      });
+        draft.buildStatus = 'info'
+        draft.interval = 30000
+      })
     }
   };
 
-  const buildingTips = (
-    <span>
-      资产正在构建中，预计需要3-5分钟的时间，你可以
-      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
-        查看构建日志
-      </a>
-      以了解最新进展
-    </span>
-  );
+  const buildingTips = <span>资产正在构建中，预计需要3-5分钟的时间，你可以<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>以了解最新进展</span>
 
-  const buildSuccessTips = (
-    <>
-      <span>资产构建成功，你可以</span>
-      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
-        查看构建日志
-      </a>
-      <span>或</span>
-      <a href={currentSelectAsset?.distCodeUrl} target="_blank">
-        查看构建产物
-      </a>
-    </>
-  );
+  const buildSuccessTips = <>
+    <span>资产构建成功，你可以</span>
+    <a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>
+    <span>或</span>
+    <a href={currentSelectAsset?.distCodeUrl} target='_blank'>查看构建产物</a>
+  </>
+  
+  const buildErrorTips = <span>资产构建失败，具体失败原因请<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a></span>
 
-  const buildErrorTips = (
-    <span>
-      资产构建失败，具体失败原因请
-      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
-        查看构建日志
-      </a>
-    </span>
-  );
-
-  let tipsDom = null;
+  let tipsDom = null
   if (buildStatus === 'success') {
-    tipsDom = buildSuccessTips;
+    tipsDom = buildSuccessTips
   } else if (buildStatus === 'info') {
-    tipsDom = buildingTips;
+    tipsDom = buildingTips
   } else if (buildStatus === 'error') {
-    tipsDom = buildErrorTips;
+    tipsDom =  buildErrorTips
   }
-
+  
   return (
     <>
-      <BaseNavbar
-        active="market"
-        rightContent={
-          <Popconfirm
-            title="发布需要3-5分钟的时间，确定要进行发布吗？"
-            onConfirm={handlePublish}
-            okText="确定"
-            cancelText="取消"
-          >
-            <Button loading={loading} style={{ color: '#000' }}>
-              发布
-            </Button>
-          </Popconfirm>
-        }
-      >
-        {buildStatus && <Alert message={tipsDom} type={buildStatus} showIcon />}
+      <BaseNavbar rightContent={
+        <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
+        onConfirm={handlePublish}
+        okText="确定"
+        cancelText="取消">
+          <Button loading={loading} style={{ color: '#000' }}>
+            发布
+          </Button>
+        </Popconfirm>
+      }>
+      {
+        buildStatus &&
+        <Alert message={tipsDom} type={buildStatus} showIcon />
+      }
       </BaseNavbar>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
