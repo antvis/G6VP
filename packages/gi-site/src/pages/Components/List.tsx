@@ -109,7 +109,7 @@ const ComponentMarket = props => {
           <Button type="primary" shape="round" onClick={() => handleShowCreateModel('components')}>
             创建资产
           </Button>
-          <Button shape="round" ghost>
+          <Button shape="round" ghost onClick={() => history.push('/market/personal')}>
             我的资产
           </Button>
         </div>
@@ -129,7 +129,7 @@ const ComponentMarket = props => {
             return (
               <Col key={id} style={{ width: '300px' }}>
                 <Link
-                  to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
+                  to={`/market/asserts/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
                   style={{ color: '#424447' }}
                 >
                   <Card hoverable>

@@ -16,7 +16,8 @@ export default {
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/market', component: 'Components/List' },
     { exact: true, path: '/market/services/:projectId', component: 'Components/CustomServices' },
-    { exact: true, path: '/market/:id', component: 'Components/Update' },
+    { exact: true, path: '/market/asserts/:id', component: 'Components/Update' },
+    { exact: true, path: '/market/personal', component: 'Components/Personal/PersonalAsserts' },
     { component: '404' },
   ],
   antd: {
