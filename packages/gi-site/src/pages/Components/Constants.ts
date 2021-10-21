@@ -60,3 +60,12 @@ export const TYPE_MAPPING = {
   // 3 表示数据服务
   service: 3,
 };
+
+export const TYPE_MAPPING_TR = {
+  // 1 表示组件
+  1: '组件',
+  // 2 表示图元素
+  2: '元素',
+  // 3 表示数据服务
+  3: '数据服务',
+};
