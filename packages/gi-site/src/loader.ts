@@ -30,7 +30,6 @@ export interface LoadModules {
  * @param targets { LoadModules[] } 要加载的组件列表
  */
 export const dynamicLoadModules = async (targets: LoadModules[]) => {
-  debugger;
   const promises = targets.map(target => SystemJS.import(target.url));
 
   return Promise.all(promises).then(values => {

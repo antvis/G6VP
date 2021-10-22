@@ -118,10 +118,7 @@ const ComponentMarket = props => {
       <div className="lists">
         {fliterGroup}
         <Row
-          gutter={[
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-          ]}
+          gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
           {listData.map(c => {
