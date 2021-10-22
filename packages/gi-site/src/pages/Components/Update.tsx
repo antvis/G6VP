@@ -1,7 +1,6 @@
 // 组件市场
 import React, { useEffect } from 'react';
 import { message, Button, Popconfirm, Alert } from 'antd';
-import { PlayCircleOutlined } from '@ant-design/icons';
 import { Provider } from 'react-redux';
 import { Utils } from '@antv/graphin';
 import store from '../Analysis/redux';
@@ -94,15 +93,22 @@ const ComponentMarket = props => {
 
     setState(draft => {
       draft.currentSelectAsset = data;
-      // 不是构建中时，就不需要再进行轮询
-      if (data.status !== 2) {
-        draft.interval = null
+      if (!data.status) {
+        draft.buildStatus = null
         draft.loading = false
-        draft.buildStatus = data.status === 3 ? 'error' : 'success'
       } else {
-        // 构建中
-        draft.loading = true
-        draft.buildStatus = 'info'
+        // 不是构建中时，就不需要再进行轮询
+        if (data.status !== 2) {
+          draft.interval = null
+          draft.loading = false
+          if (data.status) {
+            draft.buildStatus = data.status === 3 ? 'error' : 'success'
+          }
+        } else {
+          // 构建中
+          draft.loading = true
+          draft.buildStatus = 'info'
+        }
       }
     });
   };
@@ -198,8 +204,8 @@ const ComponentMarket = props => {
     const componentFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'src/Component.tsx',
-    });
+      path: 'src/component.tsx'
+    })
 
     const packageFile = await getFileSourceCode({
       projectName,
@@ -211,9 +217,9 @@ const ComponentMarket = props => {
       'demo.tsx': demoFile.data,
       'demo.module.less': demoStyleFile.data,
       'styles.less': componentStyleFile.data,
-      'Component.tsx': componentFile.data,
-      'package.json': packageFile.data,
-    };
+      'component.tsx': componentFile.data,
+      'package.json': packageFile.data
+    }
 
     const previewCodeModules = fileMapToModules(initSourceCode);
     setState(draft => {
@@ -354,7 +360,7 @@ const ComponentMarket = props => {
     });
 
     if (buildResult) {
-      const { status, logUrl, id } = buildResult;
+      const { logUrl, id } = buildResult;
       // 更新数据库中构建状态及构建日志字段
       updateAssets(assetId, {
         yuyanBuildId: id,
@@ -368,7 +374,6 @@ const ComponentMarket = props => {
         status: 2,
         buildLogUrl: logUrl,
         version: newBranchName,
-        // build
       });
 
       // 启动定时器
@@ -398,19 +403,22 @@ const ComponentMarket = props => {
   } else if (buildStatus === 'error') {
     tipsDom =  buildErrorTips
   }
-  
+
+  let publishDom = null
+
+  if (assetType === '1') {
+    publishDom = <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
+      onConfirm={handlePublish}
+      okText="确定"
+      cancelText="取消">
+      <Button loading={loading} style={{ color: '#000' }}>
+        发布
+      </Button>
+    </Popconfirm>
+  }
   return (
     <>
-      <BaseNavbar rightContent={
-        <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
-        onConfirm={handlePublish}
-        okText="确定"
-        cancelText="取消">
-          <Button loading={loading} style={{ color: '#000' }}>
-            发布
-          </Button>
-        </Popconfirm>
-      }>
+      <BaseNavbar rightContent={publishDom}>
       {
         buildStatus &&
         <Alert message={tipsDom} type={buildStatus} showIcon />
@@ -418,13 +426,7 @@ const ComponentMarket = props => {
       </BaseNavbar>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
-          <GraphInsightIDE
-            id="test"
-            readOnly={false}
-            appRef={appRef}
-            mode={assetType === '1' ? '/src/demo.tsx' : '/src/index.ts'}
-            codeChange={codeChangeCallback}
-          />
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? '/src/demo.tsx' : '/index.ts' } codeChange={codeChangeCallback}  />
         </div>
         {assetType !== '3' && (
           <div className="gi-config-wrapper">

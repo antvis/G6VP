@@ -124,11 +124,15 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
   });
 
   const res = convertResponse(response);
-  const services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
-
-  const { components, elements } = getListByGIAssets();
-
-  return { components, services, elements };
+  let services = []
+  if (param && param.projectId) {
+    services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
+    const { components, elements } = getListByGIAssets();
+    return { components, services, elements };
+  }
+  
+  return res
+ 
 
   // 如果不是动态加载
 };
