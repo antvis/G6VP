@@ -1,12 +1,12 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
-import ComponentMarket from '../ComponentMarket';
 import Group from '../../../../components/DataVGui/Group';
 
 const extensions = {
   group: Group,
   test: Group,
 };
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -47,8 +47,8 @@ const ComponentPanel = props => {
   const configObj = {};
   const valueObj = {};
 
-  choosedComponents.forEach(element => {
-    const { id, props, enable } = element;
+  components.forEach(component => {
+    const { id, meta, props } = component;
     const defaultFunction = params => {
       return {
         categoryId: 'components',
@@ -66,23 +66,17 @@ const ComponentPanel = props => {
     const { meta: defaultConfigObj, props: defaultProps, name: defaultName } = defaultComponent;
 
     valueObj[id] = {
-      ...defaultProps,
       ...props,
-      giEnable: enable,
+      ...defaultProps,
     };
 
     configObj[id] = {
       name: defaultName,
-      type: 'test',
+      type: 'group',
       fold: false,
       children: {
+        ...meta,
         ...defaultConfigObj,
-        giEnable: {
-          name: '是否加载',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
       },
     };
   });
@@ -97,9 +91,11 @@ const ComponentPanel = props => {
     });
   };
 
+  console.log('XXXX', configObj, valueObj);
+
   return (
     <div>
-      <ComponentMarket components={components} dispatch={dispatch} config={config} />
+      <AssetsCenterHandler title="组件" id="components" />
       <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
     </div>
   );
