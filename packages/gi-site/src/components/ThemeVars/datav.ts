@@ -12,13 +12,13 @@ export default {
     '--datav-gui-disabled-color': '#424447',
 
     /* 背景色-上层 */
-    '--datav-gui-background-color-front': 'RGB(242, 242, 242)',
+    '--datav-gui-background-color-front': 'RGB(248, 248, 248)',
     /* 背景色-上层-更浅： */
     '--datav-gui-background-color-front-lighter': 'RGB(250, 250, 250)',
     /* 背景色-下层 */
-    '--datav-gui-background-color-back': 'RGB(250, 250, 250)',
+    '--datav-gui-background-color-back': '#fff',
     /* 背景色-下层-更深 */
-    '--datav-gui-background-color-back-darker': ' hsl(0, 0%, 0%)',
+    '--datav-gui-background-color-back-darker': '#fff',
     /* 背景色-悬停 */
     '--datav-gui-background-hover-color': '#eee',
     /* 控件背景色 */
