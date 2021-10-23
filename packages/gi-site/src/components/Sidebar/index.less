@@ -1,8 +1,9 @@
 ul.gi-sidebar {
+  width: 100%;
   margin: 0px;
   padding: 0px;
   text-align: center;
-  width: 100%;
+
   li.sidebar-logo {
     padding: 15px 10px;
     img {
@@ -13,29 +14,29 @@ ul.gi-sidebar {
 .sidebar-item {
   width: 100%;
   height: 54px;
-  cursor: pointer;
   padding: 6px 0px;
+  cursor: pointer;
   &.active {
     // border-left: 2px solid lightcoral;
     color: #177ddc;
     background: #177ddc1a;
   }
   .icon {
-    margin-top: 5px;
-    font-size: 16px;
     display: block;
-    text-align: center;
-    margin-bottom: 0px;
     width: unset;
     height: unset;
+    margin-top: 5px;
     margin-right: unset;
+    margin-bottom: 0px;
+    font-size: 16px;
+    text-align: center;
   }
   .name {
-    font-size: 12px;
     display: block;
-    line-height: unset;
-    font-weight: bold;
-    white-space: nowrap;
     margin-right: unset;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: unset;
+    white-space: nowrap;
   }
 }
