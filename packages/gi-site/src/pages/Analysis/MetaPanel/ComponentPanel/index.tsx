@@ -1,12 +1,12 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import Group from '../../../../components/DataVGui/Group';
 
 const extensions = {
   group: Group,
   test: Group,
 };
-import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -35,9 +35,9 @@ const getComponentsByMap = componentMap => {
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { value, onChange, data, config, meta, services, dispatch, components } = props;
+  const { config, dispatch, components } = props;
 
-  const { components: choosedComponents } = config;
+  const { components: configComponents } = config;
 
   const [state, setState] = useState({
     isModalVisible: false,
@@ -48,7 +48,7 @@ const ComponentPanel = props => {
   const valueObj = {};
 
   components.forEach(component => {
-    const { id, meta, props } = component;
+    const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName } = component;
     const defaultFunction = params => {
       return {
         categoryId: 'components',
@@ -59,15 +59,12 @@ const ComponentPanel = props => {
         children: {},
       };
     };
-    const defaultComponent = components.find(c => c.id === id);
-    if (!defaultComponent) {
-      return;
-    }
-    const { meta: defaultConfigObj, props: defaultProps, name: defaultName } = defaultComponent;
+    const matchComponent = config.components?.find(c => c.id === id) || {};
+    const { props = {} } = matchComponent;
 
     valueObj[id] = {
-      ...props,
       ...defaultProps,
+      ...props,
     };
 
     configObj[id] = {
@@ -75,7 +72,6 @@ const ComponentPanel = props => {
       type: 'group',
       fold: false,
       children: {
-        ...meta,
         ...defaultConfigObj,
       },
     };
