@@ -52,7 +52,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   }, [id, setAssets, activeAssetsKeys]);
   /** 默认选中config中的components */
 
-  console.log(assetsCenter, 'assetsCenter', state);
+ 
 
   const handleCancel = () => {};
   const handleOk = () => {
@@ -71,11 +71,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     </div>
   );
   const handleChange = (key, val) => {
-    console.log(key, val);
     ref[key] = val;
     console.log('ref', ref);
   };
-  console.log(options, assets, ref);
+ 
   return (
     <div>
       <Drawer
