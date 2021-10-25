@@ -32,7 +32,7 @@ const Extra = () => {
     <>
       {options.map(c => {
         return (
-          <li className="sidebar-item" key={c.id} onClick={c.action}>
+          <li className="sidebar-item assets-center" key={c.id} onClick={c.action}>
             <span className="icon">{c.icon}</span>
             <span className="name"> {c.name}</span>
           </li>

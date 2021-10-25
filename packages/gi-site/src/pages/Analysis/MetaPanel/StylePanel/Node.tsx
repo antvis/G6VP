@@ -78,7 +78,12 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   return (
     <div>
-      <Select onChange={handleChangeShape} value={elementId} style={{ width: '100%' }} size="large">
+      <Select
+        onChange={handleChangeShape}
+        value={elementId}
+        style={{ width: '268px', margin: '8px 16px' }}
+        size="large"
+      >
         {elementOptions.map((c: any) => {
           return (
             <Option value={c.id} key={c.id}>
