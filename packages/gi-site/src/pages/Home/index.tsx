@@ -37,6 +37,7 @@ const rightContent = (
     />
   </>
 );
+
 const Home = () => (
   <Layout>
     <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
