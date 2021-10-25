@@ -9,7 +9,7 @@ import { queryAssetList } from './assets';
 import { isMock } from './const';
 
 // TODO 临时方案，需要换成和 Component 一样的方案
-const { elements } = giAssets || {};
+let { elements } = giAssets || {};
 
 const isDynamicLoad = false;
 
@@ -53,7 +53,16 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
         [curr]: giAssets.components[curr],
       };
     }, {});
-    console.log('componentscomponentscomponents', components);
+
+    // 走本地的gi-assets资产加载
+    elements = activeAssetsKeys.elements.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [curr]: giAssets.elements[curr],
+      };
+    }, {});
+
+    console.log('componentscomponentscomponents', components, elements);
   }
 
   if (isMock) {
