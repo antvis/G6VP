@@ -4,6 +4,8 @@ import { EditableProTable } from '@ant-design/pro-table';
 import { useHistory } from '@alipay/bigfish';
 import { addProject } from '../../services';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
+import { getMockData } from './utils';
+import { defaultConfig } from './defaultConfig';
 import './index.less';
 
 interface IProps {
@@ -57,18 +59,15 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     },
   ];
 
-  const onFinish = async value => {
+  const onFinish = async () => {
+    const value = form.getFieldValue();
     const projectId = await addProject({
       name: value.title,
-      // description: '空',
       status: 0, // 0 正常项目， 1删除项目
       tag: value.tag,
       members: dataSource,
-      // version: '',
-      //   projectConfig: JSON.stringify(userConfig.config),
-      // ownerId: '',
-      // coverImg: '',
-      // expandInfo: '',
+      data: JSON.stringify(getMockData()),
+      projectConfig: JSON.stringify(defaultConfig.GIConfig),
     });
 
     const createResult = await createNewProjectOnAntCode({
@@ -95,18 +94,22 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       projectId,
       sourceCode: 'export default (data) => {\n return data \n}',
     });
+    return projectId;
+  };
 
-    // if (dbResponse.success) {
-    //   history.push(`/workspace/${projectId}`);
-    // } else {
-    //   console.error(dbResponse);
-    // history.push(`/workspace`);
-    // }
+  const goAnalysis = async () => {
+    const projectId = await onFinish();
+    history.push(`/workspace/${projectId}`);
+  };
+
+  const goWorkspace = async () => {
+    await onFinish();
+    history.push(`/workspace`);
   };
 
   return (
     <Modal title={'创建项目'} visible={visible} width={846} footer={null} onCancel={handleClose}>
-      <Form form={form} labelCol={{ span: 4 }} layout="vertical" onFinish={onFinish} initialValues={{ tag: 'Empty' }}>
+      <Form form={form} labelCol={{ span: 4 }} layout="vertical" initialValues={{ tag: 'Empty' }}>
         <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
@@ -152,10 +155,10 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
           </Radio.Group>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button style={{ marginRight: 8 }} shape="round">
+          <Button style={{ marginRight: 8 }} shape="round" onClick={goWorkspace}>
             保存并返回
           </Button>
-          <Button type="primary" shape="round" htmlType="submit">
+          <Button type="primary" shape="round" onClick={goAnalysis}>
             立即去创建分析
           </Button>
         </Form.Item>
