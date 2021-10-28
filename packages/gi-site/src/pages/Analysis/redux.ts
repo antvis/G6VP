@@ -26,6 +26,8 @@ const initialState = {
   activeNavbar: '',
   /** 当前 Sidebar 是否可折叠 */
   collapse: false,
+  /** 当前 数据导入面板 是否可显示 */
+  isModalVisible: false,
   /** 所有的数据服务列表 */
   services: [],
   /** 组件市场的所有组件 */
@@ -103,6 +105,8 @@ export interface StateType {
   activeNavbar: string;
   /** 当前 Sidebar 是否可折叠 */
   collapse: boolean;
+  /** 当前 数据导入面板 是否可显示 */
+  isModalVisible: boolean;
   /** 所有的数据服务列表 */
   services: GIService[];
   /** 组件市场的所有组件 */
