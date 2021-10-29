@@ -7,7 +7,7 @@ import MonacoEditor from 'react-monaco-editor';
 import { addProject } from '../../services';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { serviceLists } from './const';
-import { defaultConfig } from './defaultConfig';
+import { defaultConfig } from '../defaultConfig';
 import { defaultData, defaultTrans } from './defaultData';
 import './index.less';
 

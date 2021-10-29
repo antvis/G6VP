@@ -4,6 +4,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
+import UploadPanel from './uploadData/index';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
@@ -40,6 +41,7 @@ const Analysis = props => {
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
+    isModalVisible,
   } = state;
 
   const dispatch = useDispatch();
@@ -230,6 +232,7 @@ const Analysis = props => {
           </div>
         </div>
       </div>
+      <UploadPanel visible={isModalVisible}></UploadPanel>
     </div>
   );
 };

@@ -9,6 +9,8 @@ import {
 } from '@ant-design/icons';
 import { Button, Card, Collapse, Space } from 'antd';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
+
 const { Panel } = Collapse;
 interface DataPanelProps {}
 
@@ -36,13 +38,23 @@ const ServiceHeader = props => {
     </Space>
   );
 };
+
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
+  const dispatch = useDispatch();
+
+  const uploadData = () => {
+    dispatch({
+      type: 'update',
+      isModalVisible: true,
+    });
+  };
+
   return (
     <div>
       <Card
         title="数据源"
         extra={
-          <Button type="dashed" style={{ width: '100%' }}>
+          <Button type="dashed" style={{ width: '100%' }} onClick={uploadData}>
             <UploadOutlined /> 导入数据
           </Button>
         }
