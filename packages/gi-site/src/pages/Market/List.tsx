@@ -20,10 +20,10 @@ const ComponentMarket = props => {
 
   const [state, setState] = useImmer({
     components: [],
-    elements: { node: {}, edge: {} },
+    elements: [],
     services: [],
     visible: false,
-    type: null,
+    type: 'services',
   });
 
   const getAssertList = async () => {
@@ -33,9 +33,11 @@ const ComponentMarket = props => {
     if (success) {
       const componentList = data.filter(d => d.type === 1);
       const serviceList = data.filter(d => d.type === 3);
+      const elementList = data.filter(d => d.type === 4 || d.type === 5);
       setState(draft => {
         draft.components = componentList;
         draft.services = serviceList;
+        draft.elements = elementList;
       });
     }
   };
@@ -45,22 +47,17 @@ const ComponentMarket = props => {
     getAssertList();
   }, []);
 
-  const { components, elements, services } = state;
+  const { components, elements, services, type } = state;
 
-  const NodeElements = Object.values(elements.node);
-  const EdgeElements = Object.values(elements.edge);
-
-  const handleShowCreateModel = (type: string) => {
+  const handleShowCreateModel = () => {
     setState(draft => {
       draft.visible = true;
-      draft.type = type;
     });
   };
 
   const handleClose = () => {
     setState(draft => {
       draft.visible = false;
-      draft.type = null;
     });
   };
 
@@ -99,14 +96,22 @@ const ComponentMarket = props => {
     </div>
   );
 
-  const listData = state.type === 'components' ? components : services;
+  debugger;
+  let listData = [];
+  if (type === 'components') {
+    listData = components;
+  } else if (type === 'services') {
+    listData = services;
+  } else if (type === 'elements') {
+    listData = elements;
+  }
   return (
     <>
       <BaseNavbar active="market"></BaseNavbar>
       <div className={styles.container}>
         <div className={styles.title}>图可视分析资产市场</div>
         <div className={styles.buttongroup}>
-          <Button type="primary" shape="round" onClick={() => handleShowCreateModel('components')}>
+          <Button type="primary" shape="round" onClick={() => handleShowCreateModel()}>
             创建资产
           </Button>
           <Button shape="round" ghost onClick={() => history.push('/market/personal')}>
@@ -135,7 +140,7 @@ const ComponentMarket = props => {
                         <AppstoreOutlined />
                       </div>
                       <div className={styles.desc}>
-                        <h4>{displayName}</h4>
+                        <h4>{displayName || name}</h4>
                         <div>作者：{ownerNickname}</div>
                         <div>版本：{version}</div>
                         <div>更新：{gmtModified}</div>
@@ -152,7 +157,7 @@ const ComponentMarket = props => {
           })}
         </Row>
       </div>
-      <CreateAsset visible={state.visible} close={handleClose} type={state.type} history={history} />
+      <CreateAsset visible={state.visible} close={handleClose} history={history} />
     </>
   );
 };
