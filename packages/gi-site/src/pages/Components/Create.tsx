@@ -1,10 +1,11 @@
+import React from 'react';
 import { Button, Modal, Form, Input, message, Radio, Select } from 'antd';
-import React, { useState } from 'react';
-import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
+import { createAssets, createNewProjectOnAntCode, getFileSourceCode } from '../../services/assets';
 import { EditableProTable } from '@ant-design/pro-table';
+import moment from 'moment';
+import { useImmer } from 'use-immer';
 import { TYPE_MAPPING } from './Constants';
 interface IProps {
-  type: string;
   visible: boolean;
   close: () => void;
   history: any;
@@ -12,15 +13,32 @@ interface IProps {
 }
 
 const { Option } = Select;
-const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, projectId }) => {
+
+const defaultData = [
+  {
+    name: '聚则',
+    useId: 1,
+    state: 'master',
+  },
+];
+
+const CreateAssets: React.FC<IProps> = ({ visible, close, history, projectId }) => {
   const [form] = Form.useForm();
-  const defaultData = [
-    {
-      name: 'test',
-      id: 1,
-      state: 'master',
-    },
-  ];
+
+  const [state, updateState] = useImmer({
+    authVisible: false,
+    dataSource: defaultData,
+    editableKeys: defaultData.map(item => item.id),
+  });
+
+  const { authVisible, dataSource, editableKeys } = state;
+
+  const setEditableRowKeys = values => {
+    updateState(draft => {
+      draft.editableKeys = values;
+    });
+  };
+
   const columns = [
     {
       title: '用户名',
@@ -54,19 +72,29 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
       render: () => null,
     },
   ];
-  const [dataSource, setDataSource] = useState(() => defaultData);
-  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
+
+  const handleChangeAuth = () => {
+    const assetParams = form.getFieldsValue();
+    const { authority } = assetParams;
+    if (authority === 'private') {
+      updateState(draft => {
+        draft.authVisible = false;
+      });
+    } else if (authority === 'public') {
+      updateState(draft => {
+        draft.authVisible = true;
+      });
+    }
+  };
+
   const handleCreate = async () => {
     const assetParams = form.getFieldsValue();
-    const { name, description, displayName } = assetParams;
-
-    // 数据服务不需要在 antcode 上创建仓库
+    const { name, description, displayName, type } = assetParams;
     // step1: 在 antcode 上创建仓库
     const createResult = await createNewProjectOnAntCode({
       projectName: name,
       description,
       type: TYPE_MAPPING[type],
-      members: dataSource,
     });
 
     if (!createResult || !createResult.success) {
@@ -74,19 +102,35 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
       return;
     }
 
+    // 读取 Meta 信息，需要将 Meta 信息存入到数据库中
+    const metaFile = await getFileSourceCode({
+      projectName: 'component_template',
+      branchName: 'master',
+      path: 'src/registerMeta.ts',
+    });
+
+    const uuid = `${Math.random()
+      .toString(36)
+      .substr(2)}`;
+    const currentDate = moment(new Date()).format('YYYYMMDD');
+    const newBranchName = `sprint_${name}_${uuid}_${currentDate}`;
+
     // step2: 将资产插入到数据库中
     const dbResponse = await createAssets({
       displayName,
       name,
       type: TYPE_MAPPING[type],
       description,
-      version: '0.0.1',
+      version: newBranchName,
       // 这两个字段需要从登陆信息中获取，目前没有接入登陆
       ownerNickname: '聚则',
       ownerId: '195094',
       branchName: 'master',
       projectId,
-      sourceCode: 'export default (data) => {\n return data \n}',
+      members: JSON.stringify(dataSource),
+      meta: metaFile.data,
+      sourceCodeUrl: createResult.data.web_url,
+      // sourceCode: 'export default (data) => {\n return data \n}',
     });
 
     if (!dbResponse || !dbResponse.success) {
@@ -98,18 +142,12 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
 
     // step3: 跳转到资产编辑页面
     history.push(
-      `/market/${data.insertId}?assetId=${data.insertId}&project=${name}&branch=master&type=${TYPE_MAPPING[type]}`,
+      `/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${name}&branch=master&type=${TYPE_MAPPING[type]}`,
     );
   };
   return (
-    <Modal
-      title={type === 'component' ? '新建资产' : type === 'element' ? '新建图元素' : '新建数据服务'}
-      visible={visible}
-      width={846}
-      footer={null}
-      onCancel={close}
-    >
-      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="vertical" onFinish={handleCreate}>
+    <Modal title="新建资产" visible={visible} width={846} footer={null} onCancel={close}>
+      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="vertical">
         <Form.Item label="资产名称" name="name" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
@@ -118,51 +156,58 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, type, project
             <Radio.Button value="layout" style={{ marginRight: 10, borderRadius: 17 }}>
               布局
             </Radio.Button>
-            <Radio.Button value="element" style={{ marginRight: 10, borderRadius: 17 }}>
-              元素
+            <Radio.Button value="nodes" style={{ marginRight: 10, borderRadius: 17 }}>
+              元素-节点
             </Radio.Button>
-            <Radio.Button value="component" style={{ marginRight: 10, borderRadius: 17 }}>
+            <Radio.Button value="edges" style={{ marginRight: 10, borderRadius: 17 }}>
+              元素-边
+            </Radio.Button>
+            <Radio.Button value="components" style={{ marginRight: 10, borderRadius: 17 }}>
               组件
             </Radio.Button>
-            <Radio.Button value="other" style={{ marginRight: 10, borderRadius: 17 }}>
-              其他
+            <Radio.Button value="services" style={{ marginRight: 10, borderRadius: 17 }}>
+              服务
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
         <Form.Item label="权限类型" name="authority">
-          <Select>
+          <Select onChange={handleChangeAuth} placeholder="请选择权限类型">
             <Option value="private">仅自己可见</Option>
             <Option value="public">部分人可见</Option>
           </Select>
         </Form.Item>
         {/* <Form.Item label="成员管理" name="members"> */}
-        <EditableProTable
-          columns={columns}
-          value={dataSource}
-          rowKey="id"
-          recordCreatorProps={{
-            creatorButtonText: '添加成员',
-            newRecordType: 'dataSource',
-            record: () => ({
-              id: dataSource.length + 1,
-            }),
-          }}
-          editable={{
-            type: 'multiple',
-            editableKeys,
-            formProps: {},
-            actionRender: (row, config, defaultDoms) => {
-              return [defaultDoms.delete];
-            },
-            onValuesChange: (record, recordList) => {
-              setDataSource(recordList);
-            },
-            onChange: setEditableRowKeys,
-          }}
-        />
+        {authVisible && (
+          <EditableProTable
+            columns={columns}
+            value={dataSource}
+            rowKey="useId"
+            recordCreatorProps={{
+              creatorButtonText: '添加成员',
+              newRecordType: 'dataSource',
+              record: () => ({
+                useId: dataSource.length + 1,
+              }),
+            }}
+            editable={{
+              type: 'multiple',
+              editableKeys,
+              formProps: {},
+              actionRender: (row, config, defaultDoms) => {
+                return [defaultDoms.delete];
+              },
+              onValuesChange: (record, recordList) => {
+                updateState(draft => {
+                  draft.dataSource = recordList;
+                });
+              },
+              onChange: setEditableRowKeys,
+            }}
+          />
+        )}
         {/* </Form.Item> */}
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button style={{ marginRight: 8 }} shape="round">
+          <Button style={{ marginRight: 8 }} shape="round" onClick={handleCreate}>
             保存并返回
           </Button>
           <Button type="primary" shape="round" htmlType="submit">
