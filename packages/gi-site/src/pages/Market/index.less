@@ -59,6 +59,9 @@
       box-shadow: none;
     }
   }
+  .ant-card-bordered {
+    border-radius: 10px;
+  }
 }
 
 .control {
@@ -81,4 +84,54 @@
   font-family: PingFangSC-Medium;
   background-color: rgb(74, 124, 249);
   border-radius: 8px;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  .icon {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: #1890ff;
+    background: rgba(23, 125, 220, 0.08);
+    border-radius: 15px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 5%);
+  }
+  .desc {
+    width: 148px;
+    div {
+      color: #000000;
+      opacity: 0.45;
+    }
+  }
+  .fire {
+    width: 50px;
+    height: 40px;
+    color: #000000;
+    opacity: 0.45;
+  }
+}
+
+.operation-group {
+  position: absolute;
+  top: 10px;
+}
+.componet-market {
+  display: flex;
+  height: calc(100vh - 64px);
+  .gi-config-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    .config {
+      max-height: 300px;
+    }
+    .view {
+      flex: 1;
+    }
+  }
 }

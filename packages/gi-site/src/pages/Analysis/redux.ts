@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GIComponentConfig, GIConfig, GIService } from '@alipay/graphinsight/src/typing';
 import { createStore } from 'redux';
-interface Action {
+type Action = {
   type: string;
   payload: any;
-}
+};
 
 const initialState = {
   /** 项目ID */
@@ -13,7 +13,11 @@ const initialState = {
   key: Math.random(),
   /** 画布渲染的配置 */
   config: {},
-
+  /** 资产Map */
+  assets: {},
+  /** 资产Map */
+  totalAssets: {},
+  siteConfig: {},
   /** 是否准备完毕 */
   isReady: false,
   /** 是否保存 */
@@ -22,6 +26,8 @@ const initialState = {
   activeNavbar: '',
   /** 当前 Sidebar 是否可折叠 */
   collapse: false,
+  /** 当前 数据导入面板 是否可显示 */
+  isModalVisible: false,
   /** 所有的数据服务列表 */
   services: [],
   /** 组件市场的所有组件 */
@@ -29,13 +35,29 @@ const initialState = {
   elements: [],
   data: {},
   refreshComponentKey: Math.random(),
-  assets: {},
+
   /** 数据服务列表 */
   serviceLists: [],
   /** 是否开启智能推荐 */
   enableAI: false,
   /** 原始渲染的配置，用于取消智能推荐时还原 */
   projectConfig: {},
+  /** 资产中心 */
+  assetsCenter: {
+    visible: false,
+    hash: 'components',
+  },
+  activeAssets: {},
+  activeAssetsKeys: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
+  activeAssetsInformation: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
 };
 
 export interface StateType {
@@ -49,6 +71,32 @@ export interface StateType {
   data: any;
   /** 画布渲染的配置 */
   config: GIConfig;
+
+  /** 全部资产 */
+  assets: {
+    components: any[];
+    elements: any[];
+    layouts: any[];
+  };
+  /** 用户选择的资产,活跃资产 */
+  activeAssets: {
+    components: any[];
+    elements: any[];
+    layouts: any[];
+  };
+  /** 用户选择的资产的Key值,活跃资产 */
+  activeAssetsKeys: {
+    components: string[];
+    elements: string[];
+    layouts: string[];
+  };
+
+  activeAssetsInformation: {
+    components: any[];
+    elements: any[];
+    layouts: any[];
+  };
+
   /** 是否准备完毕 */
   isReady: boolean;
   /** 是否保存 */
@@ -57,14 +105,15 @@ export interface StateType {
   activeNavbar: string;
   /** 当前 Sidebar 是否可折叠 */
   collapse: boolean;
+  /** 当前 数据导入面板 是否可显示 */
+  isModalVisible: boolean;
   /** 所有的数据服务列表 */
   services: GIService[];
   /** 组件市场的所有组件 */
   components: GIComponentConfig[];
   /** 资产中心的 元素 */
   elements: GIComponentConfig[];
-  /** 原始资产 */
-  assets: any;
+
   /** 数据服务列表 */
   serviceLists: {
     id: string;
@@ -75,11 +124,21 @@ export interface StateType {
   enableAI: boolean;
   /** 原始渲染的配置，用于取消智能推荐时还原 */
   projectConfig: GIConfig;
+
+  assetsCenter: {
+    visible: boolean;
+    hash: string;
+  };
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
   const { type, ...payload } = action;
   switch (type) {
+    case 'update':
+      return {
+        ...state,
+        ...payload,
+      };
     case 'update:config':
       return {
         ...state,
@@ -145,7 +204,7 @@ const RootReducers = (state: StateType = initialState, action: Action): StateTyp
       return {
         ...state,
         ...payload,
-      }
+      };
 
     default:
       return state;

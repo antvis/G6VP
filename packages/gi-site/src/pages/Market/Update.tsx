@@ -1,7 +1,6 @@
 // 组件市场
 import React, { useEffect } from 'react';
-import { message, Button } from 'antd';
-import { PlayCircleOutlined } from '@ant-design/icons';
+import { message, Button, Popconfirm, Alert } from 'antd';
 import { Provider } from 'react-redux';
 import { Utils } from '@antv/graphin';
 import store from '../Analysis/redux';
@@ -20,7 +19,7 @@ import * as ts from 'typescript';
 import moment from 'moment';
 import GraphInsightIDE from './GraphInsightIDE';
 import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
-import { usePersistFn } from 'ahooks';
+import { usePersistFn, useInterval } from 'ahooks';
 import queryString from 'querystring';
 import './index.less';
 
@@ -51,9 +50,13 @@ const ComponentMarket = props => {
     sourceCode: null,
     metaInfo: null,
     previewCode: null,
+    loading: true,
+    buildStatus: null,
+    // 定时器
+    interval: null
   });
 
-  const { currentSelectAsset } = state;
+  const { currentSelectAsset, buildStatus, loading, interval } = state;
 
   const queryParams = queryString.parse(location.hash.split('?')[1]);
   const projectName = queryParams.project as string;
@@ -90,8 +93,33 @@ const ComponentMarket = props => {
 
     setState(draft => {
       draft.currentSelectAsset = data;
+      if (!data.status) {
+        draft.buildStatus = null
+        draft.loading = false
+      } else {
+        // 不是构建中时，就不需要再进行轮询
+        if (data.status !== 2) {
+          draft.interval = null
+          draft.loading = false
+          if (data.status) {
+            draft.buildStatus = data.status === 3 ? 'error' : 'success'
+          }
+        } else {
+          // 构建中
+          draft.loading = true
+          draft.buildStatus = 'info'
+        }
+      }
     });
   };
+
+  useInterval(
+    () => {
+      queryAssetDetailById();
+    },
+    interval,
+    { immediate: false },
+  );
 
   /**
    * 将源代码对象转成实时预览需要的数据格式
@@ -108,24 +136,24 @@ const ComponentMarket = props => {
               code: isc[prev],
               // fpath: `src/index.js`,
               fpath: `/src/${prev}`,
-              entry: 1
-            }
-          }
+              entry: 1,
+            },
+          };
         } else {
           pervObj = {
             [`/src/${prev}`]: {
               code: isc[prev],
-              fpath: `/src/${prev}`
-            }
-          }
+              fpath: `/src/${prev}`,
+            },
+          };
         }
       }
 
       const fileObj = {
         code: isc[file],
-        fpath: `/src/${file}`
-      }
-      
+        fpath: `/src/${file}`,
+      };
+
       if (file === 'demo.tsx') {
         // @ts-ignore
         fileObj.entry = 1;
@@ -143,9 +171,9 @@ const ComponentMarket = props => {
 
       return {
         ...pervObj,
-        [`/src/${file}`]: fileObj
-      }
-    })
+        [`/src/${file}`]: fileObj,
+      };
+    });
 
     return previewCodeMap;
   };
@@ -158,26 +186,8 @@ const ComponentMarket = props => {
     const demoFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'src/demo.tsx'
-    })
-
-    const demoStyleFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/demo.module.less'
-    })
-
-    const componentStyleFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/styles.less'
-    })
-
-    const componentFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/Component.tsx'
-    })
+      path: 'src/demo.tsx',
+    });
 
     const packageFile = await getFileSourceCode({
       projectName,
@@ -185,12 +195,66 @@ const ComponentMarket = props => {
       path: 'package.json',
     });
 
-    const initSourceCode = {
-      'demo.tsx': demoFile.data,
-      'demo.module.less': demoStyleFile.data,
-      'styles.less': componentStyleFile.data,
-      'Component.tsx': componentFile.data,
-      'package.json': packageFile.data
+    let initSourceCode = {}
+    if (assetType === '1') {
+      const demoStyleFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/demo.module.less',
+      });
+  
+      const componentStyleFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/styles.less',
+      });
+  
+      const componentFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/component.tsx'
+      })
+  
+      initSourceCode = {
+        'demo.tsx': demoFile.data,
+        'demo.module.less': demoStyleFile.data,
+        'styles.less': componentStyleFile.data,
+        'component.tsx': componentFile.data,
+        'package.json': packageFile.data
+      }
+    } else if (assetType === '4') {
+      // assetType = 4 时，需要加载 index.ts、registerMeta.ts、registerShape.ts 和 registerTransform.ts 四个文件
+      const indexFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/index.ts'
+      })
+
+      const metaFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerMeta.ts'
+      })
+
+      const shapeFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerShape.ts'
+      })
+
+      const transformFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerTransform.ts'
+      })
+      initSourceCode = {
+        'demo.tsx': demoFile.data,
+        'index.ts': indexFile.data,
+        'package.json': packageFile.data,
+        'registerMeta.ts': metaFile.data,
+        'registerShape.ts': shapeFile.data,
+        'registerTransform.ts': transformFile.data
+      }
     }
 
     const previewCodeModules = fileMapToModules(initSourceCode);
@@ -208,10 +272,9 @@ const ComponentMarket = props => {
     // 查询 preview 所需要的 code
 
     // 当为组件时初始化源码
-    if (assetType === '1') {
+    if (assetType === '1' || assetType === '4') {
       queryInitSourceCode();
     }
-    // TODO: 查询构建状态，如果有在构建中的组件，进行提示
   }, []);
 
   const handleSourceCodeChange = async (filepath: string, source: string) => {
@@ -238,7 +301,7 @@ const ComponentMarket = props => {
       });
     } else {
       // 更新 gitlab 上文件成功，且为 meta 时候需要存储到数据库中
-      if (success && filepath === 'meta.ts') {
+      if (success && filepath === 'src/registerMeta.ts') {
         await updateAssetById({
           meta: source,
         });
@@ -279,7 +342,7 @@ const ComponentMarket = props => {
       // 从 Meta 中解析出 Meta 对象
       try {
         const registerMeta = looseCodeParse(state.currentSelectAsset.meta);
-
+        console.log('data', Utils.mock(5).circle().graphin(),)
         // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
         const metaInfo = registerMeta({
           data: Utils.mock(5).circle().graphin(),
@@ -309,26 +372,30 @@ const ComponentMarket = props => {
 
   // 发布组件，需要先创建分支，然后构建
   const handlePublish = async () => {
+    setState(draft => {
+      draft.loading = true
+    })
+
     const uuid = `${Math.random().toString(36).substr(2)}`;
     const currentDate = moment(new Date()).format('YYYYMMDD');
     const newBranchName = `sprint_${projectName}_${uuid}_${currentDate}`;
 
     // step1: 创建新的分支
-    // const result = await createNewBranch({
-    //   projectName,
-    //   branchName: newBranchName,
-    //   refBranchName: 'master'
-    // })
+    const result = await createNewBranch({
+      projectName,
+      branchName: newBranchName,
+      refBranchName: 'master'
+    })
 
     // step2: 构建
     const buildResult = await buildAssetWithTask({
       assetId,
       projectName,
-      branchName,
+      branchName: newBranchName,
     });
 
     if (buildResult) {
-      const { status, logUrl, id } = buildResult;
+      const { logUrl, id } = buildResult;
       // 更新数据库中构建状态及构建日志字段
       updateAssets(assetId, {
         yuyanBuildId: id,
@@ -343,40 +410,83 @@ const ComponentMarket = props => {
         buildLogUrl: logUrl,
         version: newBranchName,
       });
+
+      // 启动定时器
+      setState(draft => {
+        draft.buildStatus = 'info'
+        draft.interval = 30000
+      })
     }
   };
-  // const rightContent = (
-  //   <Button onClick={handlePublish} icon={<PlayCircleOutlined />}>
-  //     发布
-  //   </Button>
-  // );
-  return (
-    <>
-      <BaseNavbar>
-        <h4>物料中心</h4>
-      </BaseNavbar>
-      <Button onClick={handlePublish} style={{ position: 'absolute', right: 8, top: 1 }}>
+
+  const buildingTips = <span>资产正在构建中，预计需要3-5分钟的时间，你可以<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>以了解最新进展</span>
+
+  const buildSuccessTips = <>
+    <span>资产构建成功，你可以</span>
+    <a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>
+    <span>或</span>
+    <a href={currentSelectAsset?.distCodeUrl} target='_blank'>查看构建产物</a>
+  </>
+  
+  const buildErrorTips = <span>资产构建失败，具体失败原因请<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a></span>
+
+  let tipsDom = null
+  if (buildStatus === 'success') {
+    tipsDom = buildSuccessTips
+  } else if (buildStatus === 'info') {
+    tipsDom = buildingTips
+  } else if (buildStatus === 'error') {
+    tipsDom =  buildErrorTips
+  }
+
+  let publishDom = null
+
+  if (assetType === '1' || assetType === '4' || assetType === '5') {
+    publishDom = <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
+      onConfirm={handlePublish}
+      okText="确定"
+      cancelText="取消">
+      <Button loading={loading} style={{ color: '#000' }}>
         发布
       </Button>
+    </Popconfirm>
+  }
+
+  let defaultMode = ''
+  if (assetType === '1') {
+    defaultMode = '/src/demo.tsx'
+  } else if (assetType === '4') {
+    defaultMode = '/src/demo.tsx'
+  } else if (assetType === '3') {
+    defaultMode = '/index.ts'
+  }
+  return (
+    <>
+      <BaseNavbar rightContent={publishDom}>
+      {
+        buildStatus &&
+        <Alert message={tipsDom} type={buildStatus} showIcon />
+      }
+      </BaseNavbar>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
-          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? '/src/demo.tsx' : '/src/index.ts' } codeChange={codeChangeCallback}  />
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={defaultMode} codeChange={codeChangeCallback}  />
         </div>
         {assetType !== '3' && (
-          <div style={{ marginTop: 20 }} className="gi-config-wrapper">
-            <div className="content config">
+          <div className="gi-config-wrapper">
+            <div className="config">
               {state.metaInfo ? (
                 <ComponentMetaPanel onChange={handleMetaInfoChange} config={state.metaInfo} />
               ) : (
                 '暂无 Meta 信息'
               )}
             </div>
-            <div className="content view">
+            <div className="view">
               {state.previewCode && (
                 <GravityDemoSDK
                   code={state.previewCode}
                   width="100%"
-                  height="300px"
+                  height="100%"
                   src="https://gw.alipayobjects.com/as/g/Gravity/gravity/3.10.3/gravityDemoSdk/index.html"
                 />
               )}

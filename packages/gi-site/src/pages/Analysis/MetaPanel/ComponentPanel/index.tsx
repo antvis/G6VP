@@ -1,12 +1,6 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
-import ComponentMarket from '../ComponentMarket';
-import Group from '../../../../components/DataVGui/Group';
-
-const extensions = {
-  group: Group,
-  test: Group,
-};
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -35,9 +29,9 @@ const getComponentsByMap = componentMap => {
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { value, onChange, data, config, meta, services, dispatch, components } = props;
+  const { config, dispatch, components } = props;
 
-  const { components: choosedComponents } = config;
+  const { components: configComponents } = config;
 
   const [state, setState] = useState({
     isModalVisible: false,
@@ -47,8 +41,8 @@ const ComponentPanel = props => {
   const configObj = {};
   const valueObj = {};
 
-  choosedComponents.forEach(element => {
-    const { id, props, enable } = element;
+  components.forEach(component => {
+    const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName } = component;
     const defaultFunction = params => {
       return {
         categoryId: 'components',
@@ -59,30 +53,20 @@ const ComponentPanel = props => {
         children: {},
       };
     };
-    const defaultComponent = components.find(c => c.id === id);
-    if (!defaultComponent) {
-      return;
-    }
-    const { meta: defaultConfigObj, props: defaultProps, name: defaultName } = defaultComponent;
+    const matchComponent = config.components?.find(c => c.id === id) || {};
+    const { props = {} } = matchComponent;
 
     valueObj[id] = {
       ...defaultProps,
       ...props,
-      giEnable: enable,
     };
 
     configObj[id] = {
       name: defaultName,
-      type: 'test',
+      type: 'group',
       fold: false,
       children: {
         ...defaultConfigObj,
-        giEnable: {
-          name: '是否加载',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
       },
     };
   });
@@ -97,10 +81,12 @@ const ComponentPanel = props => {
     });
   };
 
+  console.log('XXXX', configObj, valueObj);
+
   return (
     <div>
-      <ComponentMarket components={components} dispatch={dispatch} config={config} />
-      <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
+      <AssetsCenterHandler title="组件" id="components" />
+      <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} />
     </div>
   );
 };

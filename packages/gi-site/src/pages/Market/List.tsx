@@ -1,30 +1,27 @@
 // 组件市场
-import { AppstoreOutlined, BranchesOutlined, PlusOutlined, DatabaseOutlined } from '@ant-design/icons';
-import { Card, Col, Radio, Tabs, Button, Row } from 'antd';
+import { AppstoreOutlined, FireFilled } from '@ant-design/icons';
+import { Button, Card, Col, Radio, Row, Tabs } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { queryAssets } from '../../services/assets.market';
 import { queryAssetList } from '../../services/assets';
-import CreateAsset from './Create';
-import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
+import CreateAsset from './Create';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 
 const ComponentMarket = props => {
   const { history } = props;
-  console.log('useImmer', useImmer);
-  debugger;
+
   const [state, setState] = useImmer({
     components: [],
-    elements: { node: {}, edge: {} },
+    elements: [],
     services: [],
     visible: false,
-    type: null,
+    type: 'services',
   });
 
   const getAssertList = async () => {
@@ -34,9 +31,11 @@ const ComponentMarket = props => {
     if (success) {
       const componentList = data.filter(d => d.type === 1);
       const serviceList = data.filter(d => d.type === 3);
+      const elementList = data.filter(d => d.type === 4 || d.type === 5);
       setState(draft => {
         draft.components = componentList;
         draft.services = serviceList;
+        draft.elements = elementList;
       });
     }
   };
@@ -46,22 +45,23 @@ const ComponentMarket = props => {
     getAssertList();
   }, []);
 
-  const { components, elements, services } = state;
+  const { components, elements, services, type } = state;
 
-  const NodeElements = Object.values(elements.node);
-  const EdgeElements = Object.values(elements.edge);
-
-  const handleShowCreateModel = (type: string) => {
+  const handleShowCreateModel = () => {
     setState(draft => {
       draft.visible = true;
-      draft.type = type;
     });
   };
 
   const handleClose = () => {
     setState(draft => {
       draft.visible = false;
-      draft.type = null;
+    });
+  };
+
+  const handleChangeType = evt => {
+    setState(draft => {
+      draft.type = evt.target.value;
     });
   };
 
@@ -76,7 +76,10 @@ const ComponentMarket = props => {
         </Radio.Button>
       </Radio.Group>
       <div style={{ position: 'relative', top: 10, left: 12 }}>
-        <Radio.Group defaultValue="components" size="small" className={styles.assetType}>
+        <Radio.Group defaultValue="services" size="small" className={styles.assetType} onChange={handleChangeType}>
+          <Radio.Button value="services" style={{ marginRight: 10, borderRadius: 17 }}>
+            服务
+          </Radio.Button>
           <Radio.Button value="components" style={{ marginRight: 10, borderRadius: 17 }}>
             组件
           </Radio.Button>
@@ -90,16 +93,25 @@ const ComponentMarket = props => {
       </div>
     </div>
   );
+
+  let listData = [];
+  if (type === 'components') {
+    listData = components;
+  } else if (type === 'services') {
+    listData = services;
+  } else if (type === 'elements') {
+    listData = elements;
+  }
   return (
     <>
       <BaseNavbar active="market"></BaseNavbar>
       <div className={styles.container}>
         <div className={styles.title}>图可视分析资产市场</div>
         <div className={styles.buttongroup}>
-          <Button type="primary" shape="round" onClick={() => handleShowCreateModel('component')}>
+          <Button type="primary" shape="round" onClick={() => handleShowCreateModel()}>
             创建资产
           </Button>
-          <Button shape="round" ghost>
+          <Button shape="round" ghost onClick={() => history.push('/market/personal')}>
             我的资产
           </Button>
         </div>
@@ -114,17 +126,30 @@ const ComponentMarket = props => {
           ]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
-          {services.map(c => {
-            const { id, name, displayName, description, branchName, type } = c;
+          {listData.map(c => {
+            const { id, version, name, ownerNickname, displayName, gmtModified, branchName, type } = c;
             return (
               <Col key={id} style={{ width: '300px' }}>
                 <Link
-                  to={`/market/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
+                  to={`/market/asserts/${id}?assetId=${id}&project=${name}&branch=${branchName}&type=${type}`}
                   style={{ color: '#424447' }}
                 >
-                  <Card hoverable title={displayName}>
-                    {name}「{branchName}」 <br />
-                    {description}
+                  <Card hoverable>
+                    <div className={styles.card}>
+                      <div className={styles.icon}>
+                        <AppstoreOutlined />
+                      </div>
+                      <div className={styles.desc}>
+                        <h4>{displayName || name}</h4>
+                        <div>作者：{ownerNickname}</div>
+                        <div>版本：{version}</div>
+                        <div>更新：{gmtModified}</div>
+                      </div>
+                      <div className={styles.fire}>
+                        {'12'}
+                        <FireFilled />
+                      </div>
+                    </div>
                   </Card>
                 </Link>
               </Col>
@@ -132,7 +157,7 @@ const ComponentMarket = props => {
           })}
         </Row>
       </div>
-      <CreateAsset visible={state.visible} close={handleClose} type={state.type} history={history} />
+      <CreateAsset visible={state.visible} close={handleClose} history={history} />
     </>
   );
 };

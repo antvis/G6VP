@@ -28,7 +28,7 @@ const registerMeta = context => {
         children: {
           mappingKey: {
             name: '映射字段',
-            type: 'checkbox',
+            type: 'TagsSelect',
             optionCol: 8,
             default: numberKeys,
             options: numberOptions,

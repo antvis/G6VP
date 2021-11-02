@@ -8,6 +8,7 @@ export default {
     '--border-color': '#ddd',
     // 导航栏文本颜色
     '--primary-title-text-color': 'rgba(0, 0, 0, 0.65)',
+    '--header-bg-color': 'rgb(255,255,255)',
   },
   dark: {
     '--primary-color': '#363b40',
@@ -18,5 +19,6 @@ export default {
     '--border-color': '#303030',
     // 导航栏文本颜色
     '--primary-title-text-color': 'rgba(255, 255, 255, 0.65)',
+    '--header-bg-color': 'rgba(255, 255, 255 0.65)',
   },
 };

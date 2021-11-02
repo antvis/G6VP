@@ -1,4 +1,5 @@
-import { BrowserFSFileType } from '@alipay/alex-core';
+import { BrowserFSFileType } from '@alipay/alex';
+import * as giAssets from '@alipay/gi-assets';
 import request from 'umi-request';
 import { isMock, SERVICE_URL_PREFIX } from './const';
 
@@ -51,6 +52,11 @@ interface BuildParams extends BaseParams {
   assetId: string;
 }
 
+interface ActiveAssetParams {
+  name: string;
+  version: string;
+}
+
 const convertResponse = response => {
   const { data, success, errorMsg } = response;
   let msg = errorMsg;
@@ -93,16 +99,60 @@ export const updateAssets = async (id: string, param: UpdateAssetParams) => {
 };
 
 /**
+ * 通过选中的资产名称和版本查询资产列表
+ * @param param 选中的资产列表
+ */
+export const queryActiveAssetList = async(param: ActiveAssetParams[]) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/activelist`, {
+    method: 'post',
+    data: param,
+  })
+
+  return response
+}
+
+/**
  * 查询资产列表
  * @param param 查询参数
  */
-export const queryAssetList = async (param?: { name?: string; limit?: number }) => {
+export const queryAssetList = async (param?: { name?: string; limit?: number; projectId: string }) => {
+  //TODO 等待接口Ready，目前先从giAssets离线包中构造
+  const getListByGIAssets = () => {
+    const components = Object.keys(giAssets.components).map(key => {
+      return {
+        type: 1, //组件
+        id: key,
+        ...giAssets.components[key]?.info,
+      };
+    });
+    const elements = Object.keys(giAssets.elements).map(key => {
+      return {
+        type: 2, //元素
+        id: key,
+        ...giAssets.elements[key]?.info,
+      };
+    });
+    return { components, elements };
+  };
+
+  //TODO:需要根据projectID把多余的Service过滤掉
   const response = await request(`${SERVICE_URL_PREFIX}/asset/list`, {
     method: 'get',
     params: param,
   });
 
-  return convertResponse(response);
+  const res = convertResponse(response);
+  let services = []
+  if (param && param.projectId) {
+    services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
+    const { components, elements } = getListByGIAssets();
+    return { components, services, elements };
+  }
+  
+  return res
+ 
+
+  // 如果不是动态加载
 };
 
 /**
