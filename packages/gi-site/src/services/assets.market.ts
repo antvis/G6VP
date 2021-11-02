@@ -5,13 +5,14 @@
 import * as giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { dynamicLoadModules } from '../loader';
-import { queryAssetList, queryActiveAssetList } from './assets';
+import { queryActiveAssetList, queryAssetList } from './assets';
 import { isMock } from './const';
 
-// TODO 临时方案，需要换成和 Component 一样的方案
-// let { elements } = giAssets || {};
-
+let { elements } = (giAssets || {}) as any;
 const isDynamicLoad = true;
+if (isDynamicLoad) {
+  elements = {};
+}
 
 /**
  * 获取指定项目
@@ -21,11 +22,11 @@ const isDynamicLoad = true;
 export const queryAssets = async (id: string, activeAssetsKeys: any) => {
   // 解压资产，获取脚本路径
   let components = {};
-  let elements = {}
-  
+
   if (isDynamicLoad) {
-    const { components: activeComponentKeys, elements: activeElementKeys } = activeAssetsKeys
-    const assetKeys = [...activeComponentKeys, ...activeElementKeys, 'My_Legend', 'Rect_Node']
+    const { components: activeComponentKeys, elements: activeElementKeys } = activeAssetsKeys;
+
+    const assetKeys = [...activeComponentKeys, ...activeElementKeys, 'My_Legend', 'Rect_Node', 'GraphinEdge'];
     if (assetKeys.length === 0) {
       return await new Promise(resolve => {
         resolve({
@@ -38,9 +39,9 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     const param = assetKeys.map(d => {
       return {
         name: d,
-        version: 'sprint_test_legend_zwcenscc83e_20211023'
-      }
-    })
+        version: 'sprint_test_legend_zwcenscc83e_20211023',
+      };
+    });
 
     // const param = [
     //   {
@@ -56,40 +57,41 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     //     version: 'sprint_Rect_Node_o2iudy9w1m_20211028'
     //   }
     // ]
-    
-    const activeAssetList = await queryActiveAssetList(param)
-    
+
+    const activeAssetList = await queryActiveAssetList(param);
+
     if (!activeAssetList || !activeAssetList.success) {
-      console.error(`接口请求错误，错误原因：${activeAssetList.errorMsg}`)
-      return
+      console.error(`接口请求错误，错误原因：${activeAssetList.errorMsg}`);
+      return;
     }
 
     const dynamicParam = activeAssetList.data.map(d => {
       return {
         name: d.name,
         url: d.distCodeUrl,
-        type: d.type
-      }
-    })
-    
+        type: d.type,
+      };
+    });
+
     const dlm = await dynamicLoadModules(dynamicParam);
-    
+
     if (dlm && dlm.length > 0) {
-      const componentModules = dlm.filter(d => d.type === 1)
-      const elementModules = dlm.filter(d => d.type === 4)
+      const componentModules = dlm.filter(d => d.type === 1);
+      const elementModules = dlm.filter(d => {
+        return d.type === 4 || d.type === 5;
+      });
       components = componentModules.reduce((acc, curr) => {
-         
         const currentComponent = curr.components.default;
         const { info } = currentComponent;
         return {
           ...acc,
-          [info.id]: currentComponent
+          [info.id]: currentComponent,
         };
       }, {});
 
       elements = elementModules.reduce((acc, curr) => {
         const currentElement = curr.components.default;
-        const { info } =currentElement
+        const { info } = currentElement;
         return {
           ...acc,
           [info.id]: currentElement,

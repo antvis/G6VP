@@ -47,7 +47,7 @@ export const getProjectById = async (id: string) => {
   }
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/list/${id}`, {
-    method: 'get',
+    method: 'post',
   });
   if (response.success && response.data?.length > 0) {
     const res = response.data[0];
