@@ -25,7 +25,16 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
   
   if (isDynamicLoad) {
     const { components: activeComponentKeys, elements: activeElementKeys } = activeAssetsKeys
-    const assetKeys = [...activeComponentKeys, ...activeElementKeys]
+    const assetKeys = [...activeComponentKeys, ...activeElementKeys, 'My_Legend', 'Rect_Node']
+    if (assetKeys.length === 0) {
+      return await new Promise(resolve => {
+        resolve({
+          components: [],
+          services: [],
+          elements: [],
+        });
+      });
+    }
     const param = assetKeys.map(d => {
       return {
         name: d,
@@ -47,6 +56,7 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     //     version: 'sprint_Rect_Node_o2iudy9w1m_20211028'
     //   }
     // ]
+    
     const activeAssetList = await queryActiveAssetList(param)
     
     if (!activeAssetList || !activeAssetList.success) {
