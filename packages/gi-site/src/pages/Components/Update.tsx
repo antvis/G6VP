@@ -189,36 +189,72 @@ const ComponentMarket = props => {
       path: 'src/demo.tsx',
     });
 
-    const demoStyleFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/demo.module.less',
-    });
-
-    const componentStyleFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/styles.less',
-    });
-
-    const componentFile = await getFileSourceCode({
-      projectName,
-      branchName,
-      path: 'src/component.tsx'
-    })
-
     const packageFile = await getFileSourceCode({
       projectName,
       branchName,
       path: 'package.json',
     });
 
-    const initSourceCode = {
-      'demo.tsx': demoFile.data,
-      'demo.module.less': demoStyleFile.data,
-      'styles.less': componentStyleFile.data,
-      'component.tsx': componentFile.data,
-      'package.json': packageFile.data
+    let initSourceCode = {}
+    if (assetType === '1') {
+      const demoStyleFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/demo.module.less',
+      });
+  
+      const componentStyleFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/styles.less',
+      });
+  
+      const componentFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/component.tsx'
+      })
+  
+      initSourceCode = {
+        'demo.tsx': demoFile.data,
+        'demo.module.less': demoStyleFile.data,
+        'styles.less': componentStyleFile.data,
+        'component.tsx': componentFile.data,
+        'package.json': packageFile.data
+      }
+    } else if (assetType === '4') {
+      // assetType = 4 时，需要加载 index.ts、registerMeta.ts、registerShape.ts 和 registerTransform.ts 四个文件
+      const indexFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/index.ts'
+      })
+
+      const metaFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerMeta.ts'
+      })
+
+      const shapeFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerShape.ts'
+      })
+
+      const transformFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerTransform.ts'
+      })
+      initSourceCode = {
+        'demo.tsx': demoFile.data,
+        'index.ts': indexFile.data,
+        'package.json': packageFile.data,
+        'registerMeta.ts': metaFile.data,
+        'registerShape.ts': shapeFile.data,
+        'registerTransform.ts': transformFile.data
+      }
     }
 
     const previewCodeModules = fileMapToModules(initSourceCode);
@@ -236,10 +272,9 @@ const ComponentMarket = props => {
     // 查询 preview 所需要的 code
 
     // 当为组件时初始化源码
-    if (assetType === '1') {
+    if (assetType === '1' || assetType === '4') {
       queryInitSourceCode();
     }
-    // TODO: 查询构建状态，如果有在构建中的组件，进行提示
   }, []);
 
   const handleSourceCodeChange = async (filepath: string, source: string) => {
@@ -266,7 +301,7 @@ const ComponentMarket = props => {
       });
     } else {
       // 更新 gitlab 上文件成功，且为 meta 时候需要存储到数据库中
-      if (success && filepath === 'meta.ts') {
+      if (success && filepath === 'src/registerMeta.ts') {
         await updateAssetById({
           meta: source,
         });
@@ -307,7 +342,7 @@ const ComponentMarket = props => {
       // 从 Meta 中解析出 Meta 对象
       try {
         const registerMeta = looseCodeParse(state.currentSelectAsset.meta);
-
+        console.log('data', Utils.mock(5).circle().graphin(),)
         // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
         const metaInfo = registerMeta({
           data: Utils.mock(5).circle().graphin(),
@@ -346,17 +381,17 @@ const ComponentMarket = props => {
     const newBranchName = `sprint_${projectName}_${uuid}_${currentDate}`;
 
     // step1: 创建新的分支
-    // const result = await createNewBranch({
-    //   projectName,
-    //   branchName: newBranchName,
-    //   refBranchName: 'master'
-    // })
+    const result = await createNewBranch({
+      projectName,
+      branchName: newBranchName,
+      refBranchName: 'master'
+    })
 
     // step2: 构建
     const buildResult = await buildAssetWithTask({
       assetId,
       projectName,
-      branchName,
+      branchName: newBranchName,
     });
 
     if (buildResult) {
@@ -406,7 +441,7 @@ const ComponentMarket = props => {
 
   let publishDom = null
 
-  if (assetType === '1') {
+  if (assetType === '1' || assetType === '4' || assetType === '5') {
     publishDom = <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
       onConfirm={handlePublish}
       okText="确定"
@@ -415,6 +450,15 @@ const ComponentMarket = props => {
         发布
       </Button>
     </Popconfirm>
+  }
+
+  let defaultMode = ''
+  if (assetType === '1') {
+    defaultMode = '/src/demo.tsx'
+  } else if (assetType === '4') {
+    defaultMode = '/src/demo.tsx'
+  } else if (assetType === '3') {
+    defaultMode = '/index.ts'
   }
   return (
     <>
@@ -426,7 +470,7 @@ const ComponentMarket = props => {
       </BaseNavbar>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
-          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={assetType === '1' ? '/src/demo.tsx' : '/index.ts' } codeChange={codeChangeCallback}  />
+          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={defaultMode} codeChange={codeChangeCallback}  />
         </div>
         {assetType !== '3' && (
           <div className="gi-config-wrapper">

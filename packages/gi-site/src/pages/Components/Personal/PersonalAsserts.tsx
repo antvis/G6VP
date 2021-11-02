@@ -1,12 +1,15 @@
 // 我的资产
-import { Breadcrumb, Table, Radio } from 'antd';
 import React from 'react';
+import { Breadcrumb, Table, Radio, Tag, Space, Button } from 'antd';
+import {
+  CheckCircleOutlined
+} from '@ant-design/icons';
 import { Provider } from 'react-redux';
 import { useImmer } from 'use-immer';
 import { queryAssetList } from '../../../services/assets';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
 import store from '../../Analysis/redux';
-import { TYPE_MAPPING_TR } from '../Constants';
+import { TYPE_MAPPING_TR, STATUS_MAPPING_TR } from '../Constants';
 import './index.less';
 
 const columns = [
@@ -44,6 +47,13 @@ const columns = [
     title: '状态',
     dataIndex: 'status',
     key: 'status',
+    render: (text, record) => {
+      if (record.type === 3) {
+        return <Tag icon={<CheckCircleOutlined />} color='success'>正常</Tag>
+      }
+      const Component = STATUS_MAPPING_TR[text]?.IconComponent
+      return <Tag icon={<Component />} color={STATUS_MAPPING_TR[text]?.color}>{STATUS_MAPPING_TR[text]?.text}</Tag>
+    }
   },
   {
     title: '版本号',
@@ -74,6 +84,36 @@ const columns = [
     dataIndex: 'description',
     key: 'description',
   },
+  {
+    title: "操作",
+    render: (text, record) => {
+      // 已经被使用的数据服务不需要操作
+      if (record.type === 3) {
+        if (record.projectId) {
+          // 已经被使用的数据服务不能删除
+
+          return null
+        }
+        return <Button type="link" danger>删除</Button>
+      }
+
+      if (record.status !== 2) {
+        // 已经使用的组件不能删除
+        if (record.projectId) {
+          return <Button type='link'>构建</Button>
+        }
+        return <Space size='small'>
+          <Button type='link'>构建</Button>
+          <Button type="link" danger>删除</Button>
+        </Space>
+      }
+      
+      if (record.projectId) {
+        return null
+      }
+      return <Button type="link" danger>删除</Button>
+    }
+  }
 ];
 
 const PersonAsserts = () => {
