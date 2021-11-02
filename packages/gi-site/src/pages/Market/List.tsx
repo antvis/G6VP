@@ -1,16 +1,14 @@
 // 组件市场
-import { AppstoreOutlined, FireFilled, PlusOutlined, DatabaseOutlined } from '@ant-design/icons';
-import { Card, Col, Radio, Tabs, Button, Row } from 'antd';
+import { AppstoreOutlined, FireFilled } from '@ant-design/icons';
+import { Button, Card, Col, Radio, Row, Tabs } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { queryAssets } from '../../services/assets.market';
 import { queryAssetList } from '../../services/assets';
-import CreateAsset from './Create';
-import { getComponentsByAssets, getElementsByAssets } from '../Analysis/getAssets';
 import store from '../Analysis/redux';
+import CreateAsset from './Create';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -96,7 +94,6 @@ const ComponentMarket = props => {
     </div>
   );
 
-  debugger;
   let listData = [];
   if (type === 'components') {
     listData = components;
@@ -123,7 +120,10 @@ const ComponentMarket = props => {
       <div className="lists">
         {fliterGroup}
         <Row
-          gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}
+          gutter={[
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+          ]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
           {listData.map(c => {
