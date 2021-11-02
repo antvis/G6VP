@@ -1,4 +1,5 @@
 import * as React from 'react';
+import AssetsCenter from '../../../components/AssetsCenter';
 import ComponentPanel from './ComponentPanel';
 import DataPanel from './DataPanel';
 import './index.less';
@@ -26,13 +27,18 @@ const navbarOptions = [
     name: '组件',
     component: ComponentPanel,
   },
+  // {
+  //   id: 'assets',
+  //   name: '资产',
+  //   component: () => <></>,
+  // },
 ];
-const navbarOptionsMap = navbarOptions.reduce((acc,curr)=>{
+const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
   return {
     ...acc,
-    [curr.id]:curr
-  }
-},{}) 
+    [curr.id]: curr,
+  };
+}, {});
 
 const MetaPanel = props => {
   const { value, onChange, data, config, meta, services } = props;
@@ -49,12 +55,17 @@ const MetaPanel = props => {
   return (
     <div className="gi-config-pannel">
       <Component {...props} />
+      <AssetsCenter />
     </div>
   );
 };
 
 export default React.memo(MetaPanel, (prevProps, nextProps) => {
-  if (prevProps.value !== nextProps.value || prevProps.refreshKey !== nextProps.refreshKey || JSON.stringify(prevProps.config) !== JSON.stringify(nextProps.config)) {
+  if (
+    prevProps.value !== nextProps.value ||
+    prevProps.refreshKey !== nextProps.refreshKey ||
+    JSON.stringify(prevProps.config) !== JSON.stringify(nextProps.config)
+  ) {
     return false;
   }
   return true;

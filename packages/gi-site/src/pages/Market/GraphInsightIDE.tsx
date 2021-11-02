@@ -1,25 +1,22 @@
-import React, { useRef } from 'react';
-import { AppRenderer, SlotLocation, SlotRenderer, SplitPanel, BoxPanel } from '@alipay/alex/bundle';
-import '@alipay/alex/bundle/alex.css';
-// 语法高亮
-import '@alipay/alex/languages/html';
-// import '@alipay/alex/languages/handlebars'
-import '@alipay/alex/languages/css';
-import '@alipay/alex/languages/scss';
-import '@alipay/alex/languages/less';
-import '@alipay/alex/languages/javascript';
-import '@alipay/alex/languages/typescript';
-import '@alipay/alex/languages/json';
-
+import { AppRenderer, BoxPanel, SlotLocation, SlotRenderer, SplitPanel } from '@alipay/alex';
+// import '@alipay/alex/bundle/alex.css';
+// // 语法高亮
+// import '@alipay/alex/languages/html';
+// // import '@alipay/alex/languages/handlebars'
+// import '@alipay/alex/languages/css';
+// import '@alipay/alex/languages/scss';
+// import '@alipay/alex/languages/less';
+// import '@alipay/alex/languages/javascript';
+// import '@alipay/alex/languages/typescript';
+// import '@alipay/alex/languages/json';
 import queryString from 'querystring';
-
+import React, { useRef } from 'react';
 // 语言功能
 // import html from '@alipay/alex/extensions/alex.html-language-features-worker';
 // import css from '@alipay/alex/extensions/alex.css-language-features-worker';
 // import typescript from '@alipay/alex/extensions/alex.typescript-language-features-worker';
 // import json from '@alipay/alex/extensions/alex.json-language-features-worker';
-
-import { getFileDirectory, getFileBlob } from '../../services/assets';
+import { getFileBlob, getFileDirectory } from '../../services/assets';
 
 // 布局配置
 const layoutConfig = {
