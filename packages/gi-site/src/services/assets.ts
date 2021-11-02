@@ -52,6 +52,11 @@ interface BuildParams extends BaseParams {
   assetId: string;
 }
 
+interface ActiveAssetParams {
+  name: string;
+  version: string;
+}
+
 const convertResponse = response => {
   const { data, success, errorMsg } = response;
   let msg = errorMsg;
@@ -92,6 +97,19 @@ export const updateAssets = async (id: string, param: UpdateAssetParams) => {
 
   return convertResponse(response);
 };
+
+/**
+ * 通过选中的资产名称和版本查询资产列表
+ * @param param 选中的资产列表
+ */
+export const queryActiveAssetList = async(param: ActiveAssetParams[]) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/activelist`, {
+    method: 'post',
+    data: param,
+  })
+
+  return response
+}
 
 /**
  * 查询资产列表

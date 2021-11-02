@@ -5,13 +5,13 @@
 import * as giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { dynamicLoadModules } from '../loader';
-import { queryAssetList } from './assets';
+import { queryAssetList, queryActiveAssetList } from './assets';
 import { isMock } from './const';
 
 // TODO 临时方案，需要换成和 Component 一样的方案
-let { elements } = giAssets || {};
+// let { elements } = giAssets || {};
 
-const isDynamicLoad = false;
+const isDynamicLoad = true;
 
 /**
  * 获取指定项目
@@ -21,27 +21,68 @@ const isDynamicLoad = false;
 export const queryAssets = async (id: string, activeAssetsKeys: any) => {
   // 解压资产，获取脚本路径
   let components = {};
-  // TODO: 动态加载 GI 资产，临时使用 GI 发布的资产包，需要改成从数据库中读取资产，然后按需加载
+  let elements = {}
+  
   if (isDynamicLoad) {
-    const dlm = await dynamicLoadModules([
-      {
-        name: 'NodeLegend',
-        // url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js',
-        url: 'http://alipay-rmsdeploy-image.cn-hangzhou.alipay.aliyun-inc.com/GraphInsight/test_legend-5e0ece9910fc7e3c9a7e2d228453e330.js',
-      },
-      {
-        name: 'NodeLegend1',
-        // url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js',
-        url: 'http://alipay-rmsdeploy-image.cn-hangzhou.alipay.aliyun-inc.com/GraphInsight/test_legend-5e0ece9910fc7e3c9a7e2d228453e330.js',
-      },
-    ]);
+    const { components: activeComponentKeys, elements: activeElementKeys } = activeAssetsKeys
+    const assetKeys = [...activeComponentKeys, ...activeElementKeys]
+    const param = assetKeys.map(d => {
+      return {
+        name: d,
+        version: 'sprint_test_legend_zwcenscc83e_20211023'
+      }
+    })
 
-    // let elements = {}
+    // const param = [
+    //   {
+    //     name: 'My_Legend',
+    //     version: 'sprint_My_Legend_8cnsk9bys1_20211028',
+    //   },
+    //   {
+    //     name: 'test_legend',
+    //     version: 'sprint_test_legend_zwcenscc83e_20211023'
+    //   },
+    //   {
+    //     name: 'Rect_Node',
+    //     version: 'sprint_Rect_Node_o2iudy9w1m_20211028'
+    //   }
+    // ]
+    const activeAssetList = await queryActiveAssetList(param)
+    
+    if (!activeAssetList || !activeAssetList.success) {
+      console.error(`接口请求错误，错误原因：${activeAssetList.errorMsg}`)
+      return
+    }
+
+    const dynamicParam = activeAssetList.data.map(d => {
+      return {
+        name: d.name,
+        url: d.distCodeUrl,
+        type: d.type
+      }
+    })
+    
+    const dlm = await dynamicLoadModules(dynamicParam);
+    
     if (dlm && dlm.length > 0) {
-      components = dlm.reduce((acc, curr) => {
+      const componentModules = dlm.filter(d => d.type === 1)
+      const elementModules = dlm.filter(d => d.type === 4)
+      components = componentModules.reduce((acc, curr) => {
+         
+        const currentComponent = curr.components.default;
+        const { info } = currentComponent;
         return {
           ...acc,
-          ...curr.components,
+          [info.id]: currentComponent
+        };
+      }, {});
+
+      elements = elementModules.reduce((acc, curr) => {
+        const currentElement = curr.components.default;
+        const { info } =currentElement
+        return {
+          ...acc,
+          [info.id]: currentElement,
         };
       }, {});
     }
