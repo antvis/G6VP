@@ -1,8 +1,8 @@
 import { useHistory } from '@alipay/bigfish';
-import { Tooltip, Avatar, Layout } from 'antd';
+import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Avatar, Layout } from 'antd';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { QuestionCircleOutlined, BellOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -35,9 +35,9 @@ const BaseNavbar = props => {
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
         <img
-          src="https://gw.alipayobjects.com/zos/bmw-prod/77ceaf76-5315-480f-b285-db12b1507030.svg"
+          src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*_E3uRppw3PUAAAAAAAAAAAAAARQnAQ"
           alt="logo"
-          style={{ marginRight: '36px' }}
+          style={{ height: '30px', marginLeft: '-40px', marginRight: '40px' }}
           onClick={() => {
             history.push('/workspace');
           }}

@@ -10,6 +10,7 @@ export default {
   alias: {
     '@': './src',
   },
+  favicon: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*CoNCRL6oJXoAAAAAAAAAAAAAARQnAQ',
   //mfsu: {}, //https://github.com/umijs/umi/issues/6766
 
   routes: [
