@@ -45,9 +45,10 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     dispatch({
-      type: 'update:config:layout',
-      ...layout,
-      props: rootValue,
+      type: 'FREE',
+      update: draft => {
+        draft.config.layout.props = { ...rootValue };
+      },
     });
   };
   const handleChangeShape = value => {
@@ -58,8 +59,11 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
       };
     });
     dispatch({
-      type: 'update:config:layout',
-      ...layouts[value],
+      type: 'FREE',
+      update: draft => {
+        draft.config.layout.id = value;
+        draft.config.layout = { ...layouts[value] };
+      },
     });
   };
   const layoutItems = Object.values(layouts);

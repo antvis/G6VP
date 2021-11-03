@@ -128,8 +128,10 @@ const GISDK = (props: Props) => {
     });
   }, [componentsCfg]);
   /** 布局发生改变 */
+
   React.useEffect(() => {
-    const { type, options } = layoutCfg?.props || {};
+    const { type, ...options } = layoutCfg?.props || {};
+    debugger;
     setState(preState => {
       return {
         ...preState,
