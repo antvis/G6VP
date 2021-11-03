@@ -1,6 +1,10 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+const extensions = {
+  TagsSelect,
+};
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -86,7 +90,7 @@ const ComponentPanel = props => {
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />
-      <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} />
+      <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
     </div>
   );
 };

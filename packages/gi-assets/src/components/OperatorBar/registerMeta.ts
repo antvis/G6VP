@@ -8,16 +8,30 @@ const registerMeta = context => {
     };
   });
   console.log('componentOptions', componentOptions);
+  const dividerIndexOptions = components.map((c, index) => {
+    return {
+      value: index,
+      label: index,
+    };
+  });
 
   return {
     /** 分类信息 */
     GI_CONTAINER: {
       name: '集成组件',
-      type: 'checkbox',
-      optionCol: 24,
-      default: [''],
+      type: 'TagsSelect',
+      default: [],
       options: componentOptions,
     },
+    // padding: {
+    //   name: 'Padding设置',
+    //   type: 'margin',
+    //   components: ['top', 'right'],
+    //   default: {
+    //     top: 8,
+    //     right: 16,
+    //   },
+    // },
   };
 };
 
