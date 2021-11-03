@@ -1,14 +1,18 @@
 import { FieldTimeOutlined } from '@ant-design/icons';
+import { Button, Divider, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
 
 export interface TimelineProps {
   visible: boolean;
+  color: string;
+  hasDivider: boolean;
+  defaultVisible: boolean;
 }
 
 const Timeline: React.FunctionComponent<TimelineProps> = props => {
-  const { visible: defaultVisible } = props;
+  const { defaultVisible, color, hasDivider } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   React.useEffect(() => {
     setVisible(defaultVisible);
@@ -24,7 +28,7 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
         bottom: '0px',
         right: '0px',
         left: '0px',
-        height: '100px',
+        height: '300px',
         background: 'green',
       }}
     >
@@ -35,10 +39,10 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
   return (
     <div>
       <div onClick={handleClick} className="gi-component-timeline">
-        <div>
-          <FieldTimeOutlined />
-        </div>
-        <div> 时序分析</div>
+        <Tooltip title="时序分析" color={color} key={color}>
+          <Button type="text" icon={<FieldTimeOutlined />}></Button>
+        </Tooltip>
+        {hasDivider && <Divider type="vertical" />}
       </div>
       {visible &&
         //@ts-ignore

@@ -1,12 +1,14 @@
 import { SubnodeOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import { Modal } from 'antd';
+import { Button, Divider, Modal, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import './index.less';
 
 export interface AddNode {
   visible: boolean;
+  color: string;
+  hasDivider: boolean;
 }
 
 const Content = props => {
@@ -28,7 +30,7 @@ const Content = props => {
 };
 
 const AddNode: React.FunctionComponent<AddNode> = props => {
-  const { visible: defaultVisible } = props;
+  const { visible: defaultVisible, color, hasDivider } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   const graphin = React.useContext(GraphinContext);
   React.useEffect(() => {
@@ -48,11 +50,11 @@ const AddNode: React.FunctionComponent<AddNode> = props => {
   };
   return (
     <div>
-      <div onClick={handleClick} className="gi-component-addNode">
-        <div>
-          <SubnodeOutlined />
-        </div>
-        <div> 添加节点</div>
+      <div onClick={handleClick}>
+        <Tooltip title="添加节点" color={color} key={color}>
+          <Button type="text" icon={<SubnodeOutlined />}></Button>
+        </Tooltip>
+        {hasDivider && <Divider type="vertical" />}
       </div>
       {ReactDOM.createPortal(
         <Content visible={visible} handleOk={handleOk} handleCancel={handleCancel} />,
