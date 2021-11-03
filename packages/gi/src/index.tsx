@@ -22,14 +22,19 @@ export interface Props {
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
-let registered = false;
+let registeredShapes = '';
+
 const registerShapes = Elements => {
-  if (!registered) {
-    console.log('%c register! ', 'color:green');
-    Object.keys(Elements).forEach(type => {
-      Elements[type].registerShape(Graphin);
-    });
-    registered = true;
+  if (Elements) {
+    const nextShapes = Object.keys(Elements).join('-');
+    const prevShapes = registeredShapes;
+    if (nextShapes !== prevShapes) {
+      console.log('%c register! ', 'color:green');
+      Object.keys(Elements).forEach(type => {
+        Elements[type].registerShape(Graphin);
+      });
+      registeredShapes = nextShapes;
+    }
   }
 };
 
@@ -82,7 +87,7 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    const filteredComponents = componentsCfg;//.filter(c => c.enable);
+    const filteredComponents = componentsCfg; //.filter(c => c.enable);
     /** start 针对容器组件特殊处理 */
     const containerComponents = filteredComponents.filter(c => {
       return c.props.GI_CONTAINER;
