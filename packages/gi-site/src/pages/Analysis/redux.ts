@@ -96,6 +96,7 @@ export interface StateType {
     components: any[];
     elements: any[];
     layouts: any[];
+    services: any[];
   };
 
   /** 是否准备完毕 */
