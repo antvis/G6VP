@@ -4,7 +4,6 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
-import UploadPanel from './uploadData/index';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
@@ -14,6 +13,7 @@ import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
 import store, { StateType } from './redux';
+import UploadPanel from './uploadData/index';
 import { isObjectEmpty } from './utils';
 
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
@@ -106,11 +106,25 @@ const Analysis = props => {
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
       dispatch({
-        type: 'update:config',
-        activeAssets,
-        activeAssetsInformation,
-        refreshComponentKey: Math.random(),
+        type: 'FREE',
+        update: draft => {
+          const configComponents = activeAssetsKeys.components.map(c => {
+            const matchItem = draft.config.components.find(d => d.id === c) || { id: c, props: {} };
+            return matchItem;
+          });
+          draft.config.components = configComponents;
+          draft.activeAssets = activeAssets;
+          draft.activeAssetsKeys = activeAssetsKeys;
+          draft.activeAssetsInformation = activeAssetsInformation;
+          draft.refreshComponentKey = Math.random();
+        },
       });
+      // dispatch({
+      //   type: 'update:config',
+      //   activeAssets,
+      //   activeAssetsInformation,
+      //   refreshComponentKey: Math.random(),
+      // });
     })();
   }, [ACTIVE_ASSETS_KEYS]);
 

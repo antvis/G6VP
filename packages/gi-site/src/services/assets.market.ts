@@ -9,7 +9,7 @@ import { queryActiveAssetList, queryAssetList } from './assets';
 import { isMock } from './const';
 
 let { elements } = (giAssets || {}) as any;
-const isDynamicLoad = true;
+const isDynamicLoad = false;
 if (isDynamicLoad) {
   elements = {};
 }
