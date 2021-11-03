@@ -46,13 +46,11 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const ASSET_LIST = await queryAssetList({
         projectId: id,
       });
-      setAssets({ ...ASSET_LIST, layouts: [] });
-      ref = activeAssetsKeys;
+      setAssets({ ...ASSET_LIST } as any);
+      ref = { ...activeAssetsKeys };
     })();
   }, [id, setAssets, activeAssetsKeys]);
   /** 默认选中config中的components */
-
- 
 
   const handleCancel = () => {};
   const handleOk = () => {
@@ -74,7 +72,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     ref[key] = val;
     console.log('ref', ref);
   };
- 
+
   return (
     <div>
       <Drawer

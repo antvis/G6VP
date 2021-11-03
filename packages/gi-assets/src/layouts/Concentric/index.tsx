@@ -1,4 +1,4 @@
-import registerShape from './registerLayout';
+import registerLayout from './registerLayout';
 import registerMeta from './registerMeta';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
@@ -15,6 +15,6 @@ const info = {
 
 export default {
   info,
-  registerShape,
+  registerLayout,
   registerMeta,
 };
