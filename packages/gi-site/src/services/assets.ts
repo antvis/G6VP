@@ -102,14 +102,14 @@ export const updateAssets = async (id: string, param: UpdateAssetParams) => {
  * 通过选中的资产名称和版本查询资产列表
  * @param param 选中的资产列表
  */
-export const queryActiveAssetList = async(param: ActiveAssetParams[]) => {
+export const queryActiveAssetList = async (param: ActiveAssetParams[]) => {
   const response = await request(`${SERVICE_URL_PREFIX}/asset/activelist`, {
     method: 'post',
     data: param,
-  })
+  });
 
-  return response
-}
+  return response;
+};
 
 /**
  * 查询资产列表
@@ -132,7 +132,14 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
         ...giAssets.elements[key]?.info,
       };
     });
-    return { components, elements };
+    const layouts = Object.keys(giAssets.layouts).map(key => {
+      return {
+        type: 6, //元素
+        id: key,
+        ...giAssets.layouts[key]?.info,
+      };
+    });
+    return { components, elements, layouts };
   };
 
   //TODO:需要根据projectID把多余的Service过滤掉
@@ -142,15 +149,14 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
   });
 
   const res = convertResponse(response);
-  let services = []
+  let services = [];
   if (param && param.projectId) {
     services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
-    const { components, elements } = getListByGIAssets();
-    return { components, services, elements };
+    const { components, elements, layouts } = getListByGIAssets();
+    return { components, services, elements, layouts };
   }
-  
-  return res
- 
+
+  return res;
 
   // 如果不是动态加载
 };
