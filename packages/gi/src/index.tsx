@@ -18,18 +18,21 @@ export interface Props {
     components: any;
     /** 从服务端获取的元素：Elements */
     elements: any;
+
+    layouts: any;
   };
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
 let registeredShapes = '';
+let registeredLayouts = '';
 
 const registerShapes = Elements => {
   if (Elements) {
     const nextShapes = Object.keys(Elements).join('-');
     const prevShapes = registeredShapes;
     if (nextShapes !== prevShapes) {
-      console.log('%c register! ', 'color:green');
+      console.log('%c register Layout! ', 'color:green');
       Object.keys(Elements).forEach(type => {
         Elements[type].registerShape(Graphin);
       });
@@ -37,11 +40,25 @@ const registerShapes = Elements => {
     }
   }
 };
+const registerLayouts = Layouts => {
+  if (Layouts) {
+    const nextLayout = Object.keys(Layouts).join('-');
+    const prevLayout = registeredLayouts;
+    if (nextLayout !== prevLayout) {
+      console.log('%c register Layout! ', 'color:green');
+      Object.keys(Layouts).forEach(type => {
+        Layouts[type].registerLayout(Graphin);
+      });
+      registeredLayouts = nextLayout;
+    }
+  }
+};
 
 const GISDK = (props: Props) => {
   const { config, children, assets } = props;
-  const { components: Components, elements: Elements, services: Services } = assets;
+  const { components: Components, elements: Elements, services: Services, layouts: Layouts } = assets;
   registerShapes(Elements);
+  registerLayouts(Layouts);
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] } as GraphinData,
