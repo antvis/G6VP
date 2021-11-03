@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GIComponentConfig, GIConfig, GIService } from '@alipay/graphinsight/src/typing';
+import produce from 'immer';
 import { createStore } from 'redux';
 type Action = {
   type: string;
@@ -132,8 +133,20 @@ export interface StateType {
 }
 
 const RootReducers = (state: StateType = initialState, action: Action): StateType => {
-  const { type, ...payload } = action;
+  const { type, update, ...payload } = action;
   switch (type) {
+    case 'FREE':
+      const newState = produce(state, update);
+      return newState;
+
+    case 'UPDATE':
+      const nextState = produce(state, draftState => {
+        Object.keys(payload).forEach(key => {
+          draftState[key] = payload[key];
+        });
+      });
+      return nextState;
+
     case 'update':
       return {
         ...state,
