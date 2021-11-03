@@ -8,10 +8,11 @@ import { dynamicLoadModules } from '../loader';
 import { queryActiveAssetList, queryAssetList } from './assets';
 import { isMock } from './const';
 
-let { elements } = (giAssets || {}) as any;
-const isDynamicLoad = true;
+let { elements, layouts } = (giAssets || {}) as any;
+const isDynamicLoad = false;
 if (isDynamicLoad) {
   elements = {};
+  layouts = {};
 }
 
 /**
@@ -115,7 +116,14 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
       };
     }, {});
 
-    console.log('componentscomponentscomponents', components, elements);
+    layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [curr]: giAssets.layouts[curr],
+      };
+    }, {});
+
+    console.log('componentscomponentscomponents', components, elements, layouts);
   }
 
   if (isMock) {
@@ -149,6 +157,7 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
       components,
       services,
       elements,
+      layouts,
     });
   });
 };

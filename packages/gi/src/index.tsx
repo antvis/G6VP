@@ -18,25 +18,47 @@ export interface Props {
     components: any;
     /** 从服务端获取的元素：Elements */
     elements: any;
+
+    layouts: any;
   };
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
-let registered = false;
+let registeredShapes = '';
+let registeredLayouts = '';
+
 const registerShapes = Elements => {
-  if (!registered) {
-    console.log('%c register! ', 'color:green');
-    Object.keys(Elements).forEach(type => {
-      Elements[type].registerShape(Graphin);
-    });
-    registered = true;
+  if (Elements) {
+    const nextShapes = Object.keys(Elements).join('-');
+    const prevShapes = registeredShapes;
+    if (nextShapes !== prevShapes) {
+      console.log('%c register Layout! ', 'color:green');
+      Object.keys(Elements).forEach(type => {
+        Elements[type].registerShape(Graphin);
+      });
+      registeredShapes = nextShapes;
+    }
+  }
+};
+const registerLayouts = Layouts => {
+  if (Layouts) {
+    const nextLayout = Object.keys(Layouts).join('-');
+    const prevLayout = registeredLayouts;
+    if (nextLayout !== prevLayout) {
+      console.log('%c register Layout! ', 'color:green');
+      Object.keys(Layouts).forEach(type => {
+        Layouts[type].registerLayout(Graphin);
+      });
+      registeredLayouts = nextLayout;
+    }
   }
 };
 
 const GISDK = (props: Props) => {
   const { config, children, assets } = props;
-  const { components: Components, elements: Elements, services: Services } = assets;
+  const { components: Components, elements: Elements, services: Services, layouts: Layouts } = assets;
   registerShapes(Elements);
+  registerLayouts(Layouts);
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] } as GraphinData,
@@ -82,7 +104,7 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    const filteredComponents = componentsCfg;//.filter(c => c.enable);
+    const filteredComponents = componentsCfg; //.filter(c => c.enable);
     /** start 针对容器组件特殊处理 */
     const containerComponents = filteredComponents.filter(c => {
       return c.props.GI_CONTAINER;
@@ -106,8 +128,10 @@ const GISDK = (props: Props) => {
     });
   }, [componentsCfg]);
   /** 布局发生改变 */
+
   React.useEffect(() => {
-    const { type, options } = layoutCfg?.props || {};
+    const { type, ...options } = layoutCfg?.props || {};
+    debugger;
     setState(preState => {
       return {
         ...preState,
