@@ -26,7 +26,11 @@ const getLayoutsByAssets = (assets, data, services, config) => {
         id,
         name,
         category,
-        props: { ...info.options, ...defaultProps },
+        props: {
+          type: info.type,
+          ...info.options,
+          ...defaultProps,
+        },
         meta: {
           ...configObj,
         },
