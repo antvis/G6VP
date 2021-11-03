@@ -27,11 +27,6 @@ const navbarOptions = [
     name: '组件',
     component: ComponentPanel,
   },
-  // {
-  //   id: 'assets',
-  //   name: '资产',
-  //   component: () => <></>,
-  // },
 ];
 const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
   return {

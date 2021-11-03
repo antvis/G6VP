@@ -46,7 +46,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const ASSET_LIST = await queryAssetList({
         projectId: id,
       });
-      setAssets({ ...ASSET_LIST, layouts: [] });
+      setAssets({ ...ASSET_LIST } as any);
       ref = { ...activeAssetsKeys };
     })();
   }, [id, setAssets, activeAssetsKeys]);

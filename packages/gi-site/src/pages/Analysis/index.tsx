@@ -8,6 +8,7 @@ import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
+import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
 import './index.less';
 /** gi-meta废弃，属于gi-site的一部分 */
 import MetaPanel from './MetaPanel';
@@ -56,15 +57,16 @@ const Analysis = props => {
   };
 
   const queryActiveAssetsInformation = ({ assets, data, config }) => {
-    const serviceConfig = assets.services;
-    /** 目前先Mock，都需要直接从服务端获取services,components,elements 这些资产 */
-    const components = getComponentsByAssets(assets.components, data, serviceConfig, config);
+    const components = getComponentsByAssets(assets.components, data, assets.services, config);
     const elements = getElementsByAssets(assets.elements, data);
-    const services = getServicesByAssets(serviceConfig, data);
+    const layouts = getLayoutsByAssets(assets.layouts, data);
+    const services = getServicesByAssets(assets.services, data);
+
     return {
       components,
       elements,
       services,
+      layouts,
     };
   };
 
@@ -230,6 +232,7 @@ const Analysis = props => {
             elements={activeAssetsInformation.elements}
             /** 全量的的服务 */
             services={activeAssetsInformation.services}
+            layouts={activeAssetsInformation.layouts}
           />
         </div>
         <div className="gi-analysis-workspace">
