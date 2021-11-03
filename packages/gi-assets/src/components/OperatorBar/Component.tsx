@@ -7,18 +7,16 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   console.log(props);
   //@ts-ignore
   const { components, assets } = props;
-
+  const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
+  console.log('sortedComponents', sortedComponents);
   return (
-    <div className="gi-operator-bar">
+    <div className="gi-operator-bar" style={{ padding: '8px' }}>
       <Space>
-        {components.map(item => {
+        {sortedComponents.map(item => {
           if (!item) {
             return null;
           }
-          const { props, id, enable } = item;
-          if (!enable) {
-            return null;
-          }
+          const { props, id } = item;
           const { component: Component } = assets[id];
           return (
             <span key={id}>

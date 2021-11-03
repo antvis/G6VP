@@ -110,8 +110,8 @@ const Analysis = props => {
       dispatch({
         type: 'FREE',
         update: draft => {
-          const configComponents = activeAssetsKeys.components.map(c => {
-            const matchItem = draft.config.components.find(d => d.id === c) || { id: c, props: {} };
+          const configComponents = activeAssetsInformation.components.map(c => {
+            const matchItem = draft.config.components.find(d => d.id === c) || { id: c, props: c.props };
             return matchItem;
           });
           draft.config.components = configComponents;
