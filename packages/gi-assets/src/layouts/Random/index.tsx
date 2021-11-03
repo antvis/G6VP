@@ -6,7 +6,7 @@ const info = {
   id: 'Random',
   /** 该布局资产下的布局的参数 */
   options: {
-    type: 'custon-node',
+    type: 'custom-random',
   },
   name: '随机布局',
   category: 'layout',
