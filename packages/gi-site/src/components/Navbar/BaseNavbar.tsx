@@ -37,7 +37,7 @@ const BaseNavbar = props => {
         <img
           src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*_E3uRppw3PUAAAAAAAAAAAAAARQnAQ"
           alt="logo"
-          style={{ height: '30px', marginLeft: '-40px', marginRight: '40px' }}
+          style={{ height: '30px', marginRight: '40px' }}
           onClick={() => {
             history.push('/workspace');
           }}
