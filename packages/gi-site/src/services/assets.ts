@@ -276,6 +276,26 @@ export const createNewProjectOnAntCode = async projectParams => {
 };
 
 /**
+ * 在 AntCode 上 fork 项目
+ * @param projectParams 创建项目的参数
+ */
+export const forkProjectOnAntCode = async projectParams => {
+  if (isMock) {
+    return new Promise(resolve => {
+      resolve({
+        success: true,
+      });
+    });
+  }
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/forkproject`, {
+    method: 'post',
+    data: projectParams,
+  });
+
+  return convertResponse(response);
+};
+
+/**
  * 使用 Chair Task 进行在线构建
  * @param buildParams 构建参数
  */
