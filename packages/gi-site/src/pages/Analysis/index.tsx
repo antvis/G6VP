@@ -199,6 +199,13 @@ const Analysis = props => {
   console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', state);
   const isLoading = isObjectEmpty(config) || !isReady;
 
+  const handleClose = () => {
+    dispatch({
+      type: 'update',
+      isModalVisible: false,
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="gi">
@@ -249,7 +256,7 @@ const Analysis = props => {
           </div>
         </div>
       </div>
-      <UploadPanel visible={isModalVisible}></UploadPanel>
+      <UploadPanel visible={isModalVisible} handleClose={handleClose}></UploadPanel>
     </div>
   );
 };
