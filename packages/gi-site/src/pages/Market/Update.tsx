@@ -1,11 +1,10 @@
 // 组件市场
 import React, { useEffect } from 'react';
-import { message, Button, Popconfirm, Alert } from 'antd';
+import { message, Alert } from 'antd';
 import { Provider } from 'react-redux';
 import { Utils } from '@antv/graphin';
 import store from '../Analysis/redux';
 import ComponentMetaPanel from './meta/ComponentMeta';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import {
   updateAssets,
   updateFileContent,
@@ -21,6 +20,7 @@ import GraphInsightIDE from './GraphInsightIDE';
 import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
 import { usePersistFn, useInterval } from 'ahooks';
 import queryString from 'querystring';
+import Header from './Header'
 import './index.less';
 
 window.React = React;
@@ -41,7 +41,6 @@ function looseCodeParse(source) {
 }
 
 const ComponentMarket = props => {
-  const { history } = props;
 
   const appRef = React.createRef();
 
@@ -62,7 +61,7 @@ const ComponentMarket = props => {
   const projectName = queryParams.project as string;
   const branchName = queryParams.branch as string;
   const assetId = queryParams.assetId as string;
-  const assetType = queryParams.type;
+  const assetType = queryParams.type as string;
   const projectId = queryParams.projectId;
 
   const setSourceCode = value => {
@@ -439,19 +438,6 @@ const ComponentMarket = props => {
     tipsDom =  buildErrorTips
   }
 
-  let publishDom = null
-
-  if (assetType === '1' || assetType === '4' || assetType === '5') {
-    publishDom = <Popconfirm title="发布需要3-5分钟的时间，确定要进行发布吗？"
-      onConfirm={handlePublish}
-      okText="确定"
-      cancelText="取消">
-      <Button loading={loading} style={{ color: '#000' }}>
-        发布
-      </Button>
-    </Popconfirm>
-  }
-
   let defaultMode = ''
   if (assetType === '1') {
     defaultMode = '/src/demo.tsx'
@@ -462,12 +448,11 @@ const ComponentMarket = props => {
   }
   return (
     <>
-      <BaseNavbar rightContent={publishDom}>
+      <Header assetName={currentSelectAsset?.name} updateTime={currentSelectAsset?.gmtModified} assetType={assetType} handlePublish={handlePublish} loading={loading} />
       {
         buildStatus &&
         <Alert message={tipsDom} type={buildStatus} showIcon />
       }
-      </BaseNavbar>
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
           <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={defaultMode} codeChange={codeChangeCallback}  />
