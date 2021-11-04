@@ -256,7 +256,7 @@ const Analysis = props => {
           </div>
         </div>
       </div>
-      <UploadPanel visible={isModalVisible} handleClose={handleClose}></UploadPanel>
+      <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
     </div>
   );
 };

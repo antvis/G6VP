@@ -131,7 +131,7 @@ const GISDK = (props: Props) => {
 
   React.useEffect(() => {
     const { type, ...options } = layoutCfg?.props || {};
-    debugger;
+
     setState(preState => {
       return {
         ...preState,
