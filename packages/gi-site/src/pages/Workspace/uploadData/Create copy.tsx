@@ -266,7 +266,7 @@ const CreatePanel: React.FunctionComponent<CreatePanelProps> = props => {
   });
   const steps = [
     {
-      title: '填写项目信息',
+      title: '上传数据',
       content: (
         <Form {...layout} name="basic" onFinish={getUserInfo}>
           <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请输入项目名称' }]}>
