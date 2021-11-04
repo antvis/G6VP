@@ -1,12 +1,12 @@
 // 组件市场
 import { AppstoreOutlined, FireFilled } from '@ant-design/icons';
-import { Button, Card, Col, Radio, Row, Tabs } from 'antd';
+import { Button, Card, Col, Radio, Row, Tabs, message } from 'antd';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { queryAssetList } from '../../services/assets';
+import { createAssets, forkProjectOnAntCode, getFileSourceCode, queryAssetList } from '../../services/assets';
 import store from '../Analysis/redux';
 import CreateAsset from './Create';
 import styles from './index.less';
@@ -65,6 +65,57 @@ const ComponentMarket = props => {
     });
   };
 
+  // Fork 资产
+  const handleForkAsset = async selectedAsset => {
+    const { id, projectId, type, name, meta, description, displayName, members } = selectedAsset;
+    // step1: 基于选择的仓库创建新的仓库
+    const forkProjectName = `${name}_fork_${Math.random()
+      .toString(36)
+      .substr(2)}`;
+    const createResult = await forkProjectOnAntCode({
+      originProjectName: name,
+      projectName: forkProjectName,
+      description: `从${name}Fork的资产`,
+      // type,
+    });
+
+    if (!createResult || !createResult.success) {
+      message.error('创建资产失败：' + createResult.errorMsg);
+      return;
+    }
+
+    // step2: 将资产插入到数据库中
+    const dbResponse = await createAssets({
+      displayName,
+      name: forkProjectName,
+      type,
+      description,
+      // 从指定的 id fork 过来的
+      forkFrom: id,
+      version: 'master',
+      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
+      ownerNickname: '聚则',
+      ownerId: '195094',
+      branchName: 'master',
+      projectId,
+      members,
+      meta,
+      sourceCodeUrl: createResult.data.web_url,
+    });
+
+    if (!dbResponse || !dbResponse.success) {
+      message.error('创建项目失败：' + dbResponse.errorMsg);
+      return;
+    }
+
+    const { data } = dbResponse;
+
+    // step3: 跳转到资产编辑页面
+    history.push(
+      `/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${forkProjectName}&branch=master&type=${type}`,
+    );
+  };
+
   const fliterGroup = (
     <div className={styles.control}>
       <Radio.Group defaultValue="asserts" size="middle" className="fliter">
@@ -120,10 +171,7 @@ const ComponentMarket = props => {
       <div className="lists">
         {fliterGroup}
         <Row
-          gutter={[
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-            { xs: 8, sm: 16, md: 16, lg: 16 },
-          ]}
+          gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
           {listData.map(c => {
@@ -152,6 +200,14 @@ const ComponentMarket = props => {
                     </div>
                   </Card>
                 </Link>
+                <Button
+                  onClick={() => handleForkAsset(c)}
+                  size="small"
+                  type="link"
+                  style={{ position: 'absolute', bottom: 16, right: 16 }}
+                >
+                  Fork
+                </Button>
               </Col>
             );
           })}
