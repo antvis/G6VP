@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table } from 'antd';
+import { useDispatch, useSelector, Provider } from 'react-redux';
+import store, { StateType } from '../redux';
+import { updateProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
+import { useImmer } from 'use-immer';
 import './index.less';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
 interface uploadPanel {
   visible: boolean;
+  initData: any;
   handleClose: () => void;
 }
 
@@ -49,32 +54,62 @@ const columnsData = {
   edges: edgeColumns,
 };
 
-const draggerProps = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      // message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      // message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
-  },
-};
 const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
-  const { visible, handleClose } = props;
-  const [current, setCurrent] = React.useState(0);
-  const [data, setData] = React.useState({ nodes: [], edges: [] });
-  const [tableData, setTableData] = React.useState([]);
-  const [columns, setColumns] = React.useState(nodeColumns);
+  const { visible, handleClose, initData } = props;
+  const state = useSelector((state: StateType) => state);
+  const { id } = state;
+  const [current, setCurrent] = useImmer(0);
+  const dispatch = useDispatch();
+  const [data, setData] = useImmer(initData);
+  const [tableData, setTableData] = useImmer([]);
+  const [columns, setColumns] = useImmer(nodeColumns);
 
+  const [inputData, setInputData] = useImmer([
+    {
+      uid: '1',
+      name: 'demo.js',
+      data: initData,
+    },
+  ]);
+  const draggerProps = {
+    name: 'file',
+    defaultFileList: inputData,
+    onRemove: file => {
+      const renderData = inputData.filter(d => d.uid !== file.uid);
+      setInputData(renderData);
+      mergeData(renderData);
+    },
+    customRequest: options => {
+      const { file, onSuccess } = options;
+      const reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = fileReader => {
+        const fileData = fileReader.target.result;
+        const renderData = [
+          ...inputData,
+          {
+            uid: file.uid,
+            name: file.name,
+            data: JSON.parse(fileData as string),
+          },
+        ];
+        setInputData(renderData);
+        onSuccess('Ok');
+        mergeData(renderData);
+      };
+    },
+  };
+
+  const mergeData = (renderData = inputData) => {
+    let nodes = [];
+    let edges = [];
+    renderData.map(d => {
+      nodes = [...nodes, ...d.data.nodes];
+      edges = [...edges, ...d.data.edges];
+    });
+    setData({ nodes, edges });
+  };
   const next = () => {
     setCurrent(current + 1);
   };
@@ -85,6 +120,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
 
   const checkData = () => {
     next();
+    setTableData(
+      data?.nodes.map((d, i) => {
+        return {
+          ...d,
+          key: i,
+        };
+      }),
+    );
   };
 
   const onChange = e => {
@@ -100,7 +143,17 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     setColumns(columnsData[value]);
   };
 
-  const creatProgram = () => {};
+  const updateData = () => {
+    updateProjectById(id, {
+      data: JSON.stringify(data),
+    }).then(res => {
+      dispatch({
+        type: 'update:key',
+        key: Math.random(),
+      });
+      handleClose();
+    });
+  };
 
   const steps = [
     {
@@ -130,22 +183,22 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       ),
     },
     {
-      title: '数据格式校验',
+      title: '配置字段',
       content: (
         <div className="dataCheck-panel">
           <div className="fliter-group">
             <span>数据预览</span>
-            <Radio.Group onChange={onChange} defaultValue="node">
+            <Radio.Group onChange={onChange} defaultValue="nodes">
               <Radio.Button value="nodes">Node</Radio.Button>
               <Radio.Button value="edges">Edge</Radio.Button>
             </Radio.Group>
           </div>
           <Table dataSource={tableData} columns={columns} />
-          <Row>
-            <Button style={{ margin: '0 10px' }} onClick={() => prev()}>
+          <Row style={{ justifyContent: 'center' }}>
+            <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
               上一步
             </Button>
-            <Button type="primary" onClick={creatProgram}>
+            <Button type="primary" shape="round" onClick={updateData}>
               进入分析
             </Button>
           </Row>
@@ -172,4 +225,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   );
 };
 
-export default UploadPanel;
+const WrapUploadPanel = props => {
+  return (
+    <Provider store={store}>
+      <UploadPanel {...props} />
+    </Provider>
+  );
+};
+
+export default WrapUploadPanel;
