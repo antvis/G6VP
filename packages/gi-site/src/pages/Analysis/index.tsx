@@ -111,9 +111,10 @@ const Analysis = props => {
         type: 'FREE',
         update: draft => {
           const configComponents = activeAssetsInformation.components.map(c => {
-            const matchItem = draft.config.components.find(d => d.id === c) || { id: c, props: c.props };
+            const matchItem = draft.config.components.find(d => d.id === c.id) || c;
             return matchItem;
           });
+
           draft.config.components = configComponents;
           draft.activeAssets = activeAssets;
           draft.activeAssetsKeys = activeAssetsKeys;
