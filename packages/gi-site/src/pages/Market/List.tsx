@@ -1,12 +1,13 @@
 // 组件市场
 import { AppstoreOutlined, FireFilled } from '@ant-design/icons';
-import { Button, Card, Col, Radio, Row, Tabs, message } from 'antd';
+import { Button, Card, Col, Radio, Row, Tabs, message, Popconfirm } from 'antd';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import moment from 'moment';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { createAssets, forkProjectOnAntCode, getFileSourceCode, queryAssetList } from '../../services/assets';
+import { createAssets, forkProjectOnAntCode, queryAssetList } from '../../services/assets';
 import store from '../Analysis/redux';
 import CreateAsset from './Create';
 import styles from './index.less';
@@ -162,8 +163,8 @@ const ComponentMarket = props => {
           <Button type="primary" shape="round" onClick={() => handleShowCreateModel()}>
             创建资产
           </Button>
-          <Button shape="round" ghost onClick={() => history.push('/market/personal')}>
-            我的资产
+          <Button shape="round" onClick={() => history.push('/market/personal')}>
+            管理资产
           </Button>
         </div>
       </div>
@@ -190,24 +191,28 @@ const ComponentMarket = props => {
                       <div className={styles.desc}>
                         <h4>{displayName || name}</h4>
                         <div>作者：{ownerNickname}</div>
-                        <div>版本：{version}</div>
-                        <div>更新：{gmtModified}</div>
+                        <div>
+                          <span className={styles.versionText}>版本：{version}</span>
+                        </div>
+                        <div>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</div>
                       </div>
                       <div className={styles.fire}>
-                        {'12'}
+                        {Math.floor(Math.random() * 100)}
                         <FireFilled />
                       </div>
                     </div>
                   </Card>
                 </Link>
-                <Button
-                  onClick={() => handleForkAsset(c)}
-                  size="small"
-                  type="link"
-                  style={{ position: 'absolute', bottom: 16, right: 16 }}
+                <Popconfirm
+                  title="点击 Fork 后，会基于当前资产创建一份新的资产，你确定要进行 Fork 吗？"
+                  onConfirm={() => handleForkAsset(c)}
+                  okText="确定"
+                  cancelText="取消"
                 >
-                  Fork
-                </Button>
+                  <Button size="small" type="link" style={{ position: 'absolute', bottom: 3, right: 16 }}>
+                    Fork
+                  </Button>
+                </Popconfirm>
               </Col>
             );
           })}
