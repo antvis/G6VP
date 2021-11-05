@@ -8,7 +8,7 @@
     position: absolute;
     top: 89px;
     left: 120px;
-    color: #ffffff;
+    color: #000;
     font-size: 40px;
     letter-spacing: 0;
   }
@@ -23,6 +23,7 @@
 }
 
 .lists {
+  padding-bottom: 24px;
   .ant-radio-button-wrapper {
     border-left-width: 1px;
   }
@@ -106,13 +107,24 @@
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 5%);
   }
   .desc {
-    width: 148px;
+    padding-left: 8px;
+    width: 100%;
     div {
       color: #000000;
       opacity: 0.45;
     }
+    .versionText {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: sub;
+      white-space: nowrap;
+    }
   }
   .fire {
+    position: absolute;
+    right: 0;
     width: 50px;
     height: 40px;
     color: #000000;
@@ -132,6 +144,7 @@
     flex-direction: column;
     width: 40%;
     .config {
+      border-top: 1px solid #bfbfbf;
       max-height: 300px;
     }
     .view {
