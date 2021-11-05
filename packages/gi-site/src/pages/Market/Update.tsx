@@ -451,7 +451,7 @@ const ComponentMarket = props => {
       <Header assetName={currentSelectAsset?.name} updateTime={currentSelectAsset?.gmtModified} assetType={assetType} handlePublish={handlePublish} loading={loading} />
       {
         buildStatus &&
-        <Alert message={tipsDom} type={buildStatus} showIcon />
+        <Alert message={tipsDom} type={buildStatus} showIcon closable={buildStatus !== 'info'} />
       }
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
