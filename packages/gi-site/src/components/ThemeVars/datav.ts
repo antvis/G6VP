@@ -12,9 +12,9 @@ export default {
     '--datav-gui-disabled-color': '#424447',
 
     /* 背景色-上层 */
-    '--datav-gui-background-color-front': 'RGB(248, 248, 248)',
+    '--datav-gui-background-color-front': '#fff',
     /* 背景色-上层-更浅： */
-    '--datav-gui-background-color-front-lighter': 'RGB(250, 250, 250)',
+    '--datav-gui-background-color-front-lighter': '#fff',
     /* 背景色-下层 */
     '--datav-gui-background-color-back': '#fff',
     /* 背景色-下层-更深 */
