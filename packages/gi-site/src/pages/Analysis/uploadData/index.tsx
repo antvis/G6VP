@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table } from 'antd';
+import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, notification } from 'antd';
 import { useDispatch, useSelector, Provider } from 'react-redux';
+import { EditableProTable } from '@ant-design/pro-table';
 import store, { StateType } from '../redux';
 import { updateProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
 import { useImmer } from 'use-immer';
+import { nodeColumns, edgeColumns, translist, GIDefaultTrans, getOptions } from './const';
 import './index.less';
 
 const { Step } = Steps;
@@ -16,38 +18,6 @@ interface uploadPanel {
 }
 
 const { TabPane } = Tabs;
-const nodeColumns = [
-  {
-    title: 'id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'data',
-    dataIndex: 'data',
-    key: 'data',
-    render: data => <span>{JSON.stringify(data)}</span>,
-  },
-];
-
-const edgeColumns = [
-  {
-    title: 'source',
-    dataIndex: 'source',
-    key: 'source',
-  },
-  {
-    title: 'target',
-    dataIndex: 'target',
-    key: 'target',
-  },
-  {
-    title: 'data',
-    dataIndex: 'data',
-    key: 'data',
-    render: data => <span>{JSON.stringify(data)}</span>,
-  },
-];
 
 const columnsData = {
   nodes: nodeColumns,
@@ -61,9 +31,13 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const [current, setCurrent] = useImmer(0);
   const dispatch = useDispatch();
   const [data, setData] = useImmer(initData);
+  const [transData, setTransData] = useImmer(eval(GIDefaultTrans('id', 'source', 'target'))(initData));
   const [tableData, setTableData] = useImmer([]);
   const [columns, setColumns] = useImmer(nodeColumns);
-
+  const [transColumns, setTransColumns] = useImmer([]);
+  const editableKeys = ['edit'];
+  const [form] = Form.useForm();
+  const [tableType, setTableType] = useImmer('nodes');
   const [inputData, setInputData] = useImmer([
     {
       uid: '1',
@@ -108,8 +82,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       nodes = [...nodes, ...d.data.nodes];
       edges = [...edges, ...d.data.edges];
     });
+    const transFunc = GIDefaultTrans('id', 'scource', 'target');
     setData({ nodes, edges });
+    setTransData(eval(transFunc)({ nodes, edges }));
   };
+
   const next = () => {
     setCurrent(current + 1);
   };
@@ -120,8 +97,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
 
   const checkData = () => {
     next();
+    //获取上传数据字段
+    setTransColumns(getOptions(data));
+    //
     setTableData(
-      data?.nodes.map((d, i) => {
+      transData?.nodes.map((d, i) => {
         return {
           ...d,
           key: i,
@@ -130,10 +110,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     );
   };
 
-  const onChange = e => {
-    const value = e.target.value;
+  const onChange = value => {
     setTableData(
-      data?.[value].map((d, i) => {
+      transData?.[value].map((d, i) => {
         return {
           ...d,
           key: i,
@@ -141,18 +120,55 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       }),
     );
     setColumns(columnsData[value]);
+    setTableType(value);
+  };
+
+  const transform = recordList => {
+    const { id, source, target } = recordList[0];
+    const transFunc = GIDefaultTrans(id, source, target);
+    const result = eval(transFunc)(data);
+    setTransData(result);
+
+    setTableData(
+      result?.[tableType].map((d, i) => {
+        return {
+          ...d,
+          key: i,
+        };
+      }),
+    );
   };
 
   const updateData = () => {
-    updateProjectById(id, {
-      data: JSON.stringify(data),
-    }).then(res => {
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
+    try {
+      if (transData.nodes?.find(d => !d.id || !d.data)) {
+        throw 'nodes缺少对应字段';
+      }
+      if (transData.edges?.find(d => !d.source || !d.target || !d.data)) {
+        throw 'edges缺少对应字段';
+      }
+      notification.success({
+        message: `解析成功`,
+        description: `数据格式正确`,
+        placement: 'topLeft',
       });
-      handleClose();
-    });
+
+      updateProjectById(id, {
+        data: JSON.stringify(transData),
+      }).then(res => {
+        dispatch({
+          type: 'update:key',
+          key: Math.random(),
+        });
+        handleClose();
+      });
+    } catch (error) {
+      notification.error({
+        message: `解析出错`,
+        description: `请检查数据是否为严格JSON格式且存在对应字段:${error}`,
+        placement: 'topLeft',
+      });
+    }
   };
 
   const steps = [
@@ -186,9 +202,23 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '配置字段',
       content: (
         <div className="dataCheck-panel">
+          <EditableProTable
+            columns={transColumns}
+            rowKey="key"
+            recordCreatorProps={false}
+            value={translist}
+            editable={{
+              form,
+              type: 'multiple',
+              editableKeys,
+              onValuesChange: (record, recordList) => {
+                transform(recordList);
+              },
+            }}
+          />
           <div className="fliter-group">
             <span>数据预览</span>
-            <Radio.Group onChange={onChange} defaultValue="nodes">
+            <Radio.Group onChange={e => onChange(e.target.value)} defaultValue={tableType}>
               <Radio.Button value="nodes">Node</Radio.Button>
               <Radio.Button value="edges">Edge</Radio.Button>
             </Radio.Group>
