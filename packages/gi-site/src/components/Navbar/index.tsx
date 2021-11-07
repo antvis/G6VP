@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useHistory, useRequest } from '@alipay/bigfish';
-import { DatabaseOutlined, ExportOutlined, SaveOutlined, createFromIconfontCN } from '@ant-design/icons';
-import { Button, Drawer, Modal, Tooltip } from 'antd';
 import ThemeSwitch from '@alipay/theme-tools';
+import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { Button, Drawer, Modal, Tooltip } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ThemeVars from '../ThemeVars';
 import { getProjectById, updateProjectById } from '../../services';
+import ThemeVars from '../ThemeVars';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
@@ -137,8 +137,8 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         <ThemeSwitch
           themeVars={ThemeVars}
           antdCssLinks={{
-            dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/dark.css',
-            light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.0/dist/GraphInsight/light.css',
+            dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/dark.css',
+            light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/light.css',
           }}
         ></ThemeSwitch>
       </Tooltip>

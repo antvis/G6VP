@@ -11,15 +11,26 @@ ul.gi-sidebar {
     }
   }
 }
+
 .sidebar-item {
   width: 100%;
   height: 54px;
   padding: 6px 0px;
   cursor: pointer;
+
   &.active {
-    // border-left: 2px solid lightcoral;
-    color: #177ddc;
-    background: #177ddc1a;
+    color: var(--primary-color);
+    &::before {
+      position: absolute;
+      display: block;
+      float: left;
+      width: 3px;
+      height: 37px;
+      margin-top: 8px;
+      background: var(--primary-color);
+      border-radius: 0 100px 100px 0;
+      content: '';
+    }
   }
   &.assets-center {
     position: absolute;
@@ -43,7 +54,9 @@ ul.gi-sidebar {
     margin-right: unset;
     font-weight: bold;
     font-size: 12px;
+    font-family: PingFangSC-Medium;
     line-height: unset;
     white-space: nowrap;
+    text-align: center;
   }
 }
