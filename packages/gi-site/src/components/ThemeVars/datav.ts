@@ -1,13 +1,13 @@
 export default {
   light: {
     /* 主题色 */
-    '--datav-gui-primary-color': '#2483ff',
+    '--datav-gui-primary-color': '#3056e3',
     /* 错误色 */
     '--datav-gui-error-color': '#FF4F43',
     /* 悬停色 */
-    '--datav-gui-hover-color': '#26A5FF',
+    '--datav-gui-hover-color': '#3056e3',
     /* 点击色 */
-    '--datav-gui-active-color': '#2693FF',
+    '--datav-gui-active-color': '#3056e3',
     /* 禁用色 */
     '--datav-gui-disabled-color': '#424447',
 
@@ -22,17 +22,17 @@ export default {
     /* 背景色-悬停 */
     '--datav-gui-background-hover-color': '#eee',
     /* 控件背景色 */
-    '--datav-gui-component-background-color': 'RGBA(242, 242, 242, 1.00)',
+    '--datav-gui-component-background-color': 'RGBA(255, 255, 255, 1.00)',
     /* 控件深背景色 */
-    '--datav-gui-component-background-color-darker': 'RGBA(242, 242, 242, 1)',
+    '--datav-gui-component-background-color-darker': '#ddd',
     /* 控件悬停背景色 */
-    '--datav-gui-component-background-hover-color': 'RGBA(242, 242, 242, 0.8)',
+    '--datav-gui-component-background-hover-color': 'RGBA(255, 255, 255, 0.8)',
     /* 控件点击背景色 */
-    '--datav-gui-component-background-active-color': 'RGBA(242, 242, 242, 0.8)',
+    '--datav-gui-component-background-active-color': 'RGBA(255, 255, 255, 0.8)',
     /* 控件禁用背景色 */
     '--datav-gui-component-background-disabled-color': 'RGBA(242, 242, 242, 0.50)',
 
-    '--datav-input-bg': 'RGBA(242, 242, 242, 1)',
+    '--datav-input-bg': 'RGBA(255, 255, 255, 1)',
 
     /* 文字色 */
     '--datav-gui-font-color-base': '#A1AEB3',
@@ -46,38 +46,38 @@ export default {
 
     /* 边框色 */
     '--datav-gui-border-color': '#DDD',
-    '--datav-common-outline': ' 1px solid#AAA',
+    '--datav-common-outline': '1px solid #20D291',
     /* 控件边框色 */
     '--datav-gui-component-border-color': '#DDD',
 
-    '--datav-gui-slider-handle-bg': '#AAA',
+    '--datav-gui-slider-handle-bg': '#3056e3',
 
     /* 遮盖色 */
-    '--datav-gui-cover-color': ' rgba(0, 0, 0, 0.25)',
+    '--datav-gui-cover-color': 'rgba(0, 0, 0, 0.25)',
 
     /* 滑动条高亮色 */
-    '--datav-gui-component-slider-track-color': ' linear-gradient(to right,#74f0ff,#2681ff)',
+    '--datav-gui-component-slider-track-color': '#3056e3',
 
     /* 禁用透明度 */
-    '--datav-gui-disabled-opacity': ' 0.5',
+    '--datav-gui-disabled-opacity': '0.5',
 
     /* 弹出框阴影 */
-    '--datav-gui-popover-shadow': ' 0 0 4px#000',
+    '--datav-gui-popover-shadow': '0 0 4px #000',
 
     /* -------- 文字 ----------- */
-    '--datav-gui-font-size-base': ' 12px',
-    '--datav-gui-icon-size-md': ' 14px',
+    '--datav-gui-font-size-base': '12px',
+    '--datav-gui-icon-size-md': '14px',
 
     /* -------- 边框 ----------- */
     /* 默认边框 */
-    '--datav-gui-component-border': ' 1px solid var(--datav-gui-component-border-color)',
+    '--datav-gui-component-border': '1px solid var(--datav-gui-component-border-color)',
 
     /* -------- 动画 ----------- */
-    '--datav-gui-transition-time': ' 0.3s',
-    '--datav-gui-transition-easing': ' ease-in-out',
+    '--datav-gui-transition-time': '0.3s',
+    '--datav-gui-transition-easing': 'ease-in-out',
   },
   dark: {
-    '--datav-gui-primary-color': '#2483ff',
+    '--datav-gui-primary-color': '#3056e3',
     /* 错误色 */
     '--datav-gui-error-color': '#FF4F43',
     /* 悬停色 */
@@ -121,7 +121,7 @@ export default {
     /* 边框色 */
     '--datav-gui-border-color': 'rgba(52, 52, 52, .5)',
     /* 控件边框色 */
-    '--datav-gui-component-border-color': '#0B0C0D',
+    '--datav-gui-component-border-color': '#D9D9D9',
 
     /* 遮盖色 */
     '--datav-gui-cover-color': 'rgba(0, 0, 0, 0.75)',
