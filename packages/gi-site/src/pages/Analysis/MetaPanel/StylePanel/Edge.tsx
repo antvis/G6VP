@@ -4,6 +4,7 @@ import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
+import AssetsSelect from '../../../../components/AssetsSelect';
 
 const { Option } = Select;
 
@@ -42,7 +43,7 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
       props: rootValue,
     });
   };
-  const elementOptions = Object.values(elements);
+  const elementOptions = Object.values(elements) as any[];
   const handleChangeShape = value => {
     setState(preState => {
       return {
@@ -62,26 +63,8 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
   }, []);
   return (
     <>
-      <Select
-        onChange={handleChangeShape}
-        value={elementId}
-        style={{ width: '268px', margin: '8px 16px' }}
-        size="large"
-      >
-        {elementOptions.map((c: any) => {
-          return (
-            <Option value={c.id} key={c.id}>
-              <img
-                src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ"
-                alt=""
-                width={40}
-                height={40}
-              />
-              {c.name}
-            </Option>
-          );
-        })}
-      </Select>
+      <AssetsSelect onChange={handleChangeShape} value={elementId} options={elementOptions} />
+
       {GUIComponent}
     </>
   );
