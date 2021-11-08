@@ -26,8 +26,12 @@ interface CreateAssetParams {
   sourceCode?: string;
 }
 
-interface UpdateAssetParams extends CreateAssetParams {
+interface UpdateAssetParams {
   id?: string;
+  buildLogUrl?: string;
+  yuyanBuildId?: string;
+  version: string;
+  status: number;
 }
 
 interface BaseParams {
