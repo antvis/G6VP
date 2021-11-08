@@ -6,6 +6,7 @@ import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import AssetsSelect from '../../../../components/AssetsSelect';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 const freeExtensions = {
   sizeMapping: SizeMapping,
@@ -39,15 +40,23 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   /*** 当前元素物料 */
   const layout = layouts[layoutId];
-  const configObj = layout?.meta;
-  const valueObj = extractDefault({ config: configObj, value: layoutConfig.props });
+  const configObj = {
+    options: {
+      name: '布局参数',
+      type: 'group',
+      fold: false,
+      children: layout?.meta,
+    },
+  };
 
+  const valueObj = extractDefault({ config: configObj, value: { options: layoutConfig.props } });
+  console.log('valueObj', valueObj);
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     dispatch({
       type: 'FREE',
       update: draft => {
-        draft.config.layout.props = { ...rootValue };
+        draft.config.layout.props = { ...rootValue.options };
       },
     });
   };
@@ -66,7 +75,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
       },
     });
   };
-  const layoutItems = Object.values(layouts);
+  const layoutItems = Object.values(layouts) as any[];
 
   const GUIComponent = React.useMemo(() => {
     return (
@@ -83,24 +92,8 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   return (
     <div>
       <AssetsCenterHandler title="布局" id="layouts" />
-      <Select onChange={handleChangeShape} value={layoutId} style={{ width: '268px', margin: '8px 16px' }} size="large">
-        {layoutItems.map((c: any) => {
-          return (
-            <Option value={c.id} key={c.id}>
-              <img
-                src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ"
-                alt=""
-                width={40}
-                height={40}
-              />
-              {c.name}
-            </Option>
-          );
-        })}
-      </Select>
-      <br />
+      <AssetsSelect onChange={handleChangeShape} value={layoutId} options={layoutItems} />
       {GUIComponent}
-      {/* <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} /> */}
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Mapbox } from '@antv/l7-maps';
+import { Behaviors, GraphinContext } from '@antv/graphin';
 import { Scene } from '@antv/l7';
-import { GraphinContext, Behaviors } from '@antv/graphin';
+import { Mapbox } from '@antv/l7-maps';
+import React, { useEffect, useRef } from 'react';
 
 const { ZoomCanvas, DragCanvas } = Behaviors;
 
@@ -29,6 +29,7 @@ const Mapmode = () => {
     // return () => cleanup(scene);
   }, []);
   const cleanup = scene => {
+    //@ts-ignore
     scenceRef.current.destroy();
   };
   const initLayout = (val, lngToContainer) => {
