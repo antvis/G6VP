@@ -69,35 +69,27 @@ const transform = (s, metaConfig) => {
       return {
         id: node.id,
         data: node.data,
-        type: 'graphin-circle',
-        style: {
-          keyshape: {
-            stroke: keyShapeColor,
-            fill: keyShapeColor,
-            size: keyshapeSize,
-            fillOpacity: 1,
-            strokeOpacity: 1,
-          },
-          label: {
-            value: Label?.enable ? data[Label?.key || 'id'] : '',
-            offset: [0, 10],
+        type: 'circle',
+        label: Label?.enable ? data[Label?.key || 'id'] : '',
+        labelCfg: {
+          position: 'bottom',
+          style: {
             fill: Label.color,
           },
-          halo,
-          icon,
         },
-        status: {
-          hover: {
-            halo: {
-              ...halo,
-              opacity: 0.6,
-            },
-          },
-          select: {
-            halo: {
-              lineWidth: 0,
-            },
-          },
+        size: keyshapeSize,
+        style: {
+          stroke: keyShapeColor,
+          fill: keyShapeColor,
+          fillOpacity: 0.7,
+          strokeOpacity: 1,
+          lineWidth: 1,
+        },
+        icon: {
+          show: Icon.enable,
+          width: keyshapeSize / 2,
+          height: keyshapeSize / 2,
+          img: icon.value,
         },
       };
     });
