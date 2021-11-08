@@ -12,6 +12,7 @@ import {
   createNewBranch,
   queryAssetById,
   buildAssetWithTask,
+  getFileDirectory
 } from '../../services/assets';
 import { useImmer } from 'use-immer';
 import * as ts from 'typescript';
@@ -129,20 +130,20 @@ const ComponentMarket = props => {
     const previewCodeMap = Object.keys(isc).reduce((prev, file) => {
       let pervObj: any = prev;
       if (typeof prev === 'string') {
-        if (prev === 'demo.tsx') {
+        if (prev.includes('demo.tsx')) {
           pervObj = {
-            [`/src/demo.tsx`]: {
+            [`/${prev}`]: {
               code: isc[prev],
               // fpath: `src/index.js`,
-              fpath: `/src/${prev}`,
+              fpath: `/${prev}`,
               entry: 1,
             },
           };
         } else {
           pervObj = {
-            [`/src/${prev}`]: {
+            [`/${prev}`]: {
               code: isc[prev],
-              fpath: `/src/${prev}`,
+              fpath: `/${prev}`,
             },
           };
         }
@@ -150,7 +151,7 @@ const ComponentMarket = props => {
 
       const fileObj = {
         code: isc[file],
-        fpath: `/src/${file}`,
+        fpath: `/${file}`,
       };
 
       if (file === 'demo.tsx') {
@@ -170,12 +171,21 @@ const ComponentMarket = props => {
 
       return {
         ...pervObj,
-        [`/src/${file}`]: fileObj,
+        [`/${file}`]: fileObj,
       };
     });
 
     return previewCodeMap;
   };
+
+  const getFilesByFilePath = async (directoryName: string) => {
+    const directoryFiles = await getFileDirectory({
+      projectName,
+      branchName,
+      path: directoryName,
+    });
+    return directoryFiles 
+  }
 
   /**
    * 初始查询文件内容，做实时预览使用
@@ -194,47 +204,74 @@ const ComponentMarket = props => {
       path: 'package.json',
     });
 
+    const indexFile = await getFileSourceCode({
+      projectName,
+      branchName,
+      path: 'src/index.ts'
+    })
+
+    const metaFile = await getFileSourceCode({
+      projectName,
+      branchName,
+      path: 'src/registerMeta.ts'
+    })
+
     let initSourceCode = {}
+    // assetType = 1 表示组件，则需要先查询 components 下的所有文件，然后再查询各个文件的内容
     if (assetType === '1') {
       const demoStyleFile = await getFileSourceCode({
         projectName,
         branchName,
         path: 'src/demo.module.less',
       });
-  
-      const componentStyleFile = await getFileSourceCode({
-        projectName,
-        branchName,
-        path: 'src/styles.less',
-      });
-  
-      const componentFile = await getFileSourceCode({
-        projectName,
-        branchName,
-        path: 'src/component.tsx'
-      })
-  
-      initSourceCode = {
-        'demo.tsx': demoFile.data,
-        'demo.module.less': demoStyleFile.data,
-        'styles.less': componentStyleFile.data,
-        'component.tsx': componentFile.data,
-        'package.json': packageFile.data
+
+      // 查询 components 下的文件名称和类型
+      const directoryResult = await getFilesByFilePath('src/components')
+      if (directoryResult && directoryResult.success) {
+        const fileNames = directoryResult.data['src/components'].map(async(filename) => {
+          const [name] = filename
+          const currentFile = await getFileSourceCode({
+            projectName,
+            branchName,
+            path: `src/components/${name}`,
+          });
+          return {
+            key: `components/${name}`,
+            value : currentFile.data
+          }
+        })
+        
+        Promise.all(fileNames).then(resp => {
+          const componentFiles = resp.reduce((acc, curr) => {
+            return {
+              ...acc,
+              // @ts-ignore
+              [curr.key]: curr.value
+            }
+          }, {})
+
+          initSourceCode = {
+            ...componentFiles,
+            'demo.tsx': demoFile.data,
+            'demo.module.less': demoStyleFile.data,
+            'index.ts': indexFile.data,
+            'registerMeta.ts': metaFile.data,
+            'package.json': packageFile.data
+          }
+          const previewCodeModules = fileMapToModules(initSourceCode);
+          
+          setState(draft => {
+            draft.sourceCode = initSourceCode;
+            draft.previewCode = {
+              modules: previewCodeModules,
+              type: 'demo',
+            };
+          });
+
+        })
       }
     } else if (assetType === '4') {
-      // assetType = 4 时，需要加载 index.ts、registerMeta.ts、registerShape.ts 和 registerTransform.ts 四个文件
-      const indexFile = await getFileSourceCode({
-        projectName,
-        branchName,
-        path: 'src/index.ts'
-      })
-
-      const metaFile = await getFileSourceCode({
-        projectName,
-        branchName,
-        path: 'src/registerMeta.ts'
-      })
-
+      // assetType = 4 时，需要加载 registerShape.ts 和 registerTransform.ts 两个个文件
       const shapeFile = await getFileSourceCode({
         projectName,
         branchName,
@@ -254,16 +291,17 @@ const ComponentMarket = props => {
         'registerShape.ts': shapeFile.data,
         'registerTransform.ts': transformFile.data
       }
+
+      const previewCodeModules = fileMapToModules(initSourceCode);
+      setState(draft => {
+        draft.sourceCode = initSourceCode;
+        draft.previewCode = {
+          modules: previewCodeModules,
+          type: 'demo',
+        };
+      });
     }
 
-    const previewCodeModules = fileMapToModules(initSourceCode);
-    setState(draft => {
-      draft.sourceCode = initSourceCode;
-      draft.previewCode = {
-        modules: previewCodeModules,
-        type: 'demo',
-      };
-    });
   };
 
   React.useEffect(() => {
@@ -283,7 +321,7 @@ const ComponentMarket = props => {
       branchName,
       path: filepath,
       content: source,
-      commitMsg: '测试修改文件',
+      commitMsg: 'GI 平台自动更新',
     });
 
     const { success, errorMsg } = result;
@@ -324,7 +362,8 @@ const ComponentMarket = props => {
     }
     setSourceCode({
       ...state.sourceCode,
-      [filepath]: source,
+      // 去掉 src/ 前缀
+      [filepath?.slice(4)]: source,
     });
   };
 
@@ -341,7 +380,6 @@ const ComponentMarket = props => {
       // 从 Meta 中解析出 Meta 对象
       try {
         const registerMeta = looseCodeParse(state.currentSelectAsset.meta);
-        console.log('data', Utils.mock(5).circle().graphin(),)
         // 使用 Graphin Mock 数据调用 registerMeta 方法，获取 metaInfo
         const metaInfo = registerMeta({
           data: Utils.mock(5).circle().graphin(),
@@ -357,7 +395,7 @@ const ComponentMarket = props => {
   }, [currentSelectAsset]);
 
   useEffect(() => {
-    if (state.sourceCode && assetType === '1') {
+    if (state.sourceCode && (assetType === '1' || assetType === '4')) {
       const previewCodeModules = fileMapToModules(state.sourceCode);
       setState(draft => {
         draft.sourceCode = state.sourceCode;
@@ -380,7 +418,7 @@ const ComponentMarket = props => {
     const newBranchName = `sprint_${projectName}_${uuid}_${currentDate}`;
 
     // step1: 创建新的分支
-    const result = await createNewBranch({
+    await createNewBranch({
       projectName,
       branchName: newBranchName,
       refBranchName: 'master'
@@ -446,6 +484,7 @@ const ComponentMarket = props => {
   } else if (assetType === '3') {
     defaultMode = '/index.ts'
   }
+
   return (
     <>
       <Header assetName={currentSelectAsset?.name} updateTime={currentSelectAsset?.gmtModified} assetType={assetType} handlePublish={handlePublish} loading={loading} />
