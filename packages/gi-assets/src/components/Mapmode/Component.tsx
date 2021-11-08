@@ -10,6 +10,7 @@ const Mapmode = () => {
   const { graph } = React.useContext(GraphinContext);
   const posRef = useRef({ x: 0, y: 0 });
   const scenceRef = useRef({});
+  const initlayout = useRef({});
 
   useEffect(() => {
     const scene = new Scene({
@@ -26,11 +27,31 @@ const Mapmode = () => {
       onSceneLoaded(scene);
     });
     scenceRef.current = scene;
-    // return () => cleanup(scene);
+    initlayout.current = GiState.layout;
+    return () => cleanup(scene);
   }, []);
+
   const cleanup = scene => {
-    //@ts-ignore
-    scenceRef.current.destroy();
+    //画布移动回graphin内部
+    const mapCanvas = document.querySelector('.mapboxgl-canvas');
+    const graphCanvas = mapCanvas?.parentNode?.lastChild as HTMLElement;
+    const container = document.querySelector('#graphin-container') as HTMLElement;
+    container.appendChild(graphCanvas);
+
+    scene.destroy();
+
+    const graphContainer = document.querySelector('.graphin-core') as HTMLElement;
+    graphContainer.appendChild(graphCanvas);
+    //布局还原
+    // console.log(initlayout.current);
+    // setTimeout(() => {
+    //   setGiState({
+    //     ...GiState,
+    //     layout: {
+    //       ...initlayout.current,
+    //     },
+    //   });
+    // }, 500);
   };
   const initLayout = (val, lngToContainer) => {
     const { nodes, edges } = val;
