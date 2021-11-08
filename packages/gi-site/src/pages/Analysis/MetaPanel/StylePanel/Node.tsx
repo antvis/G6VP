@@ -5,8 +5,8 @@ import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
+import AssetsSelect from '../../../../components/AssetsSelect';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
-
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
@@ -62,7 +62,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
       ...elements[value],
     });
   };
-  const elementOptions = Object.values(elements);
+  const elementOptions = Object.values(elements) as any[];
 
   const GUIComponent = React.useMemo(() => {
     return (
@@ -78,29 +78,8 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   return (
     <div>
-      <Select
-        onChange={handleChangeShape}
-        value={elementId}
-        style={{ width: '268px', margin: '8px 16px' }}
-        size="large"
-      >
-        {elementOptions.map((c: any) => {
-          return (
-            <Option value={c.id} key={c.id}>
-              <img
-                src="https://gw.alipayobjects.com/mdn/rms_402c1a/afts/img/A*JoptTZdYEEYAAAAAAAAAAAAAARQnAQ"
-                alt=""
-                width={40}
-                height={40}
-              />
-              {c.name}
-            </Option>
-          );
-        })}
-      </Select>
-      <br />
+      <AssetsSelect onChange={handleChangeShape} value={elementId} options={elementOptions} />
       {GUIComponent}
-      {/* <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} /> */}
     </div>
   );
 };
