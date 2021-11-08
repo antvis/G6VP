@@ -9,15 +9,16 @@ const registerShape = Graphin => {
       },
     },
     draw(cfg, group) {
-      const { text = {} } = cfg.style;
+      const { size, color, label } = cfg;
+      const { labelCfg } = cfg.style;
       const keyshape = group.addShape('rect', {
         attrs: {
           id: 'circle-floor',
           x: 0,
           y: 0,
-          width: 20,
-          height: 20,
-          fill: text.fill,
+          width: size,
+          height: size,
+          fill: color,
         },
         draggable: true,
         name: 'circle-floor',
@@ -27,8 +28,8 @@ const registerShape = Graphin => {
           fontSize: 12,
           x: 0,
           y: 0,
-          text: text.value,
-          fill: text.fill,
+          text: label,
+          fill: labelCfg.color,
         },
         draggable: true,
         name: 'text',

@@ -7,16 +7,18 @@ const registerTransform = (data, metaConfig) => {
   const { nodes } = data;
   try {
     const { node: nodeConfig } = metaConfig;
-    const { mappingKey, fill } = Object.assign({}, defaultProps, nodeConfig.props);
+    const { mappingKey, fill, size = '30', color } = Object.assign({}, defaultProps, nodeConfig.props);
     const transNodes = nodes.map(node => {
       return {
         id: node.id,
         type: 'RectNode',
         data: node.data,
+        label: node.data[mappingKey] || node.id,
+        size,
+        color,
         style: {
-          text: {
+          labelCfg: {
             fill: fill,
-            value: node.data[mappingKey],
           },
         },
       };

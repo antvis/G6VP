@@ -10,7 +10,7 @@ const registerMeta = context => {
 
   return {
     size: {
-      name: '大小 SIZE',
+      name: '大小',
       type: 'group',
       enableHide: false,
       fold: false,
@@ -48,7 +48,7 @@ const registerMeta = context => {
       },
     },
     color: {
-      name: '颜色 COLOR',
+      name: '颜色',
       type: 'group',
       enableHide: false,
       fold: false,
@@ -106,7 +106,7 @@ const registerMeta = context => {
       },
     },
     label: {
-      name: '标签 LABEL',
+      name: '标签',
       type: 'group',
       enableHide: false,
       fold: false,
@@ -189,7 +189,7 @@ const registerMeta = context => {
       },
     },
     icon: {
-      name: '图标 ICON',
+      name: '图标',
       type: 'group',
       enableHide: false,
       fold: false,
@@ -235,7 +235,7 @@ const registerMeta = context => {
       },
     },
     halo: {
-      name: '光晕 HALO',
+      name: '光晕',
       type: 'group',
       enableHide: false,
       fold: false,
@@ -258,7 +258,7 @@ const registerMeta = context => {
       },
     },
     badges: {
-      name: '辉标 Badges',
+      name: '辉标',
       type: 'group',
       enableHide: false,
       fold: false,

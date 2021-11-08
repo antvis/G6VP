@@ -4,10 +4,10 @@ import registerTransform from './registerTransform';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
-  id: 'GraphinNode',
+  id: 'Circle',
   category: 'node',
-  name: 'Graphin 节点',
-  desc: 'Graphin 节点',
+  name: '圆形节点',
+  desc: '圆形节点',
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*myb8SrnSy0cAAAAAAAAAAAAAARQnAQ',
 };
 
