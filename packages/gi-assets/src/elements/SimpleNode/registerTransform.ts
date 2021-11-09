@@ -1,10 +1,5 @@
-// import IconLoader from '@antv/graphin-icons';
-// import '@antv/graphin-icons/dist/index.css';
 import { defaultProps } from './registerMeta';
 
-// const icons = Graphin.registerFontFamily(IconLoader);
-
-/** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, metaConfig) => {
   const { node: nodeConfig } = metaConfig;
   try {

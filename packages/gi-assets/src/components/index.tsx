@@ -4,11 +4,12 @@
 import AddNode from './AddNode';
 import CanvasSetting from './CanvasSetting';
 import ContextMenu from './ContextMenu';
-import Mapmode from './Mapmode';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
+import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
+import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
@@ -34,6 +35,7 @@ export {
   AddNode,
   ContextMenu,
   Tooltip,
+  NodeImportance,
 };
 
 // /**

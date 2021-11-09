@@ -112,7 +112,7 @@ const registerMeta = context => {
       enableHide: false,
       fold: false,
       children: {
-        showlabel: {
+        enable: {
           name: '开关',
           type: 'switch',
           default: true,
@@ -123,9 +123,8 @@ const registerMeta = context => {
           type: 'select',
           useFont: true,
           default: 'type',
-          valuePath: 'label.key',
           showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
+            conditions: [['.enable', '$eq', true]],
           },
           options,
         },
@@ -134,6 +133,9 @@ const registerMeta = context => {
           type: 'fill',
           default: '#000',
           valuePath: 'label.color',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
         },
       },
     },
@@ -143,11 +145,20 @@ const registerMeta = context => {
       enableHide: false,
       fold: false,
       children: {
+        enable: {
+          type: 'switch',
+          name: '开关',
+          statusText: true,
+          default: true,
+        },
         type: {
           name: '类型',
           type: 'buttonRadio',
           useFont: true,
           default: 'text',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
           options: [
             {
               value: 'text',
@@ -168,6 +179,9 @@ const registerMeta = context => {
           type: 'select',
           default: 'id',
           options,
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
         },
       },
     },
