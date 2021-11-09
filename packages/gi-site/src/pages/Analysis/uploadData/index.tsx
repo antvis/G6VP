@@ -30,8 +30,13 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { id } = state;
   const [current, setCurrent] = useImmer(0);
   const dispatch = useDispatch();
+  //初始化数据
   const [data, setData] = useImmer(initData);
+  // 映射函数
+  const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target'));
+  //映射后的数据
   const [transData, setTransData] = useImmer(eval(GIDefaultTrans('id', 'source', 'target'))(initData));
+  //当前显示
   const [tableData, setTableData] = useImmer([]);
   const [columns, setColumns] = useImmer(nodeColumns);
   const [transColumns, setTransColumns] = useImmer([]);
@@ -82,9 +87,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       nodes = [...nodes, ...d.data.nodes];
       edges = [...edges, ...d.data.edges];
     });
-    const transFunc = GIDefaultTrans('id', 'scource', 'target');
     setData({ nodes, edges });
-    setTransData(eval(transFunc)({ nodes, edges }));
+    setTransData(eval(transfunc)({ nodes, edges }));
   };
 
   const next = () => {
@@ -126,6 +130,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const transform = recordList => {
     const { id, source, target } = recordList[0];
     const transFunc = GIDefaultTrans(id, source, target);
+    setTransfunc(transFunc);
     const result = eval(transFunc)(data);
     setTransData(result);
 
@@ -154,7 +159,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       });
 
       updateProjectById(id, {
-        data: JSON.stringify(transData),
+        // data: JSON.stringify(transData),
+        data: JSON.stringify({
+          transData,
+          inputData,
+          transfunc,
+        }),
       }).then(res => {
         dispatch({
           type: 'update:key',
@@ -176,12 +186,6 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '上传数据',
       content: (
         <div className="upload-panel">
-          <Alert
-            message=""
-            description="输入数据格式为{ nodes: { id, data }[], edges: { source, target, data}[]}且上传文件暂只支持json"
-            type="info"
-            style={{ margin: '10px 0px' }}
-          />
           <div className="upload-panel-section">
             <Dragger {...draggerProps}>
               <p className="ant-upload-drag-icon">
@@ -217,7 +221,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             }}
           />
           <div className="fliter-group">
-            <span>数据预览</span>
+            <span className="title">数据预览</span>
             <Radio.Group onChange={e => onChange(e.target.value)} defaultValue={tableType}>
               <Radio.Button value="nodes">Node</Radio.Button>
               <Radio.Button value="edges">Edge</Radio.Button>

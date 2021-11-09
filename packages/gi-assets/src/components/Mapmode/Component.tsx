@@ -10,6 +10,7 @@ const Mapmode = () => {
   const { graph } = React.useContext(GraphinContext);
   const posRef = useRef({ x: 0, y: 0 });
   const scenceRef = useRef({});
+  const initlayout = useRef({});
 
   useEffect(() => {
     const scene = new Scene({
@@ -17,25 +18,45 @@ const Mapmode = () => {
       map: new Mapbox({
         style: 'dark',
         pitch: 43,
-        center: [120.13383079335335, 29.651873105004427],
-        zoom: 3,
+        center: [113.033, 29.65],
+        zoom: 7,
       }),
     });
 
     scene.on('load', () => {
       onSceneLoaded(scene);
     });
+
     scenceRef.current = scene;
-    // return () => cleanup(scene);
+    initlayout.current = GiState.layout;
+    return () => cleanup(scene);
   }, []);
+
   const cleanup = scene => {
-    //@ts-ignore
-    scenceRef.current.destroy();
+    //画布移动回graphin内部
+    const mapCanvas = document.querySelector('.mapboxgl-canvas');
+    const graphCanvas = mapCanvas?.parentNode?.lastChild as HTMLElement;
+    const container = document.querySelector('#graphin-container') as HTMLElement;
+    container.appendChild(graphCanvas);
+
+    scene.destroy();
+
+    const graphContainer = document.querySelector('.graphin-core') as HTMLElement;
+    graphContainer.appendChild(graphCanvas);
+    //布局还原
+    console.log(initlayout.current);
+
+    setGiState({
+      ...GiState,
+      layout: {
+        ...initlayout.current,
+      },
+    });
   };
   const initLayout = (val, lngToContainer) => {
     const { nodes, edges } = val;
     const renderNodes = nodes.map(node => {
-      const pos = lngToContainer(node.data.coord || [120.13383079335335, 29.651873105004427]);
+      const pos = lngToContainer(node.data.coord || [113.033, 29.65]);
 
       return {
         ...node,

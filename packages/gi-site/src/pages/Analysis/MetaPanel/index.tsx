@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AssetsCenter from '../../../components/AssetsCenter';
 import ComponentPanel from './ComponentPanel';
-import DataPanel from './DataPanel';
+import WrapDataPanel from './DataPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
 import StylePanel from './StylePanel';
@@ -9,7 +9,7 @@ const navbarOptions = [
   {
     id: 'data',
     name: '数据',
-    component: DataPanel,
+    component: WrapDataPanel,
   },
   {
     id: 'style',
