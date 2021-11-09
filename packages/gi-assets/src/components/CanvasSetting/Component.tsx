@@ -4,7 +4,7 @@ import merge from 'deepmerge';
 import React from 'react';
 import registerMeta from './registerMeta';
 
-const { DragCanvas, ZoomCanvas, BrushSelect } = Behaviors;
+const { DragCanvas, ZoomCanvas, BrushSelect, Hoverable } = Behaviors;
 
 export interface CanvasSettingProps {
   dragCanvas: {
@@ -33,6 +33,7 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       <DragCanvas />
       <ZoomCanvas />
       <BrushSelect />
+      <Hoverable bindType="node" />
     </>
   );
 };
