@@ -40,10 +40,13 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const state = useSelector((state: StateType) => state);
   const { data, inputData, transfunc } = state;
   const [isVisible, setIsVisible] = useImmer(false);
+  //映射后的数据
+  const [initData, setInitData] = useImmer(eval(transfunc)(data));
+
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
   const [tableData, setTableData] = useImmer(
-    data?.[tableType].map((d, i) => {
+    initData?.[tableType].map((d, i) => {
       return {
         ...d,
         key: i,
@@ -52,11 +55,11 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   );
 
   const Header = props => {
-    const { title } = props;
+    const { title, uid } = props;
     return (
       <Space>
         {title}
-        <TableOutlined onClick={viewTable} />
+        <TableOutlined onClick={() => viewTable(uid)} />
         <EyeOutlined />
         <EyeInvisibleOutlined />
         <DeleteOutlined />
@@ -64,7 +67,19 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     );
   };
 
-  const viewTable = () => {
+  const viewTable = uid => {
+    inputData.map(d => {
+      if (d.uid === uid) {
+        const data = eval(transfunc)(d.data)?.[tableType].map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        setInitData(eval(transfunc)(d.data));
+        setTableData(data);
+      }
+    });
     setIsVisible(true);
   };
 
@@ -77,7 +92,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
 
   const onChange = value => {
     setTableData(
-      data?.[value].map((d, i) => {
+      initData?.[value].map((d, i) => {
         return {
           ...d,
           key: i,
@@ -105,7 +120,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         >
           <Collapse defaultActiveKey={['1']}>
             {inputData.map((d, i) => (
-              <Panel header={<Header title={d.name} />} key={i}>
+              <Panel header={<Header title={d.name} uid={d.uid} />} key={i}>
                 Nodes:{d.data.nodes.length} Edges:{d.data.edges.length}
               </Panel>
             ))}
