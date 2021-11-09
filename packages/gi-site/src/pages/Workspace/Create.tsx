@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import { useHistory } from '@alipay/bigfish';
 import { addProject } from '../../services';
+import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { getMockData } from './utils';
 import { defaultConfig } from './defaultConfig';
@@ -61,12 +62,23 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
   const onFinish = async () => {
     const value = form.getFieldValue();
+    const transData = getMockData();
     const projectId = await addProject({
       name: value.title,
       status: 0, // 0 正常项目， 1删除项目
       tag: value.tag,
       members: dataSource,
-      data: JSON.stringify(getMockData()),
+      data: JSON.stringify({
+        transData,
+        inputData: [
+          {
+            uid: '1',
+            name: 'demo.js',
+            data: transData,
+          },
+        ],
+        transfunc: GIDefaultTrans('id', 'source', 'target'),
+      }),
       projectConfig: JSON.stringify(defaultConfig.GIConfig),
     });
 

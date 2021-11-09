@@ -18,14 +18,15 @@ const Mapmode = () => {
       map: new Mapbox({
         style: 'dark',
         pitch: 43,
-        center: [120.13383079335335, 29.651873105004427],
-        zoom: 3,
+        center: [113.033, 29.65],
+        zoom: 7,
       }),
     });
 
     scene.on('load', () => {
       onSceneLoaded(scene);
     });
+
     scenceRef.current = scene;
     initlayout.current = GiState.layout;
     return () => cleanup(scene);
@@ -43,20 +44,19 @@ const Mapmode = () => {
     const graphContainer = document.querySelector('.graphin-core') as HTMLElement;
     graphContainer.appendChild(graphCanvas);
     //布局还原
-    // console.log(initlayout.current);
-    // setTimeout(() => {
-    //   setGiState({
-    //     ...GiState,
-    //     layout: {
-    //       ...initlayout.current,
-    //     },
-    //   });
-    // }, 500);
+    console.log(initlayout.current);
+
+    setGiState({
+      ...GiState,
+      layout: {
+        ...initlayout.current,
+      },
+    });
   };
   const initLayout = (val, lngToContainer) => {
     const { nodes, edges } = val;
     const renderNodes = nodes.map(node => {
-      const pos = lngToContainer(node.data.coord || [120.13383079335335, 29.651873105004427]);
+      const pos = lngToContainer(node.data.coord || [113.033, 29.65]);
 
       return {
         ...node,
