@@ -23,6 +23,8 @@ const transform = (s, metaConfig) => {
       label: Label,
       size: Size,
       icon: Icon,
+      halo: Halo,
+      badges: Badges,
     } = Object.assign({}, defaultProps, metaConfig.node.props);
 
     /** 分别生成Size和Color的Mapping */
@@ -44,14 +46,37 @@ const transform = (s, metaConfig) => {
       const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
       const keyshapeSize = Size?.mapping ? mappingBySize(enumValueBySize) : Size?.fixed;
       const keyShapeColor = Color?.mapping ? Color?.scale?.range?.[matchColorIndex] : Color?.fixed;
-      const halo = {
-        visible: true,
-        size: keyshapeSize + 8,
-        stroke: keyShapeColor,
-        lineWidth: 2,
-        opacity: 1,
+
+      /** 光晕 */
+      const halo: { [key: string]: any } = {
+        visible: false,
       };
-      let icon: { [key: string]: any } = {};
+
+      if (Halo.enable) {
+        halo.visible = true;
+        halo.lineWidth = Halo.lineWidth;
+        halo.fill = keyShapeColor;
+        halo.stroke = keyShapeColor;
+        halo.strokeOpacity = 1;
+        halo.fillOpacity = Halo.opacity;
+      }
+      /** 徽标 */
+      let badges: any[] = [];
+      if (Badges.enable) {
+        badges.push({
+          position: 'RT',
+          type: 'text',
+          value: data[Badges.key],
+          size: Badges.size,
+          fill: Badges.fill,
+          color: Badges.color,
+        });
+      }
+
+      /** 图标 */
+      let icon: { [key: string]: any } = {
+        visible: false,
+      };
       if (Icon.enable) {
         icon = {
           type: Icon.type,
@@ -65,7 +90,6 @@ const transform = (s, metaConfig) => {
           icon.fill = '#fff';
         }
       }
-
       return {
         id: node.id,
         data: node.data,
@@ -83,19 +107,21 @@ const transform = (s, metaConfig) => {
             offset: [0, 10],
             fill: Label.color,
           },
-          halo,
           icon,
-        },
-        status: {
-          hover: {
-            halo: {
-              ...halo,
-              opacity: 0.6,
+          halo: { visible: false },
+          badges,
+          status: {
+            normal: {
+              halo,
             },
-          },
-          select: {
-            halo: {
-              lineWidth: 0,
+            hover: {
+              halo,
+            },
+            active: {
+              halo,
+            },
+            select: {
+              halo,
             },
           },
         },
