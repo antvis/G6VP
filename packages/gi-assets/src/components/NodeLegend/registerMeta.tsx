@@ -1,6 +1,6 @@
 const registerMeta = context => {
   const { data } = context;
-  const keys = Object.keys(data.nodes[0].data);
+  const keys = Object.keys(data.nodes[0]?.data || {});
   const options = keys.map(c => {
     return {
       value: c,
