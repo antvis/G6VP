@@ -77,14 +77,18 @@ const Analysis = props => {
         isReady: false,
       });
       const { data, config, activeAssetsKeys } = await getProjectById(projectId);
+      const { transData, inputData, transfunc } = data;
+
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
-      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
+      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
       dispatch({
         type: 'update:config',
         id: projectId,
         config,
         projectConfig: config,
-        data: data,
+        data: transData,
+        inputData,
+        transfunc,
         isReady: true,
         activeNavbar: 'style',
         //@ts-ignore
@@ -257,7 +261,7 @@ const Analysis = props => {
           </div>
         </div>
       </div>
-      <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
+      {isModalVisible && <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>}
     </div>
   );
 };

@@ -35,6 +35,10 @@ const initialState = {
   components: [],
   elements: [],
   data: {},
+  /** 原数据 / 文件名 */
+  inputData: [],
+  /** 映射函数 */
+  transfunc: '',
   refreshComponentKey: Math.random(),
 
   /** 数据服务列表 */
