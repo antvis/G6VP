@@ -18,12 +18,12 @@ const AssetsSelect: React.FunctionComponent<AssetsSelectProps> = props => {
     <div>
       <Select onChange={onChange} value={value} className="style-panel-assets-select">
         {options.map((c: any) => {
-          const { id, name, icon } = c;
+          const { id, name, icon, info } = c;
           return (
             <Option value={id} key={id}>
               <div className="style-panel-assets-select-title">
-                <img src={icon} width={40} height={40} />
-                {name}
+                <img src={info?.cover} width={40} height={40} style={{ marginLeft: '18px' }} />
+                <span style={{ marginLeft: '18px' }}> {name}</span>
               </div>
             </Option>
           );
