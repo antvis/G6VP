@@ -107,8 +107,8 @@
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 5%);
   }
   .desc {
-    padding-left: 8px;
     width: 100%;
+    padding-left: 8px;
     div {
       color: #000000;
       opacity: 0.45;
@@ -117,9 +117,9 @@
       display: inline-block;
       width: 100%;
       overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
       vertical-align: sub;
-      white-space: nowrap;
     }
   }
   .fire {
@@ -144,11 +144,17 @@
     flex-direction: column;
     width: 40%;
     .config {
-      border-top: 1px solid #bfbfbf;
       max-height: 300px;
+      border-top: 1px solid #bfbfbf;
     }
     .view {
       flex: 1;
     }
+  }
+}
+
+.ant-pro-table {
+  .ant-card-body {
+    padding: 0px;
   }
 }
