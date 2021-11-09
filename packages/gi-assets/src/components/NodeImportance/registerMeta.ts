@@ -46,6 +46,8 @@ export interface PropertyContentProps {
 export interface NodeImportanceProps {
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
+  hasDivider: boolean;
+  color: string;
 }
 
 const registerMeta = context => {

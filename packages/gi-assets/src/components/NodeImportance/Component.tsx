@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 /**
  * author:shiwu.wyy@antgroup.com
  */
@@ -10,6 +9,7 @@ import { GraphinContext } from '@antv/graphin';
 import { Button, Checkbox, Col, Divider, Drawer, Form, Radio, Row, Tooltip } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import './index.less';
 import PropertyContent from './propertyContent';
 import { defaultProps, locale, MappingWay, NodeImportanceProps } from './registerMeta';
@@ -207,7 +207,20 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         if (minNode.value === maxNode.value) {
           size = undefined;
         }
-        graph.updateItem(nodeItem, { size });
+
+        const { type: shapeType } = nodeItem.getModel();
+        if (shapeType === 'graphin-circle') {
+          //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
+          graph.updateItem(nodeItem, {
+            style: {
+              keyshape: {
+                size,
+              },
+            },
+          });
+        } else {
+          graph.updateItem(nodeItem, { size });
+        }
       }
       mappedNodeIds.push(node.id);
     });
@@ -224,10 +237,21 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             ? ((edge.value - minEdge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0]
             : ((maxEdge.value - edge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0];
           if (edgeItem) {
-            graph.updateItem(edgeItem, {
-              size: lineWidth,
-            });
+            const { type: shapeType } = edgeItem.getModel();
+            if (shapeType === 'graphin-line') {
+              //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
+              graph.updateItem(edgeItem, {
+                style: {
+                  keyshape: {
+                    size: lineWidth,
+                  },
+                },
+              });
+            } else {
+              graph.updateItem(edgeItem, { size: lineWidth });
+            }
           }
+
           mappedEdgeIds.push(edge.id);
         }
       });
@@ -264,7 +288,10 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
       return;
     }
     validateFields().then(values => {
-      let res = {
+      let res: {
+        nodes: any[];
+        edges: any[];
+      } = {
         nodes: [],
         edges: [],
       };
