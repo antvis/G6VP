@@ -74,6 +74,8 @@ export interface StateType {
   refreshComponentKey: number;
   /** 原始数据 */
   data: any;
+  inputData: any[];
+  transfunc: '';
   /** 画布渲染的配置 */
   config: GIConfig;
 

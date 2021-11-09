@@ -43,13 +43,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const editableKeys = ['edit'];
   const [form] = Form.useForm();
   const [tableType, setTableType] = useImmer('nodes');
-  const [inputData, setInputData] = useImmer([
-    {
-      uid: '1',
-      name: 'demo.js',
-      data: initData,
-    },
-  ]);
+  const [inputData, setInputData] = useImmer([]);
   const draggerProps = {
     name: 'file',
     defaultFileList: inputData,

@@ -70,13 +70,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       members: dataSource,
       data: JSON.stringify({
         transData,
-        inputData: [
-          {
-            uid: '1',
-            name: 'demo.js',
-            data: transData,
-          },
-        ],
+        inputData: [],
         transfunc: GIDefaultTrans('id', 'source', 'target'),
       }),
       projectConfig: JSON.stringify(defaultConfig.GIConfig),
@@ -125,7 +119,8 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
         <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="成员设置" name="users"></Form.Item>
+        {/* <Form.Item label="成员设置" name="users" > */}
+        <span className="form-item">成员设置</span>
         <EditableProTable
           columns={columns}
           value={dataSource}
@@ -140,7 +135,6 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
           editable={{
             type: 'multiple',
             editableKeys,
-            formProps: {},
             actionRender: (row, config, defaultDoms) => {
               return [defaultDoms.delete];
             },
@@ -150,6 +144,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
             onChange: setEditableRowKeys,
           }}
         />
+        {/* </Form.Item> */}
         <Form.Item label="项目类型" name="tag" className="round">
           <Radio.Group defaultValue="Empty" size="small">
             <Radio.Button value="GIConfig" style={{ marginRight: 10, borderRadius: 17 }}>

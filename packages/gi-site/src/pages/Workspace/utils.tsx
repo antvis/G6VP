@@ -12,33 +12,33 @@ export const getUid = () => {
 };
 
 export const getMockData = () => {
-  const id = 'explame';
-  const MockEdges = [];
-  const MockNodes = [];
-  MockNodes.push({
-    id,
-    data: {
-      id,
-    },
-  });
-  Array.from({ length: 5 }).forEach((c, index) => {
-    MockNodes.push({
-      id: id + '_' + index,
-      data: {
-        id: id + '_' + index,
-      },
-    });
-    MockEdges.push({
-      source: id,
-      target: id + '_' + index,
-      data: {
-        source: id,
-        target: id + '_' + index,
-      },
-    });
-  });
+  // const id = 'explame';
+  // const MockEdges = [];
+  // const MockNodes = [];
+  // MockNodes.push({
+  //   id,
+  //   data: {
+  //     id,
+  //   },
+  // });
+  // Array.from({ length: 5 }).forEach((c, index) => {
+  //   MockNodes.push({
+  //     id: id + '_' + index,
+  //     data: {
+  //       id: id + '_' + index,
+  //     },
+  //   });
+  //   MockEdges.push({
+  //     source: id,
+  //     target: id + '_' + index,
+  //     data: {
+  //       source: id,
+  //       target: id + '_' + index,
+  //     },
+  //   });
+  // });
   return {
-    nodes: MockNodes,
-    edges: MockEdges,
+    nodes: [],
+    edges: [],
   };
 };
