@@ -72,6 +72,7 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
               style={{ width: 162, marginTop: 8 }}
               dropdownMatchSelectWidth={false}
               dropdownClassName="calc"
+              //@ts-ignore
               getPopupContainer={() => document.getElementById('select-drop-down-area')}
             >
               <Option value={'sort'} key={'sort'}>
@@ -103,6 +104,7 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
             style={{ width: 92, marginTop: 8 }}
             dropdownMatchSelectWidth={false}
             dropdownClassName="mapping"
+            //@ts-ignore
             getPopupContainer={() => document.getElementById('select-drop-down-area')}
           >
             <Option value={MappingWay.Positive} key={MappingWay.Positive}>

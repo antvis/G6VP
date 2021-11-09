@@ -10,44 +10,6 @@ const registerMeta = context => {
   });
 
   return {
-    size: {
-      name: '大小',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sizeMapping: {
-          name: '半径',
-          type: 'sizeMapping',
-          min: 0,
-          max: 100,
-          step: 1,
-          suffix: 'px',
-          valuePath: 'size',
-          default: {
-            mapping: false,
-            fixed: 26,
-            scale: {
-              custom: false, // 是否采取自定义映射
-              range: [3, 30], // 值域
-              domain: [0, 1000], // 定义域
-              abnormal: 1,
-            },
-          },
-        },
-        keyMapping: {
-          name: '映射字段',
-          type: 'select',
-          useFont: true,
-          default: 'amount',
-          options,
-          showInPanel: {
-            conditions: [['size.mapping', '$eq', true]],
-          },
-          valuePath: 'size.key',
-        },
-      },
-    },
     color: {
       name: '颜色',
       type: 'group',
@@ -61,12 +23,13 @@ const registerMeta = context => {
           valuePath: 'color',
           default: {
             mapping: false,
-            fixed: '#CB6EF8',
+            fixed: '#3056E3',
             scale: {
               type: 'ordinal',
               scheme: 'cat-1',
               custom: true,
               range: [
+                '#3056E3',
                 '#CB6EF8',
                 '#82E6C7',
                 '#F6D87B',
@@ -106,6 +69,45 @@ const registerMeta = context => {
         },
       },
     },
+    size: {
+      name: '大小',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        sizeMapping: {
+          name: '半径',
+          type: 'sizeMapping',
+          min: 0,
+          max: 100,
+          step: 1,
+          suffix: 'px',
+          valuePath: 'size',
+          default: {
+            mapping: false,
+            fixed: 26,
+            scale: {
+              custom: false, // 是否采取自定义映射
+              range: [3, 30], // 值域
+              domain: [0, 1000], // 定义域
+              abnormal: 1,
+            },
+          },
+        },
+        keyMapping: {
+          name: '映射字段',
+          type: 'select',
+          useFont: true,
+          default: 'amount',
+          options,
+          showInPanel: {
+            conditions: [['size.mapping', '$eq', true]],
+          },
+          valuePath: 'size.key',
+        },
+      },
+    },
+
     label: {
       name: '标签',
       type: 'group',
@@ -143,7 +145,7 @@ const registerMeta = context => {
       name: '图标',
       type: 'group',
       enableHide: false,
-      fold: false,
+      fold: true,
       children: {
         enable: {
           type: 'switch',
@@ -179,6 +181,91 @@ const registerMeta = context => {
           type: 'select',
           default: 'id',
           options,
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+      },
+    },
+    halo: {
+      name: '光晕',
+      type: 'group',
+      enableHide: false,
+      fold: true,
+      children: {
+        enable: {
+          name: '开关',
+          type: 'switch',
+          default: true,
+          statusText: true,
+        },
+        lineWidth: {
+          name: '宽度',
+          type: 'stepper',
+          default: 0,
+          step: 1,
+          min: 0,
+          max: 15,
+          suffix: 'px',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+        opacity: {
+          name: '透明度',
+          type: 'stepper',
+          default: 0.1,
+          step: 1,
+          min: 0,
+          max: 15,
+          suffix: '',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+      },
+    },
+    badges: {
+      name: '辉标',
+      type: 'group',
+      enableHide: false,
+      fold: true,
+      children: {
+        enable: {
+          name: '开关',
+          type: 'switch',
+          default: false,
+          statusText: true,
+        },
+        key: {
+          name: '映射字段',
+          type: 'select',
+          default: 'badges',
+          options,
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+        fill: {
+          name: '填充色',
+          type: 'fill',
+          default: '#ddd',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+        color: {
+          name: '文本色',
+          type: 'color',
+          default: '#fff',
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+        size: {
+          name: '尺寸',
+          type: 'stepper',
+          default: 10,
           showInPanel: {
             conditions: [['.enable', '$eq', true]],
           },
