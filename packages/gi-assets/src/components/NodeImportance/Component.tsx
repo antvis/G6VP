@@ -6,7 +6,7 @@
 import { ThunderboltOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Checkbox, Col, Divider, Drawer, Form, Radio, Row, Tooltip } from 'antd';
+import { Button, Checkbox, Col, Divider, Drawer, Form, Radio, Row, Tooltip, Tabs } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -14,6 +14,8 @@ import './index.less';
 import PropertyContent from './propertyContent';
 import { defaultProps, locale, MappingWay, NodeImportanceProps } from './registerMeta';
 import ResultTable from './resultTable';
+import ResultPlot from './resultPlot';
+import { fittingString } from './util';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
 const getDegreeMap = (data, degreeMap) => {
@@ -34,6 +36,7 @@ const getDegreeMap = (data, degreeMap) => {
   return reCalcDegreeMap;
 };
 
+const { TabPane } = Tabs;
 const { pageRank } = Algorithm;
 const NODE_VISUAL_RANGE = [16, 64]; // 直径
 const EDGE_VISUAL_RANGE = [1, 8];
@@ -51,6 +54,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
   const [reAnalyse, setReAnalyse] = useState(0);
   const [nodeProperties, setNodeProperties] = useState([]);
   const [edgeProperties, setEdgeProperties] = useState([]);
+  const [resultPaneKey, setResultPaneKey] = useState('table');
 
   const [form] = Form.useForm();
   const { validateFields, resetFields } = form;
@@ -332,7 +336,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             return;
           }
           data.nodes.forEach(node => {
-            const propertyValue = node.data?.properties?.[selectedNodeProperty];
+            const propertyValue = node.data?.[selectedNodeProperty];
             const value = propertyValue === '' ? undefined : +propertyValue;
             if (!isNaN(value) && graph.findById(node.id)) {
               res.nodes.push({
@@ -417,7 +421,94 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
       }
       showResult(res);
     });
+    setResultPaneKey('table');
   };
+
+  const getResultTitle = () => {
+    const formValues = form.getFieldsValue();
+    const nodeProperty = formValues['node-property.property'];
+    const edgeProperty = formValues['edge-property.property'];
+    if (result?.type === 'node-property') {
+      return <>{nodeProperty}&nbsp;-&nbsp;排序</>;
+    }
+    if (result?.type === 'edge-property') {
+      return (
+        <>
+          {edgeProperty}
+          &nbsp;-&nbsp;{locale[result?.calcWay]}
+        </>
+      );
+    }
+    return locale[result?.type];
+  };
+
+  const getStatistic = (type, itemType = 'node') => {
+    const value =
+      type === 'ave' ? `${result[itemType][type].value}` : `${result[itemType][type].value} (${result[itemType][type].name})`;
+    const fittedValue = fittingString(value, 250, 14);
+    return (
+      <>
+        {locale[type]}:&nbsp;&nbsp;
+        <span className="result-statistic-value">
+          <Tooltip title={fittedValue.includes('…') ? value : ''}>{fittedValue}</Tooltip>
+        </span>
+      </>
+    );
+  }
+
+  const getResultPane = (paneType) => {
+    const formValues = form.getFieldsValue();
+    const edgeType = formValues[`${currentAlgo}.edgeType`];
+    const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>
+    const resultBlock = paneType === 'table' ? <ResultTable
+      data={result}
+      form={form}
+      currentAlgo={currentAlgo}
+      reAnalyse={reAnalyse}
+    /> : <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />;
+    return <div className="result-wrapper">
+        <div className="result-title">
+          {getResultTitle()}
+        </div>
+        {failedMessage || <div className="result-statistic">
+          <Row>
+            <Col span={11}>{getStatistic('ave')}</Col>
+            <Col span={11}>{getStatistic('median')}</Col>
+          </Row>
+          <Row style={{ marginTop: '16px' }}>
+            <Col span={11}>{getStatistic('max')}</Col>
+            <Col span={11}>{getStatistic('min')}</Col>
+          </Row>
+        </div>}
+        {!failedMessage && resultBlock}
+    </div>
+  }
+
+  const processRow = (row) => {
+    let finalVal = '';
+    Object.values(row).forEach((value, i) => {
+      let res = (value === undefined ? '' : value).toString().replace(/"/g, '""');
+      if (res.search(/("|,|\n)/g) >= 0)
+        res = '"' + res + '"';
+      if (i > 0)
+          finalVal += ',';
+      finalVal += res;
+    });
+    return finalVal;
+  };
+
+  const downloadCSV = (itemType) => {
+    const list = result?.[itemType]?.data;
+    if (!list) {
+      return;
+    }
+    const header = 'id,name,dataType,value';
+    const csvStr = list.map(processRow).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${header}\n${csvStr}`);
+    a.download = `node-importance-${itemType}.csv`;//这里替换为你需要的文件名
+    a.click();
+  }
 
   const algoSelections = [
     {
@@ -544,8 +635,26 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           >
             分析
           </Button>
-
-          {result && <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} />}
+          {result && <Tabs
+            defaultActiveKey="table"
+            activeKey={resultPaneKey}
+            onChange={setResultPaneKey}
+            tabBarExtraContent={{
+              right: <Tooltip title='下载CSV' placement="topRight">
+                <i className="iconfont icon-download" onClick={() => {
+                  downloadCSV('node');
+                  downloadCSV('edge');
+                }} />
+              </Tooltip>
+            }}
+          >
+            <TabPane tab='结果列表' key="table">
+              {getResultPane('table')}
+            </TabPane>
+            <TabPane tab='统计图表' key="plot">
+              {getResultPane('plot')}
+            </TabPane>
+          </Tabs>}
         </Drawer>,
         //@ts-ignore
         document.getElementById('graphin-container'),
