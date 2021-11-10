@@ -2,7 +2,6 @@ import { GraphinContext } from '@antv/graphin';
 import { Col, Row, Table, Tooltip } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { ITEM_STATE, locale, MappingWay } from './registerMeta';
-import { fittingString } from './util';
 
 interface Props {
   data;
@@ -15,10 +14,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
   const { graph } = useContext(GraphinContext);
 
   const formValues = form.getFieldsValue();
-
-  const nodeProperty = formValues['node-property.property'];
   const edgeType = formValues['edge-property.edgeType'];
-  const edgeProperty = formValues['edge-property.property'];
 
   const [sortOrder, setSortOrder] = useState(false);
 
@@ -26,19 +22,6 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
     setSortOrder(false);
   }, [reAnalyse]);
 
-  const getStatistic = (type, itemType = 'node') => {
-    const value =
-      type === 'ave' ? `${data[itemType][type].value}` : `${data[itemType][type].value} (${data[itemType][type].name})`;
-    const fittedValue = fittingString(value, 250, 14);
-    return (
-      <>
-        {locale[type]}:&nbsp;&nbsp;
-        <span className="result-statistic-value">
-          <Tooltip title={fittedValue.includes('…') ? value : ''}>{fittedValue}</Tooltip>
-        </span>
-      </>
-    );
-  };
   const getResultColumns = () => {
     const columns = [
       {
@@ -90,20 +73,6 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
     }));
   };
 
-  const getResultTitle = () => {
-    if (data.type === 'node-property') {
-      return <>{nodeProperty}&nbsp;-&nbsp;排序</>;
-    }
-    if (data.type === 'edge-property') {
-      return (
-        <>
-          {edgeProperty}
-          &nbsp;-&nbsp;{locale[data.calcWay]}
-        </>
-      );
-    }
-    return locale[data.type];
-  };
 
   const clearActiveItems = () => {
     const activateItems = graph
@@ -147,43 +116,25 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
     }
   };
 
-  const failedMessage = data.node ? undefined : <p className="result-message">{data.message}</p>;
-
   return (
     <div className="result-wrapper">
-      <div className="result-title">{getResultTitle()}</div>
-      {failedMessage}
-      {!failedMessage && (
-        <div className="result-statistic">
-          <Row>
-            <Col span={11}>{getStatistic('ave')}</Col>
-            <Col span={11}>{getStatistic('median')}</Col>
-          </Row>
-          <Row style={{ marginTop: '16px' }}>
-            <Col span={11}>{getStatistic('max')}</Col>
-            <Col span={11}>{getStatistic('min')}</Col>
-          </Row>
-        </div>
-      )}
-      {!failedMessage && (
-        <Table
-          dataSource={getResultTableData()}
-          //@ts-ignore
-          columns={getResultColumns()}
-          size="small"
-          style={{ marginTop: '16px' }}
-          showSorterTooltip={{
-            title: '排序',
-          }}
-          onRow={record => {
-            return {
-              onMouseEnter: () => onEnterTableRow(record),
-              onMouseLeave: clearActiveItems,
-            };
-          }}
-          onChange={onTableChange}
-        />
-      )}
+      <Table
+        dataSource={getResultTableData()}
+        //@ts-ignore
+        columns={getResultColumns()}
+        size="small"
+        style={{ marginTop: '16px' }}
+        showSorterTooltip={{
+          title: '排序',
+        }}
+        onRow={record => {
+          return {
+            onMouseEnter: () => onEnterTableRow(record),
+            onMouseLeave: clearActiveItems,
+          };
+        }}
+        onChange={onTableChange}
+      />
     </div>
   );
 };
