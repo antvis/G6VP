@@ -60,7 +60,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                       history.push(`/workspace/${id}`);
                     }}
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*WpS1Qpk73uMAAAAAAAAAAAAAARQnAQ"
                   />
                 }
               >
