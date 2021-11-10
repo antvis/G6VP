@@ -13,6 +13,7 @@ import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { nodeColumns, edgeColumns } from '../../uploadData/const';
 import store, { StateType } from '../../redux';
+import { updateProjectById } from '../../../../services';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -38,10 +39,10 @@ const ServiceHeader = props => {
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const dispatch = useDispatch();
   const state = useSelector((state: StateType) => state);
-  const { data, inputData, transfunc } = state;
+  const { data, inputData, id } = state;
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
-  const [initData, setInitData] = useImmer(eval(transfunc)(data));
+  const [initData, setInitData] = useImmer(data);
 
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
@@ -55,14 +56,17 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   );
 
   const Header = props => {
-    const { title, uid } = props;
+    const { title, uid, enable } = props;
     return (
       <Space>
         {title}
         <TableOutlined onClick={() => viewTable(uid)} />
-        <EyeOutlined />
-        <EyeInvisibleOutlined />
-        <DeleteOutlined />
+        {enable ? (
+          <EyeOutlined onClick={() => invertVisiable(uid)} />
+        ) : (
+          <EyeInvisibleOutlined onClick={() => invertVisiable(uid)} />
+        )}
+        <DeleteOutlined onClick={() => deleteData(uid)} />
       </Space>
     );
   };
@@ -70,17 +74,96 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const viewTable = uid => {
     inputData.map(d => {
       if (d.uid === uid) {
-        const data = eval(transfunc)(d.data)?.[tableType].map((d, i) => {
+        const data = eval(d.transfunc)(d.data)?.[tableType].map((d, i) => {
           return {
             ...d,
             key: i,
           };
         });
-        setInitData(eval(transfunc)(d.data));
+        setInitData(eval(d.transfunc)(d.data));
         setTableData(data);
       }
     });
     setIsVisible(true);
+  };
+
+  const deleteData = uid => {
+    let mergeData = {
+      nodes: [],
+      edges: [],
+    };
+    const filterInputData = inputData.filter(d => d.uid !== uid);
+    filterInputData.map(d => {
+      if (d.enable) {
+        const nodesData = eval(d.transfunc)(d.data)?.nodes.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        const edgesData = eval(d.transfunc)(d.data)?.edges.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        mergeData = {
+          nodes: [...mergeData.nodes, ...nodesData],
+          edges: [...mergeData.edges, ...edgesData],
+        };
+      }
+    });
+
+    updateProjectById(id, {
+      data: JSON.stringify({
+        transData: mergeData,
+        inputData: filterInputData,
+      }),
+    }).then(res => {
+      dispatch({
+        type: 'update:key',
+        key: Math.random(),
+      });
+    });
+  };
+
+  const invertVisiable = uid => {
+    let mergeData = {
+      nodes: [],
+      edges: [],
+    };
+    const resultData = inputData.map(d => {
+      if (d.uid === uid) {
+        d.enable = !d.enable;
+      }
+      return d;
+    });
+    resultData.map(d => {
+      if (d.enable) {
+        const nodesData = eval(d.transfunc)(d.data)?.nodes.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        const edgesData = eval(d.transfunc)(d.data)?.edges.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        mergeData = {
+          nodes: [...mergeData.nodes, ...nodesData],
+          edges: [...mergeData.edges, ...edgesData],
+        };
+      }
+    });
+
+    dispatch({
+      type: 'update',
+      inputData: resultData,
+      data: mergeData,
+    });
   };
 
   const uploadData = () => {
@@ -120,7 +203,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         >
           <Collapse defaultActiveKey={['1']}>
             {inputData.map((d, i) => (
-              <Panel header={<Header title={d.name} uid={d.uid} />} key={i}>
+              <Panel header={<Header title={d.name} uid={d.uid} enable={d.enable} />} key={i}>
                 Nodes:{d.data.nodes.length} Edges:{d.data.edges.length}
               </Panel>
             ))}
