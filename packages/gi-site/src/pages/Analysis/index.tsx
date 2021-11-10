@@ -77,7 +77,7 @@ const Analysis = props => {
         isReady: false,
       });
       const { data, config, activeAssetsKeys } = await getProjectById(projectId);
-      const { transData, inputData, transfunc } = data;
+      const { transData, inputData } = data;
 
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
@@ -88,7 +88,6 @@ const Analysis = props => {
         projectConfig: config,
         data: transData,
         inputData,
-        transfunc,
         isReady: true,
         activeNavbar: 'style',
         //@ts-ignore
