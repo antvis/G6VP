@@ -46,8 +46,11 @@ export const getProjectById = async (id: string) => {
     return getResult(project);
   }
   // TODO response 返回为数组，应该返回为对象
-  const response = await request(`${SERVICE_URL_PREFIX}/project/list/${id}`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/project/id`, {
     method: 'post',
+    data:{
+      id,
+    }
   });
   if (response.success && response.data?.length > 0) {
     const res = response.data[0];
@@ -110,7 +113,7 @@ export const getProjectList = async () => {
   }
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {
-    method: 'get',
+    method: 'post',
   });
 
   if (response.success) {
