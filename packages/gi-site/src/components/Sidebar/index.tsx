@@ -44,6 +44,8 @@ const Extra = () => {
 
 const Sidebar: React.FunctionComponent<SidebarProps> = props => {
   const { options, value, onChange } = props;
+  const url = new URL(window.location.href);
+  console.log('url', url);
 
   return (
     <ul className="gi-sidebar">
