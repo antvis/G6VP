@@ -54,7 +54,7 @@ npm run bootstrap
 
 ```bash
 npm run core   //本地编译`@alipay/graphinsight`的产物
-npm run meta   //本地编译`@alipay/gi-meta`的产物
+npm run assets   //本地编译`@alipay/gi-assets`的产物
 npm run site   //本地编译`@alipay/gi-site`的产物，需先执行上面步骤
 ```
 
