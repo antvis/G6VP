@@ -38,6 +38,7 @@ export const getProjectById = async (id: string) => {
       config,
       data,
       activeAssetsKeys,
+      name: project.name,
     };
   };
 
