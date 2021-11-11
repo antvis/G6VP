@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useHistory } from '@alipay/bigfish';
 import { starProject } from '../../services';
 import { time } from './utils';
+import { ASSET_TYPE } from '../../services/const';
 
 interface ProjectListProps {
   data: any;
@@ -51,7 +52,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const favorite = id => {
     starProject({
       assetId: id,
-      assetType: 6,
+      assetType: ASSET_TYPE.PROJECT,
     });
   };
 
