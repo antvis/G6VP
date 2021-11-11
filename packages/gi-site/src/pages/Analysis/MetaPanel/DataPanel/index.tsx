@@ -43,7 +43,7 @@ const ServiceHeader = props => {
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const dispatch = useDispatch();
   const store = useSelector((state: StateType) => state);
-  const { data, inputData, id } = store;
+  const { data, inputData, id, activeAssets } = store;
 
   //TODO:合并成一个immer对象
   const [state, updateState] = useImmer({
@@ -240,7 +240,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
             );
           })}
         </CollapseCard>
-        <DataService projectId={id} />
+        <DataService projectId={id} serviceLists={activeAssets.services} />
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
         <div className={styles.fliterGroup}>
