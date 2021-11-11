@@ -1,10 +1,10 @@
-import { StarFilled, PlusOutlined, MoreOutlined, EditFilled, CopyFilled } from '@ant-design/icons';
-import { Card, Col, Row, Dropdown, Menu } from 'antd';
-import * as React from 'react';
 import { useHistory } from '@alipay/bigfish';
+import { CopyFilled, EditFilled, MoreOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { Card, Col, Dropdown, Menu, Row } from 'antd';
+import * as React from 'react';
 import { starProject } from '../../services';
-import { time } from './utils';
 import { ASSET_TYPE } from '../../services/const';
+import { time } from './utils';
 
 interface ProjectListProps {
   data: any;
@@ -69,7 +69,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 cover={
                   <img
                     onClick={() => {
-                      history.push(`/workspace/${id}`);
+                      history.push(`/workspace/${id}?nav=data`);
                     }}
                     alt="example"
                     src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*WpS1Qpk73uMAAAAAAAAAAAAAARQnAQ"

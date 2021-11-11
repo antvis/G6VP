@@ -4,6 +4,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
+import { getSearchParams } from '../../components/utils';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
@@ -76,6 +77,8 @@ const Analysis = props => {
         type: 'update:config',
         isReady: false,
       });
+      const { searchParams } = getSearchParams(window.location);
+      const activeNavbar = searchParams.get('nav') || 'data';
       const { data, config, activeAssetsKeys } = await getProjectById(projectId);
       const { transData, inputData } = data;
 
@@ -89,7 +92,7 @@ const Analysis = props => {
         data: transData,
         inputData,
         isReady: true,
-        activeNavbar: 'style',
+        activeNavbar,
         //@ts-ignore
         serviceConfig: activeAssets.services,
         // services,

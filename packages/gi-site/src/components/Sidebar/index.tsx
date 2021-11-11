@@ -2,6 +2,7 @@
 import { AppstoreOutlined } from '@ant-design/icons';
 import * as React from 'react';
 import useAssetsCenter from '../AssetsCenter/useHook';
+import { getSearchParams } from '../utils';
 import './index.less';
 interface Option {
   /** 导航图标 */
@@ -43,15 +44,15 @@ const Extra = () => {
 };
 
 const Sidebar: React.FunctionComponent<SidebarProps> = props => {
-  const { options, value, onChange } = props;
-  const url = new URL(window.location.href);
-  console.log('url', url);
+  const { options, onChange } = props;
+  const { searchParams, path } = getSearchParams(window.location);
+  const nav = searchParams.get('nav');
 
   return (
     <ul className="gi-sidebar">
       {options.map(opt => {
         const { icon, id, name } = opt;
-        const isActive = id === value;
+        const isActive = id === nav;
         const className = isActive ? 'sidebar-item active' : 'sidebar-item';
         const buttonType = isActive ? 'primary' : 'default';
 
@@ -59,6 +60,8 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
           <li
             key={id}
             onClick={() => {
+              searchParams.set('nav', id);
+              window.location.hash = `${path}?${searchParams.toString()}`;
               onChange(opt);
             }}
             className={className}
