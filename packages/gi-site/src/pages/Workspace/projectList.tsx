@@ -2,6 +2,8 @@ import { StarFilled, PlusOutlined, MoreOutlined, EditFilled, CopyFilled } from '
 import { Card, Col, Row, Dropdown, Menu } from 'antd';
 import * as React from 'react';
 import { useHistory } from '@alipay/bigfish';
+import { starProject } from '../../services';
+import { time } from './utils';
 
 interface ProjectListProps {
   data: any;
@@ -12,6 +14,7 @@ interface ProjectListProps {
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const { data, type, handleOpen, handleDelete } = props;
+
   const history = useHistory();
   const addButton = (
     <Col key={'new'} span={6}>
@@ -31,10 +34,10 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       >
         编辑项目
       </Menu.Item>
-      <Menu.Item>克隆项目</Menu.Item>
-      <Menu.Item>编辑项目信息</Menu.Item>
+      {/* <Menu.Item>克隆项目</Menu.Item> */}
+      <Menu.Item onClick={() => favorite(id)}>收藏</Menu.Item>
       <Menu.Item onClick={() => handleDelete(id)}>删除</Menu.Item>
-      <Menu.Item>分享</Menu.Item>
+      {/* <Menu.Item>分享</Menu.Item> */}
     </Menu>
   );
   const projectButton = <EditFilled className="edit icon-buuton" />;
@@ -44,6 +47,14 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       <CopyFilled className="copy icon-buuton" />
     </>
   );
+
+  const favorite = id => {
+    starProject({
+      assetId: id,
+      assetType: 6,
+    });
+  };
+
   return (
     <>
       <Row gutter={[16, 16]}>
@@ -60,7 +71,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                       history.push(`/workspace/${id}`);
                     }}
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*WpS1Qpk73uMAAAAAAAAAAAAAARQnAQ"
                   />
                 }
               >
@@ -74,7 +85,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                       </Dropdown>
                     </span>
                   </div>
-                  <span>{gmtCreate}</span>
+                  <span>{time(gmtCreate)}</span>
                 </div>
               </Card>
             </Col>

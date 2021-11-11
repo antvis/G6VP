@@ -3,7 +3,7 @@ import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, not
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import { EditableProTable } from '@ant-design/pro-table';
 import store, { StateType } from '../redux';
-import { updateProjectById } from '../../../services';
+import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
 import { useImmer } from 'use-immer';
 import { nodeColumns, edgeColumns, translist, GIDefaultTrans, getOptions } from './const';
@@ -65,6 +65,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             uid: file.uid,
             name: file.name,
             data: JSON.parse(fileData as string),
+            transfunc,
+            enable: true,
           },
         ];
         setInputData(renderData);
@@ -138,7 +140,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     );
   };
 
-  const updateData = () => {
+  const updateData = async () => {
     try {
       if (transData.nodes?.find(d => !d.id || !d.data)) {
         throw 'nodes缺少对应字段';
@@ -146,18 +148,18 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       if (transData.edges?.find(d => !d.source || !d.target || !d.data)) {
         throw 'edges缺少对应字段';
       }
-      notification.success({
-        message: `解析成功`,
-        description: `数据格式正确`,
-        placement: 'topLeft',
-      });
 
+      const result = await getProjectById(id);
+
+      const beforData = result.data.transData;
+      const mergeData = {
+        nodes: [...beforData.nodes, ...transData.nodes],
+        edges: [...beforData.edges, ...transData.edges],
+      };
       updateProjectById(id, {
-        // data: JSON.stringify(transData),
         data: JSON.stringify({
-          transData,
-          inputData,
-          transfunc,
+          transData: mergeData,
+          inputData: [...result.data.inputData, ...inputData],
         }),
       }).then(res => {
         dispatch({
@@ -165,6 +167,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           key: Math.random(),
         });
         handleClose();
+      });
+
+      notification.success({
+        message: `解析成功`,
+        description: `数据格式正确`,
+        placement: 'topLeft',
       });
     } catch (error) {
       notification.error({
