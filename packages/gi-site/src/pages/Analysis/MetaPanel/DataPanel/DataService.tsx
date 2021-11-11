@@ -9,6 +9,7 @@ import { createAssets, createNewProjectOnAntCode } from '../../../../services/as
 import { TYPE_MAPPING } from '../../../Market/Constants';
 interface DataServiceProps {
   projectId: string;
+  serviceLists: any[];
 }
 
 export interface FormValues {
@@ -18,7 +19,8 @@ export interface FormValues {
   content: string;
 }
 const DataService: React.FunctionComponent<DataServiceProps> = props => {
-  const { projectId } = props;
+  const { projectId, serviceLists } = props;
+  console.log(serviceLists, 'serviceLists');
   const [state, updateState] = useImmer<{
     visible: boolean;
     formValues: FormValues;
@@ -120,16 +122,21 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           </Button>
         }
       >
-        <ActionList
-          title={'GI_INIT_SERVICE'}
-          extra={
-            <Space>
-              <TableOutlined />
-              <EditOutlined />
-              <DeleteOutlined />
-            </Space>
-          }
-        ></ActionList>
+        {serviceLists.map(item => {
+          return (
+            <ActionList
+              key={item.id}
+              title={item.id}
+              extra={
+                <Space>
+                  <TableOutlined />
+                  <EditOutlined />
+                  <DeleteOutlined />
+                </Space>
+              }
+            ></ActionList>
+          );
+        })}
       </CollapseCard>
       <Modal title="新建数据服务" visible={visible} width={846} footer={null} onCancel={handleClose}>
         <Form
