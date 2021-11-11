@@ -1,10 +1,12 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { Button, Col, Drawer, Row, Tabs } from 'antd';
+import { Button, Col, Drawer, Row, Tabs, Avatar } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
 import { queryAssetList } from '../../services/assets';
 import useAssetsCenter from './useHook';
+import { RobotOutlined } from '@ant-design/icons';
+import  './index.less'
 
 const { TabPane } = Tabs;
 
@@ -73,6 +75,22 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     console.log('ref', ref);
   };
 
+  const cardContent = (
+    <div className="asset-detail">
+      <ul >
+        <li>作者：镜曦</li>
+        <li>作者：镜曦</li>
+        <li>作者：镜曦</li>
+      </ul>
+      <div className="asset-detail-buttom">
+        <span className="asset-favorite">Text</span>
+        <span className="asset-detail-link">Default</span>
+        <span className="asset-add">添加</span>
+
+      </div>
+    </div>
+  )
+
   return (
     <div>
       <Drawer
@@ -106,8 +124,15 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                       {assets[key].map(c => {
                         const { id: AssetId, name: AssetName } = c;
                         return (
-                          <Col key={AssetId}>
-                            <CheckCard title={AssetName} description="GI官方资产" value={AssetId} />
+                          <Col key={AssetId} >
+                            <CheckCard 
+                              className="assetsCardStyle" 
+                              title={AssetName}
+                              avatar={<Avatar style={{ backgroundColor: '#3056E3' }} icon={<RobotOutlined />} size={24} />} 
+                              description={cardContent} 
+                              value={AssetId}
+                           
+                            />
                           </Col>
                         );
                       })}
