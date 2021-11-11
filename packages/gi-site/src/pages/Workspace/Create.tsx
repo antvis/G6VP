@@ -1,13 +1,13 @@
-import { Button, Modal, Form, Input, Radio, message } from 'antd';
-import React, { useState } from 'react';
-import { EditableProTable } from '@ant-design/pro-table';
 import { useHistory } from '@alipay/bigfish';
+import { EditableProTable } from '@ant-design/pro-table';
+import { Button, Form, Input, message, Modal, Radio } from 'antd';
+import React, { useState } from 'react';
 import { addProject } from '../../services';
-import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
-import { getMockData } from './utils';
+import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import { defaultConfig } from './defaultConfig';
 import './index.less';
+import { getMockData } from './utils';
 
 interface IProps {
   visible: boolean;
@@ -105,7 +105,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
   const goAnalysis = async () => {
     const projectId = await onFinish();
-    history.push(`/workspace/${projectId}`);
+    history.push(`/workspace/${projectId}?nav=data`);
   };
 
   const goWorkspace = async () => {
