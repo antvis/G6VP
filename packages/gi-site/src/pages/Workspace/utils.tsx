@@ -42,3 +42,14 @@ export const getMockData = () => {
     edges: [],
   };
 };
+
+/**
+ *
+ * 时间戳转时间
+ *
+ */
+
+export const time = time => {
+  const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
+  return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
+};
