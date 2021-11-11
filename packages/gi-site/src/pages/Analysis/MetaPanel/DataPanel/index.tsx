@@ -7,13 +7,15 @@ import {
   TableOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import { useDispatch, Provider, useSelector } from 'react-redux';
-import { Button, Card, Collapse, Space, Modal, Radio, Table } from 'antd';
+import { Button, Collapse, Modal, Radio, Space, Table } from 'antd';
 import * as React from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { useImmer } from 'use-immer';
-import { nodeColumns, edgeColumns } from '../../uploadData/const';
-import store, { StateType } from '../../redux';
+import ActionList from '../../../../components/ActionList';
+import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
+import store, { StateType } from '../../redux';
+import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -27,12 +29,14 @@ const columnsData = {
 const ServiceHeader = props => {
   const { title } = props;
   return (
-    <Space>
+    <div>
       {title}
-      <TableOutlined />
-      <EditOutlined />
-      <DeleteOutlined />
-    </Space>
+      <Space>
+        <TableOutlined />
+        <EditOutlined />
+        <DeleteOutlined />
+      </Space>
+    </div>
   );
 };
 
@@ -193,43 +197,53 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   return (
     <>
       <div>
-        <Card
+        <CollapseCard
           title="数据源"
           extra={
-            <Button type="dashed" style={{ width: '100%' }} onClick={uploadData}>
-              <UploadOutlined /> 导入数据
+            <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
+              <UploadOutlined /> 导入
             </Button>
           }
         >
-          <Collapse defaultActiveKey={['1']}>
-            {inputData.map((d, i) => (
-              <Panel header={<Header title={d.name} uid={d.uid} enable={d.enable} />} key={i}>
-                Nodes:{d.data.nodes.length} Edges:{d.data.edges.length}
-              </Panel>
-            ))}
-          </Collapse>
-        </Card>
-        <Card
+          {inputData.map((d, i) => {
+            return (
+              <ActionList
+                key={i}
+                title={d.name}
+                extra={
+                  <Space>
+                    <TableOutlined onClick={() => viewTable(d.uid)} />
+                    {d.enable ? (
+                      <EyeOutlined onClick={() => invertVisiable(d.uid)} />
+                    ) : (
+                      <EyeInvisibleOutlined onClick={() => invertVisiable(d.uid)} />
+                    )}
+                    <DeleteOutlined onClick={() => deleteData(d.uid)} />
+                  </Space>
+                }
+              ></ActionList>
+            );
+          })}
+        </CollapseCard>
+        <CollapseCard
           title="数据服务"
           extra={
-            <Button
-              type="dashed"
-              style={{ width: '100%' }}
-              onClick={() => {
-                // window.open(`#/market/services/${projectId}`);
-                window.open(`#/market/services`);
-              }}
-            >
-              <PlusOutlined />
-              新建服务
+            <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
+              <PlusOutlined /> 新建
             </Button>
           }
         >
-          <Collapse>
-            <Panel header={<ServiceHeader title="GI_INIT_SERVICE" />} key="1"></Panel>
-          </Collapse>
-        </Card>
-        <Card title="网络分析"></Card>
+          <ActionList
+            title={'GI_INIT_SERVICE'}
+            extra={
+              <Space>
+                <TableOutlined />
+                <EditOutlined />
+                <DeleteOutlined />
+              </Space>
+            }
+          ></ActionList>
+        </CollapseCard>
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
         <div className={styles.fliterGroup}>
