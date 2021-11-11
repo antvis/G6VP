@@ -3,7 +3,6 @@ import {
   EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
-  PlusOutlined,
   TableOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
@@ -16,6 +15,7 @@ import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
 import store, { StateType } from '../../redux';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
+import DataService from './DataService';
 import styles from './index.less';
 
 const { Panel } = Collapse;
@@ -42,8 +42,23 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const dispatch = useDispatch();
-  const state = useSelector((state: StateType) => state);
-  const { data, inputData, id } = state;
+  const store = useSelector((state: StateType) => state);
+  const { data, inputData, id } = store;
+
+  //TODO:合并成一个immer对象
+  const [state, updateState] = useImmer({
+    isVisible: false,
+    initData: data,
+    tableType: 'nodes',
+    columns: nodeColumns,
+    tableData: data?.['nodes'].map((d, i) => {
+      return {
+        ...d,
+        key: i,
+      };
+    }),
+  });
+
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
   const [initData, setInitData] = useImmer(data);
@@ -225,25 +240,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
             );
           })}
         </CollapseCard>
-        <CollapseCard
-          title="数据服务"
-          extra={
-            <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
-              <PlusOutlined /> 新建
-            </Button>
-          }
-        >
-          <ActionList
-            title={'GI_INIT_SERVICE'}
-            extra={
-              <Space>
-                <TableOutlined />
-                <EditOutlined />
-                <DeleteOutlined />
-              </Space>
-            }
-          ></ActionList>
-        </CollapseCard>
+        <DataService projectId={id} />
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
         <div className={styles.fliterGroup}>
