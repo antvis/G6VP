@@ -2,7 +2,7 @@ import { useHistory, useRequest } from '@alipay/bigfish';
 import { Drawer, Modal, Tabs } from 'antd';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { getProjectList, removeProjectById } from '../../services';
+import { getProjectList, removeProjectById, getFavoriteList } from '../../services';
 import CreatePanel from './Create';
 import ProjectList from './projectList';
 import './index.less';
@@ -16,6 +16,11 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   React.useEffect(() => {
     getProjects().then(list => {
       setLists(list);
+    });
+
+    getFavoriteList().then(list => {
+      // setLists(list);
+      console.log(list);
     });
   }, []);
 
@@ -61,7 +66,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
             <ProjectList data={lists} type="collect" />
           </TabPane>
           <TabPane tab={'行业案例'} key={'case'}>
-            <ProjectList data={lists} type="case" />
+            <ProjectList data={[]} type="case" />
           </TabPane>
         </Tabs>
       </div>
