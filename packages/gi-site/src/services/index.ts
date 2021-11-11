@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { isMock, SERVICE_URL_PREFIX } from './const';
+import { isMock, SERVICE_URL_PREFIX, ASSET_TYPE } from './const';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -48,9 +48,9 @@ export const getProjectById = async (id: string) => {
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/id`, {
     method: 'post',
-    data:{
+    data: {
       id,
-    }
+    },
   });
   if (response.success && response.data?.length > 0) {
     const res = response.data[0];
@@ -146,4 +146,36 @@ export const addProject = async (param: any) => {
   if (response.success && response.data?.insertId) {
     return response.data?.insertId;
   }
+};
+
+/**
+ * 收藏项目
+ * @returns
+ */
+export const starProject = async (param: any) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/favorite/add`, {
+    method: 'post',
+    data: param,
+  });
+
+  if (response.success) {
+    return response.data;
+  }
+  return [];
+};
+
+/**
+ * 收藏项目列表
+ * @returns
+ */
+export const getFavoriteList = async () => {
+  const response = await request(`${SERVICE_URL_PREFIX}/favorite/get`, {
+    method: 'post',
+    data: { assetType: ASSET_TYPE.PROJECT },
+  });
+
+  if (response.success) {
+    return response.data;
+  }
+  return [];
 };
