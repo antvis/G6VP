@@ -19,8 +19,6 @@ interface CreateAssetParams {
   description?: string;
   type: number;
   meta?: string;
-  ownerNickname: string;
-  ownerId: string;
   branchName: string;
   projectId?: string;
   sourceCode?: string;
