@@ -6,6 +6,8 @@ import CanvasSetting from './CanvasSetting';
 import ContextMenu from './ContextMenu';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
+// import ContextMenu from './ContextMenu';
+import GremlinQuery from './GremlinQuery';
 import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
@@ -18,7 +20,6 @@ import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
-// import ContextMenu from './ContextMenu';
 
 export {
   Timeline,
@@ -36,6 +37,7 @@ export {
   ContextMenu,
   Tooltip,
   NodeImportance,
+  GremlinQuery,
 };
 
 // /**
