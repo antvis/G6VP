@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Modal, Form, Input, message, Radio, Select } from 'antd';
 import { createAssets, createNewProjectOnAntCode, getFileSourceCode } from '../../services/assets';
 import { EditableProTable } from '@ant-design/pro-table';
 import moment from 'moment';
 import { useImmer } from 'use-immer';
 import { TYPE_MAPPING } from './Constants';
+import useUserInfo from '../../hooks/useUserInfo';
+
 interface IProps {
   visible: boolean;
   close: () => void;
@@ -14,22 +16,36 @@ interface IProps {
 
 const { Option } = Select;
 
-const defaultData = [
-  {
-    name: '聚则',
-    useId: 1,
-    state: 'master',
-  },
-];
+// let defaultData = [];
 
 const CreateAssets: React.FC<IProps> = ({ visible, close, history, projectId }) => {
   const [form] = Form.useForm();
 
   const [state, updateState] = useImmer({
     authVisible: false,
-    dataSource: defaultData,
-    editableKeys: defaultData.map(item => item.id),
+    dataSource: [],
+    editableKeys: [],
   });
+
+  const userInfo = useUserInfo();
+
+  useEffect(() => {
+    if (userInfo && userInfo.outUserNo) {
+      const { nickName, realName, outUserNo } = userInfo;
+
+      updateState(draft => {
+        draft.dataSource = [
+          {
+            name: nickName || realName,
+            userId: outUserNo,
+            state: 'master',
+          },
+        ];
+
+        draft.editableKeys = [outUserNo];
+      });
+    }
+  }, [userInfo]);
 
   const { authVisible, dataSource, editableKeys } = state;
 
@@ -123,8 +139,6 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, projectId }) 
       description,
       version: newBranchName,
       // 这两个字段需要从登陆信息中获取，目前没有接入登陆
-      ownerNickname: '聚则',
-      ownerId: '195094',
       branchName: 'master',
       projectId,
       members: JSON.stringify(dataSource),
