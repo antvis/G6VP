@@ -89,7 +89,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
     const dbResponse = await createAssets({
       displayName: 'GI 初始化服务',
-      name: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
+      name: `GI_SERVICE_INTIAL_GRAPH`,
       type: 3, //数据服务
       description: 'GI 初始化服务',
       version: '0.0.1',
