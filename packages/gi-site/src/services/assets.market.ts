@@ -146,7 +146,7 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     return {
       id: serviceId,
       content: sourceCode?.split('export default')[1] || ``,
-      mode: 'mock',
+      mode: 'MOCK',
       name: displayName,
       others: service,
     };
