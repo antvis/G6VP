@@ -17,6 +17,7 @@
     "@ant-design/icons": "^4.6.2",
     "@antv/l7": "^2.5.25",
     "@antv/l7-maps": "^2.5.25",
+    "ace-gremlin-editor": "^0.0.13-beta.1",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "react-force-graph-3d": "^1.21.10"
