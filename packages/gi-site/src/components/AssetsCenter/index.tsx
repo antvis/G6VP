@@ -48,6 +48,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const ASSET_LIST = await queryAssetList({
         projectId: id,
       });
+      console.log('ASSET_LIST', ASSET_LIST);
       setAssets({ ...ASSET_LIST } as any);
       ref = { ...activeAssetsKeys };
     })();
@@ -72,7 +73,6 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   );
   const handleChange = (key, val) => {
     ref[key] = val;
-    console.log('ref', ref);
   };
 
   const cardContent = (
@@ -83,9 +83,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         <li>作者：镜曦</li>
       </ul>
       <div className="asset-detail-buttom">
-        <span className="asset-favorite">Text</span>
-        <span className="asset-detail-link">Default</span>
-        <span className="asset-add">添加</span>
+        <div className="asset-favorite">Text</div>
+        <div className="asset-detail-link">查看详情</div>
+        <div className="asset-add">添加</div>
 
       </div>
     </div>
@@ -128,7 +128,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                             <CheckCard 
                               className="assetsCardStyle" 
                               title={AssetName}
-                              avatar={<Avatar style={{ backgroundColor: '#3056E3' }} icon={<RobotOutlined />} size={24} />} 
+                              avatar={<Avatar style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }} icon={<RobotOutlined />} size={24} />} 
                               description={cardContent} 
                               value={AssetId}
                            
