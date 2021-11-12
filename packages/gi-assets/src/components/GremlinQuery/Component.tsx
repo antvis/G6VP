@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
-import { Row, Col, Divider, Button } from 'antd';
-import classNames from 'classnames';
-import GremlinEditor from 'ace-gremlin-editor';
 import { GraphinContext } from '@antv/graphin';
+import GremlinEditor from 'ace-gremlin-editor';
+import { Button, Col, Divider, Row } from 'antd';
+import classNames from 'classnames';
+import React, { useState } from 'react';
+//@ts-ignore
 import styles from './index.less';
 
-interface IGremlinQueryProps {
+export interface IGremlinQueryProps {
   visible: boolean;
   close: () => void;
   initValue?: string;
@@ -61,6 +62,9 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       style={{
         visibility: visible ? 'visible' : 'hidden',
         height: 'fit-content',
+        position: 'absolute',
+        top: '20px',
+        left: '20px',
       }}
     >
       <Row className={classNames(styles.header, 'handle')}>

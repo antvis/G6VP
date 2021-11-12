@@ -17,7 +17,7 @@ const registerMeta = context => {
     },
     visible: {
       name: '是否显示',
-      type: '',
+      type: 'switch',
       default: false,
     },
     initValue: {
@@ -27,12 +27,15 @@ const registerMeta = context => {
     },
     height: {
       name: '高度',
-      type: 'input',
       default: 200,
+      type: 'stepper',
+      step: 1,
+      min: 0,
+      max: 15,
     },
     showGutter: {
       name: '是否显示行号',
-      type: '',
+      type: 'switch',
       default: false,
     },
   };
