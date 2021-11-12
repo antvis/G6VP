@@ -29,7 +29,7 @@ const serviceTypes = [
   },
   {
     label: 'Mock',
-    value: 'mock',
+    value: 'MOCK',
   },
 ];
 
@@ -41,7 +41,7 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
   const handleSave = () => {
     const id = serviceIDRef.state.value;
     const name = serviceNameRef.state.value;
-    const mode = 'mock'; //serviceModeRef.target.value;
+    const mode = 'MOCK'; //serviceModeRef.target.value;
     const monacoModel = monacoRef.editor.getModel();
     const content = monacoModel.getValue();
 
@@ -92,7 +92,7 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
         />
         <br />
         服务实现：
-        {mode === 'mock' && (
+        {mode === 'MOCK' && (
           <MonacoEditor
             ref={node => {
               monacoRef = node;

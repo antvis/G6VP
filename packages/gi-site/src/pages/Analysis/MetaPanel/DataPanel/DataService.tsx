@@ -1,6 +1,6 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { DeleteOutlined, EditOutlined, PlusOutlined, TableOutlined } from '@ant-design/icons';
-import { Avatar, Button, Form, Input, message, Modal, Space } from 'antd';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Avatar, Button, Form, Input, message, Modal, Space, Tooltip } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
@@ -28,8 +28,8 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
   }>({
     visible: false,
     formValues: {
-      id: 'GI_SERVICE_X1',
-      displayName: 'GI_SERVICE_X1服务',
+      id: '',
+      displayName: '',
       mode: 'MOCK',
       content: '',
     },
@@ -44,8 +44,9 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
     // 数据服务不需要在 antcode 上创建仓库
     // step1: 在 antcode 上创建仓库
+    const projectName = `${projectId}_${id}`;
     const createResult = await createNewProjectOnAntCode({
-      projectName: `GI_SERVICES_ASSETS_${id}`,
+      projectName,
       description: displayName,
       type: TYPE_MAPPING['services'],
     });
@@ -80,7 +81,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
     // step3: 跳转到资产编辑页面
     window.open(
-      `#/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${id}&branch=master&type=${TYPE_MAPPING['services']}`,
+      `#/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${projectName}&branch=master&type=${TYPE_MAPPING['services']}`,
     );
   };
   const handleSubmit = async values => {
@@ -110,7 +111,26 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
       });
     }
   };
-  console.log(formValues, 'formValues');
+  const handleEdit = item => {
+    console.log('item', item);
+    if (item.mode === 'MOCK') {
+      const { others } = item;
+      window.open(
+        `#/market/asserts/${others.id}?assetId=${others.id}&project=${others.projectId}_${others.name}&branch=master&type=${TYPE_MAPPING['services']}`,
+      );
+    } else {
+      updateState(draft => {
+        draft.formValues = {
+          id: item.id,
+          mode: item.mode,
+          displayName: item.name,
+          content: item.content,
+        };
+        draft.modalStatus = 'EDIT';
+        draft.visible = true;
+      });
+    }
+  };
 
   return (
     <div>
@@ -129,16 +149,29 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
               title={item.id}
               extra={
                 <Space>
-                  <TableOutlined />
-                  <EditOutlined />
-                  <DeleteOutlined />
+                  <Tooltip placement="top" title={'编辑服务'}>
+                    <EditOutlined
+                      onClick={() => {
+                        handleEdit(item);
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip placement="top" title={'删除服务'}>
+                    <DeleteOutlined disabled={item.id === 'GI_SERVICE_INTIAL_GRAPH'} />
+                  </Tooltip>
                 </Space>
               }
             ></ActionList>
           );
         })}
       </CollapseCard>
-      <Modal title="新建数据服务" visible={visible} width={846} footer={null} onCancel={handleClose}>
+      <Modal
+        title={state.modalStatus === 'CREAT' ? '新建数据服务' : '编辑数据服务'}
+        visible={visible}
+        width={846}
+        footer={null}
+        onCancel={handleClose}
+      >
         <Form
           form={form}
           onFinish={handleSubmit}
@@ -180,7 +213,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           </Form.Item>
           {formValues.mode === 'API' && (
             <Form.Item name="value" label="API地址">
-              <Input placeholder="例如：下钻服务接口" />
+              <Input placeholder="https://storehouse/api/v3/xxx" />
             </Form.Item>
           )}
           <Form.Item>

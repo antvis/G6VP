@@ -15,7 +15,7 @@ const defaultTransFn = (data, params) => {
 const getServicesByAssets = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
-    if (mode === 'mock') {
+    if (mode === 'MOCK') {
       const fn = (params: any) => {
         return new Promise(async resolve => {
           try {
