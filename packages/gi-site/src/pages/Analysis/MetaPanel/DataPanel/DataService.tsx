@@ -44,8 +44,9 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
     // 数据服务不需要在 antcode 上创建仓库
     // step1: 在 antcode 上创建仓库
+    const projectName = `GI_SERVICES_ASSETS_${id}`;
     const createResult = await createNewProjectOnAntCode({
-      projectName: `GI_SERVICES_ASSETS_${id}`,
+      projectName,
       description: displayName,
       type: TYPE_MAPPING['services'],
     });
@@ -80,7 +81,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
     // step3: 跳转到资产编辑页面
     window.open(
-      `#/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${id}&branch=master&type=${TYPE_MAPPING['services']}`,
+      `#/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${projectName}&branch=master&type=${TYPE_MAPPING['services']}`,
     );
   };
   const handleSubmit = async values => {
@@ -110,6 +111,9 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
       });
     }
   };
+  const handleEdit = item => {
+    console.log('item', item);
+  };
   console.log(formValues, 'formValues');
 
   return (
@@ -130,7 +134,11 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
               extra={
                 <Space>
                   <TableOutlined />
-                  <EditOutlined />
+                  <EditOutlined
+                    onClick={() => {
+                      handleEdit(item);
+                    }}
+                  />
                   <DeleteOutlined />
                 </Space>
               }

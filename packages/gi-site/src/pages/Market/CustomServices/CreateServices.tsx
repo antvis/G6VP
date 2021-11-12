@@ -20,7 +20,7 @@ const selectBefore = (
 
 const CreateServicesAssets: React.FC<IProps> = ({ visible, close, history, type, projectId }) => {
   const [form] = Form.useForm();
-  const [mode, setMode] = React.useState('mock');
+  const [mode, setMode] = React.useState('MOCK');
 
   const handleCreate = async () => {
     console.log('value', form.getFieldsValue());
@@ -96,7 +96,7 @@ const CreateServicesAssets: React.FC<IProps> = ({ visible, close, history, type,
       <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="horizontal">
         <Form.Item label="服务类型" name="mode">
           <Radio.Group onChange={onChange} value={mode}>
-            <Radio value={'mock'}>MOCK</Radio>
+            <Radio value={'MOCK'}>MOCK</Radio>
             <Radio value={'api'}>API</Radio>
           </Radio.Group>
         </Form.Item>
@@ -106,7 +106,7 @@ const CreateServicesAssets: React.FC<IProps> = ({ visible, close, history, type,
         <Form.Item label="资产ID" name="name">
           <Input />
         </Form.Item>
-        {mode == 'mock' && (
+        {mode == 'MOCK' && (
           <>
             <Form.Item label="资产描述" name="description">
               <Input.TextArea rows={4} />
