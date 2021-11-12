@@ -311,3 +311,18 @@ export const buildAssetWithTask = async (buildParams: BuildParams) => {
 
   return response;
 };
+
+/**
+ * 通过资产 ID 删除资产
+ * @param assetId 资产 ID
+ */
+export const deleteAssetById = async (assetId: number) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/delete`, {
+    method: 'post',
+    data: {
+      assetId
+    }
+  })
+
+  return response
+}
