@@ -300,6 +300,37 @@ const ComponentMarket = props => {
           type: 'demo',
         };
       });
+    } else if (assetType === '2') {
+      // 布局资产
+      const demoStyleFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/demo.module.less',
+      });
+
+      const layoutFile = await getFileSourceCode({
+        projectName,
+        branchName,
+        path: 'src/registerLayout.ts',
+      });
+
+      initSourceCode = {
+        'demo.tsx': demoFile.data,
+        'index.ts': indexFile.data,
+        'package.json': packageFile.data,
+        'registerMeta.ts': metaFile.data,
+        'demo.module.less': demoStyleFile.data,
+        'registerLayout.ts': layoutFile.data
+      }
+
+      const previewCodeModules = fileMapToModules(initSourceCode);
+      setState(draft => {
+        draft.sourceCode = initSourceCode;
+        draft.previewCode = {
+          modules: previewCodeModules,
+          type: 'demo',
+        };
+      });
     }
 
   };
@@ -309,7 +340,7 @@ const ComponentMarket = props => {
     // 查询 preview 所需要的 code
 
     // 当为组件时初始化源码
-    if (assetType === '1' || assetType === '4') {
+    if (assetType === '1' || assetType === '4' || assetType === '2') {
       queryInitSourceCode();
     }
   }, []);
@@ -395,7 +426,7 @@ const ComponentMarket = props => {
   }, [currentSelectAsset]);
 
   useEffect(() => {
-    if (state.sourceCode && (assetType === '1' || assetType === '4')) {
+    if (state.sourceCode && (assetType === '1' || assetType === '4' || assetType === '2')) {
       const previewCodeModules = fileMapToModules(state.sourceCode);
       setState(draft => {
         draft.sourceCode = state.sourceCode;
@@ -483,6 +514,8 @@ const ComponentMarket = props => {
     defaultMode = '/src/demo.tsx'
   } else if (assetType === '3') {
     defaultMode = '/index.ts'
+  } else if (assetType === '2') {
+    defaultMode = '/src/demo.tsx'
   }
 
   return (
