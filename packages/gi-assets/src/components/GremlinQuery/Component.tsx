@@ -1,31 +1,33 @@
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, SubnodeOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import GremlinEditor from 'ace-gremlin-editor';
-import { Button, Col, Divider, Row } from 'antd';
+import { Button, Col, Divider, Row, Tooltip } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
-//@ts-ignore
-import styles from './index.less';
+import ReactDOM from 'react-dom';
+import './index.less';
 
 export interface IGremlinQueryProps {
   visible: boolean;
-  close: () => void;
+  onClose: () => void;
   initValue?: string;
   theme?: 'dark' | 'light';
   height?: number;
   showGutter?: boolean;
   serviceId: string;
+  style?: React.CSSProperties;
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   visible,
-  close,
+  onClose,
   initValue = '',
   theme = 'dark',
   height = 220,
   showGutter = false,
   serviceId,
+  style,
 }) => {
+  console.log('style', style);
   const { services, dispatch } = GraphinContext as any;
 
   const [editorValue, setEditorValue] = useState(initValue || '');
@@ -58,60 +60,125 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
   return (
     <div
-      className={styles.gremlineQueryPanel}
+      className={'gremlineQueryPanel'}
       style={{
         visibility: visible ? 'visible' : 'hidden',
         height: 'fit-content',
         position: 'absolute',
-        top: '20px',
-        left: '20px',
+        ...style,
       }}
     >
-      <Row className={classNames(styles.header, 'handle')}>
-        <Col span={22} className={styles.title}>
+      <Row className={classNames('header', 'handle')}>
+        <Col span={22} className={'title'}>
           Gremlin 查询
         </Col>
         <Col span={2}>
-          <span className={styles.collapseIcon} onClick={close}>
+          <span className={'collapseIcon'} onClick={onClose}>
             <CloseOutlined />
           </span>
         </Col>
       </Row>
       <div
-        className={styles.contentContainer}
+        className={'contentContainer'}
         style={{
           display: 'block',
           visibility: visible ? 'visible' : 'hidden',
         }}
       >
-        <div className={styles.blockContainer}>
+        <div className={'blockContainer'}>
           <div style={{ marginBottom: 8 }}>请输入 Gremlin 语句：</div>
           <div style={{ border: '1px solid var(--main-editor-border-color)', borderRadius: '2px' }}>
-            <GremlinEditor
+            {/* <GremlinEditor
               theme={theme}
               initValue={editorValue}
               gremlinId="query-analysis"
               height={height}
               showGutter={showGutter}
               onValueChange={value => handleChangeEditorValue(value)}
-            />
+            /> */}
           </div>
         </div>
       </div>
       <div
-        className={styles.buttonContainer}
+        className={'buttonContainer'}
         style={{
           display: 'block',
           visibility: visible ? 'visible' : 'hidden',
         }}
       >
-        <Divider className={styles.divider} />
-        <Button className={styles.queryButton} loading={btnLoading} type="primary" onClick={handleClickQuery}>
+        <Divider className={'divider'} />
+        <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
           查询
         </Button>
       </div>
     </div>
   );
 };
+export interface GIContianerProps {
+  color: string;
+  hasDivider: boolean;
+  placement: 'LT' | 'RT' | 'LB' | 'RB';
+  offset: [number, number];
+}
+const getPositionStyles = (placement, offset: number[]) => {
+  const styles: { [key: string]: string } = {
+    position: 'absolute',
+  };
+  const [offsetX, offsetY] = offset;
+  if (placement === 'RT') {
+    styles.right = `${offsetX}px`;
+    styles.top = `${offsetY}px`;
+  }
+  if (placement === 'LT') {
+    styles.left = `${offsetX}px`;
+    styles.top = `${offsetY}px`;
+  }
+  if (placement === 'LB') {
+    styles.left = `${offsetX}px`;
+    styles.bottom = `${offsetY}px`;
+  }
+  if (placement === 'RB') {
+    styles.right = `${offsetX}px`;
+    styles.bottom = `${offsetY}px`;
+  }
+  return styles;
+};
 
-export default GremlinQueryPanel;
+const WrapGIContainer = Component => {
+  return (props: IGremlinQueryProps & GIContianerProps) => {
+    const { visible: defaultVisible, color, hasDivider, placement, offset } = props;
+    const [visible, setVisible] = React.useState(defaultVisible);
+
+    React.useEffect(() => {
+      setVisible(defaultVisible);
+    }, [defaultVisible]);
+    const onClick = () => {
+      setVisible(!visible);
+    };
+    const onClose = () => {
+      setVisible(false);
+    };
+    const styles = getPositionStyles(placement, offset);
+
+    return (
+      <>
+        <div onClick={onClick}>
+          <Tooltip title="Gremlin 查询" color={color} key={color}>
+            <Button type="text" icon={<SubnodeOutlined />}>
+              Gremlin 查询
+            </Button>
+          </Tooltip>
+          {hasDivider && <Divider type="vertical" />}
+        </div>
+
+        {ReactDOM.createPortal(
+          <Component {...props} visible={visible} onClose={onClose} style={styles} />,
+          //@ts-ignore
+          document.getElementById('graphin-container'),
+        )}
+      </>
+    );
+  };
+};
+
+export default WrapGIContainer(GremlinQueryPanel);
