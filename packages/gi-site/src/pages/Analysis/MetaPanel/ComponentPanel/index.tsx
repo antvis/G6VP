@@ -1,9 +1,11 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import Offset from '../../../../components/DataVGui/Offset';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 const extensions = {
   TagsSelect,
+  Offset,
 };
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
