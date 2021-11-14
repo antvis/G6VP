@@ -1,7 +1,7 @@
 import { BrowserFSFileType } from '@alipay/alex';
 import * as giAssets from '@alipay/gi-assets';
 import request from 'umi-request';
-import { isMock, SERVICE_URL_PREFIX } from './const';
+import { isMock, SERVICE_URL_PREFIX, ASSET_TYPE} from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -121,28 +121,39 @@ export const queryActiveAssetList = async (param: ActiveAssetParams[]) => {
  */
 export const queryAssetList = async (param?: { name?: string; limit?: number; projectId: string }) => {
   //TODO 等待接口Ready，目前先从giAssets离线包中构造
-  const getListByGIAssets = () => {
-    const components = Object.keys(giAssets.components).map(key => {
-      return {
-        type: 1, //组件
-        id: key,
-        ...giAssets.components[key]?.info,
-      };
+  const getListByGIAssets = (res) => {
+    let components = [], elements = [], layouts = [];
+    res.forEach(item => {
+      if(item.type === ASSET_TYPE.COMPONENT){
+        components.push(item);
+      }else if(item.type = ASSET_TYPE.NODE || item.type === ASSET_TYPE.EDGE){
+        elements.push(item);
+      }else if(item.type = ASSET_TYPE.LAYOUT){
+        layouts.push(item);
+      }
     });
-    const elements = Object.keys(giAssets.elements).map(key => {
-      return {
-        type: 2, //元素
-        id: key,
-        ...giAssets.elements[key]?.info,
-      };
-    });
-    const layouts = Object.keys(giAssets.layouts).map(key => {
-      return {
-        type: 6, //元素
-        id: key,
-        ...giAssets.layouts[key]?.info,
-      };
-    });
+
+    // components = Object.keys(giAssets.components).map(key => {
+    //   return {
+    //     type: 1, //组件
+    //     id: key,
+    //     ...giAssets.components[key]?.info,
+    //   };
+    // });
+    // elements = Object.keys(giAssets.elements).map(key => {
+    //   return {
+    //     type: 2, //元素
+    //     id: key,
+    //     ...giAssets.elements[key]?.info,
+    //   };
+    // });
+    // layouts = Object.keys(giAssets.layouts).map(key => {
+    //   return {
+    //     type: 6, //元素
+    //     id: key,
+    //     ...giAssets.layouts[key]?.info,
+    //   };
+    // });
     return { components, elements, layouts };
   };
 
@@ -156,7 +167,7 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
   let services = [];
   if (param && param.projectId) {
     services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
-    const { components, elements, layouts } = getListByGIAssets();
+    const { components, elements, layouts } = getListByGIAssets(res.data);
     return { components, services, elements, layouts };
   }
 

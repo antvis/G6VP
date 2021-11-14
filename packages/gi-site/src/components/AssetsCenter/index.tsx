@@ -1,6 +1,7 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { Button, Col, Drawer, Row, Tabs, Avatar } from 'antd';
+import { Button, Col, Drawer, Row, Tabs, Avatar, Typography } from 'antd';
 import React from 'react';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
 import { queryAssetList } from '../../services/assets';
@@ -9,6 +10,7 @@ import { RobotOutlined } from '@ant-design/icons';
 import  './index.less'
 
 const { TabPane } = Tabs;
+const { Paragraph } = Typography;
 
 interface AssetsCenterProps {}
 const options = [
@@ -75,21 +77,21 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     ref[key] = val;
   };
 
-  const cardContent = (
-    <div className="asset-detail">
-      <ul >
-        <li>作者：镜曦</li>
-        <li>作者：镜曦</li>
-        <li>作者：镜曦</li>
-      </ul>
-      <div className="asset-detail-buttom">
-        <div className="asset-favorite">Text</div>
-        <div className="asset-detail-link">查看详情</div>
-        <div className="asset-add">添加</div>
-
+  const cardContent = (item) =>{
+    const {version, ownerNickname, gmtModified,} = item;
+    return (
+      <div className="asset-detail">
+        <ul >
+          <li>作者：{ownerNickname}</li>
+          <li>版本：{version}</li>
+          <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li>
+        </ul>
+        <div className="asset-detail-buttom">
+          {/* <div className="asset-favorite">Text</div> */}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <div>
@@ -121,17 +123,16 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                         { xs: 8, sm: 16, md: 16, lg: 16 },
                       ]}
                     >
-                      {assets[key].map(c => {
-                        const { id: AssetId, name: AssetName } = c;
+                      {assets[key].map(item => {
+                        const { id: AssetId, name: AssetName } = item;
                         return (
                           <Col key={AssetId} >
                             <CheckCard 
                               className="assetsCardStyle" 
                               title={AssetName}
                               avatar={<Avatar style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }} icon={<RobotOutlined />} size={24} />} 
-                              description={cardContent} 
+                              description={cardContent(item)} 
                               value={AssetId}
-                           
                             />
                           </Col>
                         );

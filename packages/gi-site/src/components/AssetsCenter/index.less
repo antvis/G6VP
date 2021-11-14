@@ -27,7 +27,7 @@
     padding: 12px 8px;
     height: 100%;
     .tech-checkcard-detail{
-      overflow:unset;
+      // overflow:unset;
       .tech-checkcard-description{
         height: 100%;
         .asset-detail{
@@ -46,6 +46,12 @@
               list-style: none;
               line-height: 16px;
               padding: 2px 0;
+              display: inline-block;
+              width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              vertical-align: sub;
             }
           }
           .asset-detail-buttom{
