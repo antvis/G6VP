@@ -140,7 +140,6 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
 
   const services = ASSET_LIST.services.map(service => {
     const { name, sourceCode, displayName } = service;
-    console.log('%c service!!', service);
     const serviceId = name.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1 ? 'GI_SERVICE_INTIAL_GRAPH' : name;
 
     return {

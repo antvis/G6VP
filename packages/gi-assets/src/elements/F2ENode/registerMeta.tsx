@@ -118,7 +118,7 @@ const registerMeta = context => {
           default: true,
           statusText: true,
         },
-        keyLabel: {
+        key: {
           name: '映射字段',
           type: 'select',
           useFont: true,
