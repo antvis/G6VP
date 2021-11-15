@@ -41,14 +41,17 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   };
 
   const handleDelete = id => {
-    Modal.warning({
+    Modal.confirm({
       title: '确定删除',
       content: '是否删除该项目？',
+      cancelText: '取消',
+      okText: '确定',
       onOk() {
         const items = lists.filter(d => d.id !== id);
         setLists(items);
         removeProjectById(id);
       },
+      onCancel() {},
     });
   };
 

@@ -46,22 +46,6 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     return getProjectById(projectId);
   });
 
-  const handleClose = () => {
-    updateProjectById(projectId, {
-      serviceConfig: JSON.stringify(servicesRef.current.options),
-    }).then(res => {
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
-      });
-      setVisible(false);
-    });
-  };
-
-  const handleOpen = () => {
-    setVisible(true);
-  };
-
   const handleOutClose = () => {
     setOutVisible(false);
   };
