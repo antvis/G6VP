@@ -174,28 +174,29 @@ const Analysis = props => {
       newData: newGraphData,
     };
   };
-  React.useLayoutEffect(() => {
-    const { config, projectConfig, data } = state;
-    console.log('original cfgs', config);
-    if (isReady && data && enableAI) {
-      const { newData, newConfig } = getRecommenderCfg({
-        data,
-        config,
-      });
-      dispatch({
-        type: 'update:config',
-        id: projectId,
-        config: newConfig,
-        data: newData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
-      });
-    } else if (!enableAI) {
-      dispatch({
-        type: 'update:config',
-        id: projectId,
-        config: projectConfig,
-      });
-    }
-  }, [projectId, isReady, enableAI]);
+
+  // React.useLayoutEffect(() => {
+  //   const { config, projectConfig, data } = state;
+  //   console.log('original cfgs', config);
+  //   if (isReady && data && enableAI) {
+  //     const { newData, newConfig } = getRecommenderCfg({
+  //       data,
+  //       config,
+  //     });
+  //     dispatch({
+  //       type: 'update:config',
+  //       id: projectId,
+  //       config: newConfig,
+  //       data: newData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+  //     });
+  //   } else if (!enableAI) {
+  //     dispatch({
+  //       type: 'update:config',
+  //       id: projectId,
+  //       config: projectConfig,
+  //     });
+  //   }
+  // }, [projectId, isReady, enableAI]);
 
   // React.useEffect(() => {
   //   window.addEventListener('beforeunload', ev => {
