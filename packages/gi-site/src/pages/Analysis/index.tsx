@@ -112,6 +112,7 @@ const Analysis = props => {
     console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
     (async () => {
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
       dispatch({
         type: 'FREE',
