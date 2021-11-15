@@ -6,7 +6,7 @@ export const Meta = {
   visible: {
     name: '默认显示',
     type: 'switch',
-    default: true,
+    default: false,
   },
   placement: {
     name: '组件位置',
@@ -59,7 +59,7 @@ export const Meta = {
   },
 };
 const defaultProps = {
-  visible: true,
+  visible: false,
   placement: 'LT',
   offset: [0, 0],
   hasDivider: false,
@@ -98,7 +98,13 @@ const getPositionStyles = (placement, offset: number[]) => {
 
 const WrapContainer = (Component, options) => {
   return ComponentProps => {
-    const { visible: defaultVisible, color, hasDivider, placement, offset } = {
+    const {
+      visible: defaultVisible,
+      color,
+      hasDivider,
+      placement,
+      offset,
+    } = {
       ...defaultProps,
       ...ComponentProps,
     } as any;

@@ -9,6 +9,7 @@ const info = {
   category: 'components',
   desc: '放大缩小',
   cover: 'http://xxxx.jpg',
+  type: 'GI_CONTAINER_INDEX',
 };
 
 export default {
