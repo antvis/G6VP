@@ -3,6 +3,7 @@ import { GraphinContext } from '@antv/graphin';
 import { Button, Col, Divider, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import GremlinEditor from 'ace-gremlin-editor';
 import WrapContainer from '../WrapContainer';
 import './index.less';
 
@@ -88,14 +89,14 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
         <div className={'blockContainer'}>
           <div style={{ marginBottom: 8 }}>请输入 Gremlin 语句：</div>
           <div style={{ border: '1px solid var(--main-editor-border-color)', borderRadius: '2px' }}>
-            {/* <GremlinEditor
+            <GremlinEditor
               theme={theme}
               initValue={editorValue}
               gremlinId="query-analysis"
               height={height}
               showGutter={showGutter}
               onValueChange={value => handleChangeEditorValue(value)}
-            /> */}
+            />
           </div>
         </div>
       </div>
