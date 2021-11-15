@@ -27,6 +27,17 @@ interface NodeStylePanelProps {
   dispatch: any;
 }
 
+const cache = {};
+
+const getCacheValues = (object, key) => {
+  debugger;
+  if (!cache[key]) {
+    cache[key] = { id: key, props: {} };
+    return object[key];
+  }
+  return cache[key];
+};
+
 const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { data, elements, config = { node: { props: {} } }, dispatch } = props;
   const { node: nodeConfig } = config;
@@ -41,9 +52,12 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const element = elements[elementId];
   const { configObj } = element?.meta;
   const valueObj = extractDefault({ config: configObj, value: nodeConfig.props });
+  /** 缓存数据 */
+  cache[elementId] = { id: elementId, props: { ...valueObj } };
 
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
+    cache[elementId].props = rootValue;
     dispatch({
       type: 'update:config:node',
       ...element,
@@ -57,9 +71,11 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         elementId: value,
       };
     });
+    const values = getCacheValues(elements, value);
+
     dispatch({
       type: 'update:config:node',
-      ...elements[value],
+      ...values,
     });
   };
   const elementOptions = Object.values(elements) as any[];
