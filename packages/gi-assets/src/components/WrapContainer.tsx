@@ -98,13 +98,10 @@ const getPositionStyles = (placement, offset: number[]) => {
 
 const WrapContainer = (Component, options) => {
   return ComponentProps => {
-    const {
-      visible: defaultVisible,
-      color,
-      hasDivider,
-      placement,
-      offset,
-    } = { ...defaultProps, ...ComponentProps } as any;
+    const { visible: defaultVisible, color, hasDivider, placement, offset } = {
+      ...defaultProps,
+      ...ComponentProps,
+    } as any;
     const [visible, setVisible] = React.useState(defaultVisible);
 
     React.useEffect(() => {
@@ -129,11 +126,12 @@ const WrapContainer = (Component, options) => {
           {hasDivider && <Divider type="vertical" />}
         </div>
 
-        {ReactDOM.createPortal(
-          <Component {...ComponentProps} visible={visible} onClose={onClose} style={styles} />,
-          //@ts-ignore
-          document.getElementById('graphin-container'),
-        )}
+        {visible &&
+          ReactDOM.createPortal(
+            <Component {...ComponentProps} visible={visible} onClose={onClose} style={styles} />,
+            //@ts-ignore
+            document.getElementById('graphin-container'),
+          )}
       </>
     );
   };
