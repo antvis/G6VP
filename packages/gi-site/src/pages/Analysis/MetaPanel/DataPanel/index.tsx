@@ -86,7 +86,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         ) : (
           <EyeInvisibleOutlined onClick={() => invertVisiable(uid)} />
         )}
-        <DeleteOutlined onClick={() => deleteData(uid)} />
+        <DeleteOutlined onClick={() => handleDelete(uid)} />
       </Space>
     );
   };
@@ -105,6 +105,19 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       }
     });
     setIsVisible(true);
+  };
+
+  const handleDelete = uid => {
+    Modal.confirm({
+      title: '确定删除',
+      content: '是否删除该项目？',
+      cancelText: '取消',
+      okText: '确定',
+      onOk() {
+        deleteData(uid);
+      },
+      onCancel() {},
+    });
   };
 
   const deleteData = uid => {

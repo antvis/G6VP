@@ -2,6 +2,9 @@
 // import CanvasClick from './CanvasClick';
 // import DrillingOne from './DrillingOne';
 import AddNode from './AddNode';
+import Zoom from './Zoom';
+import View from './View';
+import DownLoad from './DownLoad';
 import CanvasSetting from './CanvasSetting';
 import ContextMenu from './ContextMenu';
 import FilterPanel from './FilterPanel';
@@ -35,6 +38,9 @@ export {
   Mapmode,
   FilterPanel,
   AddNode,
+  View,
+  Zoom,
+  DownLoad,
   ContextMenu,
   Tooltip,
   NodeImportance,
