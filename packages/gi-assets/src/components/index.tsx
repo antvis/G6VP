@@ -8,6 +8,7 @@ import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
+import GremlinTemplateQuery from './GremlinTemplateQuery';
 import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
@@ -38,6 +39,7 @@ export {
   Tooltip,
   NodeImportance,
   GremlinQuery,
+  GremlinTemplateQuery,
 };
 
 // /**

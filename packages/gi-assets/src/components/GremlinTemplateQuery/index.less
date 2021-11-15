@@ -1,4 +1,4 @@
-.gremlineQueryPanel {
+.gremlineTemplateQueryPanel {
   z-index: 3;
   width: 331px;
   padding: 16px 24px;
@@ -28,6 +28,32 @@
     color: rgba(0, 0, 0, 0.85);
     .blockContainer {
       color: rgba(0, 0, 0, 0.85);
+      .algorithmSelector {
+        width: 280px;
+        margin-top: 16px;
+      }
+      .description {
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 12px;
+      }
+      .tpre {
+        margin-bottom: 0;
+        padding: 8px;
+        font-weight: normal;
+        font-size: 14px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+      }
+      .paramInputsContainer {
+        margin-top: 16px;
+        .paramInputContainer {
+          margin-bottom: 8px;
+        }
+      }
     }
   }
   .buttonContainer {
