@@ -22,6 +22,9 @@ const baseLayoutConfig = {
   id: 'GraphinForce',
   props: {
     type: 'graphin-force',
+    preset: {
+      type: 'concentric',
+    },
   },
 };
 
