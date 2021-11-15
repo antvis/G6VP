@@ -11,12 +11,13 @@ import * as React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
+import BreathIndicator from '../../../../components/BreathIndicator';
 import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
 import store, { StateType } from '../../redux';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import DataService from './DataService';
-import styles from './index.less';
+import './index.less';
 
 const { Panel } = Collapse;
 interface DataPanelProps {}
@@ -212,12 +213,15 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   return (
     <>
       <div>
+        <div className="gi-config-panel-title">数据</div>
         <CollapseCard
           title="数据源"
           extra={
-            <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
-              <UploadOutlined /> 导入
-            </Button>
+            <BreathIndicator title="导入数据" status="running">
+              <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
+                <UploadOutlined /> 导入
+              </Button>
+            </BreathIndicator>
           }
         >
           {inputData.map((d, i) => {
@@ -243,8 +247,8 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         <DataService projectId={id} serviceLists={activeAssets.services} />
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
-        <div className={styles.fliterGroup}>
-          <span className={styles.title}>数据预览</span>
+        <div className={'gi-data-fliter-group'}>
+          <span className={'gi-data-title'}>数据预览</span>
           <Radio.Group onChange={e => onChange(e.target.value)} defaultValue={tableType}>
             <Radio.Button value="nodes">Node</Radio.Button>
             <Radio.Button value="edges">Edge</Radio.Button>

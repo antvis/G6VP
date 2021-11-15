@@ -1,0 +1,41 @@
+@keyframes status-lighting {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.status {
+  display: none;
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: status-lighting 1.4s infinite ease-in-out;
+
+  &.success {
+    display: inline-block;
+    background-color: #52c41a;
+    opacity: 0.2;
+    animation: none;
+  }
+
+  &.warning {
+    display: inline-block;
+    background-color: #faad14;
+  }
+  &.running {
+    display: inline-block;
+    background-color: #48d9a3;
+  }
+
+  &.error {
+    display: inline-block;
+    background-color: #f5222d;
+  }
+}
