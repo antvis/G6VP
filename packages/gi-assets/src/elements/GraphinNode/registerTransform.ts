@@ -99,7 +99,7 @@ const transform = (s, metaConfig) => {
             stroke: keyShapeColor,
             fill: keyShapeColor,
             size: keyshapeSize,
-            fillOpacity: 1,
+            fillOpacity: 0.3,
             strokeOpacity: 1,
           },
           label: {
