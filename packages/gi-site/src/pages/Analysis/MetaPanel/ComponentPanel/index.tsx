@@ -54,7 +54,7 @@ const ComponentPanel = props => {
         categoryId: 'components',
         id: id,
         type: 'group', //这个可以不写
-        fold: false, // 这个可以不写
+        fold: true, // 这个可以不写
         name: id,
         children: {},
       };
@@ -70,7 +70,7 @@ const ComponentPanel = props => {
     configObj[id] = {
       name: defaultName,
       type: 'group',
-      fold: false,
+      fold: true,
       children: {
         ...defaultConfigObj,
       },
