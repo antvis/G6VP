@@ -30,7 +30,6 @@ interface NodeStylePanelProps {
 const cache = {};
 
 const getCacheValues = (object, key) => {
-  debugger;
   if (!cache[key]) {
     cache[key] = { id: key, props: {} };
     return object[key];

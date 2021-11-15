@@ -8,6 +8,7 @@ const info = {
   category: 'components',
   desc: '通过 Gremlin 语句查询图数据',
   cover: 'http://xxxx.jpg',
+  type: 'GI_CONTAINER_INDEX',
 };
 
 export default {
