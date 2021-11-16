@@ -27,6 +27,7 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
+import SearchBar from './SearchBar';
 
 export {
   Timeline,
@@ -52,6 +53,7 @@ export {
   GremlinTemplateQuery,
   ClearCanvas,
   Export,
+  SearchBar,
 };
 
 // /**
