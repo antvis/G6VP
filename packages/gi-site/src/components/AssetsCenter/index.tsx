@@ -1,7 +1,6 @@
 import { CheckCard } from '@alipay/tech-ui';
 import { RobotOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
-import moment from 'moment';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
@@ -78,13 +77,13 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   };
 
   const cardContent = item => {
-    const { version, ownerNickname, gmtModified } = item;
+    const { version = '最新', ownerNickname = '官方', gmtModified } = item;
     return (
       <div className="asset-detail">
         <ul>
           <li>作者：{ownerNickname}</li>
           <li>版本：{version}</li>
-          <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li>
+          {/* <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li> */}
         </ul>
         {/* <div className="asset-detail-buttom"> */}
         {/* <div className="asset-favorite">Text</div> */}
@@ -122,6 +121,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                         { xs: 8, sm: 12, md: 12, lg: 12 },
                         { xs: 8, sm: 12, md: 12, lg: 12 },
                       ]}
+                      style={{ padding: '8px 0px' }}
                     >
                       {assets[key].map(item => {
                         const { id: AssetId, name: AssetName } = item;

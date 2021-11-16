@@ -1,11 +1,6 @@
 const getMeta = context => {
-  const { data } = context;
-  let keys = ['source', 'target'];
-  try {
-    keys = Object.keys(data.edges[1].data);
-  } catch (error) {
-    console.error(error);
-  }
+  const { data, keys } = context;
+
   const options = keys.map(c => {
     return {
       value: c,
