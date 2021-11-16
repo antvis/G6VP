@@ -15,3 +15,89 @@
     cursor: pointer;
   }
 }
+
+.assetsCardStyle{
+  height: 149px;
+  width: 230px;
+  background: #FFFFFF;
+  box-shadow: 1px -1px 4px 0 rgba(241,241,241,0.50), -1px 1px 4px 0 rgba(232,232,232,0.50);
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  .tech-checkcard-content{
+    padding: 12px 8px;
+    height: 100%;
+    .tech-checkcard-detail{
+      // overflow:unset;
+      .tech-checkcard-description{
+        height: 100%;
+        .asset-detail{
+          // display: flex;
+          flex-direction: column;
+          width: 180px;
+          height: 98px;
+          position: relative;
+          ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #999;
+            font-size: 12px;
+            li{
+              list-style: none;
+              line-height: 16px;
+              padding: 2px 0;
+              display: inline-block;
+              width: 100%;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              vertical-align: sub;
+            }
+          }
+          .asset-detail-buttom{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            text-align: right;
+            height: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            .asset-favorite{
+              text-align: center;
+              line-height: 24px;
+              height: 24px;
+              width: 24px;
+              margin-left: 5px;
+              font-size: 12px;
+            }
+            .asset-detail-link{
+              height: 24px;
+              width: 64px;
+              box-shadow: 1px -1px 4px 0 rgba(213,213,213,0.50), -1px 1px 4px 0 rgba(213,213,213,0.50);
+              border-radius: 2px;
+              background-color: #FFFFFF;
+              font-size: 12px;
+              text-align: center;
+              line-height: 24px;
+              color: #A9A9A9;
+              margin-left: 5px;
+            }
+            .asset-add{
+              width: 40px;
+              height: 24px;
+              box-shadow: 1px 2px 3px 0 #95ACFF;
+              border-radius: 2px;
+              background-color: #3056E3;
+              color: #fff;
+              font-size: 12px;
+              text-align: center;
+              line-height: 24px;
+              margin-left: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
