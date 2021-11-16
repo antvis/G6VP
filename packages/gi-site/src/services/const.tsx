@@ -13,3 +13,5 @@ export const ASSET_TYPE = {
   PROJECT: 6, // 6 大分类 项目
   ASSET: 7, // 7 大分类 分析资产
 };
+
+export const IS_DYNAMIC_LOAD = false;
