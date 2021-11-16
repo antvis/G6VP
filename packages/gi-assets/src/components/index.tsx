@@ -19,6 +19,7 @@ import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
+import Redo from './Redo';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
@@ -43,6 +44,7 @@ export {
   View,
   Zoom,
   DownLoad,
+  Redo,
   ContextMenu,
   Tooltip,
   NodeImportance,

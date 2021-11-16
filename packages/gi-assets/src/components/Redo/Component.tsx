@@ -1,130 +1,33 @@
-import {
-  DownloadOutlined,
-  FullscreenExitOutlined,
-  FullscreenOutlined,
-  RedoOutlined,
-  UndoOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined,
-} from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import { Toolbar } from '@antv/graphin-components';
+import { Button, Divider, Tooltip } from 'antd';
 import * as React from 'react';
-import './index.less';
+import { UndoOutlined, RedoOutlined } from '@ant-design/icons';
 
-type direction = 'vertical' | 'horizontal';
-
-export type options = {
-  name: string | JSX.Element;
-  key: string;
-  onClick: (e) => void;
-};
-
-export interface ToolbarProps {
-  direction?: direction;
-  options?: options[];
-  zoom?: {
-    enable: true;
-  };
-  steps?: {
-    enable: true;
-  };
-  view?: {
-    enable: true;
-  };
-  download?: {
-    enable: true;
-  };
+export interface Redo {
+  visible: boolean;
+  color: string;
+  hasDivider: boolean;
 }
 
-const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
-  const { apis, graph } = React.useContext(GraphinContext);
-  const { handleZoomIn, handleZoomOut } = apis;
+const Redo: React.FunctionComponent<Redo> = props => {
+  const { color, hasDivider } = props;
+  const { graph } = React.useContext(GraphinContext);
   const [btnDisable, setBtnDisable] = React.useState({
     undo: true,
     todu: true,
   });
-
-  const zoomConfig = [
-    {
-      key: 'zoomOut',
-      name: <ZoomInOutlined />,
-      onClick: d => {
-        handleZoomOut();
-      },
-    },
-    {
-      key: 'zoomIn',
-      name: <ZoomOutOutlined />,
-      onClick: d => {
-        handleZoomIn();
-      },
-    },
-  ];
-  const doConfig = [
-    {
-      key: 'undo',
-      name: <UndoOutlined />,
-      onClick: d => {
-        if (btnDisable.undo) {
-          return;
-        }
-        undo();
-      },
-    },
-    {
-      key: 'todu',
-      name: <RedoOutlined />,
-      onClick: d => {
-        if (btnDisable.todu) {
-          return;
-        }
-        redo();
-      },
-    },
-  ];
-  const viewConfig = [
-    {
-      key: 'fitview',
-      name: <FullscreenOutlined />,
-
-      onClick: () => {
-        graph.fitView();
-      },
-    },
-    {
-      key: 'fullscreen',
-      name: <FullscreenExitOutlined />,
-      onClick: () => {
-        graph.fitCenter();
-      },
-    },
-  ];
-  const downloadConfig = [
-    {
-      key: 'download',
-      name: <DownloadOutlined />,
-      onClick: () => {
-        graph.downloadImage();
-      },
-    },
-  ];
-  const { zoom, steps, view, download } = props;
-  let defaultConfig: options[] = [];
-  if (zoom?.enable) {
-    defaultConfig = [...defaultConfig, ...zoomConfig];
-  }
-  if (steps?.enable) {
-    defaultConfig = [...defaultConfig, ...doConfig];
-  }
-  if (view?.enable) {
-    defaultConfig = [...defaultConfig, ...viewConfig];
-  }
-  if (download?.enable) {
-    defaultConfig = [...defaultConfig, ...downloadConfig];
-  }
-  const { direction = 'horizontal', options = defaultConfig } = props;
-
+  const handleRedo = () => {
+    if (btnDisable.todu) {
+      return;
+    }
+    redo();
+  };
+  const handleUndo = () => {
+    if (btnDisable.undo) {
+      return;
+    }
+    undo();
+  };
   const redo = () => {
     const redoStack = graph.getRedoStack();
 
@@ -241,18 +144,18 @@ const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
       });
     });
   }, []);
-
   return (
-    <>
-      <Toolbar direction={direction}>
-        {options?.map(d => (
-          <Toolbar.Item onClick={d.onClick} key={d.key}>
-            <span className={`${'toolbar-item'} ${btnDisable[d.key] && 'disabled'}`}>{d.name}</span>
-          </Toolbar.Item>
-        ))}
-      </Toolbar>
-    </>
+    <div>
+      <Tooltip title="上一步" color={color} key={color}>
+        <Button type="text" icon={<UndoOutlined />} disabled={btnDisable.undo} onClick={handleUndo}></Button>
+      </Tooltip>
+      {hasDivider && <Divider type="vertical" />}
+      <Tooltip title="下一步" color={color} key={color}>
+        <Button type="text" icon={<RedoOutlined />} onClick={handleRedo} disabled={btnDisable.todu}></Button>
+      </Tooltip>
+      {hasDivider && <Divider type="vertical" />}
+    </div>
   );
 };
 
-export default ToolbarA;
+export default Redo;
