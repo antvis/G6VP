@@ -6,11 +6,11 @@ import * as giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { dynamicLoadModules } from '../loader';
 import { queryActiveAssetList, queryAssetList } from './assets';
-import { isMock } from './const';
+import { isMock, IS_DYNAMIC_LOAD } from './const';
 
 let { elements, layouts } = (giAssets || {}) as any;
-const isDynamicLoad = false;
-if (isDynamicLoad) {
+
+if (IS_DYNAMIC_LOAD) {
   elements = {};
   layouts = {};
 }
@@ -24,7 +24,7 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
   // 解压资产，获取脚本路径
   let components = {};
 
-  if (isDynamicLoad) {
+  if (IS_DYNAMIC_LOAD) {
     const { components: activeComponentKeys, elements: activeElementKeys } = activeAssetsKeys;
 
     const assetKeys = [...activeComponentKeys, ...activeElementKeys, 'My_Legend', 'Rect_Node', 'GraphinEdge'];
