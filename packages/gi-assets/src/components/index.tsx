@@ -5,6 +5,7 @@ import AddNode from './AddNode';
 import Zoom from './Zoom';
 import View from './View';
 import DownLoad from './DownLoad';
+import Redo from './Redo';
 import CanvasSetting from './CanvasSetting';
 import ContextMenu from './ContextMenu';
 import FilterPanel from './FilterPanel';
@@ -41,6 +42,7 @@ export {
   View,
   Zoom,
   DownLoad,
+  Redo,
   ContextMenu,
   Tooltip,
   NodeImportance,

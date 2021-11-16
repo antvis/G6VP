@@ -28,8 +28,8 @@ const BaseNavbar = props => {
       <BellOutlined style={{ marginRight: 26 }} />
       <span>{userInfo && userInfo.nickName}</span>
       <Avatar
-        style={{ width: '21px', height: '21px' }}
-        src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.userId}.220x220.jpg`}
+        style={{ width: '21px', height: '21px', marginLeft: 5 }}
+        src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
       />
     </>
   );
