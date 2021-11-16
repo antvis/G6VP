@@ -3,7 +3,6 @@ import { Avatar, Button, Layout } from 'antd';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getUser } from '../../services/user';
 import { levelTitleMapping } from './constant';
 import FeatureCard from './FeatureCard';
 import styles from './index.less';
@@ -40,13 +39,6 @@ const rightContent = (
 );
 
 const Home = () => {
-  React.useEffect(() => {
-    (async () => {
-      const userData = await getUser();
-      console.log(userData);
-    })();
-  });
-
   return (
     <Layout>
       <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
