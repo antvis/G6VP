@@ -4,10 +4,10 @@ import registerMeta from './registerMeta';
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 
 const info = {
-  id: 'Zoom',
-  name: '放大缩小',
+  id: 'ClearCanvas',
+  name: '清空画布',
   category: 'components',
-  desc: '放大缩小',
+  desc: '清空画布',
   cover: 'http://xxxx.jpg',
   type: 'GI_CONTAINER_INDEX',
 };
