@@ -2,7 +2,7 @@
 import { useHistory, useRequest } from '@alipay/bigfish';
 import ThemeSwitch from '@alipay/theme-tools';
 import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Drawer, Modal, Tooltip } from 'antd';
+import { Button, Drawer, Modal, Tooltip, message } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjectById, updateProjectById } from '../../services';
@@ -64,12 +64,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       isSave: true,
     });
 
-    Modal.success({
-      content: '保存成功',
-      onOk() {
-        // history.push(`/workspace`);
-      },
-    });
+    message.success('保存成功');
   };
 
   const changeTitle = async () => {
