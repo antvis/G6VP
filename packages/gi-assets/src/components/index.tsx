@@ -2,11 +2,11 @@
 // import CanvasClick from './CanvasClick';
 // import DrillingOne from './DrillingOne';
 import AddNode from './AddNode';
-import Zoom from './Zoom';
-import View from './View';
-import DownLoad from './DownLoad';
 import CanvasSetting from './CanvasSetting';
+import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
+import DownLoad from './DownLoad';
+import Export from './Export';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
@@ -24,6 +24,8 @@ import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
+import View from './View';
+import Zoom from './Zoom';
 
 export {
   Timeline,
@@ -46,6 +48,8 @@ export {
   NodeImportance,
   GremlinQuery,
   GremlinTemplateQuery,
+  ClearCanvas,
+  Export,
 };
 
 // /**
