@@ -122,8 +122,6 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
         [curr]: giAssets.layouts[curr],
       };
     }, {});
-
-    console.log('componentscomponentscomponents', components, elements, layouts);
   }
 
   if (isMock) {

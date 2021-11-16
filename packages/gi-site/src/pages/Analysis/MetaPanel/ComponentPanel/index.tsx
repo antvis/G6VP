@@ -87,7 +87,7 @@ const ComponentPanel = props => {
     });
   };
 
-  console.log('XXXX', configObj, valueObj);
+  console.log('%c ComponentMeta', 'color:green');
 
   return (
     <div>
@@ -97,4 +97,11 @@ const ComponentPanel = props => {
   );
 };
 
-export default ComponentPanel;
+// export default ComponentPanel;
+
+export default React.memo(ComponentPanel, (prevProps, nextProps) => {
+  if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
+    return false;
+  }
+  return true;
+});

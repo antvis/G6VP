@@ -20,7 +20,7 @@ export interface FormValues {
 }
 const DataService: React.FunctionComponent<DataServiceProps> = props => {
   const { projectId, serviceLists } = props;
-  console.log(serviceLists, 'serviceLists');
+
   const [state, updateState] = useImmer<{
     visible: boolean;
     formValues: FormValues;
@@ -39,7 +39,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
   const [form] = Form.useForm();
   const createMockService = async values => {
-    console.log('value', values);
     const { id, displayName, mode, content } = values;
 
     // 数据服务不需要在 antcode 上创建仓库
@@ -77,7 +76,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
     }
 
     const { data } = dbResponse;
-    console.log('data', data);
 
     // step3: 跳转到资产编辑页面
     window.open(
@@ -85,7 +83,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
     );
   };
   const handleSubmit = async values => {
-    console.log('values', values);
     if (values.mode === 'MOCK') {
       createMockService(values);
     }
@@ -112,7 +109,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
     }
   };
   const handleEdit = item => {
-    console.log('item', item);
     if (item.mode === 'MOCK') {
       const { others } = item;
       window.open(

@@ -11,7 +11,7 @@ interface CustomServicesProps {}
 const CustomServices: React.FunctionComponent<CustomServicesProps> = props => {
   const { history, match } = props;
   const { projectId } = match.params;
-  console.log(props);
+
   const [state, setState] = React.useState({
     services: [],
     visible: false,
@@ -69,7 +69,6 @@ const CustomServices: React.FunctionComponent<CustomServicesProps> = props => {
           </Card>
         </Col>
         {services.map(c => {
-          console.log('c', c);
           const { id, name, displayName, description, branchName, type } = c.others;
           return (
             <Col key={id} style={{ width: '300px' }}>
