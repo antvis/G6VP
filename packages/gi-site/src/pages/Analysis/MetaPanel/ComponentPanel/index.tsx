@@ -54,7 +54,7 @@ const ComponentPanel = props => {
         categoryId: 'components',
         id: id,
         type: 'group', //这个可以不写
-        fold: false, // 这个可以不写
+        fold: true, // 这个可以不写
         name: id,
         children: {},
       };
@@ -70,7 +70,7 @@ const ComponentPanel = props => {
     configObj[id] = {
       name: defaultName,
       type: 'group',
-      fold: false,
+      fold: true,
       children: {
         ...defaultConfigObj,
       },
@@ -87,7 +87,7 @@ const ComponentPanel = props => {
     });
   };
 
-  console.log('XXXX', configObj, valueObj);
+  console.log('%c ComponentMeta', 'color:green');
 
   return (
     <div>
@@ -97,4 +97,11 @@ const ComponentPanel = props => {
   );
 };
 
-export default ComponentPanel;
+// export default ComponentPanel;
+
+export default React.memo(ComponentPanel, (prevProps, nextProps) => {
+  if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
+    return false;
+  }
+  return true;
+});
