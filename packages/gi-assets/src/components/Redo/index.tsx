@@ -9,6 +9,7 @@ const info = {
   category: 'components',
   desc: '上一步/下一步',
   cover: 'http://xxxx.jpg',
+  type: 'GI_CONTAINER_INDEX',
 };
 
 export default {
