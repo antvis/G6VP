@@ -14,11 +14,11 @@ export interface AddNode {
 const Content = props => {
   const { visible, handleOk, handleCancel } = props;
   const { graph } = React.useContext(GraphinContext);
-  console.time('cost selected');
+  // console.time('cost selected');
   const selectedNodes = graph.findAllByState('node', 'selected');
   const selectedEdges = graph.findAllByState('edge', 'selected');
-  console.timeEnd('cost selected');
-  console.log('graph', graph, selectedNodes, selectedEdges);
+  // console.timeEnd('cost selected');
+  // console.log('graph', graph, selectedNodes, selectedEdges);
 
   return (
     <Modal title="添加节点" visible={visible} onOk={handleOk} onCancel={handleCancel}>
@@ -39,7 +39,6 @@ const AddNode: React.FunctionComponent<AddNode> = props => {
   const handleClick = () => {
     setVisible(!visible);
     (graphin as any).contextmenu = {};
-    console.log('click.........', graphin);
   };
 
   const handleOk = () => {

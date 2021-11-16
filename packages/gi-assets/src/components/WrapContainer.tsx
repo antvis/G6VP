@@ -72,9 +72,13 @@ export interface GIContianerProps {
   placement: 'LT' | 'RT' | 'LB' | 'RB';
   offset: [number, number];
 }
-const getPositionStyles = (placement, offset: number[]) => {
+export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
+    top: 'unset',
+    left: 'unset',
+    right: 'unset',
+    bottom: 'unset',
   };
   const [offsetX, offsetY] = offset;
   if (placement === 'RT') {
