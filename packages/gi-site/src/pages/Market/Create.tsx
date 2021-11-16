@@ -125,9 +125,7 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, projectId }) 
       path: 'src/registerMeta.ts',
     });
 
-    const uuid = `${Math.random()
-      .toString(36)
-      .substr(2)}`;
+    const uuid = `${Math.random().toString(36).substr(2)}`;
     const currentDate = moment(new Date()).format('YYYYMMDD');
     const newBranchName = `sprint_${name}_${uuid}_${currentDate}`;
 
@@ -161,7 +159,7 @@ const CreateAssets: React.FC<IProps> = ({ visible, close, history, projectId }) 
   };
   return (
     <Modal title="新建资产" visible={visible} width={846} footer={null} onCancel={close}>
-      <Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout="vertical">
+      <Form form={form} labelCol={{ span: 4 }} layout="vertical">
         <Form.Item label="资产名称" name="name" rules={[{ required: true, message: '请填写用户名' }]}>
           <Input />
         </Form.Item>
