@@ -4,10 +4,10 @@ import registerMeta from './registerMeta';
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 
 const info = {
-  id: 'View',
-  name: '视图配置',
+  id: 'Redo',
+  name: '上一步/下一步',
   category: 'components',
-  desc: '视图配置',
+  desc: '上一步/下一步',
   cover: 'http://xxxx.jpg',
 };
 
