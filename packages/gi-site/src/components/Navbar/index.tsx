@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useHistory, useRequest } from '@alipay/bigfish';
 import ThemeSwitch from '@alipay/theme-tools';
-import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, ExportOutlined, SaveOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Drawer, Modal, Tooltip, message } from 'antd';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,6 +35,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const history = useHistory();
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
+  const [isHover, setIsHover] = React.useState(false);
   const dispatch = useDispatch();
   const { config, isSave, serviceConfig } = useSelector(state => state);
   const contentEditable = React.createRef<HTMLSpanElement>();
@@ -132,8 +133,11 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         onBlur={changeTitle}
         onKeyDown={handleKeyDown}
         suppressContentEditableWarning={true}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
       >
         {name}
+        <EditOutlined style={{ display: isHover ? 'inline-block' : 'none', marginLeft: 5 }} />
       </span>
 
       <Drawer

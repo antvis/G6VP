@@ -3,13 +3,13 @@ import { Button, Divider, Modal, Tooltip } from 'antd';
 import * as React from 'react';
 import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
 
-export interface AddNode {
+export interface Zoom {
   visible: boolean;
   color: string;
   hasDivider: boolean;
 }
 
-const Zoom: React.FunctionComponent<AddNode> = props => {
+const Zoom: React.FunctionComponent<Zoom> = props => {
   const { color, hasDivider } = props;
   const { apis, graph } = React.useContext(GraphinContext);
   const { handleZoomIn, handleZoomOut } = apis;
