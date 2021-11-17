@@ -8,18 +8,17 @@ const { Menu } = ContextMenu;
 const NodeMenu = props => {
   const { contextmenu, graph } = React.useContext(GraphinContext);
   const context = contextmenu.node;
-  const { assets, components } = props;
+
+  const { components, assets } = props;
+  const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
 
   return (
     <Menu bindType="node">
-      {components.map(item => {
+      {sortedComponents.map(item => {
         if (!item) {
           return null;
         }
-        const { props, id, enable } = item;
-        if (!enable) {
-          return null;
-        }
+        const { props, id } = item;
         const { component: Component } = assets[id];
         return (
           <Menu.Item key={id}>
@@ -33,7 +32,7 @@ const NodeMenu = props => {
 
 const NodeContextMenu = props => {
   return (
-    <ContextMenu style={{ width: '80px' }} bindType="node">
+    <ContextMenu style={{ width: '120px' }} bindType="node">
       <NodeMenu {...props} />
     </ContextMenu>
   );

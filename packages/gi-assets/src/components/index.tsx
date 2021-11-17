@@ -15,11 +15,13 @@ import GremlinTemplateQuery from './GremlinTemplateQuery';
 import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
+import NodeExpand from './NodeExpand';
 import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
 import Redo from './Redo';
+import SearchBar from './SearchBar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
@@ -27,7 +29,6 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
-import SearchBar from './SearchBar';
 
 export {
   Timeline,
@@ -54,6 +55,7 @@ export {
   ClearCanvas,
   Export,
   SearchBar,
+  NodeExpand,
 };
 
 // /**
