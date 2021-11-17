@@ -182,7 +182,7 @@ const GISDK = (props: Props) => {
       [curr.id]: curr,
     };
   }, {});
-  console.log('%c gi render...', 'color:red', props);
+  console.log('%c gi render...', 'color:red', props,state);
   if (!isReady) {
     return <div>render...</div>;
   }

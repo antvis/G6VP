@@ -64,7 +64,7 @@ const NodeExpand: React.FunctionComponent<NodeToggleProps> = props => {
     }
     service({
       id: nodeId,
-      type: e.key,
+      type: [e.key],
     }).then(res => {
       const { nodes, edges } = res;
       if (!res) {
