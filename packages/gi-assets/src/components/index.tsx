@@ -8,6 +8,7 @@ import ContextMenu from './ContextMenu';
 import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
+import LassoSelect from './LassoSelect';
 import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
@@ -53,6 +54,7 @@ export {
   GremlinQuery,
   GremlinTemplateQuery,
   ClearCanvas,
+  LassoSelect,
   Export,
   SearchBar,
   NodeExpand,
