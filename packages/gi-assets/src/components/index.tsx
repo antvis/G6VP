@@ -2,6 +2,7 @@
 // import CanvasClick from './CanvasClick';
 // import DrillingOne from './DrillingOne';
 import AddNode from './AddNode';
+import AjustLayout from './AjustLayout';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -56,6 +57,7 @@ export {
   Export,
   SearchBar,
   NodeExpand,
+  AjustLayout,
 };
 
 // /**
