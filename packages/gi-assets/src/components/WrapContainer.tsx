@@ -61,7 +61,7 @@ export const Meta = {
 const defaultProps = {
   visible: false,
   placement: 'LT',
-  offset: [0, 0],
+  offset: [10, 60],
   hasDivider: false,
   color: '#3056e3',
 };
