@@ -93,6 +93,7 @@ const transform = (s, metaConfig) => {
       return {
         id: node.id,
         data: node.data,
+        dataType: node.dataType || 'others',
         type: 'graphin-circle',
         style: {
           keyshape: {
