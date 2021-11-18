@@ -24,6 +24,11 @@ const LAYOUTS = [
   {
     value: 'grid',
     label: '网格布局',
+    options: {
+      type: 'grid',
+      rows: 4,
+      cols: 4,
+    },
   },
   {
     value: 'circular',
@@ -78,6 +83,8 @@ const LayoutMap = {
   circular: CircularLayout,
   dagre: DagreLayout,
 };
+
+const GAP = 50;
 const getLayoutsByOptions = (layouts, graph) => {
   const count = layouts.length;
   const source = graph.save();
@@ -85,20 +92,25 @@ const getLayoutsByOptions = (layouts, graph) => {
   const width = graph.get('width') / count;
   const height = graph.get('height') / count;
 
-  const datas = layouts.map((layout, index) => {
-    const { type, options, nodes } = layout;
-    const layoutOptions = {
-      width,
-      height,
-      center: [width / 2 + index * width, 0, height / 2],
-      ...options,
-    };
-
-    const instance = new LayoutMap[type](layoutOptions);
-    const newGraphData = cropGraphByNodes(source, nodes);
-    const newModel = instance.layout(newGraphData);
-    return newModel;
-  });
+  const datas = layouts
+    //过滤掉节点为空的布局
+    .filter(lay => {
+      return lay.nodes.length !== 0;
+    })
+    .map((layout, index) => {
+      const { type, options, nodes } = layout;
+      const layoutOptions = {
+        width,
+        height,
+        center: [width / 2 + index * width + GAP, 0, height / 2],
+        ...options,
+      };
+      console.log(index, layoutOptions);
+      const instance = new LayoutMap[type](layoutOptions);
+      const newGraphData = cropGraphByNodes(source, nodes);
+      const newModel = instance.layout(newGraphData);
+      return newModel;
+    });
   const newDatas = datas.reduce(
     (acc, curr) => {
       return {
@@ -127,19 +139,14 @@ const getLayoutsByOptions = (layouts, graph) => {
 };
 const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId, style }) => {
   const [state, updateState] = useImmer({
-    selected: [],
+    activeKeys: ['0'],
     layouts: [
       {
         type: 'grid',
-        nodes: [{ id: 'node-1' }, { id: 'node-2' }],
+        nodes: [] as any[],
         active: true,
-        locked: true,
-        options: {
-          type: 'grid',
-          center: [0, 0],
-          rows: 4,
-          cols: 4,
-        },
+        locked: false,
+        options: {},
       },
     ],
   });
@@ -169,18 +176,8 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
   }, [graph, updateState]);
 
   const handleClick = async () => {
-    console.log('graph', graph);
+    console.log('state', state);
     getLayoutsByOptions(state.layouts, graph);
-
-    // setGiState(preState => {
-    //   return {
-    //     ...preState,
-    //     data,
-    //     layout: {
-    //       type: 'preset',
-    //     },
-    //   };
-    // });
   };
   const { layouts, selected } = state;
   console.log('state', state);
@@ -198,38 +195,70 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
       });
     });
   };
+
   if (visible) {
+    const defaultActiveKey = layouts.map((lay, index) => {
+      return index;
+    });
     return (
       <div
         style={{
           position: 'absolute',
           background: '#fff',
-          width: '400px',
+          width: '420px',
+          padding: '12px',
+          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
           ...style,
         }}
       >
         <h3>布局调整面板</h3>
         <Collapse
           bordered={false}
-          // defaultActiveKey={['1']}
+          activeKey={state.activeKeys}
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
           className="site-collapse-custom-collapse"
+          onChange={val => {
+            updateState(draft => {
+              draft.activeKeys = val as string[];
+            });
+          }}
         >
           {layouts.map((item, index) => {
             return (
-              <Panel header={`布局${index}`} key={index} className="site-collapse-custom-panel">
+              <Panel
+                header={`布局${index}`}
+                key={index}
+                className="site-collapse-custom-panel"
+                extra={
+                  <Button
+                    type="text"
+                    onClick={() => {
+                      updateState(draft => {
+                        draft.layouts.splice(index, 1);
+                      });
+                    }}
+                  >
+                    <DeleteOutlined />
+                  </Button>
+                }
+              >
                 <div>
                   <div>
                     选择节点：
                     <Select
                       mode="multiple"
                       allowClear
-                      style={{ width: '320px' }}
+                      style={{ width: '318px' }}
                       placeholder="请选择节点"
-                      // defaultValue={[]}
                       value={item.nodes.map(node => node.id)}
                       disabled={item.locked}
-                      // onChange={handleChange}
+                      onChange={values => {
+                        updateState(draft => {
+                          draft.layouts[index].nodes = values.map(n => {
+                            return { id: n };
+                          });
+                        });
+                      }}
                     >
                       {item.nodes.map(node => {
                         return (
@@ -249,16 +278,6 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                     >
                       {item.locked ? <LockOutlined /> : <EditOutlined />}
                     </Button>
-                    <Button
-                      type="text"
-                      onClick={() => {
-                        updateState(draft => {
-                          draft.layouts[index].locked = !item.locked;
-                        });
-                      }}
-                    >
-                      <DeleteOutlined />
-                    </Button>
                   </div>
                   <div>
                     选择布局
@@ -266,8 +285,13 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                       allowClear
                       style={{ width: '320px' }}
                       placeholder="请选择布局"
+                      value={item.type}
                       defaultValue={item.type}
-                      // onChange={handleChange}
+                      onChange={val => {
+                        updateState(draft => {
+                          draft.layouts[index].type = val;
+                        });
+                      }}
                     >
                       {LAYOUTS.map(layout => {
                         return (
