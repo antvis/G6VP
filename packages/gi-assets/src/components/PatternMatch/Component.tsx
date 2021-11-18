@@ -74,8 +74,8 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
   const [state, updateState] = useImmer({
     mode: 'new',
     pattern: {},
-    nodeKey: 'unkown',
-    edgeKey: 'unkown',
+    nodeKey: 'dataType',
+    edgeKey: 'dataType',
   });
 
   const { services, dispatch, GiState, setGiState } = GraphinContext as any;
@@ -91,6 +91,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
             return {
               id: model.id,
               data: model.data,
+              dataType: model.dataType,
             };
           }) || [];
         const edges =
@@ -100,6 +101,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
               source: model.source,
               target: model.target,
               data: model.data,
+              dataType: model.dataType,
             };
           }) || [];
         if (nodes.length === 0 || edges.length === 0) {
@@ -131,6 +133,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
       }
       //@ts-ignore
       const data = simplyDeepClone(GiState.data);
+      debugger;
       const clonePattern = simplyDeepClone(pattern);
       if (state.nodeKey == 'unkown') {
         data.nodes.forEach(n => {
@@ -186,8 +189,8 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
       value: 'template',
     },
   ];
-  const NODE_KEYS = getKeys(pattern, 'node');
-  const EDGE_KEYS = getKeys(pattern, 'edge');
+  const NODE_KEYS = ['type', 'dataType']; //getKeys(pattern, 'node');
+  const EDGE_KEYS = ['edgeType', 'dataType']; //getKeys(pattern, 'edge');
 
   if (visible) {
     return (
