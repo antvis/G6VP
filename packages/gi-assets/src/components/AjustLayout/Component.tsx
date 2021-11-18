@@ -1,7 +1,7 @@
 import { BranchesOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
-import { Button, Collapse, Select } from 'antd';
+import { Button, Collapse, Select, Form } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import WrapContainer from '../WrapContainer';
@@ -244,8 +244,8 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                 }
               >
                 <div>
-                  <div style={{ marginBottom: '6px' }}>
-                    选择节点：
+                  <div style={{ marginBottom: '6px' }} className="custom-item">
+                    <div>选择节点：</div>
                     <Select
                       mode="multiple"
                       allowClear
@@ -280,11 +280,11 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                       {item.locked ? <LockOutlined /> : <EditOutlined />}
                     </Button>
                   </div>
-                  <div style={{ marginBottom: '6px' }}>
-                    选择布局
+                  <div style={{ marginBottom: '6px' }} className="custom-item">
+                    <div>选择布局：</div>
                     <Select
                       allowClear
-                      style={{ width: '316px' }}
+                      style={{ maxWidth: '247px' }}
                       placeholder="请选择布局"
                       value={item.type}
                       defaultValue={item.type}

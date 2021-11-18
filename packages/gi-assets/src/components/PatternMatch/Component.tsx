@@ -1,7 +1,7 @@
 import { ProjectOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Collapse, Radio, Select } from 'antd';
+import { Button, Collapse, Radio, Select, Form } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import WrapContainer from '../WrapContainer';
@@ -81,6 +81,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
   const { services, dispatch, GiState, setGiState } = GraphinContext as any;
   const { graph } = React.useContext(GraphinContext);
   const { pattern } = state;
+  const [form] = Form.useForm();
 
   React.useEffect(() => {
     const onNodeSelectChange = e => {
@@ -105,6 +106,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
         if (nodes.length === 0 || edges.length === 0) {
           return;
         }
+        debugger;
         console.log({ nodes, edges });
         updateState(draft => {
           draft.pattern = { nodes, edges };
@@ -124,6 +126,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
 
     try {
       //@ts-ignore
+      debugger;
       const isVaild = pattern.nodes && pattern.nodes.length !== 0 && pattern.edges && pattern.edges.length !== 0;
 
       if (!isVaild) {
@@ -176,14 +179,22 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
       console.log(error);
     }
   };
+
+  const clear = () => {
+    form.resetFields();
+    graph.removeHulls();
+  };
+
   const PatternOptions = [
     {
       label: '新建',
       value: 'new',
+      disabled: false,
     },
     {
       label: '模式库',
       value: 'template',
+      disabled: true,
     },
   ];
   const NODE_KEYS = getKeys(pattern, 'node');
@@ -201,59 +212,65 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
           ...style,
         }}
       >
-        <h3>模式匹配</h3>
-        模式选择
-        <Radio.Group
-          options={PatternOptions}
-          onChange={e => {
-            updateState(draft => {
-              draft.mode = e.target.value;
-            });
-          }}
-          value={state.mode}
-        />
-        选择节点的聚类字段：
-        <Select
-          allowClear
-          style={{ width: '100%' }}
-          placeholder="请选择字段，默认为unkown"
-          value={state.nodeKey}
-          onChange={val => {
-            updateState(draft => {
-              draft.nodeKey = val;
-            });
-          }}
-        >
-          {NODE_KEYS.map(key => {
-            return (
-              <Select.Option key={key} value={key}>
-                {key}
-              </Select.Option>
-            );
-          })}
-        </Select>
-        选择边的聚类字段：
-        <Select
-          allowClear
-          style={{ width: '100%' }}
-          placeholder="请选择字段，默认为unkown"
-          value={state.nodeKey}
-          onChange={val => {
-            updateState(draft => {
-              draft.nodeKey = val;
-            });
-          }}
-        >
-          {EDGE_KEYS.map(key => {
-            return (
-              <Select.Option key={key} value={key}>
-                {key}
-              </Select.Option>
-            );
-          })}
-        </Select>
-        <PatterGraph pattern={pattern} />
-        {/* <Select
+        <Form initialValues={state} form={form}>
+          <div>
+            <h3>模式匹配</h3> <Button onClick={clear}>重制</Button>
+          </div>
+          <Form.Item label="模式选择" name="mode" rules={[{ required: true, message: '请选择模式' }]}>
+            <Radio.Group
+              options={PatternOptions}
+              onChange={e => {
+                updateState(draft => {
+                  draft.mode = e.target.value;
+                });
+              }}
+              value={state.mode}
+            />
+          </Form.Item>
+          <Form.Item label="选择节点的聚类字段" name="nodeKey">
+            <Select
+              allowClear
+              style={{ width: '100%' }}
+              placeholder="请选择字段，默认为unkown"
+              value={state.nodeKey}
+              onChange={val => {
+                updateState(draft => {
+                  draft.nodeKey = val;
+                });
+              }}
+            >
+              {NODE_KEYS.map(key => {
+                return (
+                  <Select.Option key={key} value={key}>
+                    {key}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <Form.Item label="选择边的聚类字段" name="nodeKey">
+            <Select
+              allowClear
+              style={{ width: '100%' }}
+              placeholder="请选择字段，默认为unkown"
+              value={state.nodeKey}
+              onChange={val => {
+                updateState(draft => {
+                  draft.nodeKey = val;
+                });
+              }}
+            >
+              {EDGE_KEYS.map(key => {
+                return (
+                  <Select.Option key={key} value={key}>
+                    {key}
+                  </Select.Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <PatterGraph pattern={pattern} />
+          {/* <Select
           allowClear
           style={{ width: '100%' }}
           placeholder="请选择模式"
@@ -272,9 +289,10 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
             );
           })}
         </Select> */}
-        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
-          开始匹配
-        </Button>
+          <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
+            开始匹配
+          </Button>
+        </Form>
       </div>
     );
   }
