@@ -17,8 +17,10 @@ export interface INodeExpandProps {
 
 const NodeTypes = [
   { label: '亲属关系', value: 'family' },
-  { label: '转账关系', value: 'finance' },
-  { label: '社交关系', value: 'socialNewwork' },
+  { label: '转账关系', value: 'financial' },
+  { label: '社交关系', value: 'socialNetwork' },
+  { label: '账户关系', value: 'account' },
+  { label: '社团关系', value: 'club' },
 ];
 
 /** 数组去重 */
@@ -68,7 +70,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
         nodes: [] as any[],
         active: true,
         locked: false,
-        types: [],
+        types: ['family'],
       },
     ],
   });
@@ -117,6 +119,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
   };
 
   const handleExpandNodes = async () => {
+    const { data } = GiState;
     updateState(draft => {
       draft.loading = true;
     });
@@ -127,7 +130,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
     }
 
     const result = await service({
-      id: expandRules[0].nodes[0],
+      id: expandRules[0].nodes[0].id,
       type: expandRules[0].types,
     });
 
@@ -139,7 +142,8 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
       return null;
     }
 
-    dispatch.changeData(result);
+    const responseData = handleExpand(data, result);
+    dispatch.changeData(responseData);
   };
 
   if (!visible) {
