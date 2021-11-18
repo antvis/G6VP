@@ -1,4 +1,4 @@
-import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined, SubnodeOutlined } from '@ant-design/icons';
+import { BranchesOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
 import { Button, Collapse, Select } from 'antd';
@@ -105,7 +105,7 @@ const getLayoutsByOptions = (layouts, graph) => {
         center: [width / 2 + index * width + GAP, 0, height / 2],
         ...options,
       };
-      console.log(index, layoutOptions);
+      console.log('COUNT:', count, 'INDEX', index, 'OPTIONS', layoutOptions);
       const instance = new LayoutMap[type](layoutOptions);
       const newGraphData = cropGraphByNodes(source, nodes);
       const newModel = instance.layout(newGraphData);
@@ -179,7 +179,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
     console.log('state', state);
     getLayoutsByOptions(state.layouts, graph);
   };
-  const { layouts, selected } = state;
+  const { layouts } = state;
   console.log('state', state);
   const handlePlus = () => {
     updateState(draft => {
@@ -243,12 +243,12 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                 }
               >
                 <div>
-                  <div>
+                  <div style={{ marginBottom: '6px' }}>
                     选择节点：
                     <Select
                       mode="multiple"
                       allowClear
-                      style={{ width: '318px' }}
+                      style={{ width: '316px' }}
                       placeholder="请选择节点"
                       value={item.nodes.map(node => node.id)}
                       disabled={item.locked}
@@ -279,11 +279,11 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                       {item.locked ? <LockOutlined /> : <EditOutlined />}
                     </Button>
                   </div>
-                  <div>
+                  <div style={{ marginBottom: '6px' }}>
                     选择布局
                     <Select
                       allowClear
-                      style={{ width: '320px' }}
+                      style={{ width: '316px' }}
                       placeholder="请选择布局"
                       value={item.type}
                       defaultValue={item.type}
@@ -311,7 +311,8 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
         <Button type="dashed" style={{ width: '100%' }} onClick={handlePlus}>
           添加布局
         </Button>
-        <Button type="primary" onClick={handleClick}>
+
+        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
           开始调整
         </Button>
       </div>
@@ -321,7 +322,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
 };
 
 export default WrapContainer(AjustLayout, {
-  icon: <SubnodeOutlined />,
-  title: '布局调整面板',
+  icon: <BranchesOutlined />,
+  title: '布局调整',
   showText: true,
 });
