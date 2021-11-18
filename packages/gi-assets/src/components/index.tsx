@@ -9,11 +9,11 @@ import ContextMenu from './ContextMenu';
 import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
-import LassoSelect from './LassoSelect';
 import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
 import GremlinTemplateQuery from './GremlinTemplateQuery';
+import LassoSelect from './LassoSelect';
 import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
@@ -22,6 +22,7 @@ import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
+import PatternMatch from './PatternMatch';
 import Redo from './Redo';
 import SearchBar from './SearchBar';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
@@ -31,7 +32,6 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
-
 export {
   Timeline,
   OperatorBar,
@@ -60,6 +60,7 @@ export {
   SearchBar,
   NodeExpand,
   AjustLayout,
+  PatternMatch,
 };
 
 // /**
