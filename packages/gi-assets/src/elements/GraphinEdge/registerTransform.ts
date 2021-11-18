@@ -1,4 +1,5 @@
 import { scaleLinear } from 'd3-scale';
+import { defaultProps } from './registerMeta';
 
 const getMapping = () => {
   const Mapping = new Map();
@@ -15,13 +16,13 @@ const getMapping = () => {
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, config) => {
-  const { edge: mathEdgeConfig } = config;
+  const mathEdgeConfig = Object.assign({}, defaultProps, config.edge.props);
   try {
     /** 解构配置项 */
     /** 分别生成Size和Color的Mapping */
 
     const mappingEdgeByColor = getMapping();
-    const { color: edgeColor, label: edgeLabel, size: edgeSize, dash: dash, halo: edgeHalo } = mathEdgeConfig.props;
+    const { color: edgeColor, label: edgeLabel, size: edgeSize, dash: dash, halo: edgeHalo } = mathEdgeConfig;
 
     /** 分别生成Size和Color的Mapping */
     const mappingEdgeBySize = scaleLinear().domain(edgeSize?.scale?.domain).range(edgeSize?.scale?.range);
@@ -39,6 +40,7 @@ const transform = (s, config) => {
       return {
         ...edge,
         type: 'graphin-line',
+        dataType: edge.dataType || 'others',
         style: {
           keyshape: {
             stroke: edgeColor?.mapping ? edgeColor?.scale?.range?.[matchColorIndex] : edgeColor?.fixed,
