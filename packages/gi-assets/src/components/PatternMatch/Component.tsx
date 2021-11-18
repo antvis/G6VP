@@ -1,7 +1,7 @@
 import { ProjectOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Collapse, Radio, Select, Form } from 'antd';
+import { Button, Collapse, Form, Radio, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import WrapContainer from '../WrapContainer';
@@ -256,10 +256,10 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
               allowClear
               style={{ width: '100%' }}
               placeholder="请选择字段，默认为unkown"
-              value={state.nodeKey}
+              value={state.edgeKey}
               onChange={val => {
                 updateState(draft => {
-                  draft.nodeKey = val;
+                  draft.edgeKey = val;
                 });
               }}
             >
