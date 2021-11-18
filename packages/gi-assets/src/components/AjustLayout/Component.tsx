@@ -212,6 +212,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
         }}
       >
         <h3>布局调整面板</h3>
+
         <Collapse
           bordered={false}
           activeKey={state.activeKeys}
