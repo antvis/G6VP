@@ -31,6 +31,7 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
+import NodeExpandByTypes from './NodeExpandByType';
 
 export {
   Timeline,
@@ -60,6 +61,7 @@ export {
   SearchBar,
   NodeExpand,
   AjustLayout,
+  NodeExpandByTypes,
 };
 
 // /**
