@@ -43,6 +43,7 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
   const handleLasso = () => {
     setIsLasso(!isLasso);
     const container = document.getElementsByClassName('graphin-core')[0] as HTMLElement;
+    // @ts-ignore
     container.style.opacity = isLasso ? 1 : 0.8;
   };
 

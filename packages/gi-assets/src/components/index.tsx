@@ -18,6 +18,7 @@ import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeExpand from './NodeExpand';
+import NodeExpandByTypes from './NodeExpandByType';
 import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
@@ -32,6 +33,7 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
+
 export {
   Timeline,
   OperatorBar,
@@ -60,6 +62,7 @@ export {
   SearchBar,
   NodeExpand,
   AjustLayout,
+  NodeExpandByTypes,
   PatternMatch,
 };
 
