@@ -1,6 +1,6 @@
-import { BranchesOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { BulbOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Collapse, Select, Checkbox } from 'antd';
+import { Button, Checkbox, Collapse, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import WrapContainer from '../WrapContainer';
@@ -255,7 +255,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
 };
 
 export default WrapContainer(NodeExpandByType, {
-  icon: <BranchesOutlined />,
-  title: '布局调整',
+  icon: <BulbOutlined />,
+  title: '关系扩散',
   showText: true,
 });
