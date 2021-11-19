@@ -109,3 +109,26 @@
 .tech-checkcard-checked {
   box-shadow: 0px 0px 6px 0 var(--primary-color);
 }
+
+.gi-assets-center-drawer {
+  .tech-checkcard-multiple.tech-checkcard-checked::after {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 0;
+    height: 0;
+    border: 12px solid #3056e3;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-top-right-radius: 8px;
+    content: '';
+  }
+  .ant-tabs-tab {
+    font-size: 16px;
+  }
+  .gi-assets-center-pane-title {
+    display: inline-block;
+    width: 100px;
+    padding: 0px 18px;
+  }
+}
