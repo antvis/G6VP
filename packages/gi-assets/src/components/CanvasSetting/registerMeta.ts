@@ -15,7 +15,7 @@ const registerMeta = context => {
         background: {
           name: '背景色',
           type: 'fill',
-          default: '#f8f9fb',
+          default: '#fff',
         },
         backgroundImage: {
           name: '背景图片',
