@@ -120,6 +120,9 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
 
   const handleExpandNodes = async () => {
     const { data } = GiState;
+    if (!expandRules[0].nodes[0]) {
+      return;
+    }
     updateState(draft => {
       draft.loading = true;
     });
