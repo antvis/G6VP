@@ -66,8 +66,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   };
   const Footer = (
     <div>
-      <Button onClick={handleCancel}>取消</Button>
-      <Button onClick={handleOk} type="primary">
+      <Button onClick={handleCancel} size="small" style={{ borderRadius: 4, marginRight: 8 }}>
+        取消
+      </Button>
+      <Button onClick={handleOk} type="primary" size="small" style={{ borderRadius: 4 }}>
         确认
       </Button>
     </div>
