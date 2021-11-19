@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@antv/graphin-icons": "^1.0.0",
     "@antv/l7": "^2.5.25",
     "@antv/l7-maps": "^2.5.25",
     "@antv/layout": "^0.1.19-beta.3",

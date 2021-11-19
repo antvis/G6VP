@@ -127,8 +127,8 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
     // const matchPattern = PATTERNS.find(c => c.id === activePatternId);
 
     try {
-      //@ts-ignore
       debugger;
+      //@ts-ignore
       const isVaild = pattern.nodes && pattern.nodes.length !== 0 && pattern.edges && pattern.edges.length !== 0;
 
       if (!isVaild) {
