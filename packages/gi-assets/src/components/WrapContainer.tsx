@@ -36,7 +36,7 @@ export const Meta = {
     type: 'Offset',
     min: 0,
     max: 400,
-    default: [0, 0],
+    default: [10, 60],
   },
   /** GI原子组件 */
   GI_CONTAINER_INDEX: {
