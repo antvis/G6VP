@@ -294,7 +294,6 @@ export default (data, params) => {
 
   const responseData = type.reduce(
     (acc, curr) => {
-      debugger;
       const str = id + '_' + curr;
       const currentData = mappingData[str];
       return {

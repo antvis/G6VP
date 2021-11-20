@@ -108,7 +108,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
         if (nodes.length === 0 || edges.length === 0) {
           return;
         }
-        debugger;
+
         console.log({ nodes, edges });
         updateState(draft => {
           draft.pattern = { nodes, edges };
@@ -127,7 +127,6 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
     // const matchPattern = PATTERNS.find(c => c.id === activePatternId);
 
     try {
-      debugger;
       //@ts-ignore
       const isVaild = pattern.nodes && pattern.nodes.length !== 0 && pattern.edges && pattern.edges.length !== 0;
 
@@ -136,7 +135,6 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
       }
       //@ts-ignore
       const data = simplyDeepClone(GiState.data);
-      debugger;
       const clonePattern = simplyDeepClone(pattern);
       if (state.nodeKey == 'unkown') {
         data.nodes.forEach(n => {

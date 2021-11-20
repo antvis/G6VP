@@ -2,11 +2,10 @@ import { Behaviors, GraphinContext } from '@antv/graphin';
 import { Scene } from '@antv/l7';
 import { Mapbox } from '@antv/l7-maps';
 import React, { useEffect, useRef, useState } from 'react';
-
 const { ZoomCanvas, DragCanvas } = Behaviors;
 
 const Mapmode = props => {
-  const { GiState, setGiState } = GraphinContext as any;
+  const { GiState, setGiState, transform, config } = GraphinContext as any;
   const { graph } = React.useContext(GraphinContext);
   const [isLoaded, setIsLoaded] = useState(false);
   const scenceRef = useRef({} as Scene);
@@ -16,10 +15,10 @@ const Mapmode = props => {
     const scene = new Scene({
       id: document.querySelector('.graphin-core') as HTMLDivElement,
       map: new Mapbox({
-        style: props.mapmode.theme,
+        style: props.theme,
         pitch: 43,
-        center: [113.033, 29.65],
-        zoom: 7,
+        center: [-81.442222, 40.916111],
+        zoom: 3,
       }),
     });
 
@@ -35,8 +34,8 @@ const Mapmode = props => {
 
   React.useLayoutEffect(() => {
     if (!isLoaded) return;
-    scenceRef.current?.setMapStyle(props.mapmode.style);
-  }, [props.mapmode.theme]);
+    scenceRef.current?.setMapStyle(props.style);
+  }, [props.theme]);
 
   const cleanup = scene => {
     //画布移动回graphin内部
@@ -59,28 +58,45 @@ const Mapmode = props => {
     });
   };
   const initLayout = (val, lngToContainer) => {
-    const { nodes, edges } = val;
-    const renderNodes = nodes.map(node => {
-      const pos = lngToContainer(node.data.coord || [113.033, 29.65]);
+    // graph.changeData({ nodes: renderNodes, edges });
+    setGiState(preState => {
+      const { nodes, edges } = preState.data;
+      const renderNodes = nodes.map(node => {
+        const pos = lngToContainer(node.data.coord || [113.033, 29.65]);
+
+        return {
+          ...node,
+          x: pos.x,
+          y: pos.y,
+        };
+      });
 
       return {
-        ...node,
-        x: pos.x,
-        y: pos.y,
+        ...preState,
+        data: transform(
+          {
+            nodes: renderNodes,
+            edges,
+          },
+          config,
+        ),
+        layout: {
+          type: 'preset',
+        },
+        animate: false,
       };
     });
-    // graph.changeData({ nodes: renderNodes, edges });
-    setGiState({
-      ...GiState,
-      data: {
-        nodes: renderNodes,
-        edges,
-      },
-      layout: {
-        type: 'preset',
-      },
-      animate: false,
-    });
+    // setGiState({
+    //   ...GiState,
+    //   data: {
+    //     nodes: renderNodes,
+    //     edges,
+    //   },
+    //   layout: {
+    //     type: 'preset',
+    //   },
+    //   animate: false,
+    // });
   };
   const onSceneLoaded = scene => {
     // 图画布移动到地图上侧

@@ -161,6 +161,9 @@ const GISDK = (props: Props) => {
   //@ts-ignore 临时方案
   GraphinContext.services = Services;
   //@ts-ignore 临时方案
+  GraphinContext.transform = transform;
+  GraphinContext.config = config;
+
   GraphinContext.dispatch = {
     changeData: inputData => {
       setState(preState => {
@@ -182,7 +185,7 @@ const GISDK = (props: Props) => {
       [curr.id]: curr,
     };
   }, {});
-  console.log('%c gi render...', 'color:red', props,state);
+  console.log('%c gi render...', 'color:red', props, state);
   if (!isReady) {
     return <div>render...</div>;
   }
