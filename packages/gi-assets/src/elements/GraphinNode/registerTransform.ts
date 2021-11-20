@@ -83,7 +83,7 @@ const transform = (s, metaConfig) => {
       let icon: { [key: string]: any } = {
         visible: false,
       };
-      debugger;
+
       if (Icon.enable) {
         icon = {
           type: Icon.type,
@@ -107,6 +107,7 @@ const transform = (s, metaConfig) => {
       }
       return {
         id: node.id,
+        ...node,
         data: node.data,
         dataType: node.dataType || 'others',
         type: 'graphin-circle',
