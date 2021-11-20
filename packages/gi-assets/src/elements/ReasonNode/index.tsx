@@ -8,7 +8,7 @@ const info = {
   category: 'node',
   name: '草莓图',
   desc: '复合节点，包含玫瑰图、柱状图、节点等，原来用在归因树',
-  cover: 'http://xxxx.jpg',
+  cover: 'https://gw-office.alipayobjects.com/bmw-prod/5b9790f0-7c67-47cb-b477-b00df3343879.png',
 };
 
 export default {
