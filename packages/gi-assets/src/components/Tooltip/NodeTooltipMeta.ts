@@ -1,6 +1,10 @@
 const registerMeta = context => {
   const { data } = context;
-  const keys = Object.keys(data.nodes[0].data || {});
+  let keys = ['id', 'type'];
+  try {
+    keys = Object.keys((data.nodes[0] && data.nodes[0].data) || {});
+  } catch (error) {}
+
   const options = keys.map(c => {
     return {
       value: c,
