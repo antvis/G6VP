@@ -81,3 +81,37 @@ export function getClientRelativPoint(abs_x: number, abs_y: number) {
   const post = text[text.length - 1];
   return `${pre}${mid}${post}`;
 }
+
+
+interface ITree {
+  children?: Array<ITree>;
+  [props: string]: any;
+}
+
+/** 遍历树 DFS */
+export const tree_dfs = <T extends ITree>(root: T, onVisit?: (item: T) => void) => {
+  const stack: T[] = [root];
+  while (stack.length > 0) {
+    const currentNode = stack.pop();
+    if (onVisit && currentNode) {
+      onVisit(currentNode);
+    }
+    currentNode?.children?.forEach((c: ITree) => {
+      stack.push(c as T);
+    });
+  }
+};
+
+/** 遍历树 BFS */
+export const tree_bfs = <T extends ITree>(root: T, onVisit?: (item: T) => void) => {
+  const queue: T[] = [root];
+  while (queue.length > 0) {
+    const currentNode = queue.shift();
+    if (onVisit && currentNode) {
+      onVisit(currentNode);
+    }
+    currentNode?.children?.forEach((c: ITree) => {
+      queue.push(c as T);
+    });
+  }
+};
