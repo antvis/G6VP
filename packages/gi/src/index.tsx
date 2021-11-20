@@ -162,8 +162,10 @@ const GISDK = (props: Props) => {
   GraphinContext.services = Services;
   //@ts-ignore 临时方案
   GraphinContext.transform = transform;
+  // @ts-ignore
   GraphinContext.config = config;
 
+  // @ts-ignore
   GraphinContext.dispatch = {
     changeData: inputData => {
       setState(preState => {
