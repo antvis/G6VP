@@ -2,13 +2,13 @@ export const serviceLists = [
   {
     id: 'GI_SERVICE_INTIAL_GRAPH',
     content: `(data)=>{ return data }`,
-    mode: 'mock',
+    mode: 'MOCK',
     name: '初始化请求数据接口',
   },
 
   {
     id: 'GI_SERVICE_Mock_Expand',
-    mode: 'mock',
+    mode: 'MOCK',
     name: 'GI官方提供的Mock体验接口',
     content: `
     (data, params) => {

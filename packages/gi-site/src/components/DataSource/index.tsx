@@ -25,7 +25,7 @@ const DataSource = React.forwardRef((props, ref) => {
         console.log('data',data);
         return data;
       }`,
-      mode: 'mock',
+      mode: 'MOCK',
       name: '未命名的服务名称',
     };
     setState(draft => {

@@ -1,64 +1,57 @@
 const registerMeta = context => {
+  const { GI_CONTAINER_INDEXS } = context;
+
   return {
-    /** 放大缩小 */
-    zoom: {
-      name: '放大/缩小',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-      },
+    GI_CONTAINER: {
+      name: '集成组件',
+      type: 'TagsSelect',
+      default: [],
+      options: GI_CONTAINER_INDEXS,
     },
-    /** 上一步/下一步 */
-    steps: {
-      name: '上一步/下一步',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
+    direction: {
+      name: '展示方向',
+      type: 'radio',
+      default: 'horizontal',
+      options: [
+        {
+          label: '水平展示',
+          value: 'horizontal',
         },
-      },
+        {
+          label: '纵向展示',
+          value: 'vertical',
+        },
+      ],
     },
-    /** 视图 */
-    view: {
-      name: '视图',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
+    placement: {
+      name: '组件位置',
+      type: 'select',
+      default: 'LT',
+      options: [
+        {
+          value: 'LT',
+          label: '左上',
         },
-      },
+        {
+          value: 'RT',
+          label: '右上',
+        },
+        {
+          value: 'LB',
+          label: '左下',
+        },
+        {
+          value: 'RB',
+          label: '右下',
+        },
+      ],
     },
-    /** 下载 */
-    download: {
-      name: '下载',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-      },
+    offset: {
+      name: '偏移距离',
+      type: 'Offset',
+      min: 0,
+      max: 400,
+      default: [0, 0],
     },
   };
 };

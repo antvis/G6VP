@@ -1,11 +1,7 @@
-const getMeta = context => {
-  const { data } = context;
-  let keys = ['source', 'target'];
-  try {
-    keys = Object.keys(data.edges[1].data);
-  } catch (error) {
-    console.error(error);
-  }
+import { extractDefault } from '@ali/react-datav-gui-utils';
+const registerMeta = context => {
+  const { data, keys } = context;
+
   const options = keys.map(c => {
     return {
       value: c,
@@ -30,7 +26,7 @@ const getMeta = context => {
           valuePath: 'size',
           default: {
             mapping: false,
-            fixed: 5,
+            fixed: 0.5,
             scale: {
               custom: false, // 是否采取自定义映射
               range: [3, 30], // 值域
@@ -157,7 +153,7 @@ const getMeta = context => {
           name: '映射字段',
           type: 'select',
           useFont: true,
-          default: 'source',
+          default: 'label',
           valuePath: 'label.key',
           showInPanel: {
             conditions: [['label.showlabel', '$eq', true]],
@@ -184,7 +180,7 @@ const getMeta = context => {
           fixedComponents: ['flat'],
           default: {
             mapping: false,
-            fixed: '',
+            fixed: '#fff',
           },
           showInPanel: {
             conditions: [['label.showlabel', '$eq', true]],
@@ -237,4 +233,7 @@ const getMeta = context => {
   };
 };
 
-export default getMeta;
+export default registerMeta;
+const configObj = registerMeta({ data: {}, keys: ['source', 'target'] });
+/** 默认的配置值 */
+export const defaultProps = extractDefault({ config: configObj, value: {} });

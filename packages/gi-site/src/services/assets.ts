@@ -1,7 +1,7 @@
 import { BrowserFSFileType } from '@alipay/alex';
 import * as giAssets from '@alipay/gi-assets';
 import request from 'umi-request';
-import { isMock, SERVICE_URL_PREFIX, ASSET_TYPE} from './const';
+import { ASSET_TYPE, isMock, IS_DYNAMIC_LOAD, SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -19,8 +19,6 @@ interface CreateAssetParams {
   description?: string;
   type: number;
   meta?: string;
-  ownerNickname: string;
-  ownerId: string;
   branchName: string;
   projectId?: string;
   sourceCode?: string;
@@ -120,41 +118,47 @@ export const queryActiveAssetList = async (param: ActiveAssetParams[]) => {
  * @param param 查询参数
  */
 export const queryAssetList = async (param?: { name?: string; limit?: number; projectId: string }) => {
-  //TODO 等待接口Ready，目前先从giAssets离线包中构造
-  const getListByGIAssets = (res) => {
-    let components = [], elements = [], layouts = [];
-    res.forEach(item => {
-      if(item.type === ASSET_TYPE.COMPONENT){
-        components.push(item);
-      }else if(item.type = ASSET_TYPE.NODE || item.type === ASSET_TYPE.EDGE){
-        elements.push(item);
-      }else if(item.type = ASSET_TYPE.LAYOUT){
-        layouts.push(item);
-      }
-    });
-
-    // components = Object.keys(giAssets.components).map(key => {
-    //   return {
-    //     type: 1, //组件
-    //     id: key,
-    //     ...giAssets.components[key]?.info,
-    //   };
-    // });
-    // elements = Object.keys(giAssets.elements).map(key => {
-    //   return {
-    //     type: 2, //元素
-    //     id: key,
-    //     ...giAssets.elements[key]?.info,
-    //   };
-    // });
-    // layouts = Object.keys(giAssets.layouts).map(key => {
-    //   return {
-    //     type: 6, //元素
-    //     id: key,
-    //     ...giAssets.layouts[key]?.info,
-    //   };
-    // });
-    return { components, elements, layouts };
+  const getListByGIAssets = res => {
+    if (IS_DYNAMIC_LOAD) {
+      // 在线拉取资产列表
+      const components = [],
+        elements = [],
+        layouts = [];
+      res.forEach(item => {
+        if (item.type === ASSET_TYPE.COMPONENT) {
+          components.push(item);
+        } else if ((item.type = ASSET_TYPE.NODE || item.type === ASSET_TYPE.EDGE)) {
+          elements.push(item);
+        } else if ((item.type = ASSET_TYPE.LAYOUT)) {
+          layouts.push(item);
+        }
+      });
+      return { components, elements, layouts };
+    } else {
+      //通过本地@alipay/gi-assets 获得资产列表
+      const components = Object.keys(giAssets.components).map(key => {
+        return {
+          type: 1, //组件
+          id: key,
+          ...giAssets.components[key]?.info,
+        };
+      });
+      const elements = Object.keys(giAssets.elements).map(key => {
+        return {
+          type: 2, //元素
+          id: key,
+          ...giAssets.elements[key]?.info,
+        };
+      });
+      const layouts = Object.keys(giAssets.layouts).map(key => {
+        return {
+          type: 6, //元素
+          id: key,
+          ...giAssets.layouts[key]?.info,
+        };
+      });
+      return { components, elements, layouts };
+    }
   };
 
   //TODO:需要根据projectID把多余的Service过滤掉
@@ -165,6 +169,7 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
 
   const res = convertResponse(response);
   let services = [];
+
   if (param && param.projectId) {
     services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
     const { components, elements, layouts } = getListByGIAssets(res.data);
@@ -318,6 +323,21 @@ export const buildAssetWithTask = async (buildParams: BuildParams) => {
   const response = await request(`${SERVICE_URL_PREFIX}/asset/buildasset`, {
     method: 'post',
     data: buildParams,
+  });
+
+  return response;
+};
+
+/**
+ * 通过资产 ID 删除资产
+ * @param assetId 资产 ID
+ */
+export const deleteAssetById = async (assetId: number) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/asset/delete`, {
+    method: 'post',
+    data: {
+      assetId,
+    },
   });
 
   return response;

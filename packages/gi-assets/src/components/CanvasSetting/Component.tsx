@@ -8,7 +8,7 @@ const { DragCanvas, ZoomCanvas, BrushSelect, Hoverable } = Behaviors;
 
 export interface CanvasSettingProps {
   dragCanvas: {
-    enable: boolean;
+    disabled: boolean;
     direction: string;
     enableOptimize: boolean;
   };
@@ -16,13 +16,22 @@ export interface CanvasSettingProps {
     background: string;
     backgroundImage: string;
   };
+  zoomCanvas: {
+    disabled: boolean;
+    enableOptimize: boolean;
+  };
+  elementInteraction: {
+    enableNodeHover: boolean;
+    enableEdgeHover: boolean;
+  };
 }
 
 export const defaultProps = extractDefault({ config: registerMeta({ data: {} }) }) as CanvasSettingProps;
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
-  const { styleCanvas } = merge(defaultProps, props);
+  const { styleCanvas, dragCanvas, zoomCanvas, elementInteraction } = merge(defaultProps, props);
   const { background, backgroundImage } = styleCanvas;
+  const { enableEdgeHover, enableNodeHover } = elementInteraction;
   React.useLayoutEffect(() => {
     const container = document.getElementsByClassName('graphin-core')[0] as HTMLElement;
     container.style.background = background;
@@ -30,10 +39,15 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   }, [background, backgroundImage]);
   return (
     <>
-      <DragCanvas />
-      <ZoomCanvas />
+      <DragCanvas
+        disabled={dragCanvas.disabled}
+        direction={dragCanvas.direction}
+        enableOptimize={dragCanvas.enableOptimize}
+      />
+      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
       <BrushSelect />
-      <Hoverable bindType="node" />
+      {enableNodeHover && <Hoverable bindType="node" />}
+      {enableEdgeHover && <Hoverable bindType="edge" />}
     </>
   );
 };

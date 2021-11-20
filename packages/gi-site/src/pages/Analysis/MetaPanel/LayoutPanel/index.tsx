@@ -28,6 +28,16 @@ interface NodeStylePanelProps {
   dispatch: any;
 }
 
+const cache = {};
+
+const getCacheValues = (object, key) => {
+  if (!cache[key]) {
+    cache[key] = { id: key, props: {} };
+    return object[key];
+  }
+  return cache[key];
+};
+
 const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { data, layouts, config = { layout: { props: {} } }, dispatch } = props;
   const { layout: layoutConfig } = config;
@@ -50,9 +60,13 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   };
 
   const valueObj = extractDefault({ config: configObj, value: { options: layoutConfig.props } });
-  console.log('valueObj', valueObj);
+
+  /** 缓存数据 */
+  cache[layoutId] = { id: layoutId, props: { ...valueObj.options } };
+
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
+    cache[layoutId].props = { ...rootValue.options };
     dispatch({
       type: 'FREE',
       update: draft => {
@@ -61,6 +75,8 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     });
   };
   const handleChangeShape = value => {
+    const values = getCacheValues(layouts, value);
+
     setState(preState => {
       return {
         ...preState,
@@ -70,8 +86,9 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     dispatch({
       type: 'FREE',
       update: draft => {
-        draft.config.layout.id = value;
-        draft.config.layout = { ...layouts[value] };
+        draft.config.layout = { ...values };
+        // draft.config.layout.id = value;
+        // draft.config.layout = { ...layouts[value] };
       },
     });
   };

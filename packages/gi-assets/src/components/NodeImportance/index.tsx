@@ -11,6 +11,7 @@ const info = {
   category: 'components',
   desc: '节点重要性',
   cover: 'http://xxxx.jpg',
+  type: 'GI_CONTAINER_INDEX',
 };
 
 export default {

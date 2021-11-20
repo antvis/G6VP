@@ -40,3 +40,18 @@ export function saveAs(content: string, filename: string) {
 /** 格式化代码   配置项：https://beautifier.io/
  * @param {String} code
  */
+
+/**
+ * 获取hash上的search对象
+ * @param location
+ * @returns
+ */
+export const getSearchParams = (location: Location) => {
+  const { hash } = location;
+  const [path, search] = hash.split('?');
+  const searchParams = new URLSearchParams(search);
+  return {
+    path,
+    searchParams,
+  };
+};

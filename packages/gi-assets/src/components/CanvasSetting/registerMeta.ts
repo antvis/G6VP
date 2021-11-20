@@ -5,38 +5,7 @@ const registerMeta = context => {
 
   return {
     /** 分类信息 */
-    dragCanvas: {
-      name: '拖拽画布',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-        direction: {
-          name: '方向',
-          type: 'select',
-          useFont: true,
-          default: 'both',
-          showInPanel: {
-            conditions: [['.enable', '$eq', true]],
-          },
-        },
-        enableOptimize: {
-          name: '优化',
-          type: 'switch',
-          default: true,
-          statusText: true,
-          showInPanel: {
-            conditions: [['.enable', '$eq', true]],
-          },
-        },
-      },
-    },
+
     styleCanvas: {
       name: '画布样式',
       type: 'group',
@@ -46,7 +15,7 @@ const registerMeta = context => {
         background: {
           name: '背景色',
           type: 'fill',
-          default: '#f8f9fb',
+          default: '#fff',
         },
         backgroundImage: {
           name: '背景图片',
@@ -55,21 +24,99 @@ const registerMeta = context => {
         },
       },
     },
+    dragCanvas: {
+      name: '拖拽画布',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        disabled: {
+          name: '禁用',
+          type: 'switch',
+          default: false,
+          statusText: false,
+        },
+        direction: {
+          name: '方向',
+          type: 'select',
+          options: [
+            {
+              label: '自由',
+              value: 'both',
+            },
+            {
+              label: 'X方向',
+              value: 'x',
+            },
+            {
+              label: 'Y方向',
+              value: 'y',
+            },
+          ],
+          default: 'both',
+          showInPanel: {
+            conditions: [['.disabled', '$eq', false]],
+          },
+        },
+        enableOptimize: {
+          name: '优化',
+          type: 'switch',
+          default: false,
+          statusText: false,
+          showInPanel: {
+            conditions: [['.disabled', '$eq', false]],
+          },
+        },
+      },
+    },
+    zoomCanvas: {
+      name: '缩放画布',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        disabled: {
+          name: '禁用',
+          type: 'switch',
+          default: false,
+          statusText: false,
+        },
+        enableOptimize: {
+          name: '优化',
+          type: 'switch',
+          default: true,
+          statusText: true,
+          showInPanel: {
+            conditions: [['.disabled', '$eq', false]],
+          },
+        },
+      },
+    },
+    elementInteraction: {
+      name: '元素交互',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        enableNodeHover: {
+          name: '节点悬停',
+          type: 'switch',
+          default: true,
+          statusText: true,
+        },
+        enableEdgeHover: {
+          name: '边悬停',
+          type: 'switch',
+          default: false,
+          statusText: false,
+        },
+      },
+    },
   };
 };
 
 const configObj = registerMeta({ data: {} });
 /** 默认的配置值 */
-export const defaultProps = extractDefault({ config: configObj, value: {} }) as {
-  dragCanvas: {
-    enable: boolean;
-    direction: string;
-    enableOptimize: boolean;
-  };
-  styleCanvas: {
-    background: string;
-    backgroundImage: string;
-  };
-};
+export const defaultProps = extractDefault({ config: configObj, value: {} }) as any;
 
 export default registerMeta;

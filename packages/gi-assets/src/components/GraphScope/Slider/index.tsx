@@ -106,8 +106,6 @@ export default props => {
   const onChange = async key => {
     const params = getParams(key, currentUser);
 
-    console.log('key', key, params);
-
     if (service) {
       const result = await service(params);
       setState(preState => {

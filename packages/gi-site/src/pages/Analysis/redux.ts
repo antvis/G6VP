@@ -84,18 +84,21 @@ export interface StateType {
     components: any[];
     elements: any[];
     layouts: any[];
+    services: any[];
   };
   /** 用户选择的资产,活跃资产 */
   activeAssets: {
     components: any[];
     elements: any[];
     layouts: any[];
+    services: any[];
   };
   /** 用户选择的资产的Key值,活跃资产 */
   activeAssetsKeys: {
     components: string[];
     elements: string[];
     layouts: string[];
+    services: any[];
   };
 
   activeAssetsInformation: {

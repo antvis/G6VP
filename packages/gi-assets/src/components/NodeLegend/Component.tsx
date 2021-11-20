@@ -15,7 +15,7 @@ const Component: React.FunctionComponent<ComponentProps> = props => {
         bindType="node"
         sortKey={`data.${sortKey}`}
         colorKey="style.keyshape.stroke" // 如果是GraphinNode，则可以硬编码写死
-        style={{ position: 'absolute', left: '10px', top: '10px' }}
+        style={{ position: 'absolute', left: '10px', bottom: '20px', right: 'unset', top: 'unset' }}
       >
         <Legend.Node />
       </Legend>

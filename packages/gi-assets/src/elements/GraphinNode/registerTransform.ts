@@ -1,5 +1,11 @@
+import Graphin from '@antv/graphin';
+// 引入资源文件
+import iconLoader from '@antv/graphin-icons';
+import '@antv/graphin-icons/dist/index.css';
 import { scaleLinear } from 'd3-scale';
 import { defaultProps } from './registerMeta';
+
+const icons = Graphin.registerFontFamily(iconLoader);
 
 const getMapping = () => {
   const Mapping = new Map();
@@ -77,15 +83,24 @@ const transform = (s, metaConfig) => {
       let icon: { [key: string]: any } = {
         visible: false,
       };
+      debugger;
       if (Icon.enable) {
         icon = {
           type: Icon.type,
-          value: data[Icon.key] || '',
+          value: data[Icon.key],
         };
         if (Icon.type === 'image') {
           icon.fill = 'transparent';
           icon.size = [keyshapeSize, keyshapeSize];
           icon.clip = { r: keyshapeSize / 2 };
+        }
+
+        if (Icon.type === 'font') {
+          const iconValue = data[Icon.key] || '';
+          icon.type = 'font';
+          icon.fontFamily = 'graphin';
+          icon.value = icons[iconValue] || '';
+          icon.fill = keyShapeColor;
         } else {
           icon.fill = '#fff';
         }
@@ -93,13 +108,14 @@ const transform = (s, metaConfig) => {
       return {
         id: node.id,
         data: node.data,
+        dataType: node.dataType || 'others',
         type: 'graphin-circle',
         style: {
           keyshape: {
             stroke: keyShapeColor,
             fill: keyShapeColor,
             size: keyshapeSize,
-            fillOpacity: 1,
+            fillOpacity: 0.3,
             strokeOpacity: 1,
           },
           label: {

@@ -1,22 +1,22 @@
 import { Behaviors, GraphinContext } from '@antv/graphin';
 import { Scene } from '@antv/l7';
 import { Mapbox } from '@antv/l7-maps';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { ZoomCanvas, DragCanvas } = Behaviors;
 
-const Mapmode = () => {
+const Mapmode = props => {
   const { GiState, setGiState } = GraphinContext as any;
   const { graph } = React.useContext(GraphinContext);
-  const posRef = useRef({ x: 0, y: 0 });
-  const scenceRef = useRef({});
+  const [isLoaded, setIsLoaded] = useState(false);
+  const scenceRef = useRef({} as Scene);
   const initlayout = useRef({});
 
   useEffect(() => {
     const scene = new Scene({
       id: document.querySelector('.graphin-core') as HTMLDivElement,
       map: new Mapbox({
-        style: 'dark',
+        style: props.mapmode.theme,
         pitch: 43,
         center: [113.033, 29.65],
         zoom: 7,
@@ -25,12 +25,18 @@ const Mapmode = () => {
 
     scene.on('load', () => {
       onSceneLoaded(scene);
+      setIsLoaded(true);
     });
 
     scenceRef.current = scene;
     initlayout.current = GiState.layout;
     return () => cleanup(scene);
   }, []);
+
+  React.useLayoutEffect(() => {
+    if (!isLoaded) return;
+    scenceRef.current?.setMapStyle(props.mapmode.style);
+  }, [props.mapmode.theme]);
 
   const cleanup = scene => {
     //画布移动回graphin内部
@@ -44,7 +50,6 @@ const Mapmode = () => {
     const graphContainer = document.querySelector('.graphin-core') as HTMLElement;
     graphContainer.appendChild(graphCanvas);
     //布局还原
-    console.log(initlayout.current);
 
     setGiState({
       ...GiState,
@@ -100,7 +105,6 @@ const Mapmode = () => {
     <>
       <ZoomCanvas disabled={true} />
       <DragCanvas disabled={true} />
-      <button onClick={cleanup}></button>
     </>
   );
 };
