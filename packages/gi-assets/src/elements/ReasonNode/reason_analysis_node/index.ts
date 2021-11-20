@@ -9,6 +9,8 @@ import drawBizIntervene from './draw_bizIntervene';
 import drawBizQuotas from './draw_bizQuotas';
 import drawEmpty from './draw_empty';
 
+import { statistics_data } from './preprocess';
+
 export type IGroup = any;
 export type ModelConfig = any;
 export type Item = any;
@@ -20,7 +22,7 @@ export const registerNode = Graphin => {
       draw(cfg: ModelConfig | undefined, group: IGroup | undefined) {
         const data = cfg as ITreeData;
 
-        console.log('registerNode', data)
+        console.log('registerNode', data, Graphin)
         
         data.data.attrShowingCfg = {
           bizQuotas: {
