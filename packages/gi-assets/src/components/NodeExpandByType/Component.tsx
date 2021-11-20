@@ -196,8 +196,8 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
               }
             >
               <div>
-                <div style={{ marginBottom: '6px' }}>
-                  选择节点：
+                <div style={{ marginBottom: '6px' }} className="custom-item">
+                  <div>选择节点：</div>
                   <Select
                     mode="multiple"
                     allowClear
@@ -233,7 +233,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
                   </Button>
                 </div>
                 <div style={{ marginBottom: '6px' }}>
-                  选择扩散类型
+                  <div style={{ marginBottom: '5px' }}>选择扩散类型 </div>
                   <Checkbox.Group
                     options={NodeTypes}
                     defaultValue={['family']}

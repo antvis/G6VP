@@ -39,7 +39,7 @@ const BaseNavbar = props => {
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
         <img
-          src="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*_E3uRppw3PUAAAAAAAAAAAAAARQnAQ"
+          src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
           alt="logo"
           style={{ height: '30px', marginRight: '40px' }}
           onClick={() => {

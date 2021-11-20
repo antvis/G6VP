@@ -33,6 +33,7 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
+import EdgeBunding from './EdgeBundling';
 
 export {
   Timeline,
@@ -64,6 +65,7 @@ export {
   AjustLayout,
   NodeExpandByTypes,
   PatternMatch,
+  EdgeBunding,
 };
 
 // /**
