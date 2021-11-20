@@ -26,7 +26,7 @@ const registerMeta = context => {
           valuePath: 'size',
           default: {
             mapping: false,
-            fixed: 5,
+            fixed: 0.5,
             scale: {
               custom: false, // 是否采取自定义映射
               range: [3, 30], // 值域
@@ -153,7 +153,7 @@ const registerMeta = context => {
           name: '映射字段',
           type: 'select',
           useFont: true,
-          default: 'source',
+          default: 'label',
           valuePath: 'label.key',
           showInPanel: {
             conditions: [['label.showlabel', '$eq', true]],
@@ -180,7 +180,7 @@ const registerMeta = context => {
           fixedComponents: ['flat'],
           default: {
             mapping: false,
-            fixed: '',
+            fixed: '#fff',
           },
           showInPanel: {
             conditions: [['label.showlabel', '$eq', true]],

@@ -1,5 +1,5 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { RobotOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, RobotOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,16 +16,20 @@ const options = [
   {
     name: '组件',
     key: 'components',
+    icon: <AppstoreOutlined />,
   },
   {
     name: '元素',
     key: 'elements',
+    icon: <BgColorsOutlined />,
   },
   {
     name: '布局',
     key: 'layouts',
+    icon: <BranchesOutlined />,
   },
 ];
+
 let ref = {
   components: [],
   elements: [],
@@ -97,6 +101,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   return (
     <div>
       <Drawer
+        className="gi-assets-center-drawer"
         title="资产中心"
         placement="right"
         onClose={handleCloseAssetsCenter}
@@ -107,10 +112,18 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         {assetsCenter.visible && (
           <Tabs defaultActiveKey={assetsCenter.hash}>
             {options.map(category => {
-              const { name, key } = category;
+              const { name, key, icon } = category;
               const defaultValue = activeAssetsKeys[key];
               return (
-                <TabPane tab={name} key={key}>
+                <TabPane
+                  tab={
+                    <span className="gi-assets-center-pane-title">
+                      {icon}
+                      {name}
+                    </span>
+                  }
+                  key={key}
+                >
                   <CheckCard.Group
                     multiple
                     onChange={val => {
