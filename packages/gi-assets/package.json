@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "GraphInsight 离线资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -15,11 +15,16 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@antv/graphin-icons": "^1.0.0",
     "@antv/l7": "^2.5.25",
     "@antv/l7-maps": "^2.5.25",
+    "@antv/layout": "^0.1.19-beta.3",
+    "ace-gremlin-editor": "^0.0.13-beta.1",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
-    "react-force-graph-3d": "^1.21.10"
+    "immer": "^9.0.6",
+    "react-force-graph-3d": "^1.21.10",
+    "use-immer": "^0.6.0"
   },
   "peerDependencies": {
     "@ant-design/charts": "^1.2.11",

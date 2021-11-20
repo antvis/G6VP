@@ -1,21 +1,14 @@
 const baseNodeConfig = {
   id: 'GraphinNode',
-  name: '官方内置节点',
   props: {},
 };
 const baseEdgeConfig = {
   id: 'GraphinEdge',
-  name: '官方内置边',
   props: {},
 };
 const baseComponentsConfig = [
   {
     id: 'NodeLegend',
-    props: {},
-    enable: true,
-  },
-  {
-    id: 'CanvasSetting',
     props: {},
     enable: true,
   },
@@ -26,11 +19,12 @@ const baseComponentsConfig = [
   },
 ];
 const baseLayoutConfig = {
-  id: 'Layout',
-  name: '官方内置布局',
+  id: 'GraphinForce',
   props: {
-    type: 'concentric',
-    options: {},
+    type: 'graphin-force',
+    preset: {
+      type: 'concentric',
+    },
   },
 };
 

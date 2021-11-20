@@ -1,13 +1,12 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { Button, Col, Drawer, Row, Tabs, Avatar, Typography } from 'antd';
+import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, RobotOutlined } from '@ant-design/icons';
+import { Avatar, Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
 import React from 'react';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
 import { queryAssetList } from '../../services/assets';
+import './index.less';
 import useAssetsCenter from './useHook';
-import { RobotOutlined } from '@ant-design/icons';
-import  './index.less'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -17,16 +16,20 @@ const options = [
   {
     name: '组件',
     key: 'components',
+    icon: <AppstoreOutlined />,
   },
   {
     name: '元素',
     key: 'elements',
+    icon: <BgColorsOutlined />,
   },
   {
     name: '布局',
     key: 'layouts',
+    icon: <BranchesOutlined />,
   },
 ];
+
 let ref = {
   components: [],
   elements: [],
@@ -67,8 +70,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   };
   const Footer = (
     <div>
-      <Button onClick={handleCancel}>取消</Button>
-      <Button onClick={handleOk} type="primary">
+      <Button onClick={handleCancel} size="small" style={{ borderRadius: 4, marginRight: 8 }}>
+        取消
+      </Button>
+      <Button onClick={handleOk} type="primary" size="small" style={{ borderRadius: 4 }}>
         确认
       </Button>
     </div>
@@ -77,25 +82,26 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     ref[key] = val;
   };
 
-  const cardContent = (item) =>{
-    const {version, ownerNickname, gmtModified,} = item;
+  const cardContent = item => {
+    const { version = '最新', ownerNickname = '官方', gmtModified } = item;
     return (
       <div className="asset-detail">
-        <ul >
+        <ul>
           <li>作者：{ownerNickname}</li>
           <li>版本：{version}</li>
-          <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li>
+          {/* <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li> */}
         </ul>
-        <div className="asset-detail-buttom">
-          {/* <div className="asset-favorite">Text</div> */}
-        </div>
+        {/* <div className="asset-detail-buttom"> */}
+        {/* <div className="asset-favorite">Text</div> */}
+        {/* </div> */}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
       <Drawer
+        className="gi-assets-center-drawer"
         title="资产中心"
         placement="right"
         onClose={handleCloseAssetsCenter}
@@ -106,10 +112,18 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         {assetsCenter.visible && (
           <Tabs defaultActiveKey={assetsCenter.hash}>
             {options.map(category => {
-              const { name, key } = category;
+              const { name, key, icon } = category;
               const defaultValue = activeAssetsKeys[key];
               return (
-                <TabPane tab={name} key={key}>
+                <TabPane
+                  tab={
+                    <span className="gi-assets-center-pane-title">
+                      {icon}
+                      {name}
+                    </span>
+                  }
+                  key={key}
+                >
                   <CheckCard.Group
                     multiple
                     onChange={val => {
@@ -119,19 +133,27 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                   >
                     <Row
                       gutter={[
-                        { xs: 8, sm: 16, md: 16, lg: 16 },
-                        { xs: 8, sm: 16, md: 16, lg: 16 },
+                        { xs: 8, sm: 12, md: 12, lg: 12 },
+                        { xs: 8, sm: 12, md: 12, lg: 12 },
                       ]}
+                      style={{ padding: '8px 0px' }}
                     >
                       {assets[key].map(item => {
                         const { id: AssetId, name: AssetName } = item;
                         return (
-                          <Col key={AssetId} >
-                            <CheckCard 
-                              className="assetsCardStyle" 
+                          <Col key={AssetId}>
+                            <CheckCard
+                              bordered={false}
+                              className="assetsCardStyle"
                               title={AssetName}
-                              avatar={<Avatar style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }} icon={<RobotOutlined />} size={24} />} 
-                              description={cardContent(item)} 
+                              avatar={
+                                <Avatar
+                                  style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
+                                  icon={<RobotOutlined />}
+                                  size={24}
+                                />
+                              }
+                              description={cardContent(item)}
                               value={AssetId}
                             />
                           </Col>

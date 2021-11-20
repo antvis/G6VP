@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { isMock, SERVICE_URL_PREFIX, ASSET_TYPE } from './const';
+import { ASSET_TYPE, isMock, SERVICE_URL_PREFIX } from './const';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -30,7 +30,7 @@ export const getProjectById = async (id: string) => {
     } else {
       activeAssetsKeys = {
         elements: [config.node.id, config.edge.id],
-        components: [...config.components.map(c => c.id), 'NodeLegend', 'CanvasSetting'],
+        components: [...config.components.map(c => c.id)],
         layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
       };
     }
@@ -38,6 +38,7 @@ export const getProjectById = async (id: string) => {
       config,
       data,
       activeAssetsKeys,
+      name: project.name,
     };
   };
 

@@ -3,12 +3,15 @@ import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Avatar, Layout } from 'antd';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import useUserInfo from '../../hooks/useUserInfo';
 import styles from './index.less';
 
 const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
   const { active = 'workspace' } = props;
+  const userInfo = useUserInfo();
+
   const defaultLeft = (
     <>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
@@ -23,9 +26,10 @@ const BaseNavbar = props => {
     <>
       <QuestionCircleOutlined style={{ marginRight: 26 }} />
       <BellOutlined style={{ marginRight: 26 }} />
+      <span>{userInfo && userInfo.nickName}</span>
       <Avatar
-        style={{ width: '21px', height: '21px' }}
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        style={{ width: '21px', height: '21px', marginLeft: 5 }}
+        src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
       />
     </>
   );

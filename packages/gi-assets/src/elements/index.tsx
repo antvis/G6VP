@@ -7,7 +7,8 @@ import GraphinNode from './GraphinNode';
 import MarkerNode from './MarkerNode';
 import RectNode from './RectNode';
 import SimpleNode from './SimpleNode';
+import ReasonNode from './ReasonNode';
 // TODO fs文件自动写入
 
 /** 图元素市场 */
-export { F2ENode, GraphinNode, RectNode, GraphinEdge, DonutNode, SimpleNode, MarkerNode, ClusterNode, Circle };
+export { F2ENode, GraphinNode, RectNode, GraphinEdge, DonutNode, SimpleNode, MarkerNode, ClusterNode, Circle, ReasonNode };

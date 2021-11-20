@@ -1,3 +1,14 @@
+const options = [
+  {
+    value: 'dark',
+    lable: 'dark',
+  },
+  {
+    value: 'light',
+    lable: 'light',
+  },
+];
+
 const registerMeta = context => {
   return {
     /** 放大缩小 */
@@ -13,6 +24,13 @@ const registerMeta = context => {
           default: true,
           statusText: true,
         },
+        // theme: {
+        //   name: '主题',
+        //   type: 'select',
+        //   useFont: true,
+        //   default: 'dark',
+        //   options,
+        // },
       },
     },
   };

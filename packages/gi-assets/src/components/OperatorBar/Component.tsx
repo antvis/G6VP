@@ -4,11 +4,10 @@ import './index.less';
 export interface OperatorBarProps {}
 
 const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
-  console.log(props);
   //@ts-ignore
   const { components, assets } = props;
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
-  console.log('sortedComponents', sortedComponents);
+
   return (
     <div className="gi-operator-bar" style={{ padding: '8px' }}>
       <Space>

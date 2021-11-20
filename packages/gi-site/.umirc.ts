@@ -72,7 +72,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/g6/4.4.1/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
