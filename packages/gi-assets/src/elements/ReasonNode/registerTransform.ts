@@ -17,7 +17,9 @@ const transform = (s, metaConfig) => {
         label: data[labelKey],
       };
     });
-    console.log('transform nodes', nodes);
+    // const initNodes = statistics_data(nodes);
+    // console.log('transform nodes', initNodes);
+    // return initNodes;
     return nodes;
   } catch (error) {
     console.error('parse transform error:', error);

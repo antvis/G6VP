@@ -22,8 +22,10 @@ export default function drawRose(group: any, data: ITreeData) {
   // 显示属性
   const { roseCompare = {} } = attrShowingCfg as any;
   // 玫瑰图先注释下，数据处理上有些问题
-  return;
+  // return;
   if (!roseCompare.show_group) return; // 如果show_group是false就不用绘制了
+
+  RoseChangeMapping.getInstance().setMappingData(changes);
 
   // 扇形角度
   let startAngle = Cfg.Start_Angle;
@@ -66,12 +68,19 @@ function getDrawingValueByUnit(change: IChangeItem) {
 
   // 检查下默认单位
   const { unit } = props[0] ?? {};
-  const max =
-    RoseChangeMapping.getInstance()
-      .getMappingData()
-      .get(name) ?? 1;
-  const before = Math.log10(Math.abs(beforeValue_maybe / (max === 0 ? 1 : max))) || 0;
-  const after = Math.log10(Math.abs(afterValue_maybe / (max === 0 ? 1 : max)));
+  // const max =
+  //   RoseChangeMapping.getInstance()
+  //     .getMappingData()
+  //     .get(name) ?? 1;
+  // const max = 1422772;
+  // const before = Math.abs(beforeValue_maybe / (max === 0 ? 1 : max)) || 0;
+  // const after = Math.abs(afterValue_maybe / (max === 0 ? 1 : max));
+
+  const max = 50;
+
+  const before = Math.abs(Math.random() * 50 / max) || 0;
+  const after = Math.abs(Math.random() * 50 / max);
+
 
   console.log('before after',before,beforeValue_maybe, after, afterValue_maybe)
   return {
