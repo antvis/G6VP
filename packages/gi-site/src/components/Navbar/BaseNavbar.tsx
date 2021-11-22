@@ -14,6 +14,9 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' && styles.active}>
+        <Link to="/">首页</Link>
+      </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
         <Link to="/workspace">项目列表</Link>
       </div>
