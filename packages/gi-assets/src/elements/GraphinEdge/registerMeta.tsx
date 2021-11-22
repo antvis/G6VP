@@ -108,6 +108,41 @@ const registerMeta = context => {
         },
       },
     },
+    multilple: {
+      name: '多边设置',
+      type: 'group',
+      enableHide: false,
+      fold: true,
+      children: {
+        enable: {
+          name: '是否开启',
+          type: 'switch',
+          default: true,
+          statusText: true,
+        },
+        poly: {
+          name: '曲线间隔',
+          type: 'stepper',
+          min: 0,
+          max: 100,
+          default: 50,
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+        loop: {
+          name: '自环间隔',
+          type: 'stepper',
+          min: 0,
+          max: 50,
+          default: 10,
+          showInPanel: {
+            conditions: [['.enable', '$eq', true]],
+          },
+        },
+      },
+    },
+
     dash: {
       name: '虚线样式',
       type: 'group',

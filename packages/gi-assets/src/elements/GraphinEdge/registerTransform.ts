@@ -1,6 +1,6 @@
+import { Utils } from '@antv/graphin';
 import { scaleLinear } from 'd3-scale';
 import { defaultProps } from './registerMeta';
-
 const getMapping = () => {
   const Mapping = new Map();
   return (enumValue, value) => {
@@ -22,12 +22,24 @@ const transform = (s, config) => {
     /** 分别生成Size和Color的Mapping */
 
     const mappingEdgeByColor = getMapping();
-    const { color: edgeColor, label: edgeLabel, size: edgeSize, dash: dash, halo: edgeHalo } = mathEdgeConfig;
+    const {
+      color: edgeColor,
+      label: edgeLabel,
+      size: edgeSize,
+      dash: dash,
+      halo: edgeHalo,
+      multilple,
+    } = mathEdgeConfig;
 
     /** 分别生成Size和Color的Mapping */
     const mappingEdgeBySize = scaleLinear().domain(edgeSize?.scale?.domain).range(edgeSize?.scale?.range);
+    /** 多边处理 */
+    let processedEdge = s.edges;
+    if (multilple.enable) {
+      processedEdge = Utils.processEdges(s.edges, { poly: multilple.poly || 50, loop: multilple.loop || 10 });
+    }
 
-    const edges = s.edges.map(edge => {
+    const edges = processedEdge.map(edge => {
       const { data } = edge;
       const enumValueBySize = data[edgeSize?.key || 0];
       /** 根据Color字段映射的枚举值 */
@@ -43,6 +55,7 @@ const transform = (s, config) => {
         dataType: edge.dataType || 'others',
         style: {
           keyshape: {
+            ...edge.style?.keyshape,
             stroke: edgeColor?.mapping ? edgeColor?.scale?.range?.[matchColorIndex] : edgeColor?.fixed,
             lineWidth: edgeSize?.mapping ? mappingEdgeBySize(enumValueBySize) : edgeSize?.fixed,
             lineDash: dash?.showdash ? [dash?.length?.fixed, dash?.length.fixed] : '',

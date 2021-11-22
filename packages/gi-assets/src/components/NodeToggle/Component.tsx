@@ -45,28 +45,32 @@ const NodeToggle: React.FunctionComponent<NodeToggleProps> = props => {
 
   React.useEffect(() => {
     const handleClick = e => {
-      const nodeId = e.item.getModel().id;
-      NodeExpandStatus[nodeId] = !NodeExpandStatus[nodeId];
-      const { service } = services.find(sr => sr.id === serviceId);
-      if (!service) {
-        return;
+      try {
+        const nodeId = e.item.getModel().id;
+        NodeExpandStatus[nodeId] = !NodeExpandStatus[nodeId];
+        const { service } = services.find(sr => sr.id === serviceId);
+        if (!service) {
+          return;
+        }
+        service({
+          id: nodeId,
+        }).then(res => {
+          const { nodes, edges } = res;
+          if (!res) {
+            return {
+              nodes,
+              edges,
+            };
+          }
+          if (NodeExpandStatus[nodeId]) {
+            dispatch.changeData(handleExpand(data, res));
+          } else {
+            dispatch.changeData(handleCollaspe(data, res));
+          }
+        });
+      } catch (e) {
+        console.log(e);
       }
-      service({
-        id: nodeId,
-      }).then(res => {
-        const { nodes, edges } = res;
-        if (!res) {
-          return {
-            nodes,
-            edges,
-          };
-        }
-        if (NodeExpandStatus[nodeId]) {
-          dispatch.changeData(handleExpand(data, res));
-        } else {
-          dispatch.changeData(handleCollaspe(data, res));
-        }
-      });
     };
 
     graph.on('node:click', handleClick);
