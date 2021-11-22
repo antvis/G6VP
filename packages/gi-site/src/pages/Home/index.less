@@ -37,38 +37,47 @@
   .videoContainer {
     position: relative;
     height: 600px;
-    background: #ccc;
+    // background-image: url('./image/background.png');
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-size: cover;
     .fillTop {
       position: absolute;
       bottom: 0;
       width: 100%;
       height: 130px;
       overflow: hidden;
-      background-image: url('./image//Combined\ Shape.svg');
+      background-image: url('./image/shape-top.png');
       background-repeat: no-repeat;
       background-size: cover;
+    }
+    .container {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 1440px;
+      margin: 0 auto;
     }
     .text {
       position: absolute;
       top: 157px;
-      left: 50%;
+      left: 130px;
       color: #000000;
-      text-align: center;
-      transform: translate(-50%, 0);
+      text-align: left;
+
       h1 {
-        margin-bottom: 20px;
-        font-weight: 600;
-        font-size: 64px;
+        color: #232323;
+        font-size: 40px;
         font-family: PingFangSC-Semibold;
-        line-height: 64px;
-        letter-spacing: 1.6px;
+        letter-spacing: 0;
       }
       p {
-        width: 572px;
-        margin-bottom: 62px;
-        font-size: 22px;
-        font-family: PingFangSC-Regular;
-        line-height: 40px;
+        color: #8a8a8a;
+        font-size: 14px;
+        font-family: PingFangSC-Medium;
+        letter-spacing: 0;
       }
       button {
         width: 107px;
@@ -78,12 +87,40 @@
       }
       .leftButton {
         margin-right: 10px;
-        color: #fff;
-        background: #597ef7;
+        color: #3056e3;
+        background: #ffffff;
+        border: 1px solid #3056e3;
+        border-radius: 4px;
+        box-shadow: 1px -1px 8px 0 rgba(152, 152, 152, 0.31), -1px 1px 8px 0 rgba(202, 202, 202, 0.21);
       }
       .rightButton {
-        margin-left: 10px;
-        color: #597ef7;
+        color: #ffffff;
+        background: #3056e3;
+        border-radius: 4px;
+        box-shadow: 2px 2px 8px 0 #95acff;
+      }
+    }
+    .carousel {
+      position: absolute;
+      top: 40px;
+      right: 50px;
+      width: 1304px;
+      height: 600px;
+      background-image: url('./image/computer.png');
+      background-repeat: round;
+      background-size: cover;
+      :global {
+        .ant-carousel {
+          position: absolute;
+          top: 120px;
+          right: 229px;
+          width: 498px;
+          height: 308px;
+          img {
+            width: 498px;
+            height: 308px;
+          }
+        }
       }
     }
   }
@@ -110,8 +147,13 @@
 
   .productContainer {
     padding: 64px 0 90px;
-    background: #ebebeb;
+    background-image: linear-gradient(143deg, #3056e3 12%, #3a6eed 71%, rgba(78, 133, 244, 0.99) 100%);
     box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, 0.1);
+    h2 {
+      color: #ffffff;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
     .cardContainer {
       display: flex;
       flex-direction: row;
@@ -120,33 +162,43 @@
       max-width: 1296px;
       margin: 0 auto;
       .featrueCard {
-        width: 632px;
-        height: 495px;
+        width: 275.9px;
+        height: 270px;
         margin-bottom: 16px;
         color: #000000;
         text-align: center;
-        background: #f9f9fb;
-        border-radius: 10px;
+        background: white;
+        border-radius: 8px;
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
         cursor: pointer;
-        img {
-          width: 632px;
-          height: 372px;
-          background: #f9f9fb;
-          border-radius: 10px 10px 0 0;
+        div {
+          display: flex;
+          flex-wrap: nowrap;
+          align-content: center;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 170px;
+          background: rgb(230, 240, 254);
+          border-radius: 8px 8px 0 0;
+          img {
+            width: 251px;
+            height: 144px;
+          }
         }
         h3 {
-          margin: 32px 0 9px;
-          font-weight: 600;
-          font-size: 28px;
-          font-family: PingFangSC-Medium;
-          line-height: 28px;
+          color: #303030;
+          font-size: 24px;
+          font-family: PingFangSC-Semibold;
+          letter-spacing: 0;
+          text-align: center;
         }
         p {
-          font-size: 16px;
+          color: rgba(0, 0, 0, 0.45);
+          font-size: 14px;
           font-family: PingFangSC-Regular;
-          line-height: 22px;
-          opacity: 0.85;
+          letter-spacing: 0;
+          text-align: center;
         }
       }
     }
@@ -154,14 +206,14 @@
 
   .resolveContainer {
     position: relative;
-    padding: 80px 0 160px;
+    padding: 80px 0 80px;
     .fillTop {
       position: absolute;
       top: 0;
       width: 100%;
       height: 170px;
       overflow: hidden;
-      background-image: url('./image//Combined\ Shape.svg');
+      background-image: url('./image/shape.png');
       background-repeat: no-repeat;
       background-position-y: bottom;
       background-size: cover;
