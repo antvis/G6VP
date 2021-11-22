@@ -1,5 +1,5 @@
 import { CaretDownOutlined } from '@ant-design/icons';
-import { Avatar, Button, Layout } from 'antd';
+import { Avatar, Button, Layout, Carousel } from 'antd';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -15,16 +15,10 @@ const leftContent = (
       <Link to="/">首页</Link>
     </span>
     <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/">解决方案</Link>
+      <Link to="/workspace">项目列表</Link>
     </span>
     <span style={{ marginRight: '36px', cursor: 'pointer' }}>
       <Link to="/market">组件市场</Link>
-    </span>
-    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/">最佳实践</Link>
-    </span>
-    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/">学习中心</Link>
     </span>
   </>
 );
@@ -41,29 +35,48 @@ const rightContent = (
 const Home = () => {
   return (
     <Layout>
-      <BaseNavbar leftContent={leftContent} rightContent={rightContent} />
+      <BaseNavbar leftContent={leftContent} rightContent={rightContent} active="home" />
       <Content style={{ background: '#fff' }}>
         <div className={styles.contentContaniner}>
           <div className={styles.videoContainer}>
-            <div></div>
             <div className={styles.fillTop}></div>
-            <div className={styles.text}>
-              <h1>图可视分析平台</h1>
-              <p>一款在线图分析平台，帮助用户在关联数据中发现业务价值</p>
-              <div>
-                <Button className={styles.leftButton}>
-                  <Link to="/market">组件市场</Link>
-                </Button>
-                <Button className={styles.rightButton}>
-                  <Link to="/workspace">立即使用</Link>
-                </Button>
+            <div className={styles.container}>
+              <div className={styles.text}>
+                <h1>图可视分析平台</h1>
+                <p>一款在线图分析平台，帮助用户在关联数据中发现业务价值</p>
+                <div>
+                  <Button className={styles.leftButton}>
+                    <Link to="/market">组件市场</Link>
+                  </Button>
+                  <Button className={styles.rightButton}>
+                    <Link to="/workspace">立即使用</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className={styles.carousel}>
+                <Carousel autoplay>
+                  <div>
+                    <img
+                      src={'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*IqFVR4U1HZ0AAAAAAAAAAAAAARQnAQ'}
+                    ></img>
+                  </div>
+                  <div>
+                    <img
+                      src={'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*d8c1Sp9018oAAAAAAAAAAAAAARQnAQ'}
+                    ></img>
+                  </div>
+                  <div>
+                    <img
+                      src={'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*goIoRIevfN8AAAAAAAAAAAAAARQnAQ'}
+                    ></img>
+                  </div>
+                </Carousel>
               </div>
             </div>
           </div>
 
           <div className={styles.productContainer}>
             <h2 className={styles.h2}>{levelTitleMapping['product'].title}</h2>
-            <p className={styles.p2}>{levelTitleMapping['product'].description}</p>
             <div className={styles.cardContainer}>
               {levelTitleMapping['product'].list.map(item => (
                 <FeatureCard key={item.title} data={item} />
@@ -73,17 +86,17 @@ const Home = () => {
 
           <div className={styles.resolveContainer}>
             <div className={styles.fillTop}></div>
-            <h2 className={styles.h2}>{levelTitleMapping['resolve'].title}</h2>
+            {/* <h2 className={styles.h2}>{levelTitleMapping['resolve'].title}</h2>
             <p className={styles.p2}>{levelTitleMapping['resolve'].description}</p>
             <div className={styles.cardContainer}>
               {levelTitleMapping['resolve'].list.map(item => (
                 <SolutionCard key={item.title} data={item} />
               ))}
             </div>
-            <div className={styles.fillBottom}></div>
+            <div className={styles.fillBottom}></div> */}
           </div>
 
-          <div className={styles.clientContainer}>
+          {/* <div className={styles.clientContainer}>
             <h2 className={styles.h2}>{levelTitleMapping['client'].title}</h2>
             <p className={styles.p2}>{levelTitleMapping['client'].description}</p>
             <div className={styles.cardContainer}>
@@ -106,12 +119,12 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Content>
 
       <Footer className={styles.footerContainer} style={{ textAlign: 'center' }}>
-        <div className={styles.fillTop}></div>
+        {/* <div className={styles.fillTop}></div> */}
         AntV ©2021 Created by GraphInsight
       </Footer>
     </Layout>
