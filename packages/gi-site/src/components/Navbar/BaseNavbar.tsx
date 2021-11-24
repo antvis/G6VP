@@ -1,9 +1,11 @@
 import { useHistory } from '@alipay/bigfish';
 import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { Avatar, Layout } from 'antd';
+import { Avatar, Layout, Tooltip } from 'antd';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
+import ThemeVars from '../ThemeVars';
+import ThemeSwitch from '@alipay/theme-tools';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -30,10 +32,6 @@ const BaseNavbar = props => {
       <QuestionCircleOutlined style={{ marginRight: 26 }} />
       <BellOutlined style={{ marginRight: 26 }} />
       <span>{userInfo && userInfo.nickName}</span>
-      <Avatar
-        style={{ width: '21px', height: '21px', marginLeft: 5 }}
-        src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
-      />
     </>
   );
 
@@ -52,7 +50,22 @@ const BaseNavbar = props => {
         {leftContent}
       </div>
       {children}
-      <div className={styles.right}>{rightContent}</div>
+      <div className={styles.right}>
+        {rightContent}
+        <Avatar
+          style={{ width: '21px', height: '21px', marginLeft: 5 }}
+          src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
+        />
+        <Tooltip title="切换主题">
+          <ThemeSwitch
+            themeVars={ThemeVars}
+            antdCssLinks={{
+              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/dark.css',
+              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/light.css',
+            }}
+          ></ThemeSwitch>
+        </Tooltip>
+      </div>
     </Header>
   );
 };
