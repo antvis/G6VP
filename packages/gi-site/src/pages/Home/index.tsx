@@ -9,33 +9,17 @@ import styles from './index.less';
 import SolutionCard from './SolutionCard';
 
 const { Content, Footer } = Layout;
-const leftContent = (
-  <>
-    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/">首页</Link>
-    </span>
-    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/workspace">项目列表</Link>
-    </span>
-    <span style={{ marginRight: '36px', cursor: 'pointer' }}>
-      <Link to="/market">组件市场</Link>
-    </span>
-  </>
-);
+
 const rightContent = (
   <>
     <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>
-    <Avatar
-      style={{ width: '21px', height: '21px' }}
-      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-    />
   </>
 );
 
 const Home = () => {
   return (
     <Layout>
-      <BaseNavbar leftContent={leftContent} rightContent={rightContent} active="home" />
+      <BaseNavbar rightContent={rightContent} active="home" />
       <Content style={{ background: '#fff' }}>
         <div className={styles.contentContaniner}>
           <div className={styles.videoContainer}>
