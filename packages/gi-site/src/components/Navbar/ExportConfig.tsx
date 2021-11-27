@@ -1,17 +1,18 @@
-import { CopyOutlined, UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
-import dayjs from 'dayjs';
 import MonacoEditor from 'react-monaco-editor';
 import { useSelector } from 'react-redux';
+import { getRiddleAppCode, useCodeSandbox, useHtml, useRiddle } from '../../hooks';
 import { copyText, saveAs } from '../utils';
-import { useRiddle, useCodeSandbox, getRiddleAppCode } from '../../hooks';
 import './index.less';
 
 const ExportConfig = props => {
   const st = useSelector(state => state);
 
   const exampleCode = getRiddleAppCode(st);
+  const htmlCode = useHtml(st);
   const openRiddle = useRiddle(st);
+
   const openCSB = useCodeSandbox(st);
   /** 复制 */
   const handleCopy = () => {
@@ -25,8 +26,9 @@ const ExportConfig = props => {
 
   /** 下载 */
   const handleExport = () => {
-    let [code, ext] = [exampleCode, '.js'];
-    saveAs(code, `graphInsight-${dayjs().format('YYYYMMDD HH:mm:ss')}${ext}`);
+    let [code, ext] = [htmlCode, '.html'];
+    //@ts-ignore
+    saveAs(code, `gi-export-project-id-${st.id}${ext}`);
   };
 
   return (
@@ -40,7 +42,7 @@ const ExportConfig = props => {
               minimap: { enabled: false },
               readOnly: true,
             }}
-            value={exampleCode}
+            value={htmlCode}
           />
         </div>
       </div>
@@ -51,11 +53,13 @@ const ExportConfig = props => {
         <Button type="primary" onClick={handleExport}>
           <UploadOutlined /> 导出
         </Button> */}
-        <Button onClick={openRiddle}>
-          <UploadOutlined /> 在Riddle中打开
+
+        <Button type="primary" onClick={handleExport}>
+          <UploadOutlined /> 导出HTML
         </Button>
-        <Button onClick={openCSB}>
-          <UploadOutlined /> 在csb中打开
+
+        <Button onClick={openRiddle} disabled>
+          <UploadOutlined /> 在Riddle中打开
         </Button>
       </div>
     </div>
