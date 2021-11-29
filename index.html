@@ -10,91 +10,119 @@
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.5.0/dist/index.css" />
   </head>
   <body>
     <div id="root"></div>
 
     <script type="text/babel">
       window.onload = () => {
-        console.log('Graphin & GIAssets & GISDK', Graphin, GIAssets, GISDK);
+        const GeaMakerGISDK = () => {
+          const giProjectURL = 'http://storehouse-afx-18554.gz00b.dev.alipay.net/project/id';
+          const giProjectId = '2700003';
 
-        // Mock 的 Config 配置
-        const config = {
-          node: {
-            id: 'GraphinNode',
-            props: {},
-          },
-          edge: {
-            id: 'GraphinEdge',
-            props: {},
-          },
-          components: [
-            {
-              id: 'NodeCount',
-              props: {
-                enable: true,
-              },
-            },
-          ],
-          layout: {
-            id: 'graphin-force',
-            props: {
-              type: 'graphin-force',
-            },
-          },
-        };
+          const { utils, ...ASSETS } = GIAssets;
 
-        const MyAssets = {
-          elements: {},
-          components: {
-            NodeCount: {
-              component: () => {
-                return <div>NodeCount</div>;
-              },
-              info: {
-                id: 'NodeCount',
-              },
-              registerMeta: () => {},
-            },
-          },
-        };
-
-        const MyServices = [
-          {
-            id: 'GI_SERVICE_INTIAL_GRAPH',
-            service: () => {
-              return new Promise(resolve => {
-                resolve({
-                  nodes: [{ id: 'node-1' }, { id: 'node-2' }],
-                  edges: [{ source: 'node-1', target: 'node-2' }],
-                });
-              });
-            },
-          },
-        ];
-
-        const ASSETS = {
-          elements: { ...GIAssets.default.elements, ...MyAssets.elements },
-          components: {
-            ...GIAssets.default.components,
-            ...MyAssets.components,
-          },
-          services: [...MyServices],
-        };
-
-        const DEMO = () => {
-          return <GISDK.default config={config} assets={ASSETS} />;
-        };
-
-        const LoadGraphSDK = () => {
-          const giProjectURL = 'https://storehouse.test.alipay.net/project/list/100004';
           const servicesOpt = [
             {
               id: 'GI_SERVICE_INTIAL_GRAPH',
               content: ' (data) => {\n return data \n}',
               mode: 'MOCK',
               name: 'GI 初始化服务',
+              others: {
+                id: 2900004,
+                gmtCreate: '2021-11-16T10:38:36.000Z',
+                gmtModified: '2021-11-16T10:38:36.000Z',
+                members: null,
+                sourceCodeUrl: null,
+                distCodeUrl: null,
+                yuyanBuildId: null,
+                yuyanAssetsId: null,
+                publicLevel: null,
+                tag: null,
+                status: null,
+                forkFrom: null,
+                version: '0.0.1',
+                description: 'GI 初始化服务',
+                name: 'GI_SERVICE_INTIAL_GRAPH',
+                type: 3,
+                meta: null,
+                ownerId: '195094',
+                ownerNickname: '聚则',
+                displayName: 'GI 初始化服务',
+                branchName: 'master',
+                sourceCode: 'export default (data) => {\n return data \n}',
+                projectId: '2700003',
+                buildLogUrl: null,
+              },
+            },
+            {
+              id: 'WDY_FAMILY',
+              content:
+                " (data) => {\n  const transform =(d)=>{\n    const {nodes,edges}=d;\n    return {\n      nodes:nodes.map(n=>{return {id:n.id,data:n}}),\n      edges:edges.map(n=>{return {source:n.source,target:n.target,data:n}})\n    }\n  }\n  const familyDataTime1 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n  ]\n}\nconst familyDataTime2 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n  ]\n}\nconst familyDataTime3 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }, {\n    id: 'daughterInLaw',\n    label: '儿媳'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughterInLaw', edgeType: 'father-daughter', label: '父女' },\n    { source: 'son', target: 'daughterInLaw', edgeType: 'couple', label: '夫妻' },\n  ]\n}\nconst familyDataTime4 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'grandSon1',\n    label: '大孙子'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'sonInLaw2',\n    label: '二女婿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }, {\n    id: 'daughterInLaw',\n    label: '儿媳'\n  }, {\n    id: 'grandSon2',\n    label: '二孙子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughterInLaw', edgeType: 'father-daughter', label: '父女' },\n    { source: 'son', target: 'daughterInLaw', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandSon1', edgeType: 'grandfather-grandson', label: '爷孙' },\n    { source: 'daughter1', target: 'grandSon1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandSon1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'grandSon2', edgeType: 'grandfather-grandson', label: '爷孙' },\n    { source: 'son', target: 'grandSon2', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'daughterInLaw', target: 'grandSon2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'sonInLaw2', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter2', target: 'sonInLaw2', edgeType: 'couple', label: '夫妻' },\n  ]\n}\n\n  \t// 在这里编写自己的逻辑\n  debugger\n\treturn transform(familyDataTime1)\n}",
+              mode: 'MOCK',
+              name: '吴大爷-家庭',
+              others: {
+                id: 2900005,
+                gmtCreate: '2021-11-16T10:42:49.000Z',
+                gmtModified: '2021-11-16T13:16:34.000Z',
+                members: null,
+                sourceCodeUrl: null,
+                distCodeUrl: null,
+                yuyanBuildId: null,
+                yuyanAssetsId: null,
+                publicLevel: null,
+                tag: null,
+                status: null,
+                forkFrom: null,
+                version: '0.0.1',
+                description: '吴大爷-家庭',
+                name: 'WDY_FAMILY',
+                type: 3,
+                meta: null,
+                ownerId: '195094',
+                ownerNickname: '聚则',
+                displayName: '吴大爷-家庭',
+                branchName: 'master',
+                sourceCode:
+                  "export default (data) => {\n  const transform =(d)=>{\n    const {nodes,edges}=d;\n    return {\n      nodes:nodes.map(n=>{return {id:n.id,data:n}}),\n      edges:edges.map(n=>{return {source:n.source,target:n.target,data:n}})\n    }\n  }\n  const familyDataTime1 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n  ]\n}\nconst familyDataTime2 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n  ]\n}\nconst familyDataTime3 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }, {\n    id: 'daughterInLaw',\n    label: '儿媳'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughterInLaw', edgeType: 'father-daughter', label: '父女' },\n    { source: 'son', target: 'daughterInLaw', edgeType: 'couple', label: '夫妻' },\n  ]\n}\nconst familyDataTime4 = {\n  nodes: [{\n    id: 'self',\n    label: '吴大爷（自己）',\n    sex: 'male'\n  }, {\n    id: 'daughter1',\n    label: '大女儿'\n  }, {\n    id: 'sonInLaw1',\n    label: '大女婿'\n  }, {\n    id: 'grandDaughter1',\n    label: '大孙女'\n  }, {\n    id: 'grandSon1',\n    label: '大孙子'\n  }, {\n    id: 'daughter2',\n    label: '二女儿'\n  }, {\n    id: 'sonInLaw2',\n    label: '二女婿'\n  }, {\n    id: 'son',\n    label: '儿子'\n  }, {\n    id: 'daughterInLaw',\n    label: '儿媳'\n  }, {\n    id: 'grandSon2',\n    label: '二孙子'\n  }], edges: [\n    { source: 'self', target: 'daughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughter2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'son', edgeType: 'father-son', label: '父子' },\n    { source: 'self', target: 'sonInLaw1', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter1', target: 'sonInLaw1', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandDaughter1', edgeType: 'grandfather-granddaughter', label: '爷孙' },\n    { source: 'daughter1', target: 'grandDaughter1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandDaughter1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'daughterInLaw', edgeType: 'father-daughter', label: '父女' },\n    { source: 'son', target: 'daughterInLaw', edgeType: 'couple', label: '夫妻' },\n    { source: 'self', target: 'grandSon1', edgeType: 'grandfather-grandson', label: '爷孙' },\n    { source: 'daughter1', target: 'grandSon1', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'sonInLaw1', target: 'grandSon1', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'grandSon2', edgeType: 'grandfather-grandson', label: '爷孙' },\n    { source: 'son', target: 'grandSon2', edgeType: 'mother-daughter', label: '母女' },\n    { source: 'daughterInLaw', target: 'grandSon2', edgeType: 'father-daughter', label: '父女' },\n    { source: 'self', target: 'sonInLaw2', edgeType: 'father-son', label: '父子' },\n    { source: 'daughter2', target: 'sonInLaw2', edgeType: 'couple', label: '夫妻' },\n  ]\n}\n\n  \t// 在这里编写自己的逻辑\n  debugger\n\treturn transform(familyDataTime1)\n}",
+                projectId: '2700003',
+                buildLogUrl: null,
+              },
+            },
+            {
+              id: 'WDY_EXPAND',
+              content:
+                " (data, params) => {\n \n  const transform = d => {\n    const { nodes, edges } = d;\n    return {\n      nodes: nodes.map(n => {\n        \n        return { \n          id: n.id,\n          dataType:n.nodeType || n.type || 'others',\n         data: n };\n      }),\n      edges: edges.map(n => {\n        return { source: n.source, target: n.target, data: n,   dataType:n.edgeType || 'others' };\n      }),\n    };\n  };\n\n  const { id, type = [] } = params;\n\n  const mappingData = {\n    // 吴大爷家庭数据\n    self_family: {\n      nodes: [\n        {\n          id: 'self',\n          label: '吴大爷（自己）',\n          sex: 'male',\n          type: 'user',\n        },\n        {\n          id: 'daughter1',\n          label: '大女儿',\n          type: 'user',\n        },\n        {\n          id: 'daughter2',\n          label: '二女儿',\n          type: 'user',\n        },\n        {\n          id: 'son',\n          label: '儿子',\n          type: 'user',\n        },\n      ],\n      edges: [\n        { source: 'self', target: 'daughter1', type: 'father-daughter', label: '父女' },\n        { source: 'self', target: 'daughter2', type: 'father-daughter', label: '父女' },\n        { source: 'self', target: 'son', type: 'father-son', label: '父子' },\n      ],\n    },\n    self_account: {\n      nodes: [{ id: 'wAccont', label: '吴大爷的账户', sex: 'male', type: 'account' }],\n      edges: [{ source: 'self', target: 'wAccont', type: 'account', label: '拥有' }],\n    },\n    // 吴大爷社交媒体\n    self_socialNetwork: {\n      nodes: [{ id: 'wAocialNetwork', label: '吴大爷的社交媒体', sex: 'male', type: 'socialNetwork' }],\n      edges: [{ source: 'self', target: 'wAocialNetwork', type: 'socialNetwork', label: '拥有' }],\n    },\n    self_club: {\n      nodes: [{ id: 'wClub', label: '吴大爷参加的社团', type: 'club' }],\n      edges: [{ source: 'self', target: 'wClub', type: 'club', label: '拥有' }],\n    },\n    // 吴大爷账户的转账数据\n    wAccont_financial: {\n      nodes: [\n        {\n          id: 'clubPerson6',\n          label: '小张',\n          donutAttrs: {\n            income: 200,\n            outcome: 20,\n            unknown: 25,\n          },\n          type: 'user',\n        },\n        {\n          id: 'nf1',\n          label: '网友1',\n          donutAttrs: {\n            income: 50,\n            outcome: 10,\n            unknown: 15,\n          },\n          type: 'user',\n        },\n        {\n          id: 'shop1',\n          label: '某商家1',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'shop',\n        },\n        {\n          id: 'shop2',\n          label: '某商家2',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'shop',\n        },\n      ],\n      edges: [\n        { source: 'son', target: 'wAccont', amount: 10 ,edgeType:\"transfer\",label:\"¥10000\"},\n        { source: 'wAccont', target: 'clubPerson6', amount: 0.1 ,edgeType:\"transfer\",label:\"¥100\"}, // 吴大爷 -> 小张\n        { source: 'clubPerson6', target: 'wAccont', amount: 0.2 ,edgeType:\"transfer\",label:\"¥200\"}, // 小张 -> 吴大爷\n        { source: 'wAccont', target: 'nf1', amount: 10 ,edgeType:\"transfer\",label:\"¥10000\"}, // 吴大爷 -> 网友\n        { source: 'wAccont', target: 'shop1', amount: 1 ,edgeType:\"transfer\",label:\"¥1000\"},\n        { source: 'wAccont', target: 'shop2', amount: 1 ,edgeType:\"transfer\",label:\"¥1000\"},\n      ],\n    },\n    // 小张的转账关系 clubPerson6\n    clubPerson6_financial: {\n      nodes: [\n        {\n          id: 'clubPerson1',\n          label: '刘大妈',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type:\"account\",\n          // nodeType: 'account',\n        },\n      ],\n      edges: [\n        { source: 'clubPerson6', target: 'nf1', amount: 12,edgeType:\"transfer\" }, // 小张 -> 网友\n        { source: 'clubPerson1', target: 'clubPerson6', amount: 0.05 ,edgeType:\"transfer\"}, // 刘大妈 -> 小张\n        { source: 'clubPerson6', target: 'clubPerson1', amount: 0.1 ,edgeType:\"transfer\"}, // 小张 -> 刘大妈\n      ],\n    },\n\n    // 小张的社交关系 clubPerson6\n    clubPerson6_socialNetwork: {\n      nodes: [\n        { id: 'clubPerson5', label: '吴姐', sex: 'female', order: 1 },\n        { id: 'clubPerson3', label: '张大爷', sex: 'male', order: 2 },\n        { id: 'clubPerson4', label: '龚大爷', sex: 'male', order: 3 },\n        { id: 'clubPerson1', label: '刘大妈', sex: 'female', order: 4 ,    nodeType: 'account'},\n        { id: 'clubPerson2', label: '林大姐', sex: 'female', order: 6 },\n      ],\n      edges: [\n        { source: 'clubPerson6', target: 'wClub', label: '参加' }, // 小张参加了吴大爷所在的社团\n        { source: 'clubPerson1', target: 'clubPerson2', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson3', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson3', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson4', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson4', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson5', target: 'clubPerson6', label: '牌友' },\n      ],\n    },\n    // 吴大爷社团数据\n    wClub_club: {\n      nodes: [\n        { id: 'club2Person1', label: '余大哥', sex: 'male', order: 1 },\n        { id: 'club2Person2', label: '老李', sex: 'female', order: 2 },\n        { id: 'club2Person3', label: '老谢', sex: 'male', order: 3 },\n        { id: 'club2Person4', label: '梅大爷', sex: 'male', order: 4 },\n      ],\n      edges: [\n        { source: 'wClub', target: 'club2Person1', label: '牌友' },\n        { source: 'wClub', target: 'club2Person2', label: '牌友' },\n        { source: 'wClub', target: 'club2Person3', label: '牌友' },\n        { source: 'wClub', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person2', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person3', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person2', target: 'club2Person3', label: '牌友' },\n        { source: 'club2Person2', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person3', target: 'club2Person4', label: '牌友' },\n        { source: 'clubPerson1', target: 'wClub', label: '牌友' }, // 刘大妈在社团里面\n      ],\n    },\n\n    // 吴大爷社交媒体关系数据\n    wAocialNetwork_socialNetwork: {\n      nodes: [\n        { id: 'co1', label: '同事1', sex: 'male' },\n        { id: 'co2', label: '同事2', sex: 'female' },\n        { id: 'co3', label: '同事3', sex: 'female' },\n        { id: 'co4', label: '同事4', sex: 'male' },\n        { id: 'co5', label: '同事5', sex: 'male' },\n        { id: 'co6', label: '同事6', sex: 'male' },\n        { id: 'cm1', label: '同学1', sex: 'male' },\n        { id: 'cm2', label: '同学2', sex: 'female' },\n        { id: 'cm3', label: '同学3', sex: 'female' },\n        { id: 'cm4', label: '同学4', sex: 'male' },\n        { id: 'nf1', label: '网友1', sex: 'male' },\n        { id: 'nf2', label: '网友2', sex: 'male' },\n        { id: 'nf3', label: '网友3', sex: 'female' },\n        { id: 'nb1', label: '邻居1', sex: 'male' },\n        { id: 'nb2', label: '邻居2', sex: 'female' },\n        { id: 'nb3', label: '邻居3', sex: 'male' },\n        { id: 'club2Person1', label: '余大哥', sex: 'male', order: 1 },\n        { id: 'club2Person3', label: '老谢', sex: 'male', order: 3 },\n      ],\n      edges: [\n        { source: 'wAocialNetwork', target: 'co1', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co2', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co3', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co4', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co5', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co6', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'cm1', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm2', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm3', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm4', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'nf1', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nf2', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nf3', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nb1', edgeType: 'neighbor', label: '邻居' },\n        { source: 'wAocialNetwork', target: 'nb2', edgeType: 'neighbor', label: '邻居' },\n        { source: 'wAocialNetwork', target: 'nb3', edgeType: 'neighbor', label: '邻居' },\n        {\n          source: 'wAocialNetwork',\n          target: 'clubPerson1',\n          edgeType: 'neighbor',\n          label: '邻居',\n        },\n        {\n          source: 'wAocialNetwork',\n          target: 'club2Person3',\n          edgeType: 'friend',\n          label: '朋友',\n        },\n      ],\n    },\n\n    // 网友1 的转账关系\n    nf1_financial: {\n      nodes: [\n        {\n          id: 'shop3',\n          label: '某商家3',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type: 'shop',\n        },\n      ],\n      edges: [\n        { source: 'nf1', target: 'shop3', amount: 1 },\n        { source: 'clubPerson1', target: 'nf1', amount: 20 },\n      ],\n    },\n    // 某商家3的转账关系\n    shop3_financial: {\n      nodes: [\n        {\n          id: 'shop4',\n          label: '某商家4',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type: 'shop',\n        },\n        { id: 'nf2', label: '网友2', sex: 'male' },\n      ],\n      edges: [\n        { source: 'shop3', target: 'shop4', amount: 1,edgeType:\"transfer\" },\n        { source: 'nf2', target: 'shop3', amount: 20,edgeType:\"transfer\"  },\n      ],\n    },\n\n    // 某商家4的转账关系\n    shop4_financial: {\n      nodes: [\n        {\n          id: 'bank2',\n          label: '银行卡2',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'bank',\n        },\n      ],\n      edges: [{ source: 'shop4', target: 'bank2', amount: 20 ,edgeType:\"transfer\"}],\n    },\n  };\n\n  const responseData = type.reduce(\n    (acc, curr) => {\n  \n      const str = id + '_' + curr;\n      const currentData = mappingData[str];\n      if (currentData) {\n        return {\n          nodes: [\n            ...acc.nodes,\n            ...currentData.nodes,\n          ],\n          edges: [\n              ...acc.edges,\n              ...currentData.edges,\n          ],\n        };\n      }\n      return {\n          nodes: [\n            ...acc.nodes,\n          ],\n          edges: [\n              ...acc.edges,\n          ],\n        };\n    },\n    { nodes: [], edges: [] },\n  );\n\n  return transform(responseData);\n}\n",
+              mode: 'MOCK',
+              name: '扩散服务',
+              others: {
+                id: 2900006,
+                gmtCreate: '2021-11-16T10:54:09.000Z',
+                gmtModified: '2021-11-20T12:13:41.000Z',
+                members: null,
+                sourceCodeUrl: null,
+                distCodeUrl: null,
+                yuyanBuildId: null,
+                yuyanAssetsId: null,
+                publicLevel: null,
+                tag: null,
+                status: null,
+                forkFrom: null,
+                version: '0.0.1',
+                description: '扩散服务',
+                name: 'WDY_EXPAND',
+                type: 3,
+                meta: null,
+                ownerId: '195094',
+                ownerNickname: '聚则',
+                displayName: '扩散服务',
+                branchName: 'master',
+                sourceCode:
+                  "export default (data, params) => {\n \n  const transform = d => {\n    const { nodes, edges } = d;\n    return {\n      nodes: nodes.map(n => {\n        \n        return { \n          id: n.id,\n          dataType:n.nodeType || n.type || 'others',\n         data: n };\n      }),\n      edges: edges.map(n => {\n        return { source: n.source, target: n.target, data: n,   dataType:n.edgeType || 'others' };\n      }),\n    };\n  };\n\n  const { id, type = [] } = params;\n\n  const mappingData = {\n    // 吴大爷家庭数据\n    self_family: {\n      nodes: [\n        {\n          id: 'self',\n          label: '吴大爷（自己）',\n          sex: 'male',\n          type: 'user',\n        },\n        {\n          id: 'daughter1',\n          label: '大女儿',\n          type: 'user',\n        },\n        {\n          id: 'daughter2',\n          label: '二女儿',\n          type: 'user',\n        },\n        {\n          id: 'son',\n          label: '儿子',\n          type: 'user',\n        },\n      ],\n      edges: [\n        { source: 'self', target: 'daughter1', type: 'father-daughter', label: '父女' },\n        { source: 'self', target: 'daughter2', type: 'father-daughter', label: '父女' },\n        { source: 'self', target: 'son', type: 'father-son', label: '父子' },\n      ],\n    },\n    self_account: {\n      nodes: [{ id: 'wAccont', label: '吴大爷的账户', sex: 'male', type: 'account' }],\n      edges: [{ source: 'self', target: 'wAccont', type: 'account', label: '拥有' }],\n    },\n    // 吴大爷社交媒体\n    self_socialNetwork: {\n      nodes: [{ id: 'wAocialNetwork', label: '吴大爷的社交媒体', sex: 'male', type: 'socialNetwork' }],\n      edges: [{ source: 'self', target: 'wAocialNetwork', type: 'socialNetwork', label: '拥有' }],\n    },\n    self_club: {\n      nodes: [{ id: 'wClub', label: '吴大爷参加的社团', type: 'club' }],\n      edges: [{ source: 'self', target: 'wClub', type: 'club', label: '拥有' }],\n    },\n    // 吴大爷账户的转账数据\n    wAccont_financial: {\n      nodes: [\n        {\n          id: 'clubPerson6',\n          label: '小张',\n          donutAttrs: {\n            income: 200,\n            outcome: 20,\n            unknown: 25,\n          },\n          type: 'user',\n        },\n        {\n          id: 'nf1',\n          label: '网友1',\n          donutAttrs: {\n            income: 50,\n            outcome: 10,\n            unknown: 15,\n          },\n          type: 'user',\n        },\n        {\n          id: 'shop1',\n          label: '某商家1',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'shop',\n        },\n        {\n          id: 'shop2',\n          label: '某商家2',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'shop',\n        },\n      ],\n      edges: [\n        { source: 'son', target: 'wAccont', amount: 10 ,edgeType:\"transfer\",label:\"¥10000\"},\n        { source: 'wAccont', target: 'clubPerson6', amount: 0.1 ,edgeType:\"transfer\",label:\"¥100\"}, // 吴大爷 -> 小张\n        { source: 'clubPerson6', target: 'wAccont', amount: 0.2 ,edgeType:\"transfer\",label:\"¥200\"}, // 小张 -> 吴大爷\n        { source: 'wAccont', target: 'nf1', amount: 10 ,edgeType:\"transfer\",label:\"¥10000\"}, // 吴大爷 -> 网友\n        { source: 'wAccont', target: 'shop1', amount: 1 ,edgeType:\"transfer\",label:\"¥1000\"},\n        { source: 'wAccont', target: 'shop2', amount: 1 ,edgeType:\"transfer\",label:\"¥1000\"},\n      ],\n    },\n    // 小张的转账关系 clubPerson6\n    clubPerson6_financial: {\n      nodes: [\n        {\n          id: 'clubPerson1',\n          label: '刘大妈',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type:\"account\",\n          // nodeType: 'account',\n        },\n      ],\n      edges: [\n        { source: 'clubPerson6', target: 'nf1', amount: 12,edgeType:\"transfer\" }, // 小张 -> 网友\n        { source: 'clubPerson1', target: 'clubPerson6', amount: 0.05 ,edgeType:\"transfer\"}, // 刘大妈 -> 小张\n        { source: 'clubPerson6', target: 'clubPerson1', amount: 0.1 ,edgeType:\"transfer\"}, // 小张 -> 刘大妈\n      ],\n    },\n\n    // 小张的社交关系 clubPerson6\n    clubPerson6_socialNetwork: {\n      nodes: [\n        { id: 'clubPerson5', label: '吴姐', sex: 'female', order: 1 },\n        { id: 'clubPerson3', label: '张大爷', sex: 'male', order: 2 },\n        { id: 'clubPerson4', label: '龚大爷', sex: 'male', order: 3 },\n        { id: 'clubPerson1', label: '刘大妈', sex: 'female', order: 4 ,    nodeType: 'account'},\n        { id: 'clubPerson2', label: '林大姐', sex: 'female', order: 6 },\n      ],\n      edges: [\n        { source: 'clubPerson6', target: 'wClub', label: '参加' }, // 小张参加了吴大爷所在的社团\n        { source: 'clubPerson1', target: 'clubPerson2', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson3', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson1', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson3', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson2', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson4', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson3', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson4', target: 'clubPerson5', label: '牌友' },\n        { source: 'clubPerson4', target: 'clubPerson6', label: '牌友' },\n        { source: 'clubPerson5', target: 'clubPerson6', label: '牌友' },\n      ],\n    },\n    // 吴大爷社团数据\n    wClub_club: {\n      nodes: [\n        { id: 'club2Person1', label: '余大哥', sex: 'male', order: 1 },\n        { id: 'club2Person2', label: '老李', sex: 'female', order: 2 },\n        { id: 'club2Person3', label: '老谢', sex: 'male', order: 3 },\n        { id: 'club2Person4', label: '梅大爷', sex: 'male', order: 4 },\n      ],\n      edges: [\n        { source: 'wClub', target: 'club2Person1', label: '牌友' },\n        { source: 'wClub', target: 'club2Person2', label: '牌友' },\n        { source: 'wClub', target: 'club2Person3', label: '牌友' },\n        { source: 'wClub', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person2', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person3', label: '牌友' },\n        { source: 'club2Person1', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person2', target: 'club2Person3', label: '牌友' },\n        { source: 'club2Person2', target: 'club2Person4', label: '牌友' },\n        { source: 'club2Person3', target: 'club2Person4', label: '牌友' },\n        { source: 'clubPerson1', target: 'wClub', label: '牌友' }, // 刘大妈在社团里面\n      ],\n    },\n\n    // 吴大爷社交媒体关系数据\n    wAocialNetwork_socialNetwork: {\n      nodes: [\n        { id: 'co1', label: '同事1', sex: 'male' },\n        { id: 'co2', label: '同事2', sex: 'female' },\n        { id: 'co3', label: '同事3', sex: 'female' },\n        { id: 'co4', label: '同事4', sex: 'male' },\n        { id: 'co5', label: '同事5', sex: 'male' },\n        { id: 'co6', label: '同事6', sex: 'male' },\n        { id: 'cm1', label: '同学1', sex: 'male' },\n        { id: 'cm2', label: '同学2', sex: 'female' },\n        { id: 'cm3', label: '同学3', sex: 'female' },\n        { id: 'cm4', label: '同学4', sex: 'male' },\n        { id: 'nf1', label: '网友1', sex: 'male' },\n        { id: 'nf2', label: '网友2', sex: 'male' },\n        { id: 'nf3', label: '网友3', sex: 'female' },\n        { id: 'nb1', label: '邻居1', sex: 'male' },\n        { id: 'nb2', label: '邻居2', sex: 'female' },\n        { id: 'nb3', label: '邻居3', sex: 'male' },\n        { id: 'club2Person1', label: '余大哥', sex: 'male', order: 1 },\n        { id: 'club2Person3', label: '老谢', sex: 'male', order: 3 },\n      ],\n      edges: [\n        { source: 'wAocialNetwork', target: 'co1', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co2', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co3', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co4', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co5', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'co6', edgeType: 'colleague', label: '同事' },\n        { source: 'wAocialNetwork', target: 'cm1', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm2', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm3', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'cm4', edgeType: 'classmate', label: '同学' },\n        { source: 'wAocialNetwork', target: 'nf1', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nf2', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nf3', edgeType: 'netfriend', label: '网友' },\n        { source: 'wAocialNetwork', target: 'nb1', edgeType: 'neighbor', label: '邻居' },\n        { source: 'wAocialNetwork', target: 'nb2', edgeType: 'neighbor', label: '邻居' },\n        { source: 'wAocialNetwork', target: 'nb3', edgeType: 'neighbor', label: '邻居' },\n        {\n          source: 'wAocialNetwork',\n          target: 'clubPerson1',\n          edgeType: 'neighbor',\n          label: '邻居',\n        },\n        {\n          source: 'wAocialNetwork',\n          target: 'club2Person3',\n          edgeType: 'friend',\n          label: '朋友',\n        },\n      ],\n    },\n\n    // 网友1 的转账关系\n    nf1_financial: {\n      nodes: [\n        {\n          id: 'shop3',\n          label: '某商家3',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type: 'shop',\n        },\n      ],\n      edges: [\n        { source: 'nf1', target: 'shop3', amount: 1 },\n        { source: 'clubPerson1', target: 'nf1', amount: 20 },\n      ],\n    },\n    // 某商家3的转账关系\n    shop3_financial: {\n      nodes: [\n        {\n          id: 'shop4',\n          label: '某商家4',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          type: 'shop',\n        },\n        { id: 'nf2', label: '网友2', sex: 'male' },\n      ],\n      edges: [\n        { source: 'shop3', target: 'shop4', amount: 1,edgeType:\"transfer\" },\n        { source: 'nf2', target: 'shop3', amount: 20,edgeType:\"transfer\"  },\n      ],\n    },\n\n    // 某商家4的转账关系\n    shop4_financial: {\n      nodes: [\n        {\n          id: 'bank2',\n          label: '银行卡2',\n          donutAttrs: {\n            income: 90,\n            outcome: 110,\n            unknown: 15,\n          },\n          nodeType: 'bank',\n        },\n      ],\n      edges: [{ source: 'shop4', target: 'bank2', amount: 20 ,edgeType:\"transfer\"}],\n    },\n  };\n\n  const responseData = type.reduce(\n    (acc, curr) => {\n  \n      const str = id + '_' + curr;\n      const currentData = mappingData[str];\n      if (currentData) {\n        return {\n          nodes: [\n            ...acc.nodes,\n            ...currentData.nodes,\n          ],\n          edges: [\n              ...acc.edges,\n              ...currentData.edges,\n          ],\n        };\n      }\n      return {\n          nodes: [\n            ...acc.nodes,\n          ],\n          edges: [\n              ...acc.edges,\n          ],\n        };\n    },\n    { nodes: [], edges: [] },\n  );\n\n  return transform(responseData);\n}\n",
+                projectId: '2700003',
+                buildLogUrl: null,
+              },
             },
           ];
           const [state, setState] = React.useState({
@@ -103,13 +131,20 @@
             assets: {},
           });
           React.useEffect(() => {
-            fetch(giProjectURL)
+            fetch(giProjectURL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                id: giProjectId,
+              }),
+            })
               .then(res => res.json())
               .then(res => {
-                const data = JSON.parse(res.data[0].data);
+                const data = JSON.parse(res.data[0].data).transData;
                 const projectConfig = JSON.parse(res.data[0].projectConfig);
-                const serviceConfig = JSON.parse(res.data[0].serviceConfig);
-                const services = GIAssets.default.utils.getServicesByAssets(serviceConfig, data);
+                const services = GIAssets.utils.getServicesByAssets(servicesOpt, data);
 
                 const assets = {
                   ...ASSETS,
@@ -138,13 +173,9 @@
           const { Utils, default: GraphinClass } = Graphin;
           const data = Utils.mock(10).circle().graphin();
           return (
-            <div>
+            <div style={{ height: '100vh' }}>
               <h1>GISDK Load from Remote Server</h1>
-              <LoadGraphSDK />
-              <h1>{text}</h1>
-              <div>{<GraphinClass data={data} />}</div>
-              <h1>GISDK</h1>
-              <div>{<DEMO />}</div>
+              <GeaMakerGISDK />
             </div>
           );
         };
@@ -173,8 +204,11 @@
       // ]);
     </script>
     <!--- REACT DEPENDENCIES-->
-    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
+    <script
+      crossorigin
+      src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"
+    ></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--- GRAPHIN DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
@@ -182,13 +216,7 @@
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
     <!--- GI DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.3.1/dist/index.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.3.1/dist/index.min.js"></script>
-    <!-- <script src="https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js"></script> -->
-
-    <script src="https://g.alipay.com/@alipay/alex@latest/bundle/alex.global.min.js"></script>
-    <script src="https://g.alipay.com/@alipay/alex@latest/languages/languages.global.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/typescript/4.4.3/lib/typescript.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/min/vs/editor/editor.main.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.5.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.5.0/dist/index.min.js"></script>
   </body>
 </html>
