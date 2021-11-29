@@ -12,31 +12,6 @@ export const getUid = () => {
 };
 
 export const getMockData = () => {
-  // const id = 'explame';
-  // const MockEdges = [];
-  // const MockNodes = [];
-  // MockNodes.push({
-  //   id,
-  //   data: {
-  //     id,
-  //   },
-  // });
-  // Array.from({ length: 5 }).forEach((c, index) => {
-  //   MockNodes.push({
-  //     id: id + '_' + index,
-  //     data: {
-  //       id: id + '_' + index,
-  //     },
-  //   });
-  //   MockEdges.push({
-  //     source: id,
-  //     target: id + '_' + index,
-  //     data: {
-  //       source: id,
-  //       target: id + '_' + index,
-  //     },
-  //   });
-  // });
   return {
     nodes: [],
     edges: [],
@@ -52,4 +27,46 @@ export const getMockData = () => {
 export const time = time => {
   const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
   return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
+};
+
+/**
+ *
+ * 默认config
+ *
+ */
+const baseNodeConfig = {
+  id: 'GraphinNode',
+  props: {},
+};
+const baseEdgeConfig = {
+  id: 'GraphinEdge',
+  props: {},
+};
+const baseComponentsConfig = [
+  {
+    id: 'NodeLegend',
+    props: {},
+    enable: true,
+  },
+  {
+    id: 'NodeAttrs',
+    props: {},
+    enable: true,
+  },
+];
+const baseLayoutConfig = {
+  id: 'GraphinForce',
+  props: {
+    type: 'graphin-force',
+    preset: {
+      type: 'concentric',
+    },
+  },
+};
+
+export const baseConfig = {
+  node: baseNodeConfig,
+  edge: baseEdgeConfig,
+  layout: baseLayoutConfig,
+  components: baseComponentsConfig,
 };
