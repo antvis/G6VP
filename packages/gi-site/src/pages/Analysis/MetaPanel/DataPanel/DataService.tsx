@@ -62,9 +62,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
       type: TYPE_MAPPING['services'],
       description: displayName,
       version: '0.0.1',
-      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
-      ownerNickname: '聚则',
-      ownerId: '195094',
       branchName: 'master',
       projectId,
       sourceCode: 'export default (data) => {\n return data \n}',
