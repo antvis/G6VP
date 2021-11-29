@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import { addProject } from '../../services';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
-import { defaultConfig } from './defaultConfig';
 import './index.less';
-import { getMockData } from './utils';
+import { getMockData, baseConfig } from './utils';
 
 interface IProps {
   visible: boolean;
@@ -73,7 +72,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
         inputData: [],
         transfunc: GIDefaultTrans('id', 'source', 'target'),
       }),
-      projectConfig: JSON.stringify(defaultConfig.GIConfig),
+      projectConfig: JSON.stringify(baseConfig),
     });
 
     const createResult = await createNewProjectOnAntCode({
@@ -93,9 +92,6 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       type: 3, //数据服务
       description: 'GI 初始化服务',
       version: '0.0.1',
-      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
-      ownerNickname: '聚则',
-      ownerId: '195094',
       branchName: 'master',
       projectId,
       sourceCode: 'export default (data) => {\n return data \n}',

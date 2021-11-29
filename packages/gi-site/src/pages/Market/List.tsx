@@ -70,9 +70,7 @@ const ComponentMarket = props => {
   const handleForkAsset = async selectedAsset => {
     const { id, projectId, type, name, meta, description, displayName, members } = selectedAsset;
     // step1: 基于选择的仓库创建新的仓库
-    const forkProjectName = `${name}_fork_${Math.random()
-      .toString(36)
-      .substr(2)}`;
+    const forkProjectName = `${name}_fork_${Math.random().toString(36).substr(2)}`;
     const createResult = await forkProjectOnAntCode({
       originProjectName: name,
       projectName: forkProjectName,
@@ -94,9 +92,6 @@ const ComponentMarket = props => {
       // 从指定的 id fork 过来的
       forkFrom: id,
       version: 'master',
-      // 这两个字段需要从登陆信息中获取，目前没有接入登陆
-      ownerNickname: '聚则',
-      ownerId: '195094',
       branchName: 'master',
       projectId,
       members,
@@ -172,7 +167,10 @@ const ComponentMarket = props => {
       <div className="lists">
         {fliterGroup}
         <Row
-          gutter={[{ xs: 8, sm: 16, md: 16, lg: 16 }, { xs: 8, sm: 16, md: 16, lg: 16 }]}
+          gutter={[
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+            { xs: 8, sm: 16, md: 16, lg: 16 },
+          ]}
           style={{ marginLeft: 120, marginTop: 15 }}
         >
           {listData.map(c => {
