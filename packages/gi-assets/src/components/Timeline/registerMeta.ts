@@ -1,27 +1,38 @@
 export default () => {
   return {
     GI_CONTAINER_INDEX: {
-      name: '容器中位置',
+      name: '排序位置',
       type: 'stepper',
       step: 1,
       min: 0,
       max: 15,
       default: 2,
     },
-    hasDivider: {
-      name: '分隔符',
+    isShowTitle: {
+      name: '显示名称',
       type: 'switch',
-      default: false,
+      default: true,
     },
-    color: {
-      name: '提示颜色',
-      type: 'fill',
-      default: '#87d068',
+    title: {
+      name: '填写名称',
+      type: 'text',
+      default: '时序分析',
+      showInPanel: {
+        conditions: [['.isShowTitle', '$eq', true]],
+      },
     },
-    defaultVisible: {
-      name: '是否显示',
+    isShowIcon: {
+      name: '显示图标',
       type: 'switch',
-      default: false,
+      default: true,
+    },
+    icon: {
+      name: '选择图标',
+      type: 'text',
+      default: 'icon',
+      showInPanel: {
+        conditions: [['.isShowIcon', '$eq', true]],
+      },
     },
   };
 };
