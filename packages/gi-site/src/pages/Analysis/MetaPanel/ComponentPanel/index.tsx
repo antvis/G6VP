@@ -37,8 +37,6 @@ const getComponentsByMap = componentMap => {
 const ComponentPanel = props => {
   const { config, dispatch, components } = props;
 
-  const { components: configComponents } = config;
-
   const [state, setState] = useState({
     isModalVisible: false,
   });

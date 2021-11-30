@@ -7,6 +7,7 @@ import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
 import DownLoad from './DownLoad';
+import EdgeBunding from './EdgeBundling';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
 import GraphScope from './GraphScope';
@@ -23,9 +24,11 @@ import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
+import OperatorBar2 from './OperatorBar2';
 import PatternMatch from './PatternMatch';
 import Redo from './Redo';
 import SearchBar from './SearchBar';
+import SideTabs from './SideTabs';
 // import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import Timeline from './Timeline';
 // import ClickEntity from './Liaoyuan/ClickEntity';
@@ -33,8 +36,6 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
 import Zoom from './Zoom';
-import EdgeBunding from './EdgeBundling';
-
 export {
   Timeline,
   OperatorBar,
@@ -66,6 +67,8 @@ export {
   NodeExpandByTypes,
   PatternMatch,
   EdgeBunding,
+  OperatorBar2,
+  SideTabs,
 };
 
 // /**

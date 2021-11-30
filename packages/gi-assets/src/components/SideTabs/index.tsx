@@ -2,13 +2,11 @@ import Component from './Component';
 import registerMeta from './registerMeta';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
-
 const info = {
-  id: 'Timeline',
-  name: '时序分析',
+  id: 'SideTabs',
+  name: '侧边切换栏',
   category: 'components',
-  // type: 'GI_CONTAINER_INDEX',
-  desc: '时序分析',
+  desc: '侧边切换栏',
   cover: 'http://xxxx.jpg',
 };
 
