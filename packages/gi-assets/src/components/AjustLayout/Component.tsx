@@ -1,10 +1,9 @@
-import { BranchesOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
-import { Button, Collapse, Select, Form } from 'antd';
+import { Button, Collapse, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -196,134 +195,124 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
     });
   };
 
-  if (visible) {
-    const defaultActiveKey = layouts.map((lay, index) => {
-      return index;
-    });
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          background: '#fff',
-          width: '420px',
-          padding: '12px',
-          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
-          ...style,
+  const defaultActiveKey = layouts.map((lay, index) => {
+    return index;
+  });
+  return (
+    <div
+      style={{
+        background: '#fff',
+        width: '420px',
+        padding: '12px',
+        boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
+        ...style,
+      }}
+    >
+      <Collapse
+        bordered={false}
+        activeKey={state.activeKeys}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        className="site-collapse-custom-collapse"
+        onChange={val => {
+          updateState(draft => {
+            draft.activeKeys = val as string[];
+          });
         }}
       >
-        <h3>布局调整面板</h3>
-
-        <Collapse
-          bordered={false}
-          activeKey={state.activeKeys}
-          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-          className="site-collapse-custom-collapse"
-          onChange={val => {
-            updateState(draft => {
-              draft.activeKeys = val as string[];
-            });
-          }}
-        >
-          {layouts.map((item, index) => {
-            return (
-              <Panel
-                header={`布局${index}`}
-                key={index}
-                className="site-collapse-custom-panel"
-                extra={
+        {layouts.map((item, index) => {
+          return (
+            <Panel
+              header={`布局${index}`}
+              key={index}
+              className="site-collapse-custom-panel"
+              extra={
+                <Button
+                  type="text"
+                  onClick={() => {
+                    updateState(draft => {
+                      draft.layouts.splice(index, 1);
+                    });
+                  }}
+                >
+                  <DeleteOutlined />
+                </Button>
+              }
+            >
+              <div>
+                <div style={{ marginBottom: '6px' }} className="custom-item">
+                  <div>选择节点：</div>
+                  <Select
+                    mode="multiple"
+                    allowClear
+                    style={{ width: '316px' }}
+                    placeholder="请选择节点"
+                    value={item.nodes.map(node => node.id)}
+                    disabled={item.locked}
+                    onChange={values => {
+                      updateState(draft => {
+                        draft.layouts[index].nodes = values.map(n => {
+                          return { id: n };
+                        });
+                      });
+                    }}
+                  >
+                    {item.nodes.map(node => {
+                      return (
+                        <Select.Option key={node.id} value={node.id}>
+                          {node.id}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
                   <Button
                     type="text"
                     onClick={() => {
                       updateState(draft => {
-                        draft.layouts.splice(index, 1);
+                        draft.layouts[index].locked = !item.locked;
                       });
                     }}
                   >
-                    <DeleteOutlined />
+                    {item.locked ? <LockOutlined /> : <EditOutlined />}
                   </Button>
-                }
-              >
-                <div>
-                  <div style={{ marginBottom: '6px' }} className="custom-item">
-                    <div>选择节点：</div>
-                    <Select
-                      mode="multiple"
-                      allowClear
-                      style={{ width: '316px' }}
-                      placeholder="请选择节点"
-                      value={item.nodes.map(node => node.id)}
-                      disabled={item.locked}
-                      onChange={values => {
-                        updateState(draft => {
-                          draft.layouts[index].nodes = values.map(n => {
-                            return { id: n };
-                          });
-                        });
-                      }}
-                    >
-                      {item.nodes.map(node => {
-                        return (
-                          <Select.Option key={node.id} value={node.id}>
-                            {node.id}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
-                    <Button
-                      type="text"
-                      onClick={() => {
-                        updateState(draft => {
-                          draft.layouts[index].locked = !item.locked;
-                        });
-                      }}
-                    >
-                      {item.locked ? <LockOutlined /> : <EditOutlined />}
-                    </Button>
-                  </div>
-                  <div style={{ marginBottom: '6px' }} className="custom-item">
-                    <div>选择布局：</div>
-                    <Select
-                      allowClear
-                      style={{ maxWidth: '247px' }}
-                      placeholder="请选择布局"
-                      value={item.type}
-                      defaultValue={item.type}
-                      onChange={val => {
-                        updateState(draft => {
-                          draft.layouts[index].type = val;
-                        });
-                      }}
-                    >
-                      {LAYOUTS.map(layout => {
-                        return (
-                          <Select.Option key={layout.value} value={layout.value}>
-                            {layout.label}
-                          </Select.Option>
-                        );
-                      })}
-                    </Select>
-                  </div>
                 </div>
-              </Panel>
-            );
-          })}
-        </Collapse>
+                <div style={{ marginBottom: '6px' }} className="custom-item">
+                  <div>选择布局：</div>
+                  <Select
+                    allowClear
+                    style={{ maxWidth: '247px' }}
+                    placeholder="请选择布局"
+                    value={item.type}
+                    defaultValue={item.type}
+                    onChange={val => {
+                      updateState(draft => {
+                        draft.layouts[index].type = val;
+                      });
+                    }}
+                  >
+                    {LAYOUTS.map(layout => {
+                      return (
+                        <Select.Option key={layout.value} value={layout.value}>
+                          {layout.label}
+                        </Select.Option>
+                      );
+                    })}
+                  </Select>
+                </div>
+              </div>
+            </Panel>
+          );
+        })}
+      </Collapse>
 
-        <Button type="dashed" style={{ width: '100%' }} onClick={handlePlus}>
-          添加布局
-        </Button>
+      <Button type="dashed" style={{ width: '100%' }} onClick={handlePlus}>
+        添加布局
+      </Button>
 
-        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
-          开始调整
-        </Button>
-      </div>
-    );
-  }
-  return null;
+      <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
+        开始调整
+      </Button>
+    </div>
+  );
 };
 
-export default WrapContainer(AjustLayout, {
-  icon: <BranchesOutlined />,
-  title: '布局调整',
-  showText: true,
-});
+export default AjustLayout;

@@ -2,76 +2,13 @@ import { Button, Divider, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export const Meta = {
-  visible: {
-    name: '默认显示',
-    type: 'switch',
-    default: false,
-  },
-  placement: {
-    name: '组件位置',
-    type: 'select',
-    default: 'LT',
-    options: [
-      {
-        value: 'LT',
-        label: '左上',
-      },
-      {
-        value: 'RT',
-        label: '右上',
-      },
-      {
-        value: 'LB',
-        label: '左下',
-      },
-      {
-        value: 'RB',
-        label: '右下',
-      },
-    ],
-  },
-  offset: {
-    name: '偏移距离',
-    type: 'Offset',
-    min: 0,
-    max: 400,
-    default: [10, 60],
-  },
-  /** GI原子组件 */
-  GI_CONTAINER_INDEX: {
-    name: '容器索引',
-    type: 'stepper',
-    default: 0,
-    // showInPanel: {
-    //   conditions: [['.visible', '$eq', false]],
-    // },
-  },
-  hasDivider: {
-    name: '分隔符',
-    type: 'switch',
-    default: false,
-  },
-  color: {
-    name: '提示颜色',
-    type: 'fill',
-    default: '#3056e3',
-  },
-};
-const defaultProps = {
-  visible: false,
-  placement: 'LT',
-  offset: [10, 60],
-  hasDivider: false,
-  color: '#3056e3',
-};
-
 export interface GIContianerProps {
   color: string;
   hasDivider: boolean;
   placement: 'LT' | 'RT' | 'LB' | 'RB';
   offset: [number, number];
 }
+
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
@@ -112,10 +49,8 @@ const WrapContainer = Component => {
       title,
       isShowIcon,
       icon,
-    } = {
-      ...defaultProps,
-      ...ComponentProps,
-    } as any;
+    } = ComponentProps.GI_CONTAINER_ITEM;
+
     const [visible, setVisible] = React.useState(defaultVisible);
 
     React.useEffect(() => {
@@ -143,7 +78,7 @@ const WrapContainer = Component => {
 
         {visible &&
           ReactDOM.createPortal(
-            <Component {...ComponentProps} visible={visible} onClose={onClose} style={styles} />,
+            <Component visible={visible} onClose={onClose} style={styles} />,
             //@ts-ignore
             document.getElementById('graphin-container'),
           )}

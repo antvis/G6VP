@@ -3,10 +3,10 @@ import registerMeta from './registerMeta';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
-  id: 'SideTabs',
-  name: '侧边标签容器 Tabs',
+  id: 'SideSelectContainer',
+  name: '侧边下拉容器 Select',
   category: 'components',
-  desc: '侧边标签容器 Tabs',
+  desc: '侧边下拉容器 Select',
   cover: 'http://xxxx.jpg',
 };
 

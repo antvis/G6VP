@@ -1,10 +1,9 @@
-import { CloseOutlined, SubnodeOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
+import GremlinEditor from 'ace-gremlin-editor';
 import { Button, Col, Divider, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import GremlinEditor from 'ace-gremlin-editor';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -116,8 +115,4 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   );
 };
 
-export default WrapContainer(GremlinQueryPanel, {
-  icon: <SubnodeOutlined />,
-  title: ' Gremlin 查询',
-  showText: true,
-});
+export default GremlinQueryPanel;
