@@ -25,6 +25,7 @@ import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
 import OperatorBar2 from './OperatorBar2';
+import OperatorHeader from './OperatorHeader';
 import PatternMatch from './PatternMatch';
 import Redo from './Redo';
 import SearchBar from './SearchBar';
@@ -71,4 +72,5 @@ export {
   OperatorBar2,
   SideTabs,
   SideSelectContainer,
+  OperatorHeader,
 };

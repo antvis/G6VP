@@ -84,6 +84,17 @@ export const defaultMeta = {
         type: 'fill',
         default: '#3056e3',
       },
+      isVertical: {
+        name: '垂直排列',
+        type: 'switch',
+        default: false,
+        showInPanel: {
+          conditions: [
+            ['.isShowIcon', '$eq', true],
+            ['.isShowTitle', '$eq', true],
+          ],
+        },
+      },
     },
   },
 };
