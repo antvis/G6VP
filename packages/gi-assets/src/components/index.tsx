@@ -3,6 +3,7 @@
 // import DrillingOne from './DrillingOne';
 import AddNode from './AddNode';
 import AjustLayout from './AjustLayout';
+import Back from './Back';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -73,4 +74,5 @@ export {
   SideTabs,
   SideSelectContainer,
   OperatorHeader,
+  Back,
 };
