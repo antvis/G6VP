@@ -7,7 +7,7 @@ const info = {
   id: 'Timeline',
   name: '时序分析',
   category: 'components',
-  // type: 'GI_CONTAINER_INDEX',
+  type: 'GI_CONTAINER_INDEX',
   desc: '时序分析',
   cover: 'http://xxxx.jpg',
 };

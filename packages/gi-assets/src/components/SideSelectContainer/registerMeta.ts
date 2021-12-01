@@ -41,7 +41,7 @@ const registerMeta = context => {
     height: {
       name: '高度',
       type: 'text',
-      default: 'cal(100vh -60px)',
+      default: 'calc(100vh -60px)',
     },
     width: {
       name: '宽度',

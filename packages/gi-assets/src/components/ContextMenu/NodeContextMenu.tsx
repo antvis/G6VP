@@ -1,7 +1,7 @@
 import { GraphinContext } from '@antv/graphin';
 import { ContextMenu } from '@antv/graphin-components';
 import React from 'react';
-
+import WrapContainer from './WrapContainer';
 // Do not forget to import CSS
 const { Menu } = ContextMenu;
 
@@ -18,11 +18,15 @@ const NodeMenu = props => {
         if (!item) {
           return null;
         }
-        const { props, id } = item;
+        const { props: itemProps, id } = item;
         const { component: Component } = assets[id];
+        let WrapComponent = Component;
+        if (itemProps.GI_CONTAINER_ITEM) {
+          WrapComponent = WrapContainer(Component);
+        }
         return (
           <Menu.Item key={id}>
-            <Component {...props} />
+            <WrapComponent {...itemProps} />
           </Menu.Item>
         );
       })}

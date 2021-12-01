@@ -3,12 +3,11 @@ import './index.less';
 
 export interface TimelineProps {
   visible: boolean;
-  handleClose: () => void;
   style: React.CSSProperties;
 }
 
 const Timeline: React.FunctionComponent<TimelineProps> = props => {
-  const { handleClose, style } = props;
+  const { style } = props;
 
   return (
     <div
@@ -20,7 +19,6 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
       }}
     >
       HELLO TIMELINE
-      <button onClick={handleClose}> close</button>
     </div>
   );
 };
