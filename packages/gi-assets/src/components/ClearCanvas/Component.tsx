@@ -1,26 +1,15 @@
-import { DeleteOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Divider, Tooltip } from 'antd';
 import * as React from 'react';
-
-export interface ClearCanvasProps {
-  visible: boolean;
-  color: string;
-  hasDivider: boolean;
+import { IGIAC } from '../const';
+import GIAComponent from '../GIAC';
+export interface IProps {
+  GIAC: IGIAC;
 }
 
-const ClearCanvas: React.FunctionComponent<ClearCanvasProps> = props => {
-  const { color, hasDivider } = props;
+const ClearCanvas: React.FunctionComponent<IProps> = props => {
+  const { GIAC } = props;
   const { graph } = React.useContext(GraphinContext);
-
-  return (
-    <div>
-      <Tooltip title="清空画布" color={color} key={color}>
-        <Button type="text" icon={<DeleteOutlined />} onClick={() => graph.clear()}></Button>
-      </Tooltip>
-      {hasDivider && <Divider type="vertical" />}
-    </div>
-  );
+  return <GIAComponent GIAC={GIAC} onClick={() => graph.clear()} />;
 };
 
 export default ClearCanvas;

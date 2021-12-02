@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import { CloseOutlined, SubnodeOutlined } from '@ant-design/icons';
-import { Row, Col, Input, Select, Divider, Button, Spin, Form, Tooltip } from 'antd';
 import { GraphinContext } from '@antv/graphin';
+import { Button, Col, Divider, Form, Input, Row, Select, Spin, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
 import WrapContainer from '../WrapContainer';
-
 import './index.less';
+
 const { Option } = Select;
 
 interface PathParam {
@@ -249,11 +249,13 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, o
   return (
     <div
       className="gremlineTemplateQueryPanel"
-      style={{
-        visibility: visible ? 'visible' : 'hidden',
-        height: 'fit-content',
-        ...style,
-      }}
+      style={
+        {
+          visibility: visible ? 'visible' : 'hidden',
+          height: 'fit-content',
+          ...style,
+        } as any
+      }
     >
       <Row className="header">
         <Col span={22} className="title">

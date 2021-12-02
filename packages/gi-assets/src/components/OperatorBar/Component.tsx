@@ -1,9 +1,10 @@
 import { Space } from 'antd';
 import * as React from 'react';
+import WrapContainer from '../OperatorHeader/WrapContainer';
 import './index.less';
 export interface OperatorBarProps {}
 
-const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
+const OperatorBar2: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
   const { components, assets } = props;
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
@@ -15,11 +16,15 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
           if (!item) {
             return null;
           }
-          const { props, id } = item;
-          const { component: Component } = assets[id];
+          const { props: itemProps, id: itemId } = item;
+          const { component: Component } = assets[itemId];
+          let WrapComponent = Component;
+          if (itemProps.GIAC_CONTENT) {
+            WrapComponent = WrapContainer(Component);
+          }
           return (
-            <span key={id}>
-              <Component {...props} />
+            <span key={itemId}>
+              <WrapComponent {...itemProps} />
             </span>
           );
         })}
@@ -28,4 +33,4 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   );
 };
 
-export default OperatorBar;
+export default OperatorBar2;
