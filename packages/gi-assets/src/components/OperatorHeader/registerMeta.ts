@@ -1,6 +1,7 @@
+import { deepClone, GI_CONTAINER_METAS } from '../const';
+const metas = deepClone(GI_CONTAINER_METAS);
 const registerMeta = context => {
   const { GI_CONTAINER_INDEXS } = context;
-  console.log('GI_CONTAINER_INDEXS', GI_CONTAINER_INDEXS);
   return {
     /** 分类信息 */
     GI_CONTAINER: {
@@ -36,46 +37,7 @@ const registerMeta = context => {
         conditions: [['.GI_CONTAINER', '$ne', []]],
       },
     },
-    placement: {
-      name: '放置方位',
-      type: 'select',
-      default: 'LT',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
-    },
-    offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
-      default: [0, 0],
-    },
-    height: {
-      name: '高度',
-      type: 'text',
-      default: '60px',
-    },
-    width: {
-      name: '宽度',
-      type: 'text',
-      default: '100%',
-    },
+    ...metas,
   };
 };
 

@@ -1,7 +1,9 @@
-import { deepClone, defaultMeta } from '../const';
+import { deepClone, GIAC_CONTENT_METAS } from '../const';
+
+const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.children.title.default = '时序分析';
+metas.GIAC_CONTENT.children.icon.default = 'icon-Field-time';
+
 export default () => {
-  const newMeta = deepClone(defaultMeta);
-  newMeta.GIAC_CONTENT.children.title.default = '时序分析';
-  newMeta.GIAC_CONTENT.children.icon.default = 'icon-Field-time';
-  return newMeta;
+  return metas;
 };

@@ -1,4 +1,4 @@
-import { deepClone, defaultMeta } from '../const';
+import { deepClone, GIAC_CONTENT_METAS } from '../const';
 const registerMeta = context => {
   const { services } = context;
   const serviceOptions = services.map(c => {
@@ -7,7 +7,7 @@ const registerMeta = context => {
       label: c.id,
     };
   });
-  const metas = deepClone(defaultMeta);
+  const metas = deepClone(GIAC_CONTENT_METAS);
   metas.GIAC_CONTENT.children.title.default = 'Gremlin Query';
 
   return {

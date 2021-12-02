@@ -56,7 +56,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
   };
   return (
     <div style={styles}>
-      <div onClick={handleToggle} style={handlerStyles}></div>
+      <div onClick={handleToggle} style={handlerStyles as any}></div>
       <Tabs defaultActiveKey="1">
         {sortedComponents.map((item, index) => {
           if (!item) {

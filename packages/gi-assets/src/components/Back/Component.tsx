@@ -6,11 +6,13 @@ export interface Back {
   visible: boolean;
   color: string;
   hasDivider: boolean;
+  GIAC: any;
 }
 
 const Back: React.FunctionComponent<Back> = props => {
   //@ts-ignore
-  const { color, hasDivider, title, icon, isShowIcon, isShowTitle } = props;
+  const { GIAC } = props;
+  const { color, hasDivider, title, icon, isShowIcon, isShowTitle } = GIAC;
 
   return (
     <div>

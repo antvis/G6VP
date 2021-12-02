@@ -73,7 +73,7 @@ const SideSelectContainer: React.FunctionComponent<OperatorBarProps> = props => 
 
   return (
     <div style={styles}>
-      <div onClick={handleToggle} style={handlerStyles}></div>
+      <div onClick={handleToggle} style={handlerStyles as any}></div>
       <div style={{ width: '100%', overflow: 'hidden' }} className="gi-side-select-container">
         <div className="header">
           <Select

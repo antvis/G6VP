@@ -1,3 +1,10 @@
+import { deepClone, GI_CONTAINER_METAS } from '../const';
+const metas = deepClone(GI_CONTAINER_METAS);
+
+metas.height.default = 'calc(100vh - 120px)';
+metas.width.default = '450px';
+metas.offset.default = [0, 61];
+
 const registerMeta = context => {
   const { GI_CONTAINER_INDEXS } = context;
   return {
@@ -8,46 +15,7 @@ const registerMeta = context => {
       default: [],
       options: GI_CONTAINER_INDEXS,
     },
-    placement: {
-      name: '放置方位',
-      type: 'select',
-      default: 'LT',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
-    },
-    offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
-      default: [10, 60],
-    },
-    height: {
-      name: '高度',
-      type: 'text',
-      default: 'cal(100vh -60px)',
-    },
-    width: {
-      name: '宽度',
-      type: 'text',
-      default: '400px',
-    },
+    ...metas,
   };
 };
 

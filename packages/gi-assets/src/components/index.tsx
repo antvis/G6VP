@@ -11,6 +11,8 @@ import DownLoad from './DownLoad';
 import EdgeBunding from './EdgeBundling';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
+import FitCenter from './FitCenter';
+import FitView from './FitView';
 import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
@@ -25,7 +27,6 @@ import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
-import OperatorBar2 from './OperatorBar2';
 import OperatorHeader from './OperatorHeader';
 import PatternMatch from './PatternMatch';
 import Redo from './Redo';
@@ -38,8 +39,12 @@ import Timeline from './Timeline';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
-import Zoom from './Zoom';
+import ZoomIn from './ZoomIn';
+import ZoomOut from './ZoomOut';
+
 export {
+  FitCenter,
+  FitView,
   Timeline,
   OperatorBar,
   NodeLegend,
@@ -53,7 +58,8 @@ export {
   FilterPanel,
   AddNode,
   View,
-  Zoom,
+  ZoomIn,
+  ZoomOut,
   DownLoad,
   Redo,
   ContextMenu,
@@ -70,7 +76,6 @@ export {
   NodeExpandByTypes,
   PatternMatch,
   EdgeBunding,
-  OperatorBar2,
   SideTabs,
   SideSelectContainer,
   OperatorHeader,

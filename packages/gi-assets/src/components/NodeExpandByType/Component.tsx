@@ -1,9 +1,8 @@
-import { BulbOutlined, CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { Button, Checkbox, Collapse, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -164,7 +163,6 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
         ...style,
       }}
     >
-      <h3>节点扩散面板</h3>
       <Collapse
         bordered={false}
         activeKey={state.activeKeys}
@@ -257,8 +255,4 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
   );
 };
 
-export default WrapContainer(NodeExpandByType, {
-  icon: <BulbOutlined />,
-  title: '关系扩散',
-  showText: true,
-});
+export default NodeExpandByType;
