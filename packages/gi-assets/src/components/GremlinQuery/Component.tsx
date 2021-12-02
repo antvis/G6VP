@@ -1,10 +1,9 @@
-import { CloseOutlined, SubnodeOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
+import GremlinEditor from 'ace-gremlin-editor';
 import { Button, Col, Divider, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import GremlinEditor from 'ace-gremlin-editor';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -15,7 +14,7 @@ export interface IGremlinQueryProps {
   height?: number;
   showGutter?: boolean;
   serviceId: string;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
@@ -62,12 +61,14 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   return (
     <div
       className={'gremlineQueryPanel'}
-      style={{
-        visibility: visible ? 'visible' : 'hidden',
-        height: 'fit-content',
-        position: 'absolute',
-        ...style,
-      }}
+      style={
+        {
+          visibility: visible ? 'visible' : 'hidden',
+          height: 'fit-content',
+          position: 'absolute',
+          ...style,
+        } as any
+      }
     >
       <Row className={classNames('header', 'handle')}>
         <Col span={22} className={'title'}>
@@ -116,8 +117,4 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   );
 };
 
-export default WrapContainer(GremlinQueryPanel, {
-  icon: <SubnodeOutlined />,
-  title: ' Gremlin 查询',
-  showText: true,
-});
+export default GremlinQueryPanel;

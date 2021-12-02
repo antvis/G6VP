@@ -3,18 +3,16 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { ThunderboltOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { GraphinContext } from '@antv/graphin';
-import { Button, Checkbox, Col, Divider, Drawer, Form, Radio, Row, Tooltip, Tabs } from 'antd';
+import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import './index.less';
 import PropertyContent from './propertyContent';
 import { defaultProps, locale, MappingWay, NodeImportanceProps } from './registerMeta';
-import ResultTable from './resultTable';
 import ResultPlot from './resultPlot';
+import ResultTable from './resultTable';
 import { fittingString } from './util';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
@@ -444,7 +442,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const getStatistic = (type, itemType = 'node') => {
     const value =
-      type === 'ave' ? `${result[itemType][type].value}` : `${result[itemType][type].value} (${result[itemType][type].name})`;
+      type === 'ave'
+        ? `${result[itemType][type].value}`
+        : `${result[itemType][type].value} (${result[itemType][type].name})`;
     const fittedValue = fittingString(value, 250, 14);
     return (
       <>
@@ -454,50 +454,50 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         </span>
       </>
     );
-  }
+  };
 
-  const getResultPane = (paneType) => {
+  const getResultPane = paneType => {
     const formValues = form.getFieldsValue();
     const edgeType = formValues[`${currentAlgo}.edgeType`];
-    const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>
-    const resultBlock = paneType === 'table' ? <ResultTable
-      data={result}
-      form={form}
-      currentAlgo={currentAlgo}
-      reAnalyse={reAnalyse}
-    /> : <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />;
-    return <div className="result-wrapper">
-        <div className="result-title">
-          {getResultTitle()}
-        </div>
-        {failedMessage || <div className="result-statistic">
-          <Row>
-            <Col span={11}>{getStatistic('ave')}</Col>
-            <Col span={11}>{getStatistic('median')}</Col>
-          </Row>
-          <Row style={{ marginTop: '16px' }}>
-            <Col span={11}>{getStatistic('max')}</Col>
-            <Col span={11}>{getStatistic('min')}</Col>
-          </Row>
-        </div>}
+    const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>;
+    const resultBlock =
+      paneType === 'table' ? (
+        <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} />
+      ) : (
+        <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />
+      );
+    return (
+      <div className="result-wrapper">
+        <div className="result-title">{getResultTitle()}</div>
+        {failedMessage || (
+          <div className="result-statistic">
+            <Row>
+              <Col span={11}>{getStatistic('ave')}</Col>
+              <Col span={11}>{getStatistic('median')}</Col>
+            </Row>
+            <Row style={{ marginTop: '16px' }}>
+              <Col span={11}>{getStatistic('max')}</Col>
+              <Col span={11}>{getStatistic('min')}</Col>
+            </Row>
+          </div>
+        )}
         {!failedMessage && resultBlock}
-    </div>
-  }
+      </div>
+    );
+  };
 
-  const processRow = (row) => {
+  const processRow = row => {
     let finalVal = '';
     Object.values(row).forEach((value, i) => {
       let res = (value === undefined ? '' : value).toString().replace(/"/g, '""');
-      if (res.search(/("|,|\n)/g) >= 0)
-        res = '"' + res + '"';
-      if (i > 0)
-          finalVal += ',';
+      if (res.search(/("|,|\n)/g) >= 0) res = '"' + res + '"';
+      if (i > 0) finalVal += ',';
       finalVal += res;
     });
     return finalVal;
   };
 
-  const downloadCSV = (itemType) => {
+  const downloadCSV = itemType => {
     const list = result?.[itemType]?.data;
     if (!list) {
       return;
@@ -506,9 +506,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const csvStr = list.map(processRow).join('\n');
     const a = document.createElement('a');
     a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${header}\n${csvStr}`);
-    a.download = `node-importance-${itemType}.csv`;//这里替换为你需要的文件名
+    a.download = `node-importance-${itemType}.csv`; //这里替换为你需要的文件名
     a.click();
-  }
+  };
 
   const algoSelections = [
     {
@@ -567,99 +567,95 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     setVisible(true);
     onVisibleChange?.(true);
   };
-  const { hasDivider, color } = props;
+
   return (
-    <div>
-      <div onClick={handleClick}>
-        <Tooltip title="节点重要性" color={color} key={color}>
-          <Button type="text" icon={<ThunderboltOutlined />}></Button>
-        </Tooltip>
-        {hasDivider && <Divider type="vertical" />}
+    // <Drawer
+    //   title={
+    //     <Row style={{ width: '93%', lineHeight: '25px' }}>
+    //       <Col span={22}>节点重要性</Col>
+    //       <Col span={1} offset={1}>
+    //         <i
+    //           className="icon-reload iconfont"
+    //           style={{ color: 'rgba(0, 0, 0, 0.45)', cursor: 'pointer' }}
+    //           onClick={reset}
+    //         />
+    //       </Col>
+    //     </Row>
+    //   }
+    //   placement="right"
+    //   closable={true}
+    //   onClose={() => {
+    //     setVisible(false);
+    //     onVisibleChange?.(false);
+    //   }}
+    //   visible={visibility}
+    //   width={560}
+    //   mask={false}
+    //   getContainer={false}
+    //   style={{ textAlign: 'left' }}
+    //   footerStyle={{ textAlign: 'right' }}
+    // >
+    <div style={props.style}>
+      <div className="content-wrapper" id="select-drop-down-area">
+        <div className="title-wrapper">
+          <span className="title">算法</span>
+        </div>
+        <Form form={form}>
+          <Radio.Group onChange={onRadioChange} value={currentAlgo}>
+            {algoSelections.map(selection => (
+              <div key={selection.name}>
+                <Radio value={selection.name} className="algo-radio">
+                  <div className="algo-title">
+                    <span className="algo-name">{locale[selection.name]}</span>
+                    <span className="algo-tip">({locale[`${selection.name}-tip`]})</span>
+                  </div>
+                </Radio>
+                {selection.content}
+              </div>
+            ))}
+          </Radio.Group>
+        </Form>
       </div>
 
-      {ReactDOM.createPortal(
-        <Drawer
-          title={
-            <Row style={{ width: '93%', lineHeight: '25px' }}>
-              <Col span={22}>节点重要性</Col>
-              <Col span={1} offset={1}>
+      <Button
+        className="apply-button"
+        type="primary"
+        onClick={() => {
+          setReAnalyse(Math.random());
+          onAnalyse();
+        }}
+      >
+        分析
+      </Button>
+      {result && (
+        <Tabs
+          defaultActiveKey="table"
+          activeKey={resultPaneKey}
+          onChange={setResultPaneKey}
+          tabBarExtraContent={{
+            right: (
+              <Tooltip title="下载CSV" placement="topRight">
                 <i
-                  className="icon-reload iconfont"
-                  style={{ color: 'rgba(0, 0, 0, 0.45)', cursor: 'pointer' }}
-                  onClick={reset}
+                  className="iconfont icon-download"
+                  onClick={() => {
+                    downloadCSV('node');
+                    downloadCSV('edge');
+                  }}
                 />
-              </Col>
-            </Row>
-          }
-          placement="right"
-          closable={true}
-          onClose={() => {
-            setVisible(false);
-            onVisibleChange?.(false);
-          }}
-          visible={visibility}
-          width={560}
-          mask={false}
-          getContainer={false}
-          style={{ textAlign: 'left' }}
-          footerStyle={{ textAlign: 'right' }}
-        >
-          <div className="content-wrapper" id="select-drop-down-area">
-            <div className="title-wrapper">
-              <span className="title">算法</span>
-            </div>
-            <Form form={form}>
-              <Radio.Group onChange={onRadioChange} value={currentAlgo}>
-                {algoSelections.map(selection => (
-                  <div key={selection.name}>
-                    <Radio value={selection.name} className="algo-radio">
-                      <div className="algo-title">
-                        <span className="algo-name">{locale[selection.name]}</span>
-                        <span className="algo-tip">({locale[`${selection.name}-tip`]})</span>
-                      </div>
-                    </Radio>
-                    {selection.content}
-                  </div>
-                ))}
-              </Radio.Group>
-            </Form>
-          </div>
-
-          <Button
-            className="apply-button"
-            type="primary"
-            onClick={() => {
-              setReAnalyse(Math.random());
-              onAnalyse();
-            }}
-          >
-            分析
-          </Button>
-          {result && <Tabs
-            defaultActiveKey="table"
-            activeKey={resultPaneKey}
-            onChange={setResultPaneKey}
-            tabBarExtraContent={{
-              right: <Tooltip title='下载CSV' placement="topRight">
-                <i className="iconfont icon-download" onClick={() => {
-                  downloadCSV('node');
-                  downloadCSV('edge');
-                }} />
               </Tooltip>
-            }}
-          >
-            <TabPane tab='结果列表' key="table">
-              {getResultPane('table')}
-            </TabPane>
-            <TabPane tab='统计图表' key="plot">
-              {getResultPane('plot')}
-            </TabPane>
-          </Tabs>}
-        </Drawer>,
-        //@ts-ignore
-        document.getElementById('graphin-container'),
+            ),
+          }}
+        >
+          <TabPane tab="结果列表" key="table">
+            {getResultPane('table')}
+          </TabPane>
+          <TabPane tab="统计图表" key="plot">
+            {getResultPane('plot')}
+          </TabPane>
+        </Tabs>
       )}
     </div>
+    // {/* </Drawer> */}
   );
 };
 

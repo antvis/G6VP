@@ -1,4 +1,9 @@
-import { Meta } from '../WrapContainer';
+import { deepClone, GIAC_CONTENT_METAS } from '../const';
+
+const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.children.title.default = '关系扩散';
+metas.GIAC_CONTENT.children.icon.default = 'icon-star';
+
 const registerMeta = context => {
   const { services } = context;
   const serviceOptions = services.map(c => {
@@ -16,7 +21,7 @@ const registerMeta = context => {
       default: '',
       options: serviceOptions,
     },
-    ...Meta,
+    ...metas,
   };
 };
 

@@ -1,3 +1,5 @@
+import ASSETS_PACKAGE from '@alipay/gi-assets/package.json';
+import SDK_PACKAGE from '@alipay/graphinsight/package.json';
 import beautify from 'js-beautify';
 export function beautifyCode(code: string) {
   return beautify(code, {
@@ -49,7 +51,7 @@ const getHtmlAppCode = opts => {
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.5.0/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/${ASSETS_PACKAGE.version}/dist/index.css" />
   </head>
   <body>
     <div id="root"></div>
@@ -91,8 +93,8 @@ const getHtmlAppCode = opts => {
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
     <!--- GI DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.5.0/dist/index.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.5.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/${ASSETS_PACKAGE.version}/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
 
   </body>
 </html>
