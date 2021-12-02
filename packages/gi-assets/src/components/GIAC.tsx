@@ -9,11 +9,21 @@ export interface GIContianerProps {
 
 const GIAComponent = props => {
   const { GIAC, onClick, ...others } = props;
-  const { color, hasDivider, isShowTitle, title, isShowIcon, icon, isVertical, height = '60px' } = GIAC;
+  const {
+    tooltipPlacement,
+    tooltipColor,
+    hasDivider,
+    isShowTitle,
+    title,
+    isShowIcon,
+    icon,
+    isVertical,
+    height = '60px',
+  } = GIAC;
 
   return (
     <div onClick={onClick} {...others}>
-      <Tooltip title={title} color={color} key={color}>
+      <Tooltip title={title} color={tooltipColor} placement={tooltipPlacement}>
         <Button type="text" style={isVertical ? { height } : {}}>
           {isShowIcon && <MyIcon type={icon} />}
           {isVertical && <br />}

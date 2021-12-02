@@ -9,7 +9,7 @@ export interface IProps {
 const ZoomOut: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
   const { apis } = React.useContext(GraphinContext);
-  return <GIAComponent GIAC={GIAC} onClick={() => apis.handleZoomOut()} />;
+  return <GIAComponent GIAC={GIAC} onClick={() => apis.handleZoomIn()} />;
 };
 
 export default ZoomOut;

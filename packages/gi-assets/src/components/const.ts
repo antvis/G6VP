@@ -69,10 +69,38 @@ const GIAC_CONTENT = {
       type: 'switch',
       default: false,
     },
-    color: {
+    tooltipColor: {
       name: '提示颜色',
       type: 'fill',
       default: '#3056e3',
+    },
+    tooltipPlacement: {
+      name: '提示方位',
+      type: 'select',
+      default: 'top',
+      options: [
+        {
+          value: 'top',
+          label: '上方',
+        },
+        {
+          value: 'left',
+          label: '左方',
+        },
+        {
+          value: 'right',
+          label: '右方',
+        },
+        {
+          value: 'bottom',
+          label: '下方',
+        },
+      ],
+    },
+    height: {
+      name: '单元高度',
+      type: 'text',
+      default: '60px',
     },
     isVertical: {
       name: '垂直排列',
@@ -128,11 +156,40 @@ const GIAC = {
       type: 'switch',
       default: false,
     },
-    color: {
+    tooltipColor: {
       name: '提示颜色',
       type: 'fill',
       default: '#3056e3',
     },
+    height: {
+      name: '单元高度',
+      type: 'text',
+      default: '60px',
+    },
+    tooltipPlacement: {
+      name: '提示方位',
+      type: 'select',
+      default: 'top',
+      options: [
+        {
+          value: 'top',
+          label: '上方',
+        },
+        {
+          value: 'left',
+          label: '左方',
+        },
+        {
+          value: 'right',
+          label: '右方',
+        },
+        {
+          value: 'bottom',
+          label: '下方',
+        },
+      ],
+    },
+
     isVertical: {
       name: '垂直排列',
       type: 'switch',
@@ -175,8 +232,10 @@ export const GIAC_CONTENT_PROPS = {
     placement: 'LT',
     offset: [10, 60],
     hasDivider: false,
-    color: '#3056e3',
+    tooltipPlacement: 'top',
+    tooltipColor: '#3056e3',
     isVertical: false,
+    height: '60px',
   },
 };
 export const GIAC_PROPS = {
@@ -187,9 +246,11 @@ export const GIAC_PROPS = {
     isShowIcon: true,
     title: '',
     icon: '',
+    tooltipPlacement: 'top',
+    tooltipColor: '#3056e3',
     hasDivider: false,
-    color: '#3056e3',
     isVertical: false,
+    height: '60px',
   },
 };
 export const GI_CONTAINER_METAS = {

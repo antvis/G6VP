@@ -11,7 +11,7 @@ const registerMeta = context => {
     direction: {
       name: '展示方向',
       type: 'radio',
-      default: 'horizontal',
+      default: 'vertical',
       options: [
         {
           label: '水平展示',
@@ -51,7 +51,7 @@ const registerMeta = context => {
       type: 'Offset',
       min: 0,
       max: 400,
-      default: [0, 0],
+      default: [20, 100],
     },
   };
 };
