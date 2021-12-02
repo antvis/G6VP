@@ -1,4 +1,4 @@
-import { Button, Divider, Tooltip } from 'antd';
+import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MyIcon from '../Icon';
@@ -10,6 +10,7 @@ export interface GIContianerProps {
   offset: [number, number];
 }
 
+export type IContainerType = 'drawer' | 'modal' | 'div';
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
@@ -37,6 +38,32 @@ export const getPositionStyles = (placement, offset: number[]) => {
   }
   return styles;
 };
+export interface ContainerTypeProps {
+  type: IContainerType;
+  children: any;
+  visible: boolean;
+  onClose: () => void;
+}
+
+const ContainerType = (props: ContainerTypeProps) => {
+  const { type, children, visible, onClose } = props;
+
+  if (type == 'drawer') {
+    return (
+      <Drawer visible={visible} onClose={onClose} width={'600px'}>
+        {children}
+      </Drawer>
+    );
+  }
+  if (type == 'modal') {
+    return (
+      <Modal visible={visible} onCancel={onClose}>
+        {children}
+      </Modal>
+    );
+  }
+  return visible && <div>{children}</div>;
+};
 
 const WrapContainer = Component => {
   return ComponentProps => {
@@ -51,6 +78,7 @@ const WrapContainer = Component => {
       isShowIcon,
       icon,
       isVertical,
+      containerType = 'drawer' as IContainerType,
     } = ComponentProps.GIAC_CONTENT;
 
     const [visible, setVisible] = React.useState(defaultVisible);
@@ -79,12 +107,14 @@ const WrapContainer = Component => {
           {hasDivider && <Divider type="vertical" />}
         </div>
 
-        {visible &&
-          ReactDOM.createPortal(
-            <Component visible={visible} onClose={onClose} style={styles} />,
-            //@ts-ignore
-            document.getElementById('graphin-container'),
-          )}
+        {ReactDOM.createPortal(
+          //@ts-ignore
+          <ContainerType type={containerType} visible={visible} onClose={onClose} style={styles}>
+            <Component />
+          </ContainerType>,
+          //@ts-ignore
+          document.getElementById('graphin-container'),
+        )}
       </>
     );
   };
