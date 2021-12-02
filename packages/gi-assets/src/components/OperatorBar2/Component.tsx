@@ -19,7 +19,7 @@ const OperatorBar2: React.FunctionComponent<OperatorBarProps> = props => {
           const { props: itemProps, id: itemId } = item;
           const { component: Component } = assets[itemId];
           let WrapComponent = Component;
-          if (itemProps.GI_CONTAINER_ITEM) {
+          if (itemProps.GIAC_CONTENT) {
             WrapComponent = WrapContainer(Component);
           }
           return (

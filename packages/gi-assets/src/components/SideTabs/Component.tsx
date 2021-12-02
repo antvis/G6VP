@@ -18,7 +18,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
 
   const sortedComponents = components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
-    .filter((item: any) => item.props?.GI_CONTAINER_ITEM);
+    .filter((item: any) => item.props?.GIAC_CONTENT);
 
   const handleToggle = () => {
     setState(preState => {
@@ -65,7 +65,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
           const { props: itemProps, id: itemId } = item;
           const { component: Component } = assets[itemId];
           return (
-            <TabPane key={index} tab={itemProps.GI_CONTAINER_ITEM.title}>
+            <TabPane key={index} tab={itemProps.GIAC_CONTENT.title}>
               <Component {...itemProps} />
             </TabPane>
           );

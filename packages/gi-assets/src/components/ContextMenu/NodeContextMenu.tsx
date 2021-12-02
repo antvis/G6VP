@@ -21,7 +21,7 @@ const NodeMenu = props => {
         const { props: itemProps, id } = item;
         const { component: Component } = assets[id];
         let WrapComponent = Component;
-        if (itemProps.GI_CONTAINER_ITEM) {
+        if (itemProps.GIAC_CONTENT) {
           WrapComponent = WrapContainer(Component);
         }
         return (

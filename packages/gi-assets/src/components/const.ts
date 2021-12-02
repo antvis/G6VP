@@ -8,7 +8,7 @@ export const defaultMeta = {
     default: 2,
   },
 
-  GI_CONTAINER_ITEM: {
+  GIAC_CONTENT: {
     name: '容器配置',
     type: 'group',
     fold: true,
@@ -101,7 +101,7 @@ export const defaultMeta = {
 
 export const defaultProps = {
   GI_CONTAINER_INDEX: 0,
-  GI_CONTAINER_ITEM: {
+  GIAC_CONTENT: {
     visible: true,
     isShowTitle: true,
     isShowIcon: true,

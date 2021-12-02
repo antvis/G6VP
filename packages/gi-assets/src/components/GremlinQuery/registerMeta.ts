@@ -8,7 +8,7 @@ const registerMeta = context => {
     };
   });
   const metas = deepClone(defaultMeta);
-  metas.GI_CONTAINER_ITEM.children.title.default = 'Gremlin Query';
+  metas.GIAC_CONTENT.children.title.default = 'Gremlin Query';
 
   return {
     /** 分类信息 */
