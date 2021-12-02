@@ -28,7 +28,7 @@ const getComponents = (components, assets) => {
 
 const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
-  const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width } =
+  const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
 
   const rightComponents: any[] = [];
@@ -55,17 +55,17 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   return (
     <div className="gi-operator-header" style={{ height, width, ...postionStyles }}>
       <div className="gi-operator-header-left">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {LEFT_COMPONENTS}
         </Space>
       </div>
       <div className="gi-operator-header-center">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {CENTER_COMPONENTS}
         </Space>
       </div>
       <div className="gi-operator-header-right">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {RIGHT_COMPONENTS}
         </Space>
       </div>
