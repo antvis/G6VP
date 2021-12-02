@@ -6,10 +6,10 @@ export interface IProps {
   GIAC: IGIAC;
 }
 
-const ClearCanvas: React.FunctionComponent<IProps> = props => {
+const FitCenter: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
   const { graph } = React.useContext(GraphinContext);
-  return <GIAComponent GIAC={GIAC} onClick={() => graph.clear()} />;
+  return <GIAComponent GIAC={GIAC} onClick={() => graph.fitCenter()} />;
 };
 
-export default ClearCanvas;
+export default FitCenter;

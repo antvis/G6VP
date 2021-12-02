@@ -1,7 +1,5 @@
-import { GraphinContext, G6 } from '@antv/graphin';
-import { Button, Divider, Modal, Tooltip } from 'antd';
+import { G6, GraphinContext } from '@antv/graphin';
 import * as React from 'react';
-import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
 
 export interface EdgeBunding {
   visible: boolean;
@@ -10,7 +8,6 @@ export interface EdgeBunding {
 }
 
 const EdgeBunding: React.FunctionComponent<EdgeBunding> = props => {
-  const { color, hasDivider } = props;
   const { apis, graph } = React.useContext(GraphinContext);
   const { handleZoomIn, handleZoomOut } = apis;
   React.useEffect(() => {

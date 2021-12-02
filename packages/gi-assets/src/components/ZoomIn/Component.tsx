@@ -6,10 +6,10 @@ export interface IProps {
   GIAC: IGIAC;
 }
 
-const ClearCanvas: React.FunctionComponent<IProps> = props => {
+const ZoomIn: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
-  const { graph } = React.useContext(GraphinContext);
-  return <GIAComponent GIAC={GIAC} onClick={() => graph.clear()} />;
+  const { apis } = React.useContext(GraphinContext);
+  return <GIAComponent GIAC={GIAC} onClick={() => apis.handleZoomIn()} />;
 };
 
-export default ClearCanvas;
+export default ZoomIn;

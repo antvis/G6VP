@@ -1,5 +1,7 @@
+import { deepClone, GI_CONTAINER_METAS } from '../const';
+const metas = deepClone(GI_CONTAINER_METAS);
 const registerMeta = context => {
-  const { services, config, GI_CONTAINER_INDEXS } = context;
+  const { GI_CONTAINER_INDEXS } = context;
   return {
     /** 分类信息 */
     GI_CONTAINER: {
@@ -8,6 +10,7 @@ const registerMeta = context => {
       default: [],
       options: GI_CONTAINER_INDEXS,
     },
+    ...metas,
   };
 };
 

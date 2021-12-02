@@ -1,23 +1,21 @@
-import { GraphinContext, Behaviors } from '@antv/graphin';
-import { Button, Divider, Modal, Tooltip } from 'antd';
+import { Behaviors } from '@antv/graphin';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { createFromIconfontCN } from '@ant-design/icons';
-
+import { IGIAC } from '../const';
+import GIAComponent from '../GIAC';
 const { BrushSelect, DragCanvas } = Behaviors;
 
 export interface LassoType {
   visible: boolean;
   color: string;
   hasDivider: boolean;
+  GIAC: IGIAC;
 }
 
 const LassoSelect: React.FunctionComponent<LassoType> = props => {
-  const { color, hasDivider } = props;
+  const { GIAC } = props;
   const [isLasso, setIsLasso] = React.useState(false);
-  const IconFont = createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_2946006_flm94532sdw.js',
-  });
+
   const Content = props => {
     const { isLasso } = props;
     if (isLasso) {
@@ -49,10 +47,7 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
 
   return (
     <div>
-      <Tooltip title="自由圈选" color={color} key={color}>
-        <Button type="text" icon={<IconFont type="icon-lasso" />} onClick={handleLasso}></Button>
-      </Tooltip>
-      {hasDivider && <Divider type="vertical" />}
+      <GIAComponent onClick={handleLasso} GIAC={GIAC} />
       {ReactDOM.createPortal(
         <Content isLasso={isLasso}></Content>,
         //@ts-ignore
