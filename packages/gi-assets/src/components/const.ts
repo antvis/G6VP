@@ -39,7 +39,7 @@ export const defaultMeta = {
       icon: {
         name: '选择图标',
         type: 'text',
-        default: 'icon',
+        default: 'icon-star',
         showInPanel: {
           conditions: [['.isShowIcon', '$eq', true]],
         },

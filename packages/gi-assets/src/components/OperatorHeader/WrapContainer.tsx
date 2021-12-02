@@ -1,6 +1,7 @@
 import { Button, Divider, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MyIcon from '../Icon';
 
 export interface GIContianerProps {
   color: string;
@@ -70,7 +71,7 @@ const WrapContainer = Component => {
         <div onClick={onClick}>
           <Tooltip title={title} color={color} key={color}>
             <Button type="text" style={isVertical ? { height: '60px' } : {}}>
-              {isShowIcon && icon}
+              {isShowIcon && <MyIcon type={icon} />}
               {isVertical && <br />}
               {isShowTitle && title}
             </Button>
