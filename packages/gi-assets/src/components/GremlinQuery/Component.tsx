@@ -14,7 +14,7 @@ export interface IGremlinQueryProps {
   height?: number;
   showGutter?: boolean;
   serviceId: string;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
@@ -61,12 +61,14 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   return (
     <div
       className={'gremlineQueryPanel'}
-      style={{
-        visibility: visible ? 'visible' : 'hidden',
-        height: 'fit-content',
-        position: 'absolute',
-        ...style,
-      }}
+      style={
+        {
+          visibility: visible ? 'visible' : 'hidden',
+          height: 'fit-content',
+          position: 'absolute',
+          ...style,
+        } as any
+      }
     >
       <Row className={classNames('header', 'handle')}>
         <Col span={22} className={'title'}>

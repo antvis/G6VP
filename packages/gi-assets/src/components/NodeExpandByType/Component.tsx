@@ -154,14 +154,16 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
 
   return (
     <div
-      style={{
-        position: 'absolute',
-        background: '#fff',
-        width: '420px',
-        padding: '12px',
-        boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
-        ...style,
-      }}
+      style={
+        {
+          position: 'absolute',
+          background: '#fff',
+          width: '420px',
+          padding: '12px',
+          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
+          ...style,
+        } as any
+      }
     >
       <Collapse
         bordered={false}
