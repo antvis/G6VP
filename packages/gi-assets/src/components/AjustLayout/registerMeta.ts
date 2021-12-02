@@ -1,7 +1,7 @@
 import { deepClone, defaultMeta } from '../const';
 const registerMeta = context => {
   const metas = deepClone(defaultMeta);
-  metas.GI_CONTAINER_ITEM.children.title.default = '子图布局';
+  metas.GIAC_CONTENT.children.title.default = '子图布局';
   return metas;
 };
 

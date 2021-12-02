@@ -17,7 +17,7 @@ const SideSelectContainer: React.FunctionComponent<OperatorBarProps> = props => 
   if (components.length === 0) return null;
   const sortedComponents = components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
-    .filter((item: any) => item.props?.GI_CONTAINER_ITEM);
+    .filter((item: any) => item.props?.GIAC_CONTENT);
 
   const [state, setState] = React.useState({
     toggle: false,
@@ -88,7 +88,7 @@ const SideSelectContainer: React.FunctionComponent<OperatorBarProps> = props => 
                 return null;
               }
               const { props: itemProps, id: itemId } = item;
-              return <Option value={itemId}>{itemProps.GI_CONTAINER_ITEM.title}</Option>;
+              return <Option value={itemId}>{itemProps.GIAC_CONTENT.title}</Option>;
             })}
           </Select>
         </div>

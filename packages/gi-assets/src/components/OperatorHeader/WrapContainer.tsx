@@ -51,7 +51,7 @@ const WrapContainer = Component => {
       isShowIcon,
       icon,
       isVertical,
-    } = ComponentProps.GI_CONTAINER_ITEM;
+    } = ComponentProps.GIAC_CONTENT;
 
     const [visible, setVisible] = React.useState(defaultVisible);
 
