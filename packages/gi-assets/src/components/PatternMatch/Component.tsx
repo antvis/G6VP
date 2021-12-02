@@ -204,14 +204,16 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
   if (visible) {
     return (
       <div
-        style={{
-          position: 'absolute',
-          background: '#fff',
-          width: '420px',
-          padding: '12px',
-          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
-          ...style,
-        }}
+        style={
+          {
+            position: 'absolute',
+            background: '#fff',
+            width: '420px',
+            padding: '12px',
+            boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
+            ...style,
+          } as any
+        }
       >
         <Form initialValues={state} form={form}>
           <div>

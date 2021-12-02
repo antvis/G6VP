@@ -11,12 +11,14 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
 
   return (
     <div
-      style={{
-        background: 'red',
-        height: '500px',
-        width: '500px',
-        ...style,
-      }}
+      style={
+        {
+          background: 'red',
+          height: '500px',
+          width: '500px',
+          ...style,
+        } as any
+      }
     >
       HELLO TIMELINE
     </div>
