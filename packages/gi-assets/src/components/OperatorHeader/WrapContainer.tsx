@@ -10,6 +10,25 @@ export interface GIContianerProps {
   offset: [number, number];
 }
 
+const POSITION_MAP = {
+  LT: 'top',
+  LB: 'left',
+  RT: 'right',
+  RB: 'bottom',
+};
+
+const WrapTooltip = props => {
+  const { title, isShowTooltip, tooltipPlacement, tooltipColor, children } = props;
+  if (isShowTooltip) {
+    return (
+      <Tooltip title={title} color={tooltipColor} placement={tooltipPlacement}>
+        {children}
+      </Tooltip>
+    );
+  }
+  return <>{children}</>;
+};
+
 export type IContainerType = 'drawer' | 'modal' | 'div';
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
@@ -39,47 +58,98 @@ export const getPositionStyles = (placement, offset: number[]) => {
   return styles;
 };
 export interface ContainerTypeProps {
-  type: IContainerType;
+  containerType: IContainerType;
+  containerWidth: string;
+  containerHeight: string;
+  containerMask: boolean;
+  containerMaskClosable: boolean;
+  containerPlacement: 'top';
   children: any;
   visible: boolean;
+  offset: number[];
   onClose: () => void;
+  title: string;
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
-  const { type, children, visible, onClose } = props;
+  const {
+    containerType = 'drawer' as IContainerType,
+    containerWidth = '600px',
+    containerHeight = 'calc(100vh-120px)',
+    containerMask = false,
+    containerMaskClosable = false,
+    containerPlacement,
+    children,
+    visible,
+    offset,
+    onClose,
+    title,
+  } = props;
 
-  if (type == 'drawer') {
+  const placement = POSITION_MAP[containerPlacement];
+  const [offsetX, offsetY] = offset;
+  if (containerType == 'drawer') {
     return (
-      <Drawer visible={visible} onClose={onClose} width={'600px'}>
+      <Drawer
+        title={title}
+        mask={containerMask}
+        maskClosable={containerMaskClosable}
+        placement={placement}
+        width={containerWidth}
+        height={containerHeight}
+        visible={visible}
+        onClose={onClose}
+        style={{
+          top: offsetY,
+          [placement]: offsetX,
+        }}
+      >
         {children}
       </Drawer>
     );
   }
-  if (type == 'modal') {
+  if (containerType == 'modal') {
     return (
-      <Modal visible={visible} onCancel={onClose}>
+      <Modal
+        title={title}
+        mask={containerMask}
+        width={containerWidth}
+        maskClosable={containerMaskClosable}
+        visible={visible}
+        onCancel={onClose}
+      >
         {children}
       </Modal>
     );
   }
-  return visible && <div>{children}</div>;
+  const styles = getPositionStyles(containerPlacement, offset);
+
+  return visible && <div style={styles}>{children}</div>;
 };
 
 const WrapContainer = Component => {
   return ComponentProps => {
+    const { GIAC_CONTENT } = ComponentProps;
     const {
       visible: defaultVisible,
-      color,
+      tooltipColor,
+      tooltipPlacement,
       hasDivider,
-      placement,
       offset,
       isShowTitle,
       title,
       isShowIcon,
       icon,
       isVertical,
+      isShowTooltip,
+      disabled,
       containerType = 'drawer' as IContainerType,
-    } = ComponentProps.GIAC_CONTENT;
+      containerWidth = '600px',
+      containerHeight = 'calc(100vh-120px)',
+      containerMask = false,
+      containerMaskClosable = false,
+      containerPlacement,
+    } = GIAC_CONTENT;
 
     const [visible, setVisible] = React.useState(defaultVisible);
 
@@ -92,24 +162,39 @@ const WrapContainer = Component => {
     const onClose = () => {
       setVisible(false);
     };
-    const styles = getPositionStyles(placement, offset);
 
     return (
       <>
-        <div onClick={onClick}>
-          <Tooltip title={title} color={color} key={color}>
-            <Button type="text" style={isVertical ? { height: '60px' } : {}}>
+        <div>
+          <WrapTooltip
+            title={title}
+            tooltipColor={tooltipColor}
+            tooltipPlacement={tooltipPlacement}
+            isShowTooltip={isShowTooltip}
+          >
+            <Button type="text" style={isVertical ? { height: '60px' } : {}} onClick={onClick} disabled={disabled}>
               {isShowIcon && <MyIcon type={icon} />}
               {isVertical && <br />}
               {isShowTitle && title}
             </Button>
-          </Tooltip>
+          </WrapTooltip>
           {hasDivider && <Divider type="vertical" />}
         </div>
 
         {ReactDOM.createPortal(
           //@ts-ignore
-          <ContainerType type={containerType} visible={visible} onClose={onClose} style={styles}>
+          <ContainerType
+            title={title}
+            containerType={containerType}
+            containerWidth={containerWidth}
+            containerHeight={containerHeight}
+            containerMask={containerMask}
+            containerMaskClosable={containerMaskClosable}
+            containerPlacement={containerPlacement}
+            visible={visible}
+            onClose={onClose}
+            offset={offset}
+          >
             <Component />
           </ContainerType>,
           //@ts-ignore
