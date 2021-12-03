@@ -12,7 +12,13 @@ const getComponents = (components, assets) => {
       if (!item) {
         return null;
       }
+
       const { props: itemProps, id: itemId } = item;
+
+      if (!assets[itemId]) {
+        console.warn(`assets ${itemId} is undefined`);
+        return null;
+      }
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
@@ -23,12 +29,15 @@ const getComponents = (components, assets) => {
           <WrapComponent {...itemProps} />
         </div>
       );
+    })
+    .filter(item => {
+      return item !== null;
     });
 };
 
 const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
-  const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width } =
+  const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
 
   const rightComponents: any[] = [];
@@ -55,17 +64,17 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   return (
     <div className="gi-operator-header" style={{ height, width, ...postionStyles }}>
       <div className="gi-operator-header-left">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {LEFT_COMPONENTS}
         </Space>
       </div>
       <div className="gi-operator-header-center">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {CENTER_COMPONENTS}
         </Space>
       </div>
       <div className="gi-operator-header-right">
-        <Space align="center" style={{ height }}>
+        <Space align="center" style={{ height, gap }}>
           {RIGHT_COMPONENTS}
         </Space>
       </div>

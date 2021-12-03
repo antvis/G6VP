@@ -55,22 +55,24 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
     borderRight: '20px solid transparent',
   };
   return (
-    <div style={styles}>
+    <div style={styles} className="gi-side-tabs">
       <div onClick={handleToggle} style={handlerStyles as any}></div>
-      <Tabs defaultActiveKey="1">
-        {sortedComponents.map((item, index) => {
-          if (!item) {
-            return null;
-          }
-          const { props: itemProps, id: itemId } = item;
-          const { component: Component } = assets[itemId];
-          return (
-            <TabPane key={index} tab={itemProps.GIAC_CONTENT.title}>
-              <Component {...itemProps} />
-            </TabPane>
-          );
-        })}
-      </Tabs>
+      <div className="gi-side-tabs-content">
+        <Tabs defaultActiveKey="1">
+          {sortedComponents.map((item, index) => {
+            if (!item) {
+              return null;
+            }
+            const { props: itemProps, id: itemId } = item;
+            const { component: Component } = assets[itemId];
+            return (
+              <TabPane key={index} tab={itemProps.GIAC_CONTENT.title}>
+                <Component {...itemProps} />
+              </TabPane>
+            );
+          })}
+        </Tabs>
+      </div>
     </div>
   );
 };
