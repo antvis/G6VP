@@ -12,7 +12,13 @@ const getComponents = (components, assets) => {
       if (!item) {
         return null;
       }
+
       const { props: itemProps, id: itemId } = item;
+
+      if (!assets[itemId]) {
+        console.warn(`assets ${itemId} is undefined`);
+        return null;
+      }
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
@@ -23,6 +29,9 @@ const getComponents = (components, assets) => {
           <WrapComponent {...itemProps} />
         </div>
       );
+    })
+    .filter(item => {
+      return item !== null;
     });
 };
 
