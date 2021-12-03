@@ -14,6 +14,7 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
+    "3d-force-graph": "^1.70.5",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/l7": "^2.5.25",
@@ -24,6 +25,8 @@
     "deepmerge": "^4.2.2",
     "immer": "^9.0.6",
     "react-force-graph-3d": "^1.21.10",
+    "react-spring": "^9.3.2",
+    "three": "^0.135.0",
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {
