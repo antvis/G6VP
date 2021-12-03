@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Button, Divider } from 'antd';
 import * as React from 'react';
+import { GIAC_PROPS } from '../const';
 
 export interface Back {
   visible: boolean;
@@ -10,8 +11,7 @@ export interface Back {
 }
 
 const Back: React.FunctionComponent<Back> = props => {
-  //@ts-ignore
-  const { GIAC } = props;
+  const { GIAC = GIAC_PROPS.GIAC } = props;
   const { color, hasDivider, title, icon, isShowIcon, isShowTitle } = GIAC;
 
   return (

@@ -20,31 +20,45 @@ const getComponentsByAssets = (assets, data, services, config) => {
       };
     });
 
-  const components = Object.keys(assets).map(key => {
-    const component = assets[key];
-    const {
-      registerMeta = () => {
-        return {};
-      },
-      Component,
-      info = {},
-    } = component;
-    const keys = getKeysByData(data);
+  const components = Object.keys(assets)
+    .map(key => {
+      const component = assets[key];
+      if (!component) {
+        return {
+          id: 'NOT_FOUND',
+          name: key,
+        };
+      }
+      const {
+        registerMeta = () => {
+          return {};
+        },
+        Component,
+        info = {},
+      } = component;
+      const keys = getKeysByData(data);
 
-    const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS });
-    /** 默认的配置值 */
-    const defaultProps = extractDefault({ config: configObj, value: {} });
-    const { id, name, category } = info;
-    return {
-      id,
-      name,
-      category,
-      props: defaultProps,
-      meta: {
-        ...configObj,
-      },
-    };
-  });
+      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS });
+      /** 默认的配置值 */
+      const defaultProps = extractDefault({ config: configObj, value: {} });
+      const { id, name, category } = info;
+      return {
+        id,
+        name,
+        category,
+        props: defaultProps,
+        meta: {
+          ...configObj,
+        },
+      };
+    })
+    .filter(c => {
+      if (c.id === 'NOT_FOUND') {
+        console.log('%c !!! 未找到资产包 !!! ', 'color:red', c.name);
+      }
+      return c.id !== 'NOT_FOUND';
+    });
+
   return components;
 };
 export default getComponentsByAssets;

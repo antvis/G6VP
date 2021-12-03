@@ -1,5 +1,11 @@
 import { deepClone, GI_CONTAINER_METAS } from '../const';
 const metas = deepClone(GI_CONTAINER_METAS);
+//@ts-ignore
+metas.gap = {
+  name: '间隔',
+  type: 'text',
+  default: '0px',
+};
 const registerMeta = context => {
   const { GI_CONTAINER_INDEXS } = context;
   return {
