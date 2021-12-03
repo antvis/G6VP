@@ -1,6 +1,6 @@
 import { Button, Divider, Tooltip } from 'antd';
 import React from 'react';
-import { IGIAC } from './const';
+import { GIAC_PROPS, IGIAC } from './const';
 import MyIcon from './Icon';
 export interface GIContianerProps {
   GIAC: IGIAC;
@@ -33,7 +33,7 @@ const GIAComponent = props => {
     height = '60px',
     disabled,
     isShowTooltip,
-  } = GIAC;
+  } = GIAC || GIAC_PROPS.GIAC;
 
   return (
     <div {...others}>
