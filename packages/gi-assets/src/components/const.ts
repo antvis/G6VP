@@ -8,6 +8,11 @@ const GIAC_CONTENT = {
       type: 'switch',
       default: false,
     },
+    disabled: {
+      name: '功能禁用',
+      type: 'switch',
+      default: false,
+    },
     isShowTitle: {
       name: '显示名称',
       type: 'switch',
@@ -34,45 +39,19 @@ const GIAC_CONTENT = {
         conditions: [['.isShowIcon', '$eq', true]],
       },
     },
-    placement: {
-      name: '组件位置',
-      type: 'select',
-      default: 'LT',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
-    },
-    offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
-      default: [10, 60],
-    },
-    hasDivider: {
-      name: '分隔符',
+    isShowTooltip: {
+      name: '提示框',
       type: 'switch',
-      default: false,
+      default: true,
     },
+
     tooltipColor: {
       name: '提示颜色',
       type: 'fill',
       default: '#3056e3',
+      showInPanel: {
+        conditions: [['.isShowTooltip', '$eq', true]],
+      },
     },
     tooltipPlacement: {
       name: '提示方位',
@@ -96,7 +75,16 @@ const GIAC_CONTENT = {
           label: '下方',
         },
       ],
+      showInPanel: {
+        conditions: [['.isShowTooltip', '$eq', true]],
+      },
     },
+    hasDivider: {
+      name: '分隔符',
+      type: 'switch',
+      default: false,
+    },
+
     height: {
       name: '单元高度',
       type: 'text',
@@ -113,6 +101,66 @@ const GIAC_CONTENT = {
         ],
       },
     },
+
+    containerType: {
+      name: '容器类型',
+      type: 'radio',
+      default: 'drawer',
+      options: [
+        {
+          label: '抽屉',
+          value: 'drawer',
+        },
+        {
+          label: '弹窗',
+          value: 'modal',
+        },
+        {
+          label: '普通DIV',
+          value: 'div',
+        },
+      ],
+    },
+    containerPlacement: {
+      name: '容器位置',
+      type: 'select',
+      default: 'RT',
+      options: [
+        {
+          value: 'LT',
+          label: '左上 / top',
+        },
+        {
+          value: 'LB',
+          label: '左下 / left',
+        },
+        {
+          value: 'RT',
+          label: '右上 / right',
+        },
+        {
+          value: 'RB',
+          label: '右下 / bottom',
+        },
+      ],
+    },
+    offset: {
+      name: '偏移距离',
+      type: 'Offset',
+      min: 0,
+      max: 400,
+      default: [10, 60],
+    },
+    containerWidth: {
+      name: '容器宽度',
+      type: 'text',
+      default: '400px',
+    },
+    contaienrMask: {
+      name: '容器遮罩',
+      type: 'switch',
+      default: false,
+    },
   },
 };
 const GIAC = {
@@ -122,6 +170,11 @@ const GIAC = {
   children: {
     visible: {
       name: '默认显示',
+      type: 'switch',
+      default: false,
+    },
+    disabled: {
+      name: '功能禁用',
       type: 'switch',
       default: false,
     },
@@ -151,20 +204,19 @@ const GIAC = {
         conditions: [['.isShowIcon', '$eq', true]],
       },
     },
-    hasDivider: {
-      name: '分隔符',
+
+    isShowTooltip: {
+      name: '提示框',
       type: 'switch',
-      default: false,
+      default: true,
     },
     tooltipColor: {
       name: '提示颜色',
       type: 'fill',
       default: '#3056e3',
-    },
-    height: {
-      name: '单元高度',
-      type: 'text',
-      default: '60px',
+      showInPanel: {
+        conditions: [['.isShowTooltip', '$eq', true]],
+      },
     },
     tooltipPlacement: {
       name: '提示方位',
@@ -188,8 +240,20 @@ const GIAC = {
           label: '下方',
         },
       ],
+      showInPanel: {
+        conditions: [['.isShowTooltip', '$eq', true]],
+      },
     },
-
+    hasDivider: {
+      name: '分隔符',
+      type: 'switch',
+      default: false,
+    },
+    height: {
+      name: '单元高度',
+      type: 'text',
+      default: '60px',
+    },
     isVertical: {
       name: '垂直排列',
       type: 'switch',
@@ -227,23 +291,30 @@ export const GIAC_CONTENT_PROPS = {
     visible: false,
     isShowTitle: true,
     isShowIcon: true,
+    isShowTooltip: true,
     title: '',
     icon: '',
-    placement: 'LT',
-    offset: [10, 60],
+    disabled: false,
+    placement: 'RT',
+    offset: [0, 60],
     hasDivider: false,
     tooltipPlacement: 'top',
     tooltipColor: '#3056e3',
     isVertical: false,
     height: '60px',
+    containerType: 'drawer',
+    containerWidth: '400px',
+    contaienrMask: false,
   },
 };
 export const GIAC_PROPS = {
   GI_CONTAINER_INDEX: 0,
   GIAC: {
     visible: false,
+    disabled: false,
     isShowTitle: true,
     isShowIcon: true,
+    isShowTooltip: true,
     title: '',
     icon: '',
     tooltipPlacement: 'top',
