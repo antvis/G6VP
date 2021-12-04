@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, notification } from 'antd';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import { EditableProTable } from '@ant-design/pro-table';
+import Mock from './Mock';
 import store, { StateType } from '../redux';
 import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
@@ -265,6 +266,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           </Steps>
           <div className="steps-content">{steps[current].content}</div>
           <div className="steps-action"></div>
+        </TabPane>
+        <TabPane tab="mock" key="mock">
+          <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
       </Tabs>

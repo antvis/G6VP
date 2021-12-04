@@ -59,6 +59,13 @@ data => {
 }
 `;
 
+export const getMockData = () => {
+  return {
+    nodes: [],
+    edges: [],
+  };
+};
+
 export const getOptions = data => {
   const { nodes, edges } = data;
   let nodesOptions = {};
