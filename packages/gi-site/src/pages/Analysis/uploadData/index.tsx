@@ -29,7 +29,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const state = useSelector((state: StateType) => state);
   const { id } = state;
-  const [current, setCurrent] = useImmer(0);
+  const [current, setCurrent] = useImmer({
+    activeKey: 0,
+    buttonDisabled: true,
+  });
   const dispatch = useDispatch();
   //初始化数据
   const [data, setData] = useImmer(initData);
@@ -50,6 +53,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     defaultFileList: inputData,
     onRemove: file => {
       const renderData = inputData.filter(d => d.uid !== file.uid);
+      if (renderData.length === 0) {
+        setCurrent(draft => {
+          draft.buttonDisabled = true;
+        });
+      }
       setInputData(renderData);
       mergeData(renderData);
     },
@@ -59,6 +67,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       reader.readAsText(file);
 
       reader.onload = fileReader => {
+        setCurrent(draft => {
+          draft.buttonDisabled = false;
+        });
         const fileData = fileReader.target.result;
         const renderData = [
           ...inputData,
@@ -89,11 +100,15 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const next = () => {
-    setCurrent(current + 1);
+    setCurrent(draft => {
+      draft.activeKey++;
+    });
   };
 
   const prev = () => {
-    setCurrent(current - 1);
+    setCurrent(draft => {
+      draft.activeKey--;
+    });
   };
 
   const checkData = () => {
@@ -199,7 +214,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     {
       title: '上传数据',
       content: (
-        <div className="upload-panel">
+        <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
+          <h4 style={{ marginBottom: 0 }}>已传数据</h4>
           <div className="upload-panel-section">
             <Dragger {...draggerProps}>
               <p className="ant-upload-drag-icon">
@@ -209,7 +225,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             </Dragger>
           </div>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
-            <Button type="primary" shape="round" onClick={checkData}>
+            <Button type="primary" disabled={current.buttonDisabled} shape="round" onClick={checkData}>
               进入下一步
             </Button>
           </Row>
@@ -259,12 +275,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     <Modal title="导入数据" visible={visible} width={846} footer={null} onCancel={handleClose}>
       <Tabs defaultActiveKey="document">
         <TabPane tab="文件" key="document">
-          <Steps current={current} type="navigation">
+          <Steps current={current.activeKey} type="navigation">
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
             ))}
           </Steps>
-          <div className="steps-content">{steps[current].content}</div>
+          <div className="steps-content">{steps[current.activeKey].content}</div>
           <div className="steps-action"></div>
         </TabPane>
         <TabPane tab="mock" key="mock">
