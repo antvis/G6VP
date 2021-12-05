@@ -267,7 +267,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
             <Radio.Button value="edges">Edge</Radio.Button>
           </Radio.Group>
         </div>
-        <Table dataSource={tableData} columns={columns} />
+        <Table dataSource={tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
       </Modal>
     </>
   );
