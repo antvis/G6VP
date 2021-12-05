@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, notification } from 'antd';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import { EditableProTable } from '@ant-design/pro-table';
+import Mock from './Mock';
 import store, { StateType } from '../redux';
 import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
@@ -126,7 +127,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const transform = recordList => {
     const { id, source, target } = recordList[0];
     const transFunc = GIDefaultTrans(id, source, target);
+
     setTransfunc(transFunc);
+
     const result = eval(transFunc)(data);
     setTransData(result);
 
@@ -156,10 +159,19 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         nodes: [...beforData.nodes, ...transData.nodes],
         edges: [...beforData.edges, ...transData.edges],
       };
+
+      // 更新inputdata里面的 trans function
+      const renderData = inputData.map(d => {
+        return {
+          ...d,
+          transfunc,
+        };
+      });
+
       updateProjectById(id, {
         data: JSON.stringify({
           transData: mergeData,
-          inputData: [...result.data.inputData, ...inputData],
+          inputData: [...result.data.inputData, ...renderData],
         }),
       }).then(res => {
         dispatch({
@@ -229,7 +241,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
               <Radio.Button value="edges">Edge</Radio.Button>
             </Radio.Group>
           </div>
-          <Table dataSource={tableData} columns={columns} />
+          <Table dataSource={tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
           <Row style={{ justifyContent: 'center' }}>
             <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
               上一步
@@ -254,6 +266,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           </Steps>
           <div className="steps-content">{steps[current].content}</div>
           <div className="steps-action"></div>
+        </TabPane>
+        <TabPane tab="mock" key="mock">
+          <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
       </Tabs>
