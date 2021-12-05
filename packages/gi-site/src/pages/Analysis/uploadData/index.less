@@ -2,12 +2,17 @@
   width: 798px;
   height: 234px;
   margin: 10px 0px;
-}
+  & > span {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+  }
 
-.ant-upload-list {
-  display: inline-flex;
-  margin-left: 30px;
-  vertical-align: middle;
+  .ant-upload-list {
+    display: inline-flex;
+    margin: 0 0 10px;
+    vertical-align: middle;
+  }
 }
 
 .dataCheck-panel {
