@@ -40,23 +40,38 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
     transition: 'all 0.3s ease',
   };
   const styles = state.toggle ? { ...baseStyle, width: '0px' } : baseStyle;
-  const handlerStyles: React.CSSProperties = {
+  const handerBackStyles = {
     position: 'absolute',
     left: '100%',
     top: '50%',
-    transform: ' translate(0%, -50%)',
     height: '80px',
     width: '38px',
-    backgroundColor: '#fff',
+    borderStyle: 'solid',
+    borderWidth: '20px',
+    borderColor: 'transparent transparent transparent #d9d9d9'
+  }
+  const handlerStyles: React.CSSProperties = {
+    position: 'absolute',
+    left: 'calc(100% - 1px)',
+    top: '50%',
+    height: '80px',
+    width: '38px',
     cursor: 'pointer',
-    borderTop: '20px solid transparent',
-    borderBottom: '20px solid transparent',
-    borderLeft: '30px solid #ddd',
-    borderRight: '20px solid transparent',
+    borderStyle: 'solid',
+    borderWidth: '20px',
+    borderColor: 'transparent transparent transparent #fafafa'
   };
+  const handlerTextStyles = {
+    position: 'absolute',
+    left: '-15px',
+    top: '8px'
+  }
   return (
     <div style={styles} className="gi-side-tabs">
-      <div onClick={handleToggle} style={handlerStyles as any}></div>
+      <div style={handerBackStyles as any}></div>
+      <div onClick={handleToggle} style={handlerStyles as any}>
+        <span style={handlerTextStyles as any}>||</span>
+      </div>
       <div className="gi-side-tabs-content">
         <Tabs defaultActiveKey="1">
           {sortedComponents.map((item, index) => {
