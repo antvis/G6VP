@@ -88,6 +88,7 @@ const ContainerType = (props: ContainerTypeProps) => {
 
   const placement = POSITION_MAP[containerPlacement];
   const [offsetX, offsetY] = offset;
+
   if (containerType == 'drawer') {
     return (
       <Drawer
@@ -152,10 +153,11 @@ const WrapContainer = Component => {
     } = GIAC_CONTENT;
 
     const [visible, setVisible] = React.useState(defaultVisible);
+    console.log('visible', visible)
 
-    React.useEffect(() => {
-      setVisible(defaultVisible);
-    }, [defaultVisible]);
+    // React.useEffect(() => {
+    //   setVisible(defaultVisible);
+    // }, [defaultVisible]);
     const onClick = () => {
       setVisible(!visible);
     };
