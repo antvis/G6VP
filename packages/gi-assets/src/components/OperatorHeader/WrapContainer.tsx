@@ -128,7 +128,8 @@ const ContainerType = (props: ContainerTypeProps) => {
   return visible && <div style={styles}>{children}</div>;
 };
 
-const WrapContainer = Component => {
+const WrapContainer = (Component, activePannel, setActivePannel, componentId) => {
+
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
@@ -155,11 +156,20 @@ const WrapContainer = Component => {
     const [visible, setVisible] = React.useState(defaultVisible);
     console.log('visible', visible)
 
-    // React.useEffect(() => {
-    //   setVisible(defaultVisible);
-    // }, [defaultVisible]);
+    React.useEffect(() => {
+
+      if (activePannel !== componentId) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+    }, [activePannel]);
     const onClick = () => {
+
       setVisible(!visible);
+      setActivePannel(componentId);
+
+
     };
     const onClose = () => {
       setVisible(false);
