@@ -9,6 +9,7 @@ import './index.less';
 
 export interface ILargeGraph {
   serviceId: string;
+  visible: boolean;
 }
 
 const dataTransfer = data => {
@@ -33,7 +34,7 @@ const dataTransfer = data => {
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
   //@ts-ignore
   const { services, config, transform, setGiState, dispatch } = GraphinContext;
-  const { serviceId } = props;
+  const { serviceId, visible } = props;
   const [state, setState] = React.useState({
     toggle: true,
     isReady: false,
@@ -50,7 +51,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
   };
 
   React.useEffect(() => {
-    if (!serviceId) {
+    if (!serviceId || !visible) {
       return;
     }
     const { service } = services.find(c => c.id === serviceId);
@@ -125,12 +126,10 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
             );
           })
           .onNodeRightClick((node: any) => {
-            console.log(node);
             setToggle(true);
             setGiState(preState => {
               const newData = preState.data;
               newData.nodes.push({ id: node.id, data: node.data });
-              console.log(newData, transform(newData, config));
               return {
                 ...preState,
                 data: transform(newData, config),
@@ -145,7 +144,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
           };
         });
       });
-  }, [serviceId]);
+  }, [serviceId, visible]);
 
   const { size, background, ...otherStyles } = useSpring({
     from: {
@@ -161,7 +160,9 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
   const handleToggle = () => {
     setToggle(!toggle);
   };
-
+  if (!visible) {
+    return null;
+  }
   return (
     <div>
       <animated.div

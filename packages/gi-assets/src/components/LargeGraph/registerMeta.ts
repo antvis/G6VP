@@ -8,6 +8,11 @@ export default context => {
   });
 
   return {
+    visible: {
+      name: '是否加载',
+      type: 'switch',
+      default: false,
+    },
     /** 分类信息 */
     serviceId: {
       name: '数据服务',
