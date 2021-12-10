@@ -195,7 +195,7 @@ const WrapContainer = Component => {
             onClose={onClose}
             offset={offset}
           >
-            <Component />
+            <Component {...ComponentProps} />
           </ContainerType>,
           //@ts-ignore
           document.getElementById('graphin-container'),

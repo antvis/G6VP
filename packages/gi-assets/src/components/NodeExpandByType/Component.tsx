@@ -8,8 +8,7 @@ import './index.less';
 const { Panel } = Collapse;
 
 export interface INodeExpandProps {
-  visible: boolean;
-  onClose: () => void;
+  GIAC_CONTENT: any;
   serviceId: string;
   style?: React.CSSProperties;
 }
@@ -41,26 +40,10 @@ const handleExpand = (data, responseData) => {
   };
 };
 
-const cropGraphByNodes = (graphData, targetNodes) => {
-  const { edges, nodes } = graphData;
-  const ids = targetNodes.map(node => node.id);
-  const newEdges = edges.filter(edge => {
-    const { source, target } = edge;
-    if (ids.indexOf(source) !== -1 && ids.indexOf(target) !== -1) {
-      return true;
-    }
-    return false;
-  });
-  const newNodes = nodes.filter(node => {
-    return ids.indexOf(node.id) !== -1;
-  });
-  return {
-    nodes: newNodes,
-    edges: newEdges,
-  };
-};
 
-const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, serviceId, style }) => {
+const NodeExpandByType: React.FC<INodeExpandProps> = (props) => {
+  const { serviceId, style } = props;
+  console.log('serviceId', serviceId, props)
   const [state, updateState] = useImmer({
     loading: false,
     activeKeys: ['0'],
@@ -125,7 +108,9 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
     updateState(draft => {
       draft.loading = true;
     });
-
+    if (!serviceId) {
+      return
+    }
     const { service } = services.find(sr => sr.id === serviceId);
     if (!service) {
       return;
@@ -148,22 +133,11 @@ const NodeExpandByType: React.FC<INodeExpandProps> = ({ visible, onClose, servic
     dispatch.changeData(responseData);
   };
 
-  if (!visible) {
-    return null;
-  }
+
 
   return (
     <div
-      style={
-        {
-          position: 'absolute',
-          background: '#fff',
-          width: '420px',
-          padding: '12px',
-          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
-          ...style,
-        } as any
-      }
+      style={style as any}
     >
       <Collapse
         bordered={false}
