@@ -3,9 +3,11 @@ import * as React from 'react';
 import { getPositionStyles } from '../utils';
 import './index.less';
 import WrapContainer from './WrapContainer';
-export interface OperatorBarProps {}
+export interface OperatorBarProps {
 
-const getComponents = (components, assets) => {
+}
+
+const getComponents = (components, assets, activePannel, setActivePannel) => {
   return components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
@@ -22,7 +24,7 @@ const getComponents = (components, assets) => {
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
-        WrapComponent = WrapContainer(Component);
+        WrapComponent = WrapContainer(Component, activePannel, setActivePannel, itemId);
       }
       return (
         <div key={itemId}>
@@ -40,6 +42,9 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
 
+  const [activePannel, setActivePannel] = React.useState('')
+  console.log('activePannel, setActivePannel', activePannel, setActivePannel)
+
   const rightComponents: any[] = [];
   const leftComponents: any[] = [];
   const centerComponents: any[] = [];
@@ -55,9 +60,9 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
     }
   });
 
-  const CENTER_COMPONENTS = getComponents(centerComponents, assets);
-  const LEFT_COMPONENTS = getComponents(leftComponents, assets);
-  const RIGHT_COMPONENTS = getComponents(rightComponents, assets);
+  const CENTER_COMPONENTS = getComponents(centerComponents, assets, activePannel, setActivePannel);
+  const LEFT_COMPONENTS = getComponents(leftComponents, assets, activePannel, setActivePannel);
+  const RIGHT_COMPONENTS = getComponents(rightComponents, assets, activePannel, setActivePannel);
 
   const postionStyles = getPositionStyles(placement, offset);
 
@@ -82,4 +87,18 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   );
 };
 
-export default OperatorHeader;
+
+export default React.memo(OperatorHeader, (preProps: any, nextProps: any) => {
+  console.log('preProps,nextProps', preProps, nextProps);
+  console.time('cost')
+  const { assets: preAssets, ...otherPreProps } = preProps;
+  const { assets: nextAssets, ...otherNextProps } = nextProps;
+  const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
+  console.timeEnd('cost')
+  console.log('isEqual', isEqual)
+  if (isEqual) {
+    return true
+  }
+  return false
+
+});
