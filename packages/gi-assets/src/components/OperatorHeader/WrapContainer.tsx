@@ -88,6 +88,7 @@ const ContainerType = (props: ContainerTypeProps) => {
 
   const placement = POSITION_MAP[containerPlacement];
   const [offsetX, offsetY] = offset;
+
   if (containerType == 'drawer') {
     return (
       <Drawer
@@ -127,7 +128,8 @@ const ContainerType = (props: ContainerTypeProps) => {
   return visible && <div style={styles}>{children}</div>;
 };
 
-const WrapContainer = Component => {
+const WrapContainer = (Component, activePannel, setActivePannel, componentId) => {
+
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
@@ -152,12 +154,22 @@ const WrapContainer = Component => {
     } = GIAC_CONTENT;
 
     const [visible, setVisible] = React.useState(defaultVisible);
+    console.log('visible', visible)
 
     React.useEffect(() => {
-      setVisible(defaultVisible);
-    }, [defaultVisible]);
+
+      if (activePannel !== componentId) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+    }, [activePannel]);
     const onClick = () => {
+
       setVisible(!visible);
+      setActivePannel(componentId);
+
+
     };
     const onClose = () => {
       setVisible(false);
@@ -195,7 +207,7 @@ const WrapContainer = Component => {
             onClose={onClose}
             offset={offset}
           >
-            <Component />
+            <Component {...ComponentProps} />
           </ContainerType>,
           //@ts-ignore
           document.getElementById('graphin-container'),

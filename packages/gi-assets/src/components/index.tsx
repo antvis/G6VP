@@ -17,6 +17,7 @@ import GraphScope from './GraphScope';
 // import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
 import GremlinTemplateQuery from './GremlinTemplateQuery';
+import LargeGraph from './LargeGraph';
 import LassoSelect from './LassoSelect';
 import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
@@ -80,4 +81,5 @@ export {
   SideSelectContainer,
   OperatorHeader,
   Back,
+  LargeGraph,
 };
