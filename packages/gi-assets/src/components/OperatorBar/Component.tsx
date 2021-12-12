@@ -35,4 +35,13 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   );
 };
 
-export default OperatorBar;
+export default React.memo(OperatorBar, (preProps: any, nextProps: any) => {
+  const { assets: preAssets, ...otherPreProps } = preProps;
+  const { assets: nextAssets, ...otherNextProps } = nextProps;
+  const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
+
+  if (isEqual) {
+    return true;
+  }
+  return false;
+});
