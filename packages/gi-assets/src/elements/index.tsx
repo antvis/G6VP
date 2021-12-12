@@ -6,7 +6,7 @@ import F2ENode from './F2ENode';
 import GraphinEdge from './GraphinEdge';
 import GraphinNode from './GraphinNode';
 import MarkerNode from './MarkerNode';
-// import ReasonNode from './ReasonNode';
+// import ReasonNode from './ReasonNode'; //为了包体积大小，暂时将ReasonNode注释掉
 import RectNode from './RectNode';
 import SimpleNode from './SimpleNode';
 // TODO fs文件自动写入
