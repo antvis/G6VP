@@ -3,9 +3,7 @@ import * as React from 'react';
 import { getPositionStyles } from '../utils';
 import './index.less';
 import WrapContainer from './WrapContainer';
-export interface OperatorBarProps {
-
-}
+export interface OperatorBarProps {}
 
 const getComponents = (components, assets, activePannel, setActivePannel) => {
   return components
@@ -42,8 +40,7 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
 
-  const [activePannel, setActivePannel] = React.useState('')
-  console.log('activePannel, setActivePannel', activePannel, setActivePannel)
+  const [activePannel, setActivePannel] = React.useState('');
 
   const rightComponents: any[] = [];
   const leftComponents: any[] = [];
@@ -87,18 +84,13 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   );
 };
 
-
 export default React.memo(OperatorHeader, (preProps: any, nextProps: any) => {
-  console.log('preProps,nextProps', preProps, nextProps);
-  console.time('cost')
   const { assets: preAssets, ...otherPreProps } = preProps;
   const { assets: nextAssets, ...otherNextProps } = nextProps;
   const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
-  console.timeEnd('cost')
-  console.log('isEqual', isEqual)
-  if (isEqual) {
-    return true
-  }
-  return false
 
+  if (isEqual) {
+    return true;
+  }
+  return false;
 });
