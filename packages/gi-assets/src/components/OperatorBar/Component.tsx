@@ -4,9 +4,11 @@ import WrapContainer from '../OperatorHeader/WrapContainer';
 import './index.less';
 export interface OperatorBarProps {}
 
-const OperatorBar2: React.FunctionComponent<OperatorBarProps> = props => {
+const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
   const { components, assets } = props;
+  const [activePannel, setActivePannel] = React.useState('');
+
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
 
   return (
@@ -20,7 +22,7 @@ const OperatorBar2: React.FunctionComponent<OperatorBarProps> = props => {
           const { component: Component } = assets[itemId];
           let WrapComponent = Component;
           if (itemProps.GIAC_CONTENT) {
-            WrapComponent = WrapContainer(Component);
+            WrapComponent = WrapContainer(Component, activePannel, setActivePannel, itemId);
           }
           return (
             <span key={itemId}>
@@ -33,4 +35,13 @@ const OperatorBar2: React.FunctionComponent<OperatorBarProps> = props => {
   );
 };
 
-export default OperatorBar2;
+export default React.memo(OperatorBar, (preProps: any, nextProps: any) => {
+  const { assets: preAssets, ...otherPreProps } = preProps;
+  const { assets: nextAssets, ...otherNextProps } = nextProps;
+  const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
+
+  if (isEqual) {
+    return true;
+  }
+  return false;
+});
