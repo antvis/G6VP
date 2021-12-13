@@ -25,6 +25,7 @@ import NodeAttrs from './NodeAttrs';
 import NodeExpand from './NodeExpand';
 import NodeExpandByTypes from './NodeExpandByType';
 import NodeImportance from './NodeImportance';
+import CommunityDiscovery from './CommunityDiscovery';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
@@ -66,6 +67,7 @@ export {
   ContextMenu,
   Tooltip,
   NodeImportance,
+  CommunityDiscovery,
   GremlinQuery,
   GremlinTemplateQuery,
   ClearCanvas,
