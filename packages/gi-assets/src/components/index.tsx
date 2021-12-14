@@ -1,6 +1,3 @@
-// import { MiniMap } from '@antv/graphin-components';
-// import CanvasClick from './CanvasClick';
-// import DrillingOne from './DrillingOne';
 import AddNode from './AddNode';
 import AjustLayout from './AjustLayout';
 import Back from './Back';
@@ -14,12 +11,11 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import GraphScope from './GraphScope';
-// import ContextMenu from './ContextMenu';
 import GremlinQuery from './GremlinQuery';
 import GremlinTemplateQuery from './GremlinTemplateQuery';
-import LargeGraph from './LargeGraph';
+// import LargeGraph from './LargeGraph';
 import LassoSelect from './LassoSelect';
-import Mapmode from './Mapmode';
+// import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
 import NodeAttrs from './NodeAttrs';
 import NodeExpand from './NodeExpand';
@@ -35,9 +31,7 @@ import Redo from './Redo';
 import SearchBar from './SearchBar';
 import SideSelectContainer from './SideSelectContainer';
 import SideTabs from './SideTabs';
-// import { EdgeTooltip, NodeTooltip } from './Tooltip';
 import Timeline from './Timeline';
-// import ClickEntity from './Liaoyuan/ClickEntity';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import View from './View';
@@ -56,7 +50,7 @@ export {
   NodeAttrs,
   GraphScope,
   Toolbar,
-  Mapmode,
+  // Mapmode, //为了资产包体积小，暂时从gi-assets中移除mapMode和largeGraph
   FilterPanel,
   AddNode,
   View,
@@ -83,5 +77,5 @@ export {
   SideSelectContainer,
   OperatorHeader,
   Back,
-  LargeGraph,
+  // LargeGraph,
 };
