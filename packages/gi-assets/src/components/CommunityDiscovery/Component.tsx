@@ -13,9 +13,7 @@ import './index.less';
 const { ClickSelect } = Behaviors;
 
 export interface CommunityDiscoveryProps {
-  visible?: boolean;
   style?: React.CSSProperties;
-  onVisibleChange?: (visible: boolean) => void;
 }
 
 enum CommunityDiscoveryAlgorithm {
@@ -57,9 +55,9 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     {
       name: CommunityDiscoveryAlgorithm.KCore,
       content: (
-        <div className="kg-community-importance-algo-body">
+        <div className="community-discovery-algo-body">
            <span>
-            <FormattedMessage id={`toolbar.itelligent-analysis.community.k-core.set-k`} />
+            <FormattedMessage id={`community-discovery.k-core.set-k`} />
           </span>
           <InputNumber
             min={1}
@@ -117,13 +115,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       graph.getEdges().forEach(edge => {
         //@ts-ignore
         const id = edge.getModel().id || '';
-        console.log('---initData----', initData)
         const initModel = initData.edges?.find(initEdge => initEdge.id === id);
-        console.log('---initModel----', initModel)
         // 暂时这样处理: 目前GI的导入的数据edge没有id，会自动生成，数据里的edge id和graph中edge id对不上
         // @ts-ignore
         const lineWidth = initModel?.style?.keyshape?.lineWidth;
-        console.log('---lineWidth----', lineWidth)
         if (initModel && !mappedEdgeIds?.includes(id)) {
           graph.updateItem(edge, {
             style: {
@@ -193,9 +188,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           // 暂时这样处理: 目前GI的导入的数据edge没有id，会自动生成，数据里的edge id和graph中edge id对不上
           // @ts-ignore
           const edge = graph.getEdges().find(edge => edge.getModel().data.id === edgeData.data.id);
-          console.log('------111---', graph.getEdges().map(edge => edge.getModel()))
-          console.log('---edge---', edge)
-      
           //@ts-ignore
           graph.updateItem(edge, {
             style: {
