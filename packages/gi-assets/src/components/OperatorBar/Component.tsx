@@ -10,6 +10,8 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   const [activePannel, setActivePannel] = React.useState('');
 
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
+  const [activePannel, setActivePannel] = React.useState('');
+
 
   return (
     <div className="gi-operator-bar" style={{ padding: '8px' }}>
