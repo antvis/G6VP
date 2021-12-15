@@ -27,7 +27,10 @@
     "react-force-graph-3d": "^1.21.10",
     "react-spring": "^9.3.2",
     "three": "^0.135.0",
-    "use-immer": "^0.6.0"
+    "use-immer": "^0.6.0",
+    "@antv/s2-react": "^1.2.0",
+    "@antv/s2": "^1.2.0",
+    "@antv/algorithm": "^0.1.16"
   },
   "peerDependencies": {
     "@ant-design/charts": "^1.2.11",
