@@ -22,6 +22,7 @@ import NodeExpand from './NodeExpand';
 import NodeExpandByTypes from './NodeExpandByType';
 import NodeImportance from './NodeImportance';
 import CommunityDiscovery from './CommunityDiscovery';
+import NodesSimilarity from './NodesSimilarity';
 import NodeLegend from './NodeLegend';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
@@ -62,6 +63,7 @@ export {
   Tooltip,
   NodeImportance,
   CommunityDiscovery,
+  NodesSimilarity,
   GremlinQuery,
   GremlinTemplateQuery,
   ClearCanvas,
