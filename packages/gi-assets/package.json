@@ -16,10 +16,13 @@
   "dependencies": {
     "3d-force-graph": "^1.70.5",
     "@ant-design/icons": "^4.6.2",
+    "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/l7": "^2.5.25",
     "@antv/l7-maps": "^2.5.25",
     "@antv/layout": "^0.1.19-beta.3",
+    "@antv/s2": "^1.3.0",
+    "@antv/s2-react": "^1.3.0",
     "ace-gremlin-editor": "^0.0.13-beta.1",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
@@ -27,10 +30,7 @@
     "react-force-graph-3d": "^1.21.10",
     "react-spring": "^9.3.2",
     "three": "^0.135.0",
-    "use-immer": "^0.6.0",
-    "@antv/s2-react": "^1.2.0",
-    "@antv/s2": "^1.2.0",
-    "@antv/algorithm": "^0.1.16"
+    "use-immer": "^0.6.0"
   },
   "peerDependencies": {
     "@ant-design/charts": "^1.2.11",
