@@ -1,18 +1,15 @@
 // @ts-nocheck
-import React from 'react';
+import React, { Component } from 'react';
 import { SheetComponent } from '@antv/s2-react';
-import 'antd/dist/antd.css';
-import '@antv/s2-react/dist/style.min.css';
 import { Tooltip } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import { isEqual } from 'lodash';
 import FormattedMessage, { formatMessage } from './locale';
 import { exportCSV, formatFileName } from '../utils/csv';
+import { PlainObject } from '../types';
+import '@antv/s2-react/dist/style.min.css';
 
-interface Props {
-  data;
-}
-
-const ClustersResultTable: React.FC<Props> = ({ data }) => {
+const getConfig = data => {
   let properties: any[] = [];
   const resData: any[] = [];
   data?.nodes?.forEach(node => {
@@ -45,15 +42,46 @@ const ClustersResultTable: React.FC<Props> = ({ data }) => {
     ],
     data: resData || [],
   };
+  return { dataCfg, resData, properties };
+}
 
+interface Props {
+  data;
+  focusNodeAndHighlightHull: (nodeId: string, clusterId: string) => void;
+}
+interface State {
+  data: PlainObject;
+  config: PlainObject;
+}
+
+export default class ClustersResultTable extends Component<Props, State> {
   // 交叉表配置项准备
-  const options = {
+  static options = {
     width: 330,
     height: 400,
     hierarchyType: 'grid',
   };
 
-  const download = () => {
+  state = {
+    data: null,
+    config: null,
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { data: nextData } = nextProps;
+    const { data } = prevState;
+    if (!isEqual(nextData, data)) {
+      const config = getConfig(nextData);
+      return {
+        data,
+        config,
+      };
+    }
+    return null;
+  }
+
+  download = () => {
+    const { config: { resData, properties } = {} } = this.state;
     const fileName = formatFileName('cluster_result');
     exportCSV(
       {
@@ -68,16 +96,34 @@ const ClustersResultTable: React.FC<Props> = ({ data }) => {
     );
   };
 
-  return (
-    <>
-      <Tooltip title={<FormattedMessage id="download-csv" />} placement="topRight">
-        <DownloadOutlined style={{float: 'right'}} onClick={download} />
-      </Tooltip>
-      <div className="community-discovery-table-wrapper">
-        <SheetComponent sheetType="base" dataCfg={dataCfg} options={options} />
-      </div>
-    </>
-  );
+  onRowCellClick = ({ viewMeta }) => {
+    const { query, spreadsheet } = viewMeta;
+    const rowData = spreadsheet.dataSet.getMultiData(query);
+    const { id, clusterId } = rowData?.[0] || {};
+    const { focusNodeAndHighlightHull } = this.props;
+    if (focusNodeAndHighlightHull) {
+      focusNodeAndHighlightHull(id, clusterId);
+    }
+  };
+
+  render () {
+    const { config: { dataCfg } = {} } = this.state;
+
+    return (
+      <>
+        <Tooltip title={<FormattedMessage id="download-csv" />} placement="topRight">
+          <DownloadOutlined style={{float: 'right'}} onClick={this.download} />
+        </Tooltip>
+        <div className="community-discovery-table-wrapper">
+          <SheetComponent
+            sheetType="base"
+            dataCfg={dataCfg}
+            options={this.options}
+            onRowCellClick={this.onRowCellClick}
+          />
+        </div>
+      </>
+    );
+  }
 };
 
-export default ClustersResultTable;
