@@ -1,4 +1,4 @@
-import { InputNumber, Radio, Button, Empty } from 'antd';
+import { InputNumber, Radio, Button, Empty, Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import Graphin, { GraphinContext, Behaviors } from '@antv/graphin';
 import type { GraphinData } from '@antv/graphin';
@@ -31,6 +31,9 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
   const [coreDegreeK, setCoreDegreeK] = useState(2);
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [hulls, setHulls] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [focusNodeId, setFocusNodeId] = useState(null);
+  const [allClusters, setAllClusters] = useState<any[]>([]);
 
   const divisionAlgo = [CommunityDiscoveryAlgorithm.louvain, CommunityDiscoveryAlgorithm.iLouvain];
 
@@ -83,16 +86,26 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     setHulls(null);
   };
 
-  const drawHullsByClusters = allClusters => {
-    const hullOptions = allClusters
+  const drawHullsByClusters = (clusters, remove?: boolean, focusClusterId?: string) => {
+    if (remove) {
+      removeAllHulls();
+    }
+    const hullOptions = clusters
       .map(cluster => ({
         id: cluster.id,
         type: 'smooth-convex',
         members: cluster.nodes.map(node => node.id),
+        style:
+          cluster.id === focusClusterId
+            ? {
+                fill: 'lightgreen',
+                stroke: 'green',
+              }
+            : undefined,
       }))
       .map(cluster => Utils.getHullOptions(cluster));
 
-    const newHulls = Utils.drawHulls(hullOptions, hulls, graph);
+    const newHulls = Utils.drawHulls(hullOptions, remove ? null : hulls, graph);
     setHulls(newHulls);
   };
 
@@ -139,7 +152,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     return {
       nodes: nodes.map(node => ({
         id: node.id,
-        label: node.label || node.data.label,
+        label: node.label || node.data.label || node.data.name,
         properties: node.data.properties,
       })),
       edges: edges.map(edge => ({
@@ -151,74 +164,103 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
 
   const onCommunityAnalyse = () => {
     setHasAnalysis(true);
-    const formatData = formatOriginData(data);
-    switch (communityAlgo) {
-      case CommunityDiscoveryAlgorithm.KCore:
-        if (!graph || graph.destroyed) {
-          return;
-        }
-        const coreData = (kCore(formatData, coreDegreeK) || {
-          nodes: [],
-          edges: [],
-        }) as GraphinData;
-        const coreNodeIds = coreData.nodes.map(node => node.id);
-        const coreEdgeIds = coreData.edges.map(edge => edge.id);
-        const nodes = initData?.nodes.filter(node => coreNodeIds.includes(node.id));
-        const edges = initData?.edges.filter(edge => coreEdgeIds.includes(edge.data?.id)) || [];
-        let scaleData = { nodes, edges };
-        // 如果相隔较远，x、y等比缩放
-        if (nodes.length !== initData?.nodes?.length) {
-           //@ts-ignore
-          scaleData = Utils.scaleNodes(scaleData, 600);
-        }
-        setResData(scaleData);
+    setLoading(true);;
+    setTimeout(() => {
+      const formatData = formatOriginData(data);
+      switch (communityAlgo) {
+        case CommunityDiscoveryAlgorithm.KCore:
+          if (!graph || graph.destroyed) {
+            return;
+          }
+          const coreData = (kCore(formatData, coreDegreeK) || {
+            nodes: [],
+            edges: [],
+          }) as GraphinData;
+          const coreNodeIds = coreData.nodes.map(node => node.id);
+          const coreEdgeIds = coreData.edges.map(edge => edge.id);
+          const nodes = initData?.nodes.filter(node => coreNodeIds.includes(node.id));
+          const edges = initData?.edges.filter(edge => coreEdgeIds.includes(edge.data?.id)) || [];
+          let scaleData = { nodes, edges };
+          // 如果相隔较远，x、y等比缩放
+          if (nodes.length !== initData?.nodes?.length) {
+             //@ts-ignore
+            scaleData = Utils.scaleNodes(scaleData, 600);
+          }
+          setResData(scaleData);
+  
+          resetMapping([], []);
+          // 将主图中的相关节点和边放大
+          coreData.nodes.forEach(nodeModel => {
+            graph.updateItem(nodeModel.id, {
+              style: {
+                keyshape: {
+                  size: 50
+                },
+              },
+            });
+          });
+          coreData.edges.forEach(edgeData => {
+            // 暂时这样处理: 目前GI的导入的数据edge没有id，会自动生成，数据里的edge id和graph中edge id对不上
+            // @ts-ignore
+            const edge = graph.getEdges().find(edge => edge.getModel().data.id === edgeData.data.id);
+            //@ts-ignore
+            graph.updateItem(edge, {
+              style: {
+                keyshape: {
+                  lineWidth: 2
+                },
+              },
+            });
+          });
+          graph.getEdges().forEach(edge => {
+            edge.refresh();
+          });
+          break;
+        case CommunityDiscoveryAlgorithm.louvain:
+          const clustersLouvain = louvain(formatData, false, 'weight', 0.01).clusters;
+          setResData(formatData);
+          setAllClusters(clustersLouvain);
+          drawHullsByClusters(clustersLouvain);
+          break;
+        case CommunityDiscoveryAlgorithm.iLouvain:
+          const clustersILouvain = iLouvain(formatData, false, 'weight', 0.01).clusters;
+          setResData(formatData);
+          setAllClusters(clustersILouvain);
+          drawHullsByClusters(clustersILouvain);
+        default:
+          break;
+      }
+      setLoading(false);
+    }, 100);
+  };
 
-        resetMapping([], []);
-        // 将主图中的相关节点和边放大
-        coreData.nodes.forEach(nodeModel => {
-          graph.updateItem(nodeModel.id, {
-            style: {
-              keyshape: {
-                size: 50
-              },
-            },
-          });
-        });
-        coreData.edges.forEach(edgeData => {
-          // 暂时这样处理: 目前GI的导入的数据edge没有id，会自动生成，数据里的edge id和graph中edge id对不上
-          // @ts-ignore
-          const edge = graph.getEdges().find(edge => edge.getModel().data.id === edgeData.data.id);
-          //@ts-ignore
-          graph.updateItem(edge, {
-            style: {
-              keyshape: {
-                lineWidth: 2
-              },
-            },
-          });
-        });
-        graph.getEdges().forEach(edge => {
-          edge.refresh();
-        });
-        break;
-      case CommunityDiscoveryAlgorithm.louvain:
-        const clustersLouvain = louvain(formatData, false, 'weight', 0.01).clusters;
-        setResData(formatData);
-        drawHullsByClusters(clustersLouvain);
-        break;
-      case CommunityDiscoveryAlgorithm.iLouvain:
-        const clustersILouvain = iLouvain(formatData, false, 'weight', 0.01).clusters;
-        setResData(formatData);
-        drawHullsByClusters(clustersILouvain);
-      default:
-        break;
+  const cleatActiveState = () => {
+    if (focusNodeId) {
+      const focusNode = graph.findById(focusNodeId);
+      if (focusNode.hasState('active')) {
+        graph.setItemState(focusNodeId, 'active', false);
+      }
     }
   };
 
+  const focusNodeAndHighlightHull = (nodeId, focusClusterId) => {
+    cleatActiveState();
+    graph.setItemState(nodeId, 'active', true);
+    drawHullsByClusters(allClusters, true, focusClusterId);
+    setFocusNodeId(nodeId);
+  };
 
   const renderResult = () => {
     if (!hasAnalysis) {
       return;
+    }
+
+    if (loading) {
+      return (
+        <Spin spinning>
+          <div className="kg-community-result-wrapper" />
+        </Spin>
+      );
     }
 
     if (!resData?.nodes?.length) {
@@ -236,7 +278,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <span className="community-discovery-title">
             <FormattedMessage id="community-discovery.result" />
           </span>
-          <ClustersResultTable data={resData} />
+          <ClustersResultTable
+            data={resData}
+            focusNodeAndHighlightHull={focusNodeAndHighlightHull}
+          />
         </div>
       );
     }
@@ -278,6 +323,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     setResData(null);
     removeAllHulls();
     setCommunityAlgo(CommunityDiscoveryAlgorithm.KCore);
+    cleatActiveState();
   }
 
   return (
@@ -320,7 +366,11 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           ))}
         </Radio.Group>
 
-        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={onCommunityAnalyse}>
+        <Button
+          type="primary"
+          style={{ width: '100%', marginTop: '12px' }}
+          loading={loading}
+          onClick={onCommunityAnalyse}>
           <FormattedMessage id="analyse" />
         </Button>
 
