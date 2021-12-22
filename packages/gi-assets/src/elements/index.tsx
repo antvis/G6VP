@@ -4,6 +4,7 @@ import ClusterNode from './ClusterNode';
 import DonutNode from './DonutNode';
 import F2ENode from './F2ENode';
 import GraphinEdge from './GraphinEdge';
+import G6Edge from './G6Edge';
 import GraphinNode from './GraphinNode';
 import MarkerNode from './MarkerNode';
 // import ReasonNode from './ReasonNode'; //为了包体积大小，暂时将ReasonNode注释掉
@@ -18,6 +19,7 @@ export {
   GraphinNode,
   RectNode,
   GraphinEdge,
+  G6Edge,
   DonutNode,
   SimpleNode,
   MarkerNode,
