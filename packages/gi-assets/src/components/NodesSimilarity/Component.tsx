@@ -1,14 +1,13 @@
-import { Radio, Button, Empty } from 'antd';
-import React, { useState, useEffect } from 'react';
-import { GraphinContext } from '@antv/graphin';
-import { Input } from 'antd';
-import type { GraphinData } from '@antv/graphin';
-import { cloneDeep } from 'lodash';
-import { nodesCosineSimilarity } from '@antv/algorithm';
 import { ReloadOutlined } from '@ant-design/icons';
+import { nodesCosineSimilarity } from '@antv/algorithm';
+import type { GraphinData } from '@antv/graphin';
+import { GraphinContext } from '@antv/graphin';
+import { Button, Empty, Input, Radio } from 'antd';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
 import SimilarityResultTable from './resultTable';
-import './index.less';
 
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
@@ -28,31 +27,30 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
   const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
 
-  const [similarityAlgo, setsimilarityAlgo] = useState(
-    NodesSimilarityAlgorithm.nodesConsineSimilarity,
-  );
+  const [similarityAlgo, setsimilarityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [resData, setResData] = useState<ResData>({ similarityRes: [], similarNodes: [] });
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [seedNodeId, setSeedNodeId] = useState(null);
   const [topReset, setTopReset] = useState(false);
 
-  
   //@ts-ignore
   const data = GraphinContext.GiState?.data;
 
   useEffect(() => {
     setInitData({
+      //@ts-ignore
       nodes: cloneDeep(graph.getNodes()).map(node => node.getModel()),
+      //@ts-ignore
       edges: cloneDeep(graph.getEdges()).map(edge => {
         const model = edge.getModel();
         return {
           ...model,
+          //@ts-ignore
           id: model.id || model.data.id,
-        }
+        };
       }),
     });
   }, [data]);
-
 
   const similarityAlgoSelections = [
     {
@@ -69,7 +67,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         graph.updateItem(node, {
           style: {
             keyshape: {
-              size: initModel.style?.keyshape?.size
+              size: initModel.style?.keyshape?.size,
             },
           },
         });
@@ -90,7 +88,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       edges: edges.map(edge => ({
         ...edge,
         id: edge.id || edge.data.id,
-      }))
+      })),
     };
   };
 
@@ -108,12 +106,12 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       edge.refresh();
     });
   };
-  
+
   const onAnalyse = () => {
     setHasAnalysis(true);
     const formatData = formatOriginData(data);
     switch (similarityAlgo) {
-      case NodesSimilarityAlgorithm.nodesConsineSimilarity: 
+      case NodesSimilarityAlgorithm.nodesConsineSimilarity:
         if (!graph || graph.destroyed) {
           return;
         }
@@ -132,7 +130,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     }
   };
 
-
   const renderResult = () => {
     if (!hasAnalysis) {
       return;
@@ -141,12 +138,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     const { similarityRes, similarNodes } = resData || {};
 
     if (!similarityRes?.length) {
-      return (
-        <Empty
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description={<FormattedMessage id={`data.no-data`} />}
-        />
-      );
+      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id={`data.no-data`} />} />;
     }
 
     if (similarityAlgo === NodesSimilarityAlgorithm.nodesConsineSimilarity) {
@@ -155,11 +147,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <span className="nodes-similarity-title">
             <FormattedMessage id="nodes-similarity.result" />
           </span>
-          <SimilarityResultTable
-            similarNodes={similarNodes}
-            topReset={topReset}
-            similarityKey="cosineSimilarity"
-          />
+          <SimilarityResultTable similarNodes={similarNodes} topReset={topReset} similarityKey="cosineSimilarity" />
         </div>
       );
     }
@@ -176,7 +164,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     setResData({ similarityRes: [], similarNodes: [] });
     setCommunityAlgo(NodesSimilarityAlgorithm.nodesConsineSimilarity);
     setTopReset(true);
-  }
+  };
 
   const onSeachSeed = e => {
     const nodeId = e.target.value;
@@ -224,7 +212,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <p className="nodes-similarity-title">
             <FormattedMessage id={`nodes-similarity.select-algo`} />
           </p>
-          <ReloadOutlined  onClick={reset} />
+          <ReloadOutlined onClick={reset} />
         </div>
 
         <Radio.Group onChange={changeAlgo} value={communityAlgo}>
@@ -233,14 +221,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
               <Radio value={selection.name} className="nodes-similarity-algo-radio">
                 <div className="nodes-similarity-algo-title">
                   <span className="nodes-similarity-algo-title-name">
-                    <FormattedMessage
-                      id={`nodes-similarity.${selection.name}`}
-                    />
+                    <FormattedMessage id={`nodes-similarity.${selection.name}`} />
                   </span>
                   <span className="nodes-similarity-algo-title-tip">
-                    <FormattedMessage
-                      id={`nodes-similarity.${selection.name}-tip`}
-                    />
+                    <FormattedMessage id={`nodes-similarity.${selection.name}-tip`} />
                   </span>
                 </div>
               </Radio>

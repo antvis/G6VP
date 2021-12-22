@@ -1,14 +1,14 @@
-import { InputNumber, Radio, Button, Empty, Spin } from 'antd';
-import React, { useState, useEffect } from 'react';
-import Graphin, { GraphinContext, Behaviors } from '@antv/graphin';
-import type { GraphinData } from '@antv/graphin';
-import { cloneDeep } from 'lodash';
-import { kCore, louvain, iLouvain } from '@antv/algorithm';
 import { ReloadOutlined } from '@ant-design/icons';
-import FormattedMessage from './locale';
-import ClustersResultTable from './resultTable';
+import { iLouvain, kCore, louvain } from '@antv/algorithm';
+import type { GraphinData } from '@antv/graphin';
+import Graphin, { Behaviors, GraphinContext } from '@antv/graphin';
+import { Button, Empty, InputNumber, Radio, Spin } from 'antd';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import Utils from '../utils/index';
 import './index.less';
+import FormattedMessage from './locale';
+import ClustersResultTable from './resultTable';
 
 const { ClickSelect } = Behaviors;
 
@@ -42,24 +42,26 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
 
   useEffect(() => {
     setInitData({
+      //@ts-ignore
       nodes: cloneDeep(graph.getNodes()).map(node => node.getModel()),
+      //@ts-ignore
       edges: cloneDeep(graph.getEdges()).map(edge => {
         const model = edge.getModel();
         return {
           ...model,
+          //@ts-ignore
           id: model.id || model.data.id,
-        }
+        };
       }),
     });
   }, [data]);
-
 
   const communityAlgoSelections = [
     {
       name: CommunityDiscoveryAlgorithm.KCore,
       content: (
         <div className="community-discovery-algo-body">
-           <span>
+          <span>
             <FormattedMessage id={`community-discovery.k-core.set-k`} />
           </span>
           <InputNumber
@@ -118,7 +120,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           // size: undefined
           style: {
             keyshape: {
-              size: initModel.style?.keyshape?.size
+              size: initModel.style?.keyshape?.size,
             },
           },
         });
@@ -158,13 +160,13 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       edges: edges.map(edge => ({
         ...edge,
         id: edge.id || edge.data.id,
-      }))
+      })),
     };
   };
 
   const onCommunityAnalyse = () => {
     setHasAnalysis(true);
-    setLoading(true);;
+    setLoading(true);
     setTimeout(() => {
       const formatData = formatOriginData(data);
       switch (communityAlgo) {
@@ -183,18 +185,18 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           let scaleData = { nodes, edges };
           // 如果相隔较远，x、y等比缩放
           if (nodes.length !== initData?.nodes?.length) {
-             //@ts-ignore
+            //@ts-ignore
             scaleData = Utils.scaleNodes(scaleData, 600);
           }
           setResData(scaleData);
-  
+
           resetMapping([], []);
           // 将主图中的相关节点和边放大
           coreData.nodes.forEach(nodeModel => {
             graph.updateItem(nodeModel.id, {
               style: {
                 keyshape: {
-                  size: 50
+                  size: 50,
                 },
               },
             });
@@ -207,7 +209,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
             graph.updateItem(edge, {
               style: {
                 keyshape: {
-                  lineWidth: 2
+                  lineWidth: 2,
                 },
               },
             });
@@ -264,12 +266,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     }
 
     if (!resData?.nodes?.length) {
-      return (
-        <Empty
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description={<FormattedMessage id={`data.no-data`} />}
-        />
-      );
+      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id={`data.no-data`} />} />;
     }
 
     if (divisionAlgo.includes(communityAlgo)) {
@@ -278,10 +275,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <span className="community-discovery-title">
             <FormattedMessage id="community-discovery.result" />
           </span>
-          <ClustersResultTable
-            data={resData}
-            focusNodeAndHighlightHull={focusNodeAndHighlightHull}
-          />
+          <ClustersResultTable data={resData} focusNodeAndHighlightHull={focusNodeAndHighlightHull} />
         </div>
       );
     }
@@ -324,7 +318,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     removeAllHulls();
     setCommunityAlgo(CommunityDiscoveryAlgorithm.KCore);
     cleatActiveState();
-  }
+  };
 
   return (
     <div
@@ -341,7 +335,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <p className="community-discovery-title">
             <FormattedMessage id={`community-discovery.select-algo`} />
           </p>
-          <ReloadOutlined  onClick={reset} />
+          <ReloadOutlined onClick={reset} />
         </div>
 
         <Radio.Group onChange={changeAlgo} value={communityAlgo}>
@@ -350,14 +344,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
               <Radio value={selection.name} className="community-discovery-algo-radio">
                 <div className="community-discovery-algo-title">
                   <span className="community-discovery-algo-title-name">
-                    <FormattedMessage
-                      id={`community-discovery.${selection.name}`}
-                    />
+                    <FormattedMessage id={`community-discovery.${selection.name}`} />
                   </span>
                   <span className="community-discovery-algo-title-tip">
-                    <FormattedMessage
-                      id={`community-discovery.${selection.name}-tip`}
-                    />
+                    <FormattedMessage id={`community-discovery.${selection.name}-tip`} />
                   </span>
                 </div>
               </Radio>
@@ -370,7 +360,8 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           type="primary"
           style={{ width: '100%', marginTop: '12px' }}
           loading={loading}
-          onClick={onCommunityAnalyse}>
+          onClick={onCommunityAnalyse}
+        >
           <FormattedMessage id="analyse" />
         </Button>
 
