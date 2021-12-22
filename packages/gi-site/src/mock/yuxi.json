@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "entityTypeName": "MKT.Prize",
+      "id": "PZ13484382",
+      "kgInternalId": -4415838326837962842,
+      "properties": [
+        {
+          "name": "name",
+          "value": "相互宝全年优惠V4-男-21-100"
+        },
+        {
+          "name": "description",
+          "value": "相互宝全年优惠V4-男-21-100"
+        },
+        {
+          "name": "id",
+          "value": "PZ13484382"
+        },
+        {
+          "name": "gdb_timestamp",
+          "value": 0
+        },
+        {
+          "name": "prizeId",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "entityTypeName": "MKT.Camp",
+      "id": "CP17227352",
+      "kgInternalId": -1396485914901675886,
+      "properties": [
+        {
+          "name": "name",
+          "value": "相互宝全年优惠发放活动"
+        },
+        {
+          "name": "description",
+          "value": "相互宝全年优惠发放活动"
+        },
+        {
+          "name": "cmapId",
+          "value": ""
+        },
+        {
+          "name": "id",
+          "value": "CP17227352"
+        },
+        {
+          "name": "gdb_timestamp",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "entityTypeName": "MKT.Prize",
+      "id": "PZ15484381",
+      "kgInternalId": 1591739645791497011,
+      "properties": [
+        {
+          "name": "name",
+          "value": "相互宝全年优惠V4-男-1-20"
+        },
+        {
+          "name": "description",
+          "value": "相互宝全年优惠V4-男-1-20"
+        },
+        {
+          "name": "id",
+          "value": "PZ15484381"
+        },
+        {
+          "name": "gdb_timestamp",
+          "value": 0
+        },
+        {
+          "name": "prizeId",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "entityTypeName": "MKT.Coupon",
+      "id": "2021091500073001715800059OQB",
+      "kgInternalId": 7404788439629882488,
+      "properties": [
+        {
+          "name": "name",
+          "value": "相互宝V6测试V4"
+        },
+        {
+          "name": "description",
+          "value": "相互宝V6测试V4"
+        },
+        {
+          "name": "id",
+          "value": "2021091500073001715800059OQB"
+        },
+        {
+          "name": "gdb_timestamp",
+          "value": 0
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "endEntityId": "PZ15484381",
+      "endEntityTypeName": "MKT.Prize",
+      "properties": [],
+      "relationTypeName": "include",
+      "startEntityId": "CP17227352",
+      "startEntityTypeName": "MKT.Camp"
+    },
+    {
+      "endEntityId": "CP17227352",
+      "endEntityTypeName": "MKT.Camp",
+      "properties": [],
+      "relationTypeName": "belong",
+      "startEntityId": "PZ13484382",
+      "startEntityTypeName": "MKT.Prize"
+    },
+    {
+      "endEntityId": "2021091500073001715800059OQB",
+      "endEntityTypeName": "MKT.Coupon",
+      "properties": [],
+      "relationTypeName": "include",
+      "startEntityId": "PZ15484381",
+      "startEntityTypeName": "MKT.Prize"
+    },
+    {
+      "endEntityId": "2021091500073001715800059OQB",
+      "endEntityTypeName": "MKT.Coupon",
+      "properties": [],
+      "relationTypeName": "include",
+      "startEntityId": "PZ13484382",
+      "startEntityTypeName": "MKT.Prize"
+    },
+    {
+      "endEntityId": "PZ13484382",
+      "endEntityTypeName": "MKT.Prize",
+      "properties": [],
+      "relationTypeName": "include",
+      "startEntityId": "CP17227352",
+      "startEntityTypeName": "MKT.Camp"
+    },
+    {
+      "endEntityId": "PZ15484381",
+      "endEntityTypeName": "MKT.Prize",
+      "properties": [],
+      "relationTypeName": "belong",
+      "startEntityId": "2021091500073001715800059OQB",
+      "startEntityTypeName": "MKT.Coupon"
+    },
+    {
+      "endEntityId": "PZ13484382",
+      "endEntityTypeName": "MKT.Prize",
+      "properties": [],
+      "relationTypeName": "belong",
+      "startEntityId": "2021091500073001715800059OQB",
+      "startEntityTypeName": "MKT.Coupon"
+    },
+    {
+      "endEntityId": "CP17227352",
+      "endEntityTypeName": "MKT.Camp",
+      "properties": [],
+      "relationTypeName": "belong",
+      "startEntityId": "PZ15484381",
+      "startEntityTypeName": "MKT.Prize"
+    }
+  ]
+}

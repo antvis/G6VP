@@ -3,6 +3,7 @@ import AjustLayout from './AjustLayout';
 import Back from './Back';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
+import CommunityDiscovery from './CommunityDiscovery';
 import ContextMenu from './ContextMenu';
 import DownLoad from './DownLoad';
 import EdgeBunding from './EdgeBundling';
@@ -11,8 +12,6 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import GraphScope from './GraphScope';
-import GremlinQuery from './GremlinQuery';
-import GremlinTemplateQuery from './GremlinTemplateQuery';
 // import LargeGraph from './LargeGraph';
 import LassoSelect from './LassoSelect';
 // import Mapmode from './Mapmode';
@@ -21,9 +20,8 @@ import NodeAttrs from './NodeAttrs';
 import NodeExpand from './NodeExpand';
 import NodeExpandByTypes from './NodeExpandByType';
 import NodeImportance from './NodeImportance';
-import CommunityDiscovery from './CommunityDiscovery';
-import NodesSimilarity from './NodesSimilarity';
 import NodeLegend from './NodeLegend';
+import NodesSimilarity from './NodesSimilarity';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
@@ -64,8 +62,8 @@ export {
   NodeImportance,
   CommunityDiscovery,
   NodesSimilarity,
-  GremlinQuery,
-  GremlinTemplateQuery,
+  // GremlinQuery,  //为了资产包体积小，暂时从gi-assets中移除
+  // GremlinTemplateQuery, //为了资产包体积小，暂时从gi-assets中移除
   ClearCanvas,
   LassoSelect,
   Export,
