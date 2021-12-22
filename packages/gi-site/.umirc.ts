@@ -51,16 +51,11 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    // 'lodash-es': {
-    //   commonjs: 'lodash',
-    //   amd: 'lodash',
-    //   root: '_',
-    // },
-    // lodash: {
-    //   commonjs: 'lodash',
-    //   amd: 'lodash',
-    //   root: '_',
-    // },
+    /** 组件中的一些依赖，未来要动态加载 */
+    '@antv/s2': 'S2',
+    '@antv/s2-react': 'S2-React',
+    '@antv/g2plot': 'G2Plot',
+    '@antv/g2': 'G2',
     //资产中心那块的依赖大包
     '@alipay/alex': 'Alex',
     typescript: 'ts',
@@ -77,6 +72,12 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
+    /** 组件的依赖 */
+    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.2/dist/g2plot.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/g2/4.1.35/dist/g2.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/s2/1.4.0-alpha.2/dist/index.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/s2-react/1.4.0-alpha.2/dist/index.min.js',
+
     /** 资产中心那块的依赖大包 */
     'https://gw.alipayobjects.com/os/lib/require.js/1.0.0/require.min.js',
     'https://gw.alipayobjects.com/os/lib/monaco-editor/0.27.0/min/vs/editor/editor.main.js',
@@ -89,6 +90,8 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.9/dist/index.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css',
     'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
+    'https://gw.alipayobjects.com/os/lib/antv/s2-react/1.4.0-alpha.2/dist/style.min.css',
+    'https://gw.alipayobjects.com/os/lib/antv/s2/1.4.0-alpha.2/dist/style.min.css',
   ],
   analyze: {
     analyzerMode: 'server',

@@ -88,12 +88,17 @@ module.exports = (env, argv) => {
       // new BundleAnalyzerPlugin()
     ],
     externals: {
+      lodash: '_',
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
       '@antv/graphin-components': 'GraphinComponents',
       '@antv/g6': 'G6',
       antd: 'antd',
+      '@antv/s2': 'S2',
+      '@antv/s2-react': 'S2-React',
+      '@antv/g2plot': 'G2Plot',
+      '@antv/g2': 'G2',
     },
   };
 };
