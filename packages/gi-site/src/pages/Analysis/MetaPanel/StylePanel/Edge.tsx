@@ -20,6 +20,15 @@ const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
 };
+const cache = {};
+
+const getCacheValues = (object, key) => {
+  if (!cache[key]) {
+    cache[key] = { id: key, props: {} };
+    return object[key];
+  }
+  return cache[key];
+};
 
 const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
   const { data, elements, config = { edge: { props: {} } }, dispatch } = props;
@@ -33,10 +42,12 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
   const element = elements[edgeConfig.id];
   const { configObj } = element.meta;
   const valueObj = extractDefault({ config: configObj, value: edgeConfig.props });
-  console.log(configObj, edgeConfig.props, valueObj);
+  /** 缓存数据 */
+  cache[elementId] = { id: elementId, props: { ...valueObj } };
+
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
-
+    cache[elementId].props = rootValue;
     dispatch({
       type: 'update:config:edge',
       ...element,
@@ -51,16 +62,17 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
         elementId: value,
       };
     });
+    const values = getCacheValues(elements, value);
     dispatch({
       type: 'update:config:edge',
-      ...elements[value],
+      ...values,
     });
   };
   const GUIComponent = React.useMemo(() => {
     return (
       <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
     );
-  }, []);
+  }, [elementId, handleChangeConfig]);
   return (
     <>
       <AssetsSelect onChange={handleChangeShape} value={elementId} options={elementOptions} />
