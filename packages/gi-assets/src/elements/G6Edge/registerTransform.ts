@@ -1,6 +1,11 @@
 import { Utils } from '@antv/graphin';
 import { scaleLinear } from 'd3-scale';
 import { defaultProps } from './registerMeta';
+
+const deepClone = <T>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj));
+};
+
 const getMapping = () => {
   const Mapping = new Map();
   return (enumValue, value) => {
@@ -29,7 +34,10 @@ const transform = (s, config) => {
     /** 多边处理 */
     let processedEdge = s.edges;
     if (multilple.enable) {
-      processedEdge = Utils.processEdges(s.edges, { poly: multilple.poly || 50, loop: multilple.loop || 10 });
+      processedEdge = Utils.processEdges(deepClone(s.edges), {
+        poly: multilple.poly || 50,
+        loop: multilple.loop || 10,
+      });
     }
 
     const edges = processedEdge.map(edge => {
@@ -45,10 +53,6 @@ const transform = (s, config) => {
 
       return {
         ...edge,
-        // source: edge.source,
-        // target: edge.target,
-        // data: edge.data,
-
         type: 'arc',
         dataType: edge.dataType || 'others',
         ...edge.style?.keyshape,
