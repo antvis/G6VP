@@ -60,8 +60,10 @@ export default {
     '@alipay/alex': 'Alex',
     typescript: 'ts',
     'monaco-editor/esm/vs/editor/editor.api': 'monaco',
+    systemjs: 'System',
   },
   scripts: [
+    'https://gw.alipayobjects.com/os/lib/systemjs/6.11.0/dist/system.min.js',
     'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
     'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
