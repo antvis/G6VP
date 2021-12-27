@@ -5,7 +5,7 @@ import './index.less';
 import WrapContainer from './WrapContainer';
 export interface OperatorBarProps {}
 
-const getComponents = (components, assets, containerRef) => {
+const getComponents = (components, assets) => {
   return components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
@@ -22,7 +22,7 @@ const getComponents = (components, assets, containerRef) => {
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
-        WrapComponent = WrapContainer(Component, itemId, containerRef);
+        WrapComponent = WrapContainer(Component, itemId);
       }
       return (
         <div key={itemId}>
@@ -39,7 +39,6 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
   const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
-  const containerRef = React.useRef();
 
   const { CENTER_COMPONENTS, LEFT_COMPONENTS, RIGHT_COMPONENTS } = React.useMemo(() => {
     const rightComponents: any[] = [];
@@ -57,9 +56,9 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
       }
     });
 
-    const CENTER_COMPONENTS = getComponents(centerComponents, assets, containerRef);
-    const LEFT_COMPONENTS = getComponents(leftComponents, assets, containerRef);
-    const RIGHT_COMPONENTS = getComponents(rightComponents, assets, containerRef);
+    const CENTER_COMPONENTS = getComponents(centerComponents, assets);
+    const LEFT_COMPONENTS = getComponents(leftComponents, assets);
+    const RIGHT_COMPONENTS = getComponents(rightComponents, assets);
 
     return {
       CENTER_COMPONENTS,

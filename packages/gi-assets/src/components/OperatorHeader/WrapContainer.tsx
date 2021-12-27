@@ -130,7 +130,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   return visible && <div style={styles}>{children}</div>;
 };
 
-const WrapContainer = (Component, componentId, containerRef) => {
+const WrapContainer = (Component, componentId) => {
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
