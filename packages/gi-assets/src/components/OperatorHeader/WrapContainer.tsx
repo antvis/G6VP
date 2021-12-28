@@ -213,7 +213,7 @@ const WrapContainer = (Component, componentId) => {
             onClose={onClose}
             offset={offset}
           >
-            <Component {...ComponentProps} containerVisible={containerVisible} />
+            <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,
           //@ts-ignore
           document.getElementById('graphin-container'),
