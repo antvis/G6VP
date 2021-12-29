@@ -2,7 +2,9 @@ import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MyIcon from '../Icon';
+import EventEmitter from './EventEmitter';
 
+const EM = new EventEmitter();
 export interface GIContianerProps {
   color: string;
   hasDivider: boolean;
@@ -128,7 +130,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   return visible && <div style={styles}>{children}</div>;
 };
 
-const WrapContainer = (Component, activePannel, setActivePannel, componentId) => {
+const WrapContainer = (Component, componentId) => {
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
@@ -152,23 +154,32 @@ const WrapContainer = (Component, activePannel, setActivePannel, componentId) =>
       containerPlacement,
     } = GIAC_CONTENT;
 
-    const [visible, setVisible] = React.useState(defaultVisible);
-    console.log('visible', visible);
+    const [containerVisible, setVisible] = React.useState(defaultVisible);
 
     React.useEffect(() => {
-      if (activePannel !== componentId) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-    }, [activePannel]);
+      const handleClick = ({ visible, id }) => {
+        if (id === componentId) {
+          setVisible(visible);
+        } else {
+          setVisible(false);
+        }
+      };
+      EM.on('GIAC_CONTENT:CLICK', handleClick);
+      return () => {
+        EM.off('GIAC_CONTENT:CLICK', handleClick);
+      };
+    }, []);
     const onClick = () => {
-      setVisible(!visible);
-      setActivePannel(componentId);
+      EM.emit('GIAC_CONTENT:CLICK', {
+        visible: !containerVisible,
+        id: componentId,
+      });
+      // setVisible(!containerVisible);
     };
     const onClose = () => {
       setVisible(false);
     };
+    console.log(componentId, 'containerVisible', containerVisible);
 
     return (
       <>
@@ -198,11 +209,11 @@ const WrapContainer = (Component, activePannel, setActivePannel, componentId) =>
             containerMask={containerMask}
             containerMaskClosable={containerMaskClosable}
             containerPlacement={containerPlacement}
-            visible={visible}
+            visible={containerVisible}
             onClose={onClose}
             offset={offset}
           >
-            <Component {...ComponentProps} />
+            <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,
           //@ts-ignore
           document.getElementById('graphin-container'),
