@@ -1,9 +1,9 @@
-import AddNode from './AddNode';
-import AjustLayout from './AjustLayout';
+// import AddNode from './AddNode';
+// import AjustLayout from './AjustLayout';
 import Back from './Back';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
-import CommunityDiscovery from './CommunityDiscovery';
+// import CommunityDiscovery from './CommunityDiscovery';
 import ContextMenu from './ContextMenu';
 import DownLoad from './DownLoad';
 import EdgeBunding from './EdgeBundling';
@@ -11,21 +11,21 @@ import Export from './Export';
 import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
-import GraphScope from './GraphScope';
+// import GraphScope from './GraphScope';
 // import LargeGraph from './LargeGraph';
 import LassoSelect from './LassoSelect';
 // import Mapmode from './Mapmode';
 import MiniMap from './MiniMap';
-import NodeAttrs from './NodeAttrs';
+// import NodeAttrs from './NodeAttrs';
 import NodeExpand from './NodeExpand';
 import NodeExpandByTypes from './NodeExpandByType';
-import NodeImportance from './NodeImportance';
+// import NodeImportance from './NodeImportance';
 import NodeLegend from './NodeLegend';
-import NodesSimilarity from './NodesSimilarity';
+// import NodesSimilarity from './NodesSimilarity';
 import NodeToggle from './NodeToggle';
 import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
-import PatternMatch from './PatternMatch';
+// import PatternMatch from './PatternMatch';
 import Redo from './Redo';
 import SearchBar from './SearchBar';
 import SideSelectContainer from './SideSelectContainer';
@@ -46,12 +46,12 @@ export {
   MiniMap,
   NodeToggle,
   CanvasSetting,
-  NodeAttrs,
-  GraphScope,
+  // NodeAttrs,
+  // GraphScope,
   Toolbar,
   // Mapmode, //为了资产包体积小，暂时从gi-assets中移除mapMode和largeGraph
   FilterPanel,
-  AddNode,
+  // AddNode,
   View,
   ZoomIn,
   ZoomOut,
@@ -59,9 +59,9 @@ export {
   Redo,
   ContextMenu,
   Tooltip,
-  NodeImportance,
-  CommunityDiscovery,
-  NodesSimilarity,
+  // NodeImportance,//为了资产包体积小，暂时从gi-assets中移除
+  // CommunityDiscovery,
+  // NodesSimilarity,
   // GremlinQuery,  //为了资产包体积小，暂时从gi-assets中移除
   // GremlinTemplateQuery, //为了资产包体积小，暂时从gi-assets中移除
   ClearCanvas,
@@ -69,9 +69,9 @@ export {
   Export,
   SearchBar,
   NodeExpand,
-  AjustLayout,
+  // AjustLayout,
   NodeExpandByTypes,
-  PatternMatch,
+  // PatternMatch,
   EdgeBunding,
   SideTabs,
   SideSelectContainer,

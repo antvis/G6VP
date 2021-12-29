@@ -7,10 +7,8 @@ export interface OperatorBarProps {}
 const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
   const { components, assets } = props;
-  const [activePannel, setActivePannel] = React.useState('');
 
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
-
 
   return (
     <div className="gi-operator-bar" style={{ padding: '8px' }}>
@@ -23,7 +21,7 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
           const { component: Component } = assets[itemId];
           let WrapComponent = Component;
           if (itemProps.GIAC_CONTENT) {
-            WrapComponent = WrapContainer(Component, activePannel, setActivePannel, itemId);
+            WrapComponent = WrapContainer(Component, itemId);
           }
           return (
             <span key={itemId}>

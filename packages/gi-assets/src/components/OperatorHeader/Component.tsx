@@ -5,7 +5,7 @@ import './index.less';
 import WrapContainer from './WrapContainer';
 export interface OperatorBarProps {}
 
-const getComponents = (components, assets, activePannel, setActivePannel) => {
+const getComponents = (components, assets) => {
   return components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
@@ -22,7 +22,7 @@ const getComponents = (components, assets, activePannel, setActivePannel) => {
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
-        WrapComponent = WrapContainer(Component, activePannel, setActivePannel, itemId);
+        WrapComponent = WrapContainer(Component, itemId);
       }
       return (
         <div key={itemId}>
@@ -40,26 +40,32 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
     props;
 
-  const [activePannel, setActivePannel] = React.useState('');
+  const { CENTER_COMPONENTS, LEFT_COMPONENTS, RIGHT_COMPONENTS } = React.useMemo(() => {
+    const rightComponents: any[] = [];
+    const leftComponents: any[] = [];
+    const centerComponents: any[] = [];
+    components.forEach((item: any) => {
+      if (rightContainer.indexOf(item.id) !== -1) {
+        rightComponents.push(item);
+      }
+      if (leftContainer.indexOf(item.id) !== -1) {
+        leftComponents.push(item);
+      }
+      if (centerContainer.indexOf(item.id) !== -1) {
+        centerComponents.push(item);
+      }
+    });
 
-  const rightComponents: any[] = [];
-  const leftComponents: any[] = [];
-  const centerComponents: any[] = [];
-  components.forEach((item: any) => {
-    if (rightContainer.indexOf(item.id) !== -1) {
-      rightComponents.push(item);
-    }
-    if (leftContainer.indexOf(item.id) !== -1) {
-      leftComponents.push(item);
-    }
-    if (centerContainer.indexOf(item.id) !== -1) {
-      centerComponents.push(item);
-    }
-  });
+    const CENTER_COMPONENTS = getComponents(centerComponents, assets);
+    const LEFT_COMPONENTS = getComponents(leftComponents, assets);
+    const RIGHT_COMPONENTS = getComponents(rightComponents, assets);
 
-  const CENTER_COMPONENTS = getComponents(centerComponents, assets, activePannel, setActivePannel);
-  const LEFT_COMPONENTS = getComponents(leftComponents, assets, activePannel, setActivePannel);
-  const RIGHT_COMPONENTS = getComponents(rightComponents, assets, activePannel, setActivePannel);
+    return {
+      CENTER_COMPONENTS,
+      RIGHT_COMPONENTS,
+      LEFT_COMPONENTS,
+    };
+  }, []);
 
   const postionStyles = getPositionStyles(placement, offset);
 
@@ -83,14 +89,15 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
     </div>
   );
 };
+export default OperatorHeader;
 
-export default React.memo(OperatorHeader, (preProps: any, nextProps: any) => {
-  const { assets: preAssets, ...otherPreProps } = preProps;
-  const { assets: nextAssets, ...otherNextProps } = nextProps;
-  const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
+// export default React.memo(OperatorHeader, (preProps: any, nextProps: any) => {
+//   const { assets: preAssets, ...otherPreProps } = preProps;
+//   const { assets: nextAssets, ...otherNextProps } = nextProps;
+//   const isEqual = JSON.stringify(otherPreProps) == JSON.stringify(otherNextProps);
 
-  if (isEqual) {
-    return true;
-  }
-  return false;
-});
+//   if (isEqual) {
+//     return true;
+//   }
+//   return false;
+// });

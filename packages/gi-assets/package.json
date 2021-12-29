@@ -1,13 +1,13 @@
 {
   "name": "@alipay/gi-assets",
-  "version": "0.9.0",
+  "version": "0.12.0",
   "description": "GraphInsight 离线资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "start": "npm run clean && father build --watch",
-    "build": "npm run clean && father build && npm run build:umd",
+    "build": "npm run clean && father build & npm run build:umd",
     "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
@@ -15,14 +15,10 @@
   },
   "dependencies": {
     "3d-force-graph": "^1.70.5",
-    "@ant-design/icons": "^4.6.2",
+    "@ali/react-datav-gui-utils": "latest",
     "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",
-    "@antv/l7": "^2.5.25",
-    "@antv/l7-maps": "^2.5.25",
     "@antv/layout": "^0.1.19-beta.3",
-    "@antv/s2": "^1.3.0",
-    "@antv/s2-react": "^1.3.0",
     "ace-gremlin-editor": "^0.0.13-beta.1",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
@@ -33,15 +29,18 @@
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {
+    "@antv/g2": "^4.1.35",
+    "@antv/g2plot": "^2.4.4",
+    "@ant-design/icons": "^4.6.2",
+    "@antv/s2": "^1.3.0",
+    "@antv/s2-react": "^1.3.0",
     "@ant-design/charts": "^1.2.11",
     "@antv/graphin": "2.x",
     "@antv/graphin-components": "2.x",
-    "@ali/react-datav-gui-utils": "latest",
     "react": "17.x",
     "antd": "^4.16.13"
   },
   "devDependencies": {
-    "antd": "^4.16.13",
     "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
