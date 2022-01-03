@@ -37,9 +37,10 @@ const getComponents = (components, assets) => {
 
 const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
-  const { components, assets, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } =
-    props;
-
+  const { components, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } = props;
+  //@ts-ignore
+  const { assets, ...otherProps } = props;
+  const deps = JSON.stringify(otherProps);
   const { CENTER_COMPONENTS, LEFT_COMPONENTS, RIGHT_COMPONENTS } = React.useMemo(() => {
     const rightComponents: any[] = [];
     const leftComponents: any[] = [];
@@ -65,7 +66,7 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
       RIGHT_COMPONENTS,
       LEFT_COMPONENTS,
     };
-  }, []);
+  }, [deps]);
 
   const postionStyles = getPositionStyles(placement, offset);
 
