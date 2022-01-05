@@ -1,0 +1,43 @@
+{
+  "name": "@alipay/gi-assets-basic",
+  "version": "0.12.0",
+  "description": "GraphInsight 基础资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "docs": "dumi dev",
+    "start": "npm run clean && father build --watch",
+    "build": "npm run clean && father build & npm run build:umd",
+    "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "test": "jest",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "clean": "rimraf es esm lib dist"
+  },
+  "dependencies": {
+    "@ali/react-datav-gui-utils": "latest",
+    "@antv/graphin-icons": "^1.0.0",
+    "d3-scale": "^4.0.0",
+    "deepmerge": "^4.2.2"
+  },
+  "peerDependencies": {
+    "@alipay/graphinsight": "^0.5.0",
+    "@ant-design/icons": "^4.6.2",
+    "@antv/graphin": "2.x",
+    "@antv/graphin-components": "2.x",
+    "react": "17.x",
+    "antd": "^4.16.13"
+  },
+  "devDependencies": {
+    "father": "^2.30.6",
+    "mini-css-extract-plugin": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "umi": "^3.5.20",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0",
+    "@alipay/gi-assets-testing": "^0.5.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.antfin-inc.com"
+  }
+}
