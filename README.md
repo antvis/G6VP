@@ -14,7 +14,7 @@ GraphInsight 采用 lerna 管理仓库，packages 中包含以下 3 个 package�
 | 文件路径         | 包名                   | 说明                   |
 | ---------------- | ---------------------- | ---------------------- |
 | packages/gi      | `@alipay/graphinsight` | GI 图可视分析 SDK      |
-| packages/gi-meta | `@alipay/gi-meta`      | GI 平台 的属性配置面板 |
+| packages/gi-assets | `@alipay/gi-assets`      | GI 平台 的图可视分析资产|
 | packages/gi-site | `-`                    | GI 平台 的官方站点     |
 
 - 设置 npmClient
@@ -50,7 +50,7 @@ npm run bootstrap
 
 - 启动 依赖包 的本地编译
 
-在`该项目根目录`启动 `gi` `gi-meta` `gi-site` 的本地编译.
+在`该项目根目录`启动 `gi` `gi-assets` `gi-site` 的本地编译.
 
 ```bash
 npm run core   //本地编译`@alipay/graphinsight`的产物

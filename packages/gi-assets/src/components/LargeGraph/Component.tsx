@@ -69,7 +69,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
         const Graph = ForceGraph3D()(elem)
           .graphData(data)
           .enableNodeDrag(false)
-          .nodeThreeObject(node => {
+          .nodeThreeObject((node: any) => {
             //这里按照GraphinNode的规范
             if (node.style.icon && node.style.icon.type === 'image') {
               const image = node.style.icon.value;
