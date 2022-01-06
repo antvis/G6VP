@@ -1,6 +1,5 @@
 import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
 import React from 'react';
-import * as mock from './mock';
 import { GIComponentConfig, GIConfig, GIService } from './typing';
 
 export interface Props {
@@ -243,7 +242,5 @@ const GISDK = (props: Props) => {
 //     services,
 //   };
 // };
-
-export const Mock = mock;
 
 export default GISDK;
