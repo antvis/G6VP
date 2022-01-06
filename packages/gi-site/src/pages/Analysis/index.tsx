@@ -5,6 +5,7 @@ import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
+import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
@@ -17,6 +18,7 @@ import { ConfigRecommedor } from './recommendTools';
 import store, { StateType } from './redux';
 import UploadPanel from './uploadData/index';
 import { isObjectEmpty } from './utils';
+setDefaultAssetPackages();
 
 /** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
 // const { System } = require('systemjs');
