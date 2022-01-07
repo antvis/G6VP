@@ -1,6 +1,6 @@
 import { GraphinContext } from '@antv/graphin';
 
-export const useServiceContext = (serviceId: string | undefined, hasService?: boolean) => {
+export const useServiceContext = (serviceId: string | undefined, hasService: boolean | undefined = true) => {
   if (!hasService) {
     return null;
   }

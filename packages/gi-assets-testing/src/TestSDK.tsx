@@ -106,8 +106,12 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   };
   const FinalAsset = React.useMemo(() => {
     if (type === 'GIAC_CONTENT') {
-      asset.component = WrapContainer(asset.component);
+      return {
+        ...asset,
+        component: WrapContainer(asset.component),
+      };
     }
+
     return asset;
   }, []);
 
