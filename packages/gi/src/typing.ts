@@ -1,32 +1,64 @@
+import type { GraphinContextType, GraphinData, Layout } from '@antv/graphin';
+
+export interface State {
+  /** graphin */
+  graph: GraphinContextType['graph'];
+  layoutIntance: GraphinContextType['layout'];
+  apis: GraphinContextType['layout'];
+  theme: GraphinContextType['theme'];
+
+  /** graphinsight */
+
+  /** 当前画布渲染的数据 */
+  data: GraphinData;
+  /** 需要画布重置的数据 */
+  source: GraphinData;
+  /** 布局 */
+  layout: Layout;
+  /** 组件 */
+  components: GIComponentConfig[];
+  /** 画布是否初始化完成 */
+  initialized: boolean;
+  /** 图初始化组件  */
+  initializer: {
+    id: string;
+    props: {
+      GI_INITIALIZER: boolean;
+      serviceId: 'GI_SERVICE_INTIAL_GRAPH' | string;
+    };
+  };
+  /** 画布的配置,等同props.config */
+  config: GIConfig;
+  /** 画布所有注册的服务 */
+  servives: any[];
+  /** 数据加载动画 */
+  isLoading: false;
+  /** 图的上下文准备 */
+  isContextReady: false;
+}
+
+export interface Props {
+  /**
+   * @description 配置信息
+   */
+  config: GIConfig;
+  /**
+   * @description 资产实例
+   */
+  assets: {
+    components: any;
+    elements: any;
+    layouts: any;
+  };
+  services: GIService[];
+  children?: React.ReactChildren | JSX.Element | JSX.Element[];
+}
+
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
-  type?: 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
+  type?: 'preset' | 'graphin-force' | 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
   options?: {
-    // 根据 type 不同，options 中属性字段也会有所不同
-    // 边长
-    linkDistance: number;
-    // 是否防止重叠，必须配合属性 nodeSize
-    preventOverlap: boolean;
-    // 节点大小（直径）。用于碰撞检测。
-    nodeSize: number[] | number;
-    // preventOverlap 为 true 时生效，防止重叠时节点边缘间距的最小值。为不同节点设置不同的最小间距
-    nodeSpacing: number;
-    // 指定排序的依据字段
-    sortBy: string;
-    // 是否按照聚类信息布局
-    clustering: boolean;
-    // dagre 特有
-    // 节点对齐方式。默认值是 undefined，代表对齐到中心
-    align: 'UL' | 'UR' | 'DL' | 'DR' | undefined;
-    // 水平或垂直间距
-    nodesep: number;
-    // 层间距
-    ranksep: number;
-    // concentric 配置，环与环之间最小间距，用于调整半径
-    minNodeSpacing: number;
-    // gird 布局配置，表示网格行数和列数
-    rows: number;
-    cols: number;
+    [key: string]: any;
   };
 }
 export interface GILayoutConfig {
