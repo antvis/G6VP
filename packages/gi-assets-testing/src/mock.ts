@@ -9,8 +9,10 @@ export const config = {
   },
   components: [],
   layout: {
-    id: 'graphin-force',
-    props: {},
+    id: 'GraphinForce',
+    props: {
+      type: 'graphin-force',
+    },
   },
 };
 

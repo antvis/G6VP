@@ -7,6 +7,7 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import LassoSelect from './LassoSelect';
+import Loading from './Loading';
 import MiniMap from './MiniMap';
 import NodeExpand from './NodeExpand';
 import NodeLegend from './NodeLegend';
@@ -14,9 +15,9 @@ import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
 import PropertiesPanel from './PropertiesPanel';
 import Redo from './Redo';
+import SideTabs from './SideTabs';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
-import View from './View';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -29,7 +30,6 @@ export {
   CanvasSetting,
   Toolbar,
   FilterPanel,
-  View,
   ZoomIn,
   ZoomOut,
   DownLoad,
@@ -42,4 +42,6 @@ export {
   NodeExpand,
   OperatorHeader,
   PropertiesPanel,
+  Loading,
+  SideTabs,
 };

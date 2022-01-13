@@ -1,4 +1,4 @@
-import { GraphinContext } from '@antv/graphin';
+import { useContext } from '@alipay/graphinsight';
 
 export const useServiceContext = (serviceId: string | undefined, hasService: boolean | undefined = true) => {
   if (!hasService) {
@@ -8,11 +8,10 @@ export const useServiceContext = (serviceId: string | undefined, hasService: boo
     console.warn('not found serviceId', serviceId);
     return null;
   }
-  //@ts-ignore
-  const { services } = GraphinContext;
+  const { services } = useContext();
   const { service } = services.find(s => s.id === serviceId);
   if (!service) {
-    console.warn('NodeEdgeAttrs Component need a serviceId', serviceId);
+    console.warn('Component need a serviceId', serviceId);
     return null;
   }
   return service;
