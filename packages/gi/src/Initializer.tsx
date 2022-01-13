@@ -1,10 +1,18 @@
 import * as React from 'react';
 import { useContext } from './context';
 
-const hasPosition = nodes => {
-  return nodes.every(node => !window.isNaN(Number(node.x)) && !window.isNaN(Number(node.y)));
+const isPosition = nodes => {
+  //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
+  if (nodes.length === 0) {
+    return false;
+  }
+
+  return nodes.every(node => !window.isNaN(node.x) && !window.isNaN(node.y));
 };
-const hasStyles = nodes => {
+const isStyles = nodes => {
+  if (nodes.length === 0) {
+    return false;
+  }
   return nodes.every(node => node.style);
 };
 export interface IProps {
@@ -29,10 +37,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
     service().then((res = { nodes: [], edges: [] }) => {
       updateContext(draft => {
         const { nodes } = res;
-        const position = hasPosition(nodes);
-        const style = hasStyles(nodes);
+        const position = isPosition(nodes);
+        const style = isStyles(nodes);
         if (position) {
-          //@ts-ignore
           draft.layout.type = 'preset';
         }
         if (style) {
