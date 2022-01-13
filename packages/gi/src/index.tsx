@@ -157,20 +157,20 @@ const GISDK = (props: Props) => {
       });
     },
   };
-
-  const { component: InitializerComponent, props: InitializerProps } = ComponentAssets[initializer.id] || {
+  const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.id]: curr,
+    };
+  }, {});
+  const { component: InitializerComponent } = ComponentAssets[initializer.id] || {
     component: DefaultInitializer,
+  };
+  const { props: InitializerProps } = ComponentCfgMap[initializer.id] || {
     props: defaultInitializerCfg.props,
   };
 
   const renderComponents = () => {
-    const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr.id]: curr,
-      };
-    }, {});
-
     if (!state.initialized || !state.isContextReady) {
       return null;
     }
@@ -220,7 +220,7 @@ const GISDK = (props: Props) => {
         theme={theme}
       >
         <>
-          <InitializerComponent {...InitializerProps} />
+          {state.isContextReady && <InitializerComponent {...InitializerProps} />}
           <SetupUseGraphinHook updateContext={updateState} />
 
           {isReady && renderComponents()}
