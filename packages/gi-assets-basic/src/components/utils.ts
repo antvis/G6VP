@@ -5,6 +5,8 @@ export const getPositionStyles = (placement, offset: number[]) => {
     left: 'unset',
     right: 'unset',
     bottom: 'unset',
+
+    //
   };
   const [offsetX, offsetY] = offset;
   if (placement === 'RT') {
@@ -73,4 +75,23 @@ export const handleCollaspe = (data, responseData) => {
     nodes,
     edges,
   };
+};
+
+/**
+ *
+ * @param services 从上下文得到的 services
+ * @param serviceId 组件绑定的 serviceId
+ * @returns
+ */
+export const getService = (services: any[], serviceId?: string) => {
+  if (!serviceId) {
+    console.warn('not found serviceId', serviceId);
+    return null;
+  }
+  const { service } = services.find(s => s.id === serviceId);
+  if (!service) {
+    console.warn('Component need a service', serviceId);
+    return null;
+  }
+  return service;
 };
