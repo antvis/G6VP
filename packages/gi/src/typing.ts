@@ -32,9 +32,10 @@ export interface State {
   /** 画布所有注册的服务 */
   servives: any[];
   /** 数据加载动画 */
-  isLoading: false;
+
+  isLoading: boolean;
   /** 图的上下文准备 */
-  isContextReady: false;
+  isContextReady: boolean;
 }
 
 export interface Props {
