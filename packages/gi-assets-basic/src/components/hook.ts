@@ -1,9 +1,6 @@
 import { useContext } from '@alipay/graphinsight';
 
-export const useServiceContext = (serviceId: string | undefined, hasService: boolean | undefined = true) => {
-  if (!hasService) {
-    return null;
-  }
+export const useServiceContext = (serviceId: string | undefined) => {
   if (!serviceId) {
     console.warn('not found serviceId', serviceId);
     return null;

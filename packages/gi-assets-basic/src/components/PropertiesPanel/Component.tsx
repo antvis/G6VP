@@ -1,7 +1,6 @@
-import { GraphinContext } from '@antv/graphin';
+import { useContext, utils } from '@alipay/graphinsight';
 import { Drawer, Skeleton } from 'antd';
 import React from 'react';
-import { useServiceContext } from '../hook';
 import Properties from './Properties';
 
 export interface PropertiesPanelProps {
@@ -14,12 +13,12 @@ export interface PropertiesPanelProps {
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
   const { serviceId, hasService } = props;
-  const service = useServiceContext(serviceId, hasService);
-
+  const { graph, services } = useContext();
+  const service = utils.getService(services, serviceId);
   if (hasService && !service) {
     return null;
   }
-  const { graph } = React.useContext(GraphinContext);
+
   const [state, setState] = React.useState({
     visible: false,
     detail: null,
