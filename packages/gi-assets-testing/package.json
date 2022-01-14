@@ -6,6 +6,7 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "build": "NODE_OPTIONS=--max_old_space_size=2048 npm run clean && father build && npm run build:umd",
     "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
@@ -14,7 +15,7 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "^0.5.0"
+    "@alipay/graphinsight": "*"
   },
   "peerDependencies": {
     "react": "17.x",

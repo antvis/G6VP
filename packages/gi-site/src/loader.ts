@@ -6,12 +6,14 @@ export interface Package {
 
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+
   packages['GI_ASSETS_PACKAGES'] = {
     name: '@alipay/gi-assets-basic',
     version: '0.12.0',
     url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/0.12.0/dist/index.min.js',
     global: 'GI_Assets_Basic',
   };
+
   packages['GeaMakerGraphStudio'] = {
     name: '@alipay/geamaker-studio',
     version: '1.0.10',

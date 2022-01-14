@@ -7,9 +7,11 @@ import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
-export { useContext, version };
+import * as utils from './utils';
 
-const version = '1.0.0';
+const version = '1.0.2';
+export { useContext, utils };
+
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 const GISDK = (props: Props) => {
