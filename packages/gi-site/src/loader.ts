@@ -9,15 +9,15 @@ export const setDefaultAssetPackages = () => {
 
   packages['GI_ASSETS_PACKAGES'] = {
     name: '@alipay/gi-assets-basic',
-    version: '0.12.0',
+    version: '1.0.2',
     url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/0.12.0/dist/index.min.js',
     global: 'GI_Assets_Basic',
   };
 
   packages['GeaMakerGraphStudio'] = {
     name: '@alipay/geamaker-studio',
-    version: '1.0.10',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.10/dist/index.min.js',
+    version: '1.0.12',
+    url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.12/dist/index.min.js',
     global: 'GeaMakerGraphStudio',
   };
 

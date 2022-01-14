@@ -88,6 +88,7 @@ const getHtmlAppCode = opts => {
     ></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--- GRAPHIN DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
