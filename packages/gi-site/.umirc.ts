@@ -53,7 +53,6 @@ export default {
     '@ant-design/icons': 'icons',
     moment: 'moment',
     '@alipay/graphinsight': 'GISDK',
-    '@alipay/gi-assets': 'GIAssets',
   },
   scripts: [
     'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
@@ -64,9 +63,9 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.5.0/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.9/dist/graphin.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
+
     /** GI */
-    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/0.5.0/dist/index.min.js',
-    'https://gw.alipayobjects.com/os/lib/alipay/gi-assets/0.12.0/dist/index.min.js',
+    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.0.2/dist/index.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 

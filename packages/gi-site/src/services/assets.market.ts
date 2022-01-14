@@ -1,14 +1,10 @@
-// /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
-// import * as ComponentAssets from '@alipay/graphinsight/es/components';
-// import * as ElementAssets from '@alipay/graphinsight/es/elements';
-
-import * as giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
 import { dynamicLoadModules, getCombinedAssets } from '../loader';
 import { queryActiveAssetList, queryAssetList } from './assets';
 import { isMock, IS_DYNAMIC_LOAD } from './const';
 
-let { elements, layouts } = (giAssets || {}) as any;
+let elements;
+let layouts;
 
 if (IS_DYNAMIC_LOAD) {
   elements = {};
