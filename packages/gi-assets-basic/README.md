@@ -1,5 +1,15 @@
 ## GraphInsight 基础资产包
 
+## Type
+
+- GI_CONTAINER: 容器组件
+  - GICC 普通容器组件
+  - GICC_MENU 右键菜单的容器组件
+- GI_CONTAINER_INDEX 原子组件
+  - GIAC 普通原子组件
+  - GIAC_CONTENT 可做内容的原子组件
+  - GIAC_MENU 可做菜单的原子组件
+
 ### 容器组件 4 个
 
 | 组件           | 分类     | 名称       | 说明                                       |
