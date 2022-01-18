@@ -8,6 +8,7 @@ export interface TimelineProps {
 
 const Timeline: React.FunctionComponent<TimelineProps> = props => {
   const { style } = props;
+  console.log('render...timeline');
 
   return (
     <div

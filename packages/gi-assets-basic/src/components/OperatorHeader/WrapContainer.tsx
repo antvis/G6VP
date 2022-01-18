@@ -174,7 +174,6 @@ const WrapContainer = (Component, componentId) => {
         visible: !containerVisible,
         id: componentId,
       });
-      // setVisible(!containerVisible);
     };
     const onClose = () => {
       setVisible(false);

@@ -8,7 +8,7 @@ import Asset from './index.tsx';
 const App = props => {
   return (
     <div>
-      <TestSDK asset={Asset} />
+      <TestSDK asset={Asset} type="GICC" />
     </div>
   );
 };
