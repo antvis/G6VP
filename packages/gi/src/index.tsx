@@ -9,7 +9,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.0.2';
+const version = '1.0.3';
 export { useContext, utils };
 
 console.log(`%c GI_VERSION:${version}`, 'color:red');
@@ -86,7 +86,7 @@ const GISDK = (props: Props) => {
     /** 集成到容器组件中的原子组件 */
     const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
       const { GI_CONTAINER } = curr.props;
-      return [...acc, ...GI_CONTAINER];
+      return [...acc, ...(GI_CONTAINER as string[])];
     }, []);
     /** 最终需要渲染的组件 */
     const finalComponents = filteredComponents.filter(c => {
