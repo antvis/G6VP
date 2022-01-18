@@ -76,17 +76,11 @@ export interface GIMeta {
 
 export interface GIComponentConfig {
   id: string;
-  label: string;
-  category: string;
-  // 组件名称或唯一标识值，暂时使用 any
-  // component: string;
-  component: any;
   props: {
+    GI_CONTAINER?: string[];
+    GI_CONTAINER_INDEX?: number;
     [key: string]: any;
   };
-  meta: GIMeta[];
-  // 是否可用
-  enable: boolean;
 }
 
 export interface GINodeConfig {
