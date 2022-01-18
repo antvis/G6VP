@@ -75,6 +75,8 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       const meta = registerMeta({
         data: res,
         services: innerServices,
+        keys: ['id'],
+        GI_CONTAINER_INDEXS: ['MenuA', 'BarA'],
       });
       const configObj = {
         [id]: {
