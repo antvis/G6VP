@@ -175,7 +175,7 @@ const GISDK = (props: Props) => {
     });
     const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
       const { GI_CONTAINER } = curr.props;
-      return [...acc, ...GI_CONTAINER];
+      return [...acc, ...(GI_CONTAINER as string[])];
     }, []);
 
     const finalComponents = filteredComponents.filter(c => {
