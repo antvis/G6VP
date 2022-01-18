@@ -127,7 +127,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   return visible && <div style={styles}>{children}</div>;
 };
 
-const WrapContainer = Component => {
+const WrapContainer = (Component, componentId) => {
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
@@ -159,7 +159,6 @@ const WrapContainer = Component => {
     const onClose = () => {
       setVisible(false);
     };
-
     return (
       <>
         <div>
@@ -170,6 +169,7 @@ const WrapContainer = Component => {
             isShowTooltip={isShowTooltip}
           >
             <Button type="text" style={isVertical ? { height: '60px' } : {}} onClick={onClick} disabled={disabled}>
+              {isShowIcon && icon}
               {isVertical && <br />}
               {isShowTitle && title}
             </Button>

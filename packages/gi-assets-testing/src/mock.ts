@@ -1,3 +1,5 @@
+import { GIComponentConfig } from '@alipay/graphinsight/src/typing';
+
 export const config = {
   node: {
     id: 'MyNode',
@@ -7,7 +9,7 @@ export const config = {
     id: 'MyEdge',
     props: {},
   },
-  components: [],
+  components: [] as GIComponentConfig[],
   layout: {
     id: 'GraphinForce',
     props: {
@@ -16,22 +18,6 @@ export const config = {
   },
 };
 
-export const services = [
-  {
-    id: 'GI_SERVICE_INTIAL_GRAPH',
-    service: () => {
-      return new Promise(resolve => {
-        resolve({
-          nodes: [
-            { id: 'node-1', data: {} },
-            { id: 'node-2', data: {} },
-          ],
-          edges: [{ source: 'node-1', target: 'node-2', data: {} }],
-        });
-      });
-    },
-  },
-];
 export const elements = {
   MyNode: {
     info: {
@@ -74,10 +60,39 @@ export const elements = {
     },
   },
 };
+
+export const layouts = {
+  GraphinForce: {
+    info: {
+      id: 'GraphinForce',
+      name: '力导',
+      type: 'graphin-force',
+    },
+    registerLayout: () => {},
+    registerMeta: () => {},
+  },
+};
 export const components = {};
 
+export const services = [
+  {
+    id: 'GI_SERVICE_INTIAL_GRAPH',
+    service: () => {
+      return new Promise(resolve => {
+        resolve({
+          nodes: [
+            { id: 'node-1', data: {} },
+            { id: 'node-2', data: {} },
+          ],
+          edges: [{ source: 'node-1', target: 'node-2', data: {} }],
+        });
+      });
+    },
+  },
+];
+
 export const assets = {
-  services,
   elements,
+  layouts,
   components,
 };

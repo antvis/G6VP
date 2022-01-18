@@ -1,20 +1,21 @@
 import GUI from '@ali/react-datav-gui';
 import { extractDefault } from '@ali/react-datav-gui-utils';
-import GISDK from '@alipay/graphinsight';
+import GISDK, { utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import Offset from './DataVGui/Offset';
 import TagsSelect from './DataVGui/TagsSelect';
-import { assets as MockAssets, config as MockConfig, services as MockServices } from './mock';
-import WrapContainer from './OperatorBar/WrapContainer';
+import { services as MockServices } from './mock';
+import { getAssetsByType, getConfigByType } from './utils';
+
 const extensions = {
   TagsSelect,
   Offset,
 };
 
-interface TestSDKProps {
+export interface TestSDKProps {
   asset: any;
   /** 资产类型 */
-  type?: 'GIAC_CONTENT' | 'GIAC';
+  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU';
   /** 自定义数据服务 */
   services: any[];
 }
@@ -36,16 +37,9 @@ const styles = {
   },
 };
 
-/** 数组去重 */
-export const uniqueElementsBy = (arr: any[], fn: (arg0: any, arg1: any) => any) =>
-  arr.reduce((acc, v) => {
-    if (!acc.some((x: any) => fn(v, x))) acc.push(v);
-    return acc;
-  }, []);
-
 const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   const { asset, type, services = [] } = props;
-  const { info, registerMeta } = asset;
+  const { info, registerMeta, component } = asset;
   const { id, name } = info;
 
   const [state, setState] = React.useState({
@@ -56,7 +50,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   });
 
   const { valueObj, configObj } = state;
-  const innerServices = uniqueElementsBy([...services, ...MockServices], (a, b) => {
+  const innerServices = utils.uniqueElementsBy([...services, ...MockServices], (a, b) => {
     return a.id === b.id;
   });
 
@@ -104,34 +98,15 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       };
     });
   };
-  const FinalAsset = React.useMemo(() => {
-    if (type === 'GIAC_CONTENT') {
-      return {
-        ...asset,
-        component: WrapContainer(asset.component),
-      };
-    }
 
-    return asset;
-  }, []);
-
-  const assets = {
-    ...MockAssets,
-    services: [...innerServices],
-    components: {
-      [id]: FinalAsset,
-    },
-  };
-
-  const config = {
-    ...MockConfig,
-    components: [
-      {
-        id,
-        props: valueObj[id],
-      },
-    ],
-  };
+  const { assets, config } = React.useMemo(() => {
+    const nextConfig = getConfigByType(type, id, valueObj);
+    const nextAssets = getAssetsByType(type, id, asset);
+    return {
+      config: nextConfig,
+      assets: nextAssets,
+    };
+  }, [valueObj, type]);
 
   if (!state.isReady) {
     return null;
@@ -145,7 +120,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       </div>
       <div style={styles.content}>
         {/* @ts-ignore */}
-        <GISDK config={config} assets={assets} />
+        <GISDK config={config} assets={assets} services={innerServices} />
       </div>
     </div>
   );
