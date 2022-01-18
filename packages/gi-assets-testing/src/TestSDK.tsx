@@ -13,11 +13,22 @@ const extensions = {
 };
 
 export interface TestSDKProps {
-  asset: any;
+  asset: {
+    component: React.FunctionComponent | React.Component;
+    info: {
+      id: string;
+      name: string;
+      type: 'GI_CONTAINER' | 'GI_CONTAINER_INDEX';
+    };
+    registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  };
   /** 资产类型 */
   type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU';
   /** 自定义数据服务 */
-  services: any[];
+  services: {
+    id: string;
+    service: () => Promise<any>;
+  }[];
 }
 const styles = {
   root: {
