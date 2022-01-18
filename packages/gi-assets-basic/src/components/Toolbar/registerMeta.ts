@@ -1,5 +1,5 @@
 const registerMeta = context => {
-  const { GI_CONTAINER_INDEXS } = context;
+  const { GI_CONTAINER_INDEXS = [] } = context;
 
   return {
     GI_CONTAINER: {

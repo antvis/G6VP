@@ -27,7 +27,7 @@ const App = props => {
 
   return (
     <div>
-      <TestSDK asset={Asset} services={services} type="GIAC_CONTENT" />
+      <TestSDK asset={Asset} services={services} type="GIAC_MENU" />
     </div>
   );
 };
