@@ -3,7 +3,7 @@ import type { GraphinContextType, GraphinData, Layout } from '@antv/graphin';
 export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
-  layoutIntance: GraphinContextType['layout'];
+  layoutInstance: GraphinContextType['layout'];
   apis: GraphinContextType['layout'];
   theme: GraphinContextType['theme'];
 
