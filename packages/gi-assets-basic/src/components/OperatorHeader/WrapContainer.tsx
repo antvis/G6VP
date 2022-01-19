@@ -89,7 +89,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   } = props;
 
   const placement = POSITION_MAP[containerPlacement];
-  const [offsetX, offsetY] = offset;
+  const [offsetX, offsetY] = offset || [0, 0];
 
   if (containerType == 'drawer') {
     return (
@@ -178,7 +178,6 @@ const WrapContainer = (Component, componentId) => {
     const onClose = () => {
       setVisible(false);
     };
-    console.log(componentId, 'containerVisible', containerVisible);
 
     return (
       <>
