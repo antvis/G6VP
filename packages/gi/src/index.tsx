@@ -46,6 +46,7 @@ const GISDK = (props: Props) => {
     apis: null,
     //@ts-ignore
     theme: null,
+    //@ts-ignore
     layoutInstance: null,
   });
 
