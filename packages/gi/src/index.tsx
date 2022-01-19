@@ -232,5 +232,4 @@ const GISDK = (props: Props) => {
     </GraphInsightContext.Provider>
   );
 };
-
-export default GISDK;
+export default React.memo(GISDK);
