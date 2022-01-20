@@ -1,6 +1,9 @@
 import Graphin, { GraphinData } from '@antv/graphin';
 import React from 'react';
 import { useImmer } from 'use-immer';
+/** export  */
+import { deepClone, GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS } from './components/const';
+import GIAComponent from './components/GIAC';
 import { GraphInsightContext, useContext } from './context';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
 import { registerLayouts, registerShapes } from './register';
@@ -10,10 +13,19 @@ import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
 const version = '1.0.3';
-export { useContext, utils };
+const extra = {
+  GIAC_CONTENT_METAS,
+  GIAC_CONTENT_PROPS,
+  GIAC_METAS,
+  GIAC_PROPS,
+  deepClone,
+  GIAComponent,
+};
+export { useContext, utils, extra };
 
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
+/** export  */
 const GISDK = (props: Props) => {
   const { children, assets } = props;
   let { services: Services } = props;
