@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.0.3';
+const version = '1.0.5';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
