@@ -1,10 +1,9 @@
-import { GraphinData } from '@antv/graphin';
 import React from 'react';
 import type { Updater } from 'use-immer';
 import { State } from './typing';
 interface ContextType extends State {
   updateContext: Updater<State>;
-  transform: (data: GraphinData) => GraphinData;
+  updateData: (data: any) => any;
   /** 用户自己的数据 */
   [userVars: string]: any;
 }
@@ -16,6 +15,7 @@ const defaultContext = {
   theme: null,
   layout: null,
   updateContext: () => {},
+  updateData: () => {},
 } as ContextType;
 
 export const GraphInsightContext = React.createContext(defaultContext);
