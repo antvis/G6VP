@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.0.5';
+const version = '1.0.6';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -50,6 +50,7 @@ const GISDK = (props: Props) => {
     isContextReady: false,
     initialized: false,
     initializer: defaultInitializerCfg,
+    transform: data => data,
 
     /** graphin */
     //@ts-ignore
@@ -70,19 +71,6 @@ const GISDK = (props: Props) => {
 
   const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
-
-  const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
-  const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
-  const NodeElement = ElementAssets[NodeElementId];
-  const EdgeElement = ElementAssets[EdgeElementId];
-  const transform = (data, config) => {
-    const nodes = NodeElement.registerTransform(data, config);
-    const edges = EdgeElement.registerTransform(data, config);
-    return {
-      nodes,
-      edges,
-    };
-  };
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
@@ -132,31 +120,42 @@ const GISDK = (props: Props) => {
   }, [layoutCfg]);
 
   React.useEffect(() => {
+    const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
+    const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
+    const NodeElement = ElementAssets[NodeElementId];
+    const EdgeElement = ElementAssets[EdgeElementId];
+    const transform = data => {
+      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
+      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
+      return {
+        nodes,
+        edges,
+      };
+    };
     updateState(draft => {
       if (draft.data.nodes.length !== 0) {
-        const newData = transform(draft.data, { node: nodeCfg, edge: edgeCfg });
+        const newData = transform(draft.data);
         draft.data = newData;
       }
+      draft.transform = transform;
       draft.config.node = nodeCfg;
       draft.config.edge = edgeCfg;
     });
   }, [nodeCfg, edgeCfg]);
 
-  const { data, layout, components, initializer, theme } = state;
+  const { data, layout, components, initializer, theme, transform } = state;
 
   // console.log('%c GraphInsight Render...', 'color:red', state);
 
   const ContextValue = {
     ...state,
     services: Services,
-    transform: res => {
-      return transform(res, { node: nodeCfg, edge: edgeCfg });
-    },
+
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
-        draft.data = transform(res, { node: nodeCfg, edge: edgeCfg });
-        draft.source = transform(res, { node: nodeCfg, edge: edgeCfg });
+        draft.data = transform(res);
+        draft.source = transform(res);
       });
     },
     updateLayout: res => {
@@ -166,8 +165,8 @@ const GISDK = (props: Props) => {
     },
     updateDataAndLayout: (res, lay) => {
       updateState(draft => {
-        draft.data = transform(res, { node: nodeCfg, edge: edgeCfg });
-        draft.source = transform(res, { node: nodeCfg, edge: edgeCfg });
+        draft.data = transform(res);
+        draft.source = transform(res);
         draft.layout = lay;
       });
     },
