@@ -77,7 +77,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   const {
     containerType = 'drawer' as IContainerType,
     containerWidth = '600px',
-    containerHeight = 'calc(100vh-120px)',
+    containerHeight = 'calc(100vh-64px)',
     containerMask = false,
     containerMaskClosable = false,
     containerPlacement,
@@ -94,15 +94,19 @@ const ContainerType = (props: ContainerTypeProps) => {
   if (containerType == 'drawer') {
     return (
       <Drawer
+        className="gi-operator-header-drawer"
         title={title}
         mask={containerMask}
         maskClosable={containerMaskClosable}
         placement={placement}
         width={containerWidth}
-        height={containerHeight}
+        // height={containerHeight}
+
         visible={visible}
         onClose={onClose}
+        drawerStyle={{ height: containerHeight }}
         style={{
+          height: containerHeight,
           top: offsetY,
           [placement]: offsetX,
         }}
@@ -114,6 +118,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   if (containerType == 'modal') {
     return (
       <Modal
+        className="gi-operator-header-modal"
         title={title}
         mask={containerMask}
         width={containerWidth}
@@ -127,7 +132,13 @@ const ContainerType = (props: ContainerTypeProps) => {
   }
   const styles = getPositionStyles(containerPlacement, offset);
 
-  return visible && <div style={styles}>{children}</div>;
+  return (
+    visible && (
+      <div style={styles} className="gi-operator-header-div">
+        {children}
+      </div>
+    )
+  );
 };
 
 const WrapContainer = (Component, componentId) => {
@@ -148,7 +159,7 @@ const WrapContainer = (Component, componentId) => {
       disabled,
       containerType = 'drawer' as IContainerType,
       containerWidth = '600px',
-      containerHeight = 'calc(100vh-120px)',
+      containerHeight = 'calc(100vh-64px)',
       containerMask = false,
       containerMaskClosable = false,
       containerPlacement,
