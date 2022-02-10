@@ -7,11 +7,11 @@ export interface GIContianerProps {
   onClick: () => void;
 }
 const WrapTooltip = props => {
-  const { title, isShowTooltip, tooltipPlacement, tooltipColor, children } = props;
+  const { title, isShowTooltip, tooltip, tooltipPlacement, tooltipColor, children } = props;
 
   if (isShowTooltip) {
     return (
-      <Tooltip title={title} color={tooltipColor} placement={tooltipPlacement}>
+      <Tooltip title={tooltip || title} color={tooltipColor} placement={tooltipPlacement}>
         {children}
       </Tooltip>
     );
@@ -22,6 +22,7 @@ const WrapTooltip = props => {
 const GIAComponent = props => {
   const { GIAC, onClick, ...others } = props;
   const {
+    tooltip,
     tooltipPlacement,
     tooltipColor,
     hasDivider,
@@ -39,6 +40,7 @@ const GIAComponent = props => {
     <div {...others}>
       <WrapTooltip
         title={title}
+        tooltip={tooltip}
         tooltipColor={tooltipColor}
         tooltipPlacement={tooltipPlacement}
         isShowTooltip={isShowTooltip}
