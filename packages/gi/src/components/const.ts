@@ -156,6 +156,11 @@ const GIAC_CONTENT = {
       type: 'text',
       default: '400px',
     },
+    containerHeight: {
+      name: '容器宽度',
+      type: 'text',
+      default: 'calc(100vh - 120px)',
+    },
     contaienrMask: {
       name: '容器遮罩',
       type: 'switch',

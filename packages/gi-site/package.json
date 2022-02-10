@@ -75,5 +75,8 @@
   ],
   "devDependencies": {
     "perf_hooks": "^0.0.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.antfin-inc.com"
   }
 }

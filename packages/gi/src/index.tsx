@@ -51,7 +51,6 @@ const GISDK = (props: Props) => {
     initialized: false,
     initializer: defaultInitializerCfg,
     transform: data => data,
-
     /** graphin */
     //@ts-ignore
     graph: null,
