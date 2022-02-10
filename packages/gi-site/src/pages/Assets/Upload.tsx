@@ -9,9 +9,9 @@ const UploadAssets = () => {
     setVisible(true);
   };
   const onCreate = values => {
-    const { name } = values;
+    const { global } = values;
     const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-    packages[name] = values;
+    packages[global] = values;
     localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
   };
   const handleOk = () => {

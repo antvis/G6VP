@@ -28,3 +28,12 @@ export const registerLayouts = Layouts => {
     }
   }
 };
+
+// export const  registerIconFont =()=>{
+//   return
+//   const MyIcon = React.useMemo(() => {
+//     return createFromIconfontCN({
+//       scriptUrl: iconFontUrl, // 在 iconfont.cn 上生成
+//     });
+//   }, [iconFontUrl]);
+// }

@@ -52,7 +52,9 @@ export interface Props {
     elements: any;
     layouts: any;
   };
+  /** 注册的全局数据服务 */
   services: GIService[];
+
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 

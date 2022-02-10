@@ -65,7 +65,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
 
     /** GI */
-    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.0.5/dist/index.min.js',
+    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.0.6/dist/index.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 
