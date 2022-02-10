@@ -10,15 +10,21 @@ export const setDefaultAssetPackages = () => {
   packages['GI_ASSETS_PACKAGES'] = {
     name: '@alipay/gi-assets-basic',
     version: '1.0.2',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/0.12.0/dist/index.min.js',
+    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.0.2/dist/index.min.js',
     global: 'GI_Assets_Basic',
   };
 
   packages['GeaMakerGraphStudio'] = {
     name: '@alipay/geamaker-studio',
-    version: '1.0.12',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.12/dist/index.min.js',
+    version: '1.0.23',
+    url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.23/dist/index.min.js',
     global: 'GeaMakerGraphStudio',
+  };
+  packages['GI_Assets_Kg'] = {
+    name: '@alipay/gi-assets-kg',
+    version: '0.0.7',
+    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
+    global: 'GI_Assets_Kg',
   };
 
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
@@ -28,7 +34,23 @@ export const getAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
   return Object.values(packages) as Package[];
 };
-
+const LoaderCss = options => {
+  // return new Promise(resolve => {
+  const link = document.createElement('link');
+  link.type = 'text/css';
+  link.href = options.id || options.url;
+  if (options.url) {
+    const href = options.url.replace('min.js', 'css');
+    link.href = href;
+  }
+  link.rel = 'stylesheet';
+  // debugger;
+  document.head.append(link);
+  // link.onload = () => {
+  //   resolve(link);
+  // };
+  // });
+};
 const Loader = options => {
   return new Promise(resolve => {
     const script = document.createElement('script');
@@ -49,11 +71,16 @@ const Loader = options => {
 };
 
 export const loadJS = options => {
-  return Promise.all(
-    options.map(opt => {
+  return Promise.all([
+    //js
+    ...options.map(opt => {
       return Loader(opt);
     }),
-  );
+    //css
+    ...options.map(opt => {
+      return LoaderCss(opt);
+    }),
+  ]);
 };
 
 export const getAssets = () => {
