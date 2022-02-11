@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, argv) => {
   return {
@@ -90,7 +90,10 @@ module.exports = (env, argv) => {
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
+    plugins: [
+      new MiniCssExtractPlugin(),
+      // new BundleAnalyzerPlugin()
+    ],
     externals: {
       react: 'React',
       'react-dom': 'ReactDOM',
