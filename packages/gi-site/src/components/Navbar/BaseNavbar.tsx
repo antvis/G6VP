@@ -22,9 +22,9 @@ const BaseNavbar = props => {
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
         <Link to="/workspace">项目列表</Link>
       </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
+      {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
-      </div>
+      </div> */}
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' && styles.active}>
         <Link to="/assets">本地研发资产</Link>
       </div>
