@@ -112,6 +112,35 @@ const registerMeta = context => {
         },
       },
     },
+    highlight: {
+      name: '高亮交互',
+      type: 'group',
+      enableHide: false,
+      fold: false,
+      children: {
+        enable: {
+          name: '是否启用',
+          type: 'switch',
+          default: true,
+          statusText: true,
+        },
+        trigger: {
+          name: '触发方式',
+          type: 'radio',
+          options: [
+            {
+              label: '点击',
+              value: 'click',
+            },
+            {
+              label: 'Hover',
+              value: 'mouseenter',
+            },
+          ],
+          default: 'click',
+        },
+      },
+    },
   };
 };
 
