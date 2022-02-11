@@ -17,10 +17,10 @@ const POSITION_MAP = {
 };
 
 const WrapTooltip = props => {
-  const { title, isShowTooltip, tooltipPlacement, tooltipColor, children } = props;
+  const { title, isShowTooltip, tooltip, tooltipPlacement, tooltipColor, children } = props;
   if (isShowTooltip) {
     return (
-      <Tooltip title={title} color={tooltipColor} placement={tooltipPlacement}>
+      <Tooltip title={tooltip || title} color={tooltipColor} placement={tooltipPlacement}>
         {children}
       </Tooltip>
     );
@@ -132,6 +132,7 @@ const WrapContainer = (Component, componentId) => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
       visible: defaultVisible,
+      tooltip,
       tooltipColor,
       tooltipPlacement,
       hasDivider,
@@ -164,6 +165,7 @@ const WrapContainer = (Component, componentId) => {
         <div>
           <WrapTooltip
             title={title}
+            tooltip={tooltip}
             tooltipColor={tooltipColor}
             tooltipPlacement={tooltipPlacement}
             isShowTooltip={isShowTooltip}

@@ -4,12 +4,12 @@ import React from 'react';
 import { GIAC_PROPS, IGIAC } from './const';
 
 const WrapTooltip = props => {
-  const { title, isShowTooltip, tooltipPlacement, tooltipColor, children } = props;
+  const { title, tooltip, isShowTooltip, tooltipPlacement, tooltipColor, children } = props;
 
   if (isShowTooltip) {
     return (
       //@ts-ignore
-      <Tooltip title={title} color={tooltipColor} placement={tooltipPlacement}>
+      <Tooltip title={tooltip || title} color={tooltipColor} placement={tooltipPlacement}>
         {children}
       </Tooltip>
     );
@@ -24,6 +24,7 @@ export interface GIAComponentProps {
 const GIAComponent = (props: GIAComponentProps) => {
   const { GIAC, onClick, iconFontUrl = '"https://at.alicdn.com/t/font_2981956_aelfhedtkje.js"', ...others } = props;
   const {
+    tooltip,
     tooltipPlacement,
     tooltipColor,
     hasDivider,
@@ -47,6 +48,7 @@ const GIAComponent = (props: GIAComponentProps) => {
     <div {...others}>
       <WrapTooltip
         title={title}
+        tooltip={tooltip}
         tooltipColor={tooltipColor}
         tooltipPlacement={tooltipPlacement}
         isShowTooltip={isShowTooltip}
