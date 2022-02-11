@@ -11,11 +11,12 @@ GraphInsight 采用 lerna 管理仓库，packages 中包含以下 3 个 package�
 
 他们依次对应的包名与解释如下：
 
-| 文件路径         | 包名                   | 说明                   |
-| ---------------- | ---------------------- | ---------------------- |
-| packages/gi      | `@alipay/graphinsight` | GI 图可视分析 SDK      |
-| packages/gi-assets | `@alipay/gi-assets`      | GI 平台 的图可视分析资产|
-| packages/gi-site | `-`                    | GI 平台 的官方站点     |
+| 文件路径                   | 包名                        | 说明                            |
+| -------------------------- | --------------------------- | ------------------------------- |
+| packages/gi                | `@alipay/graphinsight`      | GI 图可视分析 SDK               |
+| packages/gi-assets-basic   | `@alipay/gi-assets-basic`   | GI 平台 的图可视分析基础资产    |
+| packages/gi-assets-testing | `@alipay/gi-assets-testing` | GI 平台 的图可视分析资产 测试包 |
+| packages/gi-site           | `-`                         | GI 平台 的官方站点              |
 
 - 设置 npmClient
 
