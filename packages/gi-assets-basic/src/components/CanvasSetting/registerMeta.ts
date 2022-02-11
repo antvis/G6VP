@@ -121,8 +121,8 @@ const registerMeta = context => {
         enable: {
           name: '是否启用',
           type: 'switch',
-          default: true,
-          statusText: true,
+          default: false,
+          statusText: false,
         },
         trigger: {
           name: '触发方式',
