@@ -9,6 +9,12 @@ import type { TestSDKProps } from './TestSDK';
 export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: any) => {
   const nextAssets = produce(MockAssets, draft => {
     draft.components[id] = asset;
+    if (type === 'NODE') {
+      draft.elements[id] = asset;
+    }
+    if (type === 'EDGE') {
+      draft.elements[id] = asset;
+    }
 
     if (type === 'GIAC_CONTENT') {
       draft.components['OperatorBar'] = OperatorBar;
@@ -28,6 +34,19 @@ export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: a
 
 export const getConfigByType = (type: TestSDKProps['type'], id: string, value: any) => {
   const nextConfig = produce(MockConfig, draft => {
+    /** 元素资产 */
+    if (type === 'NODE') {
+      draft.node.id = id;
+      draft.node.props = value[id];
+      return;
+    }
+    if (type === 'EDGE') {
+      draft.node.id = id;
+      draft.node.props = value[id];
+      return;
+    }
+
+    /** 组件资产 */
     draft.components.push({
       id,
       props: value[id],

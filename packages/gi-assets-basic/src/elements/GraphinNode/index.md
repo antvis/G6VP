@@ -1,4 +1,4 @@
-## DonutNode
+## GraphinNode
 
 ```jsx
 import TestSDK, { Mock } from '@alipay/gi-assets-testing';

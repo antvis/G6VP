@@ -1,4 +1,5 @@
 import { GIComponentConfig } from '@alipay/graphinsight/src/typing';
+import { Utils } from '@antv/graphin';
 
 export const config = {
   node: {
@@ -53,7 +54,7 @@ export const elements = {
         return {
           source: edge.source,
           target: edge.target,
-          type: 'graphin-circle',
+          type: 'graphin-line',
           data: edge,
         };
       });
@@ -79,13 +80,7 @@ export const services = [
     id: 'GI_SERVICE_INTIAL_GRAPH',
     service: () => {
       return new Promise(resolve => {
-        resolve({
-          nodes: [
-            { id: 'node-1', data: {} },
-            { id: 'node-2', data: {} },
-          ],
-          edges: [{ source: 'node-1', target: 'node-2', data: {} }],
-        });
+        resolve(Utils.mock(6).tree().graphin());
       });
     },
   },
