@@ -23,7 +23,7 @@ export interface TestSDKProps {
     registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
   };
   /** 资产类型 */
-  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU';
+  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
   /** 自定义数据服务 */
   services: {
     id: string;
@@ -124,6 +124,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   if (!state.isReady) {
     return null;
   }
+  console.log(config, assets);
   return (
     <div style={styles.root}>
       {/* @ts-ignore */}

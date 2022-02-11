@@ -37,11 +37,12 @@ const transform = (s, metaConfig) => {
     const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
 
     const mappingByColor = getMapping();
-    console.log('label', Label);
+
     const nodes = s.nodes.map(node => {
-      const { id, data } = node;
+      const { id, data = {} } = node;
       /** 根据Size字段映射的枚举值 */
       const enumValueBySize = data[Size.key || 0];
+      const LABEL_VALUE = Label?.enable ? data[Label?.key || 'id'] : '';
 
       /** 根据Color字段映射的枚举值 */
       const enumValueByColor = data[Color.key || 0];
@@ -120,7 +121,7 @@ const transform = (s, metaConfig) => {
             strokeOpacity: 1,
           },
           label: {
-            value: Label?.enable ? data[Label?.key || 'id'] : '',
+            value: Label?.enable ? data[Label?.key || 'id'] || id : '',
             offset: [0, 10],
             fill: Label.color,
           },
