@@ -10,11 +10,12 @@ export interface OperatorBarProps {
 }
 
 const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
-  const [state, setState] = React.useState({
-    toggle: false,
-  });
   //@ts-ignore
-  const { components, assets, placement, offset, width, height } = props;
+  const { components, assets, placement, offset, width, height, defaultVisible } = props;
+
+  const [state, setState] = React.useState({
+    visible: typeof defaultVisible === 'boolean' ? defaultVisible : true,
+  });
 
   const sortedComponents = components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
@@ -23,7 +24,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
   const handleToggle = () => {
     setState(preState => {
       return {
-        toggle: !preState.toggle,
+        visible: !preState.visible,
       };
     });
   };
@@ -39,7 +40,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
     transition: 'all 0.3s ease',
   };
-  const styles = state.toggle ? { ...baseStyle, width: '0px' } : baseStyle;
+  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px' };
   const handerBackStyles = {
     position: 'absolute',
     left: '100%',
