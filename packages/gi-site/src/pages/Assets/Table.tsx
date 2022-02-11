@@ -1,7 +1,15 @@
-import { Table } from 'antd';
+import { Button, Popconfirm, Table } from 'antd';
 import * as React from 'react';
 
 const PackageTable = ({ data }) => {
+  const handleDelete = record => {
+    const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+    delete packages[record.global];
+    localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
+
+    location.reload();
+  };
+
   const columns = [
     {
       title: '包名',
@@ -25,8 +33,26 @@ const PackageTable = ({ data }) => {
     },
     {
       title: '操作',
-      render: () => {
-        return <>删除</>;
+      render: record => {
+        const disabled = record.name === '@alipay/gi-assets-basic';
+        if (disabled) {
+          return null;
+        }
+        return (
+          <Popconfirm
+            placement="topRight"
+            title={'删除后，资产将不会出现在探索分析页面'}
+            onConfirm={() => {
+              handleDelete(record);
+            }}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="text" disabled={disabled}>
+              删除
+            </Button>
+          </Popconfirm>
+        );
       },
     },
   ];

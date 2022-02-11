@@ -13,6 +13,7 @@ const UploadAssets = () => {
     const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
     packages[global] = values;
     localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
+    location.reload();
   };
   const handleOk = () => {
     form

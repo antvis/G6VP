@@ -7,25 +7,28 @@ export interface Package {
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
 
-  packages['GI_ASSETS_PACKAGES'] = {
-    name: '@alipay/gi-assets-basic',
-    version: '1.0.2',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.0.2/dist/index.min.js',
-    global: 'GI_Assets_Basic',
-  };
+  if (!packages['GI_Assets_Basic']) {
+    packages['GI_Assets_Basic'] = {
+      name: '@alipay/gi-assets-basic',
+      version: '1.0.4',
+      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.0.4/dist/index.min.js',
+      global: 'GI_Assets_Basic',
+    };
+  }
 
-  packages['GeaMakerGraphStudio'] = {
-    name: '@alipay/geamaker-studio',
-    version: '1.0.23',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.23/dist/index.min.js',
-    global: 'GeaMakerGraphStudio',
-  };
-  packages['GI_Assets_Kg'] = {
-    name: '@alipay/gi-assets-kg',
-    version: '0.0.7',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
-    global: 'GI_Assets_Kg',
-  };
+  // packages['GeaMakerGraphStudio'] = {
+  //   name: '@alipay/geamaker-studio',
+  //   version: '1.0.23',
+  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.23/dist/index.min.js',
+  //   global: 'GeaMakerGraphStudio',
+  // };
+
+  // packages['GI_Assets_Kg'] = {
+  //   name: '@alipay/gi-assets-kg',
+  //   version: '0.0.7',
+  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
+  //   global: 'GI_Assets_Kg',
+  // };
 
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
 };
