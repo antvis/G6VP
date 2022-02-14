@@ -9,7 +9,7 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "build": "NODE_OPTIONS=--max_old_space_size=2048 npm run clean && father build",
-    "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "build:umd": "node --max_old_space_size=8192 ../../node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
