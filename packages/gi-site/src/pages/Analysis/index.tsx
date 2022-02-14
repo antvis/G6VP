@@ -5,6 +5,7 @@ import { Prompt } from 'react-router-dom';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
+import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
@@ -18,8 +19,7 @@ import store, { StateType } from './redux';
 import UploadPanel from './uploadData/index';
 import { isObjectEmpty } from './utils';
 
-/** https://github.com/systemjs/systemjs/blob/main/docs/nodejs.md */
-// const { System } = require('systemjs');
+setDefaultAssetPackages();
 
 const Analysis = props => {
   const { history, match } = props;
@@ -129,12 +129,6 @@ const Analysis = props => {
           draft.refreshComponentKey = Math.random();
         },
       });
-      // dispatch({
-      //   type: 'update:config',
-      //   activeAssets,
-      //   activeAssetsInformation,
-      //   refreshComponentKey: Math.random(),
-      // });
     })();
   }, [ACTIVE_ASSETS_KEYS]);
 
@@ -205,8 +199,9 @@ const Analysis = props => {
   //     ev.returnValue = '配置未保存，确定离开吗？';
   //   });
   // }, []);
-  console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', state);
+
   const isLoading = isObjectEmpty(config) || !isReady;
+  console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', isLoading, state);
 
   const handleClose = () => {
     dispatch({
@@ -222,6 +217,7 @@ const Analysis = props => {
       </div>
     );
   }
+  console.log('isLoading', isLoading);
 
   return (
     <div className="gi">
@@ -257,9 +253,11 @@ const Analysis = props => {
               config={config}
               /** 资产以Props的方式按需引入 */
               assets={{
-                ...activeAssets,
-                services: activeAssetsInformation.services,
+                components: activeAssets.components,
+                elements: activeAssets.elements,
+                layouts: activeAssets.layouts,
               }}
+              services={activeAssetsInformation.services}
             ></GISDK>
           </div>
         </div>

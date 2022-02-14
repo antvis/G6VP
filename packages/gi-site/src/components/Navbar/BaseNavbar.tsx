@@ -1,11 +1,11 @@
 import { useHistory } from '@alipay/bigfish';
+import ThemeSwitch from '@alipay/theme-tools';
 import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Tooltip } from 'antd';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 import ThemeVars from '../ThemeVars';
-import ThemeSwitch from '@alipay/theme-tools';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -22,8 +22,11 @@ const BaseNavbar = props => {
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
         <Link to="/workspace">项目列表</Link>
       </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
-        <Link to="/market">资产市场</Link>
+      {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
+        <Link to="/market">云端研发资产</Link>
+      </div> */}
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' && styles.active}>
+        <Link to="/assets">本地研发资产</Link>
       </div>
     </>
   );

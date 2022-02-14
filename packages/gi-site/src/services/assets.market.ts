@@ -1,14 +1,10 @@
-// /** 临时这么引用：这部分拆分到 gi-assets 的包中，未来在云端构建 */
-// import * as ComponentAssets from '@alipay/graphinsight/es/components';
-// import * as ElementAssets from '@alipay/graphinsight/es/elements';
-
-import * as giAssets from '@alipay/gi-assets';
 import localforage from 'localforage';
-import { dynamicLoadModules } from '../loader';
+import { dynamicLoadModules, getCombinedAssets } from '../loader';
 import { queryActiveAssetList, queryAssetList } from './assets';
 import { isMock, IS_DYNAMIC_LOAD } from './const';
 
-let { elements, layouts } = (giAssets || {}) as any;
+let elements;
+let layouts;
 
 if (IS_DYNAMIC_LOAD) {
   elements = {};
@@ -101,10 +97,13 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     }
   } else {
     // 走本地的gi-assets资产加载
+
+    const dlm = await dynamicLoadModules();
+    const FinalAssets = getCombinedAssets();
     components = activeAssetsKeys.components.reduce((acc, curr) => {
       return {
         ...acc,
-        [curr]: giAssets.components[curr],
+        [curr]: FinalAssets.components[curr],
       };
     }, {});
 
@@ -112,14 +111,14 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     elements = activeAssetsKeys.elements.reduce((acc, curr) => {
       return {
         ...acc,
-        [curr]: giAssets.elements[curr],
+        [curr]: FinalAssets.elements[curr],
       };
     }, {});
 
     layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
       return {
         ...acc,
-        [curr]: giAssets.layouts[curr],
+        [curr]: FinalAssets.layouts[curr],
       };
     }, {});
   }

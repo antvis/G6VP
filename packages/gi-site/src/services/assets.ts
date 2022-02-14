@@ -1,6 +1,6 @@
 import { BrowserFSFileType } from '@alipay/alex';
-import * as giAssets from '@alipay/gi-assets';
 import request from 'umi-request';
+import { getCombinedAssets } from '../loader';
 import { ASSET_TYPE, isMock, IS_DYNAMIC_LOAD, SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
@@ -136,25 +136,28 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
       return { components, elements, layouts };
     } else {
       //通过本地@alipay/gi-assets 获得资产列表
-      const components = Object.keys(giAssets.components).map(key => {
+
+      const FinalAssets = getCombinedAssets();
+
+      const components = Object.keys(FinalAssets.components).map(key => {
         return {
           type: 1, //组件
           id: key,
-          ...giAssets.components[key]?.info,
+          ...FinalAssets.components[key]?.info,
         };
       });
-      const elements = Object.keys(giAssets.elements).map(key => {
+      const elements = Object.keys(FinalAssets.elements).map(key => {
         return {
           type: 2, //元素
           id: key,
-          ...giAssets.elements[key]?.info,
+          ...FinalAssets.elements[key]?.info,
         };
       });
-      const layouts = Object.keys(giAssets.layouts).map(key => {
+      const layouts = Object.keys(FinalAssets.layouts).map(key => {
         return {
           type: 6, //元素
           id: key,
-          ...giAssets.layouts[key]?.info,
+          ...FinalAssets.layouts[key]?.info,
         };
       });
       return { components, elements, layouts };

@@ -1,249 +1,246 @@
-import Graphin, { GraphinContext, GraphinData } from '@antv/graphin';
+import Graphin, { GraphinData } from '@antv/graphin';
 import React from 'react';
-import * as mock from './mock';
-import { GIComponentConfig, GIConfig, GIService } from './typing';
+import { useImmer } from 'use-immer';
+/** export  */
+import { deepClone, GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS } from './components/const';
+import GIAComponent from './components/GIAC';
+import { GraphInsightContext, useContext } from './context';
+import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
+import { registerLayouts, registerShapes } from './register';
+import SetupUseGraphinHook from './SetupUseGraphinHook';
+import type { Props, State } from './typing';
+import { GIComponentConfig } from './typing';
+import * as utils from './utils';
 
-export interface Props {
-  /**
-   * @description 配置信息
-   */
-  config: GIConfig;
-  /**
-   * assets 资产
-   */
-  assets: {
-    /** 从服务端获取的数据服务：Services */
-    services: GIService[];
-    /** 从服务端获取的组件：Components */
-    components: any;
-    /** 从服务端获取的元素：Elements */
-    elements: any;
-
-    layouts: any;
-  };
-  children?: React.ReactChildren | JSX.Element | JSX.Element[];
-}
-
-let registeredShapes = '';
-let registeredLayouts = '';
-
-const registerShapes = Elements => {
-  if (Elements) {
-    const nextShapes = Object.keys(Elements).join('-');
-    const prevShapes = registeredShapes;
-    if (nextShapes !== prevShapes) {
-      console.log('%c register Shape! ', 'color:green');
-      Object.keys(Elements).forEach(type => {
-        Elements[type].registerShape(Graphin);
-      });
-      registeredShapes = nextShapes;
-    }
-  }
+const version = '1.0.6';
+const extra = {
+  GIAC_CONTENT_METAS,
+  GIAC_CONTENT_PROPS,
+  GIAC_METAS,
+  GIAC_PROPS,
+  deepClone,
+  GIAComponent,
 };
-const registerLayouts = Layouts => {
-  if (Layouts) {
-    const nextLayout = Object.keys(Layouts).join('-');
-    const prevLayout = registeredLayouts;
-    if (nextLayout !== prevLayout) {
-      console.log('%c register Layout! ', 'color:green');
-      Object.keys(Layouts).forEach(type => {
-        Layouts[type].registerLayout(Graphin);
-      });
-      registeredLayouts = nextLayout;
-    }
-  }
-};
+export { useContext, utils, extra };
 
+console.log(`%c GI_VERSION:${version}`, 'color:red');
+
+/** export  */
 const GISDK = (props: Props) => {
-  const { config, children, assets } = props;
-  const { components: Components, elements: Elements, services: Services, layouts: Layouts } = assets;
-  registerShapes(Elements);
+  const { children, assets } = props;
+  let { services: Services } = props;
+  //@ts-ignore
+  if (assets.services) {
+    console.warn(`⚠️：assets.services 即将废弃，请使用 props.services 代替`);
+    //@ts-ignore
+    Services = assets.services;
+  }
+
+  const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
+  registerShapes(ElementAssets);
   registerLayouts(Layouts);
 
-  const [state, setState] = React.useState({
+  const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
     source: { nodes: [], edges: [] } as GraphinData,
     layout: {},
     components: [] as GIComponentConfig[],
-    isReady: false,
+    config: props.config,
+    isLoading: false,
+    isContextReady: false,
+    initialized: false,
+    initializer: defaultInitializerCfg,
+    transform: data => data,
+    /** graphin */
+    //@ts-ignore
+    graph: null,
+    //@ts-ignore
+    apis: null,
+    //@ts-ignore
+    theme: null,
+    //@ts-ignore
+    layoutInstance: null,
   });
 
-  const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = config;
-  /** 根据注册的图元素，生成Transform函数 */
-
-  const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
-  const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
-
-  const NodeElement = Elements[NodeElementId];
-  const EdgeElement = Elements[EdgeElementId];
-  const transform = (data, config) => {
-    const nodes = NodeElement.registerTransform(data, config);
-    const edges = EdgeElement.registerTransform(data, config);
-    return {
-      nodes,
-      edges,
-    };
-  };
-
-  /** 数据发生改变 */
   React.useEffect(() => {
-    const { service } = Services.find(s => s.id === 'GI_SERVICE_INTIAL_GRAPH') as GIService;
-
-    service().then((res = { nodes: [], edges: [] }) => {
-      setState(preState => {
-        const newData = transform(res, config);
-        return {
-          ...preState,
-          data: newData,
-          source: { ...res },
-          isReady: true,
-        };
-      });
+    updateState(draft => {
+      draft.config = props.config;
     });
-  }, []);
+  }, [props.config]);
+
+  const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = state.config;
+  /** 根据注册的图元素，生成Transform函数 */
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    const filteredComponents = componentsCfg; //.filter(c => c.enable);
-    /** start 针对容器组件特殊处理 */
-    const containerComponents = filteredComponents.filter(c => {
-      return c.props.GI_CONTAINER;
+    const filteredComponents = componentsCfg.filter(c => {
+      /** 过滤初始化组件 */
+      return !(c.props && c.props.GI_INITIALIZER);
     });
+
+    /** 容器组件 */
+    const containerComponents = filteredComponents.filter(c => {
+      return c.props && c.props.GI_CONTAINER;
+    });
+
+    /** 集成到容器组件中的原子组件 */
     const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
       const { GI_CONTAINER } = curr.props;
-      return [...acc, ...GI_CONTAINER];
+      return [...acc, ...(GI_CONTAINER as string[])];
     }, []);
-
+    /** 最终需要渲染的组件 */
     const finalComponents = filteredComponents.filter(c => {
       const { id } = c;
       return needContainerComponentIds.indexOf(id) === -1;
     });
-    /** end */
+    /** 初始化组件 */
+    const initializerCfg =
+      componentsCfg.find(c => {
+        return c.props && c.props.GI_INITIALIZER;
+      }) || defaultInitializerCfg;
 
-    setState(preState => {
-      return {
-        ...preState,
-        components: finalComponents,
-      };
+    updateState(draft => {
+      draft.config.components = componentsCfg;
+      draft.components = finalComponents;
+      //@ts-ignore
+      draft.initializer = initializerCfg;
     });
   }, [componentsCfg]);
-  /** 布局发生改变 */
 
   React.useEffect(() => {
     const { type, ...options } = layoutCfg?.props || {};
-
-    setState(preState => {
-      return {
-        ...preState,
-        layout: {
-          type: type,
-          ...options,
-        },
+    updateState(draft => {
+      draft.layout = {
+        type: type,
+        ...options,
       };
+      draft.config.layout = layoutCfg;
     });
   }, [layoutCfg]);
 
   React.useEffect(() => {
-    setState(preState => {
-      if (preState.data.nodes.length === 0) {
-        return preState;
-      }
-      const newData = transform(preState.data, { node: nodeCfg, edge: edgeCfg });
+    const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
+    const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
+    const NodeElement = ElementAssets[NodeElementId];
+    const EdgeElement = ElementAssets[EdgeElementId];
+    const transform = data => {
+      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
+      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
       return {
-        ...preState,
-        data: newData,
+        nodes,
+        edges,
       };
+    };
+    updateState(draft => {
+      if (draft.data.nodes.length !== 0) {
+        const newData = transform(draft.data);
+        draft.data = newData;
+      }
+      draft.transform = transform;
+      draft.config.node = nodeCfg;
+      draft.config.edge = edgeCfg;
     });
   }, [nodeCfg, edgeCfg]);
 
-  const { data, layout, components, isReady } = state;
+  const { data, layout, components, initializer, theme, transform } = state;
 
-  //@ts-ignore 临时方案
-  GraphinContext.services = Services;
-  //@ts-ignore 临时方案
-  GraphinContext.transform = transform;
-  // @ts-ignore
-  GraphinContext.config = config;
+  // console.log('%c GraphInsight Render...', 'color:red', state);
 
-  // @ts-ignore
-  GraphinContext.dispatch = {
-    changeData: inputData => {
-      setState(preState => {
-        return {
-          ...preState,
-          data: transform(inputData, config),
-        };
+  const ContextValue = {
+    ...state,
+    services: Services,
+
+    updateContext: updateState,
+    updateData: res => {
+      updateState(draft => {
+        draft.data = transform(res);
+        draft.source = transform(res);
+      });
+    },
+    updateLayout: res => {
+      updateState(draft => {
+        draft.layout = res;
+      });
+    },
+    updateDataAndLayout: (res, lay) => {
+      updateState(draft => {
+        draft.data = transform(res);
+        draft.source = transform(res);
+        draft.layout = lay;
       });
     },
   };
-  //@ts-ignore
-  GraphinContext.GiState = state;
-  //@ts-ignore
-  GraphinContext.setGiState = setState;
-
   const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
     return {
       ...acc,
       [curr.id]: curr,
     };
   }, {});
-  console.log('%c gi render...', 'color:red', props, state);
-  if (!isReady) {
-    return <div>render...</div>;
-  }
+  const { component: InitializerComponent } = ComponentAssets[initializer.id] || {
+    component: DefaultInitializer,
+  };
+  const { props: InitializerProps } = ComponentCfgMap[initializer.id] || {
+    props: defaultInitializerCfg.props,
+  };
+
+  const renderComponents = () => {
+    if (!state.initialized || !state.isContextReady) {
+      return null;
+    }
+
+    return components.map(c => {
+      const { id, props: itemProps = {} } = c;
+
+      const matchComponent = ComponentAssets[id];
+      if (!matchComponent) {
+        return null;
+      }
+      /** 特殊处理Container组件 */
+      const { GI_CONTAINER } = itemProps;
+
+      let GIProps = {};
+      if (GI_CONTAINER) {
+        GIProps = {
+          components: GI_CONTAINER.map(c => {
+            return ComponentCfgMap[c];
+          }),
+          assets: ComponentAssets,
+        };
+      }
+
+      const {
+        component: Component,
+        props: defaultProps,
+      }: {
+        component: typeof React.Component;
+        props: any;
+      } = matchComponent;
+      return <Component key={id} {...defaultProps} {...itemProps} {...GIProps} />;
+    });
+  };
+  const isReady = state.isContextReady && state.initialized;
+
   return (
-    //@ts-ignore
-    <Graphin data={data} layout={layout} enabledStack={true} theme={{ mode: 'light', primaryColor: '#fb08c6' }}>
-      {/** 内置的组件 */}
+    <GraphInsightContext.Provider
+      //@ts-ignore
+      value={ContextValue}
+    >
+      <Graphin
+        data={data}
+        layout={layout}
+        enabledStack={true}
+        //@ts-ignore
+        theme={theme}
+      >
+        <>
+          {state.isContextReady && <InitializerComponent {...InitializerProps} />}
+          <SetupUseGraphinHook updateContext={updateState} />
 
-      {/** 用户从组件市场里选择的组件  */}
-      {components.map(c => {
-        const { id, props: itemProps } = c;
-
-        const matchComponent = Components[id];
-        if (!matchComponent) {
-          return null;
-        }
-        /** 特殊处理Container组件 */
-        const { GI_CONTAINER } = itemProps;
-
-        let GIProps = {};
-        if (GI_CONTAINER) {
-          GIProps = {
-            components: GI_CONTAINER.map(c => {
-              return ComponentCfgMap[c];
-            }),
-            assets: Components,
-          };
-        }
-
-        const {
-          component: Component,
-          props: defaultProps,
-        }: {
-          component: typeof React.Component;
-          props: any;
-        } = matchComponent;
-        return <Component key={id} {...defaultProps} {...itemProps} {...GIProps} />;
-      })}
-
-      {/** 用户二次定制开发的组件  */}
-      {children}
-    </Graphin>
+          {isReady && renderComponents()}
+          {isReady && children}
+        </>
+      </Graphin>
+    </GraphInsightContext.Provider>
   );
 };
-
-// export const useContext = () => {
-//   const context = React.useContext(GraphinContext);
-//   //@ts-ignore
-//   const { dispatch, services } = GraphinContext;
-//   return {
-//     ...context,
-//     dispatch,
-//     services,
-//   };
-// };
-
-export const Mock = mock;
-
-export default GISDK;
+export default React.memo(GISDK);
