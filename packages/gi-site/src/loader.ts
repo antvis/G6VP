@@ -1,47 +1,170 @@
-import SystemJS from 'systemjs';
-
-// 配置 GI 资产前置依赖的库的资源路径
-SystemJS.config({
-  // baseURL: 'https://unpkg.com',
-  _nodeRequire: false,
-  map: {
-    react: 'https://unpkg.com/react@17/umd/react.production.min.js',
-    'react-dom': 'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js',
-    '@antv/g6': 'https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js',
-    '@antv/graphin': 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js',
-    '@antv/graphin-components':
-      'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
-    Graphin: 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js',
-    GraphinComponents:
-      'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
-    ReactDOM: 'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js',
-    React: 'https://unpkg.com/react@17/umd/react.production.min.js',
-    G6: 'https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js',
-  },
-});
-
-export interface LoadModules {
+export interface Package {
   name: string;
   url: string;
-  version?: string;
-  type: number;
+  global: string;
 }
 
+export const setDefaultAssetPackages = () => {
+  const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+
+  if (!packages['GI_Assets_Basic']) {
+    packages['GI_Assets_Basic'] = {
+      name: '@alipay/gi-assets-basic',
+      version: '1.0.4',
+      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.0.4/dist/index.min.js',
+      global: 'GI_Assets_Basic',
+    };
+  }
+
+  // packages['GeaMakerGraphStudio'] = {
+  //   name: '@alipay/geamaker-studio',
+  //   version: '1.0.23',
+  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.23/dist/index.min.js',
+  //   global: 'GeaMakerGraphStudio',
+  // };
+
+  // packages['GI_Assets_Kg'] = {
+  //   name: '@alipay/gi-assets-kg',
+  //   version: '0.0.7',
+  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
+  //   global: 'GI_Assets_Kg',
+  // };
+
+  localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
+};
+
+export const getAssetPackages = () => {
+  const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+  return Object.values(packages) as Package[];
+};
+const LoaderCss = options => {
+  // return new Promise(resolve => {
+  const link = document.createElement('link');
+  link.type = 'text/css';
+  link.href = options.id || options.url;
+  if (options.url) {
+    const href = options.url.replace('min.js', 'css');
+    link.href = href;
+  }
+  link.rel = 'stylesheet';
+  // debugger;
+  document.head.append(link);
+  // link.onload = () => {
+  //   resolve(link);
+  // };
+  // });
+};
+const Loader = options => {
+  return new Promise(resolve => {
+    const script = document.createElement('script');
+    script.type = options.type || 'text/javascript';
+    script.async = !!options.async;
+    script.id = options.id || options.url;
+    if (options.url) {
+      script.src = options.url;
+    }
+    if (options.text) {
+      script.text = options.text;
+    }
+    document.body.append(script);
+    script.onload = () => {
+      resolve(script);
+    };
+  });
+};
+
+export const loadJS = options => {
+  return Promise.all([
+    //js
+    ...options.map(opt => {
+      return Loader(opt);
+    }),
+    //css
+    ...options.map(opt => {
+      return LoaderCss(opt);
+    }),
+  ]);
+};
+
+export const getAssets = () => {
+  const packages = getAssetPackages();
+  return packages
+    .map(item => {
+      let assets = window[item.global];
+      if (!assets) {
+        console.warn(`${item.global} is not found`);
+        return null;
+      }
+      if (assets.hasOwnProperty('default')) {
+        //临时处理，后面要形成资产打包规范
+        assets = assets.default;
+      }
+      return {
+        ...item,
+        assets,
+      };
+    })
+    .filter(c => {
+      return c;
+    });
+};
+
+type AssetsKey = 'components' | 'elements' | 'layouts';
+type AssetsValue = {
+  [id: string]: {
+    registerMeta: () => void;
+    info: {
+      id: string;
+    };
+    component: React.FunctionComponent | any;
+  };
+};
+
+export type IAssets = Record<AssetsKey, AssetsValue>;
+
+/**
+ * 获取融合后的资产
+ * @returns
+ */
+export const getCombinedAssets = () => {
+  const assets = getAssets();
+  return assets.reduce(
+    (acc, curr) => {
+      return {
+        components: {
+          ...acc.components,
+          ...curr.assets.components,
+        },
+        elements: {
+          ...acc.elements,
+          ...curr.assets.elements,
+        },
+        layouts: {
+          ...acc.layouts,
+          ...curr.assets.layouts,
+        },
+      };
+    },
+    {
+      components: {},
+      elements: {},
+      layouts: {},
+    },
+  );
+};
 /**
  * 动态加载组件，支持同时加载多个
  * @param targets { LoadModules[] } 要加载的组件列表
  */
-export const dynamicLoadModules = async (targets: LoadModules[]) => {
-  const promises = targets.map(target => target.url && SystemJS.import(target.url));
+export const dynamicLoadModules = async () => {
+  const packages = getAssetPackages();
+  const options = packages.map(item => {
+    return {
+      url: item.url,
+    };
+  });
 
-  return Promise.all(promises).then(values => {
-    const componentMapping = values.map((value, index) => {
-      return {
-        name: targets[index].name,
-        components: value,
-        type: targets[index].type,
-      };
-    });
-    return componentMapping;
+  return loadJS(options).then(res => {
+    return getAssets();
   });
 };

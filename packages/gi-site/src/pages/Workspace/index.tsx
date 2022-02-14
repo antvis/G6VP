@@ -1,12 +1,11 @@
-import { useHistory, useRequest } from '@alipay/bigfish';
-import { Drawer, Modal, Tabs } from 'antd';
+import { useRequest } from '@alipay/bigfish';
+import { Modal, Tabs } from 'antd';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { getProjectList, removeProjectById, getFavoriteList } from '../../services';
+import { getFavoriteList, getProjectList, removeProjectById } from '../../services';
 import CreatePanel from './Create';
-import ProjectList from './projectList';
-
 import './index.less';
+import ProjectList from './projectList';
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
@@ -62,17 +61,19 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     <>
       <div className="workspace">
         <BaseNavbar />
-        <Tabs>
-          <TabPane tab={'我的项目'} key={'project'}>
-            <ProjectList data={lists} handleOpen={handleOpen} handleDelete={handleDelete} type="project" />
-          </TabPane>
-          <TabPane tab={'我的收藏'} key={'collect'}>
-            <ProjectList data={lists} type="collect" />
-          </TabPane>
-          <TabPane tab={'行业案例'} key={'case'}>
-            <ProjectList data={[]} type="case" />
-          </TabPane>
-        </Tabs>
+        <div style={{ overflow: 'scroll', height: 'calc(100vh - 64px)' }}>
+          <Tabs>
+            <TabPane tab={'我的项目'} key={'project'}>
+              <ProjectList data={lists} handleOpen={handleOpen} handleDelete={handleDelete} type="project" />
+            </TabPane>
+            <TabPane tab={'我的收藏'} key={'collect'}>
+              <ProjectList data={lists} type="collect" />
+            </TabPane>
+            <TabPane tab={'行业案例'} key={'case'}>
+              <ProjectList data={[]} type="case" />
+            </TabPane>
+          </Tabs>
+        </div>
       </div>
       <CreatePanel visible={visible} handleClose={handleClose} />
     </>
