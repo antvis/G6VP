@@ -1,4 +1,5 @@
 import Graphin from '@antv/graphin';
+import merge from 'deepmerge';
 // 引入资源文件
 import iconLoader from '@antv/graphin-icons';
 import '@antv/graphin-icons/dist/index.css';
@@ -112,37 +113,40 @@ const transform = (s, metaConfig) => {
         data: node.data,
         dataType: node.dataType || 'others',
         type: 'graphin-circle',
-        style: {
-          keyshape: {
-            stroke: keyShapeColor,
-            fill: keyShapeColor,
-            size: keyshapeSize,
-            fillOpacity: 0.3,
-            strokeOpacity: 1,
+        style: merge(
+          {
+            keyshape: {
+              stroke: keyShapeColor,
+              fill: keyShapeColor,
+              size: keyshapeSize,
+              fillOpacity: 0.3,
+              strokeOpacity: 1,
+            },
+            label: {
+              value: Label?.enable ? data[Label?.key || 'id'] || id : '',
+              offset: [0, 10],
+              fill: Label.color,
+            },
+            icon,
+            halo: { visible: false },
+            badges,
+            status: {
+              normal: {
+                halo,
+              },
+              hover: {
+                halo,
+              },
+              active: {
+                halo,
+              },
+              select: {
+                halo,
+              },
+            },
           },
-          label: {
-            value: Label?.enable ? data[Label?.key || 'id'] || id : '',
-            offset: [0, 10],
-            fill: Label.color,
-          },
-          icon,
-          halo: { visible: false },
-          badges,
-          status: {
-            normal: {
-              halo,
-            },
-            hover: {
-              halo,
-            },
-            active: {
-              halo,
-            },
-            select: {
-              halo,
-            },
-          },
-        },
+          node.style,
+        ),
       };
     });
 
