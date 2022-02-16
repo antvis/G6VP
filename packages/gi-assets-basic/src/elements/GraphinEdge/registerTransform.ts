@@ -1,6 +1,6 @@
 import { Utils } from '@antv/graphin';
-import merge from 'deepmerge';
 import { scaleLinear } from 'd3-scale';
+import merge from 'deepmerge';
 import { defaultProps } from './registerMeta';
 
 export const deepClone = <T>(obj: T): T => {
@@ -83,7 +83,7 @@ const transform = (s, config) => {
               visible: edgeHalo?.showhalo,
             },
           },
-          edge.style,
+          (edge && edge.style) || {},
         ),
       };
     });
