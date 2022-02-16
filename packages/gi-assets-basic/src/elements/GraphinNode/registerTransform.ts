@@ -1,9 +1,9 @@
 import Graphin from '@antv/graphin';
-import merge from 'deepmerge';
 // 引入资源文件
 import iconLoader from '@antv/graphin-icons';
 import '@antv/graphin-icons/dist/index.css';
 import { scaleLinear } from 'd3-scale';
+import merge from 'deepmerge';
 import { defaultProps } from './registerMeta';
 
 const icons = Graphin.registerFontFamily(iconLoader);
@@ -25,14 +25,11 @@ const getMapping = () => {
 const transform = (s, metaConfig) => {
   try {
     /** 解构配置项 */
-    const {
-      color: Color,
-      label: Label,
-      size: Size,
-      icon: Icon,
-      halo: Halo,
-      badges: Badges,
-    } = Object.assign({}, defaultProps, metaConfig.node.props);
+    const { color: Color, label: Label, size: Size, icon: Icon, halo: Halo, badges: Badges } = Object.assign(
+      {},
+      defaultProps,
+      metaConfig.node.props,
+    );
 
     /** 分别生成Size和Color的Mapping */
     const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
@@ -145,7 +142,7 @@ const transform = (s, metaConfig) => {
               },
             },
           },
-          node.style,
+          (node && node.style) || {},
         ),
       };
     });
