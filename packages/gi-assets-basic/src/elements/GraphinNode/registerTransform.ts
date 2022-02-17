@@ -140,6 +140,12 @@ const transform = (s, metaConfig) => {
               select: {
                 halo,
               },
+              highlight: {
+                keyshape: {
+                  lineWidth: 2,
+                  fillOpacity: 0.4,
+                },
+              },
             },
           },
           (node && node.style) || {},
