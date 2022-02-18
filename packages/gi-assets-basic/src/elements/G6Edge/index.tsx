@@ -6,6 +6,7 @@ const registerShape = Graphin => {};
 const info = {
   id: 'G6Edge',
   category: 'edge',
+  type: 'EDGE',
   name: 'G6内置边',
   desc: 'G6Edge，XXXXXXXX',
   cover: 'http://xxxx.jpg',

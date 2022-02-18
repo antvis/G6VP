@@ -11,6 +11,7 @@ const info = {
   name: '官方内置边',
   desc: 'GraphinEdge，XXXXXXXX',
   cover: 'http://xxxx.jpg',
+  type: 'EDGE',
 };
 
 export default {
