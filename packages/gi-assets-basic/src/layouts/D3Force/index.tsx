@@ -8,7 +8,8 @@ const info = {
     type: 'force',
   },
   name: 'D3力导布局',
-  category: 'layout',
+  category: 'basic',
+  type: 'LAYOUT',
   desc: '',
   cover: 'http://xxxx.jpg',
 };
