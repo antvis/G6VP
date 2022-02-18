@@ -1,5 +1,7 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
+import type { TypeAssetInfo } from './typing';
 import { getKeysByData } from './utils';
+
 /**
  *
  * @param assets 服务端拿到的资产: Components
@@ -8,9 +10,15 @@ import { getKeysByData } from './utils';
  */
 const getComponentsByAssets = (assets, data, services, config) => {
   const GI_CONTAINER_INDEXS = Object.values(assets)
-    .filter(item => {
-      const { info } = item || ({ info: {} } as any);
-      return info.type === 'GI_CONTAINER_INDEX';
+    .filter((item: any) => {
+      const info = ((item && item.info) || {}) as TypeAssetInfo;
+
+      return (
+        info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
+        info.type === 'GIAC_MENU' ||
+        info.type === 'GIAC' ||
+        info.type === 'GIAC_CONTENT'
+      );
     })
     .map(item => {
       const { info } = item as any;
@@ -36,7 +44,7 @@ const getComponentsByAssets = (assets, data, services, config) => {
         Component,
         info = {},
       } = component;
-      const keys = getKeysByData(data);
+      const keys = getKeysByData(data, 'node');
 
       const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS });
       /** 默认的配置值 */
