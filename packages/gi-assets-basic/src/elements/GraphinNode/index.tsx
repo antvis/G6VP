@@ -6,6 +6,7 @@ import registerTransform from './registerTransform';
 const info = {
   id: 'GraphinNode',
   category: 'node',
+  type: 'NODE',
   name: 'Graphin 节点',
   desc: 'Graphin 节点',
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*myb8SrnSy0cAAAAAAAAAAAAAARQnAQ',
