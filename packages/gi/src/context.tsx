@@ -4,6 +4,7 @@ import { State } from './typing';
 interface ContextType extends State {
   updateContext: Updater<State>;
   updateData: (data: any) => any;
+  GISDK_ID: string;
   /** 用户自己的数据 */
   [userVars: string]: any;
 }

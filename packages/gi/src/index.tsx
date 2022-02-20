@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.1.1';
+const version = '1.1.2';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -24,12 +24,11 @@ const extra = {
 export { useContext, utils, extra };
 
 console.log(`%c GI_VERSION:${version}`, 'color:red');
-const defaultId = `${Math.random().toString(36).substr(2)}`;
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets } = props;
-  let { services: Services, id: GISDK_ID } = props;
+  const { children, assets, id } = props;
+  let { services: Services } = props;
 
   //@ts-ignore
   if (assets.services) {
@@ -37,10 +36,15 @@ const GISDK = (props: Props) => {
     //@ts-ignore
     Services = assets.services;
   }
-  if (!GISDK_ID) {
-    GISDK_ID = defaultId;
-    console.info(`⚠️: props.id缺失，默认生成 ${GISDK_ID} 用于多实例管理`);
-  }
+
+  const GISDK_ID = React.useMemo(() => {
+    if (!id) {
+      const defaultId = `${Math.random().toString(36).substr(2)}`;
+      console.warn(`⚠️: props.id 缺失，默认生成 GISDK_ID : ${defaultId} 用于多实例管理`);
+      return defaultId;
+    }
+    return id;
+  }, []);
 
   const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
   registerShapes(ElementAssets);
