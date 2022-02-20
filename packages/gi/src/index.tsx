@@ -24,6 +24,7 @@ const extra = {
 export { useContext, utils, extra };
 
 console.log(`%c GI_VERSION:${version}`, 'color:red');
+const defaultId = `${Math.random().toString(36).substr(2)}`;
 
 /** export  */
 const GISDK = (props: Props) => {
@@ -37,7 +38,7 @@ const GISDK = (props: Props) => {
     Services = assets.services;
   }
   if (!GISDK_ID) {
-    GISDK_ID = `${Math.random().toString(36).substr(2)}`;
+    GISDK_ID = defaultId;
     console.info(`⚠️: props.id缺失，默认生成 ${GISDK_ID} 用于多实例管理`);
   }
 
