@@ -4,7 +4,7 @@ import WrapContainer from '../OperatorHeader/WrapContainer';
 import './index.less';
 export interface OperatorBarProps {}
 
-const getComponents = (components, assets) => {
+const getComponents = (components, assets, GISDK) => {
   return components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
@@ -21,7 +21,7 @@ const getComponents = (components, assets) => {
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
-        WrapComponent = WrapContainer(Component, itemId);
+        WrapComponent = WrapContainer(Component, itemId, GISDK);
       }
       return (
         <div key={itemId}>
@@ -36,12 +36,12 @@ const getComponents = (components, assets) => {
 
 const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
-  const { assets, ...otherProps } = props;
+  const { assets, GISDK, ...otherProps } = props;
   const deps = JSON.stringify(otherProps);
   const COMPOENTS = React.useMemo(() => {
     //@ts-ignore
     const { components } = props;
-    const COMPOENTS = getComponents(components, assets);
+    const COMPOENTS = getComponents(components, assets, GISDK);
     return COMPOENTS;
   }, [deps]);
 
