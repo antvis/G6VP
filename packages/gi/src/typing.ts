@@ -41,6 +41,10 @@ export interface State {
 
 export interface Props {
   /**
+   * @description GISDK的ID，用于多实例管理，缺失会默认生成一个
+   */
+  id?: string;
+  /**
    * @description 配置信息
    */
   config: GIConfig;

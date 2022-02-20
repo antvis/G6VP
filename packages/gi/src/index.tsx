@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.0.6';
+const version = '1.1.1';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -28,12 +28,17 @@ console.log(`%c GI_VERSION:${version}`, 'color:red');
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets } = props;
-  let { services: Services } = props;
+  let { services: Services, id: GISDK_ID } = props;
+
   //@ts-ignore
   if (assets.services) {
     console.warn(`⚠️：assets.services 即将废弃，请使用 props.services 代替`);
     //@ts-ignore
     Services = assets.services;
+  }
+  if (!GISDK_ID) {
+    GISDK_ID = `${Math.random().toString(36).substr(2)}`;
+    console.info(`⚠️: props.id缺失，默认生成 ${GISDK_ID} 用于多实例管理`);
   }
 
   const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
@@ -148,6 +153,7 @@ const GISDK = (props: Props) => {
 
   const ContextValue = {
     ...state,
+    GISDK_ID,
     services: Services,
 
     updateContext: updateState,
@@ -215,7 +221,7 @@ const GISDK = (props: Props) => {
         component: typeof React.Component;
         props: any;
       } = matchComponent;
-      return <Component key={id} {...defaultProps} {...itemProps} {...GIProps} />;
+      return <Component key={id} GISDK_ID={GISDK_ID} {...defaultProps} {...itemProps} {...GIProps} />;
     });
   };
   const isReady = state.isContextReady && state.initialized;
