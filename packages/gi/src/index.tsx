@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.1.2';
+const version = '1.1.3';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -207,7 +207,7 @@ const GISDK = (props: Props) => {
         return null;
       }
       /** 特殊处理Container组件 */
-      const { GI_CONTAINER } = itemProps;
+      const { GI_CONTAINER, GIAC_CONTENT, GIAC_MENU } = itemProps;
 
       let GIProps = {};
       if (GI_CONTAINER) {
@@ -218,7 +218,9 @@ const GISDK = (props: Props) => {
           assets: ComponentAssets,
         };
       }
-
+      if (GIAC_CONTENT || GIAC_MENU) {
+        return null;
+      }
       const {
         component: Component,
         props: defaultProps,
