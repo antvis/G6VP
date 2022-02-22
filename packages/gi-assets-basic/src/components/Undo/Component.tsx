@@ -3,14 +3,14 @@ import { IGIAC } from '@alipay/graphinsight/lib/components/const';
 import * as React from 'react';
 import useRedoUndo from './useRedoUndo';
 const { GIAComponent } = extra;
-export interface Redo {
+export interface Undo {
   GIAC: IGIAC;
 }
 
-const Redo: React.FunctionComponent<Redo> = props => {
+const Undo: React.FunctionComponent<Undo> = props => {
   const { GIAC } = props;
-  const { handleRedo } = useRedoUndo();
-  return <GIAComponent GIAC={GIAC} onClick={handleRedo} />;
+  const { handleUndo } = useRedoUndo();
+  return <GIAComponent GIAC={GIAC} onClick={handleUndo} />;
 };
 
-export default Redo;
+export default Undo;
