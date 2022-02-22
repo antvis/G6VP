@@ -16,13 +16,13 @@
   },
   "dependencies": {
     "@ali/react-datav-gui": "^4.3.1",
-    "@ali/react-datav-gui-utils": "^0.2.4"
+    "@ali/react-datav-gui-utils": "^0.2.4",
+    "@alipay/graphinsight": "*"
   },
   "peerDependencies": {
     "react": "17.x",
     "@antv/graphin": "2.x",
-    "antd": "^4.18.2",
-    "@alipay/graphinsight": "*"
+    "antd": "^4.18.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.3",
