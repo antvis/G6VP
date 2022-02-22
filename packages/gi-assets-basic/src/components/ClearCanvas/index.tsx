@@ -9,7 +9,7 @@ const info = {
   category: 'components',
   desc: '清空画布',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  type: 'GIAC',
 };
 
 export default {
