@@ -11,10 +11,10 @@ const useRedoUndo = () => {
   const { graph } = React.useContext(GraphinContext);
   const [btnDisable, setBtnDisable] = React.useState({
     undo: true,
-    todu: true,
+    redo: true,
   });
   const handleRedo = () => {
-    if (btnDisable.todu) {
+    if (btnDisable.redo) {
       return;
     }
     redo();
@@ -137,7 +137,7 @@ const useRedoUndo = () => {
 
       setBtnDisable({
         undo: undoStackLen > 2 ? false : true,
-        todu: redoStackLen > 0 ? false : true,
+        redo: redoStackLen > 0 ? false : true,
       });
     };
     graph.on('stackchange', handleStackChanage);
@@ -148,6 +148,8 @@ const useRedoUndo = () => {
   return {
     handleRedo,
     handleUndo,
+    disableUndo: btnDisable.undo,
+    disableRedo: btnDisable.redo,
   };
 };
 
