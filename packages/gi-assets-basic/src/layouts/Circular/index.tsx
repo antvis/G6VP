@@ -8,7 +8,8 @@ const info = {
     type: 'circular',
   },
   name: '圆形布局',
-  category: 'layout',
+  category: 'basic',
+  type: 'LAYOUT',
   desc: '',
   cover: 'http://xxxx.jpg',
 };

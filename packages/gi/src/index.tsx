@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.0.6';
+const version = '1.1.4';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -27,14 +27,24 @@ console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets } = props;
+  const { children, assets, id } = props;
   let { services: Services } = props;
+
   //@ts-ignore
   if (assets.services) {
     console.warn(`⚠️：assets.services 即将废弃，请使用 props.services 代替`);
     //@ts-ignore
     Services = assets.services;
   }
+
+  const GISDK_ID = React.useMemo(() => {
+    if (!id) {
+      const defaultId = `${Math.random().toString(36).substr(2)}`;
+      console.warn(`⚠️: props.id 缺失，默认生成 GISDK_ID : ${defaultId} 用于多实例管理`);
+      return defaultId;
+    }
+    return id;
+  }, []);
 
   const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
   registerShapes(ElementAssets);
@@ -148,6 +158,7 @@ const GISDK = (props: Props) => {
 
   const ContextValue = {
     ...state,
+    GISDK_ID,
     services: Services,
 
     updateContext: updateState,
@@ -196,7 +207,7 @@ const GISDK = (props: Props) => {
         return null;
       }
       /** 特殊处理Container组件 */
-      const { GI_CONTAINER } = itemProps;
+      const { GI_CONTAINER, GIAC_CONTENT, GIAC_MENU, GIAC } = itemProps;
 
       let GIProps = {};
       if (GI_CONTAINER) {
@@ -207,7 +218,9 @@ const GISDK = (props: Props) => {
           assets: ComponentAssets,
         };
       }
-
+      if (GIAC_CONTENT || GIAC_MENU || GIAC) {
+        return null;
+      }
       const {
         component: Component,
         props: defaultProps,
@@ -215,7 +228,7 @@ const GISDK = (props: Props) => {
         component: typeof React.Component;
         props: any;
       } = matchComponent;
-      return <Component key={id} {...defaultProps} {...itemProps} {...GIProps} />;
+      return <Component key={id} GISDK_ID={GISDK_ID} {...defaultProps} {...itemProps} {...GIProps} />;
     });
   };
   const isReady = state.isContextReady && state.initialized;

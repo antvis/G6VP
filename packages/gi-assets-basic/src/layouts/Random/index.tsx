@@ -9,7 +9,8 @@ const info = {
     type: 'custom-random',
   },
   name: '随机布局',
-  category: 'layout',
+  category: 'custom',
+  type: 'LAYOUT',
   desc: '',
   cover: 'http://xxxx.jpg',
 };

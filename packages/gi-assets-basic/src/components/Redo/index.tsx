@@ -5,9 +5,9 @@ import registerMeta from './registerMeta';
 
 const info = {
   id: 'Redo',
-  name: '上一步/下一步',
+  name: '重做',
   category: 'components',
-  desc: '上一步/下一步',
+  desc: '重做',
   cover: 'http://xxxx.jpg',
   type: 'GI_CONTAINER_INDEX',
 };
