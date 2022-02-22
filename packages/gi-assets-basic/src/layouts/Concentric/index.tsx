@@ -8,7 +8,8 @@ const info = {
     type: 'concentric',
   },
   name: '同心圆布局',
-  category: 'layout',
+  category: 'basic',
+  type: 'LAYOUT',
   desc: '',
   cover: 'http://xxxx.jpg',
 };

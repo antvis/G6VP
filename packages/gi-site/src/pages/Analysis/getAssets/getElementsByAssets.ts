@@ -1,4 +1,5 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
+import type { TypeAssetInfo } from './typing';
 import { getKeysByData } from './utils';
 
 /**
@@ -15,7 +16,7 @@ const getElementsByAssets = (assets, data) => {
     const element = assets[key];
     //@ts-ignore
     const { info, registerMeta, registerShape, registerTransform } = element;
-    const { id, name, category } = info;
+    const { id, name, category, type } = info as TypeAssetInfo;
 
     const keys = getKeysByData(data, category);
     const configObj = registerMeta({ data, keys });
@@ -31,13 +32,13 @@ const getElementsByAssets = (assets, data) => {
       // registerShape,
       // registerTransform,
     };
-    if (category === 'node') {
+    if (category === 'node' || type === 'NODE') {
       nodeElements = {
         ...nodeElements,
         [id]: item,
       };
     }
-    if (category === 'edge') {
+    if (category === 'edge' || type === 'EDGE') {
       edgeElements = {
         ...edgeElements,
         [id]: item,

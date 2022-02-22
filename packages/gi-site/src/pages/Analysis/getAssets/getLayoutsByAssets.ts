@@ -1,4 +1,5 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
+import type { TypeAssetInfo } from './typing';
 import { getKeysByData } from './utils';
 /**
  *
@@ -21,13 +22,12 @@ const getLayoutsByAssets = (assets, data, services, config) => {
       const configObj = registerMeta({ data, keys, services, config });
       /** 默认的配置值 */
       const defaultProps = extractDefault({ config: configObj, value: {} });
-      const { id, name, category } = info;
+      const { id, name, category } = info as TypeAssetInfo;
       return {
         id,
         name,
         category,
         props: {
-          type: info.type,
           ...info.options,
           ...defaultProps,
         },

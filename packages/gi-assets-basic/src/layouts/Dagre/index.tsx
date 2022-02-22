@@ -8,7 +8,8 @@ const info = {
     type: 'dagre',
   },
   name: '有向分层布局',
-  category: 'layout',
+  category: 'basic',
+  type: 'LAYOUT',
   desc: '',
   cover: 'http://xxxx.jpg',
 };
