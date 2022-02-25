@@ -14,6 +14,8 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "antd": "^4.18.8",
     "immer": "^9.0.7",
     "use-immer": "^0.6.0"
   },

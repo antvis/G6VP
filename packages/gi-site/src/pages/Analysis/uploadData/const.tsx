@@ -44,14 +44,14 @@ export const GIDefaultTrans = (id, source, target) => `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
-      id:n.${id},
+      id:'' + n.${id},
       data:n
     }
   })
   const edges = data.edges.map(e=>{
     return {
-      source:e.${source},
-      target:e.${target},
+      source:'' + e.${source},
+      target:'' + e.${target},
       data:e
     }
   })
