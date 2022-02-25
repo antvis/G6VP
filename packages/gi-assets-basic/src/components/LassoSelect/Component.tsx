@@ -52,10 +52,22 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
       }
     }
   };
-
+  const afterItemStatesClear = e => {
+    const { states, item } = e;
+    if (states === 'selected') {
+      const type = item?.getType();
+      if (type === 'node') {
+        setSelectedNodes(graph.findAllByState('node', 'selected').filter(node => node.getID() !== item?.getID()));
+      } else if (type === 'edge') {
+        setSelectedEdges(graph.findAllByState('edge', 'selected').filter(edge => edge.getID() !== item?.getID()));
+      }
+    }
+  };
   useEffect(() => {
     graph.on('afteritemstatechange', itemStateChange);
+    graph.on('afteritemstatesclear', afterItemStatesClear);
     return () => {
+      graph.off('afteritemstatesclear', afterItemStatesClear);
       graph.off('afteritemstatechange', itemStateChange);
     };
   }, [graph]);
