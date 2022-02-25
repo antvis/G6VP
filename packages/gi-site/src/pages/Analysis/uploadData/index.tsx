@@ -7,6 +7,7 @@ import store, { StateType } from '../redux';
 import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
 import { useImmer } from 'use-immer';
+import xlsx2js from "xlsx2js";
 import { nodeColumns, edgeColumns, translist, GIDefaultTrans, getOptions } from './const';
 import './index.less';
 
@@ -61,22 +62,30 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       setInputData(renderData);
       mergeData(renderData);
     },
-    customRequest: options => {
+    customRequest: async options => {
       const { file, onSuccess } = options;
-      const reader = new FileReader();
-      reader.readAsText(file);
+      let fileData;
+      
+      setCurrent(draft => {
+        draft.buttonDisabled = false;
+      });
 
-      reader.onload = fileReader => {
-        setCurrent(draft => {
-          draft.buttonDisabled = false;
-        });
-        const fileData = fileReader.target.result;
+      if (!file) {
+        return false;
+      } else if (/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
+        const data = await xlsx2js(file);
+
+        fileData = {
+          nodes: data,
+          edges: data,
+        }
+
         const renderData = [
           ...inputData,
           {
             uid: file.uid,
             name: file.name,
-            data: JSON.parse(fileData as string),
+            data: fileData,
             transfunc,
             enable: true,
           },
@@ -84,11 +93,38 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         setInputData(renderData);
         onSuccess('Ok');
         mergeData(renderData);
-      };
+
+      }else if(/\.(json)$/.test(file.name.toLowerCase())){
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+
+        reader.onload =  fileReader => {
+          fileData = JSON.parse(fileReader.target.result as string);
+
+          console.log('fileData json', fileData);
+          const renderData = [
+            ...inputData,
+            {
+              uid: file.uid,
+              name: file.name,
+              data: fileData,
+              transfunc,
+              enable: true,
+            },
+          ];
+          setInputData(renderData);
+          onSuccess('Ok');
+          mergeData(renderData);
+        }
+      }else{
+        return false;
+      }
     },
   };
 
   const mergeData = (renderData = inputData) => {
+
+    console.log('mergeData', renderData,inputData);
     let nodes = [];
     let edges = [];
     renderData.map(d => {
@@ -159,11 +195,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const updateData = async () => {
+    console.log('updateData', transData);
     try {
-      if (transData.nodes?.find(d => !d.id || !d.data)) {
+      if (transData.nodes?.find(d => (d.id === undefined) || (d.data === undefined))) {
         throw 'nodes缺少对应字段';
       }
-      if (transData.edges?.find(d => !d.source || !d.target || !d.data)) {
+      if (transData.edges?.find(d => (d.source === undefined) || 
+                                     (d.target === undefined) || 
+                                     (d.data === undefined))) {
         throw 'edges缺少对应字段';
       }
 
