@@ -3,9 +3,10 @@ import * as React from 'react';
 import { getPositionStyles } from '../utils';
 import './index.less';
 import WrapContainer from './WrapContainer';
+
 export interface OperatorBarProps {}
 
-const getComponents = (components, assets) => {
+const getComponents = (components, assets, GISDK_ID) => {
   return components
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
@@ -22,11 +23,11 @@ const getComponents = (components, assets) => {
       const { component: Component } = assets[itemId];
       let WrapComponent = Component;
       if (itemProps.GIAC_CONTENT) {
-        WrapComponent = WrapContainer(Component, itemId);
+        WrapComponent = WrapContainer(Component, itemId, GISDK_ID);
       }
       return (
         <div key={itemId}>
-          <WrapComponent {...itemProps} />
+          <WrapComponent GISDK_ID={GISDK_ID} {...itemProps} />
         </div>
       );
     })
@@ -36,8 +37,18 @@ const getComponents = (components, assets) => {
 };
 
 const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
-  //@ts-ignore
-  const { components, rightContainer, leftContainer, centerContainer, offset, placement, height, width, gap } = props;
+  const {
+    components,
+    rightContainer,
+    leftContainer,
+    centerContainer,
+    offset,
+    placement,
+    height,
+    width,
+    gap,
+    GISDK_ID,
+  } = props as any;
   //@ts-ignore
   const { assets, ...otherProps } = props;
   const deps = JSON.stringify(otherProps);
@@ -57,9 +68,9 @@ const OperatorHeader: React.FunctionComponent<OperatorBarProps> = props => {
       }
     });
 
-    const CENTER_COMPONENTS = getComponents(centerComponents, assets);
-    const LEFT_COMPONENTS = getComponents(leftComponents, assets);
-    const RIGHT_COMPONENTS = getComponents(rightComponents, assets);
+    const CENTER_COMPONENTS = getComponents(centerComponents, assets, GISDK_ID);
+    const LEFT_COMPONENTS = getComponents(leftComponents, assets, GISDK_ID);
+    const RIGHT_COMPONENTS = getComponents(rightComponents, assets, GISDK_ID);
 
     return {
       CENTER_COMPONENTS,

@@ -5,6 +5,7 @@ import MenuA from './MenuA';
 import { assets as MockAssets, config as MockConfig } from './mock';
 import OperatorBar from './OperatorBar';
 import type { TestSDKProps } from './TestSDK';
+import Toolbar from './Toolbar';
 
 export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: any) => {
   const nextAssets = produce(MockAssets, draft => {
@@ -14,6 +15,9 @@ export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: a
     }
     if (type === 'EDGE') {
       draft.elements[id] = asset;
+    }
+    if (type === 'GIAC') {
+      draft.components['Toolbar'] = Toolbar;
     }
 
     if (type === 'GIAC_CONTENT') {
@@ -51,6 +55,15 @@ export const getConfigByType = (type: TestSDKProps['type'], id: string, value: a
       id,
       props: value[id],
     });
+    /** 原子组件 */
+    if (type === 'GIAC') {
+      draft.components.push({
+        id: 'Toolbar',
+        props: {
+          GI_CONTAINER: [id],
+        },
+      });
+    }
 
     if (type === 'GIAC_CONTENT') {
       draft.components.push({
@@ -68,6 +81,7 @@ export const getConfigByType = (type: TestSDKProps['type'], id: string, value: a
         },
       });
     }
+    /** 容器组件 */
     if (type === 'GICC') {
       draft.components.push({
         id: 'BarA',

@@ -6,6 +6,7 @@ import registerTransform from './registerTransform';
 const info = {
   id: 'DonutNode',
   name: '甜甜圈',
+  type: 'NODE',
   category: 'node',
   desc: '甜甜圈组件，用于数据有分布的情况',
   cover: 'http://xxxx.jpg',

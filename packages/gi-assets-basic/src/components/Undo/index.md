@@ -1,4 +1,4 @@
-## Redo 重做
+## Undo 撤销
 
 ```jsx
 import TestSDK, { Mock } from '@alipay/gi-assets-testing';

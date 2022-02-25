@@ -142,10 +142,16 @@ const transform = (s, metaConfig) => {
               },
               highlight: {
                 keyshape: {
-                  lineWidth: 2,
-                  fillOpacity: 0.4,
+                  lineWidth: 4,
+                  fillOpacity: 0.6,
                 },
               },
+              inactive: {
+                keyshape: {
+                  fillOpacity: 0,
+                  strokeOpacity: 0.4,
+                },
+              }
             },
           },
           (node && node.style) || {},
