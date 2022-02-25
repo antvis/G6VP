@@ -22,7 +22,7 @@ export interface GIAComponentProps {
   iconFontUrl?: string;
 }
 const GIAComponent = (props: GIAComponentProps) => {
-  const { GIAC, onClick, iconFontUrl = '"https://at.alicdn.com/t/font_2981956_aelfhedtkje.js"', ...others } = props;
+  const { GIAC, onClick, iconFontUrl = 'https://at.alicdn.com/t/font_3156164_5ke23ql3q6e.js', ...others } = props;
   const {
     tooltip,
     tooltipPlacement,
