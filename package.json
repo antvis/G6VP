@@ -33,6 +33,7 @@
   "scripts": {
     "core": "cd packages/gi && npm run start",
     "assets": "cd packages/gi-assets-basic && npm run start",
+    "assets:docs": "cd packages/gi-assets-basic && npm run docs",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
     "bootstrap": "lerna link && lerna bootstrap --hoist --force-local",
     "build": "npm run bootstrap && npm run build:core && npm run build:assets && npm run build:site && npm run move:dist",
@@ -40,6 +41,7 @@
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "move:dist": "node ./deploy.js",
     "list": "lerna list",
     "link": "lerna link --force-local",
