@@ -142,8 +142,8 @@ const transform = (s, metaConfig) => {
               },
               highlight: {
                 keyshape: {
-                  lineWidth: 2,
-                  fillOpacity: 0.4,
+                  lineWidth: 4,
+                  fillOpacity: 0.6,
                 },
               },
             },
