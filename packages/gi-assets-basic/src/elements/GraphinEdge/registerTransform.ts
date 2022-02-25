@@ -82,6 +82,18 @@ const transform = (s, config) => {
             halo: {
               visible: edgeHalo?.showhalo,
             },
+            status: {
+              highlight: {
+                keyshape: {
+                  lineWidth: edgeSize?.mapping ? mappingEdgeBySize(enumValueBySize) + 2 : 3,
+                },
+              },
+              inactive: {
+                keyshape: {
+                  strokeOpacity: 0.4,
+                },
+              }
+            },
           },
           (edge && edge.style) || {},
         ),

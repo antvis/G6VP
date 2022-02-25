@@ -146,6 +146,12 @@ const transform = (s, metaConfig) => {
                   fillOpacity: 0.4,
                 },
               },
+              inactive: {
+                keyshape: {
+                  fillOpacity: 0,
+                  strokeOpacity: 0.4,
+                },
+              }
             },
           },
           (node && node.style) || {},
