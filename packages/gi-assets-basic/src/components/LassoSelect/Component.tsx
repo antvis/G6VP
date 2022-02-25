@@ -1,9 +1,10 @@
 import { Behaviors } from '@antv/graphin';
-import * as React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { IGIAC } from '../const';
 import GIAComponent from '../GIAC';
 const { BrushSelect, DragCanvas } = Behaviors;
+import { useContext } from '@alipay/graphinsight';
 
 export interface LassoType {
   visible: boolean;
@@ -15,16 +16,32 @@ export interface LassoType {
 const LassoSelect: React.FunctionComponent<LassoType> = props => {
   const { GIAC } = props;
   const [isLasso, setIsLasso] = React.useState(false);
-
+  const [seletedNodes, setSelectedNodes] = useState<any[]>([]);
+  const [seletedEdges, setSelectedEdges] = useState<any[]>([]);
+  const { graph } = useContext();
+  const onSelect: any = (nodes, edges) => {
+    setSelectedNodes([...seletedNodes, ...nodes]);
+    setSelectedEdges([...seletedEdges, ...edges]);
+    seletedNodes.forEach(node => {
+      graph.setItemState(node, 'selected', true);
+    });
+    seletedEdges.forEach(edge => {
+      graph.setItemState(edge, 'selected', true);
+    });
+  };
+  const onDeselect = () => {
+    setSelectedEdges([]);
+    setSelectedNodes([]);
+  };
   const Content = props => {
     const { isLasso } = props;
     if (isLasso) {
       // 套索模式
       return (
         <>
-          <Behaviors.LassoSelect trigger="drag"></Behaviors.LassoSelect>
+          <Behaviors.LassoSelect onSelect={onSelect} onDeselect={onDeselect}></Behaviors.LassoSelect>
           <BrushSelect disabled={true}></BrushSelect>
-          <DragCanvas disabled={true}></DragCanvas>
+          <DragCanvas></DragCanvas>
         </>
       );
     } else {
