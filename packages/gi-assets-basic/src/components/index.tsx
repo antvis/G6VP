@@ -18,6 +18,7 @@ import Redo from './Redo';
 import SideTabs from './SideTabs';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
+import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -34,6 +35,7 @@ export {
   ZoomOut,
   DownLoad,
   Redo,
+  Undo,
   ContextMenu,
   Tooltip,
   ClearCanvas,

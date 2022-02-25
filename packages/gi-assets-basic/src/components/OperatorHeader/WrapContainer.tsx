@@ -141,7 +141,7 @@ const ContainerType = (props: ContainerTypeProps) => {
   );
 };
 
-const WrapContainer = (Component, componentId) => {
+const WrapContainer = (Component, componentId, GISDK_ID) => {
   return ComponentProps => {
     const { GIAC_CONTENT } = ComponentProps;
     const {
@@ -176,13 +176,13 @@ const WrapContainer = (Component, componentId) => {
           setVisible(false);
         }
       };
-      EM.on('GIAC_CONTENT:CLICK', handleClick);
+      EM.on(`${GISDK_ID}_GIAC_CONTENT:CLICK`, handleClick);
       return () => {
-        EM.off('GIAC_CONTENT:CLICK', handleClick);
+        EM.off(`${GISDK_ID}_GIAC_CONTENT:CLICK`, handleClick);
       };
     }, []);
     const onClick = () => {
-      EM.emit('GIAC_CONTENT:CLICK', {
+      EM.emit(`${GISDK_ID}_GIAC_CONTENT:CLICK`, {
         visible: !containerVisible,
         id: componentId,
       });
