@@ -18,8 +18,8 @@ const { Panel } = Collapse;
 
 interface ComponentsPanelProps {
   data: any[];
-  handleChange?: (a: any, b: any) => void;
-  defaultValue?: any[];
+  handleChange: (a: any, b: any) => void;
+  defaultValue: any[];
 }
 
 const cardContent = item => {
@@ -141,7 +141,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
       <CheckCard.Group
         multiple
         onChange={val => {
-          handleChange && handleChange('components', val);
+          handleChange('components', val);
         }}
         defaultValue={defaultValue}
       >
