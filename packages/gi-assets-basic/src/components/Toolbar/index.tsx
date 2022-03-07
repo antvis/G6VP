@@ -6,9 +6,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Toolbar',
   name: '工具栏',
-  category: 'components',
   desc: '工具栏',
   cover: 'http://xxxx.jpg',
+  category: 'container-components',
+  type: 'GICC',
 };
 
 export default {
