@@ -6,10 +6,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Undo',
   name: '撤销',
-  category: 'components',
+
   desc: '上一步/下一步',
   cover: '撤销',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

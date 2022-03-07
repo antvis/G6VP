@@ -6,10 +6,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'LassoSelect',
   name: '自由圈选',
-  category: 'components',
+
   desc: '自由圈选',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

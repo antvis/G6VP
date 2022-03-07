@@ -5,9 +5,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'ContextMenu',
   name: '右键菜单',
-  category: 'components',
+
   desc: '右键菜单',
   cover: 'http://xxxx.jpg',
+  category: 'container-components',
+  type: 'GICC_MENU',
 };
 
 export default {

@@ -6,10 +6,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Export',
   name: '导出',
-  category: 'components',
   desc: '导出',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'workbook',
+  type: 'GIAC',
 };
 
 export default {

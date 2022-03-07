@@ -6,10 +6,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'DownLoad',
   name: '下载',
-  category: 'components',
+
   desc: '视图配置',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {
