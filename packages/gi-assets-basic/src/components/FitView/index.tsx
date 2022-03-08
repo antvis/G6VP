@@ -6,10 +6,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'FitView',
   name: '自适应',
-  category: 'components',
+
   desc: '自适应',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

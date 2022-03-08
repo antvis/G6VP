@@ -6,10 +6,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Loading',
   name: '加载动画',
-  category: 'components',
   desc: '加载动画',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'system-interaction',
+  type: 'AUTO',
 };
 
 export default {

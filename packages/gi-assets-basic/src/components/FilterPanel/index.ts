@@ -5,7 +5,8 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'FilterPanel',
   name: '筛选面板',
-  category: 'components',
+  category: 'data-analysis',
+  type: 'GIAC_CONTENT',
   desc: '筛选面板',
   cover: 'http://xxxx.jpg',
 };

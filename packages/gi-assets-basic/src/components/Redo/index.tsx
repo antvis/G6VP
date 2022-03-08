@@ -6,10 +6,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Redo',
   name: '重做',
-  category: 'components',
   desc: '重做',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

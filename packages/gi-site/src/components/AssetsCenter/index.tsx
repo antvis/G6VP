@@ -5,6 +5,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateType } from '../../pages/Analysis/redux';
 import { queryAssetList } from '../../services/assets';
+import ComponentsPanel from './Components';
 import './index.less';
 import useAssetsCenter from './useHook';
 
@@ -97,7 +98,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       </div>
     );
   };
-
+  console.log('assets', assets);
   return (
     <div>
       <Drawer
@@ -124,43 +125,48 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                   }
                   key={key}
                 >
-                  <CheckCard.Group
-                    multiple
-                    onChange={val => {
-                      handleChange(key, val);
-                    }}
-                    defaultValue={defaultValue}
-                  >
-                    <Row
-                      gutter={[
-                        { xs: 8, sm: 12, md: 12, lg: 12 },
-                        { xs: 8, sm: 12, md: 12, lg: 12 },
-                      ]}
-                      style={{ padding: '8px 0px' }}
+                  {key === 'components' && (
+                    <ComponentsPanel data={assets[key]} handleChange={handleChange} defaultValue={defaultValue} />
+                  )}
+                  {key !== 'components' && (
+                    <CheckCard.Group
+                      multiple
+                      onChange={val => {
+                        handleChange(key, val);
+                      }}
+                      defaultValue={defaultValue}
                     >
-                      {assets[key].map(item => {
-                        const { id: AssetId, name: AssetName } = item;
-                        return (
-                          <Col key={AssetId}>
-                            <CheckCard
-                              bordered={false}
-                              className="assetsCardStyle"
-                              title={AssetName}
-                              avatar={
-                                <Avatar
-                                  style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
-                                  icon={<RobotOutlined />}
-                                  size={24}
-                                />
-                              }
-                              description={cardContent(item)}
-                              value={AssetId}
-                            />
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </CheckCard.Group>
+                      <Row
+                        gutter={[
+                          { xs: 8, sm: 12, md: 12, lg: 12 },
+                          { xs: 8, sm: 12, md: 12, lg: 12 },
+                        ]}
+                        style={{ padding: '8px 0px' }}
+                      >
+                        {assets[key].map(item => {
+                          const { id: AssetId, name: AssetName } = item;
+                          return (
+                            <Col key={AssetId}>
+                              <CheckCard
+                                bordered={false}
+                                className="assetsCardStyle"
+                                title={AssetName}
+                                avatar={
+                                  <Avatar
+                                    style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
+                                    icon={<RobotOutlined />}
+                                    size={24}
+                                  />
+                                }
+                                description={cardContent(item)}
+                                value={AssetId}
+                              />
+                            </Col>
+                          );
+                        })}
+                      </Row>
+                    </CheckCard.Group>
+                  )}
                 </TabPane>
               );
             })}

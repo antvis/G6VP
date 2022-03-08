@@ -5,9 +5,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'MiniMap',
   name: '小地图',
-  category: 'components',
+
   desc: '小地图小地图',
   cover: 'http://xxxx.jpg',
+  category: 'system-interaction',
+  type: 'AUTO',
 };
 
 export default {

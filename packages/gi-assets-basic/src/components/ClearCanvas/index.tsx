@@ -6,9 +6,9 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'ClearCanvas',
   name: '清空画布',
-  category: 'components',
   desc: '清空画布',
   cover: 'http://xxxx.jpg',
+  category: 'canvas-interaction',
   type: 'GIAC',
 };
 

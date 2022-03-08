@@ -5,9 +5,11 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'SideTabs',
   name: '侧边标签容器 Tabs',
-  category: 'components',
+
   desc: '侧边标签容器 Tabs',
   cover: 'http://xxxx.jpg',
+  category: 'container-components',
+  type: 'GICC',
 };
 
 export default {

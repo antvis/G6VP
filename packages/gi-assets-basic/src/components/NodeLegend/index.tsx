@@ -5,9 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'NodeLegend',
   name: '节点图例',
-  category: 'components',
   desc: '节点图例，xxxxxxxxx',
   cover: 'http://xxxx.jpg',
+  category: 'data-analysis',
+  type: 'AUTO',
 };
 
 export default {
