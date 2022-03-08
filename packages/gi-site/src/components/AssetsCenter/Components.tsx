@@ -7,6 +7,7 @@ import {
   ConsoleSqlOutlined,
   InsertRowBelowOutlined,
   PieChartOutlined,
+  QuestionCircleOutlined,
   RobotOutlined,
   SelectOutlined,
   SlackOutlined,
@@ -97,7 +98,11 @@ const CategroyOptions = {
     order: 10,
   },
 };
-const otherCategory = CategroyOptions['workbook'];
+const otherCategory = {
+  name: '未分类',
+  icon: <QuestionCircleOutlined />,
+  order: 11,
+};
 const CategoryHeader = ({ data }) => {
   const { icon, name, id } = data;
   return (
