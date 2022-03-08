@@ -5,9 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'CanvasSetting',
   name: '画布设置',
-  category: 'components',
   desc: '画布设置',
   cover: 'http://xxxx.jpg',
+  category: 'canvas-interaction',
+  type: 'AUTO',
 };
 
 export default {

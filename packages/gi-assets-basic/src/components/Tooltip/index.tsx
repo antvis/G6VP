@@ -6,9 +6,11 @@ import registerMeta from './NodeTooltipMeta';
 const info = {
   id: 'Tooltip',
   name: '节点提示框',
-  category: 'components',
+
   desc: '节点提示框',
   cover: 'http://xxxx.jpg',
+  category: 'node-interaction',
+  type: 'AUTO',
 };
 
 export default {

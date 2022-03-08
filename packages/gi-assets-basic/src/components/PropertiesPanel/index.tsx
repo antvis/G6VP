@@ -5,9 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'PropertiesPanel',
   name: '属性面板',
-  category: 'components',
   desc: '属性面板',
   cover: 'http://xxxx.jpg',
+  category: 'data-analysis',
+  type: 'AUTO',
 };
 
 export default {

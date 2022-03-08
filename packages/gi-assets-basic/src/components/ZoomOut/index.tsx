@@ -6,10 +6,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'ZoomOut',
   name: '缩小',
-  category: 'components',
   desc: '缩小',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

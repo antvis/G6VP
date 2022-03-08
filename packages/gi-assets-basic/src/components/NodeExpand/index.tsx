@@ -5,10 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'NodeExpand',
   name: '节点扩散',
-  category: 'components',
   desc: '节点扩散',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'data-analysis',
+  type: 'GIAC_CONTENT',
 };
 
 export default {

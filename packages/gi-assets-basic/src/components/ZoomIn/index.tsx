@@ -6,10 +6,12 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'ZoomIn',
   name: '放大',
-  category: 'components',
+
   desc: '放大',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

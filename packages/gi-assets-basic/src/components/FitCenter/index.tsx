@@ -6,10 +6,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'FitCenter',
   name: '视图居中',
-  category: 'components',
   desc: '视图居中',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  category: 'canvas-interaction',
+  type: 'GIAC',
 };
 
 export default {

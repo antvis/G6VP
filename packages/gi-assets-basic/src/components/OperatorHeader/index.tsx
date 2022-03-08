@@ -5,10 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'OperatorHeader',
   name: '操作头栏',
-  category: 'components',
-  type: 'GI_CONTAINER', //申明类型为容器组件。
   desc: '操作头栏',
   cover: 'http://xxxx.jpg',
+  category: 'container-components',
+  type: 'GICC',
 };
 
 export default {

@@ -46,6 +46,7 @@ const GRAPH = [
     name: '系统交互',
     desc: '针对系统的交互，例如 loading',
     components: [
+      'MiniMap',
       'Loading', //数据加载动画
       'GeaMakerBack', //返回按钮
       'GeaMakerInitializer', //系统初始化程序
