@@ -7,19 +7,11 @@ const registerMeta = context => {
     };
   });
   return {
-    hasService: {
-      type: 'switch',
-      default: false,
-      name: '开启数据服务',
-    },
     serviceId: {
       name: '数据服务',
       type: 'select',
-      default: '',
+      default: 'Mock/PropertiesPanel',
       options: serviceOptions,
-      showInPanel: {
-        conditions: [['.hasService', '$eq', true]],
-      },
     },
   };
 };

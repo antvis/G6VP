@@ -21,6 +21,7 @@ export interface TestSDKProps {
       type: 'GI_CONTAINER' | 'GI_CONTAINER_INDEX';
     };
     registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+    mockServices?: () => any[];
   };
   /** 资产类型 */
   type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
@@ -50,7 +51,11 @@ const styles = {
 
 const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   const { asset, type, services = [] } = props;
-  const { info, registerMeta, component } = asset;
+  const { info, registerMeta, component, mockServices } = asset;
+  let assetServices: any[] = [];
+  if (mockServices) {
+    assetServices = mockServices();
+  }
   const { id, name } = info;
 
   const [state, setState] = React.useState({
@@ -61,7 +66,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   });
 
   const { valueObj, configObj } = state;
-  const innerServices = utils.uniqueElementsBy([...services, ...MockServices], (a, b) => {
+  const innerServices = utils.uniqueElementsBy([...services, ...assetServices, ...MockServices], (a, b) => {
     return a.id === b.id;
   });
 
