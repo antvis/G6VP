@@ -18,7 +18,7 @@ const rightContent = (
 
 const Home = () => {
   return (
-    <Layout>
+    <Layout className={styles.giLayout}>
       <BaseNavbar rightContent={rightContent} active="home" />
       <Content style={{ background: '#fff' }}>
         <div className={styles.contentContaniner}>
