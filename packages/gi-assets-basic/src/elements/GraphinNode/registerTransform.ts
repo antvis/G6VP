@@ -22,7 +22,7 @@ const getMapping = () => {
 };
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, metaConfig) => {
+const transform = (s, metaConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
     const { color: Color, label: Label, size: Size, icon: Icon, halo: Halo, badges: Badges } = Object.assign(
@@ -104,12 +104,19 @@ const transform = (s, metaConfig) => {
           icon.fill = '#fff';
         }
       }
+
+      let preStyle = (node && node.style) || {};
+      if (reset) {
+        preStyle = {};
+      }
+      console.log('keyshapeSize', keyshapeSize, 'preStyle', preStyle, node.style);
       return {
         id: node.id,
         ...node,
         data: node.data,
         dataType: node.dataType || 'others',
         type: 'graphin-circle',
+        //
         style: merge(
           {
             keyshape: {
@@ -117,6 +124,7 @@ const transform = (s, metaConfig) => {
               fill: keyShapeColor,
               size: keyshapeSize,
               fillOpacity: 0.3,
+
               strokeOpacity: 1,
             },
             label: {
@@ -151,10 +159,10 @@ const transform = (s, metaConfig) => {
                   fillOpacity: 0,
                   strokeOpacity: 0.4,
                 },
-              }
+              },
             },
           },
-          (node && node.style) || {},
+          preStyle,
         ),
       };
     });
