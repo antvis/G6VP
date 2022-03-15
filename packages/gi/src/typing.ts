@@ -93,6 +93,7 @@ export interface GIComponentConfig {
 export interface GINodeConfig {
   id: string;
   name: string;
+  rules?: any;
   props: {
     size: number;
     color: string;
@@ -107,6 +108,7 @@ export interface GIEdgeConfig {
     color: string;
     lineWidth: number;
   };
+  rules?: any;
 }
 
 export interface GIConfig {
@@ -116,6 +118,9 @@ export interface GIConfig {
   components?: GIComponentConfig[];
   node?: GINodeConfig;
   edge?: GIEdgeConfig;
+  /** 支持多元素组合 */
+  nodes?: GINodeConfig[];
+  edges?: GIEdgeConfig[];
 }
 
 interface GINodeData {
