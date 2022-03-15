@@ -14,14 +14,15 @@ import * as utils from './utils';
 
 const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 'edge'): any => {
   if (elementType === 'node') {
-    return data.nodes;
+    return data;
   }
   if (elementType == 'edge') {
-    return data.edges;
+    return data;
   }
+  return data;
 };
 
-const version = '1.1.4';
+const version = '1.1.5';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -145,13 +146,16 @@ const GISDK = (props: Props) => {
   }, [layoutCfg]);
 
   React.useEffect(() => {
+    console.warn(
+      'config.node | config.edge 将很快要废弃，请使用config.nodes和config.edges替代，可以支持多资产元素渲染',
+    );
     const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
     const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
     const NodeElement = ElementAssets[NodeElementId];
     const EdgeElement = ElementAssets[EdgeElementId];
     const transform = data => {
-      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
-      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
+      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, true);
+      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, true);
       return {
         nodes,
         edges,
@@ -170,16 +174,24 @@ const GISDK = (props: Props) => {
 
   /** 增加多元素 */
   React.useEffect(() => {
+    if (!nodesCfg || !edgesCfg) {
+      return;
+    }
     const defaultNodesCfg = [{ id: 'GraphinNode', rules: [] }];
     const defaultEdgesCfg = [{ id: 'GraphinEdge', rules: [] }];
-
-    const transform = data => {
+    /**
+     *
+     * @param data 源数据
+     * @param reset 是否重置：按照 Node/Edge Schema来视觉映射
+     * @returns
+     */
+    const transform = (data, reset?: boolean) => {
       const nodes = (nodesCfg || defaultNodesCfg)
         .map(item => {
           const { id, rules } = item;
           const Element = ElementAssets[id];
-          const filterNodes = filterDataByRules(data, rules, 'node');
-          return Element.registerTransform(filterNodes, item);
+          const filterData = filterDataByRules(data, rules, 'node');
+          return Element.registerTransform(filterData, item, reset);
         })
         .reduce((acc, curr) => {
           return [...acc, ...curr];
@@ -189,8 +201,8 @@ const GISDK = (props: Props) => {
         .map(item => {
           const { id, rules } = item;
           const Element = ElementAssets[id];
-          const filterNodes = filterDataByRules(data, rules, 'edge');
-          return Element.registerTransform(filterNodes, item);
+          const filterData = filterDataByRules(data, rules, 'edge');
+          return Element.registerTransform(filterData, item, reset);
         })
         .reduce((acc, curr) => {
           return [...acc, ...curr];
@@ -203,7 +215,9 @@ const GISDK = (props: Props) => {
     };
     updateState(draft => {
       if (draft.data.nodes.length !== 0) {
-        const newData = transform(draft.data);
+        // 当节点和边的Schema配置变化的时候，默认是重置视觉映射
+        const newData = transform(draft.data, true);
+        //@ts-ignore
         draft.data = newData;
       }
       draft.transform = transform;
