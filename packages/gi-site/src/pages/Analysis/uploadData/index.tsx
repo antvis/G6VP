@@ -2,12 +2,10 @@ import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
 import { Button, Form, Modal, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
 import * as React from 'react';
-import { Provider } from 'react-redux';
 import { useImmer } from 'use-immer';
 import xlsx2js from 'xlsx2js';
 import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
-import store from '../redux';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
 import './index.less';
 import Mock from './Mock';
@@ -97,7 +95,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         mergeData(renderData);
       } else if (/\.(json)$/.test(file.name.toLowerCase())) {
         const reader = new FileReader();
-        reader.readAsBinaryString(file);
+
+        reader.readAsText(file, 'utf-8');
 
         reader.onload = fileReader => {
           fileData = JSON.parse(fileReader.target.result as string);
@@ -328,12 +327,4 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   );
 };
 
-const WrapUploadPanel = props => {
-  return (
-    <Provider store={store}>
-      <UploadPanel {...props} />
-    </Provider>
-  );
-};
-
-export default WrapUploadPanel;
+export default UploadPanel;
