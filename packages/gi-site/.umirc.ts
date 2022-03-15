@@ -1,4 +1,11 @@
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+/** 是否为本地研发模式 */
+export const isDev = true;
+const localDeps = isDev
+  ? {}
+  : {
+      '@alipay/graphinsight': 'GISDK',
+    };
 
 export default {
   // 具体配置项
@@ -52,7 +59,7 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    '@alipay/graphinsight': 'GISDK',
+    ...localDeps,
   },
   scripts: [
     'https://unpkg.com/react@17.0.2/umd/react.production.min.js',

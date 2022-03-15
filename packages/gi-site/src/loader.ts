@@ -1,3 +1,8 @@
+import * as GI_Basic_Assets from '@alipay/gi-assets-basic';
+
+/** 是否为本地研发模式 */
+export const isDev = true;
+
 export interface Package {
   name: string;
   url: string;
@@ -88,6 +93,9 @@ export const loadJS = options => {
 
 export const getAssets = () => {
   const packages = getAssetPackages();
+  if (isDev) {
+    return GI_Basic_Assets;
+  }
   return packages
     .map(item => {
       let assets = window[item.global];
@@ -128,6 +136,10 @@ export type IAssets = Record<AssetsKey, AssetsValue>;
  */
 export const getCombinedAssets = () => {
   const assets = getAssets();
+  if (isDev) {
+    return GI_Basic_Assets;
+  }
+  //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
       return {

@@ -14,7 +14,7 @@
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/alex": "1.5.0",
     "@alipay/bigfish": "^3.6.10",
-    "@alipay/gi-assets": "*",
+    "@alipay/gi-assets-basic": "*",
     "@alipay/graphinsight": "*",
     "@alipay/gravity-demo-sdk": "^4.6.1",
     "@alipay/tech-ui": "^2.12.1",
