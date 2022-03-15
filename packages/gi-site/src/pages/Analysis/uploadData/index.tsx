@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, notification } from 'antd';
-import { useDispatch, useSelector, Provider } from 'react-redux';
-import { EditableProTable } from '@ant-design/pro-table';
-import Mock from './Mock';
-import store, { StateType } from '../redux';
-import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
+import { EditableProTable } from '@ant-design/pro-table';
+import { Button, Form, Modal, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
+import * as React from 'react';
+import { Provider } from 'react-redux';
 import { useImmer } from 'use-immer';
-import xlsx2js from "xlsx2js";
-import { nodeColumns, edgeColumns, translist, GIDefaultTrans, getOptions } from './const';
+import xlsx2js from 'xlsx2js';
+import { getProjectById, updateProjectById } from '../../../services';
+import { useContext } from '../../Analysis/hooks/useContext';
+import store from '../redux';
+import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
 import './index.less';
+import Mock from './Mock';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -28,13 +29,14 @@ const columnsData = {
 
 const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
-  const state = useSelector((state: StateType) => state);
-  const { id } = state;
+  const { context, updateContext } = useContext();
+  // const state = useSelector((state: StateType) => state);
+  const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
     buttonDisabled: true,
   });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   //初始化数据
   const [data, setData] = useImmer(initData);
   // 映射函数
@@ -65,7 +67,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     customRequest: async options => {
       const { file, onSuccess } = options;
       let fileData;
-      
+
       setCurrent(draft => {
         draft.buttonDisabled = false;
       });
@@ -78,7 +80,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         fileData = {
           nodes: data,
           edges: data,
-        }
+        };
 
         const renderData = [
           ...inputData,
@@ -93,12 +95,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         setInputData(renderData);
         onSuccess('Ok');
         mergeData(renderData);
-
-      }else if(/\.(json)$/.test(file.name.toLowerCase())){
+      } else if (/\.(json)$/.test(file.name.toLowerCase())) {
         const reader = new FileReader();
         reader.readAsBinaryString(file);
 
-        reader.onload =  fileReader => {
+        reader.onload = fileReader => {
           fileData = JSON.parse(fileReader.target.result as string);
 
           console.log('fileData json', fileData);
@@ -115,16 +116,15 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           setInputData(renderData);
           onSuccess('Ok');
           mergeData(renderData);
-        }
-      }else{
+        };
+      } else {
         return false;
       }
     },
   };
 
   const mergeData = (renderData = inputData) => {
-
-    console.log('mergeData', renderData,inputData);
+    console.log('mergeData', renderData, inputData);
     let nodes = [];
     let edges = [];
     renderData.map(d => {
@@ -197,12 +197,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const updateData = async () => {
     console.log('updateData', transData);
     try {
-      if (transData.nodes?.find(d => (d.id === undefined) || (d.data === undefined))) {
+      if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
         throw 'nodes缺少对应字段';
       }
-      if (transData.edges?.find(d => (d.source === undefined) || 
-                                     (d.target === undefined) || 
-                                     (d.data === undefined))) {
+      if (transData.edges?.find(d => d.source === undefined || d.target === undefined || d.data === undefined)) {
         throw 'edges缺少对应字段';
       }
 
@@ -228,9 +226,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           inputData: [...result.data.inputData, ...renderData],
         }),
       }).then(res => {
-        dispatch({
-          type: 'update:key',
-          key: Math.random(),
+        updateContext(draft => {
+          draft.key = Math.random();
         });
         handleClose();
       });

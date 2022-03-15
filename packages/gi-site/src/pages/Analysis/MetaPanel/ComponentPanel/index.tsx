@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import Offset from '../../../../components/DataVGui/Offset';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+import { useContext } from '../../hooks/useContext';
 const extensions = {
   TagsSelect,
   Offset,
@@ -35,7 +36,8 @@ const getComponentsByMap = componentMap => {
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { config, dispatch, components } = props;
+  const { updateContext } = useContext();
+  const { config, components } = props;
 
   const [state, setState] = useState({
     isModalVisible: false,
@@ -78,11 +80,13 @@ const ComponentPanel = props => {
   const handleChange = e => {
     const { rootValue } = e;
     const com = getComponentsByMap(rootValue);
-
-    dispatch({
-      type: 'update:config:components',
-      components: com,
+    updateContext(draft => {
+      draft.config.components = com;
     });
+    // dispatch({
+    //   type: 'update:config:components',
+    //   components: com,
+    // });
   };
 
   console.log('%c ComponentMeta', 'color:green');

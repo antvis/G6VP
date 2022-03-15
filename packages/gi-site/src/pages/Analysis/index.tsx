@@ -1,7 +1,7 @@
 import GISDK from '@alipay/graphinsight';
 import React from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
+import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
@@ -11,20 +11,77 @@ import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
+import { AnalysisContext } from './hooks/useContext';
 import './index.less';
-/** gi-meta废弃，属于gi-site的一部分 */
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import store, { StateType } from './redux';
 import UploadPanel from './uploadData/index';
 import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
+const initialState = {
+  /** 项目ID */
+  id: '',
+  /** 强制渲染的React Key */
+  key: Math.random(),
+  /** 画布渲染的配置 */
+  config: {},
+  /** 资产Map */
+  assets: {},
+  /** 资产Map */
+  totalAssets: {},
+  siteConfig: {},
+  /** 是否准备完毕 */
+  isReady: false,
+  /** 是否保存 */
+  isSave: true,
+  /** 当前 Sidebar 的值 */
+  activeNavbar: '',
+  /** 当前 Sidebar 是否可折叠 */
+  collapse: false,
+  /** 当前 数据导入面板 是否可显示 */
+  isModalVisible: false,
+  /** 所有的数据服务列表 */
+  services: [],
+  /** 组件市场的所有组件 */
+  components: [],
+  elements: [],
+  data: {},
+  /** 原数据 / 文件名 */
+  inputData: [],
+  /** 映射函数 */
+  transfunc: '',
+  refreshComponentKey: Math.random(),
+  /** 数据服务列表 */
+  serviceLists: [],
+
+  /** 是否开启智能推荐 */
+  enableAI: false,
+  /** 原始渲染的配置，用于取消智能推荐时还原 */
+  projectConfig: {},
+  /** 资产中心 */
+  assetsCenter: {
+    visible: false,
+    hash: 'components',
+  },
+  activeAssets: {},
+  activeAssetsKeys: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
+  activeAssetsInformation: {
+    components: [],
+    elements: [],
+    layouts: [],
+  },
+};
 
 const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
-  const state = useSelector((state: StateType) => state);
+  // const state = useSelector((state: StateType) => state);
+  const [state, updateState] = useImmer(initialState);
   const {
     config,
     key,
@@ -46,14 +103,14 @@ const Analysis = props => {
     isModalVisible,
   } = state;
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleChangeNavbar = opt => {
     const isSame = activeNavbar === opt.id;
-    dispatch({
-      type: 'update:config',
-      activeNavbar: opt.id,
-      collapse: isSame ? !collapse : false,
+
+    updateState(draft => {
+      draft.activeNavbar = opt.id;
+      draft.collapse = isSame ? !collapse : false;
     });
   };
 
@@ -73,9 +130,8 @@ const Analysis = props => {
 
   React.useLayoutEffect(() => {
     (async () => {
-      dispatch({
-        type: 'update:config',
-        isReady: false,
+      updateState(draft => {
+        draft.isReady = false;
       });
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
@@ -84,25 +140,40 @@ const Analysis = props => {
 
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
-      dispatch({
-        type: 'update:config',
-        id: projectId,
-        config,
-        projectConfig: config,
-        data: transData,
-        inputData,
-        isReady: true,
-        activeNavbar,
-        //@ts-ignore
-        serviceConfig: activeAssets.services,
-        // services,
-        // components,
-        // elements,
-        assets,
-        activeAssets,
-        activeAssetsKeys,
-        activeAssetsInformation,
+
+      updateState(draft => {
+        draft.id = projectId;
+        draft.config = config;
+        draft.projectConfig = config;
+        draft.data = transData;
+        draft.inputData = inputData;
+        draft.isReady = true;
+        draft.activeNavbar = activeNavbar;
+        draft.serviceConfig = activeAssets.services;
+        draft.assets = assets;
+        draft.activeAssets = activeAssets;
+        draft.activeAssetsKeys = activeAssetsKeys;
+        draft.activeAssetsInformation = activeAssetsInformation;
       });
+      // dispatch({
+      //   type: 'update:config',
+      //   id: projectId,
+      //   config,
+      //   projectConfig: config,
+      //   data: transData,
+      //   inputData,
+      //   isReady: true,
+      //   activeNavbar,
+      //   //@ts-ignore
+      //   serviceConfig: activeAssets.services,
+      //   // services,
+      //   // components,
+      //   // elements,
+      //   assets,
+      //   activeAssets,
+      //   activeAssetsKeys,
+      //   activeAssetsInformation,
+      // });
     })();
   }, [projectId, key]);
 
@@ -114,20 +185,16 @@ const Analysis = props => {
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
 
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
-      dispatch({
-        type: 'FREE',
-        update: draft => {
-          const configComponents = activeAssetsInformation.components.map(c => {
-            const matchItem = draft.config.components.find(d => d.id === c.id) || c;
-            return matchItem;
-          });
-
-          draft.config.components = configComponents;
-          draft.activeAssets = activeAssets;
-          draft.activeAssetsKeys = activeAssetsKeys;
-          draft.activeAssetsInformation = activeAssetsInformation;
-          draft.refreshComponentKey = Math.random();
-        },
+      updateState(draft => {
+        const configComponents = activeAssetsInformation.components.map(c => {
+          const matchItem = draft.config.components.find(d => d.id === c.id) || c;
+          return matchItem;
+        });
+        draft.config.components = configComponents;
+        draft.activeAssets = activeAssets;
+        draft.activeAssetsKeys = activeAssetsKeys;
+        draft.activeAssetsInformation = activeAssetsInformation;
+        draft.refreshComponentKey = Math.random();
       });
     })();
   }, [ACTIVE_ASSETS_KEYS]);
@@ -204,9 +271,8 @@ const Analysis = props => {
   console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', isLoading, state);
 
   const handleClose = () => {
-    dispatch({
-      type: 'update',
-      isModalVisible: false,
+    updateState(draft => {
+      draft.isModalVisible = false;
     });
   };
 
@@ -217,62 +283,68 @@ const Analysis = props => {
       </div>
     );
   }
-  console.log('isLoading', isLoading);
+
+  const context = { context: state, updateContext: updateState };
+  console.log('isLoading', isLoading, context);
 
   return (
-    <div className="gi">
-      <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
-      <div className="gi-navbar">
-        <Navbar projectId={projectId} enableAI={enableAI} />
-      </div>
-      <div className="gi-analysis">
-        <div className="gi-analysis-sidebar">
-          <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+    <AnalysisContext.Provider value={context}>
+      <div className="gi">
+        <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
+        <div className="gi-navbar">
+          <Navbar projectId={projectId} enableAI={enableAI} />
         </div>
-        <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
-          <MetaPanel
-            value={activeNavbar}
-            data={data}
-            dispatch={dispatch}
-            activeAssetsKeys={activeAssetsKeys}
-            refreshKey={refreshComponentKey}
-            /** 配置文件 */
-            config={config}
-            /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
-            components={activeAssetsInformation.components}
-            /** 全量的的元素 */
-            elements={activeAssetsInformation.elements}
-            /** 全量的的服务 */
-            services={activeAssetsInformation.services}
-            layouts={activeAssetsInformation.layouts}
-          />
-        </div>
-        <div className="gi-analysis-workspace">
-          <div className="gi-analysis-canvas">
-            <GISDK
+        <div className="gi-analysis">
+          <div className="gi-analysis-sidebar">
+            <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+          </div>
+          <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
+            <MetaPanel
+              value={activeNavbar}
+              data={data}
+              // dispatch={dispatch}
+              activeAssetsKeys={activeAssetsKeys}
+              refreshKey={refreshComponentKey}
+              /** 配置文件 */
               config={config}
-              /** 资产以Props的方式按需引入 */
-              assets={{
-                components: activeAssets.components,
-                elements: activeAssets.elements,
-                layouts: activeAssets.layouts,
-              }}
+              /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
+              components={activeAssetsInformation.components}
+              /** 全量的的元素 */
+              elements={activeAssetsInformation.elements}
+              /** 全量的的服务 */
               services={activeAssetsInformation.services}
-            ></GISDK>
+              layouts={activeAssetsInformation.layouts}
+            />
+          </div>
+          <div className="gi-analysis-workspace">
+            <div className="gi-analysis-canvas">
+              <GISDK
+                config={config}
+                /** 资产以Props的方式按需引入 */
+                assets={{
+                  components: activeAssets.components,
+                  elements: activeAssets.elements,
+                  layouts: activeAssets.layouts,
+                }}
+                services={activeAssetsInformation.services}
+              ></GISDK>
+            </div>
           </div>
         </div>
+        {isModalVisible && (
+          <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
+        )}
       </div>
-      {isModalVisible && <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>}
-    </div>
+    </AnalysisContext.Provider>
   );
 };
 
-const WrapAnalysis = props => {
-  return (
-    <Provider store={store}>
-      <Analysis {...props} />
-    </Provider>
-  );
-};
+// const WrapAnalysis = props => {
+//   return (
+//     <Provider store={store}>
+//       <Analysis {...props} />
+//     </Provider>
+//   );
+// };
 
-export default WrapAnalysis;
+export default Analysis;

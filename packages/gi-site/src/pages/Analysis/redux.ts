@@ -43,6 +43,7 @@ const initialState = {
 
   /** 数据服务列表 */
   serviceLists: [],
+
   /** 是否开启智能推荐 */
   enableAI: false,
   /** 原始渲染的配置，用于取消智能推荐时还原 */

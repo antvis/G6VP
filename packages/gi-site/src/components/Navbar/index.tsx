@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useHistory, useRequest } from '@alipay/bigfish';
-import ThemeSwitch from '@alipay/theme-tools';
-import { createFromIconfontCN, ExportOutlined, SaveOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Drawer, Modal, Tooltip, message } from 'antd';
+import { createFromIconfontCN, EditOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { Button, Drawer, message, Tooltip } from 'antd';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { getProjectById, updateProjectById } from '../../services';
-import ThemeVars from '../ThemeVars';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
@@ -36,8 +34,9 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const [isHover, setIsHover] = React.useState(false);
-  const dispatch = useDispatch();
-  const { config, isSave, serviceConfig } = useSelector(state => state);
+
+  const { context, updateContext } = useContext();
+  const { config, isSave, serviceConfig } = context;
   const contentEditable = React.createRef<HTMLSpanElement>();
   const servicesRef = React.useRef({
     options: serviceConfig,
@@ -59,10 +58,8 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     updateProjectById(projectId, {
       projectConfig: JSON.stringify(config),
     });
-
-    dispatch({
-      type: 'update:config',
-      isSave: true,
+    updateContext(draft => {
+      draft.isSave = true;
     });
 
     message.success('保存成功');
@@ -85,9 +82,8 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
 
   // 点击智能推荐 Icon
   const handleAiIconClick = () => {
-    dispatch({
-      type: 'update:enableAI',
-      enableAI: !enableAI,
+    updateContext(draft => {
+      draft.enableAI = !enableAI;
     });
   };
 

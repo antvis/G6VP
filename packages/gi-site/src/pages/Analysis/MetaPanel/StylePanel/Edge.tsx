@@ -5,6 +5,7 @@ import { extractDefault } from '@ali/react-datav-gui-utils';
 import { Select } from 'antd';
 import React, { useState } from 'react';
 import AssetsSelect from '../../../../components/AssetsSelect';
+import { useContext } from '../../hooks/useContext';
 
 const { Option } = Select;
 
@@ -31,7 +32,8 @@ const getCacheValues = (object, key) => {
 };
 
 const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
-  const { data, elements, config = { edge: { props: {} } }, dispatch } = props;
+  const { updateContext } = useContext();
+  const { data, elements, config = { edge: { props: {} } } } = props;
   const { edge: edgeConfig } = config;
   const [state, setState] = useState({
     /** 当前元素的ID */
@@ -48,11 +50,17 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     cache[elementId].props = rootValue;
-    dispatch({
-      type: 'update:config:edge',
-      ...element,
-      props: rootValue,
+    updateContext(draft => {
+      draft.config.edge = {
+        ...element,
+        props: rootValue,
+      };
     });
+    // dispatch({
+    //   type: 'update:config:edge',
+    //   ...element,
+    //   props: rootValue,
+    // });
   };
   const elementOptions = Object.values(elements) as any[];
   const handleChangeShape = value => {
@@ -63,10 +71,13 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
       };
     });
     const values = getCacheValues(elements, value);
-    dispatch({
-      type: 'update:config:edge',
-      ...values,
+    updateContext(draft => {
+      draft.config.edge = { ...values };
     });
+    // dispatch({
+    //   type: 'update:config:edge',
+    //   ...values,
+    // });
   };
   const GUIComponent = React.useMemo(() => {
     return (

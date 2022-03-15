@@ -114,7 +114,7 @@ const CategoryHeader = ({ data }) => {
 
 const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => {
   const { data, handleChange, defaultValue } = props;
-  console.log('data', data, handleChange, defaultValue);
+
   const res = React.useMemo(() => {
     return data.reduce((acc, curr) => {
       const { category } = curr;
