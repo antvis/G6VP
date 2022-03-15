@@ -11,6 +11,9 @@ const AssetsList = ({ data }) => {
   return (
     <Tabs defaultActiveKey="components" onChange={callback}>
       {Object.keys(data).map(type => {
+        if (type === 'extra') {
+          return null;
+        }
         const item = data[type];
 
         return (
