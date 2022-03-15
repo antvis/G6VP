@@ -12,6 +12,15 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
+const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 'edge'): any => {
+  if (elementType === 'node') {
+    return data.nodes;
+  }
+  if (elementType == 'edge') {
+    return data.edges;
+  }
+};
+
 const version = '1.1.4';
 const extra = {
   GIAC_CONTENT_METAS,
@@ -78,7 +87,14 @@ const GISDK = (props: Props) => {
     });
   }, [props.config]);
 
-  const { layout: layoutCfg, components: componentsCfg = [], node: nodeCfg, edge: edgeCfg } = state.config;
+  const {
+    layout: layoutCfg,
+    components: componentsCfg = [],
+    node: nodeCfg,
+    edge: edgeCfg,
+    nodes: nodesCfg,
+    edges: edgesCfg,
+  } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
   /** 节点和边的配置发生改变 */
@@ -151,6 +167,50 @@ const GISDK = (props: Props) => {
       draft.config.edge = edgeCfg;
     });
   }, [nodeCfg, edgeCfg]);
+
+  /** 增加多元素 */
+  React.useEffect(() => {
+    const defaultNodesCfg = [{ id: 'GraphinNode', rules: [] }];
+    const defaultEdgesCfg = [{ id: 'GraphinEdge', rules: [] }];
+
+    const transform = data => {
+      const nodes = (nodesCfg || defaultNodesCfg)
+        .map(item => {
+          const { id, rules } = item;
+          const Element = ElementAssets[id];
+          const filterNodes = filterDataByRules(data, rules, 'node');
+          return Element.registerTransform(filterNodes, item);
+        })
+        .reduce((acc, curr) => {
+          return [...acc, ...curr];
+        }, []);
+
+      const edges = (edgesCfg || defaultEdgesCfg)
+        .map(item => {
+          const { id, rules } = item;
+          const Element = ElementAssets[id];
+          const filterNodes = filterDataByRules(data, rules, 'edge');
+          return Element.registerTransform(filterNodes, item);
+        })
+        .reduce((acc, curr) => {
+          return [...acc, ...curr];
+        }, []);
+
+      return {
+        nodes,
+        edges,
+      };
+    };
+    updateState(draft => {
+      if (draft.data.nodes.length !== 0) {
+        const newData = transform(draft.data);
+        draft.data = newData;
+      }
+      draft.transform = transform;
+      draft.config.nodes = nodesCfg;
+      draft.config.edges = edgesCfg;
+    });
+  }, [nodesCfg, edgesCfg]);
 
   const { data, layout, components, initializer, theme, transform } = state;
 
