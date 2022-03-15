@@ -14,7 +14,6 @@ interface EdgeStylePanelProps {
   data: any;
   elements: any;
   config: any;
-  dispatch: any;
 }
 
 const freeExtensions = {
@@ -56,11 +55,6 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
         props: rootValue,
       };
     });
-    // dispatch({
-    //   type: 'update:config:edge',
-    //   ...element,
-    //   props: rootValue,
-    // });
   };
   const elementOptions = Object.values(elements) as any[];
   const handleChangeShape = value => {
@@ -74,10 +68,6 @@ const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
     updateContext(draft => {
       draft.config.edge = { ...values };
     });
-    // dispatch({
-    //   type: 'update:config:edge',
-    //   ...values,
-    // });
   };
   const GUIComponent = React.useMemo(() => {
     return (

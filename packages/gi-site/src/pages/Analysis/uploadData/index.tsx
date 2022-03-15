@@ -30,13 +30,13 @@ const columnsData = {
 const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext } = useContext();
-  // const state = useSelector((state: StateType) => state);
+
   const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
     buttonDisabled: true,
   });
-  // const dispatch = useDispatch();
+
   //初始化数据
   const [data, setData] = useImmer(initData);
   // 映射函数
