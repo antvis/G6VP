@@ -1,14 +1,12 @@
 // 组件市场
 import { AppstoreOutlined, FireFilled } from '@ant-design/icons';
-import { Button, Card, Col, Radio, Row, Tabs, message, Popconfirm } from 'antd';
+import { Button, Card, Col, message, Popconfirm, Radio, Row, Tabs } from 'antd';
+import moment from 'moment';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useImmer } from 'use-immer';
-import moment from 'moment';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { createAssets, forkProjectOnAntCode, queryAssetList } from '../../services/assets';
-import store from '../Analysis/redux';
 import CreateAsset from './Create';
 import styles from './index.less';
 
@@ -221,12 +219,4 @@ const ComponentMarket = props => {
   );
 };
 
-const WrapAssetsMarket = props => {
-  return (
-    <Provider store={store}>
-      <ComponentMarket {...props} />
-    </Provider>
-  );
-};
-
-export default WrapAssetsMarket;
+export default ComponentMarket;

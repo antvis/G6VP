@@ -7,7 +7,7 @@ import { getKeysByData } from './utils';
  * @param data 图数据
  * @returns
  */
-const getLayoutsByAssets = (assets, data, services, config) => {
+const getLayoutsByAssets = (assets, data) => {
   const layouts = Object.keys(assets)
     .map(key => {
       const layout = assets[key];
@@ -19,7 +19,7 @@ const getLayoutsByAssets = (assets, data, services, config) => {
         info = { options: {} },
       } = layout;
       const keys = getKeysByData(data, 'node');
-      const configObj = registerMeta({ data, keys, services, config });
+      const configObj = registerMeta({ data, keys });
       /** 默认的配置值 */
       const defaultProps = extractDefault({ config: configObj, value: {} });
       const { id, name, category } = info as TypeAssetInfo;

@@ -51,17 +51,75 @@ export interface Props {
   /**
    * @description 资产实例
    */
-  assets: {
-    components: any;
-    elements: any;
-    layouts: any;
-  };
+  assets: GIAssets;
   /** 注册的全局数据服务 */
   services: GIService[];
-
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
+export type AssetType =
+  | 'GICC'
+  | 'GICC_MENU'
+  | 'GIAC'
+  | 'GIAC_CONTENT'
+  | 'GIAC_MENU'
+  | 'NODE'
+  | 'EDGE'
+  // 兼容旧版本
+  | 'GI_CONTAINER'
+  | 'GI_CONTAINER_INDEX';
+
+export interface ComponentAsset {
+  component: React.FunctionComponent | React.Component;
+  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  mockServices?: () => any[];
+  info: {
+    id: string;
+    name: string;
+    type: AssetType;
+  };
+}
+export interface LayoutAsset {
+  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerLayout?: () => any[];
+  info: {
+    id: string;
+    name: string;
+    type: AssetType;
+    category: string;
+    options: {
+      type: string;
+    };
+    desc?: string;
+    cover?: string;
+  };
+}
+
+export interface ElementAsset {
+  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerShape?: () => any[];
+  info: {
+    id: string;
+    name: string;
+    type: AssetType;
+    category: string;
+    desc?: string;
+    cover?: string;
+  };
+  registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
+}
+
+export interface GIAssets {
+  components: {
+    [key: string]: ComponentAsset;
+  };
+  elements: {
+    [key: string]: ElementAsset;
+  };
+  layouts: {
+    [key: string]: LayoutAsset;
+  };
+}
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
   type?: 'preset' | 'graphin-force' | 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
