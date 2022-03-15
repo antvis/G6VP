@@ -7,6 +7,7 @@ import { Select } from 'antd';
 import React, { useState } from 'react';
 import AssetsSelect from '../../../../components/AssetsSelect';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+import { useContext } from '../../hooks/useContext';
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
@@ -39,6 +40,7 @@ const getCacheValues = (object, key) => {
 
 const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { data, elements, config = { node: { props: {} } }, dispatch } = props;
+  const { updateContext } = useContext();
   const { node: nodeConfig } = config;
   const [state, setState] = useState({
     /** 当前元素的ID */
@@ -57,11 +59,17 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     cache[elementId].props = rootValue;
-    dispatch({
-      type: 'update:config:node',
-      ...element,
-      props: rootValue,
+    updateContext(draft => {
+      draft.config.node = {
+        ...element,
+        props: rootValue,
+      };
     });
+    // dispatch({
+    //   type: 'update:config:node',
+    //   ...element,
+    //   props: rootValue,
+    // });
   };
   const handleChangeShape = value => {
     setState(preState => {
@@ -72,10 +80,16 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     });
     const values = getCacheValues(elements, value);
 
-    dispatch({
-      type: 'update:config:node',
-      ...values,
+    updateContext(draft => {
+      draft.config.node = {
+        ...values,
+      };
     });
+
+    // dispatch({
+    //   type: 'update:config:node',
+    //   ...values,
+    // });
   };
   const elementOptions = Object.values(elements) as any[];
 

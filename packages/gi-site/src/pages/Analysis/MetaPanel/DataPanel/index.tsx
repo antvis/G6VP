@@ -8,13 +8,12 @@ import {
 } from '@ant-design/icons';
 import { Button, Collapse, Modal, Radio, Space, Table } from 'antd';
 import * as React from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
 import BreathIndicator from '../../../../components/BreathIndicator';
 import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
-import store, { StateType } from '../../redux';
+import { useContext } from '../../hooks/useContext';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import DataService from './DataService';
 import './index.less';
@@ -42,11 +41,9 @@ const ServiceHeader = props => {
 };
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
-  const dispatch = useDispatch();
-  const store = useSelector((state: StateType) => state);
-  const { data, inputData, id, activeAssets } = store;
+  const { updateContext, context } = useContext();
+  const { data, inputData, id, activeAssets } = context;
 
-  //TODO:合并成一个immer对象
   const [state, updateState] = useImmer({
     isVisible: false,
     initData: data,
@@ -153,9 +150,8 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         inputData: filterInputData,
       }),
     }).then(res => {
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
+      updateContext(draft => {
+        draft.key = Math.random();
       });
     });
   };
@@ -191,18 +187,15 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         };
       }
     });
-
-    dispatch({
-      type: 'update',
-      inputData: resultData,
-      data: mergeData,
+    updateContext(draft => {
+      draft.inputData = resultData;
+      draft.data = mergeData;
     });
   };
 
   const uploadData = () => {
-    dispatch({
-      type: 'update',
-      isModalVisible: true,
+    updateContext(draft => {
+      draft.isModalVisible = true;
     });
   };
 
@@ -273,12 +266,12 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   );
 };
 
-const WrapDataPanel = props => {
-  return (
-    <Provider store={store}>
-      <DataPanel {...props} />
-    </Provider>
-  );
-};
+// const WrapDataPanel = props => {
+//   return (
+//     <Provider store={store}>
+//       <DataPanel {...props} />
+//     </Provider>
+//   );
+// };
 
-export default WrapDataPanel;
+export default DataPanel;
