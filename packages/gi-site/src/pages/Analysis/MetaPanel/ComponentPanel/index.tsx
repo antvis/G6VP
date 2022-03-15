@@ -80,6 +80,7 @@ const ComponentPanel = props => {
   const handleChange = e => {
     const { rootValue } = e;
     const com = getComponentsByMap(rootValue);
+    console.log('com', com);
     updateContext(draft => {
       draft.config.components = com;
     });
@@ -99,11 +100,11 @@ const ComponentPanel = props => {
   );
 };
 
-// export default ComponentPanel;
+export default ComponentPanel;
 
-export default React.memo(ComponentPanel, (prevProps, nextProps) => {
-  if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
-    return false;
-  }
-  return true;
-});
+// export default React.memo(ComponentPanel, (prevProps, nextProps) => {
+//   if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
+//     return false;
+//   }
+//   return true;
+// });

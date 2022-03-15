@@ -59,6 +59,7 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     cache[elementId].props = rootValue;
+
     updateContext(draft => {
       draft.config.node = {
         ...element,
