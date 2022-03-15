@@ -16,72 +16,31 @@ import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
 import UploadPanel from './uploadData/index';
+import type { StateType } from './useModal';
+import { initialState } from './useModal';
 import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
-const initialState = {
-  /** 项目ID */
-  id: '',
-  /** 强制渲染的React Key */
-  key: Math.random(),
-  /** 画布渲染的配置 */
-  config: {},
-  /** 资产Map */
-  assets: {},
-  /** 资产Map */
-  totalAssets: {},
-  siteConfig: {},
-  /** 是否准备完毕 */
-  isReady: false,
-  /** 是否保存 */
-  isSave: true,
-  /** 当前 Sidebar 的值 */
-  activeNavbar: '',
-  /** 当前 Sidebar 是否可折叠 */
-  collapse: false,
-  /** 当前 数据导入面板 是否可显示 */
-  isModalVisible: false,
-  /** 所有的数据服务列表 */
-  services: [],
-  /** 组件市场的所有组件 */
-  components: [],
-  elements: [],
-  data: {},
-  /** 原数据 / 文件名 */
-  inputData: [],
-  /** 映射函数 */
-  transfunc: '',
-  refreshComponentKey: Math.random(),
-  /** 数据服务列表 */
-  serviceLists: [],
 
-  /** 是否开启智能推荐 */
-  enableAI: false,
-  /** 原始渲染的配置，用于取消智能推荐时还原 */
-  projectConfig: {},
-  /** 资产中心 */
-  assetsCenter: {
-    visible: false,
-    hash: 'components',
-  },
-  activeAssets: {},
-  activeAssetsKeys: {
-    components: [],
-    elements: [],
-    layouts: [],
-  },
-  activeAssetsInformation: {
-    components: [],
-    elements: [],
-    layouts: [],
-  },
+const queryActiveAssetsInformation = ({ assets, data, config }) => {
+  const components = getComponentsByAssets(assets.components, data, assets.services, config);
+  const elements = getElementsByAssets(assets.elements, data);
+  const layouts = getLayoutsByAssets(assets.layouts, data);
+  const services = getServicesByAssets(assets.services, data);
+
+  return {
+    components,
+    elements,
+    services,
+    layouts,
+  };
 };
 
 const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
 
-  const [state, updateState] = useImmer(initialState);
+  const [state, updateState] = useImmer<StateType>(initialState);
   const {
     config,
     key,
@@ -90,10 +49,6 @@ const Analysis = props => {
     activeNavbar,
     collapse,
     data,
-    services,
-    components,
-    refreshComponentKey,
-    elements,
     assets,
     enableAI,
     projectConfig,
@@ -110,20 +65,6 @@ const Analysis = props => {
       draft.activeNavbar = opt.id;
       draft.collapse = isSame ? !collapse : false;
     });
-  };
-
-  const queryActiveAssetsInformation = ({ assets, data, config }) => {
-    const components = getComponentsByAssets(assets.components, data, assets.services, config);
-    const elements = getElementsByAssets(assets.elements, data);
-    const layouts = getLayoutsByAssets(assets.layouts, data);
-    const services = getServicesByAssets(assets.services, data);
-
-    return {
-      components,
-      elements,
-      services,
-      layouts,
-    };
   };
 
   React.useLayoutEffect(() => {
@@ -173,7 +114,6 @@ const Analysis = props => {
         draft.activeAssets = activeAssets;
         draft.activeAssetsKeys = activeAssetsKeys;
         draft.activeAssetsInformation = activeAssetsInformation;
-        draft.refreshComponentKey = Math.random();
       });
     })();
   }, [ACTIVE_ASSETS_KEYS]);
@@ -216,38 +156,40 @@ const Analysis = props => {
     };
   };
 
-  // React.useLayoutEffect(() => {
-  //   const { config, projectConfig, data } = state;
-  //   console.log('original cfgs', config);
-  //   if (isReady && data && enableAI) {
-  //     const { newData, newConfig } = getRecommenderCfg({
-  //       data,
-  //       config,
-  //     });
-  //     dispatch({
-  //       type: 'update:config',
-  //       id: projectId,
-  //       config: newConfig,
-  //       data: newData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
-  //     });
-  //   } else if (!enableAI) {
-  //     dispatch({
-  //       type: 'update:config',
-  //       id: projectId,
-  //       config: projectConfig,
-  //     });
-  //   }
-  // }, [projectId, isReady, enableAI]);
+  React.useLayoutEffect(() => {
+    const { config, projectConfig, data } = state;
 
-  // React.useEffect(() => {
-  //   window.addEventListener('beforeunload', ev => {
-  //     ev.preventDefault();
-  //     ev.returnValue = '配置未保存，确定离开吗？';
-  //   });
-  // }, []);
+    if (isReady && data && enableAI) {
+      const { newData, newConfig } = getRecommenderCfg({
+        data: JSON.parse(JSON.stringify(data)),
+        config,
+      });
+      updateState(draft => {
+        draft.id = projectId;
+        draft.config = newConfig;
+        draft.data = newData; // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+      });
+    } else if (!enableAI) {
+      updateState(draft => {
+        draft.id = projectId;
+        draft.config = projectConfig;
+      });
+    }
+  }, [projectId, isReady, enableAI]);
+
+  React.useEffect(() => {
+    const handler = ev => {
+      ev.preventDefault();
+      ev.returnValue = '配置未保存，确定离开吗？';
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => {
+      window.removeEventListener('beforeunload', handler);
+    };
+  }, []);
 
   const isLoading = isObjectEmpty(config) || !isReady;
-  console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', isLoading, state);
+  console.log('%c GRAPHINSIGHT RENDERING', 'color:lightgreen', isLoading, state);
 
   const handleClose = () => {
     updateState(draft => {
@@ -282,7 +224,6 @@ const Analysis = props => {
               value={activeNavbar}
               data={data}
               activeAssetsKeys={activeAssetsKeys}
-              refreshKey={refreshComponentKey}
               /** 配置文件 */
               config={config}
               /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
@@ -316,13 +257,5 @@ const Analysis = props => {
     </AnalysisContext.Provider>
   );
 };
-
-// const WrapAnalysis = props => {
-//   return (
-//     <Provider store={store}>
-//       <Analysis {...props} />
-//     </Provider>
-//   );
-// };
 
 export default Analysis;

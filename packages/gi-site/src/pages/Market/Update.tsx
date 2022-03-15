@@ -1,28 +1,26 @@
 // 组件市场
-import React, { useEffect } from 'react';
-import { message, Alert } from 'antd';
-import { Provider } from 'react-redux';
+import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
 import { Utils } from '@antv/graphin';
-import store from '../Analysis/redux';
-import ComponentMetaPanel from './meta/ComponentMeta';
+import { useInterval, usePersistFn } from 'ahooks';
+import { Alert, message } from 'antd';
+import moment from 'moment';
+import queryString from 'querystring';
+import React, { useEffect } from 'react';
+import * as ts from 'typescript';
+import { useImmer } from 'use-immer';
 import {
+  buildAssetWithTask,
+  createNewBranch,
+  getFileDirectory,
+  getFileSourceCode,
+  queryAssetById,
   updateAssets,
   updateFileContent,
-  getFileSourceCode,
-  createNewBranch,
-  queryAssetById,
-  buildAssetWithTask,
-  getFileDirectory
 } from '../../services/assets';
-import { useImmer } from 'use-immer';
-import * as ts from 'typescript';
-import moment from 'moment';
 import GraphInsightIDE from './GraphInsightIDE';
-import GravityDemoSDK from '@alipay/gravity-demo-sdk/dist/gravityDemoSdk/sdk/sdk.js';
-import { usePersistFn, useInterval } from 'ahooks';
-import queryString from 'querystring';
-import Header from './Header'
+import Header from './Header';
 import './index.less';
+import ComponentMetaPanel from './meta/ComponentMeta';
 
 window.React = React;
 
@@ -42,7 +40,6 @@ function looseCodeParse(source) {
 }
 
 const ComponentMarket = props => {
-
   const appRef = React.createRef();
 
   const [state, setState] = useImmer({
@@ -53,7 +50,7 @@ const ComponentMarket = props => {
     loading: true,
     buildStatus: null,
     // 定时器
-    interval: null
+    interval: null,
   });
 
   const { currentSelectAsset, buildStatus, loading, interval } = state;
@@ -94,20 +91,20 @@ const ComponentMarket = props => {
     setState(draft => {
       draft.currentSelectAsset = data;
       if (!data.status) {
-        draft.buildStatus = null
-        draft.loading = false
+        draft.buildStatus = null;
+        draft.loading = false;
       } else {
         // 不是构建中时，就不需要再进行轮询
         if (data.status !== 2) {
-          draft.interval = null
-          draft.loading = false
+          draft.interval = null;
+          draft.loading = false;
           if (data.status) {
-            draft.buildStatus = data.status === 3 ? 'error' : 'success'
+            draft.buildStatus = data.status === 3 ? 'error' : 'success';
           }
         } else {
           // 构建中
-          draft.loading = true
-          draft.buildStatus = 'info'
+          draft.loading = true;
+          draft.buildStatus = 'info';
         }
       }
     });
@@ -184,8 +181,8 @@ const ComponentMarket = props => {
       branchName,
       path: directoryName,
     });
-    return directoryFiles 
-  }
+    return directoryFiles;
+  };
 
   /**
    * 初始查询文件内容，做实时预览使用
@@ -207,16 +204,16 @@ const ComponentMarket = props => {
     const indexFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'src/index.ts'
-    })
+      path: 'src/index.ts',
+    });
 
     const metaFile = await getFileSourceCode({
       projectName,
       branchName,
-      path: 'src/registerMeta.ts'
-    })
+      path: 'src/registerMeta.ts',
+    });
 
-    let initSourceCode = {}
+    let initSourceCode = {};
     // assetType = 1 表示组件，则需要先查询 components 下的所有文件，然后再查询各个文件的内容
     if (assetType === '1') {
       const demoStyleFile = await getFileSourceCode({
@@ -226,10 +223,10 @@ const ComponentMarket = props => {
       });
 
       // 查询 components 下的文件名称和类型
-      const directoryResult = await getFilesByFilePath('src/components')
+      const directoryResult = await getFilesByFilePath('src/components');
       if (directoryResult && directoryResult.success) {
-        const fileNames = directoryResult.data['src/components'].map(async(filename) => {
-          const [name] = filename
+        const fileNames = directoryResult.data['src/components'].map(async filename => {
+          const [name] = filename;
           const currentFile = await getFileSourceCode({
             projectName,
             branchName,
@@ -237,18 +234,18 @@ const ComponentMarket = props => {
           });
           return {
             key: `components/${name}`,
-            value : currentFile.data
-          }
-        })
-        
+            value: currentFile.data,
+          };
+        });
+
         Promise.all(fileNames).then(resp => {
           const componentFiles = resp.reduce((acc, curr) => {
             return {
               ...acc,
               // @ts-ignore
-              [curr.key]: curr.value
-            }
-          }, {})
+              [curr.key]: curr.value,
+            };
+          }, {});
 
           initSourceCode = {
             ...componentFiles,
@@ -256,10 +253,10 @@ const ComponentMarket = props => {
             'demo.module.less': demoStyleFile.data,
             'index.ts': indexFile.data,
             'registerMeta.ts': metaFile.data,
-            'package.json': packageFile.data
-          }
+            'package.json': packageFile.data,
+          };
           const previewCodeModules = fileMapToModules(initSourceCode);
-          
+
           setState(draft => {
             draft.sourceCode = initSourceCode;
             draft.previewCode = {
@@ -267,30 +264,29 @@ const ComponentMarket = props => {
               type: 'demo',
             };
           });
-
-        })
+        });
       }
     } else if (assetType === '4') {
       // assetType = 4 时，需要加载 registerShape.ts 和 registerTransform.ts 两个个文件
       const shapeFile = await getFileSourceCode({
         projectName,
         branchName,
-        path: 'src/registerShape.ts'
-      })
+        path: 'src/registerShape.ts',
+      });
 
       const transformFile = await getFileSourceCode({
         projectName,
         branchName,
-        path: 'src/registerTransform.ts'
-      })
+        path: 'src/registerTransform.ts',
+      });
       initSourceCode = {
         'demo.tsx': demoFile.data,
         'index.ts': indexFile.data,
         'package.json': packageFile.data,
         'registerMeta.ts': metaFile.data,
         'registerShape.ts': shapeFile.data,
-        'registerTransform.ts': transformFile.data
-      }
+        'registerTransform.ts': transformFile.data,
+      };
 
       const previewCodeModules = fileMapToModules(initSourceCode);
       setState(draft => {
@@ -320,8 +316,8 @@ const ComponentMarket = props => {
         'package.json': packageFile.data,
         'registerMeta.ts': metaFile.data,
         'demo.module.less': demoStyleFile.data,
-        'registerLayout.ts': layoutFile.data
-      }
+        'registerLayout.ts': layoutFile.data,
+      };
 
       const previewCodeModules = fileMapToModules(initSourceCode);
       setState(draft => {
@@ -332,7 +328,6 @@ const ComponentMarket = props => {
         };
       });
     }
-
   };
 
   React.useEffect(() => {
@@ -441,8 +436,8 @@ const ComponentMarket = props => {
   // 发布组件，需要先创建分支，然后构建
   const handlePublish = async () => {
     setState(draft => {
-      draft.loading = true
-    })
+      draft.loading = true;
+    });
 
     const uuid = `${Math.random().toString(36).substr(2)}`;
     const currentDate = moment(new Date()).format('YYYYMMDD');
@@ -452,8 +447,8 @@ const ComponentMarket = props => {
     await createNewBranch({
       projectName,
       branchName: newBranchName,
-      refBranchName: 'master'
-    })
+      refBranchName: 'master',
+    });
 
     // step2: 构建
     const buildResult = await buildAssetWithTask({
@@ -481,53 +476,83 @@ const ComponentMarket = props => {
 
       // 启动定时器
       setState(draft => {
-        draft.buildStatus = 'info'
-        draft.interval = 30000
-      })
+        draft.buildStatus = 'info';
+        draft.interval = 30000;
+      });
     }
   };
 
-  const buildingTips = <span>资产正在构建中，预计需要3-5分钟的时间，你可以<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>以了解最新进展</span>
+  const buildingTips = (
+    <span>
+      资产正在构建中，预计需要3-5分钟的时间，你可以
+      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
+        查看构建日志
+      </a>
+      以了解最新进展
+    </span>
+  );
 
-  const buildSuccessTips = <>
-    <span>资产构建成功，你可以</span>
-    <a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a>
-    <span>或</span>
-    <a href={currentSelectAsset?.distCodeUrl} target='_blank'>查看构建产物</a>
-  </>
-  
-  const buildErrorTips = <span>资产构建失败，具体失败原因请<a href={currentSelectAsset?.buildLogUrl} target='_blank'>查看构建日志</a></span>
+  const buildSuccessTips = (
+    <>
+      <span>资产构建成功，你可以</span>
+      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
+        查看构建日志
+      </a>
+      <span>或</span>
+      <a href={currentSelectAsset?.distCodeUrl} target="_blank">
+        查看构建产物
+      </a>
+    </>
+  );
 
-  let tipsDom = null
+  const buildErrorTips = (
+    <span>
+      资产构建失败，具体失败原因请
+      <a href={currentSelectAsset?.buildLogUrl} target="_blank">
+        查看构建日志
+      </a>
+    </span>
+  );
+
+  let tipsDom = null;
   if (buildStatus === 'success') {
-    tipsDom = buildSuccessTips
+    tipsDom = buildSuccessTips;
   } else if (buildStatus === 'info') {
-    tipsDom = buildingTips
+    tipsDom = buildingTips;
   } else if (buildStatus === 'error') {
-    tipsDom =  buildErrorTips
+    tipsDom = buildErrorTips;
   }
 
-  let defaultMode = ''
+  let defaultMode = '';
   if (assetType === '1') {
-    defaultMode = '/src/demo.tsx'
+    defaultMode = '/src/demo.tsx';
   } else if (assetType === '4') {
-    defaultMode = '/src/demo.tsx'
+    defaultMode = '/src/demo.tsx';
   } else if (assetType === '3') {
-    defaultMode = '/index.ts'
+    defaultMode = '/index.ts';
   } else if (assetType === '2') {
-    defaultMode = '/src/demo.tsx'
+    defaultMode = '/src/demo.tsx';
   }
 
   return (
     <>
-      <Header assetName={currentSelectAsset?.name} updateTime={currentSelectAsset?.gmtModified} assetType={assetType} handlePublish={handlePublish} loading={loading} />
-      {
-        buildStatus &&
-        <Alert message={tipsDom} type={buildStatus} showIcon closable={buildStatus !== 'info'} />
-      }
+      <Header
+        assetName={currentSelectAsset?.name}
+        updateTime={currentSelectAsset?.gmtModified}
+        assetType={assetType}
+        handlePublish={handlePublish}
+        loading={loading}
+      />
+      {buildStatus && <Alert message={tipsDom} type={buildStatus} showIcon closable={buildStatus !== 'info'} />}
       <div className="componet-market">
         <div className="gi-ide-wrapper" style={{ width: assetType === '1' ? '60%' : '100%' }}>
-          <GraphInsightIDE id='test' readOnly={false} appRef={appRef} mode={defaultMode} codeChange={codeChangeCallback}  />
+          <GraphInsightIDE
+            id="test"
+            readOnly={false}
+            appRef={appRef}
+            mode={defaultMode}
+            codeChange={codeChangeCallback}
+          />
         </div>
         {assetType !== '3' && (
           <div className="gi-config-wrapper">
@@ -555,12 +580,4 @@ const ComponentMarket = props => {
   );
 };
 
-const WrapAnalysis = props => {
-  return (
-    <Provider store={store}>
-      <ComponentMarket {...props} />
-    </Provider>
-  );
-};
-
-export default WrapAnalysis;
+export default ComponentMarket;
