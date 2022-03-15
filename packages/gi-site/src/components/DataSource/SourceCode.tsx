@@ -1,8 +1,9 @@
 import { useRequest } from '@alipay/bigfish';
-import { Collapse, Tabs, Button } from 'antd';
+import { Button, Collapse, Tabs } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { getProjectById, updateProjectById } from '../../services';
 import './index.less';
 const { Panel } = Collapse;
@@ -17,7 +18,7 @@ let monacoRef;
 const SourceCode: React.FunctionComponent<SourceCodeProps> = props => {
   const { handleClose } = props;
   //@ts-ignore
-  const { id } = useSelector(state => state);
+  const { id } = useContext();
   const { data: project = {}, run } = useRequest(() => {
     return getProjectById(id);
   });

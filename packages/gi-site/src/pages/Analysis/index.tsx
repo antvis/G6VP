@@ -80,7 +80,7 @@ const initialState = {
 const Analysis = props => {
   const { history, match } = props;
   const { projectId } = match.params;
-  // const state = useSelector((state: StateType) => state);
+
   const [state, updateState] = useImmer(initialState);
   const {
     config,
@@ -102,8 +102,6 @@ const Analysis = props => {
     activeAssets,
     isModalVisible,
   } = state;
-
-  // const dispatch = useDispatch();
 
   const handleChangeNavbar = opt => {
     const isSame = activeNavbar === opt.id;
@@ -155,25 +153,6 @@ const Analysis = props => {
         draft.activeAssetsKeys = activeAssetsKeys;
         draft.activeAssetsInformation = activeAssetsInformation;
       });
-      // dispatch({
-      //   type: 'update:config',
-      //   id: projectId,
-      //   config,
-      //   projectConfig: config,
-      //   data: transData,
-      //   inputData,
-      //   isReady: true,
-      //   activeNavbar,
-      //   //@ts-ignore
-      //   serviceConfig: activeAssets.services,
-      //   // services,
-      //   // components,
-      //   // elements,
-      //   assets,
-      //   activeAssets,
-      //   activeAssetsKeys,
-      //   activeAssetsInformation,
-      // });
     })();
   }, [projectId, key]);
 
@@ -302,7 +281,6 @@ const Analysis = props => {
             <MetaPanel
               value={activeNavbar}
               data={data}
-              // dispatch={dispatch}
               activeAssetsKeys={activeAssetsKeys}
               refreshKey={refreshComponentKey}
               /** 配置文件 */

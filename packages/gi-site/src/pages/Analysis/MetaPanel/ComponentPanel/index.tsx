@@ -84,10 +84,6 @@ const ComponentPanel = props => {
     updateContext(draft => {
       draft.config.components = com;
     });
-    // dispatch({
-    //   type: 'update:config:components',
-    //   components: com,
-    // });
   };
 
   console.log('%c ComponentMeta', 'color:green');

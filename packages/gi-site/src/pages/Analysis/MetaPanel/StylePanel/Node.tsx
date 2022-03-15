@@ -25,7 +25,6 @@ interface NodeStylePanelProps {
   data: any;
   elements: any;
   config: any;
-  dispatch: any;
 }
 
 const cache = {};
@@ -39,7 +38,7 @@ const getCacheValues = (object, key) => {
 };
 
 const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-  const { data, elements, config = { node: { props: {} } }, dispatch } = props;
+  const { data, elements, config = { node: { props: {} } } } = props;
   const { updateContext } = useContext();
   const { node: nodeConfig } = config;
   const [state, setState] = useState({
@@ -66,11 +65,6 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         props: rootValue,
       };
     });
-    // dispatch({
-    //   type: 'update:config:node',
-    //   ...element,
-    //   props: rootValue,
-    // });
   };
   const handleChangeShape = value => {
     setState(preState => {
@@ -86,11 +80,6 @@ const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         ...values,
       };
     });
-
-    // dispatch({
-    //   type: 'update:config:node',
-    //   ...values,
-    // });
   };
   const elementOptions = Object.values(elements) as any[];
 

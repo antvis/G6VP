@@ -1,13 +1,13 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
 import MonacoEditor from 'react-monaco-editor';
-import { useSelector } from 'react-redux';
 import { getRiddleAppCode, useCodeSandbox, useHtml, useRiddle } from '../../hooks';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { copyText, saveAs } from '../utils';
 import './index.less';
 
 const ExportConfig = props => {
-  const st = useSelector(state => state);
+  const { context: st } = useContext();
 
   const exampleCode = getRiddleAppCode(st);
   const htmlCode = useHtml(st);
