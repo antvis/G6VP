@@ -1,6 +1,7 @@
 import { useRequest } from '@alipay/bigfish';
 import { Modal, Tabs } from 'antd';
 import * as React from 'react';
+import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getFavoriteList, getProjectList, removeProjectById } from '../../services';
 import CreatePanel from './Create';
@@ -59,7 +60,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   return (
     <>
       <div className="workspace">
-        <BaseNavbar />
+        <BaseNavbar rightContentExtra={<DataModeCard />}></BaseNavbar>
         <div style={{ overflow: 'scroll', height: 'calc(100vh - 64px)' }}>
           <Tabs>
             <TabPane tab={'我的项目'} key={'project'}>

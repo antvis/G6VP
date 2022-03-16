@@ -38,7 +38,7 @@ const BaseNavbar = props => {
     </>
   );
 
-  const { children, leftContent = defaultLeft, rightContent = defaultRight } = props;
+  const { children, leftContent = defaultLeft, rightContent = defaultRight, rightContentExtra = '' } = props;
   return (
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
@@ -54,6 +54,7 @@ const BaseNavbar = props => {
       </div>
       {children}
       <div className={styles.right}>
+        {rightContentExtra}
         {rightContent}
         <Avatar
           style={{ width: '21px', height: '21px', marginLeft: 5 }}
