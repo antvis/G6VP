@@ -36,7 +36,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const [isHover, setIsHover] = React.useState(false);
 
   const { context, updateContext } = useContext();
-  const { config, isSave, serviceConfig } = context;
+  const { config, isSave, serviceConfig, activeAssetsKeys } = context;
   const contentEditable = React.createRef<HTMLSpanElement>();
   const servicesRef = React.useRef({
     options: serviceConfig,
@@ -56,6 +56,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
 
   const handleSave = async () => {
     updateProjectById(projectId, {
+      activeAssetsKeys: JSON.stringify(activeAssetsKeys),
       projectConfig: JSON.stringify(config),
     });
     updateContext(draft => {

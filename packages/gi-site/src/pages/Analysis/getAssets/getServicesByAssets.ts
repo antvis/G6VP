@@ -15,11 +15,14 @@ const defaultTransFn = (data, params) => {
 const getServicesByAssets = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
+    const runtimeContent = content?.split('export default')[1] || content;
+    console.log('runtime content', content, runtimeContent);
+
     if (mode === 'MOCK') {
       const fn = (params: any) => {
         return new Promise(async resolve => {
           try {
-            const transFn = looseJsonParse(content);
+            const transFn = looseJsonParse(runtimeContent);
             const transData = transFn(data, params);
             return resolve(transData);
           } catch (error) {

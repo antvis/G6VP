@@ -5,7 +5,8 @@ import './index.less';
 import SideList from './List';
 
 const DataSource = React.forwardRef((props, ref) => {
-  const { defaultOptions } = props;
+  //@ts-ignore
+  const { defaultOptions, onSave } = props;
 
   const [state, setState] = useImmer({
     options: defaultOptions,
@@ -56,8 +57,11 @@ const DataSource = React.forwardRef((props, ref) => {
       opt.name = name;
       opt.mode = mode;
       opt.content = content;
+      opt.sourceCode = content;
       draft.currentId = id;
     });
+    console.log(opt);
+    onSave && onSave(opt);
   };
 
   const current = options.find(opt => opt.id === currentId);

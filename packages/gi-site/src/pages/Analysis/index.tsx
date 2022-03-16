@@ -166,26 +166,26 @@ const Analysis = props => {
     };
   };
 
-  React.useLayoutEffect(() => {
-    const { config, projectConfig, data } = state;
+  // React.useLayoutEffect(() => {
+  //   const { config, projectConfig, data } = state;
 
-    if (isReady && data && enableAI) {
-      const { newData, newConfig } = getRecommenderCfg({
-        data: JSON.parse(JSON.stringify(data)),
-        config,
-      });
-      updateState(draft => {
-        draft.id = projectId;
-        draft.config = newConfig;
-        draft.data = newData; // 改变 data 是为了能把衍生出的属性加进去，比如 degree
-      });
-    } else if (!enableAI) {
-      updateState(draft => {
-        draft.id = projectId;
-        draft.config = projectConfig;
-      });
-    }
-  }, [projectId, isReady, enableAI]);
+  //   if (isReady && data && enableAI) {
+  //     const { newData, newConfig } = getRecommenderCfg({
+  //       data: JSON.parse(JSON.stringify(data)),
+  //       config,
+  //     });
+  //     updateState(draft => {
+  //       draft.id = projectId;
+  //       draft.config = newConfig;
+  //       draft.data = newData; // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+  //     });
+  //   } else if (!enableAI) {
+  //     updateState(draft => {
+  //       draft.id = projectId;
+  //       draft.config = projectConfig;
+  //     });
+  //   }
+  // }, [projectId, isReady, enableAI]);
 
   React.useEffect(() => {
     const handler = ev => {
