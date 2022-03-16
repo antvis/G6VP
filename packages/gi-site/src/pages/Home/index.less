@@ -348,3 +348,26 @@
     background-size: cover;
   }
 }
+.modalContent {
+  width: calc((100% - 12px)/2);
+  display: inline-block;
+  min-height: 200px;
+  border: 1px solid rgb(201, 198, 198);
+  border-radius: 4px;
+  text-align: center;
+  position: relative;
+  &:first-child {
+    margin-right: 12px;
+  }
+  :global {
+    .anticon-check {
+      font-size: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -50px;
+      margin-top: -50px;
+      color: #b7eb8f;
+    }
+  }
+}
