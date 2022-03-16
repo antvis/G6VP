@@ -1,5 +1,6 @@
 import { Skeleton } from 'antd';
 import { produce } from 'immer';
+import queryString from 'query-string';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import DataSource from '../../../components/DataSource/index';
@@ -9,8 +10,10 @@ interface DataServicesProps {}
 
 const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   //@ts-ignore
-  const { history, match } = props;
+  const { match } = props;
   const { projectId } = match.params;
+  const search = window.location.hash.split('?')[1];
+  const { serviceId } = queryString.parse(search);
 
   const [state, updateState] = useImmer({
     isReady: false,
@@ -59,10 +62,14 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   if (!isReady) {
     return <Skeleton />;
   }
+  console.log('serviceId', serviceId);
+  // if (!serviceId) {
+  //   return <div>NOT FOUND SERVICEID</div>;
+  // }
   return (
     <div>
       <BaseNavbar />
-      <DataSource defaultOptions={serviceConfig} onSave={onSave} />
+      <DataSource defaultOptions={serviceConfig} onSave={onSave} defaultActiveId={serviceId} />
     </div>
   );
 };
