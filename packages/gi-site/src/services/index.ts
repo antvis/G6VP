@@ -21,7 +21,6 @@ export function getEdgesByNodes(nodes, edges) {
  */
 export const getProjectById = async (id: string) => {
   const getResult = project => {
-    //TODO :这里应该不用处理JSON.parse 吧
     const config = JSON.parse(project.projectConfig);
     const data = JSON.parse(project.data);
     let activeAssetsKeys;
@@ -43,8 +42,14 @@ export const getProjectById = async (id: string) => {
   };
 
   if (isMock) {
-    const project = await localforage.getItem(id);
-    return getResult(project);
+    const project: any = await localforage.getItem(id);
+
+    return {
+      config: project.projectConfig,
+      data: project.data,
+      activeAssetsKeys: project.activeAssetsKeys,
+      name: project.name,
+    };
   }
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/id`, {
@@ -65,17 +70,18 @@ export const getProjectById = async (id: string) => {
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (id: string, data: any) => {
+export const updateProjectById = async (id: string, params: { data: string; [key: string]: any }) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
-    return await localforage.setItem(id, { ...origin, ...data });
+    const { data, ...others } = params;
+    return await localforage.setItem(id, { ...origin, ...others, data: JSON.parse(data) });
   }
 
-  data.id = id;
+  params.id = id;
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
     method: 'post',
-    data,
+    data: params,
   });
 
   return response.success;
@@ -129,7 +135,18 @@ export const getProjectList = async () => {
 export const addProject = async (param: any) => {
   if (isMock) {
     const projectId = getUid();
-    const p = { ...param, id: projectId, isProject: true };
+
+    const { projectConfig, activeAssetsKeys, data, serviceConfig, ...otherParams } = param;
+
+    const p = {
+      ...otherParams,
+      projectConfig: JSON.parse(projectConfig),
+      activeAssetsKeys: JSON.parse(activeAssetsKeys),
+      data: JSON.parse(data),
+      serviceConfig: JSON.parse(serviceConfig),
+      id: projectId,
+      isProject: true,
+    };
     // const all = (await getProjectList()) as any[];
     // localforage.setItem('projects', [...all, p]);
 

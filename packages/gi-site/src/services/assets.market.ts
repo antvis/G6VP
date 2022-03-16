@@ -125,11 +125,24 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
 
   if (isMock) {
     const { serviceConfig } = await localforage.getItem(id);
+    const services = serviceConfig.map(c => {
+      const { content, id, name, mode, sourceCode } = c;
+      return {
+        content: sourceCode?.split('export default')[1],
+        sourceCode,
+        id,
+        name,
+        mode,
+      };
+    });
+    console.log('services', services);
+
     return await new Promise(resolve => {
       resolve({
-        services: JSON.parse(serviceConfig),
+        services: services,
         components: components,
         elements: elements,
+        layouts: layouts,
       });
     });
   }

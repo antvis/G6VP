@@ -6,7 +6,7 @@ import { addProject } from '../../services';
 import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';
-import { getMockData, baseConfig } from './utils';
+import { activeAssetsKeys, baseConfig, getMockData, serviceConfig } from './utils';
 
 interface IProps {
   visible: boolean;
@@ -73,6 +73,8 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
         transfunc: GIDefaultTrans('id', 'source', 'target'),
       }),
       projectConfig: JSON.stringify(baseConfig),
+      activeAssetsKeys: JSON.stringify(activeAssetsKeys),
+      serviceConfig: JSON.stringify(serviceConfig),
     });
 
     const createResult = await createNewProjectOnAntCode({
