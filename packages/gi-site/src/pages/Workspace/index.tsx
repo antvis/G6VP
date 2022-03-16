@@ -20,7 +20,6 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
     getFavoriteList().then(list => {
       // setLists(list);
-      console.log(list);
     });
   }, []);
 

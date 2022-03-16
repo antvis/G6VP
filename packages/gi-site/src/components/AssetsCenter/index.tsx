@@ -43,7 +43,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
   const { handleCloseAssetsCenter } = useAssetsCenter();
   const { assetsCenter, config, activeAssetsInformation, activeAssetsKeys } = context;
-  console.log('context', context, assetsCenter);
+
   const [assets, setAssets] = React.useState({
     components: [],
     elements: [],
@@ -54,7 +54,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const ASSET_LIST = await queryAssetList({
         projectId: id,
       });
-      console.log('ASSET_LIST', ASSET_LIST);
+      // console.log('ASSET_LIST', ASSET_LIST);
       setAssets({ ...ASSET_LIST } as any);
       ref = { ...activeAssetsKeys };
     })();
@@ -97,7 +97,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       </div>
     );
   };
-  console.log('assets', assets);
+
   return (
     <div>
       <Drawer

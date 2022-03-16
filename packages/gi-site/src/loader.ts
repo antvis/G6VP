@@ -52,7 +52,7 @@ const LoaderCss = options => {
     link.href = href;
   }
   link.rel = 'stylesheet';
-  // debugger;
+
   document.head.append(link);
   // link.onload = () => {
   //   resolve(link);
