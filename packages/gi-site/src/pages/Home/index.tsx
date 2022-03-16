@@ -1,8 +1,10 @@
 import { CaretDownOutlined } from '@ant-design/icons';
 import { Avatar, Button, Layout, Carousel } from 'antd';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import DataModeCard from '../../components/DataModeCard';
 import { levelTitleMapping } from './constant';
 import FeatureCard from './FeatureCard';
 import styles from './index.less';
@@ -12,13 +14,14 @@ const { Content, Footer } = Layout;
 
 const rightContent = (
   <>
+    <DataModeCard />
     <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>
   </>
 );
 
 const Home = () => {
   return (
-    <Layout>
+    <Layout className={styles.giLayout}>
       <BaseNavbar rightContent={rightContent} active="home" />
       <Content style={{ background: '#fff' }}>
         <div className={styles.contentContaniner}>
