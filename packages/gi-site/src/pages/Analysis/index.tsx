@@ -33,16 +33,25 @@ localforage.config({
 setDefaultAssetPackages();
 
 const queryActiveAssetsInformation = ({ assets, data, config }) => {
-  const components = getComponentsByAssets(assets.components, data, assets.services, config);
+  const { components, mockServices, mockServicesConfig } = getComponentsByAssets(
+    assets.components,
+    data,
+    assets.services,
+    config,
+  );
   const elements = getElementsByAssets(assets.elements, data);
   const layouts = getLayoutsByAssets(assets.layouts, data);
-  const services = getServicesByAssets(assets.services, data);
+  const servicesByConfig = getServicesByAssets(assets.services, data);
+  const services = [...servicesByConfig, ...mockServices];
+  console.log('mockServicesConfig', mockServicesConfig);
 
   return {
     components,
     elements,
     services,
     layouts,
+    mockServicesConfig,
+    // mockServices,
   };
 };
 
@@ -87,7 +96,9 @@ const Analysis = props => {
       const { data, config, activeAssetsKeys } = await getProjectById(projectId);
       const { transData, inputData } = data;
 
-      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
+      const serviceConfig = activeAssets.services;
+
       const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
 
       updateState(draft => {
@@ -98,7 +109,8 @@ const Analysis = props => {
         draft.inputData = inputData;
         draft.isReady = true;
         draft.activeNavbar = activeNavbar;
-        draft.serviceConfig = activeAssets.services;
+        //@ts-ignore
+        draft.serviceConfig = [...serviceConfig, ...activeAssetsInformation.mockServicesConfig];
         draft.assets = assets;
         draft.activeAssets = activeAssets;
         draft.activeAssetsKeys = activeAssetsKeys;

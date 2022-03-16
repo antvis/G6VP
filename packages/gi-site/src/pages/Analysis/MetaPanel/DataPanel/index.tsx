@@ -42,7 +42,7 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const { updateContext, context } = useContext();
-  const { data, inputData, id, activeAssets } = context;
+  const { data, inputData, id, serviceConfig } = context;
 
   const [state, updateState] = useImmer({
     isVisible: false,
@@ -250,7 +250,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
             );
           })}
         </CollapseCard>
-        <DataService projectId={id} serviceLists={activeAssets.services} />
+        <DataService projectId={id} serviceLists={serviceConfig} />
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
         <div className={'gi-data-fliter-group'}>
