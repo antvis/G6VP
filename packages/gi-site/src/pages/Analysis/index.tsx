@@ -1,4 +1,5 @@
 import GISDK from '@alipay/graphinsight';
+import localforage from 'localforage';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -19,6 +20,15 @@ import UploadPanel from './uploadData/index';
 import type { StateType } from './useModal';
 import { initialState } from './useModal';
 import { isObjectEmpty } from './utils';
+
+// 配置不同的驱动优先级
+localforage.config({
+  driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
+  name: 'GI-WebServer',
+  version: 1.0,
+  description: 'GraphInsight Local Server',
+  storeName: 'project',
+});
 
 setDefaultAssetPackages();
 
@@ -100,7 +110,7 @@ const Analysis = props => {
   const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
   React.useEffect(() => {
     //TODO 依赖还有问题
-    console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
+    // console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
     (async () => {
       const activeAssets = await queryAssets(projectId, activeAssetsKeys);
 
@@ -189,7 +199,6 @@ const Analysis = props => {
   }, []);
 
   const isLoading = isObjectEmpty(config) || !isReady;
-  console.log('%c GRAPHINSIGHT RENDERING', 'color:lightgreen', isLoading, state);
 
   const handleClose = () => {
     updateState(draft => {
@@ -204,9 +213,8 @@ const Analysis = props => {
       </div>
     );
   }
-
   const context = { context: state, updateContext: updateState };
-  console.log('isLoading', isLoading, context);
+  console.log('%c GRAPHINSIGHT RENDERING', 'color:lightgreen', state);
 
   return (
     <AnalysisContext.Provider value={context}>
@@ -226,11 +234,8 @@ const Analysis = props => {
               activeAssetsKeys={activeAssetsKeys}
               /** 配置文件 */
               config={config}
-              /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
               components={activeAssetsInformation.components}
-              /** 全量的的元素 */
               elements={activeAssetsInformation.elements}
-              /** 全量的的服务 */
               services={activeAssetsInformation.services}
               layouts={activeAssetsInformation.layouts}
             />
