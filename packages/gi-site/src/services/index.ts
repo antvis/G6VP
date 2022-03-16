@@ -22,7 +22,9 @@ export function getEdgesByNodes(nodes, edges) {
 export const getProjectById = async (id: string) => {
   const getResult = project => {
     const config = JSON.parse(project.projectConfig);
+
     const data = JSON.parse(project.data);
+    const serviceConfig = JSON.parse(project.serviceConfig);
     let activeAssetsKeys;
     if (project.activeAssetsKeys) {
       activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
@@ -38,17 +40,20 @@ export const getProjectById = async (id: string) => {
       data,
       activeAssetsKeys,
       name: project.name,
+      serviceConfig,
     };
   };
 
   if (isMock) {
     const project: any = await localforage.getItem(id);
+    console.log('project............', project);
 
     return {
       config: project.projectConfig,
       data: project.data,
       activeAssetsKeys: project.activeAssetsKeys,
       name: project.name,
+      serviceConfig: project.serviceConfig,
     };
   }
   // TODO response 返回为数组，应该返回为对象
@@ -70,11 +75,29 @@ export const getProjectById = async (id: string) => {
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (id: string, params: { data: string; [key: string]: any }) => {
+export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
-    const { data, ...others } = params;
-    return await localforage.setItem(id, { ...origin, ...others, data: JSON.parse(data) });
+    const { data, serviceConfig, projectConfig, name, activeAssetsKeys } = params;
+    // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
+    // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
+    if (data) {
+      origin.data = JSON.parse(data);
+    }
+    if (serviceConfig) {
+      origin.serviceConfig = JSON.parse(serviceConfig);
+    }
+    if (projectConfig) {
+      origin.projectConfig = JSON.parse(projectConfig);
+    }
+
+    if (activeAssetsKeys) {
+      origin.activeAssetsKeys = JSON.parse(activeAssetsKeys);
+    }
+    if (name) {
+      origin.name = name;
+    }
+    return await localforage.setItem(id, origin);
   }
 
   params.id = id;

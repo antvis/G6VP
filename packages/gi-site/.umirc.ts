@@ -26,6 +26,7 @@ export default {
     { exact: true, path: '/', component: 'Home' },
     { exact: true, path: '/workspace', component: 'Workspace' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
+    { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
     { exact: true, path: '/market', component: 'Market/List' },
     { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },

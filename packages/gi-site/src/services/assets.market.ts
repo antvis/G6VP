@@ -128,7 +128,7 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     const services = serviceConfig.map(c => {
       const { content, id, name, mode, sourceCode } = c;
       return {
-        content: sourceCode?.split('export default')[1],
+        content,
         sourceCode,
         id,
         name,
