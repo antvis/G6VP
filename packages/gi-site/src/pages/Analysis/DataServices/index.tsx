@@ -49,7 +49,6 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
         draft.push(params);
       }
     });
-    console.log(JSON.stringify(newServiceConfig));
 
     updateProjectById(projectId, {
       serviceConfig: JSON.stringify(newServiceConfig),
