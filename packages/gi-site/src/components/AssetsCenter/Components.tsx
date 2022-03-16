@@ -139,8 +139,6 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
       });
   }, [categoryKeys]);
 
-  console.log('categoryKeys', categoryKeys, categroy);
-
   return (
     <div>
       <CheckCard.Group
