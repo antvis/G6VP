@@ -1,6 +1,5 @@
-import { CheckCard } from '@alipay/tech-ui';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Avatar, Button, Form, Input, message, Modal, Space, Tooltip } from 'antd';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Form, message, Space, Tooltip } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
@@ -76,7 +75,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
 
     // step3: 跳转到资产编辑页面
     window.open(
-      `#/market/asserts/${data.insertId}?assetId=${data.insertId}&project=${projectName}&branch=master&type=${TYPE_MAPPING['services']}`,
+      `#/services//${data.insertId}?assetId=${data.insertId}&project=${projectName}&branch=master&type=${TYPE_MAPPING['services']}`,
     );
   };
   const handleSubmit = async values => {
@@ -105,32 +104,20 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
       });
     }
   };
-  const handleEdit = item => {
-    if (item.mode === 'MOCK') {
-      const { others } = item;
-      window.open(
-        `#/market/asserts/${others.id}?assetId=${others.id}&project=${others.projectId}_${others.name}&branch=master&type=${TYPE_MAPPING['services']}`,
-      );
-    } else {
-      updateState(draft => {
-        draft.formValues = {
-          id: item.id,
-          mode: item.mode,
-          displayName: item.name,
-          content: item.content,
-        };
-        draft.modalStatus = 'EDIT';
-        draft.visible = true;
-      });
-    }
-  };
 
   return (
     <div>
       <CollapseCard
         title="数据服务"
         extra={
-          <Button type="dashed" style={{ width: '100%' }} size="small" onClick={handleClick}>
+          <Button
+            type="dashed"
+            style={{ width: '100%' }}
+            size="small"
+            onClick={() => {
+              window.open(`#/services/${projectId}`);
+            }}
+          >
             <PlusOutlined /> 新建
           </Button>
         }
@@ -145,12 +132,9 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
                   <Tooltip placement="top" title={'编辑服务'}>
                     <EditOutlined
                       onClick={() => {
-                        handleEdit(item);
+                        window.open(`#/services/${projectId}?serviceId=${item.id}`);
                       }}
                     />
-                  </Tooltip>
-                  <Tooltip placement="top" title={'删除服务'}>
-                    <DeleteOutlined disabled={item.id === 'GI_SERVICE_INTIAL_GRAPH'} />
                   </Tooltip>
                 </Space>
               }
@@ -158,64 +142,6 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           );
         })}
       </CollapseCard>
-      <Modal
-        title={state.modalStatus === 'CREAT' ? '新建数据服务' : '编辑数据服务'}
-        visible={visible}
-        width={846}
-        footer={null}
-        onCancel={handleClose}
-      >
-        <Form
-          form={form}
-          onFinish={handleSubmit}
-          layout="vertical"
-          initialValues={formValues}
-          onValuesChange={onValuesChange}
-        >
-          <Form.Item name="id" label={'数据服务的ID'}>
-            <Input placeholder="例如：GI_SERVICES_XX" />
-          </Form.Item>
-          <Form.Item name="displayName" label="展示名称">
-            <Input placeholder="例如：下钻服务接口" />
-          </Form.Item>
-          <Form.Item name="mode" label="选择服务类型">
-            <CheckCard.Group style={{ width: '100%' }}>
-              <CheckCard
-                title="Mock服务"
-                avatar={
-                  <Avatar
-                    src="https://gw.alipayobjects.com/zos/bmw-prod/2dd637c7-5f50-4d89-a819-33b3d6da73b6.svg"
-                    size="large"
-                  />
-                }
-                description="使用本地上传的数据源，做为数据服务"
-                value="MOCK"
-              />
-              <CheckCard
-                title="API服务"
-                avatar={
-                  <Avatar
-                    src="https://gw.alipayobjects.com/zos/bmw-prod/6935b98e-96f6-464f-9d4f-215b917c6548.svg"
-                    size="large"
-                  />
-                }
-                description="使用在线的API接口，做为数据服务"
-                value="API"
-              />
-            </CheckCard.Group>
-          </Form.Item>
-          {formValues.mode === 'API' && (
-            <Form.Item name="value" label="API地址">
-              <Input placeholder="https://storehouse/api/v3/xxx" />
-            </Form.Item>
-          )}
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 };

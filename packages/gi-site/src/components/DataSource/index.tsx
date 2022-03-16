@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import Detail from './Detail';
@@ -6,11 +7,11 @@ import SideList from './List';
 
 const DataSource = React.forwardRef((props, ref) => {
   //@ts-ignore
-  const { defaultOptions, onSave } = props;
+  const { defaultOptions, onSave, defaultActiveId } = props;
 
   const [state, setState] = useImmer({
     options: defaultOptions,
-    currentId: defaultOptions[0].id,
+    currentId: defaultActiveId,
   });
 
   React.useImperativeHandle(ref, () => ({
@@ -39,6 +40,14 @@ const DataSource = React.forwardRef((props, ref) => {
     setState(draft => {
       draft.currentId = value;
     });
+    try {
+      const search = window.location.hash.split('?')[1];
+      const { serviceId } = queryString.parse(search) as { serviceId: string };
+      const newHref = window.location.href.replace(serviceId, value);
+      window.location.href = newHref;
+    } catch (error) {
+      console.warn(error);
+    }
   };
   const handleDelete = id => {
     setState(draft => {
@@ -64,7 +73,10 @@ const DataSource = React.forwardRef((props, ref) => {
     onSave && onSave(opt);
   };
 
-  const current = options.find(opt => opt.id === currentId);
+  const current = options.find(opt => opt.id === currentId) || {};
+  // if (!current) {
+  //   return <div>NOT FOUND SERVICEID:{currentId} </div>;
+  // }
   const { id, mode, content, name } = current;
 
   return (
