@@ -1,10 +1,10 @@
-import { Skeleton } from 'antd';
+import { notification, Skeleton } from 'antd';
 import { produce } from 'immer';
-import queryString from 'query-string';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import DataSource from '../../../components/DataSource/index';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
+import { getSearchParams } from '../../../components/utils';
 import { getProjectById, updateProjectById } from '../../../services/index';
 interface DataServicesProps {}
 
@@ -12,8 +12,9 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   //@ts-ignore
   const { match } = props;
   const { projectId } = match.params;
-  const search = window.location.hash.split('?')[1];
-  const { serviceId } = queryString.parse(search);
+  const { searchParams } = getSearchParams(window.location);
+
+  const serviceId = searchParams.get('serviceId');
 
   const [state, updateState] = useImmer({
     isReady: false,
@@ -23,7 +24,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   React.useEffect(() => {
     getProjectById(projectId).then((res: any) => {
       const { data, serviceConfig } = res;
-      console.log(res);
+
       updateState(draft => {
         draft.isReady = true;
         draft.serviceConfig = serviceConfig;
@@ -34,7 +35,6 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   const { isReady, serviceConfig } = state;
 
   const onSave = params => {
-    console.log(params, 'params');
     const { id, name, content } = params;
 
     const newServiceConfig = produce(serviceConfig, draft => {
@@ -54,18 +54,22 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
     updateProjectById(projectId, {
       serviceConfig: JSON.stringify(newServiceConfig),
     }).then(res => {
-      console.log('result', res);
+      if (res) {
+        notification['success']({
+          message: '保存成功',
+          description: '该服务保存成功，快去分析页面查看～',
+        });
+      }
     });
   };
 
-  console.log('state', state);
   if (!isReady) {
     return <Skeleton />;
   }
-  console.log('serviceId', serviceId);
-  // if (!serviceId) {
-  //   return <div>NOT FOUND SERVICEID</div>;
-  // }
+
+  if (!serviceId) {
+    return <div>NOT FOUND SERVICEID</div>;
+  }
   return (
     <div>
       <BaseNavbar />
