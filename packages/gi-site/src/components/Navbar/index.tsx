@@ -56,6 +56,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
 
   const handleSave = async () => {
     updateProjectById(projectId, {
+      serviceConfig: JSON.stringify(serviceConfig),
       activeAssetsKeys: JSON.stringify(activeAssetsKeys),
       projectConfig: JSON.stringify(config),
     });
