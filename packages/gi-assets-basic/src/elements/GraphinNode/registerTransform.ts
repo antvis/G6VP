@@ -1,3 +1,4 @@
+import type { GINodeConfig } from '@alipay/graphinsight/lib/typing';
 import Graphin from '@antv/graphin';
 // 引入资源文件
 import iconLoader from '@antv/graphin-icons';
@@ -22,13 +23,13 @@ const getMapping = () => {
 };
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, metaConfig, reset?: boolean) => {
+const transform = (s, metaConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
     const { color: Color, label: Label, size: Size, icon: Icon, halo: Halo, badges: Badges } = Object.assign(
       {},
       defaultProps,
-      metaConfig.node.props,
+      metaConfig.props,
     );
 
     /** 分别生成Size和Color的Mapping */

@@ -70,7 +70,7 @@ export type AssetType =
   | 'GI_CONTAINER_INDEX';
 
 export interface ComponentAsset {
-  component: React.FunctionComponent | React.Component;
+  component: React.ElementType; // https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#polymorphic-components-eg-with-as-props
   registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
   mockServices?: () => any[];
   info: {

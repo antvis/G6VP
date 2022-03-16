@@ -149,13 +149,17 @@ const GISDK = (props: Props) => {
     console.warn(
       'config.node | config.edge 将很快要废弃，请使用config.nodes和config.edges替代，可以支持多资产元素渲染',
     );
-    const { id: NodeElementId } = nodeCfg || { id: 'GraphinNode' };
-    const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
+    if (!nodeCfg || !edgeCfg) {
+      console.warn('config.node 和 config.edge 不能未定义');
+      return;
+    }
+    const { id: NodeElementId = 'GraphinNode' } = nodeCfg;
+    const { id: EdgeElementId = 'GraphinEdge' } = edgeCfg;
     const NodeElement = ElementAssets[NodeElementId];
     const EdgeElement = ElementAssets[EdgeElementId];
     const transform = data => {
-      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, true);
-      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, true);
+      const nodes = NodeElement.registerTransform(data, nodeCfg, true);
+      const edges = EdgeElement.registerTransform(data, edgeCfg, true);
       return {
         nodes,
         edges,
@@ -295,30 +299,20 @@ const GISDK = (props: Props) => {
       if (GIAC_CONTENT || GIAC_MENU || GIAC) {
         return null;
       }
+
       const {
         component: Component,
-        props: defaultProps,
       }: {
-        component: typeof React.Component;
-        props: any;
+        component: React.ElementType;
       } = matchComponent;
-      return <Component key={id} GISDK_ID={GISDK_ID} {...defaultProps} {...itemProps} {...GIProps} />;
+      return <Component key={id} GISDK_ID={GISDK_ID} {...itemProps} {...GIProps} />;
     });
   };
   const isReady = state.isContextReady && state.initialized;
 
   return (
-    <GraphInsightContext.Provider
-      //@ts-ignore
-      value={ContextValue}
-    >
-      <Graphin
-        data={data}
-        layout={layout}
-        enabledStack={true}
-        //@ts-ignore
-        theme={theme}
-      >
+    <GraphInsightContext.Provider value={ContextValue}>
+      <Graphin data={data} layout={layout} enabledStack={true} theme={theme}>
         <>
           {state.isContextReady && <InitializerComponent {...InitializerProps} />}
           <SetupUseGraphinHook updateContext={updateState} />
