@@ -25,7 +25,11 @@ export const getMockData = () => {
  */
 
 export const time = time => {
+  if (!time) {
+    return 'Invalid Date';
+  }
   const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
+
   return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
 };
 
@@ -48,11 +52,6 @@ const baseComponentsConfig = [
     props: {},
     enable: true,
   },
-  {
-    id: 'NodeAttrs',
-    props: {},
-    enable: true,
-  },
 ];
 const baseLayoutConfig = {
   id: 'GraphinForce',
@@ -70,3 +69,19 @@ export const baseConfig = {
   layout: baseLayoutConfig,
   components: baseComponentsConfig,
 };
+
+export const activeAssetsKeys = {
+  elements: [baseNodeConfig.id, baseEdgeConfig.id],
+  components: [...baseComponentsConfig.map(c => c.id)],
+  layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+};
+
+export const serviceConfig = [
+  {
+    id: 'GI_SERVICE_INTIAL_GRAPH',
+    content: `(data)=>{return data}`,
+    sourceCode: `export default (localData)=>{return localData}`,
+    mode: 'MOCK',
+    name: '初始化接口',
+  },
+];

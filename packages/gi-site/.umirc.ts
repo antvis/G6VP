@@ -62,8 +62,9 @@ export default {
     ...localDeps,
   },
   scripts: [
-    'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
-    'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
+    'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
+    'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',

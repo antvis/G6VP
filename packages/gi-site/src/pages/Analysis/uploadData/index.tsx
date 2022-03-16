@@ -101,7 +101,6 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         reader.onload = fileReader => {
           fileData = JSON.parse(fileReader.target.result as string);
 
-          console.log('fileData json', fileData);
           const renderData = [
             ...inputData,
             {
