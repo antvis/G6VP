@@ -1,20 +1,15 @@
-import { CaretDownOutlined } from '@ant-design/icons';
-import { Avatar, Button, Layout, Carousel } from 'antd';
+import { Button, Carousel, Layout } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import DataModeCard from '../../components/DataModeCard';
 import { levelTitleMapping } from './constant';
 import FeatureCard from './FeatureCard';
 import styles from './index.less';
-import SolutionCard from './SolutionCard';
 
 const { Content, Footer } = Layout;
 
 const rightContent = (
   <>
-    <DataModeCard />
     <span style={{ marginRight: '36px', cursor: 'pointer' }}>我的工作台</span>
   </>
 );
