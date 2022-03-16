@@ -1,3 +1,6 @@
+.giLayout {
+  height: 100%;
+}
 .headerContainer {
   display: flex;
   height: 64px;
@@ -30,9 +33,14 @@
     color: #597ef7;
   }
 }
-
+// 滚动条宽度设置为0，就不会影响首页背景图宽度展示，而且也可以上下滑动
+.contentContaniner::-webkit-scrollbar {
+  width: 0;
+}
 .contentContaniner {
   margin: 0 auto;
+  height: 100%;
+  overflow: auto;
 
   .videoContainer {
     position: relative;
