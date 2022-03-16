@@ -1,9 +1,12 @@
-import queryString from 'query-string';
 import React from 'react';
 import { useImmer } from 'use-immer';
+import { getSearchParams } from '../../components/utils';
 import Detail from './Detail';
 import './index.less';
 import SideList from './List';
+const S4 = () => {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1).toLocaleUpperCase();
+};
 
 const DataSource = React.forwardRef((props, ref) => {
   //@ts-ignore
@@ -22,13 +25,12 @@ const DataSource = React.forwardRef((props, ref) => {
 
   const handleAdd = () => {
     const option = {
-      id: `MY_SERVICE_${Math.random()}`,
-      content: `(data)=>{
-        console.log('data',data);
-        return data;
+      id: `SERVICE_${S4()}`,
+      content: `export default (localData)=>{
+        return localData;
       }`,
       mode: 'MOCK',
-      name: '未命名的服务名称',
+      name: '未命名的服务',
     };
     setState(draft => {
       draft.options = [...draft.options, option];
@@ -41,8 +43,9 @@ const DataSource = React.forwardRef((props, ref) => {
       draft.currentId = value;
     });
     try {
-      const search = window.location.hash.split('?')[1];
-      const { serviceId } = queryString.parse(search) as { serviceId: string };
+      const { searchParams } = getSearchParams(location);
+      const serviceId = searchParams.get('serviceId');
+
       const newHref = window.location.href.replace(serviceId, value);
       window.location.href = newHref;
     } catch (error) {
@@ -69,7 +72,7 @@ const DataSource = React.forwardRef((props, ref) => {
       opt.sourceCode = content;
       draft.currentId = id;
     });
-    console.log(opt);
+
     onSave && onSave(opt);
   };
 

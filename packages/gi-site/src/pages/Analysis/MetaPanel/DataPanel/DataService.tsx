@@ -115,7 +115,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
             style={{ width: '100%' }}
             size="small"
             onClick={() => {
-              window.open(`#/services/${projectId}`);
+              window.open(`#/services/${projectId}?serviceId=NEW_GI_SERVICE`);
             }}
           >
             <PlusOutlined /> 新建

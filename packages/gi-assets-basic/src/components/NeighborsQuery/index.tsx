@@ -20,6 +20,9 @@ const mockServices = () => {
       service: params => {
         console.log('params', params);
         return new Promise(resolve => {
+          // location
+          // window.indexDB.data
+          // location.search='xxx'
           const { id } = params;
           return resolve({
             nodes: [
@@ -27,7 +30,7 @@ const mockServices = () => {
                 id,
               },
               {
-                id: `node-${id}-1`,
+                id: `node-${id}-1-1`,
               },
               {
                 id: `node-${id}-2`,
