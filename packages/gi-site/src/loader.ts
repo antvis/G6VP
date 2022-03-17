@@ -15,8 +15,8 @@ export const setDefaultAssetPackages = () => {
   if (!packages['GI_Assets_Basic']) {
     packages['GI_Assets_Basic'] = {
       name: '@alipay/gi-assets-basic',
-      version: '1.2.0',
-      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.2.0/dist/index.min.js',
+      version: '1.3.0',
+      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.3.0/dist/index.min.js',
       global: 'GI_Assets_Basic',
     };
   }
