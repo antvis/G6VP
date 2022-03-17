@@ -22,7 +22,7 @@ const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 
   return data;
 };
 
-const version = '1.1.5';
+const version = '1.1.6';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -279,14 +279,21 @@ const GISDK = (props: Props) => {
 
     return components.map(c => {
       const { id, props: itemProps = {} } = c;
-
-      const matchComponent = ComponentAssets[id];
+      const matchComponent = ComponentAssets[id]; //具体组件的实现
       if (!matchComponent) {
         return null;
       }
-      /** 特殊处理Container组件 */
-      const { GI_CONTAINER, GIAC_CONTENT, GIAC_MENU, GIAC } = itemProps;
+      const { component: Component, info } = matchComponent;
 
+      /** 三类原子组件，必须在容器组件中才能渲染，因此不单独渲染 */
+      if (itemProps.GIAC_CONTENT || itemProps.GIAC_MENU || itemProps.GIAC) {
+        return null;
+      }
+      if (info.type === 'GIAC_CONTENT' || info.type === 'GIAC' || info.type === 'GIAC_MENU') {
+        return null;
+      }
+
+      const { GI_CONTAINER } = itemProps;
       let GIProps = {};
       if (GI_CONTAINER) {
         GIProps = {
@@ -296,15 +303,7 @@ const GISDK = (props: Props) => {
           assets: ComponentAssets,
         };
       }
-      if (GIAC_CONTENT || GIAC_MENU || GIAC) {
-        return null;
-      }
 
-      const {
-        component: Component,
-      }: {
-        component: React.ElementType;
-      } = matchComponent;
       return <Component key={id} GISDK_ID={GISDK_ID} {...itemProps} {...GIProps} />;
     });
   };
