@@ -110,11 +110,11 @@ const transform = (s, metaConfig: GINodeConfig, reset?: boolean) => {
       if (reset) {
         preStyle = {};
       }
-      console.log('keyshapeSize', keyshapeSize, 'preStyle', preStyle, node.style);
+
       return {
-        id: node.id,
         ...node,
-        data: node.data,
+        id: node.id,
+        data: node.data || node,
         dataType: node.dataType || 'others',
         type: 'graphin-circle',
         //
