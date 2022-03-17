@@ -1,4 +1,3 @@
-import ASSETS_PACKAGE from '@alipay/gi-assets/package.json';
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
 import { produce } from 'immer';
 import beautify from 'js-beautify';
@@ -48,7 +47,7 @@ const getHtmlAppCode = opts => {
   const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
   const packages = getAssetPackages();
   const combinedAssets = getCombinedAssets();
-  console.log('packages', packages, combinedAssets);
+
   const GIAssetsScripts = packages
     .map(pkg => {
       return `<script src="${pkg.url}"></script>`;
@@ -73,9 +72,9 @@ const getHtmlAppCode = opts => {
 
     <!--- CSS -->
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/${ASSETS_PACKAGE.version}/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.0/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.5.0/dist/index.css" />
+   
     ${GIAssetsLinks}
  
   </head>
@@ -138,46 +137,16 @@ function looseJsonParse(obj) {
 const defaultTransFn = (data, params) => {
   return data;
 };
-
-const getServicesByConfig = (assets, data) => {
-  return assets.map(s => {
+const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
+  return serviceConfig.map(s => {
     const { id, content, mode } = s;
-    if (mode === 'MOCK') {
-      const fn = (params) => {
-        return new Promise(async resolve => {
-          try {
-            const transFn = looseJsonParse(content);
-            const transData = transFn(data, params);
-            return resolve(transData);
-          } catch (error) {
-            console.error(error);
-            const transData = defaultTransFn(data, params);
-            return resolve(transData);
-          }
-        });
-      };
-
-      return {
-        id,
-        service: fn,
-      };
-    }
-    // if mode==='api'
-    const service = params => {
-      try {
-        return fetch(content, {
-          method: 'post',
-          // data: params,
-        });
-      } catch (error) {
-        return new Promise(resolve => {
-          resolve({});
-        });
-      }
-    };
+    const runtimeContent = content?.split('export default')[1] || content;
+    const transFn = looseJsonParse(runtimeContent);
     return {
       id,
-      service,
+      service: (...params) => {
+        return transFn(...params, LOCAL_DATA);
+      },
     };
   });
 };
@@ -215,8 +184,8 @@ const getServicesByConfig = (assets, data) => {
     <!--- GRAPHIN DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.7/dist/g6.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.3/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.0/dist/graphin.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
     <!--- GI DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
