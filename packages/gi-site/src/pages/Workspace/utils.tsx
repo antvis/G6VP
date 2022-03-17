@@ -79,8 +79,11 @@ export const activeAssetsKeys = {
 export const serviceConfig = [
   {
     id: 'GI_SERVICE_INTIAL_GRAPH',
-    content: `(data)=>{return data}`,
-    sourceCode: `export default (localData)=>{return localData}`,
+    content: `export default (localData)=>{
+      return new Promise((resolve)=>{
+        resolve(localData)
+      })
+    }`,
     mode: 'MOCK',
     name: '初始化接口',
   },
