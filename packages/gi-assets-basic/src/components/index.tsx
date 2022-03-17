@@ -9,6 +9,7 @@ import FitView from './FitView';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
+import NeighborsQuery from './NeighborsQuery';
 import NodeExpand from './NodeExpand';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
@@ -46,4 +47,5 @@ export {
   PropertiesPanel,
   Loading,
   SideTabs,
+  NeighborsQuery,
 };

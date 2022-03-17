@@ -12,51 +12,47 @@ const info = {
   desc: '邻居查询',
   cover: 'http://xxxx.jpg',
 };
-
 const mockServices = () => {
   return [
     {
       id: SERVICE_ID,
-      service: params => {
-        console.log('params', params);
+      service: (params, localData) => {
+        const { id } = params;
+        const data = {
+          nodes: [
+            {
+              id,
+            },
+            {
+              id: `${id}-1`,
+            },
+            {
+              id: `${id}-2`,
+            },
+            {
+              id: `${id}-3`,
+            },
+            {
+              id: `${id}-4`,
+            },
+          ],
+          edges: [
+            {
+              source: id,
+              target: `${id}-1`,
+            },
+            {
+              source: id,
+              target: `${id}-2`,
+            },
+            {
+              source: id,
+              target: `${id}-3`,
+            },
+          ],
+        };
         return new Promise(resolve => {
-          // location
-          // window.indexDB.data
-          // location.search='xxx'
-          const { id } = params;
-          return resolve({
-            nodes: [
-              {
-                id,
-              },
-              {
-                id: `node-${id}-1-1`,
-              },
-              {
-                id: `node-${id}-2`,
-              },
-              {
-                id: `node-${id}-3`,
-              },
-              {
-                id: `node-${id}-4`,
-              },
-            ],
-            edges: [
-              {
-                source: id,
-                target: `node-${id}-1`,
-              },
-              {
-                source: id,
-                target: `node-${id}-2`,
-              },
-              {
-                source: id,
-                target: `node-${id}-3`,
-              },
-            ],
-          });
+          return resolve(data);
         });
       },
     },

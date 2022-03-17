@@ -14,13 +14,17 @@ const info = {
 };
 
 export interface Parmas {
-  data: {};
+  [key: string]: any;
+}
+export interface LocalData {
+  nodes: any[];
+  edges: any[];
 }
 const mockServices = () => {
   return [
     {
       id: SERVICE_ID,
-      service: (params: Parmas) => {
+      service: (params: Parmas, localData: LocalData) => {
         const { data } = params;
         return new Promise(resolve => {
           return resolve(data);
