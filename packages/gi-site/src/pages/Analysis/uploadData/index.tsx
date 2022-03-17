@@ -193,7 +193,6 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const updateData = async () => {
-    console.log('updateData', transData);
     try {
       if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
         throw 'nodes缺少对应字段';
