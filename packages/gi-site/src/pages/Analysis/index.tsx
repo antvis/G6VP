@@ -10,8 +10,10 @@ import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
-import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
+import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
+import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
+import getMockServiceConfig from './getAssets/getMockServiceConfig';
 import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
@@ -32,26 +34,15 @@ localforage.config({
 
 setDefaultAssetPackages();
 
-const queryActiveAssetsInformation = ({ assets, data, config }) => {
-  const { components, mockServices, mockServicesConfig } = getComponentsByAssets(
-    assets.components,
-    data,
-    assets.services,
-    config,
-  );
+const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig }) => {
+  const { components } = getComponentsByAssets(assets.components, data, serviceConfig, config);
   const elements = getElementsByAssets(assets.elements, data);
   const layouts = getLayoutsByAssets(assets.layouts, data);
-  const servicesByConfig = getServicesByAssets(assets.services, data);
-  const services = [...servicesByConfig, ...mockServices];
-  console.log('mockServicesConfig', mockServicesConfig);
 
   return {
     components,
     elements,
-    services,
     layouts,
-    mockServicesConfig,
-    // mockServices,
   };
 };
 
@@ -79,7 +70,6 @@ const Analysis = props => {
 
   const handleChangeNavbar = opt => {
     const isSame = activeNavbar === opt.id;
-
     updateState(draft => {
       draft.activeNavbar = opt.id;
       draft.collapse = isSame ? !collapse : false;
@@ -91,15 +81,28 @@ const Analysis = props => {
       updateState(draft => {
         draft.isReady = false;
       });
+      /** 从地址栏上选择默认展示的tab */
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
-      const { data, config, activeAssetsKeys } = await getProjectById(projectId);
+      /** 根据 projectId 获取项目的信息  */
+      const { data, config, activeAssetsKeys, serviceConfig } = await getProjectById(projectId);
       const { transData, inputData } = data;
-
+      /** 根据活跃资产Key值，动态加载资产实例 */
       const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
-      const serviceConfig = activeAssets.services;
+      const mockServiceConfig = getMockServiceConfig(assets.components);
+      /** 将组件的MockServices与项目自身带的 services 去重处理 */
+      const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, serviceConfig);
 
-      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
+      /** 根据资产实例，获得GI站点运行需要的资产信息，包括资产本身带的serviceConfig */
+      const activeAssetsInformation = queryActiveAssetsInformation({
+        assets: activeAssets,
+        data: transData,
+        config,
+        serviceConfig: combinedServiceConfig,
+      });
+
+      /** 根据服务配置列表，得到真正运行的Service实例 */
+      const services = getServicesByConfig(combinedServiceConfig, transData);
 
       updateState(draft => {
         draft.id = projectId;
@@ -109,29 +112,45 @@ const Analysis = props => {
         draft.inputData = inputData;
         draft.isReady = true;
         draft.activeNavbar = activeNavbar;
-        //@ts-ignore
-        draft.serviceConfig = [...serviceConfig, ...activeAssetsInformation.mockServicesConfig];
+        draft.serviceConfig = serviceConfig;
         draft.assets = assets;
         draft.activeAssets = activeAssets;
         draft.activeAssetsKeys = activeAssetsKeys;
+        //@ts-ignore
         draft.activeAssetsInformation = activeAssetsInformation;
+        draft.services = services;
       });
     })();
   }, [projectId, key]);
 
   const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
   React.useEffect(() => {
-    //TODO 依赖还有问题
-    // console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
     (async () => {
-      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+      console.log('ACTIVE_ASSETS_KEYS....', ACTIVE_ASSETS_KEYS);
+      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
+      const mockServiceConfig = getMockServiceConfig(activeAssets.components);
 
-      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
       updateState(draft => {
+        /** 将组件的MockServices与项目自身带的 services 去重处理 */
+        const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, draft.serviceConfig);
+
+        const activeAssetsInformation = queryActiveAssetsInformation({
+          assets: activeAssets,
+          data,
+          config,
+          serviceConfig: combinedServiceConfig,
+        });
+
         const configComponents = activeAssetsInformation.components.map(c => {
           const matchItem = draft.config.components.find(d => d.id === c.id) || c;
           return matchItem;
         });
+
+        /** 根据服务配置列表，得到真正运行的Service实例 */
+        const services = getServicesByConfig(combinedServiceConfig, data);
+
+        draft.serviceConfig = combinedServiceConfig;
+        draft.services = services;
         draft.config.components = configComponents;
         draft.activeAssets = activeAssets;
         draft.activeAssetsKeys = activeAssetsKeys;
@@ -199,16 +218,16 @@ const Analysis = props => {
   //   }
   // }, [projectId, isReady, enableAI]);
 
-  React.useEffect(() => {
-    const handler = ev => {
-      ev.preventDefault();
-      ev.returnValue = '配置未保存，确定离开吗？';
-    };
-    window.addEventListener('beforeunload', handler);
-    return () => {
-      window.removeEventListener('beforeunload', handler);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   const handler = ev => {
+  //     ev.preventDefault();
+  //     ev.returnValue = '配置未保存，确定离开吗？';
+  //   };
+  //   window.addEventListener('beforeunload', handler);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handler);
+  //   };
+  // }, []);
 
   const isLoading = isObjectEmpty(config) || !isReady;
 
@@ -248,7 +267,7 @@ const Analysis = props => {
               config={config}
               components={activeAssetsInformation.components}
               elements={activeAssetsInformation.elements}
-              services={activeAssetsInformation.services}
+              services={state.services}
               layouts={activeAssetsInformation.layouts}
             />
           </div>
@@ -262,7 +281,7 @@ const Analysis = props => {
                   elements: activeAssets.elements,
                   layouts: activeAssets.layouts,
                 }}
-                services={activeAssetsInformation.services}
+                services={state.services}
               ></GISDK>
             </div>
           </div>

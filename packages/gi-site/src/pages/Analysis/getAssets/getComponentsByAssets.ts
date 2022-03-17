@@ -1,26 +1,6 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import type { TypeAssetInfo } from './typing';
-import { getKeysByData } from './utils';
-
-var stringify = function (obj, prop) {
-  var placeholder = '____PLACEHOLDER____';
-  var fns = [];
-  var json = JSON.stringify(
-    obj,
-    function (key, value) {
-      if (typeof value === 'function') {
-        fns.push(value);
-        return placeholder;
-      }
-      return value;
-    },
-    2,
-  );
-  json = json.replace(new RegExp('"' + placeholder + '"', 'g'), function (_) {
-    return fns.shift();
-  });
-  return 'this["' + prop + '"] = ' + json + ';';
-};
+import { getKeysByData, stringify } from './utils';
 
 /**
  *
@@ -30,7 +10,7 @@ var stringify = function (obj, prop) {
  */
 const getComponentsByAssets = (assets, data, services, config) => {
   let MOCK_SERVICES = [];
-  let MOCK_SERVICES_CONFIG = [];
+  let COMPONENTS_MOCK_SERVICES_CONFIG = [];
   const GI_CONTAINER_INDEXS = Object.values(assets)
     .filter((item: any) => {
       const info = ((item && item.info) || {}) as TypeAssetInfo;
@@ -81,11 +61,10 @@ const getComponentsByAssets = (assets, data, services, config) => {
             id: c.id,
             mode: 'MOCK',
             name: c.id,
-            //@ts-ignore
             content: stringify(c.service),
           };
         });
-        MOCK_SERVICES_CONFIG = [...MOCK_SERVICES_CONFIG, ...sers_config];
+        COMPONENTS_MOCK_SERVICES_CONFIG = [...COMPONENTS_MOCK_SERVICES_CONFIG, ...sers_config];
       }
       return {
         id,
@@ -104,6 +83,6 @@ const getComponentsByAssets = (assets, data, services, config) => {
       return c.id !== 'NOT_FOUND';
     });
 
-  return { components, mockServices: MOCK_SERVICES, mockServicesConfig: MOCK_SERVICES_CONFIG };
+  return { components, COMPONENTS_MOCK_SERVICES_CONFIG };
 };
 export default getComponentsByAssets;

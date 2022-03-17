@@ -1,6 +1,5 @@
-import localforage from 'localforage';
 import { dynamicLoadModules, getCombinedAssets } from '../loader';
-import { queryActiveAssetList, queryAssetList } from './assets';
+import { queryActiveAssetList } from './assets';
 import { isMock, IS_DYNAMIC_LOAD } from './const';
 
 let elements;
@@ -124,47 +123,18 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
   }
 
   if (isMock) {
-    const { serviceConfig } = await localforage.getItem(id);
-    const services = serviceConfig.map(c => {
-      const { content, id, name, mode, sourceCode } = c;
-      return {
-        content,
-        sourceCode,
-        id,
-        name,
-        mode,
-      };
-    });
-    console.log('services', services);
-
     return await new Promise(resolve => {
       resolve({
-        services: services,
         components: components,
         elements: elements,
         layouts: layouts,
       });
     });
   }
-  const ASSET_LIST = await queryAssetList({ projectId: id });
-
-  const services = ASSET_LIST.services.map(service => {
-    const { name, sourceCode, displayName } = service;
-    const serviceId = name.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1 ? 'GI_SERVICE_INTIAL_GRAPH' : name;
-
-    return {
-      id: serviceId,
-      content: sourceCode?.split('export default')[1] || ``,
-      mode: 'MOCK',
-      name: displayName,
-      others: service,
-    };
-  });
 
   return await new Promise(resolve => {
     resolve({
       components,
-      services,
       elements,
       layouts,
     });

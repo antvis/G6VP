@@ -266,12 +266,4 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   );
 };
 
-// const WrapDataPanel = props => {
-//   return (
-//     <Provider store={store}>
-//       <DataPanel {...props} />
-//     </Provider>
-//   );
-// };
-
 export default DataPanel;

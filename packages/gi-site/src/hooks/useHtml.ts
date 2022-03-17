@@ -139,7 +139,7 @@ const defaultTransFn = (data, params) => {
   return data;
 };
 
-const getServicesByAssets = (assets, data) => {
+const getServicesByConfig = (assets, data) => {
   return assets.map(s => {
     const { id, content, mode } = s;
     if (mode === 'MOCK') {
@@ -194,7 +194,7 @@ const getServicesByAssets = (assets, data) => {
       const assets = getCombinedAssets();
     const MyGraphSdk = () => {
       const config = GI_PROJECT_CONFIG;
-      const services = getServicesByAssets(GI_SERVICES_OPTIONS,GI_LOCAL_DATA);
+      const services = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA);
     
       return  <div style={{ height: '100vh' }}>
         <GISDK.default config={config} assets={assets} services={services}/>
