@@ -47,7 +47,7 @@ export const getRiddleAppCode = opts => {
   **/
 
   const {components,elements,utils}= ASSETS;
-  const {getServicesByAssets} = utils;
+  const {getServicesByConfig} = utils;
 
   const config = ${temaplteCode};
   const giProjectURL = "https://storehouse.test.alipay.net/project/list/${id}";
@@ -85,7 +85,7 @@ export const getRiddleAppCode = opts => {
       const assets = {
           components,
           elements,
-          services:getServicesByAssets(servicesOpt,data)
+          services:getServicesByConfig(servicesOpt,data)
         }
         setState(preState=>{
           return {

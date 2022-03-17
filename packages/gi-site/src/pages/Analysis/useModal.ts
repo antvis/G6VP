@@ -33,7 +33,7 @@ export const initialState: StateType = {
   transfunc: '',
 
   /** 数据服务列表 */
-  serviceLists: [],
+  serviceConfig: [],
 
   /** 是否开启智能推荐 */
   enableAI: false,
@@ -75,17 +75,19 @@ export interface StateType {
   config: GIConfig;
   /** GISDK.services */
   services: GIService[];
-
+  /** 数据服务列表 */
+  serviceConfig: {
+    id: string;
+    mode: string;
+    content: string;
+  }[];
   /** 强制渲染的React Key */
   key: number;
-
   /** 原始数据 */
   data: GraphinData;
   /** 上传的数据 */
   inputData: any[];
-
   transfunc: string;
-
   /** 全部资产 */
   assets: GIAssets;
   /** 用户选择的资产,活跃资产 */
@@ -96,6 +98,7 @@ export interface StateType {
     elements: string[];
     layouts: string[];
   };
+  /** 激活资产的详细信息：meta/info */
   activeAssetsInformation: {
     components: any[];
     elements: any[];
@@ -111,12 +114,7 @@ export interface StateType {
   collapse: boolean;
   /** 当前 数据导入面板 是否可显示 */
   isModalVisible: boolean;
-  /** 数据服务列表 */
-  serviceLists: {
-    id: string;
-    mode: string;
-    content: string;
-  }[];
+
   /** 是否开启智能推荐 */
   enableAI: boolean;
   /** 原始渲染的配置，用于取消智能推荐时还原 */
