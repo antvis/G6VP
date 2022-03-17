@@ -27,7 +27,7 @@ import { isObjectEmpty } from './utils';
 localforage.config({
   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
   name: 'GI-WebServer',
-  version: 1.0,
+  version: 2.0,
   description: 'GraphInsight Local Server',
   storeName: 'project',
 });

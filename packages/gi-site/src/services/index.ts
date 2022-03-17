@@ -46,8 +46,6 @@ export const getProjectById = async (id: string) => {
 
   if (isMock) {
     const project: any = await localforage.getItem(id);
-    console.log('project............', project);
-
     return {
       config: project.projectConfig,
       data: project.data,
