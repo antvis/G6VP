@@ -18,7 +18,7 @@ export interface TestSDKProps {
     info: {
       id: string;
       name: string;
-      type: 'GI_CONTAINER' | 'GI_CONTAINER_INDEX';
+      type: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
     };
     registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
     mockServices?: () => any[];
@@ -50,7 +50,8 @@ const styles = {
 };
 
 const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
-  const { asset, type, services = [] } = props;
+  const { asset, services = [] } = props;
+  const type = props.type || asset.info.type;
   const { info, registerMeta, component, mockServices } = asset;
   let assetServices: any[] = [];
   if (mockServices) {
