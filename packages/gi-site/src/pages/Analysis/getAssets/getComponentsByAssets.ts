@@ -1,6 +1,6 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
 import type { TypeAssetInfo } from './typing';
-import { getKeysByData, stringify } from './utils';
+import { getKeysByData } from './utils';
 
 /**
  *
@@ -9,12 +9,9 @@ import { getKeysByData, stringify } from './utils';
  * @returns
  */
 const getComponentsByAssets = (assets, data, services, config) => {
-  let MOCK_SERVICES = [];
-  let COMPONENTS_MOCK_SERVICES_CONFIG = [];
   const GI_CONTAINER_INDEXS = Object.values(assets)
     .filter((item: any) => {
       const info = ((item && item.info) || {}) as TypeAssetInfo;
-
       return (
         info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
         info.type === 'GIAC_MENU' ||
@@ -43,8 +40,6 @@ const getComponentsByAssets = (assets, data, services, config) => {
         registerMeta = () => {
           return {};
         },
-        Component,
-        mockServices,
         info = {},
       } = component;
       const keys = getKeysByData(data, 'node');
@@ -53,19 +48,7 @@ const getComponentsByAssets = (assets, data, services, config) => {
       /** 默认的配置值 */
       const defaultProps = extractDefault({ config: configObj, value: {} });
       const { id, name, category } = info;
-      if (mockServices) {
-        const sers = mockServices();
-        MOCK_SERVICES = [...MOCK_SERVICES, ...sers];
-        const sers_config = sers.map(c => {
-          return {
-            id: c.id,
-            mode: 'MOCK',
-            name: c.id,
-            content: stringify(c.service),
-          };
-        });
-        COMPONENTS_MOCK_SERVICES_CONFIG = [...COMPONENTS_MOCK_SERVICES_CONFIG, ...sers_config];
-      }
+
       return {
         id,
         name,
@@ -83,6 +66,6 @@ const getComponentsByAssets = (assets, data, services, config) => {
       return c.id !== 'NOT_FOUND';
     });
 
-  return { components, COMPONENTS_MOCK_SERVICES_CONFIG };
+  return components;
 };
 export default getComponentsByAssets;
