@@ -22,6 +22,7 @@ import Tooltip from './Tooltip';
 import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+import StyleSetting from './StyleSetting';
 
 export {
   FitCenter,
@@ -48,4 +49,5 @@ export {
   Loading,
   SideTabs,
   NeighborsQuery,
+  StyleSetting,
 };
