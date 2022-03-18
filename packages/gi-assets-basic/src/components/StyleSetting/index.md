@@ -1,7 +1,7 @@
 ## StyleSetting 样式设置
 
 ```jsx
-// import TestSDK, { Mock } from '@alipay/gi-assets-xrender';
+import TestSDK, { Mock } from '@alipay/gi-assets-testing';
 import * as React from 'react';
 import StyleSetting from './Component.tsx';
 import Asset from './index.tsx';
@@ -47,9 +47,10 @@ const data = {
   ],
 };
 const App = props => {
+  //<StyleSetting data={data} shapeOptions={[]} />
   return (
     <div>
-      <StyleSetting data={data} shapeOptions={[]} />
+      <TestSDK asset={Asset} type="GIAC_CONTENT" />
     </div>
   );
 };
