@@ -8,7 +8,7 @@ const info = {
   desc: '样式设置',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
-  type: 'AUTO',
+  type: 'GIAC_CONTENT',
 };
 
 export default {
