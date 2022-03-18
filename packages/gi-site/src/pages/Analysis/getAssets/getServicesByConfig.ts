@@ -12,14 +12,7 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
   return serviceConfig.map(s => {
     const { id, content, mode } = s;
     const runtimeContent = content?.split('export default')[1] || content;
-
     const transFn = looseJsonParse(runtimeContent);
-    console.log('runtime content', content, runtimeContent, {
-      id,
-      service: (...params) => {
-        return transFn(...params, LOCAL_DATA);
-      },
-    });
     return {
       id,
       service: (...params) => {

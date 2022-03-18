@@ -35,7 +35,7 @@ localforage.config({
 setDefaultAssetPackages();
 
 const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig }) => {
-  const { components } = getComponentsByAssets(assets.components, data, serviceConfig, config);
+  const components = getComponentsByAssets(assets.components, data, serviceConfig, config);
   const elements = getElementsByAssets(assets.elements, data);
   const layouts = getLayoutsByAssets(assets.layouts, data);
 
@@ -47,7 +47,7 @@ const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig }) =
 };
 
 const Analysis = props => {
-  const { history, match } = props;
+  const { match } = props;
   const { projectId } = match.params;
 
   const [state, updateState] = useImmer<StateType>(initialState);
