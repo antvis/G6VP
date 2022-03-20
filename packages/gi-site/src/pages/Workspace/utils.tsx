@@ -42,10 +42,22 @@ const baseNodeConfig = {
   id: 'GraphinNode',
   props: {},
 };
+const baseNodesConfig = [
+  {
+    id: 'SimpleNode',
+    props: {},
+  },
+];
 const baseEdgeConfig = {
   id: 'GraphinEdge',
   props: {},
 };
+const baseEdgesConfig = [
+  {
+    id: 'SimpleEdge',
+    props: {},
+  },
+];
 const baseComponentsConfig = [
   {
     id: 'NodeLegend',
@@ -64,14 +76,16 @@ const baseLayoutConfig = {
 };
 
 export const baseConfig = {
-  node: baseNodeConfig,
-  edge: baseEdgeConfig,
+  // node: baseNodeConfig,
+  // edge: baseEdgeConfig,
+  nodes: baseNodesConfig,
+  edges: baseEdgesConfig,
   layout: baseLayoutConfig,
   components: baseComponentsConfig,
 };
 
 export const activeAssetsKeys = {
-  elements: [baseNodeConfig.id, baseEdgeConfig.id],
+  elements: [baseNodesConfig.map(n => n.id), baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
   layouts: ['GraphinForce', 'Concentric', 'Dagre'],
 };

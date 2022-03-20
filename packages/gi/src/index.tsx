@@ -14,10 +14,10 @@ import * as utils from './utils';
 
 const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 'edge'): any => {
   if (elementType === 'node') {
-    return data;
+    return data.nodes;
   }
   if (elementType == 'edge') {
-    return data;
+    return data.edges;
   }
   return data;
 };
