@@ -1,0 +1,174 @@
+import type { GINodeConfig } from '@alipay/graphinsight/lib/typing';
+import Graphin, { Utils } from '@antv/graphin';
+// 引入资源文件
+import iconLoader from '@antv/graphin-icons';
+import '@antv/graphin-icons/dist/index.css';
+import merge from 'deepmerge';
+
+const icons = Graphin.registerFontFamily(iconLoader);
+
+const defaultNodeTheme = {
+  primaryColor: '#FF6A00',
+  nodeSize: 26,
+  mode: 'light' as 'light' | 'dark',
+};
+
+// type NodeTheme = Pick<ThemeType, 'mode' | 'primaryColor' | 'nodeSize'>;
+// type IconType = 'image' | 'font' | 'text';
+
+const getIconStyleByTheme = (style, data) => {
+  const { icon, keyshape } = style;
+  const { isMapping } = icon;
+  const value = isMapping ? data[icon.value] : icon.value;
+  if (icon.visible) {
+    if (icon.type === 'image') {
+      icon.fill = 'transparent';
+      icon.size = [keyshape.size, keyshape.size];
+      icon.clip = { r: keyshape.size / 2 };
+      icon.value = value;
+    }
+    if (icon.type === 'font') {
+      icon.type = 'font';
+      icon.fontFamily = 'graphin';
+      icon.value = icons[value] || '';
+      icon.fill = keyshape.fill;
+    }
+    if (icon.type === 'text') {
+      icon.fill = '#fff';
+      icon.value = value;
+    }
+  } else {
+    icon.visible = false;
+    icon.value = '';
+  }
+  return icon;
+};
+
+const getBadgesStyleByTheme = (style, data) => {
+  const { badge } = style;
+  const { isMapping, visible } = badge;
+  const value = isMapping ? data[badge.value] : badge.value;
+  if (visible) {
+    if (badge.type === 'font') {
+      badge.type = 'font';
+      badge.fontFamily = 'graphin';
+      badge.value = icons[value] || '';
+    }
+    if (badge.type === 'text') {
+      badge.fill = '#fff';
+      badge.value = value;
+    }
+    return [badge];
+  }
+  return [];
+};
+
+const defaultNodeStyles = Utils.getNodeStyleByTheme(defaultNodeTheme);
+
+const { style, status } = defaultNodeStyles;
+const { keyshape, halo, label, icon } = style;
+
+const defaultConfig = {
+  size: defaultNodeTheme.nodeSize,
+  color: defaultNodeTheme.primaryColor,
+  label: ['id'],
+  icon: '',
+  advanced: {
+    keyshape,
+    label: {
+      ...label,
+      visible: true,
+    },
+    icon: {
+      ...icon,
+      isMapping: false,
+      visible: false,
+    },
+    badge: {
+      visible: false,
+      position: 'RT',
+      type: 'text',
+      value: '',
+      size: Math.round(keyshape.size / 3), // 徽标占据九宫格的最右上角，所以/3
+      fill: '#fff',
+      color: '#fff',
+      stroke: keyshape.stroke,
+      isMapping: false,
+    },
+    halo: {
+      ...halo,
+      visible: false,
+      lineWidth: 0,
+    },
+  },
+};
+type NodeConfig = typeof defaultConfig;
+
+/** 数据映射函数  需要根据配置自动生成*/
+const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
+  try {
+    /** 解构配置项 */
+    const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props) as NodeConfig;
+
+    const { halo } = advanced;
+
+    const transNodes = nodes.map(node => {
+      const { id } = node;
+      const data = node.data || node;
+      /** 根据Size字段映射的枚举值 */
+      const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_') || id;
+      const icon = getIconStyleByTheme(advanced, data);
+      const badges = getBadgesStyleByTheme(advanced, data);
+
+      const keyshape = {
+        ...advanced.keyshape,
+        fill: color,
+        size: size,
+      };
+      const label = {
+        ...advanced.label,
+        value: advanced.label.visible ? LABEL_VALUE : '',
+      };
+
+      let styleWithUserData = (node && node.style) || {};
+      if (reset) {
+        styleWithUserData = {};
+      }
+
+      const styleByConfig = {
+        keyshape,
+        label,
+        icon,
+        halo,
+        badges,
+        status: {
+          ...status,
+          highlight: {
+            keyshape: {
+              lineWidth: 4,
+              fillOpacity: 0.6,
+            },
+          },
+        },
+      };
+
+      return {
+        ...node,
+        id: node.id,
+        data: node.data || node,
+        dataType: node.dataType || 'unkown',
+        type: 'graphin-circle',
+        // 数据中的style还是优先级最高的
+        style: merge(styleByConfig, styleWithUserData),
+      };
+    });
+
+    console.log('%c Graphin Nodes', 'color:red', nodes);
+
+    return transNodes;
+  } catch (error) {
+    console.error('parse transform error:', error);
+    return nodes;
+  }
+};
+export default transform;
