@@ -1,9 +1,8 @@
 import { useHistory } from '@alipay/bigfish';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Input, message, Modal, Radio } from 'antd';
+import { Button, Form, Input, Modal, Radio } from 'antd';
 import React, { useState } from 'react';
 import { addProject } from '../../services';
-import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';
 import { activeAssetsKeys, baseConfig, getMockData, serviceConfig } from './utils';
@@ -75,29 +74,9 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       projectConfig: JSON.stringify(baseConfig),
       activeAssetsKeys: JSON.stringify(activeAssetsKeys),
       serviceConfig: JSON.stringify(serviceConfig),
+      type: 'project',
     });
 
-    const createResult = await createNewProjectOnAntCode({
-      projectName: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
-      description: '创建 GI 初始化服务代码仓库',
-      type: 3,
-    });
-
-    if (!createResult || !createResult.success) {
-      message.error('创建项目失败：' + createResult.errorMsg);
-      return;
-    }
-
-    const dbResponse = await createAssets({
-      displayName: 'GI 初始化服务',
-      name: `GI_SERVICE_INTIAL_GRAPH`,
-      type: 3, //数据服务
-      description: 'GI 初始化服务',
-      version: '0.0.1',
-      branchName: 'master',
-      projectId,
-      sourceCode: 'export default (data) => {\n return data \n}',
-    });
     return projectId;
   };
 
