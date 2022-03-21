@@ -116,7 +116,7 @@ const transform = (s, metaConfig) => {
               stroke: keyShapeColor,
               fill: keyShapeColor,
               size: keyshapeSize,
-              fillOpacity: 0.3,
+              fillOpacity: Color.opacity || 0.3,
               strokeOpacity: 1,
             },
             label: {
@@ -151,7 +151,7 @@ const transform = (s, metaConfig) => {
                   fillOpacity: 0,
                   strokeOpacity: 0.4,
                 },
-              }
+              },
             },
           },
           (node && node.style) || {},
