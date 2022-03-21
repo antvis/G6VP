@@ -3,7 +3,6 @@ import { Form, Button, Row, Col, Collapse, Checkbox, Switch, Input } from 'antd'
 import { useImmer } from 'use-immer';
 import { PlusOutlined, DeleteOutlined, MinusOutlined } from '@ant-design/icons';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
-import { filterByTopRule } from './utils';
 import './index.less';
 
 export interface ElementTypeOption {
@@ -13,7 +12,7 @@ export interface ElementTypeOption {
 
 export interface GroupContainerProps {
   data: any[];
-  children?: React.ReactChild;
+  children?: any;
   valuesChange: (currenr: any, allValues: any) => void;
 }
 
@@ -45,37 +44,10 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
   };
 
   const onValuesChange = useCallback((changedValue: any, allValues: any) => {
-    console.log('xxx', data, allValues);
-    const { groups } = allValues;
-    groups.forEach(p => {
-      console.log('xxxxdddd', filterByRules(p.expressions, data));
-    });
-    // console.log(filterByRules())
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }
   }, []);
-
-  const filterByRules = (conditions, nodes) => {
-    if (conditions.length === 0) {
-      return;
-    }
-
-    const newMembers = conditions.reduce((map, condition, index) => {
-      const filteredNodes = nodes.filter(node => {
-        const topRule = condition && condition.name && condition.operator ? condition : undefined;
-        if (topRule) {
-          return filterByTopRule(node.data, topRule);
-        } else {
-          return false;
-        }
-      });
-      map[index] = { list: filteredNodes.map(node => node.id) };
-      return map;
-    }, []);
-
-    return newMembers;
-  };
 
   // 构建属性列表
   const propertyList = Object.keys(data[0]).map(d => {
@@ -92,7 +64,7 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
           name="groups"
           shouldUpdate={() => true}
           // 最后一项隐藏，解决panel展开问题
-          initialValue={[{ groupName: '样式配置分组1' }]}
+          initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group' }]}
         >
           <Form.List name="groups">
             {(fields, { add, remove }) => {
@@ -141,9 +113,8 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                                 </Form.Item>
                               </div>
                             </Col>
-                            <Col>筛选节点列表</Col>
                           </Row>
-                          <Row className="xrender-form-container">{children}</Row>
+                          <Row className="xrender-form-container">{children(index)}</Row>
                         </Panel>
                       );
                     })}
@@ -160,7 +131,12 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                         type="primary"
                         style={{ width: '100%' }}
                         onClick={() => {
-                          add({ groupName: `样式配置分组${fields.length + 1}` });
+                          add({
+                            groupName: `样式配置分组${fields.length + 1}`,
+                            groupId: Math.random()
+                              .toString(36)
+                              .slice(-8),
+                          });
                           setState(state => {
                             state.activeKeys = [...activeKeys, `${fields.length}`];
                           });
