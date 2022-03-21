@@ -6,7 +6,6 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "remove:antd": "rm -rf ./node_modules/antd",
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
     "build": "npm run clean && father build & npm run build:umd",
@@ -16,27 +15,14 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "@alipay/gi-assets-testing": "*",
-    "@alipay/graphinsight": "*",
     "form-render": "^1.9.5",
-    "deepmerge": "^4.2.2"
-  },
-  "peerDependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "@antv/graphin": "2.x",
-    "@antv/graphin-components": "2.x",
     "react": "17.x",
     "antd": "^4.16.13"
   },
   "devDependencies": {
-    "dumi": "^1.1.38",
+    "@types/node": "latest",
     "father": "^2.30.6",
-    "mini-css-extract-plugin": "^2.3.0",
-    "rimraf": "^3.0.2",
-    "umi": "^3.5.20",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
+    "rimraf": "^3.0.2"
   },
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"
