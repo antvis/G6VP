@@ -31,9 +31,6 @@ const ExpressionGroup: React.FunctionComponent<{
                 const { name: property } = expressions[conditionIndex] || {};
                 // 根据类型判断 property 具体类型
                 const propertyType = (property || '').split('-')[1] || 'string';
-                //TODO：把数据中属性转成属性 + 类型
-                const propertyOptions: any[] = [];
-
                 return (
                   <Row align="middle" gutter={8} className="item" key={key}>
                     <Col span={2}>
