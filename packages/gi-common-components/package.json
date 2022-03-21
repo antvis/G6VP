@@ -1,0 +1,28 @@
+{
+  "name": "@alipay/gi-common-components",
+  "version": "1.0.0",
+  "description": "GraphInsight 通用UI组件",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "docs": "dumi dev",
+    "start": "npm run clean && father build --watch",
+    "test": "jest",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "clean": "rimraf es esm lib dist"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "antd": "^4.16.13",
+    "react": "17.x"
+  },
+  "devDependencies": {
+    "dumi": "^1.1.38",
+    "father": "^2.30.6",
+    "rimraf": "^3.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.antfin-inc.com"
+  }
+}
