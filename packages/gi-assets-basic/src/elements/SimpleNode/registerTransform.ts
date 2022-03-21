@@ -45,10 +45,12 @@ const getIconStyleByConfig = (style, data) => {
 };
 
 const getBadgesStyleByConfig = (style, data) => {
-  const { badge } = style;
+  const { badge, keyshape } = style;
   const { isMapping, visible } = badge;
   const value = isMapping ? data[badge.value] : badge.value;
   if (visible) {
+    badge.size = Math.round(keyshape.size / 3);
+    badge.stroke = keyshape.stroke;
     if (badge.type === 'font') {
       badge.type = 'font';
       badge.fontFamily = 'graphin';
@@ -56,6 +58,7 @@ const getBadgesStyleByConfig = (style, data) => {
     }
     if (badge.type === 'text') {
       badge.fill = '#fff';
+      badge.color = keyshape.fill;
       badge.value = value;
     }
     return [badge];
@@ -115,16 +118,18 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
     const transNodes = nodes.map(node => {
       const { id } = node;
       const data = node.data || node;
+      const keyshape = {
+        ...advanced.keyshape,
+        fill: color,
+        stroke: color,
+        size: size,
+      };
+      advanced.keyshape = keyshape;
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_') || id;
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
 
-      const keyshape = {
-        ...advanced.keyshape,
-        fill: color,
-        size: size,
-      };
       const label = {
         ...advanced.label,
         value: advanced.label.visible ? LABEL_VALUE : '',

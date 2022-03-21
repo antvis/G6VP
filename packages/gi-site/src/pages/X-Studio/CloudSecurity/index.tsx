@@ -3,7 +3,18 @@ const config = {
   nodes: [
     {
       id: 'SimpleNode',
-      props: {},
+      props: {
+        label: ['Name', 'Type'],
+        size: 50,
+        color: 'green',
+        advanced: {
+          badge: {
+            type: 'text',
+            value: '6',
+            visible: true,
+          },
+        },
+      },
     },
   ],
   edges: [
