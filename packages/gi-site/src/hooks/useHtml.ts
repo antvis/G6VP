@@ -25,11 +25,16 @@ export function beautifyCode(code: string) {
  */
 const getHtmlAppCode = opts => {
   const { data, id } = opts;
+
   const config = produce(opts.config, draft => {
-    delete draft.node.meta;
-    delete draft.node.info;
-    delete draft.edge.meta;
-    delete draft.edge.info;
+    try {
+      delete draft.node.meta;
+      delete draft.node.info;
+      delete draft.edge.meta;
+      delete draft.edge.info;
+    } catch (error) {
+      console.warn(error);
+    }
   });
   const serviceConfig = produce(opts.serviceConfig, draft => {
     draft.forEach(s => {
