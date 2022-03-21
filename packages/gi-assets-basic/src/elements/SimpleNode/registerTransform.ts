@@ -16,7 +16,7 @@ const defaultNodeTheme = {
 // type NodeTheme = Pick<ThemeType, 'mode' | 'primaryColor' | 'nodeSize'>;
 // type IconType = 'image' | 'font' | 'text';
 
-const getIconStyleByTheme = (style, data) => {
+const getIconStyleByConfig = (style, data) => {
   const { icon, keyshape } = style;
   const { isMapping } = icon;
   const value = isMapping ? data[icon.value] : icon.value;
@@ -37,14 +37,14 @@ const getIconStyleByTheme = (style, data) => {
       icon.fill = '#fff';
       icon.value = value;
     }
-  } else {
-    icon.visible = false;
-    icon.value = '';
+    return icon;
   }
+  icon.visible = false;
+  icon.value = '';
   return icon;
 };
 
-const getBadgesStyleByTheme = (style, data) => {
+const getBadgesStyleByConfig = (style, data) => {
   const { badge } = style;
   const { isMapping, visible } = badge;
   const value = isMapping ? data[badge.value] : badge.value;
@@ -117,8 +117,8 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       const data = node.data || node;
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_') || id;
-      const icon = getIconStyleByTheme(advanced, data);
-      const badges = getBadgesStyleByTheme(advanced, data);
+      const icon = getIconStyleByConfig(advanced, data);
+      const badges = getBadgesStyleByConfig(advanced, data);
 
       const keyshape = {
         ...advanced.keyshape,
@@ -130,9 +130,9 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         value: advanced.label.visible ? LABEL_VALUE : '',
       };
 
-      let styleWithUserData = (node && node.style) || {};
+      let preStyle = (node && node.style) || {};
       if (reset) {
-        styleWithUserData = {};
+        preStyle = {};
       }
 
       const styleByConfig = {
@@ -159,7 +159,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         dataType: node.dataType || 'unkown',
         type: 'graphin-circle',
         // 数据中的style还是优先级最高的
-        style: merge(styleByConfig, styleWithUserData),
+        style: merge(styleByConfig, preStyle),
       };
     });
 
