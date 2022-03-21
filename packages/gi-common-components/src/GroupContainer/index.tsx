@@ -1,7 +1,7 @@
-import React, { useEffect, useCallback } from 'react';
-import { Form, Button, Row, Col, Collapse, Checkbox, Switch, Input } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
+import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
-import { PlusOutlined, DeleteOutlined, MinusOutlined } from '@ant-design/icons';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 
@@ -25,7 +25,7 @@ export interface Condition {
   groupIndex: number | string;
   checked?: boolean;
 }
-interface State {
+export interface State {
   activeKeys: (string | number)[];
 }
 
@@ -133,9 +133,7 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                         onClick={() => {
                           add({
                             groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random()
-                              .toString(36)
-                              .slice(-8),
+                            groupId: Math.random().toString(36).slice(-8),
                           });
                           setState(state => {
                             state.activeKeys = [...activeKeys, `${fields.length}`];

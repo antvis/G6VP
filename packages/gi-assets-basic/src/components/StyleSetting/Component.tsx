@@ -1,10 +1,10 @@
+import { GroupContainer } from '@alipay/gi-common-components';
+import { filterByTopRule } from '@alipay/gi-common-components/lib/GroupContainer/utils';
 import { useContext } from '@alipay/graphinsight';
 import FormRender, { useForm } from 'form-render';
 import React from 'react';
-import { GroupContainer } from '@alipay/gi-common-components';
-import { schema } from './registerMeta';
 import IconSelector from './IconSelector';
-import { filterByTopRule } from '@alipay/gi-common-components/lib/GroupContainer/utils';
+import { schema } from './registerMeta';
 
 interface MetaProps {
   key: string;
@@ -97,65 +97,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
         groupId: 'default-group',
       };
     }
-
-    const options = {
-      'group-a': {
-        expression: [{ name: 'nodeType', operator: 'eql', value: 'person' }],
-        config: {
-          size: {
-            r: 19,
-          },
-          color: {
-            fill: '#583d3d',
-            stroke: '#1d0606',
-          },
-          label: {
-            visible: true,
-            value: ['top'],
-            fill: '#b99898',
-            fontSize: 12,
-            position: 'bottom',
-          },
-          icon: {
-            iconStyle: 'circle',
-          },
-          badges: {
-            value: 'user',
-            fill: '#ee1b1b',
-          },
-        },
-      },
-      'group-b': {
-        expression: [{ name: 'nodeType', operator: 'eql', value: 'car' }],
-        config: {
-          size: {
-            r: 12,
-          },
-          color: {
-            fill: 'green',
-            stroke: '#1d0606',
-          },
-          label: {
-            visible: true,
-            value: ['top'],
-            fill: '#b99898',
-            fontSize: 14,
-            position: 'top',
-          },
-          icon: {
-            iconStyle: 'circle',
-          },
-          badges: {
-            value: 'car',
-            fill: '#ddd',
-          },
-        },
-      },
-    };
-    const transform = getTransformOptions(options);
-    updateContext(draft => {
-      draft.transform = transform;
-    });
+    console.log('preStyleGroup', preStyleGroup);
   };
 
   const handleGroupChange = (current, all) => {

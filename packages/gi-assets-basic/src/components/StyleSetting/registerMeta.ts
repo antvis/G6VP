@@ -1,6 +1,7 @@
 import { extra } from '@alipay/graphinsight';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.name = '样式设置';
 
 export const schema = {
   type: 'object',
@@ -110,9 +111,6 @@ export const schema = {
 };
 
 const registerMeta = context => {
-  const { services } = context;
-  metas.GIAC_CONTENT.name = '样式设置';
-
   return {
     ...metas,
   };
