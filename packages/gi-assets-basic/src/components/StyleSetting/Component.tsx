@@ -98,6 +98,20 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
       };
     }
     console.log('preStyleGroup', preStyleGroup);
+    const nodesConfig = preStyleGroup.map(c => {
+      return {
+        id: 'SimpleNode',
+        props: c.config,
+        groupId: c.groupId,
+        groupName: c.groupName,
+        expressions: c.expressions,
+        logic: c.logic,
+      };
+    });
+    console.log('nodeConfig', nodesConfig);
+    // updateContext(draft => {
+    //   draft.config.nodes = nodesConfig;
+    // });
   };
 
   const handleGroupChange = (current, all) => {
