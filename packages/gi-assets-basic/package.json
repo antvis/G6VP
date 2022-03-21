@@ -20,6 +20,7 @@
     "@alipay/gi-assets-testing": "*",
     "@alipay/gi-assets-xrender": "*",
     "@alipay/graphinsight": "*",
+    "@alipay/gi-common-components": "*",
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
