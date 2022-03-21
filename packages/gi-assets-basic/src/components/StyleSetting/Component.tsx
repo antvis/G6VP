@@ -3,8 +3,16 @@ import { filterByTopRule } from '@alipay/gi-common-components/lib/GroupContainer
 import { useContext } from '@alipay/graphinsight';
 import FormRender, { useForm } from 'form-render';
 import React from 'react';
+import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
 import IconSelector from './IconSelector';
 import { schema } from './registerMeta';
+export type NodesConfig = {
+  id: string;
+  groupId: string;
+  groupName: string;
+  expressions: any[];
+  props: NodeConfig;
+}[];
 
 interface MetaProps {
   key: string;
@@ -98,17 +106,17 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
       };
     }
     console.log('preStyleGroup', preStyleGroup);
-    const nodesConfig = preStyleGroup.map(c => {
+    const nodesConfig: NodesConfig = preStyleGroup.map(c => {
       return {
         id: 'SimpleNode',
-        props: c.config,
+        props: c.config as NodeConfig,
         groupId: c.groupId,
         groupName: c.groupName,
         expressions: c.expressions,
         logic: c.logic,
       };
     });
-    console.log('nodeConfig', nodesConfig);
+    console.log('nodeConfig', nodesConfig, nodesConfig[0].props.advanced);
     // updateContext(draft => {
     //   draft.config.nodes = nodesConfig;
     // });
