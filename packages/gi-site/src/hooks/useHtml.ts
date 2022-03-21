@@ -1,4 +1,3 @@
-import ASSETS_PACKAGE from '@alipay/gi-assets/package.json';
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
 import { produce } from 'immer';
 import beautify from 'js-beautify';
@@ -75,7 +74,6 @@ const getHtmlAppCode = opts => {
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.0/dist/index.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/gi-assets/${ASSETS_PACKAGE.version}/dist/index.css" />
     ${GIAssetsLinks}
  
   </head>
