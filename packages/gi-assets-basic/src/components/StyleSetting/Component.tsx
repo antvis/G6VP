@@ -1,5 +1,4 @@
 import { GroupContainer } from '@alipay/gi-common-components';
-import { filterByTopRule } from '@alipay/gi-common-components/lib/GroupContainer/utils';
 import { useContext } from '@alipay/graphinsight';
 import FormRender, { useForm } from 'form-render';
 import React from 'react';
@@ -69,27 +68,6 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
   const form = useForm();
   const { updateContext } = useContext();
 
-  const filterByRules = (conditions, nodes) => {
-    if (!conditions || conditions.length === 0) {
-      return;
-    }
-
-    const newMembers = conditions.reduce((map, condition, index) => {
-      const filteredNodes = nodes.filter(node => {
-        const topRule = condition && condition.name && condition.operator ? condition : undefined;
-        if (topRule) {
-          return filterByTopRule(node.data, topRule);
-        } else {
-          return false;
-        }
-      });
-      map[index] = { list: filteredNodes.map(node => node.id) };
-      return map;
-    }, []);
-
-    return newMembers;
-  };
-
   /**
    * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
    * @param current
@@ -122,6 +100,8 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
     updateContext(draft => {
       //@ts-ignore
       draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
+      //@ts-check
+      draft.layoutCache = true;
     });
   };
 
