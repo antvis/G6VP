@@ -71,7 +71,7 @@ const defaultNodeStyles = Utils.getNodeStyleByTheme(defaultNodeTheme);
 const { style, status } = defaultNodeStyles;
 const { keyshape, halo, label, icon } = style;
 
-const defaultConfig = {
+export const defaultConfig = {
   size: defaultNodeTheme.nodeSize,
   color: defaultNodeTheme.primaryColor,
   label: ['id'],

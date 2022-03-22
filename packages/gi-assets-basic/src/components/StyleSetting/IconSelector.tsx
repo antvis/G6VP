@@ -49,16 +49,8 @@ const IconSet = {
       value: 'icon-car',
     },
     {
-      key: 'heart',
-      value: 'icon-heart',
-    },
-    {
       key: 'phone',
       value: 'icon-phone',
-    },
-    {
-      key: 'addteam',
-      value: 'icon-addteam',
     },
     {
       key: 'solution',
@@ -96,7 +88,7 @@ const IconSelector = props => {
       <Form.Item noStyle>
         <Select
           showSearch
-          style={{ width: 100 }}
+          style={{ width: 87 }}
           placeholder="选择图标类型"
           onChange={handleChangeIconSource}
           defaultValue={iconSource}

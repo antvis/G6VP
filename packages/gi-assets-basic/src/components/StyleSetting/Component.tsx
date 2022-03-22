@@ -145,6 +145,9 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
           <FormRender
             widgets={{ iconSelector: IconSelector }}
             form={form}
+            displayType="row"
+            allCollapsed={true}
+            // debounceInput={true}
             schema={schema as any}
             onValuesChange={(current, all) => handleChange(current, all, groupIndex)}
           />
