@@ -1,6 +1,6 @@
 import { filterByRules } from '@alipay/gi-common-components/lib/GroupContainer/utils';
 import Graphin, { GraphinData } from '@antv/graphin';
-import { original, produce } from 'immer';
+import { original } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
 /** export  */
@@ -73,6 +73,7 @@ const GISDK = (props: Props) => {
     initialized: false,
     initializer: defaultInitializerCfg,
     transform: data => data,
+    layoutCache: false,
     /** graphin */
     //@ts-ignore
     graph: null,
@@ -133,6 +134,7 @@ const GISDK = (props: Props) => {
       draft.components = finalComponents;
       //@ts-ignore
       draft.initializer = initializerCfg;
+      draft.layoutCache = true;
     });
   }, [componentsCfg]);
 
@@ -144,6 +146,7 @@ const GISDK = (props: Props) => {
         ...options,
       };
       draft.config.layout = layoutCfg;
+      draft.layoutCache = false;
     });
   }, [layoutCfg]);
 
@@ -240,7 +243,6 @@ const GISDK = (props: Props) => {
       };
     };
 
-    const a = produce({}, draft => {});
     updateState(draft => {
       if (draft.data.nodes.length !== 0) {
         // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
@@ -271,11 +273,13 @@ const GISDK = (props: Props) => {
       updateState(draft => {
         draft.data = transform(res);
         draft.source = transform(res);
+        draft.layoutCache = false;
       });
     },
     updateLayout: res => {
       updateState(draft => {
         draft.layout = res;
+        draft.layoutCache = false;
       });
     },
     updateDataAndLayout: (res, lay) => {
@@ -283,6 +287,7 @@ const GISDK = (props: Props) => {
         draft.data = transform(res);
         draft.source = transform(res);
         draft.layout = lay;
+        draft.layoutCache = false;
       });
     },
   };
@@ -338,7 +343,7 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <Graphin data={data} layout={layout} enabledStack={true} theme={theme}>
+      <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
         <>
           {state.isContextReady && <InitializerComponent {...InitializerProps} />}
           <SetupUseGraphinHook updateContext={updateState} />

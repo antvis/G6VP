@@ -37,6 +37,9 @@ export interface State {
   isContextReady: boolean;
   /** 数据映射函数 */
   transform: (data: any) => any;
+
+  /** 是否使用缓存的布局 */
+  layoutCache: boolean;
 }
 
 export interface Props {
