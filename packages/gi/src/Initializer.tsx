@@ -51,6 +51,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.source = { ...res };
         }
         draft.initialized = true;
+        draft.layoutCache = false;
       });
     });
   }, []);
