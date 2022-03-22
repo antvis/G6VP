@@ -32,16 +32,51 @@ export const schema = {
       default: ['id'],
       widget: 'multiSelect',
     },
-    icon: {
-      type: 'string',
-      title: '图标（选填）',
-      widget: 'iconSelector',
-      default: defaultConfig.icon,
-    },
+
     advanced: {
       title: '高级配置',
       type: 'object',
       properties: {
+        icon: {
+          type: 'object',
+          title: '图标',
+          properties: {
+            visible: {
+              title: '是否显示',
+              type: 'boolean',
+              default: defaultConfig.advanced.icon.visible,
+            },
+            type: {
+              title: '类型',
+              type: 'string',
+              enum: ['text', 'font'],
+              enumNames: ['文本', '字体图标'],
+              widget: 'select',
+              hidden: '{{!rootValue.visible}}',
+              default: defaultConfig.advanced.icon.type,
+            },
+            value: {
+              type: 'string',
+              title: '图标（选填）',
+              widget: 'iconSelector',
+              default: defaultConfig.icon,
+              hidden: '{{!rootValue.visible}}',
+            },
+            fill: {
+              title: '颜色',
+              type: 'string',
+              format: 'color',
+              default: defaultConfig.advanced.icon.fill,
+              hidden: '{{!rootValue.visible}}',
+            },
+            size: {
+              title: '大小',
+              type: 'number',
+              default: defaultConfig.advanced.icon.size,
+              hidden: '{{!rootValue.visible}}',
+            },
+          },
+        },
         keyshape: {
           type: 'object',
           title: '主节点',
@@ -88,23 +123,7 @@ export const schema = {
             },
           },
         },
-        icon: {
-          type: 'object',
-          title: '图标',
-          properties: {
-            fill: {
-              title: '颜色',
-              type: 'string',
-              format: 'color',
-              default: defaultConfig.advanced.icon.fill,
-            },
-            size: {
-              title: '大小',
-              type: 'number',
-              default: defaultConfig.advanced.icon.size,
-            },
-          },
-        },
+
         badge: {
           type: 'object',
           title: '徽标',

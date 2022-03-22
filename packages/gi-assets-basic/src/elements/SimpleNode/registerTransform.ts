@@ -17,9 +17,10 @@ const defaultNodeTheme = {
 // type IconType = 'image' | 'font' | 'text';
 
 const getIconStyleByConfig = (style, data) => {
-  const { icon, keyshape } = style;
-  const { isMapping } = icon;
-  const value = isMapping ? data[icon.value] : icon.value;
+  const { keyshape } = style;
+  const icon = { ...style.icon };
+  const { value } = icon;
+
   if (icon.visible) {
     if (icon.type === 'image') {
       icon.fill = 'transparent';
@@ -46,8 +47,8 @@ const getIconStyleByConfig = (style, data) => {
 
 const getBadgesStyleByConfig = (style, data) => {
   const { badge, keyshape } = style;
-  const { isMapping, visible } = badge;
-  const value = isMapping ? data[badge.value] : badge.value;
+  const { visible, value } = badge;
+
   if (visible) {
     badge.size = Math.round(keyshape.size / 3);
     badge.stroke = keyshape.stroke;
