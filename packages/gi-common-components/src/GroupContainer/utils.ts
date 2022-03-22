@@ -64,15 +64,11 @@ export const getOperatorList = (type: 'long' | 'string' | 'double') => {
   return [];
 };
 
-export const formatProperties = (data: {
+export const formatProperties = (node: {
   label: string;
-  properties?: Record<string, string | number>;
+  data?: Record<string, string | number>;
 }): Record<string, string | number> => {
-  return data.properties
-    ? data.properties
-    : {
-        [data.label]: data.label,
-      };
+  return node.data || {};
 };
 
 const filterByExpression = (data: Record<string, string | number>, expression: Expression): boolean => {
@@ -105,7 +101,7 @@ const filterByExpression = (data: Record<string, string | number>, expression: E
 };
 
 export const filterByTopRule = (node, rule: Condition) => {
-  const { logic, nodeTypes, expressions } = rule;
+  const { logic, expressions } = rule;
 
   // 未配置规则一律通过
   if (!expressions || expressions.length === 0) {
@@ -113,6 +109,12 @@ export const filterByTopRule = (node, rule: Condition) => {
   }
 
   return logic === true
-    ? expressions.every(item => nodeTypes.includes(node.label) && filterByExpression(formatProperties(node), item))
-    : expressions.some(item => nodeTypes.includes(node.label) && filterByExpression(formatProperties(node), item));
+    ? expressions.every(item => filterByExpression(formatProperties(node), item))
+    : expressions.some(item => filterByExpression(formatProperties(node), item));
+};
+
+export const filterByRules = (nodes, rule) => {
+  return nodes.filter(node => {
+    return filterByTopRule(node, rule);
+  });
 };

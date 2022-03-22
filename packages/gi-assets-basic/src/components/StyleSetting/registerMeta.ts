@@ -42,7 +42,7 @@ export const schema = {
       title: '高级配置',
       type: 'object',
       properties: {
-        keyShape: {
+        keyshape: {
           type: 'object',
           title: '主节点',
           properties: {

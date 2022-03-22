@@ -1,4 +1,6 @@
+import { filterByRules } from '@alipay/gi-common-components/lib/GroupContainer/utils';
 import Graphin, { GraphinData } from '@antv/graphin';
+import { original, produce } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
 /** export  */
@@ -190,16 +192,36 @@ const GISDK = (props: Props) => {
      * @returns
      */
     const transform = (data, reset?: boolean) => {
-      const nodes = (nodesCfg || defaultNodesCfg)
+      const filterNodes = (nodesCfg || defaultNodesCfg)
         .map(item => {
-          const { id, rules } = item;
+          //@ts-ignore
+          const { id, expressions, logic } = item;
           const Element = ElementAssets[id];
-          const filterData = filterDataByRules(data, rules, 'node');
+          const filterData = filterByRules(data.nodes, { logic, expressions });
+          console.log('nodes filter', filterData);
           return Element.registerTransform(filterData, item, reset);
         })
         .reduce((acc, curr) => {
           return [...acc, ...curr];
         }, []);
+      const filterIds = filterNodes.map(n => n.id);
+
+      const otherNodes = data.nodes.filter(n => {
+        return filterIds.indexOf(n.id) === -1;
+      });
+
+      const otherNodesByTrans = ElementAssets['SimpleNode'].registerTransform(
+        otherNodes,
+        {
+          id: 'SimpleNode',
+          //@ts-ignore
+          props: {},
+        },
+        reset,
+      );
+      const nodes = [...filterNodes, ...otherNodesByTrans];
+
+      console.log('nodes', nodes);
 
       const edges = (edgesCfg || defaultEdgesCfg)
         .map(item => {
@@ -217,13 +239,18 @@ const GISDK = (props: Props) => {
         edges,
       };
     };
+
+    const a = produce({}, draft => {});
     updateState(draft => {
       if (draft.data.nodes.length !== 0) {
-        // 当节点和边的Schema配置变化的时候，默认是重置视觉映射
-        const newData = transform(draft.data, true);
-        //@ts-ignore
+        // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
+        const preData = original(draft.data);
+        console.log(preData, draft.data);
+        const newData = transform(preData, true);
+
         draft.data = newData;
       }
+
       draft.transform = transform;
       draft.config.nodes = nodesCfg;
       draft.config.edges = edgesCfg;
