@@ -6,6 +6,7 @@ import React from 'react';
 import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
 import IconSelector from './IconSelector';
 import { schema } from './registerMeta';
+
 export type NodesConfig = {
   id: string;
   groupId: string;
@@ -116,10 +117,12 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
         logic: c.logic,
       };
     });
-    console.log('nodeConfig', nodesConfig, nodesConfig[0].props.advanced);
-    // updateContext(draft => {
-    //   draft.config.nodes = nodesConfig;
-    // });
+
+    console.log('nodeConfig', nodesConfig);
+    updateContext(draft => {
+      //@ts-ignore
+      draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
+    });
   };
 
   const handleGroupChange = (current, all) => {
