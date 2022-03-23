@@ -1,4 +1,8 @@
-import { BrowserFSFileType } from '@alipay/alex';
+// import { BrowserFSFileType } from '@alipay/alex';
+const BrowserFSFileType = {
+  FILE: '',
+  DIRECTORY: '',
+};
 import request from 'umi-request';
 import { getCombinedAssets } from '../loader';
 import { ASSET_TYPE, isMock, IS_DYNAMIC_LOAD, SERVICE_URL_PREFIX } from './const';
