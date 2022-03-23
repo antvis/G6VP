@@ -24,7 +24,6 @@
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
-    "form-render": "^1.9.5",
     "install": "^0.13.0",
     "npm": "^8.5.5"
   },
