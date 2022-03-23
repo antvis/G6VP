@@ -16,12 +16,11 @@ export interface Expression {
 const ExpressionGroup: React.FunctionComponent<{
   index: number;
   form: any;
-  restField: any;
   name: string;
   options: any[];
-}> = ({ index, form, restField, name, options }) => {
+}> = ({ index, form, name, options }) => {
   const content = (
-    <Form.Item {...restField} name={[name, 'expressions']} label="属性过滤">
+    <Form.Item name={[name, 'expressions']} label="属性过滤">
       <Form.List name={[name, 'expressions']}>
         {(fields, { add, remove }) => {
           const { expressions } = form.getFieldValue('groups')[index] || {};
