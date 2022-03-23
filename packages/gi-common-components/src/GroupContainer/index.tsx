@@ -29,7 +29,8 @@ export interface State {
   activeKeys: (string | number)[];
 }
 
-const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesChange }) => {
+const GroupContainer: React.FC<GroupContainerProps> = props => {
+  const { data, children, valuesChange } = props;
   const [form] = Form.useForm();
 
   const [state, setState] = useImmer<State>({
@@ -95,13 +96,7 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                         >
                           <Row>
                             <Col span={24} className="expression-group">
-                              <ExpressionGroup
-                                options={propertyList}
-                                restField={restField}
-                                name={name as any}
-                                index={index}
-                                form={form}
-                              />
+                              <ExpressionGroup options={propertyList} name={name as any} index={index} form={form} />
                               <div className="switch-button-wrap">
                                 <Form.Item name={[name, 'logic']} initialValue={true}>
                                   <Switch
@@ -114,17 +109,14 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                               </div>
                             </Col>
                           </Row>
-                          <Row className="xrender-form-container">{children(index)}</Row>
+                          <Col span={24} className="xrender-form-container">
+                            {children(index)}
+                          </Col>
                         </Panel>
                       );
                     })}
                   </Collapse>
                   <Row gutter={20}>
-                    {/* <Col span={12}>
-                      <Button size="small" style={{ width: '100%' }} onClick={onDeleteGroups} icon={<MinusOutlined />}>
-                        删除所有分组
-                      </Button>
-                    </Col> */}
                     <Col span={24}>
                       <Button
                         size="small"
@@ -133,7 +125,9 @@ const GroupContainer: React.FC<GroupContainerProps> = ({ data, children, valuesC
                         onClick={() => {
                           add({
                             groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random().toString(36).slice(-8),
+                            groupId: Math.random()
+                              .toString(36)
+                              .slice(-8),
                           });
                           setState(state => {
                             state.activeKeys = [...activeKeys, `${fields.length}`];
