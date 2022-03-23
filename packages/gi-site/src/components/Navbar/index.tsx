@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useHistory, useRequest } from '@alipay/bigfish';
 import { createFromIconfontCN, EditOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Drawer, message, Tooltip } from 'antd';
+import { Button, Drawer, Tooltip, notification } from 'antd';
 import * as React from 'react';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { getProjectById, updateProjectById } from '../../services';
@@ -63,8 +63,9 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     updateContext(draft => {
       draft.isSave = true;
     });
-
-    message.success('保存成功');
+    notification.success({
+      message: '保存成功',
+    });
   };
 
   const changeTitle = async () => {
