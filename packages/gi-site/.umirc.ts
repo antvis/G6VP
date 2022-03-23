@@ -1,4 +1,3 @@
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 /** 是否为本地研发模式 */
 export const isDev = true;
 const localDeps = isDev
@@ -28,10 +27,10 @@ export default {
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
-    { exact: true, path: '/market', component: 'Market/List' },
-    { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
-    { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
-    { exact: true, path: '/market/personal', component: 'Market/Personal/PersonalAsserts' },
+    // { exact: true, path: '/market', component: 'Market/List' },
+    // { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
+    // { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
+    // { exact: true, path: '/market/personal', component: 'Market/Personal/PersonalAsserts' },
     { component: '404' },
   ],
   // mfsu: {},
@@ -42,13 +41,13 @@ export default {
   request: {
     dataField: '',
   },
-  chainWebpack(config: any) {
-    config.plugin('monaco-editor').use(
-      new MonacoWebpackPlugin({
-        languages: ['javascript', 'json'],
-      }),
-    );
-  },
+  // chainWebpack(config: any) {
+  //   config.plugin('monaco-editor').use(
+  //     new MonacoWebpackPlugin({
+  //       languages: ['javascript', 'json'],
+  //     }),
+  //   );
+  // },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
