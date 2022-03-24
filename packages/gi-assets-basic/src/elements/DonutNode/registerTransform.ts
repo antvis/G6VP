@@ -1,30 +1,16 @@
-import { defaultProps } from './registerMeta';
-
-const getMapping = () => {
-  const Mapping = new Map();
-  return (enumValue, value) => {
-    const current = Mapping.get(enumValue);
-    if (current) {
-      Mapping.set(enumValue, [...current, value]);
-    } else {
-      Mapping.set(enumValue, [value]);
-    }
-    return Mapping;
-  };
+const defaultProps = {
+  donut: [],
+  label: ['id'],
 };
-
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, metaConfig) => {
+const transform = (nodes, nodeConfig) => {
   try {
     /** 解构配置项 */
-    const props = Object.assign({}, defaultProps, metaConfig.node.props);
-    const { donut = {}, label = {} } = props;
- 
-    /** Mock */
-    const dountKeys = donut.mappingKey || [];
+    const props = Object.assign({}, defaultProps, nodeConfig.props);
+    const { donut: dountKeys, label: labelKey } = props;
+
     const colorKeys = ['#61DDAA', '#F08BB4', '#65789B'];
-    const labelKey = label.mappingKey || 'id';
-    /** calculate */
+
     const donutColorMap = dountKeys.reduce((acc, curr, index) => {
       return {
         ...acc,
@@ -32,8 +18,9 @@ const transform = (s, metaConfig) => {
       };
     }, {});
 
-    const nodes = s.nodes.map(node => {
-      const { id, data } = node;
+    const transNodes = nodes.map(node => {
+      const { id } = node;
+      const data = node.data || node;
       /**  构造 donutAttrs */
       const donutAttrs = dountKeys.reduce((acc, curr) => {
         return { ...acc, [curr]: data[curr] };
@@ -44,8 +31,8 @@ const transform = (s, metaConfig) => {
 
       const size = Math.sqrt(donutSumCount) * 5;
       return {
-        id: node.id,
-        data: node.data,
+        id,
+        data,
         type: 'donut',
         label: data[labelKey],
         donutAttrs,
@@ -61,10 +48,10 @@ const transform = (s, metaConfig) => {
       };
     });
 
-    return nodes;
+    return transNodes;
   } catch (error) {
     console.error('parse transform error:', error);
-    return s.nodes;
+    return nodes;
   }
 };
 export default transform;
