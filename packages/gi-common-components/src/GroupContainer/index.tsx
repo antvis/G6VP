@@ -65,7 +65,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           name="groups"
           shouldUpdate={() => true}
           // 最后一项隐藏，解决panel展开问题
-          initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group' }]}
+          initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group', id: 'SimpleNode', props: {} }]}
         >
           <Form.List name="groups">
             {(fields, { add, remove }) => {
@@ -81,6 +81,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                           add({
                             groupName: `样式配置分组${fields.length + 1}`,
                             groupId: Math.random().toString(36).slice(-8),
+                            id: 'SimpleNode',
+                            props: {},
                           });
                           setState(state => {
                             state.activeKeys = [...activeKeys, `${fields.length}`];
