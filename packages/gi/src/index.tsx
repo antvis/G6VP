@@ -201,13 +201,16 @@ const GISDK = (props: Props) => {
           const { id, expressions, logic } = item;
           const Element = ElementAssets[id];
           const filterData = filterByRules(data.nodes, { logic, expressions });
-          console.log('nodes filter', filterData);
           return Element.registerTransform(filterData, item, reset);
         })
         .reduce((acc, curr) => {
-          return [...acc, ...curr];
+          return [...curr, ...acc];
         }, []);
-      const filterIds = filterNodes.map(n => n.id);
+
+      const uniqueNodes = utils.uniqueElementsBy(filterNodes, (a, b) => {
+        return a.id === b.id;
+      });
+      const filterIds = uniqueNodes.map(n => n.id);
 
       const otherNodes = data.nodes.filter(n => {
         return filterIds.indexOf(n.id) === -1;
@@ -222,7 +225,7 @@ const GISDK = (props: Props) => {
         },
         reset,
       );
-      const nodes = [...filterNodes, ...otherNodesByTrans];
+      const nodes = [...uniqueNodes, ...otherNodesByTrans];
 
       console.log('nodes', nodes);
 
@@ -247,7 +250,7 @@ const GISDK = (props: Props) => {
       if (draft.data.nodes.length !== 0) {
         // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
         const preData = original(draft.data);
-        console.log(preData, draft.data);
+        console.log('PRE DATA', preData);
         const newData = transform(preData, true);
 
         draft.data = newData;
