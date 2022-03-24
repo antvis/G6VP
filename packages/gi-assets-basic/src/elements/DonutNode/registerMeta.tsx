@@ -1,5 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
-
 const registerMeta = context => {
   try {
     const { data, keys } = context;
@@ -7,64 +5,35 @@ const registerMeta = context => {
     const numberKeys = Object.keys(firstNode).filter(key => {
       return typeof firstNode[key] === 'number';
     });
-    const numberOptions = numberKeys.map(c => {
-      return {
-        value: c,
-        label: c,
-      };
-    });
-    const labelOptions = keys.map(c => {
-      return {
-        value: c,
-        label: c,
-      };
-    });
     return {
-      donut: {
-        name: '环展示',
-        type: 'group',
-        enableHide: false,
-        fold: false,
-        children: {
-          mappingKey: {
-            name: '映射字段',
-            type: 'TagsSelect',
-            optionCol: 8,
-            default: numberKeys,
-            options: numberOptions,
+      type: 'object',
+      collapsed: false,
+      properties: {
+        donut: {
+          title: '环展示',
+          type: 'array',
+          widget: 'multiSelect',
+          enum: numberKeys,
+          items: {
+            type: 'string',
           },
+          default: numberKeys,
         },
-      },
-      label: {
-        name: '标签',
-        type: 'group',
-        enableHide: false,
-        fold: false,
-        children: {
-          showlabel: {
-            name: '开关',
-            type: 'switch',
-            default: true,
-            statusText: true,
+        label: {
+          title: '文本',
+          type: 'array',
+          enum: keys,
+          items: {
+            type: 'string',
           },
-          mappingKey: {
-            name: '映射字段',
-            type: 'select',
-            useFont: true,
-            default: 'type',
-            showInPanel: {
-              conditions: [['label.showlabel', '$eq', true]],
-            },
-            options: labelOptions,
-          },
+          default: ['id'],
+          widget: 'multiSelect',
         },
       },
     };
-  } catch (error) {}
+  } catch (error) {
+    return {};
+  }
 };
-
-const configObj = registerMeta({ data: {}, keys: ['id'] });
-/** 默认的配置值 */
-export const defaultProps = extractDefault({ config: configObj, value: {} });
 
 export default registerMeta;
