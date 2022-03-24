@@ -1,106 +1,59 @@
-import ColorMapping from '@ali/datav-gui-color-scale';
-import MarkerMapping from '@ali/datav-gui-marker-scale';
-import SizeMapping from '@ali/datav-gui-size-scale';
-import GUI from '@ali/react-datav-gui';
-import { extractDefault } from '@ali/react-datav-gui-utils';
-import { Select } from 'antd';
-import React, { useState } from 'react';
-import AssetsSelect from '../../../../components/AssetsSelect';
-import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+import { CommonStyleSetting } from '@alipay/gi-common-components';
+import React from 'react';
 import { useContext } from '../../hooks/useContext';
-const freeExtensions = {
-  sizeMapping: SizeMapping,
-  colorMapping: ColorMapping,
-  markerMapping: MarkerMapping,
-};
+import getNodeSchema, { defaultConfig } from './getNodeSchema';
+type NodeConfig = any;
+export type NodesConfig = {
+  id: string;
+  groupId: string;
+  groupName: string;
+  expressions: any[];
+  props: NodeConfig;
+}[];
 
-const extensions = {
-  TagsSelect,
-};
-
-const { Option } = Select;
-
-interface NodeStylePanelProps {
-  meta: any;
-  data: any;
-  elements: any;
-  config: any;
+interface MetaProps {
+  key: string;
+  meta: Object;
 }
 
-const cache = {};
+export interface StyleSettingProps {
+  shapeOptions: MetaProps[];
+  data: { nodes: any[]; edges: any[] };
+  elementType: 'node' | 'edge';
+}
 
-const getCacheValues = (object, key) => {
-  if (!cache[key]) {
-    cache[key] = { id: key, props: {} };
-    return object[key];
-  }
-  return cache[key];
-};
+const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType }) => {
+  const { updateContext, context } = useContext();
+  const { data } = context;
+  const schema = getNodeSchema(defaultConfig);
 
-const NodeStylePanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-  const { data, elements, config = { node: { props: {} } } } = props;
-  const { updateContext } = useContext();
-  const { node: nodeConfig } = config;
-  const [state, setState] = useState({
-    /** 当前元素的ID */
-    elementId: nodeConfig.id,
-  });
-
-  const { elementId } = state;
-
-  /*** 当前元素物料 */
-  const element = elements[elementId];
-  const { configObj } = element?.meta;
-  const valueObj = extractDefault({ config: configObj, value: nodeConfig.props });
-  /** 缓存数据 */
-  cache[elementId] = { id: elementId, props: { ...valueObj } };
-
-  const handleChangeConfig = evt => {
-    const { rootValue } = evt;
-    cache[elementId].props = rootValue;
-
-    updateContext(draft => {
-      draft.config.node = {
-        ...element,
-        props: rootValue,
-      };
-    });
-  };
-  const handleChangeShape = value => {
-    setState(preState => {
+  /**
+   * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
+   * @param current
+   * @param all
+   */
+  const handleChange = styleGroups => {
+    const nodesConfig: NodesConfig = styleGroups.map(c => {
       return {
-        ...preState,
-        elementId: value,
+        id: 'SimpleNode',
+        props: c.config as NodeConfig,
+        groupId: c.groupId,
+        groupName: c.groupName,
+        expressions: c.expressions,
+        logic: c.logic,
       };
     });
-    const values = getCacheValues(elements, value);
 
+    console.log('nodeConfig', nodesConfig);
     updateContext(draft => {
-      draft.config.node = {
-        ...values,
-      };
+      //@ts-ignore
+      draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
+      //@ts-check
+      draft.layoutCache = true;
     });
   };
-  const elementOptions = Object.values(elements) as any[];
 
-  const GUIComponent = React.useMemo(() => {
-    return (
-      <GUI
-        configObj={configObj}
-        valueObj={valueObj}
-        freeExtensions={freeExtensions}
-        onChange={handleChangeConfig}
-        extensions={extensions}
-      />
-    );
-  }, [elementId, handleChangeConfig]);
-
-  return (
-    <div>
-      <AssetsSelect onChange={handleChangeShape} value={elementId} options={elementOptions} />
-      {GUIComponent}
-    </div>
-  );
+  return <CommonStyleSetting schema={schema} onChange={handleChange} data={data} elementType="node" />;
 };
 
-export default NodeStylePanel;
+export default NodeStyleSetting;
