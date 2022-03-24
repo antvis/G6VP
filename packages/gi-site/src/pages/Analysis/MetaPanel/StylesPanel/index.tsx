@@ -22,8 +22,8 @@ const EdgeTab = <div className="tab-title">边</div>;
 
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const { elements } = props;
-  const { node: NodeElements, edge: EdgeElements } = elements;
-
+  const { nodes: NodeElements, edges: EdgeElements } = elements;
+  console.log('NodeElements', NodeElements);
   return (
     <>
       <AssetsCenterHandler title="元素" id="elements" />
@@ -31,7 +31,7 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
       <Tabs defaultActiveKey="node" onChange={callback} centered id="gi-switch-elements-tab">
         <TabPane tab={NodeTab} key="node">
           {/* <NodeStylePanel {...props} elements={NodeElements} /> */}
-          <NodeStyleSetting {...props} />
+          <NodeStyleSetting elementType="node" elements={NodeElements} />
         </TabPane>
         <TabPane tab={EdgeTab} key="edge">
           {/* <EdgeStylePanel {...props} elements={EdgeElements} /> */}

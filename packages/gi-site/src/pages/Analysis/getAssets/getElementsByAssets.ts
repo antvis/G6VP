@@ -1,4 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
 import type { TypeAssetInfo } from './typing';
 import { getKeysByData } from './utils';
 
@@ -15,20 +14,21 @@ const getElementsByAssets = (assets, data) => {
   Object.keys(assets).forEach(key => {
     const element = assets[key];
     //@ts-ignore
-    const { info, registerMeta, registerShape, registerTransform } = element;
+    const { info, registerMeta, registerShape, registerTransform, defaultProps } = element;
     const { id, name, category, type } = info as TypeAssetInfo;
 
     const keys = getKeysByData(data, category);
     const configObj = registerMeta({ data, keys });
     /** 默认的配置值 */
-    const defaultProps = extractDefault({ config: configObj, value: {} });
+    // const defaultProps = extractDefault({ config: configObj, value: {} });
 
     const item = {
       id,
       props: defaultProps,
       name,
       info,
-      meta: { configObj },
+      // meta: { configObj },
+      meta: configObj,
       // registerShape,
       // registerTransform,
     };
@@ -47,8 +47,8 @@ const getElementsByAssets = (assets, data) => {
   });
 
   return {
-    node: nodeElements,
-    edge: edgeElements,
+    nodes: nodeElements,
+    edges: edgeElements,
   };
 };
 export default getElementsByAssets;
