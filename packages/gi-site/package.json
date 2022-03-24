@@ -9,6 +9,7 @@
     "analyse": "ANALYZE=1 umi dev"
   },
   "dependencies": {
+    "@alipay/gi-common-components": "latest",
     "@ali/datav-gui-color-scale": "^1.0.9",
     "@ali/datav-gui-marker-scale": "^1.1.0",
     "@ali/datav-gui-size-scale": "^1.0.5",

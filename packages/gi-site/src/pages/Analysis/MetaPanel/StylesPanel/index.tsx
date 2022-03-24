@@ -2,6 +2,7 @@ import { Tabs } from 'antd';
 import React from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import './index.less';
+import NodeStyleSetting from './Node';
 
 const { TabPane } = Tabs;
 
@@ -30,6 +31,7 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
       <Tabs defaultActiveKey="node" onChange={callback} centered id="gi-switch-elements-tab">
         <TabPane tab={NodeTab} key="node">
           {/* <NodeStylePanel {...props} elements={NodeElements} /> */}
+          <NodeStyleSetting {...props} />
         </TabPane>
         <TabPane tab={EdgeTab} key="edge">
           {/* <EdgeStylePanel {...props} elements={EdgeElements} /> */}

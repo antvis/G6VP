@@ -245,7 +245,7 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState };
-  console.log('%c GRAPHINSIGHT RENDERING', 'color:lightgreen', state);
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
 
   return (
     <AnalysisContext.Provider value={context}>
