@@ -76,7 +76,6 @@ export const defaultConfig = {
   size: defaultNodeTheme.nodeSize,
   color: defaultNodeTheme.primaryColor,
   label: ['id'],
-  icon: '',
   advanced: {
     keyshape,
     label: {
@@ -112,7 +111,7 @@ export type NodeConfig = typeof defaultConfig;
 const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
-    const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props) as NodeConfig;
+    const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
     const { halo } = advanced;
 
