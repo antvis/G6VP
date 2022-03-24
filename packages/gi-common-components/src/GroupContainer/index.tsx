@@ -71,6 +71,27 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
             {(fields, { add, remove }) => {
               return (
                 <>
+                  <Row gutter={20}>
+                    <Col span={24}>
+                      <Button
+                        size="small"
+                        type="primary"
+                        style={{ width: '100%' }}
+                        onClick={() => {
+                          add({
+                            groupName: `样式配置分组${fields.length + 1}`,
+                            groupId: Math.random().toString(36).slice(-8),
+                          });
+                          setState(state => {
+                            state.activeKeys = [...activeKeys, `${fields.length}`];
+                          });
+                        }}
+                        icon={<PlusOutlined />}
+                      >
+                        增加样式配置分组
+                      </Button>
+                    </Col>
+                  </Row>
                   <Collapse expandIconPosition="right" bordered={false} onChange={onPanelChange} activeKey={activeKeys}>
                     {fields.map(({ key, name, ...restField }, index) => {
                       return (
@@ -116,29 +137,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       );
                     })}
                   </Collapse>
-                  <Row gutter={20}>
-                    <Col span={24}>
-                      <Button
-                        size="small"
-                        type="primary"
-                        style={{ width: '100%' }}
-                        onClick={() => {
-                          add({
-                            groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random()
-                              .toString(36)
-                              .slice(-8),
-                          });
-                          setState(state => {
-                            state.activeKeys = [...activeKeys, `${fields.length}`];
-                          });
-                        }}
-                        icon={<PlusOutlined />}
-                      >
-                        增加样式配置分组
-                      </Button>
-                    </Col>
-                  </Row>
                 </>
               );
             }}
