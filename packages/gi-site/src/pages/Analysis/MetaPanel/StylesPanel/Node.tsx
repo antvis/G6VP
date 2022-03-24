@@ -17,14 +17,16 @@ interface MetaProps {
 }
 
 export interface StyleSettingProps {
-  shapeOptions: MetaProps[];
+  elements: MetaProps[];
   data: { nodes: any[]; edges: any[] };
   elementType: 'node' | 'edge';
 }
 
-const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType }) => {
+const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
+  const { elements } = props;
+
   const { updateContext, context } = useContext();
-  const { data } = context;
+  const { data, config } = context;
   const schema = getNodeSchema(defaultConfig);
 
   /**
@@ -34,17 +36,16 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOpt
    */
   const handleChange = styleGroups => {
     const nodesConfig: NodesConfig = styleGroups.map(c => {
+      const { id, groupId, groupName, expressions, logic } = c;
       return {
-        id: 'SimpleNode',
-        props: c.config as NodeConfig,
-        groupId: c.groupId,
-        groupName: c.groupName,
-        expressions: c.expressions,
-        logic: c.logic,
+        id,
+        props: c.props,
+        groupId,
+        groupName,
+        expressions,
+        logic,
       };
     });
-
-    console.log('nodeConfig', nodesConfig);
     updateContext(draft => {
       //@ts-ignore
       draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
@@ -53,7 +54,16 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOpt
     });
   };
 
-  return <CommonStyleSetting schema={schema} onChange={handleChange} data={data} elementType="node" />;
+  return (
+    <CommonStyleSetting
+      config={config}
+      schema={schema}
+      onChange={handleChange}
+      data={data}
+      elementType="node"
+      elements={elements}
+    />
+  );
 };
 
 export default NodeStyleSetting;
