@@ -1,6 +1,6 @@
 import registerMeta from './registerMeta';
 import registerShape from './registerShape';
-import registerTransform from './registerTransform';
+import registerTransform, { defaultConfig } from './registerTransform';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
@@ -14,6 +14,7 @@ const info = {
 
 export default {
   info,
+  defaultProps: defaultConfig,
   registerShape,
   registerMeta,
   registerTransform,
