@@ -1,6 +1,7 @@
-import GroupContainer from '../GroupContainer';
 import React from 'react';
-import RenderForm from './renderForm'
+import GroupContainer from '../GroupContainer';
+import RenderForm from './renderForm';
+
 // import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
 
 export type NodesConfig = {
@@ -16,35 +17,71 @@ export interface StyleSettingProps {
   elementType: 'node' | 'edge';
   schema: any;
   onChange: (params: any) => void;
+  /** GI ELEMENT ASSETS */
+  elements: {};
+  /** GI CONFIG */
+  config: {
+    nodes: [
+      {
+        id: string;
+        props: {};
+      },
+    ];
+    edges: [{}];
+    [key: string]: any;
+  };
 }
 
-const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ data, elementType, schema, onChange }) => {
-  const preStyleGroup = React.useRef([] as any)
+const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
+  data,
+  elementType,
+  schema,
+  onChange,
+  elements,
+  config,
+}) => {
+  const cloneConfig = JSON.parse(JSON.stringify(config.nodes));
+  const preStyleGroup = React.useRef(cloneConfig as any);
+  const defaultNodeConfig = {
+    id: 'SimpleNode',
+    props: {},
+  };
 
   /**
-   * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
+   * change id / props
    * @param current
    * @param all
    */
-  const handleChange = (current, all, groupIndex = 0) => {
+  const handleChange = (all, groupIndex = 0, elementId) => {
+    console.log(all, groupIndex, elementId, preStyleGroup.current);
+
     if (preStyleGroup.current[groupIndex]) {
-      preStyleGroup.current[groupIndex].config = all;
+      preStyleGroup.current[groupIndex].props = all;
+      preStyleGroup.current[groupIndex].id = elementId;
     } else {
       // 不设置分组规则
       preStyleGroup.current[groupIndex] = {
-        config: all,
+        props: all,
         groupName: `样式配置分组${groupIndex + 1}`,
         groupId: 'default-group',
+        id: elementId,
+        expressions: [],
+        rules: 'and',
       };
     }
     console.log('preStyleGroup', preStyleGroup);
     if (onChange) {
-      onChange(preStyleGroup.current)
+      onChange(preStyleGroup.current);
     }
-    
   };
 
-  const handleGroupChange = (current, all) => {
+  /**
+   * change rules / expression / groupIndex /groupName
+   * @param _current
+   * @param all
+   */
+  const handleGroupChange = (_current, all) => {
+    debugger;
     const resultGroup: any = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
@@ -61,14 +98,19 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({ data, 
   };
 
   return (
-    <GroupContainer data={elementType === 'node' ? data.nodes : data.edges } valuesChange={handleGroupChange}>
+    <GroupContainer data={elementType === 'node' ? data.nodes : data.edges} valuesChange={handleGroupChange}>
       {groupIndex => {
+        const nodeConfig = config.nodes[groupIndex] || defaultNodeConfig;
         return (
-          <RenderForm
-            // debounceInput={true}
-            schema={schema as any}
-            onChange={(current, all) => handleChange(current, all, groupIndex)}
-          />
+          <div>
+            <RenderForm
+              elements={elements}
+              config={nodeConfig}
+              // debounceInput={true}
+              schema={schema as any}
+              onChange={(all, elementId) => handleChange(all, groupIndex, elementId)}
+            />
+          </div>
         );
       }}
     </GroupContainer>
