@@ -3,7 +3,7 @@
   max-height: calc(100vh - 300px);
   overflow: auto;
   .ant-form {
-    width: 410px;
+    width: 322px;
   }
   .ant-form-vertical .ant-form-item-label,
   .ant-col-24.ant-form-item-label,
@@ -89,14 +89,14 @@
     }
     .xrender-form-container {
       .ant-collapse-header {
-        // border: 1px solid #ccc;
-        border-bottom: none;
-        padding-left: 16px !important;
         display: flex;
         flex-wrap: nowrap;
         align-items: flex-start;
+        padding-left: 16px !important;
         color: rgba(0, 0, 0, 0.85);
         line-height: 1.5715;
+        // border: 1px solid #ccc;
+        border-bottom: none;
         cursor: pointer;
         transition: all 0.3s, visibility 0s;
       }
@@ -107,4 +107,11 @@
     right: 20px;
     bottom: 20px;
   }
+}
+
+.fr-container .fr-label-row {
+  width: unset !important;
+}
+.fr-container .error-message {
+  min-height: 12px !important;
 }
