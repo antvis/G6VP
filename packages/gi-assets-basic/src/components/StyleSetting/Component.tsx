@@ -23,40 +23,8 @@ export interface StyleSettingProps {
   elementType: 'node' | 'edge';
 }
 
-const data = {
-  nodes: [
-    {
-      id: 'node1',
-      nodeType: 'User',
-      // 默认ID
-      label: 'xxx',
-      data: {
-        id: 'node1',
-        nodeType: 'User',
-        // 默认ID
-        label: 'xxx',
-      },
-    },
-    {
-      id: 'node1',
-      label: 'Car',
-      data: {
-        id: 'node1',
-        label: 'Car',
-      },
-    },
-  ],
-  edges: [
-    {
-      source: 'node1',
-      target: 'node1',
-      edgeType: 'edge1',
-    },
-  ],
-};
-
 const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType }) => {
-  const { updateContext } = useContext();
+  const { updateContext, data } = useContext();
 
   /**
    * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
