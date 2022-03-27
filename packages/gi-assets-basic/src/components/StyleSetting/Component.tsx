@@ -51,7 +51,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
       draft.layoutCache = true;
     });
   };
-
+  //@ts-ignore
   return <CommonStyleSetting schema={schema} onChange={handleChange} data={data} elementType="node" />;
 };
 
