@@ -60,7 +60,7 @@ export const schema = {
               type: 'string',
               title: '图标（选填）',
               widget: 'iconSelector',
-              default: defaultConfig.icon,
+              default: defaultConfig.advanced.icon.value,
               hidden: '{{!rootValue.visible}}',
             },
             fill: {
