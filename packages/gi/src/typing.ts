@@ -36,7 +36,7 @@ export interface State {
   /** 图的上下文准备 */
   isContextReady: boolean;
   /** 数据映射函数 */
-  transform: (data: any) => any;
+  transform: (data: any, reset?: boolean) => any;
 }
 
 export interface Props {
