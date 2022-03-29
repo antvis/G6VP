@@ -75,7 +75,7 @@ const { keyshape, halo, label, icon } = style;
 export const defaultConfig = {
   size: defaultNodeTheme.nodeSize,
   color: defaultNodeTheme.primaryColor,
-  label: ['id'],
+  label: [],
   advanced: {
     keyshape,
     label: {
@@ -126,7 +126,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       };
       advanced.keyshape = keyshape;
       /** 根据Size字段映射的枚举值 */
-      const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_') || id;
+      const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
 
