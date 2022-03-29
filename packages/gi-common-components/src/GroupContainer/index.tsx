@@ -51,7 +51,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   }, []);
 
   // 构建属性列表
-  const propertyList = Object.keys(data[0]).map(d => {
+  const p = data[0] && data[0].data;
+  const propertyList = Object.keys(p).map(d => {
     return {
       value: d,
       key: d,

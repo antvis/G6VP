@@ -81,7 +81,6 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param all
    */
   const handleGroupChange = (_current, all) => {
-    debugger;
     const resultGroup: any = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
