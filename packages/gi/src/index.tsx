@@ -12,7 +12,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const version = '1.1.4';
+const version = '1.1.7';
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -23,7 +23,7 @@ const extra = {
 };
 export { useContext, utils, extra };
 
-console.log(`%c GI_VERSION:${version}`, 'color:red');
+console.log(`%c GI_VERSION:${version} config.node | config.edge`, 'color:red');
 
 /** export  */
 const GISDK = (props: Props) => {
@@ -133,9 +133,9 @@ const GISDK = (props: Props) => {
     const { id: EdgeElementId } = edgeCfg || { id: 'GraphinEdge' };
     const NodeElement = ElementAssets[NodeElementId];
     const EdgeElement = ElementAssets[EdgeElementId];
-    const transform = data => {
-      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
-      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg });
+    const transform = (data, reset) => {
+      const nodes = NodeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, reset);
+      const edges = EdgeElement.registerTransform(data, { node: nodeCfg, edge: edgeCfg }, reset);
       return {
         nodes,
         edges,
@@ -143,7 +143,7 @@ const GISDK = (props: Props) => {
     };
     updateState(draft => {
       if (draft.data.nodes.length !== 0) {
-        const newData = transform(draft.data);
+        const newData = transform(draft.data, true);
         draft.data = newData;
       }
       draft.transform = transform;
