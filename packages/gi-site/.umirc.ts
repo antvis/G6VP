@@ -1,5 +1,5 @@
 /** 是否为本地研发模式 */
-export const isDev = true;
+export const isDev = process.env.NODE_ENV === 'development';
 const localDeps = isDev
   ? {}
   : {

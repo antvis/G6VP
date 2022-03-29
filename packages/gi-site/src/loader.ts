@@ -1,7 +1,7 @@
 import * as GI_Basic_Assets from '@alipay/gi-assets-basic';
 
 /** 是否为本地研发模式 */
-export const isDev = true;
+export const isDev = process.env.NODE_ENV === 'development';
 
 export interface Package {
   name: string;
