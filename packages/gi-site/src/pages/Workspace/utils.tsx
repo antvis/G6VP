@@ -85,7 +85,7 @@ export const baseConfig = {
 };
 
 export const activeAssetsKeys = {
-  elements: [baseNodesConfig.map(n => n.id), baseEdgesConfig.map(e => e.id)],
+  elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
   layouts: ['GraphinForce', 'Concentric', 'Dagre'],
 };
