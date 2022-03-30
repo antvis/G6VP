@@ -34,6 +34,7 @@
     "core": "cd packages/gi && npm run start",
     "assets": "cd packages/gi-assets-basic && npm run start",
     "common:components": "cd packages/gi-common-components && npm run start",
+    "assets:testing": "cd packages/gi-assets-testing && npm run start",
     "assets:docs": "cd packages/gi-assets-basic && npm run docs",
     "common:components:docs": "cd packages/gi-common-components && npm run docs",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
