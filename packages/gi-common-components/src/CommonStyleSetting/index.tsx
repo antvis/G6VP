@@ -1,8 +1,6 @@
 import React from 'react';
 import GroupContainer from '../GroupContainer';
-import RenderForm from './renderForm';
-
-// import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
+import RenderForm from './FormilyRenderForm'
 
 export type NodesConfig = {
   id: string;
@@ -15,7 +13,6 @@ export type NodesConfig = {
 export interface StyleSettingProps {
   data: { nodes: any[]; edges: any[] };
   elementType: 'node' | 'edge';
-  schema: any;
   onChange: (params: any) => void;
   /** GI ELEMENT ASSETS */
   elements: {};
@@ -35,12 +32,11 @@ export interface StyleSettingProps {
 const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   data,
   elementType,
-  schema,
   onChange,
   elements,
   config,
 }) => {
-  const cloneConfig = JSON.parse(JSON.stringify(config.nodes));
+  const cloneConfig = JSON.parse(JSON.stringify(config.nodes || {}));
   const preStyleGroup = React.useRef(cloneConfig as any);
   const defaultNodeConfig = {
     id: 'SimpleNode',
@@ -106,7 +102,6 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
               elements={elements}
               config={nodeConfig}
               // debounceInput={true}
-              schema={schema as any}
               onChange={(all, elementId) => handleChange(all, groupIndex, elementId)}
             />
           </div>
