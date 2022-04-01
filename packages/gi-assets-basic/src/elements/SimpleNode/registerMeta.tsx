@@ -1,4 +1,6 @@
 import { defaultConfig } from './registerTransform';
+
+const { icon, keyshape, label, badge } = defaultConfig.advanced;
 const registerMeta = context => {
   const { keys } = context;
 
@@ -23,13 +25,15 @@ const registerMeta = context => {
         title: '文本',
         type: 'string',
         //todo: 显示文本属性根据 data 生成
-        enum: [
-          { label: '节点ID', value: 'id' },
-          { label: '类型', value: 'nodeType' },
-        ],
+        enum: keys.map(c => {
+          return { label: c, value: c };
+        }),
         default: ['id'],
         'x-decorator': 'FormItem',
         'x-component': 'Select',
+        'x-component-props': {
+          mode: 'multiple',
+        },
       },
       advanced: {
         type: 'object',
@@ -68,6 +72,7 @@ const registerMeta = context => {
                         title: '是否显示',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
+                        default: icon.visible,
                       },
                       type: {
                         type: 'string',
@@ -78,24 +83,28 @@ const registerMeta = context => {
                           { label: '文本', value: 'text' },
                           { label: '字体图标', value: 'font' },
                         ],
+                        default: icon.type,
                       },
                       value: {
                         type: 'string',
                         title: '图标',
                         'x-decorator': 'FormItem',
                         'x-component': 'IconSelector',
+                        default: icon.value,
                       },
                       fill: {
                         type: 'string',
                         title: '颜色',
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
+                        default: icon.fill,
                       },
                       size: {
                         type: 'string',
                         title: '大小',
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
+                        default: icon.size,
                       },
                     },
                   },
@@ -114,7 +123,7 @@ const registerMeta = context => {
                         'x-component': 'NumberPicker',
                         max: 1,
                         min: 0,
-                        defaltVale: 0.3,
+                        default: keyshape.fillOpacity,
                       },
                     },
                   },
@@ -130,12 +139,14 @@ const registerMeta = context => {
                         title: '是否显示',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
+                        default: label.visible,
                       },
                       fill: {
                         title: '文本颜色',
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
+                        default: label.fill,
                       },
                       fontSize: {
                         type: 'string',
@@ -144,7 +155,7 @@ const registerMeta = context => {
                         'x-component': 'NumberPicker',
                         max: 100,
                         min: 12,
-                        defaltVale: 14,
+                        default: label.fontSize,
                       },
                       position: {
                         title: '展示位置',
@@ -158,6 +169,7 @@ const registerMeta = context => {
                           { label: '右侧', value: 'right' },
                           { label: '中间', value: 'center' },
                         ],
+                        default: label.position,
                       },
                     },
                   },
@@ -173,6 +185,7 @@ const registerMeta = context => {
                         title: '是否显示',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
+                        default: badge.visible,
                       },
                       type: {
                         title: '类型',
@@ -183,12 +196,14 @@ const registerMeta = context => {
                           { label: '文本', value: 'text' },
                           { label: '字体图标', value: 'font' },
                         ],
+                        default: badge.type,
                       },
                       value: {
                         type: 'string',
                         title: '字体大小',
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
+                        default: badge.value,
                       },
                     },
                   },
