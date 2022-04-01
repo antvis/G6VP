@@ -62,8 +62,6 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     service()
       .then(res => res.json())
       .then(res => {
-        console.log('res', res);
-
         const { nodes, edges } = transform(dataTransfer(res), config);
         const data = { nodes, links: edges };
         const Graph = ForceGraph3D()(elem)

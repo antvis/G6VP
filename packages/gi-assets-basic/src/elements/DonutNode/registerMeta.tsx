@@ -5,6 +5,9 @@ const registerMeta = context => {
     const numberKeys = Object.keys(firstNode).filter(key => {
       return typeof firstNode[key] === 'number';
     });
+    const numberOptions = numberKeys.map(c => {
+      return { label: c, value: c };
+    });
     return {
       type: 'object',
       collapsed: false,
@@ -12,22 +15,28 @@ const registerMeta = context => {
         donut: {
           title: '环展示',
           type: 'array',
-          widget: 'multiSelect',
-          enum: numberKeys,
-          items: {
-            type: 'string',
-          },
+          //todo: 显示文本属性根据 data 生成
+          enum: numberOptions,
           default: numberKeys,
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
         },
         label: {
           title: '文本',
           type: 'array',
-          enum: keys,
-          items: {
-            type: 'string',
+          //todo: 显示文本属性根据 data 生成
+          enum: keys.map(c => {
+            return { label: c, value: c };
+          }),
+          default: keys,
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
           },
-          default: ['id'],
-          widget: 'multiSelect',
         },
       },
     };
