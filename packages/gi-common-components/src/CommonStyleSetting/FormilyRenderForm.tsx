@@ -1,10 +1,10 @@
+import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
+import { createForm, onFormInputChange } from '@formily/core';
+import { createSchemaField, FormProvider } from '@formily/react';
 import { Select as AntdSelect } from 'antd';
-import { createForm, onFormInputChange } from '@formily/core'
-import { FormProvider, createSchemaField } from '@formily/react'
-import { FormItem, Input, FormCollapse, Select, NumberPicker, Switch } from '@formily/antd'
 import React, { useState } from 'react';
-import ColorInput from './ColorInput'
-import { SketchPicker } from 'react-color'
+import { SketchPicker } from 'react-color';
+import ColorInput from './ColorInput';
 import IconSelector from './IconSelector';
 const { Option } = AntdSelect;
 
@@ -21,31 +21,31 @@ interface RenderFormProps {
 
 const SchemaField = createSchemaField({
   components: {
-    FormItem, 
-    Input, 
-    FormCollapse, 
-    Select, 
+    FormItem,
+    Input,
+    FormCollapse,
+    Select,
     NumberPicker,
     Switch,
     SketchPicker,
     ColorInput,
-    IconSelector
-  }
-})
+    IconSelector,
+  },
+});
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { onChange, elements, config } = props;
   const form = createForm({
     effects() {
       onFormInputChange(({ values }) => {
-        const currentValues = JSON.parse(JSON.stringify(values))
-        console.log('xxx', currentValues)
-        if (onChange && currentValues.advanced) {
+        const currentValues = JSON.parse(JSON.stringify(values));
+        console.log('xxx', currentValues);
+        if (onChange) {
           ref.current.cacheConfigMap.set(ref.current.elementId, currentValues);
           onChange(currentValues, ref.current.elementId);
         }
-      })
-    }
-  })
+      });
+    },
+  });
   // @ts-ignore
   const formCollapse = FormCollapse?.createFormCollapse();
 
