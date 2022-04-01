@@ -116,7 +116,7 @@ const registerMeta = context => {
                       header: '主节点',
                     },
                     properties: {
-                      opacity: {
+                      fillOpacity: {
                         type: 'string',
                         title: '透明度',
                         'x-decorator': 'FormItem',
@@ -200,7 +200,7 @@ const registerMeta = context => {
                       },
                       value: {
                         type: 'string',
-                        title: '字体大小',
+                        title: '文本',
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         default: badge.value,

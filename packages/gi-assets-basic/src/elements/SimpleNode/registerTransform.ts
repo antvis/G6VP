@@ -18,39 +18,64 @@ const defaultNodeTheme = {
 
 const getIconStyleByConfig = (style, data) => {
   const { keyshape } = style;
+  if (!style.icon || !keyshape) {
+    return {};
+  }
   const icon = { ...style.icon };
   const { value } = icon;
 
   if (icon.visible) {
     if (icon.type === 'image') {
-      icon.fill = 'transparent';
-      icon.size = [keyshape.size, keyshape.size];
-      icon.clip = { r: keyshape.size / 2 };
-      icon.value = value;
+      return {
+        fill: 'transparent',
+        size: [keyshape.size, keyshape.size],
+        clip: { r: keyshape.size / 2 },
+        value: value,
+      };
     }
+
     if (icon.type === 'font') {
-      icon.type = 'font';
-      icon.fontFamily = 'graphin';
-      icon.value = icons[value] || '';
-      icon.fill = keyshape.fill;
+      return {
+        ...icon,
+        // size: keyshape.size * 2,
+        type: 'font',
+        fontFamily: 'graphin',
+        value: icons[value] || '',
+        fill: keyshape.fill,
+      };
     }
     if (icon.type === 'text') {
-      icon.fill = '#fff';
-      icon.value = value;
+      return {
+        ...icon,
+        fontSize: keyshape.size / 4,
+        fill: '#fff',
+        value: value,
+      };
     }
-    return icon;
+    return {
+      ...icon,
+    };
   }
-  icon.visible = false;
-  icon.value = '';
-  return icon;
+  return {
+    ...icon,
+    visible: false,
+    value: '',
+  };
 };
 
 const getBadgesStyleByConfig = (style, data) => {
   const { badge, keyshape } = style;
+  if (!badge || !keyshape) {
+    return [];
+  }
+
   const { visible, value } = badge;
 
   if (visible) {
-    badge.size = Math.round(keyshape.size / 3);
+    const size = Math.round(keyshape.size / 3);
+    const fontSize = size / 2;
+    console.log('fontSize', fontSize, size);
+    badge.size = size;
     badge.stroke = keyshape.stroke;
     if (badge.type === 'font') {
       badge.type = 'font';
@@ -61,6 +86,7 @@ const getBadgesStyleByConfig = (style, data) => {
       badge.fill = '#fff';
       badge.color = keyshape.fill;
       badge.value = value;
+      badge.fontSize = fontSize;
     }
     return [badge];
   }
@@ -84,7 +110,8 @@ export const defaultConfig = {
     },
     icon: {
       ...icon,
-      isMapping: false,
+      type: 'font',
+      value: '',
       visible: false,
     },
     badge: {
@@ -111,9 +138,15 @@ export type NodeConfig = typeof defaultConfig;
 const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
+
     const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
-    const { halo } = advanced;
+    let isBug = false;
+    //@ts-ignore
+    if (!Object.is(advanced)) {
+      isBug = true;
+    }
+    const { halo } = isBug ? defaultConfig.advanced : advanced;
 
     const transNodes = nodes.map(node => {
       const { id } = node;
