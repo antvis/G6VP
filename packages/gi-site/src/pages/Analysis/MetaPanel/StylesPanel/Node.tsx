@@ -51,7 +51,7 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
       draft.layoutCache = true;
     });
   };
-
+  console.log('NODE STYLING', props);
   return (
     <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
   );
