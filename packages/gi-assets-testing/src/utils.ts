@@ -40,13 +40,27 @@ export const getConfigByType = (type: TestSDKProps['type'], id: string, value: a
   const nextConfig = produce(MockConfig, draft => {
     /** 元素资产 */
     if (type === 'NODE') {
-      draft.node.id = id;
-      draft.node.props = value[id];
+      // @ts-ignore
+      draft.nodes = [
+        {
+          id,
+          props: value[id]
+        }
+      ]
+      // draft.node.id = id;
+      // draft.node.props = value[id];
       return;
     }
     if (type === 'EDGE') {
-      draft.node.id = id;
-      draft.node.props = value[id];
+      // draft.node.id = id;
+      // draft.node.props = value[id];
+      // @ts-ignore
+      draft.edges = [
+        {
+          id,
+          props: value[id]
+        }
+      ]
       return;
     }
 

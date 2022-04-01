@@ -1,7 +1,6 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
 import React from 'react';
 import { useContext } from '../../hooks/useContext';
-import getNodeSchema, { defaultConfig } from './getNodeSchema';
 type NodeConfig = any;
 export type NodesConfig = {
   id: string;
@@ -27,7 +26,6 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
 
   const { updateContext, context } = useContext();
   const { data, config } = context;
-  const schema = getNodeSchema(defaultConfig);
 
   /**
    * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
@@ -55,14 +53,7 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
   };
 
   return (
-    <CommonStyleSetting
-      config={config}
-      schema={schema}
-      onChange={handleChange}
-      data={data}
-      elementType="node"
-      elements={elements}
-    />
+    <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
   );
 };
 

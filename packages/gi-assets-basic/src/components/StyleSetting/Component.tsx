@@ -2,7 +2,6 @@ import { CommonStyleSetting } from '@alipay/gi-common-components';
 import { useContext } from '@alipay/graphinsight';
 import React from 'react';
 import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
-import { schema } from './registerMeta';
 
 export type NodesConfig = {
   id: string;
@@ -23,8 +22,8 @@ export interface StyleSettingProps {
   elementType: 'node' | 'edge';
 }
 
-const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType }) => {
-  const { updateContext, data } = useContext();
+const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'node' }) => {
+  const { updateContext, data, config } = useContext();
 
   /**
    * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
@@ -52,7 +51,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
     });
   };
   //@ts-ignore
-  return <CommonStyleSetting schema={schema} onChange={handleChange} data={data} elementType="node" />;
+  return <CommonStyleSetting onChange={handleChange} config={config} data={data} elementType={elementType} />;
 };
 
 export default StyleSetting;

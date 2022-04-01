@@ -41,4 +41,4 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   );
 };
 
-export default StylePanel;
+export default React.memo(StylePanel, () => true);

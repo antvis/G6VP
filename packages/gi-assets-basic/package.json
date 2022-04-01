@@ -18,7 +18,6 @@
   "dependencies": {
     "@ali/react-datav-gui-utils": "latest",
     "@alipay/gi-assets-testing": "*",
-    "@alipay/gi-assets-xrender": "*",
     "@alipay/graphinsight": "*",
     "@alipay/gi-common-components": "*",
     "@antv/graphin-icons": "^1.0.0",
