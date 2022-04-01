@@ -19,13 +19,13 @@ export const getKeysByData = (data, category) => {
     if (category === 'node') {
       const node = data.nodes[0] || {};
       const result = walkProperties(node);
-      console.log('result', result);
+
       return result;
     }
     if (category === 'edge') {
       const edge = data.edges[0] || {};
       const result = walkProperties(edge);
-      console.log('result', result);
+
       return result;
     }
   } catch (error) {

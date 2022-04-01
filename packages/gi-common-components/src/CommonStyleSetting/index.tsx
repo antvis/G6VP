@@ -1,6 +1,6 @@
 import React from 'react';
 import GroupContainer from '../GroupContainer';
-import RenderForm from './FormilyRenderForm'
+import RenderForm from './FormilyRenderForm';
 
 export type NodesConfig = {
   id: string;
@@ -111,4 +111,9 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   );
 };
 
-export default CommonStyleSetting;
+export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
+  /** 只要元素资产变换的时候，才去重绘 */
+  const preElementKeys = Object.keys(preProps.elements).join('_');
+  const nextElementKeys = Object.keys(nextProps.elements).join('_');
+  return preElementKeys === nextElementKeys;
+});

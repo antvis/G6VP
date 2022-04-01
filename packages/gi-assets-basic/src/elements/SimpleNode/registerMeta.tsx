@@ -23,7 +23,10 @@ const registerMeta = context => {
         title: '文本',
         type: 'string',
         //todo: 显示文本属性根据 data 生成
-        enum: [{ label: '节点ID', value: 'id' }, { label: '类型', value: 'nodeType' }],
+        enum: [
+          { label: '节点ID', value: 'id' },
+          { label: '类型', value: 'nodeType' },
+        ],
         default: ['id'],
         'x-decorator': 'FormItem',
         'x-component': 'Select',
@@ -32,9 +35,9 @@ const registerMeta = context => {
         type: 'object',
         'x-decorator': 'FormItem',
         'x-component': 'FormCollapse',
-        // "x-component-props": {
-        //   formCollapse: "{{formCollapse}}"
-        // },
+        'x-component-props': {
+          bordered: false,
+        },
         properties: {
           advancedPanel: {
             type: 'void',
@@ -45,11 +48,12 @@ const registerMeta = context => {
             properties: {
               panel: {
                 type: 'void',
-                // 'x-decorator': 'FormItem',
+                'x-decorator': 'FormItem',
                 'x-component': 'FormCollapse',
-                // 'x-component-props': {
-                //   formCollapse: '{{formCollapse}}',
-                // },
+                'x-component-props': {
+                  accordion: true,
+                  bordered: false,
+                },
                 properties: {
                   icon: {
                     type: 'object',
@@ -70,7 +74,10 @@ const registerMeta = context => {
                         title: '类型',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                       },
                       value: {
                         type: 'string',
@@ -172,7 +179,10 @@ const registerMeta = context => {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                       },
                       value: {
                         type: 'string',

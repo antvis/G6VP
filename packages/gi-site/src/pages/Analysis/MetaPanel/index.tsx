@@ -55,13 +55,4 @@ const MetaPanel = props => {
   );
 };
 
-export default React.memo(MetaPanel, (prevProps, nextProps) => {
-  if (
-    prevProps.value !== nextProps.value ||
-    prevProps.refreshKey !== nextProps.refreshKey ||
-    JSON.stringify(prevProps.config) !== JSON.stringify(nextProps.config)
-  ) {
-    return false;
-  }
-  return true;
-});
+export default MetaPanel;
