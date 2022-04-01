@@ -15,11 +15,14 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "form-render": "^1.9.7",
-    "react": "17.x",
-    "antd": "^4.16.13",
     "@antv/graphin": "2.x",
-    "@antv/graphin-icons": "^1.0.0"
+    "@antv/graphin-icons": "^1.0.0",
+    "@formily/antd": "^2.0.17",
+    "@formily/core": "^2.0.17",
+    "@formily/react": "^2.0.17",
+    "antd": "^4.16.13",
+    "react": "17.x",
+    "react-color": "^2.19.3"
   },
   "devDependencies": {
     "@types/node": "latest",

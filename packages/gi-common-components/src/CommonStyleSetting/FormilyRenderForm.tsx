@@ -1,11 +1,14 @@
-import { Select } from 'antd';
-import FormRender, { useForm } from 'form-render';
+import { Select as AntdSelect } from 'antd';
+import { createForm, onFormInputChange } from '@formily/core'
+import { FormProvider, createSchemaField } from '@formily/react'
+import { FormItem, Input, FormCollapse, Select, NumberPicker, Switch } from '@formily/antd'
 import React, { useState } from 'react';
+import ColorInput from './ColorInput'
+import { SketchPicker } from 'react-color'
 import IconSelector from './IconSelector';
-const { Option } = Select;
+const { Option } = AntdSelect;
 
 interface RenderFormProps {
-  schema: any;
   onChange: (all: any, elementId: string) => void;
   /** node assets */
   elements: {};
@@ -16,9 +19,36 @@ interface RenderFormProps {
   };
 }
 
+const SchemaField = createSchemaField({
+  components: {
+    FormItem, 
+    Input, 
+    FormCollapse, 
+    Select, 
+    NumberPicker,
+    Switch,
+    SketchPicker,
+    ColorInput,
+    IconSelector
+  }
+})
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { onChange, elements, config } = props;
-  const form = useForm();
+  const form = createForm({
+    effects() {
+      onFormInputChange(({ values }) => {
+        const currentValues = JSON.parse(JSON.stringify(values))
+        console.log('xxx', currentValues)
+        if (onChange && currentValues.advanced) {
+          ref.current.cacheConfigMap.set(ref.current.elementId, currentValues);
+          onChange(currentValues, ref.current.elementId);
+        }
+      })
+    }
+  })
+  // @ts-ignore
+  const formCollapse = FormCollapse?.createFormCollapse();
+
   const [state, setState] = useState({
     elementId: config.id,
   });
@@ -38,13 +68,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     return Object.values(elements).map((c: any) => c.info);
   }, [elements]);
 
-  const handleChange = all => {
-    if (onChange) {
-      ref.current.cacheConfigMap.set(ref.current.elementId, all);
-      onChange(all, ref.current.elementId);
-    }
-  };
-
   const handleChangeElement = value => {
     setState({
       elementId: value,
@@ -58,7 +81,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   return (
     <>
       <div>
-        <Select value={elementId} onChange={handleChangeElement}>
+        <AntdSelect value={elementId} onChange={handleChangeElement}>
           {OPTIONS.map(c => {
             const { id, name } = c;
             return (
@@ -67,17 +90,12 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
               </Option>
             );
           })}
-        </Select>
+        </AntdSelect>
       </div>
       <hr />
-      <FormRender
-        widgets={{ iconSelector: IconSelector }}
-        form={form}
-        displayType="row"
-        allCollapsed={true}
-        schema={schema as any}
-        onValuesChange={(_current, all) => handleChange(all)}
-      />
+      <FormProvider form={form}>
+        <SchemaField schema={schema} />
+      </FormProvider>
     </>
   );
 };

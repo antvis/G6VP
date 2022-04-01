@@ -81,7 +81,9 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         onClick={() => {
                           add({
                             groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random().toString(36).slice(-8),
+                            groupId: Math.random()
+                              .toString(36)
+                              .slice(-8),
                             id: 'SimpleNode',
                             props: {},
                           });
