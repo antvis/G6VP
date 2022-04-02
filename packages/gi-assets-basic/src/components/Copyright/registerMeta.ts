@@ -1,36 +1,24 @@
-const registerMeta = context => {
-  const { data } = context;
-  let keys = ['id'];
-  try {
-    keys = Object.keys(data.nodes[0]?.data || {});
-  } catch (error) {
-    console.warn(error);
-  }
-
-  const options = keys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
-
+const registerMeta = () => {
   return {
-    /** 分类信息 */
-    sortKey: {
-      name: '映射字段',
-      type: 'select',
-      default: 'type',
-      options,
+    imageUrl: {
+      name: '版权图片',
+      type: 'image',
+      default: '',
     },
-    textColor: {
-      name: '字体颜色',
-      type: 'fill',
-      default: '#ddd',
+    width: {
+      type: 'number',
+      name: '宽度',
+      default: 100,
+    },
+    height: {
+      type: 'number',
+      name: '高度',
+      default: 50,
     },
     placement: {
       name: '组件位置',
       type: 'select',
-      default: 'LB',
+      default: 'RB',
       options: [
         {
           value: 'LT',

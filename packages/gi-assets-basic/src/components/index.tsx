@@ -1,6 +1,7 @@
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
+import Copyright from './Copyright';
 import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
@@ -50,4 +51,5 @@ export {
   SideTabs,
   NeighborsQuery,
   StyleSetting,
+  Copyright
 };
