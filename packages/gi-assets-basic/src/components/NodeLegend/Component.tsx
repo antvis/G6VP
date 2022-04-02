@@ -1,13 +1,18 @@
 import { Legend } from '@antv/graphin-components';
 import React from 'react';
+import { getPositionStyles } from '../WrapContainer';
 
 export interface ComponentProps {
   sortKey: string;
   textColor: string;
+  placement: string;
+  offset: number[];
 }
 
 const Component: React.FunctionComponent<ComponentProps> = props => {
-  const { sortKey, textColor } = props;
+  const { sortKey, textColor, placement, offset } = props;
+  const positionStyles = getPositionStyles(placement, offset);
+
 
   return (
     <div>
@@ -15,7 +20,7 @@ const Component: React.FunctionComponent<ComponentProps> = props => {
         bindType="node"
         sortKey={`data.${sortKey}`}
         colorKey="style.keyshape.stroke" // 如果是GraphinNode，则可以硬编码写死
-        style={{ position: 'absolute', left: '10px', bottom: '20px', right: 'unset', top: 'unset' }}
+        style={positionStyles}
       >
         <Legend.Node />
       </Legend>

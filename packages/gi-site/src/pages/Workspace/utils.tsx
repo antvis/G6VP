@@ -61,7 +61,12 @@ const baseEdgesConfig = [
 const baseComponentsConfig = [
   {
     id: 'NodeLegend',
-    props: {},
+    props: {
+      sortKey: 'type',
+      textColor: '#ddd',
+      placement: 'LB',
+      offset: [100, 20],
+    },
     enable: true,
   },
 ];
