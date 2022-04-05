@@ -1,6 +1,7 @@
 import { Legend } from '@antv/graphin-components';
 import React from 'react';
-import { getPositionStyles } from '../WrapContainer';
+import { utils } from '@alipay/graphinsight';
+const { getPositionStyles } = utils;
 
 export interface ComponentProps {
   sortKey: string;

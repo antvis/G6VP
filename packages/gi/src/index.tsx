@@ -338,7 +338,6 @@ const GISDK = (props: Props) => {
           assets: ComponentAssets,
         };
       }
-
       return <Component key={id} GISDK_ID={GISDK_ID} {...itemProps} {...GIProps} />;
     });
   };

@@ -21,7 +21,7 @@ export const initialState: StateType = {
   /** 当前 Sidebar 是否可折叠 */
   collapse: false,
   /** 当前 数据导入面板 是否可显示 */
-  isModalVisible: false,
+  isUploadModalVisible: false,
 
   data: {
     nodes: [],
@@ -113,7 +113,7 @@ export interface StateType {
   /** 当前 Sidebar 是否可折叠 */
   collapse: boolean;
   /** 当前 数据导入面板 是否可显示 */
-  isModalVisible: boolean;
+  isUploadModalVisible: boolean;
 
   /** 是否开启智能推荐 */
   enableAI: boolean;
