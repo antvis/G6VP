@@ -195,7 +195,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
 
   const uploadData = () => {
     updateContext(draft => {
-      draft.isModalVisible = true;
+      draft.isUploadModalVisible = true;
     });
   };
 

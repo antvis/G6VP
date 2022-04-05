@@ -1,4 +1,5 @@
 import { useContext } from '@alipay/graphinsight';
+import { INode } from "@antv/g6";
 import React, { useEffect } from 'react';
 
 interface IG6GraphEvent {
@@ -26,6 +27,16 @@ interface State {
   /** 触发的元素 */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item?: IG6GraphEvent['item'];
+}
+
+export interface Contextmenu {
+  onShow: () => void;
+  onClose: () => void;
+  id: string;
+  item: INode;
+  visible: boolean;
+  x: number;
+  y: number;
 }
 
 const useContextMenu = props => {
@@ -121,14 +132,14 @@ const useContextMenu = props => {
   const id = (item && !item.destroyed && item.getModel && item.getModel().id) || '';
 
   return {
-    oneShow: handleShow,
+    onShow: handleShow,
     onClose: handleClose,
     id,
     item,
     visible,
     x,
     y,
-  };
+  } as Contextmenu;
 };
 
 export default useContextMenu;
