@@ -9,6 +9,7 @@ import FitCenter from './FitCenter';
 import FitView from './FitView';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
+import MapMode from './MapMode';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
 import NodeExpand from './NodeExpand';
@@ -18,12 +19,12 @@ import OperatorHeader from './OperatorHeader';
 import PropertiesPanel from './PropertiesPanel';
 import Redo from './Redo';
 import SideTabs from './SideTabs';
+import StyleSetting from './StyleSetting';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
-import StyleSetting from './StyleSetting';
 
 export {
   FitCenter,
@@ -51,5 +52,6 @@ export {
   SideTabs,
   NeighborsQuery,
   StyleSetting,
-  Copyright
+  Copyright,
+  MapMode,
 };
