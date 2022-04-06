@@ -13,8 +13,8 @@ export interface IProps {
 
 // 叶子节点缓存
 const leafNodeIdsCache: Record<string, string[]> = {};
-// 处于收起状态的节点
-const foldedNodes = new Set<INode>();
+// 已被操作过的节点缓存
+const nodeIdsCache = new Set<string>();
 // 原始画布数据
 let originGraphData;
 
@@ -42,7 +42,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
         leafNodeIds.forEach(id => {
           graph.hideItem(id);
         });
-        foldedNodes.add(targetNode);
+        nodeIdsCache.add(nodeId);
         leafNodeIdsCache[nodeId] = leafNodeIds;
         graph.updateItem(targetNode, {
           folded: true,
@@ -51,8 +51,9 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
 
       if (isReLayout) {
         let hiddenNodeIds: string[] = [];
-        Array.from(foldedNodes).forEach(node => {
-          if (node.getModel().folded) {
+        Array.from(nodeIdsCache).forEach(id => {
+          const node = graph.findById(id)
+          if (node && node.getModel().folded) {
             const id = node.getModel().id as string;
             hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
           }
