@@ -28,7 +28,7 @@ const registerMeta = context => {
         enum: keys.map(c => {
           return { label: c, value: c };
         }),
-        default: ['id'],
+        // default: ['id'],
         'x-decorator': 'FormItem',
         'x-component': 'Select',
         'x-component-props': {
@@ -41,6 +41,8 @@ const registerMeta = context => {
         'x-component': 'FormCollapse',
         'x-component-props': {
           bordered: false,
+          // 设置手风琴默认，不允许收起高级配置，否则下面的 visible 控制就失效了
+          accordion: true,
         },
         properties: {
           advancedPanel: {
@@ -48,6 +50,8 @@ const registerMeta = context => {
             'x-component': 'FormCollapse.CollapsePanel',
             'x-component-props': {
               header: '高级配置',
+              // 暂时不设置高级配置默认收起，否则下面的 visible 控制就失效了
+              // key: 'advanced-panel',
             },
             properties: {
               panel: {
@@ -55,7 +59,6 @@ const registerMeta = context => {
                 'x-decorator': 'FormItem',
                 'x-component': 'FormCollapse',
                 'x-component-props': {
-                  accordion: true,
                   bordered: false,
                 },
                 properties: {
@@ -65,6 +68,7 @@ const registerMeta = context => {
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
                       header: '图标',
+                      key: 'icon-panel',
                     },
                     properties: {
                       visible: {
@@ -72,18 +76,22 @@ const registerMeta = context => {
                         title: '是否显示',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
-                        default: icon.visible,
                       },
                       type: {
                         type: 'string',
                         title: '类型',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [
-                          { label: '文本', value: 'text' },
-                          { label: '字体图标', value: 'font' },
-                        ],
+                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
                         default: icon.type,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       value: {
                         type: 'string',
@@ -91,6 +99,14 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'IconSelector',
                         default: icon.value,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       fill: {
                         type: 'string',
@@ -98,6 +114,14 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: icon.fill,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       size: {
                         type: 'string',
@@ -105,6 +129,14 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         default: icon.size,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -114,6 +146,7 @@ const registerMeta = context => {
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
                       header: '主节点',
+                      key: 'keyshape-panel',
                     },
                     properties: {
                       fillOpacity: {
@@ -132,6 +165,7 @@ const registerMeta = context => {
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
                       header: '文本',
+                      key: 'label-panel',
                     },
                     properties: {
                       visible: {
@@ -147,6 +181,14 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: label.fill,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       fontSize: {
                         type: 'string',
@@ -156,6 +198,14 @@ const registerMeta = context => {
                         max: 100,
                         min: 12,
                         default: label.fontSize,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       position: {
                         title: '展示位置',
@@ -170,6 +220,14 @@ const registerMeta = context => {
                           { label: '中间', value: 'center' },
                         ],
                         default: label.position,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -178,6 +236,7 @@ const registerMeta = context => {
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
                       header: '徽标',
+                      key: 'badge-panel',
                     },
                     properties: {
                       visible: {
@@ -192,11 +251,16 @@ const registerMeta = context => {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [
-                          { label: '文本', value: 'text' },
-                          { label: '字体图标', value: 'font' },
-                        ],
+                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
                         default: badge.type,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                       value: {
                         type: 'string',
@@ -204,6 +268,14 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         default: badge.value,
+                        'x-reactions': {
+                          dependencies: ['.visible'],
+                          fulfill: {
+                            state: {
+                              visible: '{{$deps[0]}}',
+                            },
+                          },
+                        },
                       },
                     },
                   },
