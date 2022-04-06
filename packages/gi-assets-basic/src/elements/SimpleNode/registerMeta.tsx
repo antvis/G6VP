@@ -76,6 +76,40 @@ const registerMeta = context => {
                         title: '是否显示',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
+                        'x-reactions': [
+                          {
+                            target: 'advanced.icon.type',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.icon.value',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.icon.fill',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.icon.size',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                        ],
                       },
                       type: {
                         type: 'string',
@@ -84,14 +118,6 @@ const registerMeta = context => {
                         'x-component': 'Select',
                         enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
                         default: icon.type,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       value: {
                         type: 'string',
@@ -99,14 +125,6 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'IconSelector',
                         default: icon.value,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       fill: {
                         type: 'string',
@@ -114,14 +132,6 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: icon.fill,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       size: {
                         type: 'string',
@@ -129,14 +139,6 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         default: icon.size,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                     },
                   },
@@ -174,6 +176,32 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: label.visible,
+                        'x-reactions': [
+                          {
+                            target: 'advanced.label.fill',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.label.fontSize',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.label.position',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                        ],
                       },
                       fill: {
                         title: '文本颜色',
@@ -181,14 +209,6 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: label.fill,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       fontSize: {
                         type: 'string',
@@ -198,14 +218,6 @@ const registerMeta = context => {
                         max: 100,
                         min: 12,
                         default: label.fontSize,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       position: {
                         title: '展示位置',
@@ -220,14 +232,6 @@ const registerMeta = context => {
                           { label: '中间', value: 'center' },
                         ],
                         default: label.position,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                     },
                   },
@@ -245,6 +249,24 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: badge.visible,
+                        'x-reactions': [
+                          {
+                            target: 'advanced.badge.type',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.badge.value',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                        ],
                       },
                       type: {
                         title: '类型',
@@ -253,14 +275,6 @@ const registerMeta = context => {
                         'x-component': 'Select',
                         enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
                         default: badge.type,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                       value: {
                         type: 'string',
@@ -268,14 +282,6 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         default: badge.value,
-                        'x-reactions': {
-                          dependencies: ['.visible'],
-                          fulfill: {
-                            state: {
-                              visible: '{{$deps[0]}}',
-                            },
-                          },
-                        },
                       },
                     },
                   },
