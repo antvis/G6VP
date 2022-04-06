@@ -95,7 +95,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
       </div>
       <hr />
       <FormProvider form={form}>
-        <SchemaField schema={schema} />
+        <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
       </FormProvider>
     </>
   );
