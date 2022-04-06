@@ -9,13 +9,15 @@ export interface MapModeProps {
 
 const MapMode: React.FunctionComponent<MapModeProps> = props => {
   const context = useContext();
-  const { data, graph } = context;
+  const { data, graph, config } = context;
+  const { color: NODE_COLOR } = (config.nodes && config.nodes[0].props) || {};
+  // const { color: EDGE_COLOR, size: EDGE_SIZE } = (config.edges && config.edges[0].props) || { size: 1 };
   const { visible } = props;
   if (!visible) {
     return null;
   }
   React.useEffect(() => {
-    console.log('data', data, graph.getEdges());
+    console.log('data & config', data, config);
 
     const geoData = data.nodes.map(node => {
       const n = node.data.data;
@@ -41,7 +43,7 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
     const Map = new L7Plot('map-container', {
       map: {
         type: 'mapbox',
-        style: 'dark',
+        style: 'light',
         center,
         zoom: 15,
         pitch: 0,
@@ -58,10 +60,10 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
               coordinates: 'lnglat',
             },
           },
-          color: '#41fc9d',
-          size: 0.5,
+          color: '#ddd',
+          size: 1,
           style: {
-            opacity: 0.4,
+            opacity: 1,
           },
         },
         //点的图层
@@ -76,14 +78,14 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
               coordinates: 'location',
             },
           },
-          color: '#ffed11',
-          size: 40,
+          color: NODE_COLOR,
+          size: 10,
           style: {
-            opacity: 1,
+            opacity: 0.8,
           },
-          animate: {
-            speed: 0.8,
-          },
+          // animate: {
+          //   speed: 0.8,
+          // },
         },
       ],
     });
