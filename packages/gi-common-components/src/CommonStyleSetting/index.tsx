@@ -92,8 +92,12 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     preStyleGroup.current = resultGroup;
   };
 
+  // todo @山果，样式配置的数据传到这里，替换掉 initValue 就可以
+  const initValue = JSON.parse('[{"groupName":"默认样式","groupId":"default-group","id":"SimpleNode","props":{},"logic":true},{"groupName":"自定义样式","groupId":"7s4n2r88","id":"SimpleNode","props":{"size":25,"color":"green","label":["id"],"advanced":{"icon":{"visible":false,"type":"font","value":"","fill":"#FF6A00","size":46},"keyshape":{"fillOpacity":0.1},"label":{"visible":true,"fill":"#000","fontSize":12,"position":"bottom"},"badge":{"visible":false,"type":"text","value":""}}}}]')
+  console.log('初始值', initValue)
+
   return (
-    <GroupContainer data={elementType === 'node' ? data.nodes : data.edges} valuesChange={handleGroupChange}>
+    <GroupContainer initValues={{ groups: initValue }} data={elementType === 'node' ? data.nodes : data.edges} valuesChange={handleGroupChange}>
       {groupIndex => {
         const nodeConfig = config.nodes[groupIndex] || defaultNodeConfig;
         return (

@@ -35,6 +35,7 @@ const SchemaField = createSchemaField({
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { onChange, elements, config } = props;
   const form = createForm({
+    initialValues: elements[config.id].props,
     effects() {
       onFormInputChange(({ values }) => {
         const currentValues = JSON.parse(JSON.stringify(values));

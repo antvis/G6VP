@@ -13,6 +13,7 @@ export interface ElementTypeOption {
 export interface GroupContainerProps {
   data: any[];
   children?: any;
+  initValues?: any;
   valuesChange: (currenr: any, allValues: any) => void;
 }
 
@@ -30,7 +31,7 @@ export interface State {
 }
 
 const GroupContainer: React.FC<GroupContainerProps> = props => {
-  const { data, children, valuesChange } = props;
+  const { data, children, valuesChange, initValues } = props;
   const [form] = Form.useForm();
 
   const [state, setState] = useImmer<State>({
@@ -45,6 +46,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   };
 
   const onValuesChange = useCallback((changedValue: any, allValues: any) => {
+    console.log('form value change', allValues);
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }
@@ -61,7 +63,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
 
   return (
     <div className="gi-group-contaner">
-      <Form layout="vertical" form={form} onValuesChange={onValuesChange}>
+      <Form initialValues={initValues} layout="vertical" form={form} onValuesChange={onValuesChange}>
         <Form.Item
           name="groups"
           shouldUpdate={() => true}
