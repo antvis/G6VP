@@ -1,9 +1,10 @@
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
+import { DeleteOutlined, FilterOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Form, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
+import PopoverContainer from './PopoverContainer';
 
 export interface ElementTypeOption {
   value: string;
@@ -61,6 +62,10 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
+  const getExtra = () => {
+    return;
+  };
+
   return (
     <div className="gi-group-contaner">
       <Form initialValues={initValues} layout="vertical" form={form} onValuesChange={onValuesChange}>
@@ -83,9 +88,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         onClick={() => {
                           add({
                             groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random()
-                              .toString(36)
-                              .slice(-8),
+                            groupId: Math.random().toString(36).slice(-8),
                             id: 'SimpleNode',
                             props: {},
                           });
@@ -99,44 +102,78 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       </Button>
                     </Col>
                   </Row>
-                  <Collapse expandIconPosition="right" bordered={false} onChange={onPanelChange} activeKey={activeKeys}>
+                  <Collapse
+                    // collapsible="header"
+                    bordered={false}
+                    onChange={onPanelChange}
+                    activeKey={activeKeys}
+                  >
                     {fields.map(({ key, name, ...restField }, index) => {
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
                           key={`${key}`}
-                          header={
-                            <div className="header">
-                              <div className="left" onClick={e => e.stopPropagation()}>
-                                <Form.Item {...restField} name={[name, 'groupName']}>
-                                  <Input placeholder="请输入样式分组名称" bordered={false} />
-                                </Form.Item>
-                              </div>
+                          extra={
+                            <div
+                              style={{ display: 'inline-block', verticalAlign: 'top' }}
+                              onClick={e => {
+                                // If you don't want click extra trigger collapse, you can prevent this:
+                                e.stopPropagation();
+                              }}
+                            >
+                              <PopoverContainer
+                                title="分组规则"
+                                content={
+                                  <Row>
+                                    <Col span={24} className="expression-group">
+                                      <ExpressionGroup
+                                        options={propertyList}
+                                        name={name as any}
+                                        index={index}
+                                        form={form}
+                                      />
+                                      <div className="switch-button-wrap">
+                                        <Form.Item name={[name, 'logic']} initialValue={true}>
+                                          <Switch
+                                            size="small"
+                                            className="switch-button"
+                                            checkedChildren="and"
+                                            unCheckedChildren="or"
+                                          />
+                                        </Form.Item>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                }
+                              >
+                                <Button type="text" icon={<FilterOutlined />} size="small"></Button>
+                              </PopoverContainer>
                               {index !== 0 && (
-                                <DeleteOutlined
-                                  onClick={() => {
-                                    remove(name);
-                                  }}
-                                />
+                                <Button
+                                  type="text"
+                                  icon={
+                                    <DeleteOutlined
+                                      onClick={() => {
+                                        remove(name);
+                                      }}
+                                    />
+                                  }
+                                  size="small"
+                                ></Button>
                               )}
                             </div>
                           }
+                          header={
+                            // <div className="header">
+                            //   <div className="left" onClick={e => e.stopPropagation()}>
+                            //     <Form.Item {...restField} name={[name, 'groupName']}>
+                            //       <Input placeholder="请输入样式分组名称" bordered={false} />
+                            //     </Form.Item>
+                            //   </div>
+                            // </div>
+                            <div>hhh</div>
+                          }
                         >
-                          <Row>
-                            <Col span={24} className="expression-group">
-                              <ExpressionGroup options={propertyList} name={name as any} index={index} form={form} />
-                              <div className="switch-button-wrap">
-                                <Form.Item name={[name, 'logic']} initialValue={true}>
-                                  <Switch
-                                    size="small"
-                                    className="switch-button"
-                                    checkedChildren="and"
-                                    unCheckedChildren="or"
-                                  />
-                                </Form.Item>
-                              </div>
-                            </Col>
-                          </Row>
                           <Col span={24} className="xrender-form-container">
                             {children(index)}
                           </Col>
