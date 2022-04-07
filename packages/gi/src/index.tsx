@@ -24,7 +24,8 @@ const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 
   return data;
 };
 
-const version = '1.1.6';
+const version = '1.2.0';
+
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -227,7 +228,7 @@ const GISDK = (props: Props) => {
       );
       const nodes = [...uniqueNodes, ...otherNodesByTrans];
 
-      console.log('nodes', nodes);
+      console.log('nodes', filterNodes, uniqueNodes, otherNodesByTrans, nodes);
 
       const edges = (edgesCfg || defaultEdgesCfg)
         .map(item => {
