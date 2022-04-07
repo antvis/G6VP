@@ -1,5 +1,5 @@
-import { DeleteOutlined, FilterOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Collapse, Form, Row, Switch } from 'antd';
+import { CaretRightOutlined, DeleteOutlined, FilterOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
@@ -107,6 +107,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                     bordered={false}
                     onChange={onPanelChange}
                     activeKey={activeKeys}
+                    expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                   >
                     {fields.map(({ key, name, ...restField }, index) => {
                       return (
@@ -115,7 +116,12 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                           key={`${key}`}
                           extra={
                             <div
-                              style={{ display: 'inline-block', verticalAlign: 'top' }}
+                              style={{
+                                display: 'inline-block',
+                                verticalAlign: 'top',
+                                height: '32px',
+                                lineHeight: '32px',
+                              }}
                               onClick={e => {
                                 // If you don't want click extra trigger collapse, you can prevent this:
                                 e.stopPropagation();
@@ -164,14 +170,17 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                             </div>
                           }
                           header={
-                            // <div className="header">
-                            //   <div className="left" onClick={e => e.stopPropagation()}>
-                            //     <Form.Item {...restField} name={[name, 'groupName']}>
-                            //       <Input placeholder="请输入样式分组名称" bordered={false} />
-                            //     </Form.Item>
-                            //   </div>
-                            // </div>
-                            <div>hhh</div>
+                            <div className="header">
+                              <div className="left" onClick={e => e.stopPropagation()}>
+                                <Form.Item
+                                  {...restField}
+                                  name={[name, 'groupName']}
+                                  className="gi-group-container-panel-header"
+                                >
+                                  <Input placeholder="请输入样式分组名称" bordered={false} />
+                                </Form.Item>
+                              </div>
+                            </div>
                           }
                         >
                           <Col span={24} className="xrender-form-container">
