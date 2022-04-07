@@ -79,31 +79,35 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
             {(fields, { add, remove }) => {
               return (
                 <>
-                  <Row gutter={20}>
-                    <Col span={24}>
-                      <Button
-                        size="small"
-                        type="primary"
-                        style={{ width: '100%' }}
-                        onClick={() => {
-                          add({
-                            groupName: `样式配置分组${fields.length + 1}`,
-                            groupId: Math.random().toString(36).slice(-8),
-                            id: 'SimpleNode',
-                            props: {},
-                          });
-                          setState(state => {
-                            state.activeKeys = [...activeKeys, `${fields.length}`];
-                          });
-                        }}
-                        icon={<PlusOutlined />}
-                      >
-                        增加样式配置分组
-                      </Button>
-                    </Col>
-                  </Row>
+                  <Button
+                    type="primary"
+                    style={{
+                      width: '320px',
+                      borderRadius: '4px',
+                      position: 'fixed',
+                      zIndex: 999,
+                      left: ' 60px',
+                      bottom: '12px',
+                    }}
+                    onClick={() => {
+                      add({
+                        groupName: `样式配置分组${fields.length + 1}`,
+                        groupId: Math.random().toString(36).slice(-8),
+                        id: 'SimpleNode',
+                        props: {},
+                      });
+                      setState(state => {
+                        state.activeKeys = [...activeKeys, `${fields.length}`];
+                      });
+                    }}
+                    icon={<PlusOutlined />}
+                  >
+                    新增样式分组
+                  </Button>
+
                   <Collapse
                     // collapsible="header"
+                    className="gi-sidebar-collapse"
                     bordered={false}
                     onChange={onPanelChange}
                     activeKey={activeKeys}
