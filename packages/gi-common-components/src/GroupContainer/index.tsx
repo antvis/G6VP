@@ -154,19 +154,19 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                               >
                                 <Button type="text" icon={<FilterOutlined />} size="small"></Button>
                               </PopoverContainer>
-                              {index !== 0 && (
-                                <Button
-                                  type="text"
-                                  icon={
-                                    <DeleteOutlined
-                                      onClick={() => {
-                                        remove(name);
-                                      }}
-                                    />
-                                  }
-                                  size="small"
-                                ></Button>
-                              )}
+
+                              <Button
+                                type="text"
+                                disabled={index === 0}
+                                icon={
+                                  <DeleteOutlined
+                                    onClick={() => {
+                                      remove(name);
+                                    }}
+                                  />
+                                }
+                                size="small"
+                              ></Button>
                             </div>
                           }
                           header={

@@ -1,9 +1,11 @@
+import { BgColorsOutlined } from '@ant-design/icons';
 import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
-import { Select as AntdSelect } from 'antd';
+import { Button, Select as AntdSelect } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
+import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
 import IconSelector from './IconSelector';
 const { Option } = AntdSelect;
@@ -81,19 +83,26 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
   return (
     <>
-      <div>
-        <AntdSelect value={elementId} onChange={handleChangeElement}>
-          {OPTIONS.map(c => {
-            const { id, name } = c;
-            return (
-              <Option value={id} key={id}>
-                {name}
-              </Option>
-            );
-          })}
-        </AntdSelect>
+      <div className="gi-assets-selector" style={{ position: 'absolute', right: '40px', top: '-37px' }}>
+        <PopoverContainer
+          title="选择元素资产"
+          content={
+            <AntdSelect value={elementId} onChange={handleChangeElement}>
+              {OPTIONS.map(c => {
+                const { id, name } = c;
+                return (
+                  <Option value={id} key={id}>
+                    {name}
+                  </Option>
+                );
+              })}
+            </AntdSelect>
+          }
+        >
+          <Button type="text" icon={<BgColorsOutlined />} size="small"></Button>
+        </PopoverContainer>
       </div>
-      <hr />
+
       <FormProvider form={form}>
         <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
       </FormProvider>
