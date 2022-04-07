@@ -5,6 +5,11 @@ export const nodeColumns = [
     key: 'id',
   },
   {
+    title: 'nodeType',
+    dataIndex: 'nodeType',
+    key: 'nodeType',
+  },
+  {
     title: 'data',
     dataIndex: 'data',
     key: 'data',
@@ -13,6 +18,11 @@ export const nodeColumns = [
 ];
 
 export const edgeColumns = [
+  {
+    title: 'edgeType',
+    dataIndex: 'edgeType',
+    key: 'edgeType',
+  },
   {
     title: 'source',
     dataIndex: 'source',
@@ -40,11 +50,12 @@ export const translist = [
   },
 ];
 
-export const GIDefaultTrans = (id, source, target) => `
+export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
       id:'' + n.${id},
+      nodeType: n.${nodeType},
       data:n
     }
   })
@@ -52,6 +63,7 @@ data => {
     return {
       source:'' + e.${source},
       target:'' + e.${target},
+      edgeType: e.${edgeType},
       data:e
     }
   })
@@ -95,6 +107,24 @@ export const getOptions = data => {
             message: '此项是必填项',
           },
         ],
+      },
+    },
+    {
+      title: 'Node Type',
+      key: 'nodeType',
+      dataIndex: 'nodeType',
+      valueType: 'select',
+      valueEnum: {
+        ...nodesOptions,
+      },
+    },
+    {
+      title: 'Edge Type',
+      key: 'edgeType',
+      dataIndex: 'edgeType',
+      valueType: 'select',
+      valueEnum: {
+        ...edgesOptions,
       },
     },
     {
