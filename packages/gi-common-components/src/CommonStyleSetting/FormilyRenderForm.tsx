@@ -84,7 +84,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
   return (
     <>
-      <div className="gi-assets-selector" style={{ position: 'absolute', right: '40px', top: '-37px' }}>
+      <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>
         <PopoverContainer
           title="选择元素资产"
           content={
