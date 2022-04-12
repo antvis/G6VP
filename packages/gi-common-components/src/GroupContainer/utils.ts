@@ -65,10 +65,15 @@ export const getOperatorList = (type: 'long' | 'string' | 'double') => {
 };
 
 export const formatProperties = (node: {
-  label: string;
+  id: string;
   data?: Record<string, string | number>;
 }): Record<string, string | number> => {
-  return node.data || {};
+  if (node.data) {
+    return node.data;
+  }
+  //@ts-ignore
+  return node || {};
+  // return node.data || {};
 };
 
 const filterByExpression = (data: Record<string, string | number>, expression: Expression): boolean => {
