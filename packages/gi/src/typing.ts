@@ -154,22 +154,33 @@ export interface GIComponentConfig {
 export interface GINodeConfig {
   id: string;
   name: string;
-  rules?: any;
   props: {
     size: number;
     color: string;
-    label: string;
+    label: string[];
+    [key: string]: any;
   };
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
 }
-
 export interface GIEdgeConfig {
   id: string;
   name: string;
   props: {
     color: string;
-    lineWidth: number;
+    size: number;
+    label: string[];
   };
-  rules?: any;
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
 }
 
 export interface GIConfig {
