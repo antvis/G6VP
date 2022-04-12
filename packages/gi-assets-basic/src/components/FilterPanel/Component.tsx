@@ -1,129 +1,106 @@
-import React from 'react';
-import { Checkbox } from 'antd';
-import { GraphinContext } from '@antv/graphin';
-import './index.less';
+import React, { useState, useEffect } from 'react';
+import { Drawer, Button, Select } from 'antd';
+import { GraphinData } from '@antv/graphin';
+import { nanoid } from 'nanoid';
+import { useContext } from '@alipay/graphinsight';
+import { generatorSchemaByGraphData } from '@alipay/graphinsight/es/utils';
+import {filterGraphData} from './utils'
+import FilterSelection from './FilterSelection';
+import { IFilterCriteria } from './type';
 
-interface TypeConfig {
-  name: string;
-  value: string;
+export interface FilterPanelProps {
+  visible: boolean;
 }
 
-export interface FilterProps {
-  node: {
-    sortKey: string;
-  };
-  edge: {
-    sortKey: string;
-  };
-}
-const FilterPanel: React.FunctionComponent<FilterProps> = props => {
-  const { graph } = React.useContext(GraphinContext);
-  const { node, edge } = props;
-  const [state, setState] = React.useState({
-    nodeType: [] as TypeConfig[],
-    edgeType: [] as TypeConfig[],
-  });
+const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
+  const { visible } = props;
+  const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
+  const { source, updateContext, graph } = useContext();
+  const dataSchemas = generatorSchemaByGraphData(source);
 
-  const { GiState } = GraphinContext as any;
-  const { data } = GiState;
+  const nodeProperties = dataSchemas.nodes.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
 
-  React.useEffect(() => {
-    // // 获取节点 / 边 的类型集合
-    let nodeMap = {};
-    let edgeMap = {};
-    data.nodes.map(d => {
-      nodeMap[d.data[node?.sortKey]] = true;
+  const edgeProperties = dataSchemas.edges.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
+
+  const addFilter = () => {
+    const id = nanoid();
+    const filterCriteria = {
+      id,
+      isFilterReady: false,
+    };
+
+    setFilterOptions({
+      ...filterOptions,
+      [id]: filterCriteria,
     });
-    data.edges.map(d => {
-      edgeMap[d.data[edge?.sortKey]] = true;
-    });
-
-    let nodeType: TypeConfig[] = [];
-    let edgeType: TypeConfig[] = [];
-    Object.keys(nodeMap).forEach(d =>
-      nodeType.push({
-        name: d,
-        value: d,
-      }),
-    );
-
-    Object.keys(edgeMap).forEach(d =>
-      edgeType.push({
-        name: d,
-        value: d,
-      }),
-    );
-    setState({
-      nodeType,
-      edgeType,
-    });
-  }, [GiState]);
-
-  const renderOptions = (data: TypeConfig[]) =>
-    data.map((item, index) => {
-      return (
-        <div key={index} className="eItem">
-          <div className="name">{item.name}</div>
-          <Checkbox value={item.value} />
-        </div>
-      );
-    });
-  const handleOnChange = (type: 'node' | 'edge', value: any) => {
-    const allNodes = graph.getNodes();
-    const allEdges = graph.getEdges();
-
-    if (type === 'node') {
-      allNodes.forEach((item: any) => {
-        const { data } = item.getModel();
-        // 判断是否是隐藏节点
-        const isVisible = value.includes(String(data[node?.sortKey]));
-        // 隐藏节点相关的边
-        if (isVisible) {
-          graph.showItem(item, false);
-        } else {
-          graph.hideItem(item, false);
-        }
-      });
-    } else if (type === 'edge') {
-      allEdges.forEach((item: any) => {
-        const { data } = item.getModel();
-        const isVisible = value.includes(String(data[edge?.sortKey]));
-        if (isVisible) {
-          graph.showItem(item, false);
-        } else {
-          graph.hideItem(item, false);
-        }
-      });
-    }
   };
 
-  if (state.nodeType.length === 0) {
-    return null;
-  }
+  const updateFilterCriteria = (id: string, filterCriteria: IFilterCriteria) => {
+    setFilterOptions({
+      ...filterOptions,
+      [id]: filterCriteria,
+    });
+  };
+
+  const removeFilterCriteria = (id: string) => {
+    delete filterOptions[id];
+    setFilterOptions({ ...filterOptions });
+  };
+
+
+  
+  useEffect(() => {
+    console.log(filterOptions, 'filterOptions')
+    let data:GraphinData = source;
+    Object.values(filterOptions).map(filterCriteria => {
+      data = filterGraphData(data, filterCriteria, graph);
+    })
+    updateContext(draft => {
+      draft.data = data;
+    })
+  }, [filterOptions])
+
 
   return (
-    <div className="filter-container">
-      <div className="eBox">
-        <div className="title">节点</div>
-        <Checkbox.Group
-          style={{ width: '100%' }}
-          defaultValue={state.nodeType.map(d => d.value)}
-          onChange={val => handleOnChange('node', val)}
-        >
-          {renderOptions(state.nodeType)}
-        </Checkbox.Group>
-      </div>
-      <div className="eBox">
-        <div className="title">边</div>
-        <Checkbox.Group
-          style={{ width: '100%' }}
-          defaultValue={state.edgeType.map(d => d.value)}
-          onChange={val => handleOnChange('edge', val)}
-        >
-          {renderOptions(state.edgeType)}
-        </Checkbox.Group>
-      </div>
-    </div>
+    <Drawer
+      placement="right"
+      visible={visible}
+      title="筛选面板"
+      width="356px"
+      style={{
+        marginTop: '61px',
+      }}
+      mask={false}
+      bodyStyle={{
+        padding: '12px 24px',
+      }}
+    >
+      <Button style={{ width: '100%' }} onClick={addFilter}>
+        增加筛选器
+      </Button>
+      {Object.values(filterOptions).map(filterCriter => {
+        return (
+          <FilterSelection
+            filterCriter={filterCriter}
+            nodeProperties={nodeProperties}
+            edgeProperties={edgeProperties}
+            updateFilterCriteria={updateFilterCriteria}
+            removeFilterCriteria={removeFilterCriteria}
+          />
+        );
+      })}
+    </Drawer>
   );
 };
+
 export default FilterPanel;
