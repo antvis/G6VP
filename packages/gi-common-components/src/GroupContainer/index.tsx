@@ -62,10 +62,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
-  const getExtra = () => {
-    return;
-  };
-
   return (
     <div className="gi-group-contaner">
       <Form initialValues={initValues} layout="vertical" form={form} onValuesChange={onValuesChange}>
@@ -114,6 +110,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                     expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                   >
                     {fields.map(({ key, name, ...restField }, index) => {
+                      console.log(restField, 'restField', key, name, initValues);
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
