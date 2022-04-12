@@ -53,6 +53,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
   return (
     <CommonStyleSetting
       onChange={handleChange}
+      //@ts-ignore
       config={config}
       data={data}
       elementType={elementType}
