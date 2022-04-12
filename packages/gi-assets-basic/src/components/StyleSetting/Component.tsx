@@ -1,4 +1,4 @@
-import { CommonStyleSetting } from '@alipay/gi-common-components';
+import { CommonStyleSetting, Utils } from '@alipay/gi-common-components';
 import { useContext } from '@alipay/graphinsight';
 import React from 'react';
 import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
@@ -23,26 +23,25 @@ export interface StyleSettingProps {
 }
 
 const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'node' }) => {
-  const { updateContext, data, config } = useContext();
+  const { updateContext, data, config, assets } = useContext();
 
-  /**
-   * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
-   * @param current
-   * @param all
-   */
+  const elements = React.useMemo(() => {
+    console.log('calcute.....');
+    return Utils.getElementsByAssets(assets.elements, data);
+  }, []);
+
   const handleChange = styleGroups => {
     const nodesConfig: NodesConfig = styleGroups.map(c => {
+      const { id, groupId, groupName, expressions, logic } = c;
       return {
-        id: 'SimpleNode',
-        props: c.config as NodeConfig,
-        groupId: c.groupId,
-        groupName: c.groupName,
-        expressions: c.expressions,
-        logic: c.logic,
+        id,
+        props: c.props,
+        groupId,
+        groupName,
+        expressions,
+        logic,
       };
     });
-
-    console.log('nodeConfig', nodesConfig);
     updateContext(draft => {
       //@ts-ignore
       draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
@@ -51,7 +50,15 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
     });
   };
   //@ts-ignore
-  return <CommonStyleSetting onChange={handleChange} config={config} data={data} elementType={elementType} />;
+  return (
+    <CommonStyleSetting
+      onChange={handleChange}
+      config={config}
+      data={data}
+      elementType={elementType}
+      elements={elements.nodes}
+    />
+  );
 };
 
 export default StyleSetting;

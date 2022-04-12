@@ -271,7 +271,7 @@ const GISDK = (props: Props) => {
     ...state,
     GISDK_ID,
     services: Services,
-
+    assets,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {

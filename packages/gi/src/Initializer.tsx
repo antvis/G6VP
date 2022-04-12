@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useContext } from './context';
+import { GIService } from './typing';
 
 const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
@@ -33,7 +34,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
   const { services, updateContext, transform } = context;
 
   React.useEffect(() => {
-    const { service } = services.find(s => s.id === serviceId);
+    const { service } = services.find(s => s.id === serviceId) as GIService;
     service().then((res = { nodes: [], edges: [] }) => {
       updateContext(draft => {
         const { nodes } = res;
