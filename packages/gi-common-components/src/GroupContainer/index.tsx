@@ -110,7 +110,35 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                     expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                   >
                     {fields.map(({ key, name, ...restField }, index) => {
-                      console.log(restField, 'restField', key, name, initValues);
+                      console.log(restField, 'restField', key, name, initValues, activeKeys);
+                      const panelKey = `${key}`;
+                      const isActive = activeKeys.indexOf(panelKey) !== -1;
+                      const { color } = initValues['groups'][key]['props'];
+                      const DisplayColor = isActive ? null : (
+                        <Button
+                          size="small"
+                          type="text"
+                          style={{
+                            width: '24px',
+                            height: '24px',
+                            padding: ' 0px 0px',
+                            fontSize: '14px',
+                            borderRadius: '2px',
+                            verticalAlign: '-3px',
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: 'block',
+                              width: '14px',
+                              height: '14px',
+                              background: color,
+                              borderRadius: '50%',
+                              marginLeft: '3px',
+                            }}
+                          ></div>
+                        </Button>
+                      );
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
@@ -128,6 +156,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                 e.stopPropagation();
                               }}
                             >
+                              {DisplayColor}
                               <PopoverContainer
                                 title="分组规则"
                                 content={
