@@ -35,23 +35,23 @@ const registerMeta = context => {
           mode: 'multiple',
         },
       },
-      advanced: {
-        type: 'object',
+      advancedPanel: {
+        type: 'void',
         'x-decorator': 'FormItem',
         'x-component': 'FormCollapse',
-        'x-component-props': {
-          bordered: false,
-          // 设置手风琴默认，不允许收起高级配置，否则下面的 visible 控制就失效了
-          accordion: true,
-        },
+        // 'x-component-props': {
+        //   bordered: false,
+        //   // 设置手风琴默认，不允许收起高级配置，否则下面的 visible 控制就失效了
+        //   accordion: true,
+        // },
         properties: {
-          advancedPanel: {
-            type: 'void',
+          advanced: {
+            type: 'object',
             'x-component': 'FormCollapse.CollapsePanel',
             'x-component-props': {
               header: '高级配置',
               // 暂时不设置高级配置默认收起，否则下面的 visible 控制就失效了
-              // key: 'advanced-panel',
+              key: 'advanced-panel',
             },
             properties: {
               panel: {
@@ -116,7 +116,10 @@ const registerMeta = context => {
                         title: '类型',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                         default: icon.type,
                       },
                       value: {
@@ -273,7 +276,10 @@ const registerMeta = context => {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                         default: badge.type,
                       },
                       value: {

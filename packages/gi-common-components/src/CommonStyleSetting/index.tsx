@@ -114,6 +114,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     </GroupContainer>
   );
 };
+// export default CommonStyleSetting;
 
 export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
   /** 只要元素资产变换的时候，才去重绘 */
