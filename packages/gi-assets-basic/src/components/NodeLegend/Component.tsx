@@ -1,6 +1,8 @@
 import { Legend } from '@antv/graphin-components';
 import React from 'react';
 import { getPositionStyles } from '../WrapContainer';
+import { useContext } from '@alipay/graphinsight';
+
 
 export interface ComponentProps {
   sortKey: string;
@@ -12,7 +14,7 @@ export interface ComponentProps {
 const Component: React.FunctionComponent<ComponentProps> = props => {
   const { sortKey, textColor, placement, offset } = props;
   const positionStyles = getPositionStyles(placement, offset);
-
+  const context = useContext();
 
   return (
     <div>
