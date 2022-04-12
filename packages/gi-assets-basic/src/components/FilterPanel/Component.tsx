@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Drawer, Button, Select } from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Drawer, Button } from 'antd';
 import { GraphinData } from '@antv/graphin';
 import { nanoid } from 'nanoid';
 import { useContext } from '@alipay/graphinsight';
 import { generatorSchemaByGraphData } from '@alipay/graphinsight/es/utils';
-import {filterGraphData} from './utils'
+import { filterGraphData } from './utils';
 import FilterSelection from './FilterSelection';
 import { IFilterCriteria } from './type';
+import "./index.less"
 
 export interface FilterPanelProps {
   visible: boolean;
@@ -16,21 +17,25 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const { visible } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, graph } = useContext();
-  const dataSchemas = generatorSchemaByGraphData(source);
+  const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
-  const nodeProperties = dataSchemas.nodes.reduce((acc, cur) => {
-    return {
-      ...acc,
-      ...cur.properties,
-    };
-  }, {});
+  const nodeProperties = useMemo(() => {
+    return dataSchemas.nodes.reduce((acc, cur) => {
+      return {
+        ...acc,
+        ...cur.properties,
+      };
+    }, {});
+  }, [dataSchemas]);
 
-  const edgeProperties = dataSchemas.edges.reduce((acc, cur) => {
-    return {
-      ...acc,
-      ...cur.properties,
-    };
-  }, {});
+  const edgeProperties = useMemo(() => {
+    return dataSchemas.edges.reduce((acc, cur) => {
+      return {
+        ...acc,
+        ...cur.properties,
+      };
+    }, {});
+  }, [dataSchemas]);
 
   const addFilter = () => {
     const id = nanoid();
@@ -57,26 +62,22 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     setFilterOptions({ ...filterOptions });
   };
 
-
-  
   useEffect(() => {
-    console.log(filterOptions, 'filterOptions')
-    let data:GraphinData = source;
+    let data: GraphinData = source;
     Object.values(filterOptions).map(filterCriteria => {
       data = filterGraphData(data, filterCriteria, graph);
-    })
+    });
     updateContext(draft => {
       draft.data = data;
-    })
-  }, [filterOptions])
-
+    });
+  }, [filterOptions]);
 
   return (
     <Drawer
       placement="right"
       visible={visible}
       title="筛选面板"
-      width="356px"
+      width="275px"
       style={{
         marginTop: '61px',
       }}
@@ -85,20 +86,24 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         padding: '12px 24px',
       }}
     >
-      <Button style={{ width: '100%' }} onClick={addFilter}>
-        增加筛选器
-      </Button>
-      {Object.values(filterOptions).map(filterCriter => {
-        return (
-          <FilterSelection
-            filterCriter={filterCriter}
-            nodeProperties={nodeProperties}
-            edgeProperties={edgeProperties}
-            updateFilterCriteria={updateFilterCriteria}
-            removeFilterCriteria={removeFilterCriteria}
-          />
-        );
-      })}
+      <div className="gi-filter-panel">
+        <Button style={{ width: '100%' }} onClick={addFilter}>
+          增加筛选器
+        </Button>
+        <div className='gi-filter-panel-criteria-container'>
+          {Object.values(filterOptions).map(filterCriter => {
+            return (
+              <FilterSelection
+                filterCriter={filterCriter}
+                nodeProperties={nodeProperties}
+                edgeProperties={edgeProperties}
+                updateFilterCriteria={updateFilterCriteria}
+                removeFilterCriteria={removeFilterCriteria}
+              />
+            );
+          })}
+        </div>
+      </div>
     </Drawer>
   );
 };
