@@ -1,4 +1,4 @@
-import {INode} from '@antv/g6'
+import { INode } from '@antv/g6';
 import type { GraphinContextType, GraphinData } from '@antv/graphin';
 import { IFilterCriteria } from './type';
 
@@ -9,13 +9,21 @@ import { IFilterCriteria } from './type';
  * @param graph G6 画布实例
  * @returns
  */
-export const filterGraphData = (source: GraphinData, filterCriteria: IFilterCriteria, graph: GraphinContextType['graph']): GraphinData => {
+export const filterGraphData = (
+  source: GraphinData,
+  filterCriteria: IFilterCriteria,
+  graph: GraphinContextType['graph'],
+): GraphinData => {
   const { analyzerType, isFilterReady, elementType, prop, selectValue, range } = filterCriteria;
-  if (!isFilterReady || analyzerType === 'NONE') return source;
+  if (!isFilterReady || analyzerType === 'NONE') {
+    return source;
+  }
+
   const newData: GraphinData = {
     nodes: [],
     edges: [],
   };
+
   if (elementType === 'node') {
     const inValidNodes = new Set<string>();
     newData.nodes = source.nodes.filter(node => {
@@ -25,12 +33,20 @@ export const filterGraphData = (source: GraphinData, filterCriteria: IFilterCrit
         }
         inValidNodes.add(node.id);
         return false;
+      } else if (analyzerType === 'BRUSH') {
+        const min = range![0];
+        const max = range![1];
+        if (node.data && node.data[prop!] && min <= node.data[prop!] && node.data[prop!] <= max) {
+          return true;
+        }
+        inValidNodes.add(node.id);
+        return false;
       }
     });
     newData.edges = source.edges.filter(edge => {
       return !inValidNodes.has(edge.source) && !inValidNodes.has(edge.target);
     });
-  } else if (elementType === 'edge'){
+  } else if (elementType === 'edge') {
     const inValidEdges = new Set<string>();
     newData.edges = source.edges.filter(edge => {
       if (analyzerType === 'SELECT') {
@@ -40,10 +56,19 @@ export const filterGraphData = (source: GraphinData, filterCriteria: IFilterCrit
         inValidEdges.add(edge.source);
         inValidEdges.add(edge.target);
         return false;
+      } else if (analyzerType === 'BRUSH') {
+        const min = range![0];
+        const max = range![1];
+        if (edge.data && edge.data[prop!] && min <= edge.data[prop!] && edge.data[prop!] <= max) {
+          return true;
+        }
+        inValidEdges.add(edge.source);
+        inValidEdges.add(edge.target);
+        return false;
       }
     });
-    newData.nodes = source.nodes
-  } 
-  //console.log(newData)
+    newData.nodes = source.nodes;
+  }
+  console.log('newData@', newData);
   return newData;
 };

@@ -2,7 +2,7 @@ export interface IFilterCriteria{
   id?: string;
   prop?: string;
   elementType?: 'node' | 'edge';
-  range?: [number, number];
+  range?: number[];
   histogram?: IHistogramProp;
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
@@ -28,5 +28,5 @@ export interface IHistogramProp  {
   data: IHistogramBin[];
   step: number;
   dataType: string;
-  //format: string;
+  format: string;
 };

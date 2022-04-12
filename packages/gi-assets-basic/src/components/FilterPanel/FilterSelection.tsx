@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Select } from 'antd';
+import { Button, Select } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
+import { Filter as BrushFilter } from 'motif-gi';
 import { useContext } from '@alipay/graphinsight';
 import { IFilterCriteria } from './type';
+import './index.less';
 
 interface FilterSelectionProps {
   filterCriter: IFilterCriteria;
@@ -15,7 +18,6 @@ interface FilterSelectionProps {
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria } = props;
   const { source } = useContext();
-  const [filterField, setFilterField] = useState();
 
   const getSelectOptions = (
     graphData: GraphinData,
@@ -47,11 +49,47 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     return options;
   };
 
+  const getHistogram = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge') => {
+    const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
+    const valueMap = new Map<number, number>();
+    let maxValue = -Infinity;
+    let minValue = Infinity;
+    elements.forEach(e => {
+      const value = e.data && e.data[prop];
+      if (value && typeof value === 'number') {
+        valueMap.set(value, valueMap.has(value) ? valueMap.get(value)! + 1 : 0);
+        maxValue = Math.max(value, maxValue);
+        minValue = Math.min(value, minValue);
+      }
+    });
+
+    const interval = (maxValue - minValue) / 50;
+    const data = [...valueMap.entries()].map(e => {
+      const [key, value] = e;
+      const x0 = key - interval / 2;
+      const x1 = key + interval / 2;
+      return {
+        count: value,
+        x0: x0 >= minValue ? x0 : minValue,
+        x1: x1 <= maxValue ? x1 : maxValue,
+      };
+    });
+    return {
+      data,
+      domain: [minValue, maxValue],
+      step: interval,
+      dataType: 'NUMBER',
+      format: '',
+      color: '#3056E3',
+    };
+  };
+
   const onSelectChange = value => {
     const id = filterCriter.id as string;
     const elementType = value.slice(0, 4);
     const prop = value.slice(5);
     const elementProps = elementType === 'node' ? nodeProperties : edgeProperties;
+
     let analyzerType;
     if (elementProps[prop] === 'number') {
       analyzerType = 'BRUSH';
@@ -60,15 +98,26 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else {
       analyzerType = 'NONE';
     }
+
     if (analyzerType == 'SELECT') {
       const selectOptions = getSelectOptions(source, elementProps[prop], prop, elementType);
       updateFilterCriteria(id, {
         ...filterCriter,
-        id,
         elementType,
         prop,
         analyzerType,
         selectOptions,
+      });
+    } else if (analyzerType === 'BRUSH') {
+      const histogram = getHistogram(source, prop, elementType);
+      updateFilterCriteria(id, {
+        ...filterCriter,
+        analyzerType: 'BRUSH',
+        isFilterReady: false,
+        elementType,
+        prop,
+        histogram,
+        range: histogram.domain,
       });
     }
   };
@@ -76,7 +125,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const onValueSelectChange = value => {
     const id = filterCriter.id as string;
     const isFilterReady = value.length !== 0;
-    console.log('value', value)
     updateFilterCriteria(id, {
       ...filterCriter,
       isFilterReady,
@@ -84,10 +132,19 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     });
   };
 
+  const onBrushChange = value => {
+    const id = filterCriter.id as string;
+    updateFilterCriteria(id, {
+      ...filterCriter,
+      isFilterReady: true,
+      range: value,
+    });
+  };
+
   return (
-    <div key={filterCriter.id}>
-      <div>
-        <Select style={{ width: '200px' }} onChange={onSelectChange}>
+    <div key={filterCriter.id} className="gi-filter-panel-criteria">
+      <div >
+        <Select style={{ width: '200px' }} onChange={onSelectChange} className="gi-filter-panel-prop-select">
           <Select.OptGroup key="node" label="节点">
             {Object.keys(nodeProperties).map(prop => (
               <Select.Option value={`node-${prop}`}>{prop}</Select.Option>
@@ -99,12 +156,23 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             ))}
           </Select.OptGroup>
         </Select>
+        <DeleteOutlined className="gi-filter-panel-delete" onClick={() => removeFilterCriteria(filterCriter.id!)}/>
       </div>
-      <div>
+      <div className='gi-filter-panel-value'>
         {filterCriter.analyzerType == 'SELECT' && (
-          <Select style={{ width: '200px' }} onChange={onValueSelectChange} mode="tags" placeholder="选择筛选值" options={filterCriter.selectOptions} value={filterCriter.selectValue}>
-          </Select>
+          <Select
+            style={{ width: '200px' }}
+            onChange={onValueSelectChange}
+            mode="tags"
+            placeholder="选择筛选值"
+            options={filterCriter.selectOptions}
+            value={filterCriter.selectValue}
+          />
         )}
+        {filterCriter.analyzerType === 'BRUSH' && (
+          <BrushFilter value={filterCriter.range!} histogram={filterCriter.histogram!} onChangeRange={onBrushChange} />
+        )}
+        {filterCriter.analyzerType === 'NONE' && <span>请选择合法字段</span>}
       </div>
     </div>
   );

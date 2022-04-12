@@ -7,7 +7,7 @@ const info = {
   desc: '筛选面板',
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',
-  type: '',
+  type: 'GIAC_CONTENT',
 };
 
 export default  {
