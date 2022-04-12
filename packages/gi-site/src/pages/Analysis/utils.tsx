@@ -1,3 +1,4 @@
+import type { GIConfig } from '@alipay/graphinsight';
 export const isObjectEmpty = obj => {
   return Object.keys(obj).length === 0;
 };
@@ -9,11 +10,13 @@ interface IGraphData {
 
 interface INodeSchema {
   nodeType: string;
+  nodeTypeKeyFromProperties: string;
   properties: Object;
 }
 
 interface IEdgeSchema {
   edgeType: string;
+  edgeTypeKeyFromProperties: string;
   sourceNodeType: string;
   targetNodeType: string;
   properties: Object;
@@ -33,9 +36,10 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
   const edgeSchemas = [];
 
   nodes.forEach(node => {
-    const { nodeType = 'UNKNOW', data } = node;
+    const { nodeType = 'UNKNOW', data, nodeTypeKeyFromProperties } = node;
     const nodeSchema = {
       nodeType: nodeType,
+      nodeTypeKeyFromProperties,
       properties: {},
     };
 
@@ -60,9 +64,10 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
   });
 
   edges.forEach(edge => {
-    const { edgeType = 'UNKNOW', source, target, data } = edge;
+    const { edgeType = 'UNKNOW', source, target, data, edgeTypeKeyFromProperties } = edge;
     const edgeSchema = {
       edgeType: edgeType,
+      edgeTypeKeyFromProperties,
       sourceNodeType: '',
       targetNodeType: '',
       properties: {},
@@ -97,5 +102,71 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
   return {
     nodes: nodeSchemas,
     edges: edgeSchemas,
+  };
+};
+
+const NODE_COLORS = [
+  '#3056E3',
+  '#CB6EF8',
+  '#82E6C7',
+  '#F6D87B',
+  '#F69F7F',
+  '#E96075',
+  '#F58CCB',
+  '#795AE1',
+  '#622CD8',
+  '#85C98E',
+  '#3E34E5',
+  '#2959C1',
+  '#4D92DE',
+  '#5CB5D4',
+  '#B9D569',
+];
+export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig): GIConfig => {
+  const { nodes, edges } = schema;
+  const nodesConfig = nodes.map((c, index) => {
+    return {
+      id: 'SimpleNode',
+      props: {
+        size: 26,
+        color: NODE_COLORS[index] || '#ddd',
+        label: ['id'],
+      },
+      name: '官方节点',
+      expressions: [
+        {
+          name: c.nodeTypeKeyFromProperties,
+          operator: 'eql',
+          value: c.nodeType,
+        },
+      ],
+      logic: true,
+      groupName: `${c.nodeType.toUpperCase()} TYPE`,
+    };
+  });
+  const edgesConfig = edges.map((c, index) => {
+    return {
+      id: 'SimpleEdge',
+      props: {
+        size: 26,
+        color: NODE_COLORS[index] || '#ddd',
+        label: ['id'],
+      },
+      name: '官方边',
+      expressions: [
+        {
+          name: c.edgeTypeKeyFromProperties,
+          operator: 'eql',
+          value: c.edgeType,
+        },
+      ],
+      logic: true,
+      groupName: `${c.edgeType.toUpperCase()} TYPE`,
+    };
+  });
+  return {
+    ...config,
+    nodes: nodesConfig,
+    edges: edgesConfig,
   };
 };

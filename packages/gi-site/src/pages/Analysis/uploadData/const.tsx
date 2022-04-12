@@ -56,6 +56,7 @@ data => {
     return {
       id:'' + n.${id},
       nodeType: n.${nodeType},
+      nodeTypeKeyFromProperties:'${nodeType}',
       data:n
     }
   })
@@ -64,6 +65,7 @@ data => {
       source:'' + e.${source},
       target:'' + e.${target},
       edgeType: e.${edgeType},
+      edgeTypeKeyFromProperties:'${edgeType}',
       data:e
     }
   })
