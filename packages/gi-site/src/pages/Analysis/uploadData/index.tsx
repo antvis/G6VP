@@ -8,8 +8,9 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import './index.less';
+import GraphScopeMode from './GraphScopeMode'
 import Mock from './Mock';
+import './index.less';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
