@@ -49,9 +49,11 @@ export interface StyleSettingProps {
   onChange: (params: any) => void;
   /** GI ELEMENTS ASSETS META */
   elements: {
-    id: string;
-    props: {};
-    meta: Record<string, any>;
+    [key: string]: {
+      id: string;
+      meta: Record<string, any>;
+      [key: string]: any;
+    };
   };
   /** GI CONFIG */
   config: {
@@ -122,6 +124,10 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
       }
     }
     preStyleGroup.current = resultGroup;
+
+    if (onChange) {
+      onChange(preStyleGroup.current);
+    }
   };
 
   return (
@@ -143,11 +149,12 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     </GroupContainer>
   );
 };
-// export default CommonStyleSetting;
 
-export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
-  /** 只要元素资产变换的时候，才去重绘 */
-  const preElementKeys = Object.keys(preProps.elements).join('_');
-  const nextElementKeys = Object.keys(nextProps.elements).join('_');
-  return preElementKeys === nextElementKeys;
-});
+export default CommonStyleSetting;
+
+// export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
+//   /** 只要元素资产变换的时候，才去重绘 */
+//   const preElementKeys = Object.keys(preProps.elements).join('_');
+//   const nextElementKeys = Object.keys(nextProps.elements).join('_');
+//   return preElementKeys === nextElementKeys;
+// });
