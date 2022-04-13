@@ -1,4 +1,3 @@
-import { filterByRules } from '@alipay/gi-common-components/lib/GroupContainer/utils';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React from 'react';
@@ -187,7 +186,7 @@ const GISDK = (props: Props) => {
     if (!nodesCfg || !edgesCfg) {
       return;
     }
-    debugger;
+
     const defaultNodesCfg = [{ id: 'GraphinNode', rules: [] }];
     const defaultEdgesCfg = [{ id: 'GraphinEdge', rules: [] }];
     /**
@@ -197,48 +196,8 @@ const GISDK = (props: Props) => {
      * @returns
      */
     const transform = (data, reset?: boolean) => {
-      const filterNodes = (nodesCfg || defaultNodesCfg)
-        .map(item => {
-          //@ts-ignore
-          const { id, expressions, logic } = item;
-          const Element = ElementAssets[id];
-          const filterData = filterByRules(data.nodes, { logic, expressions });
-          return Element.registerTransform(filterData, item, reset);
-        })
-        .reduce((acc, curr) => {
-          return [...curr, ...acc];
-        }, []);
-
-      const uniqueNodes = utils.uniqueElementsBy(filterNodes, (a, b) => {
-        return a.id === b.id;
-      });
-      const filterIds = uniqueNodes.map(n => n.id);
-
-      const otherNodes = data.nodes.filter(n => {
-        return filterIds.indexOf(n.id) === -1;
-      });
-
-      const otherNodesByTrans = ElementAssets['SimpleNode'].registerTransform(
-        otherNodes,
-        {
-          id: 'SimpleNode',
-          //@ts-ignore
-          props: {},
-        },
-        reset,
-      );
-      const nodes = [...uniqueNodes, ...otherNodesByTrans];
-
-      const edges = (edgesCfg || defaultEdgesCfg)
-        .map(item => {
-          const { id, expressions } = item;
-          const Element = ElementAssets[id];
-          const filterData = filterDataByRules(data, expressions, 'edge');
-          return Element.registerTransform(filterData, item, reset);
-        })
-        .reduce((acc, curr) => {
-          return [...acc, ...curr];
-        }, []);
+      const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
+      const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
 
       return {
         nodes,
@@ -251,7 +210,7 @@ const GISDK = (props: Props) => {
         const preData = original(draft.data);
         // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
         const newData = transform(preData, true);
-
+        //@ts-ignore
         draft.data = newData;
       }
 

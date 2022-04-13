@@ -174,6 +174,7 @@ export interface GIEdgeConfig {
     color: string;
     size: number;
     label: string[];
+    [key: string]: any;
   };
   expressions?: {
     name: string;
