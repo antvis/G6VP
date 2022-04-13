@@ -332,6 +332,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
+        <TabPane tab="GraphScope" key="graphscope">
+          <GraphScopeMode />
+        </TabPane>
       </Tabs>
     </Modal>
   );
