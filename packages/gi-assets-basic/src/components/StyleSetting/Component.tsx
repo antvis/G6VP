@@ -19,10 +19,10 @@ interface MetaProps {
 export interface StyleSettingProps {
   shapeOptions: MetaProps[];
   data: { nodes: any[]; edges: any[] };
-  elementType: 'node' | 'edge';
+  elementType: 'nodes' | 'edges';
 }
 
-const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'node' }) => {
+const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'nodes' }) => {
   const { updateContext, data, config, assets } = useContext();
 
   const elements = React.useMemo(() => {
@@ -57,6 +57,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
       config={config}
       data={data}
       elementType={elementType}
+      //@ts-ignore
       elements={elements.nodes}
     />
   );

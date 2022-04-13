@@ -10,21 +10,53 @@ export type NodesConfig = {
   props: any;
 }[];
 
+export interface GINodeConfig {
+  id: string;
+  name: string;
+  props: {
+    size: number;
+    color: string;
+    label: string[];
+    [key: string]: any;
+  };
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
+}
+export interface GIEdgeConfig {
+  id: string;
+  name: string;
+  props: {
+    color: string;
+    size: number;
+    label: string[];
+    [key: string]: any;
+  };
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
+}
+
 export interface StyleSettingProps {
   data: { nodes: any[]; edges: any[] };
-  elementType: 'node' | 'edge';
+  elementType: 'nodes' | 'edges';
   onChange: (params: any) => void;
-  /** GI ELEMENT ASSETS */
-  elements: {};
+  /** GI ELEMENTS ASSETS META */
+  elements: {
+    id: string;
+    props: {};
+    meta: Record<string, any>;
+  };
   /** GI CONFIG */
   config: {
-    nodes: [
-      {
-        id: string;
-        props: {};
-      },
-    ];
-    edges: [{}];
+    nodes: GINodeConfig[];
+    edges: GIEdgeConfig[];
     [key: string]: any;
   };
 }
@@ -34,9 +66,9 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   elementType,
   onChange,
   elements,
-  config,
+  config: CONFIG,
 }) => {
-  const elementConfig = JSON.parse(JSON.stringify(config.nodes || {}));
+  const elementConfig = JSON.parse(JSON.stringify(CONFIG[elementType] || {}));
   const preStyleGroup = React.useRef(elementConfig as any);
   const defaultNodeConfig = {
     id: 'SimpleNode',
@@ -93,18 +125,15 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   };
 
   return (
-    <GroupContainer
-      initValues={{ groups: elementConfig }}
-      data={elementType === 'node' ? data.nodes : data.edges}
-      valuesChange={handleGroupChange}
-    >
+    <GroupContainer initValues={{ groups: elementConfig }} data={data[elementType]} valuesChange={handleGroupChange}>
       {groupIndex => {
-        const nodeConfig = config.nodes[groupIndex] || defaultNodeConfig;
+        const itemConfig = elementConfig[groupIndex] || defaultNodeConfig;
         return (
           <div>
             <RenderForm
               elements={elements}
-              config={nodeConfig}
+              //@ts-ignore
+              config={itemConfig}
               // debounceInput={true}
               onChange={(all, elementId) => handleChange(all, groupIndex, elementId)}
             />

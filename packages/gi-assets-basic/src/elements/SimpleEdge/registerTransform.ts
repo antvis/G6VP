@@ -7,11 +7,16 @@ const defaultEdgeTheme = {
   mode: 'light' as 'light' | 'dark',
 };
 
-const defaultEdgeStyles = Utils.getEdgeStyleByTheme(defaultEdgeTheme);
-
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
   try {
+    const { color, size, label, advance } = config.props;
+    const defaultEdgeStyles = Utils.getEdgeStyleByTheme({
+      primaryEdgeColor: color,
+      edgeSize: size,
+      mode: 'light',
+    });
+
     const transEdges = edges.map(edge => {
       const data = edge.data || edge;
       let preStyle = (edge && edge.style) || {};
@@ -25,6 +30,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         style: merge(defaultEdgeStyles.style, preStyle),
       };
     });
+    console.log('%c transEdges', 'color:blue', transEdges, config);
     return transEdges;
   } catch (error) {
     console.error('parse transform error:', error);
