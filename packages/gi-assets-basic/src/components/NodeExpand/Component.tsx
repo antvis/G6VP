@@ -21,7 +21,7 @@ const NodeExpand: React.FunctionComponent<NodeToggleProps> = props => {
     const { item, onClose } = contextmenu;
     const nodeId = item.getModel().id;
     NodeExpandStatus[nodeId] = !NodeExpandStatus[nodeId];
-    const { service } = services.find(sr => sr.id === serviceId);
+    const { service } = services.find(sr => sr.id === serviceId) || {};
     if (!service) {
       return;
     }
