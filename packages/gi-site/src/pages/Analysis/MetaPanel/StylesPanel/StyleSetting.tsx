@@ -1,13 +1,13 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
 import React from 'react';
 import { useContext } from '../../hooks/useContext';
-type EdgeConfig = any;
+type NodeConfig = any;
 export type NodesConfig = {
   id: string;
   groupId: string;
   groupName: string;
   expressions: any[];
-  props: EdgeConfig;
+  props: NodeConfig;
 }[];
 
 interface MetaProps {
@@ -17,11 +17,11 @@ interface MetaProps {
 
 export interface StyleSettingProps {
   elements: MetaProps[];
-  elementType: 'node' | 'edge';
+  elementType: 'nodes' | 'edges';
 }
 
 const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
-  const { elements } = props;
+  const { elements, elementType } = props;
 
   const { updateContext, context } = useContext();
   const { data, config } = context;
@@ -32,7 +32,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
    * @param all
    */
   const handleChange = styleGroups => {
-    const nodesConfig: NodesConfig = styleGroups.map(c => {
+    const elementConfig: NodesConfig = styleGroups.map(c => {
       const { id, groupId, groupName, expressions, logic } = c;
       return {
         id,
@@ -45,13 +45,19 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
     });
     updateContext(draft => {
       //@ts-ignore
-      draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
+      draft.config[elementType] = JSON.parse(JSON.stringify(elementConfig));
       //@ts-check
       draft.layoutCache = true;
     });
   };
   return (
-    <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
+    <CommonStyleSetting
+      config={config}
+      onChange={handleChange}
+      data={data}
+      elementType={elementType}
+      elements={elements}
+    />
   );
 };
 

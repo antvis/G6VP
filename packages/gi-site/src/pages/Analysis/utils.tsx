@@ -122,48 +122,94 @@ const NODE_COLORS = [
   '#5CB5D4',
   '#B9D569',
 ];
+
+const colorMap = new Map();
+const nodesMap = new Map();
+
 export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig): GIConfig => {
   const { nodes, edges } = schema;
-  const nodesConfig = nodes.map((c, index) => {
-    return {
-      id: 'SimpleNode',
-      props: {
-        size: 26,
-        color: NODE_COLORS[index] || '#ddd',
-        label: ['id'],
-      },
-      name: '官方节点',
-      expressions: [
-        {
-          name: c.nodeTypeKeyFromProperties,
-          operator: 'eql',
-          value: c.nodeType,
+  const nodesConfig = nodes
+    .map((c, index) => {
+      colorMap.set(c.nodeType, NODE_COLORS[index]);
+      if (c.nodeType === 'UNKNOW') {
+        return {
+          id: 'SimpleNode',
+          props: {
+            size: 26,
+            color: NODE_COLORS[index] || '#ddd',
+            label: ['id'],
+          },
+          name: '官方节点',
+          order: -1,
+          expressions: [],
+          logic: true,
+          groupName: `GLOBAL TYPE`,
+        };
+      }
+
+      return {
+        id: 'SimpleNode',
+        props: {
+          size: 26,
+          color: NODE_COLORS[index] || '#ddd',
+          label: ['id'],
         },
-      ],
-      logic: true,
-      groupName: `${c.nodeType.toUpperCase()} TYPE`,
-    };
-  });
-  const edgesConfig = edges.map((c, index) => {
-    return {
-      id: 'SimpleEdge',
-      props: {
-        size: 26,
-        color: NODE_COLORS[index] || '#ddd',
-        label: ['id'],
-      },
-      name: '官方边',
-      expressions: [
-        {
-          name: c.edgeTypeKeyFromProperties,
-          operator: 'eql',
-          value: c.edgeType,
+        name: '官方节点',
+        expressions: [
+          {
+            name: c.nodeTypeKeyFromProperties,
+            operator: 'eql',
+            value: c.nodeType,
+          },
+        ],
+        order: index,
+        logic: true,
+        groupName: `${c.nodeType.toUpperCase()} TYPE`,
+      };
+    })
+    .sort((a, b) => {
+      return a.order - b.order;
+    });
+  const edgesConfig = edges
+    .map((c, index) => {
+      if (c.edgeType === 'UNKNOW') {
+        return {
+          id: 'SimpleEdge',
+          props: {
+            size: 1,
+            color: colorMap.get(c.sourceNodeType) || '#ddd',
+            label: ['id'],
+          },
+          name: '官方边',
+          order: -1,
+          expressions: [],
+          logic: true,
+          groupName: `GLOBAL TYPE`,
+        };
+      }
+      return {
+        id: 'SimpleEdge',
+        props: {
+          size: 1,
+          color: colorMap.get(c.sourceNodeType) || '#ddd',
+          label: ['id'],
         },
-      ],
-      logic: true,
-      groupName: `${c.edgeType.toUpperCase()} TYPE`,
-    };
-  });
+        name: '官方边',
+        expressions: [
+          {
+            name: c.edgeTypeKeyFromProperties,
+            operator: 'eql',
+            value: c.edgeType,
+          },
+        ],
+        order: index,
+        logic: true,
+        groupName: `${c.edgeType.toUpperCase()} TYPE`,
+      };
+    })
+    .sort((a, b) => {
+      return a.order - b.order;
+    });
   return {
     ...config,
     nodes: nodesConfig,
