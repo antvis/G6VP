@@ -6,7 +6,7 @@ export const useServiceContext = (serviceId: string | undefined) => {
     return null;
   }
   const { services } = useContext();
-  const { service } = services.find(s => s.id === serviceId);
+  const { service } = services.find(s => s.id === serviceId) || {};
   if (!service) {
     console.warn('Component need a serviceId', serviceId);
     return null;
