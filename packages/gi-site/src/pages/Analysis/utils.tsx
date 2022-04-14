@@ -49,7 +49,7 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
         for (const subKey in data[key]) {
           // 只处理这一层的非 object 的字段，其他的不再作为 schema 的属性
           if (typeof data[key][subKey] !== 'object') {
-            nodeSchema.properties[subKey] = typeof data[key][subKey];
+            nodeSchema.properties[`${key}.${subKey}`] = typeof data[key][subKey];
           }
         }
       } else {
@@ -124,29 +124,45 @@ const NODE_COLORS = [
 ];
 
 const colorMap = new Map();
-const nodesMap = new Map();
+
+const defaultNodeConfig = {
+  id: 'SimpleNode',
+  props: {
+    size: 26,
+    color: '#ddd',
+    label: ['id'],
+  },
+  name: '官方节点',
+  order: -1,
+  expressions: [],
+  logic: true,
+  groupName: `默认样式`,
+};
+const defaultEdgeConfig = {
+  id: 'SimpleEdge',
+  props: {
+    size: 1,
+    color: '#ddd',
+    label: ['id'],
+  },
+  name: '官方边',
+  order: -1,
+  expressions: [],
+  logic: true,
+  groupName: `默认样式`,
+};
 
 export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig): GIConfig => {
   const { nodes, edges } = schema;
+  let hasUnkownNodeType = false;
+  let hasUnkownEdgeType = false;
   const nodesConfig = nodes
     .map((c, index) => {
       colorMap.set(c.nodeType, NODE_COLORS[index]);
       if (c.nodeType === 'UNKNOW') {
-        return {
-          id: 'SimpleNode',
-          props: {
-            size: 26,
-            color: NODE_COLORS[index] || '#ddd',
-            label: ['id'],
-          },
-          name: '官方节点',
-          order: -1,
-          expressions: [],
-          logic: true,
-          groupName: `GLOBAL TYPE`,
-        };
+        hasUnkownNodeType = true;
+        return { ...defaultNodeConfig };
       }
-
       return {
         id: 'SimpleNode',
         props: {
@@ -173,18 +189,9 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
   const edgesConfig = edges
     .map((c, index) => {
       if (c.edgeType === 'UNKNOW') {
+        hasUnkownEdgeType = true;
         return {
-          id: 'SimpleEdge',
-          props: {
-            size: 1,
-            color: colorMap.get(c.sourceNodeType) || '#ddd',
-            label: ['id'],
-          },
-          name: '官方边',
-          order: -1,
-          expressions: [],
-          logic: true,
-          groupName: `GLOBAL TYPE`,
+          ...defaultEdgeConfig,
         };
       }
       return {
@@ -210,9 +217,20 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
     .sort((a, b) => {
       return a.order - b.order;
     });
+
+  let nodesCfg = nodesConfig;
+  let edgesCfg = edgesConfig;
+  if (!hasUnkownNodeType) {
+    nodesCfg = [defaultNodeConfig, ...nodesConfig];
+  }
+
+  if (!hasUnkownEdgeType) {
+    edgesCfg = [defaultEdgeConfig, ...edgesConfig];
+  }
+
   return {
     ...config,
-    nodes: nodesConfig,
-    edges: edgesConfig,
+    nodes: nodesCfg,
+    edges: edgesCfg,
   };
 };
