@@ -233,6 +233,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         }),
         // schemaData: schemaData,
         projectConfig: JSON.stringify(newConfig),
+        schemaData: JSON.stringify(schemaData),
       }).then(res => {
         updateContext(draft => {
           draft.key = Math.random();
