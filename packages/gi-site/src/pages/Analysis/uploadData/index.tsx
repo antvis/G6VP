@@ -8,8 +8,9 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import './index.less';
+import GraphScopeMode from './GraphScopeMode'
 import Mock from './Mock';
+import './index.less';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -332,6 +333,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
+        <TabPane tab="GraphScope" key="graphscope">
+          <GraphScopeMode />
+        </TabPane>
       </Tabs>
     </Modal>
   );
