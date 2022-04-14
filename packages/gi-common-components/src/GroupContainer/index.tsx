@@ -115,7 +115,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                     expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                   >
                     {fields.map(({ key, name, ...restField }, index) => {
-                      console.log(restField, 'restField', key, name, initValues, activeKeys);
                       const panelKey = `${key}`;
                       const isActive = activeKeys.indexOf(panelKey) !== -1;
                       const item = initValues['groups'][key];
