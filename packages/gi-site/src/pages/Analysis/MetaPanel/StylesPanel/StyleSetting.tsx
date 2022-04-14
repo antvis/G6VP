@@ -10,13 +10,14 @@ export type NodesConfig = {
   props: NodeConfig;
 }[];
 
-interface MetaProps {
-  key: string;
-  meta: Object;
-}
-
 export interface StyleSettingProps {
-  elements: MetaProps[];
+  elements: {
+    [key: string]: {
+      id: string;
+      meta: Record<string, any>;
+      [key: string]: any;
+    };
+  };
   elementType: 'nodes' | 'edges';
 }
 

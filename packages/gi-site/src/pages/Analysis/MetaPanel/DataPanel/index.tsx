@@ -154,6 +154,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         inputData: filterInputData,
       }),
       projectConfig: JSON.stringify(newConfig),
+      schemaData: JSON.stringify(schemaData),
     }).then(res => {
       updateContext(draft => {
         draft.key = Math.random();
