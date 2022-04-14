@@ -2,10 +2,10 @@ import { CaretRightOutlined, DeleteOutlined, FilterOutlined, PlusOutlined } from
 import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
+import type { ItemConfig } from '../CommonStyleSetting/typing';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 import PopoverContainer from './PopoverContainer';
-
 export interface ElementTypeOption {
   value: string;
   properties: any[];
@@ -16,6 +16,7 @@ export interface GroupContainerProps {
   children?: any;
   initValues?: any;
   valuesChange: (currenr: any, allValues: any) => void;
+  defaultGroupOption: ItemConfig;
 }
 
 const { Panel } = Collapse;
@@ -32,7 +33,7 @@ export interface State {
 }
 
 const GroupContainer: React.FC<GroupContainerProps> = props => {
-  const { data, children, valuesChange, initValues } = props;
+  const { data, children, valuesChange, initValues, defaultGroupOption } = props;
   const [form] = Form.useForm();
 
   const [state, setState] = useImmer<State>({
@@ -55,12 +56,16 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
 
   // 构建属性列表
   const p = data[0] && data[0].data;
-  const propertyList = Object.keys(p).map(d => {
-    return {
-      value: d,
-      key: d,
-    };
-  });
+
+  const propertyList =
+    (p &&
+      Object.keys(p).map(d => {
+        return {
+          value: d,
+          key: d,
+        };
+      })) ||
+    [];
 
   return (
     <div className="gi-group-contaner">
@@ -86,12 +91,12 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       bottom: '12px',
                     }}
                     onClick={() => {
-                      add({
-                        groupName: `样式配置分组${fields.length + 1}`,
-                        groupId: Math.random().toString(36).slice(-8),
-                        id: 'SimpleNode',
-                        props: {},
-                      });
+                      const idx = fields.length + 1;
+                      const options = {
+                        ...defaultGroupOption,
+                        groupName: `自定义样式 ${idx}`,
+                      };
+                      add(options);
                       setState(state => {
                         state.activeKeys = [...activeKeys, `${fields.length}`];
                       });
@@ -113,7 +118,12 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       console.log(restField, 'restField', key, name, initValues, activeKeys);
                       const panelKey = `${key}`;
                       const isActive = activeKeys.indexOf(panelKey) !== -1;
-                      const { color } = initValues['groups'][key]['props'];
+                      const item = initValues['groups'][key];
+                      let color = '#ddd';
+                      if (item && item.props) {
+                        color = item.props.color;
+                      }
+
                       const DisplayColor = isActive ? null : (
                         <Button
                           size="small"
