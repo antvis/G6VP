@@ -26,7 +26,10 @@ const registerMeta = context => {
         type: 'string',
         //todo: 显示文本属性根据 data 生成
         enum: keys.map(c => {
-          return { label: c, value: c };
+          return {
+            label: `${c.id} (${c.type})`,
+            value: c.id,
+          };
         }),
         // default: ['id'],
         'x-decorator': 'FormItem',
@@ -132,7 +135,7 @@ const registerMeta = context => {
                         type: 'string',
                         title: '图标',
                         'x-decorator': 'FormItem',
-                        'x-component': 'IconSelector',
+                        'x-component': 'IconPicker',
                         default: icon.value,
                       },
                       fill: {
