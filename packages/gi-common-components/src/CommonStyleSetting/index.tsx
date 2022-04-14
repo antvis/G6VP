@@ -1,47 +1,7 @@
 import React from 'react';
 import GroupContainer from '../GroupContainer';
 import RenderForm from './FormilyRenderForm';
-
-export type NodesConfig = {
-  id: string;
-  groupId: string;
-  groupName: string;
-  expressions: any[];
-  props: any;
-}[];
-
-export interface GINodeConfig {
-  id: string;
-  name: string;
-  props: {
-    size: number;
-    color: string;
-    label: string[];
-    [key: string]: any;
-  };
-  expressions?: {
-    name: string;
-    operator: string;
-    value: string | number;
-  }[];
-  groupName: string;
-}
-export interface GIEdgeConfig {
-  id: string;
-  name: string;
-  props: {
-    color: string;
-    size: number;
-    label: string[];
-    [key: string]: any;
-  };
-  expressions?: {
-    name: string;
-    operator: string;
-    value: string | number;
-  }[];
-  groupName: string;
-}
+import type { ItemConfig } from './typing';
 
 export interface StyleSettingProps {
   data: { nodes: any[]; edges: any[] };
@@ -57,11 +17,48 @@ export interface StyleSettingProps {
   };
   /** GI CONFIG */
   config: {
-    nodes: GINodeConfig[];
-    edges: GIEdgeConfig[];
+    nodes: ItemConfig[];
+    edges: ItemConfig[];
     [key: string]: any;
   };
 }
+
+const defaultGroupOption = {
+  nodes: {
+    groupName: `自定义样式`,
+    groupId: Math.random().toString(36).slice(-8),
+    id: 'SimpleNode',
+    expressions: [
+      {
+        name: 'id',
+        operator: 'eql',
+        value: '',
+      },
+    ],
+    props: {
+      color: '#ddd',
+      size: 26,
+      label: ['id'],
+    },
+  },
+  edges: {
+    groupName: `自定义样式`,
+    groupId: Math.random().toString(36).slice(-8),
+    id: 'SimpleEdge',
+    expressions: [
+      {
+        name: 'id',
+        operator: 'eql',
+        value: '',
+      },
+    ],
+    props: {
+      color: '#ddd',
+      size: 1,
+      label: ['source', 'target'],
+    },
+  },
+};
 
 const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   data,
@@ -131,7 +128,12 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   };
 
   return (
-    <GroupContainer initValues={{ groups: elementConfig }} data={data[elementType]} valuesChange={handleGroupChange}>
+    <GroupContainer
+      defaultGroupOption={defaultGroupOption[elementType]}
+      initValues={{ groups: elementConfig }}
+      data={data[elementType]}
+      valuesChange={handleGroupChange}
+    >
       {groupIndex => {
         const itemConfig = elementConfig[groupIndex] || defaultNodeConfig;
         return (

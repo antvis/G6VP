@@ -187,8 +187,6 @@ const GISDK = (props: Props) => {
       return;
     }
 
-    const defaultNodesCfg = [{ id: 'GraphinNode', rules: [] }];
-    const defaultEdgesCfg = [{ id: 'GraphinEdge', rules: [] }];
     /**
      *
      * @param data 源数据
