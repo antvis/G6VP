@@ -1,55 +1,58 @@
-import React, { useRef, useState } from 'react'
-import { Input, Popover } from 'antd'
-import { SketchPicker } from 'react-color'
-import './index.less'
+import { Input, Popover } from 'antd';
+import React, { useState } from 'react';
+import { SketchPicker } from 'react-color';
+import './index.less';
 
 export interface IColorInputProps {
-  value?: string
-  onChange?: (color: string) => void
+  value?: string;
+  onChange?: (color: string) => void;
 }
 
-const ColorInput: React.FC<IColorInputProps> = (props) => {
-  const container = useRef<HTMLDivElement>()
-  const [color, setColor] = useState(props.value as string)
-  
+const ColorInput: React.FC<IColorInputProps> = props => {
+  let container;
+  const [color, setColor] = useState(props.value as string);
+
   return (
-    // @ts-ignore
-    <div ref={container} className='color-input-container'>
+    <div className="color-input-container">
       <Input
         value={props.value}
-        onChange={(e) => {
-          props.onChange?.(e.target.value)
+        onChange={e => {
+          setColor(e.target.value);
+          props.onChange?.(e.target.value);
         }}
         placeholder="请选择颜色"
         prefix={
           <Popover
-            autoAdjustOverflow
+            placement="topLeft"
             trigger="click"
             overlayInnerStyle={{ padding: 0 }}
             // @ts-ignore
-            getPopupContainer={() => container.current}
+            getPopupContainer={() => container}
             content={
               <SketchPicker
                 color={color}
                 onChange={({ rgb }) => {
-                  setColor(`rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`)
-                  props.onChange?.(`rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`)
+                  setColor(`rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`);
+                  props.onChange?.(`rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`);
                 }}
               />
             }
           >
             <div
-              className='color-input-container-color-tips'
+              ref={node => {
+                container = node;
+              }}
+              className="color-input-container-color-tips"
               style={{
                 backgroundColor: color,
-                border: `1px solid ${color}`
+                border: `1px solid ${color}`,
               }}
             ></div>
           </Popover>
         }
       />
     </div>
-  )
-}
+  );
+};
 
-export default ColorInput
+export default ColorInput;

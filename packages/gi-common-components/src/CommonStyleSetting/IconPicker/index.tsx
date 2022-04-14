@@ -19,7 +19,6 @@ const IconPicker: React.FC<IColorInputProps> = props => {
 
   const { activeCategory, activeIcon } = state;
 
-  const handleChange = val => {};
   console.log('icon picker render...', value);
   return (
     <div className="icon-input-container">
