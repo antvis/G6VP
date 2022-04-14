@@ -200,9 +200,6 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         style: merge(styleByConfig, preStyle),
       };
     });
-
-    console.log('%c Graphin Nodes', 'color:red', nodes);
-
     return transNodes;
   } catch (error) {
     console.error('parse transform error:', error);

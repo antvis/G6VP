@@ -1,274 +1,309 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
+import { defaultConfig } from './registerTransform';
+const { advanced, color, size } = defaultConfig;
+const { keyshape, label, animate } = advanced;
+
 const registerMeta = context => {
-  const { data, keys } = context;
+  const { keys } = context;
 
-  const options = keys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
-
-  return {
-    size: {
-      name: '边宽',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sizeMapping: {
-          name: '宽度',
-          type: 'sizeMapping',
-          min: 0,
-          max: 50,
-          step: 1,
-          suffix: 'px',
-          valuePath: 'size',
-          default: {
-            mapping: false,
-            fixed: 0.5,
-            scale: {
-              custom: false, // 是否采取自定义映射
-              range: [3, 30], // 值域
-              domain: [0, 1000], // 定义域
-              abnormal: 1,
+  const schema = {
+    type: 'object',
+    properties: {
+      color: {
+        title: '颜色',
+        type: 'string',
+        'x-decorator': 'FormItem',
+        'x-component': 'ColorInput',
+        default: color,
+      },
+      size: {
+        title: '大小',
+        type: 'number',
+        'x-decorator': 'FormItem',
+        'x-component': 'NumberPicker',
+        default: size,
+      },
+      label: {
+        title: '文本',
+        type: 'string',
+        enum: keys.map(c => {
+          return {
+            label: `${c.id} (${c.type})`,
+            value: c.id,
+          };
+        }),
+        'x-decorator': 'FormItem',
+        'x-component': 'Select',
+        'x-component-props': {
+          mode: 'multiple',
+        },
+      },
+      advancedPanel: {
+        type: 'void',
+        'x-decorator': 'FormItem',
+        'x-component': 'FormCollapse',
+        'x-component-props': {
+          className: 'gi-assets-elements-advance-panel',
+          ghost: true,
+        },
+        properties: {
+          advanced: {
+            type: 'object',
+            'x-component': 'FormCollapse.CollapsePanel',
+            'x-component-props': {
+              header: '高级配置',
+              key: 'advanced-panel',
+            },
+            properties: {
+              panel: {
+                type: 'void',
+                'x-decorator': 'FormItem',
+                'x-component': 'FormCollapse',
+                'x-component-props': {
+                  className: 'gi-assets-elements-panel',
+                  style: {},
+                  ghost: true,
+                },
+                properties: {
+                  keyshape: {
+                    type: 'object',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'FormCollapse.CollapsePanel',
+                    'x-component-props': {
+                      header: '形状',
+                      key: 'icon-panel',
+                    },
+                    properties: {
+                      multilple: {
+                        type: 'boolean',
+                        title: '多边',
+                        default: keyshape.multilple,
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        'x-reactions': [
+                          {
+                            target: 'advanced.keyshape.poly',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.keyshape.loop',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.icon.fill',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.icon.size',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      poly: {
+                        title: 'poly',
+                        type: 'number',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: keyshape.poly,
+                      },
+                      loop: {
+                        title: 'poly',
+                        type: 'number',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: keyshape.loop,
+                      },
+                      lineDash: {
+                        title: 'lineDash',
+                        type: 'number',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Input',
+                        default: keyshape.lineDash,
+                      },
+                      lineAppendWidth: {
+                        type: 'string',
+                        title: '响应宽度',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: keyshape.lineAppendWidth,
+                      },
+                      opacity: {
+                        type: 'string',
+                        title: '透明度',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: keyshape.opacity,
+                      },
+                    },
+                  },
+                  label: {
+                    type: 'object',
+                    'x-decorator': 'FormItem',
+                    'x-component': 'FormCollapse.CollapsePanel',
+                    'x-component-props': {
+                      header: '标签',
+                      key: 'keyshape-panel',
+                    },
+                    properties: {
+                      visible: {
+                        type: 'boolean',
+                        title: '显隐',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        default: label.visible,
+                      },
+                      fontSize: {
+                        type: 'string',
+                        title: '大小',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: label.fontSize,
+                      },
+                      offset: {
+                        type: 'string',
+                        title: '偏移',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: label.offset,
+                      },
+                      fill: {
+                        type: 'string',
+                        title: '颜色',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'ColorInput',
+                        default: label.fill,
+                      },
+                      backgroundEnable: {
+                        type: 'string',
+                        title: '背景',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        default: label.backgroundEnable,
+                      },
+                      backgroundFill: {
+                        type: 'string',
+                        title: '背景色',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'ColorInput',
+                        default: label.backgroundFill,
+                      },
+                      backgroundStroke: {
+                        type: 'string',
+                        title: '背景描边',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'ColorInput',
+                        default: label.backgroundStroke,
+                      },
+                    },
+                  },
+                  animate: {
+                    type: 'object',
+                    'x-component': 'FormCollapse.CollapsePanel',
+                    'x-component-props': {
+                      header: '动画',
+                      key: 'aniamte-panel',
+                    },
+                    properties: {
+                      visible: {
+                        type: 'boolean',
+                        title: '开关',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        default: animate.visible,
+                        'x-reactions': [
+                          {
+                            target: 'advanced.animate.type',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.animate.dotColor',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.animate.repeat',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                          {
+                            target: 'advanced.animate.duration',
+                            fulfill: {
+                              state: {
+                                visible: '{{$self.value}}',
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      type: {
+                        title: '类型',
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Select',
+                        enum: [
+                          { label: '圆球', value: 'circle-running' },
+                          { label: '虚线', value: 'line-dash' },
+                          { label: '渐长', value: 'line-growth' },
+                        ],
+                        default: animate.type,
+                      },
+                      dotColor: {
+                        type: 'string',
+                        title: '圆球颜色',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'ColorInput',
+                        default: animate.dotColor,
+                      },
+                      repeat: {
+                        title: '重复',
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        default: animate.repeat,
+                      },
+                      duration: {
+                        title: '时长',
+                        type: 'string',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'NumberPicker',
+                        default: animate.duration,
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
-        },
-        keyMapping: {
-          name: '映射字段',
-          type: 'select',
-          useFont: true,
-          default: 'amount',
-          options,
-          showInPanel: {
-            conditions: [
-              ['size.scale.custom', '$eq', true],
-              ['size.mapping', '$eq', true],
-            ],
-            logicalType: '$and',
-          },
-          valuePath: 'size.key',
-        },
-      },
-    },
-    color: {
-      name: '颜色',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        colorMapping: {
-          name: '填充颜色',
-          type: 'colorMapping',
-          fixedComponents: ['flat'],
-          valuePath: 'color',
-          default: {
-            mapping: false,
-            fixed: '#ddd',
-            scale: {
-              type: 'ordinal',
-              scheme: 'cat-1',
-              custom: true,
-              range: [
-                '#ddd',
-                '#CB6EF8',
-                '#82E6C7',
-                '#F6D87B',
-                '#F69F7F',
-                '#E96075',
-                '#F58CCB',
-                '#795AE1',
-                '#622CD8',
-                '#85C98E',
-                '#3E34E5',
-                '#2959C1',
-                '#4D92DE',
-                '#5CB5D4',
-                '#B9D569',
-              ],
-              domain: [],
-              excepted: '#666',
-              abnormal: '#f31200',
-              pin: [false, true],
-            },
-          },
-        },
-        keyMapping: {
-          name: '映射字段',
-          type: 'select',
-          useFont: true,
-          default: 'type',
-          options,
-          showInPanel: {
-            conditions: [['color.mapping', '$eq', true]],
-            logicalType: '$and',
-          },
-          valuePath: 'color.key',
-        },
-      },
-    },
-    multilple: {
-      name: '多边设置',
-      type: 'group',
-      enableHide: false,
-      fold: true,
-      children: {
-        enable: {
-          name: '是否开启',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-        poly: {
-          name: '曲线间隔',
-          type: 'stepper',
-          min: 0,
-          max: 100,
-          default: 50,
-          showInPanel: {
-            conditions: [['.enable', '$eq', true]],
-          },
-        },
-        loop: {
-          name: '自环间隔',
-          type: 'stepper',
-          min: 0,
-          max: 50,
-          default: 10,
-          showInPanel: {
-            conditions: [['.enable', '$eq', true]],
-          },
-        },
-      },
-    },
-
-    dash: {
-      name: '虚线样式',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        showdash: {
-          name: '虚线样式',
-          type: 'switch',
-          default: false,
-          statusText: true,
-        },
-        dashMapping: {
-          name: '虚线长度',
-          type: 'sizeMapping',
-          min: 0,
-          max: 10,
-          step: 1,
-          suffix: 'px',
-          valuePath: 'dash.length',
-          default: {
-            fixed: 3,
-          },
-          showInPanel: {
-            conditions: [['dash.showdash', '$eq', true]],
-          },
-        },
-      },
-    },
-    label: {
-      name: '标签',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        showlabel: {
-          name: '开关',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-        keyLabel: {
-          name: '映射字段',
-          type: 'select',
-          useFont: true,
-          default: 'label',
-          valuePath: 'label.key',
-          showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
-          },
-          options,
-        },
-        labelColor: {
-          name: '颜色',
-          valuePath: 'label.fill',
-          type: 'colorMapping',
-          fixedComponents: ['flat'],
-          default: {
-            mapping: false,
-            fixed: '#d9d9d9',
-          },
-          showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
-          },
-        },
-        labelBg: {
-          name: '背景色',
-          valuePath: 'label.background',
-          type: 'colorMapping',
-          fixedComponents: ['flat'],
-          default: {
-            mapping: false,
-            fixed: '#fff',
-          },
-          showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
-          },
-        },
-        labelBorder: {
-          name: '边框',
-          valuePath: 'label.border',
-          type: 'colorMapping',
-          fixedComponents: ['flat'],
-          default: {
-            mapping: false,
-            fixed: '',
-          },
-          showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
-          },
-        },
-        labelPos: {
-          name: '偏移',
-          type: 'sizeMapping',
-          min: -10,
-          max: 10,
-          step: 1,
-          suffix: 'px',
-          valuePath: 'label.offest',
-          default: {
-            fixed: 0,
-          },
-          showInPanel: {
-            conditions: [['label.showlabel', '$eq', true]],
-          },
-        },
-      },
-    },
-    halo: {
-      name: '光晕',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        showhalo: {
-          name: '开关',
-          type: 'switch',
-          default: false,
-          statusText: true,
         },
       },
     },
   };
-};
 
+  return schema;
+};
 export default registerMeta;
-const configObj = registerMeta({ data: {}, keys: ['source', 'target'] });
-/** 默认的配置值 */
-export const defaultProps = extractDefault({ config: configObj, value: {} });

@@ -13,16 +13,6 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
 
-const filterDataByRules = (data: GraphinData, rules: any, elementType: 'node' | 'edge'): any => {
-  if (elementType === 'node') {
-    return data.nodes;
-  }
-  if (elementType == 'edge') {
-    return data.edges;
-  }
-  return data;
-};
-
 const version = '1.2.0';
 
 const extra = {

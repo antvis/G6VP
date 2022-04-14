@@ -143,7 +143,7 @@ const defaultEdgeConfig = {
   props: {
     size: 1,
     color: '#ddd',
-    label: ['id'],
+    label: [],
   },
   name: '官方边',
   order: -1,
@@ -199,7 +199,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         props: {
           size: 1,
           color: colorMap.get(c.sourceNodeType) || '#ddd',
-          label: ['id'],
+          label: [],
         },
         name: '官方边',
         expressions: [
