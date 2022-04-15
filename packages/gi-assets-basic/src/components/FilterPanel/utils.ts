@@ -11,6 +11,7 @@ import { IFilterCriteria } from './type';
 export const filterGraphData = (
   source: GraphinData,
   filterCriteria: IFilterCriteria,
+  isFilterIsolatedNodes: boolean,
 ): GraphinData => {
   const { analyzerType, isFilterReady, elementType, prop, selectValue, range } = filterCriteria;
   if (!isFilterReady || analyzerType === 'NONE') {
@@ -66,7 +67,7 @@ export const filterGraphData = (
         return false;
       }
     });
-    newData.nodes = source.nodes.filter(node => validNodes.has(node.id));
+    newData.nodes = isFilterIsolatedNodes ? source.nodes.filter(node => validNodes.has(node.id)) : source.nodes;
   }
   return newData;
 };
