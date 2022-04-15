@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Button } from 'antd';
+import { useContext, utils } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
+import { Button } from 'antd';
 import { nanoid } from 'nanoid';
-import { useContext } from '@alipay/graphinsight';
-import { generatorSchemaByGraphData, isStyles } from '@alipay/graphinsight/es/utils';
-import { filterGraphData } from './utils';
+import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
-import { IFilterCriteria } from './type';
 import './index.less';
+import { IFilterCriteria } from './type';
+import { filterGraphData } from './utils';
+
+const { generatorSchemaByGraphData, isStyles } = utils;
 
 export interface FilterPanelProps {
   visible: boolean;
