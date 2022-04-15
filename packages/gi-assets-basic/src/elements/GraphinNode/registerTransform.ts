@@ -105,12 +105,10 @@ const transform = (s, metaConfig: GINodeConfig, reset?: boolean) => {
           icon.fill = '#fff';
         }
       }
-
       let preStyle = (node && node.style) || {};
       if (reset) {
         preStyle = {};
       }
-
       return {
         ...node,
         id: node.id,

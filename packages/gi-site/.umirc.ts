@@ -75,7 +75,7 @@ export default {
 
     /** GI */
 
-    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.1.4/dist/index.min.js',
+    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.1.7/dist/index.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 

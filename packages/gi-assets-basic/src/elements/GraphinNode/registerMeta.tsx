@@ -67,6 +67,15 @@ const registerMeta = context => {
           valuePath: 'color.key',
           options,
         },
+        opacity: {
+          name: '透明度',
+          type: 'stepper',
+          default: 0.3,
+          step: 1,
+          min: 0,
+          max: 1,
+          suffix: '',
+        },
       },
     },
     size: {
