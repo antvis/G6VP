@@ -181,7 +181,9 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             })}
           </Select.OptGroup>
         </Select>
-        <DeleteOutlined className="gi-filter-panel-delete" onClick={() => removeFilterCriteria(filterCriter.id!)} />
+        <Button onClick={() => removeFilterCriteria(filterCriter.id!)} type="text">
+          <DeleteOutlined className="gi-filter-panel-delete"  />
+        </Button>
       </div>
       <div className="gi-filter-panel-value">
         {filterCriter.analyzerType == 'SELECT' && (
