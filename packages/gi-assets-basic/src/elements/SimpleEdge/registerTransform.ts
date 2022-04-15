@@ -19,11 +19,10 @@ export const defaultConfig = {
   label: [],
   advanced: {
     keyshape: {
-      multilple: true,
-      poly: 30,
-      loop: 10,
+      customPoly: false,
+      poly: 0,
       lineDash: [],
-      lineAppendWidth: keyshape.lineWidth,
+      // lineAppendWidth: keyshape.lineWidth,
       opacity: keyshape.strokeOpacity,
     },
     label: {
@@ -56,19 +55,34 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
     ) as EdgeConfig;
 
     const { keyshape: keyshape_CFG } = advanced;
-    const { multilple, poly, loop } = keyshape_CFG;
 
-    let processedEdge = edges;
-    if (multilple) {
-      processedEdge = Utils.processEdges(Utils.cloneDeep(edges), {
-        poly: poly,
-        loop: loop,
-      });
-    }
-    console.log('processedEdge', edges, processedEdge, advanced, multilple);
-
-    const transEdges = processedEdge.map(edge => {
+    const transEdges = edges.map(edge => {
       const data = edge.data || edge;
+      const isLoop = edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
+      const isPoly = edge.isMultiple;
+      const { customPoly } = keyshape_CFG;
+      const shape: any = {};
+      if (isLoop) {
+        shape.type = 'loop';
+        shape.loop = { ...edge.style.keyshape.loop };
+      }
+      if (isPoly) {
+        shape.type = 'poly';
+        shape.poly = { ...edge.style.keyshape.poly };
+      }
+      if (!isPoly && !isLoop) {
+        //只有直线的时候才支持设置弧度，多边的默认是系统分配的弧度
+        shape.type = 'poly';
+        shape.poly = {
+          distance: advanced.keyshape.poly,
+        };
+      }
+      if (customPoly) {
+        //如果用户要强行自定义弧度，那就随他去吧
+        shape.poly = {
+          distance: advanced.keyshape.poly,
+        };
+      }
 
       /** LABEL */
       const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
@@ -94,37 +108,35 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         preStyle = {};
       }
 
+      const finalStyle = merge(
+        {
+          keyshape: {
+            ...shape,
+            // ...edge.style?.keyshape,
+            lineWidth: size_CFG,
+            stroke: color_CFG,
+            opacity: keyshape_CFG.opacity,
+            lineDash: keyshape_CFG.lineDash,
+            lineAppendWidth: 10, //keyshape_CFG.lineAppendWidth,
+          },
+          label,
+          animate: {
+            visible: advanced.animate.visible,
+            type: advanced.animate.type,
+            color: advanced.animate.dotColor,
+            repeat: advanced.animate.repeat,
+            duration: advanced.animate.duration,
+          },
+        },
+        preStyle,
+      );
+
       return {
         ...edge,
         data,
         type: 'graphin-line',
         edgeType: edge.edgeType || 'UNKOWN',
-        style: merge(
-          {
-            keyshape: {
-              // type: 'line',
-              type: 'poly',
-              poly: {
-                distance: poly,
-              },
-              // ...edge.style?.keyshape,
-              lineWidth: size_CFG,
-              stroke: color_CFG,
-              opacity: keyshape_CFG.opacity,
-              lineDash: keyshape_CFG.lineDash,
-              lineAppendWidth: keyshape_CFG.lineAppendWidth,
-            },
-            label,
-            animate: {
-              visible: advanced.animate.visible,
-              type: advanced.animate.type,
-              color: advanced.animate.dotColor,
-              repeat: advanced.animate.repeat,
-              duration: advanced.animate.duration,
-            },
-          },
-          preStyle,
-        ),
+        style: finalStyle,
       };
     });
     return transEdges;

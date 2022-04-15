@@ -129,6 +129,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
 
   return (
     <GroupContainer
+      //@ts-ignore
       defaultGroupOption={defaultGroupOption[elementType]}
       initValues={{ groups: elementConfig }}
       data={data[elementType]}

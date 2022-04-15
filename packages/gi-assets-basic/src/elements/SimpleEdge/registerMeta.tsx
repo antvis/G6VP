@@ -73,23 +73,15 @@ const registerMeta = context => {
                       key: 'icon-panel',
                     },
                     properties: {
-                      multilple: {
+                      customPoly: {
                         type: 'boolean',
-                        title: '多边',
-                        default: keyshape.multilple,
+                        title: '自定义弧度',
+                        default: keyshape.customPoly,
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         'x-reactions': [
                           {
                             target: 'advanced.keyshape.poly',
-                            fulfill: {
-                              state: {
-                                visible: '{{$self.value}}',
-                              },
-                            },
-                          },
-                          {
-                            target: 'advanced.keyshape.loop',
                             fulfill: {
                               state: {
                                 visible: '{{$self.value}}',
@@ -115,33 +107,21 @@ const registerMeta = context => {
                         ],
                       },
                       poly: {
-                        title: 'poly',
+                        title: '弧度',
                         type: 'number',
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         default: keyshape.poly,
                       },
-                      loop: {
-                        title: 'poly',
-                        type: 'number',
-                        'x-decorator': 'FormItem',
-                        'x-component': 'NumberPicker',
-                        default: keyshape.loop,
-                      },
+
                       lineDash: {
-                        title: 'lineDash',
+                        title: '虚线',
                         type: 'number',
                         'x-decorator': 'FormItem',
                         'x-component': 'Input',
                         default: keyshape.lineDash,
                       },
-                      lineAppendWidth: {
-                        type: 'string',
-                        title: '响应宽度',
-                        'x-decorator': 'FormItem',
-                        'x-component': 'NumberPicker',
-                        default: keyshape.lineAppendWidth,
-                      },
+
                       opacity: {
                         type: 'string',
                         title: '透明度',
