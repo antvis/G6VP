@@ -35,8 +35,10 @@ export interface State {
   isLoading: boolean;
   /** 图的上下文准备 */
   isContextReady: boolean;
-  /** 数据映射函数 */
-  transform: (data: any) => any;
+  /**
+   * 数据映射函数
+   */
+  transform: (data: any, reset?: boolean) => any;
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
