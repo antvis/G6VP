@@ -5,17 +5,20 @@ import { PlusOutlined } from '@ant-design/icons';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
-import './index.less';
 import { IFilterCriteria } from './type';
 import { filterGraphData } from './utils';
+import './index.less';
 
 const { generatorSchemaByGraphData, isStyles } = utils;
 
 export interface FilterPanelProps {
-  visible: boolean;
+  histogramColor: string
+  isFilterIsolatedNodes: boolean;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
+  console.log('props@',props)
+  const {histogramColor, isFilterIsolatedNodes} = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform } = useContext();
   const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
@@ -66,7 +69,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   useEffect(() => {
     let data: GraphinData = source;
     Object.values(filterOptions).map(filterCriteria => {
-      data = filterGraphData(data, filterCriteria);
+      data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
     });
     updateContext(draft => {
       if (isStyles(source.nodes)) {
@@ -92,6 +95,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
               edgeProperties={edgeProperties}
               updateFilterCriteria={updateFilterCriteria}
               removeFilterCriteria={removeFilterCriteria}
+              histogramColor={histogramColor}
             />
           );
         })}
