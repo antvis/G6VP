@@ -1,4 +1,4 @@
-import type { GraphinContextType, GraphinData } from '@antv/graphin';
+import type { GraphinData } from '@antv/graphin';
 import { IFilterCriteria } from './type';
 
 /**
@@ -11,7 +11,6 @@ import { IFilterCriteria } from './type';
 export const filterGraphData = (
   source: GraphinData,
   filterCriteria: IFilterCriteria,
-  graph: GraphinContextType['graph'],
 ): GraphinData => {
   const { analyzerType, isFilterReady, elementType, prop, selectValue, range } = filterCriteria;
   if (!isFilterReady || analyzerType === 'NONE') {
@@ -46,27 +45,28 @@ export const filterGraphData = (
       return !inValidNodes.has(edge.source) && !inValidNodes.has(edge.target);
     });
   } else if (elementType === 'edge') {
-    const inValidEdges = new Set<string>();
+    const validNodes = new Set<string>();
     newData.edges = source.edges.filter(edge => {
       if (analyzerType === 'SELECT') {
         if (edge.data && edge.data[prop!] && selectValue?.indexOf(edge.data[prop!]) !== -1) {
+          validNodes.add(edge.source);
+          validNodes.add(edge.target);
           return true;
         }
-        inValidEdges.add(edge.source);
-        inValidEdges.add(edge.target);
+
         return false;
       } else if (analyzerType === 'BRUSH') {
         const min = range![0];
         const max = range![1];
         if (edge.data && edge.data[prop!] && min <= edge.data[prop!] && edge.data[prop!] <= max) {
+          validNodes.add(edge.source);
+          validNodes.add(edge.target);
           return true;
         }
-        inValidEdges.add(edge.source);
-        inValidEdges.add(edge.target);
         return false;
       }
     });
-    newData.nodes = source.nodes;
+    newData.nodes = source.nodes.filter(node => validNodes.has(node.id));
   }
   return newData;
 };

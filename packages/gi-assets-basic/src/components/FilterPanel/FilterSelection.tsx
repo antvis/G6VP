@@ -57,7 +57,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     elements.forEach(e => {
       const value = e.data && e.data[prop];
       if (value && typeof value === 'number') {
-        valueMap.set(value, valueMap.has(value) ? valueMap.get(value)! + 1 : 0);
+        valueMap.set(value, valueMap.has(value) ? valueMap.get(value)! + 1 : 1);
         maxValue = Math.max(value, maxValue);
         minValue = Math.min(value, minValue);
       }
@@ -143,7 +143,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
 
   return (
     <div key={filterCriter.id} className="gi-filter-panel-criteria">
-      <div >
+      <div className='gi-filter-panel-prop'>
         <Select style={{ width: '200px' }} onChange={onSelectChange} className="gi-filter-panel-prop-select">
           <Select.OptGroup key="node" label="节点">
             {Object.keys(nodeProperties).map(prop => (
