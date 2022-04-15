@@ -15,6 +15,7 @@ import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
 import { useContext } from '../../hooks/useContext';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
+import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../utils';
 import DataService from './DataService';
 import './index.less';
 
@@ -144,11 +145,16 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       }
     });
 
+    const schemaData = generatorSchemaByGraphData(mergeData);
+    const newConfig = generatorStyleConfigBySchema(schemaData, context.config);
+
     updateProjectById(id, {
       data: JSON.stringify({
         transData: mergeData,
         inputData: filterInputData,
       }),
+      projectConfig: JSON.stringify(newConfig),
+      schemaData: JSON.stringify(schemaData),
     }).then(res => {
       updateContext(draft => {
         draft.key = Math.random();

@@ -26,7 +26,10 @@ const registerMeta = context => {
         type: 'string',
         //todo: 显示文本属性根据 data 生成
         enum: keys.map(c => {
-          return { label: c, value: c };
+          return {
+            label: `${c.id} (${c.type})`,
+            value: c.id,
+          };
         }),
         // default: ['id'],
         'x-decorator': 'FormItem',
@@ -35,23 +38,23 @@ const registerMeta = context => {
           mode: 'multiple',
         },
       },
-      advanced: {
-        type: 'object',
+      advancedPanel: {
+        type: 'void',
         'x-decorator': 'FormItem',
         'x-component': 'FormCollapse',
         'x-component-props': {
-          bordered: false,
-          // 设置手风琴默认，不允许收起高级配置，否则下面的 visible 控制就失效了
-          accordion: true,
+          className: 'gi-assets-elements-advance-panel',
+          // style: { background: 'blue' },
+          ghost: true,
         },
         properties: {
-          advancedPanel: {
-            type: 'void',
+          advanced: {
+            type: 'object',
             'x-component': 'FormCollapse.CollapsePanel',
             'x-component-props': {
               header: '高级配置',
               // 暂时不设置高级配置默认收起，否则下面的 visible 控制就失效了
-              // key: 'advanced-panel',
+              key: 'advanced-panel',
             },
             properties: {
               panel: {
@@ -59,7 +62,13 @@ const registerMeta = context => {
                 'x-decorator': 'FormItem',
                 'x-component': 'FormCollapse',
                 'x-component-props': {
-                  bordered: false,
+                  className: 'gi-assets-elements-panel',
+                  style: {
+                    // background: 'red',
+                    // margin: '-16px',
+                  },
+
+                  ghost: true,
                 },
                 properties: {
                   icon: {
@@ -73,7 +82,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: '是否显示',
+                        title: '显隐',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         'x-reactions': [
@@ -116,14 +125,17 @@ const registerMeta = context => {
                         title: '类型',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                         default: icon.type,
                       },
                       value: {
                         type: 'string',
                         title: '图标',
                         'x-decorator': 'FormItem',
-                        'x-component': 'IconSelector',
+                        'x-component': 'IconPicker',
                         default: icon.value,
                       },
                       fill: {
@@ -133,13 +145,13 @@ const registerMeta = context => {
                         'x-component': 'ColorInput',
                         default: icon.fill,
                       },
-                      size: {
-                        type: 'string',
-                        title: '大小',
-                        'x-decorator': 'FormItem',
-                        'x-component': 'NumberPicker',
-                        default: icon.size,
-                      },
+                      // size: {
+                      //   type: 'string',
+                      //   title: '大小',
+                      //   'x-decorator': 'FormItem',
+                      //   'x-component': 'NumberPicker',
+                      //   default: icon.size,
+                      // },
                     },
                   },
                   keyshape: {
@@ -147,7 +159,7 @@ const registerMeta = context => {
                     'x-decorator': 'FormItem',
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
-                      header: '主节点',
+                      header: '节点',
                       key: 'keyshape-panel',
                     },
                     properties: {
@@ -172,7 +184,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: '是否显示',
+                        title: '开关',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: label.visible,
@@ -204,7 +216,7 @@ const registerMeta = context => {
                         ],
                       },
                       fill: {
-                        title: '文本颜色',
+                        title: '颜色',
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
@@ -212,7 +224,7 @@ const registerMeta = context => {
                       },
                       fontSize: {
                         type: 'string',
-                        title: '字体大小',
+                        title: '大小',
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         max: 100,
@@ -220,7 +232,7 @@ const registerMeta = context => {
                         default: label.fontSize,
                       },
                       position: {
-                        title: '展示位置',
+                        title: '位置',
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
@@ -245,7 +257,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: '是否显示',
+                        title: '显隐',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: badge.visible,
@@ -273,7 +285,10 @@ const registerMeta = context => {
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
+                        enum: [
+                          { label: '文本', value: 'text' },
+                          { label: '字体图标', value: 'font' },
+                        ],
                         default: badge.type,
                       },
                       value: {

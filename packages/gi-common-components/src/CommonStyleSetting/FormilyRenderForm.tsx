@@ -7,7 +7,9 @@ import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
+import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
+
 const { Option } = AntdSelect;
 
 interface RenderFormProps {
@@ -32,6 +34,7 @@ const SchemaField = createSchemaField({
     SketchPicker,
     ColorInput,
     IconSelector,
+    IconPicker,
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
@@ -84,7 +87,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
   return (
     <>
-      <div className="gi-assets-selector" style={{ position: 'absolute', right: '40px', top: '-37px' }}>
+      <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>
         <PopoverContainer
           title="选择元素资产"
           content={

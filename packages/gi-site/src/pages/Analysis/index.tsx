@@ -1,4 +1,5 @@
 import GISDK from '@alipay/graphinsight';
+import { original } from 'immer';
 import localforage from 'localforage';
 import React from 'react';
 import { Prompt } from 'react-router-dom';
@@ -34,9 +35,9 @@ localforage.config({
 
 setDefaultAssetPackages();
 
-const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig }) => {
+const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData }) => {
   const components = getComponentsByAssets(assets.components, data, serviceConfig, config);
-  const elements = getElementsByAssets(assets.elements, data);
+  const elements = getElementsByAssets(assets.elements, data, schemaData);
   const layouts = getLayoutsByAssets(assets.layouts, data);
 
   return {
@@ -85,7 +86,7 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig } = await getProjectById(projectId);
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
       const { transData, inputData } = data;
       /** 根据活跃资产Key值，动态加载资产实例 */
       const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
@@ -99,6 +100,7 @@ const Analysis = props => {
         data: transData,
         config,
         serviceConfig: combinedServiceConfig,
+        schemaData,
       });
 
       /** 根据服务配置列表，得到真正运行的Service实例 */
@@ -119,6 +121,7 @@ const Analysis = props => {
         //@ts-ignore
         draft.activeAssetsInformation = activeAssetsInformation;
         draft.services = services;
+        draft.schemaData = schemaData;
       });
     })();
   }, [projectId, key]);
@@ -139,6 +142,7 @@ const Analysis = props => {
           data,
           config,
           serviceConfig: combinedServiceConfig,
+          schemaData: original(draft.schemaData),
         });
 
         const configComponents = activeAssetsInformation.components.map(c => {

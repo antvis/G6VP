@@ -23,6 +23,7 @@ export const getProjectById = async (id: string) => {
   if (isMock) {
     const project: any = await localforage.getItem(id);
     return {
+      schemaData: project.schemaData,
       config: project.projectConfig,
       data: project.data,
       activeAssetsKeys: project.activeAssetsKeys,
@@ -77,7 +78,7 @@ export const getProjectById = async (id: string) => {
 export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
-    const { data, serviceConfig, projectConfig, name, activeAssetsKeys } = params;
+    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
     // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
     if (data) {
@@ -88,6 +89,9 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
     }
     if (projectConfig) {
       origin.projectConfig = JSON.parse(projectConfig);
+    }
+    if (schemaData) {
+      origin.schemaData = JSON.parse(schemaData);
     }
 
     if (activeAssetsKeys) {
@@ -196,9 +200,10 @@ export const getProjectList = async (type: 'project' | 'case') => {
 export const addProject = async (param: any) => {
   if (isMock) {
     const projectId = getUid();
-    const { projectConfig, activeAssetsKeys, data, serviceConfig, ...otherParams } = param;
+    const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, ...otherParams } = param;
     const p = {
       ...otherParams,
+      schemaData: JSON.parse(schemaData),
       projectConfig: JSON.parse(projectConfig),
       activeAssetsKeys: JSON.parse(activeAssetsKeys),
       data: JSON.parse(data),
