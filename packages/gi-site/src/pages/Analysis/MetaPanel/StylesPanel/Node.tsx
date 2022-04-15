@@ -17,11 +17,10 @@ interface MetaProps {
 
 export interface StyleSettingProps {
   elements: MetaProps[];
-  data: { nodes: any[]; edges: any[] };
   elementType: 'node' | 'edge';
 }
 
-const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
+const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
   const { elements } = props;
 
   const { updateContext, context } = useContext();
@@ -51,10 +50,9 @@ const NodeStyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
       draft.layoutCache = true;
     });
   };
-  console.log('NODE STYLING', props);
   return (
     <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
   );
 };
 
-export default NodeStyleSetting;
+export default StyleSetting;

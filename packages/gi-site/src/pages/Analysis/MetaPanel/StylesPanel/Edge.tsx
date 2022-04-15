@@ -1,86 +1,58 @@
-import ColorMapping from '@ali/datav-gui-color-scale';
-import SizeMapping from '@ali/datav-gui-size-scale';
-import GUI from '@ali/react-datav-gui';
-import { extractDefault } from '@ali/react-datav-gui-utils';
-import { Select } from 'antd';
-import React, { useState } from 'react';
-import AssetsSelect from '../../../../components/AssetsSelect';
+import { CommonStyleSetting } from '@alipay/gi-common-components';
+import React from 'react';
 import { useContext } from '../../hooks/useContext';
+type EdgeConfig = any;
+export type NodesConfig = {
+  id: string;
+  groupId: string;
+  groupName: string;
+  expressions: any[];
+  props: EdgeConfig;
+}[];
 
-const { Option } = Select;
-
-interface EdgeStylePanelProps {
-  meta: any;
-  data: any;
-  elements: any;
-  config: any;
+interface MetaProps {
+  key: string;
+  meta: Object;
 }
 
-const freeExtensions = {
-  sizeMapping: SizeMapping,
-  colorMapping: ColorMapping,
-};
-const cache = {};
+export interface StyleSettingProps {
+  elements: MetaProps[];
+  elementType: 'node' | 'edge';
+}
 
-const getCacheValues = (object, key) => {
-  if (!cache[key]) {
-    cache[key] = { id: key, props: {} };
-    return object[key];
-  }
-  return cache[key];
-};
+const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
+  const { elements } = props;
 
-const EdgeStylePanel: React.FunctionComponent<EdgeStylePanelProps> = props => {
-  const { updateContext } = useContext();
-  const { data, elements, config = { edge: { props: {} } } } = props;
-  const { edge: edgeConfig } = config;
-  const [state, setState] = useState({
-    /** 当前元素的ID */
-    elementId: edgeConfig.id,
-  });
-  const { elementId } = state;
+  const { updateContext, context } = useContext();
+  const { data, config } = context;
 
-  const element = elements[edgeConfig.id];
-  const { configObj } = element.meta;
-  const valueObj = extractDefault({ config: configObj, value: edgeConfig.props });
-  /** 缓存数据 */
-  cache[elementId] = { id: elementId, props: { ...valueObj } };
-
-  const handleChangeConfig = evt => {
-    const { rootValue } = evt;
-    cache[elementId].props = rootValue;
-    updateContext(draft => {
-      draft.config.edge = {
-        ...element,
-        props: rootValue,
-      };
-    });
-  };
-  const elementOptions = Object.values(elements) as any[];
-  const handleChangeShape = value => {
-    setState(preState => {
+  /**
+   * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
+   * @param current
+   * @param all
+   */
+  const handleChange = styleGroups => {
+    const nodesConfig: NodesConfig = styleGroups.map(c => {
+      const { id, groupId, groupName, expressions, logic } = c;
       return {
-        ...preState,
-        elementId: value,
+        id,
+        props: c.props,
+        groupId,
+        groupName,
+        expressions,
+        logic,
       };
     });
-    const values = getCacheValues(elements, value);
     updateContext(draft => {
-      draft.config.edge = { ...values };
+      //@ts-ignore
+      draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
+      //@ts-check
+      draft.layoutCache = true;
     });
   };
-  const GUIComponent = React.useMemo(() => {
-    return (
-      <GUI configObj={configObj} valueObj={valueObj} freeExtensions={freeExtensions} onChange={handleChangeConfig} />
-    );
-  }, [elementId, handleChangeConfig]);
   return (
-    <>
-      <AssetsSelect onChange={handleChangeShape} value={elementId} options={elementOptions} />
-
-      {GUIComponent}
-    </>
+    <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
   );
 };
 
-export default EdgeStylePanel;
+export default StyleSetting;

@@ -1,129 +1,107 @@
-import React from 'react';
-import { Checkbox } from 'antd';
-import { GraphinContext } from '@antv/graphin';
+import { useContext, utils } from '@alipay/graphinsight';
+import { GraphinData } from '@antv/graphin';
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { nanoid } from 'nanoid';
+import React, { useEffect, useMemo, useState } from 'react';
+import FilterSelection from './FilterSelection';
+import { IFilterCriteria } from './type';
+import { filterGraphData } from './utils';
 import './index.less';
 
-interface TypeConfig {
-  name: string;
-  value: string;
+const { generatorSchemaByGraphData, isStyles } = utils;
+
+export interface FilterPanelProps {
+  histogramColor: string
+  isFilterIsolatedNodes: boolean;
 }
 
-export interface FilterProps {
-  node: {
-    sortKey: string;
-  };
-  edge: {
-    sortKey: string;
-  };
-}
-const FilterPanel: React.FunctionComponent<FilterProps> = props => {
-  const { graph } = React.useContext(GraphinContext);
-  const { node, edge } = props;
-  const [state, setState] = React.useState({
-    nodeType: [] as TypeConfig[],
-    edgeType: [] as TypeConfig[],
-  });
+const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
+  console.log('props@',props)
+  const {histogramColor, isFilterIsolatedNodes} = props;
+  const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
+  const { source, updateContext, transform } = useContext();
+  const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
-  const { GiState } = GraphinContext as any;
-  const { data } = GiState;
+  const nodeProperties = useMemo(() => {
+    return dataSchemas.nodes.reduce((acc, cur) => {
+      return {
+        ...acc,
+        ...cur.properties,
+      };
+    }, {});
+  }, [dataSchemas]);
 
-  React.useEffect(() => {
-    // // 获取节点 / 边 的类型集合
-    let nodeMap = {};
-    let edgeMap = {};
-    data.nodes.map(d => {
-      nodeMap[d.data[node?.sortKey]] = true;
+  const edgeProperties = useMemo(() => {
+    return dataSchemas.edges.reduce((acc, cur) => {
+      return {
+        ...acc,
+        ...cur.properties,
+      };
+    }, {});
+  }, [dataSchemas]);
+
+  const addFilter = () => {
+    const id = nanoid();
+    const filterCriteria = {
+      id,
+      isFilterReady: false,
+    };
+
+    setFilterOptions({
+      ...filterOptions,
+      [id]: filterCriteria,
     });
-    data.edges.map(d => {
-      edgeMap[d.data[edge?.sortKey]] = true;
-    });
-
-    let nodeType: TypeConfig[] = [];
-    let edgeType: TypeConfig[] = [];
-    Object.keys(nodeMap).forEach(d =>
-      nodeType.push({
-        name: d,
-        value: d,
-      }),
-    );
-
-    Object.keys(edgeMap).forEach(d =>
-      edgeType.push({
-        name: d,
-        value: d,
-      }),
-    );
-    setState({
-      nodeType,
-      edgeType,
-    });
-  }, [GiState]);
-
-  const renderOptions = (data: TypeConfig[]) =>
-    data.map((item, index) => {
-      return (
-        <div key={index} className="eItem">
-          <div className="name">{item.name}</div>
-          <Checkbox value={item.value} />
-        </div>
-      );
-    });
-  const handleOnChange = (type: 'node' | 'edge', value: any) => {
-    const allNodes = graph.getNodes();
-    const allEdges = graph.getEdges();
-
-    if (type === 'node') {
-      allNodes.forEach((item: any) => {
-        const { data } = item.getModel();
-        // 判断是否是隐藏节点
-        const isVisible = value.includes(String(data[node?.sortKey]));
-        // 隐藏节点相关的边
-        if (isVisible) {
-          graph.showItem(item, false);
-        } else {
-          graph.hideItem(item, false);
-        }
-      });
-    } else if (type === 'edge') {
-      allEdges.forEach((item: any) => {
-        const { data } = item.getModel();
-        const isVisible = value.includes(String(data[edge?.sortKey]));
-        if (isVisible) {
-          graph.showItem(item, false);
-        } else {
-          graph.hideItem(item, false);
-        }
-      });
-    }
   };
 
-  if (state.nodeType.length === 0) {
-    return null;
-  }
+  const updateFilterCriteria = (id: string, filterCriteria: IFilterCriteria) => {
+    setFilterOptions({
+      ...filterOptions,
+      [id]: filterCriteria,
+    });
+  };
+
+  const removeFilterCriteria = (id: string) => {
+    delete filterOptions[id];
+    setFilterOptions({ ...filterOptions });
+  };
+
+  useEffect(() => {
+    let data: GraphinData = source;
+    Object.values(filterOptions).map(filterCriteria => {
+      data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
+    });
+    updateContext(draft => {
+      if (isStyles(source.nodes)) {
+        draft.data = data;
+      } else {
+        draft.data = transform(data);
+      }
+      draft.layoutCache = true;
+    });
+  }, [filterOptions]);
 
   return (
-    <div className="filter-container">
-      <div className="eBox">
-        <div className="title">节点</div>
-        <Checkbox.Group
-          style={{ width: '100%' }}
-          defaultValue={state.nodeType.map(d => d.value)}
-          onChange={val => handleOnChange('node', val)}
-        >
-          {renderOptions(state.nodeType)}
-        </Checkbox.Group>
-      </div>
-      <div className="eBox">
-        <div className="title">边</div>
-        <Checkbox.Group
-          style={{ width: '100%' }}
-          defaultValue={state.edgeType.map(d => d.value)}
-          onChange={val => handleOnChange('edge', val)}
-        >
-          {renderOptions(state.edgeType)}
-        </Checkbox.Group>
+    <div className="gi-filter-panel">
+      <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
+        增加筛选器
+      </Button>
+      <div className="gi-filter-panel-criteria-container">
+        {Object.values(filterOptions).map(filterCriter => {
+          return (
+            <FilterSelection
+              filterCriter={filterCriter}
+              nodeProperties={nodeProperties}
+              edgeProperties={edgeProperties}
+              updateFilterCriteria={updateFilterCriteria}
+              removeFilterCriteria={removeFilterCriteria}
+              histogramColor={histogramColor}
+            />
+          );
+        })}
       </div>
     </div>
   );
 };
+
 export default FilterPanel;

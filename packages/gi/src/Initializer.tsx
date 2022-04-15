@@ -1,20 +1,8 @@
 import * as React from 'react';
 import { useContext } from './context';
+import { GIService } from './typing';
+import { isPosition, isStyles } from './utils';
 
-const isPosition = nodes => {
-  //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
-  if (nodes.length === 0) {
-    return false;
-  }
-
-  return nodes.every(node => !window.isNaN(node.x) && !window.isNaN(node.y));
-};
-const isStyles = nodes => {
-  if (nodes.length === 0) {
-    return false;
-  }
-  return nodes.every(node => node.style);
-};
 export interface IProps {
   serviceId: string;
 }
@@ -33,7 +21,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
   const { services, updateContext, transform } = context;
 
   React.useEffect(() => {
-    const { service } = services.find(s => s.id === serviceId);
+    const { service } = services.find(s => s.id === serviceId) as GIService;
     service().then((res = { nodes: [], edges: [] }) => {
       updateContext(draft => {
         const { nodes } = res;
@@ -46,7 +34,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.data = res;
           draft.source = res;
         } else {
-          const newData = transform(res);
+          const newData = transform(res, true);
           draft.data = newData;
           draft.source = { ...res };
         }

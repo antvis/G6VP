@@ -66,6 +66,10 @@ export const initialState: StateType = {
     elements: [],
     layouts: [],
   },
+  schemaData: {
+    nodes: [],
+    edges: [],
+  },
 };
 
 export interface StateType {
@@ -123,4 +127,5 @@ export interface StateType {
     visible: boolean;
     hash: string;
   };
+  schemaData: any;
 }
