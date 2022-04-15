@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { addProject } from '../../services';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';
-import { activeAssetsKeys, baseConfig, getMockData, serviceConfig } from './utils';
+import { activeAssetsKeys, baseConfig, getMockData, schemaData, serviceConfig } from './utils';
 
 interface IProps {
   visible: boolean;
@@ -69,11 +69,12 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       data: JSON.stringify({
         transData,
         inputData: [],
-        transfunc: GIDefaultTrans('id', 'source', 'target'),
+        transfunc: GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'),
       }),
       projectConfig: JSON.stringify(baseConfig),
       activeAssetsKeys: JSON.stringify(activeAssetsKeys),
       serviceConfig: JSON.stringify(serviceConfig),
+      schemaData: JSON.stringify(schemaData),
       type: 'project',
     });
 

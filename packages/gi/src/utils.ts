@@ -1,3 +1,8 @@
+import { filterByRules } from '@alipay/gi-common-components/lib/GroupContainer/utils';
+import { GraphinData, IUserEdge } from '@antv/graphin';
+import processEdges from './process/processEdges';
+import { GIAssets, GIConfig } from './typing';
+
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
@@ -109,99 +114,88 @@ export const getService = (services: any[], serviceId?: string) => {
   return service;
 };
 
-interface IGraphData {
-  nodes: any[];
-  edges: any[];
-}
-
-interface INodeSchema {
-  nodeType: string;
-  properties: Object;
-}
-
-interface IEdgeSchema {
-  edgeType: string;
-  sourceNodeType: string;
-  targetNodeType: string;
-  properties: Object;
-}
-interface IGraphSchema {
-  nodes: INodeSchema[];
-  edges: IEdgeSchema[];
-}
-
 /**
- * 通过 graphData 生成 Schema
- * @param graphData 图数据
+ *
+ * @param elementType 元素类型：node or edge
+ * @param data 数据
+ * @param config GISDK配置
+ * @param ElementAssets 元素资产
+ * @param reset 是否重置transform
+ * @returns nodes or edges
  */
- export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema => {
-  const { nodes, edges } = graphData;
-  const nodeSchemas: INodeSchema[] = [];
-  const edgeSchemas: IEdgeSchema[] = [];
+export const transDataByConfig = (
+  elementType: 'nodes' | 'edges',
+  data: GraphinData,
+  config: GIConfig,
+  ElementAssets: GIAssets['elements'],
+  reset?: boolean,
+) => {
+  console.time(`cost ${elementType} trans`);
+  const elementConfig = config[elementType];
 
-  nodes.forEach(node => {
-    const { nodeType = 'UNKNOW', data } = node;
-    const nodeSchema = {
-      nodeType: nodeType,
-      properties: {},
-    };
-
-    for (const key in data) {
-      if (typeof data[key] === 'object') {
-        // 说明包括的是一个对象，需要再把里面的属性值解构出来
-        for (const subKey in data[key]) {
-          // 只处理这一层的非 object 的字段，其他的不再作为 schema 的属性
-          if (typeof data[key][subKey] !== 'object') {
-            nodeSchema.properties[subKey] = typeof data[key][subKey];
-          }
+  const defaultConfig =
+    elementType === 'nodes'
+      ? {
+          id: 'SimpleNode',
+          props: {},
+          name: '官方节点',
+          order: -1,
+          expressions: [],
+          logic: true,
+          groupName: `GLOBAL TYPE`,
         }
-      } else {
-        nodeSchema.properties[key] = typeof data[key];
-      }
-    }
+      : {
+          id: 'SimpleEdge',
+          props: {},
+          name: '官方边',
+          order: -1,
+          expressions: [],
+          logic: true,
+          groupName: `GLOBAL TYPE`,
+        };
 
-    const hasCurrent = nodeSchemas.find(schema => schema.nodeType === nodeType);
-    if (!hasCurrent) {
-      nodeSchemas.push(nodeSchema);
-    }
+  if (!elementConfig) {
+    return {};
+  }
+
+  let elementData = data[elementType];
+
+  if (elementType === 'edges') {
+    // 先整体做个多边处理
+    elementData = processEdges(elementData as IUserEdge[], {
+      poly: 30,
+      loop: 10,
+    });
+  }
+
+  const [basicConfig, ...otherConfigs] = elementConfig;
+
+  const filterElements = otherConfigs
+    .map(item => {
+      //@ts-ignore
+      const { id, expressions, logic } = item;
+      const Element = ElementAssets[id];
+      const filterData = filterByRules(elementData, { logic, expressions });
+      return Element.registerTransform(filterData, item, reset);
+    })
+    .reduce((acc, curr) => {
+      return [...curr, ...acc];
+    }, []);
+
+  const uniqueElements = uniqueElementsBy(filterElements, (a, b) => {
+    return a.id === b.id;
+  });
+  const uniqueIds = uniqueElements.map(n => n.id);
+  //@ts-ignore
+  const restElements = elementData.filter(n => {
+    return uniqueIds.indexOf(n.id) === -1;
   });
 
-  edges.forEach(edge => {
-    const { edgeType = 'UNKNOW', source, target, data } = edge;
-    const edgeSchema = {
-      edgeType: edgeType,
-      sourceNodeType: '',
-      targetNodeType: '',
-      properties: {},
-    };
+  //@ts-ignore
+  const restData = ElementAssets[basicConfig.id].registerTransform(restElements, basicConfig, reset);
 
-    // 获取当前 source 对应的 nodeType
-    const currentSource = nodes.find(node => node.id === source);
-    const currentTarget = nodes.find(node => node.id === target);
-    edgeSchema.sourceNodeType = currentSource.nodeType;
-    edgeSchema.targetNodeType = currentTarget.nodeType;
-
-    for (const key in data) {
-      if (typeof data[key] === 'object') {
-        // 说明包括的是一个对象，需要再把里面的属性值解构出来
-        for (const subKey in data[key]) {
-          // 只处理这一层的非 object 的字段，其他的不再作为 schema 的属性
-          if (typeof data[key][subKey] !== 'object') {
-            edgeSchema.properties[subKey] = typeof data[key][subKey];
-          }
-        }
-      } else {
-        edgeSchema.properties[key] = typeof data[key];
-      }
-    }
-
-    const hasCurrent = edgeSchemas.find(schema => schema.edgeType === edgeType);
-    if (!hasCurrent) {
-      edgeSchemas.push(edgeSchema);
-    }
-  });
-  return {
-    nodes: nodeSchemas,
-    edges: edgeSchemas,
-  };
+  const nodes = [...uniqueElements, ...restData];
+  console.timeEnd(`cost ${elementType} trans`);
+  console.log(elementType, nodes);
+  return nodes;
 };

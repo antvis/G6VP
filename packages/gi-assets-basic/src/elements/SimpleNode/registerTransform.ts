@@ -37,11 +37,11 @@ const getIconStyleByConfig = (style, data) => {
     if (icon.type === 'font') {
       return {
         ...icon,
-        // size: keyshape.size * 2,
+        size: keyshape.size / 2,
         type: 'font',
         fontFamily: 'graphin',
         value: icons[value] || '',
-        fill: keyshape.fill,
+        fill: icon.fill || keyshape.fill,
       };
     }
     if (icon.type === 'text') {
@@ -200,9 +200,6 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         style: merge(styleByConfig, preStyle),
       };
     });
-
-    console.log('%c Graphin Nodes', 'color:red', nodes);
-
     return transNodes;
   } catch (error) {
     console.error('parse transform error:', error);

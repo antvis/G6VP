@@ -1,3 +1,4 @@
+import type { GIConfig } from '@alipay/graphinsight';
 /**
  *
  * @param
@@ -38,24 +39,32 @@ export const time = time => {
  * 默认config
  *
  */
-const baseNodeConfig = {
-  id: 'GraphinNode',
-  props: {},
-};
-const baseNodesConfig = [
+
+const baseNodesConfig: GIConfig['nodes'] = [
   {
     id: 'SimpleNode',
-    props: {},
+    name: '官方节点',
+    expressions: [],
+    groupName: '默认样式',
+    props: {
+      size: 26,
+      color: '#ddd',
+      label: ['id'],
+    },
   },
 ];
-const baseEdgeConfig = {
-  id: 'GraphinEdge',
-  props: {},
-};
-const baseEdgesConfig = [
+
+const baseEdgesConfig: GIConfig['edges'] = [
   {
     id: 'SimpleEdge',
-    props: {},
+    name: '官方边',
+    expressions: [],
+    groupName: '默认样式',
+    props: {
+      size: 1,
+      color: '#ddd',
+      label: ['source', 'target'],
+    },
   },
 ];
 const baseComponentsConfig = [
@@ -81,8 +90,6 @@ const baseLayoutConfig = {
 };
 
 export const baseConfig = {
-  // node: baseNodeConfig,
-  // edge: baseEdgeConfig,
   nodes: baseNodesConfig,
   edges: baseEdgesConfig,
   layout: baseLayoutConfig,
@@ -107,3 +114,8 @@ export const serviceConfig = [
     name: '初始化接口',
   },
 ];
+
+export const schemaData = {
+  nodes: [],
+  edges: [],
+};
