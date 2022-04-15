@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useContext } from './context';
-import {isStyles, isPosition} from "./utils"
 import { GIService } from './typing';
-
+import { isPosition, isStyles } from './utils';
 
 export interface IProps {
   serviceId: string;
