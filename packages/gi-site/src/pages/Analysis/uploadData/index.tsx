@@ -6,9 +6,11 @@ import { useImmer } from 'use-immer';
 import xlsx2js from 'xlsx2js';
 import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
+import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import './index.less';
+import GraphScopeMode from './GraphScopeMode'
 import Mock from './Mock';
+import './index.less';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -38,9 +40,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   //初始化数据
   const [data, setData] = useImmer(initData);
   // 映射函数
-  const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target'));
+  const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'));
   //映射后的数据
-  const [transData, setTransData] = useImmer(eval(GIDefaultTrans('id', 'source', 'target'))(initData));
+  const [transData, setTransData] = useImmer(
+    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))(initData),
+  );
   //当前显示
   const [tableData, setTableData] = useImmer([]);
   const [columns, setColumns] = useImmer(nodeColumns);
@@ -174,8 +178,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const transform = recordList => {
-    const { id, source, target } = recordList[0];
-    const transFunc = GIDefaultTrans(id, source, target);
+    const { id, source, target, nodeType, edgeType } = recordList[0];
+    const transFunc = GIDefaultTrans(id, source, target, nodeType, edgeType);
 
     setTransfunc(transFunc);
 
@@ -209,6 +213,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         edges: [...beforData.edges, ...transData.edges],
       };
 
+      // 进入分析之前，根据数据，生成 schema
+      const schemaData = generatorSchemaByGraphData(mergeData);
+      const newConfig = generatorStyleConfigBySchema(schemaData, context.config);
+      console.log('生成的 Schema 数据', schemaData);
+
       // 更新inputdata里面的 trans function
       const renderData = inputData.map(d => {
         return {
@@ -222,9 +231,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           transData: mergeData,
           inputData: [...result.data.inputData, ...renderData],
         }),
+        // schemaData: schemaData,
+        projectConfig: JSON.stringify(newConfig),
+        schemaData: JSON.stringify(schemaData),
       }).then(res => {
         updateContext(draft => {
           draft.key = Math.random();
+          draft.schemaData = schemaData;
+          // draft.config = newConfig;
         });
         handleClose();
       });
@@ -320,6 +334,9 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
+        <TabPane tab="GraphScope" key="graphscope">
+          <GraphScopeMode />
+        </TabPane>
       </Tabs>
     </Modal>
   );

@@ -1,4 +1,4 @@
-import { INode, IEdge } from '@antv/g6';
+import { IEdge, INode } from '@antv/g6';
 
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {

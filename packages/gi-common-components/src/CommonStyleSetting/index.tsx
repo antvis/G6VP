@@ -1,43 +1,74 @@
 import React from 'react';
 import GroupContainer from '../GroupContainer';
 import RenderForm from './FormilyRenderForm';
-
-export type NodesConfig = {
-  id: string;
-  groupId: string;
-  groupName: string;
-  expressions: any[];
-  props: any;
-}[];
+import type { ItemConfig } from './typing';
 
 export interface StyleSettingProps {
   data: { nodes: any[]; edges: any[] };
-  elementType: 'node' | 'edge';
+  elementType: 'nodes' | 'edges';
   onChange: (params: any) => void;
-  /** GI ELEMENT ASSETS */
-  elements: {};
+  /** GI ELEMENTS ASSETS META */
+  elements: {
+    [key: string]: {
+      id: string;
+      meta: Record<string, any>;
+      [key: string]: any;
+    };
+  };
   /** GI CONFIG */
   config: {
-    nodes: [
-      {
-        id: string;
-        props: {};
-      },
-    ];
-    edges: [{}];
+    nodes: ItemConfig[];
+    edges: ItemConfig[];
     [key: string]: any;
   };
 }
+
+const defaultGroupOption = {
+  nodes: {
+    groupName: `自定义样式`,
+    groupId: Math.random().toString(36).slice(-8),
+    id: 'SimpleNode',
+    expressions: [
+      {
+        name: 'id',
+        operator: 'eql',
+        value: '',
+      },
+    ],
+    props: {
+      color: '#ddd',
+      size: 26,
+      label: ['id'],
+    },
+  },
+  edges: {
+    groupName: `自定义样式`,
+    groupId: Math.random().toString(36).slice(-8),
+    id: 'SimpleEdge',
+    expressions: [
+      {
+        name: 'id',
+        operator: 'eql',
+        value: '',
+      },
+    ],
+    props: {
+      color: '#ddd',
+      size: 1,
+      label: ['source', 'target'],
+    },
+  },
+};
 
 const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   data,
   elementType,
   onChange,
   elements,
-  config,
+  config: CONFIG,
 }) => {
-  const cloneConfig = JSON.parse(JSON.stringify(config.nodes || {}));
-  const preStyleGroup = React.useRef(cloneConfig as any);
+  const elementConfig = JSON.parse(JSON.stringify(CONFIG[elementType] || {}));
+  const preStyleGroup = React.useRef(elementConfig as any);
   const defaultNodeConfig = {
     id: 'SimpleNode',
     props: {},
@@ -90,17 +121,28 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
       }
     }
     preStyleGroup.current = resultGroup;
+
+    if (onChange) {
+      onChange(preStyleGroup.current);
+    }
   };
 
   return (
-    <GroupContainer data={elementType === 'node' ? data.nodes : data.edges} valuesChange={handleGroupChange}>
+    <GroupContainer
+      //@ts-ignore
+      defaultGroupOption={defaultGroupOption[elementType]}
+      initValues={{ groups: elementConfig }}
+      data={data[elementType]}
+      valuesChange={handleGroupChange}
+    >
       {groupIndex => {
-        const nodeConfig = config.nodes[groupIndex] || defaultNodeConfig;
+        const itemConfig = elementConfig[groupIndex] || defaultNodeConfig;
         return (
           <div>
             <RenderForm
               elements={elements}
-              config={nodeConfig}
+              //@ts-ignore
+              config={itemConfig}
               // debounceInput={true}
               onChange={(all, elementId) => handleChange(all, groupIndex, elementId)}
             />
@@ -111,9 +153,11 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   );
 };
 
-export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
-  /** 只要元素资产变换的时候，才去重绘 */
-  const preElementKeys = Object.keys(preProps.elements).join('_');
-  const nextElementKeys = Object.keys(nextProps.elements).join('_');
-  return preElementKeys === nextElementKeys;
-});
+export default CommonStyleSetting;
+
+// export default React.memo(CommonStyleSetting, (preProps, nextProps) => {
+//   /** 只要元素资产变换的时候，才去重绘 */
+//   const preElementKeys = Object.keys(preProps.elements).join('_');
+//   const nextElementKeys = Object.keys(nextProps.elements).join('_');
+//   return preElementKeys === nextElementKeys;
+// });

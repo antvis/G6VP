@@ -35,8 +35,10 @@ export interface State {
   isLoading: boolean;
   /** 图的上下文准备 */
   isContextReady: boolean;
-  /** 数据映射函数 */
-  transform: (data: any) => any;
+  /**
+   * 数据映射函数
+   */
+  transform: (data: any, reset?: boolean) => any;
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
@@ -154,22 +156,34 @@ export interface GIComponentConfig {
 export interface GINodeConfig {
   id: string;
   name: string;
-  rules?: any;
   props: {
     size: number;
     color: string;
-    label: string;
+    label: string[];
+    [key: string]: any;
   };
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
 }
-
 export interface GIEdgeConfig {
   id: string;
   name: string;
   props: {
     color: string;
-    lineWidth: number;
+    size: number;
+    label: string[];
+    [key: string]: any;
   };
-  rules?: any;
+  expressions?: {
+    name: string;
+    operator: string;
+    value: string | number;
+  }[];
+  groupName: string;
 }
 
 export interface GIConfig {

@@ -2,13 +2,9 @@ import { Tabs } from 'antd';
 import React from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import './index.less';
-import NodeStyleSetting from './Node';
+import StyleSettig from './StyleSetting';
 
 const { TabPane } = Tabs;
-
-function callback(key) {
-  console.log(key);
-}
 
 interface StylePanelProps {
   meta: any;
@@ -19,22 +15,21 @@ interface StylePanelProps {
 
 const NodeTab = <div className="tab-title">节点</div>;
 const EdgeTab = <div className="tab-title">边</div>;
-
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const { elements } = props;
   const { nodes: NodeElements, edges: EdgeElements } = elements;
-  console.log('NodeElements', NodeElements);
+  console.log('Elements', EdgeElements, NodeElements);
+  const defaultActiveKey = 'nodes';
+
   return (
     <>
       <AssetsCenterHandler title="元素" id="elements" />
-
-      <Tabs defaultActiveKey="node" onChange={callback} centered id="gi-switch-elements-tab">
-        <TabPane tab={NodeTab} key="node">
-          {/* <NodeStylePanel {...props} elements={NodeElements} /> */}
-          <NodeStyleSetting elementType="node" elements={NodeElements} />
+      <Tabs defaultActiveKey={defaultActiveKey} centered id="gi-switch-elements-tab">
+        <TabPane tab={NodeTab} key="nodes">
+          <StyleSettig elementType="nodes" elements={NodeElements} />
         </TabPane>
-        <TabPane tab={EdgeTab} key="edge">
-          {/* <EdgeStylePanel {...props} elements={EdgeElements} /> */}
+        <TabPane tab={EdgeTab} key="edges">
+          <StyleSettig elementType="edges" elements={EdgeElements} />
         </TabPane>
       </Tabs>
     </>
