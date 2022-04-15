@@ -1,6 +1,8 @@
 import { filterByRules } from '@alipay/gi-common-components/lib/GroupContainer/utils';
-import { GraphinData } from '@antv/graphin';
+import { GraphinData, IUserEdge } from '@antv/graphin';
+import processEdges from './process/processEdges';
 import { GIAssets, GIConfig } from './typing';
+
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
@@ -144,16 +146,16 @@ export const transDataByConfig = (
   let elementData = data[elementType];
 
   if (elementType === 'edges') {
-    elementData = elementData.map((item, index) => {
-      return {
-        ...item,
-        id: `${item.source}_${item.target}_${index}`,
-      };
+    // 先整体做个多边处理
+    elementData = processEdges(elementData as IUserEdge[], {
+      poly: 30,
+      loop: 10,
     });
   }
-  console.log('elementData', elementData);
 
-  const filterElements = elementConfig
+  const [basicConfig, ...otherConfigs] = elementConfig;
+
+  const filterElements = otherConfigs
     .map(item => {
       //@ts-ignore
       const { id, expressions, logic } = item;
@@ -173,8 +175,9 @@ export const transDataByConfig = (
   const restElements = elementData.filter(n => {
     return uniqueIds.indexOf(n.id) === -1;
   });
+
   //@ts-ignore
-  const restData = ElementAssets[defaultConfig.id].registerTransform(restElements, defaultConfig, reset);
+  const restData = ElementAssets[basicConfig.id].registerTransform(restElements, basicConfig, reset);
 
   const nodes = [...uniqueElements, ...restData];
   console.timeEnd(`cost ${elementType} trans`);
