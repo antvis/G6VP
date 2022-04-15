@@ -62,7 +62,7 @@ const GISDK = (props: Props) => {
     isContextReady: false,
     initialized: false,
     initializer: defaultInitializerCfg,
-    transform: data => data,
+    transform: (data, reset?: boolean) => data,
     layoutCache: false,
     /** graphin */
     //@ts-ignore

@@ -47,7 +47,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.data = res;
           draft.source = res;
         } else {
-          const newData = transform(res);
+          const newData = transform(res, true);
           draft.data = newData;
           draft.source = { ...res };
         }
