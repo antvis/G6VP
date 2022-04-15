@@ -149,3 +149,6 @@ export const getOptions = data => {
     },
   ];
 };
+
+export const DefaultGraphScopeNodeFilePath = '/home/graphscope/dongze.ldz/alibaba/gstest/property/p2p-31_property_v_0';
+export const DefaultGraphScopeEdgeFilePath = '/home/graphscope/dongze.ldz/alibaba/gstest/property/p2p-31_property_e_0';
