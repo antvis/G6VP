@@ -3,11 +3,11 @@ import { Drawer, Button } from 'antd';
 import { GraphinData } from '@antv/graphin';
 import { nanoid } from 'nanoid';
 import { useContext } from '@alipay/graphinsight';
-import { generatorSchemaByGraphData } from '@alipay/graphinsight/es/utils';
+import { generatorSchemaByGraphData, isStyles } from '@alipay/graphinsight/es/utils';
 import { filterGraphData } from './utils';
 import FilterSelection from './FilterSelection';
 import { IFilterCriteria } from './type';
-import "./index.less"
+import './index.less';
 
 export interface FilterPanelProps {
   visible: boolean;
@@ -16,7 +16,7 @@ export interface FilterPanelProps {
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const { visible } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { source, updateContext, graph } = useContext();
+  const { source, updateContext, graph, transform } = useContext();
   const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
@@ -68,43 +68,33 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       data = filterGraphData(data, filterCriteria, graph);
     });
     updateContext(draft => {
-      draft.data = data;
+      if (isStyles(source.nodes)) {
+        draft.data = data;
+      } else {
+        draft.data = transform(data);
+      }
     });
   }, [filterOptions]);
 
   return (
-    <Drawer
-      placement="right"
-      visible={visible}
-      title="筛选面板"
-      width="275px"
-      style={{
-        marginTop: '61px',
-      }}
-      mask={false}
-      bodyStyle={{
-        padding: '12px 24px',
-      }}
-    >
-      <div className="gi-filter-panel">
-        <Button style={{ width: '100%' }} onClick={addFilter}>
-          增加筛选器
-        </Button>
-        <div className='gi-filter-panel-criteria-container'>
-          {Object.values(filterOptions).map(filterCriter => {
-            return (
-              <FilterSelection
-                filterCriter={filterCriter}
-                nodeProperties={nodeProperties}
-                edgeProperties={edgeProperties}
-                updateFilterCriteria={updateFilterCriteria}
-                removeFilterCriteria={removeFilterCriteria}
-              />
-            );
-          })}
-        </div>
+    <div className="gi-filter-panel">
+      <Button style={{ width: '100%' }} onClick={addFilter}>
+        增加筛选器
+      </Button>
+      <div className="gi-filter-panel-criteria-container">
+        {Object.values(filterOptions).map(filterCriter => {
+          return (
+            <FilterSelection
+              filterCriter={filterCriter}
+              nodeProperties={nodeProperties}
+              edgeProperties={edgeProperties}
+              updateFilterCriteria={updateFilterCriteria}
+              removeFilterCriteria={removeFilterCriteria}
+            />
+          );
+        })}
       </div>
-    </Drawer>
+    </div>
   );
 };
 

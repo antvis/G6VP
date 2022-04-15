@@ -1,4 +1,3 @@
-import { INode } from '@antv/g6';
 import type { GraphinContextType, GraphinData } from '@antv/graphin';
 import { IFilterCriteria } from './type';
 
@@ -69,6 +68,5 @@ export const filterGraphData = (
     });
     newData.nodes = source.nodes;
   }
-  console.log('newData@', newData);
   return newData;
 };
