@@ -87,7 +87,6 @@ const ComponentPanel = props => {
   };
 
   console.log('%c ComponentMeta', 'color:green');
-
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />

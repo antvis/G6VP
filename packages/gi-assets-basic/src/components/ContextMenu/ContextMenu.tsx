@@ -1,9 +1,8 @@
-import { Menu } from 'antd';
+import { Menu, Empty, Divider } from 'antd';
 import React, { createRef } from 'react';
 import useContextMenu from './useContextMenu';
 
 const defaultStyle = {
-  width: '120px',
   boxShadow: '0 4px 12px rgb(0 0 0 / 15%)',
 };
 
@@ -13,7 +12,7 @@ const ContextMenu = props => {
     bindType: 'node',
     container,
   });
-  const { oneShow, onClose, id, item, visible, x, y } = contextmenu;
+  const { onShow, onClose, id, item, visible, x, y } = contextmenu;
 
   const { components, assets } = props;
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
@@ -28,7 +27,7 @@ const ContextMenu = props => {
     //@ts-ignore
     <div style={{ ...defaultStyle, ...positionStyle }} ref={container}>
       {visible && (
-        <Menu style={{ width: 120 }} mode="vertical">
+        <Menu mode="vertical">
           {sortedComponents.map(item => {
             if (!item) {
               return null;
