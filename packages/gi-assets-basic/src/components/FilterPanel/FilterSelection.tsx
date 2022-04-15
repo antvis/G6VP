@@ -19,10 +19,11 @@ interface FilterSelectionProps {
   removeFilterCriteria: (id: string) => void;
   nodeProperties: Object;
   edgeProperties: Object;
+  histogramColor: string;
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria } = props;
+  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } = props;
   const { source } = useContext();
 
   const getSelectOptions = (
@@ -55,7 +56,8 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     return options;
   };
 
-  const getHistogram = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge') => {
+  // 获取直方图相关数据
+  const getHistogram = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge', color: string) => {
     const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
     const valueMap = new Map<number, number>();
     let maxValue = -Infinity;
@@ -86,7 +88,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       step: interval,
       dataType: 'NUMBER',
       format: '',
-      color: '#3056E3',
+      color,
     };
   };
 
@@ -115,7 +117,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         selectOptions,
       });
     } else if (analyzerType === 'BRUSH') {
-      const histogram = getHistogram(source, prop, elementType);
+      const histogram = getHistogram(source, prop, elementType, histogramColor);
       updateFilterCriteria(id, {
         ...filterCriter,
         analyzerType: 'BRUSH',
