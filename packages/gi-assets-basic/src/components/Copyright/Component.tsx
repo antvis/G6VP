@@ -1,6 +1,7 @@
 import React from 'react';
-import './index.less'
-import { getPositionStyles } from '../WrapContainer';
+import './index.less';
+import { utils } from '@alipay/graphinsight';
+const { getPositionStyles } = utils;
 
 export interface CopyrightProps {
   imageUrl: string;
@@ -15,11 +16,15 @@ const Copyright: React.FunctionComponent<CopyrightProps> = props => {
   const positionStyles = getPositionStyles(placement, offset);
 
   return (
-    <div className='gi-copyright' style={positionStyles}>
-      <img src={`${imageUrl}`} alt="版权图片" style={{
-        width: `${width}px`,
-        height: `${height}px`
-      }} />
+    <div className="gi-copyright" style={positionStyles}>
+      <img
+        src={`${imageUrl}`}
+        alt="版权图片"
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      />
     </div>
   );
 };

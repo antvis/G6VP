@@ -66,7 +66,7 @@ const Analysis = props => {
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
-    isModalVisible,
+    isUploadModalVisible,
   } = state;
 
   const handleChangeNavbar = opt => {
@@ -237,7 +237,7 @@ const Analysis = props => {
 
   const handleClose = () => {
     updateState(draft => {
-      draft.isModalVisible = false;
+      draft.isUploadModalVisible = false;
     });
   };
 
@@ -290,8 +290,8 @@ const Analysis = props => {
             </div>
           </div>
         </div>
-        {isModalVisible && (
-          <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
+        {isUploadModalVisible && (
+          <UploadPanel visible={isUploadModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
         )}
       </div>
     </AnalysisContext.Provider>

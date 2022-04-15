@@ -20,6 +20,7 @@ import PropertiesPanel from './PropertiesPanel';
 import Redo from './Redo';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
+import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import Undo from './Undo';
@@ -53,5 +54,6 @@ export {
   NeighborsQuery,
   StyleSetting,
   Copyright,
+  ToggleClusterWithMenu,
   MapMode,
 };

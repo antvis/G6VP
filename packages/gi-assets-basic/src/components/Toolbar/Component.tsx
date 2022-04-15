@@ -1,6 +1,7 @@
 import { Toolbar } from '@antv/graphin-components';
 import * as React from 'react';
-import { getPositionStyles } from '../WrapContainer';
+import { utils } from '@alipay/graphinsight';
+const { getPositionStyles } = utils;
 
 type direction = 'vertical' | 'horizontal';
 export interface ToolbarProps {
