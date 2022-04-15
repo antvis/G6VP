@@ -3,6 +3,21 @@ import { GraphinData, IUserEdge } from '@antv/graphin';
 import processEdges from './process/processEdges';
 import { GIAssets, GIConfig } from './typing';
 
+export const isPosition = nodes => {
+  //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
+  if (nodes.length === 0) {
+    return false;
+  }
+
+  return nodes.every(node => !window.isNaN(node.x) && !window.isNaN(node.y));
+};
+export const isStyles = nodes => {
+  if (nodes.length === 0) {
+    return false;
+  }
+  return nodes.every(node => node.style);
+};
+
 export const getPositionStyles = (placement, offset: number[]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
