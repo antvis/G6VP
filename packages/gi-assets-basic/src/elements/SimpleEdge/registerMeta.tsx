@@ -121,7 +121,6 @@ const registerMeta = context => {
                         'x-component': 'Input',
                         default: keyshape.lineDash,
                       },
-
                       opacity: {
                         type: 'string',
                         title: '透明度',

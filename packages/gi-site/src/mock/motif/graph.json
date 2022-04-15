@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    { "id": "node-0", "label": "node-0" },
+    { "id": "node-1", "label": "node-1" },
+    { "id": "node-2", "label": "node-2" },
+    { "id": "node-3", "label": "node-3" },
+    { "id": "node-4", "label": "node-4" },
+    { "id": "node-5", "label": "node-5" },
+    { "id": "node-6", "label": "node-6" },
+    { "id": "node-7", "label": "node-7" },
+    { "id": "node-8", "label": "node-8" },
+    { "id": "node-9", "label": "node-9" }
+  ],
+  "edges": [
+    { "source": "node-0", "target": "node-0", "numeric": 2, "id": "74HeZ4maj" },
+    { "source": "node-0", "target": "node-1", "numeric": 9, "id": "xlrvhelb7v" },
+    { "source": "node-0", "target": "node-2", "numeric": 2, "id": "N9dyjkxKLa" },
+    { "source": "node-0", "target": "node-3", "numeric": 10, "id": "0s9R_yFsNG" },
+    { "source": "node-0", "target": "node-4", "numeric": 5, "id": "RpSyhAyDHj" },
+    { "source": "node-0", "target": "node-5", "numeric": 3, "id": "fCSVFjCx-z" },
+    { "source": "node-0", "target": "node-6", "numeric": 10, "id": "NYTff8e0tL" },
+    { "source": "node-0", "target": "node-7", "numeric": 2, "id": "TC54BATfOo" },
+    { "source": "node-0", "target": "node-8", "numeric": 4, "id": "bGXGwtpOz2" },
+    { "source": "node-1", "target": "node-0", "numeric": 8, "id": "jx4FnsMF7R" },
+    { "source": "node-2", "target": "node-0", "numeric": 2, "id": "Cp4F0sXQZt" },
+    { "source": "node-3", "target": "node-0", "numeric": 7, "id": "NLNLS2TIOJ" },
+    { "source": "node-4", "target": "node-0", "numeric": 8, "id": "6j0072Rh4K" },
+    { "source": "node-5", "target": "node-0", "numeric": 8, "id": "7ozGnFz92s" },
+    { "source": "node-6", "target": "node-0", "numeric": 4, "id": "AznwGOghJM" },
+    { "source": "node-7", "target": "node-0", "numeric": 10, "id": "7WvPhrnpiY" },
+    { "source": "node-8", "target": "node-0", "numeric": 10, "id": "zz8O34T2Uqz" },
+    { "source": "node-9", "target": "node-0", "numeric": 8, "id": "x1XlCuFCHs0" }
+  ]
+}

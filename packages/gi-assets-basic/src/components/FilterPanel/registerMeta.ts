@@ -1,49 +1,12 @@
-const registerMeta = context => {
-  const { data } = context;
-  const nodeKeys = Object.keys(data.nodes[0].data);
+import { deepClone, GIAC_CONTENT_METAS } from '../const';
+const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.children.title.default = '筛选面板';
+metas.GIAC_CONTENT.children.icon.default = 'icon-star';
+metas.GIAC_CONTENT.children.containerWidth.default= '300px'
 
-  const nodeOptions = nodeKeys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
-  const edgeKeys = Object.keys(data.edges[0].data);
-  const edgeOptions = edgeKeys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
+const registerMeta = () => {
   return {
-    node: {
-      name: '节点',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sortKey: {
-          name: '映射字段',
-          type: 'select',
-          default: 'id',
-          options: nodeOptions,
-        },
-      },
-    },
-    edge: {
-      name: '边',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sortKey: {
-          name: '映射字段',
-          type: 'select',
-          default: 'source',
-          options: edgeOptions,
-        },
-      },
-    },
+    ...metas
   };
 };
 
