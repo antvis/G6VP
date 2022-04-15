@@ -344,7 +344,6 @@ const GISDK = (props: Props) => {
     });
   };
   const isReady = state.isContextReady && state.initialized;
-  console.log('@data', data);
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>

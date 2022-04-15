@@ -1,5 +1,6 @@
 export interface IFilterCriteria{
   id?: string;
+  // 筛选属性值
   prop?: string;
   elementType?: 'node' | 'edge';
   range?: number[];
@@ -8,8 +9,6 @@ export interface IFilterCriteria{
   selectOptions?: IOption[];
   analyzerType?: 'BRUSH' | 'SELECT' | 'NONE';
   isFilterReady?: boolean;
-  //selection?: SelectVariableOption[];
-  //format?: string;
 };
 
 interface IOption {

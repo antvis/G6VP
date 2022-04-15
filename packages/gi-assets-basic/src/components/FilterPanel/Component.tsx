@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Drawer, Button } from 'antd';
+import { Button } from 'antd';
 import { GraphinData } from '@antv/graphin';
 import { nanoid } from 'nanoid';
 import { useContext } from '@alipay/graphinsight';
@@ -14,9 +14,8 @@ export interface FilterPanelProps {
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { visible } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { source, updateContext, graph, transform } = useContext();
+  const { source, updateContext, transform } = useContext();
   const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
@@ -65,7 +64,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   useEffect(() => {
     let data: GraphinData = source;
     Object.values(filterOptions).map(filterCriteria => {
-      data = filterGraphData(data, filterCriteria, graph);
+      data = filterGraphData(data, filterCriteria);
     });
     updateContext(draft => {
       if (isStyles(source.nodes)) {
@@ -73,12 +72,13 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       } else {
         draft.data = transform(data);
       }
+      draft.layoutCache = true;
     });
   }, [filterOptions]);
 
   return (
     <div className="gi-filter-panel">
-      <Button style={{ width: '100%' }} onClick={addFilter}>
+      <Button style={{ width: '90%' }} onClick={addFilter}>
         增加筛选器
       </Button>
       <div className="gi-filter-panel-criteria-container">
