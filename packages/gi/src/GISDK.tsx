@@ -292,15 +292,18 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
-        <>
-          {state.isContextReady && <InitializerComponent {...InitializerProps} />}
-          <SetupUseGraphinHook updateContext={updateState} />
+      <div className="graphinsight-container" id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
+        <div className="graphinsight-container-extra-dom" id={`${GISDK_ID}-container-extra`}></div>
+        <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
+          <>
+            {state.isContextReady && <InitializerComponent {...InitializerProps} />}
+            <SetupUseGraphinHook updateContext={updateState} />
 
-          {isReady && renderComponents()}
-          {isReady && children}
-        </>
-      </Graphin>
+            {isReady && renderComponents()}
+            {isReady && children}
+          </>
+        </Graphin>
+      </div>
     </GraphInsightContext.Provider>
   );
 };
