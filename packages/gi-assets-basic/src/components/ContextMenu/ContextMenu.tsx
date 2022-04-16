@@ -1,45 +1,44 @@
-import { Menu, Empty, Divider } from 'antd';
-import React, { createRef } from 'react';
-import useContextMenu from './useContextMenu';
+import { Components, ContextMenuValue } from '@antv/graphin';
+import { Menu } from 'antd';
+import React, { useMemo } from 'react';
+
+const { ContextMenu } = Components;
 
 const defaultStyle = {
   boxShadow: '0 4px 12px rgb(0 0 0 / 15%)',
 };
 
-const container = createRef();
-const ContextMenu = props => {
-  const contextmenu = useContextMenu({
-    bindType: 'node',
-    container,
-  });
-  const { onShow, onClose, id, item, visible, x, y } = contextmenu;
-
+const ContextMenuContainer = props => {
   const { components, assets } = props;
-  const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
 
-  const positionStyle: React.CSSProperties = {
-    position: 'absolute',
-    left: x,
-    top: y,
-  };
+  const sortedComponents = useMemo(() => {
+    return components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
+  }, [components]);
 
   return (
     //@ts-ignore
-    <div style={{ ...defaultStyle, ...positionStyle }} ref={container}>
-      {visible && (
-        <Menu mode="vertical">
-          {sortedComponents.map(item => {
-            if (!item) {
-              return null;
-            }
-            const { props: itemProps, id } = item;
-            const { component: Component } = assets[id];
-            return <Component {...itemProps} contextmenu={contextmenu} key={id} />;
-          })}
-        </Menu>
-      )}
-    </div>
+    <ContextMenu bindType="node" style={defaultStyle}>
+      {(menuProps: ContextMenuValue) => {
+        return (
+          <Menu mode="vertical">
+            {sortedComponents.map(item => {
+              if (!item) {
+                return null;
+              }
+              const { props: itemProps, id } = item;
+              const { component: Component } = assets[id];
+              return <Component {...itemProps} contextmenu={menuProps} key={id} />;
+            })}
+          </Menu>
+        );
+      }}
+    </ContextMenu>
+    // <div style={{ ...defaultStyle, ...positionStyle }} ref={container}>
+    //   {visible && (
+
+    //   )}
+    // </div>
   );
 };
 
-export default ContextMenu;
+export default ContextMenuContainer;

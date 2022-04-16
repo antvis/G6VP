@@ -15,6 +15,21 @@ const registerMeta = context => {
       default: [],
       options: GI_CONTAINER_INDEXS,
     },
+    outSideFromCanvas: {
+      name: '是否独立于画布外',
+      type: 'Switch',
+      default: true,
+    },
+    flexDirection: {
+      name: '布局',
+      type: 'Select',
+      default: 'row',
+      options: [
+        { label: '从左往右（row）', value: 'row' },
+        { label: '从上往下（column）', value: 'column' },
+      ],
+    },
+
     ...metas,
   };
 };
