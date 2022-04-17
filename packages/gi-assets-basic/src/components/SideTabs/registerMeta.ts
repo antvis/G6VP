@@ -18,18 +18,20 @@ const registerMeta = context => {
     outSideFromCanvas: {
       name: '是否独立于画布外',
       type: 'Switch',
-      default: true,
-    },
-    flexDirection: {
-      name: '布局',
-      type: 'Select',
-      default: 'row',
-      options: [
-        { label: '从左往右（row）', value: 'row' },
-        { label: '从上往下（column）', value: 'column' },
-      ],
+      default: false,
     },
 
+    tabPosition: {
+      name: '导航布局',
+      type: 'Select',
+      default: 'left',
+      options: [
+        { label: 'left', value: 'left' },
+        { label: 'right', value: 'right' },
+        { label: 'top', value: 'top' },
+        { label: 'bottom', value: 'bottom' },
+      ],
+    },
     ...metas,
   };
 };

@@ -1,7 +1,7 @@
 export interface ContainerProps {
-  placement: 'RT' | 'LT' | 'RB' | 'LB';
+  placement: 'LT' | 'LB' | 'RT' | 'RB';
   offset: number[];
-  width: number;
-  height: number;
+  width: string;
+  height: string;
   defaultVisible: boolean;
 }

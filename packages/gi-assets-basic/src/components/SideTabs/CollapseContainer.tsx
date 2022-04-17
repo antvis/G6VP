@@ -1,15 +1,8 @@
 import { utils } from '@alipay/graphinsight';
 import * as React from 'react';
+import type { ContainerProps } from './typing';
 
-interface CollapseContainerProps {
-  placement: 'RT' | 'LT' | 'RB' | 'LB';
-  offset: number[];
-  width: number;
-  height: number;
-  defaultVisible: boolean;
-}
-
-const CollapseContainer: React.FunctionComponent<CollapseContainerProps> = props => {
+const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
   const { placement, offset, width, height, defaultVisible } = props;
 
   const [state, setState] = React.useState({

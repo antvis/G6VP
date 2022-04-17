@@ -1,10 +1,11 @@
-import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
+import { GIAssets, GIComponentConfig, useGraphInsightContainerLayout } from '@alipay/graphinsight';
 import { Tabs } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import CollapseContainer from './CollapseContainer';
 import './index.less';
 import type { ContainerProps } from './typing';
+import WrapTab from './WrapTab';
 const { TabPane } = Tabs;
 
 export interface OperatorBarProps extends ContainerProps {
@@ -32,14 +33,27 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
     outSideFromCanvas,
     GISDK_ID,
     flexDirection,
+    tabPosition,
   } = props;
 
-  const sortedComponents = components
-    //@ts-ignore
-    .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX)
-    .filter(item => item.props?.GIAC_CONTENT);
+  useGraphInsightContainerLayout(GISDK_ID, outSideFromCanvas, {
+    flexDirection,
+    placement,
+    offset,
+    width,
+    height,
+  });
 
-  const content = React.useMemo(() => {
+  const sortedComponents = React.useMemo(() => {
+    return (
+      components
+        //@ts-ignore
+        .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX)
+        .filter(item => item.props?.GIAC_CONTENT)
+    );
+  }, [components]);
+
+  const panes = React.useMemo(() => {
     return sortedComponents.map((item, index) => {
       if (!item) {
         return null;
@@ -47,24 +61,22 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
       const { props: itemProps, id: itemId } = item;
       const { component: Component } = assets[itemId];
       return (
-        <TabPane key={index} tab={itemProps.GIAC_CONTENT.title}>
+        <TabPane key={index} tab={<WrapTab {...itemProps} />}>
           <Component {...itemProps} />
         </TabPane>
       );
     });
   }, [sortedComponents]);
 
-  React.useEffect(() => {
-    const container = document.getElementById(`${GISDK_ID}-container`);
-    if (outSideFromCanvas && container) {
-      container.style.display = 'flex';
-      container.style.flexDirection = flexDirection;
-    } else if (container) {
-      container.style.display = 'block';
-    }
-  }, [outSideFromCanvas, flexDirection]);
+  const Content = (
+    <div className="gi-side-tabs">
+      <Tabs defaultActiveKey="1" tabPosition={tabPosition}>
+        {panes}
+      </Tabs>
+    </div>
+  );
 
-  console.log('sortedComponents', sortedComponents, GISDK_ID);
+  console.log('sortedComponents', sortedComponents, props);
 
   if (!outSideFromCanvas) {
     return (
@@ -75,14 +87,11 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
         placement={placement}
         offset={offset}
       >
-        <Tabs defaultActiveKey="1">{content}</Tabs>
+        {Content}
       </CollapseContainer>
     );
   }
-  return ReactDOM.createPortal(
-    <Tabs defaultActiveKey="1">{content}</Tabs>,
-    document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement,
-  );
+  return ReactDOM.createPortal(Content, document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement);
 };
 
 export default SideTabs;
