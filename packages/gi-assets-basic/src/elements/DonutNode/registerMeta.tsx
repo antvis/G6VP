@@ -15,7 +15,7 @@ const registerMeta = context => {
           type: 'array',
           //todo: 显示文本属性根据 data 生成
           enum: numberOptions,
-          default: numberKeys,
+          default: [],
           'x-decorator': 'FormItem',
           'x-component': 'Select',
           'x-component-props': {
@@ -31,7 +31,7 @@ const registerMeta = context => {
               value: c.id,
             };
           }),
-          default: ['id'],
+          default: [],
           'x-decorator': 'FormItem',
           'x-component': 'Select',
           'x-component-props': {

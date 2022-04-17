@@ -177,7 +177,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                 title="分组规则"
                                 content={
                                   <Row>
-                                    <Col span={24} className="expression-group">
+                                    <Col span={24} className="expression-group" style={{ display: 'flex' }}>
                                       <ExpressionGroup
                                         options={propertyList}
                                         name={name as any}
