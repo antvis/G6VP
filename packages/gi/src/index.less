@@ -1,0 +1,27 @@
+.graphinsight-container {
+  &.LB {
+    display: flex;
+    flex-direction: row;
+  }
+  &.LT {
+    display: flex;
+    flex-direction: column;
+  }
+  &.RT {
+    display: flex;
+    //独立DOM 布局情况下，不支持
+    // flex-direction: row-reverse;
+  }
+  &.RB {
+    display: flex;
+    //独立DOM 布局情况下，不支持
+    // flex-direction: column-reverse;
+  }
+}
+
+.graphinsight-container-extra {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0px;
+  background: #fff;
+}
