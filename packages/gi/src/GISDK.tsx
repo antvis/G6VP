@@ -6,6 +6,7 @@ import { useImmer } from 'use-immer';
 import { deepClone, GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS } from './components/const';
 import GIAComponent from './components/GIAC';
 import { GraphInsightContext, useContext } from './context';
+import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
 import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
@@ -292,8 +293,8 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <div className="graphinsight-container" id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
-        <div className="graphinsight-container-extra-dom" id={`${GISDK_ID}-container-extra`}></div>
+      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
+        <div id={`${GISDK_ID}-container-extra`}></div>
         <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
           <>
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}

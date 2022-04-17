@@ -5,7 +5,7 @@ import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './utils';
 /** export typing */
-export { default as useLayout } from './process/layout';
+export { default as useGraphInsightContainerLayout } from './process/layout';
 export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig } from './typing';
 export { useContext, utils, extra };
 const version = '1.2.1';
