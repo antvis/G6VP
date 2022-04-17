@@ -1,8 +1,24 @@
-.expressionGroupContainer {
-  margin-right: 24px;
+.expression-group {
+  display: flex;
+  .ant-form-item {
+    margin: 0px;
+  }
 
-  .addExpressionButton {
-    width: 100%;
-    margin: 8px 0;
+  .expressionGroupContainer {
+    padding-right: 24px;
+    border-right: 2px solid #2e55e0;
+    .switch-button-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: -20px;
+    }
+    .addExpressionButton {
+      width: 100%;
+      margin: 8px 0;
+    }
+    .ant-row .ant-form-item {
+      margin: 0px;
+    }
   }
 }
