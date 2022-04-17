@@ -107,7 +107,7 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
 
 const NODE_COLORS = [
   '#3056E3',
-  '#CB6EF8',
+  '#ff9d05',
   '#82E6C7',
   '#F6D87B',
   '#F69F7F',
@@ -121,6 +121,7 @@ const NODE_COLORS = [
   '#4D92DE',
   '#5CB5D4',
   '#B9D569',
+  '#CB6EF8',
 ];
 
 const colorMap = new Map();
@@ -134,7 +135,7 @@ const defaultNodeConfig = {
   },
   name: '官方节点',
   order: -1,
-  expressions: [],
+  expressions: [null],
   logic: true,
   groupName: `默认样式`,
 };
@@ -147,7 +148,7 @@ const defaultEdgeConfig = {
   },
   name: '官方边',
   order: -1,
-  expressions: [],
+  expressions: [null],
   logic: true,
   groupName: `默认样式`,
 };
