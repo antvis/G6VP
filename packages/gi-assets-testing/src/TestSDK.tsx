@@ -32,6 +32,8 @@ export interface TestSDKProps {
     id: string;
     service: () => Promise<any>;
   }[];
+  updateConfig?: (_draft) => any;
+  style?: React.CSSProperties;
 }
 const styles = {
   root: {
@@ -52,7 +54,7 @@ const styles = {
 };
 
 const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
-  const { asset, services = [] } = props;
+  const { asset, services = [], updateConfig } = props;
   const type = props.type || asset.info.type;
   const { info, registerMeta, component, mockServices } = asset;
   let assetServices: any[] = [];
@@ -121,7 +123,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   };
 
   const { assets, config } = React.useMemo(() => {
-    const nextConfig = getConfigByType(type, id, valueObj);
+    const nextConfig = getConfigByType(type, id, valueObj, updateConfig);
     const nextAssets = getAssetsByType(type, id, asset);
     return {
       config: nextConfig,
@@ -134,7 +136,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   }
   console.log(config, assets);
   return (
-    <div style={styles.root}>
+    <div style={{ ...styles.root, ...props.style }}>
       {/* @ts-ignore */}
       <div style={styles.meta}>
         <h3>GraphInsight 属性面板配置</h3>
