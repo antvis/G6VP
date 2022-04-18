@@ -12,6 +12,7 @@
     "@alipay/graphinsight": "*",
     "@alipay/gi-assets-basic": "*",
     "@alipay/gi-assets-scene": "*",
+    "@alipay/gi-assets-advance": "*",
     "@alipay/gi-common-components": "latest",
     "@ali/datav-gui-color-scale": "^1.0.9",
     "@ali/datav-gui-marker-scale": "^1.1.0",
