@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const packages = require('./package.json');
+const globalName = packages.name.replace('@alipay/', '').toUpperCase();
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, argv) => {
@@ -78,7 +80,7 @@ module.exports = (env, argv) => {
     },
     // devtool: 'cheap-module-source-map',
     output: {
-      library: 'GIAssets',
+      library: globalName,
       libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist/'),
       publicPath: './',
