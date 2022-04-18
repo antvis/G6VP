@@ -1,10 +1,5 @@
 const registerMeta = context => {
-  const { data } = context;
-  let keys = ['id', 'type'];
-  try {
-    keys = Object.keys((data.nodes[0] && data.nodes[0].data) || {});
-  } catch (error) {}
-
+  const { keys } = context;
   const options = keys.map(c => {
     return {
       value: c,
@@ -40,6 +35,11 @@ const registerMeta = context => {
         },
       ],
     },
+    width: {
+      name: '宽度',
+      type: 'text',
+      default: '200px',
+    },
     hasArrow: {
       name: '箭头',
       type: 'switch',
@@ -49,7 +49,7 @@ const registerMeta = context => {
     background: {
       name: '背景色',
       type: 'fill',
-      default: '#f8f9fb',
+      default: '#fff',
     },
     color: {
       name: '字体颜色',
