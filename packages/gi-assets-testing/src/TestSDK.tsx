@@ -4,8 +4,10 @@ import GISDK, { utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import Offset from './DataVGui/Offset';
 import TagsSelect from './DataVGui/TagsSelect';
-import { services as MockServices } from './mock';
+import { GI_LOCAL_DATA, GI_SERVICES_OPTIONS } from './Mock/index';
 import { getAssetsByType, getConfigByType } from './utils';
+
+const MockServices = utils.getServicesByConfig(GI_SERVICES_OPTIONS, GI_LOCAL_DATA);
 
 const extensions = {
   TagsSelect,
@@ -18,13 +20,13 @@ export interface TestSDKProps {
     info: {
       id: string;
       name: string;
-      type: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
+      type: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE' | 'LAYOUT';
     };
     registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
     mockServices?: () => any[];
   };
   /** 资产类型 */
-  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
+  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE' | 'LAYOUT';
   /** 自定义数据服务 */
   services: {
     id: string;
@@ -82,7 +84,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
         data: res,
         services: innerServices,
         keys: ['id'],
-        GI_CONTAINER_INDEXS: ['MenuA', 'BarA'],
+        GI_CONTAINER_INDEXS: ['ZoomIn', 'ZoomOut', 'FitView'],
       });
       const configObj = {
         [id]: {
@@ -99,7 +101,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       setState(preState => {
         return {
           ...preState,
-          data: res,
+          data: GI_LOCAL_DATA,
           isReady: true,
           configObj,
           valueObj,
