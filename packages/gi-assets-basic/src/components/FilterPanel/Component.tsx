@@ -1,26 +1,26 @@
 import { useContext, utils } from '@alipay/graphinsight';
+import { PlusOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
+import './index.less';
 import { IFilterCriteria } from './type';
 import { filterGraphData } from './utils';
-import './index.less';
 
 const { generatorSchemaByGraphData, isStyles } = utils;
 
 export interface FilterPanelProps {
-  histogramColor: string
+  histogramColor: string;
   isFilterIsolatedNodes: boolean;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  console.log('props@',props)
-  const {histogramColor, isFilterIsolatedNodes} = props;
+  const { histogramColor, isFilterIsolatedNodes } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { source, updateContext, transform } = useContext();
+  const { source, updateContext, transform, schemaData } = useContext();
+  console.log('props@', props, source, schemaData);
   const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
