@@ -9,6 +9,30 @@ export interface Package {
   global: string;
 }
 
+const NPM_INFO = [
+  {
+    name: '@alipay/gi-assets-basic',
+    version: '2.0.0',
+  },
+  {
+    name: '@alipay/gi-assets-advance',
+    version: '2.0.0',
+  },
+  {
+    name: '@alipay/gi-assets-scene',
+    version: '2.0.0',
+  },
+];
+const PACKAGES = NPM_INFO.map(c => {
+  const name = c.name.replace('@alipay/', '');
+  return {
+    ...c,
+    url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+    global: name.toUpperCase(),
+  };
+});
+console.log('packages', PACKAGES);
+
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
 

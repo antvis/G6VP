@@ -59,6 +59,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     }
     const elem = document.getElementById('gi-3d-graph') as HTMLElement;
     service()
+      //@ts-ignore
       .then(res => res.json())
       .then(res => {
         const { nodes, edges } = transform(dataTransfer(res));
