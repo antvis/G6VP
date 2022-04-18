@@ -1,66 +1,49 @@
+import * as GI_BASIC_ASSETS from '@alipay/gi-assets-basic';
 import { produce } from 'immer';
-import BarA from './BarA';
-import ContextMenu from './ContextMenu';
-import MenuA from './MenuA';
-import { assets as MockAssets, config as MockConfig } from './mock';
-import OperatorBar from './OperatorBar';
+import { GI_PROJECT_CONFIG } from './Mock/index';
 import type { TestSDKProps } from './TestSDK';
-import Toolbar from './Toolbar';
 
 export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: any) => {
-  const nextAssets = produce(MockAssets, draft => {
+  const nextAssets = produce(GI_BASIC_ASSETS, draft => {
     draft.components[id] = asset;
-    if (type === 'NODE') {
+    if (type === 'NODE' || type === 'EDGE') {
       draft.elements[id] = asset;
     }
-    if (type === 'EDGE') {
-      draft.elements[id] = asset;
+    if (type === 'LAYOUT') {
+      draft.layouts[id] = asset;
     }
-    if (type === 'GIAC') {
-      draft.components['Toolbar'] = Toolbar;
-    }
-
-    if (type === 'GIAC_CONTENT') {
-      draft.components['OperatorBar'] = OperatorBar;
-    }
-    if (type === 'GIAC_MENU') {
-      draft.components['ContextMenu'] = ContextMenu;
-    }
-    if (type === 'GICC') {
-      draft.components['BarA'] = BarA;
-    }
-    if (type === 'GICC_MENU') {
-      draft.components['MenuA'] = MenuA;
-    }
+    draft.components[id] = asset;
   });
   return nextAssets;
 };
 
 export const getConfigByType = (type: TestSDKProps['type'], id: string, value: any) => {
-  const nextConfig = produce(MockConfig, draft => {
+  const nextConfig = produce(GI_PROJECT_CONFIG, draft => {
     /** 元素资产 */
     if (type === 'NODE') {
-      // @ts-ignore
       draft.nodes = [
+        //@ts-ignore
         {
           id,
-          props: value[id]
-        }
-      ]
-      // draft.node.id = id;
-      // draft.node.props = value[id];
+          props: value[id],
+        },
+      ];
       return;
     }
     if (type === 'EDGE') {
-      // draft.node.id = id;
-      // draft.node.props = value[id];
       // @ts-ignore
       draft.edges = [
+        //@ts-ignore
         {
           id,
-          props: value[id]
-        }
-      ]
+          props: value[id],
+        },
+      ];
+      return;
+    }
+    if (type === 'LAYOUT') {
+      draft.layout.id = id;
+      draft.layout.props = value[id];
       return;
     }
 
@@ -71,57 +54,45 @@ export const getConfigByType = (type: TestSDKProps['type'], id: string, value: a
     });
     /** 原子组件 */
     if (type === 'GIAC') {
-      draft.components.push({
-        id: 'Toolbar',
-        props: {
-          GI_CONTAINER: [id],
-        },
+      const Toolbar = draft.components.find(c => {
+        return c.id === 'Toolbar';
       });
+      if (Toolbar) {
+        Toolbar.props.GI_CONTAINER = [id];
+      }
     }
-
     if (type === 'GIAC_CONTENT') {
-      draft.components.push({
-        id: 'OperatorBar',
-        props: {
-          GI_CONTAINER: [id],
-        },
+      const OperatorBar = draft.components.find(c => {
+        return c.id === 'OperatorBar';
       });
+      if (OperatorBar) {
+        OperatorBar.props.GI_CONTAINER = [id];
+      }
     }
     if (type === 'GIAC_MENU') {
-      draft.components.push({
-        id: 'ContextMenu',
-        props: {
-          GI_CONTAINER: [id],
-        },
+      const ContextMenu = draft.components.find(c => {
+        return c.id === 'ContextMenu';
       });
+      if (ContextMenu) {
+        //@ts-ignore
+        ContextMenu.props.GI_CONTAINER?.push(id);
+      }
     }
+
     /** 容器组件 */
     if (type === 'GICC') {
-      draft.components.push({
-        id: 'BarA',
-        props: {
-          GIAC_CONTENT: {
-            title: '测试组件A',
-          },
-        },
-      });
-      draft.components
-        .find(item => {
-          return item.id === id;
-        })
-        ?.props?.GI_CONTAINER?.push('BarA');
-    }
-    if (type === 'GICC_MENU') {
-      draft.components.push({
-        id: 'MenuA',
-        props: {},
-      });
-      const match = draft.components.find(item => {
+      const currentComponent = draft.components.find(item => {
         return item.id === id;
       });
-      if (match) {
-        match?.props?.GI_CONTAINER?.push('MenuA');
-      }
+      //@ts-ignore
+      currentComponent.props.GI_CONTAINER?.push('ZoomIn', 'ZoomOut', 'FitView');
+    }
+    if (type === 'GICC_MENU') {
+      const currentComponent = draft.components.find(item => {
+        return item.id === id;
+      });
+      //@ts-ignore
+      currentComponent.props.GI_CONTAINER?.push('NeighborsQuery');
     }
   });
   return nextConfig;

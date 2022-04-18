@@ -1,6 +1,6 @@
 import ForceGraph3D from '3d-force-graph';
+import { useContext } from '@alipay/graphinsight';
 import { ExpandOutlined } from '@ant-design/icons';
-import { GraphinContext } from '@antv/graphin';
 import { Button } from 'antd';
 import * as React from 'react';
 import { animated, useSpring } from 'react-spring';
@@ -32,8 +32,7 @@ const dataTransfer = data => {
   };
 };
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
-  //@ts-ignore
-  const { services, config, transform, setGiState, dispatch } = GraphinContext;
+  const { services, config, transform, setGiState, data, updateContext } = useContext();
   const { serviceId, visible } = props;
   const [state, setState] = React.useState({
     toggle: true,
@@ -125,14 +124,18 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
           })
           .onNodeRightClick((node: any) => {
             setToggle(true);
-            setGiState(preState => {
-              const newData = preState.data;
-              newData.nodes.push({ id: node.id, data: node.data });
-              return {
-                ...preState,
-                data: transform(newData, config),
-              };
-            });
+            // updateContext(draft=>{
+            //   const newData =  preState.data;
+            //   draft.data = transform()
+            // })
+            // setGiState(preState => {
+            //   const newData = preState.data;
+            //   newData.nodes.push({ id: node.id, data: node.data });
+            //   return {
+            //     ...preState,
+            //     data: transform(newData, config),
+            //   };
+            // });
           });
 
         setState(preState => {
