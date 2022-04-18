@@ -24,6 +24,7 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
+  dynamicImportSyntax: {},
   routes: [
     { exact: true, path: '/', component: 'Home' },
     { exact: true, path: '/workspace', component: 'Workspace' },

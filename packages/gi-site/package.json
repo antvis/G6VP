@@ -9,14 +9,15 @@
     "analyse": "ANALYZE=1 umi dev"
   },
   "dependencies": {
+    "@alipay/graphinsight": "*",
+    "@alipay/gi-assets-basic": "*",
+    "@alipay/gi-assets-scene": "*",
     "@alipay/gi-common-components": "latest",
     "@ali/datav-gui-color-scale": "^1.0.9",
     "@ali/datav-gui-marker-scale": "^1.1.0",
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/alex": "^1.5.0",
     "@alipay/bigfish": "^3.6.10",
-    "@alipay/gi-assets-basic": "*",
-    "@alipay/graphinsight": "*",
     "@alipay/gravity-demo-sdk": "^4.6.1",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
