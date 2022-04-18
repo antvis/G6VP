@@ -9,7 +9,6 @@ import FitCenter from './FitCenter';
 import FitView from './FitView';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
-import MapMode from './MapMode';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
 import NodeExpand from './NodeExpand';
@@ -27,6 +26,7 @@ import Tooltip from './Tooltip';
 import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+
 export {
   FitCenter,
   FitView,
@@ -55,6 +55,5 @@ export {
   StyleSetting,
   Copyright,
   ToggleClusterWithMenu,
-  MapMode,
   Timeline,
 };

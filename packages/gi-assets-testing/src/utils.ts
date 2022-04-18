@@ -17,7 +17,7 @@ export const getAssetsByType = (type: TestSDKProps['type'], id: string, asset: a
   return nextAssets;
 };
 
-export const getConfigByType = (type: TestSDKProps['type'], id: string, value: any) => {
+export const getConfigByType = (type: TestSDKProps['type'], id: string, value: any, callback?: (_draft) => any) => {
   const nextConfig = produce(GI_PROJECT_CONFIG, draft => {
     /** 元素资产 */
     if (type === 'NODE') {
@@ -93,6 +93,9 @@ export const getConfigByType = (type: TestSDKProps['type'], id: string, value: a
       });
       //@ts-ignore
       currentComponent.props.GI_CONTAINER?.push('NeighborsQuery');
+    }
+    if (callback) {
+      callback(draft);
     }
   });
   return nextConfig;
