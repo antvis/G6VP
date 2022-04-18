@@ -92,10 +92,11 @@ export const loadJS = options => {
 };
 
 export const getAssets = () => {
-  const packages = getAssetPackages();
   if (isDev) {
     return GI_Basic_Assets;
   }
+  const packages = getAssetPackages();
+
   return packages
     .map(item => {
       let assets = window[item.global];
@@ -135,10 +136,10 @@ export type IAssets = Record<AssetsKey, AssetsValue>;
  * @returns
  */
 export const getCombinedAssets = () => {
-  const assets = getAssets();
   if (isDev) {
     return GI_Basic_Assets;
   }
+  const assets = getAssets();
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
@@ -169,6 +170,9 @@ export const getCombinedAssets = () => {
  * @param targets { LoadModules[] } 要加载的组件列表
  */
 export const dynamicLoadModules = async () => {
+  if (isDev) {
+    return getAssets();
+  }
   const packages = getAssetPackages();
   const options = packages.map(item => {
     return {

@@ -32,12 +32,11 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
     defaultVisible,
     outSideFromCanvas,
     GISDK_ID,
-    flexDirection,
+
     tabPosition,
   } = props;
 
   useGraphInsightContainerLayout(GISDK_ID, outSideFromCanvas, {
-    flexDirection,
     placement,
     offset,
     width,
