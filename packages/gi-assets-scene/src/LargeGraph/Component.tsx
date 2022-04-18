@@ -53,7 +53,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     if (!serviceId || !visible) {
       return;
     }
-    const { service } = services.find(c => c.id === serviceId);
+    const { service } = services.find(c => c.id === serviceId) || {};
     if (!service) {
       return;
     }
@@ -61,7 +61,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     service()
       .then(res => res.json())
       .then(res => {
-        const { nodes, edges } = transform(dataTransfer(res), config);
+        const { nodes, edges } = transform(dataTransfer(res));
         const data = { nodes, links: edges };
         const Graph = ForceGraph3D()(elem)
           .graphData(data)
