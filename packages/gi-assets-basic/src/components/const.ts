@@ -328,23 +328,23 @@ export const GI_CONTAINER_METAS = {
   placement: {
     name: '放置方位',
     type: 'select',
-    default: 'LT',
+    default: 'left',
     options: [
       {
         value: 'LT',
-        label: '左上',
-      },
-      {
-        value: 'RT',
-        label: '右上',
+        label: '左上 / top',
       },
       {
         value: 'LB',
-        label: '左下',
+        label: '左下 / left',
+      },
+      {
+        value: 'RT',
+        label: '右上 / right (独立布局不支持)',
       },
       {
         value: 'RB',
-        label: '右下',
+        label: '右下 / bottom (独立布局不支持)',
       },
     ],
   },

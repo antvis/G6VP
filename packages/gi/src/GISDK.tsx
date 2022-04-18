@@ -2,30 +2,14 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
-/** export  */
-import { deepClone, GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS } from './components/const';
-import GIAComponent from './components/GIAC';
-import { GraphInsightContext, useContext } from './context';
+import { GraphInsightContext } from './context';
+import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
 import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
-
-const version = '1.2.0';
-
-const extra = {
-  GIAC_CONTENT_METAS,
-  GIAC_CONTENT_PROPS,
-  GIAC_METAS,
-  GIAC_PROPS,
-  deepClone,
-  GIAComponent,
-};
-export { useContext, utils, extra };
-
-console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 /** export  */
 const GISDK = (props: Props) => {
@@ -292,15 +276,18 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
-        <>
-          {state.isContextReady && <InitializerComponent {...InitializerProps} />}
-          <SetupUseGraphinHook updateContext={updateState} />
+      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
+        <div id={`${GISDK_ID}-container-extra`}></div>
+        <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
+          <>
+            {state.isContextReady && <InitializerComponent {...InitializerProps} />}
+            <SetupUseGraphinHook updateContext={updateState} />
 
-          {isReady && renderComponents()}
-          {isReady && children}
-        </>
-      </Graphin>
+            {isReady && renderComponents()}
+            {isReady && children}
+          </>
+        </Graphin>
+      </div>
     </GraphInsightContext.Provider>
   );
 };

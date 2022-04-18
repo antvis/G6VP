@@ -1,96 +1,96 @@
+import { GIAssets, GIComponentConfig, useGraphInsightContainerLayout } from '@alipay/graphinsight';
 import { Tabs } from 'antd';
 import * as React from 'react';
-import { getPositionStyles } from '../utils';
+import ReactDOM from 'react-dom';
+import CollapseContainer from './CollapseContainer';
 import './index.less';
+import type { ContainerProps } from './typing';
+import WrapTab from './WrapTab';
 const { TabPane } = Tabs;
-export interface OperatorBarProps {
-  placement: string;
-  offset: number[];
+
+export interface OperatorBarProps extends ContainerProps {
   GI_CONTAINER: string[];
+  components: GIComponentConfig[];
+  assets: GIAssets;
+  tabPosition: 'left' | 'right' | 'top' | 'bottom';
+  /**
+   * 是否在画布的外围
+   */
+  outSideFromCanvas: boolean;
+  flexDirection: 'row' | 'column';
+  GISDK_ID: string;
 }
 
 const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
-  //@ts-ignore
-  const { components, assets, placement, offset, width, height, defaultVisible } = props;
+  const {
+    components,
+    assets,
+    placement,
+    offset,
+    width,
+    height,
+    defaultVisible,
+    outSideFromCanvas,
+    GISDK_ID,
 
-  const [state, setState] = React.useState({
-    visible: typeof defaultVisible === 'boolean' ? defaultVisible : true,
+    tabPosition,
+  } = props;
+
+  useGraphInsightContainerLayout(GISDK_ID, outSideFromCanvas, {
+    placement,
+    offset,
+    width,
+    height,
   });
 
-  const sortedComponents = components
-    .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
-    .filter((item: any) => item.props?.GIAC_CONTENT);
+  const sortedComponents = React.useMemo(() => {
+    return (
+      components
+        //@ts-ignore
+        .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX)
+        .filter(item => item.props?.GIAC_CONTENT)
+    );
+  }, [components]);
 
-  const handleToggle = () => {
-    setState(preState => {
-      return {
-        visible: !preState.visible,
-      };
+  const panes = React.useMemo(() => {
+    return sortedComponents.map((item, index) => {
+      if (!item) {
+        return null;
+      }
+      const { props: itemProps, id: itemId } = item;
+      const { component: Component } = assets[itemId];
+      return (
+        <TabPane key={index} tab={<WrapTab {...itemProps} />}>
+          <Component {...itemProps} />
+        </TabPane>
+      );
     });
-  };
+  }, [sortedComponents]);
 
-  const postionStyles = getPositionStyles(placement, offset);
-
-  const baseStyle = {
-    ...postionStyles,
-    height,
-    width,
-    backgroundColor: '#fff',
-    padding: '8px',
-    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
-    transition: 'all 0.3s ease',
-  };
-  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px' };
-  const handerBackStyles = {
-    position: 'absolute',
-    left: '100%',
-    top: '50%',
-    height: '80px',
-    width: '38px',
-    borderStyle: 'solid',
-    borderWidth: '20px',
-    borderColor: 'transparent transparent transparent #d9d9d9',
-  };
-  const handlerStyles: React.CSSProperties = {
-    position: 'absolute',
-    left: 'calc(100% - 1px)',
-    top: '50%',
-    height: '80px',
-    width: '38px',
-    cursor: 'pointer',
-    borderStyle: 'solid',
-    borderWidth: '20px',
-    borderColor: 'transparent transparent transparent #fafafa',
-  };
-  const handlerTextStyles = {
-    position: 'absolute',
-    left: '-15px',
-    top: '8px',
-  };
-  return (
-    <div style={styles} className="gi-side-tabs">
-      <div style={handerBackStyles as any}></div>
-      <div onClick={handleToggle} style={handlerStyles as any}>
-        <span style={handlerTextStyles as any}>||</span>
-      </div>
-      <div className="gi-side-tabs-content">
-        <Tabs defaultActiveKey="1">
-          {sortedComponents.map((item, index) => {
-            if (!item) {
-              return null;
-            }
-            const { props: itemProps, id: itemId } = item;
-            const { component: Component } = assets[itemId];
-            return (
-              <TabPane key={index} tab={itemProps.GIAC_CONTENT.title}>
-                <Component {...itemProps} />
-              </TabPane>
-            );
-          })}
-        </Tabs>
-      </div>
+  const Content = (
+    <div className="gi-side-tabs">
+      <Tabs defaultActiveKey="1" tabPosition={tabPosition}>
+        {panes}
+      </Tabs>
     </div>
   );
+
+  console.log('sortedComponents', sortedComponents, props);
+
+  if (!outSideFromCanvas) {
+    return (
+      <CollapseContainer
+        width={width}
+        height={height}
+        defaultVisible={defaultVisible}
+        placement={placement}
+        offset={offset}
+      >
+        {Content}
+      </CollapseContainer>
+    );
+  }
+  return ReactDOM.createPortal(Content, document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement);
 };
 
 export default SideTabs;

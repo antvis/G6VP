@@ -1,12 +1,11 @@
-import { INode } from '@antv/g6';
-import * as React from 'react';
-import { Menu } from 'antd';
 import { useContext } from '@alipay/graphinsight';
-import type { Contextmenu } from '../ContextMenu';
+import type { ContextMenuValue } from '@antv/graphin';
+import { Menu } from 'antd';
+import * as React from 'react';
 import { filterGraphDataByNodes, getLeafNodes } from '../utils';
 
 export interface IProps {
-  contextmenu: Contextmenu;
+  contextmenu: ContextMenuValue;
   isReLayout: boolean;
   degree: number;
 }
@@ -22,6 +21,9 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { contextmenu, isReLayout, degree } = props;
   const { graph, updateData, data } = useContext();
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
+  if (!targetNode) {
+    return null;
+  }
   const model = targetNode.getModel();
   if (!originGraphData) {
     originGraphData = data;
@@ -30,6 +32,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const handleToggleCluster = () => {
     // n 度节点收起暂不支持
     if (degree === 1) {
+      //@ts-ignore
       const leafNodeIds = getLeafNodes(targetNode).map(node => node.getModel().id as string);
       if (model.folded) {
         graph.updateItem(targetNode, {
@@ -52,7 +55,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       if (isReLayout) {
         let hiddenNodeIds: string[] = [];
         Array.from(nodeIdsCache).forEach(id => {
-          const node = graph.findById(id)
+          const node = graph.findById(id);
           if (node && node.getModel().folded) {
             const id = node.getModel().id as string;
             hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
@@ -67,7 +70,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
 
   return (
     <Menu.Item key="toggleClusterWithMenu" onClick={handleToggleCluster}>
-      {model.folded ? '展开' : '收起'}
+      {model.folded ? '展开节点' : '收起节点'}
     </Menu.Item>
   );
 };

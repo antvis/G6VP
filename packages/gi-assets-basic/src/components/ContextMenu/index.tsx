@@ -17,5 +17,3 @@ export default {
   component: Component,
   registerMeta,
 };
-
-export type { Contextmenu } from './useContextMenu';

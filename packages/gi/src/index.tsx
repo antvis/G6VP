@@ -5,11 +5,10 @@ import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './utils';
 /** export typing */
+export { default as useGraphInsightContainerLayout } from './process/layout';
 export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig } from './typing';
-export { useContext, utils, extra };
-
-const version = '1.2.1';
-console.log(`%c GI_VERSION:${version}`, 'color:red');
+export { useContext, utils };
+export { extra };
 const extra = {
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
@@ -18,5 +17,7 @@ const extra = {
   deepClone,
   GIAComponent,
 };
+const version = '2.0.0';
+console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;

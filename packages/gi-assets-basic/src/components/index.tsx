@@ -20,13 +20,13 @@ import PropertiesPanel from './PropertiesPanel';
 import Redo from './Redo';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
+import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
-
 export {
   FitCenter,
   FitView,
@@ -56,4 +56,5 @@ export {
   Copyright,
   ToggleClusterWithMenu,
   MapMode,
+  Timeline,
 };

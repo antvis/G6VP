@@ -2,7 +2,7 @@ import { BgColorsOutlined } from '@ant-design/icons';
 import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
-import { Button, Select as AntdSelect } from 'antd';
+import { Button, Radio, Select as AntdSelect } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
@@ -75,7 +75,8 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     return Object.values(elements).map((c: any) => c.info);
   }, [elements]);
 
-  const handleChangeElement = value => {
+  const handleChangeElement = e => {
+    const { value } = e.target;
     setState({
       elementId: value,
     });
@@ -91,16 +92,44 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
         <PopoverContainer
           title="选择元素资产"
           content={
-            <AntdSelect value={elementId} onChange={handleChangeElement}>
+            // <AntdSelect value={elementId} onChange={handleChangeElement}>
+            //   {OPTIONS.map(c => {
+            //     const { id, name } = c;
+            //     return (
+            //       <Option value={id} key={id}>
+            //         {name}
+            //       </Option>
+            //     );
+            //   })}
+            // </AntdSelect>
+
+            <Radio.Group value={elementId} onChange={handleChangeElement}>
               {OPTIONS.map(c => {
-                const { id, name } = c;
+                const { id, name, cover } = c;
+                console.log(c);
                 return (
-                  <Option value={id} key={id}>
+                  <Radio.Button
+                    value={id}
+                    key={id}
+                    style={{
+                      textAlign: 'center',
+                      justifyContent: 'center',
+                      padding: '8px 16px',
+                      margin: '12px',
+                      width: '90px',
+                      height: '90px',
+                    }}
+                  >
+                    <img
+                      src={cover}
+                      alt=""
+                      style={{ display: 'block', margin: 'auto', width: '40px', height: '40px' }}
+                    />{' '}
                     {name}
-                  </Option>
+                  </Radio.Button>
                 );
               })}
-            </AntdSelect>
+            </Radio.Group>
           }
         >
           <Button type="text" icon={<BgColorsOutlined />} size="small"></Button>

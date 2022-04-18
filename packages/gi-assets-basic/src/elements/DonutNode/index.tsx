@@ -9,7 +9,7 @@ const info = {
   type: 'NODE',
   category: 'node',
   desc: '甜甜圈组件，用于数据有分布的情况',
-  cover: 'http://xxxx.jpg',
+  cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*dqQ0RrldWTAAAAAAAAAAAAAAARQnAQ',
 };
 
 export default {
