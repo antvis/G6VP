@@ -9,7 +9,7 @@ const info = {
   desc: '地图模式',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
-  type: 'AUTO',
+  type: 'GIAC',
 };
 
 export default {
