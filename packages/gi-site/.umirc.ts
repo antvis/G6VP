@@ -1,11 +1,13 @@
 /** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
-console.log('isDev', isDev);
+
 const localDeps = isDev
   ? {}
   : {
       '@alipay/graphinsight': 'GISDK',
     };
+
+const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.2.1/dist/index.min.js'];
 
 export default {
   // 具体配置项
@@ -74,12 +76,9 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
 
     /** GI */
-
-    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.1.7/dist/index.min.js',
+    ...localScripts,
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
-
-    // 'https://gw.alipayobjects.com/os/lib/require.js/1.0.0/require.min.js',
   ],
   styles: [
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
