@@ -17,8 +17,8 @@
   "dependencies": {
     "@ali/react-datav-gui": "^4.3.1",
     "@ali/react-datav-gui-utils": "^0.2.4",
-    "@alipay/graphinsight": "*",
-    "@alipay/gi-assets-basic": "*"
+    "@alipay/graphinsight": "2.x",
+    "@alipay/gi-assets-basic": "2.x"
   },
   "peerDependencies": {
     "react": "17.x",

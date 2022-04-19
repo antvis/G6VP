@@ -14,7 +14,7 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "*",
+    "@alipay/graphinsight": "2.x",
     "@ali/react-datav-gui-utils": "latest",
     "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",
