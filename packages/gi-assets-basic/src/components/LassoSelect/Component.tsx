@@ -1,10 +1,10 @@
+import { useContext } from '@alipay/graphinsight';
 import { Behaviors } from '@antv/graphin';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { IGIAC } from '../const';
 import GIAComponent from '../GIAC';
 const { BrushSelect, DragCanvas } = Behaviors;
-import { useContext } from '@alipay/graphinsight';
 
 export interface LassoType {
   visible: boolean;
@@ -18,7 +18,7 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
   const [isLasso, setIsLasso] = React.useState(false);
   const [seletedNodes, setSelectedNodes] = useState<any[]>([]);
   const [seletedEdges, setSelectedEdges] = useState<any[]>([]);
-  const { graph } = useContext();
+  const { graph, GISDK_ID } = useContext();
   const onSelect: any = (nodes, edges) => {
     setSelectedNodes([...seletedNodes, ...nodes]);
     setSelectedEdges([...seletedEdges, ...edges]);
@@ -106,7 +106,7 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
       {ReactDOM.createPortal(
         <Content isLasso={isLasso}></Content>,
         //@ts-ignore
-        document.getElementById('graphin-container'),
+        document.getElementById(`${GISDK_ID}-graphin-container`),
       )}
     </div>
   );

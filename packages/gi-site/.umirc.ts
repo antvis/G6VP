@@ -72,7 +72,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.3/dist/g6.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.2/dist/graphin.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js',
 
     /** GI */
     ...localScripts,
@@ -81,7 +81,7 @@ export default {
   ],
   styles: [
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.4/dist/index.css',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
     'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
   analyze: {
