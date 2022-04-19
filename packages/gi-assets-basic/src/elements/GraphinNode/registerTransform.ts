@@ -22,7 +22,7 @@ const getMapping = () => {
 };
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, metaConfig) => {
+const transform = (s, metaConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
     const { color: Color, label: Label, size: Size, icon: Icon, halo: Halo, badges: Badges } = Object.assign(
@@ -104,6 +104,10 @@ const transform = (s, metaConfig) => {
           icon.fill = '#fff';
         }
       }
+      let preStyle = (node && node.style) || {};
+      if (reset) {
+        preStyle = {};
+      }
       return {
         id: node.id,
         ...node,
@@ -154,7 +158,7 @@ const transform = (s, metaConfig) => {
               },
             },
           },
-          (node && node.style) || {},
+          preStyle,
         ),
       };
     });
