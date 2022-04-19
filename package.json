@@ -14,6 +14,8 @@
     "react-dom": "^17.x"
   },
   "devDependencies": {
+    "@types/react": "^17.0.44",
+    "@types/react-dom": "^17.0.15",
     "@umijs/plugin-antd": "^0.11.0",
     "@umijs/plugin-layout": "^0.17.2",
     "@umijs/plugin-locale": "^0.14.2",
