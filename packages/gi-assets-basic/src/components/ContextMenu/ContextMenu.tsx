@@ -25,9 +25,14 @@ const ContextMenuContainer = props => {
               if (!item) {
                 return null;
               }
-              const { props: itemProps, id } = item;
-              const { component: Component } = assets[id];
-              return <Component {...itemProps} contextmenu={menuProps} key={id} />;
+              const { props: itemProps, id: itemId } = item;
+              const asset = assets[itemId];
+              if (!asset) {
+                console.warn(`asset: ${itemId} not found`);
+                return null;
+              }
+              const { component: Component } = asset;
+              return <Component {...itemProps} contextmenu={menuProps} key={itemId} />;
             })}
           </Menu>
         );
