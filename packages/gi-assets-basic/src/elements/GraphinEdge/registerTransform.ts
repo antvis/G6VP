@@ -21,7 +21,7 @@ const getMapping = () => {
 };
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, config) => {
+const transform = (s, config, reset?: boolean) => {
   const mathEdgeConfig = Object.assign({}, defaultProps, config.edge.props);
   try {
     /** 解构配置项 */
@@ -58,6 +58,10 @@ const transform = (s, config) => {
       /** 根据数组匹配，未来也是需要用户在属性面板上调整位置 */
       const colorKeys = MappingByColor.keys();
       const matchColorIndex = [...colorKeys].findIndex(c => c === enumValueByColor);
+      let preStyle = (edge && edge.style) || {};
+      if (reset) {
+        preStyle = {};
+      }
       return {
         ...edge,
         type: 'graphin-line',
@@ -92,10 +96,10 @@ const transform = (s, config) => {
                 keyshape: {
                   strokeOpacity: 0.4,
                 },
-              }
+              },
             },
           },
-          (edge && edge.style) || {},
+          preStyle,
         ),
       };
     });
