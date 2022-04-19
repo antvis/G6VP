@@ -48,7 +48,7 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
       components
         //@ts-ignore
         .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX)
-        .filter(item => item.props?.GIAC_CONTENT)
+        .filter(item => item && item.props && item.props.GIAC_CONTENT)
     );
   }, [components]);
 

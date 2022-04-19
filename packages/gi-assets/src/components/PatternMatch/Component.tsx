@@ -117,6 +117,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
         console.log(error);
       }
     };
+    //@ts-ignore
     graph.on('nodeselectchange', onNodeSelectChange);
     return () => {
       graph.off('nodeselectchange', onNodeSelectChange);

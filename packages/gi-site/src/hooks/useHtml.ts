@@ -77,9 +77,8 @@ const getHtmlAppCode = opts => {
 
     <!--- CSS -->
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.0/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.5.0/dist/index.css" />
-   
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.css" /> 
     ${GIAssetsLinks}
  
   </head>
@@ -189,9 +188,8 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
     <!--- GRAPHIN DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.3/dist/g6.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.0/dist/graphin.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
     <!--- GI DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
     ${GIAssetsScripts}

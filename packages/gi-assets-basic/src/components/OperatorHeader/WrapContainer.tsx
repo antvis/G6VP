@@ -227,7 +227,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,
           //@ts-ignore
-          document.getElementById('graphin-container'),
+          document.getElementById(`${GISDK_ID}-graphin-container`),
         )}
       </>
     );

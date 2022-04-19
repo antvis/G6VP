@@ -25,7 +25,6 @@ module.exports = (env, argv) => {
 
             plugins: [
               ['@babel/plugin-proposal-class-properties', { loose: true }],
-              ['@babel/plugin-proposal-class-properties', { loose: true }],
               ['@babel/plugin-proposal-private-methods', { loose: true }],
               ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
               ['react-hot-loader/babel'],
@@ -98,7 +97,6 @@ module.exports = (env, argv) => {
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
-      '@antv/graphin-components': 'GraphinComponents',
       '@antv/g6': 'G6',
       antd: 'antd',
     },

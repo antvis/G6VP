@@ -1,5 +1,6 @@
-import { MiniMap } from '@antv/graphin-components';
+import { Components } from '@antv/graphin';
 import registerMeta from './registerMeta';
+const { MiniMap } = Components;
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
