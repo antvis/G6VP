@@ -20,7 +20,7 @@
     "@antv/l7plot": "^0.0.11",
     "react-spring": "^9.4.4",
     "three": "^0.139.2",
-    "@alipay/graphinsight": "*"
+    "@alipay/graphinsight": "2.x"
   },
   "peerDependencies": {
     "react": "17.x",
@@ -28,7 +28,7 @@
     "antd": "^4.16.13"
   },
   "devDependencies": {
-    "@alipay/gi-assets-testing": "latest",
+    "@alipay/gi-assets-testing": "2.x",
     "dumi": "^1.1.38",
     "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
