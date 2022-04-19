@@ -12,7 +12,7 @@ export interface MapModeProps {
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
   const context = useContext();
-  const { data, graph, config } = context;
+  const { data, graph, config, GISDK_ID } = context;
   const { color: NODE_COLOR } = (config.nodes && config.nodes[0].props) || {};
   // const { color: EDGE_COLOR, size: EDGE_SIZE } = (config.edges && config.edges[0].props) || { size: 1 };
   const { handleClick, GIAC } = props;
@@ -123,7 +123,7 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
     </div>
   );
 
-  const dom = document.getElementById('graphin-container') as HTMLDivElement;
+  const dom = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   return <div>{ReactDOM.createPortal(Map, dom)}</div>;
 };
 

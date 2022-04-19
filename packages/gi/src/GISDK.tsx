@@ -65,14 +65,7 @@ const GISDK = (props: Props) => {
     });
   }, [props.config]);
 
-  const {
-    layout: layoutCfg,
-    components: componentsCfg = [],
-    node: nodeCfg,
-    edge: edgeCfg,
-    nodes: nodesCfg,
-    edges: edgesCfg,
-  } = state.config;
+  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
   /** 节点和边的配置发生改变 */
@@ -123,37 +116,6 @@ const GISDK = (props: Props) => {
       draft.layoutCache = false;
     });
   }, [layoutCfg]);
-
-  React.useEffect(() => {
-    console.warn(
-      'config.node | config.edge 将很快要废弃，请使用config.nodes和config.edges替代，可以支持多资产元素渲染',
-    );
-    if (!nodeCfg || !edgeCfg) {
-      console.warn('config.node 和 config.edge 不能未定义');
-      return;
-    }
-    const { id: NodeElementId = 'GraphinNode' } = nodeCfg;
-    const { id: EdgeElementId = 'GraphinEdge' } = edgeCfg;
-    const NodeElement = ElementAssets[NodeElementId];
-    const EdgeElement = ElementAssets[EdgeElementId];
-    const transform = data => {
-      const nodes = NodeElement.registerTransform(data, nodeCfg, true);
-      const edges = EdgeElement.registerTransform(data, edgeCfg, true);
-      return {
-        nodes,
-        edges,
-      };
-    };
-    updateState(draft => {
-      if (draft.data.nodes.length !== 0) {
-        const newData = transform(draft.data);
-        draft.data = newData;
-      }
-      draft.transform = transform;
-      draft.config.node = nodeCfg;
-      draft.config.edge = edgeCfg;
-    });
-  }, [nodeCfg, edgeCfg]);
 
   /** 增加多元素 */
   React.useEffect(() => {
@@ -278,7 +240,14 @@ const GISDK = (props: Props) => {
     <GraphInsightContext.Provider value={ContextValue}>
       <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
         <div id={`${GISDK_ID}-container-extra`}></div>
-        <Graphin data={data} layout={layout} enabledStack={true} theme={theme} layoutCache={state.layoutCache}>
+        <Graphin
+          containerId={`${GISDK_ID}-graphin-container`}
+          data={data}
+          layout={layout}
+          enabledStack={true}
+          theme={theme}
+          layoutCache={state.layoutCache}
+        >
           <>
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}
             <SetupUseGraphinHook updateContext={updateState} />

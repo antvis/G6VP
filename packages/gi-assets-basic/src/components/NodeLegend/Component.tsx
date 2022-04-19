@@ -1,6 +1,8 @@
+import { utils } from '@alipay/graphinsight';
 import { Components } from '@antv/graphin';
 import React from 'react';
-import { getPositionStyles } from '../WrapContainer';
+
+const { getPositionStyles } = utils;
 
 const { Legend } = Components;
 
