@@ -9,13 +9,13 @@ const getComponents = (components, assets, GISDK) => {
     .sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX)
     .map(item => {
       if (!item) {
+        console.warn(`component config not found`);
         return null;
       }
-
       const { props: itemProps, id: itemId } = item;
-
-      if (!assets[itemId]) {
-        console.warn(`assets ${itemId} is undefined`);
+      const asset = assets[itemId];
+      if (!asset) {
+        console.warn(`asset: ${itemId} not found`);
         return null;
       }
       const { component: Component } = assets[itemId];
