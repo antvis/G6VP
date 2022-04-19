@@ -1,7 +1,10 @@
-import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
-import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-const LOCAL_ASSETS = [GI_ASSETS_BASIC, GI_ASSETS_SCENE, GI_ASSETS_ADVANCE];
+// import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+// import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
+const LOCAL_ASSETS = [
+  GI_ASSETS_BASIC,
+  // GI_ASSETS_SCENE, GI_ASSETS_ADVANCE
+];
 
 /** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
@@ -17,14 +20,14 @@ const NPM_INFO = [
     name: '@alipay/gi-assets-basic',
     version: '2.0.0',
   },
-  {
-    name: '@alipay/gi-assets-advance',
-    version: '2.0.0',
-  },
-  {
-    name: '@alipay/gi-assets-scene',
-    version: '2.0.0',
-  },
+  // {
+  //   name: '@alipay/gi-assets-advance',
+  //   version: '2.0.0',
+  // },
+  // {
+  //   name: '@alipay/gi-assets-scene',
+  //   version: '2.0.0',
+  // },
 ];
 const PACKAGES = NPM_INFO.map(c => {
   const name = c.name.replace('@alipay/', '');
