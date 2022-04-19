@@ -50,7 +50,6 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service(model);
-      console.log('data', detail, model);
 
       setState(preState => {
         return {

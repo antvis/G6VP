@@ -30,7 +30,6 @@
   "peerDependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
-    "@antv/graphin-components": "2.x",
     "react": "^17.x",
     "react-dom": "^17.x",
     "antd": "^4.16.13"

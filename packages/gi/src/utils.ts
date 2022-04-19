@@ -3,8 +3,11 @@ import { GraphinData, IUserEdge } from '@antv/graphin';
 import processEdges from './process/processEdges';
 import { GIAssets, GIConfig } from './typing';
 /** TODO */
+export { default as getMockServiceConfig } from './process/getMockServiceConfig';
+export { default as getServicesByConfig } from './process/getServicesByConfig';
 export { default as processEdges } from './process/processEdges';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './process/schema';
+
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
