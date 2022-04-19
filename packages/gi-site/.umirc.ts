@@ -24,7 +24,7 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
-  dynamicImportSyntax: {},
+  // dynamicImportSyntax: {},
   routes: [
     { exact: true, path: '/', component: 'Home' },
     { exact: true, path: '/workspace', component: 'Workspace' },
@@ -80,7 +80,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
   ],
   styles: [
-    'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
+    // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
     'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
