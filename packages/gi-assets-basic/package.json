@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "1.2.3",
+  "version": "1.4.0",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,8 +16,8 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "*",
-    "@alipay/gi-assets-testing": "*",
+    "@alipay/graphinsight": "1.x",
+    "@alipay/gi-assets-testing": "1.x",
     "@ali/react-datav-gui-utils": "latest",
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
