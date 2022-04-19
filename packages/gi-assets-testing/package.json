@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-testing",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "GraphInsight 资产测试包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@ali/react-datav-gui": "^4.3.1",
     "@ali/react-datav-gui-utils": "^0.2.4",
-    "@alipay/graphinsight": "*"
+    "@alipay/graphinsight": "1.x"
   },
   "peerDependencies": {
     "react": "17.x",
