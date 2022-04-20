@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@ali/react-datav-gui-utils": "latest",
-    "@alipay/gi-assets-testing": "*",
-    "@alipay/graphinsight": "*",
-    "@alipay/gi-common-components": "*",
+    "@alipay/gi-assets-testing": "2.x",
+    "@alipay/graphinsight": "2.x",
+    "@alipay/gi-common-components": "1.x",
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
@@ -30,8 +30,8 @@
   "peerDependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
-    "react": "^17.x",
-    "react-dom": "^17.x",
+    "react": "17.x",
+    "react-dom": "17.x",
     "antd": "^4.16.13"
   },
   "devDependencies": {

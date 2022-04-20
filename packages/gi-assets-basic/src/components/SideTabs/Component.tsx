@@ -55,10 +55,17 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
   const panes = React.useMemo(() => {
     return sortedComponents.map((item, index) => {
       if (!item) {
+        console.warn(`config not found, index: ${index}`);
         return null;
       }
       const { props: itemProps, id: itemId } = item;
-      const { component: Component } = assets[itemId];
+      const asset = assets[itemId];
+      if (!asset) {
+        console.warn(`asset: ${itemId} not found`);
+        return null;
+      }
+
+      const { component: Component } = asset;
       return (
         <TabPane key={index} tab={<WrapTab {...itemProps} />}>
           <Component {...itemProps} />

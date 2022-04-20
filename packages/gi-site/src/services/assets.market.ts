@@ -100,25 +100,37 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     const dlm = await dynamicLoadModules();
     const FinalAssets = getCombinedAssets();
     components = activeAssetsKeys.components.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.components[curr],
-      };
+      const asset = FinalAssets.components[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
 
     // 走本地的gi-assets资产加载
     elements = activeAssetsKeys.elements.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.elements[curr],
-      };
+      const asset = FinalAssets.elements[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
 
     layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.layouts[curr],
-      };
+      const asset = FinalAssets.layouts[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
   }
 

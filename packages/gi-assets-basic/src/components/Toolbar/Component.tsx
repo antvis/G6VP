@@ -24,11 +24,16 @@ const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
           if (!item) {
             return null;
           }
-          const { props, id } = item;
-          const { component: Component } = assets[id];
+          const { props: itemProps, id: itemId } = item;
+          const asset = assets[itemId];
+          if (!asset) {
+            console.warn(`asset: ${itemId} not found`);
+            return null;
+          }
+          const { component: Component } = asset;
           return (
-            <span key={id}>
-              <Component {...props} />
+            <span key={itemId}>
+              <Component {...itemProps} />
             </span>
           );
         })}
