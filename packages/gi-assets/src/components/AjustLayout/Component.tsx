@@ -168,6 +168,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
         }
       });
     };
+    //@ts-ignore
     graph.on('nodeselectchange', onNodeSelectChange);
     return () => {
       graph.off('nodeselectchange', onNodeSelectChange);
