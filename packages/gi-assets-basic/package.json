@@ -18,14 +18,15 @@
   "dependencies": {
     "@ali/react-datav-gui-utils": "latest",
     "@alipay/gi-assets-testing": "2.x",
-    "@alipay/graphinsight": "2.x",
     "@alipay/gi-common-components": "1.x",
+    "@alipay/graphinsight": "2.x",
+    "@antv/g2plot": "^2.4.15",
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "install": "^0.13.0",
-    "npm": "^8.5.5",
-    "motif-gi": "latest"
+    "motif-gi": "latest",
+    "npm": "^8.5.5"
   },
   "peerDependencies": {
     "@ant-design/icons": "^4.6.2",
