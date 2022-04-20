@@ -8,6 +8,11 @@
     "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "analyse": "ANALYZE=1 umi dev"
   },
+  "peerDependencies": {
+    "antd": "^4.18.2",
+    "react": "17.x",
+    "react-dom": "17.x"
+  },
   "dependencies": {
     "@alipay/graphinsight": "*",
     "@alipay/gi-assets-basic": "*",
@@ -28,12 +33,9 @@
     "@ant-design/pro-table": "^2.66.4",
     "@antv/dw-analyzer": "^1.1.5",
     "@types/classnames": "^2.2.9",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
     "@types/systemjs": "latest",
     "@umijs/preset-react": "^1.8.12",
     "ahooks": "^2.10.9",
-    "antd": "^4.18.2",
     "classnames": "^2.2.6",
     "dayjs": "^1.10.5",
     "immer": "^9.0.6",
@@ -43,8 +45,6 @@
     "lz-string": "^1.4.4",
     "monaco-editor": "^0.25.2",
     "monaco-editor-webpack-plugin": "^4.0.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
     "react-monaco-editor": "^0.43.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.1",
