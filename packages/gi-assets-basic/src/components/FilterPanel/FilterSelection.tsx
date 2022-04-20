@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Pie, Plot, PieOptions, WordCloud, WordCloudOptions } from '@antv/g2plot';
 import { Button, Select } from 'antd';
 import { DeleteOutlined, NumberOutlined, FieldStringOutlined } from '@ant-design/icons';
-import { GraphinData } from '@antv/graphin';
 import { Filter as BrushFilter } from 'motif-gi';
 import { useContext } from '@alipay/graphinsight';
-import { IFilterCriteria } from './type';
+import { IFilterCriteria, IChartData } from './type';
+import { getValueMap, getHistogram } from './utils';
 import './index.less';
 
 const iconMap = {
@@ -23,17 +24,35 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } = props;
+  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } =
+    props;
+  const [chartData, setChartData] = useState<Map<string, number>>();
   const { source } = useContext();
+  const piePlotRef = useRef<Plot<PieOptions> | undefined>();
+  const wordCloudRef = useRef<Plot<WordCloudOptions> | undefined>();
 
-  const getSelectOptions = (
-    graphData: GraphinData,
-    type: 'boolean' | 'string',
-    prop: string,
-    elementType: 'node' | 'edge',
-  ) => {
-    if (type === 'boolean') {
-      return [
+  const onSelectChange = value => {
+    const id = filterCriter.id as string;
+    const elementType = value.slice(0, 4);
+    const prop = value.slice(5);
+    const elementProps = elementType === 'node' ? nodeProperties : edgeProperties;
+    let analyzerType;
+    if (elementProps[prop] === 'number') {
+      analyzerType = 'BRUSH';
+      const histogram = getHistogram(source, prop, elementType, histogramColor);
+      updateFilterCriteria(id, {
+        //...filterCriter,
+        id,
+        analyzerType,
+        isFilterReady: false,
+        elementType,
+        prop,
+        histogram,
+        range: histogram.domain,
+      });
+    } else if (elementProps[prop] === 'boolean') {
+      analyzerType = 'SELECT';
+      const selectOptions = [
         {
           value: true,
           label: '是',
@@ -43,89 +62,48 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           label: '否',
         },
       ];
-    }
-    const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
-    const optionSet = new Set<string>();
-    elements?.forEach(e => {
-      e.data && e.data[prop] && optionSet.add(e.data[prop]);
-    });
-    const options = [...optionSet].map(v => ({
-      label: v,
-      value: v,
-    }));
-    return options;
-  };
-
-  // 获取直方图相关数据
-  const getHistogram = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge', color: string) => {
-    const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
-    const valueMap = new Map<number, number>();
-    let maxValue = -Infinity;
-    let minValue = Infinity;
-    elements.forEach(e => {
-      const value = e.data && e.data[prop];
-      if (value && typeof value === 'number') {
-        valueMap.set(value, valueMap.has(value) ? valueMap.get(value)! + 1 : 1);
-        maxValue = Math.max(value, maxValue);
-        minValue = Math.min(value, minValue);
-      }
-    });
-
-    const interval = (maxValue - minValue) / 50;
-    const data = [...valueMap.entries()].map(e => {
-      const [key, value] = e;
-      const x0 = key - interval / 2;
-      const x1 = key + interval / 2;
-      return {
-        count: value,
-        x0: x0 >= minValue ? x0 : minValue,
-        x1: x1 <= maxValue ? x1 : maxValue,
-      };
-    });
-    return {
-      data,
-      domain: [minValue, maxValue],
-      step: interval,
-      dataType: 'NUMBER',
-      format: '',
-      color,
-    };
-  };
-
-  const onSelectChange = value => {
-    const id = filterCriter.id as string;
-    const elementType = value.slice(0, 4);
-    const prop = value.slice(5);
-    const elementProps = elementType === 'node' ? nodeProperties : edgeProperties;
-
-    let analyzerType;
-    if (elementProps[prop] === 'number') {
-      analyzerType = 'BRUSH';
-    } else if (elementProps[prop] === 'boolean' || elementProps[prop] === 'string') {
-      analyzerType = 'SELECT';
-    } else {
-      analyzerType = 'NONE';
-    }
-
-    if (analyzerType == 'SELECT') {
-      const selectOptions = getSelectOptions(source, elementProps[prop], prop, elementType);
       updateFilterCriteria(id, {
-        ...filterCriter,
+        //...filterCriter,
+        id,
+        isFilterReady: false,
         elementType,
         prop,
         analyzerType,
         selectOptions,
       });
-    } else if (analyzerType === 'BRUSH') {
-      const histogram = getHistogram(source, prop, elementType, histogramColor);
+    } else if (elementProps[prop] === 'string') {
+      const valueMap = getValueMap(source, prop, elementType);
+      let selectOptions;
+      if (valueMap.size <= 6) {
+        analyzerType = 'PIE';
+        setChartData(valueMap);
+      } else if (valueMap.size <= 12) {
+        analyzerType = 'SELECT';
+        selectOptions = [...valueMap.keys()].map(key => ({
+          value: key,
+          label: key,
+        }));
+      } else {
+        analyzerType = 'WORDCLOUD';
+        setChartData(valueMap);
+      }
       updateFilterCriteria(id, {
-        ...filterCriter,
-        analyzerType: 'BRUSH',
+        //...filterCriter,
+        id,
         isFilterReady: false,
         elementType,
         prop,
-        histogram,
-        range: histogram.domain,
+        analyzerType,
+        selectOptions,
+      });
+    } else {
+      analyzerType = 'NONE';
+      updateFilterCriteria(id, {
+        id,
+        isFilterReady: false,
+        elementType,
+        prop,
+        analyzerType,
       });
     }
   };
@@ -148,6 +126,110 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       range: value,
     });
   };
+
+  const renderPie = (chartData?: Map<string, number>, container?: string) => {
+    if (!chartData || !container) {
+      return;
+    }
+    const sum = [...chartData.values()].reduce((acc, cur) => acc + cur, 0);
+    const data = [...chartData.entries()].map(e => {
+      const [key, value] = e;
+      return {
+        x: key,
+        value,
+      };
+    });
+
+    const piePlot = new Pie(container, {
+      //width: 300,
+      height: 200,
+      data,
+      angleField: 'value',
+      colorField: 'x',
+      radius: 0.9,
+      label: {
+        type: 'inner',
+        offset: '-30%',
+        content: ({ value }) => `${((value / sum) * 100).toFixed(0)}%`,
+        style: {
+          fontSize: 14,
+          textAlign: 'center',
+        },
+      },
+      interactions: [{ type: 'element-selected' }, { type: 'element-active' }],
+    });
+
+    piePlot.on('element:click', ({ view }) => {
+      const elements = view.geometries[0].elements;
+      const selectValue = elements.filter(e => e.states.indexOf('selected') != -1).map(e => e.data.x);
+      const isFilterReady = selectValue.length != 0;
+      updateFilterCriteria(filterCriter.id!, {
+        ...filterCriter,
+        isFilterReady,
+        selectValue,
+      });
+    });
+
+    piePlot.render();
+    piePlotRef.current = piePlot;
+  };
+
+  const renderWordCloud = (chartData?: Map<string, number>, container?: string) => {
+    if (!chartData || !container) {
+      return;
+    }
+    const data = [...chartData.entries()].map(e => {
+      const [key, value] = e;
+      return {
+        x: key,
+        value,
+        category: '',
+      };
+    });
+
+    const wordCloud = new WordCloud(container, {
+      data,
+      //height: 200,
+      wordField: 'x',
+      weightField: 'value',
+      color: '#122c6a',
+      wordStyle: {
+        fontFamily: 'Verdana',
+        fontSize: [24, 80],
+      },
+      // 设置交互类型
+      interactions: [{ type: 'element-active' }],
+      state: {
+        active: {
+          // 这里可以设置 active 时的样式
+          style: {
+            lineWidth: 3,
+          },
+        },
+      },
+    });
+
+    wordCloud.render();
+    wordCloudRef.current = wordCloud;
+  };
+
+  useEffect(() => {
+    if (filterCriter.analyzerType === 'PIE') {
+      piePlotRef.current?.destroy();
+      renderPie(chartData, 'chart-container');
+    } else {
+      piePlotRef.current?.destroy();
+      piePlotRef.current = undefined;
+    }
+
+    if (filterCriter.analyzerType === 'WORDCLOUD') {
+      wordCloudRef.current?.destroy();
+      renderWordCloud(chartData, 'chart-container');
+    } else {
+      wordCloudRef.current?.destroy();
+      wordCloudRef.current = undefined;
+    }
+  }, [chartData, filterCriter.analyzerType]);
 
   return (
     <div key={filterCriter.id} className="gi-filter-panel-group">
@@ -184,10 +266,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           </Select.OptGroup>
         </Select>
         <Button onClick={() => removeFilterCriteria(filterCriter.id!)} type="text">
-          <DeleteOutlined className="gi-filter-panel-delete"  />
+          <DeleteOutlined className="gi-filter-panel-delete" />
         </Button>
       </div>
-      <div className="gi-filter-panel-value">
+      <div className="gi-filter-panel-value" id="chart-container">
         {filterCriter.analyzerType == 'SELECT' && (
           <Select
             style={{ width: '100%' }}
@@ -207,6 +289,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
           />
         )}
+
         {filterCriter.analyzerType === 'NONE' && <span>请选择合法字段</span>}
       </div>
     </div>
