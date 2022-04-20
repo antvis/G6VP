@@ -1,8 +1,7 @@
-import { CloseOutlined, SubnodeOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { Button, Col, Divider, Form, Input, Row, Select, Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 const { Option } = Select;
@@ -336,8 +335,4 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, o
   );
 };
 
-export default WrapContainer(GremlinTemplateQuery, {
-  icon: <SubnodeOutlined />,
-  title: ' Gremlin 路径查询',
-  showText: true,
-});
+export default GremlinTemplateQuery;
