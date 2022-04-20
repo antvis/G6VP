@@ -80,6 +80,8 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     });
   }, [filterOptions]);
 
+  //console.log(filterOptions, '@')
+
   return (
     <div className="gi-filter-panel">
       <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>

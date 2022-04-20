@@ -1,15 +1,15 @@
 {
   "nodes": [
-    { "id": "node-0", "label": "node-0" },
-    { "id": "node-1", "label": "node-1" },
-    { "id": "node-2", "label": "node-2" },
-    { "id": "node-3", "label": "node-3" },
-    { "id": "node-4", "label": "node-4" },
-    { "id": "node-5", "label": "node-5" },
-    { "id": "node-6", "label": "node-6" },
-    { "id": "node-7", "label": "node-7" },
-    { "id": "node-8", "label": "node-8" },
-    { "id": "node-9", "label": "node-9" }
+    { "id": "node-0", "label": "node-0", "isOdd": false },
+    { "id": "node-1", "label": "node-1", "isOdd": true },
+    { "id": "node-2", "label": "node-2", "isOdd": false },
+    { "id": "node-3", "label": "node-3", "isOdd": true },
+    { "id": "node-4", "label": "node-4", "isOdd": false },
+    { "id": "node-5", "label": "node-5", "isOdd": true },
+    { "id": "node-6", "label": "node-6", "isOdd": false },
+    { "id": "node-7", "label": "node-7", "isOdd": true },
+    { "id": "node-8", "label": "node-8", "isOdd": false },
+    { "id": "node-9", "label": "node-9", "isOdd": true }
   ],
   "edges": [
     { "source": "node-0", "target": "node-0", "numeric": 2, "id": "74HeZ4maj" },
