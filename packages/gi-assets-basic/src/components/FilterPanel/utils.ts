@@ -26,7 +26,7 @@ export const filterGraphData = (
   if (elementType === 'node') {
     const inValidNodes = new Set<string>();
     newData.nodes = source.nodes.filter(node => {
-      if (analyzerType === 'SELECT' || analyzerType === 'PIE') {
+      if (analyzerType === 'SELECT' || analyzerType === 'PIE' || analyzerType === 'WORDCLOUD') {
         if (node.data && node.data[prop!] && selectValue?.indexOf(node.data[prop!]) !== -1) {
           return true;
         }
@@ -48,7 +48,7 @@ export const filterGraphData = (
   } else if (elementType === 'edge') {
     const validNodes = new Set<string>();
     newData.edges = source.edges.filter(edge => {
-      if (analyzerType === 'SELECT') {
+      if (analyzerType === 'SELECT' || analyzerType === 'PIE' || analyzerType === 'WORDCLOUD') {
         if (edge.data && edge.data[prop!] && selectValue?.indexOf(edge.data[prop!]) !== -1) {
           validNodes.add(edge.source);
           validNodes.add(edge.target);

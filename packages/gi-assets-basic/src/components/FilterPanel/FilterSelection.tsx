@@ -74,18 +74,18 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else if (elementProps[prop] === 'string') {
       const valueMap = getValueMap(source, prop, elementType);
       let selectOptions;
-      if (valueMap.size <= 6) {
+      if (valueMap.size <= 5) {
         analyzerType = 'PIE';
         setChartData(valueMap);
-      } else if (valueMap.size <= 12) {
+      } else if (valueMap.size <= 10) {
+        analyzerType = 'WORDCLOUD';
+        setChartData(valueMap);
+      } else {
         analyzerType = 'SELECT';
         selectOptions = [...valueMap.keys()].map(key => ({
           value: key,
           label: key,
         }));
-      } else {
-        analyzerType = 'WORDCLOUD';
-        setChartData(valueMap);
       }
       updateFilterCriteria(id, {
         //...filterCriter,
@@ -189,16 +189,16 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
 
     const wordCloud = new WordCloud(container, {
       data,
-      //height: 200,
+      height: 200,
       wordField: 'x',
       weightField: 'value',
       color: '#122c6a',
       wordStyle: {
         fontFamily: 'Verdana',
-        fontSize: [24, 80],
+        fontSize: [10, 16],
       },
       // 设置交互类型
-      interactions: [{ type: 'element-active' }],
+      interactions: [{ type: 'element-active' }, { type: 'element-selected' }],
       state: {
         active: {
           // 这里可以设置 active 时的样式
@@ -209,6 +209,17 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       },
     });
 
+    wordCloud.on('element:click', ({view}) => {
+      const elements = view.geometries[0].elements;
+      const selectValue = elements.filter(e => e.states.indexOf('selected') != -1).map(e => e.data.datum.x);
+      const isFilterReady = selectValue.length != 0;
+      updateFilterCriteria(filterCriter.id!, {
+        ...filterCriter,
+        isFilterReady,
+        selectValue,
+      });
+    })
+
     wordCloud.render();
     wordCloudRef.current = wordCloud;
   };
@@ -216,7 +227,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   useEffect(() => {
     if (filterCriter.analyzerType === 'PIE') {
       piePlotRef.current?.destroy();
-      renderPie(chartData, 'chart-container');
+      renderPie(chartData, `${filterCriter.id}-chart-container`);
     } else {
       piePlotRef.current?.destroy();
       piePlotRef.current = undefined;
@@ -224,7 +235,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
 
     if (filterCriter.analyzerType === 'WORDCLOUD') {
       wordCloudRef.current?.destroy();
-      renderWordCloud(chartData, 'chart-container');
+      renderWordCloud(chartData, `${filterCriter.id}-chart-container`);
     } else {
       wordCloudRef.current?.destroy();
       wordCloudRef.current = undefined;
@@ -269,7 +280,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           <DeleteOutlined className="gi-filter-panel-delete" />
         </Button>
       </div>
-      <div className="gi-filter-panel-value" id="chart-container">
+      <div className="gi-filter-panel-value" id={`${filterCriter.id}-chart-container`}>
         {filterCriter.analyzerType == 'SELECT' && (
           <Select
             style={{ width: '100%' }}
