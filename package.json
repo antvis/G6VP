@@ -9,11 +9,13 @@
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "latest",
     "@antv/s2-react": "^1.8.0",
-    "antd": "^4.2.4",
-    "react": "^17.x",
-    "react-dom": "^17.x"
+    "antd": "latest",
+    "react": "17.x",
+    "react-dom": "17.x"
   },
   "devDependencies": {
+    "@types/react": "17.x",
+    "@types/react-dom": "17.x",
     "@umijs/plugin-antd": "^0.11.0",
     "@umijs/plugin-layout": "^0.17.2",
     "@umijs/plugin-locale": "^0.14.2",
@@ -38,7 +40,7 @@
     "assets:docs": "cd packages/gi-assets-basic && npm run docs",
     "common:components:docs": "cd packages/gi-common-components && npm run docs",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
-    "bootstrap": "lerna link && lerna bootstrap --hoist --force-local ",
+    "bootstrap": "lerna link && lerna bootstrap  --hoist --force-local ",
     "build": "npm run bootstrap && npm run build:core && npm run build:assets && npm run build:site && npm run move:dist",
     "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",

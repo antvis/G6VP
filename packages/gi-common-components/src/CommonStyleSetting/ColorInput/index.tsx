@@ -26,9 +26,9 @@ const ColorInput: React.FC<IColorInputProps> = props => {
             placement="topLeft"
             trigger="click"
             overlayInnerStyle={{ padding: 0 }}
-            // @ts-ignore
             getPopupContainer={() => container}
             content={
+              //@ts-ignore
               <SketchPicker
                 color={color}
                 onChange={({ rgb }) => {

@@ -1,9 +1,7 @@
-import { SubnodeOutlined } from '@ant-design/icons';
 import { GraphinContext } from '@antv/graphin';
 import { debounce } from '@antv/util';
 import { Input, Select, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 
 const { Search } = Input;
@@ -259,8 +257,4 @@ const SearchBar: React.FC<ISearchBarProps> = ({ serviceId, schemaServiceId, styl
   );
 };
 
-export default WrapContainer(SearchBar, {
-  icon: <SubnodeOutlined />,
-  title: 'ISO-GQL 搜索框',
-  showText: true,
-});
+export default SearchBar;
