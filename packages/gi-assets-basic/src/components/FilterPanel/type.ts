@@ -1,4 +1,4 @@
-export interface IFilterCriteria{
+export interface IFilterCriteria {
   id?: string;
   // 筛选属性值
   prop?: string;
@@ -7,9 +7,9 @@ export interface IFilterCriteria{
   histogram?: IHistogramProp;
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
-  analyzerType?: 'BRUSH' | 'SELECT' | 'NONE';
+  analyzerType?: 'BRUSH' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE';
   isFilterReady?: boolean;
-};
+}
 
 interface IOption {
   value: string | boolean;
@@ -20,12 +20,17 @@ export interface IHistogramBin {
   x0: number | undefined;
   x1: number | undefined;
   count: number;
-};
+}
 
-export interface IHistogramProp  {
+export interface IHistogramProp {
   domain: number[];
   data: IHistogramBin[];
   step: number;
   dataType: string;
   format: string;
-};
+}
+
+export interface IChartData {
+  x: string;
+  value: number;
+}
