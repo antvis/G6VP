@@ -3,7 +3,7 @@ import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 // import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 const LOCAL_ASSETS = [
   GI_ASSETS_BASIC,
-  GI_ASSETS_SCENE,
+  //GI_ASSETS_SCENE,
   // GI_ASSETS_ADVANCE
 ];
 
