@@ -41,7 +41,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       analyzerType = 'BRUSH';
       const histogram = getHistogram(source, prop, elementType, histogramColor);
       updateFilterCriteria(id, {
-        //...filterCriter,
         id,
         analyzerType,
         isFilterReady: false,
@@ -51,25 +50,15 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         range: histogram.domain,
       });
     } else if (elementProps[prop] === 'boolean') {
-      analyzerType = 'SELECT';
-      const selectOptions = [
-        {
-          value: true,
-          label: '是',
-        },
-        {
-          value: false,
-          label: '否',
-        },
-      ];
+      analyzerType = 'PIE';
+      const valueMap = getValueMap(source, prop, elementType);
+      setChartData(valueMap);
       updateFilterCriteria(id, {
-        //...filterCriter,
         id,
         isFilterReady: false,
         elementType,
         prop,
         analyzerType,
-        selectOptions,
       });
     } else if (elementProps[prop] === 'string') {
       const valueMap = getValueMap(source, prop, elementType);
@@ -88,7 +77,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         }));
       }
       updateFilterCriteria(id, {
-        //...filterCriter,
         id,
         isFilterReady: false,
         elementType,
@@ -141,7 +129,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     });
 
     const piePlot = new Pie(container, {
-      //width: 300,
       height: 200,
       data,
       angleField: 'value',
@@ -159,18 +146,20 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       interactions: [{ type: 'element-selected' }, { type: 'element-active' }],
     });
 
+    piePlot.render();
+
     piePlot.on('element:click', ({ view }) => {
+      const id = filterCriter.id as string;
       const elements = view.geometries[0].elements;
       const selectValue = elements.filter(e => e.states.indexOf('selected') != -1).map(e => e.data.x);
       const isFilterReady = selectValue.length != 0;
-      updateFilterCriteria(filterCriter.id!, {
+      updateFilterCriteria(id, {
         ...filterCriter,
         isFilterReady,
         selectValue,
       });
     });
 
-    piePlot.render();
     piePlotRef.current = piePlot;
   };
 
@@ -209,7 +198,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       },
     });
 
-    wordCloud.on('element:click', ({view}) => {
+    wordCloud.on('element:click', ({ view }) => {
       const elements = view.geometries[0].elements;
       const selectValue = elements.filter(e => e.states.indexOf('selected') != -1).map(e => e.data.datum.x);
       const isFilterReady = selectValue.length != 0;
@@ -218,7 +207,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         isFilterReady,
         selectValue,
       });
-    })
+    });
 
     wordCloud.render();
     wordCloudRef.current = wordCloud;

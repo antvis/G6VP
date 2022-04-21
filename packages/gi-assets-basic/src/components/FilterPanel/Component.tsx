@@ -47,16 +47,20 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       isFilterReady: false,
     };
 
-    setFilterOptions({
-      ...filterOptions,
-      [id]: filterCriteria,
+    setFilterOptions(preState => {
+      return {
+        ...preState,
+        [id]: filterCriteria,
+      };
     });
   };
 
   const updateFilterCriteria = (id: string, filterCriteria: IFilterCriteria) => {
-    setFilterOptions({
-      ...filterOptions,
-      [id]: filterCriteria,
+    setFilterOptions(preState => {
+      return {
+        ...preState,
+        [id]: filterCriteria,
+      };
     });
   };
 
@@ -79,8 +83,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       draft.layoutCache = true;
     });
   }, [filterOptions]);
-
-  //console.log(filterOptions, '@')
 
   return (
     <div className="gi-filter-panel">
