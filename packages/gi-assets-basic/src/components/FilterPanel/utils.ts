@@ -27,7 +27,7 @@ export const filterGraphData = (
     const inValidNodes = new Set<string>();
     newData.nodes = source.nodes.filter(node => {
       if (analyzerType === 'SELECT' || analyzerType === 'PIE' || analyzerType === 'WORDCLOUD') {
-        if (node.data && node.data[prop!] && selectValue?.indexOf(node.data[prop!]) !== -1) {
+        if (node.data && node.data[prop!] != undefined && selectValue?.indexOf(node.data[prop!]) !== -1) {
           return true;
         }
         inValidNodes.add(node.id);
@@ -49,7 +49,7 @@ export const filterGraphData = (
     const validNodes = new Set<string>();
     newData.edges = source.edges.filter(edge => {
       if (analyzerType === 'SELECT' || analyzerType === 'PIE' || analyzerType === 'WORDCLOUD') {
-        if (edge.data && edge.data[prop!] && selectValue?.indexOf(edge.data[prop!]) !== -1) {
+        if (edge.data && edge.data[prop!] != undefined && selectValue?.indexOf(edge.data[prop!]) !== -1) {
           validNodes.add(edge.source);
           validNodes.add(edge.target);
           return true;
@@ -77,7 +77,7 @@ export const getValueMap = (graphData: GraphinData, prop: string, elementType: '
   const valueMap = new Map<string, number>();
   elements?.forEach(e => {
     e.data &&
-      e.data[prop] &&
+      e.data[prop] != undefined &&
       valueMap.set(e.data[prop], valueMap.has(e.data[prop]) ? valueMap.get(e.data[prop])! + 1 : 1);
   });
   return valueMap;
@@ -118,4 +118,3 @@ export const getHistogram = (graphData: GraphinData, prop: string, elementType: 
     color,
   };
 };
-
