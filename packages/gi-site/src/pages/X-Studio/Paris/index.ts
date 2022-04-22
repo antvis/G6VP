@@ -4,10 +4,10 @@ const activeComponentsKeys = GI_PROJECT_CONFIG.components.map(c => {
   return c.id;
 });
 const schemaData = generatorSchemaByGraphData(GI_LOCAL_DATA);
-const id = 'cloud-security';
+const id = 'paris-transport';
 const project = {
   id,
-  name: '云安全:主机溯源',
+  name: '巴黎地铁图',
   type: 'case',
   projectConfig: GI_PROJECT_CONFIG,
   serviceConfig: GI_SERVICES_OPTIONS,
