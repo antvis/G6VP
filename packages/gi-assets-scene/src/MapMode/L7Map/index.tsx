@@ -173,7 +173,6 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         setTimeout(() => {
           const ids = matchNodes.map(node => node.id);
           apis.focusNodeById(ids[0] || '');
-          apis.highlightNodeById(ids);
           data.nodes.forEach(node => {
             if (ids.includes(node.id)) {
               graph.setItemState(node.id, 'selected', true);

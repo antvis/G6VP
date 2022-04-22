@@ -53,6 +53,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
     console.log('effect....', mapInstance);
 
     const handleNodeClick = async e => {
+      console.log('e', e);
       setState(preState => {
         return {
           ...preState,
@@ -95,41 +96,21 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
         };
       });
     };
-    mapInstance.on('loaded', () => {
-      const nodeLayer = mapInstance.layerGroup.getLayerByName('node');
-      const edgeLayer = mapInstance.layerGroup.getLayerByName('edge');
-
+    if (!mapInstance) {
+      return;
+    }
+    const nodeLayer = mapInstance.layerGroup.getLayerByName('node');
+    const edgeLayer = mapInstance.layerGroup.getLayerByName('edge');
+    if (nodeLayer && edgeLayer) {
+      nodeLayer.on('click', handleNodeClick);
+      edgeLayer.on('click', handleEdgeClick);
+    }
+    return () => {
       if (nodeLayer && edgeLayer) {
-        nodeLayer.on('click', handleNodeClick);
-        edgeLayer.on('click', handleEdgeClick);
+        nodeLayer.off('click', handleNodeClick);
+        edgeLayer.off('click', handleEdgeClick);
       }
-      // const scene = mapInstance.getScene();
-      // const drawControl = new DrawControl(scene, {
-      //   position: 'topleft',
-      //   layout: 'horizontal', // horizontal vertical
-      //   controls: {
-      //     boxSelect: true,
-      //   },
-      // });
-
-      // scene.addControl(drawControl);
-      // drawControl.on('draw.boxselect', e => {
-      //   const { endPoint, startPoint } = e.feature;
-      //   const poly = turf.bboxPolygon([startPoint.lng, startPoint.lat, endPoint.lng, endPoint.lat]);
-      //   const matchNodes = geoData.filter(node => {
-      //     const pt = turf.point(node.location);
-      //     const isMatch = turf.booleanPointInPolygon(pt, poly);
-      //     return isMatch;
-      //   });
-      //   updateState(preState => {
-      //     return {
-      //       ...preState,
-      //       toggle: true,
-      //     };
-      //   });
-      //   console.log('matchNodes', matchNodes);
-      // });
-    });
+    };
   }, [geoData]);
 
   const { visible, detail, isLoading } = state;
