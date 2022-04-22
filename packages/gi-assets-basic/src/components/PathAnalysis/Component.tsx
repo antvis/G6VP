@@ -80,24 +80,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
     for (let i = 0; i < state.allNodePath.length; i++) {
       const nodes = state.allNodePath[i];
       const edges = state.allEdgePath[i];
-      if (state.highlightPath.has(i)) {
-        !state.pathStatusMap[i] &&
-          nodes.forEach(nodeId => {
-            //graph.setItemState(nodeId, 'active', true);
-            const node = graph.findById(nodeId);
-            node.setState("highlight", true);
-          });
-        !state.pathStatusMap[i] &&
-          edges.forEach(edgeId => {
-            graph.setItemState(edgeId, 'active', true);
-          });
-        updateState(draft => {
-          draft.pathStatusMap[i] = true;
-        });
-      } else {
+      
+      if (!state.highlightPath.has(i)) {
         state.pathStatusMap[i] &&
           nodes.forEach(nodeId => {
-            //graph.setItemState(nodeId, 'active', false);
             const node = graph.findById(nodeId);
             node.setState('highlight', false);
           });
@@ -106,8 +92,27 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
           edges.forEach(edgeId => {
             graph.setItemState(edgeId, 'active', false);
           });
+
         updateState(draft => {
           draft.pathStatusMap[i] = false;
+        });
+      }
+    }
+
+    for (let i = 0; i < state.allNodePath.length; i++) {
+      const nodes = state.allNodePath[i];
+      const edges = state.allEdgePath[i];
+      if (state.highlightPath.has(i)) {
+        nodes.forEach(nodeId => {
+          const node = graph.findById(nodeId);
+          node.setState('highlight', true);
+        });
+        edges.forEach(edgeId => {
+          console.log(edgeId, '@edgeId')
+          graph.setItemState(edgeId, 'active', true);
+        });
+        updateState(draft => {
+          draft.pathStatusMap[i] = true;
         });
       }
     }
