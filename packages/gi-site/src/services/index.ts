@@ -42,10 +42,18 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
     } else {
       activeAssetsKeys = {
-        elements: [config.node.id, config.edge.id],
+        elements: [...config.nodes.map(node => node.id), ...config.edges.map(edge => edge.id)],
         components: [...config.components.map(c => c.id)],
         layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
       };
+    }
+
+    let currentSchema = JSON.parse(project.schemaData)
+    if (!currentSchema) {
+      currentSchema = {
+        nodes: [],
+        edges: []
+      }
     }
     return {
       config,
@@ -53,6 +61,7 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys,
       name: project.name,
       serviceConfig,
+      schemaData: currentSchema
     };
   };
 
