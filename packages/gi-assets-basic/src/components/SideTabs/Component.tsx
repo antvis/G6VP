@@ -76,13 +76,9 @@ const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
 
   const Content = (
     <div className="gi-side-tabs">
-      <Tabs defaultActiveKey="1" tabPosition={tabPosition}>
-        {panes}
-      </Tabs>
+      <Tabs tabPosition={tabPosition}>{panes}</Tabs>
     </div>
   );
-
-  console.log('sortedComponents', sortedComponents, props);
 
   if (!outSideFromCanvas) {
     return (
