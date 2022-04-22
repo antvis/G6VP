@@ -6,11 +6,24 @@ metas.GIAC_CONTENT.children.containerWidth.default = '300px';
 
 const registerMeta = () => {
   return {
-    filterRule: {
-      name: '过滤规则',
-      type: 'TagsSelect',
-      options: ['all-path', 'shortest-path', 'custom-pathRule'],
-      default: ['all-path', 'shortest-path', 'custom-pathRule'],
+    searchRule: {
+      name: '查询规则',
+      type: 'select',
+      options: [
+        {
+          value: 'All-Path',
+          label: '所有路径',
+        },
+        {
+          value: 'Shortest-Path',
+          label: '最短路径',
+        },
+        {
+          value: 'Custom-PathRule',
+          label: '自定义规则'
+        },
+      ],
+      default: 'All-Path',
     },
     ...metas,
   };
