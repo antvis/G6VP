@@ -5,13 +5,12 @@ import { L7Plot } from '@antv/l7plot';
 import * as turf from '@turf/turf';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import AnimateContainer from './AnimateContainer';
+import AnimateContainer from '../AnimateContainer';
+import PropertiesPanel from '../PropertiesPanel/Component';
+import ToolbarContainer from '../Toolbar';
 import './index.less';
-import PropertiesPanel from './PropertiesPanel/Component';
-import ToolbarContainer from './Toolbar';
 const { deepClone } = extra;
 
-const { GIAComponent } = extra;
 export interface MapModeProps {
   GIAC: GIAComponentProps['GIAC'];
   visible?: boolean;
