@@ -4,10 +4,9 @@ const activeComponentsKeys = GI_PROJECT_CONFIG.components.map(c => {
   return c.id;
 });
 const schemaData = generatorSchemaByGraphData(GI_LOCAL_DATA);
-const id = 'cloud-security';
 const project = {
-  id,
-  name: '云安全:主机溯源',
+  id: 'demo-bank',
+  name: '银行案例',
   type: 'case',
   projectConfig: GI_PROJECT_CONFIG,
   serviceConfig: GI_SERVICES_OPTIONS,
@@ -18,7 +17,7 @@ const project = {
         data: GI_LOCAL_DATA,
         enable: true,
         transfunc: `data => data`,
-        name: `${id}.json`,
+        name: 'bank.json',
       },
     ],
     transData: GI_LOCAL_DATA,
