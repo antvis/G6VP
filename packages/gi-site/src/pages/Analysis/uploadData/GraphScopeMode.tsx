@@ -10,14 +10,13 @@ import {
   loadGraphToGraphScope,
 } from '../../../services/graphcompute';
 import { DefaultGraphScopeNodeFilePath, DefaultGraphScopeEdgeFilePath } from './const';
-import { useContext } from '../../Analysis/hooks/useContext';
 const { Item } = Form;
 
 const GraphScopeMode = () => {
   const [form] = Form.useForm();
 
-  const { context, updateContext } = useContext();
-  const { graphScopeInstanceId } = context;
+  const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
+  const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
 
   const [dataType, setDataType] = useState('demo');
 
@@ -39,11 +38,8 @@ const GraphScopeMode = () => {
 
       const { data } = gsResult;
       const { instanceId } = data;
-      // 将 instanceId 存储到 context 中
-
-      updateContext(draft => {
-        draft.graphScopeInstanceId = instanceId;
-      });
+      // 将 instanceId 存储到 localstorage 中
+      localStorage.setItem('graphScopeInstanceId', instanceId);
 
       currentInstanceId = instanceId;
     }
@@ -64,12 +60,16 @@ const GraphScopeMode = () => {
       });
 
       console.log('加载数据到 GraphScope', loadResult);
-      const { success: loadSuccess, message: loadMessage } = loadResult;
+      // 每次载图以后，获取最新 Gremlin server
+      const { success: loadSuccess, message: loadMessage, data } = loadResult;
       if (!loadSuccess) {
         message.error(`数据加载失败: ${loadMessage}`);
         return;
       }
       message.success('加载数据到 GraphScope 引擎成功');
+      const { graphName, graphURL } = data;
+      localStorage.setItem('graphScopeGraphName', graphName);
+      localStorage.setItem('graphScopeGremlinServer', graphURL);
       return;
     }
 
@@ -133,23 +133,44 @@ const GraphScopeMode = () => {
     });
 
     console.log('加载数据到 GraphScope', loadResult);
-    const { success: loadSuccess, message: loadMessage } = loadResult;
+    const { success: loadSuccess, message: loadMessage, data: loadData } = loadResult;
     if (!loadSuccess) {
       message.error(`数据加载失败: ${loadMessage}`);
       return;
     }
+
+    const { graphName, graphURL } = loadData;
+    localStorage.setItem('graphScopeGraphName', graphName);
+    localStorage.setItem('graphScopeGremlinServer', graphURL);
+
     message.success('加载数据到 GraphScope 引擎成功');
+  };
+
+  const clearGraphScopeStorage = () => {
+    localStorage.removeItem('graphScopeGraphName');
+    localStorage.removeItem('graphScopeGremlinServer');
+    localStorage.removeItem('graphScopeInstanceId');
   };
 
   const handleCloseGraph = async () => {
     if (graphScopeInstanceId) {
-      const result = await closeGraphInstance(graphScopeInstanceId);
+      // 清空localstorage 中的实例、图名称和Gremlin服务地址
+      const result = await closeGraphInstance({
+        instanceId: graphScopeInstanceId,
+        graphName: graphScopeGraphName,
+      });
       console.log('关闭 GraphScope 实例', result);
+      // clearGraphScopeStorage();
     }
   };
 
   const handleCreateGreml = async () => {
-    const result = await gremlinQuery('g.V(1)');
+    const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
+    if (!gremlinServer) {
+      message.error('Gremlin Server 没有实例化，请选载入数据再进行查询');
+      return;
+    }
+    const result = await gremlinQuery('g.V()');
     console.log('Gremlin 查询', result);
   };
 

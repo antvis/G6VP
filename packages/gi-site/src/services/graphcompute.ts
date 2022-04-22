@@ -150,6 +150,7 @@ export const findNodeById = async nodeId => {
     method: 'get',
     params: {
       nodeId,
+      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
     },
   });
 
@@ -159,9 +160,10 @@ export const findNodeById = async nodeId => {
 // queryByGremlinLanguage
 export const gremlinQuery = async (statement: string) => {
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/gremlinQuery`, {
-    method: 'get',
-    params: {
+    method: 'post',
+    data: {
       statement,
+      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
     },
   });
 
