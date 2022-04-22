@@ -4,7 +4,7 @@ export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
   layoutInstance: GraphinContextType['layout'];
-  apis: GraphinContextType['layout'];
+  apis: GraphinContextType['apis'];
   theme: GraphinContextType['theme'];
 
   /** graphinsight */
