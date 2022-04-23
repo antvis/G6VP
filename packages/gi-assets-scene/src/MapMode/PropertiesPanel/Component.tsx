@@ -50,10 +50,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   };
 
   React.useLayoutEffect(() => {
-    console.log('effect....', mapInstance);
-
     const handleNodeClick = async e => {
-      console.log('e', e);
       setState(preState => {
         return {
           ...preState,

@@ -23,7 +23,7 @@ const Mock: React.FunctionComponent<mock> = props => {
         uid: 1,
         name: 'mock.js',
         data: demo,
-        transfunc: GIDefaultTrans('id', 'source', 'target'),
+        transfunc: GIDefaultTrans('id', 'source', 'target', 'UNKNOWN', 'UNKNOWN'),
         enable: true,
       },
     ],
