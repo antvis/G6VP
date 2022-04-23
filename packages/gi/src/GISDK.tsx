@@ -106,9 +106,14 @@ const GISDK = (props: Props) => {
   }, [componentsCfg]);
 
   React.useEffect(() => {
-    const { type, ...options } = layoutCfg?.props || {};
+    if (!layoutCfg) {
+      return;
+    }
+    const layout = assets.layouts[layoutCfg.id];
+    const { type, ...options } = layoutCfg.props || {};
     updateState(draft => {
       draft.layout = {
+        ...layout.info.options, //asset default options
         type: type,
         ...options,
       };
