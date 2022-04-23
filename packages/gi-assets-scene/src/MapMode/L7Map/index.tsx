@@ -1,7 +1,7 @@
 import { extra, useContext } from '@alipay/graphinsight';
 import type { GIAComponentProps } from '@alipay/graphinsight/lib/components/GIAC';
 import { DrawBoxSelect } from '@antv/l7-draw';
-import { L7Plot } from '@antv/l7plot';
+import { L7Plot, L7PlotOptions } from '@antv/l7plot';
 import * as turf from '@turf/turf';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
@@ -15,9 +15,12 @@ export interface MapModeProps {
   GIAC: GIAComponentProps['GIAC'];
   visible?: boolean;
   handleClick: () => any;
+  theme: string;
+  type: string;
 }
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
+  const { theme, type } = props;
   const context = useContext();
   const { data, graph, config, GISDK_ID, apis } = context;
 
@@ -35,7 +38,6 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
     drawbox: undefined,
   });
 
-  console.log('config', config);
   const { handleClick, GIAC } = props;
   let isValid = true;
   const geoData = React.useMemo(() => {
@@ -46,9 +48,9 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         isValid = false;
         return n;
       }
-      return { ...n, location: [n.longitude, n.latitude] };
+      return { ...node, location: [n.longitude, n.latitude] };
     });
-  }, []);
+  }, [data]);
   if (!isValid) {
     console.warn('%c invalid data', 'color:red', 'nodes should has longitude or latitude field');
     return null;
@@ -56,7 +58,7 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
 
   React.useEffect(() => {
     const edgesData = graph.getEdges().map(edge => {
-      const e = edge.get('model').data;
+      const e = edge.get('model');
       const source = edge.get('source').get('model');
       const target = edge.get('target').get('model');
 
@@ -69,13 +71,14 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       };
     });
     const center = geoData[0].location;
-    const map = new L7Plot('map-container', {
+    const options = {
       map: {
-        type: 'mapbox',
-        style: 'light',
+        type: type,
+        style: theme,
         center,
         zoom: 15,
         pitch: 0,
+        // autoFit: true,
       },
       layers: [
         //线的图层
@@ -115,17 +118,13 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
               return NODE_COLOR;
             },
           },
-
           state: {
-            select: { color: 'red' },
+            select: { color: 'red', size: 20 },
           },
           size: 10,
           style: {
             opacity: 0.8,
           },
-          // animate: {
-          //   speed: 0.8,
-          // },
         },
         {
           name: 'text',
@@ -148,14 +147,14 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
           },
         },
       ],
-    });
+    } as L7PlotOptions;
+
+    const map = new L7Plot('map-container', options);
 
     map.on('loaded', () => {
       const scene = map.getScene();
       const drawbox = new DrawBoxSelect(scene);
-      // drawbox.enable();
       drawbox.on('draw.boxselect', e => {
-        console.log('select brush...', e);
         const { endPoint, startPoint } = e;
         const poly = turf.bboxPolygon([startPoint.lng, startPoint.lat, endPoint.lng, endPoint.lat]);
         const matchNodes = geoData.filter(node => {
@@ -180,16 +179,15 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
               graph.setItemState(node.id, 'inactive', true);
             }
           });
-          data.edges.forEach(node => {
-            const { source, target } = node;
+          data.edges.forEach(edge => {
+            const { source, target } = edge;
             if (ids.includes(source) && ids.includes(target)) {
-              graph.setItemState(node.id, 'selected', true);
+              graph.setItemState(edge.id, 'selected', true);
             } else {
-              graph.setItemState(node.id, 'inactive', true);
+              graph.setItemState(edge.id, 'inactive', true);
             }
           });
         }, 0);
-        console.log('matchNodes', matchNodes);
       });
       setState(preState => {
         return {
@@ -200,7 +198,19 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         };
       });
     });
-  }, []);
+    // const plot = map.getPlots()[0];
+    // plot.changeData(geoData);
+
+    return () => {
+      map.destroy();
+    };
+  }, [
+    // TODO: change geoData
+    // graph,
+    // geoData,
+    type,
+    theme,
+  ]);
   const { isReady, mapInstance, toggle } = state;
 
   const handleToggle = () => {
@@ -218,12 +228,6 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       drawbox.enable();
     }
   };
-  const Toggle_GIAC = deepClone(GIAC);
-  Toggle_GIAC.icon = 'icon-fullscreen';
-  Toggle_GIAC.title = toggle ? '小地图' : '退出小地图';
-  Toggle_GIAC.isShowTitle = false;
-  Toggle_GIAC.tooltipPlacement = 'RT';
-
   const Map = (
     <AnimateContainer toggle={toggle}>
       <div
