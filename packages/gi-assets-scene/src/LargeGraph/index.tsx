@@ -9,6 +9,7 @@ const info = {
   category: 'components',
   desc: '3D大图',
   cover: 'http://xxxx.jpg',
+  type: 'GIAC',
 };
 
 export default {
