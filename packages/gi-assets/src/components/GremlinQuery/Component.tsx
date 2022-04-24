@@ -3,7 +3,7 @@ import { useContext, utils } from '@alipay/graphinsight';
 import GremlinEditor from 'ace-gremlin-editor';
 import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
-import { Button, Col, Divider, Row } from 'antd';
+import { Button, Col, Divider, Row, notification } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import './index.less';
@@ -66,6 +66,17 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   const handleClickQuery = async () => {
     setBtnLoading(true);
     if (!service) {
+      return;
+    }
+
+    // 查询之前判断是否已经实例化 GraphScope 实例
+    const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
+    if (!gremlinServer) {
+      setBtnLoading(false);
+      notification.error({
+        message: 'Gremlin 查询失败',
+        description: '使用 Gremlin 查询之前，请先实例化 GraphScope 实例！',
+      });
       return;
     }
 
