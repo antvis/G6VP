@@ -19,7 +19,7 @@ enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel } = props;
-  const { data: graphData, graph, dataMap } = useContext();
+  const { data: graphData, graph, sourceDataMap } = useContext();
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -55,30 +55,35 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
   const handleSearch = () => {
     form.validateFields().then(values => {
+      cancelHighlight();
       const { source, target } = values;
       const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, true);
+      const highlightPath = new Set(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;
         draft.nodePath = allNodePath;
         draft.edgePath = allEdgePath;
         draft.isAnalysis = true;
+        draft.highlightPath = highlightPath;
       });
-      cancelHighlight();
     });
   };
 
   const onSwitchChange = (pathId: number) => {
     updateState(draft => {
-      draft.highlightPath.has(pathId) ? draft.highlightPath.delete(pathId) : draft.highlightPath.add(pathId);
+      if (draft.highlightPath.has(pathId)) {
+        draft.highlightPath.delete(pathId);
+      } else {
+        draft.highlightPath.add(pathId);
+      }
     });
   };
 
   // 取消所有节点和边的高亮状态
   const cancelHighlight = () => {
     [...highlightElementRef.current?.nodes].forEach(nodeId => {
-      const node = graph.findById(nodeId);
-      node.setState('highlight', false);
+      graph.setItemState(nodeId, 'active', false);
     });
     [...highlightElementRef.current.edges].forEach(edgeId => {
       graph.setItemState(edgeId, 'active', false);
@@ -93,8 +98,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       if (!state.highlightPath.has(i)) {
         state.pathStatusMap[i] &&
           nodes.forEach(nodeId => {
-            const node = graph.findById(nodeId);
-            node.setState('highlight', false);
+            graph.setItemState(nodeId, 'active', false);
             highlightElementRef.current?.nodes.delete(nodeId);
           });
 
@@ -115,15 +119,12 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       const edges = state.edgePath[i];
       if (state.highlightPath.has(i)) {
         nodes.forEach(nodeId => {
-          const node = graph.findById(nodeId);
-          node.setState('highlight', true);
+          graph.setItemState(nodeId, 'active', true);
           highlightElementRef.current?.nodes.add(nodeId);
         });
         edges.forEach(edgeId => {
           graph.setItemState(edgeId, 'active', true);
           highlightElementRef.current?.edges.add(edgeId);
-          //const edge = graph.findById(edgeId);
-          //edge.setState('highlight', true);
         });
         updateState(draft => {
           draft.pathStatusMap[i] = true;
@@ -132,7 +133,11 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     }
   }, [state.highlightPath, state.pathStatusMap]);
 
+  // 过滤逻辑副作用
   useEffect(() => {
+    cancelHighlight();
+    highlightElementRef.current = { nodes: new Set(), edges: new Set() };
+
     let nodePath: string[][] = [];
     let edgePath: string[][] = [];
     if (state.filterRule.type === 'All-Path') {
@@ -143,7 +148,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       let minLen = Infinity;
       state.allEdgePath.forEach((path, pathId) => {
         const len = state.filterRule.weightPropertyName
-          ? getPathByWeight(path, state.filterRule.weightPropertyName, dataMap)
+          ? getPathByWeight(path, state.filterRule.weightPropertyName, sourceDataMap)
           : path.length;
         minLen = Math.min(minLen, len);
         pathLenMap[pathId] = len;
@@ -156,10 +161,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     updateState(draft => {
       draft.nodePath = nodePath;
       draft.edgePath = edgePath;
-      draft.highlightPath = new Set();
+      draft.highlightPath = new Set(nodePath.map((_, index) => index));
       draft.pathStatusMap = {};
     });
-    cancelHighlight();
   }, [state.allNodePath, state.allEdgePath, state.filterRule]);
 
   return (
@@ -218,7 +222,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                 >
                   <Timeline>
                     {path.map(nodeId => {
-                      const nodeConfig = dataMap.nodes[nodeId];
+                      const nodeConfig = sourceDataMap.nodes[nodeId];
                       const data = nodeConfig?.data || {};
                       return <Timeline.Item>{data[pathNodeLabel] || nodeId}</Timeline.Item>;
                     })}
