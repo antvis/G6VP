@@ -15,6 +15,7 @@ import NodeExpand from './NodeExpand';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
+import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
 import Redo from './Redo';
 import SideTabs from './SideTabs';
@@ -48,6 +49,7 @@ export {
   Export,
   NodeExpand,
   OperatorHeader,
+  PathAnalysis,
   PropertiesPanel,
   Loading,
   SideTabs,
