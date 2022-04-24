@@ -1,6 +1,6 @@
 import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
 import CanvasClick from './components/ClickCanvas';
 import { GraphInsightContext } from './context';
@@ -162,12 +162,29 @@ const GISDK = (props: Props) => {
   const { data, layout, components, initializer, theme, transform } = state;
 
   // console.log('%c GraphInsight Render...', 'color:red', state);
+  const sourceDataMap = useMemo(() => {
+    const nodes = state.source.nodes.reduce((acc, cur) => {
+      acc[cur.id] = cur;
+      return acc;
+    }, {});
+
+    const edges = state.source.edges.reduce((acc, cur) => {
+      acc[cur.id] = cur;
+      return acc;
+    }, {})
+
+    return {
+      nodes,
+      edges
+    }
+  }, [state.source]);
 
   const ContextValue = {
     ...state,
     GISDK_ID,
     services: Services,
     assets,
+    sourceDataMap,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {

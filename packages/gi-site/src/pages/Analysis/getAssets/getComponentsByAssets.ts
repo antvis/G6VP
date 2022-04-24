@@ -8,7 +8,7 @@ import { getKeysByData } from './utils';
  * @param data 图数据
  * @returns
  */
-const getComponentsByAssets = (assets, data, services, config) => {
+const getComponentsByAssets = (assets, data, services, config, schemaData) => {
   const GI_CONTAINER_INDEXS = Object.values(assets)
     .filter((item: any) => {
       const info = ((item && item.info) || {}) as TypeAssetInfo;
@@ -62,7 +62,7 @@ const getComponentsByAssets = (assets, data, services, config) => {
       } = component;
       const keys = getKeysByData(data, 'node');
 
-      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS, GI_MENU_CONTAINER_INDEXS });
+      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS, GI_MENU_CONTAINER_INDEXS, schemaData });
       /** 默认的配置值 */
       const defaultProps = extractDefault({ config: configObj, value: {} });
       const { id, name, category } = info;

@@ -1,4 +1,4 @@
-import type { GraphinContextType, GraphinData, Layout } from '@antv/graphin';
+import type { GraphinContextType, GraphinData, Layout, IUserNode, IUserEdge } from '@antv/graphin';
 
 export interface State {
   /** graphin */
@@ -225,4 +225,13 @@ export interface GIService {
   /** 获取初始化接口，获取初始图数据 */
   id: string;
   service: (params?: any) => Promise<GIServiceResponseData>;
+}
+
+export interface ISourceDataMap {
+  nodes: {
+    [id: string]: IUserNode;
+  };
+  edges: {
+    [id: string]: IUserEdge;
+  };
 }
