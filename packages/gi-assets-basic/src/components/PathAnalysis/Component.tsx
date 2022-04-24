@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { useContext } from '@alipay/graphinsight';
-import { Algorithm } from '@antv/g6';
-import { GraphinData } from '@antv/graphin';
 import { Form, Select, Button, Timeline, Collapse, Empty, Row, Col } from 'antd';
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
@@ -13,12 +11,15 @@ import FilterRule from './FilterRule';
 
 const { Panel } = Collapse;
 
-export interface IPathAnalysisProps {}
+export interface IPathAnalysisProps {
+  pathNodeLabel: string;
+}
 
 enableMapSet();
 
-const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
-  const { data: graphData, graph } = useContext();
+const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
+  const { pathNodeLabel } = props;
+  const { data: graphData, graph, dataMap } = useContext();
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -132,8 +133,8 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
   }, [state.highlightPath, state.pathStatusMap]);
 
   useEffect(() => {
-    let nodePath: string[][];
-    let edgePath: string[][];
+    let nodePath: string[][] = [];
+    let edgePath: string[][] = [];
     if (state.filterRule.type === 'All-Path') {
       nodePath = state.allNodePath;
       edgePath = state.allEdgePath;
@@ -142,7 +143,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
       let minLen = Infinity;
       state.allEdgePath.forEach((path, pathId) => {
         const len = state.filterRule.weightPropertyName
-          ? getPathByWeight(path, state.filterRule.weightPropertyName, graphData)
+          ? getPathByWeight(path, state.filterRule.weightPropertyName, dataMap)
           : path.length;
         minLen = Math.min(minLen, len);
         pathLenMap[pathId] = len;
@@ -217,7 +218,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
                 >
                   <Timeline>
                     {path.map(nodeId => {
-                      return <Timeline.Item>{nodeId}</Timeline.Item>;
+                      const nodeConfig = dataMap.nodes[nodeId];
+                      const data = nodeConfig?.data || {};
+                      return <Timeline.Item>{data[pathNodeLabel] || nodeId}</Timeline.Item>;
                     })}
                   </Timeline>
                 </Panel>

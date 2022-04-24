@@ -6,7 +6,7 @@ import GISDK from './GISDK';
 import * as utils from './utils';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
-export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig } from './typing';
+export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig, IDataMap } from './typing';
 export { useContext, utils };
 export { extra };
 const extra = {
