@@ -1,14 +1,4 @@
 import type { IUserEdge, GraphinData } from '@antv/graphin';
-import {} from "@alipay/graphinsight"
-export const getEdgeIdMap = (edges: IUserEdge[]) => {
-  const edgeIdMap = new Map<string, string[]>();
-  edges.forEach(edge => {
-    const idx = `${edge.source}-${edge.target}`;
-    edgeIdMap.has(idx) ? edgeIdMap.set(idx, [...edgeIdMap.get(idx)!, edge.id]) : edgeIdMap.set(idx, [edge.id]);
-  });
-  return edgeIdMap;
-};
-
 type IVisitedNode = {
   node: string;
   edge: string;

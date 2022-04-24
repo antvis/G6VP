@@ -4,7 +4,7 @@ import { Form, Select, Button, Timeline, Collapse, Empty, Row, Col } from 'antd'
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
 import { IState, IHighlightElement } from './typing';
-import { getEdgeIdMap, findAllPath, getPathByWeight } from './utils';
+import { findAllPath, getPathByWeight } from './utils';
 import './index.less';
 import PanelExtra from './PanelExtra';
 import FilterRule from './FilterRule';
