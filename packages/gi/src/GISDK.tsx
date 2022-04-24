@@ -157,13 +157,13 @@ const GISDK = (props: Props) => {
   const { data, layout, components, initializer, theme, transform } = state;
 
   // console.log('%c GraphInsight Render...', 'color:red', state);
-  const dataMap = useMemo(() => {
-    const nodes = state.data.nodes.reduce((acc, cur) => {
+  const sourceDataMap = useMemo(() => {
+    const nodes = state.source.nodes.reduce((acc, cur) => {
       acc[cur.id] = cur;
       return acc;
     }, {});
 
-    const edges = state.data.edges.reduce((acc, cur) => {
+    const edges = state.source.edges.reduce((acc, cur) => {
       acc[cur.id] = cur;
       return acc;
     }, {})
@@ -172,14 +172,14 @@ const GISDK = (props: Props) => {
       nodes,
       edges
     }
-  }, [state.data]);
+  }, [state.source]);
 
   const ContextValue = {
     ...state,
     GISDK_ID,
     services: Services,
     assets,
-    dataMap,
+    sourceDataMap,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
