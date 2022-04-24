@@ -35,6 +35,7 @@
   "scripts": {
     "core": "cd packages/gi && npm run start",
     "assets": "cd packages/gi-assets-basic && npm run start",
+    "assets:advanced": "cd packages/gi-assets && npm run start",
     "common:components": "cd packages/gi-common-components && npm run start",
     "assets:testing": "cd packages/gi-assets-testing && npm run start",
     "assets:docs": "cd packages/gi-assets-basic && npm run docs",

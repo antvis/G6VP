@@ -1,4 +1,11 @@
-import { deepClone, GIAC_CONTENT_METAS } from '../const';
+import { extra } from '@alipay/graphinsight';
+
+const { GIAC_CONTENT_METAS, deepClone } = extra;
+const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.name = 'Gremlin Query';
+metas.GIAC_CONTENT.children.icon.default = 'icon-bold';
+metas.GIAC_CONTENT.children.title.default = 'Gremlin Query';
+
 const registerMeta = context => {
   const { services } = context;
   const serviceOptions = services.map(c => {
@@ -7,8 +14,6 @@ const registerMeta = context => {
       label: c.id,
     };
   });
-  const metas = deepClone(GIAC_CONTENT_METAS);
-  metas.GIAC_CONTENT.children.title.default = 'Gremlin Query';
 
   return {
     /** 分类信息 */
