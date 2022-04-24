@@ -4,15 +4,18 @@ export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
   layoutInstance: GraphinContextType['layout'];
-  apis: GraphinContextType['layout'];
+  apis: GraphinContextType['apis'];
   theme: GraphinContextType['theme'];
 
   /** graphinsight */
 
-  /** 当前画布渲染的数据 */
+  /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射*/
+  rawData: GraphinData;
+  /** 当前画布渲染的数据，经过视觉映射*/
   data: GraphinData;
-  /** 需要画布重置的数据 */
+  /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
+
   /** 布局 */
   layout: Layout;
   /** 组件 */

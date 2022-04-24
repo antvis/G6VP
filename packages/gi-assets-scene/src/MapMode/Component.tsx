@@ -6,11 +6,15 @@ const { GIAComponent } = extra;
 export interface MapModeProps {
   GIAC: GIAComponentProps['GIAC'];
   visible?: boolean;
+  /** 主题  */
+  theme: string;
+  /** 地图类型 */
+  type: string;
 }
 
 const MapMode: React.FunctionComponent<MapModeProps> = props => {
   const GIAC = { ...props.GIAC };
-  const { visible: defaultVisible } = props;
+  const { visible: defaultVisible, theme, type } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   GIAC.title = visible ? '切换至网图' : '切换至地图';
 
@@ -25,6 +29,8 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
       />
       {visible && (
         <L7Map
+          theme={theme}
+          type={type}
           GIAC={GIAC}
           handleClick={() => {
             setVisible(false);

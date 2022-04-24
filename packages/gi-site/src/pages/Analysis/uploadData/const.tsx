@@ -81,16 +81,21 @@ export const getMockData = () => {
 };
 
 export const getOptions = data => {
-  const { nodes, edges } = data;
+  const { nodes, edges = [] } = data;
+
   let nodesOptions = {};
   let edgesOptions = {};
   Object.keys(nodes[0]).forEach(key => {
     nodesOptions[key] = { text: `${key}` };
   });
 
-  Object.keys(edges[0]).forEach(key => {
-    edgesOptions[key] = { text: `${key}` };
-  });
+  if (edges.length === 0) {
+    edgesOptions = {};
+  } else {
+    Object.keys(edges[0]).forEach(key => {
+      edgesOptions[key] = { text: `${key}` };
+    });
+  }
 
   return [
     {
