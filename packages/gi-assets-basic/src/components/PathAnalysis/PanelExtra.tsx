@@ -5,7 +5,7 @@ interface IPanelHeaderProps {
   highlightPath: Set<number>;
   onSwitchChange: (pathId: number) => void;
 }
-const PanelHeader: React.FC<IPanelHeaderProps> = props => {
+const PanelExtra: React.FC<IPanelHeaderProps> = props => {
   const { pathId, onSwitchChange, highlightPath } = props;
   const checked = highlightPath.has(pathId);
   const preventBuddle = e => {
@@ -13,10 +13,9 @@ const PanelHeader: React.FC<IPanelHeaderProps> = props => {
   };
   return (
     <div onClick={preventBuddle}>
-      <span>路径{pathId + 1}</span>
       <Switch checked={checked} onChange={checked => onSwitchChange(pathId)} />
     </div>
   );
 };
 
-export default PanelHeader;
+export default PanelExtra;
