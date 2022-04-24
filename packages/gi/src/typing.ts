@@ -224,7 +224,7 @@ export interface GIService {
   service: (params?: any) => Promise<GIServiceResponseData>;
 }
 
-export interface IDataMap {
+export interface ISourceDataMap {
   nodes: {
     [id: string]: IUserNode;
   };
