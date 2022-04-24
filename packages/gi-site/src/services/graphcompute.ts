@@ -170,17 +170,15 @@ export const gremlinQuery = async (statement: string) => {
   return response;
 };
 
-interface ICloseGraphParams {
-  instanceId: string;
-  graphName: string;
-}
 /**
  * 关闭启动的 GraphScope 引擎
  */
-export const closeGraphInstance = async (params: ICloseGraphParams) => {
-  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeGraph`, {
-    method: 'POST',
-    data: params,
+export const closeGraphInstance = async (instanceId: string) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeGSInstance`, {
+    method: 'GET',
+    params: {
+      instanceId,
+    },
   });
 
   return result;
