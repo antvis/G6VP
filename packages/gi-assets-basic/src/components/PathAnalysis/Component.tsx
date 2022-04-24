@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useContext } from '@alipay/graphinsight';
 import { Algorithm } from '@antv/g6';
 import { GraphinData } from '@antv/graphin';
-import { Form, Select, Button, Timeline, Collapse, Empty } from 'antd';
+import { Form, Select, Button, Timeline, Collapse, Empty, Row, Col } from 'antd';
 import { useImmer } from 'use-immer';
 import { enableMapSet } from 'immer';
-import { IState } from './typing';
-import { getEdgeIdMap, findAllPath } from './utils';
+import { IState, IHighlightElement } from './typing';
+import { getEdgeIdMap, findAllPath, getPathByWeight } from './utils';
 import './index.less';
-import PanelHeader from './PanelHeader';
+import PanelExtra from './PanelExtra';
+import FilterRule from './FilterRule';
 
 const { Panel } = Collapse;
 
@@ -21,52 +22,48 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
+    nodePath: [],
+    edgePath: [],
     pathStatusMap: {},
     highlightPath: new Set<number>(),
     isAnalysis: false,
+    filterRule: {
+      type: 'All-Path',
+    },
   });
+
+  // 缓存被高亮的节点和边
+  const highlightElementRef = useRef<IHighlightElement>({
+    nodes: new Set(),
+    edges: new Set(),
+  });
+
   const [form] = Form.useForm();
-  //const { findShortestPath, findAllPath } = Algorithm as any;
 
   const handleResetForm = () => {
     form.resetFields();
     updateState(draft => {
-      draft.allNodePath = [];
-      draft.allEdgePath = [];
+      draft.nodePath = [];
+      draft.edgePath = [];
       draft.pathStatusMap = {};
       draft.highlightPath = new Set();
       draft.isAnalysis = false;
     });
+    cancelHighlight();
   };
 
   const handleSearch = () => {
-    //console.log(graphData, '@graphData')
-    //const edge = graph.findById('account_103-account_903-4');
-    //console.log(edge, '@edge')
     form.validateFields().then(values => {
       const { source, target } = values;
       const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, true);
-
-      /* const edgeIdMap = getEdgeIdMap(graphData.edges);
-      console.log(edgeIdMap, '@edgeIdMap')
-      const allEdgePath: string[][] = [];
-      allNodePath.forEach(nodeArr => {
-        const edgeArr: string[] = [];
-        for (let i = 0; i < nodeArr.length - 1; i++) {
-          const idx = `${nodeArr[i]}-${nodeArr[i + 1]}`;
-          const edgeIds = edgeIdMap.get(idx);
-          const edgeId = edgeIds?.shift();
-          edgeIdMap.set(idx, edgeIds as string[]);
-          edgeArr.push(edgeId as string);
-        }
-        allEdgePath.push(edgeArr);
-      }); */
-
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;
+        draft.nodePath = allNodePath;
+        draft.edgePath = allEdgePath;
         draft.isAnalysis = true;
       });
+      cancelHighlight();
     });
   };
 
@@ -76,21 +73,34 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
     });
   };
 
+  // 取消所有节点和边的高亮状态
+  const cancelHighlight = () => {
+    [...highlightElementRef.current?.nodes].forEach(nodeId => {
+      const node = graph.findById(nodeId);
+      node.setState('highlight', false);
+    });
+    [...highlightElementRef.current.edges].forEach(edgeId => {
+      graph.setItemState(edgeId, 'active', false);
+    });
+  };
+
   useEffect(() => {
-    for (let i = 0; i < state.allNodePath.length; i++) {
-      const nodes = state.allNodePath[i];
-      const edges = state.allEdgePath[i];
-      
+    for (let i = 0; i < state.nodePath.length; i++) {
+      const nodes = state.nodePath[i];
+      const edges = state.edgePath[i];
+
       if (!state.highlightPath.has(i)) {
         state.pathStatusMap[i] &&
           nodes.forEach(nodeId => {
             const node = graph.findById(nodeId);
             node.setState('highlight', false);
+            highlightElementRef.current?.nodes.delete(nodeId);
           });
 
         state.pathStatusMap[i] &&
           edges.forEach(edgeId => {
             graph.setItemState(edgeId, 'active', false);
+            highlightElementRef.current?.edges.delete(edgeId);
           });
 
         updateState(draft => {
@@ -99,28 +109,61 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
       }
     }
 
-    for (let i = 0; i < state.allNodePath.length; i++) {
-      const nodes = state.allNodePath[i];
-      const edges = state.allEdgePath[i];
+    for (let i = 0; i < state.nodePath.length; i++) {
+      const nodes = state.nodePath[i];
+      const edges = state.edgePath[i];
       if (state.highlightPath.has(i)) {
         nodes.forEach(nodeId => {
           const node = graph.findById(nodeId);
           node.setState('highlight', true);
+          highlightElementRef.current?.nodes.add(nodeId);
         });
         edges.forEach(edgeId => {
-          console.log(edgeId, '@edgeId')
           graph.setItemState(edgeId, 'active', true);
+          highlightElementRef.current?.edges.add(edgeId);
+          //const edge = graph.findById(edgeId);
+          //edge.setState('highlight', true);
         });
         updateState(draft => {
           draft.pathStatusMap[i] = true;
         });
       }
     }
-  }, [state.highlightPath]);
+  }, [state.highlightPath, state.pathStatusMap]);
+
+  useEffect(() => {
+    let nodePath: string[][];
+    let edgePath: string[][];
+    if (state.filterRule.type === 'All-Path') {
+      nodePath = state.allNodePath;
+      edgePath = state.allEdgePath;
+    } else if (state.filterRule.type === 'Shortest-Path') {
+      const pathLenMap = {};
+      let minLen = Infinity;
+      state.allEdgePath.forEach((path, pathId) => {
+        const len = state.filterRule.weightPropertyName
+          ? getPathByWeight(path, state.filterRule.weightPropertyName, graphData)
+          : path.length;
+        minLen = Math.min(minLen, len);
+        pathLenMap[pathId] = len;
+      });
+
+      nodePath = state.allNodePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
+      edgePath = state.allEdgePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
+    }
+
+    updateState(draft => {
+      draft.nodePath = nodePath;
+      draft.edgePath = edgePath;
+      draft.highlightPath = new Set();
+      draft.pathStatusMap = {};
+    });
+    cancelHighlight();
+  }, [state.allNodePath, state.allEdgePath, state.filterRule]);
 
   return (
     <div className="gi-path-analysis">
-      <h2 className="gi-path-analysis-title">路径查询</h2>
+      <h2 className="gi-path-analysis-title">路径分析</h2>
       <Form form={form}>
         <Form.Item label="起点节点ID" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
           <Select showSearch optionFilterProp="children">
@@ -141,23 +184,35 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button style={{ marginRight: 8 }} onClick={handleResetForm}>
-            重置
-          </Button>
-          <Button type="primary" onClick={handleSearch}>
-            查询
-          </Button>
+          <Row>
+            <Col span={6}>
+              <Button style={{ marginRight: 8 }} onClick={handleResetForm}>
+                重置
+              </Button>
+            </Col>
+            <Col span={6}>
+              <Button type="primary" onClick={handleSearch}>
+                查询
+              </Button>
+            </Col>
+            <Col offset={5} span={6}>
+              {state.isAnalysis && state.allNodePath.length > 0 && (
+                <FilterRule state={state} updateState={updateState} />
+              )}
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
       <div className="gi-path-analysis-path-list-container">
-        {state.allNodePath.length > 0 && (
+        {state.nodePath.length > 0 && (
           <Collapse defaultActiveKey={0}>
-            {state.allNodePath.map((path, index) => {
+            {state.nodePath.map((path, index) => {
               return (
                 <Panel
                   key={index}
-                  header={
-                    <PanelHeader pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
+                  header={`路径${index + 1}`}
+                  extra={
+                    <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                   }
                 >
                   <Timeline>
@@ -170,7 +225,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = () => {
             })}
           </Collapse>
         )}
-        {state.allNodePath.length === 0 && state.isAnalysis && <Empty />}
+        {state.isAnalysis && state.nodePath.length === 0 && <Empty />}
       </div>
     </div>
   );

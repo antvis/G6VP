@@ -1,4 +1,5 @@
-import { IUserEdge, GraphinData } from '@antv/graphin';
+import type { Graph } from '@antv/g6';
+import type { IUserEdge, GraphinData } from '@antv/graphin';
 export const getEdgeIdMap = (edges: IUserEdge[]) => {
   const edgeIdMap = new Map<string, string[]>();
   edges.forEach(edge => {
@@ -96,4 +97,24 @@ export const getNeighbors = (
     return edge.source === nodeId ? { node: edge.target, edge: edge.id } : { node: edge.source, edge: edge.id };
   };
   return currentEdges.map(neighhborsConverter);
+};
+
+
+/**
+ *
+ * @param path 由边构成的路径
+ * @param  weightPropertyName 权重
+ * @param graphData 图数据
+ * @return 路径长度
+ */
+
+export const getPathByWeight = (path: string[], weightPropertyName: string, graphData: GraphinData) => {
+  let pathLen: number = 0;
+  path.forEach(edgeId => {
+    const edgeConfig = graphData.edges.find(edge => edge.id === edgeId)!;
+    const data = edgeConfig.data;
+    pathLen = pathLen + data[weightPropertyName] ? data[weightPropertyName] : 0;
+  });
+  console.log(pathLen, '@pathLen');
+  return pathLen;
 };
