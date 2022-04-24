@@ -1,10 +1,10 @@
-import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
-import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+// import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 const LOCAL_ASSETS = [
-  GI_ASSETS_BASIC, //基础资产
-  GI_ASSETS_SCENE, //场景资产
-  GI_ASSETS_ADVANCE, //高级资产
+  GI_ASSETS_BASIC,
+  //GI_ASSETS_SCENE,
+  GI_ASSETS_ADVANCE,
 ];
 
 /** 是否为本地研发模式 */
