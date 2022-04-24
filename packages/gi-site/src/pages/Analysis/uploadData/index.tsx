@@ -335,7 +335,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
         <TabPane tab="GraphScope" key="graphscope">
-          <GraphScopeMode />
+          <GraphScopeMode close={handleClose} />
         </TabPane>
       </Tabs>
     </Modal>
