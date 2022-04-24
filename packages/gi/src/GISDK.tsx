@@ -2,6 +2,7 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
+import CanvasClick from './components/ClickCanvas';
 import { GraphInsightContext } from './context';
 import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
@@ -10,7 +11,6 @@ import SetupUseGraphinHook from './SetupUseGraphinHook';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
-
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
@@ -106,9 +106,14 @@ const GISDK = (props: Props) => {
   }, [componentsCfg]);
 
   React.useEffect(() => {
-    const { type, ...options } = layoutCfg?.props || {};
+    if (!layoutCfg) {
+      return;
+    }
+    const layout = assets.layouts[layoutCfg.id];
+    const { type, ...options } = layoutCfg.props || {};
     updateState(draft => {
       draft.layout = {
+        ...layout.info.options, //asset default options
         type: type,
         ...options,
       };
@@ -251,7 +256,7 @@ const GISDK = (props: Props) => {
           <>
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}
             <SetupUseGraphinHook updateContext={updateState} />
-
+            {isReady && <CanvasClick />}
             {isReady && renderComponents()}
             {isReady && children}
           </>
