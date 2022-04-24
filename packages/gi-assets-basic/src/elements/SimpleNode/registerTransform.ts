@@ -187,6 +187,14 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
               fillOpacity: 0.6,
             },
           },
+          active: {
+            halo: {
+              visible: true,
+            },
+            keyshape: {
+              lineWidth: 5,
+            },
+          },
         },
       };
 
