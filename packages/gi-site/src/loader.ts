@@ -1,4 +1,3 @@
-import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 // import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
