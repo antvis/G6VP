@@ -4,26 +4,23 @@ metas.GIAC_CONTENT.children.title.default = '路径分析';
 metas.GIAC_CONTENT.children.icon.default = 'icon-star';
 metas.GIAC_CONTENT.children.containerWidth.default = '300px';
 
-const registerMeta = () => {
+const registerMeta = ({ schemaData }) => {
+  const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
+  const options = Object.keys(nodeProperties)
+    .filter(key => nodeProperties[key] === 'string')
+    .map(e => ({ value: e, label: e }));
+
   return {
-    searchRule: {
-      name: '查询规则',
+    pathNodeLabel: {
+      name: '路径节点标签映射',
       type: 'select',
-      options: [
-        {
-          value: 'All-Path',
-          label: '所有路径',
-        },
-        {
-          value: 'Shortest-Path',
-          label: '最短路径',
-        },
-        {
-          value: 'Custom-PathRule',
-          label: '自定义规则'
-        },
-      ],
-      default: 'All-Path',
+      options,
+      default: 'id',
     },
     ...metas,
   };

@@ -1,4 +1,3 @@
-import { GraphinData } from '@antv/graphin';
 export interface IFilterRule{
   type: string;
   weightPropertyName?: string,

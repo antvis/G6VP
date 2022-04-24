@@ -1,5 +1,5 @@
-import type { Graph } from '@antv/g6';
 import type { IUserEdge, GraphinData } from '@antv/graphin';
+import {} from "@alipay/graphinsight"
 export const getEdgeIdMap = (edges: IUserEdge[]) => {
   const edgeIdMap = new Map<string, string[]>();
   edges.forEach(edge => {
@@ -99,7 +99,6 @@ export const getNeighbors = (
   return currentEdges.map(neighhborsConverter);
 };
 
-
 /**
  *
  * @param path 由边构成的路径
@@ -108,10 +107,10 @@ export const getNeighbors = (
  * @return 路径长度
  */
 
-export const getPathByWeight = (path: string[], weightPropertyName: string, graphData: GraphinData) => {
+export const getPathByWeight = (path: string[], weightPropertyName: string, dataMap) => {
   let pathLen: number = 0;
   path.forEach(edgeId => {
-    const edgeConfig = graphData.edges.find(edge => edge.id === edgeId)!;
+    const edgeConfig = dataMap.edges[edgeId];
     const data = edgeConfig.data;
     pathLen = pathLen + data[weightPropertyName] ? data[weightPropertyName] : 0;
   });
