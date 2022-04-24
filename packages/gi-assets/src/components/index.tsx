@@ -9,6 +9,7 @@ import NodesSimilarity from './NodesSimilarity';
 import NodeToggle from './NodeToggle';
 import PatternMatch from './PatternMatch';
 import SearchBar from './SearchBar';
+import GremlinQuery from './GremlinQuery';
 
 export {
   NodeToggle,
@@ -22,4 +23,5 @@ export {
   NodeExpandByTypes,
   PatternMatch,
   EdgeBunding,
+  GremlinQuery,
 };
