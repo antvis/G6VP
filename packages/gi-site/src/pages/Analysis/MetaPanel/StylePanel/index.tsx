@@ -16,7 +16,6 @@ interface StylePanelProps {
   data: any;
   elements: any;
   config: any;
-  dispatch: any;
 }
 
 const NodeTab = <div className="tab-title">节点</div>;

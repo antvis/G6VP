@@ -1,10 +1,14 @@
 import React from 'react';
 import type { Updater } from 'use-immer';
-import { State } from './typing';
+import { GIAssets, GIService, State, ISourceDataMap } from './typing';
+
 interface ContextType extends State {
   updateContext: Updater<State>;
   updateData: (data: any) => any;
+  assets: GIAssets;
+  services: GIService[];
   GISDK_ID: string;
+  sourceDataMap: ISourceDataMap;
   /** 用户自己的数据 */
   [userVars: string]: any;
 }

@@ -8,14 +8,31 @@ import { getKeysByData } from './utils';
  * @param data 图数据
  * @returns
  */
-const getComponentsByAssets = (assets, data, services, config) => {
+const getComponentsByAssets = (assets, data, services, config, schemaData) => {
   const GI_CONTAINER_INDEXS = Object.values(assets)
     .filter((item: any) => {
       const info = ((item && item.info) || {}) as TypeAssetInfo;
-
       return (
         info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
-        info.type === 'GIAC_MENU' ||
+        info.type === 'GIAC' ||
+        info.type === 'GIAC_CONTENT'
+      );
+    })
+    .map(item => {
+      const { info } = item as any;
+      return {
+        label: info.name,
+        value: info.id,
+      };
+    });
+
+  // 集成到右键菜单容器中的组件
+  const GI_MENU_CONTAINER_INDEXS = Object.values(assets)
+    .filter((item: any) => {
+      const info = ((item && item.info) || {}) as TypeAssetInfo;
+      return (
+        info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
+        info.type === 'GIAC_MENU' || // 菜单原子组件只能集成到右键菜单组件中
         info.type === 'GIAC' ||
         info.type === 'GIAC_CONTENT'
       );
@@ -41,15 +58,15 @@ const getComponentsByAssets = (assets, data, services, config) => {
         registerMeta = () => {
           return {};
         },
-        Component,
         info = {},
       } = component;
       const keys = getKeysByData(data, 'node');
 
-      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS });
+      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS, GI_MENU_CONTAINER_INDEXS, schemaData });
       /** 默认的配置值 */
       const defaultProps = extractDefault({ config: configObj, value: {} });
       const { id, name, category } = info;
+
       return {
         id,
         name,

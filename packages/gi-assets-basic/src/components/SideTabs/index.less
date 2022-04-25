@@ -1,5 +1,36 @@
 .gi-side-tabs {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  border-right: 1px solid #ddd;
   .gi-side-tabs-content {
     overflow: hidden;
+  }
+  .ant-tabs {
+    height: 100%;
+  }
+  .ant-tabs-tab {
+    justify-content: center;
+    margin-top: 0px;
+    padding: 8px 12px !important;
+    text-align: center;
+  }
+  .ant-tabs-left > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane,
+  .ant-tabs-left > div > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane {
+    height: 100%;
+    padding: 0px;
+  }
+  .ant-tabs-top > .ant-tabs-nav,
+  .ant-tabs-bottom > .ant-tabs-nav,
+  .ant-tabs-top > div > .ant-tabs-nav,
+  .ant-tabs-bottom > div > .ant-tabs-nav {
+    margin-bottom: 8px;
+  }
+  .ant-tabs-tabpane .ant-tabs-tabpane-active {
+    height: 100%;
+  }
+  .ant-tabs-content {
+    height: 100%;
+    padding: 8px;
   }
 }

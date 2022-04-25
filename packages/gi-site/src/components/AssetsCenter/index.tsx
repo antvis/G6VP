@@ -2,8 +2,7 @@ import { CheckCard } from '@alipay/tech-ui';
 import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, RobotOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { StateType } from '../../pages/Analysis/redux';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { queryAssetList } from '../../services/assets';
 import ComponentsPanel from './Components';
 import './index.less';
@@ -38,12 +37,13 @@ let ref = {
 };
 
 const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
-  const state = useSelector((state: StateType) => state);
-  const dispatch = useDispatch();
-  const { id } = state;
+  const { context, updateContext } = useContext();
+
+  const { id } = context;
 
   const { handleCloseAssetsCenter } = useAssetsCenter();
-  const { assetsCenter, config, activeAssetsInformation, activeAssetsKeys } = state;
+  const { assetsCenter, config, activeAssetsInformation, activeAssetsKeys } = context;
+
   const [assets, setAssets] = React.useState({
     components: [],
     elements: [],
@@ -54,7 +54,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const ASSET_LIST = await queryAssetList({
         projectId: id,
       });
-      console.log('ASSET_LIST', ASSET_LIST);
+      // console.log('ASSET_LIST', ASSET_LIST);
       setAssets({ ...ASSET_LIST } as any);
       ref = { ...activeAssetsKeys };
     })();
@@ -63,10 +63,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
   const handleCancel = () => {};
   const handleOk = () => {
-    dispatch({
-      type: 'update:config',
-      activeAssetsKeys: ref,
-      assetsCenter: { visible: false },
+    updateContext(draft => {
+      draft.activeAssetsKeys = ref;
+      draft.assetsCenter = { visible: false };
     });
   };
   const Footer = (
@@ -98,7 +97,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       </div>
     );
   };
-  console.log('assets', assets);
+
   return (
     <div>
       <Drawer

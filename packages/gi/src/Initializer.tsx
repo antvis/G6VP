@@ -1,20 +1,9 @@
+// import { notification } from 'antd';
 import * as React from 'react';
 import { useContext } from './context';
+import { GIService } from './typing';
+import { isPosition, isStyles } from './utils';
 
-const isPosition = nodes => {
-  //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
-  if (nodes.length === 0) {
-    return false;
-  }
-
-  return nodes.every(node => !window.isNaN(node.x) && !window.isNaN(node.y));
-};
-const isStyles = nodes => {
-  if (nodes.length === 0) {
-    return false;
-  }
-  return nodes.every(node => node.style);
-};
 export interface IProps {
   serviceId: string;
 }
@@ -33,10 +22,10 @@ const Initializer: React.FunctionComponent<IProps> = props => {
   const { services, updateContext, transform } = context;
 
   React.useEffect(() => {
-    const { service } = services.find(s => s.id === serviceId);
+    const { service } = services.find(s => s.id === serviceId) as GIService;
     service().then((res = { nodes: [], edges: [] }) => {
       updateContext(draft => {
-        const { nodes } = res;
+        const { nodes, edges } = res;
         const position = isPosition(nodes);
         const style = isStyles(nodes);
         if (position) {
@@ -46,11 +35,34 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.data = res;
           draft.source = res;
         } else {
-          const newData = transform(res);
+          const newData = transform(res, true);
+          draft.rawData = { ...res };
           draft.data = newData;
-          draft.source = { ...res };
+          draft.source = newData;
+
+          if (nodes.length > 1000 || edges.length > 1000) {
+            // notification.warn({
+            //   message: '数据过大',
+            //   description:
+            //     '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
+            // });
+
+            console.warn(
+              '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
+            );
+            draft.layout.type = 'grid';
+            if (nodes.length > 2000 || edges.length > 2000) {
+              /** 数据量过大，需要裁剪 */
+              draft.data = {
+                nodes: [...newData.nodes].splice(0, 1000),
+                edges: [],
+              };
+              console.warn('加载的数据量过大，默认裁剪节点为2000，边为100');
+            }
+          }
         }
         draft.initialized = true;
+        draft.layoutCache = false;
       });
     });
   }, []);

@@ -20,32 +20,51 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string) => {
+  if (isMock) {
+    const project: any = await localforage.getItem(id);
+    return {
+      schemaData: project.schemaData,
+      config: project.projectConfig,
+      data: project.data,
+      activeAssetsKeys: project.activeAssetsKeys,
+      name: project.name,
+      serviceConfig: project.serviceConfig,
+    };
+  }
+
   const getResult = project => {
-    //TODO :这里应该不用处理JSON.parse 吧
     const config = JSON.parse(project.projectConfig);
+
     const data = JSON.parse(project.data);
+    const serviceConfig = JSON.parse(project.serviceConfig);
     let activeAssetsKeys;
     if (project.activeAssetsKeys) {
       activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
     } else {
       activeAssetsKeys = {
-        elements: [config.node.id, config.edge.id],
+        elements: [...config.nodes.map(node => node.id), ...config.edges.map(edge => edge.id)],
         components: [...config.components.map(c => c.id)],
         layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
       };
+    }
+
+    let currentSchema = JSON.parse(project.schemaData)
+    if (!currentSchema) {
+      currentSchema = {
+        nodes: [],
+        edges: []
+      }
     }
     return {
       config,
       data,
       activeAssetsKeys,
       name: project.name,
+      serviceConfig,
+      schemaData: currentSchema
     };
   };
 
-  if (isMock) {
-    const project = await localforage.getItem(id);
-    return getResult(project);
-  }
   // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/id`, {
     method: 'post',
@@ -65,17 +84,39 @@ export const getProjectById = async (id: string) => {
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (id: string, data: any) => {
+export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   if (isMock) {
     const origin: any = await localforage.getItem(id);
-    return await localforage.setItem(id, { ...origin, ...data });
+    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData } = params;
+    // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
+    // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
+    if (data) {
+      origin.data = JSON.parse(data);
+    }
+    if (serviceConfig) {
+      origin.serviceConfig = JSON.parse(serviceConfig);
+    }
+    if (projectConfig) {
+      origin.projectConfig = JSON.parse(projectConfig);
+    }
+    if (schemaData) {
+      origin.schemaData = JSON.parse(schemaData);
+    }
+
+    if (activeAssetsKeys) {
+      origin.activeAssetsKeys = JSON.parse(activeAssetsKeys);
+    }
+    if (name) {
+      origin.name = name;
+    }
+    return await localforage.setItem(id, origin);
   }
 
-  data.id = id;
+  params.id = id;
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
     method: 'post',
-    data,
+    data: params,
   });
 
   return response.success;
@@ -97,20 +138,59 @@ export const removeProjectById = async (id: string) => {
   return response.success;
 };
 
+export interface Project {
+  activeAssetsKeys: {
+    components: string[];
+    elements: string[];
+    layouts: string[];
+  };
+  data: {
+    transFunc?: string;
+    transData: {
+      nodes: any[];
+      edges: any[];
+    };
+  };
+  type: 'case' | 'project';
+  id: string;
+  members: { name: string; id: string; state: 'master' | 'user' }[];
+  projectConfig: {};
+  serviceConfig: {
+    content: string;
+    id: string;
+    mode: 'MOCK' | 'API';
+    name: string;
+  }[];
+  status?: number;
+  tag?: string;
+}
 /**
  * 获取所有项目
  * @returns
  */
-export const getProjectList = async () => {
+export const getProjectList = async (type: 'project' | 'case') => {
   if (isMock) {
-    const list = [];
-    const iter = await localforage.iterate(value => {
-      //@ts-ignore
-      if (value.isProject) {
-        list.push(value);
+    const projects = [];
+    const cases = [];
+
+    const iter = await localforage.iterate((value: Project) => {
+      if (value.type === 'case') {
+        cases.push(value);
+      } else {
+        projects.push(value);
       }
+      // if (value.type === 'project') {
+      //   projects.push(value);
+      // }
     });
-    return list || [];
+    console.log('case', cases, projects, iter);
+    if (type === 'project') {
+      return projects;
+    }
+    if (type == 'case') {
+      return cases;
+    }
+    return projects;
   }
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {
@@ -129,10 +209,18 @@ export const getProjectList = async () => {
 export const addProject = async (param: any) => {
   if (isMock) {
     const projectId = getUid();
-    const p = { ...param, id: projectId, isProject: true };
-    // const all = (await getProjectList()) as any[];
-    // localforage.setItem('projects', [...all, p]);
-
+    const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, ...otherParams } = param;
+    const p = {
+      ...otherParams,
+      schemaData: JSON.parse(schemaData),
+      projectConfig: JSON.parse(projectConfig),
+      activeAssetsKeys: JSON.parse(activeAssetsKeys),
+      data: JSON.parse(data),
+      serviceConfig: JSON.parse(serviceConfig),
+      id: projectId,
+      isProject: true,
+      gmtCreate: new Date(),
+    };
     localforage.setItem(projectId, p);
     return new Promise(resolve => {
       resolve(projectId);

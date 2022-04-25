@@ -1,5 +1,5 @@
+import { useContext } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
-import { GraphinContext } from '@antv/graphin';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
 import { Button, Collapse, Select } from 'antd';
 import React from 'react';
@@ -150,8 +150,8 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
     ],
   });
 
-  const { services, dispatch, GiState, setGiState } = GraphinContext as any;
-  const { graph } = React.useContext(GraphinContext);
+  // const { services, dispatch, GiState, setGiState } = GraphinContext as any;
+  const { graph, services, data, updateContext } = useContext();
 
   React.useEffect(() => {
     const onNodeSelectChange = e => {
@@ -168,6 +168,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
         }
       });
     };
+    //@ts-ignore
     graph.on('nodeselectchange', onNodeSelectChange);
     return () => {
       graph.off('nodeselectchange', onNodeSelectChange);

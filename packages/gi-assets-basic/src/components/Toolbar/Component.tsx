@@ -1,6 +1,7 @@
-import { Toolbar } from '@antv/graphin-components';
+import { utils } from '@alipay/graphinsight';
 import * as React from 'react';
-import { getPositionStyles } from '../WrapContainer';
+import Toolbar from './Toolbar';
+const { getPositionStyles } = utils;
 
 type direction = 'vertical' | 'horizontal';
 export interface ToolbarProps {
@@ -11,7 +12,7 @@ export interface ToolbarProps {
   offset: number[];
 }
 
-const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
+const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
   const { direction = 'horizontal', components, assets, placement, offset } = props;
   const positionStyles = getPositionStyles(placement, offset);
 
@@ -23,11 +24,16 @@ const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
           if (!item) {
             return null;
           }
-          const { props, id } = item;
-          const { component: Component } = assets[id];
+          const { props: itemProps, id: itemId } = item;
+          const asset = assets[itemId];
+          if (!asset) {
+            console.warn(`asset: ${itemId} not found`);
+            return null;
+          }
+          const { component: Component } = asset;
           return (
-            <span key={id}>
-              <Component {...props} />
+            <span key={itemId}>
+              <Component {...itemProps} />
             </span>
           );
         })}
@@ -36,4 +42,4 @@ const ToolbarA: React.FunctionComponent<ToolbarProps> = props => {
   );
 };
 
-export default ToolbarA;
+export default ToolbarContainer;

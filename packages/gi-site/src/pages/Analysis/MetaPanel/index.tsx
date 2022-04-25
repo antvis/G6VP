@@ -4,7 +4,7 @@ import ComponentPanel from './ComponentPanel';
 import WrapDataPanel from './DataPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
-import StylePanel from './StylePanel';
+import StylesPanel from './StylesPanel';
 const navbarOptions = [
   {
     id: 'data',
@@ -14,7 +14,7 @@ const navbarOptions = [
   {
     id: 'style',
     name: '样式',
-    component: StylePanel,
+    component: StylesPanel, // StylePanel,
   },
 
   {
@@ -55,13 +55,4 @@ const MetaPanel = props => {
   );
 };
 
-export default React.memo(MetaPanel, (prevProps, nextProps) => {
-  if (
-    prevProps.value !== nextProps.value ||
-    prevProps.refreshKey !== nextProps.refreshKey ||
-    JSON.stringify(prevProps.config) !== JSON.stringify(nextProps.config)
-  ) {
-    return false;
-  }
-  return true;
-});
+export default MetaPanel;

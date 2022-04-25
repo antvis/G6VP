@@ -1,3 +1,4 @@
+import type { GIEdgeConfig } from '@alipay/graphinsight/lib/typing';
 import { Utils } from '@antv/graphin';
 import { scaleLinear } from 'd3-scale';
 import merge from 'deepmerge';
@@ -21,8 +22,8 @@ const getMapping = () => {
 };
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (s, config, reset?: boolean) => {
-  const mathEdgeConfig = Object.assign({}, defaultProps, config.edge.props);
+const transform = (s, config: GIEdgeConfig, reset?: boolean) => {
+  const mathEdgeConfig = Object.assign({}, defaultProps, config.props);
   try {
     /** 解构配置项 */
     /** 分别生成Size和Color的Mapping */

@@ -42,7 +42,7 @@ const NodeAttrs: React.FunctionComponent<NodeAttrsProps> = props => {
         nodes: [],
       });
     };
-
+    //@ts-ignore
     graph.on('nodeselectchange', handleSelect);
     // graph.on('canvas:click', handleClose);
     return () => {

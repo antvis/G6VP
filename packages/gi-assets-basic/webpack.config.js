@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const packages = require('./package.json');
+const globalName = packages.name.replace('@alipay/', '').toUpperCase();
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, argv) => {
@@ -77,7 +79,7 @@ module.exports = (env, argv) => {
     },
     // devtool: 'cheap-module-source-map',
     output: {
-      library: 'GI_Assets_Basic',
+      library: globalName,
       libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist/'),
       publicPath: './',
@@ -92,7 +94,7 @@ module.exports = (env, argv) => {
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
-      '@antv/graphin-components': 'GraphinComponents',
+
       '@antv/g6': 'G6',
       antd: 'antd',
       '@alipay/graphinsight': 'GISDK',

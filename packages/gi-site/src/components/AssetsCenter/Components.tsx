@@ -114,7 +114,7 @@ const CategoryHeader = ({ data }) => {
 
 const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => {
   const { data, handleChange, defaultValue } = props;
-  console.log('data', data, handleChange, defaultValue);
+
   const res = React.useMemo(() => {
     return data.reduce((acc, curr) => {
       const { category } = curr;
@@ -138,8 +138,6 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
         return a.order - b.order;
       });
   }, [categoryKeys]);
-
-  console.log('categoryKeys', categoryKeys, categroy);
 
   return (
     <div>

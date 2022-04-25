@@ -15,7 +15,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   const { serviceId, hasService } = props;
   const { graph, services } = useContext();
   const service = utils.getService(services, serviceId);
-  if (hasService && !service) {
+  if (!service) {
     return null;
   }
 
@@ -49,7 +49,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
-      const detail = hasService ? await service(model) : model.data;
+      const detail = await service(model);
 
       setState(preState => {
         return {
@@ -70,7 +70,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
-      const detail = hasService ? await service(model) : model.data;
+      const detail = await service(model);
 
       setState(preState => {
         return {

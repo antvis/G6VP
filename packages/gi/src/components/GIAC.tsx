@@ -20,9 +20,16 @@ export interface GIAComponentProps {
   GIAC: IGIAC;
   onClick: () => void;
   iconFontUrl?: string;
+  className?: string;
 }
 const GIAComponent = (props: GIAComponentProps) => {
-  const { GIAC, onClick, iconFontUrl = 'https://at.alicdn.com/t/font_3156164_5ke23ql3q6e.js', ...others } = props;
+  const {
+    GIAC,
+    onClick,
+    iconFontUrl = 'https://at.alicdn.com/t/font_3156164_5ke23ql3q6e.js',
+    className,
+    ...others
+  } = props;
   const {
     tooltip,
     tooltipPlacement,
@@ -53,7 +60,13 @@ const GIAComponent = (props: GIAComponentProps) => {
         tooltipPlacement={tooltipPlacement}
         isShowTooltip={isShowTooltip}
       >
-        <Button type="text" style={isVertical ? { height } : {}} disabled={disabled} onClick={onClick}>
+        <Button
+          type="text"
+          style={isVertical ? { height } : {}}
+          disabled={disabled}
+          onClick={onClick}
+          className={className}
+        >
           {isShowIcon && <MyIcon type={icon} />}
           {isVertical && <br />}
           {isShowTitle && title}

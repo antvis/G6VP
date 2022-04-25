@@ -4,8 +4,10 @@ import GISDK, { utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import Offset from './DataVGui/Offset';
 import TagsSelect from './DataVGui/TagsSelect';
-import { services as MockServices } from './mock';
+import { GI_LOCAL_DATA, GI_SERVICES_OPTIONS } from './Mock/index';
 import { getAssetsByType, getConfigByType } from './utils';
+
+const MockServices = utils.getServicesByConfig(GI_SERVICES_OPTIONS, GI_LOCAL_DATA);
 
 const extensions = {
   TagsSelect,
@@ -18,17 +20,20 @@ export interface TestSDKProps {
     info: {
       id: string;
       name: string;
-      type: 'GI_CONTAINER' | 'GI_CONTAINER_INDEX';
+      type: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE' | 'LAYOUT';
     };
     registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+    mockServices?: () => any[];
   };
   /** 资产类型 */
-  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE';
+  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU' | 'NODE' | 'EDGE' | 'LAYOUT';
   /** 自定义数据服务 */
   services: {
     id: string;
     service: () => Promise<any>;
   }[];
+  updateConfig?: (_draft) => any;
+  style?: React.CSSProperties;
 }
 const styles = {
   root: {
@@ -49,8 +54,13 @@ const styles = {
 };
 
 const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
-  const { asset, type, services = [] } = props;
-  const { info, registerMeta, component } = asset;
+  const { asset, services = [], updateConfig } = props;
+  const type = props.type || asset.info.type;
+  const { info, registerMeta, component, mockServices } = asset;
+  let assetServices: any[] = [];
+  if (mockServices) {
+    assetServices = mockServices();
+  }
   const { id, name } = info;
 
   const [state, setState] = React.useState({
@@ -61,7 +71,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   });
 
   const { valueObj, configObj } = state;
-  const innerServices = utils.uniqueElementsBy([...services, ...MockServices], (a, b) => {
+  const innerServices = utils.uniqueElementsBy([...services, ...assetServices, ...MockServices], (a, b) => {
     return a.id === b.id;
   });
 
@@ -76,7 +86,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
         data: res,
         services: innerServices,
         keys: ['id'],
-        GI_CONTAINER_INDEXS: ['MenuA', 'BarA'],
+        GI_CONTAINER_INDEXS: ['ZoomIn', 'ZoomOut', 'FitView'],
       });
       const configObj = {
         [id]: {
@@ -93,7 +103,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       setState(preState => {
         return {
           ...preState,
-          data: res,
+          data: GI_LOCAL_DATA,
           isReady: true,
           configObj,
           valueObj,
@@ -113,7 +123,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   };
 
   const { assets, config } = React.useMemo(() => {
-    const nextConfig = getConfigByType(type, id, valueObj);
+    const nextConfig = getConfigByType(type, id, valueObj, updateConfig);
     const nextAssets = getAssetsByType(type, id, asset);
     return {
       config: nextConfig,
@@ -126,7 +136,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   }
   console.log(config, assets);
   return (
-    <div style={styles.root}>
+    <div style={{ ...styles.root, ...props.style }}>
       {/* @ts-ignore */}
       <div style={styles.meta}>
         <h3>GraphInsight 属性面板配置</h3>

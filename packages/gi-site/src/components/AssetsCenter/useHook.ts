@@ -1,23 +1,21 @@
-import { useDispatch } from 'react-redux';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 
 const useAssetsCenter = (hash = 'components') => {
-  const dispatch = useDispatch();
+  const { updateContext } = useContext();
   const handleOpenAssetsCenter = () => {
-    dispatch({
-      type: 'update',
-      assetsCenter: {
+    updateContext(draft => {
+      draft.assetsCenter = {
         visible: true,
         hash,
-      },
+      };
     });
   };
   const handleCloseAssetsCenter = () => {
-    dispatch({
-      type: 'update',
-      assetsCenter: {
+    updateContext(draft => {
+      draft.assetsCenter = {
         visible: false,
         hash: 'components',
-      },
+      };
     });
   };
   return {

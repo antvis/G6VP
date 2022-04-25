@@ -1,4 +1,13 @@
-import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+/** 是否为本地研发模式 */
+export const isDev = process.env.NODE_ENV === 'development';
+
+const localDeps = isDev
+  ? {}
+  : {
+      '@alipay/graphinsight': 'GISDK',
+    };
+
+const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.2.1/dist/index.min.js'];
 
 export default {
   // 具体配置项
@@ -15,15 +24,17 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
+  // dynamicImportSyntax: {},
   routes: [
     { exact: true, path: '/', component: 'Home' },
     { exact: true, path: '/workspace', component: 'Workspace' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
+    { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
-    { exact: true, path: '/market', component: 'Market/List' },
-    { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
-    { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
-    { exact: true, path: '/market/personal', component: 'Market/Personal/PersonalAsserts' },
+    // { exact: true, path: '/market', component: 'Market/List' },
+    // { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
+    // { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
+    // { exact: true, path: '/market/personal', component: 'Market/Personal/PersonalAsserts' },
     { component: '404' },
   ],
   // mfsu: {},
@@ -34,48 +45,43 @@ export default {
   request: {
     dataField: '',
   },
-  chainWebpack(config: any) {
-    config.plugin('monaco-editor').use(
-      new MonacoWebpackPlugin({
-        languages: ['javascript', 'json'],
-      }),
-    );
-  },
+  // chainWebpack(config: any) {
+  //   config.plugin('monaco-editor').use(
+  //     new MonacoWebpackPlugin({
+  //       languages: ['javascript', 'json'],
+  //     }),
+  //   );
+  // },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
     '@antv/graphin': 'Graphin',
-    '@antv/graphin-components': 'GraphinComponents',
     '@antv/g6': 'G6',
     antd: 'antd',
     'antd/es/*': 'antd',
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    '@alipay/graphinsight': 'GISDK',
+    ...localDeps,
   },
   scripts: [
-    'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
-    'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
+    'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
+    'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.2/dist/graphin.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/graphin-components.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js',
 
     /** GI */
-
-    'https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.1.7/dist/index.min.js',
+    ...localScripts,
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
-
-    // 'https://gw.alipayobjects.com/os/lib/require.js/1.0.0/require.min.js',
   ],
   styles: [
-    'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.5.2/dist/index.css',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin-components/2.4.0/dist/index.css',
+    // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
     'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
   analyze: {

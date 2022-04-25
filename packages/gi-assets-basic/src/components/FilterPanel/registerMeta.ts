@@ -1,49 +1,24 @@
-const registerMeta = context => {
-  const { data } = context;
-  const nodeKeys = Object.keys(data.nodes[0].data);
+import { extra } from '@alipay/graphinsight';
 
-  const nodeOptions = nodeKeys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
-  const edgeKeys = Object.keys(data.edges[0].data);
-  const edgeOptions = edgeKeys.map(c => {
-    return {
-      value: c,
-      label: c,
-    };
-  });
+const { deepClone, GIAC_CONTENT_METAS } = extra;
+const metas = deepClone(GIAC_CONTENT_METAS);
+metas.GIAC_CONTENT.children.title.default = '筛选面板';
+metas.GIAC_CONTENT.children.icon.default = 'icon-filter';
+metas.GIAC_CONTENT.children.containerWidth.default = '400px';
+
+const registerMeta = () => {
   return {
-    node: {
-      name: '节点',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sortKey: {
-          name: '映射字段',
-          type: 'select',
-          default: 'id',
-          options: nodeOptions,
-        },
-      },
+    histogramColor: {
+      name: '直方图颜色',
+      type: 'fill',
+      default: '#3056E3',
     },
-    edge: {
-      name: '边',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        sortKey: {
-          name: '映射字段',
-          type: 'select',
-          default: 'source',
-          options: edgeOptions,
-        },
-      },
+    isFilterIsolatedNodes: {
+      name: '过滤孤立节点',
+      type: 'switch',
+      default: true,
     },
+    ...metas,
   };
 };
 

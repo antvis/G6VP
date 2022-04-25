@@ -89,8 +89,9 @@ module.exports = (env, argv) => {
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
-      '@antv/graphin-components': 'GraphinComponents',
+
       '@antv/g6': 'G6',
+      '@alipay/grapphinsight': 'GISDK',
       antd: 'antd',
     },
   };
