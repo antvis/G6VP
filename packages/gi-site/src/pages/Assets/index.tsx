@@ -25,7 +25,6 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     dynamicLoadModules().then(res => {
       const packages = getAssetPackages();
       const assets = getCombinedAssets();
-
       setState({
         isReady: true,
         //@ts-ignore
