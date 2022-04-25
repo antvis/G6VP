@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
-import { Popover, Button, Select, Form } from 'antd';
 import { useContext, utils } from '@alipay/graphinsight';
+import { FilterOutlined } from '@ant-design/icons';
+import { Button, Form, Popover, Select } from 'antd';
+import React, { useMemo } from 'react';
 import { IState } from './typing';
 export interface FileRuleProps {
   children: React.FC;
@@ -81,7 +82,7 @@ export const FilterRule = props => {
       placement="right"
       content={<FilterRuleContent state={state} updateState={updateState} />}
     >
-      <Button type="primary">过滤路径</Button>
+      <Button type="primary" icon={<FilterOutlined />}></Button>
     </Popover>
   );
 };
