@@ -9,7 +9,6 @@ export interface IState {
   allEdgePath: string[][];
   nodePath: string[][];
   edgePath: string[][];
-  pathStatusMap: { [key: string]: boolean };
   highlightPath: Set<number>;
   isAnalysis: boolean;
   filterRule: IFilterRule;
