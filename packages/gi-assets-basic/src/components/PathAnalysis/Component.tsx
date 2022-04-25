@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
 import { useContext } from '@alipay/graphinsight';
-import { Form, Select, Button, Timeline, Collapse, Empty, Row, Col } from 'antd';
-import { useImmer } from 'use-immer';
+import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Timeline } from 'antd';
 import { enableMapSet } from 'immer';
-import { IState, IHighlightElement } from './typing';
-import { findAllPath, getPathByWeight } from './utils';
+import React, { useEffect, useRef } from 'react';
+import { useImmer } from 'use-immer';
+import FilterRule from './FilterRule';
 import './index.less';
 import PanelExtra from './PanelExtra';
-import FilterRule from './FilterRule';
+import { IHighlightElement, IState } from './typing';
+import { findAllPath, getPathByWeight } from './utils';
 
 const { Panel } = Collapse;
 
@@ -168,9 +169,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
   return (
     <div className="gi-path-analysis">
-      <h2 className="gi-path-analysis-title">路径分析</h2>
+      {/* <h2 className="gi-path-analysis-title">路径分析</h2> */}
       <Form form={form}>
-        <Form.Item label="起点节点ID" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
+        <Form.Item label="起始节点" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
           <Select showSearch optionFilterProp="children">
             {graphData.nodes.map(node => (
               <Select.Option key={node.id} value={node.id}>
@@ -179,7 +180,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="终点节点ID" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
+        <Form.Item label="目标节点" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
           <Select showSearch optionFilterProp="children">
             {graphData.nodes.map(node => (
               <Select.Option key={node.id} value={node.id}>
@@ -190,27 +191,30 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         </Form.Item>
         <Form.Item>
           <Row>
-            <Col span={6}>
-              <Button style={{ marginRight: 8 }} onClick={handleResetForm}>
-                重置
+            <Col span={16}>
+              <Button type="primary" onClick={handleSearch} style={{ width: '100%' }}>
+                查询路径
               </Button>
             </Col>
-            <Col span={6}>
-              <Button type="primary" onClick={handleSearch}>
-                查询
-              </Button>
-            </Col>
-            <Col offset={5} span={6}>
-              {state.isAnalysis && state.allNodePath.length > 0 && (
-                <FilterRule state={state} updateState={updateState} />
-              )}
+            <Col offset="2" span={6} style={{ textAlign: 'right' }}>
+              <Space size={'small'}>
+                {state.isAnalysis && state.allNodePath.length > 0 && (
+                  <FilterRule state={state} updateState={updateState} />
+                )}
+                <Button danger onClick={handleResetForm} icon={<DeleteOutlined />}></Button>
+              </Space>
             </Col>
           </Row>
         </Form.Item>
       </Form>
       <div className="gi-path-analysis-path-list-container">
         {state.nodePath.length > 0 && (
-          <Collapse defaultActiveKey={0}>
+          <Collapse
+            defaultActiveKey={0}
+            ghost={true}
+            className="gi-collapse-container"
+            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+          >
             {state.nodePath.map((path, index) => {
               return (
                 <Panel

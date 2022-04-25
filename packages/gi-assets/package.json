@@ -19,7 +19,6 @@
     "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/layout": "^0.1.19-beta.3",
-    "ace-gremlin-editor": "^0.0.13-beta.1",
     "antd": "^4.18.8",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
