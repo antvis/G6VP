@@ -1,4 +1,5 @@
-import { deepClone, GIAC_CONTENT_METAS } from '../const';
+import { extra } from '@alipay/graphinsight';
+const { deepClone, GIAC_CONTENT_METAS } = extra;
 
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.children.title.default = '关系扩散';

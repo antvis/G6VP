@@ -7,6 +7,11 @@ import {
   GIAC_PROPS,
   GI_CONTAINER_METAS,
 } from './components/const';
+
+export { default as Icon } from './components/Icon';
+
+export type { IGIAC } from './components/const';
+
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
@@ -24,10 +29,10 @@ const extra = {
   GIAC_PROPS,
   /** 容器组件 META */
   GI_CONTAINER_METAS,
-
   deepClone,
   GIAComponent,
 };
+
 const version = '2.0.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
