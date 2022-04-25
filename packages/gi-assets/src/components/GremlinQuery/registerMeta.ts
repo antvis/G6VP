@@ -20,12 +20,12 @@ const registerMeta = context => {
     serviceId: {
       name: '数据服务',
       type: 'select',
-      default: '',
+      default: 'Mock/GremlinQuery',
       options: serviceOptions,
     },
-    initValue: {
+    initialValue: {
       name: '初始查询语句',
-      type: 'input',
+      type: 'text',
       default: 'g.V(1)',
     },
     height: {
@@ -35,11 +35,6 @@ const registerMeta = context => {
       step: 1,
       min: 0,
       max: 750,
-    },
-    showGutter: {
-      name: '是否显示行号',
-      type: 'switch',
-      default: false,
     },
     ...metas,
   };

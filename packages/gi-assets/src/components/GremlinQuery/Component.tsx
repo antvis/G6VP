@@ -38,8 +38,6 @@ export interface IGremlinQueryProps {
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style }) => {
-  console.log('style', style);
-
   const { data, updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
@@ -71,7 +69,12 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
     const result = await service({
       value: editorValue,
-    }).then(response => response.json());
+    }).then(response => {
+      if (response.json) {
+        return response.json();
+      }
+      return response;
+    });
 
     setBtnLoading(false);
     console.log('Gremlin 查询结果', result);
@@ -79,11 +82,8 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
       return;
     }
 
-    const newData = utils.handleExpand(data, result.data);
-
     updateContext(draft => {
-      const res = transform(newData);
-      console.log('转换后的数据', res);
+      const res = transform(result.data);
       res.nodes.forEach(node => {
         if (!node.style.badges) {
           node.style.badges = [];
