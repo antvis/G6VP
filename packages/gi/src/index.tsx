@@ -1,5 +1,12 @@
 /** export  */
-import { deepClone, GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS } from './components/const';
+import {
+  deepClone,
+  GIAC_CONTENT_METAS,
+  GIAC_CONTENT_PROPS,
+  GIAC_METAS,
+  GIAC_PROPS,
+  GI_CONTAINER_METAS,
+} from './components/const';
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
@@ -10,10 +17,14 @@ export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig,
 export { useContext, utils };
 export { extra };
 const extra = {
+  /** 原子组件 META */
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
   GIAC_METAS,
   GIAC_PROPS,
+  /** 容器组件 META */
+  GI_CONTAINER_METAS,
+
   deepClone,
   GIAComponent,
 };

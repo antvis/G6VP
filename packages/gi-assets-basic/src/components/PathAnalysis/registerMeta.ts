@@ -1,8 +1,9 @@
-import { deepClone, GIAC_CONTENT_METAS } from '../const';
+import { extra } from '@alipay/graphinsight';
+const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.children.title.default = '路径分析';
 metas.GIAC_CONTENT.children.icon.default = 'icon-star';
-metas.GIAC_CONTENT.children.containerWidth.default = '300px';
+metas.GIAC_CONTENT.children.containerWidth.default = '400px';
 
 const registerMeta = ({ schemaData }) => {
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
