@@ -17,10 +17,6 @@ const NPM_INFO = [
     name: '@alipay/gi-assets-basic',
     version: '2.0.0',
   },
-  // {
-  //   name: '@alipay/gi-assets-advance',
-  //   version: '2.0.0',
-  // },
   {
     name: '@alipay/gi-assets-scene',
     version: '2.0.0',
@@ -52,12 +48,12 @@ export const setDefaultAssetPackages = () => {
   //   global: 'GeaMakerGraphStudio',
   // };
 
-  packages['GI_Assets_Kg'] = {
-    name: '@alipay/gi-assets-kg',
-    version: '0.0.7',
-    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
-    global: 'GI_Assets_Kg',
-  };
+  // packages['GI_Assets_Kg'] = {
+  //   name: '@alipay/gi-assets-kg',
+  //   version: '0.0.7',
+  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
+  //   global: 'GI_Assets_Kg',
+  // };
 
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
 };
