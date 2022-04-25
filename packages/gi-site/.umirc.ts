@@ -1,19 +1,46 @@
 /** 是否为本地研发模式 */
 
-export const isDev = process.env.NODE_ENV === 'development';
-const GI_VERSION = '2.0.1';
-const localDeps = isDev
-  ? {}
-  : {
-      '@alipay/graphinsight': 'GISDK',
-      '@alipay/gi-assets-basic': 'GI-ASSET-BASIC',
-      '@alipay/gi-assets-scene': 'GI-ASSET-SCENE',
-      // '@alipay/gi-assets-basic': 'GI-ASSET-BASIC',
-    };
+export const isDev = false; // process.env.NODE_ENV === 'development';
 
-const localScripts = isDev
+export const NPM_INFO = [
+  {
+    name: '@alipay/graphinsight',
+    version: '2.0.1',
+    global: 'GISDK',
+  },
+  {
+    name: '@alipay/gi-assets-basic',
+    version: '2.0.0',
+  },
+  {
+    name: '@alipay/gi-assets-scene',
+    version: '2.0.0',
+  },
+];
+
+const PACKAGES = NPM_INFO.map(c => {
+  const name = c.name.replace('@alipay/', '');
+  return {
+    url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+    global: name.toUpperCase(),
+    ...c,
+  };
+});
+
+const externals = isDev
+  ? {}
+  : PACKAGES.reduce((acc, curr) => {
+      return {
+        ...acc,
+        [curr.name]: `${curr.global}`,
+      };
+    }, {});
+
+const externalScripts = isDev
   ? []
-  : [`https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${GI_VERSION}/dist/index.min.js`];
+  : PACKAGES.map(c => {
+      return c.url;
+    });
 
 console.log('isDev', isDev);
 export default {
@@ -69,7 +96,7 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    ...localDeps,
+    ...externals,
   },
   scripts: [
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
@@ -82,11 +109,14 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js',
 
     /** GI */
-    ...localScripts,
+    ...externalScripts,
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
   ],
   styles: [
+    ...externalScripts.map(c => {
+      return c.replace('min.js', 'css');
+    }),
     // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
     'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
