@@ -1,7 +1,8 @@
 import { GraphinContext } from '@antv/graphin';
 import * as React from 'react';
-import { IGIAC } from '../const';
-import GIAComponent from '../GIAC';
+import type { IGIAC } from '@alipay/graphinsight';
+import { extra } from '@alipay/graphinsight';
+const { GIAComponent } = extra;
 export interface IProps {
   GIAC: IGIAC;
 }

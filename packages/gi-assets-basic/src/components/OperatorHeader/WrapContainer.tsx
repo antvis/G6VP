@@ -1,7 +1,7 @@
 import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MyIcon from '../Icon';
+import { Icon } from '@alipay/graphinsight';
 import EventEmitter from './EventEmitter';
 
 const EM = new EventEmitter();
@@ -202,7 +202,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             isShowTooltip={isShowTooltip}
           >
             <Button type="text" style={isVertical ? { height: '60px' } : {}} onClick={onClick} disabled={disabled}>
-              {isShowIcon && <MyIcon type={icon} />}
+              {isShowIcon && <Icon type={icon} />}
               {isVertical && <br />}
               {isShowTitle && title}
             </Button>
