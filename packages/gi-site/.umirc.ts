@@ -1,13 +1,15 @@
 /** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
-
+const GI_VERSION = '2.0.0';
 const localDeps = isDev
   ? {}
   : {
       '@alipay/graphinsight': 'GISDK',
     };
 
-const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.2.1/dist/index.min.js'];
+const localScripts = isDev
+  ? []
+  : [`https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${GI_VERSION}/dist/index.min.js`];
 
 export default {
   // 具体配置项

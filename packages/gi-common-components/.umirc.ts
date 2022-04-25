@@ -28,4 +28,14 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.4.9/dist/index.css',
   ],
+  analyze: {
+    analyzerMode: 'server',
+    analyzerPort: 8888,
+    openAnalyzer: true,
+    // generate stats file while ANALYZE_DUMP exist
+    generateStatsFile: false,
+    statsFilename: 'stats.json',
+    logLevel: 'info',
+    defaultSizes: 'parsed', // stat  // gzip
+  },
 };
