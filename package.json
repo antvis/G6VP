@@ -47,7 +47,7 @@
     "build": "npm run build:site && npm run move:dist",
     "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "build:site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:site": "cd packages/gi-site && tnpm install && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "move:dist": "node ./deploy.js",
