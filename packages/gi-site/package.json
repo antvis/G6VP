@@ -14,6 +14,8 @@
     "react-dom": "17.x"
   },
   "dependencies": {
+    "@fast-csv/format": "latest",
+    "@faker-js/faker": "latest",
     "@alipay/graphinsight": "*",
     "@alipay/gi-assets-basic": "*",
     "@alipay/gi-assets-scene": "*",
