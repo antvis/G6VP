@@ -26,7 +26,6 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     allEdgePath: [],
     nodePath: [],
     edgePath: [],
-    pathStatusMap: {},
     highlightPath: new Set<number>(),
     isAnalysis: false,
     filterRule: {
@@ -47,7 +46,6 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     updateState(draft => {
       draft.nodePath = [];
       draft.edgePath = [];
-      draft.pathStatusMap = {};
       draft.highlightPath = new Set();
       draft.isAnalysis = false;
     });
@@ -84,10 +82,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   // 取消所有节点和边的高亮状态
   const cancelHighlight = () => {
     [...highlightElementRef.current?.nodes].forEach(nodeId => {
-      graph.setItemState(nodeId, 'active', false);
+      graph.findById(nodeId) && graph.setItemState(nodeId, 'active', false);
     });
     [...highlightElementRef.current.edges].forEach(edgeId => {
-      graph.setItemState(edgeId, 'active', false);
+      graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
     });
   };
 
@@ -97,20 +95,14 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       const edges = state.edgePath[i];
 
       if (!state.highlightPath.has(i)) {
-        state.pathStatusMap[i] &&
-          nodes.forEach(nodeId => {
-            graph.setItemState(nodeId, 'active', false);
-            highlightElementRef.current?.nodes.delete(nodeId);
-          });
+        nodes.forEach(nodeId => {
+          graph.findById(nodeId) && graph.setItemState(nodeId, 'active', false);
+          highlightElementRef.current?.nodes.delete(nodeId);
+        });
 
-        state.pathStatusMap[i] &&
-          edges.forEach(edgeId => {
-            graph.setItemState(edgeId, 'active', false);
-            highlightElementRef.current?.edges.delete(edgeId);
-          });
-
-        updateState(draft => {
-          draft.pathStatusMap[i] = false;
+        edges.forEach(edgeId => {
+          graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
+          highlightElementRef.current?.edges.delete(edgeId);
         });
       }
     }
@@ -120,19 +112,16 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       const edges = state.edgePath[i];
       if (state.highlightPath.has(i)) {
         nodes.forEach(nodeId => {
-          graph.setItemState(nodeId, 'active', true);
+          graph.findById(nodeId) && graph.setItemState(nodeId, 'active', true);
           highlightElementRef.current?.nodes.add(nodeId);
         });
         edges.forEach(edgeId => {
-          graph.setItemState(edgeId, 'active', true);
+          graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
           highlightElementRef.current?.edges.add(edgeId);
-        });
-        updateState(draft => {
-          draft.pathStatusMap[i] = true;
         });
       }
     }
-  }, [state.highlightPath, state.pathStatusMap]);
+  }, [state.highlightPath]);
 
   // 过滤逻辑副作用
   useEffect(() => {
@@ -163,9 +152,12 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       draft.nodePath = nodePath;
       draft.edgePath = edgePath;
       draft.highlightPath = new Set(nodePath.map((_, index) => index));
-      draft.pathStatusMap = {};
     });
   }, [state.allNodePath, state.allEdgePath, state.filterRule]);
+
+  useEffect(() => {
+    handleResetForm();
+  }, [graphData]);
 
   return (
     <div className="gi-path-analysis">
