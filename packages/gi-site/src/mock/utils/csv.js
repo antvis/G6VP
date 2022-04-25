@@ -4,7 +4,7 @@ const csv = require('@fast-csv/format');
 const faker = require('@faker-js/faker').default;
 
 //中国的经纬度范围大约为： 纬度3.86 53.55，经度73.66 135.05
-const nodeType = ['user', 'customer', 'supplier'];
+const nodeType = ['user', 'customer', 'supplier', 'partner'];
 const genNodes = (count, type) => {
   return Array.from({ length: count }, (v, i) => {
     const count = Math.floor(Math.random() * 4); //每个节点与其他节点的链接不超过 10 个
@@ -19,7 +19,6 @@ const genNodes = (count, type) => {
       email: faker.internet.email(),
       company: faker.company.companyName(),
       avatar: faker.internet.avatar(),
-      tags: [],
       group: faker.datatype.number({ min: 1, max: 4 }),
       /** 地理信息 */
       country: faker.address.country(),
@@ -76,12 +75,12 @@ class CsvFile {
   }
 }
 
-const nodeCount = 100;
+const nodeCount = 10000;
 const nodes = genNodes(nodeCount, 'user');
-const edgeType = ['follow', 'friend', 'employee', 'family'];
+const edgeType = ['follow', 'friend', 'employee', 'family', 'partner'];
 const edges = nodes
   .map((node, index) => {
-    const linkCount = Math.floor(Math.random() * 3); //每个节点与其他节点的链接不超过 10 个
+    const linkCount = Math.floor(Math.random() * 5); //每个节点与其他节点的链接不超过 4 个
     console.log('linkCount', linkCount);
     const links = Array.from({ length: linkCount }, (v, i) => {
       const link = {

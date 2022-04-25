@@ -54,8 +54,8 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             if (nodes.length > 2000 || edges.length > 2000) {
               /** 数据量过大，需要裁剪 */
               draft.data = {
-                nodes: [...newData.nodes].splice(0, 2000),
-                edges: [...newData.edges].splice(0, 100),
+                nodes: [...newData.nodes].splice(0, 1000),
+                edges: [],
               };
               console.warn('加载的数据量过大，默认裁剪节点为2000，边为100');
             }
