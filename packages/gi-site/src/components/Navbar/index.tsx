@@ -95,8 +95,6 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   }, []);
 
   const { name } = initProject;
-  //console.log(initProject, '@init')
-  console.log(name, '@@')
   const rightContent = (
     <>
       <Tooltip title="保存">
