@@ -1,6 +1,5 @@
-import { CloseOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@alipay/graphinsight';
-import GremlinEditor from 'ace-gremlin-editor';
+import GremlinEditor from './GremlinEditor';
 import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
 import { Button, Col, Divider, Row, notification } from 'antd';
@@ -31,31 +30,21 @@ const defSpringLen = (_edge, source, target) => {
 };
 
 export interface IGremlinQueryProps {
-  onClose: () => void;
-  initValue?: string;
-  theme?: 'dark' | 'light';
+  initialValue?: string;
   height?: number;
   showGutter?: boolean;
   serviceId: string;
   style?: React.CSSProperties | undefined;
 }
 
-const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
-  onClose,
-  initValue = '',
-  theme = 'dark',
-  height = 220,
-  showGutter = false,
-  serviceId,
-  style,
-}) => {
+const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style }) => {
   console.log('style', style);
 
   const { data, updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
 
-  const [editorValue, setEditorValue] = useState(initValue || '');
+  const [editorValue, setEditorValue] = useState(initialValue || '');
 
   const handleChangeEditorValue = (value: string) => {
     setEditorValue(value);
@@ -132,41 +121,18 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   };
 
   return (
-    <div
-      className={'gremlineQueryPanel'}
-      style={
-        {
-          height: 'fit-content',
-          position: 'absolute',
-          ...style,
-        } as any
-      }
-    >
+    <div className={'gremlineQueryPanel'} style={style}>
       <Row className={classNames('header', 'handle')}>
         <Col span={22} className={'title'}>
-          Gremlin 查询
-        </Col>
-        <Col span={2}>
-          <span className={'collapseIcon'} onClick={onClose}>
-            <CloseOutlined />
-          </span>
+          请输入 Gremlin 语句进行查询
         </Col>
       </Row>
-      <div
-        className={'contentContainer'}
-        style={{
-          display: 'block',
-        }}
-      >
+      <div className={'contentContainer'}>
         <div className={'blockContainer'}>
-          <div style={{ marginBottom: 8 }}>请输入 Gremlin 语句：</div>
-          <div style={{ border: '1px solid var(--main-editor-border-color)', borderRadius: '2px' }}>
+          <div style={{ border: '1px solid #bfbfbf', borderRadius: '2px' }}>
             <GremlinEditor
-              theme={theme}
-              initValue={editorValue}
-              gremlinId="query-analysis"
+              initialValue={editorValue}
               height={height}
-              showGutter={showGutter}
               onValueChange={value => handleChangeEditorValue(value)}
             />
           </div>
@@ -175,7 +141,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       <div className={'buttonContainer'}>
         <Divider className={'divider'} />
         <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
-          查询
+          开始查询
         </Button>
       </div>
     </div>
