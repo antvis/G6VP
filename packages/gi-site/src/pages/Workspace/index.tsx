@@ -6,7 +6,7 @@ import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import setDefaultDemo from '../X-Studio';
 import CreatePanel from './Create';
 import './index.less';
-import ProjectList from './ProjectList';
+import ProjectList from './projectList';
 
 setDefaultDemo();
 
