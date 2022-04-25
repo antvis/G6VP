@@ -1,31 +1,39 @@
 /** 是否为本地研发模式 */
 
 export const isDev = false; // process.env.NODE_ENV === 'development';
-
-export const NPM_INFO = [
+const assets_npm = [
+  {
+    name: '@alipay/gi-assets-basic',
+    version: '2.0.1',
+  },
+  {
+    name: '@alipay/gi-assets-scene',
+    version: '2.0.1',
+  },
+];
+const NPM_INFO = [
   {
     name: '@alipay/graphinsight',
     version: '2.0.1',
     global: 'GISDK',
   },
-  {
-    name: '@alipay/gi-assets-basic',
-    version: '2.0.0',
-  },
-  {
-    name: '@alipay/gi-assets-scene',
-    version: '2.0.0',
-  },
+  ...assets_npm,
 ];
 
-const PACKAGES = NPM_INFO.map(c => {
-  const name = c.name.replace('@alipay/', '');
-  return {
-    url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
-    global: name.toUpperCase(),
-    ...c,
-  };
-});
+const getPackages = npm => {
+  return npm.map(c => {
+    const name = c.name.replace('@alipay/', '');
+    return {
+      url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      global: name.split('-').join('_').toUpperCase(),
+      ...c,
+    };
+  });
+};
+
+export const PACKAGES = getPackages(NPM_INFO);
+
+export const OFFICIAL_PACKAGES = getPackages(assets_npm);
 
 const externals = isDev
   ? {}
