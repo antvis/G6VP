@@ -1,7 +1,8 @@
 import { GraphinContext } from '@antv/graphin';
 import * as React from 'react';
-import { IGIAC } from '../const';
-import GIAComponents from '../GIAC';
+import type { IGIAC } from '@alipay/graphinsight';
+import { extra } from '@alipay/graphinsight';
+const { GIAComponent } = extra;
 
 export interface ClearCanvasProps {
   visible: boolean;
@@ -38,7 +39,7 @@ const Export: React.FunctionComponent<ClearCanvasProps> = props => {
     URL.revokeObjectURL(element.href);
   };
 
-  return <GIAComponents GIAC={GIAC} onClick={onExport} />;
+  return <GIAComponent GIAC={GIAC} onClick={onExport} />;
 };
 
 export default Export;
