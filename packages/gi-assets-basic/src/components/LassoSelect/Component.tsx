@@ -2,8 +2,9 @@ import { useContext } from '@alipay/graphinsight';
 import { Behaviors } from '@antv/graphin';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { IGIAC } from '../const';
-import GIAComponent from '../GIAC';
+import type { IGIAC } from '@alipay/graphinsight';
+import { extra } from '@alipay/graphinsight';
+const { GIAComponent } = extra;
 const { BrushSelect, DragCanvas } = Behaviors;
 
 export interface LassoType {

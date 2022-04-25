@@ -1,6 +1,6 @@
 import { Divider, Tooltip } from 'antd';
 import React from 'react';
-import MyIcon from '../Icon';
+import { Icon } from '@alipay/graphinsight';
 
 export interface GIContianerProps {
   color: string;
@@ -58,7 +58,7 @@ const WrapTab = ComponentProps => {
           tooltipPlacement={tooltipPlacement}
           isShowTooltip={isShowTooltip}
         >
-          {isShowIcon && <MyIcon type={icon} style={iconStyle} />}
+          {isShowIcon && <Icon type={icon} style={iconStyle} />}
           {isVertical && <br />}
           {isShowTitle && title}
         </WrapTooltip>

@@ -1,4 +1,5 @@
-import { deepClone, GI_CONTAINER_METAS } from '../const';
+import { extra } from '@alipay/graphinsight';
+const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 //@ts-ignore
 metas.gap = {
