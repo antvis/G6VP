@@ -6,6 +6,9 @@ const localDeps = isDev
   ? {}
   : {
       '@alipay/graphinsight': 'GISDK',
+      '@alipay/gi-assets-basic': 'GI-ASSET-BASIC',
+      '@alipay/gi-assets-scene': 'GI-ASSET-SCENE',
+      // '@alipay/gi-assets-basic': 'GI-ASSET-BASIC',
     };
 
 const localScripts = isDev
