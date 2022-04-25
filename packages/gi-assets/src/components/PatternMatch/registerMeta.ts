@@ -1,8 +1,11 @@
-import { Meta } from '../WrapContainer';
-const registerMeta = context => {
+import { extra } from "@alipay/graphinsight";
+
+const { GIAC_CONTENT_METAS } = extra;
+
+const registerMeta = (context) => {
   return {
     /** 分类信息 */
-    ...Meta,
+    ...GIAC_CONTENT_METAS,
     // visible: {
     //   name: '默认显示',
     //   type: 'switch',

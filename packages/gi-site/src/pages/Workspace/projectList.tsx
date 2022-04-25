@@ -1,30 +1,51 @@
 import { useHistory } from '@alipay/bigfish';
 import { CopyFilled, EditFilled, MoreOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
-import { Card, Col, Dropdown, Menu, Row } from 'antd';
+import { Card, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
-import { starProject } from '../../services';
-import { ASSET_TYPE } from '../../services/const';
+import { useImmer } from 'use-immer';
+import { getProjectList, removeProjectById } from '../../services';
 import { time } from './utils';
 
 interface ProjectListProps {
-  data: any;
-  handleOpen?: () => void;
-  handleDelete?: (id: string) => void;
-  type: string;
+  onCreate?: () => void;
+  type: 'project' | 'case';
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
-  const { data, type, handleOpen, handleDelete } = props;
-
+  const { type, onCreate } = props;
   const history = useHistory();
+  const [state, updateState] = useImmer({
+    lists: [],
+    visible: false,
+  });
+
+  React.useEffect(() => {
+    (async () => {
+      const lists = await getProjectList(type);
+      updateState(draft => {
+        draft.lists = lists;
+      });
+    })();
+  }, []);
+
+  const { lists } = state;
+
   const addButton = (
     <Col key={'new'} span={6}>
-      <Card style={{ height: '100%', width: '100%', minHeight: 236 }} hoverable onClick={handleOpen} className="new">
+      <Card style={{ height: '100%', width: '100%', minHeight: 236 }} hoverable onClick={onCreate} className="new">
         <PlusOutlined style={{ fontSize: '100px', opacity: 0.15, color: '#177DDC' }} />
         <span className="new-title">创建项目</span>
       </Card>
     </Col>
   );
+
+  const confirm = id => {
+    const items = lists.filter(d => d.id !== id);
+    updateState(draft => {
+      draft.lists = items;
+    });
+    removeProjectById(id);
+  };
 
   const menu = id => (
     <Menu>
@@ -36,8 +57,18 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         编辑项目
       </Menu.Item>
       {/* <Menu.Item>克隆项目</Menu.Item> */}
-      <Menu.Item onClick={() => favorite(id)}>收藏</Menu.Item>
-      <Menu.Item onClick={() => handleDelete(id)}>删除</Menu.Item>
+      <Menu.Item>
+        <Popconfirm
+          title="是否删除该项目?"
+          onConfirm={() => {
+            confirm(id);
+          }}
+          okText="Yes"
+          cancelText="No"
+        >
+          删除项目
+        </Popconfirm>
+      </Menu.Item>
       {/* <Menu.Item>分享</Menu.Item> */}
     </Menu>
   );
@@ -49,18 +80,11 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     </>
   );
 
-  const favorite = id => {
-    starProject({
-      assetId: id,
-      assetType: ASSET_TYPE.PROJECT,
-    });
-  };
-
   return (
     <>
       <Row gutter={[16, 16]}>
         {type === 'project' && addButton}
-        {data.map(item => {
+        {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
             <Col key={id} span={6}>

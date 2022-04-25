@@ -1,3 +1,4 @@
+import type { GIConfig } from '@alipay/graphinsight';
 /**
  *
  * @param
@@ -25,7 +26,11 @@ export const getMockData = () => {
  */
 
 export const time = time => {
+  if (!time) {
+    return 'Invalid Date';
+  }
   const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
+
   return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
 };
 
@@ -34,23 +39,43 @@ export const time = time => {
  * 默认config
  *
  */
-const baseNodeConfig = {
-  id: 'GraphinNode',
-  props: {},
-};
-const baseEdgeConfig = {
-  id: 'GraphinEdge',
-  props: {},
-};
+
+const baseNodesConfig: GIConfig['nodes'] = [
+  {
+    id: 'SimpleNode',
+    name: '官方节点',
+    expressions: [],
+    groupName: '默认样式',
+    props: {
+      size: 26,
+      color: '#ddd',
+      label: ['id'],
+    },
+  },
+];
+
+const baseEdgesConfig: GIConfig['edges'] = [
+  {
+    id: 'SimpleEdge',
+    name: '官方边',
+    expressions: [],
+    groupName: '默认样式',
+    props: {
+      size: 1,
+      color: '#ddd',
+      label: ['source', 'target'],
+    },
+  },
+];
 const baseComponentsConfig = [
   {
     id: 'NodeLegend',
-    props: {},
-    enable: true,
-  },
-  {
-    id: 'NodeAttrs',
-    props: {},
+    props: {
+      sortKey: 'type',
+      textColor: '#ddd',
+      placement: 'LB',
+      offset: [100, 20],
+    },
     enable: true,
   },
 ];
@@ -65,8 +90,32 @@ const baseLayoutConfig = {
 };
 
 export const baseConfig = {
-  node: baseNodeConfig,
-  edge: baseEdgeConfig,
+  nodes: baseNodesConfig,
+  edges: baseEdgesConfig,
   layout: baseLayoutConfig,
   components: baseComponentsConfig,
+};
+
+export const activeAssetsKeys = {
+  elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
+  components: [...baseComponentsConfig.map(c => c.id)],
+  layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+};
+
+export const serviceConfig = [
+  {
+    id: 'GI_SERVICE_INTIAL_GRAPH',
+    content: `export default (localData)=>{
+      return new Promise((resolve)=>{
+        resolve(localData)
+      })
+    }`,
+    mode: 'MOCK',
+    name: '初始化接口',
+  },
+];
+
+export const schemaData = {
+  nodes: [],
+  edges: [],
 };

@@ -1,14 +1,15 @@
-import * as React from 'react';
-import { Modal, Tabs, Steps, Alert, Row, Radio, Upload, Button, Table, Form, notification } from 'antd';
-import { useDispatch, useSelector, Provider } from 'react-redux';
-import { EditableProTable } from '@ant-design/pro-table';
-import Mock from './Mock';
-import store, { StateType } from '../redux';
-import { updateProjectById, getProjectById } from '../../../services';
 import { FileTextOutlined } from '@ant-design/icons';
+import { EditableProTable } from '@ant-design/pro-table';
+import { Button, Form, Modal, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
+import * as React from 'react';
 import { useImmer } from 'use-immer';
-import xlsx2js from "xlsx2js";
-import { nodeColumns, edgeColumns, translist, GIDefaultTrans, getOptions } from './const';
+import xlsx2js from 'xlsx2js';
+import { getProjectById, updateProjectById } from '../../../services';
+import { useContext } from '../../Analysis/hooks/useContext';
+import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
+import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
+import GraphScopeMode from './GraphScopeMode'
+import Mock from './Mock';
 import './index.less';
 
 const { Step } = Steps;
@@ -28,19 +29,22 @@ const columnsData = {
 
 const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
-  const state = useSelector((state: StateType) => state);
-  const { id } = state;
+  const { context, updateContext } = useContext();
+
+  const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
     buttonDisabled: true,
   });
-  const dispatch = useDispatch();
+
   //初始化数据
   const [data, setData] = useImmer(initData);
   // 映射函数
-  const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target'));
+  const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'));
   //映射后的数据
-  const [transData, setTransData] = useImmer(eval(GIDefaultTrans('id', 'source', 'target'))(initData));
+  const [transData, setTransData] = useImmer(
+    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))(initData),
+  );
   //当前显示
   const [tableData, setTableData] = useImmer([]);
   const [columns, setColumns] = useImmer(nodeColumns);
@@ -65,7 +69,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     customRequest: async options => {
       const { file, onSuccess } = options;
       let fileData;
-      
+
       setCurrent(draft => {
         draft.buttonDisabled = false;
       });
@@ -78,7 +82,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         fileData = {
           nodes: data,
           edges: data,
-        }
+        };
 
         const renderData = [
           ...inputData,
@@ -93,15 +97,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         setInputData(renderData);
         onSuccess('Ok');
         mergeData(renderData);
-
-      }else if(/\.(json)$/.test(file.name.toLowerCase())){
+      } else if (/\.(json)$/.test(file.name.toLowerCase())) {
         const reader = new FileReader();
-        reader.readAsBinaryString(file);
 
-        reader.onload =  fileReader => {
+        reader.readAsText(file, 'utf-8');
+
+        reader.onload = fileReader => {
           fileData = JSON.parse(fileReader.target.result as string);
 
-          console.log('fileData json', fileData);
           const renderData = [
             ...inputData,
             {
@@ -115,16 +118,15 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           setInputData(renderData);
           onSuccess('Ok');
           mergeData(renderData);
-        }
-      }else{
+        };
+      } else {
         return false;
       }
     },
   };
 
   const mergeData = (renderData = inputData) => {
-
-    console.log('mergeData', renderData,inputData);
+    console.log('mergeData', renderData, inputData);
     let nodes = [];
     let edges = [];
     renderData.map(d => {
@@ -176,8 +178,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const transform = recordList => {
-    const { id, source, target } = recordList[0];
-    const transFunc = GIDefaultTrans(id, source, target);
+    const { id, source, target, nodeType, edgeType } = recordList[0];
+    const transFunc = GIDefaultTrans(id, source, target, nodeType, edgeType);
 
     setTransfunc(transFunc);
 
@@ -195,14 +197,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const updateData = async () => {
-    console.log('updateData', transData);
     try {
-      if (transData.nodes?.find(d => (d.id === undefined) || (d.data === undefined))) {
+      if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
         throw 'nodes缺少对应字段';
       }
-      if (transData.edges?.find(d => (d.source === undefined) || 
-                                     (d.target === undefined) || 
-                                     (d.data === undefined))) {
+      if (transData.edges?.find(d => d.source === undefined || d.target === undefined || d.data === undefined)) {
         throw 'edges缺少对应字段';
       }
 
@@ -213,6 +212,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         nodes: [...beforData.nodes, ...transData.nodes],
         edges: [...beforData.edges, ...transData.edges],
       };
+
+      // 进入分析之前，根据数据，生成 schema
+      const schemaData = generatorSchemaByGraphData(mergeData);
+      const newConfig = generatorStyleConfigBySchema(schemaData, context.config);
+      console.log('生成的 Schema 数据', schemaData);
 
       // 更新inputdata里面的 trans function
       const renderData = inputData.map(d => {
@@ -227,10 +231,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           transData: mergeData,
           inputData: [...result.data.inputData, ...renderData],
         }),
+        // schemaData: schemaData,
+        projectConfig: JSON.stringify(newConfig),
+        schemaData: JSON.stringify(schemaData),
       }).then(res => {
-        dispatch({
-          type: 'update:key',
-          key: Math.random(),
+        updateContext(draft => {
+          draft.key = Math.random();
+          draft.schemaData = schemaData;
+          // draft.config = newConfig;
         });
         handleClose();
       });
@@ -326,17 +334,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <Mock handleClose={handleClose}></Mock>
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
+        <TabPane tab="GraphScope" key="graphscope">
+          <GraphScopeMode close={handleClose} />
+        </TabPane>
       </Tabs>
     </Modal>
   );
 };
 
-const WrapUploadPanel = props => {
-  return (
-    <Provider store={store}>
-      <UploadPanel {...props} />
-    </Provider>
-  );
-};
-
-export default WrapUploadPanel;
+export default UploadPanel;

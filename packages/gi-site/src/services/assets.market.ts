@@ -1,6 +1,5 @@
-import localforage from 'localforage';
 import { dynamicLoadModules, getCombinedAssets } from '../loader';
-import { queryActiveAssetList, queryAssetList } from './assets';
+import { queryActiveAssetList } from './assets';
 import { isMock, IS_DYNAMIC_LOAD } from './const';
 
 let elements;
@@ -101,57 +100,53 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
     const dlm = await dynamicLoadModules();
     const FinalAssets = getCombinedAssets();
     components = activeAssetsKeys.components.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.components[curr],
-      };
+      const asset = FinalAssets.components[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
 
     // 走本地的gi-assets资产加载
     elements = activeAssetsKeys.elements.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.elements[curr],
-      };
+      const asset = FinalAssets.elements[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
 
     layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
-      return {
-        ...acc,
-        [curr]: FinalAssets.layouts[curr],
-      };
+      const asset = FinalAssets.layouts[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
     }, {});
   }
 
   if (isMock) {
-    const { serviceConfig } = await localforage.getItem(id);
     return await new Promise(resolve => {
       resolve({
-        services: JSON.parse(serviceConfig),
         components: components,
         elements: elements,
+        layouts: layouts,
       });
     });
   }
-  const ASSET_LIST = await queryAssetList({ projectId: id });
-
-  const services = ASSET_LIST.services.map(service => {
-    const { name, sourceCode, displayName } = service;
-    const serviceId = name.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1 ? 'GI_SERVICE_INTIAL_GRAPH' : name;
-
-    return {
-      id: serviceId,
-      content: sourceCode?.split('export default')[1] || ``,
-      mode: 'MOCK',
-      name: displayName,
-      others: service,
-    };
-  });
 
   return await new Promise(resolve => {
     resolve({
       components,
-      services,
       elements,
       layouts,
     });

@@ -40,10 +40,9 @@ const handleExpand = (data, responseData) => {
   };
 };
 
-
-const NodeExpandByType: React.FC<INodeExpandProps> = (props) => {
+const NodeExpandByType: React.FC<INodeExpandProps> = props => {
   const { serviceId, style } = props;
-  console.log('serviceId', serviceId, props)
+  console.log('serviceId', serviceId, props);
   const [state, updateState] = useImmer({
     loading: false,
     activeKeys: ['0'],
@@ -75,8 +74,10 @@ const NodeExpandByType: React.FC<INodeExpandProps> = (props) => {
         }
       });
     };
-    graph.on('nodeselectchange', onNodeSelectChange);
+    //@ts-ignore
+    graph.on('nodeselectChange', onNodeSelectChange);
     return () => {
+      //@ts-ignore
       graph.off('nodeselectchange', onNodeSelectChange);
     };
   }, [graph, updateState]);
@@ -109,7 +110,7 @@ const NodeExpandByType: React.FC<INodeExpandProps> = (props) => {
       draft.loading = true;
     });
     if (!serviceId) {
-      return
+      return;
     }
     const { service } = services.find(sr => sr.id === serviceId);
     if (!service) {
@@ -133,12 +134,8 @@ const NodeExpandByType: React.FC<INodeExpandProps> = (props) => {
     dispatch.changeData(responseData);
   };
 
-
-
   return (
-    <div
-      style={style as any}
-    >
+    <div style={style as any}>
       <Collapse
         bordered={false}
         activeKey={state.activeKeys}

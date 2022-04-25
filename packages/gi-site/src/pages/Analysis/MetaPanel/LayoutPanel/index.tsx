@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import AssetsSelect from '../../../../components/AssetsSelect';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+import { useContext } from '../../hooks/useContext';
 const freeExtensions = {
   sizeMapping: SizeMapping,
   colorMapping: ColorMapping,
@@ -25,7 +26,6 @@ interface NodeStylePanelProps {
   data: any;
   layouts: any;
   config: any;
-  dispatch: any;
 }
 
 const cache = {};
@@ -39,7 +39,8 @@ const getCacheValues = (object, key) => {
 };
 
 const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-  const { data, layouts, config = { layout: { props: {} } }, dispatch } = props;
+  const { data, layouts, config = { layout: { props: {} } } } = props;
+  const { updateContext } = useContext();
   const { layout: layoutConfig } = config;
   const [state, setState] = useState({
     /** 当前布局的ID */
@@ -67,11 +68,8 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const handleChangeConfig = evt => {
     const { rootValue } = evt;
     cache[layoutId].props = { ...rootValue.options };
-    dispatch({
-      type: 'FREE',
-      update: draft => {
-        draft.config.layout.props = { ...rootValue.options };
-      },
+    updateContext(draft => {
+      draft.config.layout.props = { ...rootValue.options };
     });
   };
   const handleChangeShape = value => {
@@ -83,13 +81,10 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         layoutId: value,
       };
     });
-    dispatch({
-      type: 'FREE',
-      update: draft => {
-        draft.config.layout = { ...values };
-        // draft.config.layout.id = value;
-        // draft.config.layout = { ...layouts[value] };
-      },
+    updateContext(draft => {
+      draft.config.layout = { ...values };
+      // draft.config.layout.id = value;
+      // draft.config.layout = { ...layouts[value] };
     });
   };
   const layoutItems = Object.values(layouts) as any[];

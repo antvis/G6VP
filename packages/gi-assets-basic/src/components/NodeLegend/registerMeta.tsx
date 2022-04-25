@@ -27,6 +27,36 @@ const registerMeta = context => {
       type: 'fill',
       default: '#ddd',
     },
+    placement: {
+      name: '组件位置',
+      type: 'select',
+      default: 'LB',
+      options: [
+        {
+          value: 'LT',
+          label: '左上',
+        },
+        {
+          value: 'RT',
+          label: '右上',
+        },
+        {
+          value: 'LB',
+          label: '左下',
+        },
+        {
+          value: 'RB',
+          label: '右下',
+        },
+      ],
+    },
+    offset: {
+      name: '偏移距离',
+      type: 'Offset',
+      min: 0,
+      max: 400,
+      default: [100, 20],
+    },
   };
 };
 

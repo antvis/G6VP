@@ -1,20 +1,49 @@
+import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
+import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
+import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+const LOCAL_ASSETS = [GI_ASSETS_BASIC, GI_ASSETS_SCENE, GI_ASSETS_ADVANCE];
+
+/** 是否为本地研发模式 */
+export const isDev = process.env.NODE_ENV === 'development';
+
 export interface Package {
   name: string;
   url: string;
   global: string;
 }
 
+const NPM_INFO = [
+  {
+    name: '@alipay/gi-assets-basic',
+    version: '2.0.0',
+  },
+  // {
+  //   name: '@alipay/gi-assets-advance',
+  //   version: '2.0.0',
+  // },
+  // {
+  //   name: '@alipay/gi-assets-scene',
+  //   version: '2.0.0',
+  // },
+];
+const PACKAGES = NPM_INFO.map(c => {
+  const name = c.name.replace('@alipay/', '');
+  return {
+    ...c,
+    url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+    global: name.toUpperCase(),
+  };
+});
+console.log('packages', PACKAGES);
+
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-
-  if (!packages['GI_Assets_Basic']) {
-    packages['GI_Assets_Basic'] = {
-      name: '@alipay/gi-assets-basic',
-      version: '1.2.3',
-      url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/1.2.3/dist/index.min.js',
-      global: 'GI_Assets_Basic',
+  /** 保持内置的组件都是最新版本 */
+  PACKAGES.forEach(pkg => {
+    packages[pkg.global] = {
+      ...pkg,
     };
-  }
+  });
 
   // packages['GeaMakerGraphStudio'] = {
   //   name: '@alipay/geamaker-studio',
@@ -23,12 +52,12 @@ export const setDefaultAssetPackages = () => {
   //   global: 'GeaMakerGraphStudio',
   // };
 
-  // packages['GI_Assets_Kg'] = {
-  //   name: '@alipay/gi-assets-kg',
-  //   version: '0.0.7',
-  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
-  //   global: 'GI_Assets_Kg',
-  // };
+  packages['GI_Assets_Kg'] = {
+    name: '@alipay/gi-assets-kg',
+    version: '0.0.7',
+    url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
+    global: 'GI_Assets_Kg',
+  };
 
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
 };
@@ -47,7 +76,7 @@ const LoaderCss = options => {
     link.href = href;
   }
   link.rel = 'stylesheet';
-  // debugger;
+
   document.head.append(link);
   // link.onload = () => {
   //   resolve(link);
@@ -87,7 +116,11 @@ export const loadJS = options => {
 };
 
 export const getAssets = () => {
+  if (isDev) {
+    return LOCAL_ASSETS;
+  }
   const packages = getAssetPackages();
+
   return packages
     .map(item => {
       let assets = window[item.global];
@@ -128,20 +161,21 @@ export type IAssets = Record<AssetsKey, AssetsValue>;
  */
 export const getCombinedAssets = () => {
   const assets = getAssets();
+  //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
       return {
         components: {
           ...acc.components,
-          ...curr.assets.components,
+          ...curr.components,
         },
         elements: {
           ...acc.elements,
-          ...curr.assets.elements,
+          ...curr.elements,
         },
         layouts: {
           ...acc.layouts,
-          ...curr.assets.layouts,
+          ...curr.layouts,
         },
       };
     },
@@ -157,6 +191,9 @@ export const getCombinedAssets = () => {
  * @param targets { LoadModules[] } 要加载的组件列表
  */
 export const dynamicLoadModules = async () => {
+  if (isDev) {
+    return getAssets();
+  }
   const packages = getAssetPackages();
   const options = packages.map(item => {
     return {

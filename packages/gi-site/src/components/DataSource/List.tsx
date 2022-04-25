@@ -12,6 +12,12 @@ interface SidebarProps {
 
 const SideList: React.FunctionComponent<SidebarProps> = props => {
   const { options, handleChange, handleAdd, handleDelete, activeId } = props;
+  React.useEffect(() => {
+    if (activeId === 'NEW_GI_SERVICE') {
+      handleChange('NEW_GI_SERVICE');
+      handleAdd();
+    }
+  }, [activeId]);
 
   return (
     <ul className="gi-services-sidebar">

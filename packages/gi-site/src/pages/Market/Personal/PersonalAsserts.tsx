@@ -1,15 +1,11 @@
 // 我的资产
+import { CheckCircleOutlined } from '@ant-design/icons';
+import { Breadcrumb, Button, message, Popconfirm, Radio, Space, Table, Tag } from 'antd';
 import React from 'react';
-import { Breadcrumb, Table, Radio, Tag, Space, Button, Popconfirm, message } from 'antd';
-import {
-  CheckCircleOutlined
-} from '@ant-design/icons';
-import { Provider } from 'react-redux';
 import { useImmer } from 'use-immer';
-import { queryAssetList, deleteAssetById } from '../../../services/assets';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
-import store from '../../Analysis/redux';
-import { TYPE_MAPPING_TR, STATUS_MAPPING_TR } from '../Constants';
+import { deleteAssetById, queryAssetList } from '../../../services/assets';
+import { STATUS_MAPPING_TR, TYPE_MAPPING_TR } from '../Constants';
 import './index.less';
 
 const PersonAsserts = () => {
@@ -32,15 +28,15 @@ const PersonAsserts = () => {
     getAssertList();
   }, []);
 
-  const handleDeleteAsset = async (id) => {
-    const result = await deleteAssetById(id)
+  const handleDeleteAsset = async id => {
+    const result = await deleteAssetById(id);
     if (result && result.success) {
-      message.success('删除成功')
+      message.success('删除成功');
       getAssertList();
     } else {
-      message.success(`删除资产失败：${result.errorMsg}`)
+      message.success(`删除资产失败：${result.errorMsg}`);
     }
-  }
+  };
 
   const columns = [
     {
@@ -87,11 +83,19 @@ const PersonAsserts = () => {
       key: 'status',
       render: (text, record) => {
         if (record.type === 3) {
-          return <Tag icon={<CheckCircleOutlined />} color='success'>正常</Tag>
+          return (
+            <Tag icon={<CheckCircleOutlined />} color="success">
+              正常
+            </Tag>
+          );
         }
-        const Component = STATUS_MAPPING_TR[text]?.IconComponent
-        return <Tag icon={<Component />} color={STATUS_MAPPING_TR[text]?.color}>{STATUS_MAPPING_TR[text]?.text}</Tag>
-      }
+        const Component = STATUS_MAPPING_TR[text]?.IconComponent;
+        return (
+          <Tag icon={<Component />} color={STATUS_MAPPING_TR[text]?.color}>
+            {STATUS_MAPPING_TR[text]?.text}
+          </Tag>
+        );
+      },
     },
     {
       title: '版本号',
@@ -123,41 +127,53 @@ const PersonAsserts = () => {
       key: 'description',
     },
     {
-      title: "操作",
+      title: '操作',
       render: (text, record) => {
         // 已经被使用的数据服务不需要操作
         if (record.type === 3) {
           if (record.projectId) {
             // 已经被使用的数据服务不能删除
-  
-            return null
+
+            return null;
           }
-          return <Popconfirm title='确定删除该资产' onConfirm={() => handleDeleteAsset(record.id)}>
-            <Button type="link" danger>删除</Button>
-          </Popconfirm>
+          return (
+            <Popconfirm title="确定删除该资产" onConfirm={() => handleDeleteAsset(record.id)}>
+              <Button type="link" danger>
+                删除
+              </Button>
+            </Popconfirm>
+          );
         }
-  
+
         if (record.status !== 2) {
           // 已经使用的组件不能删除
           if (record.projectId) {
-            return <Button type='link'>构建</Button>
+            return <Button type="link">构建</Button>;
           }
-          return <Space size='small'>
-            <Button type='link'>构建</Button>
-            <Popconfirm title='确定删除该资产' onConfirm={() => handleDeleteAsset(record.id)}>
-              <Button type="link" danger>删除</Button>
-            </Popconfirm>
-          </Space>
+          return (
+            <Space size="small">
+              <Button type="link">构建</Button>
+              <Popconfirm title="确定删除该资产" onConfirm={() => handleDeleteAsset(record.id)}>
+                <Button type="link" danger>
+                  删除
+                </Button>
+              </Popconfirm>
+            </Space>
+          );
         }
-        
+
         if (record.projectId) {
-          return null
+          return null;
         }
-        return <Popconfirm title='确定删除该资产' onConfirm={() => handleDeleteAsset(record.id)}>
-          <Button type="link" danger>删除</Button>
-        </Popconfirm>
-      }
-    }
+        return (
+          <Popconfirm title="确定删除该资产" onConfirm={() => handleDeleteAsset(record.id)}>
+            <Button type="link" danger>
+              删除
+            </Button>
+          </Popconfirm>
+        );
+      },
+    },
   ];
 
   return (
@@ -189,11 +205,4 @@ const PersonAsserts = () => {
   );
 };
 
-const WrapPersonAssets = props => {
-  return (
-    <Provider store={store}>
-      <PersonAsserts {...props} />
-    </Provider>
-  );
-};
-export default WrapPersonAssets;
+export default PersonAsserts;

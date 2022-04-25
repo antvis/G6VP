@@ -5,6 +5,11 @@ export const nodeColumns = [
     key: 'id',
   },
   {
+    title: 'nodeType',
+    dataIndex: 'nodeType',
+    key: 'nodeType',
+  },
+  {
     title: 'data',
     dataIndex: 'data',
     key: 'data',
@@ -13,6 +18,11 @@ export const nodeColumns = [
 ];
 
 export const edgeColumns = [
+  {
+    title: 'edgeType',
+    dataIndex: 'edgeType',
+    key: 'edgeType',
+  },
   {
     title: 'source',
     dataIndex: 'source',
@@ -40,11 +50,13 @@ export const translist = [
   },
 ];
 
-export const GIDefaultTrans = (id, source, target) => `
+export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
       id:'' + n.${id},
+      nodeType: n.${nodeType},
+      nodeTypeKeyFromProperties:'${nodeType}',
       data:n
     }
   })
@@ -52,6 +64,8 @@ data => {
     return {
       source:'' + e.${source},
       target:'' + e.${target},
+      edgeType: e.${edgeType},
+      edgeTypeKeyFromProperties:'${edgeType}',
       data:e
     }
   })
@@ -67,16 +81,21 @@ export const getMockData = () => {
 };
 
 export const getOptions = data => {
-  const { nodes, edges } = data;
+  const { nodes, edges = [] } = data;
+
   let nodesOptions = {};
   let edgesOptions = {};
   Object.keys(nodes[0]).forEach(key => {
     nodesOptions[key] = { text: `${key}` };
   });
 
-  Object.keys(edges[0]).forEach(key => {
-    edgesOptions[key] = { text: `${key}` };
-  });
+  if (edges.length === 0) {
+    edgesOptions = {};
+  } else {
+    Object.keys(edges[0]).forEach(key => {
+      edgesOptions[key] = { text: `${key}` };
+    });
+  }
 
   return [
     {
@@ -95,6 +114,24 @@ export const getOptions = data => {
             message: '此项是必填项',
           },
         ],
+      },
+    },
+    {
+      title: 'Node Type',
+      key: 'nodeType',
+      dataIndex: 'nodeType',
+      valueType: 'select',
+      valueEnum: {
+        ...nodesOptions,
+      },
+    },
+    {
+      title: 'Edge Type',
+      key: 'edgeType',
+      dataIndex: 'edgeType',
+      valueType: 'select',
+      valueEnum: {
+        ...edgesOptions,
       },
     },
     {
@@ -117,3 +154,6 @@ export const getOptions = data => {
     },
   ];
 };
+
+export const DefaultGraphScopeNodeFilePath = '/home/graphscope/dongze.ldz/alibaba/gstest/property/p2p-31_property_v_0';
+export const DefaultGraphScopeEdgeFilePath = '/home/graphscope/dongze.ldz/alibaba/gstest/property/p2p-31_property_e_0';

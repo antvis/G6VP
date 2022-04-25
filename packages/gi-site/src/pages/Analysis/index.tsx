@@ -1,7 +1,9 @@
 import GISDK from '@alipay/graphinsight';
+import { original } from 'immer';
+import localforage from 'localforage';
 import React from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Prompt } from 'react-router-dom';
+import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
@@ -9,22 +11,47 @@ import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
-import { getComponentsByAssets, getElementsByAssets, getServicesByAssets } from './getAssets';
+import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
+import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
+import getMockServiceConfig from './getAssets/getMockServiceConfig';
+import { AnalysisContext } from './hooks/useContext';
 import './index.less';
-/** gi-meta废弃，属于gi-site的一部分 */
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import store, { StateType } from './redux';
 import UploadPanel from './uploadData/index';
+import type { StateType } from './useModal';
+import { initialState } from './useModal';
 import { isObjectEmpty } from './utils';
+
+// 配置不同的驱动优先级
+localforage.config({
+  driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
+  name: 'GI-WebServer',
+  version: 2.0,
+  description: 'GraphInsight Local Server',
+  storeName: 'project',
+});
 
 setDefaultAssetPackages();
 
+const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData }) => {
+  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData);
+  const elements = getElementsByAssets(assets.elements, data, schemaData);
+  const layouts = getLayoutsByAssets(assets.layouts, data);
+
+  return {
+    components,
+    elements,
+    layouts,
+  };
+};
+
 const Analysis = props => {
-  const { history, match } = props;
+  const { match } = props;
   const { projectId } = match.params;
-  const state = useSelector((state: StateType) => state);
+
+  const [state, updateState] = useImmer<StateType>(initialState);
   const {
     config,
     key,
@@ -33,101 +60,105 @@ const Analysis = props => {
     activeNavbar,
     collapse,
     data,
-    services,
-    components,
-    refreshComponentKey,
-    elements,
     assets,
     enableAI,
     projectConfig,
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
-    isModalVisible,
+    isUploadModalVisible,
   } = state;
-
-  const dispatch = useDispatch();
 
   const handleChangeNavbar = opt => {
     const isSame = activeNavbar === opt.id;
-    dispatch({
-      type: 'update:config',
-      activeNavbar: opt.id,
-      collapse: isSame ? !collapse : false,
+    updateState(draft => {
+      draft.activeNavbar = opt.id;
+      draft.collapse = isSame ? !collapse : false;
     });
-  };
-
-  const queryActiveAssetsInformation = ({ assets, data, config }) => {
-    const components = getComponentsByAssets(assets.components, data, assets.services, config);
-    const elements = getElementsByAssets(assets.elements, data);
-    const layouts = getLayoutsByAssets(assets.layouts, data);
-    const services = getServicesByAssets(assets.services, data);
-
-    return {
-      components,
-      elements,
-      services,
-      layouts,
-    };
   };
 
   React.useLayoutEffect(() => {
     (async () => {
-      dispatch({
-        type: 'update:config',
-        isReady: false,
+      updateState(draft => {
+        draft.isReady = false;
       });
+      /** 从地址栏上选择默认展示的tab */
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
-      const { data, config, activeAssetsKeys } = await getProjectById(projectId);
+      /** 根据 projectId 获取项目的信息  */
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
       const { transData, inputData } = data;
+      /** 根据活跃资产Key值，动态加载资产实例 */
+      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
+      const mockServiceConfig = getMockServiceConfig(assets.components);
+      /** 将组件的MockServices与项目自身带的 services 去重处理 */
+      const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, serviceConfig);
 
-      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
-      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data: transData, config });
-      dispatch({
-        type: 'update:config',
-        id: projectId,
-        config,
-        projectConfig: config,
+      /** 根据资产实例，获得GI站点运行需要的资产信息，包括资产本身带的serviceConfig */
+      const activeAssetsInformation = queryActiveAssetsInformation({
+        assets: activeAssets,
         data: transData,
-        inputData,
-        isReady: true,
-        activeNavbar,
+        config,
+        serviceConfig: combinedServiceConfig,
+        schemaData,
+      });
+
+      /** 根据服务配置列表，得到真正运行的Service实例 */
+      const services = getServicesByConfig(combinedServiceConfig, transData);
+
+      updateState(draft => {
+        draft.id = projectId;
+        draft.config = config;
+        draft.projectConfig = config;
+        draft.data = transData;
+        draft.inputData = inputData;
+        draft.isReady = true;
+        draft.activeNavbar = activeNavbar;
+        draft.serviceConfig = serviceConfig;
+        draft.assets = assets;
+        draft.activeAssets = activeAssets;
+        draft.activeAssetsKeys = activeAssetsKeys;
         //@ts-ignore
-        serviceConfig: activeAssets.services,
-        // services,
-        // components,
-        // elements,
-        assets,
-        activeAssets,
-        activeAssetsKeys,
-        activeAssetsInformation,
+        draft.activeAssetsInformation = activeAssetsInformation;
+        draft.services = services;
+        draft.schemaData = schemaData;
       });
     })();
   }, [projectId, key]);
 
   const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
   React.useEffect(() => {
-    //TODO 依赖还有问题
-    console.log('activeAssetsKeys', activeAssetsKeys, ACTIVE_ASSETS_KEYS);
     (async () => {
-      const activeAssets = await queryAssets(projectId, activeAssetsKeys);
+      console.log('ACTIVE_ASSETS_KEYS....', ACTIVE_ASSETS_KEYS);
+      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
+      const mockServiceConfig = getMockServiceConfig(activeAssets.components);
 
-      const activeAssetsInformation = queryActiveAssetsInformation({ assets: activeAssets, data, config });
-      dispatch({
-        type: 'FREE',
-        update: draft => {
-          const configComponents = activeAssetsInformation.components.map(c => {
-            const matchItem = draft.config.components.find(d => d.id === c.id) || c;
-            return matchItem;
-          });
+      updateState(draft => {
+        /** 将组件的MockServices与项目自身带的 services 去重处理 */
+        const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, draft.serviceConfig);
 
-          draft.config.components = configComponents;
-          draft.activeAssets = activeAssets;
-          draft.activeAssetsKeys = activeAssetsKeys;
-          draft.activeAssetsInformation = activeAssetsInformation;
-          draft.refreshComponentKey = Math.random();
-        },
+        const activeAssetsInformation = queryActiveAssetsInformation({
+          assets: activeAssets,
+          data,
+          config,
+          serviceConfig: combinedServiceConfig,
+          schemaData: original(draft.schemaData),
+        });
+
+        const configComponents = activeAssetsInformation.components.map(c => {
+          const matchItem = draft.config.components.find(d => d.id === c.id) || c;
+          return matchItem;
+        });
+
+        /** 根据服务配置列表，得到真正运行的Service实例 */
+        const services = getServicesByConfig(combinedServiceConfig, data);
+
+        draft.serviceConfig = combinedServiceConfig;
+        draft.services = services;
+        draft.config.components = configComponents;
+        draft.activeAssets = activeAssets;
+        draft.activeAssetsKeys = activeAssetsKeys;
+        draft.activeAssetsInformation = activeAssetsInformation;
       });
     })();
   }, [ACTIVE_ASSETS_KEYS]);
@@ -172,41 +203,41 @@ const Analysis = props => {
 
   // React.useLayoutEffect(() => {
   //   const { config, projectConfig, data } = state;
-  //   console.log('original cfgs', config);
+
   //   if (isReady && data && enableAI) {
   //     const { newData, newConfig } = getRecommenderCfg({
-  //       data,
+  //       data: JSON.parse(JSON.stringify(data)),
   //       config,
   //     });
-  //     dispatch({
-  //       type: 'update:config',
-  //       id: projectId,
-  //       config: newConfig,
-  //       data: newData, // 改变 data 是为了能把衍生出的属性加进去，比如 degree
+  //     updateState(draft => {
+  //       draft.id = projectId;
+  //       draft.config = newConfig;
+  //       draft.data = newData; // 改变 data 是为了能把衍生出的属性加进去，比如 degree
   //     });
   //   } else if (!enableAI) {
-  //     dispatch({
-  //       type: 'update:config',
-  //       id: projectId,
-  //       config: projectConfig,
+  //     updateState(draft => {
+  //       draft.id = projectId;
+  //       draft.config = projectConfig;
   //     });
   //   }
   // }, [projectId, isReady, enableAI]);
 
   // React.useEffect(() => {
-  //   window.addEventListener('beforeunload', ev => {
+  //   const handler = ev => {
   //     ev.preventDefault();
   //     ev.returnValue = '配置未保存，确定离开吗？';
-  //   });
+  //   };
+  //   window.addEventListener('beforeunload', handler);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handler);
+  //   };
   // }, []);
 
   const isLoading = isObjectEmpty(config) || !isReady;
-  console.log('%c GRAPHINSIGHT RENDERING', 'color:yellow', isLoading, state);
 
   const handleClose = () => {
-    dispatch({
-      type: 'update',
-      isModalVisible: false,
+    updateState(draft => {
+      draft.isUploadModalVisible = false;
     });
   };
 
@@ -217,62 +248,54 @@ const Analysis = props => {
       </div>
     );
   }
-  console.log('isLoading', isLoading);
+  const context = { context: state, updateContext: updateState };
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
 
   return (
-    <div className="gi">
-      <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
-      <div className="gi-navbar">
-        <Navbar projectId={projectId} enableAI={enableAI} />
-      </div>
-      <div className="gi-analysis">
-        <div className="gi-analysis-sidebar">
-          <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+    <AnalysisContext.Provider value={context}>
+      <div className="gi">
+        <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
+        <div className="gi-navbar">
+          <Navbar projectId={projectId} enableAI={enableAI} />
         </div>
-        <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
-          <MetaPanel
-            value={activeNavbar}
-            data={data}
-            dispatch={dispatch}
-            activeAssetsKeys={activeAssetsKeys}
-            refreshKey={refreshComponentKey}
-            /** 配置文件 */
-            config={config}
-            /** 全量的的组件，比config中的components多了meta字段，以及默认计算出defaultProps */
-            components={activeAssetsInformation.components}
-            /** 全量的的元素 */
-            elements={activeAssetsInformation.elements}
-            /** 全量的的服务 */
-            services={activeAssetsInformation.services}
-            layouts={activeAssetsInformation.layouts}
-          />
-        </div>
-        <div className="gi-analysis-workspace">
-          <div className="gi-analysis-canvas">
-            <GISDK
+        <div className="gi-analysis">
+          <div className="gi-analysis-sidebar">
+            <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+          </div>
+          <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
+            <MetaPanel
+              value={activeNavbar}
+              data={data}
+              activeAssetsKeys={activeAssetsKeys}
+              /** 配置文件 */
               config={config}
-              /** 资产以Props的方式按需引入 */
-              assets={{
-                components: activeAssets.components,
-                elements: activeAssets.elements,
-                layouts: activeAssets.layouts,
-              }}
-              services={activeAssetsInformation.services}
-            ></GISDK>
+              components={activeAssetsInformation.components}
+              elements={activeAssetsInformation.elements}
+              services={state.services}
+              layouts={activeAssetsInformation.layouts}
+            />
+          </div>
+          <div className="gi-analysis-workspace">
+            <div className="gi-analysis-canvas">
+              <GISDK
+                config={config}
+                /** 资产以Props的方式按需引入 */
+                assets={{
+                  components: activeAssets.components,
+                  elements: activeAssets.elements,
+                  layouts: activeAssets.layouts,
+                }}
+                services={state.services}
+              ></GISDK>
+            </div>
           </div>
         </div>
+        {isUploadModalVisible && (
+          <UploadPanel visible={isUploadModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
+        )}
       </div>
-      {isModalVisible && <UploadPanel visible={isModalVisible} handleClose={handleClose} initData={data}></UploadPanel>}
-    </div>
+    </AnalysisContext.Provider>
   );
 };
 
-const WrapAnalysis = props => {
-  return (
-    <Provider store={store}>
-      <Analysis {...props} />
-    </Provider>
-  );
-};
-
-export default WrapAnalysis;
+export default Analysis;

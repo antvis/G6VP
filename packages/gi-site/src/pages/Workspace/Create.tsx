@@ -1,18 +1,45 @@
 import { useHistory } from '@alipay/bigfish';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Input, message, Modal, Radio } from 'antd';
+import { Button, Form, Input, Modal, Radio } from 'antd';
 import React, { useState } from 'react';
 import { addProject } from '../../services';
-import { createAssets, createNewProjectOnAntCode } from '../../services/assets';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';
-import { getMockData, baseConfig } from './utils';
+import { activeAssetsKeys, baseConfig, getMockData, schemaData, serviceConfig } from './utils';
 
 interface IProps {
   visible: boolean;
   handleClose: () => void;
 }
 
+const SOLUTIONS = [
+  {
+    id: 'blank',
+    name: '空白模版',
+    url: 'https://gw.alipayobjects.com/zos/bmw-prod/5e3b4176-a8b5-4a17-ab02-c0c4f3d3933c.svg',
+  },
+  {
+    id: 'financial',
+    name: '金融风控',
+    url: 'https://gw.alipayobjects.com/zos/bmw-prod/fa575ef2-763e-4a97-8e82-5ba1bd0f5676.svg',
+  },
+  {
+    id: 'enterprise',
+    name: '企业风控',
+    url: 'https://gw.alipayobjects.com/zos/bmw-prod/1519d32a-dfa5-46fe-9d0e-42c96e831b96.svg',
+  },
+  {
+    id: 'social',
+    name: '社交网络',
+    url: 'https://gw.alipayobjects.com/zos/bmw-prod/ee827cb1-c523-4f71-bb35-175a1342b670.svg',
+  },
+  {
+    id: 'database',
+    name: '图数据库',
+    url: 'https://gw.alipayobjects.com/zos/bmw-prod/94237b87-25da-4d8e-8fba-44dd9dbd3301.svg',
+  },
+];
+const GI_ENV = localStorage.getItem('GI_SERVER_ENV');
 const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   const [form] = Form.useForm();
   const history = useHistory();
@@ -70,32 +97,15 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       data: JSON.stringify({
         transData,
         inputData: [],
-        transfunc: GIDefaultTrans('id', 'source', 'target'),
+        transfunc: GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'),
       }),
       projectConfig: JSON.stringify(baseConfig),
+      activeAssetsKeys: JSON.stringify(activeAssetsKeys),
+      serviceConfig: JSON.stringify(serviceConfig),
+      schemaData: JSON.stringify(schemaData),
+      type: 'project',
     });
 
-    const createResult = await createNewProjectOnAntCode({
-      projectName: `${projectId}_GI_SERVICE_INTIAL_GRAPH`,
-      description: '创建 GI 初始化服务代码仓库',
-      type: 3,
-    });
-
-    if (!createResult || !createResult.success) {
-      message.error('创建项目失败：' + createResult.errorMsg);
-      return;
-    }
-
-    const dbResponse = await createAssets({
-      displayName: 'GI 初始化服务',
-      name: `GI_SERVICE_INTIAL_GRAPH`,
-      type: 3, //数据服务
-      description: 'GI 初始化服务',
-      version: '0.0.1',
-      branchName: 'master',
-      projectId,
-      sourceCode: 'export default (data) => {\n return data \n}',
-    });
     return projectId;
   };
 
@@ -116,51 +126,48 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
           <Input />
         </Form.Item>
         {/* <Form.Item label="成员设置" name="users" > */}
-        <span className="form-item">成员设置</span>
-        <EditableProTable
-          columns={columns}
-          value={dataSource}
-          rowKey="id"
-          recordCreatorProps={{
-            creatorButtonText: '添加成员',
-            newRecordType: 'dataSource',
-            record: () => ({
-              id: dataSource.length + 1,
-            }),
-          }}
-          editable={{
-            type: 'multiple',
-            editableKeys,
-            actionRender: (row, config, defaultDoms) => {
-              return [defaultDoms.delete];
-            },
-            onValuesChange: (record, recordList) => {
-              setDataSource(recordList);
-            },
-            onChange: setEditableRowKeys,
-          }}
-        />
+        {GI_ENV === 'ONLINE' && (
+          <>
+            <span className="form-item">成员设置</span>
+            <EditableProTable
+              columns={columns}
+              value={dataSource}
+              rowKey="id"
+              recordCreatorProps={{
+                creatorButtonText: '添加成员',
+                newRecordType: 'dataSource',
+                record: () => ({
+                  id: dataSource.length + 1,
+                }),
+              }}
+              editable={{
+                type: 'multiple',
+                editableKeys,
+                actionRender: (row, config, defaultDoms) => {
+                  return [defaultDoms.delete];
+                },
+                onValuesChange: (record, recordList) => {
+                  setDataSource(recordList);
+                },
+                onChange: setEditableRowKeys,
+              }}
+            />
+          </>
+        )}
         {/* </Form.Item> */}
         <Form.Item label="项目类型" name="tag" className="round">
-          <Radio.Group defaultValue="Empty" size="small">
-            <Radio.Button value="GIConfig" style={{ marginRight: 10, borderRadius: 17 }}>
-              前端大学图谱模版
-            </Radio.Button>
-            <Radio.Button value="Empty" style={{ marginRight: 10, borderRadius: 17 }}>
-              空白模版
-            </Radio.Button>
-            <Radio.Button value="knowledgeGraph" style={{ marginRight: 10, borderRadius: 17 }}>
-              数据图谱
-            </Radio.Button>
-            <Radio.Button value="riskControl" style={{ marginRight: 10, borderRadius: 17 }}>
-              企业风控
-            </Radio.Button>
+          <Radio.Group defaultValue="blank" size="small">
+            {SOLUTIONS.map(c => {
+              return (
+                <Radio.Button key={c.id} value={c.id} className="gi-workspace-temp">
+                  <img src={c.url} alt="" />
+                  <div>{c.name}</div>
+                </Radio.Button>
+              );
+            })}
           </Radio.Group>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button style={{ marginRight: 8 }} shape="round" onClick={goWorkspace}>
-            保存并返回
-          </Button>
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
           <Button type="primary" shape="round" onClick={goAnalysis}>
             立即去创建分析
           </Button>

@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Button, Row, Col } from 'antd';
 import { FileTextOutlined } from '@ant-design/icons';
+import { Button, Col, Row } from 'antd';
+import * as React from 'react';
 import { useImmer } from 'use-immer';
-import { useDispatch, useSelector } from 'react-redux';
-import store, { StateType } from '../redux';
-import { updateProjectById } from '../../../services';
 import demo from '../../../mock/demo.json';
+import { updateProjectById } from '../../../services';
+import { useContext } from '../hooks/useContext';
 import { GIDefaultTrans } from './const';
 
 interface mock {
@@ -14,16 +13,17 @@ interface mock {
 
 const Mock: React.FunctionComponent<mock> = props => {
   const { handleClose } = props;
-  const global = useSelector((state: StateType) => state);
-  const { id } = global;
-  const dispatch = useDispatch();
+  const { context, updateContext } = useContext();
+
+  const { id } = context;
+
   const [state, setState] = useImmer({
     inputData: [
       {
         uid: 1,
         name: 'mock.js',
         data: demo,
-        transfunc: GIDefaultTrans('id', 'source', 'target'),
+        transfunc: GIDefaultTrans('id', 'source', 'target', 'UNKNOWN', 'UNKNOWN'),
         enable: true,
       },
     ],
@@ -35,9 +35,8 @@ const Mock: React.FunctionComponent<mock> = props => {
         inputData: state.inputData,
       }),
     }).then(res => {
-      dispatch({
-        type: 'update:key',
-        key: Math.random(),
+      updateContext(draft => {
+        draft.key = Math.random();
       });
       handleClose();
     });

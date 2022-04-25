@@ -1,12 +1,11 @@
-import { CaretDownOutlined } from '@ant-design/icons';
-import { Avatar, Button, Layout, Carousel } from 'antd';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import { Button, Carousel, Layout } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import BubbleChart from './Bubble';
 import { levelTitleMapping } from './constant';
 import FeatureCard from './FeatureCard';
 import styles from './index.less';
-import SolutionCard from './SolutionCard';
 
 const { Content, Footer } = Layout;
 
@@ -70,6 +69,12 @@ const Home = () => {
 
           <div className={styles.resolveContainer}>
             <div className={styles.fillTop}></div>
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <BubbleChart />
             {/* <h2 className={styles.h2}>{levelTitleMapping['resolve'].title}</h2>
             <p className={styles.p2}>{levelTitleMapping['resolve'].description}</p>
             <div className={styles.cardContainer}>

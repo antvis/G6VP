@@ -25,6 +25,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     dynamicLoadModules().then(res => {
       const packages = getAssetPackages();
       const assets = getCombinedAssets();
+
       setState({
         isReady: true,
         //@ts-ignore
@@ -34,7 +35,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       });
     });
   }, []);
-  console.log('state', state);
+
   const { lists, assets } = state;
   if (!state.isReady) {
     return null;

@@ -1,10 +1,8 @@
-import { ProjectOutlined } from '@ant-design/icons';
+import { useContext } from '@alipay/graphinsight';
 import Algorithm from '@antv/algorithm';
-import { GraphinContext } from '@antv/graphin';
 import { Button, Collapse, Form, Radio, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import WrapContainer from '../WrapContainer';
 import './index.less';
 import PatterGraph from './PatternGraph';
 const { GADDI } = Algorithm;
@@ -73,13 +71,15 @@ const PATTERNS = [
 const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, style }) => {
   const [state, updateState] = useImmer({
     mode: 'new',
-    pattern: {},
+    pattern: {
+      nodes: [],
+      edges: [],
+    },
     nodeKey: 'dataType',
     edgeKey: 'dataType',
   });
 
-  const { services, dispatch, GiState, setGiState } = GraphinContext as any;
-  const { graph } = React.useContext(GraphinContext);
+  const { graph, services, data, updateContext } = useContext();
   const { pattern } = state;
   const [form] = Form.useForm();
 
@@ -117,6 +117,7 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
         console.log(error);
       }
     };
+    //@ts-ignore
     graph.on('nodeselectchange', onNodeSelectChange);
     return () => {
       graph.off('nodeselectchange', onNodeSelectChange);
@@ -302,8 +303,4 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
   return null;
 };
 
-export default WrapContainer(PatternMatch, {
-  icon: <ProjectOutlined />,
-  title: '模式匹配',
-  showText: true,
-});
+export default PatternMatch;
