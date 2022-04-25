@@ -1,7 +1,7 @@
 import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-const LOCAL_ASSETS = [GI_ASSETS_BASIC, GI_ASSETS_SCENE, GI_ASSETS_ADVANCE];
+const LOCAL_ASSETS = [GI_ASSETS_BASIC, GI_ASSETS_ADVANCE, GI_ASSETS_SCENE];
 
 /** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
@@ -21,10 +21,10 @@ const NPM_INFO = [
   //   name: '@alipay/gi-assets-advance',
   //   version: '2.0.0',
   // },
-  // {
-  //   name: '@alipay/gi-assets-scene',
-  //   version: '2.0.0',
-  // },
+  {
+    name: '@alipay/gi-assets-scene',
+    version: '2.0.0',
+  },
 ];
 const PACKAGES = NPM_INFO.map(c => {
   const name = c.name.replace('@alipay/', '');
@@ -117,7 +117,9 @@ export const loadJS = options => {
 
 export const getAssets = () => {
   if (isDev) {
-    return LOCAL_ASSETS;
+    return LOCAL_ASSETS.map(c => {
+      return;
+    });
   }
   const packages = getAssetPackages();
 
@@ -132,10 +134,7 @@ export const getAssets = () => {
         //临时处理，后面要形成资产打包规范
         assets = assets.default;
       }
-      return {
-        ...item,
-        assets,
-      };
+      return assets;
     })
     .filter(c => {
       return c;
