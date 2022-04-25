@@ -93,7 +93,7 @@ const GIAC_CONTENT = {
     isVertical: {
       name: '垂直排列',
       type: 'switch',
-      default: false,
+      default: true,
       showInPanel: {
         conditions: [
           ['.isShowIcon', '$eq', true],
@@ -262,7 +262,7 @@ const GIAC = {
     isVertical: {
       name: '垂直排列',
       type: 'switch',
-      default: false,
+      default: true,
       showInPanel: {
         conditions: [
           ['.isShowIcon', '$eq', true],
@@ -339,19 +339,19 @@ export const GI_CONTAINER_METAS = {
     options: [
       {
         value: 'LT',
-        label: '左上',
+        label: '左上 / top',
       },
       {
         value: 'RT',
-        label: '右上',
+        label: '右上 / right',
       },
       {
         value: 'LB',
-        label: '左下',
+        label: '左下 / left',
       },
       {
         value: 'RB',
-        label: '右下',
+        label: '右下 / bottom',
       },
     ],
   },
