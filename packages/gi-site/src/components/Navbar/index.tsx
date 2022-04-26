@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { useHistory, useRequest } from '@alipay/bigfish';
 import { createFromIconfontCN, EditOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
-import { Button, Drawer, Tooltip, notification } from 'antd';
+import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { getProjectById, updateProjectById } from '../../services';
 import BaseNavbar from './BaseNavbar';
@@ -34,16 +34,13 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const [visible, setVisible] = React.useState(false);
   const [outVisible, setOutVisible] = React.useState(false);
   const [isHover, setIsHover] = React.useState(false);
+  const [initProject, setInitProject] = React.useState({});
 
   const { context, updateContext } = useContext();
   const { config, isSave, serviceConfig, activeAssetsKeys } = context;
   const contentEditable = React.createRef<HTMLSpanElement>();
   const servicesRef = React.useRef({
     options: serviceConfig,
-  });
-
-  const { data: initProject = {}, run } = useRequest(() => {
-    return getProjectById(projectId);
   });
 
   const handleOutClose = () => {
@@ -69,8 +66,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   };
 
   const changeTitle = async () => {
-    const newTitle = contentEditable.current.innerHTML;
-
+    const newTitle = contentEditable.current.innerText;
     updateProjectById(projectId, {
       name: newTitle,
     });
@@ -91,9 +87,12 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   };
 
   React.useEffect(() => {
-    run();
+    (async () => {
+      const project = await getProjectById(projectId);
+      setInitProject(project);
+    })();
   }, []);
-
+  //@ts-ignore
   const { name } = initProject;
   const rightContent = (
     <>
