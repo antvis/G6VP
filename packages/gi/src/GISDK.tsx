@@ -258,8 +258,6 @@ const GISDK = (props: Props) => {
   };
   const isReady = state.isContextReady && state.initialized;
 
-  console.log(state.data, '@@')
-
   return (
     <GraphInsightContext.Provider value={ContextValue}>
       <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%' }}>
