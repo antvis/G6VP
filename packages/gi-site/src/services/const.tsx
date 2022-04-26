@@ -1,7 +1,7 @@
 export const isMock = window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
 
-export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
-// export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
+// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
+export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 
 export const ASSET_TYPE = {
