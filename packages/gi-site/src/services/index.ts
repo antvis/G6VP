@@ -47,21 +47,21 @@ export const getProjectById = async (id: string) => {
         layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
       };
     }
-
-    let currentSchema = JSON.parse(project.schemaData)
-    if (!currentSchema) {
-      currentSchema = {
-        nodes: [],
-        edges: []
-      }
+    let currentSchema = {
+      nodes: [],
+      edges: [],
+    };
+    if (project.schemaData) {
+      currentSchema = JSON.parse(project.schemaData);
     }
+
     return {
       config,
       data,
       activeAssetsKeys,
       name: project.name,
       serviceConfig,
-      schemaData: currentSchema
+      schemaData: currentSchema,
     };
   };
 
