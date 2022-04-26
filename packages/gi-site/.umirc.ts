@@ -1,15 +1,15 @@
 /** 是否为本地研发模式 */
 
-export const isDev = false; // process.env.NODE_ENV === 'development';
+export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
   {
     name: '@alipay/gi-assets-basic',
     version: '2.0.1',
   },
-  {
-    name: '@alipay/gi-assets-scene',
-    version: '2.0.1',
-  },
+  // {
+  //   name: '@alipay/gi-assets-scene',
+  //   version: '2.0.1',
+  // },
 ];
 const NPM_INFO = [
   {
