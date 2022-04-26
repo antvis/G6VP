@@ -1,7 +1,7 @@
-import { useHistory } from '@alipay/bigfish';
 import { EditableProTable } from '@ant-design/pro-table';
 import { Button, Form, Input, Modal, Radio } from 'antd';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { addProject } from '../../services';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';

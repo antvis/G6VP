@@ -3,7 +3,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const packages = require('./package.json');
-const globalName = packages.name.replace('@alipay/', '').toUpperCase();
+const globalName = packages.name.replace('@alipay/', '').split('-').join('_').toUpperCase();
 
 module.exports = (env, argv) => {
   return {

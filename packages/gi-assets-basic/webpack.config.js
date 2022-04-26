@@ -2,8 +2,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const packages = require('./package.json');
-const globalName = packages.name.replace('@alipay/', '').toUpperCase();
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const globalName = packages.name.replace('@alipay/', '').split('-').join('_').toUpperCase();
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, argv) => {
   return {
@@ -85,10 +85,7 @@ module.exports = (env, argv) => {
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [
-      new MiniCssExtractPlugin(),
-      // new BundleAnalyzerPlugin()
-    ],
+    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
     externals: {
       lodash: '_',
       react: 'React',
