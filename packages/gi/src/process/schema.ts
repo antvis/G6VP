@@ -76,8 +76,16 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
     // 获取当前 source 对应的 nodeType
     const currentSource = nodes.find(node => node.id === source);
     const currentTarget = nodes.find(node => node.id === target);
-    edgeSchema.sourceNodeType = currentSource.nodeType;
-    edgeSchema.targetNodeType = currentTarget.nodeType;
+    if (!currentSource) {
+      console.warn('数据不合法,找不到 Source ID：', source);
+    }
+    if (!currentTarget) {
+      console.warn('数据不合法,找不到 Target ID：', target);
+    }
+    if (currentSource && currentTarget) {
+      edgeSchema.sourceNodeType = currentSource.nodeType;
+      edgeSchema.targetNodeType = currentTarget.nodeType;
+    }
 
     for (const key in data) {
       if (typeof data[key] === 'object') {
