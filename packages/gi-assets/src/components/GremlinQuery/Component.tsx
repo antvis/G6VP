@@ -1,6 +1,7 @@
 import { useContext, utils } from '@alipay/graphinsight';
 import GremlinEditor from './GremlinEditor';
 import Graphin from '@antv/graphin';
+import request from 'umi-request';
 import iconLoader from '@antv/graphin-icons';
 import { Button, Col, Divider, Row, notification } from 'antd';
 import classNames from 'classnames';
@@ -29,6 +30,9 @@ const defSpringLen = (_edge, source, target) => {
   return SpringLength;
 };
 
+export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
+// export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+
 export interface IGremlinQueryProps {
   initialValue?: string;
   height?: number;
@@ -38,7 +42,7 @@ export interface IGremlinQueryProps {
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style }) => {
-  const { data, updateContext, transform, services } = useContext();
+  const { updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
 
@@ -49,6 +53,17 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
   };
 
   const [btnLoading, setBtnLoading] = useState(false);
+
+  const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
+    params.id = id;
+
+    const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
+      method: 'post',
+      data: params,
+    });
+
+    return response.success;
+  };
 
   const handleClickQuery = async () => {
     setBtnLoading(true);
@@ -69,11 +84,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
     const result = await service({
       value: editorValue,
-    }).then(response => {
-      if (response.json) {
-        return response.json();
-      }
-      return response;
     });
 
     setBtnLoading(false);
@@ -82,7 +92,23 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
       return;
     }
 
+    const schemaData = utils.generatorSchemaByGraphData(result.data);
+
+    const locationHash = location.hash.match(/(?<=workspace\/)([0-9\.]*)(?=\?)/g);
+    if (locationHash && locationHash.length === 1) {
+      await updateProjectById(locationHash[0], {
+        // projectConfig: JSON.stringify(newConfig),
+        schemaData: JSON.stringify(schemaData),
+      });
+    }
+
     updateContext(draft => {
+      // @ts-ignore
+      draft.key = Math.random();
+
+      // @ts-ignore
+      draft.schemaData = schemaData;
+
       const res = transform(result.data);
       res.nodes.forEach(node => {
         if (!node.style.badges) {

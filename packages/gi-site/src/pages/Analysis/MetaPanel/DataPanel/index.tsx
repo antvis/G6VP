@@ -43,20 +43,7 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const { updateContext, context } = useContext();
-  const { data, inputData, id, serviceConfig } = context;
-
-  const [state, updateState] = useImmer({
-    isVisible: false,
-    initData: data,
-    tableType: 'nodes',
-    columns: nodeColumns,
-    tableData: data?.['nodes'].map((d, i) => {
-      return {
-        ...d,
-        key: i,
-      };
-    }),
-  });
+  const { data, inputData = [], id, serviceConfig } = context;
 
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
@@ -65,7 +52,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
   const [tableData, setTableData] = useImmer(
-    initData?.[tableType].map((d, i) => {
+    initData[tableType]?.map((d, i) => {
       return {
         ...d,
         key: i,
