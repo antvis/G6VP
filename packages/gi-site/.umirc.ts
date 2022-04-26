@@ -80,10 +80,10 @@ export default {
     { component: '404' },
   ],
   // mfsu: {},
-  antd: {
-    dark: false,
-    compact: false,
-  },
+  // antd: {
+  //   dark: false,
+  //   compact: false,
+  // },
   request: {
     dataField: '',
   },
@@ -95,27 +95,24 @@ export default {
   //   );
   // },
   externals: {
+    lodash: '_',
     react: 'React',
     'react-dom': 'ReactDOM',
     '@antv/graphin': 'Graphin',
     '@antv/g6': 'G6',
     antd: 'antd',
-    'antd/es/*': 'antd',
-    'antd/es': 'antd',
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
     xlsx: 'XLSX',
     '@antv/g2': 'G2',
     '@antv/g2plot': 'G2Plot',
-    './node_modules/_antd@4.20.0@antd/es': 'antd',
     // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
   },
   scripts: [
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.20.0/dist/antd.min.js',
