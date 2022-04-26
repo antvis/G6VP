@@ -1,7 +1,7 @@
 export interface IFilterRule{
   type: string;
   weightPropertyName?: string,
-  expressions?: any[]
+  edgeType?: string
 }
 
 export interface IState {
