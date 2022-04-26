@@ -1,11 +1,11 @@
-import { useHistory } from '@alipay/bigfish';
 import ThemeSwitch from '@alipay/theme-tools';
 import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Tooltip } from 'antd';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 import ThemeVars from '../ThemeVars';
+//@ts-ignore
 import styles from './index.less';
 
 const { Header } = Layout;
