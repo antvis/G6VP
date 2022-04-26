@@ -39,38 +39,78 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
   });
 
   const { handleClick, GIAC } = props;
-  let isValid = true;
-  const geoData = React.useMemo(() => {
-    return data.nodes.map(node => {
-      const n = node.data;
-      if (!n.longitude || !n.latitude) {
-        console.warn('node without longitude or latitude', n);
-        isValid = false;
-        return n;
-      }
-      return { ...node, location: [n.longitude, n.latitude] };
-    });
+
+  const geoNodesData = React.useMemo(() => {
+    return data.nodes
+      .filter(node => {
+        const n = node.data;
+        if (!n.longitude || !n.latitude) {
+          return false;
+        }
+        return true;
+      })
+      .map(node => {
+        const n = node.data;
+        return {
+          ...node,
+          location: [n.longitude, n.latitude],
+        };
+      });
   }, [data]);
-  if (!isValid) {
-    console.warn('%c invalid data', 'color:red', 'nodes should has longitude or latitude field');
+  const geoEdgesData = React.useMemo(() => {
+    return graph
+      .getEdges()
+      .filter(edge => {
+        const e = edge.get('model');
+        const source = edge.get('source').get('model');
+        const target = edge.get('target').get('model');
+        if (!source.data.longitude || !source.data.latitude || !target.data.longitude || !target.data.latitude) {
+          return false;
+        }
+        return true;
+      })
+      .map(edge => {
+        const e = edge.get('model');
+        const source = edge.get('source').get('model');
+        const target = edge.get('target').get('model');
+        return {
+          ...e,
+          lnglat: [
+            [source.data.longitude, source.data.latitude],
+            [target.data.longitude, target.data.latitude],
+          ],
+        };
+      });
+  }, [data]);
+  if (geoNodesData.length === 0) {
+    console.warn('%c invalid data', 'color:red', 'nodes has no longitude or latitude field');
     return null;
   }
+  console.log(geoNodesData, geoEdgesData);
 
   React.useEffect(() => {
-    const edgesData = graph.getEdges().map(edge => {
-      const e = edge.get('model');
-      const source = edge.get('source').get('model');
-      const target = edge.get('target').get('model');
-
-      return {
-        ...e,
-        lnglat: [
-          [source.data.longitude, source.data.latitude],
-          [target.data.longitude, target.data.latitude],
-        ],
-      };
-    });
-    const center = geoData[0].location;
+    const center = geoNodesData[0].location as [number, number];
+    const hasEdgeLayer = geoEdgesData.length !== 0;
+    const edgeLayer = hasEdgeLayer
+      ? [
+          {
+            name: 'edge',
+            type: 'pathLayer',
+            source: {
+              data: geoEdgesData,
+              parser: {
+                type: 'json',
+                coordinates: 'lnglat',
+              },
+            },
+            color: '#ddd',
+            size: 1,
+            style: {
+              opacity: 1,
+            },
+          },
+        ]
+      : [];
     const options = {
       map: {
         type: type,
@@ -81,30 +121,14 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         // autoFit: true,
       },
       layers: [
-        //线的图层
-        {
-          name: 'edge',
-          type: 'pathLayer',
-          source: {
-            data: edgesData,
-            parser: {
-              type: 'json',
-              coordinates: 'lnglat',
-            },
-          },
-          color: '#ddd',
-          size: 1,
-          style: {
-            opacity: 1,
-          },
-        },
+        ...edgeLayer,
         //点的图层
         {
           name: 'node',
           type: 'dotLayer',
           shape: 'circle',
           source: {
-            data: geoData,
+            data: geoNodesData,
             parser: {
               type: 'json',
               coordinates: 'location',
@@ -132,7 +156,7 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
           shape: 'text',
           field: 'id',
           source: {
-            data: geoData,
+            data: geoNodesData,
             parser: {
               type: 'json',
               coordinates: 'location',
@@ -157,7 +181,7 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       drawbox.on('draw.boxselect', e => {
         const { endPoint, startPoint } = e;
         const poly = turf.bboxPolygon([startPoint.lng, startPoint.lat, endPoint.lng, endPoint.lat]);
-        const matchNodes = geoData.filter(node => {
+        const matchNodes = geoNodesData.filter(node => {
           const pt = turf.point(node.location);
           const isMatch = turf.booleanPointInPolygon(pt, poly);
           return isMatch;
@@ -199,15 +223,15 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       });
     });
     // const plot = map.getPlots()[0];
-    // plot.changeData(geoData);
+    // plot.changeData(geoNodesData);
 
     return () => {
       map.destroy();
     };
   }, [
-    // TODO: change geoData
+    // TODO: change geoNodesData
     // graph,
-    // geoData,
+    // geoNodesData,
     type,
     theme,
   ]);
@@ -256,7 +280,9 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
             handleToggleMap={handleToggle}
           />
 
-          {isReady && <PropertiesPanel mapInstance={mapInstance as L7Plot} geoData={geoData} updateState={setState} />}
+          {isReady && (
+            <PropertiesPanel mapInstance={mapInstance as L7Plot} geoData={geoNodesData} updateState={setState} />
+          )}
         </div>
       </div>
     </AnimateContainer>
