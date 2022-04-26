@@ -22,8 +22,8 @@ const options = [
     label: '最短路径',
   },
   {
-    value: 'Customer-Rule',
-    label: '自定义规则',
+    value: 'Edge-Type-Filter',
+    label: '边类型过滤',
   },
 ];
 
@@ -43,6 +43,12 @@ const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
     return Object.keys(edgeProperties).filter(key => edgeProperties[key] === 'number');
   }, [schemaData]);
 
+  const edgeTypeOptions = useMemo(() => {
+    return schemaData.edges.map(schema => {
+      return { value: schema.edgeType, label: schema.edgeType };
+    });
+  }, [schemaData]);
+
   const onRuleTypeChange = (value: string) => {
     updateState(draft => {
       draft.filterRule.type = value;
@@ -52,6 +58,12 @@ const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
   const onWeightChange = (value: string) => {
     updateState(draft => {
       draft.filterRule.weightPropertyName = value;
+    });
+  };
+
+  const onEdgeTypeChange = (value: string) => {
+    updateState(draft => {
+      draft.filterRule.edgeType = value;
     });
   };
 
@@ -65,6 +77,15 @@ const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
           <Select value={filterRule.weightPropertyName} allowClear onChange={onWeightChange}>
             {weightProperties.map(prop => {
               return <Select.Option value={prop}>{prop}</Select.Option>;
+            })}
+          </Select>
+        </Form.Item>
+      )}
+      {filterRule.type === 'Edge-Type-Filter' && (
+        <Form.Item label="边类型">
+          <Select value={filterRule.edgeType} onChange={onEdgeTypeChange}>
+            {edgeTypeOptions.map(option => {
+              return <Select.Option value={option.value}>{option.label}</Select.Option>;
             })}
           </Select>
         </Form.Item>
