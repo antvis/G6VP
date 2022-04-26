@@ -90,7 +90,7 @@ export const loadJS = options => {
     //js
     ...options.map(opt => {
       if (window[opt.global]) {
-        return;
+        return window[opt.global];
       }
       return Loader(opt);
     }),
@@ -107,7 +107,7 @@ export const loadJS = options => {
 export const getAssets = () => {
   if (isDev) {
     return LOCAL_ASSETS.map(c => {
-      return;
+      return c;
     });
   }
   const packages = getAssetPackages();
