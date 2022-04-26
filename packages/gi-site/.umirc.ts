@@ -101,9 +101,15 @@ export default {
     '@antv/g6': 'G6',
     antd: 'antd',
     'antd/es/*': 'antd',
+    'antd/es': 'antd',
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
+    xlsx: 'XLSX',
+    '@antv/g2': 'G2',
+    '@antv/g2plot': 'G2Plot',
+    './node_modules/_antd@4.20.0@antd/es': 'antd',
+    // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
   },
   scripts: [
@@ -112,7 +118,7 @@ export default {
 
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
-    'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
+    'https://gw.alipayobjects.com/os/lib/antd/4.20.0/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js',
 
@@ -120,6 +126,12 @@ export default {
     ...externalScripts,
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
+    /** editor */
+    // 'https://gw.alipayobjects.com/os/lib/react-monaco-editor/0.48.0/lib/index.js',
+    'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
+    /** G2 / G2Plot */
+    'https://gw.alipayobjects.com/os/lib/antv/g2/4.2.0/dist/g2.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
   ],
   styles: [
     ...externalScripts.map(c => {
