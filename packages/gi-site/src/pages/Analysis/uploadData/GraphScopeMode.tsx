@@ -73,6 +73,8 @@ const GraphScopeMode = ({ close }) => {
         return;
       }
       message.success('加载数据到 GraphScope 引擎成功');
+      // 关闭弹框
+      close();
       const { graphName, graphURL } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
       localStorage.setItem('graphScopeGremlinServer', graphURL);
@@ -171,6 +173,7 @@ const GraphScopeMode = ({ close }) => {
         // 提示
         message.success('关闭 GraphScope 实例成功');
         clearGraphScopeStorage();
+        close();
       }
     }
   };
@@ -274,7 +277,7 @@ const GraphScopeMode = ({ close }) => {
                 关闭 GraphScope 实例
               </Button>
             </Popconfirm>
-            <Button onClick={handleSubmitForm}>取消</Button>
+            <Button onClick={close}>取消</Button>
             <Button type="primary" onClick={handleSubmitForm} loading={loading}>
               进入分析
             </Button>
