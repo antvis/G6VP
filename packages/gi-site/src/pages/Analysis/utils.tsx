@@ -153,7 +153,7 @@ const defaultEdgeConfig = {
   groupName: `默认样式`,
 };
 
-export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig): GIConfig => {
+export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig = {}): GIConfig => {
   const { nodes, edges } = schema;
   let hasUnkownNodeType = false;
   let hasUnkownEdgeType = false;

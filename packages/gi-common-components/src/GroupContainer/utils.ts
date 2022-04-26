@@ -80,7 +80,7 @@ const filterByExpression = (data: Record<string, string | number>, expression: E
   if (!expression) {
     return false;
   }
-  const { name: propertyName, operator, value } = expression;
+  const { name: propertyName = '', operator, value } = expression;
   const name = propertyName.split('-')[0];
   let formatted: string | number = value;
 
