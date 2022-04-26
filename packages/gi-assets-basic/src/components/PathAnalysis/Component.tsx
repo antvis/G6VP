@@ -21,6 +21,7 @@ enableMapSet();
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel } = props;
   const { data: graphData, graph, sourceDataMap } = useContext();
+  //console.log(graphData, '@graphData')
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -44,10 +45,15 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const handleResetForm = () => {
     form.resetFields();
     updateState(draft => {
+      draft.allNodePath = [];
+      draft.allEdgePath = [];
       draft.nodePath = [];
       draft.edgePath = [];
       draft.highlightPath = new Set();
       draft.isAnalysis = false;
+      draft.filterRule = {
+        type: 'All-Path',
+      };
     });
     cancelHighlight();
   };
@@ -65,6 +71,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         draft.edgePath = allEdgePath;
         draft.isAnalysis = true;
         draft.highlightPath = highlightPath;
+        draft.filterRule = {
+          type: 'All-Path',
+        };
       });
     });
   };
@@ -130,10 +139,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
     let nodePath: string[][] = [];
     let edgePath: string[][] = [];
-    if (state.filterRule.type === 'All-Path') {
-      nodePath = state.allNodePath;
-      edgePath = state.allEdgePath;
-    } else if (state.filterRule.type === 'Shortest-Path') {
+    if (state.filterRule.type === 'Shortest-Path') {
       const pathLenMap = {};
       let minLen = Infinity;
       state.allEdgePath.forEach((path, pathId) => {
@@ -146,6 +152,22 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
       nodePath = state.allNodePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
       edgePath = state.allEdgePath.filter((_, pathId) => pathLenMap[pathId] === minLen);
+    } else if (state.filterRule.type === 'Edge-Type-Filter' && state.filterRule.edgeType) {
+      const validPathId = new Set();
+      state.allEdgePath.forEach((path, pathId) => {
+        const isMatch = path.every(edgeId => {
+          const edgeConfig = sourceDataMap.edges[edgeId];
+          return edgeConfig?.edgeType === state.filterRule.edgeType;
+        });
+        if (isMatch) {
+          validPathId.add(pathId);
+        }
+      });
+      nodePath = state.allNodePath.filter((_, pathId) => validPathId.has(pathId));
+      edgePath = state.allEdgePath.filter((_, pathId) => validPathId.has(pathId));
+    } else {
+      nodePath = state.allNodePath;
+      edgePath = state.allEdgePath;
     }
 
     updateState(draft => {
