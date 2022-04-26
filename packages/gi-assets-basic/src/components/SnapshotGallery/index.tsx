@@ -7,7 +7,7 @@ const info = {
   desc: '快照画廊',
   cover: 'http://xxx.jpg',
   category: 'system-interaction',
-  type: 'AUTO',
+  type: 'GIAC',
 };
 
 export default { info, component: Component, registerMeta };
