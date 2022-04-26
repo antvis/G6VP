@@ -43,7 +43,7 @@ export const getProjectById = async (id: string) => {
     } else {
       activeAssetsKeys = {
         elements: [...config.nodes.map(node => node.id), ...config.edges.map(edge => edge.id)],
-        components: [...config.components.map(c => c.id)],
+        components: config.components ? [...config.components.map(c => c.id)] : [],
         layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
       };
     }

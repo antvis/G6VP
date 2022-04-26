@@ -1,4 +1,4 @@
-import Component from './Component';
+import Component, { SERVICE_URL_PREFIX } from './Component';
 import registerMeta from './registerMeta';
 
 const ASSET_ID = 'GremlinQuery';
@@ -66,7 +66,7 @@ const mockServices = () => {
       id: SERVICE_GS_ID,
       service: (params = {}) => {
         const { value = 'g.V().limit(5)' } = params as any;
-        return fetch(`http://dev.alipay.net:7001/graphcompute/gremlinQuery`, {
+        return fetch(`${SERVICE_URL_PREFIX}/graphcompute/gremlinQuery`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -75,7 +75,7 @@ const mockServices = () => {
             statement: value,
             gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
           }),
-        });
+        }).then(response => response.json());
       },
     },
   ];
