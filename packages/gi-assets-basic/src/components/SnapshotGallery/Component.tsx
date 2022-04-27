@@ -1,23 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import type { IGIAC } from '@alipay/graphinsight';
-import { extra, useContext } from '@alipay/graphinsight';
+import { extra, useContext, utils } from '@alipay/graphinsight';
 import { useImmer } from 'use-immer';
 const { GIAComponent } = extra;
 import { nanoid } from 'nanoid';
 import { IState, IHistoryObj, IHistory } from './typing';
-import Gallery from './Gallery';
+//import Gallery from './Gallery';
+import SnapShot from './Snapshot';
 import './index.less';
+
+const { getPositionStyles } = utils;
 
 export interface IProps {
   GIAC: IGIAC;
   placement: string;
   offset: number[];
   direction: 'horizontal' | 'vertical';
+  background: string
 }
 
 const SnapshotGallery: React.FC<IProps> = props => {
-  const { GIAC, placement, offset, direction } = props;
+  const { GIAC, placement, offset, direction, background } = props;
+  const positionStyles = getPositionStyles(placement, offset);
+  const flexDirection = direction === 'horizontal' ? 'row' : 'column';
   const { graph, data, GISDK_ID } = useContext();
   const [state, updateState] = useImmer<IState>({
     history: new Map<string, IHistoryObj>(),
@@ -42,15 +48,30 @@ const SnapshotGallery: React.FC<IProps> = props => {
 
     updateState(draft => {
       const id = nanoid();
-      draft.history.set(id, { graphData, imgURL });
+      draft.history.set(id, { graphData, imgURL, time: Date.now() });
     });
   };
+
+  const deleteSnapShot = (id: string) => {
+    updateState(draft => {
+      draft.history.delete(id);
+    });
+  };
+
+  const content = (
+    <div className="gi-gallery-container" style={{ ...positionStyles, flexDirection, background }}>
+      {[...state.history.entries()].map(e => {
+        const [id, historyObj] = e;
+        return <SnapShot id={id} historyObj={historyObj} deleteSnapShot={deleteSnapShot}/>
+      })}
+    </div>
+  );
 
   return (
     <div className="gi-snapshot-gallery">
       <GIAComponent GIAC={GIAC} onClick={handleClick} />
       {ReactDOM.createPortal(
-        <Gallery history={state.history} placement={placement} offset={offset} direction={direction} />,
+        content,
         document.getElementById(`${GISDK_ID}-graphin-container`)!,
       )}
     </div>
