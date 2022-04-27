@@ -1,4 +1,4 @@
-import type { GraphinContextType, GraphinData, Layout, IUserNode, IUserEdge } from '@antv/graphin';
+import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 
 export interface State {
   /** graphin */
@@ -66,13 +66,14 @@ export interface Props {
 }
 
 export type AssetType =
-  | 'GICC'
-  | 'GICC_MENU'
-  | 'GIAC'
-  | 'GIAC_CONTENT'
-  | 'GIAC_MENU'
-  | 'NODE'
-  | 'EDGE'
+  | 'AUTO' // 自加载组件
+  | 'GICC' // 容器组件
+  | 'GICC_MENU' // 容器组件（菜单）
+  | 'GIAC' // 原子组件
+  | 'GIAC_CONTENT' //原子组件（内容）
+  | 'GIAC_MENU' // 原子组件（菜单）
+  | 'NODE' // 节点
+  | 'EDGE' // 边
   // 兼容旧版本
   | 'GI_CONTAINER'
   | 'GI_CONTAINER_INDEX';
@@ -235,3 +236,29 @@ export interface ISourceDataMap {
     [id: string]: IUserEdge;
   };
 }
+
+export type AssetCategory =
+  | 'container-components'
+  | 'canvas-interaction'
+  | 'elements-interaction'
+  | 'data-analysis'
+  | 'data-query'
+  | 'system-interaction'
+  | 'styling-analysis'
+  | 'algorithm-analysis'
+  | 'workbook';
+export type AssetInfo = {
+  /** 资产ID */
+  id: string;
+  /** 资产名称 */
+  name: string;
+  /** 资产缩略图 */
+  cover?: string;
+  /** 资产类型 */
+  type: AssetType;
+  /** 资产分类 */
+  category: AssetCategory;
+  /** 资产描述 */
+  desc?: string;
+  [key: string]: any;
+};

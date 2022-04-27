@@ -7,20 +7,29 @@ import {
   GIAC_PROPS,
   GI_CONTAINER_METAS,
 } from './components/const';
-
-export { default as Icon } from './components/Icon';
-
-export type { IGIAC } from './components/const';
-
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './utils';
+
+export type { IGIAC } from './components/const';
+export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
-export type { GIAssets, GIComponentConfig, GIConfig, GIEdgeConfig, GINodeConfig, ISourceDataMap } from './typing';
+export type {
+  AssetCategory,
+  AssetInfo,
+  AssetType,
+  GIAssets,
+  GIComponentConfig,
+  GIConfig,
+  GIEdgeConfig,
+  GINodeConfig,
+  ISourceDataMap,
+} from './typing';
 export { useContext, utils };
 export { extra };
+
 const extra = {
   /** 原子组件 META */
   GIAC_CONTENT_METAS,
