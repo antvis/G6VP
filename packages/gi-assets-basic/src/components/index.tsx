@@ -17,14 +17,14 @@ import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
-import Redo from './Redo';
+// import Redo from './Redo';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
 import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
-import Undo from './Undo';
+// import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -40,8 +40,8 @@ export {
   ZoomIn,
   ZoomOut,
   DownLoad,
-  Redo,
-  Undo,
+  // Redo,
+  // Undo,
   ContextMenu,
   Tooltip,
   ClearCanvas,
