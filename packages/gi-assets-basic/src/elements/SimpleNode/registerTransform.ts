@@ -74,9 +74,21 @@ const getBadgesStyleByConfig = (style, data) => {
   if (visible) {
     const size = Math.round(keyshape.size / 3);
     const fontSize = size / 2;
-    console.log('fontSize', fontSize, size);
     badge.size = size;
     badge.stroke = keyshape.stroke;
+    if (badge.type === 'mapping') {
+      const b = {
+        size,
+        stroke: keyshape.stroke,
+        fill: '#fff',
+        color: keyshape.fill,
+        visible: data[value] ? true : false,
+        value: data[value],
+        fontSize,
+      };
+      console.log('b,', b, data, value, data[value]);
+      return [b];
+    }
     if (badge.type === 'font') {
       badge.type = 'font';
       badge.fontFamily = 'graphin';
