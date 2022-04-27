@@ -9,6 +9,11 @@ metas.GIAC.children.tooltipPlacement.default = 'right';
 
 const registerMeta = () => {
   return {
+    background: {
+      name: '画廊背景色',
+      type: 'fill',
+      default: '#fff',
+    },
     direction: {
       name: '展示方向',
       type: 'radio',
