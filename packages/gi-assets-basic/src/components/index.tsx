@@ -16,8 +16,9 @@ import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
-// import Redo from './Redo';
 import SideTabs from './SideTabs';
+// import Redo from './Redo';
+import SnapshotGallery from './SnapshotGallery';
 import StyleSetting from './StyleSetting';
 import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
@@ -56,4 +57,5 @@ export {
   Copyright,
   ToggleClusterWithMenu,
   Timeline,
+  SnapshotGallery,
 };
