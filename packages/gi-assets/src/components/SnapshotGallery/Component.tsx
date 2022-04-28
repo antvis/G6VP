@@ -22,6 +22,8 @@ export interface IProps {
 
 const SnapshotGallery: React.FC<IProps> = props => {
   const { GIAC, placement, offset, direction, background } = props;
+  //GIAC.isShowTooltip = true;
+  //GIAC.tooltip = ''
   const positionStyles = getPositionStyles(placement, offset);
   const flexDirection = direction === 'horizontal' ? 'row' : 'column';
   const { graph, data, GISDK_ID } = useContext();
@@ -94,7 +96,7 @@ const SnapshotGallery: React.FC<IProps> = props => {
 
   return (
     <div className="gi-snapshot-gallery">
-      <GIAComponent GIAC={GIAC} onClick={saveSnapshot} />
+      <GIAComponent GIAC={GIAC} onClick={saveSnapshot}/>
       {ReactDOM.createPortal(content, document.getElementById(`${GISDK_ID}-graphin-container`)!)}
     </div>
   );
