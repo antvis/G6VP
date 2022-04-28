@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import type { IGIAC } from '@alipay/graphinsight';
 import { extra, useContext, utils } from '@alipay/graphinsight';
@@ -17,7 +17,7 @@ export interface IProps {
   placement: string;
   offset: number[];
   direction: 'horizontal' | 'vertical';
-  background: string
+  background: string;
 }
 
 const SnapshotGallery: React.FC<IProps> = props => {
@@ -29,7 +29,7 @@ const SnapshotGallery: React.FC<IProps> = props => {
     history: new Map<string, IHistoryObj>(),
   });
 
-  const handleClick = () => {
+  const saveSnapshot = () => {
     const nodes = data.nodes.map(nodeConfig => {
       const { id } = nodeConfig;
       const node = graph.findById(id);
@@ -62,18 +62,40 @@ const SnapshotGallery: React.FC<IProps> = props => {
     <div className="gi-gallery-container" style={{ ...positionStyles, flexDirection, background }}>
       {[...state.history.entries()].map(e => {
         const [id, historyObj] = e;
-        return <SnapShot id={id} historyObj={historyObj} deleteSnapShot={deleteSnapShot}/>
+        return <SnapShot id={id} historyObj={historyObj} deleteSnapShot={deleteSnapShot} />;
       })}
     </div>
   );
 
+  useEffect(() => {
+    // 绑定快捷键 默认为 control + x
+    // 兼容 Windows 用户
+    const keyMap = {};
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      keyMap[e.key] = true;
+      if (keyMap['x'] && keyMap['Control']) {
+        saveSnapshot();
+      }
+    };
+
+    const onKeyUp = (e: KeyboardEvent) => {
+      keyMap[e.key] = false;
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('keyup', onKeyUp);
+    };
+  }, []);
+
   return (
     <div className="gi-snapshot-gallery">
-      <GIAComponent GIAC={GIAC} onClick={handleClick} />
-      {ReactDOM.createPortal(
-        content,
-        document.getElementById(`${GISDK_ID}-graphin-container`)!,
-      )}
+      <GIAComponent GIAC={GIAC} onClick={saveSnapshot} />
+      {ReactDOM.createPortal(content, document.getElementById(`${GISDK_ID}-graphin-container`)!)}
     </div>
   );
 };

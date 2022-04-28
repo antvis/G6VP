@@ -67,6 +67,7 @@ const Snapshot: React.FC<ISnapShotProps> = props => {
       >
         <div onClick={stopPropagation}>
           <Button onClick={() => deleteSnapShot(id)} icon={<DeleteOutlined />} />
+          {/* 用于预览图片：暂未实现 */}
           <Button icon={<ZoomInOutlined />} />
         </div>
       </Card>
