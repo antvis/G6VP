@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { getProjectList, removeProjectById } from '../../services';
-import { time } from './utils';
+import { utils } from '@alipay/graphinsight';
 
 interface ProjectListProps {
   onCreate?: () => void;
@@ -110,7 +110,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                       </Dropdown>
                     </span>
                   </div>
-                  <span>{time(gmtCreate)}</span>
+                  <span>{utils.time(gmtCreate)}</span>
                 </div>
               </Card>
             </Col>

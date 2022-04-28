@@ -14,20 +14,15 @@ export interface IProps {
 const leafNodeIdsCache: Record<string, string[]> = {};
 // 已被操作过的节点缓存
 const nodeIdsCache = new Set<string>();
-// 原始画布数据
-let originGraphData;
 
 const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { contextmenu, isReLayout, degree } = props;
-  const { graph, updateData, data } = useContext();
+  const { graph, updateContext, source, data } = useContext();
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
   if (!targetNode) {
     return null;
   }
   const model = targetNode.getModel();
-  if (!originGraphData) {
-    originGraphData = data;
-  }
 
   const handleToggleCluster = () => {
     // n 度节点收起暂不支持
@@ -61,8 +56,10 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
             hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
           }
         });
-        const newData = filterGraphDataByNodes(originGraphData, hiddenNodeIds);
-        updateData(newData);
+        const newData = filterGraphDataByNodes(source, hiddenNodeIds);
+        updateContext(draft => {
+          draft.data = newData;
+        })
       }
     }
     onClose();

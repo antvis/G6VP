@@ -21,21 +21,6 @@ export const getMockData = () => {
 
 /**
  *
- * 时间戳转时间
- *
- */
-
-export const time = time => {
-  if (!time) {
-    return 'Invalid Date';
-  }
-  const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
-
-  return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
-};
-
-/**
- *
  * 默认config
  *
  */
