@@ -11,7 +11,6 @@ import LassoSelect from './LassoSelect';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
-import NodeExpand from './NodeExpand';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
@@ -47,7 +46,6 @@ export {
   ClearCanvas,
   LassoSelect,
   Export,
-  NodeExpand,
   OperatorHeader,
   PathAnalysis,
   PropertiesPanel,
