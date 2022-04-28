@@ -6,10 +6,10 @@ const assets_npm = [
     name: '@alipay/gi-assets-basic',
     version: '2.0.1',
   },
-  {
-    name: '@alipay/gi-assets-scene',
-    version: '2.0.1',
-  },
+  // {
+  //   name: '@alipay/gi-assets-scene',
+  //   version: '2.0.1',
+  // },
 ];
 const NPM_INFO = [
   {
