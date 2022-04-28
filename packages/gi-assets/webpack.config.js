@@ -2,8 +2,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const packages = require('./package.json');
-const globalName = packages.name.replace('@alipay/', '').toUpperCase();
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const globalName = packages.name.replace('@alipay/', '').split('-').join('_').toUpperCase();
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, argv) => {
   return {
@@ -77,6 +77,9 @@ module.exports = (env, argv) => {
 
     resolve: {
       extensions: ['*', '.ts', '.tsx', '.js', '.jsx'],
+      fallback: {
+        fs: false,
+      },
     },
     // devtool: 'cheap-module-source-map',
     output: {
@@ -86,22 +89,15 @@ module.exports = (env, argv) => {
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [
-      new MiniCssExtractPlugin(),
-      // new BundleAnalyzerPlugin()
-    ],
+    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
     externals: {
       lodash: '_',
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
-
       '@antv/g6': 'G6',
       antd: 'antd',
-      '@antv/s2': 'S2',
-      '@antv/s2-react': 'S2-React',
-      '@antv/g2plot': 'G2Plot',
-      '@antv/g2': 'G2',
+      '@alipay/graphinsight': 'GISDK',
     },
   };
 };

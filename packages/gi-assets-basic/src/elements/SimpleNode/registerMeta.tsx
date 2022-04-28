@@ -286,6 +286,7 @@ const registerMeta = context => {
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
                         enum: [
+                          { label: '字段映射', value: 'mapping' },
                           { label: '文本', value: 'text' },
                           { label: '字体图标', value: 'font' },
                         ],

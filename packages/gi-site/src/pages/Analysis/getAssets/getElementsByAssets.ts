@@ -35,7 +35,7 @@ const getElementsByAssets = (assets, data, schemaData) => {
       return a.id === b.id;
     });
 
-    const configObj = registerMeta({ data, keys });
+    const configObj = registerMeta({ data, keys, schemaData });
     /** 默认的配置值 */
     // const defaultProps = extractDefault({ config: configObj, value: {} });
 

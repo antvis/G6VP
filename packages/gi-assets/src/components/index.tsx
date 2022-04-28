@@ -1,5 +1,5 @@
 // import AddNode from './AddNode';
-import AjustLayout from './AjustLayout';
+// import AjustLayout from './AjustLayout';
 // import EdgeBunding from './EdgeBundling';
 // import NodeAttrs from './NodeAttrs';
 // import NodeExpand from './NodeExpand';
@@ -9,10 +9,4 @@ import AjustLayout from './AjustLayout';
 // import SearchBar from './SearchBar';
 import GremlinQuery from './GremlinQuery';
 
-export {
-  AjustLayout,
-  // NodeExpandByTypes,
-  // PatternMatch,
-  // EdgeBunding,
-  GremlinQuery,
-};
+export { GremlinQuery };
