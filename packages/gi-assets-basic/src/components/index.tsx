@@ -11,21 +11,20 @@ import LassoSelect from './LassoSelect';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
-import NodeExpand from './NodeExpand';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
-import Redo from './Redo';
-import SnapshotGallery from './SnapshotGallery';
 import SideTabs from './SideTabs';
+// import Redo from './Redo';
+import SnapshotGallery from './SnapshotGallery';
 import StyleSetting from './StyleSetting';
 import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
-import Undo from './Undo';
+// import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -41,14 +40,13 @@ export {
   ZoomIn,
   ZoomOut,
   DownLoad,
-  Redo,
-  Undo,
+  // Redo,
+  // Undo,
   ContextMenu,
   Tooltip,
   ClearCanvas,
   LassoSelect,
   Export,
-  NodeExpand,
   OperatorHeader,
   PathAnalysis,
   PropertiesPanel,
@@ -59,5 +57,5 @@ export {
   Copyright,
   ToggleClusterWithMenu,
   Timeline,
-  SnapshotGallery
+  SnapshotGallery,
 };

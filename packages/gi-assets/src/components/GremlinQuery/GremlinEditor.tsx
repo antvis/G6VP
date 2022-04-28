@@ -1,17 +1,17 @@
 // @ts-nocheck
-import React from "react";
-import { Button, Tooltip } from "antd";
-import { MonacoEnvironment, EditorProvider } from "@alipay/e2-editor-core";
-import type { monaco } from "@alipay/e2-language-gremlin";
-import elementResizeDetectorMaker from "element-resize-detector";
-import { FormatPainterOutlined } from "@ant-design/icons";
-import "./index.less";
+import React from 'react';
+import { Button, Tooltip } from 'antd';
+import { MonacoEnvironment, EditorProvider } from '@alipay/e2-editor-core';
+import dsl from '@alipay/e2-language-gremlin';
+import elementResizeDetectorMaker from 'element-resize-detector';
+import { FormatPainterOutlined } from '@ant-design/icons';
+import './index.less';
 
 interface Props {
   initialValue: string;
   isReadOnly?: boolean;
   height?: string | number;
-  onCreated?: (editor: monaco.editor.IStandaloneCodeEditor) => void;
+  onCreated?: (editor: any) => void;
   onValueChange?: (content: string) => void;
   onSelectionChange?: (content: string) => void;
 }
@@ -20,18 +20,11 @@ interface Props {
  * gremlin editor based on E2
  * @see https://yuque.antfin-inc.com/yuqi.pyq/fgetpa/ap3fnc
  */
-export const GremlinEditor: React.FC<Props> = (props) => {
-  const {
-    initialValue,
-    isReadOnly = false,
-    height = "100%",
-    onCreated,
-    onValueChange,
-    onSelectionChange
-  } = props;
+export const GremlinEditor: React.FC<Props> = props => {
+  const { initialValue, isReadOnly = false, height = '100%', onCreated, onValueChange, onSelectionChange } = props;
 
   const editorRef = React.useRef<HTMLDivElement | null>(null);
-  const [codeEditor, setCodeEditor] = React.useState<monaco.editor.IStandaloneCodeEditor>(null);
+  const [codeEditor, setCodeEditor] = React.useState<any>(null);
 
   // 监听 resize 事件
   let erd: elementResizeDetectorMaker.Erd;
@@ -45,7 +38,7 @@ export const GremlinEditor: React.FC<Props> = (props) => {
 
   const installElementResizeDetector = () => {
     erd = elementResizeDetectorMaker({
-      strategy: "scroll"
+      strategy: 'scroll',
     });
     // eslint-disable-next-line react/no-find-dom-node
     const node = editorRef && editorRef.current;
@@ -65,30 +58,29 @@ export const GremlinEditor: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     MonacoEnvironment.loadModule(async (container: { load: (arg0: any) => void }) => {
-      const dsl = await import("@alipay/e2-language-gremlin");
-      container.load(dsl.default);
+      container.load(dsl);
     });
     MonacoEnvironment.init().then(async () => {
       if (editorRef && editorRef.current) {
         const editorProvider = MonacoEnvironment.container.get<EditorProvider>(EditorProvider);
         const editor = editorProvider.create(editorRef.current, {
-          language: "Gremlin",
+          language: 'Gremlin',
           value: initialValue,
-          theme: "GremlinTheme",
+          theme: 'GremlinTheme',
           suggestLineHeight: 24,
           automaticLayout: true,
           minimap: { enabled: false },
           fontSize: 14,
           lineHeight: 20,
           folding: true,
-          wordWrap: "on",
+          wordWrap: 'on',
           lineDecorationsWidth: 0,
           lineNumbersMinChars: 3,
           readOnly: isReadOnly,
-          suggestSelection: "first",
+          suggestSelection: 'first',
           wordBasedSuggestions: false,
           suggest: { snippetsPreventQuickSuggestions: false },
-          autoClosingQuotes: "always"
+          autoClosingQuotes: 'always',
         });
 
         setCodeEditor(editor.codeEditor);
@@ -99,9 +91,7 @@ export const GremlinEditor: React.FC<Props> = (props) => {
         }
 
         if (onValueChange) {
-          editor.codeEditor.onDidChangeModelContent(() =>
-            onValueChange(editor.codeEditor.getValue())
-          );
+          editor.codeEditor.onDidChangeModelContent(() => onValueChange(editor.codeEditor.getValue()));
         }
 
         if (onSelectionChange) {
@@ -129,7 +119,7 @@ export const GremlinEditor: React.FC<Props> = (props) => {
     const selection = codeEditor.getSelection();
     const hasSelection = selection && !selection.isEmpty();
     const action = codeEditor.getAction(
-      hasSelection ? "editor.action.formatSelection" : "editor.action.formatDocument"
+      hasSelection ? 'editor.action.formatSelection' : 'editor.action.formatDocument',
     );
     if (action) {
       return new Promise((resolve, reject) => {
@@ -139,26 +129,27 @@ export const GremlinEditor: React.FC<Props> = (props) => {
           },
           (err: Error) => {
             reject(err);
-          }
+          },
         );
       });
     }
-    return Promise.reject(new Error("format not support"));
+    return Promise.reject(new Error('format not support'));
   };
 
   return (
     <>
-      <div className='editor-toolbar'>
-        <Tooltip title='格式化'>
+      <div className="editor-toolbar">
+        <Tooltip title="格式化">
           <Button
-            style={{ border: "none" }}
+            style={{ border: 'none' }}
             disabled={isReadOnly}
             onClick={doFormat}
-            size='small'
-            icon={<FormatPainterOutlined />}></Button>
+            size="small"
+            icon={<FormatPainterOutlined />}
+          ></Button>
         </Tooltip>
       </div>
-      <div style={{ width: "100%", height }} ref={editorRef} />
+      <div style={{ width: '100%', height }} ref={editorRef} />
     </>
   );
 };

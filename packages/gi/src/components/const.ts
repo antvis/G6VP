@@ -56,7 +56,7 @@ const GIAC_CONTENT = {
     tooltipPlacement: {
       name: '提示方位',
       type: 'select',
-      default: 'top',
+      default: 'right',
       options: [
         {
           value: 'top',
