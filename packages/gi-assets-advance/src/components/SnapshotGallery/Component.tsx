@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import type { IGIAC } from '@alipay/graphinsight';
 import { extra, useContext, utils } from '@alipay/graphinsight';
-import { useImmer } from 'use-immer';
-const { GIAComponent } = extra;
+import { enableMapSet } from 'immer';
 import { nanoid } from 'nanoid';
-import { IState, IHistoryObj, IHistory } from './typing';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import { useImmer } from 'use-immer';
+import './index.less';
 //import Gallery from './Gallery';
 import SnapShot from './Snapshot';
-import './index.less';
+import { IHistoryObj, IState } from './typing';
+const { GIAComponent } = extra;
 
 const { getPositionStyles } = utils;
 
@@ -20,6 +21,7 @@ export interface IProps {
   background: string;
 }
 
+enableMapSet();
 const SnapshotGallery: React.FC<IProps> = props => {
   const { GIAC, placement, offset, direction, background } = props;
   //GIAC.isShowTooltip = true;
