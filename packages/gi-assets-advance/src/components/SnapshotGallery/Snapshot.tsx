@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Button, Image } from 'antd';
-import { useImmer } from 'use-immer';
 import { useSpring, animated } from 'react-spring';
 import { DeleteOutlined, ZoomInOutlined } from '@ant-design/icons';
 import { useContext } from '@alipay/graphinsight';
@@ -20,10 +19,6 @@ const Snapshot: React.FC<ISnapShotProps> = props => {
   const { id, historyObj, deleteSnapShot } = props;
   const { graphData, imgURL } = historyObj;
 
-  const [state, updateState] = useImmer<IState>({
-    isPreview: false,
-  });
-
   const { updateContext, graph } = useContext();
 
   const onClickSnapshot = graphData => {
@@ -38,14 +33,12 @@ const Snapshot: React.FC<ISnapShotProps> = props => {
 
   const style = useSpring({
     from: {
-      //transform: 'translate(-100px, -20px)',
       width: `${graphWidth}px`,
       height: `${graphHeight}px`,
     },
     to: {
       width: '100px',
       height: '60px',
-      //transform: 'translate(0, 0)',
     },
   });
 
@@ -58,11 +51,7 @@ const Snapshot: React.FC<ISnapShotProps> = props => {
       <Card
         hoverable
         onClick={() => onClickSnapshot(graphData)}
-        cover={
-          <animated.div style={{ ...style }}>
-            <Image preview={{ visible: state.isPreview }} src={imgURL} alt="画廊图片" className="gi-gallery-img" />
-          </animated.div>
-        }
+        cover={<animated.img style={{ ...style }} src={imgURL} alt="画廊图片" className="gi-gallery-img" />}
         bodyStyle={{ width: 100 }}
       >
         <div onClick={stopPropagation}>
