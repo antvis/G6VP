@@ -12,11 +12,13 @@ const registerMeta = context => {
       'x-component-props': {
         mode: 'multiple',
       },
-      default:[]
+      default: [],
     },
     direction: {
       title: '展示方向',
       type: 'string',
+      'x-decorator': 'FormItem',
+      ' x-component': 'Radio.Group',
       enum: DIRECTION_OPTIONS,
     },
     placement: {
