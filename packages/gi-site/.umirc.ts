@@ -1,20 +1,28 @@
 /** 是否为本地研发模式 */
+import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
+import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
+import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
+import graphinsight from '@alipay/graphinsight/package.json';
 
 export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
   {
-    name: '@alipay/gi-assets-basic',
-    version: '2.0.1',
+    name: GI_ASSETS_BASIC.name,
+    version: GI_ASSETS_BASIC.version,
   },
-  // {
-  //   name: '@alipay/gi-assets-scene',
-  //   version: '2.0.1',
-  // },
+  {
+    name: GI_ASSETS_ADVANCE.name,
+    version: GI_ASSETS_ADVANCE.version,
+  },
+  {
+    name: GI_ASSETS_SCENE.name,
+    version: GI_ASSETS_SCENE.version,
+  },
 ];
 const NPM_INFO = [
   {
-    name: '@alipay/graphinsight',
-    version: '2.0.1',
+    name: graphinsight.name,
+    version: graphinsight.version,
     global: 'GISDK',
   },
   ...assets_npm,
@@ -50,7 +58,7 @@ const externalScripts = isDev
       return c.url;
     });
 
-console.log('isDev', isDev);
+console.log('isDev', isDev, PACKAGES);
 export default {
   // 具体配置项
   // mode: "site",
