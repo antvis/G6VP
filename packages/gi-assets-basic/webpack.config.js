@@ -92,7 +92,6 @@ module.exports = (env, argv) => {
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
       '@antv/g6': 'G6',
-      '@antv/g2': 'G2',
       '@antv/g2plot': 'G2Plot',
       antd: 'antd',
       '@alipay/graphinsight': 'GISDK',

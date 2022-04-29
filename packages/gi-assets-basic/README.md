@@ -7,7 +7,6 @@
       lodash: '_',
       react: 'React',
       'react-dom': 'ReactDOM',
-      '@antv/g2': 'G2',
       '@antv/g2Plot': 'G2Plot',
       '@antv/g6': 'G6',
       antd: 'antd',

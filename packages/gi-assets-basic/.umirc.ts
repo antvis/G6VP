@@ -6,9 +6,9 @@ export default {
     react: 'React',
     'react-dom': 'ReactDOM',
     '@antv/graphin': 'Graphin',
-
     '@antv/g6': 'G6',
     antd: 'antd',
+    '@antv/g2plot': 'G2Plot',
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
