@@ -1,0 +1,55 @@
+{
+  "placement": {
+    "title": "放置方位",
+    "type": "string",
+    "x-component": "Select",
+    "x-component-props": {
+      "options": [
+        {
+          "value": "LT",
+          "label": "左上 / top"
+        },
+        {
+          "value": "RT",
+          "label": "右上 / right"
+        },
+        {
+          "value": "LB",
+          "label": "左下 / left"
+        },
+        {
+          "value": "RB",
+          "label": "右下 / bottom"
+        }
+      ]
+    },
+    "default": "LT"
+  },
+  "offset": {
+    "title": "偏移距离",
+    "type": "string",
+    "x-component": "Offset",
+    "x-component-props": {
+      "min": 0,
+      "max": 400
+    },
+    "default": [
+      0,
+      0
+    ]
+  },
+  "height": {
+    "title": "高度",
+    "type": "string",
+    "x-component": "Text",
+    "x-component-props": {},
+    "default": "60px"
+  },
+  "width": {
+    "title": "宽度",
+    "type": "string",
+    "x-component": "Text",
+    "x-component-props": {},
+    "default": "100%"
+  }
+}
