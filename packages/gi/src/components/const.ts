@@ -209,11 +209,18 @@ const GIAC = {
         conditions: [['.isShowIcon', '$eq', true]],
       },
     },
-
     isShowTooltip: {
       name: '提示框',
       type: 'switch',
       default: true,
+    },
+    tooltip: {
+      name: '填写提示框内容',
+      type: 'text',
+      default: '',
+      showInPanel: {
+        conditions: [['.isShowTooltip', '$eq', true]],
+      },
     },
     tooltipColor: {
       name: '提示颜色',

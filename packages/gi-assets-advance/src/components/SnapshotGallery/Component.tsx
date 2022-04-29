@@ -50,7 +50,7 @@ const SnapshotGallery: React.FC<IProps> = props => {
 
     updateState(draft => {
       const id = nanoid();
-      draft.history.set(id, { graphData, imgURL, time: Date.now() });
+      draft.history.set(id, { graphData, imgURL });
     });
   };
 
@@ -96,7 +96,7 @@ const SnapshotGallery: React.FC<IProps> = props => {
 
   return (
     <div className="gi-snapshot-gallery">
-      <GIAComponent GIAC={GIAC} onClick={saveSnapshot}/>
+      <GIAComponent GIAC={GIAC} onClick={saveSnapshot} />
       {ReactDOM.createPortal(content, document.getElementById(`${GISDK_ID}-graphin-container`)!)}
     </div>
   );

@@ -1,10 +1,10 @@
 import { extra } from '@alipay/graphinsight';
 const { deepClone, GIAC_METAS } = extra;
-
 const metas = deepClone(GIAC_METAS);
 metas.GIAC.children.title.default = '快照画廊';
-metas.GIAC.children.icon.default = 'icon-zoomout';
-metas.GIAC.children.isShowTitle.default = false;
+metas.GIAC.children.icon.default = 'icon-camera';
+metas.GIAC.children.isShowTitle.default = true;
+metas.GIAC.children.tooltip.default = '快照画廊(快捷键ctrl+x)'
 metas.GIAC.children.tooltipPlacement.default = 'right';
 
 const registerMeta = () => {
