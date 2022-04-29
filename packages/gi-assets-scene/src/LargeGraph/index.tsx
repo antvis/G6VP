@@ -6,7 +6,7 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'LargeGraph',
   name: '3D大图',
-  category: 'components',
+  category: 'scene-analysis',
   desc: '3D大图',
   cover: 'http://xxxx.jpg',
   type: 'GIAC',

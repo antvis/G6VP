@@ -3,23 +3,24 @@ import type { GIAComponentProps } from '@alipay/graphinsight/lib/components/GIAC
 import * as React from 'react';
 import ForceGraph from './ForceGraph';
 const { GIAComponent } = extra;
+
 export interface MapModeProps {
   GIAC: GIAComponentProps['GIAC'];
   visible?: boolean;
-  /** 主题  */
-  theme: string;
-  /** 地图类型 */
   type: string;
+  minSize: string;
+  maxSize: string;
+  placement: 'LT' | 'RT' | 'LB' | 'RB';
+  offset: number[];
 }
 
 const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
   const GIAC = { ...props.GIAC };
-  const { visible: defaultVisible, theme, type } = props;
+  const { visible: defaultVisible, maxSize, minSize, placement, offset } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   GIAC.title = visible ? '切换至2D' : '切换至3D';
-
   return (
-    <div>
+    <>
       <GIAComponent
         //@ts-ignore
         GIAC={GIAC}
@@ -29,16 +30,17 @@ const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
       />
       {visible && (
         <ForceGraph
-          // theme={theme}
-          // type={type}
-          //@ts-ignore
+          minSize={minSize}
+          maxSize={maxSize}
+          placement={placement}
+          offset={offset}
           GIAC={GIAC}
           handleClick={() => {
             setVisible(false);
           }}
         />
       )}
-    </div>
+    </>
   );
 };
 
