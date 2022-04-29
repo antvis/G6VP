@@ -10,11 +10,15 @@ export interface MapModeProps {
   theme: string;
   /** 地图类型 */
   type: string;
+  minSize: string;
+  maxSize: string;
+  placement: 'LT' | 'RT' | 'LB' | 'RB';
+  offset: number[];
 }
 
 const MapMode: React.FunctionComponent<MapModeProps> = props => {
   const GIAC = { ...props.GIAC };
-  const { visible: defaultVisible, theme, type } = props;
+  const { visible: defaultVisible, theme, type, minSize, maxSize, placement, offset } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   GIAC.title = visible ? '切换至网图' : '切换至地图';
 
@@ -29,6 +33,10 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
       />
       {visible && (
         <L7Map
+          minSize={minSize}
+          maxSize={maxSize}
+          placement={placement}
+          offset={offset}
           theme={theme}
           type={type}
           GIAC={GIAC}
