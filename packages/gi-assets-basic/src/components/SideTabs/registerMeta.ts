@@ -9,32 +9,43 @@ metas.placement.default = 'LB';
 
 const registerMeta = context => {
   const { GI_CONTAINER_INDEXS = [] } = context;
-  return {
-    /** 分类信息 */
+
+  const schema = {
     GI_CONTAINER: {
-      name: '集成组件',
-      type: 'TagsSelect',
+      title: '集成组件',
+      type: 'string',
+      'x-decorator':'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        mode:'multiple'
+      },
+      enum: GI_CONTAINER_INDEXS,
       default: [],
-      options: GI_CONTAINER_INDEXS,
     },
     outSideFromCanvas: {
-      name: '是否独立于画布外',
-      type: 'Switch',
-      default: false,
+      title: '是否独立于画布外',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true, 
     },
     tabPosition: {
-      name: '导航布局',
-      type: 'Select',
-      default: 'left',
-      options: [
+      title: '导航布局',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [
         { label: 'left', value: 'left' },
         { label: 'right', value: 'right' },
         { label: 'top', value: 'top' },
         { label: 'bottom', value: 'bottom' },
       ],
+      default: 'left',
     },
-    ...metas,
-  };
+    ...metas
+  }
+
+  return schema;
 };
 
 export default registerMeta;
