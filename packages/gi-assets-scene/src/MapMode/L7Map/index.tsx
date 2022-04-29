@@ -5,7 +5,7 @@ import { L7Plot, L7PlotOptions } from '@antv/l7plot';
 import * as turf from '@turf/turf';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import AnimateContainer from '../AnimateContainer';
+import AnimateContainer from '../../CommonCmponents/AnimateContainer';
 import PropertiesPanel from '../PropertiesPanel/Component';
 import ToolbarContainer from '../Toolbar';
 import './index.less';
@@ -17,10 +17,14 @@ export interface MapModeProps {
   handleClick: () => any;
   theme: string;
   type: string;
+  maxSize: string;
+  minSize: string;
+  placement: 'LT' | 'RT' | 'LB' | 'RB';
+  offset: number[];
 }
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
-  const { theme, type } = props;
+  const { theme, type, maxSize, minSize, placement, offset } = props;
   const context = useContext();
   const { data, graph, config, GISDK_ID, apis } = context;
 
@@ -252,8 +256,9 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       drawbox.enable();
     }
   };
+
   const Map = (
-    <AnimateContainer toggle={toggle}>
+    <AnimateContainer toggle={toggle} maxSize={maxSize} minSize={minSize} offset={offset} placement={placement}>
       <div
         id="map-container"
         style={{
