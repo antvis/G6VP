@@ -1,4 +1,3 @@
-import OperatorHeader from '../../../gi-assets-advance/src/components/OperatorHeader';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -41,7 +40,7 @@ export {
   ClearCanvas,
   LassoSelect,
   Export,
-  OperatorHeader,
+  // OperatorHeader,
   PathAnalysis,
   PropertiesPanel,
   Loading,
