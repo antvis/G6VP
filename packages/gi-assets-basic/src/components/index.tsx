@@ -1,3 +1,4 @@
+import OperatorHeader from '../../../gi-assets-advance/src/components/OperatorHeader';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -13,12 +14,10 @@ import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
-import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
-import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
@@ -37,8 +36,6 @@ export {
   ZoomIn,
   ZoomOut,
   DownLoad,
-  // Redo,
-  // Undo,
   ContextMenu,
   Tooltip,
   ClearCanvas,
@@ -53,5 +50,4 @@ export {
   StyleSetting,
   Copyright,
   ToggleClusterWithMenu,
-  Timeline,
 };
