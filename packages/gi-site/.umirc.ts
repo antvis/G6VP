@@ -113,7 +113,6 @@ export default {
     '@ant-design/icons': 'icons',
     moment: 'moment',
     xlsx: 'XLSX',
-    '@antv/g2': 'G2',
     '@antv/g2plot': 'G2Plot',
     // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
@@ -134,8 +133,7 @@ export default {
     /** editor */
     // 'https://gw.alipayobjects.com/os/lib/react-monaco-editor/0.48.0/lib/index.js',
     'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
-    /** G2 / G2Plot */
-    'https://gw.alipayobjects.com/os/lib/antv/g2/4.2.0/dist/g2.min.js',
+    /**  G2Plot */
     'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
   ],
   styles: [
