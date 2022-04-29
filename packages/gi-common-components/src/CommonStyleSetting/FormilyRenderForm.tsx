@@ -85,7 +85,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
     onChange(_config, ref.current.elementId);
   };
-
+  console.log(schema , '@schemaNode')
   return (
     <>
       <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>

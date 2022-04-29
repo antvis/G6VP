@@ -1,13 +1,18 @@
 import { InputNumber, Space } from 'antd';
 import React from 'react';
 
-const Offset = props => {
-  const { value, config } = props;
-  console.log(props, '@props')
-  //const { min, max } = config;
+interface IOffsetProps {
+  value: number[];
+  min?: number;
+  max?: number;
+  defaultValue?: number[];
+  onChange: (value: number[]) => void;
+}
 
+const Offset: React.FC<IOffsetProps> = props => {
+  const { value = [100, 100], min = 0, max = 200, } = props;
   const [x, y] = value;
-  //const [defaultX, defaultY] = config.default;
+  //const [defaultX, defaultY] = defaultValue;
 
   return (
     <Space>
@@ -15,8 +20,8 @@ const Offset = props => {
         size="small"
         //defaultValue={defaultX}
         value={x}
-        //min={min}
-        //max={max}
+        min={min}
+        max={max}
         onChange={v => {
           props.onChange([v, y]);
         }}
@@ -26,8 +31,8 @@ const Offset = props => {
         size="small"
         //defaultValue={defaultY}
         value={y}
-        //min={min}
-        //max={max}
+        min={min}
+        max={max}
         onChange={v => {
           props.onChange([x, v]);
         }}
