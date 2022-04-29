@@ -3,10 +3,15 @@ const registerMeta = context => {
   return {
     /** 分类信息 */
     GI_CONTAINER: {
-      name: '集成组件',
-      type: 'TagsSelect',
+      title: '集成组件',
+      type: 'string',
+      enum: GI_MENU_CONTAINER_INDEXS,
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        mode: 'multiple',
+      },
       default: [],
-      options: GI_MENU_CONTAINER_INDEXS,
     },
   };
 };

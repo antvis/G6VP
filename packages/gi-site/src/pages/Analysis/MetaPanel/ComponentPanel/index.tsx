@@ -128,12 +128,9 @@ const ComponentPanel = props => {
     });
   };
 
-  console.log(schema, '@@schemaCom');
-
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />
-      {/* <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} /> */}
       <FormProvider form={form}>
         <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
       </FormProvider>
