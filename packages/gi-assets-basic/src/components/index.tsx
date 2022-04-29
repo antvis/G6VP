@@ -16,6 +16,7 @@ import OperatorBar from './OperatorBar';
 import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
 import PropertiesPanel from './PropertiesPanel';
+import Sheetbar from './Sheetbar';
 import SideTabs from './SideTabs';
 // import Redo from './Redo';
 import SnapshotGallery from './SnapshotGallery';
@@ -29,6 +30,7 @@ import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
 export {
+  Sheetbar,
   FitCenter,
   FitView,
   OperatorBar,
