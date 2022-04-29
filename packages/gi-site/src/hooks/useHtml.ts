@@ -192,8 +192,7 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
     <!--- G2/G2Plot DEPENDENCIES-->
-    'https://gw.alipayobjects.com/os/lib/antv/g2/4.2.0/dist/g2.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
     <!--- GI DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
     ${GIAssetsScripts}
