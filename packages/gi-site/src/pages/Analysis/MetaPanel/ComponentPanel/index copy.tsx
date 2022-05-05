@@ -1,31 +1,13 @@
 import GUI from '@ali/react-datav-gui';
 import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import Offset from '../../../../components/DataVGui/Offset';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 import { useContext } from '../../hooks/useContext';
-import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
-import { createForm, onFormInputChange } from '@formily/core';
-import { createSchemaField, FormProvider } from '@formily/react';
-import { ColorInput, Offset } from '@alipay/gi-common-components';
-import { SketchPicker } from 'react-color';
 const extensions = {
   TagsSelect,
   Offset,
 };
-
-const SchemaField = createSchemaField({
-  components: {
-    FormItem,
-    Input,
-    FormCollapse,
-    Select,
-    NumberPicker,
-    Switch,
-    SketchPicker,
-    ColorInput,
-    Offset,
-  },
-});
 
 /** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
 const getDefaultValues = meta => {
@@ -85,55 +67,30 @@ const ComponentPanel = props => {
       ...props,
     };
 
-    configObj[`${id}Panel`] = {
-      type: 'void',
-      'x-decorator': 'FormItem',
-      'x-component': 'FormCollapse',
-      properties: {
-        [id]: {
-          type: 'object',
-          'x-component': 'FormCollapse.CollapsePanel',
-          'x-component-props': {
-            header: defaultName,
-            key: `${id}Panel`,
-          },
-          properties: {
-            ...defaultConfigObj
-          }
-        },
+    configObj[id] = {
+      name: defaultName,
+      type: 'group',
+      fold: true,
+      children: {
+        ...defaultConfigObj,
       },
     };
   });
 
-  const schema = {
-    type: 'object',
-    properties: configObj,
-  };
-
-  const form = createForm({
-    initialValues: valueObj,
-    effects() {
-      onFormInputChange(({ values }) => {
-        handleChange(values)
-      });
-    },
-  });
-
-  const handleChange = values => {
-    const currentValues = JSON.parse(JSON.stringify(values));
-    const com = getComponentsByMap(currentValues);
+  const handleChange = e => {
+    const { rootValue } = e;
+    const com = getComponentsByMap(rootValue);
     console.log('com', com);
     updateContext(draft => {
       draft.config.components = com;
     });
   };
 
+  console.log('%c ComponentMeta', 'color:green');
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />
-      <FormProvider form={form}>
-        <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
-      </FormProvider>
+      <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
     </div>
   );
 };

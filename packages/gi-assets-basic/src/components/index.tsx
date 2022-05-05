@@ -10,29 +10,29 @@ import FitView from './FitView';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
-import NeighborsQuery from './NeighborsQuery';
+// import NeighborsQuery from './NeighborsQuery';
 import NodeLegend from './NodeLegend';
-import OperatorBar from './OperatorBar';
-import OperatorHeader from './OperatorHeader';
+// import OperatorBar from './OperatorBar';
+// import OperatorHeader from './OperatorHeader';
 import PathAnalysis from './PathAnalysis';
-import PropertiesPanel from './PropertiesPanel';
-import Sheetbar from './Sheetbar';
+// import PropertiesPanel from './PropertiesPanel';
+// import Sheetbar from './Sheetbar';
 import SideTabs from './SideTabs';
-// import Redo from './Redo';
-import StyleSetting from './StyleSetting';
+// // import Redo from './Redo';
+// //import StyleSetting from './StyleSetting';
 import Timeline from './Timeline';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
-import Tooltip from './Tooltip';
-// import Undo from './Undo';
+// import Tooltip from './Tooltip';
+// // import Undo from './Undo';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
 export {
-  Sheetbar,
+  // Sheetbar,
   FitCenter,
   FitView,
-  OperatorBar,
+  // OperatorBar,
   NodeLegend,
   MiniMap,
   CanvasSetting,
@@ -41,20 +41,20 @@ export {
   ZoomIn,
   ZoomOut,
   DownLoad,
-  // Redo,
-  // Undo,
+  // // Redo,
+  // // Undo,
   ContextMenu,
-  Tooltip,
+  // Tooltip,
   ClearCanvas,
   LassoSelect,
   Export,
-  OperatorHeader,
+  // OperatorHeader,
   PathAnalysis,
-  PropertiesPanel,
+  // PropertiesPanel,
   Loading,
   SideTabs,
-  NeighborsQuery,
-  StyleSetting,
+  // NeighborsQuery,
+  // //StyleSetting,
   Copyright,
   ToggleClusterWithMenu,
   Timeline,
