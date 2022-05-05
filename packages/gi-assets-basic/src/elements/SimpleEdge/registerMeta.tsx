@@ -75,7 +75,7 @@ const registerMeta = context => {
                     properties: {
                       customPoly: {
                         type: 'boolean',
-                        title: '自定义弧度',
+                        title: '定义弧度',
                         default: keyshape.customPoly,
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',

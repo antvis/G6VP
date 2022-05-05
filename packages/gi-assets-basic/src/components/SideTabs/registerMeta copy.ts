@@ -18,7 +18,7 @@ const registerMeta = context => {
       options: GI_CONTAINER_INDEXS,
     },
     outSideFromCanvas: {
-      name: '是否独立于画布外',
+      name: '独立DOM',
       type: 'Switch',
       default: false,
     },

@@ -1,13 +1,12 @@
-import GUI from '@ali/react-datav-gui';
-import React, { useState } from 'react';
-import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
-import TagsSelect from '../../../../components/DataVGui/TagsSelect';
-import { useContext } from '../../hooks/useContext';
+import { ColorInput, Offset } from '@alipay/gi-common-components';
 import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
-import { ColorInput, Offset } from '@alipay/gi-common-components';
+import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
+import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import TagsSelect from '../../../../components/DataVGui/TagsSelect';
+import { useContext } from '../../hooks/useContext';
 const extensions = {
   TagsSelect,
   Offset,
@@ -89,6 +88,10 @@ const ComponentPanel = props => {
       type: 'void',
       'x-decorator': 'FormItem',
       'x-component': 'FormCollapse',
+      'x-component-props': {
+        ghost: true,
+        className: 'gi-site-collapse',
+      },
       properties: {
         [id]: {
           type: 'object',
@@ -98,8 +101,8 @@ const ComponentPanel = props => {
             key: `${id}Panel`,
           },
           properties: {
-            ...defaultConfigObj
-          }
+            ...defaultConfigObj,
+          },
         },
       },
     };
@@ -114,7 +117,7 @@ const ComponentPanel = props => {
     initialValues: valueObj,
     effects() {
       onFormInputChange(({ values }) => {
-        handleChange(values)
+        handleChange(values);
       });
     },
   });
