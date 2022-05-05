@@ -5,7 +5,6 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = '路径分
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = 'icon-star';
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
-
 const registerMeta = ({ schemaData }) => {
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
     return {
@@ -19,7 +18,7 @@ const registerMeta = ({ schemaData }) => {
 
   return {
     pathNodeLabel: {
-      title: '路径节点标签映射',
+      title: '标签映射',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

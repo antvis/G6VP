@@ -2,6 +2,10 @@ const GIAC_CONTENT = {
   type: 'void',
   'x-decorator': 'FormItem',
   'x-component': 'FormCollapse',
+  'x-component-props': {
+    ghost: true,
+    className: 'gi-site-collapse-item',
+  },
   properties: {
     GIAC_CONTENT: {
       type: 'object',
@@ -91,7 +95,7 @@ const GIAC_CONTENT = {
           default: true,
         },
         tooltip: {
-          title: '填写提示框',
+          title: '提示内容',
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -254,6 +258,10 @@ const GIAC = {
   type: 'void',
   'x-decorator': 'FormItem',
   'x-component': 'FormCollapse',
+  'x-component-props': {
+    ghost: true,
+    className: 'gi-site-collapse-item',
+  },
   properties: {
     GIAC: {
       type: 'object',
@@ -343,7 +351,7 @@ const GIAC = {
           default: true,
         },
         tooltip: {
-          title: '填写提示框',
+          title: '提示内容',
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',

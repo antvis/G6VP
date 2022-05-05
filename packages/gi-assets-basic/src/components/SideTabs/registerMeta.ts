@@ -14,20 +14,20 @@ const registerMeta = context => {
     GI_CONTAINER: {
       title: '集成组件',
       type: 'string',
-      'x-decorator':'FormItem',
+      'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        mode:'multiple'
+        mode: 'multiple',
       },
       enum: GI_CONTAINER_INDEXS,
       default: [],
     },
     outSideFromCanvas: {
-      title: '是否独立于画布外',
+      title: '独立DOM',
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: true, 
+      default: true,
     },
     tabPosition: {
       title: '导航布局',
@@ -42,8 +42,8 @@ const registerMeta = context => {
       ],
       default: 'left',
     },
-    ...metas
-  }
+    ...metas,
+  };
 
   return schema;
 };
