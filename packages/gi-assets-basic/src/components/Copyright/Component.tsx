@@ -12,7 +12,7 @@ export interface CopyrightProps {
 }
 
 const Copyright: React.FunctionComponent<CopyrightProps> = props => {
-  const { imageUrl, width, height, placement, offset } = props;
+  const { imageUrl, width, height, placement, offset} = props;
   const positionStyles = getPositionStyles(placement, offset);
 
   return (

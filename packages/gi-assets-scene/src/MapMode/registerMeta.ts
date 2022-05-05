@@ -2,11 +2,11 @@ import { extra } from '@alipay/graphinsight';
 const { GIAC_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_METAS);
 
-metas.GIAC.children.title.default = '地图模式';
-metas.GIAC.children.isShowTitle.default = false;
-metas.GIAC.children.icon.default = 'icon-location';
-metas.GIAC.children.isVertical.default = true;
-metas.GIAC.children.tooltipPlacement.default = 'right';
+metas.GIAC.properties.GIAC.properties.title.default = '地图模式';
+metas.GIAC.properties.GIAC.properties.isShowTitle.default = false;
+metas.GIAC.properties.GIAC.properties.icon.default = 'icon-location';
+metas.GIAC.properties.GIAC.properties.isVertical.default = true;
+metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 export default () => {
   return {
     visible: {
