@@ -118,7 +118,11 @@ const registerMeta = context => {
                         title: '虚线',
                         type: 'number',
                         'x-decorator': 'FormItem',
-                        'x-component': 'Input',
+                        'x-component': 'Offset',
+                        'x-component-props': {
+                          min: -100,
+                          max: 100,
+                        },
                         default: keyshape.lineDash,
                       },
                       opacity: {
@@ -157,7 +161,11 @@ const registerMeta = context => {
                         type: 'string',
                         title: '偏移',
                         'x-decorator': 'FormItem',
-                        'x-component': 'NumberPicker',
+                        'x-component': 'Offset',
+                        'x-component-props': {
+                          min: -100,
+                          max: 100,
+                        },
                         default: label.offset,
                       },
                       fill: {
