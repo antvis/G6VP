@@ -8,7 +8,7 @@ const info = {
   name: '地图模式',
   desc: '地图模式',
   cover: 'http://xxxx.jpg',
-  category: 'system-interaction',
+  category: 'scene-analysis',
   type: 'GIAC',
 };
 

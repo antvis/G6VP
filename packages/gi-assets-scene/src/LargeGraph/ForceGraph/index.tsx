@@ -1,27 +1,30 @@
 import ForceGraph3D from '3d-force-graph';
-import { extra, useContext } from '@alipay/graphinsight';
-import { ExpandOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { extra, IGIAC, useContext } from '@alipay/graphinsight';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { animated, useSpring } from 'react-spring';
 import * as THREE from 'three';
+import AnimateContainer from '../../CommonCmponents/AnimateContainer';
+import Toolbar from '../Toolbar';
 
 const { deepClone } = extra;
 
 export interface ILargeGraph {
-  serviceId: string;
-  visible: boolean;
+  GIAC: IGIAC;
+  handleClick: () => void;
+  minSize: string;
+  maxSize: string;
+  placement: 'LT' | 'RT' | 'LB' | 'RB';
+  offset: number[];
 }
 
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
-  const { updateContext, source: DATA, GISDK_ID, apis } = useContext();
+  const { updateContext, source: DATA, GISDK_ID, apis, config } = useContext();
+  const { GIAC, handleClick, maxSize, minSize, placement, offset } = props;
 
   const [state, setState] = React.useState({
     toggle: false,
-    isReady: false,
   });
-  const { isReady, toggle } = state;
+  const { toggle } = state;
 
   const setToggle = (isToggle: boolean) => {
     setState(preState => {
@@ -99,8 +102,6 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
       });
 
     Graph.onNodeRightClick(node => {
-      console.log('click node', node);
-
       setToggle(true);
       //只要大数据节点的时候才是添加节点
       if (data.nodes.length > 1000 || data.links.length > 1000) {
@@ -128,47 +129,21 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     });
   }, []);
 
-  const { size, background, ...otherStyles } = useSpring({
-    from: {
-      size: '100%',
-      background: 'hotpink',
-    },
-    to: {
-      size: toggle ? '20%' : '100%',
-      background: toggle ? '#ddd' : 'hotpink',
-    },
-  });
-
   const handleToggle = () => {
     setToggle(!toggle);
   };
 
   return ReactDOM.createPortal(
     <div>
-      <animated.div
-        style={{
-          right: '0px',
-          bottom: '0px',
-          width: size,
-          height: size,
-          position: 'absolute',
-          zIndex: 9,
-          ...otherStyles,
-        }}
-      >
-        <Button
-          shape="circle"
-          icon={<ExpandOutlined />}
-          onClick={handleToggle}
-          style={{
-            position: 'absolute',
-            right: '12px',
-            top: '12px',
-            zIndex: 11,
-          }}
-        />
+      <AnimateContainer toggle={toggle} maxSize={maxSize} minSize={minSize} placement={placement} offset={offset}>
+        <Toolbar
+          GIAC={GIAC}
+          config={config}
+          handleSwitchMap={handleClick} // 切换渲染视图
+          handleToggleMap={handleToggle} //大小视图
+        ></Toolbar>
         <div id="gi-3d-graph"></div>
-      </animated.div>
+      </AnimateContainer>
     </div>,
     document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement,
   );

@@ -7,9 +7,7 @@
 // import NodeToggle from './NodeToggle';
 // import PatternMatch from './PatternMatch';
 // import SearchBar from './SearchBar';
-//import GremlinQuery from './GremlinQuery';
+import GremlinQuery from './GremlinQuery';
 import SnapshotGallery from './SnapshotGallery';
 
-//export { GremlinQuery };
-
-export { SnapshotGallery };
+export { SnapshotGallery, GremlinQuery };
