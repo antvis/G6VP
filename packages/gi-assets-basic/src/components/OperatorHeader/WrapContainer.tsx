@@ -1,7 +1,7 @@
+import { Icon } from '@alipay/graphinsight';
 import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Icon } from '@alipay/graphinsight';
 import EventEmitter from './EventEmitter';
 
 const EM = new EventEmitter();

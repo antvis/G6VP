@@ -1,20 +1,28 @@
 /** 是否为本地研发模式 */
+import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
+import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
+import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
+import graphinsight from '@alipay/graphinsight/package.json';
 
 export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
   {
-    name: '@alipay/gi-assets-basic',
-    version: '2.0.1',
+    name: GI_ASSETS_BASIC.name,
+    version: GI_ASSETS_BASIC.version,
   },
-  // {
-  //   name: '@alipay/gi-assets-scene',
-  //   version: '2.0.1',
-  // },
+  {
+    name: GI_ASSETS_ADVANCE.name,
+    version: GI_ASSETS_ADVANCE.version,
+  },
+  {
+    name: GI_ASSETS_SCENE.name,
+    version: GI_ASSETS_SCENE.version,
+  },
 ];
 const NPM_INFO = [
   {
-    name: '@alipay/graphinsight',
-    version: '2.0.1',
+    name: graphinsight.name,
+    version: graphinsight.version,
     global: 'GISDK',
   },
   ...assets_npm,
@@ -50,7 +58,7 @@ const externalScripts = isDev
       return c.url;
     });
 
-console.log('isDev', isDev);
+console.log('isDev', isDev, PACKAGES);
 export default {
   // 具体配置项
   // mode: "site",
@@ -105,7 +113,6 @@ export default {
     '@ant-design/icons': 'icons',
     moment: 'moment',
     xlsx: 'XLSX',
-    '@antv/g2': 'G2',
     '@antv/g2plot': 'G2Plot',
     // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
@@ -118,17 +125,17 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antd/4.20.0/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js',
+    /**  G2Plot */
+    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
+    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
+    'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 
     /** GI */
     ...externalScripts,
-    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
-    'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
+
     /** editor */
     // 'https://gw.alipayobjects.com/os/lib/react-monaco-editor/0.48.0/lib/index.js',
     'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
-    /** G2 / G2Plot */
-    'https://gw.alipayobjects.com/os/lib/antv/g2/4.2.0/dist/g2.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
   ],
   styles: [
     ...externalScripts.map(c => {

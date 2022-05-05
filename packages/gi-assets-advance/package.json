@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-advance",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "description": "GraphInsight 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -14,6 +14,8 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
+    "@alipay/e2-editor-core": "^2.1.0",
+    "@alipay/e2-language-gremlin": "^2.1.0",
     "@ali/react-datav-gui-utils": "latest",
     "@alipay/graphinsight": "2.x",
     "@antv/algorithm": "^0.1.17",
@@ -48,6 +50,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.antfin-inc.com"
   }
 }

@@ -2,7 +2,9 @@ import React from 'react';
 import './index.less';
 
 const defaultStyle: React.CSSProperties = {
+  zIndex: 999,
   background: '#fff',
+  marginBlockEnd: '0px',
 };
 
 export interface ToolBarItemType {
@@ -52,7 +54,10 @@ const Toolbar: React.FunctionComponent<ToolBarProps> = props => {
       className="graphin-components-toolbar"
     >
       {
-        <ul className="graphin-components-toolbar-content" style={{ display: isHorizontal ? 'flex' : '' }}>
+        <ul
+          className="graphin-components-toolbar-content"
+          style={{ display: isHorizontal ? 'flex' : '', marginBlockEnd: '0px' }}
+        >
           {children}
         </ul>
       }
