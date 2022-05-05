@@ -10,83 +10,100 @@ metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 export default () => {
   return {
     visible: {
-      type: 'switch',
-      name: '默认开启',
+      title: '默认显示',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
       default: false,
     },
     type: {
-      type: 'select',
-      name: '地图类型',
-      options: [
-        {
-          label: '高德',
-          value: 'amap',
-        },
-        {
-          label: 'MapBox',
-          value: 'mapbox',
-        },
-      ],
+      type: 'string',
+      title: '地图类型',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            label: '高德',
+            value: 'amap',
+          },
+          {
+            label: 'MapBox',
+            value: 'mapbox',
+          },
+        ],
+      },
       default: 'mapbox',
     },
     theme: {
-      type: 'select',
-      name: '主题',
-      options: [
-        {
-          label: '明亮',
-          value: 'light',
-        },
-        {
-          label: '黑暗',
-          value: 'dark',
-        },
-
-        {
-          label: '普通',
-          value: 'normal',
-        },
-      ],
+      type: 'string',
+      title: '主题',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            label: '明亮',
+            value: 'light',
+          },
+          {
+            label: '黑暗',
+            value: 'dark',
+          },
+        ],
+      },
       default: 'light',
     },
     minSize: {
-      type: 'text',
-      name: '最小尺寸',
+      type: 'string',
+      title: '最小尺寸',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
       default: '20%',
     },
     maxSize: {
-      type: 'text',
-      name: '最大尺寸',
+      type: 'string',
+      title: '最大尺寸',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
       default: '100%',
     },
     placement: {
-      name: '放置方位',
-      type: 'select',
+      title: '放置方位',
+      type: 'string',
       default: 'RB',
-      options: [
-        {
-          value: 'LT',
-          label: '左上 / top',
-        },
-        {
-          value: 'RT',
-          label: '右上 / right',
-        },
-        {
-          value: 'LB',
-          label: '左下 / left',
-        },
-        {
-          value: 'RB',
-          label: '右下 / bottom',
-        },
-      ],
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: 'LT',
+            label: '左上 / top',
+          },
+          {
+            value: 'RT',
+            label: '右上 / right',
+          },
+          {
+            value: 'LB',
+            label: '左下 / left',
+          },
+          {
+            value: 'RB',
+            label: '右下 / bottom',
+          },
+        ],
+      },
     },
     offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
+      title: '偏移距离',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      'x-component-props': {
+        min: 0,
+        max: 400,
+      },
       default: [0, 0],
     },
     ...metas,
