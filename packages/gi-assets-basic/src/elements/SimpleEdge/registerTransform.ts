@@ -21,7 +21,7 @@ export const defaultConfig = {
     keyshape: {
       customPoly: false,
       poly: 0,
-      lineDash: [],
+      lineDash: [0, 0],
       // lineAppendWidth: keyshape.lineWidth,
       opacity: keyshape.strokeOpacity,
     },
