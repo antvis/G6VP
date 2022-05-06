@@ -1,3 +1,4 @@
+import { Icon } from '@alipay/graphinsight';
 import { CheckCard } from '@alipay/tech-ui';
 import {
   BarChartOutlined,
@@ -8,7 +9,6 @@ import {
   InsertRowBelowOutlined,
   PieChartOutlined,
   QuestionCircleOutlined,
-  RobotOutlined,
   SelectOutlined,
   SlackOutlined,
 } from '@ant-design/icons';
@@ -46,7 +46,7 @@ const CategroyOptions = {
     icon: <SelectOutlined />,
     order: 2,
   },
-  'elements-interaction': {
+  'element-interaction': {
     name: '元素交互',
     icon: <PieChartOutlined />,
     order: 3,
@@ -56,7 +56,6 @@ const CategroyOptions = {
     icon: <PieChartOutlined />,
     order: 3,
   },
-
   'system-interaction': {
     name: '系统交互',
     icon: <SlackOutlined />,
@@ -162,7 +161,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
                   style={{ padding: '8px 0px' }}
                 >
                   {res[categoryId].map(item => {
-                    const { id: AssetId, name: AssetName, version } = item;
+                    const { id: AssetId, name: AssetName, version, icon = 'icon-robot' } = item;
                     const pkg = item.pkg.replace('@alipay/gi-assets-', '');
 
                     return (
@@ -193,7 +192,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
                           avatar={
                             <Avatar
                               style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
-                              icon={<RobotOutlined />}
+                              icon={<Icon type={icon} />}
                               size={48}
                             ></Avatar>
                           }
