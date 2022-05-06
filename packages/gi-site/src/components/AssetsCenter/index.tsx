@@ -1,13 +1,13 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, RobotOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
+import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined } from '@ant-design/icons';
+import { Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
 import React from 'react';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { queryAssetList } from '../../services/assets';
+import AssetCard from './Card';
 import ComponentsPanel from './Components';
 import './index.less';
 import useAssetsCenter from './useHook';
-
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
 
@@ -143,23 +143,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                         style={{ padding: '8px 0px' }}
                       >
                         {assets[key].map(item => {
-                          const { id: AssetId, name: AssetName } = item;
+                          const { id: AssetId } = item;
                           return (
                             <Col key={AssetId}>
-                              <CheckCard
-                                bordered={false}
-                                className="assetsCardStyle"
-                                title={AssetName}
-                                avatar={
-                                  <Avatar
-                                    style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
-                                    icon={<RobotOutlined />}
-                                    size={24}
-                                  />
-                                }
-                                description={cardContent(item)}
-                                value={AssetId}
-                              />
+                              <AssetCard {...item}></AssetCard>
                             </Col>
                           );
                         })}

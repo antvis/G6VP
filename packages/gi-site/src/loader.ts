@@ -142,6 +142,23 @@ type AssetsValue = {
 
 export type IAssets = Record<AssetsKey, AssetsValue>;
 
+const appendInfo = (itemAssets, version, name) => {
+  if (!itemAssets) {
+    return {};
+  }
+  const coms = Object.keys(itemAssets).reduce((a, c) => {
+    return {
+      ...a,
+      [c]: {
+        ...itemAssets[c],
+        version,
+        pkg: name,
+      },
+    };
+  }, {});
+  return coms;
+};
+
 /**
  * 获取融合后的资产
  * @returns
@@ -151,17 +168,11 @@ export const getCombinedAssets = async () => {
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name } = curr;
-      const coms = Object.keys(components).reduce((a, c) => {
-        return {
-          ...a,
-          [c]: {
-            ...components[c],
-            version,
-            pkg: name,
-          },
-        };
-      }, {});
+      const { components, version, name, elements, layouts } = curr;
+      const coms = appendInfo(components, version, name);
+      const elems = appendInfo(elements, version, name);
+      const lays = appendInfo(layouts, version, name);
+
       return {
         components: {
           ...acc.components,
@@ -169,11 +180,11 @@ export const getCombinedAssets = async () => {
         },
         elements: {
           ...acc.elements,
-          ...curr.elements,
+          ...elems,
         },
         layouts: {
           ...acc.layouts,
-          ...curr.layouts,
+          ...lays,
         },
       };
     },

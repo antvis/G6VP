@@ -10,7 +10,8 @@ const info = {
   name: '圆形布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '圆形布局',
+  icon: 'icon-layout-circular',
   cover: 'http://xxxx.jpg',
 };
 

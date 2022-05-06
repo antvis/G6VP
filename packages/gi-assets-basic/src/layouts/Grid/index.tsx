@@ -10,7 +10,8 @@ const info = {
   name: '网格布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '节点按照网格排布',
+  icon: 'icon-layout-grid',
   cover: 'http://xxxx.jpg',
 };
 

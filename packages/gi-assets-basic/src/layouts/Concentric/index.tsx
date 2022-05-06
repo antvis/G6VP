@@ -10,7 +10,8 @@ const info = {
   name: '同心圆布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '根据节点度数，可按照同心圆排布',
+  icon: 'icon-layout-concentric',
   cover: 'http://xxxx.jpg',
 };
 

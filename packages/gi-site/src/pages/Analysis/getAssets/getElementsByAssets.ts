@@ -40,11 +40,11 @@ const getElementsByAssets = (assets, data, schemaData) => {
     // const defaultProps = extractDefault({ config: configObj, value: {} });
 
     const item = {
+      ...element,
       id,
       props: defaultProps,
       name,
       info,
-
       meta: configObj,
     };
     if (elementType === 'nodes') {
