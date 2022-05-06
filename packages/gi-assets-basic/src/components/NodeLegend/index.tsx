@@ -5,7 +5,8 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'NodeLegend',
   name: '节点图例',
-  desc: '节点图例，xxxxxxxxx',
+  desc: '启用后可展示节点的图例信息',
+  icon: 'icon-legend',
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',
   type: 'AUTO',
