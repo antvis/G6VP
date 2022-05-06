@@ -7,7 +7,9 @@ import { Badge, Collapse } from 'antd';
 import { CollapsePanelProps, CollapseProps } from 'antd/lib/collapse';
 import cls from 'classnames';
 import React, { Fragment, useMemo } from 'react';
+import Icon from '../../Icon';
 import usePrefixCls from './usePrefixCls';
+
 type ActiveKeys = string | number | Array<string | number>;
 
 type ActiveKey = string | number;
@@ -128,11 +130,22 @@ export const FormCollapse: ComposedFormCollapse = observer(({ formCollapse, ...p
         _formCollapse?.setActiveKeys?.(key);
       }}
     >
-      {panels.map(({ props, schema, name }, index) => (
-        <Collapse.Panel key={index} {...props} header={badgedHeader(name, props)} forceRender>
-          <RecursionField schema={schema} name={name} />
-        </Collapse.Panel>
-      ))}
+      {panels.map(({ props, schema, name }, index) => {
+        const { icon } = props;
+        let header = badgedHeader(name, props);
+        if (icon) {
+          header = (
+            <span>
+              <Icon type={icon} /> &nbsp; {header}
+            </span>
+          );
+        }
+        return (
+          <Collapse.Panel key={index} {...props} header={header} forceRender>
+            <RecursionField schema={schema} name={name} />
+          </Collapse.Panel>
+        );
+      })}
     </Collapse>
   );
 });

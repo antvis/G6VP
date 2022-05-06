@@ -35,7 +35,7 @@ const cardContent = item => {
   return <div className="asset-detail">{desc}</div>;
 };
 
-const CategroyOptions = {
+export const CategroyOptions = {
   'container-components': {
     name: '容器组件',
     icon: <InsertRowBelowOutlined />,
@@ -154,7 +154,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
               <Panel header={<CategoryHeader data={categoryItem} />} key={categoryId}>
                 <Row
                   gutter={[
-                    { xs: 8, sm: 12, md: 12, lg: 12 },
+                    { xs: 8, sm: 12, md: 24, lg: 24 },
                     { xs: 8, sm: 12, md: 12, lg: 12 },
                   ]}
                   style={{ padding: '8px 0px' }}

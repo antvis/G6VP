@@ -30,7 +30,7 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
         title={
           <div
             style={{
-              width: '240px',
+              width: '230px',
               display: 'flex',
               justifyContent: 'space-between',
             }}
@@ -49,9 +49,9 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
         }
         avatar={
           <Avatar
-            style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
+            style={{ backgroundColor: '#EAEEFC', color: '#3056E3', fontSize: '34px' }}
             icon={<Icon type={icon} />}
-            size={48}
+            size={50}
           ></Avatar>
         }
         description={<div className="asset-detail">{desc}</div>}

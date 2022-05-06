@@ -5,6 +5,7 @@ import { createSchemaField, FormProvider } from '@formily/react';
 import React from 'react';
 import { SketchPicker } from 'react-color';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
+import { CategroyOptions } from '../../../../components/AssetsCenter/Components';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 import { useContext } from '../../hooks/useContext';
 const extensions = {
@@ -49,18 +50,25 @@ const ComponentPanel = props => {
   /** 手动构建ConfigObject信息 */
   const configObj = {};
   const valueObj = {};
-
-  components.forEach(component => {
-    const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName } = component;
+  const sortComponents = [...components].sort((a, b) => {
+    try {
+      const aOrder = CategroyOptions[a.category]?.order || 99;
+      const bOrder = CategroyOptions[b.category]?.order || 99;
+      return aOrder - bOrder;
+    } catch (error) {
+      console.log(error);
+      return 0;
+    }
+  });
+  sortComponents.forEach(component => {
+    const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName, info } = component;
     const matchComponent = config.components?.find(c => c.id === id) || {};
     const { props = {} } = matchComponent;
-
+    console.log('matchComponent', matchComponent, component);
     valueObj[id] = {
       ...defaultProps,
       ...props,
     };
-
-    console.log('formCollapse', FormCollapse.CollapsePanel);
 
     configObj[`${id}Panel`] = {
       type: 'void',
@@ -77,6 +85,7 @@ const ComponentPanel = props => {
           'x-component-props': {
             header: defaultName,
             key: `${id}Panel`,
+            icon: info.icon,
           },
           properties: {
             ...defaultConfigObj,
