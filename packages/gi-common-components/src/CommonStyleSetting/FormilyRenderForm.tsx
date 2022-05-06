@@ -1,11 +1,11 @@
 import { BgColorsOutlined } from '@ant-design/icons';
-import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
+import { FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
 import { Button, Radio, Select as AntdSelect } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
-import { Offset } from '../FormilyForm';
+import { FormCollapse, Offset } from '../FormilyForm';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
 import IconPicker from './IconPicker';
