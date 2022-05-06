@@ -1,5 +1,5 @@
-import { ColorInput, Offset } from '@alipay/gi-common-components';
-import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
+import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
+import { FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
 import React from 'react';
@@ -10,6 +10,7 @@ import { useContext } from '../../hooks/useContext';
 const extensions = {
   TagsSelect,
   Offset,
+  AssetCollapse,
 };
 
 const SchemaField = createSchemaField({
@@ -23,20 +24,9 @@ const SchemaField = createSchemaField({
     SketchPicker,
     ColorInput,
     Offset,
+    AssetCollapse,
   },
 });
-
-/** 根据用户的组件Meta信息，得到默认的defaultvalue值 */
-const getDefaultValues = meta => {
-  const { children } = meta;
-  const keys = Object.keys(children);
-  const values = {};
-  keys.forEach(key => {
-    const { default: defaultValue } = children[key];
-    values[key] = defaultValue;
-  });
-  return values;
-};
 
 const getComponentsByMap = componentMap => {
   const componentKeys = Object.keys(componentMap);
@@ -70,6 +60,8 @@ const ComponentPanel = props => {
       ...props,
     };
 
+    console.log('formCollapse', FormCollapse.CollapsePanel);
+
     configObj[`${id}Panel`] = {
       type: 'void',
       'x-decorator': 'FormItem',
@@ -81,7 +73,7 @@ const ComponentPanel = props => {
       properties: {
         [id]: {
           type: 'object',
-          'x-component': 'FormCollapse.CollapsePanel',
+          'x-component': 'FormCollapse.FormCollapsePanel',
           'x-component-props': {
             header: defaultName,
             key: `${id}Panel`,
@@ -101,6 +93,7 @@ const ComponentPanel = props => {
 
   const form = createForm({
     initialValues: valueObj,
+
     effects() {
       onFormInputChange(({ values }) => {
         handleChange(values);
