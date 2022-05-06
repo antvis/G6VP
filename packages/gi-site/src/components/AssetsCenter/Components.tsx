@@ -1,4 +1,3 @@
-import { Icon } from '@alipay/graphinsight';
 import { CheckCard } from '@alipay/tech-ui';
 import {
   BarChartOutlined,
@@ -12,8 +11,9 @@ import {
   SelectOutlined,
   SlackOutlined,
 } from '@ant-design/icons';
-import { Avatar, Col, Collapse, Row, Tag } from 'antd';
+import { Col, Collapse, Row } from 'antd';
 import * as React from 'react';
+import AssetCard from './Card';
 
 const { Panel } = Collapse;
 
@@ -114,7 +114,6 @@ const CategoryHeader = ({ data }) => {
 
 const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => {
   const { data, handleChange, defaultValue } = props;
-  console.log('data', data);
   const res = React.useMemo(() => {
     return data.reduce((acc, curr) => {
       const { category } = curr;
@@ -161,44 +160,9 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
                   style={{ padding: '8px 0px' }}
                 >
                   {res[categoryId].map(item => {
-                    const { id: AssetId, name: AssetName, version, icon = 'icon-robot' } = item;
-                    const pkg = item.pkg.replace('@alipay/gi-assets-', '');
-
                     return (
-                      <Col key={AssetId}>
-                        <CheckCard
-                          bordered={false}
-                          className="assetsCardStyle"
-                          title={
-                            <div
-                              style={{
-                                width: '224px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                              }}
-                            >
-                              {AssetName}
-                              <Tag
-                                color={COLOR_MAP[pkg]}
-                                style={{
-                                  fontSize: '12px',
-                                  transform: 'scale(0.8)',
-                                }}
-                              >
-                                {pkg}@{version}
-                              </Tag>
-                            </div>
-                          }
-                          avatar={
-                            <Avatar
-                              style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
-                              icon={<Icon type={icon} />}
-                              size={48}
-                            ></Avatar>
-                          }
-                          description={cardContent(item)}
-                          value={AssetId}
-                        />
+                      <Col key={item.id}>
+                        <AssetCard {...item} />
                       </Col>
                     );
                   })}

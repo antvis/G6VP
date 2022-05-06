@@ -136,17 +136,25 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
     };
   });
   const elements = Object.keys(FinalAssets.elements).map(key => {
+    const asset = FinalAssets.elements[key];
+    const { pkg, version, info } = asset;
     return {
       type: 2, //元素
       id: key,
-      ...FinalAssets.elements[key].info,
+      pkg,
+      version,
+      ...info,
     };
   });
   const layouts = Object.keys(FinalAssets.layouts).map(key => {
+    const asset = FinalAssets.layouts[key];
+    const { pkg, version, info } = asset;
     return {
       type: 6, //元素
       id: key,
-      ...FinalAssets.layouts[key].info,
+      pkg,
+      version,
+      ...info,
     };
   });
   return { components, elements, layouts };
