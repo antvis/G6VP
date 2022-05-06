@@ -1,4 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
 import type { TypeAssetInfo } from './typing';
 import { getKeysByData } from './utils';
 
@@ -62,16 +61,25 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
       } = component;
       const keys = getKeysByData(data, 'node');
 
-      const configObj = registerMeta({ data, keys, services, config, GI_CONTAINER_INDEXS, GI_MENU_CONTAINER_INDEXS, schemaData });
+      const configObj = registerMeta({
+        data,
+        keys,
+        services,
+        config,
+        GI_CONTAINER_INDEXS,
+        GI_MENU_CONTAINER_INDEXS,
+        schemaData,
+      });
       /** 默认的配置值 */
-      const defaultProps = extractDefault({ config: configObj, value: {} });
+
       const { id, name, category } = info;
 
       return {
+        ...component,
         id,
         name,
         category,
-        props: defaultProps,
+        props: {},
         meta: {
           ...configObj,
         },
