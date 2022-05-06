@@ -12,7 +12,7 @@ import {
   SelectOutlined,
   SlackOutlined,
 } from '@ant-design/icons';
-import { Avatar, Col, Collapse, Row } from 'antd';
+import { Avatar, Col, Collapse, Row, Tag } from 'antd';
 import * as React from 'react';
 
 const { Panel } = Collapse;
@@ -22,21 +22,17 @@ interface ComponentsPanelProps {
   handleChange?: (a: any, b: any) => void;
   defaultValue?: any[];
 }
-
+const COLOR_MAP = {
+  basic: 'green',
+  advance: 'volcano',
+  scene: 'purple',
+  undefined: '#f50',
+};
 const cardContent = item => {
-  const { version = '最新', ownerNickname = '官方', gmtModified } = item;
-  return (
-    <div className="asset-detail">
-      <ul>
-        <li>作者：{ownerNickname}</li>
-        <li>版本：{version}</li>
-        {/* <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li> */}
-      </ul>
-      {/* <div className="asset-detail-buttom"> */}
-      {/* <div className="asset-favorite">Text</div> */}
-      {/* </div> */}
-    </div>
-  );
+  console.log('item', item);
+  const { desc, version } = item;
+  const pkg = item.pkg.replace('@alipay/gi-assets-', '');
+  return <div className="asset-detail">{desc}</div>;
 };
 
 const CategroyOptions = {
@@ -92,16 +88,21 @@ const CategroyOptions = {
     icon: <PieChartOutlined />,
     order: 9,
   },
+  'scene-analysis': {
+    name: '场景分析',
+    icon: <PieChartOutlined />,
+    order: 10,
+  },
   workbook: {
     name: '工作簿',
     icon: <CarryOutOutlined />,
-    order: 10,
+    order: 11,
   },
 };
 const otherCategory = {
   name: '未分类',
   icon: <QuestionCircleOutlined />,
-  order: 11,
+  order: 12,
 };
 const CategoryHeader = ({ data }) => {
   const { icon, name, id } = data;
@@ -114,7 +115,7 @@ const CategoryHeader = ({ data }) => {
 
 const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => {
   const { data, handleChange, defaultValue } = props;
-
+  console.log('data', data);
   const res = React.useMemo(() => {
     return data.reduce((acc, curr) => {
       const { category } = curr;
@@ -161,19 +162,40 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
                   style={{ padding: '8px 0px' }}
                 >
                   {res[categoryId].map(item => {
-                    const { id: AssetId, name: AssetName } = item;
+                    const { id: AssetId, name: AssetName, version } = item;
+                    const pkg = item.pkg.replace('@alipay/gi-assets-', '');
+
                     return (
                       <Col key={AssetId}>
                         <CheckCard
                           bordered={false}
                           className="assetsCardStyle"
-                          title={AssetName}
+                          title={
+                            <div
+                              style={{
+                                width: '224px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              {AssetName}
+                              <Tag
+                                color={COLOR_MAP[pkg]}
+                                style={{
+                                  fontSize: '12px',
+                                  transform: 'scale(0.8)',
+                                }}
+                              >
+                                {pkg}@{version}
+                              </Tag>
+                            </div>
+                          }
                           avatar={
                             <Avatar
                               style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
                               icon={<RobotOutlined />}
-                              size={24}
-                            />
+                              size={48}
+                            ></Avatar>
                           }
                           description={cardContent(item)}
                           value={AssetId}

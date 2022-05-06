@@ -2,7 +2,7 @@ import { ColorInput, Offset } from '@alipay/gi-common-components';
 import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { SketchPicker } from 'react-color';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import TagsSelect from '../../../../components/DataVGui/TagsSelect';
@@ -56,26 +56,12 @@ const ComponentPanel = props => {
   const { updateContext } = useContext();
   const { config, components } = props;
 
-  const [state, setState] = useState({
-    isModalVisible: false,
-  });
-
   /** 手动构建ConfigObject信息 */
   const configObj = {};
   const valueObj = {};
 
   components.forEach(component => {
     const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName } = component;
-    const defaultFunction = params => {
-      return {
-        categoryId: 'components',
-        id: id,
-        type: 'group', //这个可以不写
-        fold: true, // 这个可以不写
-        name: id,
-        children: {},
-      };
-    };
     const matchComponent = config.components?.find(c => c.id === id) || {};
     const { props = {} } = matchComponent;
 
@@ -131,6 +117,7 @@ const ComponentPanel = props => {
     });
   };
 
+  console.log('propsssss', components, schema, valueObj);
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />
