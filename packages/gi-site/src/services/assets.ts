@@ -125,29 +125,31 @@ export const queryAssetList = async (param?: { name?: string; limit?: number; pr
   const FinalAssets = await getCombinedAssets();
 
   const components = Object.keys(FinalAssets.components).map(key => {
+    const asset = FinalAssets.components[key];
+    const { pkg, version, info } = asset;
     return {
       type: 1, //组件
       id: key,
-      ...FinalAssets.components[key]?.info,
+      pkg,
+      version,
+      ...info,
     };
   });
   const elements = Object.keys(FinalAssets.elements).map(key => {
     return {
       type: 2, //元素
       id: key,
-      ...FinalAssets.elements[key]?.info,
+      ...FinalAssets.elements[key].info,
     };
   });
   const layouts = Object.keys(FinalAssets.layouts).map(key => {
     return {
       type: 6, //元素
       id: key,
-      ...FinalAssets.layouts[key]?.info,
+      ...FinalAssets.layouts[key].info,
     };
   });
   return { components, elements, layouts };
-
-  // 如果不是动态加载
 };
 
 /**
