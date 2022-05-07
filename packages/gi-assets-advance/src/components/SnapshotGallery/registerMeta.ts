@@ -4,60 +4,74 @@ const metas = deepClone(GIAC_METAS);
 metas.GIAC.properties.GIAC.properties.title.default = '快照画廊';
 metas.GIAC.properties.GIAC.properties.icon.default = 'icon-camera';
 metas.GIAC.properties.GIAC.properties.isShowTitle.default = true;
-metas.GIAC.properties.GIAC.properties.tooltip.default = '快照画廊(快捷键ctrl+x)'
+metas.GIAC.properties.GIAC.properties.tooltip.default = '快照画廊(快捷键ctrl+x)';
 metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 
 const registerMeta = () => {
   return {
     background: {
-      name: '画廊背景色',
-      type: 'fill',
+      title: '画廊背景',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'ColorInput',
       default: '#fff',
     },
     direction: {
-      name: '展示方向',
-      type: 'radio',
+      title: '展示方向',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            label: '水平展示',
+            value: 'horizontal',
+          },
+          {
+            label: '纵向展示',
+            value: 'vertical',
+          },
+        ],
+      },
       default: 'horizontal',
-      options: [
-        {
-          label: '水平展示',
-          value: 'horizontal',
-        },
-        {
-          label: '纵向展示',
-          value: 'vertical',
-        },
-      ],
     },
     placement: {
-      name: '画廊位置',
-      type: 'select',
+      title: '画廊位置',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: 'LT',
+            label: '左上',
+          },
+          {
+            value: 'RT',
+            label: '右上',
+          },
+          {
+            value: 'LB',
+            label: '左下',
+          },
+          {
+            value: 'RB',
+            label: '右下',
+          },
+        ],
+      },
       default: 'LT',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
     },
     offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
-      default: [100, 20],
+      title: '偏移距离',
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      'x-component-props': {
+        min: 0,
+        max: 400,
+      },
+      default: [20, 20],
     },
     ...metas,
   };

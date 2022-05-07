@@ -8,29 +8,35 @@ export default context => {
   });
   return {
     serviceId: {
-      name: '列表ID',
-      type: 'select',
+      title: '列表ID',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
       default: 'Mock/NeighborsQuery',
       options: serviceOptions,
     },
     degree: {
-      name: '选择查询度数',
-      type: 'checkbox',
-      default: [1, 2, 3],
-      options: [
-        {
-          value: 1,
-          label: '一度查询',
-        },
-        {
-          value: 2,
-          label: '二度查询',
-        },
-        {
-          value: 3,
-          label: '三度查询',
-        },
-      ],
+      title: '查询度数',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: '1',
+            label: '一度查询',
+          },
+          {
+            value: '2',
+            label: '二度查询',
+          },
+          {
+            value: '3',
+            label: '三度查询',
+          },
+        ],
+      },
+      default: '1',
     },
   };
 };
