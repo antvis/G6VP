@@ -5,7 +5,7 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'SideTabs',
   name: '侧边栏',
-  desc: '画布侧边栏，可导航，可集成众多分析组件',
+  desc: '画布侧边导航栏，可集成分析组件',
   icon: 'icon-sidebar',
   cover: 'http://xxxx.jpg',
   category: 'container-components',
