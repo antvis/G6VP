@@ -11,6 +11,7 @@ import SetupUseGraphinHook from './SetupUseGraphinHook';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import * as utils from './utils';
+
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
@@ -171,12 +172,12 @@ const GISDK = (props: Props) => {
     const edges = state.source.edges.reduce((acc, cur) => {
       acc[cur.id] = cur;
       return acc;
-    }, {})
+    }, {});
 
     return {
       nodes,
-      edges
-    }
+      edges,
+    };
   }, [state.source]);
 
   const ContextValue = {
