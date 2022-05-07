@@ -10,7 +10,7 @@ import {
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
-import * as utils from './utils';
+import * as utils from './process';
 
 export type { IGIAC } from './components/const';
 export { default as Icon } from './components/Icon';
