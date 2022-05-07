@@ -1,5 +1,5 @@
 import type { TypeAssetInfo } from './typing';
-import { getKeysByData } from './utils';
+import { getDefaultValues, getKeysByData } from './utils';
 
 /**
  *
@@ -70,6 +70,9 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
         GI_MENU_CONTAINER_INDEXS,
         schemaData,
       });
+      //@ts-ignore
+      const defaultProps = getDefaultValues({ type: 'object', properties: configObj });
+
       /** 默认的配置值 */
 
       const { id, name, category } = info;
@@ -79,7 +82,8 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
         id,
         name,
         category,
-        props: {},
+        //@ts-ignore
+        props: defaultProps,
         meta: {
           ...configObj,
         },
