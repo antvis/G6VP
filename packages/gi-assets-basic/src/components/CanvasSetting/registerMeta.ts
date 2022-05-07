@@ -3,13 +3,11 @@ import { extractDefault } from '@ali/react-datav-gui-utils';
 const registerMeta = context => {
   const { services } = context;
 
-  
-
   return {
     /** 分类信息 */
 
     styleCanvas: {
-      name: '画布样式',
+      title: '画布样式',
       type: 'group',
       enableHide: false,
       fold: false,

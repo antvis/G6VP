@@ -26,7 +26,6 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
   const { updateContext, data, config, assets } = useContext();
 
   const elements = React.useMemo(() => {
-    console.log('calcute.....');
     return Utils.getElementsByAssets(assets.elements, data);
   }, []);
 
