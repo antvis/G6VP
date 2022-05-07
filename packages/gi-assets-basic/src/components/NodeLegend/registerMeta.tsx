@@ -1,6 +1,6 @@
 import { PLACEMENT_OPTIONS } from '../const';
 const registerMeta = context => {
-  const { data } = context;
+  const { data, schemaData } = context;
   let keys = ['id'];
   try {
     keys = Object.keys(data.nodes[0]?.data || {});

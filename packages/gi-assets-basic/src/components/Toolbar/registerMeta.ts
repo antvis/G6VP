@@ -20,6 +20,7 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       ' x-component': 'Radio.Group',
       enum: DIRECTION_OPTIONS,
+      default: 'vertical',
     },
     placement: {
       title: '组件位置',
@@ -38,7 +39,7 @@ const registerMeta = context => {
         min: 0,
         max: 400,
       },
-      default: [100, 20],
+      default: [12, 12],
     },
   };
 

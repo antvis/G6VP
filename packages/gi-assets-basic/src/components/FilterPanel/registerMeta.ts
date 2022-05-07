@@ -1,12 +1,12 @@
 import { extra } from '@alipay/graphinsight';
-
+import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 
-metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = '筛选面板';
-metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = 'icon-filter';
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
-
 
 const registerMeta = () => {
   const schema = {
@@ -24,10 +24,10 @@ const registerMeta = () => {
       'x-component': 'Switch',
       default: true,
     },
-    ...metas
-  }
+    ...metas,
+  };
 
-  return schema
+  return schema;
 };
 
 export default registerMeta;
