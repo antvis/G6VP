@@ -1,131 +1,88 @@
-import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
-import { FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
-import { createForm, onFormInputChange } from '@formily/core';
-import { createSchemaField, FormProvider } from '@formily/react';
+import { CaretRightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Collapse } from 'antd';
 import React from 'react';
-import { SketchPicker } from 'react-color';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import { CategroyOptions } from '../../../../components/AssetsCenter/Components';
-import TagsSelect from '../../../../components/DataVGui/TagsSelect';
-import { useContext } from '../../hooks/useContext';
-const extensions = {
-  TagsSelect,
-  Offset,
-  AssetCollapse,
+import './index.less';
+import RenderForm from './RenderForm';
+const { Panel } = Collapse;
+const otherCategory = {
+  name: '未分类',
+  icon: <QuestionCircleOutlined />,
+  order: 12,
 };
-
-const SchemaField = createSchemaField({
-  components: {
-    FormItem,
-    Input,
-    FormCollapse,
-    Select,
-    NumberPicker,
-    Switch,
-    SketchPicker,
-    ColorInput,
-    Offset,
-    AssetCollapse,
-  },
-});
-
-const getComponentsByMap = componentMap => {
-  const componentKeys = Object.keys(componentMap);
-  return componentKeys.map(id => {
-    const props = componentMap[id];
-    const { giEnable } = props;
-    return {
-      id,
-      props,
-      enable: giEnable,
-    };
-  });
+const CategoryHeader = ({ data }) => {
+  const { icon, name, id } = data;
+  return <div>{name}</div>;
 };
 
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { updateContext } = useContext();
-  const { config, components } = props;
+  // const { updateContext } = useContext();
+  const { config, components, updateContext } = props;
 
-  /** 手动构建ConfigObject信息 */
-  const configObj = {};
-  const valueObj = {};
-  const sortComponents = [...components].sort((a, b) => {
-    try {
-      const aOrder = CategroyOptions[a.category]?.order || 99;
-      const bOrder = CategroyOptions[b.category]?.order || 99;
-      return aOrder - bOrder;
-    } catch (error) {
-      console.log(error);
-      return 0;
-    }
-  });
-  sortComponents.forEach(component => {
-    const { id, meta: defaultConfigObj, props: defaultProps, name: defaultName, info } = component;
-    const matchComponent = config.components?.find(c => c.id === id) || {};
-    const { props = {} } = matchComponent;
-    console.log('matchComponent', matchComponent, component);
-    valueObj[id] = {
-      ...defaultProps,
-      ...props,
-    };
+  const res = React.useMemo(() => {
+    return components.reduce((acc, curr) => {
+      const { category } = curr;
+      const children = acc[category];
+      if (children) {
+        acc[category] = [...children, curr];
+      } else {
+        acc[category] = [curr];
+      }
 
-    configObj[`${id}Panel`] = {
-      type: 'void',
-      'x-decorator': 'FormItem',
-      'x-component': 'FormCollapse',
-      'x-component-props': {
-        ghost: true,
-        className: 'gi-site-collapse',
-      },
-      properties: {
-        [id]: {
-          type: 'object',
-          'x-component': 'FormCollapse.FormCollapsePanel',
-          'x-component-props': {
-            header: defaultName,
-            key: `${id}Panel`,
-            icon: info.icon,
-          },
-          properties: {
-            ...defaultConfigObj,
-          },
-        },
-      },
-    };
-  });
-
-  const schema = {
-    type: 'object',
-    properties: configObj,
-  };
-
-  const form = createForm({
-    initialValues: valueObj,
-
-    effects() {
-      onFormInputChange(({ values }) => {
-        handleChange(values);
+      return acc;
+    }, {});
+  }, [components]);
+  const categoryKeys = Object.keys(res);
+  const categroy = React.useMemo(() => {
+    return categoryKeys
+      .map(c => {
+        return { id: c, ...(CategroyOptions[c] || otherCategory) };
+      })
+      .sort((a, b) => {
+        return a.order - b.order;
       });
-    },
-  });
+  }, [categoryKeys]);
 
-  const handleChange = values => {
-    const currentValues = JSON.parse(JSON.stringify(values));
-    const com = getComponentsByMap(currentValues);
-    console.log('com', com);
+  const handleChange = (assetId, values) => {
+    console.log('onChange....', assetId, values);
     updateContext(draft => {
-      draft.config.components = com;
+      draft.config.components.forEach(item => {
+        if (item.id === assetId) {
+          item.props = values;
+        }
+      });
     });
   };
-
-  console.log('propsssss', components, schema, valueObj);
   return (
     <div>
       <AssetsCenterHandler title="组件" id="components" />
-      <FormProvider form={form}>
-        <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
-      </FormProvider>
+      <div>
+        <Collapse
+          defaultActiveKey={categoryKeys}
+          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+          ghost
+          // expandIconPosition="right"
+        >
+          {categroy.map(categoryItem => {
+            const { id: categoryId } = categoryItem;
+
+            return (
+              <Panel
+                header={<CategoryHeader data={categoryItem} />}
+                key={categoryId}
+                style={{ padding: '0px' }}
+                className="no-padding"
+              >
+                {res[categoryId].map(item => {
+                  return <RenderForm key={item.id} {...item} onChange={handleChange} config={config} />;
+                })}
+              </Panel>
+            );
+          })}
+        </Collapse>
+      </div>
     </div>
   );
 };
@@ -133,8 +90,9 @@ const ComponentPanel = props => {
 export default ComponentPanel;
 
 // export default React.memo(ComponentPanel, (prevProps, nextProps) => {
-//   if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
+//   if (JSON.stringify(prevProps.ACTIVE_ASSETS_KEYS) !== JSON.stringify(nextProps.ACTIVE_ASSETS_KEYS)) {
 //     return false;
 //   }
+//   console.log('prevProps.activeAssetsKeys', prevProps, nextProps);
 //   return true;
 // });

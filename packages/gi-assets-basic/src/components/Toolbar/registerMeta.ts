@@ -5,7 +5,7 @@ const registerMeta = context => {
   const schema = {
     GI_CONTAINER: {
       title: '集成组件',
-      type: 'string',
+      type: 'array',
       enum: GI_CONTAINER_INDEXS,
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -27,12 +27,14 @@ const registerMeta = context => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      enum: PLACEMENT_OPTIONS,
+      'x-component-props': {
+        options: PLACEMENT_OPTIONS,
+      },
       default: 'LB',
     },
     offset: {
       title: '偏移量',
-      type: 'string',
+      type: 'array',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',
       'x-component-props': {

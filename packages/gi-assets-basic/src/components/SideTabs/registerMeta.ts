@@ -2,8 +2,8 @@ import { extra } from '@alipay/graphinsight';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 
-metas.height.default = 'calc(100vh - 120px)';
-metas.width.default = '450px';
+// metas.height.default = 'calc(100vh - 120px)';
+// metas.width.default = '450px';
 metas.offset.default = [0, 61];
 metas.placement.default = 'LB';
 
