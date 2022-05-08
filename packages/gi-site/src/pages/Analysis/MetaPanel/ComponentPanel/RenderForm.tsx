@@ -48,8 +48,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     },
   });
 
-  console.log('renderForm', schema, props);
-
   return (
     <div>
       <Collapse

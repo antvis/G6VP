@@ -1,10 +1,11 @@
 import { extra } from '@alipay/graphinsight';
+import info from './info';
 const { GIAC_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_METAS);
 
-metas.GIAC.properties.GIAC.properties.title.default = '3D模式';
+metas.GIAC.properties.GIAC.properties.title.default = info.name;
 metas.GIAC.properties.GIAC.properties.isShowTitle.default = false;
-metas.GIAC.properties.GIAC.properties.icon.default = 'icon-windows';
+metas.GIAC.properties.GIAC.properties.icon.default = info.icon;
 metas.GIAC.properties.GIAC.properties.isVertical.default = true;
 metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 
