@@ -24,7 +24,7 @@ const registerMeta = context => {
       },
       label: {
         title: '文本',
-        type: 'string',
+        type: 'array',
         enum: keys.map(c => {
           return {
             label: `${c.id} (${c.type})`,
@@ -116,7 +116,7 @@ const registerMeta = context => {
 
                       lineDash: {
                         title: '虚线',
-                        type: 'number',
+                        type: 'array',
                         'x-decorator': 'FormItem',
                         'x-component': 'Offset',
                         'x-component-props': {
