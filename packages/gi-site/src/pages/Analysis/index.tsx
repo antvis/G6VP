@@ -146,10 +146,17 @@ const Analysis = props => {
         });
 
         const configComponents = activeAssetsInformation.components.map(c => {
-          const matchItem = draft.config.components.find(d => d.id === c.id) || c;
-          return matchItem;
+          const defaultValues = c.props;
+          const matchItem = original(draft.config.components.find(d => d.id === c.id)) || c;
+          return {
+            ...matchItem,
+            props: {
+              //给一个默认值
+              ...defaultValues,
+              ...matchItem.props,
+            },
+          };
         });
-
         /** 根据服务配置列表，得到真正运行的Service实例 */
         const services = getServicesByConfig(combinedServiceConfig, data);
 

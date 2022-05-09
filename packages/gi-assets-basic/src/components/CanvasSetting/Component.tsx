@@ -20,22 +20,14 @@ export interface CanvasSettingProps {
     disabled: boolean;
     enableOptimize: boolean;
   };
-  elementInteraction: {
-    enableNodeHover: boolean;
-    enableEdgeHover: boolean;
-  };
-  highlight: {
-    trigger: string;
-    enable: boolean;
-  };
 }
 
 export const defaultProps = extractDefault({ config: registerMeta({ data: {} }) }) as CanvasSettingProps;
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
-  const { styleCanvas, dragCanvas, zoomCanvas, elementInteraction, highlight } = merge(defaultProps, props);
+  const { styleCanvas, dragCanvas, zoomCanvas } = merge(defaultProps, props);
   const { background, backgroundImage } = styleCanvas;
-  const { enableEdgeHover, enableNodeHover } = elementInteraction;
+  // const { enableEdgeHover, enableNodeHover } = elementInteraction;
   console.log('render....', props);
   React.useLayoutEffect(() => {
     const container = document.getElementsByClassName('graphin-core')[0] as HTMLElement;
@@ -51,10 +43,10 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       />
       <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
       <BrushSelect />
-      {highlight.enable && <ActivateRelations trigger={highlight.trigger} />}
+      {/* {highlight.enable && <ActivateRelations trigger={highlight.trigger} />}
 
       {enableNodeHover && <Hoverable bindType="node" />}
-      {enableEdgeHover && <Hoverable bindType="edge" />}
+      {enableEdgeHover && <Hoverable bindType="edge" />} */}
     </>
   );
 };
