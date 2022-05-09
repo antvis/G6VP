@@ -6,6 +6,7 @@ import WrapDataPanel from './DataPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
 import StylesPanel from './StylesPanel';
+
 const navbarOptions = [
   {
     id: 'data',
