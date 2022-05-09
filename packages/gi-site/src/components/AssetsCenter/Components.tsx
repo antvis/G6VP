@@ -46,7 +46,7 @@ export const CategroyOptions = {
     icon: <SelectOutlined />,
     order: 2,
   },
-  'element-interaction': {
+  'elements-interaction': {
     name: '元素交互',
     icon: <PieChartOutlined />,
     order: 3,
