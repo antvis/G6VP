@@ -82,22 +82,6 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     ref[key] = val;
   };
 
-  const cardContent = item => {
-    const { version = '最新', ownerNickname = '官方', gmtModified } = item;
-    return (
-      <div className="asset-detail">
-        <ul>
-          <li>作者：{ownerNickname}</li>
-          <li>版本：{version}</li>
-          {/* <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li> */}
-        </ul>
-        {/* <div className="asset-detail-buttom"> */}
-        {/* <div className="asset-favorite">Text</div> */}
-        {/* </div> */}
-      </div>
-    );
-  };
-
   return (
     <div>
       <Drawer

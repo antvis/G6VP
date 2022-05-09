@@ -12,9 +12,9 @@ const AssetsCenterHandler: React.FunctionComponent<AssetsCenterHandlerProps> = p
   const { title, id } = props;
   const { handleOpenAssetsCenter } = useAssetsCenter(id);
   return (
-    <div className="gi-assets-center-handler">
+    <div className={`gi-assets-center-handler ${id}`}>
       <span>{title} </span>
-      <span onClick={handleOpenAssetsCenter}>
+      <span onClick={handleOpenAssetsCenter} className={`gi-tour-assets-${id}`}>
         <AppstoreAddOutlined />
       </span>
     </div>

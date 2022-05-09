@@ -52,8 +52,9 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     <div>
       <Collapse
         ghost
+        defaultActiveKey={['Toolbar']}
         style={{ padding: '4px 0px' }}
-        className="gi-site-collapse"
+        className={`gi-site-collapse gi-tour-components-${info.id}`}
         expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       >
         <Panel
