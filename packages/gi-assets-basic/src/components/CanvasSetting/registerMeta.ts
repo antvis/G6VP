@@ -1,5 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
-
 const registerMeta = context => {
   const { services } = context;
 
@@ -8,144 +6,88 @@ const registerMeta = context => {
 
     styleCanvas: {
       title: '画布样式',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
+      type: 'object',
+      properties: {
         background: {
-          name: '背景色',
-          type: 'fill',
+          title: '背景颜色',
+          'x-component': 'ColorInput',
+          'x-decorator': 'FormItem',
+          type: 'string',
           default: '#fff',
         },
         backgroundImage: {
-          name: '背景图片',
-          type: 'image',
-          default: '',
+          title: '背景图片',
+          type: 'string',
+          'x-component': 'Input',
+          'x-decorator': 'FormItem',
+          default: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*k9t4QamMuQ4AAAAAAAAAAAAAARQnAQ',
         },
       },
     },
     dragCanvas: {
-      name: '拖拽画布',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
+      title: '画布样式',
+      type: 'object',
+      properties: {
         disabled: {
-          name: '禁用',
-          type: 'switch',
+          title: '拖拽禁用',
+          'x-component': 'Switch',
+          'x-decorator': 'FormItem',
+          type: 'boolean',
           default: false,
-          statusText: false,
         },
         direction: {
-          name: '方向',
+          title: '拖拽方向',
           type: 'select',
-          options: [
-            {
-              label: '自由',
-              value: 'both',
-            },
-            {
-              label: 'X方向',
-              value: 'x',
-            },
-            {
-              label: 'Y方向',
-              value: 'y',
-            },
-          ],
-          default: 'both',
-          showInPanel: {
-            conditions: [['.disabled', '$eq', false]],
+          'x-component': 'Select',
+          'x-decorator': 'FormItem',
+          'x-component-props': {
+            options: [
+              {
+                label: '自由',
+                value: 'both',
+              },
+              {
+                label: 'X方向',
+                value: 'x',
+              },
+              {
+                label: 'Y方向',
+                value: 'y',
+              },
+            ],
           },
+          default: 'both',
         },
         enableOptimize: {
-          name: '优化',
-          type: 'switch',
+          title: '拖拽优化',
+          'x-component': 'Switch',
+          'x-decorator': 'FormItem',
+          type: 'boolean',
           default: false,
-          statusText: false,
-          showInPanel: {
-            conditions: [['.disabled', '$eq', false]],
-          },
         },
       },
     },
     zoomCanvas: {
-      name: '缩放画布',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
+      title: '画布样式',
+      type: 'object',
+      properties: {
         disabled: {
-          name: '禁用',
-          type: 'switch',
+          title: '缩放禁用',
+          'x-component': 'Switch',
+          'x-decorator': 'FormItem',
+          type: 'boolean',
           default: false,
-          statusText: false,
         },
         enableOptimize: {
-          name: '优化',
-          type: 'switch',
+          title: '缩放优化',
+          type: 'boolean',
+          'x-component': 'Switch',
+          'x-decorator': 'FormItem',
           default: true,
-          statusText: true,
-          showInPanel: {
-            conditions: [['.disabled', '$eq', false]],
-          },
-        },
-      },
-    },
-    elementInteraction: {
-      name: '元素交互',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enableNodeHover: {
-          name: '节点悬停',
-          type: 'switch',
-          default: true,
-          statusText: true,
-        },
-        enableEdgeHover: {
-          name: '边悬停',
-          type: 'switch',
-          default: false,
-          statusText: false,
-        },
-      },
-    },
-    highlight: {
-      name: '高亮交互',
-      type: 'group',
-      enableHide: false,
-      fold: false,
-      children: {
-        enable: {
-          name: '是否启用',
-          type: 'switch',
-          default: false,
-          statusText: false,
-        },
-        trigger: {
-          name: '触发方式',
-          type: 'radio',
-          options: [
-            {
-              label: '点击',
-              value: 'click',
-            },
-            {
-              label: 'Hover',
-              value: 'mouseenter',
-            },
-          ],
-          default: 'click',
         },
       },
     },
   };
 };
-
-const configObj = registerMeta({ data: {} });
-/** 默认的配置值 */
-export const defaultProps = extractDefault({ config: configObj, value: {} }) as any;
 
 export default registerMeta;
