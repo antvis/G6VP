@@ -9,14 +9,15 @@ interface AssetsSelectProps {
     name: string;
     icon?: string;
   }[];
+  className?: string;
 }
 
 const { Option } = Select;
 const AssetsSelect: React.FunctionComponent<AssetsSelectProps> = props => {
-  const { value, onChange, options } = props;
+  const { value, onChange, options, className } = props;
   return (
     <div>
-      <Select onChange={onChange} value={value} className="style-panel-assets-select">
+      <Select onChange={onChange} value={value} className={`style-panel-assets-select ${className}`}>
         {options.map((c: any) => {
           const { id, name, icon, info } = c;
           return (

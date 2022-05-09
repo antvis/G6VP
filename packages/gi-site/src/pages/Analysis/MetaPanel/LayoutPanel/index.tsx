@@ -104,7 +104,12 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   return (
     <div>
       <AssetsCenterHandler title="布局" id="layouts" />
-      <AssetsSelect onChange={handleChangeShape} value={layoutId} options={layoutItems} />
+      <AssetsSelect
+        onChange={handleChangeShape}
+        value={layoutId}
+        options={layoutItems}
+        className="gi-tour-layout-switch"
+      />
       {GUIComponent}
     </div>
   );
