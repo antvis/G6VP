@@ -217,7 +217,13 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
           title="数据源"
           extra={
             <BreathIndicator title="导入数据" status="running">
-              <Button type="dashed" style={{ width: '100%' }} size="small" onClick={uploadData}>
+              <Button
+                type="dashed"
+                style={{ width: '100%' }}
+                size="small"
+                onClick={uploadData}
+                className="gi-intro-upload-data"
+              >
                 <UploadOutlined /> 导入
               </Button>
             </BreathIndicator>

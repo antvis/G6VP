@@ -97,6 +97,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       left: '0px',
                       bottom: '12px',
                     }}
+                    className="gi-tour-style-add-group"
                     onClick={() => {
                       const idx = fields.length + 1;
                       const options = {
@@ -198,7 +199,12 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                   </Row>
                                 }
                               >
-                                <Button type="text" icon={<FilterOutlined />} size="small"></Button>
+                                <Button
+                                  className={`gi-tour-style-rule-${index}`}
+                                  type="text"
+                                  icon={<FilterOutlined />}
+                                  size="small"
+                                ></Button>
                               </PopoverContainer>
 
                               <Button
