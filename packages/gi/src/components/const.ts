@@ -300,7 +300,7 @@ const GIAC = {
               },
             },
           ],
-          default: true,
+          default: false,
         },
         title: {
           title: '填写名称',
