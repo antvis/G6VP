@@ -6,11 +6,12 @@ import CanvasClick from './components/ClickCanvas';
 import { GraphInsightContext } from './context';
 import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
+import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
-import * as utils from './utils';
+
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
@@ -171,12 +172,12 @@ const GISDK = (props: Props) => {
     const edges = state.source.edges.reduce((acc, cur) => {
       acc[cur.id] = cur;
       return acc;
-    }, {})
+    }, {});
 
     return {
       nodes,
-      edges
-    }
+      edges,
+    };
   }, [state.source]);
 
   const ContextValue = {
@@ -243,8 +244,10 @@ const GISDK = (props: Props) => {
       }
 
       const { GI_CONTAINER } = itemProps;
+
       let GIProps = {};
       if (GI_CONTAINER) {
+        console.log(GI_CONTAINER, ComponentAssets);
         GIProps = {
           components: GI_CONTAINER.map(c => {
             return ComponentCfgMap[c];

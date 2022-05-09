@@ -6,8 +6,8 @@ const { MiniMap } = Components;
 const info = {
   id: 'MiniMap',
   name: '小地图',
-
-  desc: '小地图小地图',
+  desc: '启用后，可在小地图上展示信息',
+  icon: 'icon-minimap',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
   type: 'AUTO',

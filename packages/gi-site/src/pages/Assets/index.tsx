@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import { dynamicLoadModules, getAssetPackages, getCombinedAssets, setDefaultAssetPackages } from '../../loader';
+import { getAssetPackages, getCombinedAssets, setDefaultAssetPackages } from '../../loader';
 import './index.less';
 import AssetsList from './List';
 import PackageTable from './Table';
@@ -22,9 +22,8 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     },
   });
   React.useEffect(() => {
-    dynamicLoadModules().then(res => {
+    getCombinedAssets().then(assets => {
       const packages = getAssetPackages();
-      const assets = getCombinedAssets();
       setState({
         isReady: true,
         //@ts-ignore

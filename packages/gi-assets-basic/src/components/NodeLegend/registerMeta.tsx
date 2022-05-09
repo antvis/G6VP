@@ -1,5 +1,6 @@
+import { PLACEMENT_OPTIONS } from '../const';
 const registerMeta = context => {
-  const { data } = context;
+  const { data, schemaData } = context;
   let keys = ['id'];
   try {
     keys = Object.keys(data.nodes[0]?.data || {});
@@ -14,50 +15,44 @@ const registerMeta = context => {
     };
   });
 
-  return {
-    /** 分类信息 */
-    sortKey: {
-      name: '映射字段',
-      type: 'select',
+  const schema = {
+    sortkey: {
+      title: '映射字段',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
       default: 'type',
-      options,
+      enum: options,
     },
     textColor: {
-      name: '字体颜色',
-      type: 'fill',
+      title: '字体颜色',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'ColorInput',
       default: '#ddd',
     },
     placement: {
-      name: '组件位置',
-      type: 'select',
+      title: '组件位置',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: PLACEMENT_OPTIONS,
       default: 'LB',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
     },
     offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
+      title: '偏移量',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      'x-component-props': {
+        min: 0,
+        max: 400,
+      },
       default: [100, 20],
     },
   };
+
+  return schema;
 };
 
 export default registerMeta;

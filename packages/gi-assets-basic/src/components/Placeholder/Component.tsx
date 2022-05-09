@@ -12,14 +12,12 @@ const Loading: React.FunctionComponent<LoadingProps> = props => {
   const context = useContext();
   const {
     width = 200,
-
     img = 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
     text,
   } = props;
 
   const { data } = context;
   const hasNodes = data && data.nodes && data.nodes.length !== 0;
-  console.log('hasNodes', hasNodes);
 
   if (!hasNodes) {
     return (

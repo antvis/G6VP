@@ -1,5 +1,6 @@
 import * as React from 'react';
 import AssetsCenter from '../../../components/AssetsCenter';
+import { useContext } from '../hooks/useContext';
 import ComponentPanel from './ComponentPanel';
 import WrapDataPanel from './DataPanel';
 import './index.less';
@@ -37,6 +38,7 @@ const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
 
 const MetaPanel = props => {
   const { value, onChange, data, config, meta, services } = props;
+  const { updateContext } = useContext();
 
   const { components, layout, node, edge } = config;
 
@@ -49,10 +51,18 @@ const MetaPanel = props => {
 
   return (
     <div className="gi-config-pannel">
-      <Component {...props} />
+      <Component {...props} updateContext={updateContext} />
       <AssetsCenter />
     </div>
   );
 };
 
 export default MetaPanel;
+
+// export default React.memo(MetaPanel, (prevProps, nextProps) => {
+//   if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
+//     return false;
+//   }
+//   console.log('MetaPanel &&&&&&', prevProps, nextProps);
+//   return true;
+// });

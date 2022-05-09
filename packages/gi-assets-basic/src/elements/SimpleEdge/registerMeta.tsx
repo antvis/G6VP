@@ -24,7 +24,7 @@ const registerMeta = context => {
       },
       label: {
         title: '文本',
-        type: 'string',
+        type: 'array',
         enum: keys.map(c => {
           return {
             label: `${c.id} (${c.type})`,
@@ -75,7 +75,7 @@ const registerMeta = context => {
                     properties: {
                       customPoly: {
                         type: 'boolean',
-                        title: '自定义弧度',
+                        title: '定义弧度',
                         default: keyshape.customPoly,
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
@@ -116,9 +116,13 @@ const registerMeta = context => {
 
                       lineDash: {
                         title: '虚线',
-                        type: 'number',
+                        type: 'array',
                         'x-decorator': 'FormItem',
-                        'x-component': 'Input',
+                        'x-component': 'Offset',
+                        'x-component-props': {
+                          min: -100,
+                          max: 100,
+                        },
                         default: keyshape.lineDash,
                       },
                       opacity: {
@@ -157,7 +161,11 @@ const registerMeta = context => {
                         type: 'string',
                         title: '偏移',
                         'x-decorator': 'FormItem',
-                        'x-component': 'NumberPicker',
+                        'x-component': 'Offset',
+                        'x-component-props': {
+                          min: -100,
+                          max: 100,
+                        },
                         default: label.offset,
                       },
                       fill: {

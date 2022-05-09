@@ -2,7 +2,7 @@ import { extra } from '@alipay/graphinsight';
 
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
-metas.GIAC_CONTENT.children.title.default = '搜索栏';
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = '搜索栏';
 
 const registerMeta = context => {
   const { services } = context;

@@ -1,25 +1,33 @@
 import { extra } from '@alipay/graphinsight';
-
+import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
-metas.GIAC_CONTENT.children.title.default = '筛选面板';
-metas.GIAC_CONTENT.children.icon.default = 'icon-filter';
-metas.GIAC_CONTENT.children.containerWidth.default = '400px';
+
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
 const registerMeta = () => {
-  return {
+  const schema = {
     histogramColor: {
-      name: '直方图颜色',
-      type: 'fill',
+      title: '直方图颜色',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'ColorInput',
       default: '#3056E3',
     },
     isFilterIsolatedNodes: {
-      name: '过滤孤立节点',
-      type: 'switch',
+      title: '过滤孤立节点',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
       default: true,
     },
     ...metas,
   };
+
+  return schema;
 };
 
 export default registerMeta;

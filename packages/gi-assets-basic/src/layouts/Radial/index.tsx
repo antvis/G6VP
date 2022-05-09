@@ -10,7 +10,8 @@ const info = {
   name: '径向布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '辐射布局',
+  icon: 'icon-layout-radial',
   cover: 'http://xxxx.jpg',
 };
 

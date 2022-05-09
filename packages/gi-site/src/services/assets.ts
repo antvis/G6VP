@@ -5,7 +5,7 @@ const BrowserFSFileType = {
 };
 import request from 'umi-request';
 import { getCombinedAssets } from '../loader';
-import { ASSET_TYPE, isMock, IS_DYNAMIC_LOAD, SERVICE_URL_PREFIX } from './const';
+import { isMock, SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -122,96 +122,42 @@ export const queryActiveAssetList = async (param: ActiveAssetParams[]) => {
  * @param param 查询参数
  */
 export const queryAssetList = async (param?: { name?: string; limit?: number; projectId: string }) => {
-  if (isMock) {
-    const FinalAssets = getCombinedAssets();
-    const components = Object.keys(FinalAssets.components).map(key => {
-      return {
-        type: 1, //组件
-        id: key,
-        ...FinalAssets.components[key]?.info,
-      };
-    });
-    const elements = Object.keys(FinalAssets.elements).map(key => {
-      return {
-        type: 2, //元素
-        id: key,
-        ...FinalAssets.elements[key]?.info,
-      };
-    });
-    const layouts = Object.keys(FinalAssets.layouts).map(key => {
-      return {
-        type: 6, //元素
-        id: key,
-        ...FinalAssets.layouts[key]?.info,
-      };
-    });
-    return { components, elements, layouts };
-  }
+  const FinalAssets = await getCombinedAssets();
 
-  const getListByGIAssets = res => {
-    if (IS_DYNAMIC_LOAD) {
-      // 在线拉取资产列表
-      const components = [],
-        elements = [],
-        layouts = [];
-      res.forEach(item => {
-        if (item.type === ASSET_TYPE.COMPONENT) {
-          components.push(item);
-        } else if ((item.type = ASSET_TYPE.NODE || item.type === ASSET_TYPE.EDGE)) {
-          elements.push(item);
-        } else if ((item.type = ASSET_TYPE.LAYOUT)) {
-          layouts.push(item);
-        }
-      });
-      return { components, elements, layouts };
-    } else {
-      //通过本地@alipay/gi-assets 获得资产列表
-
-      const FinalAssets = getCombinedAssets();
-
-      const components = Object.keys(FinalAssets.components).map(key => {
-        return {
-          type: 1, //组件
-          id: key,
-          ...FinalAssets.components[key]?.info,
-        };
-      });
-      const elements = Object.keys(FinalAssets.elements).map(key => {
-        return {
-          type: 2, //元素
-          id: key,
-          ...FinalAssets.elements[key]?.info,
-        };
-      });
-      const layouts = Object.keys(FinalAssets.layouts).map(key => {
-        return {
-          type: 6, //元素
-          id: key,
-          ...FinalAssets.layouts[key]?.info,
-        };
-      });
-      return { components, elements, layouts };
-    }
-  };
-
-  //TODO:需要根据projectID把多余的Service过滤掉
-  const response = await request(`${SERVICE_URL_PREFIX}/asset/list`, {
-    method: 'get',
-    params: param,
+  const components = Object.keys(FinalAssets.components).map(key => {
+    const asset = FinalAssets.components[key];
+    const { pkg, version, info } = asset;
+    return {
+      type: 1, //组件
+      id: key,
+      pkg,
+      version,
+      ...info,
+    };
   });
-
-  const res = convertResponse(response);
-  let services = [];
-
-  if (param && param.projectId) {
-    services = res.data.filter(d => d.type === 3 && d.projectId === param.projectId);
-    const { components, elements, layouts } = getListByGIAssets(res.data);
-    return { components, services, elements, layouts };
-  }
-
-  return res;
-
-  // 如果不是动态加载
+  const elements = Object.keys(FinalAssets.elements).map(key => {
+    const asset = FinalAssets.elements[key];
+    const { pkg, version, info } = asset;
+    return {
+      type: 2, //元素
+      id: key,
+      pkg,
+      version,
+      ...info,
+    };
+  });
+  const layouts = Object.keys(FinalAssets.layouts).map(key => {
+    const asset = FinalAssets.layouts[key];
+    const { pkg, version, info } = asset;
+    return {
+      type: 6, //元素
+      id: key,
+      pkg,
+      version,
+      ...info,
+    };
+  });
+  return { components, elements, layouts };
 };
 
 /**

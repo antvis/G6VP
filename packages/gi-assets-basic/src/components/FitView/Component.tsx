@@ -1,8 +1,8 @@
-import { GraphinContext } from '@antv/graphin';
-import * as React from 'react';
 import type { IGIAC } from '@alipay/graphinsight';
 import { extra } from '@alipay/graphinsight';
-const {GIAComponent} = extra
+import { GraphinContext } from '@antv/graphin';
+import * as React from 'react';
+const { GIAComponent } = extra;
 export interface IProps {
   GIAC: IGIAC;
 }

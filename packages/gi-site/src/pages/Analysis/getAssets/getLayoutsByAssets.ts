@@ -24,6 +24,7 @@ const getLayoutsByAssets = (assets, data) => {
       const defaultProps = extractDefault({ config: configObj, value: {} });
       const { id, name, category } = info as TypeAssetInfo;
       return {
+        ...layout,
         id,
         name,
         category,
