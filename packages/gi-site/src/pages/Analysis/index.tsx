@@ -147,7 +147,11 @@ const Analysis = props => {
 
         const configComponents = activeAssetsInformation.components.map(c => {
           const defaultValues = c.props;
-          const matchItem = original(draft.config.components.find(d => d.id === c.id)) || c;
+          const cfgComponents = draft.config.components.find(d => d.id === c.id);
+          let matchItem = c;
+          if (cfgComponents) {
+            matchItem = original(cfgComponents);
+          }
           return {
             ...matchItem,
             props: {
