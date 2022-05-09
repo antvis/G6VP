@@ -13,7 +13,7 @@ export const isStyles = nodes => {
   return nodes.every(node => node.style);
 };
 
-export const getPositionStyles = (placement, offset: number[]) => {
+export const getPositionStyles = (placement = 'LT', offset: number[] = [24, 64]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
     top: 'unset',

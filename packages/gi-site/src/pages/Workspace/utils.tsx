@@ -54,14 +54,48 @@ const baseEdgesConfig: GIConfig['edges'] = [
 ];
 const baseComponentsConfig = [
   {
+    id: 'Toolbar',
+    props: {
+      placement: 'LT',
+      direction: 'vertical',
+      offset: [24, 64],
+      GI_CONTAINER: ['ZoomIn', 'ZoomOut', 'FitView', 'FitCenter', 'LassoSelect'],
+    },
+  },
+  {
+    id: 'ZoomIn',
+    props: {},
+  },
+  {
+    id: 'ZoomOut',
+    props: {},
+  },
+  {
+    id: 'FitView',
+    props: {},
+  },
+  {
+    id: 'FitCenter',
+    props: {},
+  },
+  {
+    id: 'LassoSelect',
+    props: {},
+  },
+  /** 元素交互 */
+  {
+    id: 'PropertiesPanel',
+    props: {},
+  },
+  {
+    id: 'ActivateRelations',
+    props: {},
+  },
+  {
     id: 'NodeLegend',
     props: {
       sortKey: 'type',
-      textColor: '#ddd',
-      placement: 'LB',
-      offset: [100, 20],
     },
-    enable: true,
   },
 ];
 const baseLayoutConfig = {

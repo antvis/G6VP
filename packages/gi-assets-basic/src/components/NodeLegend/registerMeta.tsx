@@ -16,7 +16,7 @@ const registerMeta = context => {
   });
 
   const schema = {
-    sortkey: {
+    sortKey: {
       title: '映射字段',
       type: 'string',
       'x-decorator': 'FormItem',
