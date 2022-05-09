@@ -30,7 +30,7 @@ const registerMeta = context => {
       'x-component-props': {
         options: PLACEMENT_OPTIONS,
       },
-      default: 'LB',
+      default: 'LT',
     },
     offset: {
       title: '偏移量',
@@ -41,7 +41,7 @@ const registerMeta = context => {
         min: 0,
         max: 400,
       },
-      default: [12, 12],
+      default: [24, 64],
     },
   };
 
