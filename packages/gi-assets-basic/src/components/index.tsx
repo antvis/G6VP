@@ -1,3 +1,4 @@
+import ActivateRelations from './ActivateRelations';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -23,7 +24,6 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
-
 export {
   Placeholder,
   FitCenter,
@@ -51,4 +51,5 @@ export {
   StyleSetting,
   Copyright,
   ToggleClusterWithMenu,
+  ActivateRelations,
 };

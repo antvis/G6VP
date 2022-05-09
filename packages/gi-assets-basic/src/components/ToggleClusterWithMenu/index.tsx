@@ -7,7 +7,7 @@ const info = {
   desc: '集成在右键菜单中，展开/收起节点',
   icon: 'icon-toggle',
   cover: 'http://xxx.jpg',
-  category: 'element-interaction',
+  category: 'elements-interaction',
   type: 'GIAC_MENU',
 };
 
