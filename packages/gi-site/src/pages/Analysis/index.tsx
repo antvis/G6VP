@@ -129,7 +129,7 @@ const Analysis = props => {
   const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
   React.useEffect(() => {
     (async () => {
-      console.log('ACTIVE_ASSETS_KEYS....', ACTIVE_ASSETS_KEYS);
+      console.log('ACTIVE_ASSETS_KEYS....', ACTIVE_ASSETS_KEYS, activeAssetsKeys, JSON.parse(ACTIVE_ASSETS_KEYS));
       const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
       const mockServiceConfig = getMockServiceConfig(activeAssets.components);
 
@@ -249,7 +249,7 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState };
-  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state.config);
 
   return (
     <AnalysisContext.Provider value={context}>
@@ -266,6 +266,7 @@ const Analysis = props => {
             <MetaPanel
               value={activeNavbar}
               data={data}
+              ACTIVE_ASSETS_KEYS={ACTIVE_ASSETS_KEYS}
               activeAssetsKeys={activeAssetsKeys}
               /** 配置文件 */
               config={config}

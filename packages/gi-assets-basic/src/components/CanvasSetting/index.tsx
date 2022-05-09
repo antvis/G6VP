@@ -6,7 +6,8 @@ import registerMeta from './registerMeta';
 const info: AssetInfo = {
   id: 'CanvasSetting',
   name: '画布设置',
-  desc: '画布设置',
+  desc: '设置画布的背景，缩放，移动等交互',
+  icon: 'icon-canvas-setting',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',

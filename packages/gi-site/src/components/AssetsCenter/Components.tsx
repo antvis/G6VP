@@ -8,12 +8,12 @@ import {
   InsertRowBelowOutlined,
   PieChartOutlined,
   QuestionCircleOutlined,
-  RobotOutlined,
   SelectOutlined,
   SlackOutlined,
 } from '@ant-design/icons';
-import { Avatar, Col, Collapse, Row } from 'antd';
+import { Col, Collapse, Row } from 'antd';
 import * as React from 'react';
+import AssetCard from './Card';
 
 const { Panel } = Collapse;
 
@@ -22,24 +22,20 @@ interface ComponentsPanelProps {
   handleChange?: (a: any, b: any) => void;
   defaultValue?: any[];
 }
-
+const COLOR_MAP = {
+  basic: 'green',
+  advance: 'volcano',
+  scene: 'purple',
+  undefined: '#f50',
+};
 const cardContent = item => {
-  const { version = '最新', ownerNickname = '官方', gmtModified } = item;
-  return (
-    <div className="asset-detail">
-      <ul>
-        <li>作者：{ownerNickname}</li>
-        <li>版本：{version}</li>
-        {/* <li>更新：{moment(gmtModified, 'YYYY-MM-DD HH:mm:ss').fromNow()}</li> */}
-      </ul>
-      {/* <div className="asset-detail-buttom"> */}
-      {/* <div className="asset-favorite">Text</div> */}
-      {/* </div> */}
-    </div>
-  );
+  console.log('item', item);
+  const { desc, version } = item;
+  const pkg = item.pkg.replace('@alipay/gi-assets-', '');
+  return <div className="asset-detail">{desc}</div>;
 };
 
-const CategroyOptions = {
+export const CategroyOptions = {
   'container-components': {
     name: '容器组件',
     icon: <InsertRowBelowOutlined />,
@@ -50,7 +46,7 @@ const CategroyOptions = {
     icon: <SelectOutlined />,
     order: 2,
   },
-  'elements-interaction': {
+  'element-interaction': {
     name: '元素交互',
     icon: <PieChartOutlined />,
     order: 3,
@@ -60,7 +56,6 @@ const CategroyOptions = {
     icon: <PieChartOutlined />,
     order: 3,
   },
-
   'system-interaction': {
     name: '系统交互',
     icon: <SlackOutlined />,
@@ -92,16 +87,21 @@ const CategroyOptions = {
     icon: <PieChartOutlined />,
     order: 9,
   },
+  'scene-analysis': {
+    name: '场景分析',
+    icon: <PieChartOutlined />,
+    order: 10,
+  },
   workbook: {
     name: '工作簿',
     icon: <CarryOutOutlined />,
-    order: 10,
+    order: 11,
   },
 };
 const otherCategory = {
   name: '未分类',
   icon: <QuestionCircleOutlined />,
-  order: 11,
+  order: 12,
 };
 const CategoryHeader = ({ data }) => {
   const { icon, name, id } = data;
@@ -114,7 +114,6 @@ const CategoryHeader = ({ data }) => {
 
 const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => {
   const { data, handleChange, defaultValue } = props;
-
   const res = React.useMemo(() => {
     return data.reduce((acc, curr) => {
       const { category } = curr;
@@ -155,29 +154,15 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
               <Panel header={<CategoryHeader data={categoryItem} />} key={categoryId}>
                 <Row
                   gutter={[
-                    { xs: 8, sm: 12, md: 12, lg: 12 },
+                    { xs: 8, sm: 12, md: 24, lg: 24 },
                     { xs: 8, sm: 12, md: 12, lg: 12 },
                   ]}
                   style={{ padding: '8px 0px' }}
                 >
                   {res[categoryId].map(item => {
-                    const { id: AssetId, name: AssetName } = item;
                     return (
-                      <Col key={AssetId}>
-                        <CheckCard
-                          bordered={false}
-                          className="assetsCardStyle"
-                          title={AssetName}
-                          avatar={
-                            <Avatar
-                              style={{ backgroundColor: '#EAEEFC', color: '#3056E3' }}
-                              icon={<RobotOutlined />}
-                              size={24}
-                            />
-                          }
-                          description={cardContent(item)}
-                          value={AssetId}
-                        />
+                      <Col key={item.id}>
+                        <AssetCard {...item} />
                       </Col>
                     );
                   })}

@@ -3,20 +3,20 @@ import React from 'react';
 
 const Offset = props => {
   const { value, config } = props;
-
-  const { min, max } = config;
+  console.log(props, '@props')
+  //const { min, max } = config;
 
   const [x, y] = value;
-  const [defaultX, defaultY] = config.default;
+  //const [defaultX, defaultY] = config.default;
 
   return (
     <Space>
       <InputNumber
         size="small"
-        defaultValue={defaultX}
+        //defaultValue={defaultX}
         value={x}
-        min={min}
-        max={max}
+        //min={min}
+        //max={max}
         onChange={v => {
           props.onChange([v, y]);
         }}
@@ -24,10 +24,10 @@ const Offset = props => {
       />
       <InputNumber
         size="small"
-        defaultValue={defaultY}
+        //defaultValue={defaultY}
         value={y}
-        min={min}
-        max={max}
+        //min={min}
+        //max={max}
         onChange={v => {
           props.onChange([x, v]);
         }}

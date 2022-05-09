@@ -1,59 +1,51 @@
+import { DIRECTION_OPTIONS, PLACEMENT_OPTIONS } from '../const';
 const registerMeta = context => {
   const { GI_CONTAINER_INDEXS = [] } = context;
 
-  return {
+  const schema = {
     GI_CONTAINER: {
-      name: '集成组件',
-      type: 'TagsSelect',
+      title: '集成组件',
+      type: 'array',
+      enum: GI_CONTAINER_INDEXS,
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        mode: 'multiple',
+      },
       default: [],
-      options: GI_CONTAINER_INDEXS,
     },
     direction: {
-      name: '展示方向',
-      type: 'radio',
+      title: '展示方向',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      ' x-component': 'Radio.Group',
+      enum: DIRECTION_OPTIONS,
       default: 'vertical',
-      options: [
-        {
-          label: '水平展示',
-          value: 'horizontal',
-        },
-        {
-          label: '纵向展示',
-          value: 'vertical',
-        },
-      ],
     },
     placement: {
-      name: '组件位置',
-      type: 'select',
+      title: '组件位置',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: PLACEMENT_OPTIONS,
+      },
       default: 'LT',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
     },
     offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
-      default: [20, 100],
+      title: '偏移量',
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      'x-component-props': {
+        min: 0,
+        max: 400,
+      },
+      default: [24, 64],
     },
   };
+
+  return schema;
 };
 
 export default registerMeta;

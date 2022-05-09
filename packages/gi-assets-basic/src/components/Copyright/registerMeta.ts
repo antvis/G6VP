@@ -1,51 +1,49 @@
+import { PLACEMENT_OPTIONS } from '../const';
 const registerMeta = () => {
-  return {
+  const schema = {
     imageUrl: {
-      name: '版权图片',
-      type: 'image',
+      title: '版权图片',
+      type: 'string',
+      'x-component': 'Input',
+      'x-decorator': 'FormItem',
       default: '',
     },
     width: {
+      title: '宽度',
       type: 'number',
-      name: '宽度',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
       default: 100,
     },
     height: {
+      title: '高度',
       type: 'number',
-      name: '高度',
-      default: 50,
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      default: 100,
     },
     placement: {
-      name: '组件位置',
-      type: 'select',
+      title: '组件位置',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: PLACEMENT_OPTIONS,
       default: 'RB',
-      options: [
-        {
-          value: 'LT',
-          label: '左上',
-        },
-        {
-          value: 'RT',
-          label: '右上',
-        },
-        {
-          value: 'LB',
-          label: '左下',
-        },
-        {
-          value: 'RB',
-          label: '右下',
-        },
-      ],
     },
     offset: {
-      name: '偏移距离',
-      type: 'Offset',
-      min: 0,
-      max: 400,
+      title: '偏移量',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      'x-component-props': {
+        min: 0,
+        max: 400,
+      },
       default: [100, 20],
     },
   };
+
+  return schema;
 };
 
 export default registerMeta;

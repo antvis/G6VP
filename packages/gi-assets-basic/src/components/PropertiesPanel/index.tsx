@@ -7,9 +7,10 @@ const SERVICE_ID = `Mock/${ASSET_ID}`;
 const info = {
   id: ASSET_ID,
   name: '属性面板',
-  desc: '属性面板',
+  desc: '点击节点或边，展示其详情信息',
+  icon: 'icon-properties-panel',
+  category: 'element-interaction',
   cover: 'http://xxxx.jpg',
-  category: 'data-analysis',
   type: 'AUTO',
 };
 

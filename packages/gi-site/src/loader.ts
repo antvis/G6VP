@@ -3,12 +3,27 @@ import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import { isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
-const LOCAL_ASSETS = [GI_ASSETS_BASIC, GI_ASSETS_ADVANCE, GI_ASSETS_SCENE];
-console.log('OFFICIAL_PACKAGES', OFFICIAL_PACKAGES);
+const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
+  return {
+    ...acc,
+    [curr.global]: curr,
+  };
+}, {});
+const LOCAL_ASSETS = [
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_BASIC'],
+    ...GI_ASSETS_BASIC,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
+    ...GI_ASSETS_ADVANCE,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
+    ...GI_ASSETS_SCENE,
+  },
+];
 
-/** 是否为本地研发模式 */
-// export const isDev = process.env.NODE_ENV === 'development';
-console.log('isDev loader', isDev);
 export interface Package {
   name: string;
   url: string;
@@ -24,20 +39,6 @@ export const setDefaultAssetPackages = () => {
     };
   });
 
-  // packages['GeaMakerGraphStudio'] = {
-  //   name: '@alipay/geamaker-studio',
-  //   version: '1.0.23',
-  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/geamaker-graphstudio/1.0.23/dist/index.min.js',
-  //   global: 'GeaMakerGraphStudio',
-  // };
-
-  // packages['GI_Assets_Kg'] = {
-  //   name: '@alipay/gi-assets-kg',
-  //   version: '0.0.7',
-  //   url: 'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-kg/0.0.7/dist/index.min.js',
-  //   global: 'GI_Assets_Kg',
-  // };
-
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
 };
 
@@ -45,8 +46,8 @@ export const getAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
   return Object.values(packages) as Package[];
 };
-const LoaderCss = options => {
-  // return new Promise(resolve => {
+
+const loadCss = options => {
   const link = document.createElement('link');
   link.type = 'text/css';
   link.href = options.id || options.url;
@@ -55,14 +56,10 @@ const LoaderCss = options => {
     link.href = href;
   }
   link.rel = 'stylesheet';
-
   document.head.append(link);
-  // link.onload = () => {
-  //   resolve(link);
-  // };
-  // });
 };
-const Loader = options => {
+
+const loadJS = options => {
   return new Promise(resolve => {
     const script = document.createElement('script');
     script.type = options.type || 'text/javascript';
@@ -81,49 +78,55 @@ const Loader = options => {
   });
 };
 
-export const loadJS = options => {
+export const loader = options => {
+  // const queries
+
   return Promise.all([
     //js
     ...options.map(opt => {
-      if (window[opt.global]) {
-        return window[opt.global];
+      const asset = window[opt.global];
+      if (asset) {
+        return { ...asset, ...opt };
       }
-      return Loader(opt);
+      return loadJS(opt).then(_res => {
+        let assets = window[opt.global];
+        if (!assets) {
+          console.warn(`${opt.global} is not found`);
+          return undefined;
+        }
+        if (assets.hasOwnProperty('default')) {
+          //临时处理，后面要形成资产打包规范
+          //@ts-ignore
+          assets = assets.default;
+        }
+        return { ...assets, ...opt };
+      });
     }),
     //css
     ...options.map(opt => {
       if (window[opt.global]) {
-        return;
+        return undefined;
       }
-      return LoaderCss(opt);
+      return loadCss(opt);
     }),
-  ]);
+  ]).then(res => {
+    return res.filter(c => {
+      return c;
+    });
+  });
 };
 
-export const getAssets = () => {
-  if (isDev) {
-    return LOCAL_ASSETS.map(c => {
-      return c;
-    });
-  }
+export const getAssets = async () => {
   const packages = getAssetPackages();
 
-  return packages
-    .map(item => {
-      let assets = window[item.global];
-      if (!assets) {
-        console.warn(`${item.global} is not found`);
-        return null;
-      }
-      if (assets.hasOwnProperty('default')) {
-        //临时处理，后面要形成资产打包规范
-        assets = assets.default;
-      }
-      return assets;
-    })
-    .filter(c => {
-      return c;
+  if (isDev) {
+    return new Promise(resolve => {
+      resolve(LOCAL_ASSETS);
     });
+  }
+  return loader(packages).then(res => {
+    return res;
+  });
 };
 
 type AssetsKey = 'components' | 'elements' | 'layouts';
@@ -139,27 +142,49 @@ type AssetsValue = {
 
 export type IAssets = Record<AssetsKey, AssetsValue>;
 
+const appendInfo = (itemAssets, version, name) => {
+  if (!itemAssets) {
+    return {};
+  }
+  const coms = Object.keys(itemAssets).reduce((a, c) => {
+    return {
+      ...a,
+      [c]: {
+        ...itemAssets[c],
+        version,
+        pkg: name,
+      },
+    };
+  }, {});
+  return coms;
+};
+
 /**
  * 获取融合后的资产
  * @returns
  */
-export const getCombinedAssets = () => {
-  const assets = getAssets();
+export const getCombinedAssets = async () => {
+  const assets = await getAssets();
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
+      const { components, version, name, elements, layouts } = curr;
+      const coms = appendInfo(components, version, name);
+      const elems = appendInfo(elements, version, name);
+      const lays = appendInfo(layouts, version, name);
+
       return {
         components: {
           ...acc.components,
-          ...curr.components,
+          ...coms,
         },
         elements: {
           ...acc.elements,
-          ...curr.elements,
+          ...elems,
         },
         layouts: {
           ...acc.layouts,
-          ...curr.layouts,
+          ...lays,
         },
       };
     },
@@ -169,18 +194,4 @@ export const getCombinedAssets = () => {
       layouts: {},
     },
   );
-};
-/**
- * 动态加载组件，支持同时加载多个
- * @param targets { LoadModules[] } 要加载的组件列表
- */
-export const dynamicLoadModules = async () => {
-  if (isDev) {
-    return getAssets();
-  }
-  const packages = getAssetPackages();
-
-  return loadJS(packages).then(res => {
-    return getAssets();
-  });
 };

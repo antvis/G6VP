@@ -1,9 +1,9 @@
+import { utils } from '@alipay/graphinsight';
 import { Space } from 'antd';
 import * as React from 'react';
-import { getPositionStyles } from '../utils';
 import './index.less';
 import WrapContainer from './WrapContainer';
-
+const { getPositionStyles } = utils;
 export interface OperatorBarProps {}
 
 const getComponents = (components, assets, GISDK_ID) => {

@@ -1,15 +1,15 @@
 import { BgColorsOutlined } from '@ant-design/icons';
-import { FormCollapse, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
+import { FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
 import { Button, Radio, Select as AntdSelect } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
+import { FormCollapse, Offset } from '../FormilyForm';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
 import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
-
 const { Option } = AntdSelect;
 
 interface RenderFormProps {
@@ -35,6 +35,7 @@ const SchemaField = createSchemaField({
     ColorInput,
     IconSelector,
     IconPicker,
+    Offset,
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
@@ -85,7 +86,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
     onChange(_config, ref.current.elementId);
   };
-
+  console.log(schema, '@schemaNode');
   return (
     <>
       <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>

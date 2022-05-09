@@ -8,10 +8,14 @@ const registerMeta = context => {
   });
   return {
     serviceId: {
-      name: '数据服务',
-      type: 'select',
+      title: '数据服务',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: serviceOptions,
+      },
       default: 'Mock/PropertiesPanel',
-      options: serviceOptions,
     },
   };
 };

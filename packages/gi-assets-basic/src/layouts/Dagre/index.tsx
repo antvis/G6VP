@@ -10,7 +10,8 @@ const info = {
   name: '有向分层布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '节点按照边的流向排布',
+  icon: 'icon-layout-dagre',
   cover: 'http://xxxx.jpg',
 };
 

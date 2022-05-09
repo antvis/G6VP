@@ -34,7 +34,8 @@ const info = {
   name: 'Graphin力导布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '',
+  desc: '渐进式力导布局，可用于动态布局',
+  icon: 'icon-layout-force',
   cover: 'http://xxxx.jpg',
 };
 

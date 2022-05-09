@@ -14,6 +14,7 @@ import NeighborsQuery from './NeighborsQuery';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
 import PathAnalysis from './PathAnalysis';
+import Placeholder from './Placeholder';
 import PropertiesPanel from './PropertiesPanel';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
@@ -24,6 +25,7 @@ import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
 export {
+  Placeholder,
   FitCenter,
   FitView,
   OperatorBar,

@@ -24,8 +24,7 @@ export interface IProps {
 enableMapSet();
 const SnapshotGallery: React.FC<IProps> = props => {
   const { GIAC, placement, offset, direction, background } = props;
-  //GIAC.isShowTooltip = true;
-  //GIAC.tooltip = ''
+
   const positionStyles = getPositionStyles(placement, offset);
   const flexDirection = direction === 'horizontal' ? 'row' : 'column';
   const { graph, data, GISDK_ID } = useContext();
