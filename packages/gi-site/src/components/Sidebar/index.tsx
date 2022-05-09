@@ -64,7 +64,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
               window.location.hash = `${path}?${searchParams.toString()}`;
               onChange(opt);
             }}
-            className={className}
+            className={`${className} gi-intro-nav-${id}`}
           >
             <span className="icon">{icon}</span>
             <span className="name"> {name}</span>
