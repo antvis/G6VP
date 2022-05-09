@@ -140,6 +140,7 @@ const STEP = {
     {
       selector: '.gi-assets-selector',
       title: '元素切换',
+
       content: () => {
         return (
           <div style={{ width: '500px' }}>
@@ -156,6 +157,7 @@ const STEP = {
     {
       selector: '.gi-tour-assets-elements',
       title: '自选元素资产',
+
       content: () => {
         return (
           <div>
@@ -172,23 +174,28 @@ const STEP = {
   ],
   layout: [
     {
-      title: '欢迎使用 GraphInsight',
-      content: () => <div>'本指引帮助您快速了解GraphInsight的产品功能，如您有任何问题，请联系我们。'</div>,
+      selector: '.gi-tour-layout-switch',
+      title: '切换布局',
+      placement: 'right',
+      content: () => {
+        return <div className="w-325">下拉选择您所需要的布局，每种布局将对应不同的参数配置</div>;
+      },
     },
     {
-      selector: '.gi-intro-upload-data',
-      title: 'Step1: 导入你的数据',
-      content: '数据格式为标准的 Graph JSON ，若您未准备好数据集，可以尝试使用官方提供的MOCK数据体验',
-    },
-    {
-      selector: '.gi-intro-save',
-      title: 'Step5: 保存全部操作配置',
-      content: '数据格式为标准的 Graph JSON ，若您未准备好数据集，可以尝试使用官方提供的MOCK数据体验',
-    },
-    {
-      selector: '.gi-intro-export',
-      title: 'Step6: 导出您的分析画布',
-      content: '数据格式为标准的 Graph JSON ，若您未准备好数据集，可以尝试使用官方提供的MOCK数据体验',
+      selector: '.gi-tour-assets-layouts',
+      title: '自选布局资产',
+      content: () => {
+        return (
+          <div>
+            点击 <AppstoreAddOutlined /> 图标，选择更多布局资产
+            <img
+              className="gi-tour-image"
+              src="https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*jvKiTZnT5uUAAAAAAAAAAAAAARQnAQ"
+              alt=""
+            />
+          </div>
+        );
+      },
     },
   ],
   components: [
