@@ -55,9 +55,11 @@ const ExpressionGroup: React.FunctionComponent<{
                         )}
                       </Form.Item>
                     </Col>
-                    <Col span={2}>
-                      <DeleteOutlined onClick={() => remove(name)} />
-                    </Col>
+                    {conditionIndex !== 0 && (
+                      <Col span={2}>
+                        <DeleteOutlined onClick={() => remove(name)} />
+                      </Col>
+                    )}
                   </Row>
                 );
               })}

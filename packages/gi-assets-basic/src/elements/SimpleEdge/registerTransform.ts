@@ -88,10 +88,14 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       // const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
       
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
-        const [edgeType, currentProperty] = d.split('.')
+        const [edgeType, propObjKey, propName] = d.split('.')
         if (edge.edgeType === edgeType) {
           // 只有当 nodeType 匹配时才取对应的属性值
-          return data[currentProperty]
+          if (propName) {
+            // propName 存在，则 propObjKey 值一定为 properties
+            return data[propObjKey][propName]
+          }
+          return data[propObjKey]
         }
         return data[edgeType]
       }).filter(d => d).join('\n');
