@@ -18,10 +18,10 @@ const LOCAL_ASSETS = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
     ...GI_ASSETS_ADVANCE,
   },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
-  //   ...GI_ASSETS_SCENE,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
+    ...GI_ASSETS_SCENE,
+  },
 ];
 
 export interface Package {
