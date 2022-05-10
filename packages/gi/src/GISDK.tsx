@@ -247,7 +247,6 @@ const GISDK = (props: Props) => {
 
       let GIProps = {};
       if (GI_CONTAINER) {
-        console.log(GI_CONTAINER, ComponentAssets);
         GIProps = {
           components: GI_CONTAINER.map(c => {
             return ComponentCfgMap[c];

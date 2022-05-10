@@ -218,8 +218,6 @@ const Analysis = props => {
   // }, [projectId, isReady, enableAI]);
 
   const isLoading = isObjectEmpty(config) || !isReady;
-  endTime = Date.now();
-  console.log('%c GRAPHINSIGHT SITE', 'color:red', state, 'isReady', isReady, endTime - startTime, endTime);
 
   const handleClose = () => {
     updateState(draft => {
@@ -235,7 +233,8 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState };
-  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state.config, isObjectEmpty(config), !isReady, isLoading);
+  endTime = Date.now();
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
 
   return (
     <AnalysisContext.Provider value={context}>
