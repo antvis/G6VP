@@ -93,7 +93,7 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
         for (const subKey in data[key]) {
           // 只处理这一层的非 object 的字段，其他的不再作为 schema 的属性
           if (typeof data[key][subKey] !== 'object') {
-            edgeSchema.properties[subKey] = typeof data[key][subKey];
+            edgeSchema.properties[`${key}.${subKey}`] = typeof data[key][subKey];
           }
         }
       } else {
