@@ -5,7 +5,7 @@ interface PopoverContainerProps {
   title: string;
   content: React.ReactNode;
   children: React.ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const PopoverContainer: React.FunctionComponent<PopoverContainerProps> = props => {
