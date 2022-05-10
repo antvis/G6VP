@@ -106,7 +106,7 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
       edgeSchemas.push(edgeSchema);
     }
   });
-  console.log('schema', nodeSchemas, edgeSchemas);
+
   return {
     nodes: nodeSchemas,
     edges: edgeSchemas,
