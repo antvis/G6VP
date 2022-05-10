@@ -2,7 +2,7 @@ import { BgColorsOutlined } from '@ant-design/icons';
 import { FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { createSchemaField, FormProvider } from '@formily/react';
-import { Button, Radio, Select as AntdSelect } from 'antd';
+import { Button, Radio } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 import { FormCollapse, Offset } from '../FormilyForm';
@@ -10,7 +10,7 @@ import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
 import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
-const { Option } = AntdSelect;
+import GroupSelect from './GroupSelect'
 
 interface RenderFormProps {
   onChange: (all: any, elementId: string) => void;
@@ -36,6 +36,7 @@ const SchemaField = createSchemaField({
     IconSelector,
     IconPicker,
     Offset,
+    GroupSelect
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {

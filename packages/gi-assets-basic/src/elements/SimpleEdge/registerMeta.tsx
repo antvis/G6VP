@@ -3,8 +3,8 @@ const { advanced, color, size } = defaultConfig;
 const { keyshape, label, animate } = advanced;
 
 const registerMeta = context => {
-  const { keys } = context;
-
+  const { keys, schemaData } = context;
+  debugger;
   const schema = {
     type: 'object',
     properties: {
@@ -24,17 +24,18 @@ const registerMeta = context => {
       },
       label: {
         title: '文本',
-        type: 'array',
-        enum: keys.map(c => {
-          return {
-            label: `${c.id} (${c.type})`,
-            value: c.id,
-          };
-        }),
+        type: 'string',
+        // enum: keys.map(c => {
+        //   return {
+        //     label: `${c.id} (${c.type})`,
+        //     value: c.id,
+        //   };
+        // }),
         'x-decorator': 'FormItem',
-        'x-component': 'Select',
+        'x-component': 'GroupSelect',
         'x-component-props': {
           mode: 'multiple',
+          schemaData: schemaData.edges,
         },
       },
       advancedPanel: {

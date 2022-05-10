@@ -10,7 +10,7 @@ const defaultEdgeTheme = {
 
 const defaultEdgeStyles = Utils.getEdgeStyleByTheme(defaultEdgeTheme);
 
-const { style, status } = defaultEdgeStyles;
+const { style } = defaultEdgeStyles;
 const { keyshape, label } = style;
 
 export const defaultConfig = {
@@ -85,7 +85,17 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       }
 
       /** LABEL */
-      const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
+      // const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
+      
+      const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
+        const [edgeType, currentProperty] = d.split('.')
+        if (edge.edgeType === edgeType) {
+          // 只有当 nodeType 匹配时才取对应的属性值
+          return data[currentProperty]
+        }
+        return data[edgeType]
+      }).filter(d => d).join('\n');
+
       const label: any = {
         value: LABEL_VALUE,
         offset: advanced.label.offset,

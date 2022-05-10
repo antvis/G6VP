@@ -34,7 +34,7 @@ const baseNodesConfig: GIConfig['nodes'] = [
     props: {
       size: 26,
       color: '#ddd',
-      label: ['id'],
+      label: [],
     },
   },
 ];

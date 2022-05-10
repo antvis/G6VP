@@ -2,8 +2,7 @@ import { defaultConfig } from './registerTransform';
 
 const { icon, keyshape, label, badge } = defaultConfig.advanced;
 const registerMeta = context => {
-  const { keys } = context;
-
+  const { schemaData } = context;
   const schema = {
     type: 'object',
     properties: {
@@ -24,18 +23,11 @@ const registerMeta = context => {
       label: {
         title: '文本',
         type: 'string',
-        //todo: 显示文本属性根据 data 生成
-        enum: keys.map(c => {
-          return {
-            label: `${c.id} (${c.type})`,
-            value: c.id,
-          };
-        }),
-        // default: ['id'],
         'x-decorator': 'FormItem',
-        'x-component': 'Select',
+        'x-component': 'GroupSelect',
         'x-component-props': {
           mode: 'multiple',
+          schemaData: schemaData.nodes,
         },
       },
       advancedPanel: {
@@ -125,10 +117,7 @@ const registerMeta = context => {
                         title: '类型',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
-                        enum: [
-                          { label: '文本', value: 'text' },
-                          { label: '字体图标', value: 'font' },
-                        ],
+                        enum: [{ label: '文本', value: 'text' }, { label: '字体图标', value: 'font' }],
                         default: icon.type,
                       },
                       value: {
