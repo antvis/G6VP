@@ -175,6 +175,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                               {DisplayColor}
                               <PopoverContainer
                                 title="分组规则"
+                                disabled={index === 0}
                                 content={
                                   <Row>
                                     <Col span={24} className="expression-group" style={{ display: 'flex' }}>
@@ -200,6 +201,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                               >
                                 <Button
                                   className={`gi-tour-style-rule-${index}`}
+                                  disabled={index === 0}
                                   type="text"
                                   icon={<FilterOutlined />}
                                   size="small"
