@@ -38,7 +38,7 @@ const defaultGroupOption = {
     props: {
       color: '#ddd',
       size: 26,
-      label: ['id'],
+      label: [],
     },
   },
   edges: {

@@ -80,7 +80,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
         <Form.Item
           name="groups"
           shouldUpdate={() => true}
-          // 最后一项隐藏，解决panel展开问题
           initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group', id: 'SimpleNode', props: {} }]}
         >
           <Form.List name="groups">
@@ -200,7 +199,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                               >
                                 <Button type="text" icon={<FilterOutlined />} size="small"></Button>
                               </PopoverContainer>
-
+                              
                               <Button
                                 type="text"
                                 disabled={index === 0}
