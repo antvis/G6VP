@@ -92,6 +92,10 @@ const baseComponentsConfig = [
     props: {},
   },
   {
+    id: 'CanvasSetting',
+    props: {},
+  },
+  {
     id: 'NodeLegend',
     props: {
       sortKey: 'type',

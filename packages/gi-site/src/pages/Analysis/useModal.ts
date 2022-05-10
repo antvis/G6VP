@@ -51,21 +51,9 @@ export const initialState: StateType = {
     layouts: {},
   },
   /** 激活的资产Map */
-  activeAssets: {
-    components: {},
-    elements: {},
-    layouts: {},
-  },
-  activeAssetsKeys: {
-    components: [],
-    elements: [],
-    layouts: [],
-  },
-  activeAssetsInformation: {
-    components: [],
-    elements: [],
-    layouts: [],
-  },
+  activeAssets: null,
+  activeAssetsKeys: null,
+  activeAssetsInformation: null,
   schemaData: {
     nodes: [],
     edges: [],
@@ -95,19 +83,19 @@ export interface StateType {
   /** 全部资产 */
   assets: GIAssets;
   /** 用户选择的资产,活跃资产 */
-  activeAssets: GIAssets;
+  activeAssets: GIAssets | null;
   /** 用户选择的资产的Key值,活跃资产 */
   activeAssetsKeys: {
     components: string[];
     elements: string[];
     layouts: string[];
-  };
+  } | null;
   /** 激活资产的详细信息：meta/info */
   activeAssetsInformation: {
     components: any[];
-    elements: any[];
-    layouts: any[];
-  };
+    elements: { nodes: {}; edges: {} };
+    layouts: any;
+  } | null;
   /** 是否准备完毕 */
   isReady: boolean;
   /** 是否保存 */

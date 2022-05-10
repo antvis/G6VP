@@ -1,3 +1,4 @@
+import { GIAssets } from '@alipay/graphinsight';
 import { getCombinedAssets } from '../loader';
 
 /**
@@ -50,6 +51,6 @@ export const queryAssets = async (id: string, activeAssetsKeys: any) => {
       components,
       elements,
       layouts,
-    });
+    } as GIAssets);
   });
 };
