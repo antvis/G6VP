@@ -201,6 +201,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                               >
                                 <Button
                                   className={`gi-tour-style-rule-${index}`}
+                                  disabled={index === 0}
                                   type="text"
                                   icon={<FilterOutlined />}
                                   size="small"
