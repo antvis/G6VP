@@ -173,10 +173,14 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       advanced.keyshape = keyshape;
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
-        const [nodeType, currentProperty] = d.split('.')
+        const [nodeType, propObjKey, propName] = d.split('.')
         if (node.nodeType === nodeType) {
           // 只有当 nodeType 匹配时才取对应的属性值
-          return data[currentProperty]
+          if (propName) {
+            // propName 存在，则 propObjKey 值一定为 properties
+            return data[propObjKey][propName]
+          }
+          return data[propObjKey]
         }
         return data[nodeType]
       }).filter(d => d).join('\n');

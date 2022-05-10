@@ -5,22 +5,24 @@ interface PopoverContainerProps {
   title: string;
   content: React.ReactNode;
   children: React.ReactNode;
+  disabled: boolean;
 }
 
 const PopoverContainer: React.FunctionComponent<PopoverContainerProps> = props => {
-  const { title, content, children } = props;
+  const { title, content, disabled, children } = props;
   const [state, setState] = React.useState({
     visible: false,
   });
-  const handleClose = () => {
-    setState({
-      visible: false,
-    });
-  };
+
   const handleVisibleChange = value => {
     setState({ visible: value });
   };
   const { visible } = state;
+
+  if (disabled) {
+    return children;
+  }
+
   return (
     <Popover
       placement="bottomRight"
