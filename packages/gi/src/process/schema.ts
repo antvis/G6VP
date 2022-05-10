@@ -138,7 +138,7 @@ const defaultNodeConfig = {
   props: {
     size: 26,
     color: '#ddd',
-    label: ['id'],
+    label: [],
   },
   name: '官方节点',
   order: -1,
@@ -176,7 +176,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         props: {
           size: 26,
           color: NODE_COLORS[index] || '#ddd',
-          label: ['id'],
+          label: [],
         },
         name: '官方节点',
         expressions: [
