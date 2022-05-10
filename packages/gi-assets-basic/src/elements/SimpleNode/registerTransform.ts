@@ -115,13 +115,17 @@ export const defaultConfig = {
   color: defaultNodeTheme.primaryColor,
   label: [],
   advanced: {
-    keyshape,
+    keyshape: {
+      ...keyshape,
+      fillOpacity: 0.8,
+    },
     label: {
       ...label,
       visible: true,
     },
     icon: {
       ...icon,
+      fill: '#fff',
       type: 'font',
       value: '',
       visible: false,
