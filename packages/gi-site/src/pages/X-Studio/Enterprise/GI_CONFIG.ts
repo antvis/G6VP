@@ -9,6 +9,7 @@ export const GI_SERVICES_OPTIONS = [
     name: '初始化接口',
   },
 ];
+
 export const GI_PROJECT_CONFIG = {
   nodes: [
     {
@@ -18,11 +19,9 @@ export const GI_PROJECT_CONFIG = {
         color: '#ddd',
         label: ['id'],
       },
-      name: '官方节点',
-      order: -1,
+      groupName: '默认样式',
       expressions: [null],
       logic: true,
-      groupName: '默认样式',
     },
     {
       id: 'SimpleNode',
@@ -30,8 +29,28 @@ export const GI_PROJECT_CONFIG = {
         size: 26,
         color: '#3056E3',
         label: ['id'],
+        advanced: {
+          icon: {
+            type: 'font',
+            value: 'company',
+            fill: '#fff',
+            visible: true,
+          },
+          keyshape: {
+            fillOpacity: 0.8,
+          },
+          label: {
+            visible: true,
+            fill: '#000',
+            fontSize: 12,
+            position: 'bottom',
+          },
+          badge: {
+            visible: false,
+          },
+        },
       },
-      name: '官方节点',
+      groupName: 'COMPANY TYPE',
       expressions: [
         {
           name: 'nodeType',
@@ -39,9 +58,7 @@ export const GI_PROJECT_CONFIG = {
           value: 'company',
         },
       ],
-      order: 0,
       logic: true,
-      groupName: 'COMPANY TYPE',
     },
     {
       id: 'SimpleNode',
@@ -49,8 +66,28 @@ export const GI_PROJECT_CONFIG = {
         size: 26,
         color: '#ff9d05',
         label: ['id'],
+        advanced: {
+          icon: {
+            type: 'font',
+            value: 'user',
+            fill: '#fff',
+            visible: true,
+          },
+          keyshape: {
+            fillOpacity: 0.8,
+          },
+          label: {
+            visible: true,
+            fill: '#000',
+            fontSize: 12,
+            position: 'bottom',
+          },
+          badge: {
+            visible: false,
+          },
+        },
       },
-      name: '官方节点',
+      groupName: 'PERSON TYPE',
       expressions: [
         {
           name: 'nodeType',
@@ -58,9 +95,7 @@ export const GI_PROJECT_CONFIG = {
           value: 'person',
         },
       ],
-      order: 1,
       logic: true,
-      groupName: 'PERSON TYPE',
     },
   ],
   edges: [
@@ -149,11 +184,96 @@ export const GI_PROJECT_CONFIG = {
     },
   ],
   layout: {
-    id: 'GraphinForce',
+    info: {
+      id: 'Dagre',
+      options: {
+        type: 'dagre',
+      },
+      name: '有向分层布局',
+      category: 'basic',
+      type: 'LAYOUT',
+      desc: '节点按照边的流向排布',
+      icon: 'icon-layout-dagre',
+      cover: 'http://xxxx.jpg',
+    },
+    version: '2.0.6',
+    pkg: '@alipay/gi-assets-basic',
+    id: 'Dagre',
+    name: '有向分层布局',
+    category: 'basic',
     props: {
-      type: 'graphin-force',
-      preset: {
-        type: 'concentric',
+      rankdir: 'LR',
+      align: 'UL',
+      nodesep: 47,
+      ranksep: 29,
+      type: 'dagre',
+    },
+    meta: {
+      rankdir: {
+        type: 'select',
+        caption: '布局方向',
+        default: 'TB',
+        options: [
+          {
+            label: '自上而下',
+            value: 'TB',
+          },
+          {
+            label: '自下而上',
+            value: 'BT',
+          },
+          {
+            label: '自左而右',
+            value: 'LR',
+          },
+          {
+            label: '自右而左',
+            value: 'RL',
+          },
+        ],
+      },
+      align: {
+        type: 'select',
+        caption: '对齐方式',
+        default: null,
+        options: [
+          {
+            label: '请选择',
+            value: null,
+          },
+          {
+            label: 'UL',
+            value: 'UL',
+          },
+          {
+            label: 'UR',
+            value: 'UR',
+          },
+          {
+            label: 'DL',
+            value: 'DL',
+          },
+          {
+            label: 'DR',
+            value: 'DR',
+          },
+        ],
+      },
+      nodesep: {
+        type: 'slider',
+        caption: '节点间距',
+        default: 10,
+        min: 1,
+        max: 200,
+        step: 1,
+      },
+      ranksep: {
+        type: 'slider',
+        caption: '层间距',
+        default: 10,
+        min: 1,
+        max: 200,
+        step: 1,
       },
     },
   },
@@ -172,11 +292,11 @@ export const GI_PROJECT_CONFIG = {
       props: {
         GI_CONTAINER: ['PathAnalysis'],
         outSideFromCanvas: true,
-        tabPosition: 'left',
+        tabPosition: 'top',
         placement: 'LB',
         offset: [0, 61],
         height: 'calc(100vh - 120px)',
-        width: '450px',
+        width: '350px',
       },
     },
     {

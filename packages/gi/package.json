@@ -1,6 +1,6 @@
 {
   "name": "@alipay/graphinsight",
-  "version": "2.0.5",
+  "version": "2.0.7",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,6 +32,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }

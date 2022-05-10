@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-common-components",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,6 +32,6 @@
     "rimraf": "^3.0.2"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }
