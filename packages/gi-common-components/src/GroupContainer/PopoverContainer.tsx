@@ -20,7 +20,7 @@ const PopoverContainer: React.FunctionComponent<PopoverContainerProps> = props =
   const { visible } = state;
 
   if (disabled) {
-    return children;
+    return <>{children}</>;
   }
 
   return (
