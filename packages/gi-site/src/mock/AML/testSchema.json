@@ -1,0 +1,600 @@
+{
+  "nodes": [
+    {
+      "id": "6217****1",
+      "type": "bank",
+      "tag": "black",
+      "properties": {
+        "longitude": 102.0371,
+        "latitude": 25.0124,
+        "alipayNo": "66669-6570"
+      }
+    },
+    {
+      "id": "*剑剑",
+      "type": "alipay",
+      "properties": {
+        "longitude": 102.0091,
+        "latitude": 25.237,
+        "alipayNo": "66662-1625"
+      }
+    },
+    {
+      "id": "66666****2",
+      "type": "wangshang",
+      "owner": "*剑剑",
+      "properties": {
+        "address": "zzz"
+      }
+    },
+    {
+      "id": "Stracke",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66662-5014"
+      }
+    },
+    {
+      "id": "20882-1201",
+      "type": "bank",
+      "owner": "Stracke",
+      "properties": {
+        "longitude": 102.2227,
+        "latitude": 25.4684,
+        "alipayNo": "66667-3662"
+      }
+    },
+    {
+      "id": "Walter",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66668-5549"
+      }
+    },
+    {
+      "id": "20883-3554",
+      "type": "bank",
+      "owner": "Walter",
+      "properties": {
+        "longitude": 102.4945,
+        "latitude": 25.4288,
+        "alipayNo": "66660-7161"
+      }
+    },
+    {
+      "id": "McDermott",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66661-1564"
+      }
+    },
+    {
+      "id": "20889-5754",
+      "type": "bank",
+      "owner": "McDermott",
+      "properties": {
+        "longitude": 102.0439,
+        "latitude": 25.3274,
+        "alipayNo": "66669-7065"
+      }
+    },
+    {
+      "id": "Lind",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66664-3540"
+      }
+    },
+    {
+      "id": "20883-8278",
+      "type": "bank",
+      "owner": "Lind",
+      "properties": {
+        "longitude": 102.2586,
+        "latitude": 25.4682,
+        "alipayNo": "66667-4168"
+      }
+    },
+    {
+      "id": "Lebsack",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66666-1409"
+      }
+    },
+    {
+      "id": "20888-5829",
+      "type": "bank",
+      "owner": "Lebsack",
+      "properties": {
+        "longitude": 102.0956,
+        "latitude": 25.1441,
+        "alipayNo": "66667-8034"
+      }
+    },
+    {
+      "id": "Hane",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66664-0673"
+      }
+    },
+    {
+      "id": "20886-2558",
+      "type": "bank",
+      "owner": "Hane",
+      "properties": {
+        "longitude": 102.1918,
+        "latitude": 25.0442,
+        "alipayNo": "66669-1667"
+      }
+    },
+    {
+      "id": "Hegmann",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66665-5594"
+      }
+    },
+    {
+      "id": "20888-1587",
+      "type": "bank",
+      "owner": "Hegmann",
+      "properties": {
+        "longitude": 102.2105,
+        "latitude": 25.1885,
+        "alipayNo": "66662-4363"
+      }
+    },
+    {
+      "id": "Monahan",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66669-8780"
+      }
+    },
+    {
+      "id": "20889-7780",
+      "type": "bank",
+      "owner": "Monahan",
+      "properties": {
+        "longitude": 102.4114,
+        "latitude": 25.208,
+        "alipayNo": "66666-1957"
+      }
+    },
+    {
+      "id": "Spencer",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66663-8809"
+      }
+    },
+    {
+      "id": "20884-6198",
+      "type": "bank",
+      "owner": "Spencer",
+      "properties": {
+        "longitude": 102.0221,
+        "latitude": 25.4912,
+        "alipayNo": "66666-6462"
+      }
+    },
+    {
+      "id": "Frami",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66661-7534"
+      }
+    },
+    {
+      "id": "20883-5336",
+      "type": "bank",
+      "owner": "Frami",
+      "properties": {
+        "longitude": 102.4274,
+        "latitude": 25.3933,
+        "alipayNo": "66669-4326"
+      }
+    },
+    {
+      "id": "Little",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66669-4166"
+      }
+    },
+    {
+      "id": "20880-7512",
+      "type": "bank",
+      "owner": "Little",
+      "properties": {
+        "longitude": 102.1009,
+        "latitude": 25.1304,
+        "alipayNo": "66668-7852"
+      }
+    },
+    {
+      "id": "Pfeffer",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66663-2601"
+      }
+    },
+    {
+      "id": "20883-0774",
+      "type": "bank",
+      "owner": "Pfeffer",
+      "properties": {
+        "longitude": 102.0327,
+        "latitude": 25.007,
+        "alipayNo": "66662-5198"
+      }
+    },
+    {
+      "id": "Douglas",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66661-0483"
+      }
+    },
+    {
+      "id": "20885-0457",
+      "type": "bank",
+      "owner": "Douglas",
+      "properties": {
+        "longitude": 102.1797,
+        "latitude": 25.2746,
+        "alipayNo": "66669-1883"
+      }
+    },
+    {
+      "id": "Denesik",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66667-8976"
+      }
+    },
+    {
+      "id": "20883-4518",
+      "type": "bank",
+      "owner": "Denesik",
+      "properties": {
+        "longitude": 102.2365,
+        "latitude": 25.2189,
+        "alipayNo": "66669-9732"
+      }
+    },
+    {
+      "id": "Mueller",
+      "type": "alipay",
+      "properties": {
+        "alipayNo": "66665-0297"
+      }
+    },
+    {
+      "id": "20882-1787",
+      "type": "bank",
+      "owner": "Mueller",
+      "properties": {
+        "longitude": 102.2458,
+        "latitude": 25.1219,
+        "alipayNo": "66665-7190"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "6217****1",
+      "target": "*剑剑",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 100000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "*剑剑",
+      "target": "66666****2",
+      "type": "transfer",
+      "properties": {
+        "amount": 800000
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Stracke",
+      "type": "transfer",
+      "properties": {
+        "amount": 7773
+      }
+    },
+    {
+      "source": "Stracke",
+      "target": "20882-1201",
+      "type": "transfer",
+      "properties": {
+        "amount": 15388
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Walter",
+      "type": "transfer",
+      "properties": {
+        "amount": 18146
+      }
+    },
+    {
+      "source": "Walter",
+      "target": "20883-3554",
+      "type": "transfer",
+      "properties": {
+        "amount": 32478
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "McDermott",
+      "type": "transfer",
+      "properties": {
+        "amount": 25399
+      }
+    },
+    {
+      "source": "McDermott",
+      "target": "20889-5754",
+      "type": "transfer",
+      "properties": {
+        "amount": 36648
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Lind",
+      "type": "transfer",
+      "properties": {
+        "amount": 16159
+      }
+    },
+    {
+      "source": "Lind",
+      "target": "20883-8278",
+      "type": "transfer",
+      "properties": {
+        "amount": 9149
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Lebsack",
+      "type": "transfer",
+      "properties": {
+        "amount": 16132
+      }
+    },
+    {
+      "source": "Lebsack",
+      "target": "20888-5829",
+      "type": "transfer",
+      "properties": {
+        "amount": 49558
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Hane",
+      "type": "transfer",
+      "properties": {
+        "amount": 35479
+      }
+    },
+    {
+      "source": "Hane",
+      "target": "20886-2558",
+      "type": "transfer",
+      "properties": {
+        "amount": 50692
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Hegmann",
+      "type": "transfer",
+      "properties": {
+        "amount": 25944
+      }
+    },
+    {
+      "source": "Hegmann",
+      "target": "20888-1587",
+      "type": "transfer",
+      "properties": {
+        "amount": 31378
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Monahan",
+      "type": "transfer",
+      "properties": {
+        "amount": 20298
+      }
+    },
+    {
+      "source": "Monahan",
+      "target": "20889-7780",
+      "type": "transfer",
+      "properties": {
+        "amount": 24459
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Spencer",
+      "type": "transfer",
+      "properties": {
+        "amount": 27239
+      }
+    },
+    {
+      "source": "Spencer",
+      "target": "20884-6198",
+      "type": "transfer",
+      "properties": {
+        "amount": 46474
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Frami",
+      "type": "transfer",
+      "properties": {
+        "amount": 9613
+      }
+    },
+    {
+      "source": "Frami",
+      "target": "20883-5336",
+      "type": "transfer",
+      "properties": {
+        "amount": 13180
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Little",
+      "type": "transfer",
+      "properties": {
+        "amount": 23424
+      }
+    },
+    {
+      "source": "Little",
+      "target": "20880-7512",
+      "type": "transfer",
+      "properties": {
+        "amount": 4718
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Pfeffer",
+      "type": "transfer",
+      "properties": {
+        "amount": 7437
+      }
+    },
+    {
+      "source": "Pfeffer",
+      "target": "20883-0774",
+      "type": "transfer",
+      "properties": {
+        "amount": 45781
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Douglas",
+      "type": "transfer",
+      "properties": {
+        "amount": 24509
+      }
+    },
+    {
+      "source": "Douglas",
+      "target": "20885-0457",
+      "type": "transfer",
+      "properties": {
+        "amount": 40676
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Denesik",
+      "type": "transfer",
+      "properties": {
+        "amount": 31302
+      }
+    },
+    {
+      "source": "Denesik",
+      "target": "20883-4518",
+      "type": "transfer",
+      "properties": {
+        "amount": 44056
+      }
+    },
+    {
+      "source": "66666****2",
+      "target": "Mueller",
+      "type": "transfer",
+      "properties": {
+        "amount": 39794
+      }
+    },
+    {
+      "source": "Mueller",
+      "target": "20882-1787",
+      "type": "transfer",
+      "properties": {
+        "amount": 36181
+      }
+    }
+  ]
+}
