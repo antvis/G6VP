@@ -58,10 +58,7 @@ const registerMeta = context => {
           useFont: true,
           default: 'type',
           showInPanel: {
-            conditions: [
-              ['color.scale.custom', '$eq', true],
-              ['color.mapping', '$eq', true],
-            ],
+            conditions: [['color.scale.custom', '$eq', true], ['color.mapping', '$eq', true]],
             logicalType: '$and',
           },
           valuePath: 'color.key',

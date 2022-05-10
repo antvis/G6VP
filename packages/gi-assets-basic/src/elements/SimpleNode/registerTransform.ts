@@ -13,9 +13,6 @@ const defaultNodeTheme = {
   mode: 'light' as 'light' | 'dark',
 };
 
-// type NodeTheme = Pick<ThemeType, 'mode' | 'primaryColor' | 'nodeSize'>;
-// type IconType = 'image' | 'font' | 'text';
-
 const getIconStyleByConfig = (style, data) => {
   const { keyshape } = style;
   if (!style.icon || !keyshape) {
@@ -161,7 +158,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
     const { halo } = isBug ? defaultConfig.advanced : advanced;
 
     const transNodes = nodes.map(node => {
-      const { id } = node;
+      // properties
       const data = node.data || node;
       const keyshape = {
         ...advanced.keyshape,
@@ -171,7 +168,15 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       };
       advanced.keyshape = keyshape;
       /** 根据Size字段映射的枚举值 */
-      const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
+      const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
+        const [nodeType, currentProperty] = d.split('.')
+        if (node.nodeType === nodeType) {
+          // 只有当 nodeType 匹配时才取对应的属性值
+          return data[currentProperty]
+        }
+        return data[nodeType]
+      }).filter(d => d).join('\n');
+
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
 
