@@ -23,7 +23,6 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
     enableEdgeHover,
     enableNodeHover,
   } = props;
-  console.log('trigger', trigger);
 
   return (
     <>

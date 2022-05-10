@@ -30,8 +30,8 @@ export const defaultConfig = {
       fontSize: label.fontSize,
       offset: [0, 0],
       fill: label.fill,
-      backgroundEnable: false,
-      backgroundFill: defaultEdgeTheme.primaryEdgeColor,
+      backgroundEnable: true,
+      backgroundFill: '#fff',
       backgroundStroke: '#fff',
     },
     animate: {

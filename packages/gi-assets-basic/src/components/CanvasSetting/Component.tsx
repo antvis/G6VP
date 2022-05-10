@@ -27,8 +27,7 @@ export const defaultProps = extractDefault({ config: registerMeta({ data: {} }) 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   const { styleCanvas, dragCanvas, zoomCanvas } = merge(defaultProps, props);
   const { background, backgroundImage } = styleCanvas;
-  // const { enableEdgeHover, enableNodeHover } = elementInteraction;
-  console.log('render....', props);
+
   React.useLayoutEffect(() => {
     const container = document.getElementsByClassName('graphin-core')[0] as HTMLElement;
     container.style.background = background;

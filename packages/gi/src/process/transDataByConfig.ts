@@ -20,7 +20,8 @@ export const transDataByConfig = (
   ElementAssets: GIAssets['elements'],
   reset?: boolean,
 ) => {
-  console.time(`cost ${elementType} trans`);
+  console.time(`${elementType.toUpperCase()}_TRANS_COST`);
+
   const elementConfig = config[elementType];
 
   const defaultConfig =
@@ -85,7 +86,7 @@ export const transDataByConfig = (
   const restData = ElementAssets[basicConfig.id].registerTransform(restElements, basicConfig, reset);
 
   const nodes = [...uniqueElements, ...restData];
-  console.timeEnd(`cost ${elementType} trans`);
-  console.log(elementType, nodes);
+  console.timeEnd(`${elementType.toUpperCase()}_TRANS_COST`);
+
   return nodes;
 };
