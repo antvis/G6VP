@@ -21,7 +21,7 @@ const Mock: React.FunctionComponent<mock> = props => {
     inputData: [
       {
         uid: 1,
-        name: 'mock.js',
+        name: 'mock.json',
         data: demo,
         transfunc: GIDefaultTrans('id', 'source', 'target', 'UNKNOWN', 'UNKNOWN'),
         enable: true,
