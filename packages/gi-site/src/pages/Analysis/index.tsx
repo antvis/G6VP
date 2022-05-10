@@ -1,8 +1,7 @@
-import GISDK from '@alipay/graphinsight';
+import GISDK, { GIAssets } from '@alipay/graphinsight';
 import { original } from 'immer';
 import localforage from 'localforage';
 import React from 'react';
-import { Prompt } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
@@ -47,6 +46,8 @@ const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, sch
   };
 };
 
+let startTime = Date.now();
+let endTime = Date.now();
 const Analysis = props => {
   const { match } = props;
   const { projectId } = match.params;
@@ -88,91 +89,74 @@ const Analysis = props => {
       /** 根据 projectId 获取项目的信息  */
       const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
       const { transData, inputData } = data;
-      /** 根据活跃资产Key值，动态加载资产实例 */
-      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
-      const mockServiceConfig = getMockServiceConfig(assets.components);
-      /** 将组件的MockServices与项目自身带的 services 去重处理 */
-      const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, serviceConfig);
-
-      /** 根据资产实例，获得GI站点运行需要的资产信息，包括资产本身带的serviceConfig */
-      const activeAssetsInformation = queryActiveAssetsInformation({
-        assets: activeAssets,
-        data: transData,
-        config,
-        serviceConfig: combinedServiceConfig,
-        schemaData,
-      });
-
-      /** 根据服务配置列表，得到真正运行的Service实例 */
-      const services = getServicesByConfig(combinedServiceConfig, transData);
 
       updateState(draft => {
-        draft.id = projectId;
-        draft.config = config;
-        draft.projectConfig = config;
-        draft.data = transData;
-        draft.inputData = inputData;
-        draft.isReady = true;
-        draft.activeNavbar = activeNavbar;
-        draft.serviceConfig = serviceConfig;
-        draft.assets = assets;
-        draft.activeAssets = activeAssets;
-        draft.activeAssetsKeys = activeAssetsKeys;
-        //@ts-ignore
-        draft.activeAssetsInformation = activeAssetsInformation;
-        draft.services = services;
-        draft.schemaData = schemaData;
+        draft.id = projectId; //项目ID
+        draft.config = config; //项目配置
+        draft.projectConfig = config; //项目原始配置（从服务器中来的）
+        draft.data = transData; //画布数据
+        draft.schemaData = schemaData; //图数据的Schema
+        draft.inputData = inputData; //用户上传的数据（可展示在「数据」模块）
+        draft.activeNavbar = activeNavbar; //当前激活的导航
+        draft.serviceConfig = serviceConfig; //服务配置
+        draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
       });
+      return;
     })();
+    // 当项目ID变化，或者强制重新刷新的时候运行
   }, [projectId, key]);
 
-  const ACTIVE_ASSETS_KEYS = JSON.stringify(activeAssetsKeys);
   React.useEffect(() => {
-    (async () => {
-      console.log('ACTIVE_ASSETS_KEYS....', ACTIVE_ASSETS_KEYS, activeAssetsKeys, JSON.parse(ACTIVE_ASSETS_KEYS));
-      const activeAssets = (await queryAssets(projectId, activeAssetsKeys)) as any;
-      const mockServiceConfig = getMockServiceConfig(activeAssets.components);
+    if (!activeAssetsKeys) {
+      //初始化阶段
+      return;
+    }
+    /** 根据活跃资产Key值，动态加载资产实例 */
+    queryAssets(projectId, activeAssetsKeys).then(
+      //@ts-ignore
+      (activeAssets: GIAssets) => {
+        const mockServiceConfig = getMockServiceConfig(activeAssets.components);
 
-      updateState(draft => {
-        /** 将组件的MockServices与项目自身带的 services 去重处理 */
-        const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, draft.serviceConfig);
+        updateState(draft => {
+          /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
+          const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
+          const activeAssetsInformation = queryActiveAssetsInformation({
+            assets: activeAssets,
+            data,
+            config,
+            serviceConfig: combinedServiceConfig,
+            schemaData: original(draft.schemaData),
+          });
 
-        const activeAssetsInformation = queryActiveAssetsInformation({
-          assets: activeAssets,
-          data,
-          config,
-          serviceConfig: combinedServiceConfig,
-          schemaData: original(draft.schemaData),
+          const configComponents = activeAssetsInformation.components.map(c => {
+            const defaultValues = c.props;
+            const cfgComponents = draft.config.components.find(d => d.id === c.id);
+            let matchItem = c;
+            if (cfgComponents) {
+              matchItem = original(cfgComponents);
+            }
+            return {
+              ...matchItem,
+              props: {
+                /** 将config.components 中的值与 assets.components 中的值进行合并 */
+                ...defaultValues,
+                ...matchItem.props,
+              },
+            };
+          });
+          /** 根据服务配置列表，得到真正运行的Service实例 */
+          const services = getServicesByConfig(combinedServiceConfig, data);
+          draft.isReady = true; //项目加载完毕
+          draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
+          draft.services = services; //更新服务
+          draft.config.components = configComponents; //更新 config.components
+          draft.activeAssets = activeAssets; //更新活跃资产
+          draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
+          draft.activeAssetsInformation = activeAssetsInformation;
         });
-
-        const configComponents = activeAssetsInformation.components.map(c => {
-          const defaultValues = c.props;
-          const cfgComponents = draft.config.components.find(d => d.id === c.id);
-          let matchItem = c;
-          if (cfgComponents) {
-            matchItem = original(cfgComponents);
-          }
-          return {
-            ...matchItem,
-            props: {
-              //给一个默认值
-              ...defaultValues,
-              ...matchItem.props,
-            },
-          };
-        });
-        /** 根据服务配置列表，得到真正运行的Service实例 */
-        const services = getServicesByConfig(combinedServiceConfig, data);
-
-        draft.serviceConfig = combinedServiceConfig;
-        draft.services = services;
-        draft.config.components = configComponents;
-        draft.activeAssets = activeAssets;
-        draft.activeAssetsKeys = activeAssetsKeys;
-        draft.activeAssetsInformation = activeAssetsInformation;
-      });
-    })();
-  }, [ACTIVE_ASSETS_KEYS]);
+      },
+    );
+  }, [activeAssetsKeys]);
 
   const getRecommenderCfg = params => {
     const { config, data } = params;
@@ -233,18 +217,9 @@ const Analysis = props => {
   //   }
   // }, [projectId, isReady, enableAI]);
 
-  // React.useEffect(() => {
-  //   const handler = ev => {
-  //     ev.preventDefault();
-  //     ev.returnValue = '配置未保存，确定离开吗？';
-  //   };
-  //   window.addEventListener('beforeunload', handler);
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handler);
-  //   };
-  // }, []);
-
   const isLoading = isObjectEmpty(config) || !isReady;
+  endTime = Date.now();
+  console.log('%c GRAPHINSIGHT SITE', 'color:red', state, 'isReady', isReady, endTime - startTime, endTime);
 
   const handleClose = () => {
     updateState(draft => {
@@ -260,12 +235,11 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState };
-  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state.config);
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state.config, isObjectEmpty(config), !isReady, isLoading);
 
   return (
     <AnalysisContext.Provider value={context}>
       <div className="gi">
-        <Prompt when={!isSave} message={() => '配置未保存，确定离开吗？'} />
         <div className="gi-navbar">
           <Navbar projectId={projectId} enableAI={enableAI} />
         </div>
@@ -277,7 +251,6 @@ const Analysis = props => {
             <MetaPanel
               value={activeNavbar}
               data={data}
-              ACTIVE_ASSETS_KEYS={ACTIVE_ASSETS_KEYS}
               activeAssetsKeys={activeAssetsKeys}
               /** 配置文件 */
               config={config}
