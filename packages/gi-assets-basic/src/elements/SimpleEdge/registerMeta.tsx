@@ -4,7 +4,7 @@ const { keyshape, label, animate } = advanced;
 
 const registerMeta = context => {
   const { keys, schemaData } = context;
-  debugger;
+
   const schema = {
     type: 'object',
     properties: {
