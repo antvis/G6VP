@@ -32,6 +32,6 @@
     "rimraf": "^3.0.2"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.antfin-inc.com"
   }
 }
