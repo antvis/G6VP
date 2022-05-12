@@ -71,6 +71,7 @@ export interface ContainerTypeProps {
   offset: number[];
   onClose: () => void;
   title: string;
+  GISDK_ID: string;
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
@@ -86,11 +87,12 @@ const ContainerType = (props: ContainerTypeProps) => {
     offset,
     onClose,
     title,
+    GISDK_ID,
   } = props;
 
   const placement = POSITION_MAP[containerPlacement];
   const [offsetX, offsetY] = offset || [0, 0];
-
+  const DrawerContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   if (containerType == 'drawer') {
     return (
       <Drawer
@@ -101,7 +103,7 @@ const ContainerType = (props: ContainerTypeProps) => {
         placement={placement}
         width={containerWidth}
         // height={containerHeight}
-
+        getContainer={DrawerContainer}
         visible={visible}
         onClose={onClose}
         drawerStyle={{ height: containerHeight }}
@@ -223,6 +225,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             visible={containerVisible}
             onClose={onClose}
             offset={offset}
+            GISDK_ID={GISDK_ID}
           >
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,
