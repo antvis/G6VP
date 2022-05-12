@@ -1,89 +1,41 @@
-import GISDK, { extra, IGIAC, useContext } from '@alipay/graphinsight';
-import { MoreOutlined, PlusOutlined } from '@ant-design/icons';
-import { Utils } from '@antv/graphin';
-import { Button } from 'antd';
+import GISDK, { useContext } from '@alipay/graphinsight';
+import { DeleteOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-
-const { GIAComponent } = extra;
+import { getStyles } from './utils';
 export interface SheetbarProps {
-  GIAC: IGIAC;
+  height: number;
+  placement: 'top' | 'bottom';
 }
-
 const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
-  const { GISDK_ID, config, data, source, transform, services, updateContext, graph, assets, ...others } = useContext();
+  const { height, placement } = props;
+  const { GISDK_ID, config, data, source, transform, services, updateContext, graph, assets } = useContext();
   const vars = React.useRef({
     tagContext: false,
   });
   const [state, setState] = React.useState(() => {
     const initialSheetMap = new Map();
-
     initialSheetMap.set('default', {
-      sheetName: 'default',
       sheetId: 'default',
-      config: Utils.cloneDeep(config),
-      data: Utils.cloneDeep(data),
-      source: Utils.cloneDeep(source),
+      sheetName: '默认画布',
+      config: config,
+      data: data,
+      source: source,
     });
     return {
-      sheetMap: initialSheetMap,
       currentId: 'default',
       currentName: '默认画布',
-      selected: {
-        nodes: [],
-        edges: [],
-      },
+      sheetMap: initialSheetMap,
     };
   });
 
-  const { sheetMap, currentId, currentName, selected } = state;
-
-  const { GIAC } = props;
-  const handleClick = React.useCallback(() => {
-    if (selected.nodes.length === 0) {
-      return;
-    }
-    handleAdd(selected);
-  }, [selected]);
-
-  // React.useEffect(() => {
-  //   //@ts-ignore
-  //   graph.on('nodeselectchange', e => {
-  //     console.log(e, e.item);
-  //     if (e.select) {
-  //       //单击的时候，edge不存在
-  //       //@ts-ignore
-  //       const { nodes, edges } = e.selectedItems;
-  //       const data = {
-  //         nodes: nodes.map(n => {
-  //           return { ...n.getModel() };
-  //         }),
-  //         edges: edges
-  //           ? edges.map(e => {
-  //               return { ...e.getModel() };
-  //             })
-  //           : [],
-  //       };
-  //       setState(preState => {
-  //         return {
-  //           ...preState,
-  //           selected: data,
-  //         };
-  //       });
-  //     } else {
-  //       setState(preState => {
-  //         return {
-  //           ...preState,
-  //           selected: { nodes: [], edges: [] },
-  //         };
-  //       });
-  //     }
-  //   });
-  // }, []);
+  const { sheetMap, currentId, currentName } = state;
 
   const options = [...sheetMap.values()];
+  const styles = getStyles(height, placement);
 
-  console.log('options', options);
+  console.log('options', options, currentId, styles);
   const handleAdd = (data?: { nodes: never[]; edges: never[] }) => {
     const uid = Math.random().toString(36).substr(2);
     const sheetName = '未命名画布';
@@ -134,34 +86,38 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
     },
     [currentId, sheetMap],
   );
+  const handleDelete = (id: string) => {
+    if (id === 'default') {
+      return;
+    }
+    setState(preState => {
+      preState.sheetMap.delete(id);
+      return {
+        ...preState,
+        sheetMap: preState.sheetMap,
+        currentId: 'default',
+        currentName: '默认画布',
+      };
+    });
+  };
 
   const GISDK_DOM = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
   const GISDK_PARENT_DOM = GISDK_DOM.parentElement as HTMLDivElement;
+
   React.useEffect(() => {
     if (currentId === 'default') {
       GISDK_DOM.style.display = 'block';
+      Object.keys(styles.container).forEach(key => {
+        GISDK_DOM.style[key] = styles.container[key];
+      });
     } else {
       GISDK_DOM.style.display = 'none';
     }
   }, [currentId, GISDK_DOM]);
 
-  // console.log('render.......', others);
   const SheetComponent = (
     <>
-      <div
-        style={{
-          display: 'flex',
-          position: 'absolute',
-          bottom: '-1px',
-          left: '0px',
-          right: '0px',
-          height: '40px',
-          lineHeight: '40px',
-          background: ' #fff',
-          border: '1px solid #fafafa',
-          zIndex: 99,
-        }}
-      >
+      <div style={styles.sheetbar}>
         {options.map(option => {
           const { sheetName, sheetId } = option;
           const isActive = currentId === sheetId;
@@ -185,6 +141,22 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
             ...option.config,
             components: sheetItemComponentsConfig,
           };
+          const menu = (
+            <Menu
+              items={[
+                {
+                  key: 'delete',
+                  label: <div onClick={() => handleDelete(sheetId)}>删除</div>,
+                  icon: <DeleteOutlined />,
+                },
+                {
+                  label: <div>重命名</div>,
+                  key: 'rename',
+                  icon: <DeleteOutlined />,
+                },
+              ]}
+            />
+          );
           return (
             <div
               key={sheetId}
@@ -199,11 +171,14 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
               }}
             >
               {sheetName}
-              <Button
-                type="text"
-                style={{ height: '40px', width: '40px', marginLeft: '4px' }}
-                icon={<MoreOutlined />}
-              />
+              <Dropdown overlay={menu} placement="topRight">
+                <Button
+                  type="text"
+                  style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}
+                  icon={<MoreOutlined />}
+                />
+              </Dropdown>
+
               {sheetId !== 'default' &&
                 ReactDOM.createPortal(
                   <GISDK
@@ -214,6 +189,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
                     services={sheetItemService}
                     style={{
                       display: sheetId === currentId ? 'block' : 'none',
+                      ...styles.container,
                     }}
                   />,
                   GISDK_PARENT_DOM,
