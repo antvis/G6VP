@@ -117,7 +117,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
 
   const SheetComponent = (
     <>
-      <div style={styles.sheetbar}>
+      <div style={styles.sheetbar} className="gi-sheetbar">
         {options.map(option => {
           const { sheetName, sheetId } = option;
           const isActive = currentId === sheetId;
@@ -198,7 +198,15 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
           );
         })}
         <div>
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd()}></Button>
+          <Button
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={() => handleAdd()}
+            style={{
+              width: `${height}px`,
+              height: `${height}px`,
+            }}
+          ></Button>
         </div>
       </div>
     </>
