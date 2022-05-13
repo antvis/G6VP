@@ -3,7 +3,7 @@ const { deepClone, GIAC_METAS } = extra;
 const metas = deepClone(GIAC_METAS);
 metas.GIAC.properties.GIAC.properties.title.default = '快照画廊';
 metas.GIAC.properties.GIAC.properties.icon.default = 'icon-camera';
-metas.GIAC.properties.GIAC.properties.isShowTitle.default = true;
+metas.GIAC.properties.GIAC.properties.isShowTitle.default = false;
 metas.GIAC.properties.GIAC.properties.tooltip.default = '快照画廊(快捷键ctrl+x)';
 metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 

@@ -1,11 +1,11 @@
 import { useContext, utils } from '@alipay/graphinsight';
-import GremlinEditor from './GremlinEditor';
 import Graphin from '@antv/graphin';
-import request from 'umi-request';
 import iconLoader from '@antv/graphin-icons';
-import { Button, Col, Divider, Row, notification } from 'antd';
+import { Button, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useState } from 'react';
+import request from 'umi-request';
+import GremlinEditor from './GremlinEditor';
 import './index.less';
 
 const icons = Graphin.registerFontFamily(iconLoader);
@@ -73,7 +73,8 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
     // 查询之前判断是否已经实例化 GraphScope 实例
     const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
-    if (!gremlinServer) {
+    const isGraphScopeService = serviceId.startsWith('GraphScope');
+    if (!gremlinServer && isGraphScopeService) {
       setBtnLoading(false);
       notification.error({
         message: 'Gremlin 查询失败',
