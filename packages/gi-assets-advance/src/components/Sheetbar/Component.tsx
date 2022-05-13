@@ -1,87 +1,41 @@
-import { extra, IGIAC, useContext } from '@alipay/graphinsight';
-import { MoreOutlined, PlusOutlined } from '@ant-design/icons';
-import { Utils } from '@antv/graphin';
-import { Button } from 'antd';
+import GISDK, { useContext } from '@alipay/graphinsight';
+import { DeleteOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-
-const { GIAComponent } = extra;
+import { getStyles } from './utils';
 export interface SheetbarProps {
-  GIAC: IGIAC;
+  height: number;
+  placement: 'top' | 'bottom';
 }
-
 const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
-  const { GISDK_ID, config, data, source, transform, services, updateContext, graph } = useContext();
-
+  const { height, placement } = props;
+  const { GISDK_ID, config, data, source, transform, services, updateContext, graph, assets } = useContext();
+  const vars = React.useRef({
+    tagContext: false,
+  });
   const [state, setState] = React.useState(() => {
     const initialSheetMap = new Map();
-
     initialSheetMap.set('default', {
-      sheetName: 'default',
       sheetId: 'default',
-      config: Utils.cloneDeep(config),
-      data: Utils.cloneDeep(data),
-      source: Utils.cloneDeep(source),
+      sheetName: '默认画布',
+      config: config,
+      data: data,
+      source: source,
     });
     return {
-      sheetMap: initialSheetMap,
       currentId: 'default',
       currentName: '默认画布',
-      selected: {
-        nodes: [],
-        edges: [],
-      },
+      sheetMap: initialSheetMap,
     };
   });
 
-  const { sheetMap, currentId, currentName, selected } = state;
-
-  const { GIAC } = props;
-  const handleClick = React.useCallback(() => {
-    if (selected.nodes.length === 0) {
-      return;
-    }
-    handleAdd(selected);
-  }, [selected]);
-
-  React.useEffect(() => {
-    //@ts-ignore
-    graph.on('nodeselectchange', e => {
-      console.log(e, e.item);
-      if (e.select) {
-        //单击的时候，edge不存在
-        //@ts-ignore
-        const { nodes, edges } = e.selectedItems;
-        const data = {
-          nodes: nodes.map(n => {
-            return { ...n.getModel() };
-          }),
-          edges: edges
-            ? edges.map(e => {
-                return { ...e.getModel() };
-              })
-            : [],
-        };
-        setState(preState => {
-          return {
-            ...preState,
-            selected: data,
-          };
-        });
-      } else {
-        setState(preState => {
-          return {
-            ...preState,
-            selected: { nodes: [], edges: [] },
-          };
-        });
-      }
-    });
-  }, []);
+  const { sheetMap, currentId, currentName } = state;
 
   const options = [...sheetMap.values()];
+  const styles = getStyles(height, placement);
 
-  console.log('options', options);
+  console.log('options', options, currentId, styles);
   const handleAdd = (data?: { nodes: never[]; edges: never[] }) => {
     const uid = Math.random().toString(36).substr(2);
     const sheetName = '未命名画布';
@@ -103,106 +57,162 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
         }),
       };
     });
-    updateContext(draft => {
-      draft.data = newData;
-      draft.source = newData;
-    });
   };
+  React.useEffect(() => {
+    // console.log('update effect....add sheetbar', vars.current.tagContext);
+    if (!vars.current.tagContext) {
+      updateContext(draft => {
+        //@ts-ignore
+        draft.handleAddSheetbar = val => {
+          handleAdd(val);
+        };
+      });
+      vars.current.tagContext = true;
+    }
+  }, []);
+
   const handleReCover = React.useCallback(
     (sheetId: string) => {
       if (currentId === sheetId) {
         return;
       }
-
-      const save = {
-        data: { nodes: [], edges: [] },
-        source: { nodes: [], edges: [] },
-        config: {},
-      };
-
       setState(preState => {
-        // 将当前的画布数据保存下来
-        const preSheetMap = preState.sheetMap;
-        preSheetMap.set(currentId, {
-          sheetId: currentId,
-          sheetName: currentName,
-          config,
-          source,
-          data,
-        });
-
-        // 将ID匹配到的保存数据 恢复出来
-        const matchPrev = preSheetMap.get(sheetId);
-        preSheetMap.set(sheetId, matchPrev);
-
-        save.data = matchPrev.data;
-        save.source = matchPrev.source;
-        save.config = matchPrev.config;
-        updateContext(draft => {
-          draft.data = save.data;
-          draft.source = save.source;
-          draft.config = save.config;
-          draft.layoutCache = true;
-        });
         return {
           ...preState,
-          sheetMap: preSheetMap,
           currentId: sheetId,
-          currentName: matchPrev.sheetName,
+          currentName: sheetMap.get(sheetId).sheetName,
         };
       });
     },
-    [data, source, config],
+    [currentId, sheetMap],
   );
-  const SheetComponents = (
-    <div
-      style={{
-        display: 'flex',
-        position: 'absolute',
-        bottom: '-1px',
-        left: '0px',
-        right: '0px',
-        height: '40px',
-        lineHeight: '40px',
-        background: ' #fff',
-        border: '1px solid #fafafa',
-      }}
-    >
-      {options.map(option => {
-        const { sheetName, sheetId } = option;
-        const isActive = currentId === sheetId;
-        return (
-          <div
-            key={sheetId}
-            onClick={() => {
-              handleReCover(sheetId);
-            }}
-            style={{
-              // background: `${isActive ? '#3056e3' : '#fff'}`,
-              color: `${isActive ? '#3056e3' : '#000'}`,
-              padding: '0px 12px',
-              cursor: 'pointer',
-            }}
-          >
-            {sheetName}
-            <Button type="text" style={{ height: '40px', width: '40px', marginLeft: '4px' }} icon={<MoreOutlined />} />
-          </div>
-        );
-      })}
-      <div>
-        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd()}></Button>
-      </div>
-    </div>
-  );
-  return (
+  const handleDelete = (id: string) => {
+    if (id === 'default') {
+      return;
+    }
+    setState(preState => {
+      preState.sheetMap.delete(id);
+      return {
+        ...preState,
+        sheetMap: preState.sheetMap,
+        currentId: 'default',
+        currentName: '默认画布',
+      };
+    });
+  };
+
+  const GISDK_DOM = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+  const GISDK_PARENT_DOM = GISDK_DOM.parentElement as HTMLDivElement;
+
+  React.useEffect(() => {
+    if (currentId === 'default') {
+      GISDK_DOM.style.display = 'block';
+      Object.keys(styles.container).forEach(key => {
+        GISDK_DOM.style[key] = styles.container[key];
+      });
+    } else {
+      GISDK_DOM.style.display = 'none';
+    }
+  }, [currentId, GISDK_DOM]);
+
+  const SheetComponent = (
     <>
-      <GIAComponent GIAC={GIAC} onClick={handleClick} />
-      {ReactDOM.createPortal(
-        SheetComponents,
-        document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement,
-      )}
+      <div style={styles.sheetbar} className="gi-sheetbar">
+        {options.map(option => {
+          const { sheetName, sheetId } = option;
+          const isActive = currentId === sheetId;
+          const sheetItemComponentsConfig = option.config.components.filter(c => {
+            return c.id !== 'Sheetbar';
+          });
+          const sheetItemService = services.map(c => {
+            if (c.id === 'GI_SERVICE_INTIAL_GRAPH') {
+              return {
+                id: 'GI_SERVICE_INTIAL_GRAPH',
+                service: () => {
+                  return new Promise(resolve => {
+                    resolve(option.data);
+                  });
+                },
+              };
+            }
+            return c;
+          });
+          const itemConfig = {
+            ...option.config,
+            components: sheetItemComponentsConfig,
+          };
+          const menu = (
+            <Menu
+              items={[
+                {
+                  key: 'delete',
+                  label: <div onClick={() => handleDelete(sheetId)}>删除</div>,
+                  icon: <DeleteOutlined />,
+                },
+                {
+                  label: <div>重命名</div>,
+                  key: 'rename',
+                  icon: <DeleteOutlined />,
+                },
+              ]}
+            />
+          );
+          return (
+            <div
+              key={sheetId}
+              onClick={() => {
+                handleReCover(sheetId);
+              }}
+              style={{
+                // background: `${isActive ? '#3056e3' : '#fff'}`,
+                color: `${isActive ? '#3056e3' : '#000'}`,
+                padding: '0px 12px',
+                cursor: 'pointer',
+              }}
+            >
+              {sheetName}
+              <Dropdown overlay={menu} placement="topRight">
+                <Button
+                  type="text"
+                  style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}
+                  icon={<MoreOutlined />}
+                />
+              </Dropdown>
+
+              {sheetId !== 'default' &&
+                ReactDOM.createPortal(
+                  <GISDK
+                    id={sheetId}
+                    config={itemConfig}
+                    assets={assets}
+                    //@ts-ignore
+                    services={sheetItemService}
+                    style={{
+                      display: sheetId === currentId ? 'block' : 'none',
+                      ...styles.container,
+                    }}
+                  />,
+                  GISDK_PARENT_DOM,
+                )}
+            </div>
+          );
+        })}
+        <div>
+          <Button
+            icon={<PlusOutlined />}
+            type="primary"
+            onClick={() => handleAdd()}
+            style={{
+              width: `${height}px`,
+              height: `${height}px`,
+            }}
+          ></Button>
+        </div>
+      </div>
     </>
   );
+
+  return ReactDOM.createPortal(SheetComponent, GISDK_PARENT_DOM);
 };
 
 export default Sheetbar;
