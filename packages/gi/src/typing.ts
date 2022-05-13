@@ -62,6 +62,11 @@ export interface Props {
   assets: GIAssets;
   /** 注册的全局数据服务 */
   services: GIService[];
+  /**
+   * style
+   */
+  style?: React.CSSProperties;
+  className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
 }
 
