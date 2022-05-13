@@ -1,6 +1,6 @@
 import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
-// import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import { isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
 const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
@@ -18,10 +18,10 @@ const LOCAL_ASSETS = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
     ...GI_ASSETS_ADVANCE,
   },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
-  //   ...GI_ASSETS_SCENE,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
+    ...GI_ASSETS_SCENE,
+  },
 ];
 
 export interface Package {
