@@ -8,12 +8,14 @@ export default context => {
   });
   return {
     serviceId: {
-      title: '列表ID',
+      title: '数据服务',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       default: 'Mock/NeighborsQuery',
-      options: serviceOptions,
+      'x-component-props': {
+        options: serviceOptions,
+      },
     },
     degree: {
       title: '查询度数',
