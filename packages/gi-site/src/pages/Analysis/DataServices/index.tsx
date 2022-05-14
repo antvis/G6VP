@@ -62,6 +62,23 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
     });
   };
 
+  const onDelete = id => {
+    const newServiceConfig = produce(serviceConfig, draft => {
+      return draft.filter(c => {
+        return c.id !== id;
+      });
+    });
+    updateProjectById(projectId, {
+      serviceConfig: JSON.stringify(newServiceConfig),
+    }).then(res => {
+      if (res) {
+        notification['success']({
+          message: '删除成功',
+        });
+      }
+    });
+  };
+
   if (!isReady) {
     return <Skeleton />;
   }
@@ -72,7 +89,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   return (
     <div>
       <BaseNavbar />
-      <DataSource defaultOptions={serviceConfig} onSave={onSave} defaultActiveId={serviceId} />
+      <DataSource defaultOptions={serviceConfig} onSave={onSave} onDelete={onDelete} defaultActiveId={serviceId} />
     </div>
   );
 };
