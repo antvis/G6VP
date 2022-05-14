@@ -3,14 +3,13 @@ import { getCombinedAssets } from '../loader';
 
 /**
  * 从全量的资产中Pick用户活跃的资产
- * @param id 项目id
  * @returns
  */
-export const queryAssets = async (id: string, activeAssetsKeys: any) => {
+export const queryAssets = async (activeAssetsKeys: any) => {
   let components = {};
   let elements;
   let layouts;
-
+  // http://localhost:8000/#/workspace/8100001?nav=data
   const FinalAssets = await getCombinedAssets();
 
   components = activeAssetsKeys.components.reduce((acc, curr) => {
