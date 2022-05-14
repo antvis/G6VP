@@ -81,6 +81,7 @@ export default {
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
+    { exact: true, path: '/share/:shareId', component: 'Share' },
     // { exact: true, path: '/market', component: 'Market/List' },
     // { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
     // { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
