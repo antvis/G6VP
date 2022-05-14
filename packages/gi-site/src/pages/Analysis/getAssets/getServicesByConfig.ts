@@ -8,15 +8,16 @@ function looseJsonParse(obj) {
  * @param data  图数据
  * @returns
  */
-const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
+const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
   return serviceConfig.map(s => {
     const { id, content, mode } = s;
     const runtimeContent = content?.split('export default')[1] || content;
     const transFn = looseJsonParse(runtimeContent);
     return {
       id,
+      content,
       service: (...params) => {
-        return transFn(...params, LOCAL_DATA);
+        return transFn(...params, LOCAL_DATA, schemaData);
       },
     };
   });
