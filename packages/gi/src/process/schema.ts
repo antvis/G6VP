@@ -125,7 +125,7 @@ export const generatorSchemaByGraphData = (graphData: IGraphData, defaultOptions
   };
 };
 
-const NODE_COLORS = [
+export const COLORS = [
   '#3056E3',
   '#F58CCB',
   '#795AE1',
@@ -178,7 +178,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
   let hasUnkownEdgeType = false;
   const nodesConfig = nodes
     .map((c, index) => {
-      colorMap.set(c.nodeType, NODE_COLORS[index]);
+      colorMap.set(c.nodeType, COLORS[index]);
       if (c.nodeType === 'UNKNOW') {
         hasUnkownNodeType = true;
         return { ...defaultNodeConfig };
@@ -187,7 +187,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         id: 'SimpleNode',
         props: {
           size: 26,
-          color: NODE_COLORS[index] || '#ddd',
+          color: COLORS[index] || '#ddd',
           label: [],
         },
         name: '官方节点',
