@@ -10,6 +10,29 @@ import getSchemaGraph from './getSchemaGraph';
 import SchemaEditor from './SchemaEditor';
 interface DataServiceProps {}
 
+/**
+ * 通过缓存策略，将之前的Config配置作用在新的Config上
+ * @param curr 当前新产生的 NodesConfig or EdgeConfig
+ * @param prev 之前的 NodesConfig or EdgeConfig
+ * @returns
+ */
+const getStyleConfig = (curr: any[], prev: any[]) => {
+  const prevMap = new Map();
+  prev.forEach(c => {
+    const id = JSON.stringify(c.expressions);
+    prevMap.set(id, c);
+  });
+  return curr.map(c => {
+    const id = JSON.stringify(c.expressions);
+    const prev = prevMap.get(id);
+    if (prev) {
+      return prev;
+    } else {
+      return c;
+    }
+  });
+};
+
 export interface FormValues {
   id: string;
   displayName: string;
@@ -46,10 +69,17 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
   };
 
   const onSave = params => {
-    const newConfig = utils.generatorStyleConfigBySchema(schemaData, config);
+    const { schemaData } = params;
+    const styleConfig = utils.generatorStyleConfigBySchema(schemaData);
+    const nodesConfig = getStyleConfig(styleConfig.nodes, config.nodes);
+    const edgesConfig = getStyleConfig(styleConfig.edges, config.edges);
 
     updateProjectById(id, {
-      projectConfig: JSON.stringify(newConfig),
+      projectConfig: JSON.stringify({
+        ...config,
+        nodes: nodesConfig,
+        edges: edgesConfig,
+      }),
       schemaData: JSON.stringify(params.schemaData),
     }).then(res => {
       updateContext(draft => {
