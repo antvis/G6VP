@@ -93,23 +93,18 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
       return;
     }
 
-    const schemaData = utils.generatorSchemaByGraphData(result.data);
-
     const locationHash = location.hash.match(/(?<=workspace\/)([0-9\.]*)(?=\?)/g);
     if (locationHash && locationHash.length === 1) {
-      await updateProjectById(locationHash[0], {
-        // projectConfig: JSON.stringify(newConfig),
-        schemaData: JSON.stringify(schemaData),
-      });
+      // schemaData 统一在项目的Schema管理中去处理
+      // await updateProjectById(locationHash[0], {
+      //   // projectConfig: JSON.stringify(newConfig),
+      //   schemaData: JSON.stringify(schema),
+      // });
     }
 
     updateContext(draft => {
       // @ts-ignore
       draft.key = Math.random();
-
-      // @ts-ignore
-      draft.schemaData = schemaData;
-
       const res = transform(result.data);
       res.nodes.forEach(node => {
         if (!node.style.badges) {
