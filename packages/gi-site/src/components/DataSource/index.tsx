@@ -10,7 +10,7 @@ const S4 = () => {
 
 const DataSource = React.forwardRef((props, ref) => {
   //@ts-ignore
-  const { defaultOptions, onSave, defaultActiveId } = props;
+  const { defaultOptions, onSave, onDelete, defaultActiveId } = props;
 
   const [state, setState] = useImmer({
     options: defaultOptions,
@@ -59,6 +59,7 @@ const DataSource = React.forwardRef((props, ref) => {
       });
       draft.currentId = draft.options[0].id;
     });
+    onDelete && onDelete(id);
   };
 
   const handleSave = opt => {
