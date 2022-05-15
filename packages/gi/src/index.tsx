@@ -25,6 +25,7 @@ export type {
   GIConfig,
   GIEdgeConfig,
   GINodeConfig,
+  GIService,
   ISourceDataMap,
 } from './typing';
 export { useContext, utils };

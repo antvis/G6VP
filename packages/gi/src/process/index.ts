@@ -10,6 +10,7 @@ export {
   uniqueElementsBy,
 } from './common';
 export { filterByRules } from './filterByRules';
+export { default as getElementsByAssets } from './getElementsByAssets';
 export { default as getMockServiceConfig } from './getMockServiceConfig';
 export { default as getServicesByConfig } from './getServicesByConfig';
 export { default as useGraphInsightContainerLayout } from './layout';
