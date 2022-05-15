@@ -1,3 +1,4 @@
+import { Icon } from '@alipay/graphinsight';
 import { Select } from 'antd';
 import * as React from 'react';
 import './index.less';
@@ -23,8 +24,28 @@ const AssetsSelect: React.FunctionComponent<AssetsSelectProps> = props => {
           return (
             <Option value={id} key={id}>
               <div className="style-panel-assets-select-title">
-                <img src={info?.cover} width={40} height={40} style={{ marginLeft: '18px' }} />
-                <span style={{ marginLeft: '18px' }}> {name}</span>
+                <Icon
+                  type={info.icon}
+                  style={{
+                    fontSize: '40px',
+                    marginLeft: '18px',
+                    verticalAlign: 'bottom',
+                    height: '66px',
+                    lineHeight: '66px',
+                    display: 'inline-block',
+                  }}
+                />
+                <span
+                  style={{
+                    marginLeft: '18px',
+                    verticalAlign: 'top',
+                    height: '66px',
+                    lineHeight: '66px',
+                    display: 'inline-block',
+                  }}
+                >
+                  {name}
+                </span>
               </div>
             </Option>
           );
