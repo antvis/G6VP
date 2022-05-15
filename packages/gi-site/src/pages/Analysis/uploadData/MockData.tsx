@@ -1,26 +1,36 @@
-import { FileTextOutlined } from '@ant-design/icons';
-import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Modal, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
 import * as React from 'react';
+import { EditableProTable } from '@ant-design/pro-table';
+import { CheckCard } from '@alipay/tech-ui';
+import { Button, Form, Col, notification, Radio, Row, Steps, Table } from 'antd';
+import { AntCloudOutlined, AlipayCircleOutlined, TaobaoCircleOutlined, SlackSquareOutlined } from '@ant-design/icons'
 import { useImmer } from 'use-immer';
-import xlsx2js from 'xlsx2js';
 import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import GraphScopeMode from './GraphScope'
-import MockData from './MockData'
+import cloudSecurityData from '../../../mock/cloud-security.json';
+import enterpriseData from '../../../mock/path-analysis/shareholding-path.json'
+import antiMoneyData from '../../../mock/AML/v1.2.json'
+import transportData from '../../../mock/linkrous/transport.json'
+
 import './index.less';
 
+const MockData = {
+  // 企业持股
+  enterprise: enterpriseData,
+  // 云安全
+  cloudSecurity: cloudSecurityData,
+  // 反洗钱
+  antiMoney: antiMoneyData,
+  // 巴黎地铁图
+  transport: transportData
+}
+
 const { Step } = Steps;
-const { Dragger } = Upload;
 interface uploadPanel {
-  visible: boolean;
-  initData: any;
   handleClose: () => void;
 }
 
-const { TabPane } = Tabs;
 
 const columnsData = {
   nodes: nodeColumns,
@@ -28,22 +38,21 @@ const columnsData = {
 };
 
 const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
-  const { visible, handleClose, initData } = props;
+  const { handleClose } = props;
   const { context, updateContext } = useContext();
 
   const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
-    buttonDisabled: true,
   });
 
   //初始化数据
-  const [data, setData] = useImmer(initData);
+  const [data, setData] = useImmer({});
   // 映射函数
   const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'));
   //映射后的数据
   const [transData, setTransData] = useImmer(
-    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))(initData),
+    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))({nodes: [], edges: []}),
   );
   //当前显示
   const [tableData, setTableData] = useImmer([]);
@@ -53,80 +62,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const [form] = Form.useForm();
   const [tableType, setTableType] = useImmer('nodes');
   const [inputData, setInputData] = useImmer([]);
-  const draggerProps = {
-    name: 'file',
-    defaultFileList: inputData,
-    onRemove: file => {
-      const renderData = inputData.filter(d => d.uid !== file.uid);
-      if (renderData.length === 0) {
-        setCurrent(draft => {
-          draft.buttonDisabled = true;
-        });
-      }
-      setInputData(renderData);
-      mergeData(renderData);
-    },
-    customRequest: async options => {
-      const { file, onSuccess } = options;
-      let fileData;
-
-      setCurrent(draft => {
-        draft.buttonDisabled = false;
-      });
-
-      if (!file) {
-        return false;
-      } else if (/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
-        const data = await xlsx2js(file);
-
-        fileData = {
-          nodes: data,
-          edges: data,
-        };
-
-        const renderData = [
-          ...inputData,
-          {
-            uid: file.uid,
-            name: file.name,
-            data: fileData,
-            transfunc,
-            enable: true,
-          },
-        ];
-        setInputData(renderData);
-        onSuccess('Ok');
-        mergeData(renderData);
-      } else if (/\.(json)$/.test(file.name.toLowerCase())) {
-        const reader = new FileReader();
-
-        reader.readAsText(file, 'utf-8');
-
-        reader.onload = fileReader => {
-          fileData = JSON.parse(fileReader.target.result as string);
-
-          const renderData = [
-            ...inputData,
-            {
-              uid: file.uid,
-              name: file.name,
-              data: fileData,
-              transfunc,
-              enable: true,
-            },
-          ];
-          setInputData(renderData);
-          onSuccess('Ok');
-          mergeData(renderData);
-        };
-      } else {
-        return false;
-      }
-    },
-  };
 
   const mergeData = (renderData = inputData) => {
-    console.log('mergeData', renderData, inputData);
     let nodes = [];
     let edges = [];
     renderData.map(d => {
@@ -257,22 +194,66 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     }
   };
 
+  const handleMockDataChange = (value) => {
+    console.log('value', value);
+    const renderData = [
+      // ...inputData,
+      {
+        uid: value,
+        name: value,
+        data: MockData[value],
+        transfunc,
+        enable: true,
+      },
+    ];
+    setInputData(renderData);
+    mergeData(renderData);
+  }
+
   const steps = [
     {
-      title: '上传数据',
+      title: '选择数据',
       content: (
-        <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
-          <h4 style={{ marginBottom: 0 }}>已传数据</h4>
-          <div className="upload-panel-section">
-            <Dragger {...draggerProps}>
-              <p className="ant-upload-drag-icon">
-                <FileTextOutlined />
-              </p>
-              <p>点击或将数据文件拖拽到这里上传</p>
-            </Dragger>
-          </div>
+        <div style={{ margin: '10px 0px 0px 0px' }}>
+          <Row style={{ paddingTop: 16 }}>
+            <Col span={24}>
+              <CheckCard.Group
+                onChange={handleMockDataChange}
+                defaultValue="enterprise"
+              >
+                <CheckCard 
+                  title="企业持股数据" 
+                  description="企业持股测试数据，通过探索可以发现各个公司的持股情况" 
+                  value="enterprise"
+                  avatar={
+                    <TaobaoCircleOutlined style={{ fontSize: 35}} />
+                  }/>
+                <CheckCard 
+                  title="反洗钱数据"
+                  description="反洗钱测试数据，可以通过探索分析可以发现存在的洗钱风险" 
+                  value="antiMoney"
+                  avatar={
+                    <AlipayCircleOutlined style={{ fontSize: 35}} />
+                  } />
+                  <CheckCard 
+                  title="巴黎地铁图" 
+                  description="巴黎地铁图数据，通过图分析结合地理信息，可以直观地发现地铁图的分布" 
+                  value="transport"
+                  avatar={
+                    <SlackSquareOutlined style={{ fontSize: 35}} />
+                  } />
+                <CheckCard 
+                  title="云安全数据" 
+                  description="云安全测试数据，通过测试数据探索云安全分析场景" 
+                  value="cloudSecurity"
+                  avatar={
+                    <AntCloudOutlined style={{ fontSize: 35}} />
+                  } />
+              </CheckCard.Group>
+            </Col>
+          </Row>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
-            <Button type="primary" disabled={current.buttonDisabled} shape="round" onClick={checkData}>
+            <Button type="primary" shape="round" onClick={checkData}>
               进入下一步
             </Button>
           </Row>
@@ -319,26 +300,15 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   ];
 
   return (
-    <Modal title="导入数据" visible={visible} width={800} footer={null} onCancel={handleClose}>
-      <Tabs defaultActiveKey="graphscope">
-        <TabPane tab="示例数据" key="mockdata">
-          <MockData handleClose={handleClose} />
-        </TabPane>
-        <TabPane tab="本地文件" key="document">
-          <Steps current={current.activeKey} type="navigation">
-            {steps.map(item => (
-              <Step key={item.title} title={item.title} />
-            ))}
-          </Steps>
-          <div className="steps-content">{steps[current.activeKey].content}</div>
-          <div className="steps-action"></div>
-        </TabPane>
-        <TabPane tab="GraphScope" key="graphscope">
-          <GraphScopeMode close={handleClose} />
-        </TabPane>
-        <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
-      </Tabs>
-    </Modal>
+    <>
+      <Steps current={current.activeKey} type="navigation">
+        {steps.map(item => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[current.activeKey].content}</div>
+      <div className="steps-action"></div>
+    </>
   );
 };
 
