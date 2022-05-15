@@ -28,15 +28,15 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
     data,
     config,
     assets,
-    schema = {
+    schemaData = {
       nodes: [],
       edges: [],
     },
   } = useContext();
 
   const elements = React.useMemo(() => {
-    return utils.getElementsByAssets(assets.elements, data, schema);
-  }, [schema, data]);
+    return utils.getElementsByAssets(assets.elements, data, schemaData);
+  }, [schemaData, data]);
 
   const handleChange = styleGroups => {
     const nodesConfig: NodesConfig = styleGroups.map(c => {
