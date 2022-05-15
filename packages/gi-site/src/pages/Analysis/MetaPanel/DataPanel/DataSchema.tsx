@@ -48,8 +48,9 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
     visible: false,
   });
   const schemaGraph = React.useMemo(() => {
-    return getSchemaGraph(schemaData);
+    return getSchemaGraph(schemaData, config);
   }, [schemaData]);
+
   const { visible } = state;
   const handleClick = () => {
     setState(preState => {
@@ -104,7 +105,7 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
           layout={{ type: 'graphin-force', animation: false }}
         ></Graphin>
         <Drawer title="编辑图模型" placement="right" onClose={onClose} visible={visible} width="calc(100vw - 382px)">
-          <SchemaEditor schemaGraph={schemaGraph} schemaData={schemaData} onSave={onSave} />
+          <SchemaEditor schemaGraph={schemaGraph} schemaData={schemaData} onSave={onSave} config={config} />
         </Drawer>
       </CollapseCard>
     </div>

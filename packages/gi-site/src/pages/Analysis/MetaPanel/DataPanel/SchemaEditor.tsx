@@ -1,3 +1,4 @@
+import { GIConfig } from '@alipay/graphinsight';
 import { IGraphSchema } from '@alipay/graphinsight/lib/process/schema';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { Alert, Button, Card, Col, notification, Row } from 'antd';
@@ -8,11 +9,12 @@ interface SchemaEditorProps {
   schemaGraph: GraphinData;
   schemaData: IGraphSchema;
   onSave: (params: any) => void;
+  config: GIConfig;
 }
 
 let monacoRef;
 const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
-  const { schemaData, onSave } = props;
+  const { schemaData, onSave, config } = props;
   const editorDidMount = editor => {
     editor.focus();
   };
@@ -53,7 +55,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
 
     let newSchemaGraph = schemaGraph;
     try {
-      newSchemaGraph = getSchemaGraph(JSON.parse(content));
+      newSchemaGraph = getSchemaGraph(JSON.parse(content), config);
     } catch (error) {
       console.log('error', error);
       notification.error({

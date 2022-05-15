@@ -43,7 +43,7 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const { updateContext, context } = useContext();
-  const { data, inputData = [], id, serviceConfig } = context;
+  const { data, inputData = [], id, serviceConfig, config } = context;
 
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
