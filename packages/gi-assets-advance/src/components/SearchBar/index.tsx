@@ -9,6 +9,7 @@ const info = {
   desc: '通过 ISO-GQL 语句快查询图数据',
   cover: 'http://xxxx.jpg',
   type: 'GI_CONTAINER_INDEX',
+  icon: 'icon-search',
 };
 
 export default {

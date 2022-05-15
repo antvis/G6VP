@@ -17,6 +17,7 @@ import OperatorBar from './OperatorBar';
 import PathAnalysis from './PathAnalysis';
 import Placeholder from './Placeholder';
 import PropertiesPanel from './PropertiesPanel';
+import Save from './Save';
 import SideTabs from './SideTabs';
 import StyleSetting from './StyleSetting';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
@@ -24,7 +25,9 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+
 export {
+  Save,
   Placeholder,
   FitCenter,
   FitView,
