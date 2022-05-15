@@ -11,11 +11,11 @@ import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
-
 export type { IGIAC } from './components/const';
 export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
+export { COLORS } from './process/schema';
 export type {
   AssetCategory,
   AssetInfo,
