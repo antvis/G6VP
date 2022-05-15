@@ -8,7 +8,7 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import GraphScopeMode from './GraphScopeMode'
+import GraphScopeMode from './GraphScope'
 import MockData from './MockData'
 import './index.less';
 
@@ -319,8 +319,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   ];
 
   return (
-    <Modal title="导入数据" visible={visible} width={846} footer={null} onCancel={handleClose}>
-      <Tabs defaultActiveKey="mockdata">
+    <Modal title="导入数据" visible={visible} width={800} footer={null} onCancel={handleClose}>
+      <Tabs defaultActiveKey="graphscope">
         <TabPane tab="示例数据" key="mockdata">
           <MockData handleClose={handleClose} />
         </TabPane>
