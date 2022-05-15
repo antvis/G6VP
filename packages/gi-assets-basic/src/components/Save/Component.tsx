@@ -1,5 +1,5 @@
 import { useContext, utils } from '@alipay/graphinsight';
-import { Button, notification } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import React from 'react';
 
 export interface Props {
@@ -8,14 +8,20 @@ export interface Props {
 
 const Save: React.FunctionComponent<Props> = props => {
   const { serviceId } = props;
-  const { graph, GISDK_ID, config, services } = useContext();
+  const { graph, GISDK_ID, config, services, schema } = useContext();
+  const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
   const handleSave = () => {
+    const { name, description, cover } = form.getFieldsValue();
+    console.log(name, cover);
     const data = graph.save();
     service({
+      name,
+      description,
       data, //数据，带布局信息
       config, //配置，可以还原画布状态
       services, //服务
+      schemaData: schema,
     }).then(res => {
       if (res.success) {
         notification.success({
@@ -30,9 +36,30 @@ const Save: React.FunctionComponent<Props> = props => {
     });
   };
 
+  const imgURL = graph.toDataURL('image/jpeg', '#fff');
+
   return (
     <div>
-      <Button onClick={handleSave}> Save </Button>
+      <Form form={form} name="saveStyle" layout="vertical">
+        <Form.Item name="name" label="名称" rules={[{ required: true, max: 50 }]} extra="名称由中文、英文或数字组成">
+          <Input maxLength={50} />
+        </Form.Item>
+        <Form.Item name="description" label="描述" extra="描述由中文、英文或数字组成" rules={[{ max: 160 }]}>
+          {/** @ts-ignore  */}
+          <Input.TextArea row={4} maxLength={200} />
+        </Form.Item>
+        <Form.Item name="cover" label="缩略图">
+          <img src={imgURL} alt="" width={'100%'} />
+        </Form.Item>
+      </Form>
+
+      <Button
+        onClick={handleSave}
+        type="primary"
+        style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 44px)' }}
+      >
+        保存分享
+      </Button>
     </div>
   );
 };
