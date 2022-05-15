@@ -1,4 +1,5 @@
 import { extractDefault } from '@ali/react-datav-gui-utils';
+import { useContext } from '@alipay/graphinsight';
 import { Behaviors } from '@antv/graphin';
 import merge from 'deepmerge';
 import React from 'react';
@@ -27,11 +28,15 @@ export const defaultProps = extractDefault({ config: registerMeta({ data: {} }) 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   const { styleCanvas, dragCanvas, zoomCanvas } = merge(defaultProps, props);
   const { background, backgroundImage } = styleCanvas;
+  const { GISDK_ID } = useContext();
 
   React.useLayoutEffect(() => {
-    const container = document.getElementsByClassName('graphin-core')[0] as HTMLElement;
-    container.style.background = background;
-    container.style.backgroundImage = `url(${backgroundImage})`;
+    const parent_container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
+    const container = parent_container.firstElementChild as HTMLElement;
+    if (parent_container && container) {
+      container.style.background = background;
+      container.style.backgroundImage = `url(${backgroundImage})`;
+    }
   }, [background, backgroundImage]);
   return (
     <>
