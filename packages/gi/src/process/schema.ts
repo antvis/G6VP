@@ -3,25 +3,25 @@ export const isObjectEmpty = obj => {
   return Object.keys(obj).length === 0;
 };
 
-interface IGraphData {
+export interface IGraphData {
   nodes: any[];
   edges: any[];
 }
 
-interface INodeSchema {
+export interface INodeSchema {
   nodeType: string;
   nodeTypeKeyFromProperties: string;
   properties: Object;
 }
 
-interface IEdgeSchema {
+export interface IEdgeSchema {
   edgeType: string;
   edgeTypeKeyFromProperties: string;
   sourceNodeType: string;
   targetNodeType: string;
   properties: Object;
 }
-interface IGraphSchema {
+export interface IGraphSchema {
   nodes: INodeSchema[];
   edges: IEdgeSchema[];
 }
@@ -30,13 +30,19 @@ interface IGraphSchema {
  * 通过 graphData 生成 Schema
  * @param graphData 图数据
  */
-export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema => {
+export const generatorSchemaByGraphData = (graphData: IGraphData, defaultOptions?: any): IGraphSchema => {
   const { nodes, edges } = graphData;
   const nodeSchemas: INodeSchema[] = [];
   const edgeSchemas: IEdgeSchema[] = [];
+  const {
+    nodeType: defaultNodeType = 'UNKNOW',
+    edgeType: defaultEdgeType = 'UNKNOW',
+    nodeTypeFromProperties: defaultNodeTypeFromProperties,
+    edgeTypeFromProperties: defaultEdgeTypeFromProperties,
+  } = defaultOptions || {};
 
   nodes.forEach(node => {
-    const { nodeType = 'UNKNOW', data, nodeTypeKeyFromProperties } = node;
+    const { nodeType = defaultNodeType, data, nodeTypeKeyFromProperties = defaultNodeTypeFromProperties } = node;
     const nodeSchema = {
       nodeType: nodeType,
       nodeTypeKeyFromProperties,
@@ -64,7 +70,13 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
   });
 
   edges.forEach(edge => {
-    const { edgeType = 'UNKNOW', source, target, data, edgeTypeKeyFromProperties } = edge;
+    const {
+      edgeType = defaultEdgeType,
+      source,
+      target,
+      data,
+      edgeTypeKeyFromProperties = defaultEdgeTypeFromProperties,
+    } = edge;
     const edgeSchema = {
       edgeType: edgeType,
       edgeTypeKeyFromProperties,
@@ -115,14 +127,14 @@ export const generatorSchemaByGraphData = (graphData: IGraphData): IGraphSchema 
 
 const NODE_COLORS = [
   '#3056E3',
-  '#CB6EF8',
+  '#F58CCB',
+  '#795AE1',
+  '#622CD8',
   '#82E6C7',
   '#F6D87B',
   '#F69F7F',
   '#E96075',
-  '#F58CCB',
-  '#795AE1',
-  '#622CD8',
+  '#CB6EF8',
   '#85C98E',
   '#3E34E5',
   '#2959C1',

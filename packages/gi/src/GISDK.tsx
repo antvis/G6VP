@@ -34,11 +34,17 @@ const GISDK = (props: Props) => {
   }, []);
 
   const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
+
   registerShapes(ElementAssets);
   registerLayouts(Layouts);
 
   const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
+    schemaData: {
+      //会在初始化时候更新
+      nodes: [],
+      edges: [],
+    },
     source: { nodes: [], edges: [] } as GraphinData,
     layout: {},
     components: [] as GIComponentConfig[],
@@ -49,6 +55,7 @@ const GISDK = (props: Props) => {
     initializer: defaultInitializerCfg,
     transform: (data, reset?: boolean) => data,
     layoutCache: false,
+
     /** graphin */
     //@ts-ignore
     graph: null,
