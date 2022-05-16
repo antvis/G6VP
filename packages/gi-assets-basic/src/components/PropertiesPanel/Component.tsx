@@ -6,14 +6,16 @@ import Properties from './Properties';
 export interface PropertiesPanelProps {
   hasService: boolean;
   serviceId?: string;
+  placement: 'top' | 'right' | 'top' | 'bottom';
+  width: number;
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
-  const { serviceId, hasService } = props;
-  const { graph, services } = useContext();
+  const { serviceId, hasService, placement, width } = props;
+  const { graph, services, GISDK_ID } = useContext();
   const service = utils.getService(services, serviceId);
   if (!service) {
     return null;
@@ -94,20 +96,19 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   const { visible, detail, isLoading } = state;
 
   const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
+  const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   return (
     <Drawer
       visible={visible}
-      placement="right"
+      placement={placement}
       onClose={handleClose}
       title={'属性面板'}
-      width={'356px'}
-      style={{
-        marginTop: '61px',
-      }}
+      width={`${width}px`}
       mask={false}
       bodyStyle={{
         padding: '12px 24px',
       }}
+      getContainer={container}
     >
       {content}
     </Drawer>
