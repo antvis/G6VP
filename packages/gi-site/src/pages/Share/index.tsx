@@ -11,7 +11,7 @@ const Share = props => {
     services: {},
   });
   const { data, config, schema, services: ServicesConfig } = JSON.parse(localStorage.getItem(shareId));
-  console.log('data', data, config, schema, ServicesConfig);
+
   React.useEffect(() => {
     const { components } = config;
     const activeAssetsKeys = {

@@ -31,7 +31,6 @@ const AddSheetbar: React.FunctionComponent<AddSheetbarProps> = props => {
   React.useEffect(() => {
     //@ts-ignore
     graph.on('nodeselectchange', e => {
-      console.log(e, e.item);
       if (e.select) {
         //单击的时候，edge不存在
         //@ts-ignore

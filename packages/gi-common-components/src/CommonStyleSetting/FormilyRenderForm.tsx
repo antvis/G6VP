@@ -8,9 +8,9 @@ import { SketchPicker } from 'react-color';
 import { FormCollapse, Offset } from '../FormilyForm';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
+import GroupSelect from './GroupSelect';
 import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
-import GroupSelect from './GroupSelect'
 
 interface RenderFormProps {
   onChange: (all: any, elementId: string) => void;
@@ -36,7 +36,7 @@ const SchemaField = createSchemaField({
     IconSelector,
     IconPicker,
     Offset,
-    GroupSelect
+    GroupSelect,
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
@@ -47,7 +47,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     effects() {
       onFormInputChange(({ values }) => {
         const currentValues = JSON.parse(JSON.stringify(values));
-        console.log('xxx', currentValues);
+
         if (onChange) {
           ref.current.cacheConfigMap.set(ref.current.elementId, currentValues);
           onChange(currentValues, ref.current.elementId);

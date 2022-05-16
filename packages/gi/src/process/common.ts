@@ -97,7 +97,6 @@ export const handleCollaspe = (data, responseData) => {
     const id = `${c.source}-${c.target}`;
     return edgeIds.indexOf(id) === -1;
   });
-  console.log(nodes, edges);
 
   return {
     nodes,

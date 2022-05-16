@@ -134,7 +134,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
   if (!state.isReady) {
     return null;
   }
-  console.log(config, assets);
+
   return (
     <div style={{ ...styles.root, ...props.style }}>
       {/* @ts-ignore */}

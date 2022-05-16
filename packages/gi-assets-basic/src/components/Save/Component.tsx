@@ -12,8 +12,8 @@ const Save: React.FunctionComponent<Props> = props => {
   const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
   const handleSave = () => {
-    const { name, description, cover } = form.getFieldsValue();
-    console.log(name, cover);
+    const { name, description } = form.getFieldsValue();
+
     const data = graph.save();
     service({
       name,
