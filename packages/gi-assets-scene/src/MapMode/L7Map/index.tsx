@@ -142,7 +142,6 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
             field: 'type',
             //@ts-ignore
             value: ({ type }) => {
-              console.log('type', type);
               return NODE_COLOR;
             },
           },

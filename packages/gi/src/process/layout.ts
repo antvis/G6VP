@@ -13,7 +13,6 @@ export interface Options {
 const useGraphInsightContainerLayout = (GISDK_ID: string, outSideFromCanvas: boolean, options: Options) => {
   const { width, height, placement } = options;
   React.useEffect(() => {
-    console.log('width', width, height, placement);
     const container = document.getElementById(`${GISDK_ID}-container`);
     const componentsContainer = document.getElementById(`${GISDK_ID}-container-extra`);
     if (container && componentsContainer) {

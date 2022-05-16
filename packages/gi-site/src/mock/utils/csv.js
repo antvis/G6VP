@@ -81,7 +81,7 @@ const edgeType = ['follow', 'friend', 'employee', 'family', 'partner'];
 const edges = nodes
   .map((node, index) => {
     const linkCount = Math.floor(Math.random() * 5); //每个节点与其他节点的链接不超过 4 个
-    console.log('linkCount', linkCount);
+
     const links = Array.from({ length: linkCount }, (v, i) => {
       const link = {
         source: index,

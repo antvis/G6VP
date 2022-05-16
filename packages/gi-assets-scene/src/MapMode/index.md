@@ -24,7 +24,6 @@ const mockServices = () => {
 const App = props => {
   const services = mockServices();
   const updateConfig = draft_config => {
-    console.log('draft_config', JSON.parse(JSON.stringify(draft_config)));
     draft_config.nodes = [
       {
         id: 'SimpleNode',
