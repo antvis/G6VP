@@ -10,6 +10,7 @@ const info: AssetInfo = {
   desc: '新增页签',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
+  icon: 'icon-plus',
   type: 'GIAC',
 };
 

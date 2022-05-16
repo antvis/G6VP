@@ -106,7 +106,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
 
   React.useEffect(() => {
     if (currentId === 'default') {
-      GISDK_DOM.style.display = 'block';
+      GISDK_DOM.style.display = 'flex';
       Object.keys(styles.container).forEach(key => {
         GISDK_DOM.style[key] = styles.container[key];
       });
@@ -188,7 +188,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
                     //@ts-ignore
                     services={sheetItemService}
                     style={{
-                      display: sheetId === currentId ? 'block' : 'none',
+                      display: sheetId === currentId ? 'flex' : 'none',
                       ...styles.container,
                     }}
                   />,

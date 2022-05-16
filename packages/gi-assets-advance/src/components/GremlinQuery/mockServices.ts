@@ -2,6 +2,7 @@ import { SERVICE_URL_PREFIX } from './Component';
 import info from './info';
 const { id: ASSET_ID } = info;
 const SERVICE_MOCK_ID = `Mock/${ASSET_ID}`;
+
 const SERVICE_GS_ID = `GraphScope/${ASSET_ID}`;
 
 const mockServices = () => {
@@ -14,32 +15,28 @@ const mockServices = () => {
           nodes: [
             {
               id,
+              type: 'user',
+            },
+
+            {
+              id: `${id}-family`,
+              type: 'user',
             },
             {
-              id: `${id}-1`,
-            },
-            {
-              id: `${id}-2`,
-            },
-            {
-              id: `${id}-3`,
-            },
-            {
-              id: `${id}-4`,
+              id: `${id}-card`,
+              type: 'card',
             },
           ],
           edges: [
             {
               source: id,
-              target: `${id}-1`,
+              target: `${id}-family`,
+              type: 'family',
             },
             {
               source: id,
-              target: `${id}-2`,
-            },
-            {
-              source: id,
-              target: `${id}-3`,
+              target: `${id}-card`,
+              type: 'own',
             },
           ],
         };

@@ -1,5 +1,5 @@
-import { CommonStyleSetting, Utils } from '@alipay/gi-common-components';
-import { useContext } from '@alipay/graphinsight';
+import { CommonStyleSetting } from '@alipay/gi-common-components';
+import { useContext, utils } from '@alipay/graphinsight';
 import React from 'react';
 import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
 
@@ -23,11 +23,20 @@ export interface StyleSettingProps {
 }
 
 const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'nodes' }) => {
-  const { updateContext, data, config, assets } = useContext();
+  const {
+    updateContext,
+    data,
+    config,
+    assets,
+    schemaData = {
+      nodes: [],
+      edges: [],
+    },
+  } = useContext();
 
   const elements = React.useMemo(() => {
-    return Utils.getElementsByAssets(assets.elements, data);
-  }, []);
+    return utils.getElementsByAssets(assets.elements, data, schemaData);
+  }, [schemaData, data]);
 
   const handleChange = styleGroups => {
     const nodesConfig: NodesConfig = styleGroups.map(c => {

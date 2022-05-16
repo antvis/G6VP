@@ -10,12 +10,12 @@ import { Button, Collapse, Modal, Radio, Space, Table } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
-import BreathIndicator from '../../../../components/BreathIndicator';
 import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
 import { useContext } from '../../hooks/useContext';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../utils';
+import DataSchema from './DataSchema';
 import DataService from './DataService';
 import './index.less';
 
@@ -43,7 +43,7 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const { updateContext, context } = useContext();
-  const { data, inputData = [], id, serviceConfig } = context;
+  const { data, inputData = [], id, serviceConfig, config } = context;
 
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
@@ -154,7 +154,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       nodes: [],
       edges: [],
     };
-    const resultData = inputData.map(d => {
+    const resultData = JSON.parse(JSON.stringify(inputData)).map(d => {
       if (d.uid === uid) {
         d.enable = !d.enable;
       }
@@ -214,19 +214,17 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       <div>
         <div className="gi-config-panel-title">数据</div>
         <CollapseCard
-          title="数据源"
+          title="图数据源"
           extra={
-            <BreathIndicator title="导入数据" status="running">
-              <Button
-                type="dashed"
-                style={{ width: '100%' }}
-                size="small"
-                onClick={uploadData}
-                className="gi-intro-upload-data"
-              >
-                <UploadOutlined /> 导入
-              </Button>
-            </BreathIndicator>
+            <Button
+              type="dashed"
+              style={{ width: '100%' }}
+              size="small"
+              onClick={uploadData}
+              className="gi-intro-upload-data"
+            >
+              <UploadOutlined /> 导入
+            </Button>
           }
         >
           {inputData.map((d, i) => {
@@ -237,11 +235,11 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
                 extra={
                   <Space>
                     <TableOutlined onClick={() => viewTable(d.uid)} />
-                    {d.enable ? (
+                    {/* {d.enable ? (
                       <EyeOutlined onClick={() => invertVisiable(d.uid)} />
                     ) : (
                       <EyeInvisibleOutlined onClick={() => invertVisiable(d.uid)} />
-                    )}
+                    )} */}
                     <DeleteOutlined onClick={() => deleteData(d.uid)} />
                   </Space>
                 }
@@ -250,6 +248,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
           })}
         </CollapseCard>
         <DataService projectId={id} serviceLists={serviceConfig} />
+        <DataSchema />
       </div>
       <Modal title="数据预览" visible={isVisible} width={846} footer={null} onCancel={handleClose}>
         <div className={'gi-data-fliter-group'}>

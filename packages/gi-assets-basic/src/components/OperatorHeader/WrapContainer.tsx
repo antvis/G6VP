@@ -72,6 +72,7 @@ export interface ContainerTypeProps {
   onClose: () => void;
   title: string;
   GISDK_ID: string;
+  getContainer: HTMLDivElement;
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
@@ -88,6 +89,7 @@ const ContainerType = (props: ContainerTypeProps) => {
     onClose,
     title,
     GISDK_ID,
+    getContainer,
   } = props;
 
   const placement = POSITION_MAP[containerPlacement];
@@ -103,7 +105,7 @@ const ContainerType = (props: ContainerTypeProps) => {
         placement={placement}
         width={containerWidth}
         // height={containerHeight}
-        getContainer={DrawerContainer}
+        getContainer={getContainer}
         visible={visible}
         onClose={onClose}
         drawerStyle={{ height: containerHeight }}
@@ -120,11 +122,13 @@ const ContainerType = (props: ContainerTypeProps) => {
   if (containerType == 'modal') {
     return (
       <Modal
+        getContainer={getContainer}
         className="gi-operator-header-modal"
         title={title}
-        mask={containerMask}
+        // mask={containerMask}
         width={containerWidth}
-        maskClosable={containerMaskClosable}
+        // centered
+        // maskClosable={containerMaskClosable}
         visible={visible}
         onCancel={onClose}
       >
@@ -192,6 +196,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
     const onClose = () => {
       setVisible(false);
     };
+    const ContainerDOM = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
 
     return (
       <>
@@ -226,6 +231,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             onClose={onClose}
             offset={offset}
             GISDK_ID={GISDK_ID}
+            getContainer={ContainerDOM}
           >
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,

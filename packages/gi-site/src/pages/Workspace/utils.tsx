@@ -53,6 +53,13 @@ const baseEdgesConfig: GIConfig['edges'] = [
   },
 ];
 const baseComponentsConfig = [
+  // {
+  //   id: 'Initializer',
+  //   props: {
+  //     GI_INITIALIZER: true,
+  //     serviceId: 'GI_SERVICE_INTIAL_GRAPH',
+  //   },
+  // },
   {
     id: 'Toolbar',
     props: {
@@ -131,6 +138,16 @@ export const serviceConfig = [
     content: `export default (localData)=>{
       return new Promise((resolve)=>{
         resolve(localData)
+      })
+    }`,
+    mode: 'MOCK',
+    name: '初始化接口',
+  },
+  {
+    id: 'GI_SERVICE_SCHEMA',
+    content: `export default (localData,schemaData)=>{
+      return new Promise((resolve)=>{
+        resolve(schemaData)
       })
     }`,
     mode: 'MOCK',

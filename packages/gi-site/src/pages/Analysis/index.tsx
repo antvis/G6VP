@@ -112,7 +112,7 @@ const Analysis = props => {
       return;
     }
     /** 根据活跃资产Key值，动态加载资产实例 */
-    queryAssets(projectId, activeAssetsKeys).then(
+    queryAssets(activeAssetsKeys).then(
       //@ts-ignore
       (activeAssets: GIAssets) => {
         const mockServiceConfig = getMockServiceConfig(activeAssets.components);
@@ -120,12 +120,13 @@ const Analysis = props => {
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
+          const schemaData = original(draft.schemaData);
           const activeAssetsInformation = queryActiveAssetsInformation({
             assets: activeAssets,
             data,
             config,
             serviceConfig: combinedServiceConfig,
-            schemaData: original(draft.schemaData),
+            schemaData,
           });
 
           const configComponents = activeAssetsInformation.components.map(c => {
@@ -145,7 +146,7 @@ const Analysis = props => {
             };
           });
           /** 根据服务配置列表，得到真正运行的Service实例 */
-          const services = getServicesByConfig(combinedServiceConfig, data);
+          const services = getServicesByConfig(combinedServiceConfig, data, schemaData);
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务

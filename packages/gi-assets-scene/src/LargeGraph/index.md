@@ -9,7 +9,6 @@ const services = [
   {
     id: 'My_Service',
     service: params => {
-      console.log(params);
       return fetch('https://gw.alipayobjects.com/os/bmw-prod/9995f073-7869-4ae1-aa2a-386a92a3980f.json')
         .then(res => res.json())
         .then(res => {

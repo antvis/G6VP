@@ -1,25 +1,32 @@
-import ColorMapping from '@ali/datav-gui-color-scale';
-import MarkerMapping from '@ali/datav-gui-marker-scale';
-import SizeMapping from '@ali/datav-gui-size-scale';
-import GUI from '@ali/react-datav-gui';
-import { extractDefault } from '@ali/react-datav-gui-utils';
-import { Select } from 'antd';
+import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
+import { FormItem, Input, NumberPicker, Radio, Switch } from '@formily/antd';
+import { createForm, onFormInputChange } from '@formily/core';
+import { createSchemaField, FormProvider } from '@formily/react';
+import { Collapse, Select } from 'antd';
 import React, { useState } from 'react';
+import { SketchPicker } from 'react-color';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import AssetsSelect from '../../../../components/AssetsSelect';
-import TagsSelect from '../../../../components/DataVGui/TagsSelect';
 import { useContext } from '../../hooks/useContext';
-const freeExtensions = {
-  sizeMapping: SizeMapping,
-  colorMapping: ColorMapping,
-  markerMapping: MarkerMapping,
-};
 
-const extensions = {
-  TagsSelect,
-};
+const defSpringLen = (_edge, source, target) => {
+  /** 默认返回的是 200 的弹簧长度 */
+  /** 如果你要想要产生聚类的效果，可以考虑
+  根据边两边节点的度数来动态设置边的初始化长度：度数越小，则边越短 */
+  const defaultSpring = 100;
+  const Sdegree = source.data.layout.degree;
+  const Tdegree = target.data.layout.degree;
+  const MinDegree = Math.min(Sdegree, Tdegree);
+  const MaxDegree = Math.max(Sdegree, Tdegree);
 
-const { Option } = Select;
+  let SpringLength = defaultSpring;
+  if (MinDegree < 5) {
+    SpringLength = defaultSpring * MinDegree;
+  } else {
+    SpringLength = 450;
+  }
+  return SpringLength;
+};
 
 interface NodeStylePanelProps {
   meta: any;
@@ -27,6 +34,23 @@ interface NodeStylePanelProps {
   layouts: any;
   config: any;
 }
+
+const { Panel } = Collapse;
+const SchemaField = createSchemaField({
+  components: {
+    Radio,
+    FormItem,
+    Input,
+    FormCollapse,
+    Select,
+    NumberPicker,
+    Switch,
+    SketchPicker,
+    ColorInput,
+    Offset,
+    AssetCollapse,
+  },
+});
 
 const cache = {};
 
@@ -42,6 +66,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { data, layouts, config = { layout: { props: {} } } } = props;
   const { updateContext } = useContext();
   const { layout: layoutConfig } = config;
+
   const [state, setState] = useState({
     /** 当前布局的ID */
     layoutId: layoutConfig.id,
@@ -51,30 +76,50 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   /*** 当前元素物料 */
   const layout = layouts[layoutId];
-  const configObj = {
-    options: {
-      name: '布局参数',
-      type: 'group',
-      fold: false,
-      children: layout?.meta,
+
+  const schema = {
+    type: 'object',
+    properties: {
+      ...layout?.meta,
     },
   };
 
-  const valueObj = extractDefault({ config: configObj, value: { options: layoutConfig.props } });
+  const defaultProps = { ...layout.props, ...layoutConfig.props };
+  //特殊情况处理：defSpringLen 为 function
+  if (defaultProps.defSpringLen && typeof defaultProps.defSpringLen === 'string') {
+    try {
+      defaultProps.defSpringLen = eval(defaultProps.defSpringLen);
+    } catch (error) {
+      defaultProps.defSpringLen = defSpringLen;
+    }
+  }
 
   /** 缓存数据 */
-  cache[layoutId] = { id: layoutId, props: { ...valueObj.options } };
+  cache[layoutId] = { id: layoutId, props: defaultProps };
 
-  const handleChangeConfig = evt => {
-    const { rootValue } = evt;
-    cache[layoutId].props = { ...rootValue.options };
-    updateContext(draft => {
-      draft.config.layout.props = { ...rootValue.options };
-    });
-  };
+  const form = createForm({
+    initialValues: defaultProps,
+    effects() {
+      onFormInputChange(({ values }) => {
+        //特殊情况处理：defSpringLen 为 function
+        if (values.defSpringLen && typeof values.defSpringLen === 'string') {
+          try {
+            values.defSpringLen = eval(values.defSpringLen);
+          } catch (error) {
+            values.defSpringLen = defSpringLen;
+          }
+        }
+
+        cache[layoutId].props = { ...values };
+        updateContext(draft => {
+          draft.config.layout.props = { ...values };
+        });
+      });
+    },
+  });
+
   const handleChangeShape = value => {
     const values = getCacheValues(layouts, value);
-
     setState(preState => {
       return {
         ...preState,
@@ -83,23 +128,9 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     });
     updateContext(draft => {
       draft.config.layout = { ...values };
-      // draft.config.layout.id = value;
-      // draft.config.layout = { ...layouts[value] };
     });
   };
   const layoutItems = Object.values(layouts) as any[];
-
-  const GUIComponent = React.useMemo(() => {
-    return (
-      <GUI
-        configObj={configObj}
-        valueObj={valueObj}
-        freeExtensions={freeExtensions}
-        onChange={handleChangeConfig}
-        extensions={extensions}
-      />
-    );
-  }, [layoutId, handleChangeConfig]);
 
   return (
     <div>
@@ -110,7 +141,19 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         options={layoutItems}
         className="gi-tour-layout-switch"
       />
-      {GUIComponent}
+      <div
+        style={{
+          margin: '8px',
+          padding: '12px',
+          borderRadius: '8px',
+          boxShadow:
+            '-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%), 2px 3px 8px 2px rgb(151 151 151 / 5%)',
+        }}
+      >
+        <FormProvider form={form}>
+          <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
+        </FormProvider>
+      </div>
     </div>
   );
 };
