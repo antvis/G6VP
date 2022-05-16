@@ -20,6 +20,7 @@ import {
   closeGraphInstance,
   createGraphScopeInstance,
   loadGraphToGraphScope,
+  loadDefaultGraphToGraphScope,
 } from '../../../services/graphcompute';
 import { DefaultGraphScopeNodeFilePath, DefaultGraphScopeEdgeFilePath } from './const';
 const { Item } = Form;
@@ -27,7 +28,7 @@ const { Item } = Form;
 interface GraphModelProps {
   close: () => void;
 }
-const GraphScopeMode = ({ close }) => {
+const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
   const [form] = Form.useForm();
 
   const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
@@ -38,7 +39,6 @@ const GraphScopeMode = ({ close }) => {
   const [closeLoading, setCloseLoading] = useState(false);
 
   const handleDataTypeChange = e => {
-    console.log(e);
     setDataType(e.target.value);
   };
   const handleSubmitForm = async () => {
@@ -65,7 +65,7 @@ const GraphScopeMode = ({ close }) => {
 
     // 使用示例数据
     if (dataType === 'demo') {
-      const loadResult = await loadGraphToGraphScope({
+      const loadResult = await loadDefaultGraphToGraphScope({
         instanceId: currentInstanceId,
         nodeFilePath: DefaultGraphScopeNodeFilePath,
         nodeType: 'v0',
@@ -96,21 +96,9 @@ const GraphScopeMode = ({ close }) => {
     }
 
     const values = await form.validateFields();
-    console.log('values', values);
-    const {
-      nodeFileList,
-      edgeFileList,
-      directed = true,
-      nodeType,
-      edgeType,
-      sourceNodeType,
-      targetNodeType,
-      delimiter = ',',
-      hasHeaderRow = true,
-    } = values;
 
-    const { configList } = values;
-    const nodeFileLists = configList.map(d => d.nodeFileList);
+    const { nodeConfigList, edgeConfigList, directed = true, delimiter = ',', hasHeaderRow = true } = values;
+    const nodeFileLists = nodeConfigList.filter(d => d.nodeFileList && d.nodeType).map(d => d.nodeFileList);
     const nodeFilePromise = nodeFileLists.map(d => {
       // 上传点文件
       const nodeFileResult = uploadLocalFileToGraphScope({
@@ -120,68 +108,50 @@ const GraphScopeMode = ({ close }) => {
       return nodeFileResult;
     });
 
-    const edgeFileLists = configList.map(d => d.nodeFileList);
+    const edgeFileLists = edgeConfigList
+      .filter(d => d.edgeType && d.sourceNodeType && d.targetNodeType)
+      .map(d => d.edgeFileList);
     const edgeFilePromise = edgeFileLists.map(d => {
       // 上传点文件
-      const nodeFileResult = uploadLocalFileToGraphScope({
+      const edgeFileResult = uploadLocalFileToGraphScope({
         fileList: d,
         instanceId: currentInstanceId,
       });
-      return nodeFileResult;
+      return edgeFileResult;
     });
 
     const filesUploadResult = await Promise.all([...nodeFilePromise, ...edgeFilePromise]);
-    console.log('所有文件上传结果', filesUploadResult);
-    // 所有文件上传成功后，开始载图
 
-    // TODO: 下面的逻辑都需要改
-    // 上传点文件
-    const nodeFileResult = await uploadLocalFileToGraphScope({
-      fileList: nodeFileList,
-      instanceId: currentInstanceId,
-    });
-    const { success, data } = nodeFileResult;
-    if (!success) {
-      setLoading(false);
-      message.error('点文件上传失败');
+    // 所有文件上传成功后，开始载图
+    // 验证是否有上传失败的
+    const failedFile = filesUploadResult.find(d => !d.success);
+    if (failedFile) {
+      // 有文件上传失败，提示用户，停止后面的逻辑
+      message.error('文件上传失败');
       return;
     }
-    const { filePath: nodeFilePath } = data;
 
-    let edgeFilePath = '';
-    // 上传边文件
-    // 如果存在边文件，则上传
-    if (edgeFileList) {
-      const edgeFileResult = await uploadLocalFileToGraphScope({
-        fileList: edgeFileList,
-        instanceId: currentInstanceId,
-      });
+    // 构建 fileName: filePath 的对象
+    const filePathMapping = {};
+    filesUploadResult.forEach(d => {
+      const { fileName, filePath } = d.data;
+      filePathMapping[fileName] = filePath;
+    });
 
-      const { success, data } = edgeFileResult;
-      if (!success) {
-        setLoading(false);
-        message.error('点文件上传失败');
-        return;
-      }
-
-      edgeFilePath = data.filePath;
-    }
+    console.log('上传的文件对象', filePathMapping);
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
       instanceId: currentInstanceId,
-      nodeFilePath: nodeFilePath,
-      nodeType,
-      edgeType,
-      sourceNodeType,
-      targetNodeType,
-      edgeFilePath,
+      nodeConfigList,
+      edgeConfigList,
+      fileMapping: filePathMapping,
       directed,
       delimiter,
       hasHeaderRow,
     });
 
-    console.log('加载数据到 GraphScope', loadResult);
+    console.log('载图到 GraphScope 中', loadResult);
     setLoading(false);
     const { success: loadSuccess, message: loadMessage, data: loadData } = loadResult;
     if (!loadSuccess) {
@@ -209,10 +179,10 @@ const GraphScopeMode = ({ close }) => {
       // 清空localstorage 中的实例、图名称和Gremlin服务地址
       const result = await closeGraphInstance(graphScopeInstanceId);
       setCloseLoading(false);
+      clearGraphScopeStorage();
       if (result && result.success) {
         // 提示
         message.success('关闭 GraphScope 实例成功');
-        clearGraphScopeStorage();
         close();
       }
     }
@@ -223,7 +193,7 @@ const GraphScopeMode = ({ close }) => {
     directed: true,
     hasHeaderRow: true,
     delimiter: ',',
-    configList: [
+    nodeConfigList: [
       {
         nodeType: '',
       },
@@ -235,7 +205,7 @@ const GraphScopeMode = ({ close }) => {
   };
   return (
     <div>
-      <Form name="gsform" form={form} initialValue={formInitValue}>
+      <Form name="gsform" form={form} initialValues={formInitValue}>
         <Radio.Group defaultValue={dataType} buttonStyle="solid" onChange={handleDataTypeChange}>
           <Radio.Button value="demo">示例数据</Radio.Button>
           <Radio.Button value="real">我有数据</Radio.Button>
@@ -269,72 +239,110 @@ const GraphScopeMode = ({ close }) => {
                 </Radio>
               </Radio.Group>
             </Item>
-            <Form.List name="configList">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map((field, index) => (
-                    <Row
-                      key={field.key}
-                      style={{
-                        border: '1px solid #ccc',
-                        padding: 16,
-                        paddingBottom: 0,
-                        marginBottom: 16,
-                      }}
-                    >
-                      <Col span={24} style={{ marginBottom: 16 }}>
-                        <h4>第 {index + 1} 组点边配置</h4>
-                      </Col>
-                      <Col span={8}>
-                        <Item label="点类型" name={[field.name, 'nodeType']}>
-                          <Input style={{ width: 150 }} />
-                        </Item>
-                      </Col>
-                      <Col span={8}>
-                        <Item label="点数据文件" name={[field.name, 'nodeFileList']}>
-                          <Upload {...fileProps} name="nodes" maxCount={1}>
-                            <Button icon={<UploadOutlined />}>上传点文件</Button>
-                          </Upload>
-                        </Item>
-                      </Col>
-                      <Col span={8}>
-                        <Item label="边数据文件" name={[field.name, 'edgeFileList']}>
-                          <Upload {...fileProps} name="edges" maxCount={1}>
-                            <Button icon={<UploadOutlined />}>上传边文件</Button>
-                          </Upload>
-                        </Item>
-                      </Col>
-                      <Col span={8}>
-                        <Item label="边类型" name={[field.name, 'edgeType']}>
-                          <Input style={{ width: 150 }} />
-                        </Item>
-                      </Col>
-                      <Col span={8}>
-                        <Item label="边起点类型" name={[field.name, 'sourceNodeType']}>
-                          <Input style={{ width: 125 }} />
-                        </Item>
-                      </Col>
-                      <Col span={7}>
-                        <Item label="边终点类型" name={[field.name, 'targetNodeType']}>
-                          <Input style={{ width: 125 }} />
-                        </Item>
-                      </Col>
-                      {index !== 0 && (
-                        <Col span={1} style={{ textAlign: 'right', fontSize: 23 }}>
-                          <MinusCircleOutlined onClick={() => remove(field.name)} />
-                        </Col>
-                      )}
-                    </Row>
-                  ))}
+            <Row>
+              <Col span={11} style={{ marginRight: 24 }}>
+                <h4>点配置列表</h4>
+                <Form.List name="nodeConfigList">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map((field, index) => (
+                        <Row
+                          key={field.key}
+                          style={{
+                            border: '1px solid #ccc',
+                            padding: 16,
+                            paddingBottom: 0,
+                            marginBottom: 16,
+                          }}
+                        >
+                          <Col span={22} style={{ marginBottom: 16 }}>
+                            <h5>第 {index + 1} 组点配置</h5>
+                          </Col>
+                          {index !== 0 && (
+                            <Col span={2} style={{ textAlign: 'right', fontSize: 16 }}>
+                              <MinusCircleOutlined onClick={() => remove(field.name)} />
+                            </Col>
+                          )}
+                          <Col span={12}>
+                            <Item label="点类型" name={[field.name, 'nodeType']}>
+                              <Input style={{ width: 125 }} />
+                            </Item>
+                          </Col>
+                          <Col span={12}>
+                            <Item label="点数据文件" name={[field.name, 'nodeFileList']}>
+                              <Upload {...fileProps} name="nodes" maxCount={1}>
+                                <Button icon={<UploadOutlined />}>上传点文件</Button>
+                              </Upload>
+                            </Item>
+                          </Col>
+                        </Row>
+                      ))}
 
-                  <Form.Item>
-                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                      增加点边数据配置
-                    </Button>
-                  </Form.Item>
-                </>
-              )}
-            </Form.List>
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                          增加点配置
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Col>
+              <Col span={12}>
+                <h4>边配置列表</h4>
+                <Form.List name="edgeConfigList">
+                  {(fields, { add, remove }) => (
+                    <>
+                      {fields.map((field, index) => (
+                        <Row
+                          key={field.key}
+                          style={{
+                            border: '1px solid #ccc',
+                            padding: 16,
+                            paddingBottom: 0,
+                            marginBottom: 16,
+                          }}
+                        >
+                          <Col span={22} style={{ marginBottom: 16 }}>
+                            <h5>第 {index + 1} 组边配置</h5>
+                          </Col>
+                          <Col span={2} style={{ textAlign: 'right', fontSize: 16 }}>
+                            <MinusCircleOutlined onClick={() => remove(field.name)} />
+                          </Col>
+                          <Col span={12}>
+                            <Item label="边文件类型" name={[field.name, 'edgeType']}>
+                              <Input style={{ width: 125 }} />
+                            </Item>
+                          </Col>
+                          <Col span={12}>
+                            <Item label="边数据文件" name={[field.name, 'edgeFileList']}>
+                              <Upload {...fileProps} name="edges" maxCount={1}>
+                                <Button icon={<UploadOutlined />}>上传边文件</Button>
+                              </Upload>
+                            </Item>
+                          </Col>
+                          <Col span={12}>
+                            <Item label="边起点类型" name={[field.name, 'sourceNodeType']}>
+                              <Input style={{ width: 125 }} />
+                            </Item>
+                          </Col>
+                          <Col span={12}>
+                            <Item label="边终点类型" name={[field.name, 'targetNodeType']}>
+                              <Input style={{ width: 125 }} />
+                            </Item>
+                          </Col>
+                        </Row>
+                      ))}
+
+                      <Form.Item>
+                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                          增加边配置
+                        </Button>
+                      </Form.Item>
+                    </>
+                  )}
+                </Form.List>
+              </Col>
+            </Row>
 
             {/* <Item label="点类型" name="nodeType" rules={[{ required: true, message: '请输入点类型!' }]}>
               <Input style={{ width: 200 }} />
