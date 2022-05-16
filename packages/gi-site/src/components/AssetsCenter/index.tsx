@@ -91,7 +91,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         onClose={handleCloseAssetsCenter}
         visible={assetsCenter.visible}
         footer={Footer}
-        width={'80%'}
+        width="calc(100vw - 382px)"
       >
         {assetsCenter.visible && (
           <Tabs defaultActiveKey={assetsCenter.hash}>

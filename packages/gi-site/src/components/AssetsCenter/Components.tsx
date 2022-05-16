@@ -29,7 +29,6 @@ const COLOR_MAP = {
   undefined: '#f50',
 };
 const cardContent = item => {
-  console.log('item', item);
   const { desc, version } = item;
   const pkg = item.pkg.replace('@alipay/gi-assets-', '');
   return <div className="asset-detail">{desc}</div>;

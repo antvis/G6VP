@@ -1,0 +1,44 @@
+{
+  "nodes": [
+    {
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "properties": {
+        "id": "string",
+        "type": "string"
+      }
+    },
+    {
+      "nodeType": "card",
+      "nodeTypeKeyFromProperties": "type",
+      "properties": {
+        "id": "string",
+        "type": "string"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "edgeType": "family",
+      "edgeTypeKeyFromProperties": "type",
+      "sourceNodeType": "user",
+      "targetNodeType": "user",
+      "properties": {
+        "source": "string",
+        "target": "string",
+        "type": "string"
+      }
+    },
+    {
+      "edgeType": "own",
+      "edgeTypeKeyFromProperties": "type",
+      "sourceNodeType": "user",
+      "targetNodeType": "card",
+      "properties": {
+        "source": "string",
+        "target": "string",
+        "type": "string"
+      }
+    }
+  ]
+}

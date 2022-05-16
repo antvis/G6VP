@@ -7,10 +7,11 @@ import registerMeta from './registerMeta';
 const info: AssetInfo = {
   id: 'Sheetbar',
   name: '多画布页签',
-  desc: '多画布页签',
+  desc: '新建画布页签，辅助动态分析',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
   type: 'AUTO',
+  icon: 'icon-diff',
 };
 
 export default {

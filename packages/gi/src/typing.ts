@@ -1,5 +1,5 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-
+import type { IGraphSchema } from './process/schema';
 export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
@@ -15,6 +15,8 @@ export interface State {
   data: GraphinData;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
+
+  schemaData: IGraphSchema;
 
   /** 布局 */
   layout: Layout;
@@ -65,6 +67,7 @@ export interface Props {
   /**
    * style
    */
+  schemaData?: IGraphSchema;
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
@@ -261,6 +264,8 @@ export type AssetInfo = {
   cover?: string;
   /** 资产类型 */
   type: AssetType;
+  /** 资产ID */
+  icon: string;
   /** 资产分类 */
   category: AssetCategory;
   /** 资产描述 */

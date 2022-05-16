@@ -80,7 +80,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param all
    */
   const handleChange = (all, groupIndex = 0, elementId) => {
-    console.log(all, groupIndex, elementId, preStyleGroup.current);
+    //(all, groupIndex, elementId, preStyleGroup.current);
 
     if (preStyleGroup.current[groupIndex]) {
       preStyleGroup.current[groupIndex].props = all;
@@ -96,7 +96,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
         rules: 'and',
       };
     }
-    console.log('preStyleGroup', preStyleGroup);
+
     if (onChange) {
       onChange(preStyleGroup.current);
     }

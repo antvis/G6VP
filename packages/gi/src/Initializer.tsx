@@ -6,6 +6,7 @@ import { GIService } from './typing';
 
 export interface IProps {
   serviceId: string;
+  schemaServiceId: string;
 }
 
 export const defaultInitializerCfg = {
@@ -13,30 +14,40 @@ export const defaultInitializerCfg = {
   props: {
     GI_INITIALIZER: true,
     serviceId: 'GI_SERVICE_INTIAL_GRAPH',
+    schemaServiceId: 'GI_SERVICE_SCHEMA',
   },
 };
 
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
-  const { serviceId } = props;
+  const { serviceId, schemaServiceId } = props;
   const { services, updateContext, transform } = context;
 
   React.useEffect(() => {
-    const { service } = services.find(s => s.id === serviceId) as GIService;
-    service().then((res = { nodes: [], edges: [] }) => {
+    const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
+    const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
+      service: () => Promise.resolve(null),
+    };
+
+    Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
       updateContext(draft => {
-        const { nodes, edges } = res;
+        const { nodes, edges } = data;
+        if (schema) {
+          // 更新schemaData
+          draft.schemaData = schema as any;
+        }
+
         const position = isPosition(nodes);
         const style = isStyles(nodes);
         if (position) {
           draft.layout.type = 'preset';
         }
         if (style) {
-          draft.data = res;
-          draft.source = res;
+          draft.data = data;
+          draft.source = data;
         } else {
-          const newData = transform(res, true);
-          draft.rawData = { ...res };
+          const newData = transform(data, true);
+          draft.rawData = { ...data };
           draft.data = newData;
           draft.source = newData;
 

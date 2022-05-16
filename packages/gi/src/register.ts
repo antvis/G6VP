@@ -7,7 +7,6 @@ export const registerShapes = Elements => {
     const nextShapes = Object.keys(Elements).join('-');
     const prevShapes = registeredShapes;
     if (nextShapes !== prevShapes) {
-      console.log('%c register Shape! ', 'color:green');
       Object.keys(Elements).forEach(type => {
         Elements[type].registerShape(Graphin);
       });
@@ -20,7 +19,6 @@ export const registerLayouts = Layouts => {
     const nextLayout = Object.keys(Layouts).join('-');
     const prevLayout = registeredLayouts;
     if (nextLayout !== prevLayout) {
-      console.log('%c register Layout! ', 'color:green');
       Object.keys(Layouts).forEach(type => {
         Layouts[type].registerLayout(Graphin);
       });

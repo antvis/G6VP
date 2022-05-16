@@ -1,36 +1,45 @@
 const registerMeta = context => {
   return {
     radius: {
-      type: 'slider',
-      caption: '半径',
-      default: 100,
-      min: 5,
-      max: 2500,
-      step: 1,
+      type: 'number',
+      title: '半径',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {
+        step: 1,
+      },
+      default: 300,
     },
     divisions: {
-      type: 'slider',
-      caption: '分段数',
+      type: 'number',
+      title: '分段数',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {
+        step: 1,
+      },
       default: 1,
-      step: 1,
-      min: 1,
-      max: 10,
     },
     ordering: {
-      type: 'select',
-      caption: '排序依据',
+      type: 'string',
+      title: '排序依据',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          { label: 'Null', value: null },
+          { label: 'topology', value: 'topology' },
+          { label: 'degree', value: 'degree' },
+        ],
+      },
       default: null,
-      options: [
-        { label: '请选择', value: null },
-        { label: 'topology', value: 'topology' },
-        { label: 'degree', value: 'degree' },
-      ],
     },
     preventOverlap: {
       type: 'switch',
-      caption: '防止重叠',
+      title: '防止重叠',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
       default: true,
-      statusText: false,
     },
   };
 };

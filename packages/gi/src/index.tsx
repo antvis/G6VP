@@ -11,11 +11,11 @@ import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
-
 export type { IGIAC } from './components/const';
 export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
+export { COLORS } from './process/schema';
 export type {
   AssetCategory,
   AssetInfo,
@@ -25,6 +25,7 @@ export type {
   GIConfig,
   GIEdgeConfig,
   GINodeConfig,
+  GIService,
   ISourceDataMap,
 } from './typing';
 export { useContext, utils };
@@ -42,7 +43,7 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.0.0';
+const version = '2.1.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;

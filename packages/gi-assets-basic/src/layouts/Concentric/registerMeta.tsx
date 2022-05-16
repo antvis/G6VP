@@ -1,42 +1,52 @@
 const registerMeta = context => {
   return {
     sortBy: {
-      type: 'select',
-      caption: '排序依据',
-      useFont: true,
+      type: 'string',
+      title: '排序依据',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          { label: 'Null', value: null },
+          { label: 'topology', value: 'topology' },
+          { label: 'degree', value: 'degree' },
+        ],
+      },
       default: null,
-      options: [
-        { label: '请选择', value: null },
-        { label: 'topology', value: 'topology' },
-        { label: 'degree', value: 'degree' },
-      ],
     },
     nodeSize: {
-      type: 'slider',
-      caption: '节点大小',
-      default: 15,
-      min: 0,
-      max: 200,
-      step: 1,
+      type: 'number',
+      title: '节点大小',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {
+        step: 1,
+      },
+      default: 80,
     },
     minNodeSpacing: {
-      type: 'slider',
-      caption: '最小间距',
-      default: 10,
-      min: 5,
-      max: 50,
-      step: 1,
+      type: 'number',
+      title: '最小间距',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {
+        step: 1,
+      },
+      default: 40,
     },
     equidistant: {
-      type: 'switch',
-      caption: '是否等间距',
-      default: false,
+      type: 'boolean',
+      title: '是否等间距',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
     },
     preventOverlap: {
-      type: 'switch',
-      caption: '防止重叠',
+      type: 'boolean',
+      title: '防止重叠',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
       default: true,
-      statusText: false,
     },
   };
 };
