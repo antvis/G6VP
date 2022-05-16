@@ -1,6 +1,6 @@
 import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Modal, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
+import { Button, Form, notification, Radio, Row, Steps, Table, Tabs, Upload, Drawer } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import xlsx2js from 'xlsx2js';
@@ -8,7 +8,7 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import GraphScopeMode from './GraphScope'
+import GraphScopeData from './GraphScopeData'
 import MockData from './MockData'
 import './index.less';
 
@@ -319,7 +319,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   ];
 
   return (
-    <Modal title="导入数据" visible={visible} width={800} footer={null} onCancel={handleClose}>
+    <Drawer title="导入数据" visible={visible} width={1050} onClose={handleClose}>
       <Tabs defaultActiveKey="graphscope">
         <TabPane tab="示例数据" key="mockdata">
           <MockData handleClose={handleClose} />
@@ -334,11 +334,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <div className="steps-action"></div>
         </TabPane>
         <TabPane tab="GraphScope" key="graphscope">
-          <GraphScopeMode close={handleClose} />
+          <GraphScopeData close={handleClose} />
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
       </Tabs>
-    </Modal>
+    </Drawer>
   );
 };
 
