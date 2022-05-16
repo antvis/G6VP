@@ -22,8 +22,6 @@
     "@ali/datav-gui-marker-scale": "^1.1.0",
     "@ali/datav-gui-size-scale": "^1.0.5",
     "@alipay/alex": "^1.5.0",
-    "@alipay/e2-editor-core": "^2.1.2",
-    "@alipay/e2-language-gremlin": "^2.1.2",
     "@alipay/gi-assets-advance": "*",
     "@alipay/gi-assets-basic": "*",
     "@alipay/gi-assets-scene": "*",
