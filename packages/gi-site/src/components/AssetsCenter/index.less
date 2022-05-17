@@ -6,7 +6,6 @@
 
   line-height: 56px;
   letter-spacing: -0.3px;
-  // border-bottom: 1px solid #ececec;
 
   & > span:last-child {
     float: right;
@@ -105,23 +104,7 @@
   }
 }
 
-.ant-pro-checkcard-checked {
-  box-shadow: 0px 0px 6px 0 var(--primary-color);
-}
-
 .gi-assets-center-drawer {
-  .ant-pro-checkcard-multiple.ant-pro-checkcard-checked::after {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 0;
-    height: 0;
-    border: 12px solid #3056e3;
-    border-bottom: 12px solid transparent;
-    border-left: 12px solid transparent;
-    border-top-right-radius: 8px;
-    content: '';
-  }
   .ant-tabs-tab {
     font-size: 16px;
   }
@@ -130,4 +113,21 @@
     width: 100px;
     padding: 0px 18px;
   }
+}
+
+.ant-pro-checkcard-checked {
+  box-shadow: 0px 0px 6px 0 var(--primary-color);
+}
+
+.ant-pro-checkcard-multiple.ant-pro-checkcard-checked::after {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 0;
+  height: 0;
+  border: 12px solid #3056e3;
+  border-bottom: 12px solid transparent;
+  border-left: 12px solid transparent;
+  border-top-right-radius: 8px;
+  content: '';
 }
