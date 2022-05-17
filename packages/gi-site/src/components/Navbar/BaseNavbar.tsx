@@ -64,8 +64,8 @@ const BaseNavbar = props => {
           <ThemeSwitch
             themeVars={ThemeVars}
             antdCssLinks={{
-              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/dark.css',
-              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/light.css',
+              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.5/dist/GraphInsight/dark.css',
+              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.5/dist/GraphInsight/light.css',
             }}
           ></ThemeSwitch>
         </Tooltip>
