@@ -51,7 +51,7 @@ const GIAC_CONTENT = {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: '时序分析',
+          default: '未命名组件',
         },
         isShowIcon: {
           title: '显示图标',
@@ -132,9 +132,6 @@ const GIAC_CONTENT = {
                 label: '下方',
               },
             ],
-            showInPanel: {
-              conditions: [['.isShowTooltip', '$eq', true]],
-            },
           },
           default: 'right',
         },
@@ -157,14 +154,7 @@ const GIAC_CONTENT = {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
-          'x-component-props': {
-            showInPanel: {
-              conditions: [
-                ['.isShowIcon', '$eq', true],
-                ['.isShowTitle', '$eq', true],
-              ],
-            },
-          },
+
           default: true,
         },
         containerType: {
@@ -174,6 +164,10 @@ const GIAC_CONTENT = {
           'x-component': 'Radio.Group',
           enum: [
             {
+              label: '普通DIV',
+              value: 'div',
+            },
+            {
               label: '抽屉',
               value: 'drawer',
             },
@@ -181,12 +175,15 @@ const GIAC_CONTENT = {
               label: '弹窗',
               value: 'modal',
             },
-            {
-              label: '普通DIV',
-              value: 'div',
-            },
           ],
-          default: 'drawer',
+          default: 'div',
+        },
+        containerAnimate: {
+          title: '容器动画（仅DIV有效）',
+          type: 'boolean',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: false,
         },
         containerPlacement: {
           title: '容器位置',
@@ -220,28 +217,23 @@ const GIAC_CONTENT = {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Offset',
-          'x-component-props': {
-            min: 0,
-            max: 400,
-          },
-          default: [10, 60],
+          default: [0, 0],
         },
         containerWidth: {
           title: '容器宽度',
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          'x-component-props': {},
-          default: '400px',
+          default: '350px',
         },
         containerHeight: {
-          title: '容器宽度',
+          title: '容器高度',
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          'x-component-props': {},
-          default: 'calc(100vh - 120px)',
+          default: 'calc(100% - 100px)',
         },
+
         contaienrMask: {
           title: '容器遮罩',
           type: 'string',
@@ -523,10 +515,6 @@ export const GI_CONTAINER_METAS = {
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Offset',
-    'x-component-props': {
-      min: 0,
-      max: 400,
-    },
     default: [0, 0],
   },
   height: {

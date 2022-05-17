@@ -67,10 +67,6 @@ const registerMeta = () => {
       type: 'array',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',
-      'x-component-props': {
-        min: 0,
-        max: 400,
-      },
       default: [20, 20],
     },
     ...metas,
