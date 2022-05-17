@@ -11,5 +11,6 @@ import AddSheetbar from './AddSheetbar';
 import GremlinQuery from './GremlinQuery';
 import Sheetbar from './Sheetbar';
 import SnapshotGallery from './SnapshotGallery';
+import AlgorithmAnalysis from './AlgorithmAnalysis';
 
-export { SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar };
+export { SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, AlgorithmAnalysis };

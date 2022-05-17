@@ -274,3 +274,27 @@ export const closeGraphInstance = async (instanceId: string) => {
 
   return result;
 };
+
+interface GraphAlgorithmProps {
+  name: 'pagerank' | 'clustering' | 'sssp' | 'wcc' | 'eigenvector_centrality' | 'k_core';
+  graphName: string;
+  limit?: number;
+  sortById?: boolean;
+  maxRound?: number;
+  delta?: number;
+  weight?: string;
+  // sssp 算法 src 必选
+  src?: string;
+  tolerance?: number;
+  // k-core 算法 k 必选
+  k?: number;
+}
+
+// 调用图算法
+export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/execAlgorithm`, {
+    method: 'POST',
+    data: params
+  })
+  return result
+}
