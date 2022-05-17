@@ -21,7 +21,7 @@ const Loading: React.FunctionComponent<LoadingProps> = props => {
 
   if (!hasNodes) {
     return (
-      <div className="gi-placeholader">
+      <div className="gi-placeholader" style={{ width: `${width}px` }}>
         {img && <img src={img} width={width} />}
         {text}
       </div>
