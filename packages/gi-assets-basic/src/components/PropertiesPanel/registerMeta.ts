@@ -17,6 +17,13 @@ const registerMeta = context => {
       },
       default: 'Mock/PropertiesPanel',
     },
+    title: {
+      title: '标题',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      default: '属性面板',
+    },
     placement: {
       title: '展示方位',
       type: 'string',
@@ -26,31 +33,51 @@ const registerMeta = context => {
         options: [
           {
             label: '左部',
-            value: 'left',
+            value: 'LB',
           },
           {
             label: '右部',
-            value: 'right',
+            value: 'RT',
           },
           {
             label: '上部',
-            value: 'top',
+            value: 'LT',
           },
           {
             label: '底部',
-            value: 'bottom',
+            value: 'RB',
           },
         ],
       },
-      default: 'right',
+      default: 'LB',
     },
-
     width: {
-      title: '展示方位',
-      type: 'number',
+      title: '宽度',
+      type: 'string',
       'x-decorator': 'FormItem',
-      'x-component': 'NumberPicker',
-      default: 356,
+      'x-component': 'Input',
+      default: '356px',
+    },
+    height: {
+      title: '高度',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      default: 'calc(100% - 80px)',
+    },
+    offset: {
+      title: '偏移距离',
+      type: 'array',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      default: [10, 10],
+    },
+    animate: {
+      title: '抽屉动画',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
     },
   };
 };

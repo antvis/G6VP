@@ -10,7 +10,7 @@ interface IOffsetProps {
 }
 
 const Offset: React.FC<IOffsetProps> = props => {
-  const { value = [100, 100], min = 0, max = 200, } = props;
+  const { value = [100, 100], min = 0, max = 200 } = props;
   const [x, y] = value;
   //const [defaultX, defaultY] = defaultValue;
 
