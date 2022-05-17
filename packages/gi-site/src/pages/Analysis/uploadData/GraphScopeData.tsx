@@ -13,8 +13,9 @@ import {
   Alert,
   Row,
   Col,
+  Modal,
 } from 'antd';
-import { UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined, MinusCircleOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import {
   uploadLocalFileToGraphScope,
   closeGraphInstance,
@@ -24,6 +25,7 @@ import {
 } from '../../../services/graphcompute';
 import { DefaultGraphScopeNodeFilePath, DefaultGraphScopeEdgeFilePath } from './const';
 const { Item } = Form;
+const { confirm } = Modal;
 
 interface GraphModelProps {
   close: () => void;
@@ -33,24 +35,29 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
   const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
   const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
+  const graphScopeFilesMapping = localStorage.getItem('graphScopeFilesMapping');
 
   const [dataType, setDataType] = useState('real');
   const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
   const [closeLoading, setCloseLoading] = useState(false);
+  const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping ? JSON.parse(graphScopeFilesMapping) : null);
 
   const handleDataTypeChange = e => {
     setDataType(e.target.value);
   };
-  const handleSubmitForm = async () => {
+
+  /**
+   * 实例化GraphScope引擎实例
+   */
+  const initGraphScopeInstance = async () => {
     let currentInstanceId = graphScopeInstanceId;
-    setLoading(true);
     // 不存在 GraphScope 实例，则进行创建
     if (!graphScopeInstanceId) {
       // step1: 初始化 GraphScope 引擎
       const gsResult = await createGraphScopeInstance();
 
       if (!gsResult || !gsResult.success) {
-        setLoading(false);
         message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
         return null;
       }
@@ -62,6 +69,86 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
       currentInstanceId = instanceId;
     }
+
+    return currentInstanceId;
+  };
+
+  const confirmUploadFiles = () => {
+    if (filesMapping) {
+      confirm({
+        title: '是否继续上传文件?',
+        icon: <ExclamationCircleOutlined />,
+        content: '你已经有上传的文件，是否继续上传，如果上传同名文件，会覆盖之前上传的文件',
+        onOk() {
+          handleUploadFiles();
+        },
+        onCancel() {
+          return;
+        },
+      });
+    } else {
+      // 上传
+      handleUploadFiles();
+    }
+  };
+
+  const handleUploadFiles = async () => {
+    setUploadLoading(true);
+    const currentInstanceId = await initGraphScopeInstance();
+    const values = await form.validateFields();
+
+    const { nodeConfigList, edgeConfigList = [] } = values;
+    const nodeFileLists = nodeConfigList.filter(d => d.nodeFileList && d.nodeType).map(d => d.nodeFileList);
+    const nodeFilePromise = nodeFileLists.map(d => {
+      // 上传点文件
+      const nodeFileResult = uploadLocalFileToGraphScope({
+        fileList: d,
+        instanceId: currentInstanceId,
+      });
+      return nodeFileResult;
+    });
+
+    const edgeFileLists = edgeConfigList
+      .filter(d => d.edgeType && d.sourceNodeType && d.targetNodeType)
+      .map(d => d.edgeFileList);
+    const edgeFilePromise = edgeFileLists.map(d => {
+      // 上传点文件
+      const edgeFileResult = uploadLocalFileToGraphScope({
+        fileList: d,
+        instanceId: currentInstanceId,
+      });
+      return edgeFileResult;
+    });
+
+    const filesUploadResult = await Promise.all([...nodeFilePromise, ...edgeFilePromise]);
+
+    setUploadLoading(false);
+    // 所有文件上传成功后，开始载图
+    // 验证是否有上传失败的
+    const failedFile = filesUploadResult.find(d => !d.success);
+    if (failedFile) {
+      // 有文件上传失败，提示用户，停止后面的逻辑
+      message.error('文件上传失败');
+      return;
+    }
+
+    // 构建 fileName: filePath 的对象
+    const filePathMapping = {};
+    filesUploadResult.forEach(d => {
+      const { fileName, filePath } = d.data;
+      filePathMapping[fileName] = filePath;
+    });
+
+    console.log('上传的文件对象', filePathMapping);
+    setFilesMapping(filePathMapping);
+
+    localStorage.setItem('graphScopeFilesMapping', JSON.stringify(filePathMapping));
+    message.success('文件上传成功，可以点击进入分析开始载图并分析');
+  };
+
+  const handleSubmitForm = async () => {
+    const currentInstanceId = await initGraphScopeInstance();
+    setLoading(true);
 
     // 使用示例数据
     if (dataType === 'demo') {
@@ -95,57 +182,22 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       return;
     }
 
-    const values = await form.validateFields();
-
-    const { nodeConfigList, edgeConfigList, directed = true, delimiter = ',', hasHeaderRow = true } = values;
-    const nodeFileLists = nodeConfigList.filter(d => d.nodeFileList && d.nodeType).map(d => d.nodeFileList);
-    const nodeFilePromise = nodeFileLists.map(d => {
-      // 上传点文件
-      const nodeFileResult = uploadLocalFileToGraphScope({
-        fileList: d,
-        instanceId: currentInstanceId,
-      });
-      return nodeFileResult;
-    });
-
-    const edgeFileLists = edgeConfigList
-      .filter(d => d.edgeType && d.sourceNodeType && d.targetNodeType)
-      .map(d => d.edgeFileList);
-    const edgeFilePromise = edgeFileLists.map(d => {
-      // 上传点文件
-      const edgeFileResult = uploadLocalFileToGraphScope({
-        fileList: d,
-        instanceId: currentInstanceId,
-      });
-      return edgeFileResult;
-    });
-
-    const filesUploadResult = await Promise.all([...nodeFilePromise, ...edgeFilePromise]);
-
-    // 所有文件上传成功后，开始载图
-    // 验证是否有上传失败的
-    const failedFile = filesUploadResult.find(d => !d.success);
-    if (failedFile) {
-      // 有文件上传失败，提示用户，停止后面的逻辑
-      message.error('文件上传失败');
+    // 没有上传文件
+    if (!filesMapping) {
+      message.error('请先上传文件后再进行载图');
       return;
     }
 
-    // 构建 fileName: filePath 的对象
-    const filePathMapping = {};
-    filesUploadResult.forEach(d => {
-      const { fileName, filePath } = d.data;
-      filePathMapping[fileName] = filePath;
-    });
+    const values = await form.validateFields();
 
-    console.log('上传的文件对象', filePathMapping);
+    const { nodeConfigList, edgeConfigList = [], directed = true, delimiter = ',', hasHeaderRow = true } = values;
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
       instanceId: currentInstanceId,
       nodeConfigList,
       edgeConfigList,
-      fileMapping: filePathMapping,
+      fileMapping: filesMapping,
       directed,
       delimiter,
       hasHeaderRow,
@@ -171,6 +223,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     localStorage.removeItem('graphScopeGraphName');
     localStorage.removeItem('graphScopeGremlinServer');
     localStorage.removeItem('graphScopeInstanceId');
+    localStorage.removeItem('graphScopeFilesMapping');
   };
 
   const handleCloseGraph = async () => {
@@ -215,7 +268,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
             type="info"
             showIcon
             style={{ marginTop: 16, marginBottom: 16 }}
-            message="正在创建 GraphScope 实例、上传点边文件，并将点边数据载入到 GraphScope 引擎中，请耐心等待……"
+            message="正在将点边数据载入到 GraphScope 引擎中，请耐心等待……"
           />
         )}
         {dataType === 'demo' && (
@@ -343,29 +396,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
                 </Form.List>
               </Col>
             </Row>
-
-            {/* <Item label="点类型" name="nodeType" rules={[{ required: true, message: '请输入点类型!' }]}>
-              <Input style={{ width: 200 }} />
-            </Item>
-            <Item label="点文件" name="nodeFileList" rules={[{ required: true, message: '请上传点文件!' }]}>
-              <Upload {...fileProps} name="nodes" maxCount={1}>
-                <Button icon={<UploadOutlined />}>上传点文件</Button>
-              </Upload>
-            </Item>
-            <Item label="边文件" name="edgeFileList">
-              <Upload {...fileProps} name="edges" maxCount={1}>
-                <Button icon={<UploadOutlined />}>上传边文件</Button>
-              </Upload>
-            </Item>
-            <Item label="边类型" name="edgeType">
-              <Input style={{ width: 200 }} />
-            </Item>
-            <Item label="边起点类型" name="sourceNodeType">
-              <Input style={{ width: 200 }} />
-            </Item>
-            <Item label="边终点类型" name="targetNodeType">
-              <Input style={{ width: 200 }} />
-            </Item> */}
             <Collapse>
               <Collapse.Panel header="高级配置" key="advanced-panel">
                 <Item label="是否有向图" name="directed">
@@ -398,7 +428,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               </Button>
             </Popconfirm>
             <Button onClick={close}>取消</Button>
-            <Button type="primary" onClick={handleSubmitForm} loading={loading}>
+            <Button onClick={confirmUploadFiles} loading={uploadLoading}>
+              上传文件
+            </Button>
+            <Button type="primary" disabled={!filesMapping} onClick={handleSubmitForm} loading={loading}>
               进入分析
             </Button>
           </Space>
