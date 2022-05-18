@@ -3,8 +3,6 @@
     "@ali/datav-gui-color-scale": "^1.0.9",
     "@ali/datav-gui-marker-scale": "^1.1.0",
     "@ali/datav-gui-size-scale": "^1.0.5",
-    "@ali/react-datav-gui": "^4.1.7",
-    "@ali/react-datav-gui-utils": "^0.1.18",
     "@alipay/e2-editor-core": "^2.0.22",
     "@alipay/e2-language-gremlin": "^2.0.22",
     "@ant-design/charts": "^1.2.11",

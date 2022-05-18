@@ -1,3 +1,4 @@
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 /** 是否为本地研发模式 */
 import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
@@ -96,13 +97,13 @@ export default {
   request: {
     dataField: '',
   },
-  // chainWebpack(config: any) {
-  //   config.plugin('monaco-editor').use(
-  //     new MonacoWebpackPlugin({
-  //       languages: ['javascript', 'json'],
-  //     }),
-  //   );
-  // },
+  chainWebpack(config: any) {
+    config.plugin('monaco-editor').use(
+      new MonacoWebpackPlugin({
+        languages: ['javascript', 'json'],
+      }),
+    );
+  },
   externals: {
     lodash: '_',
     react: 'React',

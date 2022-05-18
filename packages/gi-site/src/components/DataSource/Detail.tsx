@@ -1,4 +1,4 @@
-import { Button, Card, Input, Radio } from 'antd';
+import { Button, Card, Input } from 'antd';
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import './index.less';
@@ -82,30 +82,20 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
             serviceNameRef = node;
           }}
         />
-        服务类型:
-        <Radio.Group
-          options={serviceTypes}
-          onChange={value => {
-            serviceModeRef = value;
-          }}
-          defaultValue={mode}
-        />
         <br />
         服务实现：
-        {mode === 'MOCK' && (
-          <MonacoEditor
-            ref={node => {
-              monacoRef = node;
-            }}
-            width="calc(80vw - 400px)"
-            height="400px"
-            language="json"
-            theme="vs-dark"
-            defaultValue={content}
-            options={{}}
-            editorDidMount={editorDidMount}
-          />
-        )}
+        <MonacoEditor
+          ref={node => {
+            monacoRef = node;
+          }}
+          width="calc(100vw - 496px)"
+          height="calc(100vh - 480px)"
+          language="javascript"
+          theme="vs-light"
+          defaultValue={content}
+          options={{}}
+          editorDidMount={editorDidMount}
+        />
       </Card>
     </div>
   );

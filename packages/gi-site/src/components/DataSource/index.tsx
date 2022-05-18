@@ -84,15 +84,17 @@ const DataSource = React.forwardRef((props, ref) => {
   const { id, mode, content, name } = current;
 
   return (
-    <div className="gi-services">
-      <SideList
-        options={options}
-        activeId={currentId}
-        handleDelete={handleDelete}
-        handleAdd={handleAdd}
-        handleChange={handleClickSidebar}
-      />
-      <Detail key={currentId} name={name} content={content} id={id} mode={mode} handleSave={handleSave} />
+    <div className="gi-page-container">
+      <div className="gi-services-container">
+        <SideList
+          options={options}
+          activeId={currentId}
+          handleDelete={handleDelete}
+          handleAdd={handleAdd}
+          handleChange={handleClickSidebar}
+        />
+        <Detail key={currentId} name={name} content={content} id={id} mode={mode} handleSave={handleSave} />
+      </div>
     </div>
   );
 });

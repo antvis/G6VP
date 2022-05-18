@@ -16,7 +16,6 @@
   "dependencies": {
     "@alipay/e2-editor-core": "^2.1.0",
     "@alipay/e2-language-gremlin": "^2.1.0",
-    "@ali/react-datav-gui-utils": "latest",
     "@alipay/graphinsight": "2.x",
     "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",

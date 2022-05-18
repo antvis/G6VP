@@ -1,12 +1,20 @@
 @line-height: 40px;
-.gi-services {
+.gi-page-container {
+  height: calc(100vh - 64px);
+  padding: 12px 48px 48px 48px;
+  overflow-y: scroll;
+  background: #fafafa;
+}
+.gi-services-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
+  background: #fff;
 }
 
-ul.gi-services-sidebar {
-  flex-basis: 300px;
-  width: 300px;
+.gi-services-sidebar {
+  flex-basis: 400px;
+  width: 400px;
   margin: 0px;
   padding: 0px;
   list-style: none;
@@ -38,7 +46,7 @@ ul.gi-services-sidebar {
     margin: 12px 0;
   }
   .ant-radio-group-outline {
-    margin-left: 12px;
     margin-bottom: 12px;
+    margin-left: 12px;
   }
 }

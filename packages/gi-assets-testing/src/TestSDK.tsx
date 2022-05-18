@@ -1,5 +1,3 @@
-import GUI from '@ali/react-datav-gui';
-import { extractDefault } from '@ali/react-datav-gui-utils';
 import GISDK, { utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import Offset from './DataVGui/Offset';
@@ -98,7 +96,6 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
           },
         },
       };
-      const valueObj = extractDefault({ config: configObj, value: {} });
 
       setState(preState => {
         return {
@@ -140,7 +137,6 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
       {/* @ts-ignore */}
       <div style={styles.meta}>
         <h3>GraphInsight 属性面板配置</h3>
-        <GUI configObj={configObj} valueObj={valueObj} onChange={handleChange} extensions={extensions} />
       </div>
       <div style={styles.content}>
         {/* @ts-ignore */}
