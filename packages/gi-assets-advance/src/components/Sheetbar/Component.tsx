@@ -140,22 +140,14 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
             ...option.config,
             components: sheetItemComponentsConfig,
           };
-          const menu = (
-            <Menu
-              items={[
-                {
-                  key: 'delete',
-                  label: <div onClick={() => handleDelete(sheetId)}>删除</div>,
-                  icon: <DeleteOutlined />,
-                },
-                {
-                  label: <div>重命名</div>,
-                  key: 'rename',
-                  icon: <DeleteOutlined />,
-                },
-              ]}
-            />
-          );
+          const menuOptions = [
+            {
+              key: 'delete',
+              label: <div onClick={() => handleDelete(sheetId)}>删除</div>,
+              icon: <DeleteOutlined />,
+            },
+          ];
+          const menu = <Menu items={sheetId === 'default' ? [] : menuOptions} />;
           return (
             <div
               key={sheetId}
@@ -170,7 +162,8 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
               }}
             >
               {sheetName}
-              <Dropdown overlay={menu} placement="topRight">
+
+              <Dropdown overlay={menu} placement="topRight" trigger={['click']}>
                 <Button
                   type="text"
                   style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}

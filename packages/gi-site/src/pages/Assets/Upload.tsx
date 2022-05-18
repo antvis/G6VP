@@ -1,3 +1,4 @@
+import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Tabs } from 'antd';
 import * as React from 'react';
 const { TabPane } = Tabs;
@@ -34,7 +35,7 @@ const UploadAssets = () => {
   const [visible, setVisible] = React.useState(false);
   return (
     <div>
-      <Button onClick={handleUpload} type="primary">
+      <Button onClick={handleUpload} type="primary" icon={<UploadOutlined />}>
         本地上传资产包
       </Button>
 

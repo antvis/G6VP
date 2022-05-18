@@ -26,7 +26,7 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
         bordered={false}
         title="数据服务"
         extra={
-          <Button size="small" onClick={handleAdd} icon={<PlusOutlined />} type="primary">
+          <Button size="small" onClick={handleAdd} icon={<PlusOutlined />} type="dashed">
             新增
           </Button>
         }
