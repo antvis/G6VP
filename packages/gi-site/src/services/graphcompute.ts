@@ -237,6 +237,51 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
   };
 };
 
+interface ChinaVisParams {
+  instanceId: string;
+  dataSource: any;
+}
+/**
+ * 将 ChinaVis 示例数据载入到 GraphScope 中
+ * @param params 
+ */
+export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
+  const { instanceId, dataSource } = params
+  const loadFileParams = {
+    type: 'LOCAL',
+    directed: true,
+    oid_type: 'string',
+    instance_id: instanceId,
+    dataSource
+  };
+
+  console.log('载图参数', loadFileParams);
+
+  const loadResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/loadData`, {
+    method: 'post',
+    data: loadFileParams,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!loadResult || !loadResult.success) {
+    return loadResult;
+  }
+
+  const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+
+  return {
+    success: true,
+    data: {
+      graphURL,
+      graphName,
+      hostIp,
+      hostName,
+    },
+  };
+}
+
 export const findNodeById = async nodeId => {
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/findVertex`, {
     method: 'get',
