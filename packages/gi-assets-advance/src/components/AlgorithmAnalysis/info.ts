@@ -4,7 +4,7 @@ const info = {
   name: '算法分析面板',
   desc: '调用 GraphScope 图算法对数据进行分析',
   icon: 'icon-query',
-  category: 'canvas-interaction',
+  category: 'algorithm-analysis',
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
 };
