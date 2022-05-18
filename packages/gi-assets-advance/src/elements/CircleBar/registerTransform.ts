@@ -1,5 +1,6 @@
 import { scaleLinear } from 'd3-scale';
-import { defaultProps } from './registerMeta';
+// import { defaultProps } from './registerMeta';
+const defaultProps = {};
 
 const getMapping = () => {
   const Mapping = new Map();
@@ -18,12 +19,11 @@ const getMapping = () => {
 const transform = (s, metaConfig) => {
   try {
     /** 解构配置项 */
-    const {
-      color: Color,
-      label: Label,
-      size: Size,
-      icon: Icon,
-    } = Object.assign({}, defaultProps, metaConfig.node.props);
+    const { color: Color, label: Label, size: Size, icon: Icon } = Object.assign(
+      {},
+      defaultProps,
+      metaConfig.node.props,
+    );
 
     /** 分别生成Size和Color的Mapping */
     const mappingBySize = scaleLinear().domain(Size.scale.domain).range(Size.scale.range);
