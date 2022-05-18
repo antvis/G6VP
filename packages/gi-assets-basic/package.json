@@ -16,7 +16,6 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@ali/react-datav-gui-utils": "latest",
     "@alipay/gi-assets-testing": "2.x",
     "@alipay/gi-common-components": "1.x",
     "@alipay/graphinsight": "2.x",

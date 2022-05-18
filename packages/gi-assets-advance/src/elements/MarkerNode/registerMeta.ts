@@ -1,5 +1,3 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
-
 const registerMeta = context => {
   const { data, keys = ['id', 'type'] } = context;
   const options = keys.map(c => {
@@ -126,9 +124,5 @@ const registerMeta = context => {
     },
   };
 };
-
-const configObj = registerMeta({ data: {}, keys: ['id'] });
-
-export const defaultProps = extractDefault({ config: configObj, value: {} });
 
 export default registerMeta;

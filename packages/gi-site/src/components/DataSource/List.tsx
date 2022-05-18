@@ -1,4 +1,5 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Card } from 'antd';
 import React from 'react';
 import './index.less';
 
@@ -20,41 +21,52 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
   }, [activeId]);
 
   return (
-    <ul className="gi-services-sidebar">
-      {options.map(opt => {
-        const { id } = opt;
-        const isActive = id === activeId;
-        const classes = isActive ? 'active' : '';
-        const isShowDelete = isActive && id !== options[0].id;
-        return (
-          <li
-            className={classes}
-            key={id}
-            onClick={() => {
-              handleChange(id);
-            }}
-          >
-            {id}
-
-            {isShowDelete && (
-              <span
-                className="delete"
-                onClick={e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleDelete(id);
+    <div className="gi-services-sidebar">
+      <Card
+        title="数据服务"
+        extra={
+          <Button size="small" onClick={handleAdd} icon={<PlusOutlined />} type="dashed">
+            新增
+          </Button>
+        }
+      >
+        <ul>
+          {/* <li key="plus" onClick={handleAdd} className="plus">
+            自定义数据服务 <PlusOutlined />
+          </li> */}
+          {options.map(opt => {
+            const { id } = opt;
+            const isActive = id === activeId;
+            const classes = isActive ? 'active' : '';
+            const isShowDelete = isActive && id !== options[0].id;
+            return (
+              <li
+                className={classes}
+                key={id}
+                onClick={() => {
+                  handleChange(id);
                 }}
               >
-                <DeleteOutlined />
-              </span>
-            )}
-          </li>
-        );
-      })}
-      <li key="plus" onClick={handleAdd} className="plus">
-        自定义数据服务 <PlusOutlined />
-      </li>
-    </ul>
+                {id}
+
+                {isShowDelete && (
+                  <span
+                    className="delete"
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleDelete(id);
+                    }}
+                  >
+                    <DeleteOutlined />
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </Card>
+    </div>
   );
 };
 
