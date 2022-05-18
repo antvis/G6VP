@@ -26,12 +26,13 @@
   "peerDependencies": {
     "react": "17.x",
     "react-dom": "17.x",
-    "antd": "latest"
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "devDependencies": {
     "@alipay/gi-assets-testing": "2.x",
     "dumi": "^1.1.38",
-    "father": "^2.30.6",
+    "father": "^2.30.19",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
     "umi": "^3.5.20",

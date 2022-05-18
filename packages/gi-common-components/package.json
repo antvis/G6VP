@@ -23,12 +23,12 @@
   "peerDependencies": {
     "react": "17.x",
     "react-dom": "17.x",
-    "@antv/graphin": "2.x",
-    "antd": "^4.16.13"
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "devDependencies": {
     "@types/node": "latest",
-    "father": "^2.30.6",
+    "father": "^2.30.19",
     "rimraf": "^3.0.2"
   },
   "publishConfig": {

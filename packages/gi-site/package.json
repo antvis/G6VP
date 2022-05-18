@@ -13,9 +13,10 @@
     "*.css"
   ],
   "peerDependencies": {
-    "antd": "latest",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "dependencies": {
     "@fast-csv/format": "latest",
