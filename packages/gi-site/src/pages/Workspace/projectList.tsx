@@ -1,14 +1,15 @@
-import { CopyFilled, EditFilled, MoreOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
-import { Card, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
+import { Icon, utils } from '@alipay/graphinsight';
+import { CopyFilled, EditFilled, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { Card, Col, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
-import { utils } from '@alipay/graphinsight';
 
 interface ProjectListProps {
   onCreate?: () => void;
-  type: 'project' | 'case';
+  type: 'project' | 'case' | 'save';
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -88,7 +89,16 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           const { id, name, gmtCreate } = item;
           return (
             <Col key={id} span={6}>
-              <Card
+              <ProjectCard
+                onClick={() => {
+                  history.push(`/workspace/${id}?nav=data`);
+                }}
+                cover={<Icon type="icon-analysis" style={{ fontSize: '80px' }} />}
+                title={name}
+                time={utils.time(gmtCreate)}
+                description="dsdasfdasfasfdsafasdfdafadfdafafdsfdsfdafdafasfds"
+              ></ProjectCard>
+              {/* <Card
                 hoverable
                 cover={
                   <img
@@ -112,7 +122,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                   </div>
                   <span>{utils.time(gmtCreate)}</span>
                 </div>
-              </Card>
+              </Card> */}
             </Col>
           );
         })}

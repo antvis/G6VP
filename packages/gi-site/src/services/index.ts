@@ -168,7 +168,7 @@ export interface Project {
  * 获取所有项目
  * @returns
  */
-export const getProjectList = async (type: 'project' | 'case') => {
+export const getProjectList = async (type: 'project' | 'case' | 'save') => {
   if (isMock) {
     const projects = [];
     const cases = [];

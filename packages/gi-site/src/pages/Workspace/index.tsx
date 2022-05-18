@@ -13,14 +13,18 @@ setDefaultDemo();
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
 
-const LIST_OPTIONS: { id: 'case' | 'project'; name: string }[] = [
+const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = [
+  {
+    id: 'case',
+    name: '行业案例',
+  },
   {
     id: 'project',
     name: '我的项目',
   },
   {
-    id: 'case',
-    name: '行业案例',
+    id: 'save',
+    name: '我的保存',
   },
 ];
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
@@ -46,8 +50,22 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     <>
       <div className="workspace">
         <BaseNavbar rightContentExtra={<DataModeCard />}></BaseNavbar>
-        <div style={{ overflow: 'scroll', height: 'calc(100vh - 64px)' }}>
-          <Tabs>
+        <div
+          style={{
+            overflow: 'scroll',
+            padding: '24px 48px',
+            height: 'calc(100vh - 64px)',
+            background: '#fafafa',
+          }}
+        >
+          <Tabs
+            tabPosition="left"
+            style={{
+              background: '#fff',
+              height: '100%',
+              padding: '24px 0px',
+            }}
+          >
             {LIST_OPTIONS.map(c => {
               return (
                 <TabPane tab={c.name} key={c.id}>
