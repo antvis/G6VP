@@ -126,6 +126,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
       return acc;
     }, {});
   }, [data]);
+
   const categoryKeys = Object.keys(res);
   const categroy = React.useMemo(() => {
     return categoryKeys
@@ -136,6 +137,7 @@ const ComponentsPanel: React.FunctionComponent<ComponentsPanelProps> = props => 
         return a.order - b.order;
       });
   }, [categoryKeys]);
+  console.log('res', res, data, categoryKeys);
 
   return (
     <div>

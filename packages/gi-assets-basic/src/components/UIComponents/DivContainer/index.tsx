@@ -35,7 +35,6 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
     animate,
   } = props;
 
-  console.log('props', props);
   const styles = utils.getPositionStyles(containerPlacement, offset);
   const ps = POSITION_MAP[containerPlacement];
   const classes = animate ? (visible ? `${ps} open` : `${ps} close`) : '';

@@ -121,7 +121,7 @@ export const queryActiveAssetList = async (param: ActiveAssetParams[]) => {
  * 查询资产列表
  * @param param 查询参数
  */
-export const queryAssetList = async (param?: { name?: string; limit?: number; projectId: string }) => {
+export const queryAssetList = async () => {
   const FinalAssets = await getCombinedAssets();
 
   const components = Object.keys(FinalAssets.components).map(key => {

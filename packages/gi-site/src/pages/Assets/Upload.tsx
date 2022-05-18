@@ -34,11 +34,9 @@ const UploadAssets = () => {
   const [visible, setVisible] = React.useState(false);
   return (
     <div>
-      <h1>
-        <Button onClick={handleUpload} type="primary">
-          本地上传资产包
-        </Button>
-      </h1>
+      <Button onClick={handleUpload} type="primary">
+        本地上传资产包
+      </Button>
 
       <Modal title="上传配置" visible={visible} onOk={handleOk} onCancel={handleCancel}>
         <Form form={form} name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>

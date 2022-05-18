@@ -1,11 +1,9 @@
-import { CheckCard } from '@alipay/tech-ui';
 import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined } from '@ant-design/icons';
-import { Button, Col, Drawer, Row, Tabs, Typography } from 'antd';
+import { Button, Drawer, Tabs, Typography } from 'antd';
 import React from 'react';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { queryAssetList } from '../../services/assets';
-import AssetCard from './Card';
-import ComponentsPanel from './Components';
+import AllAssets from './AllAssets';
 import './index.less';
 import useAssetsCenter from './useHook';
 const { TabPane } = Tabs;
@@ -51,9 +49,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   });
   React.useEffect(() => {
     (async () => {
-      const ASSET_LIST = await queryAssetList({
-        projectId: id,
-      });
+      const ASSET_LIST = await queryAssetList();
       // console.log('ASSET_LIST', ASSET_LIST);
       setAssets({ ...ASSET_LIST } as any);
       ref = { ...activeAssetsKeys };
@@ -78,8 +74,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       </Button>
     </div>
   );
-  const handleChange = (key, val) => {
-    ref[key] = val;
+  const handleChange = (vals: any) => {
+    ref = vals;
+    console.log('ref', ref);
   };
 
   return (
@@ -94,6 +91,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         width="calc(100vw - 382px)"
       >
         {assetsCenter.visible && (
+          <AllAssets activeAssetsKeys={activeAssetsKeys} assetsCenter={assetsCenter} onChange={handleChange} />
+        )}
+        {/* {assetsCenter.visible && (
           <Tabs defaultActiveKey={assetsCenter.hash}>
             {options.map(category => {
               const { name, key, icon } = category;
@@ -141,7 +141,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
               );
             })}
           </Tabs>
-        )}
+        )} */}
       </Drawer>
     </div>
   );
