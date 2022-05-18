@@ -20,7 +20,7 @@
     "3d-force-graph": "^1.70.10",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7plot": "^0.0.11",
-    "@antv/l7-draw": "latest",
+    "@antv/l7-draw": "^2.4.24",
     "react-spring": "^9.4.4",
     "three": "^0.139.2"
   },

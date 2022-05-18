@@ -1,4 +1,5 @@
-import { defaultProps } from './registerMeta';
+// import { defaultProps } from './registerMeta';
+const defaultProps = {};
 
 const getMapping = () => {
   const Mapping = new Map();
