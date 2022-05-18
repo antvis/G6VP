@@ -11,7 +11,7 @@ const info = {
   category: 'basic',
   type: 'LAYOUT',
   desc: '节点按照网格排布',
-  icon: 'icon-layout-grid',
+  icon: 'icon-layout-grid-fill',
   cover: 'http://xxxx.jpg',
 };
 

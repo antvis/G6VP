@@ -1,4 +1,4 @@
-import { CaretRightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { MoreOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Collapse } from 'antd';
 import React from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
@@ -13,7 +13,7 @@ const otherCategory = {
 };
 const CategoryHeader = ({ data }) => {
   const { icon, name, id } = data;
-  return <div>{name}</div>;
+  return <div style={{ fontWeight: 'lighter' }}>{name}</div>;
 };
 
 /** 组件模块 配置面板 */
@@ -46,7 +46,6 @@ const ComponentPanel = props => {
   }, [categoryKeys]);
 
   const handleChange = (assetId, values) => {
-    console.log('onChange....', assetId, values);
     updateContext(draft => {
       draft.config.components.forEach(item => {
         if (item.id === assetId) {
@@ -61,7 +60,14 @@ const ComponentPanel = props => {
       <div>
         <Collapse
           defaultActiveKey={categoryKeys}
-          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+          expandIcon={({ isActive }) => (
+            <MoreOutlined
+              rotate={isActive ? 90 : 0}
+              style={{
+                color: '#ddd',
+              }}
+            />
+          )}
           ghost
           // expandIconPosition="right"
         >
