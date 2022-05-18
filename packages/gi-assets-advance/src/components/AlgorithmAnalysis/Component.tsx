@@ -40,8 +40,9 @@ const AlgorithmAnalysis = ({ serviceId }) => {
 
   const handleExecAlgorithm = async () => {
     console.log('算法参数', algorithmParams);
-    // const result = await service(algorithmParams);
+    const result = await service(algorithmParams);
 
+    console.log('result', result);
     // setBtnLoading(false);
     // console.log('Gremlin 查询结果', result);
     // if (!result || !result.success) {
