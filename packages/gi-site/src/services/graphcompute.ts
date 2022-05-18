@@ -131,6 +131,7 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
   const loadFileParams = {
     type: 'LOCAL',
     directed,
+    oid_type: 'string',
     instance_id: instanceId,
     dataSource: {
       nodes: nodeSources,

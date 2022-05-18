@@ -35,13 +35,13 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
   const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
   const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
-  const graphScopeFilesMapping = localStorage.getItem('graphScopeFilesMapping');
+  const graphScopeFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping'));
 
   const [dataType, setDataType] = useState('real');
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [closeLoading, setCloseLoading] = useState(false);
-  const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping ? JSON.parse(graphScopeFilesMapping) : null);
+  const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping);
 
   const handleDataTypeChange = e => {
     setDataType(e.target.value);
@@ -76,29 +76,46 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
   const confirmUploadFiles = () => {
     if (filesMapping) {
       confirm({
-        title: '是否继续上传文件?',
+        title: '是否忽略已上传文件?',
         icon: <ExclamationCircleOutlined />,
-        content: '你已经有上传的文件，是否继续上传，如果上传同名文件，会覆盖之前上传的文件',
+        content:
+          '你已经有上传的文件，是否选择忽略已经上传的文件，，如果选择「忽略已上传文件」，则已经上传的文件不会再次上传，如果选择全量覆盖，若上传同名文件，会覆盖之前上传的文件',
         onOk() {
-          handleUploadFiles();
+          // 忽略已上传文件
+          handleUploadFiles(false);
         },
         onCancel() {
-          return;
+          // 全量覆盖
+          handleUploadFiles(true);
         },
+        okText: '忽略已上传文件',
+        cancelText: '全量覆盖',
       });
     } else {
       // 上传
-      handleUploadFiles();
+      handleUploadFiles(true);
     }
   };
 
-  const handleUploadFiles = async () => {
+  const handleUploadFiles = async (isCover = false) => {
     setUploadLoading(true);
     const currentInstanceId = await initGraphScopeInstance();
     const values = await form.validateFields();
 
+    // 如果 isCover = false， 则需要先过滤掉 nodeConfigList, edgeConfigList 中已经存在于 localstorage 中的文件
     const { nodeConfigList, edgeConfigList = [] } = values;
-    const nodeFileLists = nodeConfigList.filter(d => d.nodeFileList && d.nodeType).map(d => d.nodeFileList);
+    debugger;
+    const nodeFileLists = nodeConfigList
+      .filter(d => d.nodeFileList && d.nodeType)
+      .filter(d => {
+        // 过滤到不完整的配置后，还要再过滤掉已经上传过的文件
+        if (!isCover && graphScopeFilesMapping) {
+          const fileName = d.nodeFileList.file.name;
+          return !graphScopeFilesMapping[fileName];
+        }
+        return true;
+      })
+      .map(d => d.nodeFileList);
     const nodeFilePromise = nodeFileLists.map(d => {
       // 上传点文件
       const nodeFileResult = uploadLocalFileToGraphScope({
@@ -109,7 +126,15 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     });
 
     const edgeFileLists = edgeConfigList
-      .filter(d => d.edgeType && d.sourceNodeType && d.targetNodeType)
+      .filter(d => d.edgeType && d.edgeFileList && d.sourceNodeType && d.targetNodeType)
+      .filter(d => {
+        // 过滤到不完整的配置后，还要再过滤掉已经上传过的文件
+        if (!isCover && graphScopeFilesMapping) {
+          const fileName = d.edgeFileList.file.name;
+          return !graphScopeFilesMapping[fileName];
+        }
+        return true;
+      })
       .map(d => d.edgeFileList);
     const edgeFilePromise = edgeFileLists.map(d => {
       // 上传点文件
@@ -140,9 +165,13 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     });
 
     console.log('上传的文件对象', filePathMapping);
-    setFilesMapping(filePathMapping);
+    const allUploadFiles = {
+      ...filesMapping,
+      ...filePathMapping,
+    };
+    setFilesMapping(allUploadFiles);
 
-    localStorage.setItem('graphScopeFilesMapping', JSON.stringify(filePathMapping));
+    localStorage.setItem('graphScopeFilesMapping', JSON.stringify(allUploadFiles));
     message.success('文件上传成功，可以点击进入分析开始载图并分析');
   };
 
@@ -239,6 +268,12 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
         close();
       }
     }
+  };
+
+  const handleCloseLoading = () => {
+    setLoading(false);
+    setCloseLoading(false);
+    setUploadLoading(false);
   };
 
   const formInitValue = {
@@ -428,6 +463,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               </Button>
             </Popconfirm>
             <Button onClick={close}>取消</Button>
+            <Button onClick={handleCloseLoading}>关闭 Loading「临时测试」</Button>
             <Button onClick={confirmUploadFiles} loading={uploadLoading}>
               上传文件
             </Button>
