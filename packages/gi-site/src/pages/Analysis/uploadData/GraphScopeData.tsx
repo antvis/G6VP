@@ -104,6 +104,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     // 如果 isCover = false， 则需要先过滤掉 nodeConfigList, edgeConfigList 中已经存在于 localstorage 中的文件
     const { nodeConfigList, edgeConfigList = [] } = values;
+    debugger;
     const nodeFileLists = nodeConfigList
       .filter(d => d.nodeFileList && d.nodeType)
       .filter(d => {
@@ -125,7 +126,15 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     });
 
     const edgeFileLists = edgeConfigList
-      .filter(d => d.edgeType && d.sourceNodeType && d.targetNodeType)
+      .filter(d => d.edgeType && d.edgeFileList && d.sourceNodeType && d.targetNodeType)
+      .filter(d => {
+        // 过滤到不完整的配置后，还要再过滤掉已经上传过的文件
+        if (!isCover && graphScopeFilesMapping) {
+          const fileName = d.edgeFileList.file.name;
+          return !graphScopeFilesMapping[fileName];
+        }
+        return true;
+      })
       .map(d => d.edgeFileList);
     const edgeFilePromise = edgeFileLists.map(d => {
       // 上传点文件
