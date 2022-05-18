@@ -145,7 +145,6 @@ export default {
     }),
     // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
-    'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
   analyze: {
     analyzerMode: 'server',
