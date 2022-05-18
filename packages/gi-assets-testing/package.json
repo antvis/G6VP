@@ -20,12 +20,12 @@
   "peerDependencies": {
     "react": "17.x",
     "react-dom": "17.x",
-    "@antv/graphin": "2.x",
-    "antd": "^4.18.2"
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "devDependencies": {
     "@types/react": "^17.0.3",
-    "father": "^2.30.6",
+    "father": "^2.30.19",
     "rimraf": "^3.0.2",
     "typescript": "^4.5.4",
     "webpack": "^5.53.0",
