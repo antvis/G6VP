@@ -14,6 +14,7 @@ import {
   Row,
   Col,
   Modal,
+  Table,
 } from 'antd';
 import { UploadOutlined, MinusCircleOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import {
@@ -22,8 +23,17 @@ import {
   createGraphScopeInstance,
   loadGraphToGraphScope,
   loadDefaultGraphToGraphScope,
+  loadChinaVisGraphToGraphScope,
 } from '../../../services/graphcompute';
-import { DefaultGraphScopeNodeFilePath, DefaultGraphScopeEdgeFilePath } from './const';
+import {
+  DefaultGraphScopeNodeFilePath,
+  DefaultGraphScopeEdgeFilePath,
+  ChinaVisNodeColumns,
+  ChinaVisNodeData,
+  ChinaVisEdgeColumns,
+  ChinaVisEdgeData,
+  LoadChinaVisDataSource,
+} from './const';
 const { Item } = Form;
 const { confirm } = Modal;
 
@@ -211,6 +221,31 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       return;
     }
 
+    // 载图 ChinaVis 数据
+    if (dataType === 'chinavis') {
+      // loadChinaVisGraphToGraphScope
+      const loadResult = await loadChinaVisGraphToGraphScope({
+        instanceId: currentInstanceId,
+        dataSource: LoadChinaVisDataSource,
+      });
+
+      setLoading(false);
+      console.log('加载数据到 GraphScope', loadResult);
+      // 每次载图以后，获取最新 Gremlin server
+      const { success: loadSuccess, message: loadMessage, data } = loadResult;
+      if (!loadSuccess) {
+        message.error(`数据加载失败: ${loadMessage}`);
+        return;
+      }
+      message.success('加载数据到 GraphScope 引擎成功');
+      // 关闭弹框
+      close();
+      const { graphName, graphURL } = data;
+      localStorage.setItem('graphScopeGraphName', graphName);
+      localStorage.setItem('graphScopeGremlinServer', graphURL);
+      return;
+    }
+
     // 没有上传文件
     if (!filesMapping) {
       message.error('请先上传文件后再进行载图');
@@ -270,12 +305,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     }
   };
 
-  const handleCloseLoading = () => {
-    setLoading(false);
-    setCloseLoading(false);
-    setUploadLoading(false);
-  };
-
   const formInitValue = {
     type: 'LOCAL',
     directed: true,
@@ -295,7 +324,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     <div>
       <Form name="gsform" form={form} initialValues={formInitValue}>
         <Radio.Group defaultValue={dataType} buttonStyle="solid" onChange={handleDataTypeChange}>
-          <Radio.Button value="demo">示例数据</Radio.Button>
+          <Radio.Button value="demo">p2p示例数据</Radio.Button>
+          <Radio.Button value="chinavis">ChinaVis示例数据</Radio.Button>
           <Radio.Button value="real">我有数据</Radio.Button>
         </Radio.Group>
         {loading && (
@@ -312,6 +342,32 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
             <p>点文件名称：p2p-31_property_v_0</p>
             <p>边文件：p2p-31_property_e_0</p>
             <p>测试数据共包括 62586 节点，147892 条边</p>
+          </div>
+        )}
+        {dataType === 'chinavis' && (
+          <div style={{ marginTop: 16 }}>
+            <p>
+              默认使用ChinaVis 赛道1{' '}
+              <a href="http://chinavis.org/2022/challenge.html" target="_blank">
+                数据安全可视分析
+              </a>
+              的点边数据，文件基本信息如下
+            </p>
+            <p>点文件名称：Node.csv</p>
+            <p>边文件：Link.csv</p>
+            <p>测试数据共包括 237 万个与黑灰产相关的网络资产（节点）和 328 万条资产关联关系</p>
+            <p>点类型：</p>
+            <Table
+              columns={ChinaVisNodeColumns}
+              dataSource={ChinaVisNodeData}
+              pagination={{ hideOnSinglePage: true }}
+            />
+            <p>边类型：</p>
+            <Table
+              columns={ChinaVisEdgeColumns}
+              dataSource={ChinaVisEdgeData}
+              pagination={{ hideOnSinglePage: true, pageSize: 11 }}
+            />
           </div>
         )}
         {dataType === 'real' && (
@@ -463,12 +519,11 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               </Button>
             </Popconfirm>
             <Button onClick={close}>取消</Button>
-            <Button onClick={handleCloseLoading}>关闭 Loading「临时测试」</Button>
             <Button onClick={confirmUploadFiles} loading={uploadLoading}>
               上传文件
             </Button>
             <Button type="primary" disabled={!filesMapping} onClick={handleSubmitForm} loading={loading}>
-              进入分析
+              开始载图
             </Button>
           </Space>
         </Form.Item>
