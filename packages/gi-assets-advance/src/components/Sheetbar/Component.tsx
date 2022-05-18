@@ -35,7 +35,6 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
   const options = [...sheetMap.values()];
   const styles = getStyles(height, placement);
 
-  console.log('options', options, currentId, styles);
   const handleAdd = (data?: { nodes: never[]; edges: never[] }) => {
     const uid = Math.random().toString(36).substr(2);
     const sheetName = '未命名画布';
