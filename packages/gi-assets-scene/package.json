@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@alipay/graphinsight": "2.x",
+    "@alipay/gi-assets-testing": "2.x",
     "3d-force-graph": "^1.70.10",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7plot": "^0.0.11",
@@ -30,7 +31,6 @@
     "@antv/graphin": "2.x"
   },
   "devDependencies": {
-    "@alipay/gi-assets-testing": "2.x",
     "dumi": "^1.1.38",
     "father": "^2.30.19",
     "mini-css-extract-plugin": "^2.3.0",
