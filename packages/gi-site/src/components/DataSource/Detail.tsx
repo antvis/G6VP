@@ -63,7 +63,7 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
 
   return (
     <div className="gi-services-editor">
-      <Card title="服务详情" extra={extra}>
+      <Card title="服务详情" extra={extra} style={{ borderTop: 'none', borderBottom: 'none', borderRight: 'none' }}>
         服务ID:
         <Input
           placeholder="Basic usage"
