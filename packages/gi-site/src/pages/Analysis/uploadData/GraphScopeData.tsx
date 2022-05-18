@@ -261,6 +261,12 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     }
   };
 
+  const handleCloseLoading = () => {
+    setLoading(false);
+    setCloseLoading(false);
+    setUploadLoading(false);
+  };
+
   const formInitValue = {
     type: 'LOCAL',
     directed: true,
@@ -448,6 +454,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               </Button>
             </Popconfirm>
             <Button onClick={close}>取消</Button>
+            <Button onClick={handleCloseLoading}>关闭 Loading「临时测试」</Button>
             <Button onClick={confirmUploadFiles} loading={uploadLoading}>
               上传文件
             </Button>
