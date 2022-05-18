@@ -7,11 +7,11 @@ const info = {
   options: {
     type: 'dagre',
   },
-  name: '有向分层布局',
+  name: '有向分层',
   category: 'basic',
   type: 'LAYOUT',
   desc: '节点按照边的流向排布',
-  icon: 'icon-layout-dagre',
+  icon: 'icon-layout-tree',
   cover: 'http://xxxx.jpg',
 };
 
