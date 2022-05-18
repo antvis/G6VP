@@ -24,24 +24,28 @@ const AssetsSelect: React.FunctionComponent<AssetsSelectProps> = props => {
           return (
             <Option value={id} key={id}>
               <div className="style-panel-assets-select-title">
-                <Icon
-                  type={info.icon}
+                <div
                   style={{
-                    fontSize: '40px',
-                    marginLeft: '18px',
-                    verticalAlign: 'bottom',
-                    height: '66px',
-                    lineHeight: '66px',
-                    display: 'inline-block',
+                    height: '50px',
+                    width: '50px',
+                    background: '#eaeefc',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
-                />
+                >
+                  <Icon
+                    type={info.icon}
+                    style={{
+                      fontSize: '30px',
+                      color: 'var(--primary-color)',
+                    }}
+                  />
+                </div>
                 <span
                   style={{
                     marginLeft: '18px',
-                    verticalAlign: 'top',
-                    height: '66px',
-                    lineHeight: '66px',
-                    display: 'inline-block',
                   }}
                 >
                   {name}

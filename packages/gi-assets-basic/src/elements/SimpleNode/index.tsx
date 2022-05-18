@@ -8,6 +8,7 @@ const info = {
   category: 'node',
   type: 'NODE',
   name: '官方节点',
+  icon: 'icon-smile',
   desc: '官方节点',
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*myb8SrnSy0cAAAAAAAAAAAAAARQnAQ',
 };
