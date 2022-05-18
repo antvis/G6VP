@@ -20,7 +20,6 @@
     "@antv/algorithm": "^0.1.17",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/layout": "^0.1.19-beta.3",
-    "antd": "^4.18.8",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "immer": "^9.0.6",
@@ -38,7 +37,7 @@
     "antd": "latest"
   },
   "devDependencies": {
-    "father": "^2.30.19",
+    "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
     "webpack": "^5.53.0",

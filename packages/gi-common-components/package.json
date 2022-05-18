@@ -27,8 +27,7 @@
     "@antv/graphin": "2.x"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "father": "^2.30.19",
+    "father": "^2.30.6",
     "rimraf": "^3.0.2"
   },
   "publishConfig": {

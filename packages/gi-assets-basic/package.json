@@ -25,10 +25,10 @@
     "deepmerge": "^4.2.2",
     "install": "^0.13.0",
     "motif-gi": "latest",
-    "npm": "^8.5.5"
+    "npm": "^8.5.5",
+    "@ant-design/icons": "latest"
   },
   "peerDependencies": {
-    "@ant-design/icons": "latest",
     "antd": "latest",
     "@antv/graphin": "2.x",
     "react": "17.x",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "dumi": "^1.1.38",
-    "father": "^2.30.19",
+    "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
     "umi": "^3.5.20",
