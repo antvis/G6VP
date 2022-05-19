@@ -31,7 +31,7 @@ const info = {
     },
     defSpringLen,
   },
-  name: 'Graphin力导布局',
+  name: '力导布局',
   category: 'basic',
   type: 'LAYOUT',
   desc: '渐进式力导布局，可用于动态布局',

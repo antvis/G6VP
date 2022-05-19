@@ -2,8 +2,9 @@ import { Icon } from '@alipay/graphinsight';
 import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DivContainer from '../UIComponents/DivContainer';
 import EventEmitter from './EventEmitter';
-
+import './index.less';
 const EM = new EventEmitter();
 export interface GIContianerProps {
   color: string;
@@ -59,13 +60,14 @@ export const getPositionStyles = (placement, offset: number[]) => {
   }
   return styles;
 };
+
 export interface ContainerTypeProps {
   containerType: IContainerType;
   containerWidth: string;
   containerHeight: string;
   containerMask: boolean;
   containerMaskClosable: boolean;
-  containerPlacement: 'top';
+  containerPlacement: 'LT' | 'LB' | 'RT' | 'RB';
   children: any;
   visible: boolean;
   offset: number[];
@@ -73,6 +75,7 @@ export interface ContainerTypeProps {
   title: string;
   GISDK_ID: string;
   getContainer: HTMLDivElement;
+  containerAnimate?: boolean;
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
@@ -90,11 +93,11 @@ const ContainerType = (props: ContainerTypeProps) => {
     title,
     GISDK_ID,
     getContainer,
+    containerAnimate,
   } = props;
 
-  const placement = POSITION_MAP[containerPlacement];
+  const placement = POSITION_MAP[containerPlacement] as 'right' | 'left' | 'top' | 'bottom';
   const [offsetX, offsetY] = offset || [0, 0];
-  const DrawerContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   if (containerType == 'drawer') {
     return (
       <Drawer
@@ -125,10 +128,7 @@ const ContainerType = (props: ContainerTypeProps) => {
         getContainer={getContainer}
         className="gi-operator-header-modal"
         title={title}
-        // mask={containerMask}
         width={containerWidth}
-        // centered
-        // maskClosable={containerMaskClosable}
         visible={visible}
         onCancel={onClose}
       >
@@ -136,14 +136,20 @@ const ContainerType = (props: ContainerTypeProps) => {
       </Modal>
     );
   }
-  const styles = getPositionStyles(containerPlacement, offset);
 
   return (
-    visible && (
-      <div style={styles} className="gi-operator-header-div">
-        {children}
-      </div>
-    )
+    <DivContainer
+      visible={visible}
+      onClose={onClose}
+      title={title}
+      containerHeight={containerHeight}
+      containerWidth={containerWidth}
+      offset={offset}
+      containerPlacement={containerPlacement}
+      animate={containerAnimate}
+    >
+      {children}
+    </DivContainer>
   );
 };
 
@@ -170,6 +176,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
       containerMask = false,
       containerMaskClosable = false,
       containerPlacement,
+      containerAnimate,
     } = GIAC_CONTENT;
 
     const [containerVisible, setVisible] = React.useState(defaultVisible);
@@ -232,6 +239,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             offset={offset}
             GISDK_ID={GISDK_ID}
             getContainer={ContainerDOM}
+            containerAnimate={containerAnimate}
           >
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
           </ContainerType>,

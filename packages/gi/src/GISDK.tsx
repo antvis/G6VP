@@ -273,6 +273,7 @@ const GISDK = (props: Props) => {
         <div id={`${GISDK_ID}-container-extra`}></div>
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
+          containerStyle={{ transform: 'scale(1)' }}
           data={data}
           layout={layout}
           enabledStack={true}

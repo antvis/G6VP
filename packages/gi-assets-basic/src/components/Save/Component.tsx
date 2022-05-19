@@ -11,10 +11,12 @@ const Save: React.FunctionComponent<Props> = props => {
   const { graph, GISDK_ID, config, services, schema } = useContext();
   const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
+  const imgURL = graph.toDataURL('image/jpeg', '#fff');
   const handleSave = () => {
     const { name, description } = form.getFieldsValue();
 
     const data = graph.save();
+
     service({
       name,
       description,
@@ -22,6 +24,8 @@ const Save: React.FunctionComponent<Props> = props => {
       config, //配置，可以还原画布状态
       services, //服务
       schemaData: schema,
+      cover: imgURL,
+      gmtCreate: new Date(),
     }).then(res => {
       if (res.success) {
         notification.success({
@@ -35,8 +39,6 @@ const Save: React.FunctionComponent<Props> = props => {
       }
     });
   };
-
-  const imgURL = graph.toDataURL('image/jpeg', '#fff');
 
   return (
     <div>

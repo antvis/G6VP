@@ -1,4 +1,5 @@
 /** 魔改Select */
+@assets-select-height: 65px;
 .style-panel-assets-select {
   &.ant-select,
   &.ant-select:not(.ant-select-customize-input) {
@@ -9,16 +10,16 @@
     .antd-select-focused {
       .ant-select-selector {
         width: 318px;
-        height: 70px;
-        padding: 2px 0px;
+        height: @assets-select-height;
+        // padding: 2px 0px;
         border: none;
         outline: none;
       }
     }
     .ant-select-selector {
       width: 318px;
-      height: 70px;
-      padding: 2px 0px;
+      height: @assets-select-height;
+      // padding: 2px 0px;
       background-color: #ffffff;
       border: none;
       border-radius: 8px;
@@ -27,16 +28,17 @@
         2px 3px 8px 2px rgba(151, 151, 151, 0.05);
     }
     .ant-select-selection-item {
-      line-height: 70px;
-    }
-    .style-panel-assets-select-title {
-      padding: 0px 12px;
-      color: #000000;
-      font-size: 14px;
-      letter-spacing: 0;
-      img {
-        margin-right: 8px;
-      }
+      line-height: @assets-select-height;
     }
   }
+}
+
+.style-panel-assets-select-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0px 16px;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
 }

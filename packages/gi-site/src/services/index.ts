@@ -151,7 +151,7 @@ export interface Project {
       edges: any[];
     };
   };
-  type: 'case' | 'project';
+  type: 'case' | 'project' | 'save';
   id: string;
   members: { name: string; id: string; state: 'master' | 'user' }[];
   projectConfig: {};
@@ -168,29 +168,41 @@ export interface Project {
  * 获取所有项目
  * @returns
  */
-export const getProjectList = async (type: 'project' | 'case') => {
+export const getProjectList = async (type: 'project' | 'case' | 'save') => {
   if (isMock) {
     const projects = [];
     const cases = [];
+    const save = [];
 
     const iter = await localforage.iterate((value: Project) => {
       if (value.type === 'case') {
         cases.push(value);
-      } else {
+      }
+      if (value.type === 'save') {
+        //@ts-ignore
+        const { id, type, params } = value;
+        save.push({
+          id,
+          type,
+          ...JSON.parse(params),
+        });
+      }
+      if (value.type === 'project') {
         projects.push(value);
       }
-      // if (value.type === 'project') {
-      //   projects.push(value);
-      // }
     });
-    console.log('case', cases, projects, iter);
     if (type === 'project') {
+      projects.sort((a, b) => {
+        return a.gmtCreate - b.gmtCreate;
+      });
       return projects;
     }
     if (type == 'case') {
       return cases;
     }
-    return projects;
+    if (type == 'save') {
+      return save;
+    }
   }
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {

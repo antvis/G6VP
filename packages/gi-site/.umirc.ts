@@ -1,3 +1,4 @@
+// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 /** 是否为本地研发模式 */
 import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
@@ -65,6 +66,7 @@ export default {
   base: '/',
   publicPath: '/',
   hash: true,
+  favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
     type: 'hash',
   },
@@ -103,6 +105,14 @@ export default {
   //     }),
   //   );
   // },
+  // chainWebpack: memo => {
+  //   // 更多配置 https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+  //   memo.plugin('monaco-editor-webpack-plugin').use(MonacoWebpackPlugin, [
+  //     // 按需配置
+  //     { languages: ['javascript', 'json'] },
+  //   ]);
+  //   return memo;
+  // },
   externals: {
     lodash: '_',
     react: 'React',
@@ -115,10 +125,12 @@ export default {
     moment: 'moment',
     xlsx: 'XLSX',
     '@antv/g2plot': 'G2Plot',
+    localforage: 'localforage',
     // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
   },
   scripts: [
+    'https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js',
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
@@ -144,7 +156,6 @@ export default {
     }),
     // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
-    'https://g.alipay.com/@alipay/alex@1.5.2/bundle/alex.global.min.css',
   ],
   analyze: {
     analyzerMode: 'server',

@@ -1,6 +1,5 @@
-import { extractDefault } from '@ali/react-datav-gui-utils';
 import type { TypeAssetInfo } from './typing';
-import { getKeysByData } from './utils';
+import { getDefaultValues, getKeysByData } from './utils';
 /**
  *
  * @param assets 服务端拿到的资产: Components
@@ -21,7 +20,7 @@ const getLayoutsByAssets = (assets, data) => {
       const keys = getKeysByData(data, 'node');
       const configObj = registerMeta({ data, keys });
       /** 默认的配置值 */
-      const defaultProps = extractDefault({ config: configObj, value: {} });
+      const defaultProps = getDefaultValues({ type: 'object', properties: configObj });
       const { id, name, category } = info as TypeAssetInfo;
       return {
         ...layout,

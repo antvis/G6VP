@@ -22,6 +22,7 @@ const COLOR_MAP = {
 const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
   const { name: AssetName, version, icon = 'icon-robot', desc, id: AssetId } = props;
   const pkg = props.pkg?.replace('@alipay/gi-assets-', '') || '';
+
   return (
     <div>
       <CheckCard

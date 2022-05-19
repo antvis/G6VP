@@ -1,5 +1,5 @@
-import { Icon, utils } from '@alipay/graphinsight';
-import { CopyFilled, EditFilled, MoreOutlined, StarFilled } from '@ant-design/icons';
+import { utils } from '@alipay/graphinsight';
+import { MoreOutlined } from '@ant-design/icons';
 import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -12,8 +12,8 @@ interface ProjectListProps {
   type: 'project' | 'case' | 'save';
 }
 
-const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
-  const { type, onCreate } = props;
+const SaveList: React.FunctionComponent<ProjectListProps> = props => {
+  const { type } = props;
   const history = useHistory();
   const [state, updateState] = useImmer({
     lists: [],
@@ -31,19 +31,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   const { lists } = state;
 
-  const addButton = (
-    <Col key={'new'} xs={24} sm={24} md={12} lg={8} xl={6}>
-      <ProjectCard
-        style={{ color: 'var(--primary-color)', border: '2px dashed var(--primary-color)' }}
-        onClick={onCreate}
-        cover={<Icon type="icon-plus" style={{ fontSize: '70px' }} />}
-        title={'创建项目'}
-        time={''}
-        description=""
-      ></ProjectCard>
-    </Col>
-  );
-
   const confirm = id => {
     const items = lists.filter(d => d.id !== id);
     updateState(draft => {
@@ -56,7 +43,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     <Menu>
       <Menu.Item>
         <Popconfirm
-          title="是否删除该项目?"
+          title="是否删除该画布?"
           onConfirm={e => {
             e.preventDefault();
             confirm(id);
@@ -64,32 +51,25 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           okText="Yes"
           cancelText="No"
         >
-          删除项目
+          删除画布
         </Popconfirm>
       </Menu.Item>
     </Menu>
-  );
-  const projectButton = <EditFilled className="edit icon-buuton" />;
-  const collectButton = (
-    <>
-      <StarFilled className="star icon-buuton" />
-      <CopyFilled className="copy icon-buuton" />
-    </>
   );
 
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
-        {type === 'project' && addButton}
         {lists.map(item => {
-          const { id, name, gmtCreate } = item;
+          const { id, name, cover, gmtCreate } = item;
+          console.log('item', item);
           return (
             <Col key={id} xs={24} sm={24} md={12} lg={8} xl={6}>
               <ProjectCard
                 onClick={() => {
-                  history.push(`/workspace/${id}?nav=data`);
+                  history.push(`/share/${id}`);
                 }}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '70px' }} />}
+                cover={<img src={cover} style={{ width: '70px', height: '70px' }} />}
                 title={name}
                 time={utils.time(gmtCreate)}
                 extra={
@@ -107,4 +87,4 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   );
 };
 
-export default ProjectList;
+export default SaveList;

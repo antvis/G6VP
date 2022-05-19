@@ -1,19 +1,24 @@
 import { useContext, utils } from '@alipay/graphinsight';
-import { Drawer, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
 import React from 'react';
+import DivContainer from '../UIComponents/DivContainer';
 import Properties from './Properties';
-
 export interface PropertiesPanelProps {
   hasService: boolean;
   serviceId?: string;
+  placement: 'LT' | 'LB' | 'RT' | 'RB';
+  width: string;
+  height: string;
+  title: string;
+  offset: number[];
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
-  const { serviceId, hasService } = props;
-  const { graph, services } = useContext();
+  const { serviceId, hasService, placement, width, title, height, offset } = props;
+  const { graph, services, GISDK_ID } = useContext();
   const service = utils.getService(services, serviceId);
   if (!service) {
     return null;
@@ -94,23 +99,20 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   const { visible, detail, isLoading } = state;
 
   const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
+  const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   return (
-    <Drawer
+    <DivContainer
+      animate={true}
+      title={title}
       visible={visible}
-      placement="right"
+      containerPlacement={placement}
+      containerWidth={width}
+      containerHeight={height}
       onClose={handleClose}
-      title={'属性面板'}
-      width={'356px'}
-      style={{
-        marginTop: '61px',
-      }}
-      mask={false}
-      bodyStyle={{
-        padding: '12px 24px',
-      }}
+      offset={offset}
     >
       {content}
-    </Drawer>
+    </DivContainer>
   );
 };
 

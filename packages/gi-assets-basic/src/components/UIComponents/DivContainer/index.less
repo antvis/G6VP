@@ -1,27 +1,31 @@
-.gi-operator-header {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  display: flex;
-  width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  .gi-operator-header-left {
-    justify-items: start;
-  }
-  .gi-operator-header-center {
-    flex: 1;
-    text-align: center;
-  }
-  .gi-operator-header-right {
-    justify-items: end;
-  }
-}
-
-.gi-operator-header-div {
+.gi-panel-div {
+  overflow: hidden;
   background: #fff;
+  &.open {
+    &.left {
+      display: block;
+      width: 300px;
+      transition: all 0.3s;
+    }
+    &.right {
+      display: block;
+      width: 300px;
+      transition: all 0.3s;
+    }
+  }
+  &.close {
+    &.left {
+      // display: hidden;
 
+      width: 0px !important;
+      transition: all 0.3s;
+    }
+    &.right {
+      // display: hidden;
+      width: 0px !important;
+      transition: all 0.3s;
+    }
+  }
   .header {
     position: relative;
     display: flex;

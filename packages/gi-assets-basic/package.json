@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,7 +16,6 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@ali/react-datav-gui-utils": "latest",
     "@alipay/gi-assets-testing": "2.x",
     "@alipay/gi-common-components": "1.x",
     "@alipay/graphinsight": "2.x",
@@ -26,14 +25,14 @@
     "deepmerge": "^4.2.2",
     "install": "^0.13.0",
     "motif-gi": "latest",
-    "npm": "^8.5.5"
+    "npm": "^8.5.5",
+    "@ant-design/icons": "latest"
   },
   "peerDependencies": {
-    "@ant-design/icons": "^4.6.2",
+    "antd": "latest",
     "@antv/graphin": "2.x",
     "react": "17.x",
-    "react-dom": "17.x",
-    "antd": "^4.16.13"
+    "react-dom": "17.x"
   },
   "devDependencies": {
     "dumi": "^1.1.38",
