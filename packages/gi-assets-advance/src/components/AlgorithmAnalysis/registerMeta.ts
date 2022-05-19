@@ -12,16 +12,16 @@ export const SchemaData = {
     'x-decorator': 'FormItem',
     'x-component': 'Select',
     enum: [{ label: 'PageRank', value: 'pagerank' }, { label: '单源最短路径', value: 'sssp' }],
-    'x-reactions': [
-      {
-        target: 'sortById',
-        fulfill: {
-          state: {
-            visible: '{{$self.value === "pagerank"}}',
-          },
-        },
-      },
-    ],
+    // 'x-reactions': [
+    //   {
+    //     target: '*(sortById, limit)',
+    //     fulfill: {
+    //       state: {
+    //         visible: '{{$self.value === "pagerank"}}',
+    //       },
+    //     },
+    //   },
+    // ],
   },
   limit: {
     title: '限制数量',
@@ -37,27 +37,34 @@ export const SchemaData = {
     'x-component': 'Switch',
     default: true,
   },
+  delta: {
+    title: 'maxRound',
+    type: 'number',
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    default: 0.85,
+  },
   maxRound: {
     title: 'maxRound',
     type: 'number',
     'x-decorator': 'FormItem',
     'x-component': 'NumberPicker',
-    default: 1,
+    default: 10,
   },
-  weight: {
-    title: '权重',
-    type: 'number',
-    'x-decorator': 'FormItem',
-    'x-component': 'NumberPicker',
-    default: 1,
-  },
-  tolerance: {
-    title: 'tolerance',
-    type: 'number',
-    'x-decorator': 'FormItem',
-    'x-component': 'NumberPicker',
-    default: 1,
-  },
+  // weight: {
+  //   title: '权重',
+  //   type: 'number',
+  //   'x-decorator': 'FormItem',
+  //   'x-component': 'NumberPicker',
+  //   default: 1,
+  // },
+  // tolerance: {
+  //   title: 'tolerance',
+  //   type: 'number',
+  //   'x-decorator': 'FormItem',
+  //   'x-component': 'NumberPicker',
+  //   default: 1,
+  // },
 };
 
 const registerMeta = context => {
