@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useImmer } from 'use-immer';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import { getSearchParams } from '../../components/utils';
 import setDefaultDemo from '../X-Studio';
 import CreatePanel from './Create';
 import './index.less';
@@ -28,8 +29,11 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = [
   },
 ];
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
+  const { searchParams } = getSearchParams(location);
+  const type = searchParams.get('type') || 'case';
   const [state, updateState] = useImmer({
     visible: false,
+    activeKey: type,
   });
 
   const handleClose = () => {
@@ -44,7 +48,21 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     });
   };
 
-  const { visible } = state;
+  const { visible, activeKey } = state;
+  const handleChange = val => {
+    console.log('activeKey', val);
+    try {
+      const { searchParams } = getSearchParams(location);
+      const type = searchParams.get('type') || 'case';
+      const newHref = window.location.href.replace(type, val);
+      window.location.href = newHref;
+      updateState(draft => {
+        draft.activeKey = val;
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
 
   return (
     <>
@@ -64,7 +82,10 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
               background: '#fff',
               height: '100%',
               padding: '24px 0px',
+              overflow: 'auto',
             }}
+            activeKey={activeKey}
+            onChange={handleChange}
           >
             {LIST_OPTIONS.map(c => {
               return (

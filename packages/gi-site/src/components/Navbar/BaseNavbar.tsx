@@ -1,6 +1,5 @@
 import ThemeSwitch from '@alipay/theme-tools';
-import { BellOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { Avatar, Layout, Tooltip } from 'antd';
+import { Layout, Tooltip } from 'antd';
 import * as React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
@@ -20,7 +19,7 @@ const BaseNavbar = props => {
         <Link to="/">首页</Link>
       </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
-        <Link to="/workspace">项目列表</Link>
+        <Link to="/workspace?type=project">项目列表</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
@@ -32,9 +31,9 @@ const BaseNavbar = props => {
   );
   const defaultRight = (
     <>
-      <QuestionCircleOutlined style={{ marginRight: 26 }} />
+      {/* <QuestionCircleOutlined style={{ marginRight: 26 }} />
       <BellOutlined style={{ marginRight: 26 }} />
-      <span>{userInfo && userInfo.nickName}</span>
+      <span>{userInfo && userInfo.nickName}</span> */}
     </>
   );
 
@@ -45,9 +44,9 @@ const BaseNavbar = props => {
         <img
           src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
           alt="logo"
-          style={{ height: '30px', marginRight: '40px' }}
+          style={{ height: '30px', marginRight: '40px', cursor: 'pointer' }}
           onClick={() => {
-            history.push('/workspace');
+            history.push('/workspace?type=project');
           }}
         />
         {leftContent}
@@ -56,10 +55,10 @@ const BaseNavbar = props => {
       <div className={styles.right}>
         {rightContentExtra}
         {rightContent}
-        <Avatar
+        {/* <Avatar
           style={{ width: '21px', height: '21px', marginLeft: 5 }}
           src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
-        />
+        /> */}
         <Tooltip title="切换主题">
           <ThemeSwitch
             themeVars={ThemeVars}

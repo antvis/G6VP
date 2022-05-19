@@ -1,6 +1,6 @@
 import { Icon, utils } from '@alipay/graphinsight';
-import { CopyFilled, EditFilled, PlusOutlined, StarFilled } from '@ant-design/icons';
-import { Card, Col, Menu, Popconfirm, Row } from 'antd';
+import { CopyFilled, EditFilled, MoreOutlined, StarFilled } from '@ant-design/icons';
+import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -32,11 +32,15 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const { lists } = state;
 
   const addButton = (
-    <Col key={'new'} span={6}>
-      <Card style={{ height: '100%', width: '100%', minHeight: 236 }} hoverable onClick={onCreate} className="new">
-        <PlusOutlined style={{ fontSize: '100px', opacity: 0.15, color: '#177DDC' }} />
-        <span className="new-title">创建项目</span>
-      </Card>
+    <Col key={'new'} xs={24} sm={24} md={12} lg={8} xl={6}>
+      <ProjectCard
+        style={{ color: 'var(--primary-color)', border: '2px dashed var(--primary-color)' }}
+        onClick={onCreate}
+        cover={<Icon type="icon-plus" style={{ fontSize: '70px' }} />}
+        title={'创建项目'}
+        time={''}
+        description=""
+      ></ProjectCard>
     </Col>
   );
 
@@ -50,18 +54,11 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   const menu = id => (
     <Menu>
-      <Menu.Item
-        onClick={() => {
-          history.push(`/workspace/${id}`);
-        }}
-      >
-        编辑项目
-      </Menu.Item>
-      {/* <Menu.Item>克隆项目</Menu.Item> */}
       <Menu.Item>
         <Popconfirm
           title="是否删除该项目?"
-          onConfirm={() => {
+          onConfirm={e => {
+            e.preventDefault();
             confirm(id);
           }}
           okText="Yes"
@@ -70,7 +67,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      {/* <Menu.Item>分享</Menu.Item> */}
     </Menu>
   );
   const projectButton = <EditFilled className="edit icon-buuton" />;
@@ -83,20 +79,25 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   return (
     <>
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {type === 'project' && addButton}
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
-            <Col key={id} span={6}>
+            <Col key={id} xs={24} sm={24} md={12} lg={8} xl={6}>
               <ProjectCard
                 onClick={() => {
                   history.push(`/workspace/${id}?nav=data`);
                 }}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '80px' }} />}
+                cover={<Icon type="icon-analysis" style={{ fontSize: '70px' }} />}
                 title={name}
                 time={utils.time(gmtCreate)}
-                description="dsdasfdasfasfdsafasdfdafadfdafafdsfdsfdafdafasfds"
+                extra={
+                  <Dropdown overlay={menu(id)} placement="bottomCenter">
+                    <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
+                  </Dropdown>
+                }
+                description=""
               ></ProjectCard>
               {/* <Card
                 hoverable
