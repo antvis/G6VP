@@ -13,6 +13,7 @@
   .cover {
     display: flex;
     flex-basis: @height;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
@@ -26,12 +27,12 @@
     flex: 1;
     flex-direction: column;
     justify-content: space-around;
-    min-width: 200px;
-    max-width: 250px;
+
     padding: 8px;
 
     .title {
-      font-size: 14px;
+      font-weight: 600;
+      font-size: 16px;
     }
     .desc {
       overflow: hidden;
@@ -43,6 +44,11 @@
     .time {
       font-size: 12px;
     }
+  }
+  .extra {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
   }
 }
 

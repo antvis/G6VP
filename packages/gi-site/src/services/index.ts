@@ -185,6 +185,9 @@ export const getProjectList = async (type: 'project' | 'case' | 'save') => {
     });
     console.log('case', cases, projects, iter);
     if (type === 'project') {
+      projects.sort((a, b) => {
+        return a.gmtCreate - b.gmtCreate;
+      });
       return projects;
     }
     if (type == 'case') {

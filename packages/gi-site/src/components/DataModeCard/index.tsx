@@ -1,5 +1,5 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { Popover, Select } from 'antd';
+import { Popover, Select, Typography } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 const { Option } = Select;
@@ -8,7 +8,19 @@ type Props = {
   changeDataModeCallback?: (env: ServerEnv) => void;
 };
 const EnvInfo = () => {
-  return <div>env info</div>;
+  return (
+    <div style={{ width: '400px' }}>
+      GraphInsight 平台提供两种环境选择：
+      <br />
+      「本地环境」：
+      <Typography.Text type="success">所有的数据（上传数据，操作数据）均存在你的浏览器本地。</Typography.Text>
+      (技术同学可以 审查元素，查看Storage/indexDB) 因此不涉及数据安全问题 ，这个环境，也是开放对外用户的唯一环境。
+      <br />
+      「线上环境」：
+      <Typography.Text type="success">使用线上环境意味着你制作画布可以在线查看，也可以分享给其他人。</Typography.Text>
+      （我们会启用内部的服务，包括鉴权服务/ GraphScope内部环境。蚂蚁与阿里同学优先选用这种环境）
+    </div>
+  );
 };
 const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
   // 默认本地
