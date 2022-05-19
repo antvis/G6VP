@@ -9,11 +9,16 @@ const mockServices = () => {
     {
       id: SERVICE_ID,
       service: (params, localData) => {
-        const { id } = params;
         const uuid = `${Math.random().toString(36).substr(2)}`;
-        window.localStorage.setItem(uuid, JSON.stringify(params));
         const href = window.location.origin + '/#/share/' + uuid;
-        console.log('参数', params, href);
+        //  window.localforage 是 GraphInsight 平台提供的全局变量，详情参考：https://github.com/localForage/localForage
+        //@ts-ignore
+        const { localforage } = window;
+        localforage.setItem(uuid, {
+          id: uuid,
+          type: 'save',
+          params: JSON.stringify(params),
+        });
         return new Promise(resolve => {
           return resolve({
             success: true,
