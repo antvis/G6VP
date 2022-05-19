@@ -8,6 +8,7 @@ import setDefaultDemo from '../X-Studio';
 import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
+import SaveList from './SaveList';
 
 setDefaultDemo();
 
@@ -90,7 +91,8 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
             {LIST_OPTIONS.map(c => {
               return (
                 <TabPane tab={c.name} key={c.id}>
-                  <ProjectList type={c.id} onCreate={handleOpen} />
+                  {(c.id === 'case' || c.id === 'project') && <ProjectList type={c.id} onCreate={handleOpen} />}
+                  {c.id === 'save' && <SaveList type={c.id}></SaveList>}
                 </TabPane>
               );
             })}

@@ -1,5 +1,6 @@
 import GISDK from '@alipay/graphinsight';
 import React from 'react';
+import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets.market';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';
 const Share = props => {
@@ -9,29 +10,38 @@ const Share = props => {
     isReady: false,
     assets: {},
     services: {},
+    config: {},
   });
-  const { data, config, schema, services: ServicesConfig } = JSON.parse(localStorage.getItem(shareId));
 
   React.useEffect(() => {
-    const { components } = config;
-    const activeAssetsKeys = {
-      components: components.map(c => c.id),
-      elements: ['SimpleEdge', 'SimpleNode', 'DountNode'],
-      layouts: ['GraphinForce', 'Concentric', 'Dagre'],
-    };
-    const services = getServicesByConfig(ServicesConfig, data, schema);
-    queryAssets(activeAssetsKeys).then(res => {
-      setState(preState => {
-        return {
-          ...preState,
-          isReady: true,
-          assets: res,
-          services,
-        };
+    getProjectList('save').then(res => {
+      const project = res.find(d => d.id === shareId);
+      if (!project) {
+        return;
+      }
+
+      const { data, config, schema, services: ServicesConfig } = project;
+      const { components } = config;
+      const activeAssetsKeys = {
+        components: components.map(c => c.id),
+        elements: ['SimpleEdge', 'SimpleNode', 'DountNode'],
+        layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+      };
+      const services = getServicesByConfig(ServicesConfig, data, schema);
+      queryAssets(activeAssetsKeys).then(res_assets => {
+        setState(preState => {
+          return {
+            ...preState,
+            config,
+            isReady: true,
+            assets: res_assets,
+            services,
+          };
+        });
       });
     });
   }, []);
-  const { isReady, assets, services } = state;
+  const { isReady, assets, services, config } = state;
   if (!isReady) {
     return null;
   }
