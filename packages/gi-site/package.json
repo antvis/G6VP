@@ -33,6 +33,7 @@
     "@ant-design/icons": "^4.0.6",
     "@ant-design/pro-table": "^2.66.4",
     "@antv/dw-analyzer": "^1.1.5",
+ 
     "@types/classnames": "^2.2.9",
     "@types/systemjs": "latest",
     "@umijs/preset-react": "^1.8.12",
