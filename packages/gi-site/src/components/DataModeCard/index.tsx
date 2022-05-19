@@ -46,6 +46,9 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
     updateState(draft => {
       draft.visible = val;
     });
+    if (!localStorage.getItem('GI_SERVER_ENV')) {
+      localStorage.setItem('GI_SERVER_ENV', 'LOCAL');
+    }
   };
   return (
     <div>
