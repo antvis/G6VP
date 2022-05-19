@@ -124,10 +124,12 @@ export default {
     moment: 'moment',
     xlsx: 'XLSX',
     '@antv/g2plot': 'G2Plot',
+    localforage: 'localforage',
     // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
   },
   scripts: [
+    'https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js',
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
