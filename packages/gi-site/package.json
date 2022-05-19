@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-site",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "GraphInsight Site",
   "main": "dist/app.js",
   "scripts": {
@@ -13,21 +13,19 @@
     "*.css"
   ],
   "peerDependencies": {
-    "antd": "latest",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "dependencies": {
-    "@ali/datav-gui-color-scale": "^1.0.9",
-    "@ali/datav-gui-marker-scale": "^1.1.0",
-    "@ali/datav-gui-size-scale": "^1.0.5",
-    "@alipay/alex": "^1.5.0",
-    "@alipay/gi-assets-advance": "*",
+    "@fast-csv/format": "latest",
+    "@faker-js/faker": "latest",
+    "@alipay/graphinsight": "*",
     "@alipay/gi-assets-basic": "*",
     "@alipay/gi-assets-scene": "*",
+    "@alipay/gi-assets-advance": "*",
     "@alipay/gi-common-components": "*",
-    "@alipay/graphinsight": "*",
-    "@alipay/gravity-demo-sdk": "^4.6.1",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
     "@ant-design/charts": "^1.0.21",
@@ -35,8 +33,6 @@
     "@ant-design/icons": "^4.0.6",
     "@ant-design/pro-table": "^2.66.4",
     "@antv/dw-analyzer": "^1.1.5",
-    "@faker-js/faker": "latest",
-    "@fast-csv/format": "latest",
     "@types/classnames": "^2.2.9",
     "@types/systemjs": "latest",
     "@umijs/preset-react": "^1.8.12",
@@ -49,42 +45,20 @@
     "localforage": "^1.9.0",
     "lz-string": "^1.4.4",
     "monaco-editor": "^0.25.2",
-    "monaco-editor-webpack-plugin": "^4.0.0",
-    "react-monaco-editor": "^0.43.0",
+    "monaco-editor-webpack-plugin": "^7.0.1",
+    "react-monaco-editor": "^0.48.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.1",
     "redux": "^4.1.0",
     "swr": "^1.2.2",
     "systemjs": "^6.11.0",
-    "umi": "latest",
+    "umi": "^3.5.18",
     "umi-request": "^1.3.9",
     "use-immer": "latest",
     "xlsx2js": "^1.3.8"
   },
   "author": "AntV",
   "license": "MIT",
-  "cloudideExtensions": [
-    {
-      "publisher": "alex",
-      "name": "json-language-features-worker",
-      "version": "1.53.0-patch.1"
-    },
-    {
-      "publisher": "alex",
-      "name": "css-language-features-worker",
-      "version": "1.53.0-patch.1"
-    },
-    {
-      "publisher": "alex",
-      "name": "html-language-features-worker",
-      "version": "1.53.0-patch.1"
-    },
-    {
-      "publisher": "alex",
-      "name": "typescript-language-features-worker",
-      "version": "1.53.0-patch.2"
-    }
-  ],
   "devDependencies": {
     "perf_hooks": "^0.0.1"
   },

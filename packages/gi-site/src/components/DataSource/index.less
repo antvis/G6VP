@@ -1,18 +1,29 @@
 @line-height: 40px;
-.gi-services {
+.gi-page-container {
+  height: calc(100vh - 64px);
+  padding: 12px 48px 48px 48px;
+  overflow-y: scroll;
+  background: #fafafa;
+}
+.gi-services-container {
   display: flex;
   flex-direction: row;
+  height: 100%;
+  background: #fff;
 }
 
-ul.gi-services-sidebar {
-  flex-basis: 300px;
-  width: 300px;
+.gi-services-sidebar {
+  flex-basis: 400px;
+  width: 400px;
   margin: 0px;
   padding: 0px;
-  list-style: none;
+  ul {
+    list-style: none;
+    padding-inline-start: 0px;
+  }
   li {
     height: @line-height;
-    padding: 0px 8px;
+    padding: 0px 8px 0px 16px;
     line-height: @line-height;
     cursor: pointer;
     .delete {
@@ -21,11 +32,12 @@ ul.gi-services-sidebar {
     }
 
     &.active {
-      background: rgba(221, 221, 221, 0.794);
-      border-right: 3px solid #2483ff;
+      color: var(--primary-color);
+      background: rgba(48, 86, 227, 0.1);
+      border-right: 3px solid var(--primary-color);
     }
     &.plus {
-      color: #2483ff;
+      color: var(--primary-color);
       text-align: center;
       border: 1px dashed rgba(221, 221, 221, 0.794);
     }
@@ -38,7 +50,7 @@ ul.gi-services-sidebar {
     margin: 12px 0;
   }
   .ant-radio-group-outline {
-    margin-left: 12px;
     margin-bottom: 12px;
+    margin-left: 12px;
   }
 }

@@ -1,0 +1,62 @@
+@height: 100px;
+.project-card {
+  display: flex;
+  justify-items: center;
+  // &:hover {
+  //   box-shadow: 0 8px 17px 2px #3056e324, 0 3px 14px 2px #3057e31f, 0 5px 5px -3px #3056e333;
+  //   transform: all 0.3;
+  // }
+  color: #000000cc;
+  background-color: #fff;
+  box-shadow: 0 2px 2px 0 #00000024, 0 3px 1px -2px #0000001f, 0 1px 5px 0 #00000033;
+  cursor: pointer;
+
+  .cover {
+    display: flex;
+    flex-basis: @height;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: @height;
+    height: @height;
+    padding: 8px;
+    overflow: hidden;
+  }
+  .content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+
+    padding: 8px;
+
+    .title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .desc {
+      overflow: hidden;
+      color: #999;
+      font-size: 12px;
+      font-size: 12px;
+      text-overflow: ellipsis;
+    }
+    .time {
+      font-size: 12px;
+    }
+  }
+  .extra {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+.ant-radio-button-wrapper.gi-workspace-temp {
+  width: 140px !important;
+  height: 140px !important;
+  margin: 8px !important;
+  padding: 8px !important;
+  text-align: center;
+}

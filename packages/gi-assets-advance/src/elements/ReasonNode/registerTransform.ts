@@ -1,4 +1,5 @@
-import { defaultProps } from './registerMeta';
+// import { defaultProps } from './registerMeta';
+const defaultProps = {};
 
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (s, metaConfig) => {
@@ -9,7 +10,7 @@ const transform = (s, metaConfig) => {
     const labelKey = label.mappingKey || 'id';
     const nodes = s.nodes.map(node => {
       const { id, data } = node;
-     
+
       return {
         id: node.id,
         data: node.data,

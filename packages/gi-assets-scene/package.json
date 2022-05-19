@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-scene",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -16,20 +16,21 @@
   },
   "dependencies": {
     "@alipay/graphinsight": "2.x",
+    "@alipay/gi-assets-testing": "2.x",
     "3d-force-graph": "^1.70.10",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7plot": "^0.0.11",
-    "@antv/l7-draw": "latest",
+    "@antv/l7-draw": "^2.4.24",
     "react-spring": "^9.4.4",
     "three": "^0.139.2"
   },
   "peerDependencies": {
     "react": "17.x",
     "react-dom": "17.x",
-    "antd": "latest"
+    "antd": "latest",
+    "@antv/graphin": "2.x"
   },
   "devDependencies": {
-    "@alipay/gi-assets-testing": "2.x",
     "dumi": "^1.1.38",
     "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",

@@ -6,7 +6,7 @@ const info = {
   type: 'GIAC_MENU',
   name: '邻居查询',
   desc: '集成在右键菜单中，可查询邻居节点',
-  icon: 'icon-one-degree',
+  icon: 'icon-kinship',
   cover: 'http://xxxx.jpg',
 };
 export default info;
