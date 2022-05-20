@@ -5,8 +5,9 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build"
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build && node ./scripts/process.js",
+    "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "deploy": "node ./scripts/deploy.js"
   },
   "sideEffects": [
     "*.less",
@@ -60,7 +61,8 @@
   "author": "AntV",
   "license": "MIT",
   "devDependencies": {
-    "perf_hooks": "^0.0.1"
+    "perf_hooks": "^0.0.1",
+    "gh-pages": "latest"
   },
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"

@@ -114,7 +114,7 @@ const Home = () => {
 
       <Footer className={styles.footerContainer} style={{ textAlign: 'center' }}>
         {/* <div className={styles.fillTop}></div> */}
-        AntV ©2021 Created by GraphInsight
+        AntV ©2022 Created by GraphInsight
       </Footer>
     </Layout>
   );
