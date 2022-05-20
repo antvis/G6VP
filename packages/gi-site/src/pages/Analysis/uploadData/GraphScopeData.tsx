@@ -254,7 +254,14 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     const values = await form.validateFields();
 
-    const { nodeConfigList, edgeConfigList = [], directed = true, delimiter = ',', hasHeaderRow = true } = values;
+    const {
+      nodeConfigList,
+      edgeConfigList = [],
+      directed = true,
+      delimiter = ',',
+      hasHeaderRow = true,
+      isStringType,
+    } = values;
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
@@ -265,6 +272,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       directed,
       delimiter,
       hasHeaderRow,
+      isStringType,
     });
 
     console.log('载图到 GraphScope 中', loadResult);
@@ -489,6 +497,9 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
             </Row>
             <Collapse>
               <Collapse.Panel header="高级配置" key="advanced-panel">
+                <Item label="ID字段类型" name="isStringType">
+                  <Switch checkedChildren="string" unCheckedChildren="int64" />
+                </Item>
                 <Item label="是否有向图" name="directed">
                   <Switch />
                 </Item>

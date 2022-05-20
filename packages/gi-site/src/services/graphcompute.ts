@@ -78,6 +78,7 @@ interface LoadGraphDataParams {
   directed?: boolean;
   delimiter?: string;
   hasHeaderRow?: boolean;
+  isStringType?: boolean;
 }
 
 /**
@@ -85,7 +86,7 @@ interface LoadGraphDataParams {
  * @param params
  */
 export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
-  const { instanceId, nodeConfigList, edgeConfigList, fileMapping, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+  const { instanceId, nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
   // 构造载图时的 nodes 对象
   const nodeSources = nodeConfigList.filter(d => {
     // nodeType 必须存在
@@ -131,7 +132,7 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
   const loadFileParams = {
     type: 'LOCAL',
     directed,
-    oid_type: 'string',
+    oid_type: isStringType ? 'string' : 'int64_t',
     instance_id: instanceId,
     dataSource: {
       nodes: nodeSources,
