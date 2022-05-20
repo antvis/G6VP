@@ -530,10 +530,17 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               </Button>
             </Popconfirm>
             <Button onClick={close}>取消</Button>
-            <Button onClick={confirmUploadFiles} loading={uploadLoading}>
-              上传文件
-            </Button>
-            <Button type="primary" disabled={!filesMapping} onClick={handleSubmitForm} loading={loading}>
+            {dataType === 'real' && (
+              <Button onClick={confirmUploadFiles} loading={uploadLoading}>
+                上传文件
+              </Button>
+            )}
+            <Button
+              type="primary"
+              disabled={dataType === 'real' && !filesMapping}
+              onClick={handleSubmitForm}
+              loading={loading}
+            >
               开始载图
             </Button>
           </Space>
