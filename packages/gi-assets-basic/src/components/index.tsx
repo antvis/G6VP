@@ -25,6 +25,9 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+import CreateCombo from './CreateCombo';
+// 临时测试，后面要删掉，放到图谱业务资产库中
+import FuseEditPanel from './FuseEditPanel';
 
 export {
   Save,
@@ -55,4 +58,6 @@ export {
   Copyright,
   ToggleClusterWithMenu,
   ActivateRelations,
+  CreateCombo,
+  FuseEditPanel,
 };
