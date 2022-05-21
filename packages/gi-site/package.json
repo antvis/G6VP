@@ -7,7 +7,8 @@
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev",
     "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build && node ./scripts/process.js",
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "deploy": "node ./scripts/deploy.js"
+    "deploy": "node ./scripts/deploy.js",
+    "render": "tsc -p ./src/pages/Home/tsconfig.json && node ./src/pages/Home/dist/Render.js"
   },
   "sideEffects": [
     "*.less",
