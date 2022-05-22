@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from '../components/Banner/index';
 import Feature from '../components/Feature/index';
+import Footer from '../components/Footer';
 import Navbar from '../components/Navbar/index';
 import RoleSwitch from '../components/RoleSwitch/index';
 import SwitchContainer from '../components/RoleSwitch/SwitchContainer';
@@ -36,13 +37,17 @@ const Home = () => {
             );
           })}
         </div>
-        <div className="feature-background">
+      </div>
+      <div style={{ background: '#f6f9fc' }}>
+        <div className="container">
           {features.map((feature, index) => {
             const isReverse = index % 2 === 1;
             return <Feature {...feature} reverse={isReverse} />;
           })}
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
