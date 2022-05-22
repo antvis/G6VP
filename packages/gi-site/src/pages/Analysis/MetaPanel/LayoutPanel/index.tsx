@@ -54,12 +54,29 @@ const SchemaField = createSchemaField({
 
 const cache = {};
 
-const getCacheValues = (object, key) => {
-  if (!cache[key]) {
-    cache[key] = { id: key, props: {} };
-    return object[key];
+const verifyProps = props => {
+  const defaultProps = { ...props };
+  if (defaultProps.defSpringLen && typeof defaultProps.defSpringLen === 'string') {
+    try {
+      defaultProps.defSpringLen = eval(defaultProps.defSpringLen);
+    } catch (error) {
+      defaultProps.defSpringLen = defSpringLen;
+    }
   }
-  return cache[key];
+  return defaultProps;
+};
+
+const getCacheValues = (object, layoutId) => {
+  const { props } = object[layoutId];
+  const layoutProps = verifyProps(props);
+  const cacheLayout = cache[layoutId];
+  console.log('layout', layoutProps, cacheLayout);
+
+  if (!cacheLayout) {
+    cache[layoutId] = { id: layoutId, props: layoutProps };
+    return layoutProps;
+  }
+  return cacheLayout.props;
 };
 
 const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
@@ -84,35 +101,20 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     },
   };
 
-  const defaultProps = { ...layout.props, ...layoutConfig.props };
-  //特殊情况处理：defSpringLen 为 function
-  if (defaultProps.defSpringLen && typeof defaultProps.defSpringLen === 'string') {
-    try {
-      defaultProps.defSpringLen = eval(defaultProps.defSpringLen);
-    } catch (error) {
-      defaultProps.defSpringLen = defSpringLen;
-    }
-  }
+  const layoutProps = verifyProps({ ...layout.props, ...layoutConfig.props });
 
   /** 缓存数据 */
-  cache[layoutId] = { id: layoutId, props: defaultProps };
+  cache[layoutId] = { id: layoutId, props: layoutProps };
+  console.log('deafultProps', layoutProps, cache);
 
   const form = createForm({
-    initialValues: defaultProps,
+    initialValues: layoutProps,
     effects() {
       onFormInputChange(({ values }) => {
-        //特殊情况处理：defSpringLen 为 function
-        if (values.defSpringLen && typeof values.defSpringLen === 'string') {
-          try {
-            values.defSpringLen = eval(values.defSpringLen);
-          } catch (error) {
-            values.defSpringLen = defSpringLen;
-          }
-        }
-
-        cache[layoutId].props = { ...values };
+        const layoutProps = verifyProps(values);
+        cache[layoutId].props = layoutProps;
         updateContext(draft => {
-          draft.config.layout.props = { ...values };
+          draft.config.layout.props = layoutProps;
         });
       });
     },
@@ -127,7 +129,10 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
       };
     });
     updateContext(draft => {
-      draft.config.layout = { ...values };
+      draft.config.layout = {
+        id: value,
+        props: values,
+      };
     });
   };
   const layoutItems = Object.values(layouts) as any[];
