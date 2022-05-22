@@ -1,0 +1,28 @@
+{
+  "name": "@alipay/gi-portal",
+  "version": "2.2.0",
+  "description": "GraphInsight Portal",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": " PORT=3000 umi dev",
+    "build": "umi build && node scripts/copy.js",
+    "analyse": "ANALYZE=1  umi build"
+  },
+  "sideEffects": [
+    "*.less",
+    "*.css"
+  ],
+  "peerDependencies": {
+    "react": "17.x",
+    "react-dom": "17.x"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "umi": "^3.5.18"
+  },
+  "author": "AntV",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.antfin-inc.com"
+  }
+}
