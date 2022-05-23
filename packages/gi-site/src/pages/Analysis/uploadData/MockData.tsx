@@ -1,7 +1,7 @@
 import { CheckCard } from '@alipay/tech-ui';
 import { AlipayCircleOutlined, AntCloudOutlined, SlackSquareOutlined, TaobaoCircleOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Col, Form, notification, Radio, Row, Steps, Table } from 'antd';
+import { Alert, Button, Col, Form, notification, Radio, Row, Steps, Table } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import antiMoneyData from '../../../mock/AML/v1.2.json';
@@ -255,6 +255,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '配置字段',
       content: (
         <div className="dataCheck-panel">
+          <Alert
+            message="请从数据中选择合适的字段：NodeID,Source,Target 为图数据结构的必填字段。NodeType,EdgeType 为可选字段，用于生成图的 Schema"
+            type="info"
+            showIcon
+            style={{ margin: '12px 0px' }}
+          />
           <EditableProTable
             columns={transColumns}
             rowKey="key"
