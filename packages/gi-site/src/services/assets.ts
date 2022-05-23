@@ -5,7 +5,7 @@ const BrowserFSFileType = {
 };
 import request from 'umi-request';
 import { getCombinedAssets } from '../loader';
-import { isMock, SERVICE_URL_PREFIX } from './const';
+import { IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
 
 interface CreateAssetParams {
   displayName: string;
@@ -80,7 +80,7 @@ const convertResponse = response => {
  * 资产中心 service 文件
  */
 export const createAssets = async (param: CreateAssetParams) => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     return new Promise(resolve => {
       resolve({
         success: true,
@@ -259,7 +259,7 @@ export const createNewBranch = async (branchParams: BranchParams) => {
  * @param projectParams 创建项目的参数
  */
 export const createNewProjectOnAntCode = async projectParams => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     return new Promise(resolve => {
       resolve({
         success: true,
@@ -279,7 +279,7 @@ export const createNewProjectOnAntCode = async projectParams => {
  * @param projectParams 创建项目的参数
  */
 export const forkProjectOnAntCode = async projectParams => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     return new Promise(resolve => {
       resolve({
         success: true,
