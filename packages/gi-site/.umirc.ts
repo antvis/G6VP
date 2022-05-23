@@ -78,15 +78,14 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
-  dynamicImportSyntax: {},
   routes: [
     { exact: true, path: '/', redirect: '/workspace' },
     {
       exact: true,
       path: '/workspace',
-      component: 'Workspace/Dynamic',
+      component: 'Workspace',
     },
-    { exact: true, path: '/workspace/:projectId', component: 'Analysis/Dynamic' },
+    { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
