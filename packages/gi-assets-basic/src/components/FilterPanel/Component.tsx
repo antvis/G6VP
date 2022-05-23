@@ -7,19 +7,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
 import './index.less';
 import { IFilterCriteria } from './type';
-import { filterGraphData } from './utils';
+import { filterGraphData, highlightSubGraph } from './utils';
 
 const { generatorSchemaByGraphData, isStyles } = utils;
 
 export interface FilterPanelProps {
   histogramColor: string;
   isFilterIsolatedNodes: boolean;
+  highlightMode?: boolean;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes } = props;
+  const { histogramColor, isFilterIsolatedNodes, highlightMode } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { source, updateContext, transform, schemaData } = useContext();
+  const { source, updateContext, transform, schemaData, graph } = useContext();
   const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
@@ -74,6 +75,12 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     Object.values(filterOptions).map(filterCriteria => {
       data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
     });
+    console.log('data', data);
+    if (highlightMode) {
+      highlightSubGraph(graph, data);
+      return;
+    }
+
     updateContext(draft => {
       if (isStyles(source.nodes)) {
         draft.data = data;
