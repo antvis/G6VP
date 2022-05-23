@@ -1,18 +1,17 @@
-import * as React from 'react';
-import { EditableProTable } from '@ant-design/pro-table';
 import { CheckCard } from '@alipay/tech-ui';
-import { Button, Form, Col, notification, Radio, Row, Steps, Table } from 'antd';
-import { AntCloudOutlined, AlipayCircleOutlined, TaobaoCircleOutlined, SlackSquareOutlined } from '@ant-design/icons'
+import { AlipayCircleOutlined, AntCloudOutlined, SlackSquareOutlined, TaobaoCircleOutlined } from '@ant-design/icons';
+import { EditableProTable } from '@ant-design/pro-table';
+import { Alert, Button, Col, Form, notification, Radio, Row, Steps, Table } from 'antd';
+import * as React from 'react';
 import { useImmer } from 'use-immer';
+import antiMoneyData from '../../../mock/AML/v1.2.json';
+import cloudSecurityData from '../../../mock/cloud-security.json';
+import transportData from '../../../mock/linkrous/transport.json';
+import enterpriseData from '../../../mock/path-analysis/shareholding-path.json';
 import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import cloudSecurityData from '../../../mock/cloud-security.json';
-import enterpriseData from '../../../mock/path-analysis/shareholding-path.json'
-import antiMoneyData from '../../../mock/AML/v1.2.json'
-import transportData from '../../../mock/linkrous/transport.json'
-
 import './index.less';
 
 const MockData = {
@@ -23,14 +22,13 @@ const MockData = {
   // 反洗钱
   antiMoney: antiMoneyData,
   // 巴黎地铁图
-  transport: transportData
-}
+  transport: transportData,
+};
 
 const { Step } = Steps;
 interface uploadPanel {
   handleClose: () => void;
 }
-
 
 const columnsData = {
   nodes: nodeColumns,
@@ -52,7 +50,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const [transfunc, setTransfunc] = useImmer(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'));
   //映射后的数据
   const [transData, setTransData] = useImmer(
-    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))({nodes: [], edges: []}),
+    eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))({ nodes: [], edges: [] }),
   );
   //当前显示
   const [tableData, setTableData] = useImmer([]);
@@ -194,7 +192,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     }
   };
 
-  const handleMockDataChange = (value) => {
+  const handleMockDataChange = value => {
     console.log('value', value);
     const renderData = [
       // ...inputData,
@@ -208,7 +206,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     ];
     setInputData(renderData);
     mergeData(renderData);
-  }
+  };
 
   const steps = [
     {
@@ -217,38 +215,31 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         <div style={{ margin: '10px 0px 0px 0px' }}>
           <Row style={{ paddingTop: 16 }}>
             <Col span={24}>
-              <CheckCard.Group
-                onChange={handleMockDataChange}
-                defaultValue="enterprise"
-              >
-                <CheckCard 
-                  title="企业持股数据" 
-                  description="企业持股测试数据，通过探索可以发现各个公司的持股情况" 
+              <CheckCard.Group onChange={handleMockDataChange} defaultValue="">
+                <CheckCard
+                  title="企业持股数据"
+                  description="企业持股测试数据，通过探索可以发现各个公司的持股情况"
                   value="enterprise"
-                  avatar={
-                    <TaobaoCircleOutlined style={{ fontSize: 35}} />
-                  }/>
-                <CheckCard 
+                  avatar={<TaobaoCircleOutlined style={{ fontSize: 35 }} />}
+                />
+                <CheckCard
                   title="反洗钱数据"
-                  description="反洗钱测试数据，可以通过探索分析可以发现存在的洗钱风险" 
+                  description="反洗钱测试数据，可以通过探索分析可以发现存在的洗钱风险"
                   value="antiMoney"
-                  avatar={
-                    <AlipayCircleOutlined style={{ fontSize: 35}} />
-                  } />
-                  <CheckCard 
-                  title="巴黎地铁图" 
-                  description="巴黎地铁图数据，通过图分析结合地理信息，可以直观地发现地铁图的分布" 
+                  avatar={<AlipayCircleOutlined style={{ fontSize: 35 }} />}
+                />
+                <CheckCard
+                  title="巴黎地铁图"
+                  description="巴黎地铁图数据，通过图分析结合地理信息，可以直观地发现地铁图的分布"
                   value="transport"
-                  avatar={
-                    <SlackSquareOutlined style={{ fontSize: 35}} />
-                  } />
-                <CheckCard 
-                  title="云安全数据" 
-                  description="云安全测试数据，通过测试数据探索云安全分析场景" 
+                  avatar={<SlackSquareOutlined style={{ fontSize: 35 }} />}
+                />
+                <CheckCard
+                  title="云安全数据"
+                  description="云安全测试数据，通过测试数据探索云安全分析场景"
                   value="cloudSecurity"
-                  avatar={
-                    <AntCloudOutlined style={{ fontSize: 35}} />
-                  } />
+                  avatar={<AntCloudOutlined style={{ fontSize: 35 }} />}
+                />
               </CheckCard.Group>
             </Col>
           </Row>
@@ -264,6 +255,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '配置字段',
       content: (
         <div className="dataCheck-panel">
+          <Alert
+            message="请从数据中选择合适的字段：NodeID,Source,Target 为图数据结构的必填字段。NodeType,EdgeType 为可选字段，用于生成图的 Schema"
+            type="info"
+            showIcon
+            style={{ margin: '12px 0px' }}
+          />
           <EditableProTable
             columns={transColumns}
             rowKey="key"

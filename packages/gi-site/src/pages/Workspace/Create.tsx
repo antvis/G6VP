@@ -1,5 +1,5 @@
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Input, Modal, Radio } from 'antd';
+import { Alert, Button, Form, Input, Modal, Radio } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addProject } from '../../services';
@@ -155,11 +155,19 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
           </>
         )}
         {/* </Form.Item> */}
-        <Form.Item label="项目类型" name="tag" className="round">
+        <Form.Item label={'项目类型'} name="tag" className="round">
+          <div style={{ position: 'absolute', top: '-31px', left: '70px' }}>
+            <Alert
+              style={{ padding: '2px 16px', fontWeight: '100', fontSize: '12px' }}
+              message="当前版本(1.0) 仅提供空白模版，暂未开放其他类型模版"
+              type="warning"
+              showIcon
+            />
+          </div>
           <Radio.Group defaultValue="blank" size="small">
             {SOLUTIONS.map(c => {
               return (
-                <Radio.Button key={c.id} value={c.id} className="gi-workspace-temp">
+                <Radio.Button key={c.id} value={c.id} className="gi-workspace-temp" disabled={c.id !== 'blank'}>
                   <img src={c.url} alt="" />
                   <div>{c.name}</div>
                 </Radio.Button>

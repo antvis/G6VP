@@ -1,6 +1,6 @@
 import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, notification, Radio, Row, Steps, Table, Tabs, Upload, Drawer } from 'antd';
+import { Alert, Button, Drawer, Form, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import xlsx2js from 'xlsx2js';
@@ -8,9 +8,9 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import GraphScopeData from './GraphScopeData'
-import MockData from './MockData'
+import GraphScopeData from './GraphScopeData';
 import './index.less';
+import MockData from './MockData';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -262,7 +262,15 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '上传数据',
       content: (
         <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
+          <Alert
+            message="如果暂时没有数据，可以切换上方导航栏到「示例数据」进行体验"
+            type="info"
+            showIcon
+            closable
+            style={{ marginBottom: '12px' }}
+          />
           <h4 style={{ marginBottom: 0 }}>已传数据</h4>
+
           <div className="upload-panel-section">
             <Dragger {...draggerProps}>
               <p className="ant-upload-drag-icon">
@@ -283,6 +291,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       title: '配置字段',
       content: (
         <div className="dataCheck-panel">
+          <Alert
+            message="请从数据中选择合适的字段：NodeID,Source,Target 为图数据结构的必填字段。NodeType,EdgeType 为可选字段，用于生成图的 Schema"
+            type="info"
+            showIcon
+            style={{ margin: '12px 0px' }}
+          />
           <EditableProTable
             columns={transColumns}
             rowKey="key"
@@ -319,11 +333,8 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   ];
 
   return (
-    <Drawer title="导入数据" visible={visible} width={1050} onClose={handleClose}>
-      <Tabs defaultActiveKey="graphscope">
-        <TabPane tab="示例数据" key="mockdata">
-          <MockData handleClose={handleClose} />
-        </TabPane>
+    <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
+      <Tabs defaultActiveKey="document">
         <TabPane tab="本地文件" key="document">
           <Steps current={current.activeKey} type="navigation">
             {steps.map(item => (
@@ -333,7 +344,17 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <div className="steps-content">{steps[current.activeKey].content}</div>
           <div className="steps-action"></div>
         </TabPane>
+        <TabPane tab="示例数据" key="mockdata">
+          <MockData handleClose={handleClose} />
+        </TabPane>
+
         <TabPane tab="GraphScope" key="graphscope">
+          <Alert
+            message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
+            type="info"
+            showIcon
+            style={{ marginBottom: '12px' }}
+          />
           <GraphScopeData close={handleClose} />
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>

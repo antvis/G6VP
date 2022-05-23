@@ -275,9 +275,9 @@ const Analysis = props => {
             </div>
           </div>
         </div>
-        {isUploadModalVisible && (
-          <UploadPanel visible={isUploadModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
-        )}
+        {/* {isUploadModalVisible && ( */}
+        <UploadPanel visible={isUploadModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
+        {/* )} */}
       </div>
     </AnalysisContext.Provider>
   );
