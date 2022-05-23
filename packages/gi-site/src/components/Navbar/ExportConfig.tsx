@@ -53,13 +53,11 @@ const ExportConfig = props => {
         <Button type="primary" onClick={handleExport}>
           <UploadOutlined /> 导出
         </Button> */}
-
-        <Button type="primary" onClick={handleExport}>
-          <UploadOutlined /> 导出HTML
+        <Button type="primary" onClick={openCSB}>
+          <UploadOutlined /> 在 CodeSandbox 中打开
         </Button>
-
-        <Button onClick={openRiddle} disabled>
-          <UploadOutlined /> 在Riddle中打开
+        <Button onClick={handleExport}>
+          <UploadOutlined /> 导出 HTML 文件
         </Button>
       </div>
     </div>
