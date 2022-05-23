@@ -1,9 +1,10 @@
 var fsExtra = require('fs-extra');
 const path = require('path');
+/** 从gi-portal中拷贝产物*/
 
 fsExtra.copy(
-  path.resolve(__dirname, '../dist/index.html'),
-  path.resolve(__dirname, '../../gi-site/dist/home.html'),
+  path.resolve(__dirname, '../../gi-portal/dist/index.html'),
+  path.resolve(__dirname, '../dist/home.html'),
   { overwrite: true },
   function (err) {
     if (err) return console.error(err);
@@ -11,11 +12,11 @@ fsExtra.copy(
   },
 );
 fsExtra.copy(
+  path.resolve(__dirname, '../../gi-portal/dist/'),
   path.resolve(__dirname, '../dist/'),
-  path.resolve(__dirname, '../../gi-site/dist/'),
   { overwrite: false },
   function (err) {
     if (err) return console.error(err);
-    console.log('copy umi.js and umi.css success!');
+    console.log('copy home.js success!');
   },
 );
