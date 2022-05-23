@@ -1,4 +1,5 @@
 // const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+
 /** 是否为本地研发模式 */
 import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
@@ -63,6 +64,7 @@ console.log('isDev', isDev, PACKAGES);
 export default {
   // 具体配置项
   // mode: "site",
+  // webpack5: {},
   base: '/',
   publicPath: '/',
   hash: true,
@@ -76,18 +78,19 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
-  // dynamicImportSyntax: {},
+  dynamicImportSyntax: {},
   routes: [
-    { exact: true, path: '/', component: 'Home' },
-    { exact: true, path: '/workspace', component: 'Workspace' },
-    { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
+    { exact: true, path: '/', redirect: '/workspace' },
+    {
+      exact: true,
+      path: '/workspace',
+      component: 'Workspace/Dynamic',
+    },
+    { exact: true, path: '/workspace/:projectId', component: 'Analysis/Dynamic' },
     { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
-    // { exact: true, path: '/market', component: 'Market/List' },
-    // { exact: true, path: '/market/services/:projectId', component: 'Market/CustomServices' },
-    // { exact: true, path: '/market/asserts/:id', component: 'Market/Update' },
-    // { exact: true, path: '/market/personal', component: 'Market/Personal/PersonalAsserts' },
+
     { component: '404' },
   ],
   // mfsu: {},
@@ -99,19 +102,29 @@ export default {
     dataField: '',
   },
   // chainWebpack(config: any) {
-  //   config.plugin('monaco-editor').use(
-  //     new MonacoWebpackPlugin({
-  //       languages: ['javascript', 'json'],
-  //     }),
-  //   );
-  // },
-  // chainWebpack: memo => {
-  //   // 更多配置 https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-  //   memo.plugin('monaco-editor-webpack-plugin').use(MonacoWebpackPlugin, [
-  //     // 按需配置
-  //     { languages: ['javascript', 'json'] },
-  //   ]);
-  //   return memo;
+  //   // config.plugin('HtmlWebpackPlugin').use(
+  //   //   new HtmlWebpackPlugin({
+  //   //     filename: 'home.html',
+  //   //     template: 'src/pages/Home/index.html',
+  //   //   }),
+  //   // );
+  //   // {
+  //   //   filename: 'home.html',
+  //   //   template: 'src/pages/Home/index.html',
+  //   // }
+  //   //   config.plugin('monaco-editor').use(
+  //   //     new MonacoWebpackPlugin({
+  //   //       languages: ['javascript', 'json'],
+  //   //     }),
+  //   //   );
+  //   // },
+  //   // chainWebpack: memo => {
+  //   //   // 更多配置 https://github.com/Microsoft/monaco-editor-webpack-plugin#options
+  //   //   memo.plugin('monaco-editor-webpack-plugin').use(MonacoWebpackPlugin, [
+  //   //     // 按需配置
+  //   //     { languages: ['javascript', 'json'] },
+  //   //   ]);
+  //   //   return memo;
   // },
   externals: {
     lodash: '_',
