@@ -1,0 +1,26 @@
+.switch {
+  position: sticky;
+  top: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: auto;
+  padding: 2px;
+  background: #fafafa;
+  border: 1px solid rgb(248 248 248);
+  border-radius: 8px;
+  cursor: pointer;
+  .item {
+    width: 50%;
+    padding: 6px;
+    color: #121212;
+    text-align: center;
+    border-radius: 4px;
+    &.active {
+      color: #fff;
+      background: var(--primary-color);
+    }
+  }
+}

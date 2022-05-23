@@ -1,0 +1,66 @@
+@shadow:0 2px 2px 0 #00000024, 0 3px 1px -2px #0000001f, 0 1px 5px 0 #00000033;
+
+html {
+  margin: 0px;
+  padding: 0px;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.gi-portal {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff;
+  .navbar {
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 #00000024, 0 3px 1px -2px #0000001f, 0 1px 5px 0 #00000033;
+  }
+  .container {
+    width: 1240px;
+    margin: auto;
+    padding: 48px;
+  }
+}
+
+.switch-container {
+  display: flex;
+  height: 500px;
+  margin: 12px 0px 68px 0px;
+}
+
+// 移动端适配
+@media screen and (max-width: 766px) {
+  .gi-portal {
+    .container {
+      width: calc(100vw - 48px);
+      margin: auto;
+      padding: 3rem 0px;
+    }
+    .switch-container {
+      display: flex;
+      // flex-direction: column;
+      height: 40rem;
+      margin: 0rem 0px 3rem 0px;
+    }
+    .gi-banner {
+      .title {
+        margin: 0px 2.5rem 0px 0px !important;
+      }
+    }
+    .navigation {
+      padding: 0px 2rem;
+    }
+    .switch {
+      width: 100%;
+    }
+    .gi-feature-content {
+      padding: 0px;
+    }
+  }
+}
