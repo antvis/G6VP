@@ -50,7 +50,7 @@ export const analyst = [
   {
     title: '自然且流畅，让你的关联数据跃然纸上',
     description:
-      'GraphInsight 默认提供精美的元素样式，细腻的交互，合理的布局，即使再复杂的关系数据也能快速呈现在你面前',
+      'GraphInsight 默认提供精美的样式，细腻的交互，合理的布局，即使再复杂的关系数据也能快速清晰地呈现在你面前',
     image: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*eXL9T6xqPlUAAAAAAAAAAAAAARQnAQ',
   },
   {
