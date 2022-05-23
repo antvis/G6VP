@@ -34,7 +34,7 @@ const ExportConfig = props => {
   return (
     <div className="export-panel">
       <div className="export-panel-editor">
-        <div style={{ width: 770, height: '100%' }}>
+        <div style={{ width: '100%', height: '100%' }}>
           <MonacoEditor
             language="javascript"
             theme="vs-dark"

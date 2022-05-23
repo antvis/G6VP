@@ -139,7 +139,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         closable={false}
         onClose={handleOutClose}
         visible={outVisible}
-        width={'50%'}
+        width="calc(100vw - 382px)"
       >
         {outVisible && <ExportConfig></ExportConfig>}
       </Drawer>
