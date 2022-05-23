@@ -1,7 +1,7 @@
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { ASSET_TYPE, isMock, SERVICE_URL_PREFIX } from './const';
+import { ASSET_TYPE, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -20,7 +20,7 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string) => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     const project: any = await localforage.getItem(id);
     return {
       schemaData: project.schemaData,
@@ -85,7 +85,7 @@ export const getProjectById = async (id: string) => {
  * @returns
  */
 export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     const origin: any = await localforage.getItem(id);
     const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
@@ -124,7 +124,7 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     return await localforage.removeItem(id);
   }
 
@@ -169,7 +169,7 @@ export interface Project {
  * @returns
  */
 export const getProjectList = async (type: 'project' | 'case' | 'save') => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     const projects = [];
     const cases = [];
     const save = [];
@@ -219,7 +219,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save') => {
  * 增加项目
  */
 export const addProject = async (param: any) => {
-  if (isMock) {
+  if (IS_LOCAL_ENV) {
     const projectId = getUid();
     const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, ...otherParams } = param;
     const p = {
