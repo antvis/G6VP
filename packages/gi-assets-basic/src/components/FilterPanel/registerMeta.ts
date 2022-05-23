@@ -24,6 +24,13 @@ const registerMeta = () => {
       'x-component': 'Switch',
       default: true,
     },
+    highlightMode: {
+      title: '高亮模式',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
     ...metas,
   };
 

@@ -1,4 +1,4 @@
-import type { GraphinData } from '@antv/graphin';
+import type { Graph, GraphinData } from '@antv/graphin';
 import { IFilterCriteria } from './type';
 
 /**
@@ -117,4 +117,50 @@ export const getHistogram = (graphData: GraphinData, prop: string, elementType: 
     format: '',
     color,
   };
+};
+
+//@todo 感觉需要算法优化下，后面再做吧
+export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
+  const source = graph.save() as GraphinData;
+
+  const nodeIds = data.nodes.map(node => node.id);
+  const edgeIds = data.edges.map(edge => edge.id);
+
+  const sourceNodesCount = source.nodes.length;
+  const sourceEdgesCount = source.edges.length;
+  const nodesCount = data.nodes.length;
+  const edgesCount = data.edges.length;
+  const isEmpty = nodesCount === 0 && edgesCount === 0;
+  const isFull = nodesCount === sourceNodesCount && edgesCount === sourceEdgesCount;
+  // 如果是空或者全部图数据，则恢复到画布原始状态，取消高亮
+  if (isEmpty || isFull) {
+    source.nodes.forEach(function (node) {
+      graph.clearItemStates(node.id);
+    });
+    source.edges.forEach(function (edge) {
+      graph.clearItemStates(edge.id);
+    });
+    return;
+  }
+
+  source.nodes.forEach(node => {
+    const hasMatch = nodeIds.includes(node.id);
+    if (hasMatch) {
+      graph.setItemState(node.id, 'disabled', false);
+      graph.setItemState(node.id, 'selected', true);
+    } else {
+      graph.setItemState(node.id, 'selected', false);
+      graph.setItemState(node.id, 'disabled', true);
+    }
+  });
+  source.edges.forEach(edge => {
+    const hasMatch = edgeIds.includes(edge.id);
+    if (hasMatch) {
+      graph.setItemState(edge.id, 'disabled', false);
+      graph.setItemState(edge.id, 'selected', true);
+    } else {
+      graph.setItemState(edge.id, 'selected', false);
+      graph.setItemState(edge.id, 'disabled', true);
+    }
+  });
 };

@@ -39,7 +39,7 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOC
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
-  const type = searchParams.get('type') || 'case';
+  const type = searchParams.get('type') || 'project';
   const [state, updateState] = useImmer({
     visible: false,
     activeKey: type,
