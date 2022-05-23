@@ -174,23 +174,23 @@ const ChinaVisDataPathMapping = {
       filePath: '/home/graphscope/.gshttpserver/dataset/vis/IP_C.csv',
     },
     whoisPhone: {
-      nodeType: 'Cert',
+      nodeType: 'Whois_Phone',
       filePath: '/home/graphscope/.gshttpserver/dataset/vis/Whois_Phone.csv',
     },
     whoisEmail: {
-      nodeType: 'ASN',
-      filePath: '/home/graphscope/.gshttpserver/dataset/Whois_Email.csv',
+      nodeType: 'Whois_Email',
+      filePath: '/home/graphscope/.gshttpserver/dataset/vis/Whois_Email.csv',
     },
     whoisName: {
-      nodeType: 'Cert',
+      nodeType: 'Whois_Name',
       filePath: '/home/graphscope/.gshttpserver/dataset/vis/Whois_Name.csv',
     },
     domain: {
-      nodeType: 'ASN',
+      nodeType: 'Domain',
       filePath: '/home/graphscope/.gshttpserver/dataset/vis/Domain.csv',
     },
     ip: {
-      nodeType: 'Cert',
+      nodeType: 'IP',
       filePath: '/home/graphscope/.gshttpserver/dataset/vis/IP.csv',
     },
   },
@@ -291,11 +291,15 @@ const ChinaVisDataPathMapping = {
   },
 };
 
+const NODE_ID = 'id';
+const SRC_FIELD = 'src_id';
+const DST_FIELD = 'dst_id';
 export const LoadChinaVisDataSource = {
   nodes: [
     {
       label: ChinaVisDataPathMapping.nodeFiles.asn.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.asn.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -304,6 +308,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.cert.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.cert.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -312,6 +317,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.domain.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.domain.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -320,6 +326,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.whoisName.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.whoisName.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -328,6 +335,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.ip.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.ip.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -336,6 +344,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.ipC.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.ipC.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -344,6 +353,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.whoisEmail.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.whoisEmail.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -352,6 +362,7 @@ export const LoadChinaVisDataSource = {
     {
       label: ChinaVisDataPathMapping.nodeFiles.whoisPhone.nodeType,
       location: ChinaVisDataPathMapping.nodeFiles.whoisPhone.filePath,
+      id_field: NODE_ID,
       config: {
         header_row: true,
         delimiter: ',',
@@ -364,6 +375,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_asn_IP_ASN.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_asn_IP_ASN.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_asn_IP_ASN.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -374,6 +387,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_cert_Domain_Cert.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_cert_Domain_Cert.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_cert_Domain_Cert.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -384,6 +399,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_cert_chain_Cert_Cert.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_cert_chain_Cert_Cert.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_cert_chain_Cert_Cert.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -394,6 +411,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_cidr_IP_IP_CIDR.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_cidr_IP_IP_CIDR.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_cidr_IP_IP_CIDR.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -404,6 +423,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_cname_Domain_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_cname_Domain_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_cname_Domain_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -414,6 +435,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_dns_a_Domain_IP.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_dns_a_Domain_IP.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_dns_a_Domain_IP.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -424,6 +447,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_request_jump_Domain_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_request_jump_Domain_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_request_jump_Domain_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -434,6 +459,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_subdomain_Domain_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_subdomain_Domain_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_subdomain_Domain_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -444,6 +471,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_email_Domain_Whois_Email.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_email_Domain_Whois_Email.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_email_Domain_Whois_Email.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -454,6 +483,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -464,6 +495,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Name.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Name.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Name.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -474,6 +507,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Phone.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Phone.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Domain_Whois_Phone.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -484,6 +519,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Whois_Phone_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Whois_Phone_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_name_Whois_Phone_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -494,6 +531,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Domain_Whois_Phone.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Domain_Whois_Phone.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Domain_Whois_Phone.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
@@ -504,6 +543,8 @@ export const LoadChinaVisDataSource = {
       location: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Whois_Name_Domain.filePath,
       srcLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Whois_Name_Domain.sourceNodeType,
       dstLabel: ChinaVisDataPathMapping.edgeFiles.r_whois_phone_Whois_Name_Domain.targetNodeType,
+      srcField: SRC_FIELD,
+      dstField: DST_FIELD,
       config: {
         header_row: true,
         delimiter: ',',
