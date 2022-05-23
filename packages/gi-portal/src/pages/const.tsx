@@ -54,15 +54,15 @@ export const analyst = [
     image: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*eXL9T6xqPlUAAAAAAAAAAAAAARQnAQ',
   },
   {
-    title: '变化但不混乱，从容不迫帮你理清分析思路',
+    title: '灵活但不乱，从容不迫帮你理清分析思路',
     description:
-      '图的分析调查是个动态变化的过程，常常需要数据的关联，分组，筛选，下钻，查询，用户也很容易陷入思路分叉，灵感丢失，误操作等状态，GraphInsight 提供了布局缓存，多画布页签，撤销重做，分析画廊，筛选查询等众多分析资产，让你的分析过程从容不迫',
+      '图的分析中需要对数据频繁做关联、分组、筛选、下钻、查询，用户很容易思路分叉，丢失灵感甚至误操作。GraphInsight 提供了布局缓存、多画布、撤销重做、分析画廊、筛选查询等丰富的分析资产，让你的分析过程从容不迫',
     image: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*NjQnR4CuUykAAAAAAAAAAAAAARQnAQ',
   },
   {
     title: '多维且多角度，场景化分析方案助力深入洞察',
     description:
-      '得益于 GraphInsight 的丰富业务实践，我们为用户提供了3D大图分析，地理位置分析，时序分析，统计分析 等众多场景化分析方案，多角度，多维度洞察你的关联数据～',
+      '得益于 GraphInsight 的丰富业务实践，我们为用户提供了3D大图分析，地理位置分析，时序分析，统计分析 等众多场景化分析方案，多角度，多维度洞察你的关联数据',
     image: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*VWk4TZnY3nEAAAAAAAAAAAAAARQnAQ',
   },
 ];
