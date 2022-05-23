@@ -1,6 +1,5 @@
 import GISDK, { GIAssets } from '@alipay/graphinsight';
 import { original } from 'immer';
-import localforage from 'localforage';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
@@ -23,14 +22,14 @@ import type { StateType } from './useModal';
 import { initialState } from './useModal';
 import { isObjectEmpty } from './utils';
 
-// 配置不同的驱动优先级
-localforage.config({
-  driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
-  name: 'GI-WebServer',
-  version: 2.0,
-  description: 'GraphInsight Local Server',
-  storeName: 'project',
-});
+// // 配置不同的驱动优先级，目前采用默认的方式，因为在浏览器VM环境下仍然有地方调用
+// localforage.config({
+//   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
+//   name: 'GI-WebServer',
+//   version: 2.0,
+//   description: 'GraphInsight Local Server',
+//   storeName: 'project',
+// });
 
 setDefaultAssetPackages();
 
