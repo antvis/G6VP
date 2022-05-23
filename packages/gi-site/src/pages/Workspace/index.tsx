@@ -4,6 +4,7 @@ import { useImmer } from 'use-immer';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../components/utils';
+import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import CreatePanel from './Create';
 import './index.less';
@@ -14,21 +15,28 @@ setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
+const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOCAL_ENV
+  ? [
+      {
+        id: 'case',
+        name: '行业案例',
+      },
+      {
+        id: 'project',
+        name: '我的项目',
+      },
+      {
+        id: 'save',
+        name: '我的保存',
+      },
+    ]
+  : [
+      {
+        id: 'project',
+        name: '我的项目',
+      },
+    ];
 
-const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = [
-  {
-    id: 'case',
-    name: '行业案例',
-  },
-  {
-    id: 'project',
-    name: '我的项目',
-  },
-  {
-    id: 'save',
-    name: '我的保存',
-  },
-];
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'case';

@@ -1,4 +1,4 @@
-import { UploadOutlined } from '@ant-design/icons';
+import { ExportOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
 import MonacoEditor from 'react-monaco-editor';
 import { getRiddleAppCode, useCodeSandbox, useHtml, useRiddle } from '../../hooks';
@@ -34,7 +34,7 @@ const ExportConfig = props => {
   return (
     <div className="export-panel">
       <div className="export-panel-editor">
-        <div style={{ width: 770, height: '100%' }}>
+        <div style={{ width: '100%', height: '100%' }}>
           <MonacoEditor
             language="javascript"
             theme="vs-dark"
@@ -53,13 +53,11 @@ const ExportConfig = props => {
         <Button type="primary" onClick={handleExport}>
           <UploadOutlined /> 导出
         </Button> */}
-
         <Button type="primary" onClick={handleExport}>
-          <UploadOutlined /> 导出HTML
+          <UploadOutlined /> 导出 HTML 文件
         </Button>
-
-        <Button onClick={openRiddle} disabled>
-          <UploadOutlined /> 在Riddle中打开
+        <Button onClick={openCSB}>
+          <ExportOutlined /> 在 CodeSandbox 中打开
         </Button>
       </div>
     </div>

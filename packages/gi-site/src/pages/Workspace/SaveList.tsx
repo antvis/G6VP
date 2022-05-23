@@ -1,6 +1,6 @@
 import { utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
+import { Button, Col, Dropdown, Empty, Menu, Popconfirm, Row, Typography } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -56,6 +56,20 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
       </Menu.Item>
     </Menu>
   );
+  if (lists.length === 0) {
+    return (
+      <div style={{ margin: '50px auto' }}>
+        <Empty
+          description={
+            <div>
+              当用户在工作台中使用<Typography.Text type="success">「保存分析」</Typography.Text>
+              资产的时候，默认会被保存在这里。
+            </div>
+          }
+        />
+      </div>
+    );
+  }
 
   return (
     <>
