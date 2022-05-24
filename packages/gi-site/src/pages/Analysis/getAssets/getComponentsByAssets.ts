@@ -1,6 +1,32 @@
+import { utils } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
-import { getDefaultValues, getKeysByData } from './utils';
+import { getDefaultValues } from './utils';
+const { uniqueElementsBy } = utils;
 
+const getAllkeysBySchema = (schema, shapeType) => {
+  try {
+    if (shapeType === 'node') {
+      const nodeKeySet = new Set();
+      schema.nodes.forEach(node => {
+        Object.keys(node.properties).forEach(k => {
+          nodeKeySet.add(k);
+        });
+      });
+      return [...nodeKeySet];
+    }
+    if (shapeType === 'edge') {
+      const edgeKeySet = new Set();
+      schema.edges.forEach(edge => {
+        Object.keys(edge.properties).forEach(k => {
+          edgeKeySet.add(k);
+        });
+      });
+      return [...edgeKeySet];
+    }
+  } catch (error) {
+    return [];
+  }
+};
 /**
  *
  * @param assets 服务端拿到的资产: Components
@@ -59,7 +85,7 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
         },
         info = {},
       } = component;
-      const keys = getKeysByData(data, 'node');
+      const keys = getAllkeysBySchema(schemaData, 'node');
 
       const configObj = registerMeta({
         data,
