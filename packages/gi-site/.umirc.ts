@@ -2,6 +2,7 @@
 
 /** 是否为本地研发模式 */
 import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
+import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import graphinsight from '@alipay/graphinsight/package.json';
@@ -19,6 +20,10 @@ const assets_npm = [
   {
     name: GI_ASSETS_SCENE.name,
     version: GI_ASSETS_SCENE.version,
+  },
+  {
+    name: GI_ASSETS_ANALYSIS.name,
+    version: GI_ASSETS_ANALYSIS.version,
   },
 ];
 const NPM_INFO = [
