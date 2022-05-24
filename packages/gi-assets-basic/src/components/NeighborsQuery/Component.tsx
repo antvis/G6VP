@@ -103,7 +103,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
           // };
         }
       });
-
+      debugger;
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
