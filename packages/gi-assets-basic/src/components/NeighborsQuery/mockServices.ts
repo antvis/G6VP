@@ -57,8 +57,8 @@ const mockServices = () => {
 
         // 根据 sep 拼接 .bothE() 个数
         let str = '';
-        for (let i = 0; i < sep; i++) {
-          str += '.bothE()';
+        for (let i = 0; i < sep - 1; i++) {
+          str += '.both()';
         }
 
         return fetch(`http://dev.alipay.net:7001/graphcompute/gremlinQuery`, {
@@ -68,7 +68,7 @@ const mockServices = () => {
           },
           body: JSON.stringify({
             // statement: `g.V('${id}').repeat(bothE()).times(${sep})`,
-            statement: `g.V(${id})${str}`,
+            statement: `g.V(${id})${str}.bothE()`,
             gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
           }),
         })
