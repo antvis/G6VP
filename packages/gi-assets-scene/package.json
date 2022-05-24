@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-scene",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -40,6 +40,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }

@@ -1,37 +1,37 @@
+import { ExclamationCircleOutlined, MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  Alert,
+  Button,
+  Col,
+  Collapse,
+  Form,
+  Input,
+  message,
+  Modal,
+  Popconfirm,
+  Radio,
+  Row,
+  Space,
+  Switch,
+  Table,
+  Upload,
+} from 'antd';
 import React, { useState } from 'react';
 import {
-  Form,
-  Radio,
-  Upload,
-  Button,
-  Input,
-  Switch,
-  Collapse,
-  message,
-  Space,
-  Popconfirm,
-  Alert,
-  Row,
-  Col,
-  Modal,
-  Table,
-} from 'antd';
-import { UploadOutlined, MinusCircleOutlined, PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import {
-  uploadLocalFileToGraphScope,
   closeGraphInstance,
   createGraphScopeInstance,
-  loadGraphToGraphScope,
-  loadDefaultGraphToGraphScope,
   loadChinaVisGraphToGraphScope,
+  loadDefaultGraphToGraphScope,
+  loadGraphToGraphScope,
+  uploadLocalFileToGraphScope,
 } from '../../../services/graphcompute';
 import {
-  DefaultGraphScopeNodeFilePath,
-  DefaultGraphScopeEdgeFilePath,
-  ChinaVisNodeColumns,
-  ChinaVisNodeData,
   ChinaVisEdgeColumns,
   ChinaVisEdgeData,
+  ChinaVisNodeColumns,
+  ChinaVisNodeData,
+  DefaultGraphScopeEdgeFilePath,
+  DefaultGraphScopeNodeFilePath,
   LoadChinaVisDataSource,
 } from './const';
 const { Item } = Form;
@@ -114,7 +114,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     // 如果 isCover = false， 则需要先过滤掉 nodeConfigList, edgeConfigList 中已经存在于 localstorage 中的文件
     const { nodeConfigList, edgeConfigList = [] } = values;
-    debugger;
+
     const nodeFileLists = nodeConfigList
       .filter(d => d.nodeFileList && d.nodeType)
       .filter(d => {
