@@ -186,8 +186,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
   };
 
   const handleSubmitForm = async () => {
-    const currentInstanceId = await initGraphScopeInstance();
     setLoading(true);
+    const currentInstanceId = await initGraphScopeInstance();
 
     // 使用示例数据
     if (dataType === 'demo') {
