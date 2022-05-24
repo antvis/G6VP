@@ -11,17 +11,104 @@ export const SchemaData = {
     title: '算法类型',
     'x-decorator': 'FormItem',
     'x-component': 'Select',
-    enum: [{ label: 'PageRank', value: 'pagerank' }, { label: '单源最短路径', value: 'sssp' }],
-    // 'x-reactions': [
-    //   {
-    //     target: '*(sortById, limit)',
-    //     fulfill: {
-    //       state: {
-    //         visible: '{{$self.value === "pagerank"}}',
-    //       },
-    //     },
-    //   },
-    // ],
+    enum: [
+      { label: 'PageRank', value: 'pagerank' },
+      { label: '单源最短路径', value: 'sssp' },
+      { label: 'k-Core', value: 'k_core' },
+      { label: 'wcc', value: 'wcc' },
+      { label: 'clustering', value: 'clustering' },
+      { label: 'eigenvector_centrality', value: 'eigenvector_centrality' },
+    ],
+    'x-reactions': [
+      {
+        target: 'delta',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "pagerank"}}',
+          },
+        },
+      },
+      {
+        target: 'tolerance',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "eigenvector_centrality"}}',
+          },
+        },
+      },
+      {
+        target: 'maxRound',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "pagerank" || $self.value === "eigenvector_centrality"}}',
+          },
+        },
+      },
+      {
+        target: 'src',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "sssp"}}',
+          },
+        },
+      },
+      {
+        target: 'weight',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "sssp" || $self.value === "eigenvector_centrality"}}',
+          },
+        },
+      },
+      {
+        target: 'k',
+        fulfill: {
+          state: {
+            visible: '{{$self.value === "k_core"}}',
+          },
+        },
+      },
+    ],
+  },
+  delta: {
+    title: 'delta',
+    type: 'number',
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    default: 0.85,
+  },
+  maxRound: {
+    title: 'maxRound',
+    type: 'number',
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    default: 10,
+  },
+  weight: {
+    title: '权重',
+    type: 'number',
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    default: 1,
+  },
+  tolerance: {
+    title: 'tolerance',
+    type: 'number',
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    default: 1,
+  },
+  k: {
+    title: 'k',
+    type: 'string',
+    'x-decorator': 'FormItem',
+    'x-component': 'Input',
+  },
+  src: {
+    title: '起点ID',
+    type: 'string',
+    'x-decorator': 'FormItem',
+    'x-component': 'Input',
   },
   limit: {
     title: '限制数量',
@@ -37,34 +124,6 @@ export const SchemaData = {
     'x-component': 'Switch',
     default: true,
   },
-  delta: {
-    title: 'maxRound',
-    type: 'number',
-    'x-decorator': 'FormItem',
-    'x-component': 'NumberPicker',
-    default: 0.85,
-  },
-  maxRound: {
-    title: 'maxRound',
-    type: 'number',
-    'x-decorator': 'FormItem',
-    'x-component': 'NumberPicker',
-    default: 10,
-  },
-  // weight: {
-  //   title: '权重',
-  //   type: 'number',
-  //   'x-decorator': 'FormItem',
-  //   'x-component': 'NumberPicker',
-  //   default: 1,
-  // },
-  // tolerance: {
-  //   title: 'tolerance',
-  //   type: 'number',
-  //   'x-decorator': 'FormItem',
-  //   'x-component': 'NumberPicker',
-  //   default: 1,
-  // },
 };
 
 const registerMeta = context => {
