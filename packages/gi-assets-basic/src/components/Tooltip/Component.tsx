@@ -2,6 +2,9 @@ import { Components } from '@antv/graphin';
 import * as React from 'react';
 import './index.less';
 const { Tooltip } = Components;
+const isArray = arg => {
+  return Object.prototype.toString.call(arg) === '[object Array]';
+};
 
 export type PlacementType = 'top' | 'bottom' | 'right' | 'left';
 
@@ -25,6 +28,11 @@ const NodeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
     width,
   } = props;
 
+  let keys = mappingKeys;
+  if (!isArray(keys)) {
+    keys = [];
+  }
+
   return (
     <Tooltip bindType="node" placement={placement} hasArrow={hasArrow} style={{ background, color, width }}>
       {renderProps => {
@@ -32,13 +40,18 @@ const NodeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
         return (
           <div>
             <ul className="tooltip-content">
-              {mappingKeys.map((key: string) => {
-                return (
-                  <li key={key}>
-                    {/* @ts-ignore */}
-                    {key.toUpperCase()} : {model.data[key]}
-                  </li>
-                );
+              {keys.map((key: string) => {
+                //@ts-ignore
+                const val = model.data[key];
+
+                if (val !== undefined) {
+                  return (
+                    <li key={key}>
+                      {key.toUpperCase()} : {val}
+                    </li>
+                  );
+                }
+                return null;
               })}
             </ul>
           </div>
