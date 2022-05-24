@@ -1,4 +1,5 @@
 import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
+import GroupSelect from '@alipay/gi-common-components/es/CommonStyleSetting/GroupSelect';
 import { Icon } from '@alipay/graphinsight';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { FormItem, Input, NumberPicker, Radio, Select, Switch } from '@formily/antd';
@@ -21,6 +22,7 @@ const SchemaField = createSchemaField({
     ColorInput,
     Offset,
     AssetCollapse,
+    GroupSelect,
   },
 });
 
