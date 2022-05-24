@@ -32,6 +32,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
       updateContext(draft => {
         const { nodes, edges } = data;
+
         if (schema) {
           // 更新schemaData
           draft.schemaData = schema as any;
