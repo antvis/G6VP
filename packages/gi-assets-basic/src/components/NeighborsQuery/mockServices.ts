@@ -55,13 +55,20 @@ const mockServices = () => {
       service: (params, localData) => {
         const { id, sep } = params;
 
+        // 根据 sep 拼接 .bothE() 个数
+        let str = '';
+        for (let i = 0; i < sep; i++) {
+          str += '.bothE()';
+        }
+
         return fetch(`http://dev.alipay.net:7001/graphcompute/gremlinQuery`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
           body: JSON.stringify({
-            statement: `g.V('${id}').repeat(bothE()).times(${sep})`,
+            // statement: `g.V('${id}').repeat(bothE()).times(${sep})`,
+            statement: `g.V(${id})${str}`,
             gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
           }),
         })
