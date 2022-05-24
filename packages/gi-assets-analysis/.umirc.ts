@@ -7,7 +7,7 @@ const localDeps = isDev
       '@alipay/graphinsight': 'GISDK',
     };
 
-const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.2.1/dist/index.min.js'];
+const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/2.2.1/dist/index.min.js'];
 
 export default {
   nodeModulesTransform: {
@@ -21,6 +21,7 @@ export default {
     antd: 'antd',
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
+    '@antv/g2plot': 'G2Plot',
     moment: 'moment',
     ...localDeps,
   },
@@ -30,6 +31,8 @@ export default {
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
+    /**  G2Plot */
+    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.6/dist/graphin.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
