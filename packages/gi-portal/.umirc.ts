@@ -10,7 +10,16 @@ export default {
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [{ exact: true, path: '/', component: 'index' }],
+  routes: [
+    {
+      path: '/',
+      component: '@/layouts/index',
+      routes: [
+        { exact: true, path: '/', component: 'index' },
+        { exact: true, path: '/case', component: './Case' },
+      ],
+    },
+  ],
 
   externals: {
     react: 'React',
