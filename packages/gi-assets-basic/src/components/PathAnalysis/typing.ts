@@ -12,6 +12,7 @@ export interface IState {
   highlightPath: Set<number>;
   isAnalysis: boolean;
   filterRule: IFilterRule;
+  selecting: string;
 }
 
 export interface IHighlightElement{
