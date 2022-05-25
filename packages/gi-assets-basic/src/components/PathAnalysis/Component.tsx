@@ -1,6 +1,6 @@
 import { useContext } from '@alipay/graphinsight';
-import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Timeline } from 'antd';
+import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Timeline, Switch } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
@@ -32,7 +32,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     filterRule: {
       type: 'All-Path',
     },
+    selecting: ''
   });
+  let nodeClickListener = (e) => {};
 
   // 缓存被高亮的节点和边
   const highlightElementRef = useRef<IHighlightElement>({
@@ -54,6 +56,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       draft.filterRule = {
         type: 'All-Path',
       };
+      draft.selecting = '';
     });
     cancelHighlight();
   };
@@ -61,8 +64,8 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const handleSearch = () => {
     form.validateFields().then(values => {
       cancelHighlight();
-      const { source, target } = values;
-      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, true);
+      const { source, target, direction = true } = values;
+      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, direction);
       const highlightPath = new Set(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
@@ -74,6 +77,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         draft.filterRule = {
           type: 'All-Path',
         };
+        draft.selecting = '';
       });
     });
   };
@@ -97,6 +101,23 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
     });
   };
+
+  const beginSelect = (type) => {
+    updateState(draft => {
+      draft.selecting = type;
+    });
+    graph.off('node:click', nodeClickListener);
+
+    nodeClickListener = e => {
+      updateState(draft => {
+        draft.selecting = '';
+      });
+      const { item } = e;
+      if (!item || item.destroyed) return;
+      form.setFieldsValue({ [type]: item.getID() });
+    }
+    graph.once('node:click', nodeClickListener);
+  }
 
   useEffect(() => {
     for (let i = 0; i < state.nodePath.length; i++) {
@@ -185,23 +206,62 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     <div className="gi-path-analysis">
       {/* <h2 className="gi-path-analysis-title">路径分析</h2> */}
       <Form form={form}>
-        <Form.Item label="起始节点" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
-          <Select showSearch optionFilterProp="children">
-            {graphData.nodes.map(node => (
-              <Select.Option key={node.id} value={node.id}>
-                {node.id}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item label="目标节点" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
-          <Select showSearch optionFilterProp="children">
-            {graphData.nodes.map(node => (
-              <Select.Option key={node.id} value={node.id}>
-                {node.id}
-              </Select.Option>
-            ))}
-          </Select>
+        <Row justify="space-between">
+          <Col span={22}>
+            <Form.Item label="起始节点" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
+              <Select
+                showSearch
+                optionFilterProp="children"
+                onChange={() => {
+                  updateState(draft => {
+                    draft.selecting = '';
+                  });
+                }}
+              >
+                {graphData.nodes.map(node => (
+                  <Select.Option key={node.id} value={node.id}>
+                    {node.id}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
+            <FormOutlined
+              style={{ cursor: 'pointer', color: state.selecting === 'source' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
+              onClick={() => beginSelect('source')}
+            />
+          </Col>
+        </Row>
+        <Row justify="space-between">
+          <Col span={22}>
+            <Form.Item label="目标节点" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
+              <Select
+                showSearch
+                optionFilterProp="children"
+                onChange={() => {
+                  updateState(draft => {
+                    draft.selecting = '';
+                  });
+                }}
+              >
+                {graphData.nodes.map(node => (
+                  <Select.Option key={node.id} value={node.id}>
+                    {node.id}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
+            <FormOutlined
+              style={{ cursor: 'pointer', color: state.selecting === 'target' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
+              onClick={() => beginSelect('target')}
+            />
+          </Col>
+        </Row>
+        <Form.Item name="direction" label="是否有向">
+          <Switch checkedChildren="有向" unCheckedChildren="无向" defaultChecked />
         </Form.Item>
         <Form.Item>
           <Row>
