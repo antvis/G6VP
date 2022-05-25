@@ -1,0 +1,35 @@
+.gi-case {
+  min-height: calc(100vh - 124px);
+  &-top {
+    height: 12rem;
+    line-height: 12rem;
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+    &-item {
+      margin-right: 40px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 8px;
+      min-width: 100px;
+      max-width: 30%;
+      text-align: center;
+      transition: all 500ms linear;
+      padding: 0.1rem;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.5);
+        transition: all 500ms linear;
+      }
+      &-active {
+        border-color: var(--primary-color);
+      }
+      img {
+        height: 100%;
+        border-radius: 8px;
+      }
+    }
+    &-item:last-child {
+      margin-right: 0;
+    }
+  }
+}
