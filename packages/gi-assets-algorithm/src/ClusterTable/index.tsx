@@ -1,15 +1,15 @@
 //@ts-nocheck
-import React, { Component } from 'react';
-import { SheetComponent } from '@antv/s2-react';
+import { DownloadOutlined } from '@ant-design/icons';
 import type { GraphinData } from '@antv/graphin';
+import { SheetComponent } from '@antv/s2-react';
+import '@antv/s2-react/dist/style.min.css';
 import { Tooltip } from 'antd';
 import { isEqual } from 'lodash';
-import { DownloadOutlined } from '@ant-design/icons';
-import FormattedMessage, { formatMessage } from './locale';
-import { exportCSV, formatFileName } from '../../utils/csv';
-import type { PlainObject } from '../../types';
-import '@antv/s2-react/dist/style.min.css';
+import React, { Component } from 'react';
+import type { PlainObject } from '../types';
+import { exportCSV, formatFileName } from '../utils/csv';
 import './index.less';
+import FormattedMessage, { formatMessage } from './locale';
 
 const getConfig = (data: GraphinData, clusterTitle) => {
   let properties = [];
@@ -89,10 +89,7 @@ export default class ClustersTable extends Component<Props, State> {
     exportCSV(
       {
         data: resData,
-        title: [
-          clusterTitle,
-          formatMessage({ id: 'node-name' }),
-        ].concat(properties),
+        title: [clusterTitle, formatMessage({ id: 'node-name' })].concat(properties),
         titleForKey: ['clusterId', 'label'].concat(properties),
       },
       fileName,

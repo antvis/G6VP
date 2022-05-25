@@ -1,6 +1,13 @@
-import CommunityDetection from "./CommunityDetection";
-import NodeImportance from "./NodeImportance";
-import NodesClustering from "./NodesClustering";
-import NodesSimilarity from "./NodesSimilarity";
+import CommunityDetection from './CommunityDetection';
+import NodeImportance from './NodeImportance';
+import NodesClustering from './NodesClustering';
+import NodesSimilarity from './NodesSimilarity';
 
-export { NodesClustering, NodesSimilarity, CommunityDetection, NodeImportance };
+const components = {
+  NodesClustering,
+  NodesSimilarity,
+  CommunityDetection,
+  NodeImportance,
+};
+
+export { components };

@@ -1,7 +1,7 @@
 import type { GraphinData } from '@antv/graphin';
 
 const scaleNodes = (graphData: GraphinData, value: number = 600) => {
-  const{ nodes = [], edges = [] } = graphData;
+  const { nodes = [], edges = [] } = graphData;
   if (!nodes?.length) {
     return;
   }

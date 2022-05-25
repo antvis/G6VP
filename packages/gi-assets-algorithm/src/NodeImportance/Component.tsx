@@ -3,22 +3,17 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { useContext } from "@alipay/graphinsight";
-import Algorithm from "@antv/algorithm";
-import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from "antd";
-import "antd/dist/antd.css";
-import React, { useEffect, useState } from "react";
-import "./index.less";
-import PropertyContent from "./propertyContent";
-import {
-  defaultProps,
-  locale,
-  MappingWay,
-  NodeImportanceProps,
-} from "./registerMeta";
-import ResultPlot from "./resultPlot";
-import ResultTable from "./resultTable";
-import { fittingString } from "./util";
+import { useContext } from '@alipay/graphinsight';
+import Algorithm from '@antv/algorithm';
+import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
+import 'antd/dist/antd.css';
+import React, { useEffect, useState } from 'react';
+import './index.less';
+import PropertyContent from './propertyContent';
+import { locale, MappingWay, NodeImportanceProps } from './registerMeta';
+import ResultPlot from './resultPlot';
+import ResultTable from './resultTable';
+import { fittingString } from './util';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
 const getDegreeMap = (data, degreeMap) => {
@@ -26,13 +21,13 @@ const getDegreeMap = (data, degreeMap) => {
     return degreeMap;
   }
   const reCalcDegreeMap = {};
-  data.nodes.forEach((node) => {
+  data.nodes.forEach(node => {
     reCalcDegreeMap[node.id] = {
       in: 0,
       out: 0,
     };
   });
-  data.edges.forEach((edge) => {
+  data.edges.forEach(edge => {
     reCalcDegreeMap[edge.source].out += 1;
     reCalcDegreeMap[edge.target].in += 1;
   });
@@ -45,24 +40,19 @@ const NODE_VISUAL_RANGE = [16, 64]; // 直径
 const EDGE_VISUAL_RANGE = [1, 8];
 let degreeMap = undefined;
 
-const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
-  props
-) => {
-  const { visible: controlledVisible = true, onVisibleChange = () => {} } = {
-    ...defaultProps,
-    ...props,
-  };
+const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
+  const { visible: controlledVisible = true, onVisibleChange = () => {} } = props;
 
   const { graph, data } = useContext();
 
   const [visible, setVisible] = useState(false);
-  const [currentAlgo, setCurrentAlgo] = useState("page-rank");
-  const [degreeType, setDegreeType] = useState(["in", "out"]);
+  const [currentAlgo, setCurrentAlgo] = useState('page-rank');
+  const [degreeType, setDegreeType] = useState(['in', 'out']);
   const [result, setResult] = useState();
   const [reAnalyse, setReAnalyse] = useState(0);
   const [nodeProperties, setNodeProperties] = useState([]);
   const [edgeProperties, setEdgeProperties] = useState([]);
-  const [resultPaneKey, setResultPaneKey] = useState("table");
+  const [resultPaneKey, setResultPaneKey] = useState('table');
 
   const [form] = Form.useForm();
   const { validateFields, resetFields } = form;
@@ -74,22 +64,22 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
       onAnalyse();
     }
     const nodePropertyMap = {};
-    data.nodes.forEach((node) => {
-      Object.keys(node.data).forEach((key) => (nodePropertyMap[key] = true));
+    data.nodes.forEach(node => {
+      Object.keys(node.data).forEach(key => (nodePropertyMap[key] = true));
     });
     setNodeProperties(Object.keys(nodePropertyMap));
     const edgePropertyMap = {};
-    data.edges.forEach((edge) => {
-      Object.keys(edge.data).forEach((key) => (edgePropertyMap[key] = true));
+    data.edges.forEach(edge => {
+      Object.keys(edge.data).forEach(key => (edgePropertyMap[key] = true));
     });
     setEdgeProperties(Object.keys(edgePropertyMap));
   }, [data]);
 
-  const onRadioChange = (e) => {
+  const onRadioChange = e => {
     setCurrentAlgo(e.target.value);
   };
 
-  const onDegreeCheckChange = (checkedValues) => {
+  const onDegreeCheckChange = checkedValues => {
     setDegreeType(checkedValues);
   };
 
@@ -97,19 +87,16 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     resetFields();
     resetMapping([], []);
     setResult(null);
-    setCurrentAlgo("page-rank");
+    setCurrentAlgo('page-rank');
   };
 
-  const showResult = (res) => {
+  const showResult = res => {
     const formValues = form.getFieldsValue();
     const calcWay = formValues[`${currentAlgo}.calcway`];
     const mappingWay = formValues[`${currentAlgo}.mappingway`];
 
-    if (
-      !res?.nodes?.length ||
-      (currentAlgo === "edge-property" && !res?.edges?.length)
-    ) {
-      let message = "无结果";
+    if (!res?.nodes?.length || (currentAlgo === 'edge-property' && !res?.edges?.length)) {
+      let message = '无结果';
       setResult({
         type: currentAlgo,
         calcWay,
@@ -124,7 +111,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     const resNodes = res.nodes;
     let sum = 0;
     resNodes.sort((a, b) => b.value - a.value);
-    resNodes.forEach((item) => {
+    resNodes.forEach(item => {
       sum += item.value;
     });
 
@@ -134,7 +121,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
 
     let edgeSum = 0;
     res.edges?.sort((a, b) => b.value - a.value);
-    res.edges?.forEach((item) => {
+    res.edges?.forEach(item => {
       edgeSum += item.value;
     });
     const minEdge = res.edges?.[res.edges.length - 1] || undefined;
@@ -174,20 +161,14 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
               ? {
                   id: minEdge.id,
                   name: minEdge.name,
-                  value:
-                    calcWay === "count"
-                      ? minEdge.value
-                      : +minEdge.value?.toFixed(6),
+                  value: calcWay === 'count' ? minEdge.value : +minEdge.value?.toFixed(6),
                 }
               : undefined,
             max: maxEdge
               ? {
                   id: maxEdge.id,
                   name: maxEdge.name,
-                  value:
-                    calcWay === "count"
-                      ? minEdge.value
-                      : +maxEdge.value?.toFixed(6),
+                  value: calcWay === 'count' ? minEdge.value : +maxEdge.value?.toFixed(6),
                 }
               : undefined,
             ave: {
@@ -199,10 +180,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
               ? {
                   id: medianEdge.id,
                   name: medianEdge.name,
-                  value:
-                    calcWay === "count"
-                      ? minEdge.value
-                      : +medianEdge.value?.toFixed(6),
+                  value: calcWay === 'count' ? minEdge.value : +medianEdge.value?.toFixed(6),
                 }
               : undefined,
             data: res.edges,
@@ -213,27 +191,25 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     setResult(analyseResult);
   };
 
-  const mapGraph = (res) => {
+  const mapGraph = res => {
     const { min: minNode, max: maxNode } = res.node;
     const nodeValueRange = maxNode.value - minNode.value || 1;
     const nodeVisualRange = NODE_VISUAL_RANGE[1] - NODE_VISUAL_RANGE[0];
     const mappedNodeIds = [];
     const positive = res.mappingWay !== MappingWay.Negative;
-    res.node.data.forEach((node) => {
+    res.node.data.forEach(node => {
       const nodeItem = graph.findById(node.id);
       if (nodeItem) {
         let size = positive
-          ? ((node.value - minNode.value) / nodeValueRange) * nodeVisualRange +
-            NODE_VISUAL_RANGE[0]
-          : ((maxNode.value - node.value) / nodeValueRange) * nodeVisualRange +
-            NODE_VISUAL_RANGE[0];
+          ? ((node.value - minNode.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0]
+          : ((maxNode.value - node.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0];
         // 所有的值都一样, 使所有节点使用默认大小
         if (minNode.value === maxNode.value) {
           size = undefined;
         }
 
         const { type: shapeType } = nodeItem.getModel();
-        if (shapeType === "graphin-circle") {
+        if (shapeType === 'graphin-circle') {
           //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
           graph.updateItem(nodeItem, {
             style: {
@@ -249,24 +225,20 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
       mappedNodeIds.push(node.id);
     });
     let mappedEdgeIds = [];
-    if (res.edge && res.calcWay !== "count") {
+    if (res.edge && res.calcWay !== 'count') {
       const { min: minEdge, max: maxEdge } = res.edge;
       const edgeValueRange = maxEdge.value - minEdge.value || 1;
       const edgeVisualRange = EDGE_VISUAL_RANGE[1] - EDGE_VISUAL_RANGE[0];
-      res.edge.data.forEach((edge) => {
+      res.edge.data.forEach(edge => {
         const edgeItem = graph.findById(edge.id);
         // min === max 代表所有的值都一样, 使所有边使用默认大小
         if (minNode.value !== maxNode.value) {
           const lineWidth = positive
-            ? ((edge.value - minEdge.value) / edgeValueRange) *
-                edgeVisualRange +
-              EDGE_VISUAL_RANGE[0]
-            : ((maxEdge.value - edge.value) / edgeValueRange) *
-                edgeVisualRange +
-              EDGE_VISUAL_RANGE[0];
+            ? ((edge.value - minEdge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0]
+            : ((maxEdge.value - edge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0];
           if (edgeItem) {
             const { type: shapeType } = edgeItem.getModel();
-            if (shapeType === "graphin-line") {
+            if (shapeType === 'graphin-line') {
               //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
               graph.updateItem(edgeItem, {
                 style: {
@@ -288,7 +260,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
   };
 
   const resetMapping = (mappedNodeIds, mappedEdgeIds) => {
-    graph.getNodes().forEach((node) => {
+    graph.getNodes().forEach(node => {
       const model = node.getModel();
       if (model.size && !mappedNodeIds?.includes(model.id)) {
         graph.updateItem(node, {
@@ -297,7 +269,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
       }
     });
     if (mappedEdgeIds) {
-      graph.getEdges().forEach((edge) => {
+      graph.getEdges().forEach(edge => {
         const edgeModel = edge.getModel();
         if (edgeModel.size !== 1 && !mappedEdgeIds?.includes(edgeModel.id)) {
           graph.updateItem(edge, {
@@ -306,7 +278,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
         }
       });
     }
-    graph.getEdges().forEach((edge) => {
+    graph.getEdges().forEach(edge => {
       edge.refresh();
     });
   };
@@ -315,7 +287,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     if (!graph || graph.destroyed) {
       return;
     }
-    validateFields().then((values) => {
+    validateFields().then(values => {
       let res: {
         nodes: any[];
         edges: any[];
@@ -324,9 +296,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
         edges: [],
       };
       switch (currentAlgo) {
-        case "page-rank": {
+        case 'page-rank': {
           const pageRankRes = pageRank(data);
-          Object.keys(pageRankRes).map((key) => {
+          Object.keys(pageRankRes).map(key => {
             const node = graph.findById(key);
             if (node) {
               res.nodes.push({
@@ -338,33 +310,30 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
           });
           break;
         }
-        case "degree": {
-          const degree =
-            degreeType.length === 2 ? "total" : degreeType[0] || "in";
+        case 'degree': {
+          const degree = degreeType.length === 2 ? 'total' : degreeType[0] || 'in';
           degreeMap = getDegreeMap(data, degreeMap);
-          graph.getNodes().forEach((node) => {
+          graph.getNodes().forEach(node => {
             const model = node.getModel();
             if (degreeMap[model.id]) {
               res.nodes.push({
                 id: model.id,
                 name: node.getModel().id,
                 value:
-                  degree !== "total"
-                    ? degreeMap[model.id][degree]
-                    : degreeMap[model.id].in + degreeMap[model.id].out,
+                  degree !== 'total' ? degreeMap[model.id][degree] : degreeMap[model.id].in + degreeMap[model.id].out,
               });
             }
           });
           break;
         }
-        case "node-property": {
-          const selectedNodeProperty = values["node-property.property"];
+        case 'node-property': {
+          const selectedNodeProperty = values['node-property.property'];
           if (!selectedNodeProperty) {
             return;
           }
-          data.nodes.forEach((node) => {
+          data.nodes.forEach(node => {
             const propertyValue = node.data?.[selectedNodeProperty];
-            const value = propertyValue === "" ? undefined : +propertyValue;
+            const value = propertyValue === '' ? undefined : +propertyValue;
             if (!isNaN(value) && graph.findById(node.id)) {
               res.nodes.push({
                 id: node.id,
@@ -375,25 +344,23 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
           });
           break;
         }
-        case "edge-property": {
-          const selectedEdgeProperty = values["edge-property.property"];
-          const calcWay = values["edge-property.calcway"];
+        case 'edge-property': {
+          const selectedEdgeProperty = values['edge-property.property'];
+          const calcWay = values['edge-property.calcway'];
           if (!selectedEdgeProperty) {
             return;
           }
           const nodeValueMap = {};
-          graph.getEdges().forEach((edgeItem) => {
+          graph.getEdges().forEach(edgeItem => {
             const edge = edgeItem.getModel();
             const propertyValue = edge.data?.[selectedEdgeProperty];
             if (propertyValue === undefined) return;
 
-            if (calcWay === "sort") {
-              const value = propertyValue === "" ? undefined : +propertyValue;
+            if (calcWay === 'sort') {
+              const value = propertyValue === '' ? undefined : +propertyValue;
               if (!isNaN(value)) {
-                nodeValueMap[edge.source] =
-                  (nodeValueMap[edge.source] || 0) + value;
-                nodeValueMap[edge.target] =
-                  (nodeValueMap[edge.target] || 0) + value;
+                nodeValueMap[edge.source] = (nodeValueMap[edge.source] || 0) + value;
+                nodeValueMap[edge.target] = (nodeValueMap[edge.target] || 0) + value;
                 res.edges.push({
                   id: edge.id,
                   name: edge.id,
@@ -421,15 +388,12 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
             }
           });
 
-          data.nodes.forEach((node) => {
+          data.nodes.forEach(node => {
             if (!graph.findById(node.id)) {
               return;
             }
-            if (calcWay === "sort") {
-              if (
-                nodeValueMap[node.id] === undefined ||
-                !isNaN(nodeValueMap[node.id])
-              ) {
+            if (calcWay === 'sort') {
+              if (nodeValueMap[node.id] === undefined || !isNaN(nodeValueMap[node.id])) {
                 res.nodes.push({
                   id: node.id,
                   name: node.id,
@@ -453,17 +417,17 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
       }
       showResult(res);
     });
-    setResultPaneKey("table");
+    setResultPaneKey('table');
   };
 
   const getResultTitle = () => {
     const formValues = form.getFieldsValue();
-    const nodeProperty = formValues["node-property.property"];
-    const edgeProperty = formValues["edge-property.property"];
-    if (result?.type === "node-property") {
+    const nodeProperty = formValues['node-property.property'];
+    const edgeProperty = formValues['edge-property.property'];
+    if (result?.type === 'node-property') {
       return <>{nodeProperty}&nbsp;-&nbsp;排序</>;
     }
-    if (result?.type === "edge-property") {
+    if (result?.type === 'edge-property') {
       return (
         <>
           {edgeProperty}
@@ -474,9 +438,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     return locale[result?.type];
   };
 
-  const getStatistic = (type, itemType = "node") => {
+  const getStatistic = (type, itemType = 'node') => {
     const value =
-      type === "ave"
+      type === 'ave'
         ? `${result[itemType][type].value}`
         : `${result[itemType][type].value} (${result[itemType][type].name})`;
     const fittedValue = fittingString(value, 250, 14);
@@ -484,34 +448,21 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
       <>
         {locale[type]}:&nbsp;&nbsp;
         <span className="result-statistic-value">
-          <Tooltip title={fittedValue.includes("…") ? value : ""}>
-            {fittedValue}
-          </Tooltip>
+          <Tooltip title={fittedValue.includes('…') ? value : ''}>{fittedValue}</Tooltip>
         </span>
       </>
     );
   };
 
-  const getResultPane = (paneType) => {
+  const getResultPane = paneType => {
     const formValues = form.getFieldsValue();
     const edgeType = formValues[`${currentAlgo}.edgeType`];
-    const failedMessage = result?.node ? undefined : (
-      <p className="result-message">{result?.message}</p>
-    );
+    const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>;
     const resultBlock =
-      paneType === "table" ? (
-        <ResultTable
-          data={result}
-          form={form}
-          currentAlgo={currentAlgo}
-          reAnalyse={reAnalyse}
-        />
+      paneType === 'table' ? (
+        <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} />
       ) : (
-        <ResultPlot
-          data={result}
-          currentAlgo={currentAlgo}
-          edgeType={edgeType}
-        />
+        <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />
       );
     return (
       <div className="result-wrapper">
@@ -519,12 +470,12 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
         {failedMessage || (
           <div className="result-statistic">
             <Row>
-              <Col span={11}>{getStatistic("ave")}</Col>
-              <Col span={11}>{getStatistic("median")}</Col>
+              <Col span={11}>{getStatistic('ave')}</Col>
+              <Col span={11}>{getStatistic('median')}</Col>
             </Row>
-            <Row style={{ marginTop: "16px" }}>
-              <Col span={11}>{getStatistic("max")}</Col>
-              <Col span={11}>{getStatistic("min")}</Col>
+            <Row style={{ marginTop: '16px' }}>
+              <Col span={11}>{getStatistic('max')}</Col>
+              <Col span={11}>{getStatistic('min')}</Col>
             </Row>
           </div>
         )}
@@ -533,77 +484,75 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     );
   };
 
-  const processRow = (row) => {
-    let finalVal = "";
+  const processRow = row => {
+    let finalVal = '';
     Object.values(row).forEach((value, i) => {
-      let res = (value === undefined ? "" : value)
-        .toString()
-        .replace(/"/g, '""');
+      let res = (value === undefined ? '' : value).toString().replace(/"/g, '""');
       if (res.search(/("|,|\n)/g) >= 0) res = '"' + res + '"';
-      if (i > 0) finalVal += ",";
+      if (i > 0) finalVal += ',';
       finalVal += res;
     });
     return finalVal;
   };
 
-  const downloadCSV = (itemType) => {
+  const downloadCSV = itemType => {
     const list = result?.[itemType]?.data;
     if (!list) {
       return;
     }
-    const header = "id,name,dataType,value";
-    const csvStr = list.map(processRow).join("\n");
-    const a = document.createElement("a");
-    a.href = "data:text/csv;charset=utf-8," + encodeURI(`${header}\n${csvStr}`);
+    const header = 'id,name,dataType,value';
+    const csvStr = list.map(processRow).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${header}\n${csvStr}`);
     a.download = `node-importance-${itemType}.csv`; //这里替换为你需要的文件名
     a.click();
   };
 
   const algoSelections = [
     {
-      name: "page-rank",
+      name: 'page-rank',
       content: <></>,
     },
     {
-      name: "degree",
+      name: 'degree',
       content: (
         <Checkbox.Group
           className="algo-body"
           options={[
             {
-              label: "入度",
-              value: "in",
+              label: '入度',
+              value: 'in',
             },
             {
-              label: "出度",
-              value: "out",
+              label: '出度',
+              value: 'out',
             },
           ]}
-          defaultValue={["in", "out"]}
+          defaultValue={['in', 'out']}
           onChange={onDegreeCheckChange}
-          style={{ display: currentAlgo === "degree" ? "inline-flex" : "none" }}
+          style={{ display: currentAlgo === 'degree' ? 'inline-flex' : 'none' }}
         />
       ),
     },
     {
-      name: "node-property",
+      name: 'node-property',
       content: (
         <PropertyContent
           type="node"
           form={form}
-          visible={currentAlgo === "node-property"}
+          visible={currentAlgo === 'node-property'}
           properties={nodeProperties}
           // fetchSchemaProperties={fetchSchemaProperties}
         />
       ),
     },
     {
-      name: "edge-property",
+      name: 'edge-property',
       content: (
         <PropertyContent
           type="edge"
           form={form}
-          visible={currentAlgo === "edge-property"}
+          visible={currentAlgo === 'edge-property'}
           properties={edgeProperties}
           // fetchSchemaProperties={fetchSchemaProperties}
         />
@@ -651,14 +600,12 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
         </div>
         <Form form={form}>
           <Radio.Group onChange={onRadioChange} value={currentAlgo}>
-            {algoSelections.map((selection) => (
+            {algoSelections.map(selection => (
               <div key={selection.name}>
                 <Radio value={selection.name} className="algo-radio">
                   <div className="algo-title">
                     <span className="algo-name">{locale[selection.name]}</span>
-                    <span className="algo-tip">
-                      ({locale[`${selection.name}-tip`]})
-                    </span>
+                    <span className="algo-tip">({locale[`${selection.name}-tip`]})</span>
                   </div>
                 </Radio>
                 {selection.content}
@@ -689,8 +636,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
                 <i
                   className="iconfont icon-download"
                   onClick={() => {
-                    downloadCSV("node");
-                    downloadCSV("edge");
+                    downloadCSV('node');
+                    downloadCSV('edge');
                   }}
                 />
               </Tooltip>
@@ -698,10 +645,10 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
           }}
         >
           <TabPane tab="结果列表" key="table">
-            {getResultPane("table")}
+            {getResultPane('table')}
           </TabPane>
           <TabPane tab="统计图表" key="plot">
-            {getResultPane("plot")}
+            {getResultPane('plot')}
           </TabPane>
         </Tabs>
       )}
