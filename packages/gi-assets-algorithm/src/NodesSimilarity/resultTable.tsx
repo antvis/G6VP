@@ -1,10 +1,10 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react';
-import { Tooltip, Table } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import FormattedMessage, { formatMessage } from './locale';
+import { Table, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { exportCSV, formatFileName } from '../utils/csv';
 import { NodesSimilarityAlgorithm } from './Component';
-import { exportCSV, formatFileName } from '../../utils/csv';
+import FormattedMessage, { formatMessage } from './locale';
 
 interface Props {
   similarNodes;
@@ -12,7 +12,7 @@ interface Props {
   topReset: boolean;
 }
 
-const ClustersResultTable: React.FC<Props> = ({  similarNodes, similarityKey = 'similarity', topReset, }) => {
+const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 'similarity', topReset }) => {
   const [sortOrder, setSortOrder] = useState(false);
   useEffect(() => {
     setSortOrder(false);
@@ -23,7 +23,7 @@ const ClustersResultTable: React.FC<Props> = ({  similarNodes, similarityKey = '
   let propertiesKeys: string[] = [];
   const resData = [];
   similarNodes?.forEach((node, index) => {
-    if(!node.properties) {
+    if (!node.properties) {
       return;
     }
     propertiesKeys.push('id');
@@ -121,7 +121,7 @@ const ClustersResultTable: React.FC<Props> = ({  similarNodes, similarityKey = '
   return (
     <>
       <Tooltip title={<FormattedMessage id="download-csv" />} placement="topRight">
-        <DownloadOutlined style={{float: 'right'}} onClick={download} />
+        <DownloadOutlined style={{ float: 'right' }} onClick={download} />
       </Tooltip>
       <div className="nodes-similarity-table-wrapper">
         <div className="nodes-similarity-statistic">

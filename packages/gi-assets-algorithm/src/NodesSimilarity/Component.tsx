@@ -1,14 +1,13 @@
-import { ReloadOutlined } from '@ant-design/icons';
+import { useContext } from '@alipay/graphinsight';
+import { FormOutlined, ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import type { GraphinData } from '@antv/graphin';
-import { useContext } from "@alipay/graphinsight";
-import { Button, Empty, Input, Radio, Row, Col } from 'antd';
-import { FormOutlined } from '@ant-design/icons';
+import { Button, Col, Empty, Input, Radio, Row } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
 import SimilarityResultTable from './resultTable';
-import './index.less';
 
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
@@ -196,9 +195,9 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       const { item } = e;
       if (!item || item.destroyed) return;
       setSeedNodeId(item.getID());
-    }
+    };
     graph.once('node:click', nodeClickListener);
-  }
+  };
   return (
     <div
       style={
@@ -216,14 +215,15 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           </p>
           <Row justify="space-between">
             <Col span={22}>
-            <Input
-              placeholder={formatMessage({
-                id: 'itelligent-analysis.nodes-similarity.select-seed-node',
-              })}
-              style={{ display: 'block', margin: '0 0 30px 10px' }}
-              onChange={onSeachSeed}
-              value={seedNodeId}
-            />
+              <Input
+                placeholder={formatMessage({
+                  id: 'itelligent-analysis.nodes-similarity.select-seed-node',
+                })}
+                style={{ display: 'block', margin: '0 0 30px 10px' }}
+                onChange={onSeachSeed}
+                //@ts-ignore
+                value={seedNodeId}
+              />
             </Col>
             <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
               <FormOutlined
