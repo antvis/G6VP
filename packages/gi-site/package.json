@@ -27,6 +27,7 @@
     "@alipay/gi-assets-scene": "*",
     "@alipay/gi-assets-advance": "*",
     "@alipay/gi-assets-analysis": "*",
+    "@alipay/gi-assets-algorithm": "*",
     "@alipay/gi-common-components": "*",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
