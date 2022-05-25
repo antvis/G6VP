@@ -1,8 +1,6 @@
 import React from 'react';
 import Banner from '../components/Banner/index';
 import Feature from '../components/Feature/index';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar/index';
 import RoleSwitch from '../components/RoleSwitch/index';
 import SwitchContainer from '../components/RoleSwitch/SwitchContainer';
 import { analyst, developer, roles } from './const';
@@ -10,7 +8,7 @@ import './index.less';
 
 const Home = () => {
   const [state, setState] = React.useState({
-    roleId: 'analyst',
+    roleId: 'developer',
   });
   const { roleId } = state;
   const handleChangeRole = (id: string) => {
@@ -24,8 +22,7 @@ const Home = () => {
   const features = roleId === 'developer' ? developer : analyst;
 
   return (
-    <div className="gi-portal">
-      <Navbar />
+    <div>
       <div className="container">
         <RoleSwitch roleId={roleId} handleChangeRole={handleChangeRole} roles={roles} />
         <div className="switch-container">
@@ -46,8 +43,6 @@ const Home = () => {
           })}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
