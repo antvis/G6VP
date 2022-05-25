@@ -54,6 +54,7 @@ npm run bootstrap
 在`该项目根目录`启动 `gi` `gi-assets` `gi-site` 的本地编译.
 
 ```bash
+npm run common:components
 npm run core   //本地编译`@alipay/graphinsight`的产物
 npm run assets   //本地编译`@alipay/gi-assets`的产物
 npm run site   //本地编译`@alipay/gi-site`的产物，需先执行上面步骤
