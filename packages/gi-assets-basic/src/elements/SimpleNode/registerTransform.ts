@@ -174,7 +174,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
         const [nodeType, propObjKey, propName] = d.split('.');
-        if (node.nodeType === nodeType) {
+        if ((node.nodeType || 'UNKNOW') === nodeType) {
           // 只有当 nodeType 匹配时才取对应的属性值
           if (propName) {
             // propName 存在，则 propObjKey 值一定为 properties
@@ -229,7 +229,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         ...node,
         id: node.id,
         data: node.data || node,
-        dataType: node.dataType || 'unkown',
+        nodeType: node.nodeType || 'UNKNOW',
         type: 'graphin-circle',
         // 数据中的style还是优先级最高的
         style: merge(styleByConfig, preStyle),
