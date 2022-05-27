@@ -40,5 +40,12 @@ export default context => {
       },
       default: '1',
     },
+    isFocus: {
+      title: '是否聚焦到扩散点',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
   };
 };
