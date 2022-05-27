@@ -60,11 +60,7 @@ export const time = time => {
   }
   const date = new Date(new Date(time).valueOf() + 8 * 3600 * 1000);
 
-  return date
-    .toJSON()
-    .substr(0, 16)
-    .replace('T', ' ')
-    .replace(/-/g, '.');
+  return date.toJSON().substr(0, 16).replace('T', ' ').replace(/-/g, '.');
 };
 
 /**
@@ -80,7 +76,10 @@ export const handleExpand = (data, responseData) => {
       return a.id === b.id;
     }),
     edges: uniqueElementsBy([...data.edges, ...edges], (a, b) => {
-      return a.id === b.id;
+      if (a.id && b.id) {
+        return a.id === b.id;
+      }
+      return a.source === b.source && a.target === b.target;
     }),
   };
 };
