@@ -3,47 +3,31 @@ import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
 import '@antv/graphin-icons/dist/index.css';
 import { Menu } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const icons = Graphin.registerFontFamily(iconLoader);
-
-const defSpringLen = (_edge, source, target) => {
-  // NOTE: 固定200还是效果好
-  // return 200;
-  /** 默认返回的是 200 的弹簧长度 */
-  /** 如果你要想要产生聚类的效果，可以考虑 根据边两边节点的度数来动态设置边的初始化长度：度数越小，则边越短 */
-  const defaultSpring = 100;
-  const Sdegree = source.data.layout.degree;
-  const Tdegree = target.data.layout.degree;
-  const MinDegree = Math.min(Sdegree, Tdegree);
-  const MaxDegree = Math.max(Sdegree, Tdegree);
-
-  let SpringLength = defaultSpring;
-  if (MinDegree < 5) {
-    SpringLength = defaultSpring * MinDegree;
-  } else {
-    SpringLength = 500;
-  }
-  // console.log(Sdegree, Tdegree, MinDegree, MaxDegree, "SpringLength", SpringLength);
-
-  return SpringLength;
-};
 
 const { SubMenu } = Menu;
 export interface QueryNeighborsProps {
   serviceId: '';
   contextmenu: any;
   degree: number;
+  isFocus: boolean;
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
-  const { contextmenu, serviceId, degree } = props;
+  const { contextmenu, serviceId, degree, isFocus } = props;
+  const currentRef = useRef({
+    expandIds: [],
+    expandStartId: '',
+  });
+
   const { data, updateContext, transform, graph, config, apis, services } = useContext();
   const service = utils.getService(services, serviceId);
-  console.log('props', props);
+
   if (!service) {
     return null;
   }
@@ -59,64 +43,40 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     });
     const result = await service({ ...value, sep });
     const newData = utils.handleExpand(data, result);
+    const expandIds = result.nodes.map(n => n.id);
+    const expandStartId = value.id;
+    currentRef.current.expandIds = expandIds;
+    currentRef.current.expandStartId = expandStartId;
 
     contextmenu.onClose();
 
     updateContext(draft => {
       const res = transform(newData);
-      res.nodes.forEach(node => {
-        if (!node.style.badges) {
-          node.style.badges = [];
-        }
-        // 保留其他位置的 badges，例如锁定和标签
-        node.style.badges = node.style.badges.filter(({ position }) => position !== 'LB') || [];
-
-        const expandIds = result.nodes.map(n => n.id);
-        if (expandIds.indexOf(node.id) !== -1) {
-          node.style.badges.push({
-            position: 'LB',
-            type: 'font',
-            fontFamily: 'graphin',
-            value: icons['plus-circle'],
-            size: [12, 12],
-            color: '#fff',
-            fill: '#4DB6AC',
-            stroke: '#4DB6AC',
-          });
-          // node.status = {
-          //   highlight: true
-          // };
-        }
-        if (node.id === value.id) {
-          node.style.badges.push({
-            position: 'LB',
-            type: 'font',
-            fontFamily: 'graphin',
-            value: icons.fullscreen,
-            size: [15, 15],
-            color: '#fff',
-            fill: '#FF6D00',
-            stroke: '#FF6D00',
-          });
-          // node.status = {
-          //   selected: true
-          // };
-        }
-      });
-      debugger;
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
-      draft.layout = {
-        type: 'graphin-force',
-        animation: false,
-        preset: {
-          type: 'concentric',
-        },
-        defSpringLen,
-      };
     });
   };
+  useEffect(() => {
+    //@ts-ignore
+    const handleCallback = () => {
+      const { expandIds, expandStartId } = currentRef.current;
+      if (expandIds.length === 0) {
+        return;
+      }
+
+      expandIds.forEach(id => {
+        graph.setItemState(id, 'query_normal', true);
+      });
+      graph.setItemState(expandStartId, 'query_start', true);
+      isFocus && graph.focusItem(expandStartId);
+    };
+    //@ts-ignore
+    graph.on('graphin:datachange', handleCallback);
+    return () => {
+      graph.off('graphin:datachange', handleCallback);
+    };
+  }, [isFocus]);
 
   return (
     // @ts-ignore

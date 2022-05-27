@@ -171,6 +171,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         size: size,
       };
       advanced.keyshape = keyshape;
+      //这里的逻辑彻底变成了 {id,nodeType,nodeTypeFromProperties,data}为必填的格式，否则文本这块有问题，可以使用「扩散组件」验证
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
         const [nodeType, propObjKey, propName] = d.split('.');
@@ -220,6 +221,23 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
             },
             keyshape: {
               lineWidth: 5,
+            },
+          },
+          /** 扩散的状态 */
+          query_start: {
+            halo: {
+              visible: true,
+              stroke: color,
+              lineWidth: 4,
+              lineDash: [8, 8],
+            },
+          },
+          query_normal: {
+            halo: {
+              visible: true,
+              stroke: color,
+              lineWidth: 1,
+              lineDash: [8, 8],
             },
           },
         },
