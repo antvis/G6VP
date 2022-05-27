@@ -1,8 +1,9 @@
-import { Components, ContextMenuValue } from '@antv/graphin';
+import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import React, { useMemo } from 'react';
+import ContextMenu from './Container';
 
-const { ContextMenu } = Components;
+// const { ContextMenu } = Components;
 
 const defaultStyle = {
   boxShadow: '0 4px 12px rgb(0 0 0 / 15%)',
@@ -38,11 +39,6 @@ const ContextMenuContainer = props => {
         );
       }}
     </ContextMenu>
-    // <div style={{ ...defaultStyle, ...positionStyle }} ref={container}>
-    //   {visible && (
-
-    //   )}
-    // </div>
   );
 };
 
