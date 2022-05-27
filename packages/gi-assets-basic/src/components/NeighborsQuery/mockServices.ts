@@ -10,24 +10,30 @@ const mockServices = () => {
     {
       id: SERVICE_ID,
       service: (params, localData) => {
-        const { id } = params;
+        const { id, data: DATA = {} } = params;
+        const { type = 'user' } = DATA;
         console.log('邻居查询', params);
         const data = {
           nodes: [
             {
               id,
+              type,
             },
             {
               id: `${id}-1`,
+              type,
             },
             {
               id: `${id}-2`,
+              type,
             },
             {
               id: `${id}-3`,
+              type,
             },
             {
               id: `${id}-4`,
+              type,
             },
           ],
           edges: [
@@ -45,8 +51,31 @@ const mockServices = () => {
             },
           ],
         };
+        const transfrom = p => {
+          const { nodes, edges } = p;
+          return {
+            nodes: nodes.map(c => {
+              return {
+                id: c.id,
+                data: c,
+                nodeType: c.type,
+                nodeTypeKeyFromProperties: 'type',
+              };
+            }),
+            edges: edges.map(c => {
+              return {
+                source: c.source,
+                target: c.target,
+                id: `${c.source}-${c.target}`,
+                data: c,
+                edgeType: c.type,
+                edgeTypeKeyFromProperties: 'type',
+              };
+            }),
+          };
+        };
         return new Promise(resolve => {
-          return resolve(data);
+          return resolve(transfrom(data));
         });
       },
     },
