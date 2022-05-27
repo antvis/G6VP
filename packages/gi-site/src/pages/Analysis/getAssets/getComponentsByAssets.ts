@@ -86,10 +86,12 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
         info = {},
       } = component;
       const keys = getAllkeysBySchema(schemaData, 'node');
+      const edgeKeys = getAllkeysBySchema(schemaData, 'edge');
 
       const configObj = registerMeta({
         data,
         keys,
+        edgeKeys,
         services,
         config,
         GI_CONTAINER_INDEXS,
