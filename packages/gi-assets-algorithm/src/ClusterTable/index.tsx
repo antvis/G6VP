@@ -3,7 +3,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import type { GraphinData } from '@antv/graphin';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Tooltip } from 'antd';
+import { Tooltip, Select } from 'antd';
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
 import type { PlainObject } from '../types';
@@ -11,24 +11,19 @@ import { exportCSV, formatFileName } from '../utils/csv';
 import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
 
-const getConfig = (data: GraphinData, clusterTitle) => {
-  let properties = [];
-  properties.push('id');
+const getConfig = (data: GraphinData, clusterTitle, properties) => {
   const resData = [];
   data?.nodes?.forEach(node => {
-    properties = properties.concat(Object.keys(node.properties));
     resData.push({
-      ...node.properties,
-      clusterId: node.clusterId,
-      id: node.id,
-      label: node.label,
+      ...(node.properties || {}),
+      propertyId: node.properties?.id,
+      ...node
     });
   });
   resData.sort((a, b) => Number(a.clusterId) - Number(b.clusterId));
-  properties = Array.from(new Set(properties));
   const dataCfg = {
     fields: {
-      rows: ['clusterId', 'label'],
+      rows: ['clusterId', 'id'],
       values: properties,
     },
     meta: [
@@ -37,8 +32,8 @@ const getConfig = (data: GraphinData, clusterTitle) => {
         name: clusterTitle,
       },
       {
-        field: 'label',
-        name: formatMessage({ id: 'node-name' }),
+        field: 'id',
+        name: 'id',
       },
     ],
     data: resData || [],
@@ -49,6 +44,7 @@ const getConfig = (data: GraphinData, clusterTitle) => {
 interface Props {
   data: GraphinData;
   clusterTitle: string;
+  properties?: string[];
   focusNodeAndHighlightHull: (nodeId: string, clusterId: string) => void;
 }
 
@@ -58,10 +54,17 @@ interface State {
 }
 export default class ClustersTable extends Component<Props, State> {
   // 交叉表配置项准备
-  static options = {
+  options = {
     width: 500,
     height: 400,
     hierarchyType: 'grid',
+    showDefaultHeaderActionIcon: false,
+    style: {
+      layoutWidthType: 'colAdaptive',
+      colCfg: {
+        width: 20
+      }
+    }
   };
 
   state = {
@@ -70,10 +73,10 @@ export default class ClustersTable extends Component<Props, State> {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { data: nextData, clusterTitle } = nextProps;
+    const { data: nextData, clusterTitle, properties } = nextProps;
     const { data } = prevState;
     if (!isEqual(nextData, data)) {
-      const config = getConfig(nextData, clusterTitle);
+      const config = getConfig(nextData, clusterTitle, properties);
       return {
         data,
         config,
@@ -118,7 +121,7 @@ export default class ClustersTable extends Component<Props, State> {
           <SheetComponent
             sheetType="base"
             dataCfg={dataCfg}
-            options={this.options}
+            options={this.options || {}}
             onRowCellClick={this.onRowCellClick}
           />
         </div>

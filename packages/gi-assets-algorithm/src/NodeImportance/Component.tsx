@@ -6,14 +6,15 @@
 import { useContext } from '@alipay/graphinsight';
 import Algorithm from '@antv/algorithm';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
-import 'antd/dist/antd.css';
+import { DeleteOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import './index.less';
 import PropertyContent from './propertyContent';
 import { locale, MappingWay, NodeImportanceProps } from './registerMeta';
 import ResultPlot from './resultPlot';
 import ResultTable from './resultTable';
 import { fittingString } from './util';
+import 'antd/dist/antd.css';
+import './index.less';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
 const getDegreeMap = (data, degreeMap) => {
@@ -208,19 +209,18 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           size = undefined;
         }
 
-        const { type: shapeType } = nodeItem.getModel();
-        if (shapeType === 'graphin-circle') {
-          //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
-          graph.updateItem(nodeItem, {
-            style: {
-              keyshape: {
-                size,
-              },
+        const { type: shapeType, style, size: modelSize } = nodeItem.getModel();
+        //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
+        graph.updateItem(nodeItem, {
+          size,
+          oriSize: modelSize || style?.keyshape.size || 30,
+          // 兼容 graphin-circle
+          style: {
+            keyshape: {
+              size,
             },
-          });
-        } else {
-          graph.updateItem(nodeItem, { size });
-        }
+          },
+        });
       }
       mappedNodeIds.push(node.id);
     });
@@ -233,25 +233,25 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         const edgeItem = graph.findById(edge.id);
         // min === max 代表所有的值都一样, 使所有边使用默认大小
         if (minNode.value !== maxNode.value) {
-          const lineWidth = positive
+          let lineWidth = positive
             ? ((edge.value - minEdge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0]
             : ((maxEdge.value - edge.value) / edgeValueRange) * edgeVisualRange + EDGE_VISUAL_RANGE[0];
+          lineWidth = lineWidth || 1;
           if (edgeItem) {
-            const { type: shapeType } = edgeItem.getModel();
-            if (shapeType === 'graphin-line') {
-              //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
-              graph.updateItem(edgeItem, {
-                style: {
-                  keyshape: {
-                    size: lineWidth,
-                  },
+            const { size: modelSize, style = {} } = edgeItem.getModel();
+            //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
+            graph.updateItem(edgeItem, {
+              size: lineWidth,
+              oriSize: modelSize || style?.keyshape.size || 1,
+              // 兼容 graphin-line 类型边
+              style: {
+                keyshape: {
+                  size: lineWidth,
+                  ...(style.keyshape || {})
                 },
-              });
-            } else {
-              graph.updateItem(edgeItem, { size: lineWidth });
-            }
+              },
+            });
           }
-
           mappedEdgeIds.push(edge.id);
         }
       });
@@ -261,19 +261,34 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const resetMapping = (mappedNodeIds, mappedEdgeIds) => {
     graph.getNodes().forEach(node => {
-      const model = node.getModel();
-      if (model.size && !mappedNodeIds?.includes(model.id)) {
+      const { id, oriSize } = node.getModel();
+      if (oriSize && !mappedNodeIds?.includes(id)) {
         graph.updateItem(node, {
-          size: undefined,
+          size: oriSize || 30,
+          oriSize: undefined,
+          // 兼容 graphin-circle
+          style: {
+            keyshape: {
+              size: oriSize || 30,
+            },
+          },
         });
       }
     });
     if (mappedEdgeIds) {
       graph.getEdges().forEach(edge => {
-        const edgeModel = edge.getModel();
-        if (edgeModel.size !== 1 && !mappedEdgeIds?.includes(edgeModel.id)) {
+        const  { id, oriSize, size, style = {} } = edge.getModel();
+        if ((size !== 1 || style?.keyshape?.size !== 1) && !mappedEdgeIds?.includes(id)) {
           graph.updateItem(edge, {
-            size: 1,
+            size: oriSize || 1,
+            oriSize: undefined,
+            // 兼容 graphin-line
+            style: {
+              keyshape: {
+                size: oriSize || 1,
+                ...(style.keyshape || {})
+              },
+            },
           });
         }
       });
@@ -300,11 +315,13 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           const pageRankRes = pageRank(data);
           Object.keys(pageRankRes).map(key => {
             const node = graph.findById(key);
+            const model = node.getModel();
             if (node) {
               res.nodes.push({
                 id: key,
-                name: node.getModel().id,
+                name: model.id,
                 value: pageRankRes[key],
+                originProperties: model
               });
             }
           });
@@ -318,9 +335,10 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             if (degreeMap[model.id]) {
               res.nodes.push({
                 id: model.id,
-                name: node.getModel().id,
+                name: model.id,
                 value:
                   degree !== 'total' ? degreeMap[model.id][degree] : degreeMap[model.id].in + degreeMap[model.id].out,
+                originProperties: model
               });
             }
           });
@@ -339,6 +357,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 id: node.id,
                 name: node.id,
                 value,
+                originProperties: node
               });
             }
           });
@@ -365,6 +384,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                   id: edge.id,
                   name: edge.id,
                   value,
+                  originProperties: edge
                 });
               }
             } else {
@@ -384,6 +404,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 id: edge.id,
                 name: edge.id,
                 value: propertyValue,
+                originProperties: edge
               });
             }
           });
@@ -398,6 +419,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                   id: node.id,
                   name: node.id,
                   value: nodeValueMap[node.id] || 0,
+                  originProperties: node
                 });
               }
             } else {
@@ -406,6 +428,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 name: node.id,
                 value: nodeValueMap[node.id]?.length || 0,
                 values: nodeValueMap[node.id],
+                originProperties: node
               });
             }
           });
@@ -460,7 +483,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>;
     const resultBlock =
       paneType === 'table' ? (
-        <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} />
+        <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} nodeProperties={nodeProperties} />
       ) : (
         <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />
       );
@@ -567,32 +590,6 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
   };
 
   return (
-    // <Drawer
-    //   title={
-    //     <Row style={{ width: '93%', lineHeight: '25px' }}>
-    //       <Col span={22}>节点重要性</Col>
-    //       <Col span={1} offset={1}>
-    //         <i
-    //           className="icon-reload iconfont"
-    //           style={{ color: 'rgba(0, 0, 0, 0.45)', cursor: 'pointer' }}
-    //           onClick={reset}
-    //         />
-    //       </Col>
-    //     </Row>
-    //   }
-    //   placement="right"
-    //   closable={true}
-    //   onClose={() => {
-    //     setVisible(false);
-    //     onVisibleChange?.(false);
-    //   }}
-    //   visible={visibility}
-    //   width={560}
-    //   mask={false}
-    //   getContainer={false}
-    //   style={{ textAlign: 'left' }}
-    //   footerStyle={{ textAlign: 'right' }}
-    // >
     <div style={props.style}>
       <div className="content-wrapper" id="select-drop-down-area">
         <div className="title-wrapper">
@@ -608,23 +605,35 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                     <span className="algo-tip">({locale[`${selection.name}-tip`]})</span>
                   </div>
                 </Radio>
-                {selection.content}
+                {currentAlgo === selection.name && selection.content}
               </div>
             ))}
           </Radio.Group>
         </Form>
       </div>
 
-      <Button
-        className="apply-button"
-        type="primary"
-        onClick={() => {
-          setReAnalyse(Math.random());
-          onAnalyse();
-        }}
-      >
-        分析
-      </Button>
+      <Row>
+        <Col span={16}>
+          <Button
+            className="button"
+            type="primary"
+            onClick={() => {
+              setReAnalyse(Math.random());
+              onAnalyse();
+            }}
+          >
+            分析
+          </Button>
+        </Col>
+        <Col offset="2" span={6} style={{ textAlign: 'right', lineHeight: '56px' }}>
+          <Button
+            className="button"
+            danger
+            onClick={reset}
+            icon={<DeleteOutlined />}
+          ></Button>
+        </Col>
+        </Row>
       {result && (
         <Tabs
           defaultActiveKey="table"
@@ -653,7 +662,6 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         </Tabs>
       )}
     </div>
-    // {/* </Drawer> */}
   );
 };
 

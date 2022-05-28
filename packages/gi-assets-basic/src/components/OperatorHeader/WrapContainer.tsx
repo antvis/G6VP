@@ -203,6 +203,9 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
     const onClose = () => {
       setVisible(false);
     };
+    const onOpen = () => {
+      setVisible(true);
+    };
     const ContainerDOM = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
 
     return (
@@ -241,7 +244,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             getContainer={ContainerDOM}
             containerAnimate={containerAnimate}
           >
-            <Component {...ComponentProps} visible={containerVisible} onClose={onClose} />
+            <Component {...ComponentProps} visible={containerVisible} onClose={onClose} onOpen={onOpen} />
           </ContainerType>,
           //@ts-ignore
           document.getElementById(`${GISDK_ID}-graphin-container`),

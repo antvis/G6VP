@@ -6,7 +6,7 @@ import Graphin, { Behaviors } from '@antv/graphin';
 import { Button, Empty, InputNumber, Radio, Spin } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import ClustersTable from '../ClusterTable';
+import ClusterTable from '../ClusterTable';
 import Utils from '../utils/index';
 import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
@@ -39,6 +39,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
   const [loading, setLoading] = useState(false);
   const [focusNodeId, setFocusNodeId] = useState(null);
   const [allClusters, setAllClusters] = useState<any[]>([]);
+  const [nodeProperties, setNodeProperties] = useState([] as string[]);
 
   const divisionAlgo = [CommunityDetectionAlgorithm.louvain, CommunityDetectionAlgorithm.iLouvain];
 
@@ -56,6 +57,12 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
         };
       }),
     });
+
+    const nodePropertyMap = {};
+    data.nodes.forEach(node => {
+      Object.keys(node.data).forEach(key => (nodePropertyMap[key] = true));
+    });
+    setNodeProperties(Object.keys(nodePropertyMap));
   }, [data]);
 
   const communityAlgoSelections = [
@@ -133,13 +140,15 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
         const id = edge.getModel().id || '';
         const initModel = initData.edges?.find(initEdge => initEdge.id === id);
         // 暂时这样处理: 目前GI的导入的数据edge没有id，会自动生成，数据里的edge id和graph中edge id对不上
+        const keyShapeStyle = initModel?.style?.keyshape;
         // @ts-ignore
-        const lineWidth = initModel?.style?.keyshape?.lineWidth;
+        const lineWidth = keyShapeStyle?.lineWidth;
         if (initModel && !mappedEdgeIds?.includes(id)) {
           graph.updateItem(edge, {
             style: {
               keyshape: {
                 lineWidth,
+                ...(keyShapeStyle || {})
               },
             },
           });
@@ -154,12 +163,13 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
   const formatOriginData = ({ nodes = [], edges = [] }: GraphinData) => {
     return {
       nodes: nodes.map(node => ({
-        id: node.id,
+        ...(node.data || {}),
         label: node.label || node.data.label || node.data.name,
-        properties: node.data.properties,
+        id: node.id,
       })),
       edges: edges.map(edge => ({
         ...edge,
+        ...(edge.data || {}),
         id: edge.id || edge.data.id,
       })),
     };
@@ -208,11 +218,14 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
               .getEdges()
               //@ts-ignore
               .find(edge => edge.getModel().data.id === edgeData.data.id);
+            if (!edge) return;
+            const { style = {} } = edge.getModel();
             //@ts-ignore
             graph.updateItem(edge, {
               style: {
                 keyshape: {
                   lineWidth: 2,
+                  ...(style.keyshape || {})
                 },
               },
             });
@@ -285,10 +298,11 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           <span className="community-detection-title">
             <FormattedMessage id="analysis-result" />
           </span>
-          <ClustersTable
+          <ClusterTable
             data={resData}
             clusterTitle={formatMessage({ id: 'community-index' })}
             focusNodeAndHighlightHull={focusNodeAndHighlightHull}
+            properties={nodeProperties}
           />
         </div>
       );

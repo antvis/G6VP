@@ -1,22 +1,24 @@
 import { GraphinContext } from '@antv/graphin';
-import { Col, Row, Table, Tooltip } from 'antd';
+import { Table, Select } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
-import { ITEM_STATE, locale, MappingWay } from './registerMeta';
+import { ITEM_STATE, MappingWay } from './registerMeta';
 
 interface Props {
   data;
   currentAlgo: string;
   form;
   reAnalyse: number;
+  nodeProperties: string[];
 }
 
-const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) => {
+const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, nodeProperties }) => {
   const { graph } = useContext(GraphinContext);
 
   const formValues = form.getFieldsValue();
   const edgeType = formValues['edge-property.edgeType'];
 
   const [sortOrder, setSortOrder] = useState(false);
+  const [propertyKey, setPropertyKey] = useState('id');
 
   useEffect(() => {
     setSortOrder(false);
@@ -31,7 +33,17 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
         width: 60,
       },
       {
-        title: '节点',
+        title: nodeProperties?.length ? (<>
+          节点
+          <Select
+            className="result-table-property-select"
+            size="small"
+            defaultValue="id"
+            options={nodeProperties.map(key => ({ label: key, value: key }))}
+            dropdownMatchSelectWidth={false}
+            onChange={setPropertyKey}
+          />
+        </>) : '节点',
         dataIndex: 'name',
         key: 'name',
         textWrap: 'word-break',
@@ -64,13 +76,15 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse }) =>
     if (data.mappingWay === MappingWay.Negative) {
       nodes.reverse();
     }
-    return nodes.map((node, index) => ({
-      key: node.id,
-      index: index + 1,
-      name: node.name,
-      value: node.value,
-      values: node.values?.join('; '),
-    }));
+    return nodes.map((node, index) => {
+      return ({
+        key: node.id,
+        index: index + 1,
+        name: node.originProperties[propertyKey] || node.id,
+        value: node.value,
+        values: node.values?.join('; '),
+      })
+    });
   };
 
 

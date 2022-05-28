@@ -23,26 +23,22 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
 
   const [loading, setLoading] = useState(false);
 
-  const width = type === 'node' ? 285 : 195;
-
   return (
-    <div className="algo-body algo-body-property" style={{ display: visible ? 'inline-flex' : 'none' }}>
+    <div className="algo-body algo-body-property">
       {/* 实体类型 */}
 
       {/* 关系属性重要性, 关系类型 */}
 
       {/* 属性 */}
-      <span style={{ width, marginLeft: 8 }}>
-        属性
-        <br />
+      <span style={{ marginLeft: 8 }}>
         <Form.Item
           rules={[{ required: visible, message: '不可为空' }]}
           name={`${type}-property.property`}
           key={`${type}-property.property`}
+          label={'属性'}
         >
           <Select
             placeholder={'请选择'}
-            style={{ width, marginTop: 8 }}
             dropdownMatchSelectWidth={false}
             notFoundContent={loading ? <Spin /> : '无数据'}
           >
@@ -59,17 +55,15 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
 
       {/* 计算方式 */}
       {type === 'edge' && (
-        <span style={{ width: 162, marginLeft: 8 }}>
-          计算方式
-          <br />
+        <span style={{ marginLeft: 8 }}>
           <Form.Item
             rules={[{ required: visible, message: '不可为空' }]}
             name={`${type}-property.calcway`}
             key={`${type}-property.calcway`}
+            label={"计算方式"}
           >
             <Select
               placeholder={'请选择'}
-              style={{ width: 162, marginTop: 8 }}
               dropdownMatchSelectWidth={false}
               dropdownClassName="calc"
               //@ts-ignore
@@ -90,18 +84,16 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
         </span>
       )}
       {/* 映射方式 */}
-      <span style={{ width: 92, marginLeft: 8 }}>
-        映射方式
-        <br />
+      <span style={{ marginLeft: 8 }}>
         <Form.Item
           rules={[{ required: visible, message: '不可为空' }]}
           name={`${type}-property.mappingway`}
           key={`${type}-property.mappingway`}
           initialValue={MappingWay.Positive}
+          label={'映射方式'}
         >
           <Select
             placeholder={'请选择'}
-            style={{ width: 92, marginTop: 8 }}
             dropdownMatchSelectWidth={false}
             dropdownClassName="mapping"
             //@ts-ignore

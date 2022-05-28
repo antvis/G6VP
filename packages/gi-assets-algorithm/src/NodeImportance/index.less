@@ -28,14 +28,17 @@
       }
     }
     .algo-body {
-      display: inline-flex;
       margin-top: 16px;
       margin-bottom: 8px;
       font-size: 14px;
       color: rgba(0,0,0,0.85);
     }
     .algo-body-property {
-      height: 60px;
+      height: fit-content;
+      margin-top: 0;
+      .ant-form-item {
+        margin-bottom: 0;
+      }
     }
     .tip {
       color: rgba(0,0,0,0.45);
@@ -58,7 +61,7 @@
     }
   }
   
-  .apply-button {
+  .button {
     margin-top: 24px;
   }
   
@@ -80,5 +83,9 @@
     }
     .plot-wrapper {
       margin-top: 24px;
+    }
+    .result-table-property-select {
+      margin-left: 4px;
+      width: 80px;
     }
   }
