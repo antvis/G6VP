@@ -27,8 +27,8 @@
     "@alipay/graphinsight": "2.x",
     "@ant-design/icons": "^4.6.2",
     "@antv/algorithm": "^0.1.17",
-    "@antv/s2": "1.3.0",
-    "@antv/s2-react": "1.3.0"
+    "@antv/s2": "^1.3.0",
+    "@antv/s2-react": "^1.3.0"
   },
   "peerDependencies": {
     "@antv/g2plot": "^2.4.8",
