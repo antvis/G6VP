@@ -172,11 +172,11 @@ export const formatDataModels = (dataType: 'node' | 'edge', models, config: GICo
       ...model,
       style: {
         ...model.style,
-        keyshape: modelConfig.props ? {
+        keyshape: {
           size,
           fill: dataType === 'node' ? color : undefined,
           stroke: color,
-        } : undefined,
+        },
         label: typeof model.label === 'string' ? {
           value: model.label
         } : (model.style?.label || model.label)

@@ -1,15 +1,15 @@
 import { useContext } from '@alipay/graphinsight';
 import { ReloadOutlined } from '@ant-design/icons';
-import { iLouvain, kCore, louvain } from '@antv/algorithm';
+import { iLouvain, kCore, louvain, connectedComponent } from '@antv/algorithm';
 import type { GraphinData } from '@antv/graphin';
 import Graphin, { Behaviors } from '@antv/graphin';
-import { Button, Empty, InputNumber, Radio, Spin } from 'antd';
+import { Button, Empty, InputNumber, Radio, Spin, message } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClusterTable from '../ClusterTable';
 import Utils from '../utils/index';
-import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
+import './index.less';
 
 const { ClickSelect } = Behaviors;
 
@@ -17,6 +17,7 @@ enum CommunityDetectionAlgorithm {
   KCore = 'k-core',
   louvain = 'louvain',
   iLouvain = 'i-louvain',
+  ConnectedComponent = 'connected-component',
 }
 
 export interface CommunityDetectionProps {
@@ -41,7 +42,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
   const [allClusters, setAllClusters] = useState<any[]>([]);
   const [nodeProperties, setNodeProperties] = useState([] as string[]);
 
-  const divisionAlgo = [CommunityDetectionAlgorithm.louvain, CommunityDetectionAlgorithm.iLouvain];
+  const divisionAlgo = [CommunityDetectionAlgorithm.louvain, CommunityDetectionAlgorithm.iLouvain, CommunityDetectionAlgorithm.ConnectedComponent];
 
   useEffect(() => {
     setInitData({
@@ -71,7 +72,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       content: (
         <div className="community-detection-algo-body">
           <span>
-            <FormattedMessage id="itelligent-analysis.community-detection.k-core.set-k" />
+            <FormattedMessage id="community-detection.k-core.set-k" />
           </span>
           <InputNumber
             min={1}
@@ -88,6 +89,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     },
     {
       name: CommunityDetectionAlgorithm.iLouvain,
+      content: <></>,
+    },
+    {
+      name: CommunityDetectionAlgorithm.ConnectedComponent,
       content: <></>,
     },
   ];
@@ -252,6 +257,34 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           setResData(formatData);
           setAllClusters(clustersILouvain);
           drawHullsByClusters(clustersILouvain);
+          break;
+        case CommunityDetectionAlgorithm.ConnectedComponent:
+          const components = connectedComponent(formatData);
+          if (components.length <= 1) {
+            message.info(formatMessage({ id: 'connected-component.all-connected' }));
+            setLoading(false);
+            return;
+          }
+          const clustersComponent: { id: string, nodes: any[] }[] = [];
+          let existSingleNode = false;
+          components.forEach((componentNodes, i) => {
+            if (componentNodes.length === 1) {
+              existSingleNode = true;
+              return;
+            }
+            componentNodes.forEach(node => node.clusterId = `${i}`);
+            clustersComponent.push({
+              id: `${i}`,
+              nodes: componentNodes
+            });
+          });
+          if (existSingleNode) {
+            message.info(formatMessage({ id: 'connected-component.has-single' }));
+          }
+          setResData(formatData);
+          setAllClusters(clustersComponent);
+          drawHullsByClusters(clustersComponent);
+          break;
         default:
           break;
       }
@@ -357,7 +390,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       <div className="community-detection-wrapper">
         <div className="top-info">
           <p className="community-detection-title">
-            <FormattedMessage id="itelligent-analysis.select-algo" />
+            <FormattedMessage id="select-algo" />
           </p>
           <ReloadOutlined onClick={reset} />
         </div>
@@ -368,10 +401,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
               <Radio value={selection.name} className="community-detection-algo-radio">
                 <div className="community-detection-algo-title">
                   <span className="community-detection-algo-title-name">
-                    <FormattedMessage id={`itelligent-analysis.community-detection.${selection.name}`} />
+                    <FormattedMessage id={`community-detection.${selection.name}`} />
                   </span>
                   <span className="community-detection-algo-title-tip">
-                    <FormattedMessage id={`itelligent-analysis.community-detection.${selection.name}-tip`} />
+                    <FormattedMessage id={`community-detection.${selection.name}-tip`} />
                   </span>
                 </div>
               </Radio>
