@@ -23,6 +23,7 @@ import StyleSetting from './StyleSetting';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
+// import TooltipForEdge from './TooltipForEdge';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -46,6 +47,7 @@ export {
   DownLoad,
   ContextMenu,
   Tooltip,
+  // TooltipForEdge, //体验问题，暂不放开
   ClearCanvas,
   LassoSelect,
   Export,

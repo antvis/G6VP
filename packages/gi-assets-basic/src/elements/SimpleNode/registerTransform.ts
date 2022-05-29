@@ -171,10 +171,11 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         size: size,
       };
       advanced.keyshape = keyshape;
+      //这里的逻辑彻底变成了 {id,nodeType,nodeTypeFromProperties,data}为必填的格式，否则文本这块有问题，可以使用「扩散组件」验证
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
         const [nodeType, propObjKey, propName] = d.split('.');
-        if (node.nodeType === nodeType) {
+        if ((node.nodeType || 'UNKNOW') === nodeType) {
           // 只有当 nodeType 匹配时才取对应的属性值
           if (propName) {
             // propName 存在，则 propObjKey 值一定为 properties
@@ -222,6 +223,23 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
               lineWidth: 5,
             },
           },
+          /** 扩散的状态 */
+          query_start: {
+            halo: {
+              visible: true,
+              stroke: color,
+              lineWidth: 4,
+              lineDash: [8, 8],
+            },
+          },
+          query_normal: {
+            halo: {
+              visible: true,
+              stroke: color,
+              lineWidth: 1,
+              lineDash: [8, 8],
+            },
+          },
         },
       };
 
@@ -229,7 +247,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         ...node,
         id: node.id,
         data: node.data || node,
-        dataType: node.dataType || 'unkown',
+        nodeType: node.nodeType || 'UNKNOW',
         type: 'graphin-circle',
         // 数据中的style还是优先级最高的
         style: merge(styleByConfig, preStyle),

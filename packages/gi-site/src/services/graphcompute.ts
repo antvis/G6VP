@@ -308,6 +308,43 @@ export const gremlinQuery = async (statement: string) => {
   return response;
 };
 
+interface NeighborsProps {
+  id: string[];
+  sep: number;
+}
+
+/**
+ * 
+ * @param id 查询节点属性
+ */
+export const queryNeighbors = async (params: NeighborsProps) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/neighbors`, {
+    method: 'post',
+    data: {
+      ...params,
+      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+    },
+  });
+
+  return response;
+}
+
+/**
+ * 
+ * @param id 查询节点属性
+ */
+export const queryElementProperties = async (id) => {
+  const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/properties`, {
+    method: 'post',
+    data: {
+      id,
+      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+    },
+  });
+
+  return response;
+}
+
 /**
  * 关闭启动的 GraphScope 引擎
  */
