@@ -609,7 +609,12 @@ const PatternEditor: React.FC<Props> = ({
       const newNode = {
         ...node,
         id: `${node.id}${createUuid()}`,
-        virtual: true
+        style: {
+          keyshape: {
+            stroke: '#959595',
+            fill: '#959595',
+          }
+        },
       };
       nodeMap[node.id] = newNode;
       newData.nodes.push(newNode);
@@ -621,28 +626,15 @@ const PatternEditor: React.FC<Props> = ({
         type: 'graphin-line',
         source: nodeMap[edge.source].id,
         target: nodeMap[edge.target].id,
-        colorType: '#959595',
-        virtual: true,
-        name: ''
+        name: '',
+        style: {
+          keyshape: {
+            stroke: '#959595',
+            lineDash: [5, 5]
+          }
+        },
       });
     });
-    
-    // let transformedData = transformOrigin(
-    //   newData,
-    //   locale,
-    //   schemaEdgeLocale,
-    //   false,
-    //   'BaseNode',
-    //   false,
-    //   nodeTypeIdMap,
-    // );
-    // const graph = (graphRef?.current as any)?.graph;
-    // transformedData = transform(
-    //   cloneDeep(transformedData),
-    //   graph || null,
-    //   {},
-    //   false,
-    // );
     return newData;
   }
 

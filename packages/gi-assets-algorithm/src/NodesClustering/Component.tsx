@@ -6,8 +6,8 @@ import { Button, Empty, InputNumber, Radio, Select, Spin } from "antd";
 import { cloneDeep, isEqual } from "lodash";
 import React, { useEffect, useState } from "react";
 import ClustersTable from "../ClusterTable";
-import "./index.less";
 import FormattedMessage, { formatMessage } from "./locale";
+import "./index.less";
 
 const { Option } = Select;
 
