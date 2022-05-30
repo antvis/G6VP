@@ -16,7 +16,7 @@ export default {
       component: '@/layouts/index',
       routes: [
         { exact: true, path: '/', component: 'index' },
-        { exact: true, path: '/case', component: './Case' },
+        // { exact: true, path: '/case', component: './Case' },
       ],
     },
   ],

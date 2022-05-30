@@ -19,7 +19,7 @@
 }
 
 .navigation-menu {
-  width: 260px;
+  width: 360px;
 }
 
 .navigation-menu ul {
@@ -35,8 +35,8 @@
 .navigation-menu li a {
   display: block;
   width: 100%;
-  text-decoration: none;
   color: black;
+  text-decoration: none;
   &:hover {
     color: var(--primary-color);
   }
@@ -71,23 +71,24 @@
     position: absolute;
     top: 60px;
     left: 0;
+    z-index: 1;
     display: none;
     flex-direction: column;
     width: 100%;
     height: calc(100vh - 60px);
     background-color: white;
     border-top: 1px solid black;
-    z-index: 1;
   }
 
   .navigation-menu li {
+    height: 64px;
     margin: 0;
+    line-height: 64px;
     text-align: center;
   }
 
   .navigation-menu li a {
     width: 100%;
-    padding: 1.5rem 0;
     color: black;
     &:hover {
       color: var(--primary-color);
@@ -101,4 +102,12 @@
   .navigation-menu.expanded ul {
     display: block;
   }
+}
+
+.disabled {
+  color: #00000040;
+  text-shadow: none;
+  border-color: #d9d9d9;
+  box-shadow: none;
+  cursor: not-allowed;
 }
