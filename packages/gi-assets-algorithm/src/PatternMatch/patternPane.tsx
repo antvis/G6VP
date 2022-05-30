@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { Empty, Tooltip, message, Upload, Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Graphin, { Behaviors, GraphinData } from '@antv/graphin';
-import { useContext } from '@alipay/graphinsight';
-import { IEdgeSchema } from '@alipay/graphinsight/lib/process/schema'; // TODO 确定引入方式
+import { useContext, IEdgeSchema } from '@alipay/graphinsight';
 import FormattedMessage, { formatMessage } from './locale';
 import { formatData } from './util';
 import Util from '../utils';

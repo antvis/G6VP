@@ -76,7 +76,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       content: (
         <div className="community-detection-algo-body">
           <span>
-            <FormattedMessage id="community-detection.k-core.set-k" />
+            <FormattedMessage id="k-core.set-k" />
           </span>
           <InputNumber
             min={1}
@@ -412,10 +412,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
               <Radio value={selection.name} className="community-detection-algo-radio">
                 <div className="community-detection-algo-title">
                   <span className="community-detection-algo-title-name">
-                    <FormattedMessage id={`community-detection.${selection.name}`} />
+                    <FormattedMessage id={`${selection.name}`} />
                   </span>
                   <span className="community-detection-algo-title-tip">
-                    <FormattedMessage id={`community-detection.${selection.name}-tip`} />
+                    <FormattedMessage id={`${selection.name}-tip`} />
                   </span>
                 </div>
               </Radio>
