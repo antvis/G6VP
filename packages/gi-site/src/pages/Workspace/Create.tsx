@@ -1,12 +1,13 @@
 import { EditableProTable } from '@ant-design/pro-table';
-import { Alert, Button, Form, Input, Modal, Radio } from 'antd';
+import { Alert, Button, Form, Input, Modal, Radio, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addProject } from '../../services';
 import { GIDefaultTrans } from '../Analysis/uploadData/const';
 import './index.less';
+import Recover from './Recover';
 import { activeAssetsKeys, baseConfig, getMockData, schemaData, serviceConfig } from './utils';
-
+const { TabPane } = Tabs;
 interface IProps {
   visible: boolean;
   handleClose: () => void;
@@ -108,6 +109,20 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
     return projectId;
   };
+  const handleRecover = async params => {
+    const projectId = await addProject({
+      type: 'project',
+      status: 0, // 0 正常项目， 1删除项目
+      members: '',
+      name: params.name,
+      data: JSON.stringify(params.data),
+      projectConfig: JSON.stringify(params.projectConfig),
+      activeAssetsKeys: JSON.stringify(params.activeAssetsKeys),
+      serviceConfig: JSON.stringify(params.serviceConfig),
+      schemaData: JSON.stringify(params.schemaData),
+    });
+    history.push(`/workspace/${projectId}?nav=data`);
+  };
 
   const goAnalysis = async () => {
     const projectId = await onFinish();
@@ -120,67 +135,83 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   };
 
   return (
-    <Modal title={'创建项目'} visible={visible} width={846} footer={null} onCancel={handleClose}>
-      <Form form={form} labelCol={{ span: 4 }} layout="vertical" initialValues={{ tag: 'Empty' }}>
-        <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请填写用户名' }]}>
-          <Input />
-        </Form.Item>
-        {/* <Form.Item label="成员设置" name="users" > */}
-        {GI_ENV === 'ONLINE' && (
-          <>
-            <span className="form-item">成员设置</span>
-            <EditableProTable
-              columns={columns}
-              value={dataSource}
-              rowKey="id"
-              recordCreatorProps={{
-                creatorButtonText: '添加成员',
-                newRecordType: 'dataSource',
-                record: () => ({
-                  id: dataSource.length + 1,
-                }),
-              }}
-              editable={{
-                type: 'multiple',
-                editableKeys,
-                actionRender: (row, config, defaultDoms) => {
-                  return [defaultDoms.delete];
-                },
-                onValuesChange: (record, recordList) => {
-                  setDataSource(recordList);
-                },
-                onChange: setEditableRowKeys,
-              }}
-            />
-          </>
-        )}
-        {/* </Form.Item> */}
-        <Form.Item label={'项目类型'} name="tag" className="round">
-          <div style={{ position: 'absolute', top: '-31px', left: '70px' }}>
-            <Alert
-              style={{ padding: '2px 16px', fontWeight: '100', fontSize: '12px' }}
-              message="当前版本(1.0) 仅提供空白模版，暂未开放其他类型模版"
-              type="warning"
-              showIcon
-            />
-          </div>
-          <Radio.Group defaultValue="blank" size="small">
-            {SOLUTIONS.map(c => {
-              return (
-                <Radio.Button key={c.id} value={c.id} className="gi-workspace-temp" disabled={c.id !== 'blank'}>
-                  <img src={c.url} alt="" />
-                  <div>{c.name}</div>
-                </Radio.Button>
-              );
-            })}
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
-          <Button type="primary" shape="round" onClick={goAnalysis}>
-            立即去创建分析
-          </Button>
-        </Form.Item>
-      </Form>
+    <Modal
+      title={''}
+      visible={visible}
+      width={846}
+      footer={null}
+      onCancel={handleClose}
+      bodyStyle={{
+        paddingTop: '10px',
+      }}
+    >
+      <Tabs defaultActiveKey="new" className="gi-workspace-create-tabs">
+        <TabPane tab="创建项目" key="new">
+          <Form form={form} labelCol={{ span: 4 }} layout="vertical" initialValues={{ tag: 'Empty' }}>
+            <Form.Item label="项目名称" name="title" rules={[{ required: true, message: '请填写用户名' }]}>
+              <Input />
+            </Form.Item>
+            {/* <Form.Item label="成员设置" name="users" > */}
+            {GI_ENV === 'ONLINE' && (
+              <>
+                <span className="form-item">成员设置</span>
+                <EditableProTable
+                  columns={columns}
+                  value={dataSource}
+                  rowKey="id"
+                  recordCreatorProps={{
+                    creatorButtonText: '添加成员',
+                    newRecordType: 'dataSource',
+                    record: () => ({
+                      id: dataSource.length + 1,
+                    }),
+                  }}
+                  editable={{
+                    type: 'multiple',
+                    editableKeys,
+                    actionRender: (row, config, defaultDoms) => {
+                      return [defaultDoms.delete];
+                    },
+                    onValuesChange: (record, recordList) => {
+                      setDataSource(recordList);
+                    },
+                    onChange: setEditableRowKeys,
+                  }}
+                />
+              </>
+            )}
+            {/* </Form.Item> */}
+            <Form.Item label={'项目类型'} name="tag" className="round">
+              <div style={{ position: 'absolute', top: '-31px', left: '70px' }}>
+                <Alert
+                  style={{ padding: '2px 16px', fontWeight: '100', fontSize: '12px' }}
+                  message="当前版本(1.0) 仅提供空白模版，暂未开放其他类型模版"
+                  type="warning"
+                  showIcon
+                />
+              </div>
+              <Radio.Group defaultValue="blank" size="small">
+                {SOLUTIONS.map(c => {
+                  return (
+                    <Radio.Button key={c.id} value={c.id} className="gi-workspace-temp" disabled={c.id !== 'blank'}>
+                      <img src={c.url} alt="" />
+                      <div>{c.name}</div>
+                    </Radio.Button>
+                  );
+                })}
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+              <Button type="primary" shape="round" onClick={goAnalysis}>
+                立即去创建分析
+              </Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+        <TabPane tab="恢复项目" key="recover">
+          <Recover onRecover={handleRecover} />
+        </TabPane>
+      </Tabs>
     </Modal>
   );
 };

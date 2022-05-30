@@ -300,7 +300,9 @@ export default () => {
           }}
           className="step-button"
           icon={<ReadOutlined />}
-        ></Button>
+        >
+          指南
+        </Button>
       </div>
       <Tour
         steps={steps}
