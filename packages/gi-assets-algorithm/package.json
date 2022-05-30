@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-algorithm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GraphInsight 图分析算法资产库",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -18,7 +18,7 @@
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
     "build": "npm run clean && father build & npm run build:umd",
-    "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "build:umd": "node --max_old_space_size=8192 ../../node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
@@ -49,6 +49,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }
