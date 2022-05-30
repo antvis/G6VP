@@ -16,5 +16,6 @@ export default {
     'max': '最大值',
     'min': '最小值',
     'data.no-data': '暂无数据',
+    'seed-node-not-found': '未找到种子节点'
   };
   

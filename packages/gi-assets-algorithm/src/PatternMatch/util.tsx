@@ -1,5 +1,4 @@
-import { GIConfig, GIEdgeConfig, GINodeConfig } from '@alipay/graphinsight';
-import { IEdgeSchema } from '@alipay/graphinsight/lib/process/schema'; // TODO 确认引入方式
+import { GIConfig, GIEdgeConfig, GINodeConfig, IEdgeSchema } from '@alipay/graphinsight';
 import { GraphinData, Utils } from '@antv/graphin';
 
 // 模式匹配结果根据条件进行筛选

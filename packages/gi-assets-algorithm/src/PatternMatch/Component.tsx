@@ -43,7 +43,6 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   options = {},
 }) => {
   const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
-  // const { graph, data, schemaData } = useContext(StudioContext);
   const { graph, data, schemaData } = useContext();
 
   const intialPatternInfoMap = {
@@ -77,7 +76,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   const [hullIds, setHullIds] = useState([] as string[]);
   const [loading, setLoading] = useState(false);
   const [extracting, setExtracting] = useState<string | false>(false);
+  // 数据结构 { [nodeType: string]: Set }
   const [nodeProperties, setNodeProperties] = useState({} as  TypeProperties);
+  // 数据结构 { [edgeType: string]: Set }
   const [edgeProperties, setEdgeProperties] = useState({} as  TypeProperties);
   const [nodeTypes, setNodeTypes] = useState([] as TypeInfo[]);
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
@@ -143,9 +144,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   }, [data]);
 
   // 编辑器的显示抛出回调
-  useEffect(() => {
-    onGraphEditorVisibleChange?.(editorVisible);
-  }, [editorVisible]);
+  useEffect(() => onGraphEditorVisibleChange?.(editorVisible), [editorVisible]);
 
   // 模式编辑完成后，patternInfoMap 发生变化，触发模式 tabs 中显示的内容变化
   useEffect(() => {
@@ -164,9 +163,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   }, [patternInfoMap]);
 
   const enableExtractingMode = (patternId) => {
-    if (!graph || graph.destroyed) {
-      return;
-    }
+    if (!graph || graph.destroyed) return;
     message.info({
       key: EXTRACT_MESSAGE_KEY,
       className: 'kg-pattern-match-extract-tip-long',
@@ -306,55 +303,45 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
 
   const cancelExtracting = () => {
     setExtracting(false);
-    if (graph && !graph.destroyed) {
-      // 如果有选中的内容，退出需要二次提示
-      const selectedNodes = graph.findAllByState('node', ITEM_STATE.Selected);
-      const selectedEdges = graph.findAllByState('node', ITEM_STATE.Selected);
-      if (selectedNodes?.length || selectedEdges?.length) {
-        confirm({
-          title: formatMessage({ id: "extract-confirm-cancel" }),
-          icon: <ExclamationCircleOutlined />,
-          content: formatMessage({ id: "extract-confirm-cancel-content" }),
-          onOk() {
-            clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
-            clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
-            graph.setMode('default');
-            message.destroy(EXTRACT_MESSAGE_KEY);
-            onOpen?.(); // 显示抽屉
-            quitExtractMode();
-          },
-        });
-      } else {
-        graph.setMode('default');
-        message.destroy(EXTRACT_MESSAGE_KEY);
-        onOpen?.(); // 显示抽屉
-        quitExtractMode();
-      }
+    if (!graph || graph.destroyed) return;
+    // 如果有选中的内容，退出需要二次提示
+    const selectedNodes = graph.findAllByState('node', ITEM_STATE.Selected);
+    const selectedEdges = graph.findAllByState('node', ITEM_STATE.Selected);
+    if (selectedNodes?.length || selectedEdges?.length) {
+      confirm({
+        title: formatMessage({ id: "extract-confirm-cancel" }),
+        icon: <ExclamationCircleOutlined />,
+        content: formatMessage({ id: "extract-confirm-cancel-content" }),
+        onOk() {
+          clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
+          clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
+          graph.setMode('default');
+          message.destroy(EXTRACT_MESSAGE_KEY);
+          onOpen?.(); // 显示抽屉
+          quitExtractMode();
+        },
+      });
+    } else {
+      graph.setMode('default');
+      message.destroy(EXTRACT_MESSAGE_KEY);
+      onOpen?.(); // 显示抽屉
+      quitExtractMode();
     }
   }
 
   // 为 graph 绑定元素更新监听，更新 hulll
   const updateHull = e => {
-    if (!graph || graph.destroyed) {
-      return;
-    }
+    if (!graph || graph.destroyed) return;
     const id = e?.item?.getType?.() === 'node' ? e.item.getID() : undefined;
     const hulls = graph.getHulls();
-    if (!hulls) {
-      return;
-    }
+    if (!hulls) return;
     const foundHullKeys: string[] = [];
     Object.keys(hulls).forEach(key => {
       const hull = hulls[key];
-      if (id === undefined) {
-        foundHullKeys.push(key);
-      } else if (hull?.members?.find(node => node.getID?.() === id)) {
-        foundHullKeys.push(key);
-      }
+      if (id === undefined) foundHullKeys.push(key);
+      else if (hull?.members?.find(node => node.getID?.() === id)) foundHullKeys.push(key);
     });
-    foundHullKeys.forEach(key => {
-      hulls[key].updateData(hulls[key].members, []);
-    })
+    foundHullKeys.forEach(key => hulls[key].updateData(hulls[key].members, []))
   }
 
   const removeHulls = () => {
@@ -362,9 +349,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       const hullMap = graph.get('hullMap') || {};
       ids?.forEach(hullId => {
         const hull = graph.getHullById(hullId);
-        if (hull) {
-          graph.removeHull(hull);
-        }
+        if (hull) graph.removeHull(hull);
         delete hullMap[hullId];
       });
       return [];
@@ -373,9 +358,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
 
   const handleKeydown = (e) => {
     const code = e.key;
-    if (!code) {
-      return;
-    }
+    if (!code) return;
     if (code.toLowerCase() === 'w') keydown = true;
     else keydown = false;
   }
@@ -392,9 +375,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
 
   useEffect(() => {
     message.destroy(EXTRACT_MESSAGE_KEY); // 销毁提示 message
-    if (!graph || graph.destroyed) {
-      return;
-    }
+    if (!graph || graph.destroyed) return;
     graph.addBehaviors([
       {
         type: 'lasso-select',
@@ -470,10 +451,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       title: <FormattedMessage id="pattern-title" value={id} />,
       data: null
     };
-    let isCloningPattern = false;
     if (copyItem && patternInfoMap[copyItem.key]?.data) {
       newPatternInfoMap[id].data = cloneDeep(patternInfoMap[copyItem.key].data);
-      isCloningPattern = true;
     }
     newPanes.push({
       content: <PatternPane
@@ -515,9 +494,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   }
 
   const onTabEdit = (targetKey, action) => {
-    if (action === 'remove') {
-      removeTab(targetKey);
-    }
+    if (action === 'remove') removeTab(targetKey);
   }
 
   const drawHulls = matches => {
@@ -537,9 +514,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   }
 
   const onMatch = async () => {
-    if (!graph || graph.destroyed) {
-      return;
-    }
+    if (!graph || graph.destroyed) return;
     if (!activeKey || !patternInfoMap[+activeKey]?.data) {
       message.info(formatMessage({ id: 'cannot-match-empty-pattern' }));
       return;
@@ -569,9 +544,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       edges: []
     };
     data.nodes.forEach(node => {
-      if (!graph.findById(node.id)?.isVisible()) {
-        return;
-      }
+      if (!graph.findById(node.id)?.isVisible()) return;
       graphData.nodes.push({
         id: node.id,
         data: node.data,
@@ -579,9 +552,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       })
     });
     data.edges.forEach(edge => {
-      if (!graph.findById(edge.id)?.isVisible()) {
-        return;
-      }
+      if (!graph.findById(edge.id)?.isVisible()) return;
       graphData.edges.push({
         id: edge.id,
         data: edge.data,
@@ -629,9 +600,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   }
 
   const onExport = () => {
-    if (!graph || graph.destroyed) {
-      return;
-    }
+    if (!graph || graph.destroyed) return;
     if (!activeKey || !patternInfoMap[+activeKey]?.data) {
       message.info(formatMessage({ id: 'cannot-match-empty-pattern' }));
       return;

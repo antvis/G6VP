@@ -1,10 +1,9 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Form, Select, Drawer, Tooltip, Button } from 'antd';
-import { useContext } from '@alipay/graphinsight';
-import Util from '../utils';
 import FormattedMessage, { formatMessage } from './locale';
 import StyleConfigPropertyItem from './StyleConfigPropertyItem';
 import { SPLITOR } from './registerMeta';
+import Util from '../utils';
 
 const { Option } = Select;
 const { createUuid } = Util;
@@ -73,8 +72,6 @@ const EditDrawer: React.FC<Props> = ({
   const [addedProperties, setAddedProperties] = useState([] as PropertyCondition[]);
   const [properties, setProperties] = useState([] as string[]);
   const [selectedEdgeType, setSelectedEdgeType] = useState();
-
-  const { graph, data } = useContext();
 
   const onSelectNodeType = (key, endType) => {
     switch (endType) {

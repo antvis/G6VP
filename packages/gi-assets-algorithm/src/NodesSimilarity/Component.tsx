@@ -2,7 +2,7 @@ import { useContext } from '@alipay/graphinsight';
 import { FormOutlined, ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import type { GraphinData } from '@antv/graphin';
-import { Button, Col, Empty, Input, Radio, Row } from 'antd';
+import { Button, Col, Empty, Input, message, Radio, Row } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import './index.less';
@@ -98,7 +98,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       graph.updateItem(node.id, {
         style: {
           keyshape: {
-            size: Math.max(50 * node[similarityKey], 20),
+            size: Math.max(50 * node[similarityKey], 30),
           },
         },
       });
@@ -119,12 +119,16 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         }
         const nodes = formatData?.nodes || [];
         const seedNode = nodes?.find(node => node.id === seedNodeId);
+        if (!seedNode) {
+          message.info(formatMessage({ id: 'seed-node-not-found' }));
+        }
         // @ts-ignore
         const { allCosineSimilarity, similarNodes } = nodesCosineSimilarity(nodes, seedNode, 'properties');
         setResData({
           similarityRes: allCosineSimilarity,
           similarNodes: [seedNode, ...similarNodes],
         });
+        console.log('set node style', similarNodes);
         setNodeStyle(similarNodes, 'cosineSimilarity');
         break;
       default:
@@ -170,13 +174,13 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
 
   const onSeachSeed = e => {
     setSelecting(false);
-    const nodeId = e.target.value;
+    const nodeId = typeof e === 'string' ? e : e.target.value;
+    setSeedNodeId(nodeId);
     if (graph.findById(nodeId)) {
-      setSeedNodeId(nodeId);
       graph.updateItem(nodeId, {
         style: {
           keyshape: {
-            size: 60,
+            size: 40,
           },
         },
       });
@@ -194,7 +198,8 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       setSelecting(false);
       const { item } = e;
       if (!item || item.destroyed) return;
-      setSeedNodeId(item.getID());
+      onSeachSeed(item.getID());
+      // setSeedNodeId(item.getID());
     };
     graph.once('node:click', nodeClickListener);
   };
