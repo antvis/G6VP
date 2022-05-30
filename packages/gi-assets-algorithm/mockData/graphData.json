@@ -1,0 +1,370 @@
+{
+  "nodes": [
+      {
+        "id": "node-0",
+        "label": "node-0",
+        "properties": {
+          "city": "110000",
+          "age": 20,
+          "amount": 100,
+          "wifi": "10001"
+        }
+      },
+      {
+        "id": "node-1",
+        "label": "node-1",
+        "properties": {
+          "city": "110000",
+          "age": 22,
+          "amount": 100,
+          "wifi": "10001"
+        }
+      },
+      {
+        "id": "node-2",
+        "label": "node-2",
+        "properties": {
+          "city": "110000",
+          "age": 20,
+          "amount": 100,
+          "wifi": "10001"
+        }
+      },
+      {
+        "id": "node-3",
+        "label": "node-3",
+        "properties": {
+          "city": "110000",
+          "age": 21,
+          "amount": 100,
+          "wifi": "10001"
+        }
+      },
+      {
+        "id": "node-4",
+        "label": "node-4",
+        "properties": {
+          "city": "110000",
+          "age": 22,
+          "amount": 100,
+          "wifi": "10001"
+        }
+      },
+      {
+        "id": "node-5",
+        "label": "node-5",
+        "properties": {
+          "city": "310000",
+          "age": 30,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-6",
+        "label": "node-6",
+        "properties": {
+          "city": "310000",
+          "age": 31,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-7",
+        "label": "node-7",
+        "properties": {
+          "city": "310000",
+          "age": 31,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-8",
+        "label": "node-8",
+        "properties": {
+          "city": "310000",
+          "age": 32,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-9",
+        "label": "node-9",
+        "properties": {
+          "city": "310000",
+          "age": 30,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-10",
+        "label": "node-10",
+        "properties": {
+          "city": "310000",
+          "age": 30,
+          "amount": 1000,
+          "wifi": "10002"
+        }
+      },
+      {
+        "id": "node-11",
+        "label": "node-11",
+        "properties": {
+          "city": "440300",
+          "age": 40,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      },
+      {
+        "id": "node-12",
+        "label": "node-12",
+        "properties": {
+          "city": "440300",
+          "age": 40,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      },
+      {
+        "id": "node-13",
+        "label": "node-13",
+        "properties": {
+          "city": "440300",
+          "age": 41,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      },
+      {
+        "id": "node-14",
+        "label": "node-14",
+        "properties": {
+          "city": "440300",
+          "age": 42,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      },
+      {
+        "id": "node-15",
+        "label": "node-15",
+        "properties": {
+          "city": "440300",
+          "age": 41,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      },
+      {
+        "id": "node-16",
+        "label": "node-16",
+        "properties": {
+          "city": "440300",
+          "age": 43,
+          "amount": 10000,
+          "wifi": "10003"
+        }
+      }
+  ],
+  "edges": [
+      {
+        "id": "edge-0",
+        "source": "node-0",
+        "target": "node-1"
+      },
+      {
+        "id": "edge-1",
+        "source": "node-0",
+        "target": "node-2"
+      },
+      {
+        "id": "edge-2",
+        "source": "node-0",
+        "target": "node-3"
+      },
+      {
+        "id": "edge-3",
+        "source": "node-0",
+        "target": "node-4"
+      },
+      {
+        "id": "edge-4",
+        "source": "node-1",
+        "target": "node-2"
+      },
+      {
+        "id": "edge-5",
+        "source": "node-1",
+        "target": "node-3"
+     },
+      {
+        "id": "edge-6",
+        "source": "node-1",
+        "target": "node-4"
+      },
+      {
+        "id": "edge-7",
+        "source": "node-2",
+        "target": "node-3"
+      },
+      {
+        "id": "edge-8",
+        "source": "node-2",
+        "target": "node-4"
+      },
+      {
+        "id": "edge-9",
+        "source": "node-3",
+        "target": "node-4"
+      },
+
+
+      {
+        "id": "edge-10",
+        "source": "node-5",
+        "target": "node-6"
+      },
+      {
+        "id": "edge-11",
+        "source": "node-5",
+        "target": "node-7"
+      },
+      {
+        "id": "edge-12",
+        "source": "node-5",
+        "target": "node-8"
+      },
+      {
+        "id": "edge-13",
+        "source": "node-5",
+        "target": "node-9"
+      },
+      {
+        "id": "edge-14",
+        "source": "node-6",
+        "target": "node-7"
+      },
+      {
+        "id": "edge-15",
+        "source": "node-6",
+        "target": "node-8"
+     },
+      {
+        "id": "edge-16",
+        "source": "node-6",
+        "target": "node-9"
+      },
+      {
+        "id": "edge-17",
+        "source": "node-7",
+        "target": "node-8"
+      },
+      {
+        "id": "edge-18",
+        "source": "node-7",
+        "target": "node-9"
+      },
+      {
+        "id": "edge-19",
+        "source": "node-8",
+        "target": "node-9"
+      },
+      {
+        "id": "edge-20",
+        "source": "node-9",
+        "target": "node-10"
+      },
+      {
+        "id": "edge-40",
+        "source": "node-10",
+        "target": "node-5"
+      },
+
+      
+      {
+        "id": "edge-21",
+        "source": "node-11",
+        "target": "node-12"
+      },
+      {
+        "id": "edge-22",
+        "source": "node-11",
+        "target": "node-13"
+      },
+      {
+        "id": "edge-23",
+        "source": "node-11",
+        "target": "node-14"
+      },
+      {
+        "id": "edge-24",
+        "source": "node-11",
+        "target": "node-15"
+      },
+      {
+        "id": "edge-25",
+        "source": "node-12",
+        "target": "node-13"
+      },
+      {
+        "id": "edge-26",
+        "source": "node-12",
+        "target": "node-14"
+     },
+      {
+        "id": "edge-27",
+        "source": "node-12",
+        "target": "node-15"
+      },
+      {
+        "id": "edge-28",
+        "source": "node-13",
+        "target": "node-14"
+      },
+      {
+        "id": "edge-29",
+        "source": "node-13",
+        "target": "node-15"
+      },
+      {
+        "id": "edge-30",
+        "source": "node-14",
+        "target": "node-15"
+      },
+      {
+        "id": "edge-31",
+        "source": "node-0",
+        "target": "node-5"
+      },
+      {
+        "id": "edge-32",
+        "source": "node-5",
+        "target": "node-11"
+      },
+      {
+        "id": "edge-33",
+        "source": "node-11",
+        "target": "node-0"
+      },
+      {
+        "id": "edge-34",
+        "source": "node-16",
+        "target": "node-0"
+      },
+      {
+        "id": "edge-35",
+        "source": "node-16",
+        "target": "node-5"
+      },
+      {
+        "id": "edge-36",
+        "source": "node-16",
+        "target": "node-11"
+      }
+  ]
+}

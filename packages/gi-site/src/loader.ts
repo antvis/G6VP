@@ -1,6 +1,7 @@
 import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
+import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm'
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import { isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
@@ -20,6 +21,9 @@ const LOCAL_ASSETS = [
     ...GI_ASSETS_ADVANCE,
   },
   {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ALGORITHM'],
+    ...GI_ASSETS_ALGORITHM,
+  },
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
     ...GI_ASSETS_SCENE,
   },
