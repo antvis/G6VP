@@ -209,20 +209,23 @@ const EditDrawer: React.FC<Props> = ({
 
   useEffect(() => {
     setSelectedEdgeType(undefined);
-    if (source && target) {
+    const sourceType = source || itemData?.sourceNodeType;
+    const targetType = target || itemData?.targetNodeType;
+    if (sourceType && targetType) {
       // 设置边选择器选项
-      const relatedEdgeTypes: TypeInfo[] = [];
+      const relatedETypes: TypeInfo[] = [];
       edgeTypes.forEach(edgeType => {
         const { sourceNodeType, targetNodeType } = edgeType;
         // 筛选出与选定的节点类型相关的边类型
-        if (sourceNodeType !== source || targetNodeType !== target) {
-          return;
+        if (sourceNodeType === sourceType && targetNodeType === targetType) {
+          relatedETypes.push(edgeType);
         }
-        relatedEdgeTypes.push(edgeType);
       });
-      setRelatedEdgeTypes(relatedEdgeTypes);
+      setRelatedEdgeTypes(relatedETypes);
+    } else {
+      setRelatedEdgeTypes([]);
     }
-  }, [source, target]);
+  }, [source, target, itemData?.id]);
 
   useEffect(() => {
     if (itemData?.sourceNodeType) {

@@ -445,11 +445,10 @@ const PatternEditor: React.FC<Props> = ({
             newGraphData.edges = formatDataModels('edge', newGraphData.edges, config, schemaEdgeMap);
           }
         } else {
+          oldDataItem.rules = updateConfig.rules;
           newGraphData = {
-            nodes: [{
-              ...oldDataItem,
-              ...updateConfig
-            }]
+            nodes: oldGraphData.nodes,
+            edges: oldGraphData.edges
           }
         }
       } else if (type === 'edge') {
