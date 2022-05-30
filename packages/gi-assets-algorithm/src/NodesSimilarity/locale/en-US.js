@@ -16,4 +16,5 @@ export default {
   'max': 'Max',
   'min': 'Min',
   'data.no-data': 'No data',
+  'seed-node-not-found': 'Seed node not found'
 };

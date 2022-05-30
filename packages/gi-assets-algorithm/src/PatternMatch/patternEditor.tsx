@@ -1,26 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Tabs, Row, Col, Button, Divider, Layout, Menu, message, Input, Tooltip } from 'antd';
 import { IItemBase } from '@antv/g6';
-import { useContext, extra } from '@alipay/graphinsight';
-import { IEdgeSchema, INodeSchema } from '@alipay/graphinsight/lib/process/schema'; // TODO 确认引入方式
+import { useContext, extra, IEdgeSchema, INodeSchema } from '@alipay/graphinsight';
 import Graphin, { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { uniqueId } from '@antv/algorithm/lib/util';
 import Algorithm from '@antv/algorithm';
 import { cloneDeep } from 'lodash';
 import deepmerge from 'deepmerge';
-// import StudioContext from '../../../context';
 import FormattedMessage, { formatMessage } from './locale';
-// import { transformOrigin } from '../../../graph/utils/transformData';
-// import transform from '../../../graph/utils/transform';
 import AddRelation from './AddRelation';
 import EditDrawer, { TypeInfo } from './editDrawer';
-// import { FetchSchemaProperties } from '../NodeImportance/types';
 import templates from './templates';
 import Util from '../utils';
 import { ITEM_STATE, SPLITOR } from './registerMeta';
-// import { EdgeShape } from '../../../graph/types';
-// import '../../ContextMenu/index.less';
 import { formatDataModels } from './util';
 import './index.less';
 
