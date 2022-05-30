@@ -382,3 +382,17 @@ export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
   })
   return result
 }
+
+/**
+ * 查询 GraphScope 中载入图的 Schema
+ */
+export const queryGraphSchema = async () => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/schema`, {
+    method: 'GET',
+    params: {
+      graphName: localStorage.getItem('graphScopeGraphName')
+    }
+  })
+
+  return result
+}
