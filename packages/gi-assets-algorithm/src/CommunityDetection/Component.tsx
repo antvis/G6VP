@@ -1,15 +1,15 @@
 import { useContext } from '@alipay/graphinsight';
 import { ReloadOutlined } from '@ant-design/icons';
-import { iLouvain, kCore, louvain, connectedComponent } from '@antv/algorithm';
+import { connectedComponent, iLouvain, kCore, louvain } from '@antv/algorithm';
 import type { GraphinData } from '@antv/graphin';
 import Graphin, { Behaviors } from '@antv/graphin';
-import { Button, Empty, InputNumber, Radio, Spin, message } from 'antd';
+import { Button, Empty, InputNumber, message, Radio, Spin } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClusterTable from '../ClusterTable';
 import Utils from '../utils/index';
-import FormattedMessage, { formatMessage } from './locale';
 import './index.less';
+import FormattedMessage, { formatMessage } from './locale';
 
 const { ClickSelect } = Behaviors;
 
@@ -42,7 +42,11 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
   const [allClusters, setAllClusters] = useState<any[]>([]);
   const [nodeProperties, setNodeProperties] = useState([] as string[]);
 
-  const divisionAlgo = [CommunityDetectionAlgorithm.louvain, CommunityDetectionAlgorithm.iLouvain, CommunityDetectionAlgorithm.ConnectedComponent];
+  const divisionAlgo = [
+    CommunityDetectionAlgorithm.louvain,
+    CommunityDetectionAlgorithm.iLouvain,
+    CommunityDetectionAlgorithm.ConnectedComponent,
+  ];
 
   useEffect(() => {
     setInitData({
@@ -130,10 +134,14 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       const id = node.get('id');
       const initModel = initData.nodes?.find(initNode => initNode.id === id);
       if (initModel && !mappedNodeIds?.includes(id)) {
+        const { size } = initModel.style?.keyshape || { size: 30 };
         graph.updateItem(node, {
           style: {
             keyshape: {
-              size: initModel.style?.keyshape?.size,
+              size: size,
+            },
+            icon: {
+              size: size && size / 2,
             },
           },
         });
@@ -153,7 +161,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
             style: {
               keyshape: {
                 lineWidth,
-                ...(keyShapeStyle || {})
+                ...(keyShapeStyle || {}),
               },
             },
           });
@@ -214,6 +222,9 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
                 keyshape: {
                   size: 50,
                 },
+                icon: {
+                  size: 50,
+                },
               },
             });
           });
@@ -230,7 +241,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
               style: {
                 keyshape: {
                   lineWidth: 2,
-                  ...(style.keyshape || {})
+                  ...(style.keyshape || {}),
                 },
               },
             });
@@ -265,17 +276,17 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
             setLoading(false);
             return;
           }
-          const clustersComponent: { id: string, nodes: any[] }[] = [];
+          const clustersComponent: { id: string; nodes: any[] }[] = [];
           let existSingleNode = false;
           components.forEach((componentNodes, i) => {
             if (componentNodes.length === 1) {
               existSingleNode = true;
               return;
             }
-            componentNodes.forEach(node => node.clusterId = `${i}`);
+            componentNodes.forEach(node => (node.clusterId = `${i}`));
             clustersComponent.push({
               id: `${i}`,
-              nodes: componentNodes
+              nodes: componentNodes,
             });
           });
           if (existSingleNode) {

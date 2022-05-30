@@ -23,12 +23,15 @@ const extra = () => {
       </button>
       <div className={isNavExpanded ? 'navigation-menu expanded' : 'navigation-menu'}>
         <ul>
-          <li>
-            <Link to="/case">实践</Link>
+          <li className="disabled" title="预计7月份开放">
+            实践案例
+          </li>
+          <li className="disabled" title="预计8月份开放">
+            解决方案
           </li>
           <li>
             <a href="https://www.yuque.com/antv/gi/emf7am" target="_blank">
-              使用指南
+              产品文档
             </a>
           </li>
           <li>
