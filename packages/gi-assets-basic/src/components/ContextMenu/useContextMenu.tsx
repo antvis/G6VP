@@ -18,7 +18,7 @@ export interface State {
   selectedItems: IG6GraphEvent['item'][];
 }
 
-const useContextMenu = (props: ContextMenuProps) => {
+const useContextMenu = (props: ContextMenuProps): any => {
   const { bindType = 'node', container } = props;
   const { graph } = React.useContext(GraphinContext);
 
