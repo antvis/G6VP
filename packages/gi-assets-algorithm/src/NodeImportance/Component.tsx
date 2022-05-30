@@ -4,17 +4,17 @@
  */
 
 import { useContext } from '@alipay/graphinsight';
+import { DeleteOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
+import './index.less';
 import PropertyContent from './propertyContent';
 import { locale, MappingWay, NodeImportanceProps } from './registerMeta';
 import ResultPlot from './resultPlot';
 import ResultTable from './resultTable';
 import { fittingString } from './util';
-import 'antd/dist/antd.css';
-import './index.less';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
 const getDegreeMap = (data, degreeMap) => {
@@ -219,6 +219,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             keyshape: {
               size,
             },
+            icon: {
+              size: size / 2,
+            },
           },
         });
       }
@@ -239,6 +242,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           lineWidth = lineWidth || 1;
           if (edgeItem) {
             const { size: modelSize, style = {} } = edgeItem.getModel();
+
             //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
             graph.updateItem(edgeItem, {
               size: lineWidth,
@@ -246,8 +250,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
               // 兼容 graphin-line 类型边
               style: {
                 keyshape: {
-                  size: lineWidth,
-                  ...(style.keyshape || {})
+                  lineWidth: lineWidth,
+                  ...(style.keyshape || {}),
                 },
               },
             });
@@ -271,13 +275,16 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             keyshape: {
               size: oriSize || 30,
             },
+            icon: {
+              size: oriSize / 2,
+            },
           },
         });
       }
     });
     if (mappedEdgeIds) {
       graph.getEdges().forEach(edge => {
-        const  { id, oriSize, size, style = {} } = edge.getModel();
+        const { id, oriSize, size, style = {} } = edge.getModel();
         if ((size !== 1 || style?.keyshape?.size !== 1) && !mappedEdgeIds?.includes(id)) {
           graph.updateItem(edge, {
             size: oriSize || 1,
@@ -285,8 +292,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             // 兼容 graphin-line
             style: {
               keyshape: {
-                size: oriSize || 1,
-                ...(style.keyshape || {})
+                lineWidth: oriSize || 1,
+                ...(style.keyshape || {}),
               },
             },
           });
@@ -321,7 +328,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 id: key,
                 name: model.id,
                 value: pageRankRes[key],
-                originProperties: model
+                originProperties: model,
               });
             }
           });
@@ -338,7 +345,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 name: model.id,
                 value:
                   degree !== 'total' ? degreeMap[model.id][degree] : degreeMap[model.id].in + degreeMap[model.id].out,
-                originProperties: model
+                originProperties: model,
               });
             }
           });
@@ -357,7 +364,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 id: node.id,
                 name: node.id,
                 value,
-                originProperties: node
+                originProperties: node,
               });
             }
           });
@@ -384,7 +391,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                   id: edge.id,
                   name: edge.id,
                   value,
-                  originProperties: edge
+                  originProperties: edge,
                 });
               }
             } else {
@@ -404,7 +411,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 id: edge.id,
                 name: edge.id,
                 value: propertyValue,
-                originProperties: edge
+                originProperties: edge,
               });
             }
           });
@@ -419,7 +426,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                   id: node.id,
                   name: node.id,
                   value: nodeValueMap[node.id] || 0,
-                  originProperties: node
+                  originProperties: node,
                 });
               }
             } else {
@@ -428,7 +435,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
                 name: node.id,
                 value: nodeValueMap[node.id]?.length || 0,
                 values: nodeValueMap[node.id],
-                originProperties: node
+                originProperties: node,
               });
             }
           });
@@ -483,7 +490,13 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const failedMessage = result?.node ? undefined : <p className="result-message">{result?.message}</p>;
     const resultBlock =
       paneType === 'table' ? (
-        <ResultTable data={result} form={form} currentAlgo={currentAlgo} reAnalyse={reAnalyse} nodeProperties={nodeProperties} />
+        <ResultTable
+          data={result}
+          form={form}
+          currentAlgo={currentAlgo}
+          reAnalyse={reAnalyse}
+          nodeProperties={nodeProperties}
+        />
       ) : (
         <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />
       );
@@ -626,14 +639,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           </Button>
         </Col>
         <Col offset="2" span={6} style={{ textAlign: 'right', lineHeight: '56px' }}>
-          <Button
-            className="button"
-            danger
-            onClick={reset}
-            icon={<DeleteOutlined />}
-          ></Button>
+          <Button className="button" danger onClick={reset} icon={<DeleteOutlined />}></Button>
         </Col>
-        </Row>
+      </Row>
       {result && (
         <Tabs
           defaultActiveKey="table"
