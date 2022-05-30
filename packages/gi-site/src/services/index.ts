@@ -52,7 +52,12 @@ export const getProjectById = async (id: string) => {
       edges: [],
     };
     if (project.schemaData) {
-      currentSchema = JSON.parse(project.schemaData);
+      currentSchema = JSON.parse(
+        project.schemaData || {
+          nodes: [],
+          edges: [],
+        },
+      );
     }
 
     return {
