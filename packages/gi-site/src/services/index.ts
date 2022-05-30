@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
@@ -22,6 +23,11 @@ export function getEdgesByNodes(nodes, edges) {
 export const getProjectById = async (id: string) => {
   if (IS_LOCAL_ENV) {
     const project: any = await localforage.getItem(id);
+    if (!project) {
+      message.info('请先在「工作台」页面选择环境...');
+      //可能是用户第一进来的时候，没有选择环境
+      window.location.href = window.location.origin;
+    }
     return {
       schemaData: project.schemaData,
       config: project.projectConfig,
