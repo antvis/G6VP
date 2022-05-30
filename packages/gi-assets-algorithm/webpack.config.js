@@ -8,7 +8,7 @@ const globalName = packages.name.replace('@alipay/', '').split('-').join('_').to
 module.exports = (env, argv) => {
   return {
     entry: {
-      index: './src/index.ts',
+      index: './src/index.tsx',
     },
     mode: argv.mode,
     module: {
