@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, InputNumber, Input, Select, Button, Switch } from 'antd';
+import { Form, InputNumber, Input, Select, Button, Switch, message } from 'antd';
 import { useContext, utils } from '@alipay/graphinsight';
 import AlgorithmResultPanel from './AlgorithmResultPanel';
 
@@ -28,6 +28,7 @@ const AlgorithmAnalysis = ({ serviceId }) => {
 
     console.log('Gremlin 算法结果', result);
     if (!result || !result.success) {
+      message.error(`执行图算法失败：${result.message}`);
       return;
     }
 
@@ -65,11 +66,12 @@ const AlgorithmAnalysis = ({ serviceId }) => {
             <Option value="sssp">单源最短路径</Option>
             <Option value="clustering">clustering</Option>
             <Option value="wcc">wcc</Option>
+            <Option value="lpa">LPA</Option>
             <Option value="k_core">K-core</Option>
             <Option value="eigenvector_centrality">eigenvector_centrality</Option>
           </Select>
         </Form.Item>
-        {(algorithmType === 'pagerank' || algorithmType === 'eigenvector_centrality') && (
+        {(algorithmType === 'pagerank' || algorithmType === 'eigenvector_centrality' || algorithmType === 'lpa') && (
           <Form.Item name="maxRound" label="maxRound">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
@@ -79,6 +81,12 @@ const AlgorithmAnalysis = ({ serviceId }) => {
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
         )}
+        <Form.Item name="vertex_label" label="节点类型">
+          <Input />
+        </Form.Item>
+        <Form.Item name="edge_label" label="边类型">
+          <Input />
+        </Form.Item>
         {(algorithmType === 'eigenvector_centrality' || algorithmType === 'sssp') && (
           <Form.Item name="weight" label="权重">
             <InputNumber style={{ width: '100%' }} />

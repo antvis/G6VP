@@ -24,7 +24,9 @@ import {
   loadDefaultGraphToGraphScope,
   loadGraphToGraphScope,
   uploadLocalFileToGraphScope,
+  queryGraphSchema,
 } from '../../../services/graphcompute';
+import { updateProjectById } from '../../../services';
 import {
   ChinaVisEdgeColumns,
   ChinaVisEdgeData,
@@ -34,6 +36,7 @@ import {
   DefaultGraphScopeNodeFilePath,
   LoadChinaVisDataSource,
 } from './const';
+import { useContext } from '../hooks/useContext';
 const { Item } = Form;
 const { confirm } = Modal;
 
@@ -42,6 +45,9 @@ interface GraphModelProps {
 }
 const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
   const [form] = Form.useForm();
+  const { updateContext, context } = useContext();
+
+  const { id } = context;
 
   const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
   const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
@@ -288,6 +294,20 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     localStorage.setItem('graphScopeGremlinServer', graphURL);
 
     message.success('加载数据到 GraphScope 引擎成功');
+
+    // 载图成功后，更新 Project 中的 SchemeData
+    // 查询 GraphScope 中的 Schema
+    const result = await queryGraphSchema();
+
+    if (result && result.success) {
+      updateProjectById(id, {
+        schemaData: JSON.stringify(result.data),
+      }).then(() => {
+        updateContext(draft => {
+          draft.key = Math.random();
+        });
+      });
+    }
     close();
   };
 
