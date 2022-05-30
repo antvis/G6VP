@@ -86,6 +86,24 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       draft.enableAI = !enableAI;
     });
   };
+  const handleDownloadProject = async () => {
+    const project = await getProjectById(projectId);
+    const { config, name, ...others } = project;
+    const params = {
+      ...others,
+      name,
+      projectConfig: config,
+    };
+
+    const elementA = document.createElement('a');
+    elementA.download = name;
+    elementA.style.display = 'none';
+    const blob = new Blob([JSON.stringify(params, null, 2)]);
+    elementA.href = URL.createObjectURL(blob);
+    document.body.appendChild(elementA);
+    elementA.click();
+    document.body.removeChild(elementA);
+  };
 
   React.useEffect(() => {
     (async () => {
@@ -102,9 +120,14 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
           保存
         </Button>
       </Tooltip>
-      <Tooltip title="导出">
+      <Tooltip title="下载项目">
+        <Button icon={<SaveOutlined />} onClick={handleDownloadProject} size="small" className="gi-intro-save">
+          下载项目
+        </Button>
+      </Tooltip>
+      <Tooltip title="导出 SDK">
         <Button icon={<ExportOutlined />} onClick={handleOutOpen} size="small" className="gi-intro-export">
-          导出
+          导出 SDK
         </Button>
       </Tooltip>
       {/* <Tooltip title="自动推荐样式">
