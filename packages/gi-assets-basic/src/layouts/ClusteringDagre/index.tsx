@@ -10,8 +10,8 @@ const info = {
   name: '聚类分层布局',
   category: 'basic',
   type: 'LAYOUT',
-  desc: '在 Dagre 布局的基础上，增加聚类效果，支持配置每层展示的数量',
-  icon: 'icon-layout-circular',
+  desc: '可聚类的有向分层布局',
+  icon: 'icon-layout-tree',
   cover: 'http://xxxx.jpg',
 };
 

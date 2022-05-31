@@ -76,13 +76,20 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
 
       if (!file) {
         return false;
-      } else if (/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
+      } else if (/\.(xls|xlsx|csv)$/.test(file.name.toLowerCase())) {
         const data = await xlsx2js(file);
 
-        fileData = {
-          nodes: data,
-          edges: data,
-        };
+        const firstData = data[0];
+        const isEdge = firstData.source && firstData.target;
+        fileData = isEdge
+          ? {
+              nodes: [],
+              edges: data,
+            }
+          : {
+              nodes: data,
+              edges: [],
+            };
 
         const renderData = [
           ...inputData,
@@ -214,6 +221,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       };
 
       // 进入分析之前，根据数据，生成 schema
+
       const schemaData = generatorSchemaByGraphData(mergeData);
       const newConfig = generatorStyleConfigBySchema(schemaData, context.config);
       console.log('生成的 Schema 数据', schemaData);
@@ -276,7 +284,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
               <p className="ant-upload-drag-icon">
                 <FileTextOutlined />
               </p>
-              <p>点击或将数据文件拖拽到这里上传</p>
+              <p>点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式</p>
+              <p>CSV/XLS/XLSX文件规范：</p>
+              <p>分别上传点表和边表，点表：必须要有 id 字段，边表：必须要有 source 和 target 字段</p>
+              <p>JSON 文件规范：</p>
+              <p>点表和边表放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合，其属性字段的规范同上</p>
             </Dragger>
           </div>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>

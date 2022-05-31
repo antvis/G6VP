@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-common-components",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
