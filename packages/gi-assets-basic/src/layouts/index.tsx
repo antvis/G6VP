@@ -5,6 +5,7 @@ import Dagre from './Dagre';
 import GraphinForce from './GraphinForce';
 import Grid from './Grid';
 import Radial from './Radial';
+import ClusteringDagre from './ClusteringDagre';
 // import Random from './Random';
 /** 图元素市场 */
-export { Concentric, Dagre, GraphinForce, Grid, Radial, Circular };
+export { Concentric, Dagre, GraphinForce, Grid, Radial, Circular, ClusteringDagre };
