@@ -200,7 +200,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         ],
         order: index,
         logic: true,
-        groupName: `${c.nodeType.toUpperCase()} TYPE`,
+        groupName: `${String(c.nodeType).toUpperCase()} TYPE`,
       };
     })
     .sort((a, b) => {
@@ -231,7 +231,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         ],
         order: index,
         logic: true,
-        groupName: `${c.edgeType.toUpperCase()} TYPE`,
+        groupName: `${String(c.edgeType).toUpperCase()} TYPE`,
       };
     })
     .sort((a, b) => {
