@@ -191,6 +191,22 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     message.success('文件上传成功，可以点击进入分析开始载图并分析');
   };
 
+  const updateSchemaData = async () => {
+    // 载图成功后，更新 Project 中的 SchemeData
+    // 查询 GraphScope 中的 Schema
+    const result = await queryGraphSchema();
+
+    if (result && result.success) {
+      updateProjectById(id, {
+        schemaData: JSON.stringify(result.data),
+      }).then(() => {
+        updateContext(draft => {
+          draft.key = Math.random();
+        });
+      });
+    }
+  };
+
   const handleSubmitForm = async () => {
     setLoading(true);
     const currentInstanceId = await initGraphScopeInstance();
@@ -219,11 +235,14 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
         return;
       }
       message.success('加载数据到 GraphScope 引擎成功');
-      // 关闭弹框
-      close();
       const { graphName, graphURL } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
       localStorage.setItem('graphScopeGremlinServer', graphURL);
+
+      // 载图成功后，更新 Project 中的 SchemeData
+      updateSchemaData();
+      // 关闭弹框
+      close();
       return;
     }
 
@@ -244,11 +263,14 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
         return;
       }
       message.success('加载数据到 GraphScope 引擎成功');
-      // 关闭弹框
-      close();
       const { graphName, graphURL } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
       localStorage.setItem('graphScopeGremlinServer', graphURL);
+
+      // 载图成功后，更新 Project 中的 SchemeData
+      updateSchemaData();
+      // 关闭弹框
+      close();
       return;
     }
 
@@ -296,18 +318,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     message.success('加载数据到 GraphScope 引擎成功');
 
     // 载图成功后，更新 Project 中的 SchemeData
-    // 查询 GraphScope 中的 Schema
-    const result = await queryGraphSchema();
-
-    if (result && result.success) {
-      updateProjectById(id, {
-        schemaData: JSON.stringify(result.data),
-      }).then(() => {
-        updateContext(draft => {
-          draft.key = Math.random();
-        });
-      });
-    }
+    updateSchemaData();
     close();
   };
 
