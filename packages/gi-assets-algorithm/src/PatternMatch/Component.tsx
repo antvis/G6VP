@@ -263,8 +263,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         invalid = true;
         break;
       }
-      const { id: source, name: sourceNodeType } = newIdMap[dataSource];
-      const { id: target, name: targetNodeType } = newIdMap[dataTarget];
+      const { id: source, nodeType: sourceNodeType } = newIdMap[dataSource];
+      const { id: target, nodeType: targetNodeType } = newIdMap[dataTarget];
       
       pattern.edges.push({
         id: `${source}-${target}-${createUuid()}`,
