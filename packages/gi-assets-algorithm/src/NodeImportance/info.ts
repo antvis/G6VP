@@ -4,8 +4,8 @@ const info = {
   name: "节点重要性",
   category: "algorithm-analysis",
   type: "GIAC_CONTENT",
-  desc: "节点重要性",
+  desc: "使用 PageRank、度中心性、属性等计算节点重要性，映射到节点大小",
   cover: "http://xxxx.jpg",
-  icon: "icon-kinship",
+  icon: "icon-rules",
 };
 export default info;
