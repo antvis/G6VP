@@ -4,8 +4,8 @@ const info = {
   name: "模式匹配",
   category: "algorithm-analysis",
   type: "GIAC_CONTENT",
-  desc: "模式匹配",
+  desc: "使用 GADDI 算法，选定图模式，找到相似结构的子图",
   cover: "http://xxxx.jpg",
-  icon: "icon-kinship",
+  icon: "icon-query-path",
 };
 export default info;
