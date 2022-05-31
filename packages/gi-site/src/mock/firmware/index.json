@@ -1,0 +1,103 @@
+{
+  "nodes": [
+    {
+      "id": "pink-botnet",
+      "dataType": "botnet",
+      "legendType": "僵尸网络家族"
+    },
+
+    {
+      "id": "CVE-2025-4823",
+      "dataType": "cve",
+      "legendType": "漏洞事件"
+    },
+
+    {
+      "id": "Tutktunnel",
+      "dataType": "file",
+      "legendType": "单文件",
+      "md5": "c01ca513705bbd528a4b4067cc083d20"
+    },
+
+    {
+      "id": 2394,
+      "dataType": "firmware",
+      "legendType": "固件",
+      "md5": "c01ca513705bbd528a4b4067cc083d20",
+      "manu": "D-Link",
+      "device_type": "摄像头",
+      "name": "xxxx.bin"
+    },
+    {
+      "id": "D-Link",
+      "dataType": "manu",
+      "legendType": "设备制造商"
+    },
+
+    {
+      "id": "192.168.1.1",
+      "dataType": "online_assets",
+      "legendType": "在线设备资产",
+      "data": {
+        "id": "xx公司",
+        "type": "entity",
+        "longitude": 102.2956,
+        "latitude": 25.3455
+      },
+      "country": "美国",
+      "province": "亚利桑那",
+      "city": "多伦多",
+      "device_type": "摄像头",
+      "port": 22
+    },
+
+    {
+      "id": "美国",
+      "dataType": "country",
+      "legendType": "国家"
+    }
+  ],
+  "edges": [
+    {
+      "source": "pink-botnet",
+      "target": "CVE-2025-4823",
+      "edgeType": "botnet_belong"
+    },
+
+    {
+      "source": "CVE-2025-4823",
+      "target": "Tutktunnel",
+      "edgeType": "vuln_belong"
+    },
+
+    {
+      "source": "Tutktunnel",
+      "target": "2394",
+      "edgeType": "firm_belong"
+    },
+
+    {
+      "source": "2394",
+      "target": "D-Link",
+      "edgeType": "manu_belong"
+    },
+
+    {
+      "source": "D-Link",
+      "target": "美国",
+      "edgeType": "manu_country_belong"
+    },
+
+    {
+      "source": "2394",
+      "target": "192.168.1.1",
+      "edgeType": "assets_belong"
+    },
+
+    {
+      "source": "192.168.1.1",
+      "target": "美国",
+      "edgeType": "assets_country_belong"
+    }
+  ]
+}

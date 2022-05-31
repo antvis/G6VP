@@ -117,15 +117,24 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
-    const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
+    // const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
 
     // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
+
+    //@ts-ignore
+    let otherOptions = {};
+    if (options && options.defSpringLenCfg) {
+      //@ts-ignore
+      otherOptions = {
+        defSpringLen: utils.getDefSpringLenFunction(options.defSpringLenCfg),
+      };
+    }
     updateState(draft => {
       draft.layout = {
-        ...layout.info.options, //asset default options
         type,
         ...options,
+        ...otherOptions,
       };
       draft.config.layout = layoutCfg;
       draft.layoutCache = false;

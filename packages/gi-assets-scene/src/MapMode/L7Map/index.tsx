@@ -21,10 +21,13 @@ export interface MapModeProps {
   minSize: string;
   placement: 'LT' | 'RT' | 'LB' | 'RB';
   offset: number[];
+
+  latitudeKey: string;
+  longitudeKey: string;
 }
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
-  const { theme, type, maxSize, minSize, placement, offset } = props;
+  const { theme, type, maxSize, minSize, placement, offset, longitudeKey, latitudeKey } = props;
   const context = useContext();
   const { data, graph, config, GISDK_ID, apis } = context;
 
@@ -48,16 +51,26 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
     return data.nodes
       .filter(node => {
         const n = node.data;
-        if (!n.longitude || !n.latitude) {
+        if (!n[longitudeKey] || !n[latitudeKey]) {
           return false;
         }
         return true;
       })
       .map(node => {
         const n = node.data;
+        let longitude = n[longitudeKey];
+        let latitude = n[latitudeKey];
+        if (typeof longitude === 'string' || typeof latitude === 'string') {
+          try {
+            longitude = Number(JSON.parse(longitude));
+            latitude = Number(JSON.parse(latitude));
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
         return {
           ...node,
-          location: [n.longitude, n.latitude],
+          location: [longitude, latitude],
         };
       });
   }, [data]);
@@ -68,7 +81,12 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         const e = edge.get('model');
         const source = edge.get('source').get('model');
         const target = edge.get('target').get('model');
-        if (!source.data.longitude || !source.data.latitude || !target.data.longitude || !target.data.latitude) {
+        if (
+          !source.data[longitudeKey] ||
+          !source.data[latitudeKey] ||
+          !target.data[longitudeKey] ||
+          !target.data[latitudeKey]
+        ) {
           return false;
         }
         return true;
@@ -77,11 +95,32 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
         const e = edge.get('model');
         const source = edge.get('source').get('model');
         const target = edge.get('target').get('model');
+
+        let source_longitude = source.data[longitudeKey];
+        let source_latitude = source.data[latitudeKey];
+        let target_longitude = target.data[longitudeKey];
+        let target_latitude = target.data[latitudeKey];
+        if (
+          typeof source_longitude === 'string' ||
+          typeof source_latitude === 'string' ||
+          typeof target_longitude === 'string' ||
+          typeof target_latitude === 'string'
+        ) {
+          try {
+            source_longitude = Number(JSON.parse(source_longitude));
+            source_latitude = Number(JSON.parse(source_latitude));
+            target_longitude = Number(JSON.parse(target_longitude));
+            target_latitude = Number(JSON.parse(target_latitude));
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+
         return {
           ...e,
           lnglat: [
-            [source.data.longitude, source.data.latitude],
-            [target.data.longitude, target.data.latitude],
+            [source_longitude, source_latitude],
+            [target_longitude, target_latitude],
           ],
         };
       });
