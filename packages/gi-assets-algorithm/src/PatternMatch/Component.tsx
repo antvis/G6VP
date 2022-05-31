@@ -9,7 +9,7 @@ import { Button, Tabs, Tooltip, Menu, Modal, Dropdown, message, Row, Col } from 
 import { ExclamationCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { cloneDeep } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { PatternMatchProps, SPLITOR } from './registerMeta';
 import FormattedMessage, { formatMessage } from './locale';
 import ResultTable from './resultTable';
@@ -45,33 +45,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
   const { graph, data, schemaData } = useContext();
 
-  const intialPatternInfoMap = {
-    '1': {
-      id: '1',
-      title: <FormattedMessage id="pattern-title" value={'1'} />,
-      data: null
-    }
-  };
 
-  const initialPanes = [
-    {
-      title: <FormattedMessage id="pattern-title" value={intialPatternInfoMap['1'].id} />,
-      content: <PatternPane
-        {...intialPatternInfoMap['1']}
-        //@ts-ignore
-        schemaEdgeMap={schemaEdgeMap}
-        editPattern={() => setEditorVisible(true)}
-        //@ts-ignore
-        importData={importData}
-      />,
-      key: intialPatternInfoMap['1'].id
-    },
-  ];
-
-  const [panes, setPanes] = useState(initialPanes);
   const [activeKey, setActiveKey] = useState('1');
   const [editorVisible, setEditorVisible] = useState(false);
-  const [patternInfoMap, setPatternInfoMap] = useState(intialPatternInfoMap);
   const [result, setResult] = useState([] as GraphinData[]);
   const [hullIds, setHullIds] = useState([] as string[]);
   const [loading, setLoading] = useState(false);
@@ -84,6 +60,34 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
   const [schemaEdgeMap, setSchemaEdgeMap] = useState({});
   const [schemaNodeMap, setSchemaNodeMap] = useState({});
+  
+  const intialPatternInfoMap = useMemo(() => ({
+    '1': {
+      id: '1',
+      title: <FormattedMessage id="pattern-title" value={'1'} />,
+      data: null
+    }
+  }), []);
+  const [patternInfoMap, setPatternInfoMap] = useState(intialPatternInfoMap);
+
+  const importData = (data, patternId) => {
+    const newPatternInfoMap = { ...patternInfoMap };
+    newPatternInfoMap[patternId].data = data;
+    setPatternInfoMap(newPatternInfoMap);
+  }
+
+  const [panes, setPanes] = useState(() => [
+    {
+      title: <FormattedMessage id="pattern-title" value={intialPatternInfoMap['1'].id} />,
+      content: <PatternPane
+        {...intialPatternInfoMap['1']}
+        schemaEdgeMap={schemaEdgeMap}
+        editPattern={() => setEditorVisible(true)}
+        importData={importData}
+      />,
+      key: intialPatternInfoMap['1'].id
+    },
+  ]);
 
   useEffect(() => {
     const sEdgeMap = {};
@@ -164,6 +168,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
 
   const enableExtractingMode = (patternId) => {
     if (!graph || graph.destroyed) return;
+    previousSize = { width: graph.getWidth(), height: graph.getHeight() };
     message.info({
       key: EXTRACT_MESSAGE_KEY,
       className: 'kg-pattern-match-extract-tip-long',
@@ -620,12 +625,6 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     }
     exportPattern?.(pattern);
   }
-  
-  const importData = (data, patternId) => {
-    const newPatternInfoMap = { ...patternInfoMap };
-    newPatternInfoMap[patternId].data = data;
-    setPatternInfoMap(newPatternInfoMap);
-  }
 
   const savePattern = (id, saveData) => {
     const newPatternInfoMap = {...patternInfoMap};
@@ -663,7 +662,6 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     const container = document.createElement('div');
     parentDOM?.appendChild(container);
     setExtraButtonsContainer(container);
-    previousSize = { width: graph.getWidth(), height: graph.getHeight() };
     return () => {
       container.parentNode?.removeChild(container);
     }
