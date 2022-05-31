@@ -8,7 +8,14 @@ metas.GIAC.properties.GIAC.properties.isShowTitle.default = false;
 metas.GIAC.properties.GIAC.properties.icon.default = info.icon;
 metas.GIAC.properties.GIAC.properties.isVertical.default = true;
 metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
-export default () => {
+export default context => {
+  const { keys } = context;
+  const options = keys.map(c => {
+    return {
+      label: c,
+      value: c,
+    };
+  });
   return {
     visible: {
       title: '默认显示',
@@ -106,6 +113,26 @@ export default () => {
         max: 400,
       },
       default: [0, 0],
+    },
+    longitudeKey: {
+      type: 'string',
+      title: '经度字段',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options,
+      },
+      default: 'longitude',
+    },
+    latitudeKey: {
+      type: 'string',
+      title: '纬度字段',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options,
+      },
+      default: 'latitude',
     },
     ...metas,
   };
