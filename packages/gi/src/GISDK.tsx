@@ -117,12 +117,14 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
-    const layout = assets.layouts[layoutCfg.id];
+    const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
+
+    // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
     updateState(draft => {
       draft.layout = {
         ...layout.info.options, //asset default options
-        type: type,
+        type,
         ...options,
       };
       draft.config.layout = layoutCfg;
