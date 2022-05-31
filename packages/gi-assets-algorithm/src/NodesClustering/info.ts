@@ -3,8 +3,8 @@ const info = {
   category: "algorithm-analysis",
   type: "GIAC_CONTENT",
   name: "节点聚类",
-  desc: "节点聚类",
-  icon: "icon-aggregation",
+  desc: "使用 K-Means 算法计算节点的聚类",
+  icon: "icon-Kjunzhijulei",
   cover: "http://xxxx.jpg",
 };
 export default info;
