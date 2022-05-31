@@ -1,4 +1,22 @@
 const registerMeta = context => {
+  const presetOptions = [
+    {
+      label: '网格布局',
+      value: 'grid',
+    },
+    {
+      label: '环形布局',
+      value: 'circular',
+    },
+    {
+      label: '同心圆布局',
+      value: 'concentric',
+    },
+    {
+      label: '有向分层',
+      value: 'dagre',
+    },
+  ];
   return {
     stiffness: {
       type: 'number',
@@ -37,29 +55,46 @@ const registerMeta = context => {
       'x-component': 'Switch',
       default: true,
     },
-
-    defSpringLen: {
-      title: '默认边长',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input.TextArea',
-      'x-component-props': {},
-      default: `(_edge, source, target) => {
-        /** 默认返回的是 200 的弹簧长度 */
-        /** 如果你要想要产生聚类的效果，可以考虑 根据边两边节点的度数来动态设置边的初始化长度：度数越小，则边越短 */
-        const defaultSpring = 100;
-        const Sdegree = source.data.layout.degree;
-        const Tdegree = target.data.layout.degree;
-        const MinDegree = Math.min(Sdegree, Tdegree);
-
-        let SpringLength = defaultSpring;
-        if (MinDegree < 5) {
-          SpringLength = defaultSpring * MinDegree;
-        } else {
-          SpringLength = 500;
-        }
-        return SpringLength;
-      }`,
+    preset: {
+      type: 'object',
+      properties: {
+        type: {
+          type: 'string',
+          title: '前置布局',
+          'x-component': 'Select',
+          'x-decorator': 'FormItem',
+          'x-component-props': {
+            options: presetOptions,
+          },
+          default: 'concentric',
+        },
+      },
+    },
+    defSpringLenCfg: {
+      type: 'object',
+      properties: {
+        minLimitDegree: {
+          title: '最小界限度数',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 5,
+        },
+        maxLimitLength: {
+          title: '最大限制边长',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 500,
+        },
+        defaultSpring: {
+          title: '默认边长',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 100,
+        },
+      },
     },
     centripetalOptions: {
       type: 'object',

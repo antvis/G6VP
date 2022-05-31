@@ -144,12 +144,24 @@ const Analysis = props => {
               },
             };
           });
+
+          const { id: layoutId, props: layoutProps } = draft.config.layout;
+          const defaultLayout = activeAssetsInformation.layouts[layoutId];
+          const layoutConfig = {
+            id: layoutId,
+            props: {
+              ...defaultLayout.props,
+              ...layoutProps,
+            },
+          };
+
           /** 根据服务配置列表，得到真正运行的Service实例 */
           const services = getServicesByConfig(combinedServiceConfig, data, schemaData);
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务
           draft.config.components = configComponents; //更新 config.components
+          draft.config.layout = layoutConfig; //更新 config.layout
           draft.activeAssets = activeAssets; //更新活跃资产
           draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
           draft.activeAssetsInformation = activeAssetsInformation;
