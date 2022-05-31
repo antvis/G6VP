@@ -117,8 +117,11 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
+    // const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
+
+    // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
-    console.log('layout', layoutCfg);
+
     //@ts-ignore
     let otherOptions = {};
     if (options && options.defSpringLenCfg) {
@@ -129,7 +132,7 @@ const GISDK = (props: Props) => {
     }
     updateState(draft => {
       draft.layout = {
-        type: type,
+        type,
         ...options,
         ...otherOptions,
       };

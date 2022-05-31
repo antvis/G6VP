@@ -92,7 +92,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { layoutId } = state;
 
   /*** 当前元素物料 */
-  const layout = layouts[layoutId];
+  const layout = layouts[layoutId] || layouts['GraphinForce'];
 
   const schema = {
     type: 'object',

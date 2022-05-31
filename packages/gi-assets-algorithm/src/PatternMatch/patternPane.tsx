@@ -119,7 +119,7 @@ const PatternPane: React.FC<Props> = ({
         </a>
       </Dropdown>
       <Graphin
-        width={456}
+        width={388}
         height={246}
         data={graphData}
         ref={graphRef as any}

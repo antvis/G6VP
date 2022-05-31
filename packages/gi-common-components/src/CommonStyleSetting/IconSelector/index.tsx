@@ -5,7 +5,7 @@ import { createFromIconfontCN } from '@ant-design/icons';
 const { Search } = Input;
 
 const MyIcon = createFromIconfontCN({
-  scriptUrl: 'https://at.alicdn.com/t/font_3156164_ykzbpjkfgyp.js', // 在 iconfont.cn 上生成
+  scriptUrl: 'https://at.alicdn.com/t/font_3381398_5hpi569akv7.js', // 在 iconfont.cn 上生成
 });
 
 const IconSet = {
