@@ -117,13 +117,21 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
-    const layout = assets.layouts[layoutCfg.id];
     const { type, ...options } = layoutCfg.props || {};
+    console.log('layout', layoutCfg);
+    //@ts-ignore
+    let otherOptions = {};
+    if (options && options.defSpringLenCfg) {
+      //@ts-ignore
+      otherOptions = {
+        defSpringLen: utils.getDefSpringLenFunction(options.defSpringLenCfg),
+      };
+    }
     updateState(draft => {
       draft.layout = {
-        ...layout.info.options, //asset default options
         type: type,
         ...options,
+        ...otherOptions,
       };
       draft.config.layout = layoutCfg;
       draft.layoutCache = false;

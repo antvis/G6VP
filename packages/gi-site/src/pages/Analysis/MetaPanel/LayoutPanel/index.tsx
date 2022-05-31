@@ -105,7 +105,6 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   /** 缓存数据 */
   cache[layoutId] = { id: layoutId, props: layoutProps };
-  console.log('deafultProps', layoutProps, cache);
 
   const form = createForm({
     initialValues: layoutProps,

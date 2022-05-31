@@ -140,13 +140,10 @@ export interface GIAssets {
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
   type?: 'preset' | 'graphin-force' | 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
-  options?: {
-    [key: string]: any;
-  };
+  [key: string]: any;
 }
 export interface GILayoutConfig {
   id: string;
-  name: string;
   props: LayoutConfig;
 }
 
