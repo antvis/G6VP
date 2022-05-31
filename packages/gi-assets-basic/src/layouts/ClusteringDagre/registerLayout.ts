@@ -3,7 +3,7 @@ import { mix } from '@antv/util';
 
 const ascendCompare = p => {
   // 这是比较函数
-  return function(m, n) {
+  return function (m, n) {
     const keys = p.split('.');
     let a = 0,
       b = 0;
@@ -37,7 +37,7 @@ const clusteringDagreLayout = Graphin => {
 
       // 默认使用dataType排序
       let clusterAttr = 'nodeType';
-      debugger;
+
       if (self.clusterAttr) {
         // 新的属性选取方案，格式是 `attribute@@type`
         clusterAttr = self.clusterAttr;
@@ -199,7 +199,7 @@ const clusteringDagreLayout = Graphin => {
           if (!nodesep) nodesep = (height * 0.8) / maxNodeNumInLevel || 150;
         }
         const wrapLineHeight = self.wrapLineHeight;
-        debugger;
+
         nodes.forEach(node => {
           switch (rankdir) {
             case 'TB':
