@@ -10,7 +10,7 @@ const { Panel } = Collapse;
 
 const AssetCollapse: React.FC<IAssetCollapseProps & { Panel: any }> = props => {
   const { defaultActiveKey, children } = props;
-  console.log('AssetCollapse props', props);
+
   return (
     <Collapse
       {...props}
@@ -26,7 +26,7 @@ const AssetCollapse: React.FC<IAssetCollapseProps & { Panel: any }> = props => {
 
 const AssetCollapsePanel = props => {
   const { key, header, children } = props;
-  console.log('AssetCollapsePanel props', props);
+
   return (
     <Panel {...props} header={header} key={key} className="site-collapse-custom-panel">
       {children}
