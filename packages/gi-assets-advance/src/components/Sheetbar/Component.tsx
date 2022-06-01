@@ -40,8 +40,9 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
     const sheetName = '未命名画布';
     let newData = { nodes: [], edges: [] };
     if (data) {
-      newData = data;
+      newData = JSON.parse(JSON.stringify(data));
     }
+
     setState(preState => {
       return {
         ...preState,
