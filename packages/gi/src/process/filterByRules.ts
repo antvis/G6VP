@@ -81,7 +81,11 @@ export const formatProperties = (node: {
   data?: Record<string, string | number>;
 }): Record<string, string | number> => {
   if (node.data) {
-    return node.data;
+    // 如果有 data 属性，则取 data 属性和 nodeType
+    return {
+      ...node.data,
+      nodeType: (node as any).nodeType,
+    };
   }
   //@ts-ignore
   return node || {};
@@ -92,6 +96,7 @@ const filterByExpression = (data: Record<string, string | number>, expression: E
   if (!expression) {
     return false;
   }
+
   const { name: propertyName = '', operator, value } = expression;
   const name = propertyName.split('-')[0];
   let formatted: string | number = value;
