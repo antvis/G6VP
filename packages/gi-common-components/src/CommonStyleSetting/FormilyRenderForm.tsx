@@ -87,7 +87,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
 
     onChange(_config, ref.current.elementId);
   };
-  console.log(schema, '@schemaNode');
   return (
     <>
       <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>
@@ -108,7 +107,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
             <Radio.Group value={elementId} onChange={handleChangeElement}>
               {OPTIONS.map(c => {
                 const { id, name, cover } = c;
-                console.log(c);
                 return (
                   <Radio.Button
                     value={id}
