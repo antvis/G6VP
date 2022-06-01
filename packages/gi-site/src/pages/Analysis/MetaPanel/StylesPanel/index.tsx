@@ -18,7 +18,6 @@ const EdgeTab = <div className="tab-title">边</div>;
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const { elements } = props;
   const { nodes: NodeElements, edges: EdgeElements } = elements;
-  console.log('Elements', EdgeElements, NodeElements);
   const defaultActiveKey = 'nodes';
 
   return (
