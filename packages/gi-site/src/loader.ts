@@ -7,7 +7,7 @@ import { isDev, OFFICIAL_PACKAGES } from '../.umirc';
 setTimeout(() => {
   window.console.clear();
   console.log(
-    '%c Thanks to pomelo.lcw zhanning.bzn xuying.xu yunyi jingxi.lp Yanyan-Wang xx361452 baihui yifeng yuqi.pyq yuran.lcl qingyu hexiaonan.hxn who have contributed code to GraphInsight',
+    '%c Thanks to pomelo.lcw zhanning.bzn xuying.xu yunyi jingxi.lp Yanyan-Wang axu.zx xx361452 baihui yifeng yuqi.pyq yuran.lcl qingyu hexiaonan.hxn who have contributed code to GraphInsight',
     'color: #ddd; font-size: 10px; font-style: italic;',
   );
 }, 2000);
