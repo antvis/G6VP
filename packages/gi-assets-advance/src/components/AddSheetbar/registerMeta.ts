@@ -9,6 +9,13 @@ metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 
 const registerMeta = () => {
   return {
+    isRelayout: {
+      title: '是否重新布局',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
     ...metas,
   };
 };
