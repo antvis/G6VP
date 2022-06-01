@@ -36,7 +36,7 @@ export interface State {
 }
 
 const GroupContainer: React.FC<GroupContainerProps> = props => {
-  const { data, children, valuesChange, initValues, defaultGroupOption, schemaData, elementType } = props;
+  const { children, valuesChange, initValues, defaultGroupOption, schemaData, elementType } = props;
   const [form] = Form.useForm();
 
   const [state, setState] = useImmer<State>({
