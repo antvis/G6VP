@@ -18,7 +18,7 @@ const EnvInfo = () => {
       <br />
       「线上环境」：
       <Typography.Text type="success">使用线上环境意味着你制作画布可以在线查看，也可以分享给其他人。</Typography.Text>
-      （我们会启用内部的服务，包括鉴权服务/ GraphScope内部环境。蚂蚁与阿里同学优先选用这种环境）
+      （我们会启用蚂蚁内部服务，包括鉴权服务/ GraphScope 引擎环境。预计8月份上线）
     </div>
   );
 };
@@ -35,7 +35,7 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
 
   const modeList = [
     { img: '', value: 'LOCAL', label: '本地环境' },
-    { img: '', value: 'ONLINE', label: '在线环境' },
+    // { img: '', value: 'ONLINE', label: '在线环境' },
   ];
   const { env, visible } = state;
   const handleChange = (value: ServerEnv) => {
@@ -64,7 +64,7 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
       <Select defaultValue={env} style={{ width: 100 }} bordered={false} onChange={handleChange}>
         {modeList.map(c => {
           return (
-            <Option key={c.value} value={c.value}>
+            <Option key={c.value} value={c.value} disabled={c.value === 'ONLINE'}>
               {c.label}
             </Option>
           );

@@ -1,13 +1,12 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
+import { useContext, utils } from '@alipay/graphinsight';
 import React from 'react';
-import { useContext } from '../../hooks/useContext';
-type EdgeConfig = any;
 export type NodesConfig = {
   id: string;
   groupId: string;
   groupName: string;
   expressions: any[];
-  props: EdgeConfig;
+  props: any;
 }[];
 
 interface MetaProps {
@@ -16,21 +15,27 @@ interface MetaProps {
 }
 
 export interface StyleSettingProps {
-  elements: MetaProps[];
-  elementType: 'node' | 'edge';
+  shapeOptions: MetaProps[];
+  data: { nodes: any[]; edges: any[] };
+  elementType: 'nodes' | 'edges';
 }
 
-const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
-  const { elements } = props;
+const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'nodes' }) => {
+  const {
+    updateContext,
+    data,
+    config,
+    assets,
+    schemaData = {
+      nodes: [],
+      edges: [],
+    },
+  } = useContext();
 
-  const { updateContext, context } = useContext();
-  const { data, config } = context;
+  const elements = React.useMemo(() => {
+    return utils.getElementsByAssets(assets.elements, data, schemaData);
+  }, [schemaData, data]);
 
-  /**
-   * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
-   * @param current
-   * @param all
-   */
   const handleChange = styleGroups => {
     const nodesConfig: NodesConfig = styleGroups.map(c => {
       const { id, groupId, groupName, expressions, logic } = c;
@@ -50,8 +55,18 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
       draft.layoutCache = true;
     });
   };
+  //@ts-ignore
   return (
-    <CommonStyleSetting config={config} onChange={handleChange} data={data} elementType="node" elements={elements} />
+    <CommonStyleSetting
+      schemaData={schemaData}
+      onChange={handleChange}
+      //@ts-ignore
+      config={config}
+      data={data}
+      elementType={elementType}
+      //@ts-ignore
+      elements={elements.nodes}
+    />
   );
 };
 

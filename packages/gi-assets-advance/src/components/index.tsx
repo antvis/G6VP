@@ -8,9 +8,10 @@
 // import PatternMatch from './PatternMatch';
 // import SearchBar from './SearchBar';
 import AddSheetbar from './AddSheetbar';
+import AlgorithmAnalysis from './AlgorithmAnalysis';
 import GremlinQuery from './GremlinQuery';
 import Sheetbar from './Sheetbar';
 import SnapshotGallery from './SnapshotGallery';
-import AlgorithmAnalysis from './AlgorithmAnalysis';
+import StyleSetting from './StyleSetting';
 
-export { SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, AlgorithmAnalysis };
+export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, AlgorithmAnalysis };
