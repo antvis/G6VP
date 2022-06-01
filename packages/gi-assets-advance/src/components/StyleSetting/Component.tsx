@@ -1,14 +1,12 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
 import { useContext, utils } from '@alipay/graphinsight';
 import React from 'react';
-import { NodeConfig } from '../../elements/SimpleNode/registerTransform';
-
 export type NodesConfig = {
   id: string;
   groupId: string;
   groupName: string;
   expressions: any[];
-  props: NodeConfig;
+  props: any;
 }[];
 
 interface MetaProps {
@@ -60,6 +58,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions
   //@ts-ignore
   return (
     <CommonStyleSetting
+      schemaData={schemaData}
       onChange={handleChange}
       //@ts-ignore
       config={config}
