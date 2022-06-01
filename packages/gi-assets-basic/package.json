@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@alipay/gi-assets-testing": "2.x",
-    "@alipay/gi-common-components": "1.x",
     "@alipay/graphinsight": "2.x",
     "@antv/g2plot": "^2.4.15",
     "@antv/graphin-icons": "^1.0.0",
