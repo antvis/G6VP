@@ -25,7 +25,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
   const { elements, elementType } = props;
 
   const { updateContext, context } = useContext();
-  const { data, config } = context;
+  const { data, config, schemaData } = context;
 
   /**
    * 除过 groupName，Icon 和 rule 外的其他 form 表单内容更新会触发该方法
@@ -53,6 +53,7 @@ const StyleSetting: React.FunctionComponent<StyleSettingProps> = props => {
   };
   return (
     <CommonStyleSetting
+      schemaData={schemaData}
       config={config}
       onChange={handleChange}
       data={data}

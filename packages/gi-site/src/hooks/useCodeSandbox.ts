@@ -30,7 +30,7 @@ function serialize(data: Record<string, any>) {
 }
 
 const getConstantFiles = opts => {
-  const { data, id } = opts;
+  const { data, id, schemaData } = opts;
 
   const config = produce(opts.config, draft => {
     try {
@@ -56,10 +56,12 @@ const getConstantFiles = opts => {
   const GI_PROJECT_CONFIG = beautifyCode(JSON.stringify(config));
   const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
   const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
+  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
   return {
     GI_SERVICES_OPTIONS,
     GI_PROJECT_CONFIG,
     GI_LOCAL_DATA,
+    GI_SCHEMA_DATA,
   };
 };
 function getCSBData(opts) {
@@ -70,13 +72,14 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const { GI_SERVICES_OPTIONS, GI_PROJECT_CONFIG, GI_LOCAL_DATA } = getConstantFiles(opts);
+  const { GI_SERVICES_OPTIONS, GI_PROJECT_CONFIG, GI_LOCAL_DATA, GI_SCHEMA_DATA } = getConstantFiles(opts);
 
   files['src/GI_EXPORT_FILES.ts'] = {
     content: `
     export const GI_SERVICES_OPTIONS = ${GI_SERVICES_OPTIONS};
     export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
     export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
+    export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
     `,
   };
   files['src/utils.ts'] = {
@@ -135,15 +138,16 @@ export function looseJsonParse(obj) {
 export const defaultTransFn = (data, params) => {
   return data;
 };
-export const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
-  return serviceConfig.map((s) => {
+export const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
+  return serviceConfig.map(s => {
     const { id, content, mode } = s;
-    const runtimeContent = content?.split("export default")[1] || content;
+    const runtimeContent = content?.split('export default')[1] || content;
     const transFn = looseJsonParse(runtimeContent);
     return {
       id,
+      content,
       service: (...params) => {
-        return transFn(...params, LOCAL_DATA);
+        return transFn(...params, LOCAL_DATA, schemaData);
       },
     };
   });
@@ -252,7 +256,7 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <title>Document</title>
 
     <!--- CSS -->
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/light.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.css" /> 
     ${GIAssetsLinks}
@@ -269,7 +273,7 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--- Antd DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.20.4/dist/antd.min.js"></script>
     <!--- Graphin DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>

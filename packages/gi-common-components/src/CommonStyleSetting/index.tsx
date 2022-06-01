@@ -21,6 +21,7 @@ export interface StyleSettingProps {
     edges: ItemConfig[];
     [key: string]: any;
   };
+  schemaData: any;
 }
 
 const defaultGroupOption = {
@@ -66,6 +67,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
   onChange,
   elements,
   config: CONFIG,
+  schemaData,
 }) => {
   const elementConfig = JSON.parse(JSON.stringify(CONFIG[elementType] || {}));
   const preStyleGroup = React.useRef(elementConfig as any);
@@ -129,6 +131,8 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
 
   return (
     <GroupContainer
+      elementType={elementType}
+      schemaData={schemaData}
       //@ts-ignore
       defaultGroupOption={defaultGroupOption[elementType]}
       initValues={{ groups: elementConfig }}

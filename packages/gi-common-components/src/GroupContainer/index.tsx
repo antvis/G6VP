@@ -3,6 +3,7 @@ import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
 import type { ItemConfig } from '../CommonStyleSetting/typing';
+import { getAllkeysBySchema } from '../Utils/getAllkeysBySchema';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 import PopoverContainer from './PopoverContainer';
@@ -17,6 +18,8 @@ export interface GroupContainerProps {
   initValues?: any;
   valuesChange: (currenr: any, allValues: any) => void;
   defaultGroupOption: ItemConfig;
+  schemaData: any;
+  elementType: 'nodes' | 'edges';
 }
 
 const { Panel } = Collapse;
@@ -33,7 +36,7 @@ export interface State {
 }
 
 const GroupContainer: React.FC<GroupContainerProps> = props => {
-  const { data, children, valuesChange, initValues, defaultGroupOption } = props;
+  const { data, children, valuesChange, initValues, defaultGroupOption, schemaData, elementType } = props;
   const [form] = Form.useForm();
 
   const [state, setState] = useImmer<State>({
@@ -48,24 +51,19 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   };
 
   const onValuesChange = useCallback((changedValue: any, allValues: any) => {
-    console.log('form value change', allValues);
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }
   }, []);
 
   // 构建属性列表
-  const p = data[0] && data[0].data;
 
-  const propertyList =
-    (p &&
-      Object.keys(p).map(d => {
-        return {
-          value: d,
-          key: d,
-        };
-      })) ||
-    [];
+  const propertyList = getAllkeysBySchema(schemaData, elementType)?.map(c => {
+    return {
+      value: c,
+      key: c,
+    };
+  });
 
   return (
     /** 让fixed定位从该容器开始 */
@@ -180,6 +178,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                   <Row>
                                     <Col span={24} className="expression-group" style={{ display: 'flex' }}>
                                       <ExpressionGroup
+                                        //@ts-ignore
                                         options={propertyList}
                                         name={name as any}
                                         index={index}
@@ -207,7 +206,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                   size="small"
                                 ></Button>
                               </PopoverContainer>
-                              
+
                               <Button
                                 type="text"
                                 disabled={index === 0}
@@ -223,8 +222,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                             </div>
                           }
                           header={
-                            <div className="header">
-                              <div className="left" onClick={e => e.stopPropagation()}>
+                            <div>
+                              <div onClick={e => e.stopPropagation()}>
                                 <Form.Item
                                   {...restField}
                                   name={[name, 'groupName']}

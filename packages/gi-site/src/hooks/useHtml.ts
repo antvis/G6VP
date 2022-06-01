@@ -24,7 +24,7 @@ export function beautifyCode(code: string) {
  * @param opts  previewer props
  */
 const getHtmlAppCode = opts => {
-  const { data, id } = opts;
+  const { data, id, schemaData } = opts;
 
   const config = produce(opts.config, draft => {
     try {
@@ -52,6 +52,7 @@ const getHtmlAppCode = opts => {
   const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
   const packages = getAssetPackages();
   const combinedAssets = getCombinedAssets();
+  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
 
   const GIAssetsScripts = packages
     .map(pkg => {
@@ -76,7 +77,7 @@ const getHtmlAppCode = opts => {
     <title>Document</title>
 
     <!--- CSS -->
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.2.3/dist/GraphInsight/light.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.css" /> 
     ${GIAssetsLinks}
@@ -141,15 +142,16 @@ function looseJsonParse(obj) {
 const defaultTransFn = (data, params) => {
   return data;
 };
-const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
+const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
   return serviceConfig.map(s => {
     const { id, content, mode } = s;
     const runtimeContent = content?.split('export default')[1] || content;
     const transFn = looseJsonParse(runtimeContent);
     return {
       id,
+      content,
       service: (...params) => {
-        return transFn(...params, LOCAL_DATA);
+        return transFn(...params, LOCAL_DATA, schemaData);
       },
     };
   });
@@ -162,12 +164,14 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
       const GI_SERVICES_OPTIONS = ${serviceStr};
       const GI_PROJECT_CONFIG = ${configStr};
       const GI_LOCAL_DATA = ${dataStr};
+      const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
+      
       /**  由GI平台自动生成的，请勿修改 end **/
    
       const assets = getCombinedAssets();
     const MyGraphSdk = () => {
       const config = GI_PROJECT_CONFIG;
-      const services = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA);
+      const services = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA,GI_SCHEMA_DATA);
     
       return  <div style={{ height: '100vh' }}>
         <GISDK.default config={config} assets={assets} services={services}/>
@@ -187,7 +191,7 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA) => {
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!--- Antd DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.20.4/dist/antd.min.js"></script>
     <!--- Graphin DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
