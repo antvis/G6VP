@@ -1,24 +1,6 @@
-import { ExclamationCircleOutlined, MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import {
-  Alert,
-  Button,
-  Col,
-  Collapse,
-  Form,
-  Input,
-  message,
-  Modal,
-  Popconfirm,
-  Radio,
-  Row,
-  Space,
-  Switch,
-  Table,
-  Upload,
-} from 'antd';
+import { Alert, Button, Form, message, Radio, Space, Table } from 'antd';
 import React, { useState } from 'react';
 import {
-  closeGraphInstance,
   createGraphScopeInstance,
   loadChinaVisGraphToGraphScope,
   loadDefaultGraphToGraphScope,
@@ -36,9 +18,8 @@ import {
   DefaultGraphScopeNodeFilePath,
   LoadChinaVisDataSource,
 } from './const';
+import LocalFilePanel from './LocalFilePanel';
 import { useContext } from '../hooks/useContext';
-const { Item } = Form;
-const { confirm } = Modal;
 
 interface GraphModelProps {
   close: () => void;
@@ -56,8 +37,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
   const [dataType, setDataType] = useState('real');
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [closeLoading, setCloseLoading] = useState(false);
   const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping);
+  const [formValue, setFormValue] = useState({});
 
   const handleDataTypeChange = e => {
     setDataType(e.target.value);
@@ -89,35 +70,12 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     return currentInstanceId;
   };
 
-  const confirmUploadFiles = () => {
-    if (filesMapping) {
-      confirm({
-        title: '是否忽略已上传文件?',
-        icon: <ExclamationCircleOutlined />,
-        content:
-          '你已经有上传的文件，是否选择忽略已经上传的文件，，如果选择「忽略已上传文件」，则已经上传的文件不会再次上传，如果选择全量覆盖，若上传同名文件，会覆盖之前上传的文件',
-        onOk() {
-          // 忽略已上传文件
-          handleUploadFiles(false);
-        },
-        onCancel() {
-          // 全量覆盖
-          handleUploadFiles(true);
-        },
-        okText: '忽略已上传文件',
-        cancelText: '全量覆盖',
-      });
-    } else {
-      // 上传
-      handleUploadFiles(true);
-    }
-  };
-
   const handleUploadFiles = async (isCover = false) => {
     setUploadLoading(true);
     const currentInstanceId = await initGraphScopeInstance();
     const values = await form.validateFields();
 
+    setFormValue(values);
     // 如果 isCover = false， 则需要先过滤掉 nodeConfigList, edgeConfigList 中已经存在于 localstorage 中的文件
     const { nodeConfigList, edgeConfigList = [] } = values;
 
@@ -170,7 +128,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     if (failedFile) {
       // 有文件上传失败，提示用户，停止后面的逻辑
       message.error('文件上传失败');
-      return;
+      return false;
     }
 
     // 构建 fileName: filePath 的对象
@@ -189,6 +147,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     localStorage.setItem('graphScopeFilesMapping', JSON.stringify(allUploadFiles));
     message.success('文件上传成功，可以点击进入分析开始载图并分析');
+    return true;
   };
 
   const updateSchemaData = async () => {
@@ -281,6 +240,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     }
 
     const values = await form.validateFields();
+    const { isStringType = true } = values;
+    console.log('xxx', formValue, values);
 
     const {
       nodeConfigList,
@@ -288,8 +249,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       directed = true,
       delimiter = ',',
       hasHeaderRow = true,
-      isStringType,
-    } = values;
+    } = formValue as any;
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
@@ -320,28 +280,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     // 载图成功后，更新 Project 中的 SchemeData
     updateSchemaData();
     close();
-  };
-
-  const clearGraphScopeStorage = () => {
-    localStorage.removeItem('graphScopeGraphName');
-    localStorage.removeItem('graphScopeGremlinServer');
-    localStorage.removeItem('graphScopeInstanceId');
-    localStorage.removeItem('graphScopeFilesMapping');
-  };
-
-  const handleCloseGraph = async () => {
-    if (graphScopeInstanceId) {
-      setCloseLoading(true);
-      // 清空localstorage 中的实例、图名称和Gremlin服务地址
-      const result = await closeGraphInstance(graphScopeInstanceId);
-      setCloseLoading(false);
-      clearGraphScopeStorage();
-      if (result && result.success) {
-        // 提示
-        message.success('关闭 GraphScope 实例成功');
-        close();
-      }
-    }
   };
 
   const formInitValue = {
@@ -410,172 +348,30 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
           </div>
         )}
         {dataType === 'real' && (
-          <div style={{ marginTop: 16 }}>
-            <Item label="模式" name="type" style={{ marginBottom: 8 }}>
-              <Radio.Group defaultValue="LOCAL">
-                <Radio value="LOCAL">本地文件</Radio>
-                <Radio value="OSS" disabled>
-                  OSS
-                </Radio>
-                <Radio value="ODPS" disabled>
-                  ODPS
-                </Radio>
-              </Radio.Group>
-            </Item>
-            <Row>
-              <Col span={11} style={{ marginRight: 24 }}>
-                <h4>点配置列表</h4>
-                <Form.List name="nodeConfigList">
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map((field, index) => (
-                        <Row
-                          key={field.key}
-                          style={{
-                            border: '1px solid #ccc',
-                            padding: 16,
-                            paddingBottom: 0,
-                            marginBottom: 16,
-                          }}
-                        >
-                          <Col span={22} style={{ marginBottom: 16 }}>
-                            <h5>第 {index + 1} 组点配置</h5>
-                          </Col>
-                          {index !== 0 && (
-                            <Col span={2} style={{ textAlign: 'right', fontSize: 16 }}>
-                              <MinusCircleOutlined onClick={() => remove(field.name)} />
-                            </Col>
-                          )}
-                          <Col span={12}>
-                            <Item label="点类型" name={[field.name, 'nodeType']}>
-                              <Input style={{ width: 125 }} />
-                            </Item>
-                          </Col>
-                          <Col span={12}>
-                            <Item label="点数据文件" name={[field.name, 'nodeFileList']}>
-                              <Upload {...fileProps} name="nodes" maxCount={1}>
-                                <Button icon={<UploadOutlined />}>上传点文件</Button>
-                              </Upload>
-                            </Item>
-                          </Col>
-                        </Row>
-                      ))}
-
-                      <Form.Item>
-                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                          增加点配置
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </Form.List>
-              </Col>
-              <Col span={12}>
-                <h4>边配置列表</h4>
-                <Form.List name="edgeConfigList">
-                  {(fields, { add, remove }) => (
-                    <>
-                      {fields.map((field, index) => (
-                        <Row
-                          key={field.key}
-                          style={{
-                            border: '1px solid #ccc',
-                            padding: 16,
-                            paddingBottom: 0,
-                            marginBottom: 16,
-                          }}
-                        >
-                          <Col span={22} style={{ marginBottom: 16 }}>
-                            <h5>第 {index + 1} 组边配置</h5>
-                          </Col>
-                          <Col span={2} style={{ textAlign: 'right', fontSize: 16 }}>
-                            <MinusCircleOutlined onClick={() => remove(field.name)} />
-                          </Col>
-                          <Col span={12}>
-                            <Item label="边文件类型" name={[field.name, 'edgeType']}>
-                              <Input style={{ width: 125 }} />
-                            </Item>
-                          </Col>
-                          <Col span={12}>
-                            <Item label="边数据文件" name={[field.name, 'edgeFileList']}>
-                              <Upload {...fileProps} name="edges" maxCount={1}>
-                                <Button icon={<UploadOutlined />}>上传边文件</Button>
-                              </Upload>
-                            </Item>
-                          </Col>
-                          <Col span={12}>
-                            <Item label="边起点类型" name={[field.name, 'sourceNodeType']}>
-                              <Input style={{ width: 125 }} />
-                            </Item>
-                          </Col>
-                          <Col span={12}>
-                            <Item label="边终点类型" name={[field.name, 'targetNodeType']}>
-                              <Input style={{ width: 125 }} />
-                            </Item>
-                          </Col>
-                        </Row>
-                      ))}
-
-                      <Form.Item>
-                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                          增加边配置
-                        </Button>
-                      </Form.Item>
-                    </>
-                  )}
-                </Form.List>
-              </Col>
-            </Row>
-            <Collapse>
-              <Collapse.Panel header="高级配置" key="advanced-panel">
-                <Item label="ID字段类型" name="isStringType">
-                  <Switch checkedChildren="string" unCheckedChildren="int64" />
-                </Item>
-                <Item label="是否有向图" name="directed">
-                  <Switch />
-                </Item>
-                <Item label="上传是否有标题行" name="hasHeaderRow">
-                  <Switch />
-                </Item>
-                <Item label="文件分隔符" name="delimiter">
-                  <Radio.Group>
-                    <Radio value=",">逗号</Radio>
-                    <Radio value=";">分号</Radio>
-                    <Radio value="|">竖线</Radio>
-                  </Radio.Group>
-                </Item>
-              </Collapse.Panel>
-            </Collapse>
-          </div>
+          <LocalFilePanel
+            handleUploadFile={handleUploadFiles}
+            handleLoadData={handleSubmitForm}
+            close={close}
+            filesMapping={filesMapping}
+            uploadLoading={uploadLoading}
+            loading={loading}
+          />
         )}
-        <Form.Item>
-          <Space style={{ marginTop: 16 }}>
-            <Popconfirm
-              title="关闭 GraphScope 实例，就不能使用 Gremlin 查询，请确认关闭是否关闭？"
-              onConfirm={handleCloseGraph}
-              okText="确认"
-              cancelText="取消"
-            >
-              <Button danger disabled={!graphScopeInstanceId} loading={closeLoading}>
-                关闭 GraphScope 实例
+        {dataType !== 'real' && (
+          <Form.Item>
+            <Space style={{ marginTop: 16 }}>
+              <Button onClick={close}>取消</Button>
+              <Button
+                type="primary"
+                disabled={dataType === 'real' && !filesMapping}
+                onClick={handleSubmitForm}
+                loading={loading}
+              >
+                开始载图
               </Button>
-            </Popconfirm>
-            <Button onClick={close}>取消</Button>
-            {dataType === 'real' && (
-              <Button onClick={confirmUploadFiles} loading={uploadLoading}>
-                上传文件
-              </Button>
-            )}
-            <Button
-              type="primary"
-              disabled={dataType === 'real' && !filesMapping}
-              onClick={handleSubmitForm}
-              loading={loading}
-            >
-              开始载图
-            </Button>
-          </Space>
-        </Form.Item>
+            </Space>
+          </Form.Item>
+        )}
       </Form>
     </div>
   );
