@@ -5,8 +5,10 @@ import {
   EyeOutlined,
   TableOutlined,
   UploadOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined
 } from '@ant-design/icons';
-import { Button, Collapse, Modal, Radio, Space, Table } from 'antd';
+import { Button, Collapse, Modal, Radio, Space, Table, Popconfirm, message } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
@@ -15,6 +17,9 @@ import { updateProjectById } from '../../../../services';
 import { useContext } from '../../hooks/useContext';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../utils';
+import {
+  closeGraphInstance
+} from '../../../../services/graphcompute';
 import DataSchema from './DataSchema';
 import DataService from './DataService';
 import './index.less';
@@ -59,6 +64,8 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       };
     }),
   );
+
+  const [closeLoading, setCloseLoading] = useImmer(false)
 
   const Header = props => {
     const { title, uid, enable } = props;
@@ -209,6 +216,29 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     setIsVisible(false);
   };
 
+  const clearGraphScopeStorage = () => {
+    localStorage.removeItem('graphScopeGraphName');
+    localStorage.removeItem('graphScopeGremlinServer');
+    localStorage.removeItem('graphScopeInstanceId');
+    localStorage.removeItem('graphScopeFilesMapping');
+  };
+
+  const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
+
+  const handleCloseGraph = async () => {
+    if (graphScopeInstanceId) {
+      setCloseLoading(true);
+      // 清空localstorage 中的实例、图名称和Gremlin服务地址
+      const result = await closeGraphInstance(graphScopeInstanceId);
+      setCloseLoading(false);
+      clearGraphScopeStorage();
+      if (result && result.success) {
+        // 提示
+        message.success('关闭 GraphScope 实例成功');
+      }
+    }
+  };
+
   return (
     <>
       <div>
@@ -227,6 +257,33 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
             </Button>
           }
         >
+          {
+            graphScopeInstanceId &&
+            <ActionList
+              key='graphscope_datasource'
+              // @ts-ignore
+              title={<span style={{ color: '#08979c' }}>GraphScope 数据源</span>}
+              extra={
+                <Space>
+                  {
+                    closeLoading
+                    ?
+                    <LoadingOutlined style={{ color: '#08979c' }} />
+                    :
+                    <Popconfirm
+                      title="关闭 GraphScope 实例，就不能使用 Gremlin 查询，请确认关闭是否关闭？"
+                      onConfirm={handleCloseGraph}
+                      okText="确认"
+                      cancelText="取消"
+                    >
+                      <DeleteOutlined style={{ color: '#08979c' }} />
+                    </Popconfirm>
+                  }
+                </Space>
+              }
+            ></ActionList>
+          }
+              
           {inputData.map((d, i) => {
             return (
               <ActionList
