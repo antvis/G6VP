@@ -1,11 +1,11 @@
 const registerMeta = context => {
-  const { GI_MENU_CONTAINER_INDEXS = [] } = context;
+  const { GIAC_MENU_ITEMS = [] } = context;
   return {
     /** 分类信息 */
     GI_CONTAINER: {
       title: '集成组件',
       type: 'string',
-      enum: GI_MENU_CONTAINER_INDEXS,
+      enum: GIAC_MENU_ITEMS,
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {

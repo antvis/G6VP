@@ -75,7 +75,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     Object.values(filterOptions).map(filterCriteria => {
       data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
     });
-    console.log('data', data);
+
     if (highlightMode) {
       highlightSubGraph(graph, data);
       return;
