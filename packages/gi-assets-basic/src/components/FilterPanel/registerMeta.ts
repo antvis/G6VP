@@ -29,7 +29,7 @@ const registerMeta = () => {
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: false,
+      default: true,
     },
     ...metas,
   };

@@ -1,12 +1,12 @@
 import { DIRECTION_OPTIONS, PLACEMENT_OPTIONS } from '../const';
 const registerMeta = context => {
-  const { GI_CONTAINER_INDEXS = [] } = context;
+  const { GIAC_ITEMS = [] } = context;
 
   const schema = {
     GI_CONTAINER: {
       title: '集成组件',
       type: 'array',
-      enum: GI_CONTAINER_INDEXS,
+      enum: GIAC_ITEMS,
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
