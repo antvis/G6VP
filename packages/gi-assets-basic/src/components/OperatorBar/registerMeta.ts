@@ -2,7 +2,14 @@ import { extra } from '@alipay/graphinsight';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 const registerMeta = context => {
-  const { GI_CONTAINER_INDEXS = [] } = context;
+  const { GIAC_CONTENT_ITEMS = [], GIAC_ITEMS = [] } = context;
+  const GIAC_TRANS = GIAC_ITEMS.map(c => {
+    return {
+      ...c,
+      label: c.label + ' (建议集成在工具栏) ',
+    };
+  });
+  console.log;
   return {
     /** 分类信息 */
     GI_CONTAINER: {
@@ -13,7 +20,7 @@ const registerMeta = context => {
       'x-component-props': {
         mode: 'multiple',
       },
-      enum: GI_CONTAINER_INDEXS,
+      enum: [...GIAC_CONTENT_ITEMS, ...GIAC_TRANS],
       default: [],
     },
     ...metas,
