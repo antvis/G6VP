@@ -54,6 +54,8 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   //映射后的数据
   const [initData, setInitData] = useImmer(data);
 
+  const [instanceId, setInstanceId] = useImmer(localStorage.getItem('graphScopeInstanceId'))
+
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
   const [tableData, setTableData] = useImmer(
@@ -223,15 +225,14 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     localStorage.removeItem('graphScopeFilesMapping');
   };
 
-  const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
-
   const handleCloseGraph = async () => {
-    if (graphScopeInstanceId) {
+    if (instanceId) {
       setCloseLoading(true);
       // 清空localstorage 中的实例、图名称和Gremlin服务地址
-      const result = await closeGraphInstance(graphScopeInstanceId);
+      const result = await closeGraphInstance(instanceId);
       setCloseLoading(false);
       clearGraphScopeStorage();
+      setInstanceId(null)
       if (result && result.success) {
         // 提示
         message.success('关闭 GraphScope 实例成功');
@@ -258,7 +259,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
           }
         >
           {
-            graphScopeInstanceId &&
+            instanceId &&
             <ActionList
               key='graphscope_datasource'
               // @ts-ignore
