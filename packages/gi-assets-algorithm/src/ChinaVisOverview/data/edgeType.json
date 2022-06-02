@@ -1,0 +1,53 @@
+{
+  "name": "Edge Type",
+  "children": [{
+    "name": "4",
+    "children": [{
+        "name": "r_cert",
+        "value": 232766
+      }, {
+        "name": "r_subdomain",
+        "value": 450782
+      }, {
+        "name": "r_request_jump",
+        "value": 615
+      }, {
+        "name": "r_dns_a",
+        "value": 2054077
+      }
+    ]
+  }, {
+    "name": "3",
+    "children": [{
+      "name": "r_whois_name",
+      "value": 108042
+    }, {
+      "name": "r_whois_email",
+      "value": 28236
+    }, {
+      "name": "r_whois_phone",
+      "value": 19169
+    }]
+  }, {
+    "name": "2",
+    "children": [{
+      "name": "r_cert_chain",
+      "value": 15490
+    }, {
+      "name": "132344",
+      "value": 28236
+    }]
+  }, {
+    "name": "1",
+    "children": [{
+      "name": "r_asn",
+      "value": 69215
+    }]
+  }, {
+    "name": "0",
+    "children": [{
+      "name": "r_cidr",
+      "value": 176250
+    }]
+  }]
+}
