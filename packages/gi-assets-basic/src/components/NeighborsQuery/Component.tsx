@@ -33,15 +33,23 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
   }
 
   const handleClick = async e => {
+    const selectedItems = graph.findAllByState('node', 'selected');
+    const selectedIds = new Set();
+    selectedItems.forEach(item => {
+      selectedIds.add(item.getID());
+    });
+
     const { key } = e;
     const sep = key.replace('expand-', '');
     const value = contextmenu.item.getModel();
     graph.setItemState(value.id, 'selected', true);
+    selectedIds.add(value.id);
+    const selectedIdArr = Array.from(selectedIds);
 
     updateContext(draft => {
       draft.isLoading = true;
     });
-    const result = await service({ ...value, sep });
+    const result = await service({ ids: selectedIdArr, sep });
     const newData = utils.handleExpand(data, result);
     const expandIds = result.nodes.map(n => n.id);
     const expandStartId = value.id;
@@ -57,6 +65,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       draft.isLoading = false;
     });
   };
+
   useEffect(() => {
     //@ts-ignore
     const handleCallback = () => {
@@ -66,7 +75,10 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       }
 
       expandIds.forEach(id => {
-        graph.setItemState(id, 'query_normal', true);
+        const item = graph.findById(id);
+        if (item) {
+          graph.setItemState(id, 'query_normal', true);
+        }
       });
       graph.setItemState(expandStartId, 'query_start', true);
       isFocus && graph.focusItem(expandStartId);
