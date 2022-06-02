@@ -114,7 +114,7 @@ const AlgorithmAnalysis = ({ serviceId }) => {
           <Switch defaultChecked />
         </Form.Item>
         <Form.Item style={{ textAlign: 'right' }}>
-          <Button type="primary" onClick={handleExecAlgorithm}>
+          <Button type="primary" onClick={handleExecAlgorithm} loading={params.btnLoading}>
             执行算法
           </Button>
         </Form.Item>
