@@ -8,7 +8,7 @@ metas.offset.default = [0, 61];
 metas.placement.default = 'LB';
 
 const registerMeta = context => {
-  const { GI_CONTAINER_INDEXS = [] } = context;
+  const { GIAC_CONTENT_ITEMS = [] } = context;
 
   const schema = {
     GI_CONTAINER: {
@@ -19,7 +19,7 @@ const registerMeta = context => {
       'x-component-props': {
         mode: 'multiple',
       },
-      enum: GI_CONTAINER_INDEXS,
+      enum: GIAC_CONTENT_ITEMS,
       default: [],
     },
     outSideFromCanvas: {

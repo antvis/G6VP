@@ -34,41 +34,33 @@ const getAllkeysBySchema = (schema, shapeType) => {
  * @returns
  */
 const getComponentsByAssets = (assets, data, services, config, schemaData) => {
-  const GI_CONTAINER_INDEXS = Object.values(assets)
-    .filter((item: any) => {
-      const info = ((item && item.info) || {}) as TypeAssetInfo;
-      return (
-        info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
-        info.type === 'GIAC' ||
-        info.type === 'GIAC_CONTENT'
-      );
-    })
-    .map(item => {
-      const { info } = item as any;
-      return {
-        label: info.name,
-        value: info.id,
-      };
-    });
+  const GIAC_ITEMS = []; //属于GIAC的组件
+  const GIAC_MENU_ITEMS = []; //属于GIAC的菜单组件
+  const GIAC_CONTENT_ITEMS = []; //属于GIAC的内容组件
 
-  // 集成到右键菜单容器中的组件
-  const GI_MENU_CONTAINER_INDEXS = Object.values(assets)
-    .filter((item: any) => {
-      const info = ((item && item.info) || {}) as TypeAssetInfo;
-      return (
-        info.type === 'GI_CONTAINER_INDEX' || // 这个是兼容 旧的资产info
-        info.type === 'GIAC_MENU' || // 菜单原子组件只能集成到右键菜单组件中
-        info.type === 'GIAC' ||
-        info.type === 'GIAC_CONTENT'
-      );
-    })
-    .map(item => {
-      const { info } = item as any;
-      return {
+  Object.values(assets).forEach((item: any) => {
+    const info = ((item && item.info) || {}) as TypeAssetInfo;
+    const { type } = info;
+    if (type === 'GIAC') {
+      GIAC_ITEMS.push({
         label: info.name,
         value: info.id,
-      };
-    });
+      });
+    }
+    if (type === 'GIAC_MENU') {
+      GIAC_MENU_ITEMS.push({
+        label: info.name,
+        value: info.id,
+      });
+    }
+    if (type === 'GIAC_CONTENT') {
+      GIAC_CONTENT_ITEMS.push({
+        label: info.name,
+        value: info.id,
+      });
+    }
+  });
+  const GI_CONTAINER_INDEXS = [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS];
 
   const components = Object.keys(assets)
     .map(key => {
@@ -95,7 +87,9 @@ const getComponentsByAssets = (assets, data, services, config, schemaData) => {
         services,
         config,
         GI_CONTAINER_INDEXS,
-        GI_MENU_CONTAINER_INDEXS,
+        GIAC_ITEMS,
+        GIAC_MENU_ITEMS,
+        GIAC_CONTENT_ITEMS,
         schemaData,
       });
       //@ts-ignore

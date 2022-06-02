@@ -5,6 +5,6 @@ const info = {
   icon: 'icon-save',
   cover: 'http://xxxx.jpg',
   category: 'workbook',
-  type: 'GIAC',
+  type: 'GIAC_CONTENT',
 };
 export default info;
