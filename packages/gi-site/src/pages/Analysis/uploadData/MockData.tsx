@@ -194,6 +194,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
 
   const handleMockDataChange = value => {
     console.log('value', value);
+    if (!value) {
+      setInputData([]);
+      return;
+    }
     const renderData = [
       // ...inputData,
       {
@@ -244,7 +248,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             </Col>
           </Row>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
-            <Button type="primary" shape="round" onClick={checkData}>
+            <Button type="primary" shape="round" onClick={checkData} disabled={inputData.length === 0}>
               进入下一步
             </Button>
           </Row>

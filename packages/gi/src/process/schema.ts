@@ -188,7 +188,7 @@ export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GICon
         props: {
           size: 26,
           color: COLORS[index] || '#ddd',
-          label: [],
+          label: [`${c.nodeType}.id`],
         },
         name: '官方节点',
         expressions: [
