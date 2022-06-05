@@ -59,7 +59,6 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const { visible, activeKey } = state;
   const handleChange = val => {
-    console.log('activeKey', val);
     try {
       const { searchParams } = getSearchParams(location);
       const type = searchParams.get('type') || 'case';
