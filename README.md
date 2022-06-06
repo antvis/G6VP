@@ -21,7 +21,7 @@ GraphInsight 是一款在线图可视分析产品，也是一款低代码的图�
 
 > 点击下方视频链接，查看发布会当天内容
 
-- [GraphInsight，带着初心走向未来 - 御术](https://www.bilibili.com/video/BV1cg41197FL?spm_id_from=333.999.0.0)
+- [GraphInsight 带着初心走向未来 - 御术](https://www.bilibili.com/video/BV1cg41197FL?spm_id_from=333.999.0.0)
 
 - [GraphInsight 新品发布 - 山果](https://www.bilibili.com/video/BV1mg411X7Bh/?spm_id_from=333.788.recommend_more_video.0)
 
