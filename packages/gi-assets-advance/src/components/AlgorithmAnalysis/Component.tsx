@@ -113,6 +113,9 @@ const AlgorithmAnalysis = ({ serviceId }) => {
         <Form.Item name="sortById" label="是否根据ID排序">
           <Switch defaultChecked />
         </Form.Item>
+        <Form.Item name="colomnName" label="追加字段名称">
+          <Input />
+        </Form.Item>
         <Form.Item style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={handleExecAlgorithm} loading={params.btnLoading}>
             执行算法
