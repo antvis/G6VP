@@ -372,14 +372,27 @@ interface GraphAlgorithmProps {
   tolerance?: number;
   // k-core 算法 k 必选
   k?: number;
+  // 算法结果写到该字段中
+  colomnName?: string;
 }
 
 // 调用图算法
 export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
+  const { colomnName, ...others } = params
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/execAlgorithm`, {
     method: 'POST',
-    data: params
+    data: others
   })
+
+  // 图算法执行成功后，需要将结果写到指定字段中
+  if (result && result.success) {
+    const { contextName } = result
+    await addColumns({
+      contextName,
+      needGremlin: true,
+      colomnName
+    })
+  }
   return result
 }
 
@@ -391,6 +404,43 @@ export const queryGraphSchema = async () => {
     method: 'GET',
     params: {
       graphName: localStorage.getItem('graphScopeGraphName')
+    }
+  })
+
+  return result
+}
+
+/**
+ * 将图 pattern 转换为 Gremlin 查询语句
+ * @param pattern JSON 描述的 Pattern
+ */
+export const jsonToGremlin = async (pattern) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/jsonToGremlin`, {
+    method: 'POST',
+    data: {
+      value: JSON.stringify(pattern)
+    }
+  })
+
+  return result
+}
+
+interface AddColumnsProps {
+  contextName: string;
+  colomnName: string;
+  needGremlin?: boolean;
+}
+
+/**
+ * 将算法执行结果写到数据中
+ * @param params 
+ */
+export const addColumns = async (params: AddColumnsProps) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/addColumns`, {
+    method: 'POST',
+    data: {
+      ...params,
+      graphName: localStorage.getItem('graphScopeGraphName'),
     }
   })
 
