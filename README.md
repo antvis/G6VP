@@ -19,15 +19,15 @@ GraphInsight 是一款在线图可视分析产品，也是一款低代码的图�
 
 ## GraphInsight 新品发布
 
-> 更多介绍视频请查阅：
+> 点击下方视频链接，查看发布会当天内容
 
-- [【GraphInsight，带着初心走向未来 - 御术】](https://www.bilibili.com/video/BV1cg41197FL?spm_id_from=333.999.0.0)
+- [GraphInsight，带着初心走向未来 - 御术](https://www.bilibili.com/video/BV1cg41197FL?spm_id_from=333.999.0.0)
+
+- [GraphInsight 新品发布 - 山果](https://www.bilibili.com/video/BV1mg411X7Bh/?spm_id_from=333.788.recommend_more_video.0)
 
 - [Graphlnsight 在供应链漏洞分析场景的应用实践 - 刘宏达](https://www.bilibili.com/video/BV1TF411V7wM?spm_id_from=333.999.0.0)
 
 - [GraphInsight 背后高效的图计算引擎 GraphScope - 徐静波](https://www.bilibili.com/video/BV1L94y1U7rU?spm_id_from=333.999.0.0)
-
-<iframe src="//player.bilibili.com/player.html?aid=512252491&bvid=BV1mg411X7Bh&cid=739605975&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 # 【藏不住了】一线大厂内部图可视分析的需求清单
 
