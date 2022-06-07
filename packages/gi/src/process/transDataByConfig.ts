@@ -32,7 +32,7 @@ export const transDataByConfig = (
           name: '官方节点',
           order: -1,
           expressions: [],
-          logic: true,
+          logic: false,
           groupName: `GLOBAL TYPE`,
         }
       : {
@@ -41,7 +41,7 @@ export const transDataByConfig = (
           name: '官方边',
           order: -1,
           expressions: [],
-          logic: true,
+          logic: false,
           groupName: `GLOBAL TYPE`,
         };
 

@@ -9,6 +9,7 @@ import './index.less';
 import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
 import { findAllPath, getPathByWeight } from './utils';
+import { findShortestPath } from '@antv/algorithm'
 
 const { Panel } = Collapse;
 
@@ -65,7 +66,25 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     form.validateFields().then(values => {
       cancelHighlight();
       const { source, target, direction = true } = values;
-      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, direction);
+      // const { allNodePath, allEdgePath } =findAllPath(graphData, source, target, direction);
+      const { path, allPath: allNodePath = [] } = findShortestPath(graphData, source, target, direction);
+      const allEdgePath: string[][] = [];
+      allNodePath.forEach(nodePath => {
+        const edgePath: string[] = [];
+        nodePath.forEach((node, i) => {
+          if (!i) return;
+          const sourceId = nodePath[i - 1];
+          const targetId = node;
+          const edge = graphData.edges.find(e => {
+            if (direction) return e.target === targetId && e.source === sourceId;
+            return (e.target === targetId && e.source === sourceId) || (e.target === sourceId && e.source === targetId)
+          });
+          if (edge) edgePath.push(edge.id);
+        });
+        allEdgePath.push(edgePath);
+
+      });
+      // console.log('old', allNodePath, allEdgePath);
       const highlightPath = new Set(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;

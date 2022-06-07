@@ -13,6 +13,20 @@ const defaultEdgeStyles = Utils.getEdgeStyleByTheme(defaultEdgeTheme);
 const { style } = defaultEdgeStyles;
 const { keyshape, label } = style;
 
+// TODO: ChinaVis 临时代码
+const edgeLabelMap = {
+  'r_request_jump': 'jump',
+  'r_subdomain': 'sub',
+  'r_cert': 'cert',
+  'r_dns_a': 'dns',
+  'r_cert_chain': 'chain',
+  'r_whois_name': 'wname',
+  'r_whois_phone': 'wphone',
+  'r_whois_email': 'wemail',
+  'r_cname': 'cname',
+  'r_asn': 'asn'
+}
+
 export const defaultConfig = {
   size: defaultEdgeTheme.edgeSize,
   color: defaultEdgeTheme.primaryEdgeColor,
@@ -57,7 +71,8 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
     const { keyshape: keyshape_CFG } = advanced;
 
     const transEdges = edges.map(edge => {
-      const data = edge.data || edge;
+      debugger
+      const data = edge.data && Object.keys(edge.data)?.length ? edge.data : edge;
       const isLoop = edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
       const isPoly = edge.isMultiple;
       const { customPoly } = keyshape_CFG;
@@ -95,7 +110,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
             // propName 存在，则 propObjKey 值一定为 properties
             return data[propObjKey][propName];
           }
-          return data[propObjKey];
+          return edgeLabelMap[data[propObjKey]] || data[propObjKey];
         }
         return data[edgeType];
       })
@@ -129,7 +144,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
           keyshape: {
             ...shape,
             // ...edge.style?.keyshape,
-            lineWidth: size_CFG,
+            lineWidth: Math.min(edge.data.count, 10) || size_CFG,
             stroke: color_CFG,
             opacity: keyshape_CFG.opacity,
             lineDash: keyshape_CFG.lineDash,
@@ -147,7 +162,20 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         preStyle,
       );
 
-      return {
+      if (edge.edgeType === 'r_request_jump' || edge.edgeType === 'r_subdomain') {
+        console.log('finalStyle', finalStyle);
+      }
+
+      return edge.source === edge.target ? {
+        ...edge,
+        data,
+        edgeType: edge.edgeType || 'UNKOWN',
+        style: {
+          ...finalStyle.keyshape
+        },
+        type: 'loop',
+        label: finalStyle.label.value
+      } : {
         ...edge,
         data,
         type: 'graphin-line',

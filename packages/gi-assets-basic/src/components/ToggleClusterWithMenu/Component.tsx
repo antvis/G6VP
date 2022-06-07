@@ -19,7 +19,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { contextmenu, isReLayout, degree } = props;
   const { graph, updateContext, source, data } = useContext();
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
-  if (!targetNode) {
+  if (!targetNode || targetNode.destroyed) {
     return null;
   }
   const model = targetNode.getModel();
