@@ -1,5 +1,5 @@
 import { useContext } from "@alipay/graphinsight";
-import { Column, Pie, Sunburst, Histogram, Scatter } from "@antv/g2plot";
+import { Column, Pie, Sunburst, BidirectionalBar, Scatter } from "@antv/g2plot";
 import csvjson from 'csvjson';
 import { Row, Col, Form, Select, Input, message } from "antd";
 import React, { useEffect, useState, useRef } from "react";
@@ -33,6 +33,17 @@ const sthDomainPathMap = {
   'IP': 'https://gw.alipayobjects.com/os/bmw-prod/5dc92ab3-fdb1-49fe-871b-7c42ec38ad13.csv'
 }
 const domainDegreePath = "https://gw.alipayobjects.com/os/bmw-prod/f12f576a-d91d-4362-b78e-dee67ae5988f.csv"
+const domainPrPath = {
+  '100': 'https://gw.alipayobjects.com/os/bmw-prod/ce5e31f6-4f01-4653-874e-074224e32359.csv',
+  '500': 'https://gw.alipayobjects.com/os/bmw-prod/178a6251-1581-4789-870a-bbf088df2bb0.csv',
+  '1000': 'https://gw.alipayobjects.com/os/bmw-prod/5995679e-ae2c-4f49-9c18-a2737ab48e07.csv'
+}
+const domianImportancePathMap = {
+  pageRank: domainPrPath['100'],
+  degreeCentrality: '',
+  closenessCentrality: '',
+  betweenessCentrality: '',
+}
 
 export interface OverviewProps {
   style?: React.CSSProperties;
@@ -81,7 +92,7 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
         type: {
           formatter: v => {
             const zh = industryMap[v];
-            return zh ? `${v} ${industryMap[v]}` : v
+            return zh ? `${v} ${zh}` : v
           }
         }
       },
@@ -100,6 +111,14 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
           offsetY: -8,
           style: {	
             width: '400px'	
+          },
+          customHtml: (container, view, datum, filteredData) => {	
+            // @ts-ignore
+            const sum = filteredData.reduce((s, d) => s + d.value, 0);	
+            if (!datum) return `总计`	
+            return `<div>	
+            <div>${industryMap[datum.type] ? datum.type + ' ' + industryMap[datum.type] : datum.type}</div>	
+            </div>`	
           }
         },
         content: {
@@ -150,11 +169,19 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
         // label layout: limit label in shape, which means the labels out of shape will be hide
         layout: [{ type: 'limit-in-shape' }],
       },
+      meta: {
+        [Sunburst.SUNBURST_ANCESTOR_FIELD]: {
+          // 可以对 series 维度值排序
+          values: ["4", "3", "2", "1", "0"]
+        },
+      },
       legend: {
+        title: '强度值',
         itemName: { 
           formatter: txt =>{ console.log('text', txt);  return `强度 ${txt}`}
         }
-      }
+      },
+      color: ['#f5222d', '#fa8c16', '#ffd666', '#bae637', '#ccc'],
     });
     edgeTypeSunburst.render();
   }
@@ -227,8 +254,6 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
       });
 
       sthDomainStackedColumnPlot.render();
-
-      sthDomainStackedColumnPlot.render();
       sthDomainStackedColumnPlot.on('element:click', (...args) => {
         const { data } = args?.[0] as any;
         if (data?.shape === 'rect' && data?.data?.id) {
@@ -255,39 +280,40 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
           chartData.push({
             id: item.id,
             name: `${item.id}|SPLITOR|${item.name}`,
-            type: "inDegree",
-            value: +item.inDegree
+            inDegree: +item.inDegree,
+            outDegree: +item.outDegree
+            // type: "inDegree",
+            // value: +item.inDegree
           });
-          chartData.push({
-            id: item.id,
-            name: `${item.id}|SPLITOR|${item.name}`,
-            type: "outDegree",
-            value: +item.outDegree
-          });
+          // chartData.push({
+          //   id: item.id,
+          //   name: `${item.id}|SPLITOR|${item.name}`,
+          //   type: "outDegree",
+          //   value: +item.outDegree
+          // });
         }
         if (degreeStackedColumnPlot && !degreeStackedColumnPlot.destroyed) {
           degreeStackedColumnPlot.changeData(chartData);
           return;
         }
         // @ts-ignore
-        degreeStackedColumnPlot = new Column(degreeStackedRef.current, {
+        degreeStackedColumnPlot = new BidirectionalBar(degreeStackedRef.current, {
           data: chartData,
-          isStack: true,
+          layout: 'vertical',
           xField: "name",
-          yField: "value",
-          seriesField: "type",
+          yField: ['inDegree', 'outDegree'],
           label: false,
           appendPadding: [0, 0, 0, 8],
-          interactions: [{ type: "active-region", enable: false }],
-          connectedArea: {
-            style: (oldStyle, element) => {
-              return {
-                fill: "rgba(0,0,0,0.25)",
-                stroke: oldStyle.fill,
-                lineWidth: 0.5
-              };
-            }
-          },
+          // interactions: [{ type: "active-region", enable: false }],
+          // connectedArea: {
+          //   style: (oldStyle, element) => {
+          //     return {
+          //       fill: "rgba(0,0,0,0.25)",
+          //       stroke: oldStyle.fill,
+          //       lineWidth: 0.5
+          //     };
+          //   }
+          // },
           meta: {
             name: {
               formatter: (text) =>
@@ -298,12 +324,138 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
 
         degreeStackedColumnPlot.render();
         degreeStackedColumnPlot.on('element:click', (...args) => {
+          console.log('click', args);
           const { data } = args?.[0] as any;
           if (data?.shape === 'rect' && data?.data?.id) {
             clickCopy(data?.data?.id);
           }
         });
       });
+  }
+
+  const renderOneFieldImportanceColumn = () => {
+    const field = importanceFields[0];
+    // TODO: 暂时只有 pageRank
+    const path = domainPrPath['100'] // domianImportancePathMap[field];
+    fetch(path)
+    .then((csv) => csv.text())
+    .then((csv) => {
+      const data = csvjson.toObject(csv, {
+        delimiter: ",",
+        quote: '"',
+        arrayDenote: ""
+      });
+      data.forEach(item => {
+        item.value = (+item.value);
+        item.name = `${item.id}|SPLITOR|${item.name}`;
+      })
+      // @ts-ignore
+      importancePlot = new Column(importancePlotRef.current, {
+        data,
+        xField: "name",
+        yField: "value",
+        appendPadding: 4,
+        label: false,
+        interactions: [
+          { type: "element-active", enable: false }
+        ],
+        meta: {
+          name: {
+            formatter: (text) =>
+              text.split("|SPLITOR|")[1] || text.split("|SPLITOR|")[0]
+          },
+        },
+        scrollbar: {
+          categorySize: 5
+        }
+      });
+      importancePlot.render();
+      importancePlot.on('element:click', (...args) => {
+        const { data } = args?.[0] as any;
+        if (data?.shape === 'rect' && data?.data?.id) {
+          clickCopy(data?.data?.id);
+        }
+      });
+    });
+  
+  }
+  const renderTwoFiledsImportanceScatter = () => {
+    const field = importanceFields;
+    const prPath = domainPrPath['1000'] // domianImportancePathMap[field];
+    fetch(prPath)
+    .then((prCsv) => prCsv.text())
+    .then((prCsv) => {
+      const prData = csvjson.toObject(prCsv, {
+        delimiter: ",",
+        quote: '"',
+        arrayDenote: ""
+      });
+      // TODO: 替换真实数据，需要取两个文件的 top N 交集，形成下面格式的 JSON
+      fetch('https://gw.alipayobjects.com/os/bmw-prod/f12f576a-d91d-4362-b78e-dee67ae5988f.csv')
+      .then((degreeCsv) => degreeCsv.text())
+      .then((degreeCsv) => {
+        const degreeData = csvjson.toObject(degreeCsv, {
+          delimiter: ",",
+          quote: '"',
+          arrayDenote: ""
+        });
+        const degreeMap = {};
+        degreeData.forEach(degree => {
+          degreeMap[degree.id] = degree;
+        })
+        const scatterData: any[] = [];
+        prData.forEach(pr => {
+          scatterData.push({
+            id: pr.id,
+            name: pr.name,
+            pagerank: (+pr.value) || 0,
+            degree: ((+degreeMap[pr.id]?.degree) || 0) + Math.random()
+          })
+        });
+        console.log('scatterData', scatterData.length, scatterData[0], degreeData.length, prData.length);
+        // @ts-ignore
+        importancePlot = new Scatter(importancePlotRef.current, {
+          appendPadding: 10,
+          data: scatterData,
+          xField: 'degree',
+          yField: 'pagerank',
+          shape: 'circle',
+          // colorField: 'Genre',
+          size: 4,
+          yAxis: {
+            nice: true,
+            line: {
+              style: {
+                stroke: '#aaa',
+              },
+            },
+          },
+          xAxis: {
+            min: 0,
+            grid: {
+              line: {
+                style: {
+                  stroke: '#eee',
+                },
+              },
+            },
+            line: {
+              style: {
+                stroke: '#aaa',
+              },
+            },
+          },
+        });
+        importancePlot.render();
+        importancePlot.on('element:click', (...args) => {
+          console.log('click', args);
+          const { data } = args?.[0] as any;
+          if (data?.shape === 'circle' && data?.data?.id) {
+            clickCopy(data?.data?.id);
+          }
+        });
+      });
+    });
   }
 
   const onImportanceFieldsSelect = d => {
@@ -376,68 +528,17 @@ const NodesClustering: React.FunctionComponent<OverviewProps> = (
   }, [degreeProp]);
 
   useEffect(() => {
+    console.log('importanceFields', importanceFields, domainPrPath['100']);
     if (importancePlot) importancePlot.destroy();
     if (!importanceFields?.length) {
       return;
     }
     if (importanceFields.length === 1) {
       // 一个指标，绘制直方图
-
-      // TODO：替换真实数据
-      fetch('https://gw.alipayobjects.com/os/antfincdn/RoliHq%2453S/histogram.json')
-      .then((data) => data.json())
-      .then((data) => {
-        // @ts-ignore
-        importancePlot = new Histogram(importancePlotRef.current, {
-          data,
-          binField: 'value',
-          binWidth: 1,
-        });
-        importancePlot.render();
-      });
-    
+      renderOneFieldImportanceColumn();
     } else {
       // 两个指标，绘制散点图
-
-      // TODO: 替换真实数据
-      fetch('https://gw.alipayobjects.com/os/antfincdn/aao6XnO5pW/IMDB.json')
-      .then((res) => res.json())
-      .then((data) => {
-        // @ts-ignore
-        importancePlot = new Scatter(importancePlotRef.current, {
-          appendPadding: 10,
-          data,
-          xField: 'Revenue (Millions)',
-          yField: 'Rating',
-          shape: 'circle',
-          colorField: 'Genre',
-          size: 4,
-          yAxis: {
-            nice: true,
-            line: {
-              style: {
-                stroke: '#aaa',
-              },
-            },
-          },
-          xAxis: {
-            min: -100,
-            grid: {
-              line: {
-                style: {
-                  stroke: '#eee',
-                },
-              },
-            },
-            line: {
-              style: {
-                stroke: '#aaa',
-              },
-            },
-          },
-        });
-        importancePlot.render();
-      });
+      renderTwoFiledsImportanceScatter();
 
     }
 

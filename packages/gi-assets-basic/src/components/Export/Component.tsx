@@ -20,14 +20,22 @@ const Export: React.FunctionComponent<ClearCanvasProps> = props => {
       nodes: any[];
       edges: any[];
     };
+    const selectedNodes = graph.findAllByState('node', 'selected').map(node => node.getModel());
+    const selectedEdges = graph.findAllByState('edge', 'selected').map(edge => edge.getModel());
+
     const data = {
-      nodes: nodes.map(node => {
-        return node.data;
-      }),
-      edges: edges.map(edge => {
-        return edge.data;
-      }),
-    };
+      nodes: selectedNodes.map(node => node.data),
+      edges: selectedEdges.map(edge => edge.data)
+    }
+
+    // const data = {
+    //   nodes: nodes.map(node => {
+    //     return node.data;
+    //   }),
+    //   edges: edges.map(edge => {
+    //     return edge.data;
+    //   }),
+    // };
 
     const element = document.createElement('a');
     const file = new Blob([JSON.stringify(data)], { type: 'text/json' });
