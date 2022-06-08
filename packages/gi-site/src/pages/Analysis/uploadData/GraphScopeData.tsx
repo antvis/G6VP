@@ -264,8 +264,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
   const { id } = context;
 
-  const graphScopeInstanceId = localStorage.getItem('graphScopeInstanceId');
-  const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
   const graphScopeFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping'));
 
   const [dataType, setDataType] = useState('real');
@@ -282,26 +280,22 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
    * 实例化GraphScope引擎实例
    */
   const initGraphScopeInstance = async () => {
-    let currentInstanceId = graphScopeInstanceId;
-    // 不存在 GraphScope 实例，则进行创建
-    if (!graphScopeInstanceId) {
-      // step1: 初始化 GraphScope 引擎
-      const gsResult = await createGraphScopeInstance();
+    if (!id) {
+      message.error(`不存在 ID 为 ${id} 的项目`);
+      return null;
+    }
+    // step1: 初始化 GraphScope 引擎
+    const gsResult = await createGraphScopeInstance(id);
 
-      if (!gsResult || !gsResult.success) {
-        message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
-        return null;
-      }
-
-      const { data } = gsResult;
-      const { instanceId } = data;
-      // 将 instanceId 存储到 localstorage 中
-      localStorage.setItem('graphScopeInstanceId', instanceId);
-
-      currentInstanceId = instanceId;
+    if (!gsResult || !gsResult.success) {
+      message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
+      return null;
     }
 
-    return currentInstanceId;
+    const { data } = gsResult;
+    const { instanceId } = data;
+
+    return instanceId;
   };
 
   const handleUploadFiles = async (isCover = false) => {
@@ -402,12 +396,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
   const handleSubmitForm = async () => {
     setLoading(true);
-    const currentInstanceId = await initGraphScopeInstance();
-
     // 使用示例数据
     if (dataType === 'demo') {
       const loadResult = await loadDefaultGraphToGraphScope({
-        instanceId: currentInstanceId,
+        projectId: id,
         nodeFilePath: DefaultGraphScopeNodeFilePath,
         nodeType: 'v0',
         edgeType: 'e0',
@@ -443,7 +435,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     if (dataType === 'chinavis') {
       // loadChinaVisGraphToGraphScope
       const loadResult = await loadChinaVisGraphToGraphScope({
-        instanceId: currentInstanceId,
+        projectId: id,
         dataSource: LoadChinaVisDataSource,
       });
 
@@ -487,7 +479,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
-      instanceId: currentInstanceId,
+      projectId: id,
       nodeConfigList,
       edgeConfigList,
       fileMapping: filesMapping,

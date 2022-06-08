@@ -8,7 +8,7 @@ const { Option } = Select;
 
 const AlgorithmAnalysis = ({ serviceId }) => {
   const [form] = Form.useForm();
-  const { updateContext, transform, services } = useContext();
+  const { services } = useContext();
 
   const service = utils.getService(services, serviceId);
 
@@ -33,14 +33,19 @@ const AlgorithmAnalysis = ({ serviceId }) => {
       return;
     }
 
+    const { graphName, gremlinClientURL } = result;
+    // 更新 localstorage 中 graphScopeGraphName 和 graphScopeGremlinServer 地址
+    localStorage.setItem('graphScopeGremlinServer', gremlinClientURL);
+    localStorage.setItem('graphScopeGraphName', graphName);
+
     if (result.data.length > 50) {
       // 数量过多，结果下载成 csv 文件
-      const json2csvParser = new Parser({ delimiter: "," });
-    	const csvStr = json2csvParser.parse(result.data);
-    	const a = document.createElement('a');
-    	a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${csvStr}`);
-    	a.download = `${algorithmType}.csv`;
-    	a.click();
+      const json2csvParser = new Parser({ delimiter: ',' });
+      const csvStr = json2csvParser.parse(result.data);
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${csvStr}`);
+      a.download = `${algorithmType}.csv`;
+      a.click();
     } else {
       setParams({
         visible: true,

@@ -1,17 +1,61 @@
 import request from 'umi-request';
+import { message } from 'antd'
 import { SERVICE_URL_PREFIX } from './const';
+import { getProjectById, updateProjectById } from './index';
 
 /**
  * 初始化 GraphScope 引擎
  * session_txlyagpj
  */
-export const createGraphScopeInstance = async () => {
+export const createGraphScopeInstance = async (projectId: string) => {
+  const currentProject = await getProjectById(projectId);
+  if (!currentProject) {
+    message.error(`查找ID为 ${projectId} 的项目失败`);
+    return null
+  }
+
+  const { expandInfo } = currentProject;
+  if (expandInfo && expandInfo.instanceId) {
+    const { instanceId } = expandInfo;
+    return {
+      success: true,
+      data: {
+        instanceId
+      }
+    }
+  }
+
   const gsResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/createGSInstance`, {
     method: 'POST',
+    data: {
+      projectId
+    },
     headers: {
       'Content-Type': 'application/json',
     },
   });
+
+  if (!gsResult || !gsResult.success) {
+    message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
+    return null;
+  }
+
+  const { data } = gsResult;
+  const { instanceId: newInstanceId } = data;
+
+  // 创建 GS 实例后，更新 expandInfo 字段
+  let newExpandInfo = {
+    ...expandInfo,
+    instanceId: newInstanceId
+  }
+  
+  const updateResult = await updateProjectById(projectId, {
+    expandInfo: JSON.stringify(newExpandInfo)
+  });
+  if (!updateResult) {
+    message.error(`更新ID为 ${projectId} 的项目失败`);
+    return null;
+  }
 
   return gsResult;
 };
@@ -58,7 +102,7 @@ export const uploadLocalFileToGraphScope = async (params: UploadFileParams): Pro
 };
 
 interface LoadGraphParams {
-  instanceId: string;
+  projectId: string;
   nodeFilePath: any;
   edgeFilePath?: any;
   directed?: boolean;
@@ -71,7 +115,7 @@ interface LoadGraphParams {
 }
 
 interface LoadGraphDataParams {
-  instanceId: string;
+  projectId: string;
   nodeConfigList: any;
   edgeConfigList: any;
   fileMapping: any;
@@ -86,7 +130,16 @@ interface LoadGraphDataParams {
  * @param params
  */
 export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
-  const { instanceId, nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+  const { projectId, nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+  
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
+
   // 构造载图时的 nodes 对象
   const nodeSources = nodeConfigList.filter(d => {
     // nodeType 必须存在
@@ -155,6 +208,32 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
   }
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+  
+  const currentProject = await getProjectById(projectId);
+  if (!currentProject) {
+    message.error(`查找ID为 ${projectId} 的项目失败`);
+    return null
+  }
+
+  const { expandInfo = {} } = currentProject;
+
+  // 载图成功后更新 expandInfo 字段信息
+  let newExpandInfo = {
+    ...expandInfo,
+    graphNameMapping: {
+      ...expandInfo.graphNameMapping,
+      [graphName]: graphURL
+    },
+    activeGraphName: graphName,
+  }
+  
+  const updateResult = await updateProjectById(projectId, {
+    expandInfo: JSON.stringify(newExpandInfo)
+  });
+  if (!updateResult) {
+    message.error(`更新ID为 ${projectId} 的项目失败`)
+    return null
+  }
 
   return {
     success: true,
@@ -173,7 +252,7 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
  */
 export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
   const {
-    instanceId,
+    projectId,
     nodeFilePath,
     edgeFilePath,
     directed = true,
@@ -184,6 +263,14 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
     delimiter = ',',
     hasHeaderRow = true,
   } = params;
+
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
 
   const loadFileParams = {
     type: 'LOCAL',
@@ -227,6 +314,33 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
+  const currentProject = await getProjectById(projectId);
+  if (!currentProject) {
+    message.error(`查找ID为 ${projectId} 的项目失败`);
+    return null
+  }
+
+  const { expandInfo = {} } = currentProject;
+  
+
+  // 载图成功后更新 expandInfo 字段信息
+  let newExpandInfo = {
+    ...expandInfo,
+    graphNameMapping: {
+      ...expandInfo.graphNameMapping,
+      [graphName]: graphURL
+    },
+    activeGraphName: graphName,
+  }
+  
+  const updateResult = await updateProjectById(projectId, {
+    expandInfo: JSON.stringify(newExpandInfo)
+  });
+  if (!updateResult) {
+    message.error(`更新ID为 ${projectId} 的项目失败`)
+    return null
+  }
+
   return {
     success: true,
     data: {
@@ -239,7 +353,7 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
 };
 
 interface ChinaVisParams {
-  instanceId: string;
+  projectId: string;
   dataSource: any;
 }
 /**
@@ -247,7 +361,15 @@ interface ChinaVisParams {
  * @param params 
  */
 export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
-  const { instanceId, dataSource } = params
+  const { projectId, dataSource } = params
+
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
   const loadFileParams = {
     type: 'LOCAL',
     directed: true,
@@ -271,6 +393,32 @@ export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
   }
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+
+  const currentProject = await getProjectById(projectId);
+  if (!currentProject) {
+    message.error(`查找ID为 ${projectId} 的项目失败`);
+    return null
+  }
+
+  const { expandInfo } = currentProject;
+
+  // 载图成功后更新 expandInfo 字段信息
+  let newExpandInfo = {
+    ...expandInfo,
+    graphNameMapping: {
+      ...expandInfo.graphNameMapping,
+      [graphName]: graphURL
+    },
+    activeGraphName: graphName,
+  }
+  
+  const updateResult = await updateProjectById(projectId, {
+    expandInfo: JSON.stringify(newExpandInfo)
+  });
+  if (!updateResult) {
+    message.error(`更新ID为 ${projectId} 的项目失败`)
+    return null
+  }
 
   return {
     success: true,
@@ -348,13 +496,35 @@ export const queryElementProperties = async (id) => {
 /**
  * 关闭启动的 GraphScope 引擎
  */
-export const closeGraphInstance = async (instanceId: string) => {
+export const closeGraphInstance = async (projectId: string) => {
+  // 关闭实例之前，先查询相关信息
+  const currentProject = await getProjectById(projectId);
+  if (!currentProject) {
+    message.error(`查找ID为 ${projectId} 的项目失败`);
+    return null
+  }
+
+  const { expandInfo = {} } = currentProject;
+  const { instanceId } = expandInfo;
+  if (!instanceId) {
+    message.error(`GraphScope 实例 ${instanceId} 不存在`);
+    return null
+  }
+
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeGSInstance`, {
     method: 'GET',
     params: {
       instanceId,
     },
   });
+
+  const updateResult = await updateProjectById(projectId, {
+    expandInfo: null
+  });
+  if (!updateResult) {
+    message.error(`更新ID为 ${projectId} 的项目失败`);
+    return null
+  }
 
   return result;
 };
@@ -378,21 +548,11 @@ interface GraphAlgorithmProps {
 
 // 调用图算法
 export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
-  const { colomnName, ...others } = params
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/execAlgorithm`, {
     method: 'POST',
-    data: others
+    data: params
   })
 
-  // 图算法执行成功后，需要将结果写到指定字段中
-  if (result && result.success) {
-    const { contextName } = result
-    await addColumns({
-      contextName,
-      needGremlin: true,
-      colomnName
-    })
-  }
   return result
 }
 
