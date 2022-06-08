@@ -57,7 +57,8 @@ const mockServices = () => {
           },
           body: JSON.stringify({
             ...params,
-            graphName: localStorage.getItem('graphScopeGraphName'),
+            projectId: localStorage.getItem('GI_PROJECT_ID') || '4600001',
+            // graphName: localStorage.getItem('graphScopeGraphName'),
           }),
         }).then(response => response.json());
       },

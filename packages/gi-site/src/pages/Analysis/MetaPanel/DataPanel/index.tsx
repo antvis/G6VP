@@ -45,13 +45,13 @@ const ServiceHeader = props => {
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const { updateContext, context } = useContext();
-  const { data, inputData = [], id, serviceConfig, config } = context;
+  const { data, inputData = [], id, serviceConfig, engineInfo = {} } = context;
 
   const [isVisible, setIsVisible] = useImmer(false);
   //映射后的数据
   const [initData, setInitData] = useImmer(data);
 
-  const [instanceId, setInstanceId] = useImmer(localStorage.getItem('graphScopeInstanceId'));
+  const [instanceId, setInstanceId] = useImmer(engineInfo.instanceId)
 
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
@@ -218,7 +218,6 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   const clearGraphScopeStorage = () => {
     localStorage.removeItem('graphScopeGraphName');
     localStorage.removeItem('graphScopeGremlinServer');
-    localStorage.removeItem('graphScopeInstanceId');
     localStorage.removeItem('graphScopeFilesMapping');
   };
 
@@ -226,7 +225,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     if (instanceId) {
       setCloseLoading(true);
       // 清空localstorage 中的实例、图名称和Gremlin服务地址
-      const result = await closeGraphInstance(instanceId);
+      const result = await closeGraphInstance(id);
       setCloseLoading(false);
       clearGraphScopeStorage();
       setInstanceId(null);

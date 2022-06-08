@@ -28,6 +28,8 @@ export const getProjectById = async (id: string) => {
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
     }
+    const expandInfo = JSON.parse(project.expandInfo)
+
     return {
       schemaData: project.schemaData,
       config: project.projectConfig,
@@ -35,6 +37,7 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys: project.activeAssetsKeys,
       name: project.name,
       serviceConfig: project.serviceConfig,
+      expandInfo
     };
   }
 
@@ -43,6 +46,7 @@ export const getProjectById = async (id: string) => {
 
     const data = JSON.parse(project.data);
     const serviceConfig = JSON.parse(project.serviceConfig);
+    const expandInfo = JSON.parse(project.expandInfo)
     let activeAssetsKeys;
     if (project.activeAssetsKeys) {
       activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
@@ -72,6 +76,7 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys,
       name: project.name,
       serviceConfig,
+      expandInfo,
       schemaData: currentSchema,
     };
   };
@@ -98,7 +103,7 @@ export const getProjectById = async (id: string) => {
 export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   if (IS_LOCAL_ENV) {
     const origin: any = await localforage.getItem(id);
-    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData } = params;
+    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData, expandInfo } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
     // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
     if (data) {
@@ -119,6 +124,10 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
     }
     if (name) {
       origin.name = name;
+    }
+
+    if (expandInfo) {
+      origin.expandInfo = JSON.parse(expandInfo)
     }
     return await localforage.setItem(id, origin);
   }
