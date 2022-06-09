@@ -301,6 +301,33 @@ const GISDK = (props: Props) => {
   };
   const isReady = state.isContextReady && state.initialized;
 
+  const graphData = useMemo(() => {
+    const nodeMap = {};
+    const edges: any[] = [];
+    const nodes: any[] = [];
+    data.nodes?.forEach(node => {
+      if (!nodeMap[node.id]) {
+        nodeMap[node.id] = node;
+        nodes.push(node);
+      }
+    });
+    const edgeMap: any[] = [];
+    data.edges.forEach(edge => {
+      if (nodeMap[edge.source] && nodeMap[edge.target] && !edgeMap[edge.id]) {
+        edges?.push(edge);
+        edgeMap[edge.id] = edge;
+      }
+    })
+    console.log('usememo', {
+      nodes,
+      edges,
+    })
+    return {
+      nodes,
+      edges,
+    }
+  }, [data])
+
   return (
     <GraphInsightContext.Provider value={ContextValue}>
       <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', ...props.style }}>
@@ -308,7 +335,7 @@ const GISDK = (props: Props) => {
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
           containerStyle={{ transform: 'scale(1)' }}
-          data={data}
+          data={graphData}
           layout={layout}
           enabledStack={true}
           theme={theme}

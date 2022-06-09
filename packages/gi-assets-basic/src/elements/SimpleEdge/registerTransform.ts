@@ -162,10 +162,6 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         preStyle,
       );
 
-      if (edge.edgeType === 'r_request_jump' || edge.edgeType === 'r_subdomain') {
-        console.log('finalStyle', finalStyle);
-      }
-
       return edge.source === edge.target ? {
         ...edge,
         data,
