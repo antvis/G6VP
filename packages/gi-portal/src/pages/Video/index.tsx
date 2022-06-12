@@ -1,4 +1,5 @@
 import * as React from 'react';
+import $i18n from '../../i18n';
 
 interface VideoShowProps {}
 
@@ -14,7 +15,9 @@ const VideoShow: React.FunctionComponent<VideoShowProps> = props => {
         minHeight: 'calc(100vh - 160px)',
       }}
     >
-      <h2 style={{ textAlign: 'center' }}>「芒种日，图新物」发布会视频</h2>
+      <h2 style={{ textAlign: 'center' }}>
+        {$i18n.get({ id: 'gi-portal.pages.Video.MangoDayPictureNewConference', dm: '「芒种日，图新物」发布会视频' })}
+      </h2>
       <div style={{ display: 'flex', flex: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
         <Card>
           <iframe
