@@ -9,9 +9,9 @@ interface DataSourceProps {
 
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
   const { data } = props;
-  const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
+
   const [state, updateState] = useImmer({
-    visible: !GI_UPLOADED_DATA,
+    visible: data.nodes.length === 0,
   });
   const { visible } = state;
   const uploadData = () => {

@@ -3,7 +3,7 @@ const activeComponentsKeys = GI_PROJECT_CONFIG.components.map(c => {
   return c.id;
 });
 
-const id = 'network-security';
+const id = 'demo-supply-chain';
 const project = {
   id,
   name: '网络安全:供应链漏洞分析',
