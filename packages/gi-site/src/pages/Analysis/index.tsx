@@ -123,8 +123,11 @@ const Analysis = props => {
             if (cfgComponents) {
               matchItem = original(cfgComponents);
             }
+            // console.log('matchItem', matchItem);
             return {
-              ...matchItem,
+              // ...matchItem,
+              id: matchItem.id,
+              name: matchItem.name,
               props: {
                 /** 将config.components 中的值与 assets.components 中的值进行合并 */
                 ...defaultValues,
