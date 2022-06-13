@@ -6,11 +6,11 @@ import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../components/utils';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
+import Case from './Case';
 import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
-
 setDefaultDemo();
 
 interface WorkspaceProps {}
@@ -94,6 +94,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
               background: '#fff',
               height: '100%',
               padding: '24px 0px',
+              paddingRight: '24px',
               overflow: 'auto',
             }}
             activeKey={activeKey}
@@ -102,7 +103,8 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
             {LIST_OPTIONS.map(c => {
               return (
                 <TabPane tab={c.name} key={c.id}>
-                  {(c.id === 'case' || c.id === 'project') && <ProjectList type={c.id} onCreate={handleOpen} />}
+                  {c.id === 'case' && <Case />}
+                  {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
                 </TabPane>
               );
