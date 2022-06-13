@@ -40,9 +40,13 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOC
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'project';
+
+  const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
+  const defaultActiveKey = GI_UPLOADED_DATA ? type : 'case';
+
   const [state, updateState] = useImmer({
     visible: false,
-    activeKey: type,
+    activeKey: defaultActiveKey,
   });
 
   const handleClose = () => {
