@@ -3,25 +3,22 @@ import {
   EditOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
+  LoadingOutlined,
   TableOutlined,
-  UploadOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined
 } from '@ant-design/icons';
-import { Button, Collapse, Modal, Radio, Space, Table, Popconfirm, message } from 'antd';
+import { Collapse, message, Modal, Popconfirm, Radio, Space, Table } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
 import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
+import { closeGraphInstance } from '../../../../services/graphcompute';
 import { useContext } from '../../hooks/useContext';
 import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../utils';
-import {
-  closeGraphInstance
-} from '../../../../services/graphcompute';
 import DataSchema from './DataSchema';
 import DataService from './DataService';
+import DataSource from './DataSource';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -54,7 +51,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   //映射后的数据
   const [initData, setInitData] = useImmer(data);
 
-  const [instanceId, setInstanceId] = useImmer(localStorage.getItem('graphScopeInstanceId'))
+  const [instanceId, setInstanceId] = useImmer(localStorage.getItem('graphScopeInstanceId'));
 
   const [tableType, setTableType] = useImmer('nodes');
   const [columns, setColumns] = useImmer(nodeColumns);
@@ -67,7 +64,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     }),
   );
 
-  const [closeLoading, setCloseLoading] = useImmer(false)
+  const [closeLoading, setCloseLoading] = useImmer(false);
 
   const Header = props => {
     const { title, uid, enable } = props;
@@ -232,7 +229,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       const result = await closeGraphInstance(instanceId);
       setCloseLoading(false);
       clearGraphScopeStorage();
-      setInstanceId(null)
+      setInstanceId(null);
       if (result && result.success) {
         // 提示
         message.success('关闭 GraphScope 实例成功');
@@ -244,33 +241,17 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     <>
       <div>
         <div className="gi-config-panel-title">数据</div>
-        <CollapseCard
-          title="图数据源"
-          extra={
-            <Button
-              type="dashed"
-              style={{ width: '100%' }}
-              size="small"
-              onClick={uploadData}
-              className="gi-intro-upload-data"
-            >
-              <UploadOutlined /> 导入
-            </Button>
-          }
-        >
-          {
-            instanceId &&
+        <CollapseCard title="图数据源" extra={<DataSource data={data} />}>
+          {instanceId && (
             <ActionList
-              key='graphscope_datasource'
+              key="graphscope_datasource"
               // @ts-ignore
               title={<span style={{ color: '#08979c' }}>GraphScope 数据源</span>}
               extra={
                 <Space>
-                  {
-                    closeLoading
-                    ?
+                  {closeLoading ? (
                     <LoadingOutlined style={{ color: '#08979c' }} />
-                    :
+                  ) : (
                     <Popconfirm
                       title="关闭 GraphScope 实例，就不能使用 Gremlin 查询，请确认关闭是否关闭？"
                       onConfirm={handleCloseGraph}
@@ -279,12 +260,12 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
                     >
                       <DeleteOutlined style={{ color: '#08979c' }} />
                     </Popconfirm>
-                  }
+                  )}
                 </Space>
               }
             ></ActionList>
-          }
-              
+          )}
+
           {inputData.map((d, i) => {
             return (
               <ActionList

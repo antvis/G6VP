@@ -17,19 +17,9 @@ import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import UploadPanel from './uploadData/index';
 import type { StateType } from './useModal';
 import { initialState } from './useModal';
 import { isObjectEmpty } from './utils';
-
-// // 配置不同的驱动优先级，目前采用默认的方式，因为在浏览器VM环境下仍然有地方调用
-// localforage.config({
-//   driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
-//   name: 'GI-WebServer',
-//   version: 2.0,
-//   description: 'GraphInsight Local Server',
-//   storeName: 'project',
-// });
 
 setDefaultAssetPackages();
 
@@ -45,8 +35,6 @@ const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, sch
   };
 };
 
-let startTime = Date.now();
-let endTime = Date.now();
 const Analysis = props => {
   const { match } = props;
   const { projectId } = match.params;
@@ -66,7 +54,6 @@ const Analysis = props => {
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
-    isUploadModalVisible,
   } = state;
 
   const handleChangeNavbar = opt => {
@@ -86,7 +73,7 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = (await getProjectById(projectId)) as any;
       const { transData, inputData } = data;
 
       updateState(draft => {
@@ -130,6 +117,7 @@ const Analysis = props => {
 
           const configComponents = activeAssetsInformation.components.map(c => {
             const defaultValues = c.props;
+            //@ts-ignore
             const cfgComponents = draft.config.components.find(d => d.id === c.id);
             let matchItem = c;
             if (cfgComponents) {
@@ -231,12 +219,6 @@ const Analysis = props => {
 
   const isLoading = isObjectEmpty(config) || !isReady;
 
-  const handleClose = () => {
-    updateState(draft => {
-      draft.isUploadModalVisible = false;
-    });
-  };
-
   if (isLoading) {
     return (
       <div className="gi">
@@ -245,7 +227,7 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState };
-  endTime = Date.now();
+
   console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
 
   return (
@@ -286,9 +268,6 @@ const Analysis = props => {
             </div>
           </div>
         </div>
-        {/* {isUploadModalVisible && ( */}
-        <UploadPanel visible={isUploadModalVisible} handleClose={handleClose} initData={data}></UploadPanel>
-        {/* )} */}
       </div>
     </AnalysisContext.Provider>
   );
