@@ -1,16 +1,15 @@
-import { generatorSchemaByGraphData } from '../../Analysis/utils';
-import { GI_LOCAL_DATA, GI_PROJECT_CONFIG, GI_SERVICES_OPTIONS } from './GI_CONFIG';
+import { GI_LOCAL_DATA, GI_PROJECT_CONFIG, GI_SCHEMA_DATA, GI_SERVICES_OPTIONS } from './GI_CONFIG';
 const activeComponentsKeys = GI_PROJECT_CONFIG.components.map(c => {
   return c.id;
 });
-const schemaData = generatorSchemaByGraphData(GI_LOCAL_DATA);
+
 const project = {
   id: 'demo-bank',
   name: '银行案例',
   type: 'case',
   projectConfig: GI_PROJECT_CONFIG,
   serviceConfig: GI_SERVICES_OPTIONS,
-  schemaData,
+  schemaData: GI_SCHEMA_DATA,
   data: {
     inputData: [
       {
