@@ -15,7 +15,6 @@ export interface ToolbarProps {
 const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
   const { direction = 'horizontal', components, assets, placement, offset } = props;
   const positionStyles = getPositionStyles(placement, offset);
-  console.log('components', components);
 
   const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
   return (
