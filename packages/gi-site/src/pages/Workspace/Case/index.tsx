@@ -30,20 +30,27 @@ const Case: React.FunctionComponent<CaseProps> = props => {
   const [state, updateState] = useImmer({
     lists: [],
     visible: false,
+    isLoad: true,
   });
+  const { isLoad } = state;
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     (async () => {
       const lists = await getProjectList('case');
       const filterLists = lists.filter(d => {
         return CONSTS_MAP[d.id];
       });
-      console.log('filterLists', filterLists);
+      if (filterLists.length === 0) {
+        updateState(draft => {
+          draft.isLoad = false;
+        });
+        return;
+      }
       updateState(draft => {
         draft.lists = filterLists;
       });
     })();
-  }, []);
+  }, [isLoad]);
 
   console.log(state.lists);
   if (state.lists.length === 0) {
@@ -56,7 +63,6 @@ const Case: React.FunctionComponent<CaseProps> = props => {
         {state.lists.map(c => {
           const { id, name } = c;
           const { img, title, tag, time, author, video } = CONSTS_MAP[id];
-          console.log('img', img);
           return (
             <Col key={id} span={12}>
               <Card
