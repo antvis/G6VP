@@ -51,7 +51,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   };
 
   const onValuesChange = useCallback((changedValue: any, allValues: any) => {
-    console.log('onValuesChange', changedValue, allValues);
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }

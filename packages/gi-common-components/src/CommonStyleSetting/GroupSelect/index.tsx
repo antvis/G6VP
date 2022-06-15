@@ -19,7 +19,6 @@ const iconMap = {
 };
 
 const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData, onChange }) => {
-  console.log('group select', schemaData);
   return (
     <div className="group-select-container">
       <Select defaultValue={Array.from(value) as any} style={{ width: 200 }} onChange={onChange} mode={mode}>
@@ -32,14 +31,6 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData,
               value: p,
               type: properties[p],
             });
-          }
-          // TODO: ChinaVis 临时代码
-          if (d.edgeType) {
-            current.push({
-              key: `${d.edgeType}.edgeType`,
-              value: 'edgeType',
-              type: d.edgeType,
-            })
           }
           return (
             <OptGroup label={d.nodeType || d.edgeType}>

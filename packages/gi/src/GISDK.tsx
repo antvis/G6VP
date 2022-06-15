@@ -318,10 +318,6 @@ const GISDK = (props: Props) => {
         edgeMap[edge.id] = edge;
       }
     })
-    console.log('usememo', {
-      nodes,
-      edges,
-    })
     return {
       nodes,
       edges,

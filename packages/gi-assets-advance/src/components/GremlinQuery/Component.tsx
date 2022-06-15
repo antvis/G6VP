@@ -144,7 +144,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
   };
 
   useEffect(() => {
-    console.log('visible', visible);
     setBtnLoading(false);
   }, [visible])
 

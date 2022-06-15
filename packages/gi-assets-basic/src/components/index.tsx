@@ -10,7 +10,7 @@ import FitCenter from './FitCenter';
 import FitView from './FitView';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
-// import MiniMap from './MiniMap';
+import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
 import NodeLegend from './NodeLegend';
 import OperatorBar from './OperatorBar';
