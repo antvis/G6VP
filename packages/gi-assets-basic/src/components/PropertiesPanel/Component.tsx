@@ -97,11 +97,6 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
     };
   }, [graph, setState, service]);
 
-  React.useEffect(() => {
-    generateChart();
-  }, [detail])
-
-
   const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
   const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   return (

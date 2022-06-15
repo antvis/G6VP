@@ -66,8 +66,8 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     form.validateFields().then(values => {
       cancelHighlight();
       const { source, target, direction = true } = values;
-      const { allNodePath, allEdgePath } =findAllPath(graphData, source, target, direction);
-      const highlightPath: any = new Set(allNodePath.map((_, index) => index));
+      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, direction);
+      const highlightPath = new Set(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;
