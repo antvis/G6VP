@@ -20,6 +20,7 @@ const Export: React.FunctionComponent<ClearCanvasProps> = props => {
       nodes: any[];
       edges: any[];
     };
+
     const data = {
       nodes: nodes.map(node => {
         return node.data;

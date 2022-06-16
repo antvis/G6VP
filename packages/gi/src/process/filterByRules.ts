@@ -80,11 +80,15 @@ export const formatProperties = (node: {
   id: string;
   data?: Record<string, string | number>;
 }): Record<string, string | number> => {
-  if (node.data) {
+  if (node.data && Object.keys(node.data)?.length) {
     // 如果有 data 属性，则取 data 属性和 nodeType
-    return {
+    const { nodeType, edgeType } = node as any;
+    return nodeType ? {
       ...node.data,
-      nodeType: (node as any).nodeType,
+      nodeType,
+    } : {
+      ...node.data,
+      edgeType,
     };
   }
   //@ts-ignore

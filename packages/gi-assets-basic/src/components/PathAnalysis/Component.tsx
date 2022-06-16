@@ -9,6 +9,7 @@ import './index.less';
 import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
 import { findAllPath, getPathByWeight } from './utils';
+import { findShortestPath } from '@antv/algorithm'
 
 const { Panel } = Collapse;
 

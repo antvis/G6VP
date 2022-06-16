@@ -70,7 +70,7 @@ export const time = time => {
  * @returns
  */
 export const handleExpand = (data, responseData) => {
-  const { nodes, edges } = responseData;
+  const { nodes = [], edges = [] } = responseData || {};
   return {
     nodes: uniqueElementsBy([...data.nodes, ...nodes], (a, b) => {
       return a.id === b.id;

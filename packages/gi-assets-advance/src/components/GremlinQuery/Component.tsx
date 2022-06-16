@@ -3,7 +3,7 @@ import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
 import { Button, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import request from 'umi-request';
 import GremlinEditor from './GremlinEditor';
 import './index.less';
@@ -39,9 +39,10 @@ export interface IGremlinQueryProps {
   showGutter?: boolean;
   serviceId: string;
   style?: React.CSSProperties | undefined;
+  visible?: boolean;
 }
 
-const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style }) => {
+const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style, visible }) => {
   const { updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
@@ -141,6 +142,10 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
       };
     });
   };
+
+  useEffect(() => {
+    setBtnLoading(false);
+  }, [visible])
 
   return (
     <div className={'gremlineQueryPanel'} style={style}>
