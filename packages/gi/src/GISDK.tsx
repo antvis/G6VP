@@ -1,7 +1,8 @@
-import Graphin, { GraphinData } from '@antv/graphin';
+import Graphin, { GraphinData, GraphinContext } from '@antv/graphin';
 import { original } from 'immer';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import { useContext } from '.';
 import CanvasClick from './components/ClickCanvas';
 import { GraphInsightContext } from './context';
 import './index.less';
@@ -16,6 +17,8 @@ import { GIComponentConfig } from './typing';
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
   let { services: Services } = props;
+
+  const graphRef = useRef();
 
   //@ts-ignore
   if (assets.services) {
@@ -67,6 +70,25 @@ const GISDK = (props: Props) => {
     layoutInstance: null,
   });
 
+  const stopForceSimulation = e => {
+    const { instance = {} } = state.layoutInstance || {};
+    const { simulation, type } = instance;
+    if (type === 'graphin-force' && simulation) {
+      simulation.stop();
+    }
+  }
+
+  React.useEffect(() => {
+    if (state.graph && !state.graph.destroyed) {
+      state.graph.on('canvas:click', stopForceSimulation);
+    }
+    return () => {
+      if (state.graph && !state.graph.destroyed) {
+        state.graph.off('canvas:click', stopForceSimulation);
+      }
+    }
+  }, [state.layoutInstance, state.graph]);
+
   React.useEffect(() => {
     updateState(draft => {
       draft.config = props.config;
@@ -112,6 +134,7 @@ const GISDK = (props: Props) => {
       draft.layoutCache = true;
     });
   }, [componentsCfg]);
+  
 
   React.useEffect(() => {
     if (!layoutCfg) {
@@ -278,6 +301,29 @@ const GISDK = (props: Props) => {
   };
   const isReady = state.isContextReady && state.initialized;
 
+  const graphData = useMemo(() => {
+    const nodeMap = {};
+    const edges: any[] = [];
+    const nodes: any[] = [];
+    data.nodes?.forEach(node => {
+      if (!nodeMap[node.id]) {
+        nodeMap[node.id] = node;
+        nodes.push(node);
+      }
+    });
+    const edgeMap: any[] = [];
+    data.edges.forEach(edge => {
+      if (nodeMap[edge.source] && nodeMap[edge.target] && !edgeMap[edge.id]) {
+        edges?.push(edge);
+        edgeMap[edge.id] = edge;
+      }
+    })
+    return {
+      nodes,
+      edges,
+    }
+  }, [data])
+
   return (
     <GraphInsightContext.Provider value={ContextValue}>
       <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', ...props.style }}>
@@ -285,11 +331,13 @@ const GISDK = (props: Props) => {
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
           containerStyle={{ transform: 'scale(1)' }}
-          data={data}
+          data={graphData}
           layout={layout}
           enabledStack={true}
           theme={theme}
           layoutCache={state.layoutCache}
+          // @ts-ignore
+          ref={graphRef}
         >
           <>
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}

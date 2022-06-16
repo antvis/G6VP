@@ -57,7 +57,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
     const { keyshape: keyshape_CFG } = advanced;
 
     const transEdges = edges.map(edge => {
-      const data = edge.data || edge;
+      const data = edge.data && Object.keys(edge.data)?.length ? edge.data : edge;
       const isLoop = edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
       const isPoly = edge.isMultiple;
       const { customPoly } = keyshape_CFG;
