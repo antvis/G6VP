@@ -185,7 +185,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                         form={form}
                                       />
                                       <div className="switch-button-wrap">
-                                        <Form.Item name={[name, 'logic']} initialValue={true}>
+                                        <Form.Item name={[name, 'logic']} initialValue={false}>
                                           <Switch
                                             size="small"
                                             className="switch-button"

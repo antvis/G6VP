@@ -29,6 +29,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
     detail: null,
     isLoading: false,
   });
+
   const handleClose = () => {
     setState(preState => {
       if (preState.visible) {
@@ -95,8 +96,6 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       graph.off('edge:click', handleEdgeClick);
     };
   }, [graph, setState, service]);
-
-  const { visible, detail, isLoading } = state;
 
   const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
   const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
