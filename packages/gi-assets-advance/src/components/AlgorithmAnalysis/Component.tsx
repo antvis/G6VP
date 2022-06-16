@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, InputNumber, Input, Select, Button, Switch, message } from 'antd';
 import { useContext, utils } from '@alipay/graphinsight';
 import AlgorithmResultPanel from './AlgorithmResultPanel';
+import { Parser } from 'json2csv';
 
 const { Option } = Select;
 
@@ -32,11 +33,21 @@ const AlgorithmAnalysis = ({ serviceId }) => {
       return;
     }
 
-    setParams({
-      visible: true,
-      btnLoading: false,
-      algorithmData: result.data,
-    });
+    if (result.data.length > 50) {
+      // 数量过多，结果下载成 csv 文件
+      const json2csvParser = new Parser({ delimiter: "," });
+    	const csvStr = json2csvParser.parse(result.data);
+    	const a = document.createElement('a');
+    	a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${csvStr}`);
+    	a.download = `${algorithmType}.csv`;
+    	a.click();
+    } else {
+      setParams({
+        visible: true,
+        btnLoading: false,
+        algorithmData: result.data,
+      });
+    }
   };
 
   const handleFormValueChange = (current, all) => {

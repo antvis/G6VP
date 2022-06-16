@@ -51,7 +51,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     });
     const result = await service({ ids: selectedIdArr, sep });
     const newData = utils.handleExpand(data, result);
-    const expandIds = result.nodes.map(n => n.id);
+    const expandIds = result.nodes?.map(n => n.id) || [];
     const expandStartId = value.id;
     currentRef.current.expandIds = expandIds;
     currentRef.current.expandStartId = expandStartId;
@@ -64,6 +64,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       draft.source = res;
       draft.isLoading = false;
     });
+    return;
   };
 
   useEffect(() => {
@@ -76,10 +77,12 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
 
       expandIds.forEach(id => {
         const item = graph.findById(id);
-        if (item) {
+        if (item && !item.destroyed) {
           graph.setItemState(id, 'query_normal', true);
         }
       });
+      const startItem = graph.findById(expandStartId);
+      if (!startItem || startItem.destroyed) return;
       graph.setItemState(expandStartId, 'query_start', true);
       isFocus && graph.focusItem(expandStartId);
     };

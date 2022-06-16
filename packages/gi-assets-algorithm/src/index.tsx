@@ -9,7 +9,7 @@ const components = {
   NodesSimilarity,
   CommunityDetection,
   NodeImportance,
-  PatternMatch
+  PatternMatch,
 };
 
 export { components };
