@@ -96,6 +96,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       graph.off('edge:click', handleEdgeClick);
     };
   }, [graph, setState, service]);
+  const { isLoading, detail, visible } = state;
 
   const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
   const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
