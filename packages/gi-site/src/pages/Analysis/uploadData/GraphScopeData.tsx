@@ -19,241 +19,8 @@ import {
   DefaultGraphScopeNodeFilePath,
   LoadChinaVisDataSource,
 } from './const';
-import LocalFilePanel from './LocalFilePanel';
+import GSDataMode from './GSDataMode';
 import { useContext } from '../hooks/useContext';
-
-const MOCK_PATTERN_DATA = {
-  p1: {
-    nodes: [
-      {
-        id: 'node0', // id 是随机生成的，用于唯一标识这个 pattern 中的一个节点，以及 edges 中标识起点和终点，匹配计算时不用关注
-        nodeType: 'Person', // 节点类型
-        // 属性条件数组，一项代表一个属性条件，且的关系
-        rules: [
-          // 下面这条属性约束这个节点属性名为 property1 的值需要 > 100
-          {
-            key: 'property1',
-            rule: '>', // 可以是：'>' | '>=' | '<=' | '<' | '=' | '!=' | 'like' | 'unlike',
-            value: 100,
-          },
-          // 下面这条属性约束这个节点属性名为 property2 的值需要 = "xxxxx"
-          {
-            key: 'property2',
-            rule: '=',
-            value: 'xxxxx',
-          },
-        ],
-      },
-      {
-        id: 'node1',
-        nodeType: 'Company',
-        rules: [
-          {
-            key: 'property3',
-            rule: '=',
-            value: 'yyyy',
-          },
-          {
-            key: 'property4',
-            rule: 'like',
-            value: 'xxxx',
-          },
-        ],
-      },
-      {
-        id: 'node2',
-        nodeType: 'Person',
-        rules: [],
-      },
-    ],
-    edges: [
-      {
-        id: 'edge0', // id 是随机生成的，用于唯一标识这个 pattern 中的一条边，匹配计算时不用关注
-        source: 'node0', // 起点 id
-        target: 'node1', // 终点 id
-        edgeType: 'Manager', // 边类型
-        sourceNodeType: 'Person', // 节点类型
-        targeteEdgeType: 'Company', // 边类型
-        rules: [], // 同节点中的 rules
-      },
-      {
-        id: 'edge1',
-        source: 'node2',
-        target: 'node1',
-        edgeType: 'Employer',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Company',
-        rules: [],
-      },
-    ],
-  },
-  p2: {
-    nodes: [
-      {
-        id: 'node0', // id 是随机生成的，用于唯一标识这个 pattern 中的一个节点，以及 edges 中标识起点和终点，匹配计算时不用关注
-        nodeType: 'Person', // 节点类型
-        // 属性条件数组，一项代表一个属性条件，且的关系
-        rules: [
-          // 下面这条属性约束这个节点属性名为 property1 的值需要 > 100
-          {
-            key: 'property1',
-            rule: '>', // 可以是：'>' | '>=' | '<=' | '<' | '=' | '!=' | 'like' | 'unlike',
-            value: 100,
-          },
-          // 下面这条属性约束这个节点属性名为 property2 的值需要 = "xxxxx"
-          {
-            key: 'property2',
-            rule: '=',
-            value: 'xxxxx',
-          },
-        ],
-      },
-      {
-        id: 'node1',
-        nodeType: 'Company',
-        rules: [
-          {
-            key: 'property3',
-            rule: '=',
-            value: 'yyyy',
-          },
-          {
-            key: 'property4',
-            rule: 'like',
-            value: 'xxxx',
-          },
-        ],
-      },
-      {
-        id: 'node2',
-        nodeType: 'Person',
-        rules: [],
-      },
-      {
-        id: 'node3',
-        nodeType: 'Shop',
-        rules: [],
-      },
-      {
-        id: 'node4',
-        nodeType: 'Shop',
-        rules: [],
-      },
-    ],
-    edges: [
-      {
-        id: 'edge0', // id 是随机生成的，用于唯一标识这个 pattern 中的一条边，匹配计算时不用关注
-        source: 'node0', // 起点 id
-        target: 'node1', // 终点 id
-        edgeType: 'Manager', // 边类型
-        sourceNodeType: 'Person', // 节点类型
-        targeteEdgeType: 'Company', // 边类型
-        rules: [], // 同节点中的 rules
-      },
-      {
-        id: 'edge1',
-        source: 'node0',
-        target: 'node2',
-        edgeType: 'Knows',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Person',
-        rules: [],
-      },
-      {
-        id: 'edge2',
-        source: 'node0',
-        target: 'node3',
-        edgeType: 'Owns',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Shop',
-        rules: [],
-      },
-      {
-        id: 'edge3',
-        source: 'node2',
-        target: 'node4',
-        edgeType: 'Owns',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Shop',
-        rules: [],
-      },
-    ],
-  },
-  p3: {
-    nodes: [
-      {
-        id: 'node0', // id 是随机生成的，用于唯一标识这个 pattern 中的一个节点，以及 edges 中标识起点和终点，匹配计算时不用关注
-        nodeType: 'Person', // 节点类型
-        // 属性条件数组，一项代表一个属性条件，且的关系
-        rules: [
-          // 下面这条属性约束这个节点属性名为 property1 的值需要 > 100
-          {
-            key: 'property1',
-            rule: '>', // 可以是：'>' | '>=' | '<=' | '<' | '=' | '!=' | 'like' | 'unlike',
-            value: 100,
-          },
-          // 下面这条属性约束这个节点属性名为 property2 的值需要 = "xxxxx"
-          {
-            key: 'property2',
-            rule: '=',
-            value: 'xxxxx',
-          },
-        ],
-      },
-      {
-        id: 'node1',
-        nodeType: 'Company',
-        rules: [
-          {
-            key: 'property3',
-            rule: '=',
-            value: 'yyyy',
-          },
-          {
-            key: 'property4',
-            rule: 'like',
-            value: 'xxxx',
-          },
-        ],
-      },
-      {
-        id: 'node2',
-        nodeType: 'Person',
-        rules: [],
-      },
-    ],
-    edges: [
-      {
-        id: 'edge0', // id 是随机生成的，用于唯一标识这个 pattern 中的一条边，匹配计算时不用关注
-        source: 'node0', // 起点 id
-        target: 'node1', // 终点 id
-        edgeType: 'Manager', // 边类型
-        sourceNodeType: 'Person', // 节点类型
-        targeteEdgeType: 'Company', // 边类型
-        rules: [], // 同节点中的 rules
-      },
-      {
-        id: 'edge1',
-        source: 'node2',
-        target: 'node1',
-        edgeType: 'Employer',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Company',
-        rules: [],
-      },
-      {
-        id: 'edge2',
-        source: 'node0',
-        target: 'node2',
-        edgeType: 'Knows',
-        sourceNodeType: 'Person',
-        targeteEdgeType: 'Person',
-        rules: [],
-      },
-    ],
-    combos: [],
-  },
-};
 
 interface GraphModelProps {
   close: () => void;
@@ -520,22 +287,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     ],
   };
 
-  // TODO：临时测试，后面需要删掉
-  const [pattern, setPattern] = useState({
-    type: 'p1',
-    context: MOCK_PATTERN_DATA['p1'],
-  });
-  const handleChangePattern = value => {
-    setPattern({
-      type: value,
-      context: MOCK_PATTERN_DATA[value],
-    });
-  };
-
-  const handleToGremlin = async () => {
-    const result = await jsonToGremlin(pattern.context);
-    console.log(result);
-  };
   return (
     <div>
       <Form name="gsform" form={form} initialValues={formInitValue}>
@@ -558,13 +309,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
             <p>点文件名称：p2p-31_property_v_0</p>
             <p>边文件：p2p-31_property_e_0</p>
             <p>测试数据共包括 62586 节点，147892 条边</p>
-            <Select defaultValue={pattern.type} onChange={handleChangePattern} style={{ width: 150 }}>
-              <Select.Option value="p1">Pattern1</Select.Option>
-              <Select.Option value="p2">Pattern2</Select.Option>
-              <Select.Option value="p3">Pattern3</Select.Option>
-            </Select>
-            <p>Pattern 描述如下：</p>
-            <pre>{JSON.stringify(pattern.context, null, 2)}</pre>
           </div>
         )}
         {dataType === 'chinavis' && (
@@ -594,13 +338,14 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
           </div>
         )}
         {dataType === 'real' && (
-          <LocalFilePanel
+          <GSDataMode
             handleUploadFile={handleUploadFiles}
             handleLoadData={handleSubmitForm}
             close={close}
             filesMapping={filesMapping}
             uploadLoading={uploadLoading}
             loading={loading}
+            form={form}
           />
         )}
         {dataType !== 'real' && (
@@ -615,7 +360,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
               >
                 开始载图
               </Button>
-              <Button onClick={handleToGremlin}>测试Gremlin转换</Button>
             </Space>
           </Form.Item>
         )}
