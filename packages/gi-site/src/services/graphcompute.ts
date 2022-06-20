@@ -606,3 +606,38 @@ export const addColumns = async (params: AddColumnsProps) => {
 
   return result
 }
+
+interface CrateCupIdInstanceProps {
+  accessId: string;
+  accessKey: string;
+  project: string;
+  endpoint: string;
+}
+
+/**
+ * 创建 cupid 实例
+ * @param params 
+ */
+export const createCupidInstance = async (params: CrateCupIdInstanceProps) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/createCupidInstance`, {
+    method: 'POST',
+    data: params
+  })
+
+  return result
+}
+
+/**
+ * 关闭 cupid 实例
+ * @param params 
+ */
+export const closeCupidInstance = async (cupId: string) => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeCupidInstance`, {
+    method: 'GET',
+    params: {
+      cupid: cupId
+    }
+  })
+
+  return result
+}

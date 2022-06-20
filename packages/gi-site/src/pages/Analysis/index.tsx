@@ -73,8 +73,17 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = (await getProjectById(projectId)) as any;
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData, expandInfo } = await getProjectById(projectId);
       const { transData, inputData } = data;
+
+      if (expandInfo) {
+        const { activeGraphName, graphNameMapping } = expandInfo
+        if (activeGraphName) {
+          // 将当前使用的 graphName 及 gremlClientURL 写入到 localstorage 中
+          localStorage.setItem('graphScopeGraphName', activeGraphName)
+          localStorage.setItem('graphScopeGremlinServer', graphNameMapping[activeGraphName])
+        }
+      }
 
       updateState(draft => {
         draft.id = projectId; //项目ID
@@ -86,6 +95,7 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.serviceConfig = serviceConfig; //服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
+        draft.engineInfo = expandInfo
       });
       return;
     })();
@@ -137,7 +147,8 @@ const Analysis = props => {
           });
 
           const { id: layoutId, props: layoutProps } = draft.config.layout;
-          const defaultLayout = activeAssetsInformation.layouts[layoutId];
+          // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
+          const defaultLayout = activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['GraphinForce'];
           const layoutConfig = {
             id: layoutId,
             props: {
