@@ -70,7 +70,7 @@ export const handleUnPinNode = (target, graph, layoutInstance) => {
   graph.updateItem(model.id, {
     layout: {
       ...model.layout,
-      force: { mass: 1 },
+      force: { mass: null },
     },
     pinned: false,
     style: {
