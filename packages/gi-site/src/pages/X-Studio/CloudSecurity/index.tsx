@@ -1,17 +1,16 @@
-import { generatorSchemaByGraphData } from '../../Analysis/utils';
-import { GI_LOCAL_DATA, GI_PROJECT_CONFIG, GI_SERVICES_OPTIONS } from './GI_CONFIG';
+import { GI_LOCAL_DATA, GI_PROJECT_CONFIG, GI_SCHEMA_DATA, GI_SERVICES_OPTIONS } from './GI_CONFIG';
 const activeComponentsKeys = GI_PROJECT_CONFIG.components.map(c => {
   return c.id;
 });
-const schemaData = generatorSchemaByGraphData(GI_LOCAL_DATA);
-const id = 'cloud-security';
+
+const id = 'demo-supply-chain';
 const project = {
   id,
-  name: '云安全:主机溯源',
+  name: '网络安全:供应链漏洞分析',
   type: 'case',
   projectConfig: GI_PROJECT_CONFIG,
   serviceConfig: GI_SERVICES_OPTIONS,
-  schemaData,
+  schemaData: GI_SCHEMA_DATA,
   data: {
     inputData: [
       {

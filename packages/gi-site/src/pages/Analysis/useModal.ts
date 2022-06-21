@@ -20,8 +20,6 @@ export const initialState: StateType = {
   activeNavbar: '',
   /** 当前 Sidebar 是否可折叠 */
   collapse: false,
-  /** 当前 数据导入面板 是否可显示 */
-  isUploadModalVisible: false,
 
   data: {
     nodes: [],
@@ -104,8 +102,6 @@ export interface StateType {
   activeNavbar: string;
   /** 当前 Sidebar 是否可折叠 */
   collapse: boolean;
-  /** 当前 数据导入面板 是否可显示 */
-  isUploadModalVisible: boolean;
 
   /** 是否开启智能推荐 */
   enableAI: boolean;

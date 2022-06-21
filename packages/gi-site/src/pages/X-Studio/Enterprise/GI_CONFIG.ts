@@ -8,8 +8,21 @@ export const GI_SERVICES_OPTIONS = [
     mode: 'MOCK',
     name: '初始化接口',
   },
+  {
+    id: 'Mock/PropertiesPanel',
+    mode: 'MOCK',
+    name: 'Mock/PropertiesPanel',
+    content:
+      'export default function service(params, localData) {\n      var data = params.data;\n      return new Promise(function (resolve) {\n        return resolve(data);\n      });\n    }',
+  },
+  {
+    id: 'GraphScope/PropertiesPanel',
+    mode: 'MOCK',
+    name: 'GraphScope/PropertiesPanel',
+    content:
+      "export default function service(params) {\n      var id = params.id;\n      return fetch(\"http://dev.alipay.net:7001/graphcompute/properties\", {\n        method: 'post',\n        headers: {\n          'Content-Type': 'application/json;charset=utf-8'\n        },\n        body: JSON.stringify({\n          id: [id],\n          gremlinServer: localStorage.getItem('graphScopeGremlinServer')\n        })\n      }).then(function (response) {\n        return response.json();\n      }).then(function (res) {\n        var success = res.success,\n            data = res.data;\n\n        if (success) {\n          return data[id];\n        }\n\n        return res;\n      });\n    }",
+  },
 ];
-
 export const GI_PROJECT_CONFIG = {
   nodes: [
     {
@@ -28,7 +41,7 @@ export const GI_PROJECT_CONFIG = {
       props: {
         size: 26,
         color: '#3056E3',
-        label: ['id'],
+        label: ['company.id'],
         advanced: {
           icon: {
             type: 'font',
@@ -65,7 +78,7 @@ export const GI_PROJECT_CONFIG = {
       props: {
         size: 26,
         color: '#ff9d05',
-        label: ['id'],
+        label: ['person.id'],
         advanced: {
           icon: {
             type: 'font',
@@ -115,7 +128,7 @@ export const GI_PROJECT_CONFIG = {
       props: {
         size: 1,
         color: '#3056E3',
-        label: ['percent'],
+        label: ['shareHolding.percent', 'shareHolding.edgeType'],
         advanced: {
           keyshape: {
             customPoly: false,
@@ -126,7 +139,7 @@ export const GI_PROJECT_CONFIG = {
             visible: true,
             fontSize: 12,
             offset: [0, 0],
-            fill: 'rgba(0,0,0,1)',
+            fill: '#3056E3',
             backgroundEnable: false,
             backgroundFill: '#ddd',
             backgroundStroke: '#fff',
@@ -151,7 +164,7 @@ export const GI_PROJECT_CONFIG = {
       props: {
         size: 1,
         color: '#ff9d05',
-        label: ['position'],
+        label: ['manager.position'],
         advanced: {
           keyshape: {
             customPoly: false,
@@ -162,9 +175,9 @@ export const GI_PROJECT_CONFIG = {
             visible: true,
             fontSize: 12,
             offset: [0, 0],
-            fill: 'rgba(0,0,0,1)',
-            backgroundEnable: false,
-            backgroundFill: '#ddd',
+            fill: '#ff9d05',
+            backgroundEnable: true,
+            backgroundFill: 'rgba(255,255,255,1)',
             backgroundStroke: '#fff',
           },
           animate: {
@@ -184,97 +197,13 @@ export const GI_PROJECT_CONFIG = {
     },
   ],
   layout: {
-    info: {
-      id: 'Dagre',
-      options: {
-        type: 'dagre',
-      },
-      name: '有向分层布局',
-      category: 'basic',
-      type: 'LAYOUT',
-      desc: '节点按照边的流向排布',
-      icon: 'icon-layout-dagre',
-      cover: 'http://xxxx.jpg',
-    },
-    version: '2.0.6',
-    pkg: '@alipay/gi-assets-basic',
     id: 'Dagre',
-    name: '有向分层布局',
-    category: 'basic',
     props: {
+      type: 'dagre',
       rankdir: 'LR',
       align: 'UL',
       nodesep: 47,
       ranksep: 29,
-      type: 'dagre',
-    },
-    meta: {
-      rankdir: {
-        type: 'select',
-        caption: '布局方向',
-        default: 'TB',
-        options: [
-          {
-            label: '自上而下',
-            value: 'TB',
-          },
-          {
-            label: '自下而上',
-            value: 'BT',
-          },
-          {
-            label: '自左而右',
-            value: 'LR',
-          },
-          {
-            label: '自右而左',
-            value: 'RL',
-          },
-        ],
-      },
-      align: {
-        type: 'select',
-        caption: '对齐方式',
-        default: null,
-        options: [
-          {
-            label: '请选择',
-            value: null,
-          },
-          {
-            label: 'UL',
-            value: 'UL',
-          },
-          {
-            label: 'UR',
-            value: 'UR',
-          },
-          {
-            label: 'DL',
-            value: 'DL',
-          },
-          {
-            label: 'DR',
-            value: 'DR',
-          },
-        ],
-      },
-      nodesep: {
-        type: 'slider',
-        caption: '节点间距',
-        default: 10,
-        min: 1,
-        max: 200,
-        step: 1,
-      },
-      ranksep: {
-        type: 'slider',
-        caption: '层间距',
-        default: 10,
-        min: 1,
-        max: 200,
-        step: 1,
-      },
     },
   },
   components: [
@@ -288,18 +217,6 @@ export const GI_PROJECT_CONFIG = {
       },
     },
     {
-      id: 'SideTabs',
-      props: {
-        GI_CONTAINER: ['PathAnalysis'],
-        outSideFromCanvas: true,
-        tabPosition: 'top',
-        placement: 'LB',
-        offset: [0, 61],
-        height: 'calc(100vh - 120px)',
-        width: '350px',
-      },
-    },
-    {
       id: 'PathAnalysis',
       props: {
         pathNodeLabel: 'id',
@@ -308,22 +225,259 @@ export const GI_PROJECT_CONFIG = {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '路径分析',
           isShowIcon: true,
-          icon: 'icon-star',
+          icon: 'icon-path-analysis',
           isShowTooltip: true,
           tooltipColor: '#3056e3',
-          tooltipPlacement: 'top',
+          tooltipPlacement: 'right',
           hasDivider: false,
           height: '60px',
           isVertical: true,
-          containerType: 'drawer',
-          containerPlacement: 'RT',
-          offset: [10, 60],
+          containerType: 'div',
+          containerPlacement: 'LT',
+          offset: [0, 78],
           containerWidth: '400px',
           containerHeight: 'calc(100vh - 120px)',
           contaienrMask: false,
+          tooltip: '',
+          containerAnimate: false,
+          title: '路径分析',
         },
+      },
+    },
+    {
+      id: 'FitCenter',
+      name: '视图居中',
+      props: {
+        GI_CONTAINER_INDEX: 2,
+        GIAC: {
+          visible: false,
+          disabled: false,
+          isShowTitle: false,
+          title: '视图居中',
+          isShowIcon: true,
+          icon: 'icon-fit-center',
+          isShowTooltip: true,
+          tooltip: '',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+        },
+      },
+    },
+    {
+      id: 'FitView',
+      name: '自适应',
+      props: {
+        GI_CONTAINER_INDEX: 2,
+        GIAC: {
+          visible: false,
+          disabled: false,
+          isShowTitle: false,
+          title: '自适应',
+          isShowIcon: true,
+          icon: 'icon-fit-view',
+          isShowTooltip: true,
+          tooltip: '',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+        },
+      },
+    },
+    {
+      id: 'LassoSelect',
+      name: '自由圈选',
+      props: {
+        GI_CONTAINER_INDEX: 2,
+        GIAC: {
+          visible: false,
+          disabled: false,
+          isShowTitle: false,
+          title: '自由圈选',
+          isShowIcon: true,
+          icon: 'icon-lasso',
+          isShowTooltip: true,
+          tooltip: '按住Shift，点击画布即可自由圈选',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+        },
+      },
+    },
+    {
+      id: 'ZoomIn',
+      name: '放大',
+      props: {
+        GI_CONTAINER_INDEX: 2,
+        GIAC: {
+          visible: false,
+          disabled: false,
+          isShowTitle: false,
+          title: '放大',
+          isShowIcon: true,
+          icon: 'icon-zoomin',
+          isShowTooltip: true,
+          tooltip: '',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+        },
+      },
+    },
+    {
+      id: 'ZoomOut',
+      name: '缩小',
+      props: {
+        GI_CONTAINER_INDEX: 2,
+        GIAC: {
+          visible: false,
+          disabled: false,
+          isShowTitle: false,
+          title: '缩小',
+          isShowIcon: true,
+          icon: 'icon-zoomout',
+          isShowTooltip: true,
+          tooltip: '',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+        },
+      },
+    },
+    {
+      id: 'CanvasSetting',
+      name: '画布设置',
+      props: {
+        styleCanvas: {
+          background: '#fff',
+          backgroundImage: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*k9t4QamMuQ4AAAAAAAAAAAAAARQnAQ',
+        },
+        dragCanvas: {
+          disabled: false,
+          direction: 'both',
+          enableOptimize: false,
+        },
+        zoomCanvas: {
+          disabled: false,
+          enableOptimize: true,
+        },
+      },
+    },
+    {
+      id: 'Copyright',
+      name: '版权',
+      props: {
+        imageUrl: 'https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg',
+        width: 200,
+        height: 100,
+        placement: 'RB',
+        offset: [30, 0],
+      },
+    },
+    {
+      id: 'Loading',
+      name: '加载动画',
+      props: {},
+    },
+    {
+      id: 'FilterPanel',
+      name: '筛选面板',
+      props: {
+        histogramColor: '#3056E3',
+        isFilterIsolatedNodes: true,
+        highlightMode: true,
+        GI_CONTAINER_INDEX: 2,
+        GIAC_CONTENT: {
+          visible: true,
+          disabled: false,
+          isShowTitle: true,
+          isShowIcon: true,
+          icon: 'icon-filter',
+          isShowTooltip: true,
+          tooltip: '通过属性筛选画布信息，可自定义',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+          containerType: 'div',
+          containerAnimate: false,
+          containerPlacement: 'LT',
+          offset: [0, 78],
+          containerWidth: '400px',
+          containerHeight: 'calc(100vh - 120px)',
+          contaienrMask: false,
+          title: '筛选面板',
+        },
+      },
+    },
+    {
+      id: 'Toolbar',
+      name: '工具栏',
+      props: {
+        GI_CONTAINER: ['FitCenter', 'FitView', 'LassoSelect', 'ZoomIn', 'ZoomOut'],
+        direction: 'vertical',
+        placement: 'RB',
+        offset: [24, 84],
+      },
+    },
+    {
+      id: 'SideTabs',
+      name: '侧边栏',
+      props: {
+        GI_CONTAINER: ['PathAnalysis', 'FilterPanel'],
+        outSideFromCanvas: false,
+        tabPosition: 'left',
+        placement: 'LB',
+        offset: [0, 61],
+        height: 'calc(100vh - 120px)',
+        width: '450px',
+      },
+    },
+    {
+      id: 'Tooltip',
+      name: '节点提示框',
+      props: {
+        mappingKeys: ['id', 'nodeType'],
+        placement: 'top',
+        width: '200px',
+        hasArrow: true,
+      },
+    },
+    {
+      id: 'PropertiesPanel',
+      name: '属性面板',
+      props: {
+        serviceId: 'Mock/PropertiesPanel',
+        title: '属性面板',
+        placement: 'RT',
+        width: '356px',
+        height: 'calc(100% - 80px)',
+        offset: [2, 0],
+        animate: false,
+      },
+    },
+    {
+      id: 'ActivateRelations',
+      name: '元素高亮',
+      props: {
+        enableNodeHover: true,
+        enableEdgeHover: true,
+        enable: true,
+        trigger: 'click',
+        upstreamDegree: 1,
+        downstreamDegree: 1,
       },
     },
   ],
@@ -625,4 +779,51 @@ export const GI_LOCAL_DATA = {
     },
   ],
 };
+export const GI_SCHEMA_DATA = {
+  nodes: [
+    {
+      nodeType: 'company',
+      nodeTypeKeyFromProperties: 'nodeType',
+      properties: {
+        id: 'string',
+        nodeType: 'string',
+      },
+    },
+    {
+      nodeType: 'person',
+      nodeTypeKeyFromProperties: 'nodeType',
+      properties: {
+        id: 'string',
+        nodeType: 'string',
+      },
+    },
+  ],
+  edges: [
+    {
+      edgeType: 'shareHolding',
+      edgeTypeKeyFromProperties: 'edgeType',
+      sourceNodeType: 'company',
+      targetNodeType: 'company',
+      properties: {
+        source: 'string',
+        target: 'string',
+        edgeType: 'string',
+        percent: 'string',
+      },
+    },
+    {
+      edgeType: 'manager',
+      edgeTypeKeyFromProperties: 'edgeType',
+      sourceNodeType: 'person',
+      targetNodeType: 'company',
+      properties: {
+        source: 'string',
+        target: 'string',
+        edgeType: 'string',
+        position: 'string',
+      },
+    },
+  ],
+};
+
 /**  由GI平台自动生成的，请勿修改 end **/

@@ -32,6 +32,11 @@
       font-size: 1.3rem;
       line-height: 1.7;
     }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      margin-top: 24px;
+    }
     .button {
       &.disabled {
         color: #00000040;
@@ -41,10 +46,20 @@
         box-shadow: none;
         cursor: not-allowed;
       }
-      display: block;
+      &.github {
+        width: 100px;
+        color: #000;
+        background: #fafafa;
+        border: 1px solid #fafafa;
+
+        box-shadow: none;
+      }
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 136px;
       height: 36px;
-      margin-top: 24px;
+      margin: 0px 4px;
       color: #fff;
       line-height: 36px;
       text-align: center;

@@ -23,6 +23,9 @@ import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
+import ForceSimulation from './ForceSimulation';
+
+import PinNodeWithMenu from './PinNodeWithMenu';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -61,4 +64,6 @@ export {
   ActivateRelations,
   // CreateCombo,
   // FuseEditPanel,
+  ForceSimulation,
+  PinNodeWithMenu,
 };
