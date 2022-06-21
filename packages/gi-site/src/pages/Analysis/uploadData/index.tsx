@@ -9,8 +9,8 @@ import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
 import GraphScopeData from './GraphScopeData';
-import MockData from './MockData';
 import './index.less';
+import MockData from './MockData';
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -343,10 +343,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       ),
     },
   ];
-
+  const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
+  const defaultActiveKey = GI_UPLOADED_DATA ? 'document' : 'mockdata';
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
-      <Tabs defaultActiveKey="document">
+      <Tabs defaultActiveKey={defaultActiveKey}>
         <TabPane tab="本地文件" key="document">
           <Steps current={current.activeKey} type="navigation">
             {steps.map(item => (

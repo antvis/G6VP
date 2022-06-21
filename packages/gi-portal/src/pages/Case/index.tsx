@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './index.less';
+import $i18n from '../../i18n';
 
 type Status = 'solution' | 'money' | 'other';
 
@@ -9,19 +10,22 @@ const Case: React.FC = () => {
     {
       key: 'solution',
       src: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*JUMBR6Z2xTQAAAAAAAAAAAAAARQnAQ',
-      title: '图可视分析解决方案',
+      title: $i18n.get({ id: 'gi-portal.pages.Case.FigureVisualAnalysisSolution', dm: '图可视分析解决方案' }),
     },
+
     {
       key: 'money',
       src: '',
-      title: '反洗钱',
+      title: $i18n.get({ id: 'gi-portal.pages.Case.AntiMoneyLaundering', dm: '反洗钱' }),
     },
+
     {
       key: 'other',
       src: '',
       title: 'Loading',
     },
   ];
+
   return (
     <div className="gi-case">
       <div className="gi-case-top">

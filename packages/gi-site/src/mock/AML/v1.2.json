@@ -2,84 +2,84 @@
   "nodes": [
     {
       "id": "6217****1",
-      "type": "card",
+      "nodeType": "card",
       "tag": "警方备案，涉黑卡号"
     },
     {
       "id": "2088xxx1",
-      "type": "alipay"
+      "nodeType": "alipay"
     },
     {
       "id": "2088xxx2",
-      "type": "alipay"
+      "nodeType": "alipay"
     },
     {
       "id": "2088xxx0",
-      "type": "alipay",
+      "nodeType": "alipay",
       "onwer": "王xx",
       "is1688": true
     },
     {
       "id": "Haag",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66668-8265"
     },
     {
       "id": "Gutkowski",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66660-7345"
     },
     {
       "id": "Rice",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66663-4268"
     },
     {
       "id": "Powlowski",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66664-3142"
     },
     {
       "id": "Keebler",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66665-8064"
     },
     {
       "id": "Luettgen",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "66665-6317"
     },
     {
       "id": "李xx",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "2088xxxxx1",
       "tag": "体系内涉黑:2021-09-02,LINK:https://www.xxxx.com"
     },
     {
       "id": "张xx",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "2088xxxxx2"
     },
     {
       "id": "营业执照xxxx",
-      "type": "YYZZ"
+      "nodeType": "YYZZ"
     },
     {
       "id": "xxxx某",
-      "type": "alipay",
+      "nodeType": "alipay",
       "alipayNo": "2088xxxxxxx1",
       "longitude": 102.2011,
       "latitude": 25.3197
     },
     {
       "id": "娱乐xx春花秋月公司",
-      "type": "company",
+      "nodeType": "company",
       "longitude": 102.0189,
       "latitude": 25.1785
     },
     {
       "id": "娱乐xx天上人间公司",
-      "type": "company",
+      "nodeType": "company",
       "longitude": 102.2956,
       "latitude": 25.3455
     }
@@ -89,87 +89,87 @@
       "source": "6217****1",
       "target": "2088xxx1",
       "amount": 50000,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "2088xxx1",
       "target": "2088xxx2",
       "amount": 10000,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "2088xxx2",
       "target": "2088xxx0",
       "amount": 10000,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Haag",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Gutkowski",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Rice",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Powlowski",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Keebler",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "Luettgen",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "李xx",
       "target": "张xx",
       "amount": 50000,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "张xx",
       "target": "2088xxx0",
       "amount": 100,
-      "type": "transfer"
+      "edgeType": "transfer"
     },
     {
       "source": "2088xxx0",
       "target": "营业执照xxxx",
-      "type": "owner"
+      "edgeType": "owner"
     },
     {
       "source": "营业执照xxxx",
       "target": "xxxx某",
-      "type": "faren"
+      "edgeType": "faren"
     },
     {
       "source": "xxxx某",
       "target": "娱乐xx春花秋月公司",
-      "type": "owner"
+      "edgeType": "owner"
     },
     {
       "source": "xxxx某",
       "target": "娱乐xx天上人间公司",
-      "type": "owner"
+      "edgeType": "owner"
     }
   ]
 }

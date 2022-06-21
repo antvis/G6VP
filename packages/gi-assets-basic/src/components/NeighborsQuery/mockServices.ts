@@ -10,47 +10,9 @@ const mockServices = () => {
     {
       id: SERVICE_ID,
       service: (params, localData) => {
-        const { id, data: DATA = {} } = params;
+        const { ids, data: DATA = {} } = params;
         const { type = 'user' } = DATA;
-        console.log('邻居查询', params);
-        const data = {
-          nodes: [
-            {
-              id,
-              type,
-            },
-            {
-              id: `${id}-1`,
-              type,
-            },
-            {
-              id: `${id}-2`,
-              type,
-            },
-            {
-              id: `${id}-3`,
-              type,
-            },
-            {
-              id: `${id}-4`,
-              type,
-            },
-          ],
-          edges: [
-            {
-              source: id,
-              target: `${id}-1`,
-            },
-            {
-              source: id,
-              target: `${id}-2`,
-            },
-            {
-              source: id,
-              target: `${id}-3`,
-            },
-          ],
-        };
+        console.log('邻居查询', params, ids, type);
         const transfrom = p => {
           const { nodes, edges } = p;
           return {
@@ -74,8 +36,58 @@ const mockServices = () => {
             }),
           };
         };
+        const datas = ids
+          .map(id => {
+            return {
+              nodes: [
+                {
+                  id,
+                  type,
+                },
+                {
+                  id: `${id}-1`,
+                  type,
+                },
+                {
+                  id: `${id}-2`,
+                  type,
+                },
+                {
+                  id: `${id}-3`,
+                  type,
+                },
+                {
+                  id: `${id}-4`,
+                  type,
+                },
+              ],
+              edges: [
+                {
+                  source: id,
+                  target: `${id}-1`,
+                },
+                {
+                  source: id,
+                  target: `${id}-2`,
+                },
+                {
+                  source: id,
+                  target: `${id}-3`,
+                },
+              ],
+            };
+          })
+          .reduce(
+            (acc, curr) => {
+              return {
+                nodes: [].concat(acc.nodes, curr.nodes),
+                edges: [].concat(acc.edges, curr.edges),
+              };
+            },
+            { nodes: [], edges: [] },
+          );
         return new Promise(resolve => {
-          return resolve(transfrom(data));
+          return resolve(transfrom(datas));
         });
       },
     },

@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "icon": "account_box",
+      "id": "customer_103",
+      "data": {},
+      "defaultStyle": {},
+      "address": "103 RD",
+      "customer_type": "retail",
+      "first_name": "john",
+      "last_name": "doe",
+      "phone": "+65 0000 0103",
+      "remarks": "high-value purchases from luxury retailer. source of funds from 4 related accounts",
+      "risk_category": "high",
+      "risk_score": 99
+    },
+    {
+      "icon": "-",
+      "id": "other_banks",
+      "data": {},
+      "defaultStyle": {},
+      "address": "-",
+      "customer_type": "-",
+      "first_name": "-",
+      "last_name": "-",
+      "phone": "-",
+      "remarks": "other banks",
+      "risk_category": "-",
+      "risk_score": "-"
+    }
+  ],
+  "edges": []
+}

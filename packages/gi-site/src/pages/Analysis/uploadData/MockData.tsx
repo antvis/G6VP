@@ -1,12 +1,10 @@
 import { CheckCard } from '@alipay/tech-ui';
-import { AlipayCircleOutlined, AntCloudOutlined, SlackSquareOutlined, TaobaoCircleOutlined } from '@ant-design/icons';
+import { AlipayCircleOutlined, TaobaoCircleOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
 import { Alert, Button, Col, Form, notification, Radio, Row, Steps, Table } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import antiMoneyData from '../../../mock/AML/v1.2.json';
-import cloudSecurityData from '../../../mock/cloud-security.json';
-import transportData from '../../../mock/linkrous/transport.json';
 import enterpriseData from '../../../mock/path-analysis/shareholding-path.json';
 import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
@@ -17,12 +15,8 @@ import './index.less';
 const MockData = {
   // 企业持股
   enterprise: enterpriseData,
-  // 云安全
-  cloudSecurity: cloudSecurityData,
   // 反洗钱
   antiMoney: antiMoneyData,
-  // 巴黎地铁图
-  transport: transportData,
 };
 
 const { Step } = Steps;
@@ -194,6 +188,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
 
   const handleMockDataChange = value => {
     console.log('value', value);
+    if (!value) {
+      setInputData([]);
+      return;
+    }
     const renderData = [
       // ...inputData,
       {
@@ -228,23 +226,11 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
                   value="antiMoney"
                   avatar={<AlipayCircleOutlined style={{ fontSize: 35 }} />}
                 />
-                <CheckCard
-                  title="巴黎地铁图"
-                  description="巴黎地铁图数据，通过图分析结合地理信息，可以直观地发现地铁图的分布"
-                  value="transport"
-                  avatar={<SlackSquareOutlined style={{ fontSize: 35 }} />}
-                />
-                <CheckCard
-                  title="云安全数据"
-                  description="云安全测试数据，通过测试数据探索云安全分析场景"
-                  value="cloudSecurity"
-                  avatar={<AntCloudOutlined style={{ fontSize: 35 }} />}
-                />
               </CheckCard.Group>
             </Col>
           </Row>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
-            <Button type="primary" shape="round" onClick={checkData}>
+            <Button type="primary" shape="round" onClick={checkData} disabled={inputData.length === 0}>
               进入下一步
             </Button>
           </Row>
