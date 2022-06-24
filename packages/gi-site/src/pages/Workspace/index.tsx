@@ -1,5 +1,5 @@
-import { Tabs } from 'antd';
-import * as React from 'react';
+import { Tabs, message, notification, Drawer, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
@@ -11,34 +11,36 @@ import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
+import { fetchData } from "@alipay/yuyan-config-data";
 
 setDefaultDemo();
 
-interface WorkspaceProps {}
+interface WorkspaceProps { }
 const { TabPane } = Tabs;
 const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOCAL_ENV
   ? [
-      {
-        id: 'case',
-        name: '行业案例',
-      },
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-      {
-        id: 'save',
-        name: '我的保存',
-      },
-    ]
+    {
+      id: 'case',
+      name: '行业案例',
+    },
+    {
+      id: 'project',
+      name: '我的项目',
+    },
+    {
+      id: 'save',
+      name: '我的保存',
+    },
+  ]
   : [
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-    ];
+    {
+      id: 'project',
+      name: '我的项目',
+    },
+  ];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
+
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'project';
 
@@ -48,6 +50,11 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const [state, updateState] = useImmer({
     visible: false,
     activeKey: defaultActiveKey,
+    drawerVisible: false,
+    version: "",
+    content: "",
+    isShowMore: false,
+    imgUrl: "",
   });
 
   const handleClose = () => {
@@ -76,6 +83,51 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       console.warn(error);
     }
   };
+
+  const handleCloseDrawer = () => {
+    updateState(draft => {
+      draft.drawerVisible = false;
+    })
+  }
+
+  const showMore = () => {
+    updateState(draft => {
+      draft.isShowMore = true;
+    })
+  }
+
+  useEffect(() => {
+    const notifcatioVersion = async () => {
+      const versionInfo = await fetchData("notifcation_version2")
+      const { version, level, content, imgUrl } = versionInfo;
+      const lastVersion = localStorage.getItem("gi-version");
+      if (version === lastVersion) {
+        return;
+      }
+      if (level === '0') {
+        // BUG FIX 级别
+        message.success(`${version}: ${content}`);
+      } else if (level === '1') {
+        // Feature 上线
+        notification.open({
+          message: `版本: ${version}`,
+          description: content,
+        })
+      } else if (level === '2') {
+        // 重要更新
+        updateState(draft => {
+          draft.drawerVisible = true;
+          draft.version = version;
+          draft.content = content;
+          draft.imgUrl = imgUrl;
+        })
+      }
+      localStorage.setItem("gi-version", version);
+
+      // console.log("data:", versionInfo);
+    }
+    notifcatioVersion();
+  }, [])
 
   return (
     <>
@@ -114,6 +166,16 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
         </div>
       </div>
       <CreatePanel visible={visible} handleClose={handleClose} />
+      <Drawer visible={state.drawerVisible} onClose={handleCloseDrawer} title={`版本: ${state.version}`}>
+        {
+          !state.isShowMore && <Card
+            hoverable
+            cover={<img style={{ width: "90%" }} alt="version-content" src={state.imgUrl} />}
+            onClick={showMore}
+          />
+        }
+        {state.isShowMore && <iframe width="100%" height="98%" src={`${state.content}?view=doc_embed&from=asite`} frameBorder={0}></iframe>}
+      </Drawer>
     </>
   );
 };
