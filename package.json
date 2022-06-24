@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@alipay/yuyan-config-data": "^2.0.7",
     "@ant-design/icons": "latest",
     "@antv/algorithm": "^0.1.24",
     "@antv/graphin": "2.x",
