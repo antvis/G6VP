@@ -1,6 +1,8 @@
 import { Tabs, message, notification, Drawer, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import CustomerFeedback from '../../components/CustomerFeedback';
+import QRcode from '../../components/QRcode';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../components/utils';
@@ -129,10 +131,17 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     notifcatioVersion();
   }, [])
 
+  const rightContentExtra = (
+    <>
+      <QRcode />
+      <CustomerFeedback />
+      <DataModeCard />
+    </>)
+
   return (
     <>
       <div className="workspace">
-        <BaseNavbar rightContentExtra={<DataModeCard />}></BaseNavbar>
+        <BaseNavbar rightContentExtra={rightContentExtra}></BaseNavbar>
         <div
           style={{
             overflow: 'scroll',
