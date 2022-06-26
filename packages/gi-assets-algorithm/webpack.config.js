@@ -90,7 +90,12 @@ module.exports = (env, argv) => {
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
+    plugins: [
+      new MiniCssExtractPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerPort: 8884,
+      }),
+    ],
     externals: {
       lodash: '_',
       react: 'React',

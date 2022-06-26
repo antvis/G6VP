@@ -3,9 +3,10 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-import { isDev, OFFICIAL_PACKAGES } from '../.umirc';
+import { BIZ_PACKAGES, isDev, OFFICIAL_PACKAGES } from '../.umirc';
+
 setTimeout(() => {
-  // window.console.clear();
+  !isDev && window.console.clear();
   console.log(
     '%c Thanks to pomelo.lcw zhanning.bzn xuying.xu yunyi jingxi.lp Yanyan-Wang axu.zx xx361452 baihui yifeng yuqi.pyq yuran.lcl qingyu hexiaonan.hxn who have contributed code to GraphInsight',
     'color: #ddd; font-size: 10px; font-style: italic;',
@@ -49,8 +50,9 @@ export interface Package {
 
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+
   /** 保持内置的组件都是最新版本 */
-  OFFICIAL_PACKAGES.forEach(pkg => {
+  [...OFFICIAL_PACKAGES, ...BIZ_PACKAGES].forEach(pkg => {
     packages[pkg.global] = {
       ...pkg,
     };
