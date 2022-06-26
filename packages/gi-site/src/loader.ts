@@ -3,7 +3,35 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-import { BIZ_PACKAGES, isDev, OFFICIAL_PACKAGES } from '../.umirc';
+import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
+
+// 临时方案，应该要走antbuc鉴权
+export const IS_PASS_BUC_AUTH = !!localStorage.getItem('_YUYAN_COOKIE_bucUserId');
+console.log('IS_PASS_BUC_AUTH', IS_PASS_BUC_AUTH);
+export const BIZ_PACKAGES = IS_PASS_BUC_AUTH
+  ? getPackages([
+      {
+        name: '@alipay/gi-assets-yuque',
+        version: '1.0.0',
+      },
+      {
+        name: '@alipay/gi-assets-security',
+        version: '1.0.0',
+      },
+      {
+        name: '@alipay/gi-assets-gs',
+        version: '1.0.0',
+      },
+      {
+        name: '@alipay/gi-assets-akg',
+        version: '1.0.0',
+      },
+      {
+        name: '@alipay/gi-assets-geamaker',
+        version: '1.1.5',
+      },
+    ])
+  : [];
 
 setTimeout(() => {
   !isDev && window.console.clear();
