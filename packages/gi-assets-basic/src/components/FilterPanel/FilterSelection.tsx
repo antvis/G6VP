@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Pie, Plot, PieOptions, WordCloud, WordCloudOptions } from '@antv/g2plot';
+import { Pie, Plot, PieOptions, WordCloud, WordCloudOptions, G2, Histogram, HistogramOptions } from '@antv/g2plot';
 import { Button, Select } from 'antd';
 import { DeleteOutlined, NumberOutlined, FieldStringOutlined } from '@ant-design/icons';
-import { Filter as BrushFilter } from 'motif-gi';
 import { useContext } from '@alipay/graphinsight';
-import { IFilterCriteria, IChartData } from './type';
-import { getValueMap, getHistogram } from './utils';
+import { IFilterCriteria, IChartData, IHistogramValue } from './type';
+import { getValueMap, getHistogramData } from './utils';
 import './index.less';
 
 const iconMap = {
@@ -27,9 +26,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } =
     props;
   const [chartData, setChartData] = useState<Map<string, number>>();
+  const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
   const { source } = useContext();
   const piePlotRef = useRef<Plot<PieOptions> | undefined>();
   const wordCloudRef = useRef<Plot<WordCloudOptions> | undefined>();
+  const histogramRef = useRef<Plot<HistogramOptions> | undefined>()
 
   const onSelectChange = value => {
     const id = filterCriter.id as string;
@@ -39,16 +40,17 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     let analyzerType;
     if (elementProps[prop] === 'number') {
       analyzerType = 'BRUSH';
-      const histogram = getHistogram(source, prop, elementType, histogramColor);
+      const data = getHistogramData(source, prop, elementType);
+      setHistogramData(data);
       updateFilterCriteria(id, {
         id,
         analyzerType,
         isFilterReady: false,
         elementType,
         prop,
-        histogram,
-        range: histogram.domain,
+        range: [data[0].value, data[data.length - 1].value],
       });
+
     } else if (elementProps[prop] === 'boolean') {
       analyzerType = 'PIE';
       const valueMap = getValueMap(source, prop, elementType);
@@ -213,6 +215,79 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     wordCloudRef.current = wordCloud;
   };
 
+  const renderHistogram = (chartData: IHistogramValue[], container: string) => {
+    if (!chartData || !container) {
+      return;
+    }
+    const histogramPlot = new Histogram(container, {
+      data: chartData,
+      height: 200,
+      binField: 'value',
+      tooltip: false,
+      interactions: [
+        {
+          type: 'brush',
+        },
+      ],
+      meta: {
+        range: {},
+        count: {
+          nice: true,
+        },
+      },
+    });
+
+    histogramPlot.chart.on("mask:change", (e) => {
+      const minValue = chartData[0].value;
+      const maxValue = chartData[chartData.length - 1].value;
+      const start = histogramPlot.chart.coordinateBBox.x;
+      const end = histogramPlot.chart.coordinateBBox.x + histogramPlot.chart.coordinateBBox.width;
+      const minX = e.target.getBBox().minX;
+      const maxX = e.target.getBBox().maxX;
+      const rangeStart = minValue + (maxValue - minValue) * (minX - start) / (end - start);
+      const rangeEnd = minValue + (maxValue - minValue) * (maxX - start) / (end - start);
+      onBrushChange([rangeStart, rangeEnd]);
+    })
+
+    histogramPlot.render();
+    histogramRef.current = histogramPlot;
+  }
+
+  useEffect(() => {
+    G2.registerInteraction('brush', {
+      showEnable: [
+        { trigger: 'plot:mouseenter', action: 'cursor:crosshair' },
+        { trigger: 'mask:mouseenter', action: 'cursor:move' },
+        { trigger: 'plot:mouseleave', action: 'cursor:default' },
+        { trigger: 'mask:mouseleave', action: 'cursor:crosshair' },
+      ],
+      start: [
+        {
+          trigger: 'plot:mousedown', isEnable(context) {
+            return !context.isInShape('mask');
+          }, action: ['rect-mask:start', 'rect-mask:show']
+        },
+        { trigger: 'mask:dragstart', action: 'rect-mask:moveStart' }
+      ],
+      processing: [
+        { trigger: 'plot:mousemove', action: 'rect-mask:resize' },
+        {
+          trigger: 'mask:drag', isEnable(context) {
+            return context.isInPlot();
+          }, action: 'rect-mask:move'
+        },
+        { trigger: 'mask:change', action: 'element-sibling-filter-record:filter' }
+      ],
+      end: [
+        { trigger: 'plot:mouseup', action: 'rect-mask:end' },
+        { trigger: 'mask:dragend', action: 'rect-mask:moveEnd' }
+      ],
+      rollback: [
+        { trigger: 'dblclick', action: ['rect-mask:hide', 'element-sibling-filter-record:reset'] }
+      ]
+    });
+  }, [])
+
   useEffect(() => {
     if (filterCriter.analyzerType === 'PIE') {
       piePlotRef.current?.destroy();
@@ -228,6 +303,14 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else {
       wordCloudRef.current?.destroy();
       wordCloudRef.current = undefined;
+    }
+
+    if (filterCriter.analyzerType == 'BRUSH') {
+      histogramRef.current?.destroy();
+      renderHistogram(histogramData, `${filterCriter.id}-chart-container`);
+    } else {
+      histogramRef.current?.destroy();
+      histogramRef.current = undefined;
     }
   }, [chartData, filterCriter.analyzerType]);
 
@@ -280,16 +363,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             value={filterCriter.selectValue}
           />
         )}
-        {filterCriter.analyzerType === 'BRUSH' && (
-          <BrushFilter
-            value={filterCriter.range!}
-            histogram={filterCriter.histogram!}
-            onChangeRange={onBrushChange}
-            /* BrushFilter 组件问题，设置不了百分比 */
-            width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
-          />
-        )}
-
         {filterCriter.analyzerType === 'NONE' && <span>请选择合法字段</span>}
       </div>
     </div>
