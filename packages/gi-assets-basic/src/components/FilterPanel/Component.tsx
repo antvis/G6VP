@@ -66,8 +66,19 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   };
 
   const removeFilterCriteria = (id: string) => {
-    delete filterOptions[id];
-    setFilterOptions({ ...filterOptions });
+    // delete filterOptions[id];
+    // setFilterOptions({ ...filterOptions });
+
+    setFilterOptions(preState => {
+      const newFilterOptions = {};
+      for (let key in preState) {
+        if (key !== id) {
+          newFilterOptions[key] = preState[key];
+        }
+      }
+      console.log(newFilterOptions)
+      return newFilterOptions;
+    })
   };
 
   useEffect(() => {

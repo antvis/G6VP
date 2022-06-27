@@ -83,41 +83,13 @@ export const getValueMap = (graphData: GraphinData, prop: string, elementType: '
   return valueMap;
 };
 
-// 获取直方图相关数据
-export const getHistogram = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge', color: string) => {
+export const getHistogramData = (graphData, prop: string, elementType: 'node' | 'edge') => {
   const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
-  const valueMap = new Map<number, number>();
-  let maxValue = -Infinity;
-  let minValue = Infinity;
-  elements.forEach(e => {
-    const value = e.data && e.data[prop];
-    if (value && typeof value === 'number') {
-      valueMap.set(value, valueMap.has(value) ? valueMap.get(value)! + 1 : 1);
-      maxValue = Math.max(value, maxValue);
-      minValue = Math.min(value, minValue);
-    }
-  });
-
-  const interval = (maxValue - minValue) / 50;
-  const data = [...valueMap.entries()].map(e => {
-    const [key, value] = e;
-    const x0 = key - interval / 2;
-    const x1 = key + interval / 2;
-    return {
-      count: value,
-      x0: x0 >= minValue ? x0 : minValue,
-      x1: x1 <= maxValue ? x1 : maxValue,
-    };
-  });
-  return {
-    data,
-    domain: [minValue, maxValue],
-    step: interval,
-    dataType: 'NUMBER',
-    format: '',
-    color,
-  };
-};
+  const data = elements.filter((e) => e.data && e.data[prop] && typeof e.data[prop] === "number")
+    .map(e => ({ value: e.data[prop] }))
+  data.sort((a, b) => a.value - b.value)
+  return data;
+}
 
 //@todo 感觉需要算法优化下，后面再做吧
 export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
