@@ -1,5 +1,5 @@
 import ForceGraph3D from '3d-force-graph';
-import { extra, IGIAC, useContext } from '@alipay/graphinsight';
+import { extra, IGIAC, useContext, utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';
@@ -18,7 +18,7 @@ export interface ILargeGraph {
 }
 
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
-  const { updateContext, source: DATA, GISDK_ID, apis, config } = useContext();
+  const { updateContext, source: DATA, GISDK_ID, apis, config, transform } = useContext();
   const { GIAC, handleClick, maxSize, minSize, placement, offset } = props;
 
   const [state, setState] = React.useState({
@@ -37,8 +37,17 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
 
   React.useLayoutEffect(() => {
     const elem = document.getElementById('gi-3d-graph') as HTMLElement;
-    const { nodes, edges } = DATA;
-    const data = { nodes: deepClone(nodes), links: deepClone(edges) };
+
+    let nodes = deepClone(DATA.nodes);
+    let edges = deepClone(DATA.edges);
+
+    const hasStyles = utils.isStyles(DATA.nodes);
+    if (!hasStyles) {
+      const res = transform(DATA);
+      nodes = res.nodes;
+      edges = res.edges;
+    }
+    const data = { nodes, links: edges };
 
     const Graph = ForceGraph3D()(elem)
       .graphData(data)
