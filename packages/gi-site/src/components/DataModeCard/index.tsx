@@ -33,10 +33,7 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
     visible: !localStorage.getItem('GI_SERVER_ENV'), // 新用户第一次打开时没有该值，则打开弹窗
   });
 
-  const modeList = [
-    { img: '', value: 'LOCAL', label: '本地环境' },
-    // { img: '', value: 'ONLINE', label: '在线环境' },
-  ];
+  const modeList = [{ img: '', value: 'LOCAL', label: '本地环境' }, { img: '', value: 'ONLINE', label: '在线环境' }];
   const { env, visible } = state;
   const handleChange = (value: ServerEnv) => {
     localStorage.setItem('GI_SERVER_ENV', value);
@@ -64,7 +61,7 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
       <Select defaultValue={env} style={{ width: 100 }} bordered={false} onChange={handleChange}>
         {modeList.map(c => {
           return (
-            <Option key={c.value} value={c.value} disabled={c.value === 'ONLINE'}>
+            <Option key={c.value} value={c.value}>
               {c.label}
             </Option>
           );
