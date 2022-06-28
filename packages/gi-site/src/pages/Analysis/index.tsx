@@ -7,6 +7,7 @@ import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
+import { findEngineInstanceList } from '../../services/engineInstace'
 import { queryAssets } from '../../services/assets.market';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
@@ -73,16 +74,18 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData, expandInfo } = await getProjectById(projectId);
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
       const { transData, inputData } = data;
 
-      if (expandInfo) {
-        const { activeGraphName, graphNameMapping } = expandInfo
-        if (activeGraphName) {
-          // 将当前使用的 graphName 及 gremlClientURL 写入到 localstorage 中
-          localStorage.setItem('graphScopeGraphName', activeGraphName)
-          localStorage.setItem('graphScopeGremlinServer', graphNameMapping[activeGraphName])
-        }
+      // 根据 projectId，查询引擎实例信息
+      const engineInfoResult = await findEngineInstanceList(projectId)
+      let engineInfos = []
+      if (engineInfoResult.success && engineInfoResult.data.length > 0) {
+        engineInfos = engineInfoResult.data
+        // 默认最新的实例
+        localStorage.setItem('graphScopeGremlinServer', engineInfos[0].gremlinServerUrl)
+        localStorage.setItem('graphScopeGraphName', engineInfos[0].activeGraphName)
+        localStorage.setItem('activeEngineInfo', JSON.stringify(engineInfos[0]))
       }
 
       updateState(draft => {
@@ -95,7 +98,8 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.serviceConfig = serviceConfig; //服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
-        draft.engineInfo = expandInfo
+        draft.engineInfos = engineInfos
+        draft.activeEngineInfo = engineInfos[0]
       });
       return;
     })();

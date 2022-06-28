@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Alert, Form, Button, Input, Upload, Select } from 'antd';
+import { Col, Row, Alert, Form, Button, Input, Switch, Select } from 'antd';
 import { MinusCircleOutlined, UploadOutlined, PlusOutlined } from '@ant-design/icons';
 const { Option } = Select;
 
@@ -15,6 +15,11 @@ const ODPSTablePanel = () => {
         style={{ margin: '12px 0px' }}
       />
       <Row>
+        <Col span={24}>
+          <Item label="ID字段类型" name="isStringType">
+            <Switch defaultChecked checkedChildren="string" unCheckedChildren="int64" />
+          </Item>
+        </Col>
         <Col span={11} style={{ marginRight: 24 }}>
           <h4>点表配置列表</h4>
           <Form.List name="nodeConfigList">

@@ -28,7 +28,7 @@ const ODPSModelPanel = () => {
           </Item>
         </Col>
         <Col span={8}>
-          <Item label="Project" name="project">
+          <Item label="Project" name="project" rules={[{ required: true }]}>
             <Input style={{ width: 150 }} />
           </Item>
         </Col>

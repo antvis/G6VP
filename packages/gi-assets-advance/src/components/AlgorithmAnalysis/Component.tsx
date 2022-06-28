@@ -9,6 +9,9 @@ const { Option } = Select;
 const AlgorithmAnalysis = ({ serviceId }) => {
   const [form] = Form.useForm();
   const { services } = useContext();
+  const activeEngineInfo = localStorage.getItem('activeEngineInfo')
+    ? JSON.parse(localStorage.getItem('activeEngineInfo') as string)
+    : {};
 
   const service = utils.getService(services, serviceId);
 
@@ -21,11 +24,20 @@ const AlgorithmAnalysis = ({ serviceId }) => {
 
   const handleExecAlgorithm = async () => {
     console.log('算法参数', algorithmParams);
+    if (!activeEngineInfo || !activeEngineInfo.activeGraphName) {
+      message.error('GraphScope 没有载图，请先进行载图，然后再执行图算法');
+      return;
+    }
     setParams({
       ...params,
       btnLoading: true,
     });
-    const result = await service(algorithmParams);
+    const result = await service({
+      ...algorithmParams,
+      graphName: activeEngineInfo.activeGraphName,
+      instanceId: activeEngineInfo.instanceId,
+      mode: activeEngineInfo.mode === 1 ? 'LOCAL' : 'ODPS',
+    });
 
     console.log('Gremlin 算法结果', result);
     if (!result || !result.success) {

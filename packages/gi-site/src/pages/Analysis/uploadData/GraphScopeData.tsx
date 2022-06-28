@@ -1,4 +1,4 @@
-import { Alert, Button, Form, message, Radio, Space, Table, Select } from 'antd';
+import { Alert, Button, Form, message, Radio, Space, Table } from 'antd';
 import React, { useState } from 'react';
 import {
   createGraphScopeInstance,
@@ -7,7 +7,6 @@ import {
   loadGraphToGraphScope,
   uploadLocalFileToGraphScope,
   queryGraphSchema,
-  jsonToGremlin,
 } from '../../../services/graphcompute';
 import { updateProjectById } from '../../../services';
 import {
@@ -341,6 +340,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
           <GSDataMode
             handleUploadFile={handleUploadFiles}
             handleLoadData={handleSubmitForm}
+            updateSchemaData={updateSchemaData}
             close={close}
             filesMapping={filesMapping}
             uploadLoading={uploadLoading}
