@@ -4,7 +4,6 @@ export interface IFilterCriteria {
   prop?: string;
   elementType?: 'node' | 'edge';
   range?: number[];
-  histogram?: IHistogramProp;
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
   analyzerType?: 'BRUSH' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
@@ -16,21 +15,11 @@ interface IOption {
   label: string;
 }
 
-export interface IHistogramBin {
-  x0: number | undefined;
-  x1: number | undefined;
-  count: number;
-}
-
-export interface IHistogramProp {
-  domain: number[];
-  data: IHistogramBin[];
-  step: number;
-  dataType: string;
-  format: string;
-}
-
 export interface IChartData {
   x: string;
   value: number;
+}
+
+export interface IHistogramValue {
+  value: number
 }
