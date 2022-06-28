@@ -94,24 +94,16 @@ const mockServices = () => {
     {
       id: GS_SERVICE_ID,
       service: (params, localData) => {
-        const { id, sep } = params;
-
-        // 根据 sep 拼接 .bothE() 个数
-        let str = '';
-        for (let i = 0; i < sep - 1; i++) {
-          str += '.both()';
-        }
-
-        return fetch(`http://dev.alipay.net:7001/graphcompute/gremlinQuery`, {
+        // 这里根据不同环境换成相应的地址
+        // 测试环境：https://storehouse.test.alipay.net
+        // 预发环境：https://graphinsight-pre.alipay.com
+        // 生产环境：http://graphinsight-api.antgroup-inc.cn
+        return fetch(`http://dev.alipay.net:7001/graphcompute/neighbors`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
-          body: JSON.stringify({
-            // statement: `g.V('${id}').repeat(bothE()).times(${sep})`,
-            statement: `g.V(${id})${str}.bothE()`,
-            gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
-          }),
+          body: JSON.stringify(params),
         })
           .then(response => response.json())
           .then(res => {

@@ -55,17 +55,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
   const [btnLoading, setBtnLoading] = useState(false);
 
-  const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
-    params.id = id;
-
-    const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
-      method: 'post',
-      data: params,
-    });
-
-    return response.success;
-  };
-
   const handleClickQuery = async () => {
     setBtnLoading(true);
     if (!service) {
@@ -74,8 +63,8 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
     // 查询之前判断是否已经实例化 GraphScope 实例
     const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
-    const isGraphScopeService = serviceId.startsWith('GraphScope');
-    if (!gremlinServer && isGraphScopeService) {
+    // const isGraphScopeService = serviceId.startsWith('GraphScope');
+    if (!gremlinServer) {
       setBtnLoading(false);
       notification.error({
         message: 'Gremlin 查询失败',
@@ -86,6 +75,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
     const result = await service({
       value: editorValue,
+      gremlinServer,
     });
 
     setBtnLoading(false);

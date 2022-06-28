@@ -2,18 +2,20 @@ import { PlusOutlined, UploadOutlined, MinusCircleOutlined, ExclamationCircleOut
 import { Alert, Button, Col, Form, Radio, Row, Steps, message, Switch, Modal, Spin, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import { createCupidInstance } from '../../../services/graphcompute';
+import { createCupidInstance, loadOdpsDataToGraphScope } from '../../../services/graphcompute';
 import LocalFilePanel from './LocalFile';
 import ODPSTablePanel from './ODPSTablePanel';
 import ODPSMode from './ODPS';
+import { useContext } from '../hooks/useContext';
 import './index.less';
 const { Item } = Form;
 const { confirm } = Modal;
 
 const { Step } = Steps;
 interface LocalFileProps {
-  handleUploadFile: (isCover?: boolean) => boolean;
+  handleUploadFile: (isCover?: boolean) => Promise<any>;
   handleLoadData: () => void;
+  updateSchemaData: () => void;
   uploadLoading: boolean;
   filesMapping: any;
   close: () => void;
@@ -22,7 +24,20 @@ interface LocalFileProps {
 }
 
 const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
-  const { handleUploadFile, handleLoadData, close, filesMapping, uploadLoading, loading, form } = props;
+  const {
+    handleUploadFile,
+    handleLoadData,
+    updateSchemaData,
+    close,
+    filesMapping,
+    uploadLoading,
+    loading,
+    form,
+  } = props;
+
+  const { context } = useContext();
+  const { id } = context;
+  console.log('context', context);
 
   const [current, setCurrent] = useImmer({
     activeKey: 0,
@@ -53,36 +68,40 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
   };
 
   const handleUploadFileToNext = async () => {
-    setGsLoading({
-      ...gsLoading,
-      step1Loading: true,
-    });
+    // setGsLoading({
+    //   ...gsLoading,
+    //   step1Loading: true,
+    // });
     if (modeType === 'ODPS') {
-      const cupidInstanceId = localStorage.getItem('cupidInstanceId');
-      if (!cupidInstanceId) {
-        // 如果不存在，则需要创建，否则直接进入下一步
+      // 如果不存在，则需要创建，否则直接进入下一步
 
-        const values = await form.validateFields();
-        console.log('odps form value', values);
-        setOdpsFormValue(values);
-        const result = await createCupidInstance(odpsFormValue);
-        console.log('create cupid instance', result);
-        setGsLoading({
-          ...gsLoading,
-          step1Loading: false,
-        });
-        if (!result || !result.success) {
-          message.error('创建 cupid 实例失败');
-          return;
-        }
-        const { instance_id, httpserver } = result;
-        console.log('返回结果', instance_id, httpserver);
-        // todo: 创建成功以后，更新 project 项目信息
+      const values = await form.validateFields();
+      console.log('odps form value', values);
+      setOdpsFormValue(values);
+      // const { accessId, accessKey, project, endpoint } = values;
+      // const createParams = {
+      //   projectId: id,
+      //   accessId,
+      //   accessKey,
+      //   project,
+      //   endpoint,
+      // };
+      // const result = await createCupidInstance(createParams);
+      // console.log('create cupid instance', result);
+      // setGsLoading({
+      //   ...gsLoading,
+      //   step1Loading: false,
+      // });
+      // if (!result || !result.success) {
+      //   message.error('创建 cupid 实例失败');
+      //   return;
+      // }
+      // const { instance_id, httpserver } = result;
+      // console.log('返回结果', instance_id, httpserver);
+      // // 创建成功后，将 cupidInstanceId 和 cupidHttpServer 存储到 localstorage 中
+      // // localStorage.setItem('cupidInstanceId', instance_id);
+      // localStorage.setItem('cupidHttpServer', httpserver);
 
-        // 创建成功后，将 cupidInstanceId 和 cupidHttpServer 存储到 localstorage 中
-        localStorage.setItem('cupidInstanceId', instance_id);
-        localStorage.setItem('cupidHttpServer', httpserver);
-      }
       next();
     } else if (modeType === 'LOCAL') {
       if (filesMapping) {
@@ -119,6 +138,10 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
   };
 
   const handleLoadDataToGraphScope = async () => {
+    setGsLoading({
+      ...gsLoading,
+      step2Loading: true,
+    });
     if (modeType === 'LOCAL') {
       // 本地数据，则开始载图
       await handleLoadData();
@@ -127,6 +150,33 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
       const values = await form.validateFields();
       console.log('odps form step2', odpsFormValue, values);
       // 针对 ODPS 数据源进行载图
+      const odpsLoadGraphParams = {
+        project: odpsFormValue.project,
+        projectId: id,
+        ...values,
+      };
+      const result = await loadOdpsDataToGraphScope(odpsLoadGraphParams);
+
+      setGsLoading({
+        ...gsLoading,
+        step2Loading: false,
+      });
+
+      const { success: loadSuccess, message: loadMessage, data: loadData } = result;
+      if (!loadSuccess) {
+        message.error(`数据加载失败: ${loadMessage}`);
+        return;
+      }
+
+      const { graphName, graphURL } = loadData;
+      localStorage.setItem('graphScopeGraphName', graphName);
+      localStorage.setItem('graphScopeGremlinServer', graphURL);
+
+      message.success('加载数据到 GraphScope 引擎成功');
+
+      // 载图成功后，更新 Project 中的 SchemeData
+      updateSchemaData();
+      close();
     }
   };
 
@@ -158,7 +208,8 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
                     style={{ margin: '0px 0px 16px 0' }}
                   />
                 ) : (
-                  <Alert
+                  <>
+                    {/* <Alert
                     message={
                       <span>
                         请确认输入正确的 AccessId、AccessKey、Project 及 endpoint 信息，可以在
@@ -168,7 +219,16 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
                     type="info"
                     showIcon
                     style={{ margin: '0px 0px 16px 0' }}
-                  />
+                  /> */}
+                    <Alert
+                      message={
+                        <span>临时方案：只需要添加 project 字段，其他字段不需要输入，直接点击进入下一步即可</span>
+                      }
+                      type="warning"
+                      showIcon
+                      style={{ margin: '0px 0px 16px 0' }}
+                    />
+                  </>
                 )}
                 <ODPSMode />
               </>
