@@ -1,17 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Pie, Plot, PieOptions, WordCloud, WordCloudOptions } from '@antv/g2plot';
-import { Button, Select } from 'antd';
-import { DeleteOutlined, NumberOutlined, FieldStringOutlined } from '@ant-design/icons';
-import { Filter as BrushFilter } from 'motif-gi';
 import { useContext } from '@alipay/graphinsight';
-import { IFilterCriteria, IChartData } from './type';
-import { getValueMap, getHistogram } from './utils';
+import { DeleteOutlined, FieldStringOutlined, FieldTimeOutlined, NumberOutlined } from '@ant-design/icons';
+import { Pie, PieOptions, Plot, WordCloud, WordCloudOptions } from '@antv/g2plot';
+import { Button, Select } from 'antd';
+import { Filter as BrushFilter } from 'motif-gi';
+import React, { useEffect, useRef, useState } from 'react';
+import LineChart from './Charts/LineChart';
 import './index.less';
+import { IFilterCriteria } from './type';
+import { getHistogram, getValueMap } from './utils';
 
-const iconMap = {
+export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   string: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
+  date: <FieldTimeOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
 interface FilterSelectionProps {
@@ -24,8 +26,14 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } =
-    props;
+  const {
+    filterCriter,
+    nodeProperties,
+    edgeProperties,
+    updateFilterCriteria,
+    removeFilterCriteria,
+    histogramColor,
+  } = props;
   const [chartData, setChartData] = useState<Map<string, number>>();
   const { source } = useContext();
   const piePlotRef = useRef<Plot<PieOptions> | undefined>();
@@ -84,6 +92,15 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         analyzerType,
         selectOptions,
       });
+    } else if (elementProps[prop] === 'date') {
+      analyzerType = 'DATE';
+      updateFilterCriteria(id, {
+        id,
+        isFilterReady: false,
+        elementType,
+        prop,
+        analyzerType,
+      });
     } else {
       analyzerType = 'NONE';
       updateFilterCriteria(id, {
@@ -119,6 +136,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     if (!chartData || !container) {
       return;
     }
+    console.log('chartData', chartData);
     const sum = [...chartData.values()].reduce((acc, cur) => acc + cur, 0);
     const data = [...chartData.entries()].map(e => {
       const [key, value] = e;
@@ -230,7 +248,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       wordCloudRef.current = undefined;
     }
   }, [chartData, filterCriter.analyzerType]);
-
+  const elementProps = filterCriter.elementType === 'node' ? nodeProperties : edgeProperties;
   return (
     <div key={filterCriter.id} className="gi-filter-panel-group">
       <div className="gi-filter-panel-prop">
@@ -285,6 +303,15 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             value={filterCriter.range!}
             histogram={filterCriter.histogram!}
             onChangeRange={onBrushChange}
+            /* BrushFilter 组件问题，设置不了百分比 */
+            width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
+          />
+        )}
+        {filterCriter.analyzerType === 'DATE' && (
+          <LineChart
+            filterCriter={filterCriter}
+            source={source}
+            elementProps={elementProps}
             /* BrushFilter 组件问题，设置不了百分比 */
             width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
           />
