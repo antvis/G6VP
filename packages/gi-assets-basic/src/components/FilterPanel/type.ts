@@ -7,7 +7,7 @@ export interface IFilterCriteria {
   histogram?: IHistogramProp;
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
-  analyzerType?: 'BRUSH' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE';
+  analyzerType?: 'BRUSH' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
   isFilterReady?: boolean;
 }
 
