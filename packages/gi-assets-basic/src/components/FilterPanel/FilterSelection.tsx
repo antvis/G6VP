@@ -128,14 +128,14 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     });
   };
 
-  const onBrushChange = value => {
+  /* const onBrushChange = value => {
     const id = filterCriter.id as string;
     updateFilterCriteria(id, {
       ...filterCriter,
       isFilterReady: true,
       range: value,
     });
-  };
+  }; */
 
   const renderPie = (chartData?: Map<string, number>, container?: string) => {
     if (!chartData || !container) {
@@ -244,38 +244,60 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       data: chartData,
       height: 200,
       binField: 'value',
-      tooltip: false,
+      color: "rgba(111, 147, 222, 1)",
+      tooltip: {},
       interactions: [
-        {
-          type: 'brush',
-        },
+        { type: 'element-highlight' }
       ],
+      state: {
+        // 设置 active 激活状态的样式
+        active: {
+          style: {
+            fill: "rgba(56, 83, 215, 1)",
+            lineWidth: 0,
+          },
+        },
+      },
       meta: {
-        range: {},
+        range: { nice: true },
         count: {
+          type: "log",
           nice: true,
         },
       },
     });
 
-    histogramPlot.chart.on('mask:change', e => {
-      const minValue = chartData[0].value;
-      const maxValue = chartData[chartData.length - 1].value;
-      const start = histogramPlot.chart.coordinateBBox.x;
-      const end = histogramPlot.chart.coordinateBBox.x + histogramPlot.chart.coordinateBBox.width;
-      const minX = e.target.getBBox().minX;
-      const maxX = e.target.getBBox().maxX;
-      const rangeStart = minValue + ((maxValue - minValue) * (minX - start)) / (end - start);
-      const rangeEnd = minValue + ((maxValue - minValue) * (maxX - start)) / (end - start);
-      onBrushChange([rangeStart, rangeEnd]);
-    });
+    /*  histogramPlot.chart.on('mask:change', e => {
+       const minValue = chartData[0].value;
+       const maxValue = chartData[chartData.length - 1].value;
+       const start = histogramPlot.chart.coordinateBBox.x;
+       const end = histogramPlot.chart.coordinateBBox.x + histogramPlot.chart.coordinateBBox.width;
+       const minX = e.target.getBBox().minX;
+       const maxX = e.target.getBBox().maxX;
+       const rangeStart = minValue + ((maxValue - minValue) * (minX - start)) / (end - start);
+       const rangeEnd = minValue + ((maxValue - minValue) * (maxX - start)) / (end - start);
+       onBrushChange([rangeStart, rangeEnd]);
+     }); */
+
+    histogramPlot.on("element:click", ({ view }) => {
+      const elements = view.geometries[0].elements;
+      const selectRanges = elements.filter(e => e.states.indexOf('active') != -1).map(e => e.data.range);
+      const isFilterReady = selectRanges.length !== 0;
+      const range = isFilterReady ? [selectRanges[0][0], selectRanges[selectRanges.length - 1][1]] : [];
+      console.log(range, isFilterReady)
+      updateFilterCriteria(filterCriter.id!, {
+        ...filterCriter,
+        isFilterReady,
+        range,
+      })
+    })
 
     histogramPlot.render();
     histogramRef.current = histogramPlot;
   };
 
   useEffect(() => {
-    G2.registerInteraction('brush', {
+    /* G2.registerInteraction('brush', {
       showEnable: [
         { trigger: 'plot:mouseenter', action: 'cursor:crosshair' },
         { trigger: 'mask:mouseenter', action: 'cursor:move' },
@@ -308,6 +330,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         { trigger: 'mask:dragend', action: 'rect-mask:moveEnd' },
       ],
       rollback: [{ trigger: 'dblclick', action: ['rect-mask:hide', 'element-sibling-filter-record:reset'] }],
+    }); */
+
+    G2.registerInteraction('element-highlight', {
+      start: [{ trigger: 'element:click', action: 'element-highlight:toggle' }],
     });
   }, []);
 
@@ -335,7 +361,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       histogramRef.current?.destroy();
       histogramRef.current = undefined;
     }
-  }, [chartData, filterCriter.analyzerType]);
+  }, [chartData, filterCriter.analyzerType, histogramData]);
   const elementProps = filterCriter.elementType === 'node' ? nodeProperties : edgeProperties;
   return (
     <div key={filterCriter.id} className="gi-filter-panel-group">
