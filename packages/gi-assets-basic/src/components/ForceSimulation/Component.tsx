@@ -29,7 +29,6 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const handleClick = () => {
     const { instance = {} } = layoutInstance || {};
     const { simulation } = instance;
-    debugger;
 
     if (isForce && simulation) {
       if (!toggle) {

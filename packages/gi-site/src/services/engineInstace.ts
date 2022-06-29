@@ -1,5 +1,5 @@
 import request from 'umi-request';
-import { SERVICE_URL_PREFIX } from './const';
+import { IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
 
 export interface CreateEngineInstanceParams {
   projectId: string;
@@ -91,6 +91,14 @@ export const deleteInstance = async (instanceId: string) => {
 };
 
 export const findEngineInstanceList = async (projectId: string) => {
+  if (IS_LOCAL_ENV) {
+    return new Promise(resolve => {
+      resolve({
+        data: [],
+        sucess: true,
+      });
+    });
+  }
   const response = await request(`${SERVICE_URL_PREFIX}/engineinstance/list`, {
     method: 'get',
     params: {
