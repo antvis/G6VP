@@ -47,30 +47,22 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.data = data;
           draft.source = data;
         } else {
-          const newData = transform(data, true);
-          draft.rawData = { ...data };
-          draft.data = newData;
-          draft.source = newData;
-
-          if (nodes.length > 1000 || edges.length > 1000) {
-            // notification.warn({
-            //   message: '数据过大',
-            //   description:
-            //     '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
-            // });
-
+          if (nodes.length > 1000) {
             console.warn(
               '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
             );
-            draft.layout.type = 'grid';
-            if (nodes.length > 2000 || edges.length > 2000) {
-              /** 数据量过大，需要裁剪 */
-              draft.data = {
-                nodes: [...newData.nodes].splice(0, 1000),
-                edges: [],
-              };
-              console.warn('加载的数据量过大，默认裁剪节点为2000，边为100');
-            }
+            draft.largeGraphMode = true;
+            draft.largeGraphData = data;
+            draft.source = data;
+            draft.data = {
+              nodes: [],
+              edges: [],
+            };
+          } else {
+            const newData = transform(data, true);
+            draft.rawData = { ...data };
+            draft.data = newData;
+            draft.source = newData;
           }
         }
         draft.initialized = true;

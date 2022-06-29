@@ -1,12 +1,14 @@
 import React from 'react';
 import type { Updater } from 'use-immer';
-import { GIAssets, GIService, State, ISourceDataMap } from './typing';
+import { GIAssets, GIService, ISourceDataMap, State } from './typing';
 
 interface ContextType extends State {
   updateContext: Updater<State>;
   updateData: (data: any) => any;
   assets: GIAssets;
   services: GIService[];
+  stopForceSimulation: () => void;
+  restartForceSimulation: (nodes?: []) => void;
   GISDK_ID: string;
   sourceDataMap: ISourceDataMap;
   /** 用户自己的数据 */
@@ -19,6 +21,8 @@ const defaultContext = {
   apis: null,
   theme: null,
   layout: null,
+  stopForceSimulation: () => {},
+  restartForceSimulation: () => {},
   updateContext: () => {},
   updateData: () => {},
 } as ContextType;
