@@ -15,6 +15,8 @@ export interface State {
   data: GraphinData;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
+  /** 大图数据 */
+  largeGraphData?: GraphinData;
 
   schemaData: IGraphSchema;
 
