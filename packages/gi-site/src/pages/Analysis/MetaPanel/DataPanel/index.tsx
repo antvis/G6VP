@@ -5,9 +5,8 @@ import {
   EyeOutlined,
   LoadingOutlined,
   TableOutlined,
-  UploadOutlined,
 } from '@ant-design/icons';
-import { Button, Collapse, message, Modal, Popconfirm, Radio, Space, Table, Tag } from 'antd';
+import { Collapse, message, Modal, Popconfirm, Radio, Space, Table, Tag } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
@@ -20,6 +19,7 @@ import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../utils';
 import DataSchema from './DataSchema';
 import DataService from './DataService';
+import DataSource from './DataSource';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -193,12 +193,6 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     });
   };
 
-  const uploadData = () => {
-    updateContext(draft => {
-      draft.isUploadModalVisible = true;
-    });
-  };
-
   const onChange = value => {
     setTableData(
       initData?.[value].map((d, i) => {
@@ -249,20 +243,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     <>
       <div>
         <div className="gi-config-panel-title">数据</div>
-        <CollapseCard
-          title="图数据源"
-          extra={
-            <Button
-              type="dashed"
-              style={{ width: '100%' }}
-              size="small"
-              onClick={uploadData}
-              className="gi-intro-upload-data"
-            >
-              <UploadOutlined /> 导入
-            </Button>
-          }
-        >
+        <CollapseCard title="图数据源" extra={<DataSource data={data} />}>
           {instanceList.map(d => {
             return (
               <ActionList
