@@ -16,7 +16,6 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/gi-assets-testing": "2.x",
     "@alipay/graphinsight": "2.x",
     "@antv/g2plot": "^2.4.15",
     "@antv/graphin-icons": "^1.0.0",
