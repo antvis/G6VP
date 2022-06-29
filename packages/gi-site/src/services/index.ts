@@ -28,7 +28,6 @@ export const getProjectById = async (id: string) => {
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
     }
-    const expandInfo = JSON.parse(project.expandInfo)
 
     return {
       schemaData: project.schemaData,
@@ -37,7 +36,6 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys: project.activeAssetsKeys,
       name: project.name,
       serviceConfig: project.serviceConfig,
-      expandInfo
     };
   }
 
@@ -46,7 +44,7 @@ export const getProjectById = async (id: string) => {
 
     const data = JSON.parse(project.data);
     const serviceConfig = JSON.parse(project.serviceConfig);
-    const expandInfo = JSON.parse(project.expandInfo)
+    const expandInfo = JSON.parse(project.expandInfo);
     let activeAssetsKeys;
     if (project.activeAssetsKeys) {
       activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
@@ -127,7 +125,7 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
     }
 
     if (expandInfo) {
-      origin.expandInfo = JSON.parse(expandInfo)
+      origin.expandInfo = JSON.parse(expandInfo);
     }
     return await localforage.setItem(id, origin);
   }
