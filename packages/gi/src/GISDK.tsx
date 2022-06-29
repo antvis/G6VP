@@ -65,6 +65,8 @@ const GISDK = (props: Props) => {
     theme: null,
     //@ts-ignore
     layoutInstance: null,
+    stopForceSimulation: () => {},
+    restartForceSimulation: () => {},
   });
 
   React.useEffect(() => {

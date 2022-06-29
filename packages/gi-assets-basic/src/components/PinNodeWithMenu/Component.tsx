@@ -13,20 +13,21 @@ export interface PinNodeMenuItemProps {
 
 const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => {
   const { contextmenu } = props;
-  const { graph, layoutInstance } = useContext();
+  const { graph, layout, restartForceSimulation } = useContext();
   const target = contextmenu.item;
   if (!target) {
     return null;
   }
   const model = target.getModel();
   const { pinned } = model;
+  const isForce = layout.type === 'graphin-force';
 
   const handleLockNode = () => {
     contextmenu.onClose();
     if (pinned) {
-      handleUnPinNode(target, graph, layoutInstance);
+      handleUnPinNode(target, graph, restartForceSimulation, isForce);
     } else {
-      handlePinNode(target, graph, layoutInstance, { dragNodeMass: 100000 });
+      handlePinNode(target, graph, restartForceSimulation, { dragNodeMass: 100000, isForce });
     }
   };
 
