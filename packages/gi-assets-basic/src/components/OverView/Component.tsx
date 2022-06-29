@@ -31,7 +31,6 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
 
   return (
     <div>
-      {/* <Alert message="您可以通过下方的筛选面板，根据统计分析结果，自主选择部分子图在画布中展示" type="info"></Alert> */}
       <Row style={{ padding: '12px' }}>
         <Col span={8}>
           <Statistic title="展示限制" value={limit} />
@@ -45,7 +44,9 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
       </Row>
       <Alert message={title} type="info" />
 
-      <FilterPanel histogramColor="#3056E3" isFilterIsolatedNodes={true} highlightMode={true} limit={limit} />
+      {largeGraphMode && (
+        <FilterPanel histogramColor="#3056E3" isFilterIsolatedNodes={true} highlightMode={true} limit={limit} />
+      )}
     </div>
   );
 };

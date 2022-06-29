@@ -18,7 +18,7 @@ export interface IProps {
 
 const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
-  const { graph, layoutInstance, layout } = useContext();
+  const { graph, layoutInstance, layout, restartForceSimulation, stopForceSimulation } = useContext();
   const [state, setState] = React.useState({
     toggle: false,
   });
@@ -29,12 +29,13 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const handleClick = () => {
     const { instance = {} } = layoutInstance || {};
     const { simulation } = instance;
+    debugger;
 
     if (isForce && simulation) {
       if (!toggle) {
-        simulation.stop();
+        stopForceSimulation();
       } else {
-        simulation.restart([], graph);
+        restartForceSimulation([]);
       }
       setState({
         ...state,
@@ -47,11 +48,7 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
 
   React.useEffect(() => {
     const handleNodeDragStart = () => {
-      const { instance = {} } = layoutInstance || {};
-      const { simulation } = instance;
-      if (simulation) {
-        simulation.stop();
-      }
+      stopForceSimulation();
     };
     const handleNodeDragEnd = (e: any) => {
       if (!isForce || !autoPin) {
@@ -59,10 +56,11 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
       }
       if (e.item) {
         console.log('doing...');
-        handlePinNode(e.item, graph, layoutInstance, {
+        handlePinNode(e.item, graph, restartForceSimulation, {
           dragNodeMass,
           x: e.x,
           y: e.y,
+          isForce,
         });
       }
     };

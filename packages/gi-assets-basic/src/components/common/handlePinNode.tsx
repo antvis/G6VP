@@ -2,11 +2,9 @@ import iconLoader from '@antv/graphin-icons';
 // @ts-ignore
 const icons = Graphin.registerFontFamily(iconLoader);
 
-export const handlePinNode = (target, graph, layoutInstance, params) => {
-  const { x, y, dragNodeMass } = params || {};
-  const { instance = {} } = layoutInstance || {};
-  const { simulation, type } = instance;
-  const isForce = type === 'graphin-force' && simulation;
+export const handlePinNode = (target, graph, restartForceSimulation, params) => {
+  const { x, y, dragNodeMass, isForce } = params || {};
+
   const model = target.getModel();
   const style = model.style || { badges: [] };
   const { keyshape, icon } = style;
@@ -53,14 +51,13 @@ export const handlePinNode = (target, graph, layoutInstance, params) => {
       },
     };
     // 重启力导
-    simulation.restart([newModel], graph);
+    restartForceSimulation.restart([newModel], graph);
+    // simulation.restart([newModel], graph);
+    // console.log('simulation', simulation, layoutInstance.instance.simulation);
   }
 };
 
-export const handleUnPinNode = (target, graph, layoutInstance) => {
-  const { instance = {} } = layoutInstance || {};
-  const { simulation, type } = instance;
-  const isForce = type === 'graphin-force' && simulation;
+export const handleUnPinNode = (target, graph, restartForceSimulation, isForce) => {
   const model = target.getModel();
   const style = model.style || { badges: [] };
   const badges = [...style.badges];
@@ -79,6 +76,6 @@ export const handleUnPinNode = (target, graph, layoutInstance) => {
   });
   // 重启力导
   if (isForce) {
-    simulation.restart([model], graph);
+    restartForceSimulation.restart([model], graph);
   }
 };

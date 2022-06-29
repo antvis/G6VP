@@ -6,6 +6,8 @@ export interface State {
   layoutInstance: GraphinContextType['layout'];
   apis: GraphinContextType['apis'];
   theme: GraphinContextType['theme'];
+  stopForceSimulation: () => void;
+  restartForceSimulation: (nodes?: []) => void;
 
   /** graphinsight */
 
