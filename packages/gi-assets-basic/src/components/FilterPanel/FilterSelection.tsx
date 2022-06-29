@@ -249,6 +249,14 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       interactions: [
         { type: 'element-highlight' }
       ],
+      state: {
+        // 设置 active 激活状态的样式
+        active: {
+          style: {
+            lineWidth: 0,
+          },
+        },
+      },
       meta: {
         range: { nice: true },
         count: {
