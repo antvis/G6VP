@@ -6,6 +6,8 @@ export interface State {
   layoutInstance: GraphinContextType['layout'];
   apis: GraphinContextType['apis'];
   theme: GraphinContextType['theme'];
+  stopForceSimulation: () => void;
+  restartForceSimulation: (nodes?: []) => void;
 
   /** graphinsight */
 
@@ -15,6 +17,8 @@ export interface State {
   data: GraphinData;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
+  /** 大图数据 */
+  largeGraphData?: GraphinData;
 
   schemaData: IGraphSchema;
 
@@ -47,6 +51,8 @@ export interface State {
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
+  /** 大图模式 */
+  largeGraphMode: boolean;
 }
 
 export interface Props {

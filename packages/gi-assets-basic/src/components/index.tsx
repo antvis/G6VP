@@ -25,6 +25,7 @@ import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
 import ForceSimulation from './ForceSimulation';
 
+import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
@@ -66,4 +67,5 @@ export {
   // FuseEditPanel,
   ForceSimulation,
   PinNodeWithMenu,
+  Overview,
 };

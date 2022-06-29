@@ -1,16 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Pie, Plot, PieOptions, WordCloud, WordCloudOptions, G2, Histogram, HistogramOptions } from '@antv/g2plot';
-import { Button, Select } from 'antd';
-import { DeleteOutlined, NumberOutlined, FieldStringOutlined } from '@ant-design/icons';
 import { useContext } from '@alipay/graphinsight';
-import { IFilterCriteria, IChartData, IHistogramValue } from './type';
-import { getValueMap, getHistogramData } from './utils';
+import { DeleteOutlined, FieldStringOutlined, FieldTimeOutlined, NumberOutlined } from '@ant-design/icons';
+import { Pie, PieOptions, Plot, WordCloud, WordCloudOptions } from '@antv/g2plot';
+import { Button, Select } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import LineChart from './Charts/LineChart';
+
+import { G2, Histogram, HistogramOptions } from '@antv/g2plot';
+
+import { IFilterCriteria, IHistogramValue } from './type';
+import { getHistogramData, getValueMap } from './utils';
+
 import './index.less';
 
-const iconMap = {
+export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   string: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
+  date: <FieldTimeOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
 interface FilterSelectionProps {
@@ -23,14 +29,20 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriter, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, histogramColor } =
-    props;
+  const {
+    filterCriter,
+    nodeProperties,
+    edgeProperties,
+    updateFilterCriteria,
+    removeFilterCriteria,
+    histogramColor,
+  } = props;
   const [chartData, setChartData] = useState<Map<string, number>>();
   const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
   const { source } = useContext();
   const piePlotRef = useRef<Plot<PieOptions> | undefined>();
   const wordCloudRef = useRef<Plot<WordCloudOptions> | undefined>();
-  const histogramRef = useRef<Plot<HistogramOptions> | undefined>()
+  const histogramRef = useRef<Plot<HistogramOptions> | undefined>();
 
   const onSelectChange = value => {
     const id = filterCriter.id as string;
@@ -50,7 +62,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         prop,
         range: [data[0].value, data[data.length - 1].value],
       });
-
     } else if (elementProps[prop] === 'boolean') {
       analyzerType = 'PIE';
       const valueMap = getValueMap(source, prop, elementType);
@@ -85,6 +96,15 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         prop,
         analyzerType,
         selectOptions,
+      });
+    } else if (elementProps[prop] === 'date') {
+      analyzerType = 'DATE';
+      updateFilterCriteria(id, {
+        id,
+        isFilterReady: false,
+        elementType,
+        prop,
+        analyzerType,
       });
     } else {
       analyzerType = 'NONE';
@@ -121,6 +141,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     if (!chartData || !container) {
       return;
     }
+    console.log('chartData', chartData);
     const sum = [...chartData.values()].reduce((acc, cur) => acc + cur, 0);
     const data = [...chartData.entries()].map(e => {
       const [key, value] = e;
@@ -237,21 +258,21 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       },
     });
 
-    histogramPlot.chart.on("mask:change", (e) => {
+    histogramPlot.chart.on('mask:change', e => {
       const minValue = chartData[0].value;
       const maxValue = chartData[chartData.length - 1].value;
       const start = histogramPlot.chart.coordinateBBox.x;
       const end = histogramPlot.chart.coordinateBBox.x + histogramPlot.chart.coordinateBBox.width;
       const minX = e.target.getBBox().minX;
       const maxX = e.target.getBBox().maxX;
-      const rangeStart = minValue + (maxValue - minValue) * (minX - start) / (end - start);
-      const rangeEnd = minValue + (maxValue - minValue) * (maxX - start) / (end - start);
+      const rangeStart = minValue + ((maxValue - minValue) * (minX - start)) / (end - start);
+      const rangeEnd = minValue + ((maxValue - minValue) * (maxX - start)) / (end - start);
       onBrushChange([rangeStart, rangeEnd]);
-    })
+    });
 
     histogramPlot.render();
     histogramRef.current = histogramPlot;
-  }
+  };
 
   useEffect(() => {
     G2.registerInteraction('brush', {
@@ -263,30 +284,32 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       ],
       start: [
         {
-          trigger: 'plot:mousedown', isEnable(context) {
+          trigger: 'plot:mousedown',
+          isEnable(context) {
             return !context.isInShape('mask');
-          }, action: ['rect-mask:start', 'rect-mask:show']
+          },
+          action: ['rect-mask:start', 'rect-mask:show'],
         },
-        { trigger: 'mask:dragstart', action: 'rect-mask:moveStart' }
+        { trigger: 'mask:dragstart', action: 'rect-mask:moveStart' },
       ],
       processing: [
         { trigger: 'plot:mousemove', action: 'rect-mask:resize' },
         {
-          trigger: 'mask:drag', isEnable(context) {
+          trigger: 'mask:drag',
+          isEnable(context) {
             return context.isInPlot();
-          }, action: 'rect-mask:move'
+          },
+          action: 'rect-mask:move',
         },
-        { trigger: 'mask:change', action: 'element-sibling-filter-record:filter' }
+        { trigger: 'mask:change', action: 'element-sibling-filter-record:filter' },
       ],
       end: [
         { trigger: 'plot:mouseup', action: 'rect-mask:end' },
-        { trigger: 'mask:dragend', action: 'rect-mask:moveEnd' }
+        { trigger: 'mask:dragend', action: 'rect-mask:moveEnd' },
       ],
-      rollback: [
-        { trigger: 'dblclick', action: ['rect-mask:hide', 'element-sibling-filter-record:reset'] }
-      ]
+      rollback: [{ trigger: 'dblclick', action: ['rect-mask:hide', 'element-sibling-filter-record:reset'] }],
     });
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (filterCriter.analyzerType === 'PIE') {
@@ -313,7 +336,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       histogramRef.current = undefined;
     }
   }, [chartData, filterCriter.analyzerType]);
-
+  const elementProps = filterCriter.elementType === 'node' ? nodeProperties : edgeProperties;
   return (
     <div key={filterCriter.id} className="gi-filter-panel-group">
       <div className="gi-filter-panel-prop">
@@ -363,6 +386,27 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             value={filterCriter.selectValue}
           />
         )}
+
+        {filterCriter.analyzerType === 'BRUSH' &&
+          // <BrushFilter
+          //   value={filterCriter.range!}
+          //   histogram={filterCriter.histogram!}
+          //   onChangeRange={onBrushChange}
+          //   /* BrushFilter 组件问题，设置不了百分比 */
+          //   width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
+          // />
+          null}
+
+        {filterCriter.analyzerType === 'DATE' && (
+          <LineChart
+            filterCriter={filterCriter}
+            source={source}
+            elementProps={elementProps}
+            /* BrushFilter 组件问题，设置不了百分比 */
+            width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
+          />
+        )}
+
         {filterCriter.analyzerType === 'NONE' && <span>请选择合法字段</span>}
       </div>
     </div>
