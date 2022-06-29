@@ -8,6 +8,7 @@ import FilterSelection from '../FilterPanel/FilterSelection';
 import '../FilterPanel/index.less';
 import { IFilterCriteria } from '../FilterPanel/type';
 import { filterGraphData } from '../FilterPanel/utils';
+import Interpretation from './Interpretation';
 
 const { generatorSchemaByGraphData, isStyles } = utils;
 
@@ -19,11 +20,16 @@ export interface FilterPanelProps {
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes, highlightMode, limit } = props;
+  const { histogramColor, isFilterIsolatedNodes, limit } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { source, updateContext, transform, schemaData, graph } = useContext();
-  const dataSchemas = schemaData; //useMemo(() => generatorSchemaByGraphData(source), [source]);
-  console.log('dataSchemas', dataSchemas, schemaData, source, limit);
+  const { updateContext, transform, schemaData, largeGraphData } = useContext();
+  const dataSchemas = schemaData;
+  const filterData = React.useRef({});
+
+  const [state, setState] = React.useState({
+    source: largeGraphData,
+    data: { nodes: [], edges: [] },
+  });
 
   const nodeProperties = useMemo(() => {
     return dataSchemas.nodes.reduce((acc, cur) => {
@@ -71,56 +77,57 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     delete filterOptions[id];
     setFilterOptions({ ...filterOptions });
   };
+  const { source } = state;
 
   useEffect(() => {
-    let data: GraphinData = source;
+    let data: GraphinData = source as GraphinData;
+    let canvasData;
 
     Object.values(filterOptions).map(filterCriteria => {
       data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
     });
+    // 画布中的数据
+    canvasData = data;
+    filterData.current = data;
 
-    if (highlightMode) {
-      console.log('data', data);
-      // highlightSubGraph(graph, data);
-      if (data.nodes.length < limit) {
-        updateContext(draft => {
-          if (isStyles(source.nodes)) {
-            draft.data = data;
-          } else {
-            draft.data = transform(data);
-          }
-          draft.layoutCache = true;
-        });
-      }
-      return;
+    //如果在limit内，则添加到画布上
+    const isOverLimit = data.nodes.length > limit;
+    if (isOverLimit) {
+      canvasData = {
+        nodes: [],
+        edges: [],
+      };
     }
 
     updateContext(draft => {
-      if (isStyles(source.nodes)) {
-        draft.data = data;
+      if (source && isStyles(source.nodes)) {
+        draft.data = canvasData;
       } else {
-        draft.data = transform(data);
+        draft.data = transform(canvasData);
       }
       draft.layoutCache = true;
     });
-  }, [filterOptions]);
+  }, [filterOptions, source]);
 
   return (
     <div className="gi-filter-panel">
+      <Interpretation data={filterData.current as GraphinData} filterOptions={filterOptions} />
       <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
         增加筛选器
       </Button>
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriter => {
           return (
-            <FilterSelection
-              filterCriter={filterCriter}
-              nodeProperties={nodeProperties}
-              edgeProperties={edgeProperties}
-              updateFilterCriteria={updateFilterCriteria}
-              removeFilterCriteria={removeFilterCriteria}
-              histogramColor={histogramColor}
-            />
+            <div>
+              <FilterSelection
+                filterCriter={filterCriter}
+                nodeProperties={nodeProperties}
+                edgeProperties={edgeProperties}
+                updateFilterCriteria={updateFilterCriteria}
+                removeFilterCriteria={removeFilterCriteria}
+                histogramColor={histogramColor}
+              />
+            </div>
           );
         })}
       </div>

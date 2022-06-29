@@ -15,6 +15,7 @@ export default () => {
       'x-component': 'NumberPicker',
       default: 200,
     },
+
     ...metas,
   };
 };
