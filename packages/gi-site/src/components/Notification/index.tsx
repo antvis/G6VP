@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { Drawer } from "antd";
 import VersionList from "./VersionList";
+import { driver } from "localforage";
 
 export interface IState {
     popoverVisible: boolean;
@@ -32,9 +33,21 @@ const Notification = () => {
           draft.popoverVisible =
             version === localStorage.getItem("GI-VERSION") ? false : true;
         });
-        //localStorage.setItem("GI-VERSION", version);
+        localStorage.setItem("GI-VERSION", version);
       });
   }, []);
+
+  useEffect(() => {
+    // 一秒后关闭提示
+    const timeId = setTimeout(() => {
+      updateState(draft => {
+        draft.popoverVisible = false;
+      })
+    }, 1000);
+    return () => {
+      clearTimeout(timeId);
+    }
+  }, [])
 
   const content = (
     <div>
@@ -61,7 +74,7 @@ const Notification = () => {
         visible={state.popoverVisible}
         title="版本通知"
         content={content}
-        arrowPointAtCenter
+        placement="bottom"
       >
         <Button icon={<BellOutlined />} type="text" onClick={handleClick}></Button>
       </Popover>
