@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Card, Tag, Divider } from "antd";
+import React, { useEffect, useRef } from "react";
+import { Button, Card, Tag, Divider, Spin } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
 import { IVersionObj } from "./type";
@@ -13,6 +13,7 @@ const { Meta } = Card;
 
 interface IState {
   isShowMore: boolean;
+  isLoading: boolean;
   url: string;
 }
 
@@ -20,11 +21,15 @@ const VersionList: React.FC<IVersionListProps> = (props) => {
   const { versionInfo } = props;
   const [state, updateState] = useImmer<IState>({
     isShowMore: false,
+    isLoading: false,
     url: "",
   });
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   const showMore = (url: string) => {
     updateState((draft) => {
       draft.isShowMore = true;
+      draft.isLoading = true;
       draft.url = url;
     });
   };
@@ -35,6 +40,16 @@ const VersionList: React.FC<IVersionListProps> = (props) => {
       draft.url = "";
     });
   };
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      iframeRef.current.onload = () => {
+        updateState((draft) => {
+          draft.isLoading = false;
+        });
+      };
+    }
+  }, [state.isShowMore]);
 
   if (state.isShowMore) {
     return (
@@ -48,11 +63,28 @@ const VersionList: React.FC<IVersionListProps> = (props) => {
           ></Button>
         </header>
         <Divider />
+        <Spin
+          size="large"
+          style={{
+            position: "absolute",
+            top: "300px",
+            transform: "translateX(-50%)",
+            left: "50%",
+            zIndex: 0,
+            display: state.isLoading ? "block" : "none",        
+          }}
+        ></Spin>
         <iframe
           width="100%"
           height="100%"
           src={`${state.url}?view=doc_embed&from=asite`}
-          style={{border:"none", background: "rgb(243, 243, 244)"}}
+          style={{
+            border: "none",
+            background: "rgba(255, 255, 255, 0)",
+            position: "absolute",
+            zIndex: 1,
+          }}
+          ref={iframeRef}
         ></iframe>
       </div>
     );
