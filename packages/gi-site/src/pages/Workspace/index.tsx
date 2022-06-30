@@ -13,7 +13,6 @@ import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
-import { fetchData } from "@alipay/yuyan-config-data";
 
 setDefaultDemo();
 
@@ -99,36 +98,34 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   }
 
   useEffect(() => {
-    const notifcatioVersion = async () => {
-      const versionInfo = await fetchData("notifcation_version2")
-      const { version, level, content, imgUrl } = versionInfo;
-      const lastVersion = localStorage.getItem("gi-version");
-      if (version === lastVersion) {
-        return;
-      }
-      if (level === '0') {
-        // BUG FIX 级别
-        message.success(`${version}: ${content}`);
-      } else if (level === '1') {
-        // Feature 上线
-        notification.open({
-          message: `版本: ${version}`,
-          description: content,
-        })
-      } else if (level === '2') {
-        // 重要更新
-        updateState(draft => {
-          draft.drawerVisible = true;
-          draft.version = version;
-          draft.content = content;
-          draft.imgUrl = imgUrl;
-        })
-      }
-      localStorage.setItem("gi-version", version);
-
-      // console.log("data:", versionInfo);
-    }
-    notifcatioVersion();
+    fetch("https://render.alipay.com/p/yuyan/notifcation_version2/zh_CN.json")
+      .then(res => res.json())
+      .then(res => {
+        const { version, level, content, imgUrl } = res;
+        const lastVersion = localStorage.getItem("gi-version");
+        if (version === lastVersion) {
+          return;
+        }
+        if (level === '0') {
+          // BUG FIX 级别
+          message.success(`${version}: ${content}`);
+        } else if (level === '1') {
+          // Feature 上线
+          notification.open({
+            message: `版本: ${version}`,
+            description: content,
+          })
+        } else if (level === '2') {
+          // 重要更新
+          updateState(draft => {
+            draft.drawerVisible = true;
+            draft.version = version;
+            draft.content = content;
+            draft.imgUrl = imgUrl;
+          })
+        }
+        localStorage.setItem("gi-version", version);
+      })
   }, [])
 
   const rightContentExtra = (
