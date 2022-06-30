@@ -21,7 +21,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const { histogramColor, isFilterIsolatedNodes, highlightMode } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
-  const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
+  const dataSchemas = schemaData; // useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
     return dataSchemas.nodes.reduce((acc, cur) => {
@@ -76,9 +76,9 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
           newFilterOptions[key] = preState[key];
         }
       }
-      console.log(newFilterOptions)
+
       return newFilterOptions;
-    })
+    });
   };
 
   useEffect(() => {
