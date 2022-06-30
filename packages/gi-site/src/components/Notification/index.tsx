@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { Drawer } from "antd";
 import VersionList from "./VersionList";
-import { driver } from "localforage";
 
 export interface IState {
     popoverVisible: boolean;
