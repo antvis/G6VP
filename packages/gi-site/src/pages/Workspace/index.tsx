@@ -1,10 +1,11 @@
-import { Tabs, message, notification, Drawer, Card } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { Tabs } from 'antd';
+import React from 'react';
 import { useImmer } from 'use-immer';
 import CustomerFeedback from '../../components/CustomerFeedback';
 import QRcode from '../../components/QRcode';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
+import  Notification from "../../components/Notification"
 import { getSearchParams } from '../../components/utils';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
@@ -13,6 +14,7 @@ import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
+
 
 setDefaultDemo();
 
@@ -85,51 +87,9 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     }
   };
 
-  const handleCloseDrawer = () => {
-    updateState(draft => {
-      draft.drawerVisible = false;
-    })
-  }
-
-  const showMore = () => {
-    updateState(draft => {
-      draft.isShowMore = true;
-    })
-  }
-
-  useEffect(() => {
-    fetch("https://render.alipay.com/p/yuyan/notifcation_version2/zh_CN.json")
-      .then(res => res.json())
-      .then(res => {
-        const { version, level, content, imgUrl } = res;
-        const lastVersion = localStorage.getItem("gi-version");
-        if (version === lastVersion) {
-          return;
-        }
-        if (level === '0') {
-          // BUG FIX 级别
-          message.success(`${version}: ${content}`);
-        } else if (level === '1') {
-          // Feature 上线
-          notification.open({
-            message: `版本: ${version}`,
-            description: content,
-          })
-        } else if (level === '2') {
-          // 重要更新
-          updateState(draft => {
-            draft.drawerVisible = true;
-            draft.version = version;
-            draft.content = content;
-            draft.imgUrl = imgUrl;
-          })
-        }
-        localStorage.setItem("gi-version", version);
-      })
-  }, [])
-
   const rightContentExtra = (
     <>
+      <Notification />
       <QRcode />
       <CustomerFeedback />
       <DataModeCard />
@@ -172,16 +132,6 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
         </div>
       </div>
       <CreatePanel visible={visible} handleClose={handleClose} />
-      <Drawer visible={state.drawerVisible} onClose={handleCloseDrawer} title={`版本: ${state.version}`}>
-        {
-          !state.isShowMore && <Card
-            hoverable
-            cover={<img style={{ width: "90%" }} alt="version-content" src={state.imgUrl} />}
-            onClick={showMore}
-          />
-        }
-        {state.isShowMore && <iframe width="100%" height="98%" src={`${state.content}?view=doc_embed&from=asite`} frameBorder={0}></iframe>}
-      </Drawer>
     </>
   );
 };
