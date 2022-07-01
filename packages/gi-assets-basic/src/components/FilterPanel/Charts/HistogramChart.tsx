@@ -5,11 +5,11 @@ import { IFilterCriteria, IHistogramValue } from "../type";
 interface IHistogramChartProps {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
-  histogramData: IHistogramValue[];
 }
 
 const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
-  const { filterCriteria, updateFilterCriteria, histogramData } = props;
+  const { filterCriteria, updateFilterCriteria } = props;
+  const {histogramData = [{}]} = filterCriteria;
 
   useEffect(() => {
     G2.registerInteraction("element-highlight", {

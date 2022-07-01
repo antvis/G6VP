@@ -5,11 +5,12 @@ import { IFilterCriteria } from "../type";
 interface IPieChartProps {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
-  chartData: Map<string, number>;
+  //chartData: Map<string, number>;
 }
 
 const PieChart: React.FC<IPieChartProps> = (props) => {
-  const { filterCriteria, chartData, updateFilterCriteria } = props;
+  const { filterCriteria, updateFilterCriteria } = props;
+  const { chartData = new Map() } = filterCriteria;
 
   useEffect(() => {
     const sum = [...chartData.values()].reduce((acc, cur) => acc + cur, 0);
@@ -60,7 +61,7 @@ const PieChart: React.FC<IPieChartProps> = (props) => {
     };
   }, [chartData]);
 
-  return <div id={`${filterCriteria.id}-chart-container`}/>;
+  return <div id={`${filterCriteria.id}-chart-container`} />;
 };
 
 export default PieChart;

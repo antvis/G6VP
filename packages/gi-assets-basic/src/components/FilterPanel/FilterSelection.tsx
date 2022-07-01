@@ -52,8 +52,8 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
     updateFilterCriteria,
     removeFilterCriteria,
   } = props;
-  const [chartData, setChartData] = useState<Map<string, number>>(new Map());
-  const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
+  // const [chartData, setChartData] = useState<Map<string, number>>(new Map());
+  // const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
   const { source } = useContext();
 
   const onSelectChange = (value) => {
@@ -65,39 +65,43 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
     let analyzerType;
     if (elementProps[prop] === "number") {
       analyzerType = "HISTOGRAM";
-      const data = getHistogramData(source, prop, elementType);
-      setHistogramData(data);
+      const histogramData = getHistogramData(source, prop, elementType);
       updateFilterCriteria(id, {
         id,
         analyzerType,
         isFilterReady: false,
         elementType,
         prop,
-        range: [data[0].value, data[data.length - 1].value],
+        range: [
+          histogramData[0].value,
+          histogramData[histogramData.length - 1].value,
+        ],
+        histogramData,
       });
     } else if (elementProps[prop] === "boolean") {
       analyzerType = "PIE";
-      const valueMap = getValueMap(source, prop, elementType);
-      setChartData(valueMap);
+      const chartData = getValueMap(source, prop, elementType);
+      //setChartData(valueMap);
       updateFilterCriteria(id, {
         id,
         isFilterReady: false,
         elementType,
         prop,
         analyzerType,
+        chartData,
       });
     } else if (elementProps[prop] === "string") {
-      const valueMap = getValueMap(source, prop, elementType);
+      const chartData = getValueMap(source, prop, elementType);
       let selectOptions;
-      if (valueMap.size <= 5) {
+      if (chartData.size <= 5) {
         analyzerType = "PIE";
-        setChartData(valueMap);
-      } else if (valueMap.size <= 10) {
+        //setChartData(valueMap);
+      } else if (chartData.size <= 10) {
         analyzerType = "WORDCLOUD";
-        setChartData(valueMap);
+        //setChartData(valueMap);
       } else {
         analyzerType = "SELECT";
-        selectOptions = [...valueMap.keys()].map((key) => ({
+        selectOptions = [...chartData.keys()].map((key) => ({
           value: key,
           label: key,
         }));
@@ -109,6 +113,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
         prop,
         analyzerType,
         selectOptions,
+        chartData,
       });
     } else if (elementProps[prop] === "date") {
       analyzerType = "DATE";
@@ -142,6 +147,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
   };
   const elementProps =
     filterCriteria.elementType === "node" ? nodeProperties : edgeProperties;
+
   return (
     <div key={filterCriteria.id} className="gi-filter-panel-group">
       <div className="gi-filter-panel-prop">
@@ -150,6 +156,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
           onChange={onSelectChange}
           className="gi-filter-panel-prop-select"
           placeholder="选择元素属性"
+          value={
+            filterCriteria.elementType && filterCriteria.prop
+              ? `${filterCriteria.elementType}-${filterCriteria.prop}`
+              : undefined
+          }
         >
           <Select.OptGroup key="node" label="节点">
             {Object.entries(nodeProperties).map((e) => {
@@ -212,7 +223,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
           <PieChart
             filterCriteria={filterCriteria}
             updateFilterCriteria={updateFilterCriteria}
-            chartData={chartData}
+            //chartData={chartData}
           />
         )}
 
@@ -220,7 +231,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
           <WordCloudChart
             filterCriteria={filterCriteria}
             updateFilterCriteria={updateFilterCriteria}
-            chartData={chartData}
+            //chartData={chartData}
           />
         )}
 
@@ -228,7 +239,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
           <HistogramChart
             filterCriteria={filterCriteria}
             updateFilterCriteria={updateFilterCriteria}
-            histogramData={histogramData}
           />
         )}
 

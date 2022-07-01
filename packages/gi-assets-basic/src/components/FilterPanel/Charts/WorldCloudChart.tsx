@@ -5,11 +5,12 @@ import { IFilterCriteria } from "../type";
 interface IWordCloudChartProps {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
-  chartData: Map<string, number>;
+  // chartData: Map<string, number>;
 }
 
 const WordCloudChart: React.FC<IWordCloudChartProps> = (props) => {
-  const { filterCriteria, updateFilterCriteria, chartData } = props;
+  const { filterCriteria, updateFilterCriteria } = props;
+  const { chartData = new Map() } = filterCriteria;
 
   useEffect(() => {
     const data = [...chartData.entries()].map((e) => {
@@ -63,6 +64,6 @@ const WordCloudChart: React.FC<IWordCloudChartProps> = (props) => {
     };
   }, [chartData]);
 
-  return <div id={`${filterCriteria.id}-chart-container`}/>;
+  return <div id={`${filterCriteria.id}-chart-container`} />;
 };
 export default WordCloudChart;
