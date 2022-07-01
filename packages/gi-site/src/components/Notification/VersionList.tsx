@@ -67,7 +67,7 @@ const VersionList: React.FC<IVersionListProps> = (props) => {
           size="large"
           style={{
             position: "absolute",
-            top: "300px",
+            top: "50%",
             transform: "translateX(-50%)",
             left: "50%",
             zIndex: 0,
