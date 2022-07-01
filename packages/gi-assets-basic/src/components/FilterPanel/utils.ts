@@ -32,7 +32,7 @@ export const filterGraphData = (
         }
         inValidNodes.add(node.id);
         return false;
-      } else if (analyzerType === 'BRUSH') {
+      } else if (analyzerType === 'HISTOGRAM') {
         const min = range![0];
         const max = range![1];
         if (node.data && node.data[prop!] && min <= node.data[prop!] && node.data[prop!] <= max) {
@@ -56,7 +56,7 @@ export const filterGraphData = (
         }
 
         return false;
-      } else if (analyzerType === 'BRUSH') {
+      } else if (analyzerType === 'HISTOGRAM') {
         const min = range![0];
         const max = range![1];
         if (edge.data && edge.data[prop!] && min <= edge.data[prop!] && edge.data[prop!] <= max) {

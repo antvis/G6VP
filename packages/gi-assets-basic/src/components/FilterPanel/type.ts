@@ -6,7 +6,7 @@ export interface IFilterCriteria {
   range?: number[];
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
-  analyzerType?: 'BRUSH' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
+  analyzerType?: 'HISTOGRAM' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
   isFilterReady?: boolean;
 }
 
