@@ -47,9 +47,9 @@ const WordCloudChart: React.FC<IWordCloudChartProps> = (props) => {
     wordCloud.on("element:click", ({ view }) => {
       const elements = view.geometries[0].elements;
       const selectValue = elements
-        .filter((e) => e.states.indexOf("selected") != -1)
+        .filter((e) => e.states.indexOf("selected") !== -1)
         .map((e) => e.data.datum.x);
-      const isFilterReady = selectValue.length != 0;
+      const isFilterReady = selectValue.length !== 0;
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         isFilterReady,

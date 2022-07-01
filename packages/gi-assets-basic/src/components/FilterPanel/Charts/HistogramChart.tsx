@@ -9,7 +9,7 @@ interface IHistogramChartProps {
 
 const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
   const { filterCriteria, updateFilterCriteria } = props;
-  const {histogramData = [{}]} = filterCriteria;
+  const { histogramData = [{}] } = filterCriteria;
 
   useEffect(() => {
     G2.registerInteraction("element-highlight", {
@@ -49,13 +49,12 @@ const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
     histogramPlot.on("element:click", ({ view }) => {
       const elements = view.geometries[0].elements;
       const selectRanges = elements
-        .filter((e) => e.states.indexOf("active") != -1)
+        .filter((e) => e.states.indexOf("active") !== -1)
         .map((e) => e.data.range);
       const isFilterReady = selectRanges.length !== 0;
       const range = isFilterReady
         ? [selectRanges[0][0], selectRanges[selectRanges.length - 1][1]]
-        : [];
-      console.log(range, isFilterReady);
+        : undefined;
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         isFilterReady,
@@ -64,6 +63,21 @@ const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
     });
 
     histogramPlot.render();
+
+    // 初次渲染时，处于筛选范围内的图表元素高亮
+    histogramPlot.setState("active", (item: any) => {
+      if (!filterCriteria.range) return false;
+      const min = filterCriteria.range[0];
+      const max = filterCriteria.range[1];
+      return item.range[0] >= min && item.range[1] <= max;
+    });
+
+    histogramPlot.setState("inactive", (item: any) => {
+      if (!filterCriteria.range) return false;
+      const min = filterCriteria.range[0];
+      const max = filterCriteria.range[1];
+      return item.range[0] < min || item.range[1] > max;
+    });
 
     return () => {
       histogramPlot.destroy();

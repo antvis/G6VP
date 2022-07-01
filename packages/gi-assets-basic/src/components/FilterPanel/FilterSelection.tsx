@@ -72,10 +72,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = (props) => {
         isFilterReady: false,
         elementType,
         prop,
-        range: [
-          histogramData[0].value,
-          histogramData[histogramData.length - 1].value,
-        ],
+        //range: [],
         histogramData,
       });
     } else if (elementProps[prop] === "boolean") {

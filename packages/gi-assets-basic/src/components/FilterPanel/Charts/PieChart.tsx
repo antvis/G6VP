@@ -46,14 +46,18 @@ const PieChart: React.FC<IPieChartProps> = (props) => {
       const id = filterCriteria.id as string;
       const elements = view.geometries[0].elements;
       const selectValue = elements
-        .filter((e) => e.states.indexOf("selected") != -1)
+        .filter((e) => e.states.indexOf("selected") !== -1)
         .map((e) => e.data.x);
-      const isFilterReady = selectValue.length != 0;
+      const isFilterReady = selectValue.length !== 0;
       updateFilterCriteria(id, {
         ...filterCriteria,
         isFilterReady,
         selectValue,
       });
+    });
+
+    piePlot.setState("selected", (item: any) => {
+      return !!filterCriteria.selectValue && filterCriteria.selectValue.indexOf(item.x) !== -1;
     });
 
     return () => {
