@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Button, Card, Tag, Divider, Spin } from "antd";
-import { RightOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import { useImmer } from "use-immer";
 import { IVersionObj } from "./type";
 import "./index.less";
@@ -57,7 +57,7 @@ const VersionList: React.FC<IVersionListProps> = (props) => {
         <header className="header">
           <h2>详细信息</h2>
           <Button
-            icon={<RightOutlined />}
+            icon={<LeftOutlined />}
             type="text"
             onClick={showVersionList}
           ></Button>
