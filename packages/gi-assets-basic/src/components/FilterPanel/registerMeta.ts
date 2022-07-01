@@ -10,13 +10,6 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '
 
 const registerMeta = () => {
   const schema = {
-    histogramColor: {
-      title: '直方图颜色',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'ColorInput',
-      default: '#3056E3',
-    },
     isFilterIsolatedNodes: {
       title: '过滤孤立节点',
       type: 'boolean',
