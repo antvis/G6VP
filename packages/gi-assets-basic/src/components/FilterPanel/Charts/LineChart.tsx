@@ -4,18 +4,18 @@ import * as React from 'react';
 import { iconMap } from '../FilterSelection';
 interface LineChartProps {
   source: any;
-  filterCriter: any;
+  filterCriteria: any;
   width: number;
   elementProps: Object;
 }
 
 const LineChart: React.FunctionComponent<LineChartProps> = props => {
   const PlotRef = React.useRef(null);
-  const { source, filterCriter, elementProps } = props;
+  const { source, filterCriteria, elementProps } = props;
   const [state, setState] = React.useState({
     yField: '',
   });
-  const { elementType } = filterCriter;
+  const { elementType } = filterCriteria;
   const { yField } = state;
 
   React.useEffect(() => {
@@ -27,7 +27,7 @@ const LineChart: React.FunctionComponent<LineChartProps> = props => {
     const line = new Column(PlotRef.current as any, {
       data: data,
       padding: 'auto',
-      xField: filterCriter.prop,
+      xField: filterCriteria.prop,
       yField: yField,
       // xAxis: {
       //   // type: 'timeCat',
