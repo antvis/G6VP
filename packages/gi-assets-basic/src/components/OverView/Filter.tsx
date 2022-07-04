@@ -120,12 +120,11 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
           return (
             <div>
               <FilterSelection
-                filterCriter={filterCriter}
+                filterCriteria={filterCriter}
                 nodeProperties={nodeProperties}
                 edgeProperties={edgeProperties}
                 updateFilterCriteria={updateFilterCriteria}
                 removeFilterCriteria={removeFilterCriteria}
-                histogramColor={histogramColor}
               />
             </div>
           );
