@@ -1,11 +1,11 @@
 import { Tabs } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import CustomerFeedback from '../../components/CustomerFeedback';
-import QRcode from '../../components/QRcode';
+
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
-import  Notification from "../../components/Notification"
+import Notification from '../../components/Notification';
+import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
@@ -15,35 +15,33 @@ import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
 
-
 setDefaultDemo();
 
-interface WorkspaceProps { }
+interface WorkspaceProps {}
 const { TabPane } = Tabs;
 const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOCAL_ENV
   ? [
-    {
-      id: 'case',
-      name: '行业案例',
-    },
-    {
-      id: 'project',
-      name: '我的项目',
-    },
-    {
-      id: 'save',
-      name: '我的保存',
-    },
-  ]
+      {
+        id: 'case',
+        name: '行业案例',
+      },
+      {
+        id: 'project',
+        name: '我的项目',
+      },
+      {
+        id: 'save',
+        name: '我的保存',
+      },
+    ]
   : [
-    {
-      id: 'project',
-      name: '我的项目',
-    },
-  ];
+      {
+        id: 'project',
+        name: '我的项目',
+      },
+    ];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
-
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'project';
 
@@ -54,10 +52,10 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     visible: false,
     activeKey: defaultActiveKey,
     drawerVisible: false,
-    version: "",
-    content: "",
+    version: '',
+    content: '',
     isShowMore: false,
-    imgUrl: "",
+    imgUrl: '',
   });
 
   const handleClose = () => {
@@ -91,9 +89,10 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     <>
       <Notification />
       <QRcode />
-      <CustomerFeedback />
+
       <DataModeCard />
-    </>)
+    </>
+  );
 
   return (
     <>

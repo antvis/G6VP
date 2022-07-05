@@ -1,5 +1,5 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Popover, Select, Typography } from 'antd';
+import { DatabaseOutlined } from '@ant-design/icons';
+import { Button, Popover, Select, Typography } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 const { Option } = Select;
@@ -33,7 +33,10 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
     visible: !localStorage.getItem('GI_SERVER_ENV'), // 新用户第一次打开时没有该值，则打开弹窗
   });
 
-  const modeList = [{ img: '', value: 'LOCAL', label: '本地环境' }, { img: '', value: 'ONLINE', label: '在线环境' }];
+  const modeList = [
+    { img: '', value: 'LOCAL', label: '本地环境' },
+    { img: '', value: 'ONLINE', label: '在线环境' },
+  ];
   const { env, visible } = state;
   const handleChange = (value: ServerEnv) => {
     localStorage.setItem('GI_SERVER_ENV', value);
@@ -48,26 +51,25 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
     }
   };
   return (
-    <div>
-      <Popover
-        content={<EnvInfo />}
-        title="环境说明"
-        trigger="click"
-        visible={visible}
-        onVisibleChange={handleVisibleChange}
-      >
-        <InfoCircleOutlined />
-      </Popover>
-      <Select defaultValue={env} style={{ width: 100 }} bordered={false} onChange={handleChange}>
-        {modeList.map(c => {
-          return (
-            <Option key={c.value} value={c.value}>
-              {c.label}
-            </Option>
-          );
-        })}
-      </Select>
-    </div>
+    <Popover
+      content={<EnvInfo />}
+      title="环境说明"
+      trigger="click"
+      visible={visible}
+      onVisibleChange={handleVisibleChange}
+    >
+      <Button icon={<DatabaseOutlined />} style={{ padding: '0px 2px 0px 8px' }}>
+        <Select defaultValue={env} style={{ width: 100 }} bordered={false} onChange={handleChange}>
+          {modeList.map(c => {
+            return (
+              <Option key={c.value} value={c.value}>
+                {c.label}
+              </Option>
+            );
+          })}
+        </Select>
+      </Button>
+    </Popover>
   );
 };
 export default DataModeCard;
