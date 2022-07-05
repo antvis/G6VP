@@ -30,8 +30,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   // const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
   // const { source } = useContext();
 
-  console.log('filter....', source);
-
   const onSelectChange = value => {
     const id = filterCriteria.id as string;
     const elementType = value.slice(0, 4);

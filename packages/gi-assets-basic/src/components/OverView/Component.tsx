@@ -20,7 +20,6 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
 
   const { visible } = state;
   React.useEffect(() => {
-    console.log('limit.........', limit);
     updateContext(draft => {
       draft.largeGraphLimit = limit;
     });
