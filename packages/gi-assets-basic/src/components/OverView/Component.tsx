@@ -10,24 +10,23 @@ export interface LoadingProps {
 }
 
 const Overview: React.FunctionComponent<LoadingProps> = props => {
-  const { limit, cdn } = props;
+  const { limit } = props;
   const context = useContext();
   const [state, setState] = React.useState({
     visible: false,
   });
 
-  const { largeGraphMode, source, data, updateContext } = context;
+  const { source, updateContext, largeGraphData } = context;
 
   const { visible } = state;
   React.useEffect(() => {
-    // setState(pre => {
-    //   return {
-    //     ...pre,
-    //     visible: largeGraphMode,
-    //   };
-    // });
-  }, [largeGraphMode]);
+    console.log('limit.........', limit);
+    updateContext(draft => {
+      draft.largeGraphLimit = limit;
+    });
+  }, [limit]);
   const title = `为了画布渲染性能 与 用户高效分析，对超过 ${limit} 节点做了展示限制展示，可在属性面板中自定义。您可以通过下方的筛选面板，根据统计分析结果选择展示`;
+  const statistic = largeGraphData || source;
 
   return (
     <div>
@@ -36,15 +35,15 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
           <Statistic title="展示限制" value={limit} />
         </Col>
         <Col span={8}>
-          <Statistic title="载入节点数" value={source.nodes.length} />
+          <Statistic title="载入节点数" value={statistic.nodes.length} />
         </Col>
         <Col span={8}>
-          <Statistic title="载入边数" value={source.edges.length} />
+          <Statistic title="载入边数" value={statistic.edges.length} />
         </Col>
       </Row>
       <Alert message={title} type="info" />
 
-      {largeGraphMode && (
+      {largeGraphData && (
         <FilterPanel histogramColor="#3056E3" isFilterIsolatedNodes={true} highlightMode={true} limit={limit} />
       )}
     </div>

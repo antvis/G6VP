@@ -110,6 +110,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         {Object.values(filterOptions).map(filterCriteria => {
           return (
             <FilterSelection
+              source={source}
               filterCriteria={filterCriteria}
               nodeProperties={nodeProperties}
               edgeProperties={edgeProperties}
