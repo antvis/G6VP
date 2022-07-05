@@ -95,10 +95,11 @@ const mockServices = () => {
       id: GS_SERVICE_ID,
       service: (params, localData) => {
         // 这里根据不同环境换成相应的地址
+        // 开发环境: http://storehouse-afx-33614.gz00b.dev.alipay.net
         // 测试环境：https://storehouse.test.alipay.net
         // 预发环境：https://graphinsight-pre.alipay.com
         // 生产环境：http://graphinsight-api.antgroup-inc.cn
-        return fetch(`http://dev.alipay.net:7001/graphcompute/neighbors`, {
+        return fetch(`http://storehouse-afx-33614.gz00b.dev.alipay.net/graphcompute/neighbors`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
