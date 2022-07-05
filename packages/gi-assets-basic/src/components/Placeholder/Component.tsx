@@ -18,6 +18,10 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
 
   const { data, largeGraphData, largeGraphLimit } = context;
   const hasNodes = data && data.nodes && data.nodes.length !== 0;
+
+  if (hasNodes) {
+    return null;
+  }
   if (largeGraphData) {
     return (
       <div className="gi-placeholader" style={{ width: `${width}px` }}>
@@ -27,17 +31,12 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
       </div>
     );
   }
-
-  if (!hasNodes) {
-    return (
-      <div className="gi-placeholader" style={{ width: `${width}px` }}>
-        {img && <img src={img} width={width} />}
-        {text}
-      </div>
-    );
-  }
-
-  return null;
+  return (
+    <div className="gi-placeholader" style={{ width: `${width}px` }}>
+      {img && <img src={img} width={width} />}
+      {text}
+    </div>
+  );
 };
 
 export default Placeholder;
