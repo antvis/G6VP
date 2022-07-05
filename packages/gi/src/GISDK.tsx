@@ -55,6 +55,8 @@ const GISDK = (props: Props) => {
     initializer: defaultInitializerCfg,
     transform: (data, reset?: boolean) => data,
     layoutCache: false,
+    largeGraphLimit: 600,
+    largeGraphData: undefined,
 
     /** graphin */
     //@ts-ignore
