@@ -3,7 +3,7 @@ export interface IFilterCriteria {
   // 筛选属性值
   prop?: string;
   elementType?: 'node' | 'edge';
-  range?: number[];
+  range?: number[][];
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
   analyzerType?: 'HISTOGRAM' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
