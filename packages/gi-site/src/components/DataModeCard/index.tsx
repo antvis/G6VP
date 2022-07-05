@@ -32,11 +32,13 @@ const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
     env: defaultValue, // 该页面状态
     visible: !localStorage.getItem('GI_SERVER_ENV'), // 新用户第一次打开时没有该值，则打开弹窗
   });
-
-  const modeList = [
-    { img: '', value: 'LOCAL', label: '本地环境' },
-    { img: '', value: 'ONLINE', label: '在线环境' },
-  ];
+  const isOnline = localStorage.getItem('userInfo');
+  const modeList = isOnline
+    ? [
+        { img: '', value: 'LOCAL', label: '本地环境' },
+        { img: '', value: 'ONLINE', label: '在线环境' },
+      ]
+    : [{ img: '', value: 'LOCAL', label: '本地环境' }];
   const { env, visible } = state;
   const handleChange = (value: ServerEnv) => {
     localStorage.setItem('GI_SERVER_ENV', value);
