@@ -34,21 +34,21 @@ const Notification = () => {
       });
   }, []);
 
-  useEffect(() => {
-    // 一秒后关闭提示
-    const timeId = setTimeout(() => {
-      updateState(draft => {
-        draft.popoverVisible = false;
-      });
-    }, 1000);
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, []);
+  // useEffect(() => {
+  //   // 一秒后关闭提示
+  //   const timeId = setTimeout(() => {
+  //     updateState(draft => {
+  //       draft.popoverVisible = false;
+  //     });
+  //   }, 1000);
+  //   return () => {
+  //     clearTimeout(timeId);
+  //   };
+  // }, []);
 
   const content = (
     <div>
-      <p>GI 新版本上线了!</p>
+      <p>GraphInsight 新版本上线啦 🎉</p>
     </div>
   );
 
