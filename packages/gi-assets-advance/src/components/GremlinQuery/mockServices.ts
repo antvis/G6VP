@@ -51,15 +51,19 @@ const mockServices = () => {
     {
       id: SERVICE_GS_ID,
       service: (params = {}) => {
-        const { value = 'g.V().limit(5)' } = params as any;
-        return fetch(`${SERVICE_URL_PREFIX}/graphcompute/gremlinQuery`, {
+        const { value = 'g.V().limit(5)', gremlinServer } = params as any;
+        // 这里根据不同环境换成相应的地址
+        // 测试环境：https://storehouse.test.alipay.net
+        // 预发环境：https://graphinsight-pre.alipay.com
+        // 生产环境：http://graphinsight-api.antgroup-inc.cn
+        return fetch('http://dev.alipay.net:7001/graphcompute/gremlinQuery', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
           body: JSON.stringify({
-            statement: value,
-            gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+            value,
+            gremlinServer,
           }),
         }).then(response => response.json());
       },

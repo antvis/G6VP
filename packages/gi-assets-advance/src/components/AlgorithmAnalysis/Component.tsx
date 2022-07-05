@@ -8,7 +8,10 @@ const { Option } = Select;
 
 const AlgorithmAnalysis = ({ serviceId }) => {
   const [form] = Form.useForm();
-  const { updateContext, transform, services } = useContext();
+  const { services } = useContext();
+  const activeEngineInfo = localStorage.getItem('activeEngineInfo')
+    ? JSON.parse(localStorage.getItem('activeEngineInfo') as string)
+    : {};
 
   const service = utils.getService(services, serviceId);
 
@@ -21,11 +24,20 @@ const AlgorithmAnalysis = ({ serviceId }) => {
 
   const handleExecAlgorithm = async () => {
     console.log('算法参数', algorithmParams);
+    if (!activeEngineInfo || !activeEngineInfo.activeGraphName) {
+      message.error('GraphScope 没有载图，请先进行载图，然后再执行图算法');
+      return;
+    }
     setParams({
       ...params,
       btnLoading: true,
     });
-    const result = await service(algorithmParams);
+    const result = await service({
+      ...algorithmParams,
+      graphName: activeEngineInfo.activeGraphName,
+      instanceId: activeEngineInfo.instanceId,
+      mode: activeEngineInfo.mode === 1 ? 'LOCAL' : 'ODPS',
+    });
 
     console.log('Gremlin 算法结果', result);
     if (!result || !result.success) {
@@ -33,14 +45,19 @@ const AlgorithmAnalysis = ({ serviceId }) => {
       return;
     }
 
+    const { graphName, gremlinClientURL } = result;
+    // 更新 localstorage 中 graphScopeGraphName 和 graphScopeGremlinServer 地址
+    localStorage.setItem('graphScopeGremlinServer', gremlinClientURL);
+    localStorage.setItem('graphScopeGraphName', graphName);
+
     if (result.data.length > 50) {
       // 数量过多，结果下载成 csv 文件
-      const json2csvParser = new Parser({ delimiter: "," });
-    	const csvStr = json2csvParser.parse(result.data);
-    	const a = document.createElement('a');
-    	a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${csvStr}`);
-    	a.download = `${algorithmType}.csv`;
-    	a.click();
+      const json2csvParser = new Parser({ delimiter: ',' });
+      const csvStr = json2csvParser.parse(result.data);
+      const a = document.createElement('a');
+      a.href = 'data:text/csv;charset=utf-8,' + encodeURI(`${csvStr}`);
+      a.download = `${algorithmType}.csv`;
+      a.click();
     } else {
       setParams({
         visible: true,

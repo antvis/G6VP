@@ -27,6 +27,7 @@ import ForceSimulation from './ForceSimulation';
 
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
+import SankeyAnalysis from './Sankey';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 
@@ -68,4 +69,5 @@ export {
   ForceSimulation,
   PinNodeWithMenu,
   Overview,
+  SankeyAnalysis,
 };

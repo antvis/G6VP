@@ -19,6 +19,10 @@ export interface State {
   source: GraphinData;
   /** 大图数据 */
   largeGraphData?: GraphinData;
+  /** 大图展示限制 */
+  largeGraphLimit: number;
+  /** 大图模式 */
+  largeGraphMode: boolean;
 
   schemaData: IGraphSchema;
 
@@ -51,8 +55,6 @@ export interface State {
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
-  /** 大图模式 */
-  largeGraphMode: boolean;
 }
 
 export interface Props {

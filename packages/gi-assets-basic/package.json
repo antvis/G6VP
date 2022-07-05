@@ -1,37 +1,30 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.3.0",
+  "version": "2.4.1",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "remove:antd": "rm -rf ./node_modules/antd",
-    "docs": "dumi dev",
-    "start": "npm run clean && father build --watch",
     "build": "npm run clean && father build & npm run build:umd",
     "build:umd": "node --max_old_space_size=8192 ../../node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
-    "test": "jest",
+    "clean": "rimraf es esm lib dist",
+    "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
-    "clean": "rimraf es esm lib dist"
+    "remove:antd": "rm -rf ./node_modules/antd",
+    "start": "npm run clean && father build --watch",
+    "test": "jest"
   },
   "dependencies": {
-    "@alipay/gi-assets-testing": "2.x",
     "@alipay/graphinsight": "2.x",
+    "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.15",
     "@antv/graphin-icons": "^1.0.0",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "install": "^0.13.0",
     "motif-gi": "latest",
-    "npm": "^8.5.5",
-    "@ant-design/icons": "latest"
-  },
-  "peerDependencies": {
-    "antd": "latest",
-    "@antv/graphin": "2.x",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "npm": "^8.5.5"
   },
   "devDependencies": {
     "dumi": "^1.1.38",
@@ -41,6 +34,12 @@
     "umi": "^3.5.20",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
+  },
+  "peerDependencies": {
+    "@antv/graphin": "2.x",
+    "antd": "latest",
+    "react": "17.x",
+    "react-dom": "17.x"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"

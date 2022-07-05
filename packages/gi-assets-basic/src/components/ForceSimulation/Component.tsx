@@ -19,28 +19,15 @@ export interface IProps {
 const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
   const { graph, layoutInstance, layout, restartForceSimulation, stopForceSimulation } = useContext();
-  const [state, setState] = React.useState({
-    toggle: false,
-  });
-  const { toggle } = state;
 
   const isForce = layout.type === 'graphin-force';
 
   const handleClick = () => {
     const { instance = {} } = layoutInstance || {};
     const { simulation } = instance;
-    debugger;
 
     if (isForce && simulation) {
-      if (!toggle) {
-        stopForceSimulation();
-      } else {
-        restartForceSimulation([]);
-      }
-      setState({
-        ...state,
-        toggle: !toggle,
-      });
+      restartForceSimulation([]);
     }
   };
 
@@ -48,6 +35,9 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
 
   React.useEffect(() => {
     const handleNodeDragStart = () => {
+      if (!isForce) {
+        return;
+      }
       stopForceSimulation();
     };
     const handleNodeDragEnd = (e: any) => {
@@ -55,7 +45,6 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
         return;
       }
       if (e.item) {
-        console.log('doing...');
         handlePinNode(e.item, graph, restartForceSimulation, {
           dragNodeMass,
           x: e.x,
@@ -67,18 +56,20 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
 
     graph.on('node:dragstart', handleNodeDragStart);
     graph.on('node:dragend', handleNodeDragEnd);
+    graph.on('canvas:click', handleNodeDragStart);
     return () => {
       graph.off('node:dragstart', handleNodeDragStart);
       graph.off('node:dragend', handleNodeDragEnd);
+      graph.off('canvas:click', handleNodeDragStart);
     };
-  }, [graph, autoPin, isForce, layoutInstance]);
+  }, [graph, autoPin, isForce, layoutInstance, restartForceSimulation]);
 
-  GIAC.icon = toggle ? 'icon-play-circle' : 'icon-pause';
+  GIAC.icon = 'icon-play-circle';
   GIAC.disabled = true;
   GIAC.tooltip = '该功能仅在力导布局下才可使用';
   if (isForce) {
     GIAC.disabled = false;
-    GIAC.tooltip = toggle ? '重启力导布局' : '暂停力导布局';
+    GIAC.tooltip = '重启力导布局，点击画布可以暂停力导';
   }
 
   return <GIAComponent GIAC={GIAC} onClick={handleClick} />;

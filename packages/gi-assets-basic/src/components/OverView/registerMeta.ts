@@ -13,9 +13,8 @@ export default () => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
-      default: 200,
+      default: 600,
     },
-
     ...metas,
   };
 };

@@ -122,6 +122,9 @@ const loadJS = options => {
     script.onload = () => {
       resolve(script);
     };
+    script.onerror = () => {
+      resolve(script);
+    };
   });
 };
 
@@ -137,6 +140,7 @@ export const loader = options => {
       }
       return loadJS(opt).then(_res => {
         let assets = window[opt.global];
+
         if (!assets) {
           console.warn(`${opt.global} is not found`);
           return undefined;

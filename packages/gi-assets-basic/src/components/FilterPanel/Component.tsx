@@ -12,16 +12,15 @@ import { filterGraphData, highlightSubGraph } from './utils';
 const { generatorSchemaByGraphData, isStyles } = utils;
 
 export interface FilterPanelProps {
-  histogramColor: string;
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes, highlightMode } = props;
+  const { isFilterIsolatedNodes, highlightMode } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
-  const dataSchemas = useMemo(() => generatorSchemaByGraphData(source), [source]);
+  const dataSchemas = schemaData; // useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
     return dataSchemas.nodes.reduce((acc, cur) => {
@@ -76,9 +75,9 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
           newFilterOptions[key] = preState[key];
         }
       }
-      console.log(newFilterOptions)
+
       return newFilterOptions;
-    })
+    });
   };
 
   useEffect(() => {
@@ -108,15 +107,15 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         增加筛选器
       </Button>
       <div className="gi-filter-panel-criteria-container">
-        {Object.values(filterOptions).map(filterCriter => {
+        {Object.values(filterOptions).map(filterCriteria => {
           return (
             <FilterSelection
-              filterCriter={filterCriter}
+              source={source}
+              filterCriteria={filterCriteria}
               nodeProperties={nodeProperties}
               edgeProperties={edgeProperties}
               updateFilterCriteria={updateFilterCriteria}
               removeFilterCriteria={removeFilterCriteria}
-              histogramColor={histogramColor}
             />
           );
         })}

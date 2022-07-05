@@ -2,32 +2,32 @@ import { extra } from '@alipay/graphinsight';
 import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
-
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
-metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
-const registerMeta = () => {
-  const schema = {
-    isFilterIsolatedNodes: {
-      title: '过滤孤立节点',
-      type: 'boolean',
+const registerMeta = ({ schemaData }) => {
+  const edgeProperties = schemaData.edges.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
+  const options = Object.keys(edgeProperties)
+    .filter(key => edgeProperties[key] === 'number')
+    .map(e => ({ value: e, label: e }));
+
+  return {
+    weightField: {
+      title: '权重映射',
+      type: 'string',
       'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: true,
-    },
-    highlightMode: {
-      title: '高亮模式',
-      type: 'boolean',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: true,
+      'x-component': 'Select',
+      enum: options,
+      default: '',
     },
     ...metas,
   };
-
-  return schema;
 };
 
 export default registerMeta;

@@ -67,6 +67,7 @@ const baseComponentsConfig = [
         'LargeGraph',
         'MapMode',
         'SnapshotGallery',
+        'ForceSimulation',
       ],
       direction: 'vertical',
       placement: 'LT',
@@ -429,7 +430,7 @@ const baseComponentsConfig = [
     id: 'ContextMenu',
     name: '右键菜单',
     props: {
-      GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu'],
+      GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
     },
   },
   {
@@ -493,6 +494,38 @@ const baseComponentsConfig = [
     id: 'Loading',
     name: '加载动画',
     props: {},
+  },
+  {
+    id: 'PinNodeWithMenu',
+    name: '固定节点(MENU)',
+    props: {
+      color: '#fff',
+      fill: '#262626',
+    },
+  },
+  {
+    id: 'ForceSimulation',
+    name: '力导布局控制器',
+    props: {
+      autoPin: true,
+      dragNodeMass: 10000000,
+      GI_CONTAINER_INDEX: 2,
+      GIAC: {
+        visible: false,
+        disabled: false,
+        isShowTitle: false,
+        title: '力导布局控制器',
+        isShowIcon: true,
+        icon: 'icon-layout-force',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+      },
+    },
   },
 ];
 const baseLayoutConfig = {

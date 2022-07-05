@@ -1,17 +1,52 @@
 import request from 'umi-request';
+import { message } from 'antd'
 import { SERVICE_URL_PREFIX } from './const';
+import { findEngineInstanceByProjectID, updateEngineInstace, createEngineInstance, deleteInstance } from './engineInstace';
 
 /**
  * 初始化 GraphScope 引擎
- * session_txlyagpj
+ * @param projectId 项目 ID
+ * @param mode 创建实例模式，1 表示本地载图的 session 实例，2 表示 odps 载图的 session 实例
  */
-export const createGraphScopeInstance = async () => {
+export const createGraphScopeInstance = async (projectId: string, mode: string = 'LOCAL') => {
+  const engineMode = mode === 'LOCAL' ? 1 : 2
+  // 创建实例之前，先查找是否之前已经创建过图引擎实例
+  const instanceResult = await findEngineInstanceByProjectID(projectId, engineMode)
+  console.log('查询', instanceResult)
+  if (instanceResult.success && instanceResult.data.length > 0) {
+    const currentInstance = instanceResult.data[0]
+    const { instanceId } = currentInstance
+    return {
+      success: true,
+      data: {
+        instanceId
+      }
+    }
+  }
+
   const gsResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/createGSInstance`, {
     method: 'POST',
+    data: {
+      mode
+    },
     headers: {
       'Content-Type': 'application/json',
     },
   });
+
+  if (!gsResult || !gsResult.success) {
+    message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
+    return null;
+  }
+
+  const { data } = gsResult;
+  const { instanceId: newInstanceId } = data;
+
+  await createEngineInstance({
+    projectId,
+    instanceId: newInstanceId,    
+    mode: engineMode
+  })
 
   return gsResult;
 };
@@ -58,7 +93,7 @@ export const uploadLocalFileToGraphScope = async (params: UploadFileParams): Pro
 };
 
 interface LoadGraphParams {
-  instanceId: string;
+  projectId: string;
   nodeFilePath: any;
   edgeFilePath?: any;
   directed?: boolean;
@@ -71,7 +106,7 @@ interface LoadGraphParams {
 }
 
 interface LoadGraphDataParams {
-  instanceId: string;
+  projectId: string;
   nodeConfigList: any;
   edgeConfigList: any;
   fileMapping: any;
@@ -86,7 +121,16 @@ interface LoadGraphDataParams {
  * @param params
  */
 export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
-  const { instanceId, nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+  const { projectId, nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+  
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
+
   // 构造载图时的 nodes 对象
   const nodeSources = nodeConfigList.filter(d => {
     // nodeType 必须存在
@@ -155,6 +199,19 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
   }
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+  
+  const updateInstanceResult = await updateEngineInstace(instanceId, {
+    gremlinServerUrl: graphURL,
+    activeGraphName: graphName,
+  })
+
+  if (!updateInstanceResult || !updateInstanceResult.success) {
+    message.error(updateInstanceResult.errorMsg);
+    return null
+  }
+  // 更新 localstorage 值
+  localStorage.setItem('graphScopeGremlinServer', graphURL)
+  localStorage.setItem('graphScopeGraphName', graphName)
 
   return {
     success: true,
@@ -173,7 +230,7 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
  */
 export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
   const {
-    instanceId,
+    projectId,
     nodeFilePath,
     edgeFilePath,
     directed = true,
@@ -184,6 +241,14 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
     delimiter = ',',
     hasHeaderRow = true,
   } = params;
+
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
 
   const loadFileParams = {
     type: 'LOCAL',
@@ -227,6 +292,16 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
+  const updateInstanceResult = await updateEngineInstace(instanceId, {
+    gremlinServerUrl: graphURL,
+    activeGraphName: graphName,
+  })
+
+  if (!updateInstanceResult || !updateInstanceResult.success) {
+    message.error(updateInstanceResult.errorMsg);
+    return null
+  }
+
   return {
     success: true,
     data: {
@@ -239,7 +314,7 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
 };
 
 interface ChinaVisParams {
-  instanceId: string;
+  projectId: string;
   dataSource: any;
 }
 /**
@@ -247,7 +322,15 @@ interface ChinaVisParams {
  * @param params 
  */
 export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
-  const { instanceId, dataSource } = params
+  const { projectId, dataSource } = params
+
+  const instanceResult = await createGraphScopeInstance(projectId)
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
   const loadFileParams = {
     type: 'LOCAL',
     directed: true,
@@ -271,6 +354,16 @@ export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
   }
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+
+  const updateInstanceResult = await updateEngineInstace(instanceId, {
+    gremlinServerUrl: graphURL,
+    activeGraphName: graphName,
+  })
+
+  if (!updateInstanceResult || !updateInstanceResult.success) {
+    message.error(updateInstanceResult.errorMsg);
+    return null
+  }
 
   return {
     success: true,
@@ -348,13 +441,33 @@ export const queryElementProperties = async (id) => {
 /**
  * 关闭启动的 GraphScope 引擎
  */
-export const closeGraphInstance = async (instanceId: string) => {
+export const closeGraphInstance = async (projectId: string, mode: string = 'LOCAL') => {
+  const engineMode = mode === 'LOCAL' ? 1 : 2
+  // 关闭实例之前，先查询相关信息
+  const instanceResult = await findEngineInstanceByProjectID(projectId, engineMode);
+  if (!instanceResult.success || instanceResult.data.length === 0) {
+    message.error(`查找ID为 ${projectId} 的实例失败或不存在`);
+    return null
+  }
+
+  const currentInstance = instanceResult.data[0]
+
+  const { instanceId } = currentInstance;
+
+  if (!instanceId) {
+    message.error(`实例不存在`);
+    return null
+  }
+
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeGSInstance`, {
     method: 'GET',
     params: {
       instanceId,
+      mode
     },
   });
+
+  await deleteInstance(instanceId)
 
   return result;
 };
@@ -378,21 +491,11 @@ interface GraphAlgorithmProps {
 
 // 调用图算法
 export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
-  const { colomnName, ...others } = params
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/execAlgorithm`, {
     method: 'POST',
-    data: others
+    data: params
   })
 
-  // 图算法执行成功后，需要将结果写到指定字段中
-  if (result && result.success) {
-    const { contextName } = result
-    await addColumns({
-      contextName,
-      needGremlin: true,
-      colomnName
-    })
-  }
   return result
 }
 
@@ -446,3 +549,200 @@ export const addColumns = async (params: AddColumnsProps) => {
 
   return result
 }
+
+interface CrateCupIdInstanceProps {
+  projectId: string;
+  accessId: string;
+  accessKey: string;
+  project: string;
+  endpoint: string;
+}
+
+/**
+ * 创建 cupid 实例
+ * @param params 
+ */
+export const createCupidInstance = async (params: CrateCupIdInstanceProps) => {
+  const { projectId, ...others } = params
+  // 创建实例之前，先查找是否之前已经创建过图引擎实例
+  const instanceResult = await findEngineInstanceByProjectID(projectId, 2)
+  console.log('查询', instanceResult)
+  if (instanceResult.success && instanceResult.data.length > 0) {
+    const currentInstance = instanceResult.data[0]
+    const { instanceId } = currentInstance
+    return {
+      success: true,
+      data: {
+        instanceId
+      }
+    }
+  }
+
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/createCupidInstance`, {
+    method: 'POST',
+    data: others
+  })
+
+  if (!result || !result.success) {
+    message.error(`创建 GraphScope 引擎实例失败: ${result.message}`);
+    return null;
+  }
+
+  // 丘比特实例 
+  const { instance_id, httpserver } = result;
+  console.log('创建cupid', instance_id, httpserver)
+
+  await createEngineInstance({
+    projectId,
+    instanceId: instance_id,   
+    // 丘比特实例 
+    mode: 2
+  })
+
+  return result
+}
+
+/**
+ * 关闭 cupid 实例
+ * @param params 
+ */
+export const closeCupidInstance = async (projectId: string) => {
+  // 关闭实例之前，先查询相关信息
+  const instanceResult = await findEngineInstanceByProjectID(projectId, 2);
+  if (!instanceResult.success || instanceResult.data.length === 0) {
+    message.error(`查找ID为 ${projectId} 的实例失败或不存在`);
+    return null
+  }
+
+  const currentInstance = instanceResult.data[0]
+
+  const { instanceId } = currentInstance;
+
+  if (!instanceId) {
+    message.error(`实例不存在`);
+    return null
+  }
+
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/closeCupidInstance`, {
+    method: 'GET',
+    params: {
+      cupid: instanceId
+    }
+  })
+
+  await deleteInstance(instanceId)
+
+  return result
+}
+
+interface LoadODPSDataParams {
+  projectId: string;
+  project: string;
+  nodeConfigList: any;
+  edgeConfigList: any;
+  isStringType?: boolean;
+}
+
+/**
+ * 将点边文件数据加载进 GraphScope 引擎
+ * @param params
+ */
+export const loadOdpsDataToGraphScope = async (params: LoadODPSDataParams) => {
+  const { project, projectId, nodeConfigList, edgeConfigList, isStringType } = params;
+  
+  const instanceResult = await createGraphScopeInstance(projectId, 'ODPS')
+
+  if (!instanceResult.success) {
+    return
+  }
+
+  const { instanceId } = instanceResult.data
+
+  // 构造载图时的 nodes 对象
+  const nodeSources = nodeConfigList.filter(d => {
+    // nodeType 必须存在
+    const { nodeType } = d
+    return nodeType
+  }).reduce((pre, cur) => {
+    const { nodeType, partitionName, tableNames, idField } = cur;
+    const nodeTables = tableNames.map(t => {
+      return {
+        label: nodeType,
+        id_field: idField,
+        location: partitionName ? `odps:///${project}/${t}/${partitionName}` : `odps:///${project}/${t}`,
+        config: {},
+      };
+    });
+
+    return pre.concat(nodeTables);
+  }, []);
+
+  const edgeSources = edgeConfigList.filter(d => {
+    // edgeType source target 都必须存在
+    const { edgeType, sourceNodeType, targetNodeType } = d
+    return edgeType && sourceNodeType && targetNodeType
+  }).reduce((pre, cur) => {
+    const { edgeType, sourceNodeType, targetNodeType, tableNames, srcField, dstField, partitionName } = cur;
+    const edgeTables = tableNames.map(t => {
+      return {
+        label: edgeType,
+        location: partitionName ? `odps:///${project}/${t}/${partitionName}` : `odps:///${project}/${t}`,
+        srcLabel: sourceNodeType,
+        dstLabel: targetNodeType,
+        srcField,
+        dstField,
+        config: {
+        },
+      };
+    })
+
+    return pre.concat(edgeTables);
+  }, []);
+
+  const loadFileParams = {
+    type: 'ODPS',
+    directed: true,
+    oid_type: isStringType ? 'string' : 'int64_t',
+    instance_id: instanceId,
+    dataSource: {
+      nodes: nodeSources,
+      edges: edgeSources,
+    },
+  };
+
+  console.log('载图参数', loadFileParams);
+
+  const loadResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/loadData`, {
+    method: 'post',
+    data: loadFileParams,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!loadResult || !loadResult.success) {
+    return loadResult;
+  }
+
+  const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+  
+  const updateInstanceResult = await updateEngineInstace(instanceId, {
+    gremlinServerUrl: graphURL,
+    activeGraphName: graphName,
+  })
+
+  if (!updateInstanceResult || !updateInstanceResult.success) {
+    message.error(updateInstanceResult.errorMsg);
+    return null
+  }
+
+  return {
+    success: true,
+    data: {
+      graphURL,
+      graphName,
+      hostIp,
+      hostName,
+    },
+  };
+};

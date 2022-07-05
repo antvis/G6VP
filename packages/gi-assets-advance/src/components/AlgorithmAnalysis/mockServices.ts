@@ -50,6 +50,10 @@ const mockServices = () => {
     {
       id: SERVICE_GS_ID,
       service: (params = {}) => {
+        // 这里根据不同环境换成相应的地址
+        // 测试环境：https://storehouse.test.alipay.net
+        // 预发环境：https://graphinsight-pre.alipay.com
+        // 生产环境：http://graphinsight-api.antgroup-inc.cn
         return fetch(`http://dev.alipay.net:7001/graphcompute/execAlgorithm`, {
           method: 'post',
           headers: {
@@ -57,7 +61,6 @@ const mockServices = () => {
           },
           body: JSON.stringify({
             ...params,
-            graphName: localStorage.getItem('graphScopeGraphName'),
           }),
         }).then(response => response.json());
       },

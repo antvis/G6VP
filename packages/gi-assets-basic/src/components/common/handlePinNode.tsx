@@ -51,7 +51,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
       },
     };
     // 重启力导
-    restartForceSimulation.restart([newModel], graph);
+    restartForceSimulation([newModel], graph);
     // simulation.restart([newModel], graph);
     // console.log('simulation', simulation, layoutInstance.instance.simulation);
   }
@@ -76,6 +76,6 @@ export const handleUnPinNode = (target, graph, restartForceSimulation, isForce) 
   });
   // 重启力导
   if (isForce) {
-    restartForceSimulation.restart([model], graph);
+    restartForceSimulation([model], graph);
   }
 };
