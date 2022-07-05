@@ -8,6 +8,7 @@ export default () => {
     const result = await getUser();
     if (result) {
       setUserInfo(result);
+      window.localStorage.setItem('userInfo', result.nickName);
     }
   };
 
