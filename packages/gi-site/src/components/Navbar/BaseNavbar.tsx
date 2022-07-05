@@ -1,5 +1,5 @@
 import ThemeSwitch from '@alipay/theme-tools';
-import { Layout, Tooltip } from 'antd';
+import { Avatar, Layout, Tooltip } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 import ThemeVars from '../ThemeVars';
@@ -10,21 +10,12 @@ const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
   const { active = 'workspace' } = props;
-  const userInfo = useUserInfo();
+  const userInfo = useUserInfo() as any;
 
   const defaultLeft = (
     <>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' && styles.active}>
         <a href={location.origin + '/home.html'}> 首页</a>
-        {/* <Link
-          to={{
-            pathname: '/home.html',
-            origin: location.origin,
-          }}
-        >
-        
-          首页
-        </Link> */}
       </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
         <Link to="/workspace?type=project">项目列表</Link>
@@ -37,15 +28,8 @@ const BaseNavbar = props => {
       </div>
     </>
   );
-  const defaultRight = (
-    <>
-      {/* <QuestionCircleOutlined style={{ marginRight: 26 }} />
-      <BellOutlined style={{ marginRight: 26 }} />
-      <span>{userInfo && userInfo.nickName}</span> */}
-    </>
-  );
 
-  const { children, leftContent = defaultLeft, rightContent = defaultRight, rightContentExtra = '' } = props;
+  const { children, leftContent = defaultLeft, rightContent, rightContentExtra = '' } = props;
   return (
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
@@ -63,10 +47,13 @@ const BaseNavbar = props => {
       <div className={styles.right}>
         {rightContentExtra}
         {rightContent}
-        {/* <Avatar
-          style={{ width: '21px', height: '21px', marginLeft: 5 }}
-          src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
-        /> */}
+
+        {userInfo && (
+          <Avatar
+            style={{ width: '21px', height: '21px', marginLeft: 5 }}
+            src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
+          />
+        )}
         <Tooltip title="切换主题">
           <ThemeSwitch
             themeVars={ThemeVars}

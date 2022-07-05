@@ -15,7 +15,7 @@ const SetupUseGraphinHook = props => {
     };
     const restartForceSimulation = (nodes = []) => {
       const { instance } = layout;
-      debugger;
+
       const { type, simulation } = instance;
       if (type === 'graphin-force') {
         simulation.restart(nodes, graph);

@@ -38,7 +38,7 @@ const interpretation: React.FunctionComponent<interpretationProps> = props => {
         const type = item.elementType?.toUpperCase();
         const color = type === 'NODE' ? 'green' : 'blue';
         let value: any = item.selectValue;
-        if (item.analyzerType === 'BRUSH') {
+        if (item.analyzerType === 'DATE') {
           value = item.range?.join(' ~ ');
         }
 

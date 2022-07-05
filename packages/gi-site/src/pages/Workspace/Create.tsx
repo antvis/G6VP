@@ -55,8 +55,8 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
   const columns = [
     {
-      title: '用户名',
-      dataIndex: 'name',
+      title: '工号',
+      dataIndex: 'userId',
       width: '40%',
       formItemProps: (form, { rowIndex }) => {
         return {
@@ -66,15 +66,15 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     },
     {
       title: '权限',
-      key: 'state',
+      key: 'role',
       dataIndex: 'state',
       valueType: 'select',
       valueEnum: {
-        master: { text: 'master' },
-        developer: {
+        ADMIN: { text: '管理员' },
+        DEVELOPER: {
           text: '可编辑',
         },
-        reporter: {
+        REPORTER: {
           text: '仅可见',
         },
       },
@@ -82,19 +82,21 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     {
       title: '操作',
       valueType: 'option',
-      width: 250,
+      width: 200,
       render: () => null,
     },
   ];
 
   const onFinish = async () => {
     const value = form.getFieldValue();
+    console.log(value, dataSource);
+
     const transData = getMockData();
     const projectId = await addProject({
       name: value.title,
-      status: 0, // 0 正常项目， 1删除项目
+      status: 1, // 1 正常项目， 0 删除项目
       tag: value.tag,
-      members: dataSource,
+      members: JSON.stringify(dataSource),
       data: JSON.stringify({
         transData,
         inputData: [],

@@ -27,7 +27,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const filterData = React.useRef({});
 
   const [state, setState] = React.useState({
-    source: largeGraphData,
     data: { nodes: [], edges: [] },
   });
 
@@ -77,10 +76,9 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     delete filterOptions[id];
     setFilterOptions({ ...filterOptions });
   };
-  const { source } = state;
 
   useEffect(() => {
-    let data: GraphinData = source as GraphinData;
+    let data: GraphinData = largeGraphData as GraphinData;
     let canvasData;
 
     Object.values(filterOptions).map(filterCriteria => {
@@ -100,14 +98,16 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     }
 
     updateContext(draft => {
-      if (source && isStyles(source.nodes)) {
+      if (largeGraphData && isStyles(largeGraphData.nodes)) {
         draft.data = canvasData;
+        draft.source = canvasData;
       } else {
         draft.data = transform(canvasData);
+        draft.source = transform(canvasData);
       }
       draft.layoutCache = true;
     });
-  }, [filterOptions, source]);
+  }, [filterOptions]);
 
   return (
     <div className="gi-filter-panel">
@@ -120,12 +120,12 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
           return (
             <div>
               <FilterSelection
-                filterCriter={filterCriter}
+                source={largeGraphData as GraphinData}
+                filterCriteria={filterCriter}
                 nodeProperties={nodeProperties}
                 edgeProperties={edgeProperties}
                 updateFilterCriteria={updateFilterCriteria}
                 removeFilterCriteria={removeFilterCriteria}
-                histogramColor={histogramColor}
               />
             </div>
           );

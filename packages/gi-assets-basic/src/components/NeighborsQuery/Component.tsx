@@ -25,7 +25,8 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     expandStartId: '',
   });
 
-  const { data, updateContext, transform, graph, config, apis, services } = useContext();
+  const { data, updateContext, transform, graph, config, services } = useContext();
+
   const service = utils.getService(services, serviceId);
 
   if (!service) {
@@ -49,7 +50,11 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     updateContext(draft => {
       draft.isLoading = true;
     });
-    const result = await service({ ids: selectedIdArr, sep });
+    const result = await service({
+      ids: selectedIdArr,
+      sep,
+      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+    });
     const newData = utils.handleExpand(data, result);
     const expandIds = result.nodes?.map(n => n.id) || [];
     const expandStartId = value.id;

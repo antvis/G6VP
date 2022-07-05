@@ -21,7 +21,7 @@ export const defaultInitializerCfg = {
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { serviceId, schemaServiceId } = props;
-  const { services, updateContext, transform } = context;
+  const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
@@ -47,7 +47,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.data = data;
           draft.source = data;
         } else {
-          if (nodes.length > 1000) {
+          if (nodes.length > largeGraphLimit) {
             console.warn(
               '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
             );
@@ -69,7 +69,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         draft.layoutCache = false;
       });
     });
-  }, []);
+  }, [largeGraphLimit]);
 
   return null;
 };

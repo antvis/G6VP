@@ -8,7 +8,7 @@ export interface LoadingProps {
   width: number;
 }
 
-const Loading: React.FunctionComponent<LoadingProps> = props => {
+const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   const context = useContext();
   const {
     width = 200,
@@ -16,18 +16,27 @@ const Loading: React.FunctionComponent<LoadingProps> = props => {
     text,
   } = props;
 
-  const { data } = context;
+  const { data, largeGraphData, largeGraphLimit } = context;
   const hasNodes = data && data.nodes && data.nodes.length !== 0;
 
-  if (!hasNodes) {
+  if (hasNodes) {
+    return null;
+  }
+  if (largeGraphData) {
     return (
       <div className="gi-placeholader" style={{ width: `${width}px` }}>
         {img && <img src={img} width={width} />}
-        {text}
+        当前载入图的节点规模已经超出「{largeGraphLimit}
+        」限制，建议您在资产中心中加载「大图概览」资产，筛选子图数据 或 调整限制规模
       </div>
     );
   }
-  return null;
+  return (
+    <div className="gi-placeholader" style={{ width: `${width}px` }}>
+      {img && <img src={img} width={width} />}
+      {text}
+    </div>
+  );
 };
 
-export default Loading;
+export default Placeholder;
