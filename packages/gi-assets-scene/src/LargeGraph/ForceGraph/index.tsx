@@ -18,9 +18,23 @@ export interface ILargeGraph {
 }
 
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
-  const { updateContext, source: DATA, GISDK_ID, apis, config, transform } = useContext();
+  const {
+    updateContext,
+    source,
+    largeGraphData,
+    largeGraphLimit,
+    data,
+    GISDK_ID,
+    apis,
+    config,
+    transform,
+  } = useContext();
   const { GIAC, handleClick, maxSize, minSize, placement, offset } = props;
-
+  let DATA = source;
+  if (largeGraphData && data.nodes.length === 0) {
+    // 如果画布为空，且有大图数据，则展示大图数据
+    DATA = largeGraphData;
+  }
   const [state, setState] = React.useState({
     toggle: false,
   });
@@ -113,7 +127,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     Graph.onNodeRightClick(node => {
       setToggle(true);
       //只要大数据节点的时候才是添加节点
-      if (data.nodes.length > 1000 || data.links.length > 1000) {
+      if (data.nodes.length > largeGraphLimit) {
         updateContext(draft => {
           const dataFrom3D = {
             nodes: [
