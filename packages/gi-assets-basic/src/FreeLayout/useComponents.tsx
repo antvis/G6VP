@@ -18,8 +18,15 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
         return null;
       }
 
+      console.log("item:", item);
+
       const { component: Component } = asset;
-      return <Component {...itemProps} />;
+      return (
+        <div className="gi-free-layout-component-container">
+          <header>{item.name}</header>
+          <Component {...itemProps} />
+        </div>
+      );
     });
 
     return Content;

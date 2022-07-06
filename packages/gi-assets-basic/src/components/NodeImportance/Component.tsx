@@ -644,7 +644,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = (
     //   style={{ textAlign: 'left' }}
     //   footerStyle={{ textAlign: 'right' }}
     // >
-    <div style={props.style}>
+    <div style={props.style} className="gi-node-importance-container">
       <div className="content-wrapper" id="select-drop-down-area">
         <div className="title-wrapper">
           <span className="title">算法</span>
