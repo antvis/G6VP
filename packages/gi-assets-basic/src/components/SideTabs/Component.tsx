@@ -8,7 +8,7 @@ import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
 const { TabPane } = Tabs;
 
-export interface OperatorBarProps extends ContainerProps {
+export interface SideTabsProps extends ContainerProps {
   GI_CONTAINER: string[];
   components: GIComponentConfig[];
   assets: GIAssets;
@@ -21,7 +21,7 @@ export interface OperatorBarProps extends ContainerProps {
   GISDK_ID: string;
 }
 
-const SideTabs: React.FunctionComponent<OperatorBarProps> = props => {
+const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   const {
     components,
     assets,
