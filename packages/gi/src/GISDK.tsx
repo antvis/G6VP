@@ -355,7 +355,6 @@ const GISDK = (props: Props) => {
         <div id={`${GISDK_ID}-container-extra`}></div>
         {/* 以下三个 div 服务于 FreeLayout 组件 */}
         <div id={`${GISDK_ID}-free-layout-left`}></div>
-        <div id={`${GISDK_ID}-free-layout-left-handler`}></div>
         <div id={`${GISDK_ID}-free-layout-right`}></div>
         <div id={`${GISDK_ID}-free-layout-bottom`}></div>
         <Graphin

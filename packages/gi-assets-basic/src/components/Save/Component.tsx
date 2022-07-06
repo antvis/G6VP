@@ -57,7 +57,7 @@ const Save: React.FunctionComponent<Props> = props => {
           onClick={handleSave}
           type="primary"
           //style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 44px)' }}
-          style={{width: 'calc(100% - 44px)'}}
+          style={{width: '100%'}}
         >
           保存分享
         </Button>

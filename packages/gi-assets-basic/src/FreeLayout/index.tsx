@@ -1,5 +1,6 @@
 import Component from "./Component";
 import registerMeta from "./registerMeta";
+import "./index.less"
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
