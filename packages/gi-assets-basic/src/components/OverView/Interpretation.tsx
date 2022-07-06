@@ -42,6 +42,12 @@ const interpretation: React.FunctionComponent<interpretationProps> = props => {
           value = item.range?.join(' ~ ');
         }
 
+        if (item.analyzerType === "HISTOGRAM") {
+          const tmp = item.range?.map(e => e.join("~"))
+          value = tmp?.join(" 或 ")
+          //value = JSON.stringify(item.range)
+        }
+
         return (
           <List.Item style={{ maxWidth: '500px', overflow: 'hidden', overflowWrap: 'anywhere' }}>
             <Tag color={color}>{type} RULE </Tag>

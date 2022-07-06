@@ -52,13 +52,13 @@ const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
         .filter((e) => e.states.indexOf("active") !== -1)
         .map((e) => e.data.range);
       const isFilterReady = selectRanges.length !== 0;
-      const range = isFilterReady
-        ? [selectRanges[0][0], selectRanges[selectRanges.length - 1][1]]
-        : undefined;
+      /* const range = isFilterReady
+      ? [selectRanges[0][0], selectRanges[selectRanges.length - 1][1]]
+      : undefined; */
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         isFilterReady,
-        range,
+        range: selectRanges,
       });
     });
 
@@ -66,17 +66,33 @@ const HistogramChart: React.FC<IHistogramChartProps> = (props) => {
 
     // 初次渲染时，处于筛选范围内的图表元素高亮
     histogramPlot.setState("active", (item: any) => {
-      if (!filterCriteria.range) return false;
-      const min = filterCriteria.range[0];
-      const max = filterCriteria.range[1];
-      return item.range[0] >= min && item.range[1] <= max;
+      if (!filterCriteria.range || !filterCriteria.isFilterReady) return false;
+      for (let arr of filterCriteria.range) {
+        const min = arr[0];
+        const max = arr[1];
+        if (item.range[0] === min && item.range[1] === max) {
+          return true;
+        }
+      }
+      return false;
+      //const min = filterCriteria.range[0];
+      //const max = filterCriteria.range[1];
+      //return item.range[0] >= min && item.range[1] <= max;
     });
 
     histogramPlot.setState("inactive", (item: any) => {
-      if (!filterCriteria.range) return false;
-      const min = filterCriteria.range[0];
-      const max = filterCriteria.range[1];
-      return item.range[0] < min || item.range[1] > max;
+      if (!filterCriteria.range || !filterCriteria.isFilterReady) return false;
+      for (let arr of filterCriteria.range) {
+        const min = arr[0];
+        const max = arr[1];
+        if (item.range[0] === min && item.range[1] === max) {
+          return false;
+        }
+      }
+      return true;
+      //const min = filterCriteria.range[0];
+      //const max = filterCriteria.range[1];
+      //return item.range[0] < min || item.range[1] > max;
     });
 
     return () => {
