@@ -176,7 +176,7 @@ const assets = getCombinedAssets();
 /** 生成配置 */
 const config = GI_PROJECT_CONFIG;
 /** 生成服务 */
-const services = getServicesByConfig(GI_SERVICES_OPTIONS, GI_LOCAL_DATA);
+const services = getServicesByConfig(GI_SERVICES_OPTIONS, GI_LOCAL_DATA,GI_SCHEMA_DATA);
 
 /** 更新资产 */
 // assets.components["Counter"] = Counter;
