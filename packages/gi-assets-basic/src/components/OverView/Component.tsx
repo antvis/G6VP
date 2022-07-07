@@ -43,7 +43,13 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
       <Alert message={title} type="info" />
 
       {largeGraphData && (
-        <FilterPanel histogramColor="#3056E3" isFilterIsolatedNodes={true} highlightMode={true} limit={limit} />
+        <FilterPanel
+          histogramColor="#3056E3"
+          isFilterIsolatedNodes={true}
+          highlightMode={true}
+          limit={limit}
+          filterLogic={'or'}
+        />
       )}
     </div>
   );

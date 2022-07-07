@@ -17,10 +17,11 @@ export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
   limit: number;
+  filterLogic: 'and' | 'or';
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes, limit } = props;
+  const { histogramColor, isFilterIsolatedNodes, limit, filterLogic } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { updateContext, transform, schemaData, largeGraphData } = useContext();
   const dataSchemas = schemaData;
@@ -81,9 +82,37 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     let data: GraphinData = largeGraphData as GraphinData;
     let canvasData;
 
-    Object.values(filterOptions).map(filterCriteria => {
-      data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
-    });
+    // 多个筛选器的筛选逻辑为 ”与“
+    if (filterLogic === 'and') {
+      Object.values(filterOptions).map(filterCriteria => {
+        data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
+      });
+      // 多个筛选器间的筛选逻辑为 ”或“
+    } else {
+      data = Object.values(filterOptions).reduce(
+        (acc: any, filterCriteria: any) => {
+          const curr = filterGraphData(largeGraphData as GraphinData, filterCriteria, isFilterIsolatedNodes);
+          return {
+            nodes: utils.uniqueElementsBy([...acc.nodes, ...curr.nodes], (n1, n2) => n1.id === n2.id),
+            edges: utils.uniqueElementsBy([...acc.edges, ...curr.edges], (e1, e2) => {
+              if (e1.id && e2.id) {
+                return e1.id === e2.id;
+              }
+              return `${e1.source}_${e1.target}_${e1.type}` === `${e2.source}_${e2.target}_${e2.type}`;
+            }),
+          };
+        },
+        {
+          nodes: [],
+          edges: [],
+        },
+      );
+      console.log('or data', data);
+    }
+
+    // Object.values(filterOptions).map(filterCriteria => {
+    //   data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
+    // });
     // 画布中的数据
     canvasData = data;
     filterData.current = data;
