@@ -53,15 +53,17 @@ const Save: React.FunctionComponent<Props> = props => {
         <Form.Item name="cover" label="缩略图">
           <img src={imgURL} alt="" width={'100%'} />
         </Form.Item>
+        <Button
+          onClick={handleSave}
+          type="primary"
+          //style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 44px)' }}
+          style={{width: '100%'}}
+        >
+          保存分享
+        </Button>
       </Form>
 
-      <Button
-        onClick={handleSave}
-        type="primary"
-        style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 44px)' }}
-      >
-        保存分享
-      </Button>
+     
     </div>
   );
 };
