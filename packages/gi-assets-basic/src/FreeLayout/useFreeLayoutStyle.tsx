@@ -29,10 +29,6 @@ const useFreeLayoutStyle = (leftWidth, rightWidth, bottomHeight, GISDK_ID) => {
     bottomContainer.style.right = rightWidth;
     bottomContainer.style.height = bottomHeight;
 
-    // 监听拉伸 DOM
-    const leftContainerHandler = document.getElementById(`${GISDK_ID}-free-layout-left-handler`) as HTMLDivElement;
-    leftContainerHandler.className = "graphinsight-free-layout-left-hanlder"
-
     return () => {
       leftContainer.style.width = "0";
       rightContainer.style.width = "0";
