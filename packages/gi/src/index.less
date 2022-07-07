@@ -25,3 +25,37 @@
   margin: 0px;
   background: #fff;
 }
+
+.graphinsight-free-layout {
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid rgba(196, 186, 186, 0.4);
+}
+
+.graphinsight-free-layout-left {
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.graphinsight-free-layout-right {
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.graphinsight-free-layout-bottom {
+  flex-direction: row;
+  // width: 100%;
+  bottom: 0;
+  overflow-x: auto;
+  border-left: none;
+  border-right: none;
+}
