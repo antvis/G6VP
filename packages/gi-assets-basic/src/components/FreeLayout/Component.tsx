@@ -45,19 +45,27 @@ const FreeLayout: React.FC<FreeLayoutProps> = (props) => {
 
   useFreeLayoutStyle(leftWidth, rightWidth, bottomHeight, GISDK_ID);
 
+  const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`) as HTMLElement
+  const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`) as HTMLElement;
+  const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`) as HTMLElement;
+  
+  if (!leftContainer || !rightContainer || !bottomContainer) {
+    return null;
+  }
+
   return (
     <div>
       {ReactDOM.createPortal(
         LeftContent,
-        document.getElementById(`${GISDK_ID}-free-layout-left`) as HTMLElement
+        leftContainer 
       )}
       {ReactDOM.createPortal(
         RightContent,
-        document.getElementById(`${GISDK_ID}-free-layout-right`) as HTMLElement
+        rightContainer
       )}
       {ReactDOM.createPortal(
         BottomContent,
-        document.getElementById(`${GISDK_ID}-free-layout-bottom`) as HTMLElement
+        bottomContainer
       )}
     </div>
   );
