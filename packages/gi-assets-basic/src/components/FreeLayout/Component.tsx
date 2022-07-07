@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import useComponents from "./useComponents";
-import { GIAssets } from "@alipay/graphinsight";
-import useFreeLayoutStyle from "./useFreeLayoutStyle";
+import { GIAssets } from '@alipay/graphinsight';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import useComponents from './useComponents';
+import useFreeLayoutStyle from './useFreeLayoutStyle';
 
 export interface FreeLayoutProps {
   GI_CONTAINER_LEFT: string[];
@@ -11,12 +11,15 @@ export interface FreeLayoutProps {
   leftWidth: string;
   rightWidth: string;
   bottomHeight: string;
+  leftVisible: boolean;
+  rightVisible: boolean;
+  bottomVisible: boolean;
   ComponentCfgMap: object;
   assets: GIAssets;
   GISDK_ID: string;
 }
 
-const FreeLayout: React.FC<FreeLayoutProps> = (props) => {
+const FreeLayout: React.FC<FreeLayoutProps> = props => {
   const {
     ComponentCfgMap,
     assets,
@@ -27,46 +30,28 @@ const FreeLayout: React.FC<FreeLayoutProps> = (props) => {
     leftWidth,
     rightWidth,
     bottomHeight,
+    leftVisible,
+    rightVisible,
+    bottomVisible,
   } = props;
 
   const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets);
 
-  const RightContent = useComponents(
-    GI_CONTAINER_RIGHT,
-    ComponentCfgMap,
-    assets
-  );
+  const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets);
 
-  const BottomContent = useComponents(
-    GI_CONTAINER_BOTTOM,
-    ComponentCfgMap,
-    assets
-  );
+  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets);
 
-  useFreeLayoutStyle(leftWidth, rightWidth, bottomHeight, GISDK_ID);
+  useFreeLayoutStyle(leftWidth, rightWidth, bottomHeight, leftVisible, rightVisible, bottomVisible, GISDK_ID);
 
-  const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`) as HTMLElement
-  const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`) as HTMLElement;
-  const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`) as HTMLElement;
-  
-  if (!leftContainer || !rightContainer || !bottomContainer) {
-    return null;
-  }
+  const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`) 
+  const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`) 
+  const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`) 
 
   return (
     <div>
-      {ReactDOM.createPortal(
-        LeftContent,
-        leftContainer 
-      )}
-      {ReactDOM.createPortal(
-        RightContent,
-        rightContainer
-      )}
-      {ReactDOM.createPortal(
-        BottomContent,
-        bottomContainer
-      )}
+      {leftContainer && leftVisible && ReactDOM.createPortal(LeftContent, leftContainer)}
+      {rightContainer && rightVisible && ReactDOM.createPortal(RightContent, rightContainer)}
+      {bottomContainer && bottomVisible && ReactDOM.createPortal(BottomContent, bottomContainer)}
     </div>
   );
 };
