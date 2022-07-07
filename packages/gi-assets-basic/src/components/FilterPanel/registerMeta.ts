@@ -24,6 +24,14 @@ const registerMeta = () => {
       'x-component': 'Switch',
       default: true,
     },
+    filterLogic: {
+      title: '筛选逻辑',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [{value : 'and', label : 'and'}, { value: 'or', label: 'or' }],
+      default: 'and'
+    },
     ...metas,
   };
 
