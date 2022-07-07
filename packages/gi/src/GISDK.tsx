@@ -353,10 +353,6 @@ const GISDK = (props: Props) => {
         style={{ width: "100%", height: "100%", ...props.style }}
       >
         <div id={`${GISDK_ID}-container-extra`}></div>
-        {/* 以下三个 div 服务于 FreeLayout 组件 */}
-        <div id={`${GISDK_ID}-free-layout-left`}></div>
-        <div id={`${GISDK_ID}-free-layout-right`}></div>
-        <div id={`${GISDK_ID}-free-layout-bottom`}></div>
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
           containerStyle={{ transform: "scale(1)" }}
