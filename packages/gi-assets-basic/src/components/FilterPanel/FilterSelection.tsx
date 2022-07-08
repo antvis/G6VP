@@ -22,6 +22,7 @@ interface FilterSelectionProps {
   nodeProperties: Object;
   edgeProperties: Object;
   source: GraphinData;
+  defaultKey?: string;
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
@@ -116,6 +117,13 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     });
   };
   const elementProps = filterCriteria.elementType === 'node' ? nodeProperties : edgeProperties;
+
+  // 初始展示筛选器
+  useEffect(() => {
+    if (filterCriteria.defaultKey) {
+      onSelectChange(filterCriteria.defaultKey)
+    }
+  }, [filterCriteria.defaultKey])
 
   useEffect(() => {
     const { prop, elementType, analyzerType } = filterCriteria;

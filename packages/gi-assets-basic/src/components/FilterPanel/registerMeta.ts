@@ -8,8 +8,43 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
-const registerMeta = () => {
+const registerMeta = ({ schemaData }) => {
+  const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
+
+  const edgeProperties = schemaData.edges.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
+
+  const nodeOptions = Object.entries(nodeProperties).map(e => {
+    const [key, value] = e;
+    return {label: `node-${key}`, value: `node-${key}`}
+  })
+
+  const edgeOptions =  Object.entries(edgeProperties).map(e => {
+    const [key, value] = e;
+    return {label: `edge-${key}`, value: `edge-${key}`}
+  })
+
   const schema = {
+    filterKeys: {
+      title: '默认筛选字段',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      "x-component-props": {
+        mode: "multiple",
+      },
+      enum: [...nodeOptions, ...edgeOptions],
+      default: [],
+    },
     isFilterIsolatedNodes: {
       title: '过滤孤立节点',
       type: 'boolean',
@@ -29,8 +64,11 @@ const registerMeta = () => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      enum: [{value : 'and', label : 'and'}, { value: 'or', label: 'or' }],
-      default: 'and'
+      enum: [
+        { value: 'and', label: 'and' },
+        { value: 'or', label: 'or' },
+      ],
+      default: 'and',
     },
     ...metas,
   };
