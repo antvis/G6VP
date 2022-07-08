@@ -87,7 +87,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const rightContentExtra = (
     <>
-      <Notification />
+      {/* <Notification /> */}
       <QRcode />
 
       <DataModeCard />
