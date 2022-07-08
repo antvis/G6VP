@@ -17,10 +17,11 @@ export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
   limit: number;
+  filterLogic: 'and' | 'or';
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes, limit } = props;
+  const { histogramColor, isFilterIsolatedNodes, limit, filterLogic } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { updateContext, transform, schemaData, largeGraphData } = useContext();
   const dataSchemas = schemaData;
@@ -78,13 +79,49 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   };
 
   useEffect(() => {
+    if (!largeGraphData) {
+      return;
+    }
     let data: GraphinData = largeGraphData as GraphinData;
+
     let canvasData;
 
-    Object.values(filterOptions).map(filterCriteria => {
-      data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
-    });
-    // 画布中的数据
+    // 多个筛选器的筛选逻辑为 ”与“
+    if (filterLogic === 'and') {
+      Object.values(filterOptions).map(filterCriteria => {
+        data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
+      });
+      // 多个筛选器间的筛选逻辑为 ”或“
+    } else {
+      const graph_data = {
+        nodes: [],
+        edges: [],
+      } as GraphinData;
+      Object.values(filterOptions).map(filterCriteria => {
+        const { isFilterReady, analyzerType } = filterCriteria;
+        let filtered;
+        if (!isFilterReady || analyzerType === 'NONE') {
+          // 如果是「OR」的关系中，筛选不符合条件，返回的值都为空
+          filtered = { nodes: [], edges: [] };
+        } else {
+          filtered = filterGraphData(largeGraphData, filterCriteria, isFilterIsolatedNodes);
+        }
+        graph_data.nodes = [...graph_data.nodes, ...filtered.nodes];
+        graph_data.edges = [...graph_data.edges, ...filtered.edges];
+      });
+
+      data = {
+        nodes: utils.uniqueElementsBy(graph_data.nodes, (n1, n2) => n1.id === n2.id),
+        edges: utils.uniqueElementsBy(graph_data.edges, (e1, e2) => {
+          if (e1.id && e2.id) {
+            return e1.id === e2.id;
+          }
+          // 因为largeGraph没有做transform，因此没有edge.id，需要手动拼装下
+          return `${e1.source}_${e1.target}_${e1.edgeType}` === `${e2.source}_${e2.target}_${e2.edgeType}`;
+        }),
+      };
+    }
+
     canvasData = data;
     filterData.current = data;
 
@@ -111,7 +148,11 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
 
   return (
     <div className="gi-filter-panel">
-      <Interpretation data={filterData.current as GraphinData} filterOptions={filterOptions} />
+      <Interpretation
+        data={filterData.current as GraphinData}
+        filterOptions={filterOptions}
+        filterLogic={filterLogic}
+      />
       <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
         增加筛选器
       </Button>
