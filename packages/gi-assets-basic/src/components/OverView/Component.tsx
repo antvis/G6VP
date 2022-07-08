@@ -6,11 +6,11 @@ import './index.less';
 
 export interface LoadingProps {
   limit: number;
-  cdn: string;
+  filterLogic: 'and' | 'or';
 }
 
 const Overview: React.FunctionComponent<LoadingProps> = props => {
-  const { limit } = props;
+  const { limit, filterLogic } = props;
   const context = useContext();
   const [state, setState] = React.useState({
     visible: false,
@@ -48,7 +48,7 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
           isFilterIsolatedNodes={true}
           highlightMode={true}
           limit={limit}
-          filterLogic={'or'}
+          filterLogic={filterLogic}
         />
       )}
     </div>

@@ -5,12 +5,13 @@ import * as React from 'react';
 import downloadCsv from '../common/downloadCsv';
 import { IFilterCriteria } from '../FilterPanel/type';
 interface interpretationProps {
+  filterLogic: 'and' | 'or';
   data: GraphinData;
   filterOptions: { [id: string]: IFilterCriteria };
 }
 
 const interpretation: React.FunctionComponent<interpretationProps> = props => {
-  const { data, filterOptions } = props;
+  const { data, filterOptions, filterLogic } = props;
   const { nodes, edges } = data;
   if (!nodes) {
     return null;
@@ -42,9 +43,9 @@ const interpretation: React.FunctionComponent<interpretationProps> = props => {
           value = item.range?.join(' ~ ');
         }
 
-        if (item.analyzerType === "HISTOGRAM") {
-          const tmp = item.range?.map(e => e.join("~"))
-          value = tmp?.join(" 或 ")
+        if (item.analyzerType === 'HISTOGRAM') {
+          const tmp = item.range?.map(e => e.join('~'));
+          value = tmp?.join(' 或 ');
           //value = JSON.stringify(item.range)
         }
 
@@ -68,7 +69,11 @@ const interpretation: React.FunctionComponent<interpretationProps> = props => {
                 <Tooltip placement="topLeft" title={'下载数据'}>
                   <Button type="text" icon={<FileExcelOutlined />} onClick={handleDownload}></Button>
                 </Tooltip>
-                <Popover content={content} title="当前筛选条件" trigger="hover">
+                <Popover
+                  content={content}
+                  title={`当前筛选逻辑：${filterLogic.toUpperCase()}，筛选条件如下：`}
+                  trigger="hover"
+                >
                   <Button type="text" icon={<FilterOutlined />} onClick={handleShowFilter}></Button>
                 </Popover>
               </span>
