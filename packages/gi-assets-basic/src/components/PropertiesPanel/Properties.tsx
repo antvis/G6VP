@@ -1,35 +1,39 @@
-import { Input } from 'antd';
-import * as React from 'react';
-import './index.less';
-const { Search } = Input;
+import { Switch } from "antd";
+import * as React from "react";
+import { useImmer } from "use-immer";
+import PropertiesDetail from "./PropertiesDetail";
+import Statistic from "./Statistic";
+import "./index.less";
 interface PropertiesProps {
   data: any;
 }
 
-const Properties: React.FunctionComponent<PropertiesProps> = props => {
+const Properties: React.FunctionComponent<PropertiesProps> = (props) => {
   const { data } = props;
+  const [state, updateState] = useImmer({
+    isStatistic: true,
+  });
 
-  const onSearch = () => {};
+  const onChange = (checked: boolean) => {
+    updateState((draft) => {
+      draft.isStatistic = checked;
+    });
+  };
+
   return (
     <div className="gi-properties-pannel">
-      <h3>{data.id}</h3>
-      <Search placeholder="Search in the properties" onSearch={onSearch} style={{ width: '100%' }} />
-      <ul>
-        {Object.keys(data).map(key => {
-          let content = data[key];
-          let isObject = false;
-          if (typeof content == 'object') {
-            content = JSON.stringify(content, null, 2);
-            isObject = true;
-          }
-          return (
-            <li key={key}>
-              <div className="key">{key}</div>
-              <div className="value">{isObject ? <pre>{content}</pre> : content}</div>
-            </li>
-          );
-        })}
-      </ul>
+      <header className="gi-properties-pannel-header">
+        <h3>{data.id}</h3>
+        <div>
+          统计数据展示
+          <Switch checked={state.isStatistic} onChange={onChange} />
+        </div>
+      </header>
+      {state.isStatistic ? (
+        <Statistic data={data} />
+      ) : (
+        <PropertiesDetail data={data} />
+      )}
     </div>
   );
 };
