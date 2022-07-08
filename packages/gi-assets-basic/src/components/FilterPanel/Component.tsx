@@ -14,11 +14,12 @@ const { generatorSchemaByGraphData, isStyles } = utils;
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
-  filterLogic: "and" | "or";
+  filterLogic: 'and' | 'or';
+  filterKeys: string[];
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { isFilterIsolatedNodes, highlightMode, filterLogic } = props;
+  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
   const dataSchemas = schemaData; // useMemo(() => generatorSchemaByGraphData(source), [source]);
@@ -41,10 +42,11 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     }, {});
   }, [dataSchemas]);
 
-  const addFilter = () => {
+  const addFilter = (defaultKey?: string) => {
     const id = nanoid();
     const filterCriteria = {
       id,
+      defaultKey,
       isFilterReady: false,
     };
 
@@ -82,18 +84,38 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   };
 
   useEffect(() => {
+    // 初始化时需要展示的筛选器
+    const initialFilterOptions = filterKeys
+      .map(defaultKey => {
+        const id = nanoid();
+        const filterCriteria = {
+          id,
+          defaultKey,
+          isFilterReady: false,
+        };
+        return filterCriteria;
+      })
+      .reduce((acc, cur) => {
+        acc[cur.id] = cur;
+        return acc;
+      }, {});
+
+    setFilterOptions(initialFilterOptions);
+  }, [filterKeys]);
+
+  useEffect(() => {
     let data: GraphinData = source;
     // 多个筛选器的筛选逻辑为 ”与“
-    if (filterLogic === "and") {
+    if (filterLogic === 'and') {
       Object.values(filterOptions).map(filterCriteria => {
         data = filterGraphData(data, filterCriteria, isFilterIsolatedNodes);
       });
-    // 多个筛选器间的筛选逻辑为 ”或“
+      // 多个筛选器间的筛选逻辑为 ”或“
     } else {
       data = {
         nodes: [],
         edges: [],
-      }
+      };
       Object.values(filterOptions).map(filterCriteria => {
         const filterData = filterGraphData(source, filterCriteria, isFilterIsolatedNodes);
         data.nodes = [...data.nodes, ...filterData.nodes];
@@ -103,7 +125,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       // 去重
       data.nodes = utils.uniqueElementsBy(data.nodes, (n1, n2) => n1.id === n2.id);
       data.edges = utils.uniqueElementsBy(data.edges, (e1, e2) => e1.id === e2.id);
-
     }
 
     if (highlightMode) {
@@ -123,7 +144,12 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
 
   return (
     <div className="gi-filter-panel">
-      <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
+      <Button
+        type="primary"
+        style={{ width: '100%', borderRadius: '4px' }}
+        onClick={() => addFilter()}
+        icon={<PlusOutlined />}
+      >
         增加筛选器
       </Button>
       <div className="gi-filter-panel-criteria-container">
