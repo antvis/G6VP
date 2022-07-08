@@ -11,6 +11,8 @@ export interface IFilterCriteria {
   // 直方图的数据是一维的，单独列出
   histogramData?: IHistogramValue[] 
   isFilterReady?: boolean;
+  // 默认分析字段
+  defaultKey?: string;
 }
 
 interface IOption {
