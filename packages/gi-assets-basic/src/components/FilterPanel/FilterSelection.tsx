@@ -1,7 +1,7 @@
 import { DeleteOutlined, FieldStringOutlined, FieldTimeOutlined, NumberOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { Button, Select } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HistogramChart, PieChart, WordCloudChart } from './Charts';
 import LineChart from './Charts/LineChart';
 import './index.less';
@@ -38,7 +38,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     let analyzerType;
     if (elementProps[prop] === 'number') {
       analyzerType = 'HISTOGRAM';
-      const histogramData = getHistogramData(source, prop, elementType);
+      // const histogramData = getHistogramData(source, prop, elementType);
       updateFilterCriteria(id, {
         id,
         analyzerType,
@@ -46,11 +46,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         elementType,
         prop,
         //range: [],
-        histogramData,
+        // histogramData,
       });
     } else if (elementProps[prop] === 'boolean') {
       analyzerType = 'PIE';
-      const chartData = getValueMap(source, prop, elementType);
+      // const chartData = getValueMap(source, prop, elementType);
       //setChartData(valueMap);
       updateFilterCriteria(id, {
         id,
@@ -58,18 +58,18 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         elementType,
         prop,
         analyzerType,
-        chartData,
+        // chartData,
       });
     } else if (elementProps[prop] === 'string') {
       const chartData = getValueMap(source, prop, elementType);
       let selectOptions;
-      if (chartData.size <= 5) {
+      if (chartData.size <= 10) {
         analyzerType = 'PIE';
         //setChartData(valueMap);
-      } else if (chartData.size <= 10) {
+      } /* else if (chartData.size <= 10) {
         analyzerType = 'WORDCLOUD';
         //setChartData(valueMap);
-      } else {
+      } */ else {
         analyzerType = 'SELECT';
         selectOptions = [...chartData.keys()].map(key => ({
           value: key,
@@ -116,6 +116,28 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     });
   };
   const elementProps = filterCriteria.elementType === 'node' ? nodeProperties : edgeProperties;
+
+  useEffect(() => {
+    const { prop, elementType, analyzerType } = filterCriteria;
+    if (prop && elementType && analyzerType && ["PIE", "SELECT", "WORDCLOUD"].indexOf(analyzerType) !== -1) {
+      const chartData = getValueMap(source, prop, elementType);
+      updateFilterCriteria(filterCriteria.id!, {
+        ...filterCriteria,
+        chartData,
+      })
+    }
+
+    if (prop && elementType && analyzerType && ["HISTOGRAM"].indexOf(analyzerType) !== -1) {
+      const histogramData = getHistogramData(source, prop, elementType);
+      updateFilterCriteria(filterCriteria.id!, {
+        ...filterCriteria,
+        histogramData,
+      })
+    }
+
+  }, [source, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType ])
+
+
 
   return (
     <div key={filterCriteria.id} className="gi-filter-panel-group">
@@ -171,16 +193,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             value={filterCriteria.selectValue}
           />
         )}
-
-        {filterCriteria.analyzerType === 'HISTOGRAM' &&
-          // <BrushFilter
-          //   value={filterCriteria.range!}
-          //   histogram={filterCriteria.histogram!}
-          //   onChangeRange={onBrushChange}
-          //   /* BrushFilter 组件问题，设置不了百分比 */
-          //   width={document.getElementsByClassName('gi-filter-panel-prop')[0].clientWidth}
-          // />
-          null}
 
         {filterCriteria.analyzerType === 'PIE' && (
           <PieChart

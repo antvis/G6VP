@@ -25,7 +25,7 @@ const useFreeLayoutStyle = (
     return () => {
       leftContainer && container.removeChild(leftContainer);
     };
-  }, [leftVisible, leftWidth, GISDK_ID, container.clientWidth]);
+  }, [leftVisible, leftWidth, GISDK_ID]);
 
   useEffect(() => {
     let rightContainer;
@@ -40,7 +40,7 @@ const useFreeLayoutStyle = (
     return () => {
       rightContainer && container.removeChild(rightContainer);
     };
-  }, [rightVisible, rightWidth, GISDK_ID, container.clientWidth]);
+  }, [rightVisible, rightWidth, GISDK_ID]);
 
   useEffect(() => {
     let bottomContainer;
