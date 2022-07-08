@@ -6,11 +6,11 @@ import './index.less';
 
 export interface LoadingProps {
   limit: number;
-  cdn: string;
+  filterLogic: 'and' | 'or';
 }
 
 const Overview: React.FunctionComponent<LoadingProps> = props => {
-  const { limit } = props;
+  const { limit, filterLogic } = props;
   const context = useContext();
   const [state, setState] = React.useState({
     visible: false,
@@ -43,7 +43,13 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
       <Alert message={title} type="info" />
 
       {largeGraphData && (
-        <FilterPanel histogramColor="#3056E3" isFilterIsolatedNodes={true} highlightMode={true} limit={limit} />
+        <FilterPanel
+          histogramColor="#3056E3"
+          isFilterIsolatedNodes={true}
+          highlightMode={true}
+          limit={limit}
+          filterLogic={filterLogic}
+        />
       )}
     </div>
   );
