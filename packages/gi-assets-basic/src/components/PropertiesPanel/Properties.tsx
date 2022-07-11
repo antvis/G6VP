@@ -1,21 +1,22 @@
-import { Switch } from "antd";
-import * as React from "react";
-import { useImmer } from "use-immer";
-import PropertiesDetail from "./PropertiesDetail";
-import Statistic from "./Statistic";
-import "./index.less";
+import { Switch } from 'antd';
+import * as React from 'react';
+import { useImmer } from 'use-immer';
+import './index.less';
+import PropertiesDetail from './PropertiesDetail';
+import Statistic from './Statistic';
 interface PropertiesProps {
   data: any;
+  defaultiStatistic: boolean;
 }
 
-const Properties: React.FunctionComponent<PropertiesProps> = (props) => {
-  const { data } = props;
+const Properties: React.FunctionComponent<PropertiesProps> = props => {
+  const { data, defaultiStatistic } = props;
   const [state, updateState] = useImmer({
-    isStatistic: true,
+    isStatistic: defaultiStatistic,
   });
 
   const onChange = (checked: boolean) => {
-    updateState((draft) => {
+    updateState(draft => {
       draft.isStatistic = checked;
     });
   };
@@ -25,15 +26,11 @@ const Properties: React.FunctionComponent<PropertiesProps> = (props) => {
       <header className="gi-properties-pannel-header">
         <h3>{data.id}</h3>
         <div>
-          统计数据展示
+          图表展示
           <Switch checked={state.isStatistic} onChange={onChange} />
         </div>
       </header>
-      {state.isStatistic ? (
-        <Statistic data={data} />
-      ) : (
-        <PropertiesDetail data={data} />
-      )}
+      {state.isStatistic ? <Statistic data={data} /> : <PropertiesDetail data={data} />}
     </div>
   );
 };

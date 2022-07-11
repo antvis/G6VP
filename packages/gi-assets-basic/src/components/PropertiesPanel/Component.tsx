@@ -11,13 +11,14 @@ export interface PropertiesPanelProps {
   height: string;
   title: string;
   offset: number[];
+  defaultiStatistic: boolean;
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
-  const { serviceId, hasService, placement, width, title, height, offset } = props;
+  const { serviceId, hasService, placement, width, title, height, offset, defaultiStatistic } = props;
   const { graph, services, GISDK_ID } = useContext();
   const service = utils.getService(services, serviceId);
   if (!service) {
@@ -98,7 +99,8 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   }, [graph, setState, service]);
   const { isLoading, detail, visible } = state;
 
-  const content = !isLoading && detail ? <Properties data={detail} /> : <Skeleton active />;
+  const content =
+    !isLoading && detail ? <Properties data={detail} defaultiStatistic={defaultiStatistic} /> : <Skeleton active />;
   const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
   return (
     <DivContainer
