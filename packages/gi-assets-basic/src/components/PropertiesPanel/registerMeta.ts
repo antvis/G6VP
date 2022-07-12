@@ -64,7 +64,7 @@ const registerMeta = context => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
-      default: '356px',
+      default: '500px',
     },
     height: {
       title: '高度',
