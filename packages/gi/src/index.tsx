@@ -5,7 +5,7 @@ import {
   GIAC_CONTENT_PROPS,
   GIAC_METAS,
   GIAC_PROPS,
-  GI_CONTAINER_METAS
+  GI_CONTAINER_METAS,
 } from './components/const';
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
@@ -26,7 +26,7 @@ export type {
   GIEdgeConfig,
   GINodeConfig,
   GIService,
-  ISourceDataMap
+  ISourceDataMap,
 } from './typing';
 export { useContext, utils };
 export { extra };
@@ -43,7 +43,7 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.4.0';
+const version = '2.5.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;
