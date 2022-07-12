@@ -2,6 +2,7 @@ import { Tabs } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 
+import AlibabaLogin from '../../components/AlibabaLogin';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
@@ -87,9 +88,9 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const rightContentExtra = (
     <>
-      {/* <Notification /> */}
+      <AlibabaLogin />
+      <Notification />
       <QRcode />
-
       <DataModeCard />
     </>
   );
