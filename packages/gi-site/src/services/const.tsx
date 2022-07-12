@@ -1,8 +1,19 @@
 export const IS_LOCAL_ENV = window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
 
-// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
-export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
+// 本地环境
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+
+// 开发环境
+// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
+
+// 测试环境
+export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
+
+// 线上环境
+// export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
+
+// 预发环境
+// export const SERVICE_URL_PREFIX = 'https://graphinsight-pre.alipay.com';
 
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件

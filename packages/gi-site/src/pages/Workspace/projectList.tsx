@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
+import MembersPanel from './Members';
 import { getProjectList, removeProjectById } from '../../services';
 
 interface ProjectListProps {
@@ -17,6 +18,11 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const history = useHistory();
   const [state, updateState] = useImmer({
     lists: [],
+    visible: false,
+  });
+
+  const [member, setMember] = useImmer({
+    currentProject: null,
     visible: false,
   });
 
@@ -52,14 +58,29 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     removeProjectById(id);
   };
 
-  const menu = id => (
+  const handleShowMemberModal = item => {
+    console.log(item);
+    setMember({
+      visible: true,
+      currentProject: item,
+    });
+  };
+
+  const closeMemberPanen = () => {
+    setMember({
+      visible: false,
+      currentProject: null,
+    });
+  };
+
+  const menu = item => (
     <Menu>
       <Menu.Item>
         <Popconfirm
           title="是否删除该项目?"
           onConfirm={e => {
             e.preventDefault();
-            confirm(id);
+            confirm(item.id);
           }}
           okText="Yes"
           cancelText="No"
@@ -67,6 +88,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
+      <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>
     </Menu>
   );
   const projectButton = <EditFilled className="edit icon-buuton" />;
@@ -93,7 +115,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 title={name}
                 time={utils.time(gmtCreate)}
                 extra={
-                  <Dropdown overlay={menu(id)} placement="bottomCenter">
+                  <Dropdown overlay={menu(item)} placement="bottomCenter">
                     <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
                   </Dropdown>
                 }
@@ -103,6 +125,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           );
         })}
       </Row>
+      <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
     </>
   );
 };
