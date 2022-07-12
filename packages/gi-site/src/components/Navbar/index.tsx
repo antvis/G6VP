@@ -1,10 +1,16 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, EditOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import {
+  createFromIconfontCN,
+  EditOutlined,
+  ExportOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import { getProjectById, updateProjectById } from '../../services';
+import { schemaData } from '../../pages/Workspace/utils';
+import { getProjectById, updateProjectById, addProject } from '../../services';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
@@ -53,11 +59,26 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   };
 
   const handleSave = async () => {
-    updateProjectById(projectId, {
-      serviceConfig: JSON.stringify(serviceConfig),
-      activeAssetsKeys: JSON.stringify(activeAssetsKeys),
-      projectConfig: JSON.stringify(config),
-    });
+    const origin = await getProjectById(projectId);
+    console.log(origin)
+    // @ts-igono
+    if (origin.type === 'case') { 
+      addProject({
+        name: origin?.name,
+        type: "project",
+        data: JSON.stringify(origin?.data),
+        schemaData: JSON.stringify(origin?.schemaData),
+        serviceConfig: JSON.stringify(serviceConfig),
+        activeAssetsKeys: JSON.stringify(activeAssetsKeys),
+        projectConfig: JSON.stringify(config),
+      })
+    } else {
+      updateProjectById(projectId, {
+        serviceConfig: JSON.stringify(serviceConfig),
+        activeAssetsKeys: JSON.stringify(activeAssetsKeys),
+        projectConfig: JSON.stringify(config),
+      });
+    }
     updateContext(draft => {
       draft.isSave = true;
     });

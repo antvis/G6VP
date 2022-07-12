@@ -36,6 +36,7 @@ export const getProjectById = async (id: string) => {
       activeAssetsKeys: project.activeAssetsKeys,
       name: project.name,
       serviceConfig: project.serviceConfig,
+      type: project.type,
     };
   }
 
@@ -101,7 +102,7 @@ export const getProjectById = async (id: string) => {
 export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   if (IS_LOCAL_ENV) {
     const origin: any = await localforage.getItem(id);
-    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData, expandInfo } = params;
+    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData, expandInfo, type } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
     // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
     if (data) {
@@ -127,6 +128,10 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
     if (expandInfo) {
       origin.expandInfo = JSON.parse(expandInfo);
     }
+
+    /* if (type) {
+      origin.type = type;
+    } */
     return await localforage.setItem(id, origin);
   }
 
@@ -139,6 +144,8 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
 
   return response.success;
 };
+
+
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
@@ -216,6 +223,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save') => {
       return projects;
     }
     if (type == 'case') {
+      console.log("case:", cases)
       return cases;
     }
     if (type == 'save') {
@@ -266,6 +274,8 @@ export const addProject = async (param: any) => {
     return response.data?.insertId;
   }
 };
+
+
 
 /**
  * 收藏项目
