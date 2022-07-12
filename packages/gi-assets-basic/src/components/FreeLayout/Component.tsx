@@ -43,9 +43,31 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
 
   useFreeLayoutStyle(leftWidth, rightWidth, bottomHeight, leftVisible, rightVisible, bottomVisible, GISDK_ID);
 
-  const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`) 
-  const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`) 
-  const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`) 
+  const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`);
+  const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`);
+  const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`);
+
+  React.useLayoutEffect(() => {
+    return () => {
+      const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+      const leftContainer = document.getElementById(`${GISDK_ID}-free-layout-left`);
+      const rightContainer = document.getElementById(`${GISDK_ID}-free-layout-right`);
+      const bottomContainer = document.getElementById(`${GISDK_ID}-free-layout-bottom`);
+      const canvasContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
+      leftContainer && container.removeChild(leftContainer);
+      rightContainer && container.removeChild(rightContainer);
+      bottomContainer && container.removeChild(bottomContainer);
+      if (canvasContainer) {
+        canvasContainer.style.position = 'absolute';
+        canvasContainer.style.width = 'unset';
+        canvasContainer.style.height = 'unset';
+        canvasContainer.style.top = '0px';
+        canvasContainer.style.right = '0px';
+        canvasContainer.style.left = '0px';
+        canvasContainer.style.bottom = '0px';
+      }
+    };
+  }, []);
 
   return (
     <div>
