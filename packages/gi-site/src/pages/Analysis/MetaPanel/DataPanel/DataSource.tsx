@@ -10,8 +10,11 @@ interface DataSourceProps {
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
   const { data } = props;
 
+  // 如果是使用 GraphScope 模式，则不默认展示弹框
+  const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
+
   const [state, updateState] = useImmer({
-    visible: data.nodes.length === 0,
+    visible: data.nodes.length === 0 && !graphScopeGraphName,
   });
   const { visible } = state;
   const uploadData = () => {
