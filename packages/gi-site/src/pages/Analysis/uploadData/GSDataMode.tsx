@@ -1,8 +1,8 @@
-import { PlusOutlined, UploadOutlined, MinusCircleOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Radio, Row, Steps, message, Switch, Modal, Spin, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import { createCupidInstance, loadOdpsDataToGraphScope } from '../../../services/graphcompute';
+import { loadOdpsDataToGraphScope } from '../../../services/graphcompute';
 import LocalFilePanel from './LocalFile';
 import ODPSTablePanel from './ODPSTablePanel';
 import ODPSMode from './ODPS';
@@ -68,10 +68,6 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
   };
 
   const handleUploadFileToNext = async () => {
-    // setGsLoading({
-    //   ...gsLoading,
-    //   step1Loading: true,
-    // });
     if (modeType === 'ODPS') {
       // 如果不存在，则需要创建，否则直接进入下一步
 
@@ -104,6 +100,10 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
 
       next();
     } else if (modeType === 'LOCAL') {
+      setGsLoading({
+        ...gsLoading,
+        step1Loading: true,
+      });
       if (filesMapping) {
         confirm({
           title: '是否忽略已上传文件?',
@@ -128,6 +128,10 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
           cancelText: '全量覆盖',
         });
       } else {
+        setGsLoading({
+          ...gsLoading,
+          step1Loading: true,
+        });
         // 上传
         const status = await handleUploadFile(false);
         if (status) {
