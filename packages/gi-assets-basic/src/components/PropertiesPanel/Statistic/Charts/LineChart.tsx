@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Line } from "@antv/g2plot";
+import { nanoid } from 'nanoid';
 
 interface LineChartProps {
   xField: string;
@@ -9,14 +10,15 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = (props) => {
   const { data, xField, yField } = props;
-  console.log("data:", data)
+  
+  const uid = React.useMemo(() => nanoid(), [])
 
   useEffect(() => {
-    const linePlot = new Line("gi-statistic-linechart-container", {
+    const linePlot = new Line(`${uid}-linechart-container`, {
       data,
       xField,
       yField,
-      width: 300
+      height: 350
     });
 
     linePlot.render();
@@ -25,6 +27,6 @@ const LineChart: React.FC<LineChartProps> = (props) => {
     };
   }, [data, xField, yField]);
 
-  return <div id="gi-statistic-linechart-container" />;
+  return <div id={`${uid}-linechart-container`} />;
 };
 export default LineChart;
