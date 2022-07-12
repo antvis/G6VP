@@ -17,6 +17,14 @@ const registerMeta = context => {
       },
       default: 'Mock/PropertiesPanel',
     },
+
+    defaultiStatistic: {
+      title: '默认展示统计信息',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
     title: {
       title: '标题',
       type: 'string',
