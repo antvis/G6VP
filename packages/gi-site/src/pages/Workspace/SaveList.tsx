@@ -1,11 +1,13 @@
 import { utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Empty, Menu, Popconfirm, Row, Typography } from 'antd';
+import { Button, Col, Dropdown, Empty, Menu, Popconfirm, Row, Typography, message } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
+import { queryShareList, deleteShareById } from '../../services/share';
+import { IS_LOCAL_ENV } from '../../services/const';
 
 interface ProjectListProps {
   onCreate?: () => void;
@@ -22,7 +24,12 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
 
   React.useEffect(() => {
     (async () => {
-      const lists = await getProjectList(type);
+      let lists = [];
+      if (IS_LOCAL_ENV) {
+        lists = await getProjectList(type);
+      } else {
+        lists = await queryShareList();
+      }
       updateState(draft => {
         draft.lists = lists;
       });
@@ -31,12 +38,24 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
 
   const { lists } = state;
 
-  const confirm = id => {
-    const items = lists.filter(d => d.id !== id);
-    updateState(draft => {
-      draft.lists = items;
-    });
-    removeProjectById(id);
+  const confirm = async id => {
+    if (IS_LOCAL_ENV) {
+      const items = lists.filter(d => d.id !== id);
+      updateState(draft => {
+        draft.lists = items;
+      });
+      removeProjectById(id);
+    } else {
+      const result = await deleteShareById(id);
+      if (result) {
+        message.success('删除成功');
+        // 重新加载列表
+        const list = await queryShareList();
+        updateState(draft => {
+          draft.lists = list;
+        });
+      }
+    }
   };
 
   const menu = id => (
@@ -75,7 +94,7 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {lists.map(item => {
-          const { id, name, cover, gmtCreate } = item;
+          const { id, name, cover, gmtCreate, description } = item;
 
           return (
             <Col key={id} xs={24} sm={24} md={12} lg={8} xl={6}>
@@ -91,7 +110,7 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
                     <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
                   </Dropdown>
                 }
-                description=""
+                description={description}
               ></ProjectCard>
             </Col>
           );

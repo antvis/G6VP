@@ -40,6 +40,10 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOC
         id: 'project',
         name: '我的项目',
       },
+      {
+        id: 'save',
+        name: '我的保存',
+      },
     ];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {

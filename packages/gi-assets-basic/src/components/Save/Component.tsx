@@ -34,7 +34,8 @@ const Save: React.FunctionComponent<Props> = props => {
           duration: 3,
         });
         setTimeout(() => {
-          window.open(res.data);
+          const herfURL = window.location.origin + '/#/share/' + res.data.shareId;
+          window.open(herfURL);
         }, 3000);
       }
     });
@@ -57,13 +58,11 @@ const Save: React.FunctionComponent<Props> = props => {
           onClick={handleSave}
           type="primary"
           //style={{ position: 'absolute', bottom: '12px', width: 'calc(100% - 44px)' }}
-          style={{width: '100%'}}
+          style={{ width: '100%' }}
         >
           保存分享
         </Button>
       </Form>
-
-     
     </div>
   );
 };
