@@ -1,76 +1,40 @@
 import { DatabaseOutlined } from '@ant-design/icons';
-import { Button, Popover, Select, Typography } from 'antd';
+import { Button, Popover, Typography } from 'antd';
 import React from 'react';
-import { useImmer } from 'use-immer';
-const { Option } = Select;
-type ServerEnv = 'ONLINE' | 'LOCAL';
-type Props = {
-  changeDataModeCallback?: (env: ServerEnv) => void;
-};
-const EnvInfo = () => {
+
+const EnvInfo = ({ IS_ONLINE_ENV }) => {
+  if (IS_ONLINE_ENV) {
+    return (
+      <div style={{ width: '500px' }}>
+        <p>
+          当前您处于 GraphInsight <Typography.Text type="success">「线上环境」 </Typography.Text>
+        </p>
+        <p>✅ 支持域内用户，数据存放在云端，可根据权限进行查看与分享</p>
+        <p>✅ 支持域内用户，根据权限，新增/查看/使用 业务沉淀的图分析资产</p>
+        <p>✅ 支持集团用户，使用 ODPS 数据源，GraphScope 图计算。</p>
+        <p>❌ 蚂蚁集团用户，因为网络隔离问题，暂时无法使用上述图计算方案。推荐使用蚂蚁 GeaMaker 或 知蛛产品</p>
+      </div>
+    );
+  }
   return (
-    <div style={{ width: '400px' }}>
-      GraphInsight 平台提供两种环境选择：
-      <br />
-      「本地环境」：
-      <Typography.Text type="success">所有的数据（上传数据，操作数据）均存在你的浏览器本地。</Typography.Text>
-      (技术同学可以 审查元素，查看Storage/indexDB) 因此不涉及数据安全问题 ，这个环境，也是开放对外用户的唯一环境。
-      <br />
-      「线上环境」：
-      <Typography.Text type="success">使用线上环境意味着你制作画布可以在线查看，也可以分享给其他人。</Typography.Text>
-      （我们会启用蚂蚁内部服务，包括鉴权服务/ GraphScope 引擎环境。预计8月份上线）
+    <div style={{ width: '500px' }}>
+      <p>
+        当前您处于 GraphInsight <Typography.Text type="success">「本地环境」 </Typography.Text>
+      </p>
+      <p>✅ 数据安全：所有的数据（上传数据，画布操作配置）均存在你的本地浏览器 IndexDB 中，请放心使用</p>
+      <p>✅ 支持规模：本地上传文件无限制，但是目前仅支持10万节点内的网络分析，请提前处理好数据。</p>
+      <p>❌ 在线分享：数据在用户本地，因此不支持在线URL分享</p>
+      <p>✅ 项目分享：提供项目下载与恢复功能，可以通过项目文件进行分享</p>
     </div>
   );
 };
-const DataModeCard: React.FC<Props> = ({ changeDataModeCallback }) => {
-  // 默认本地
-  const defaultValue: ServerEnv = localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? 'ONLINE' : 'LOCAL';
-  const [state, updateState] = useImmer<{
-    env: ServerEnv;
-    visible: boolean;
-  }>({
-    env: defaultValue, // 该页面状态
-    visible: !localStorage.getItem('GI_SERVER_ENV'), // 新用户第一次打开时没有该值，则打开弹窗
-  });
-  const isOnline = localStorage.getItem('userInfo');
-  const modeList = isOnline
-    ? [
-        { img: '', value: 'LOCAL', label: '本地环境' },
-        { img: '', value: 'ONLINE', label: '在线环境' },
-      ]
-    : [{ img: '', value: 'LOCAL', label: '本地环境' }];
-  const { env, visible } = state;
-  const handleChange = (value: ServerEnv) => {
-    localStorage.setItem('GI_SERVER_ENV', value);
-    location.reload();
-  };
-  const handleVisibleChange = val => {
-    updateState(draft => {
-      draft.visible = val;
-    });
-    if (!localStorage.getItem('GI_SERVER_ENV')) {
-      localStorage.setItem('GI_SERVER_ENV', 'LOCAL');
-    }
-  };
+
+const DataModeCard = () => {
+  const IS_ONLINE_ENV = window.location.host === 'graphinsight.antgroup-inc.cn';
+  const title = IS_ONLINE_ENV ? '线上环境' : '本地环境';
   return (
-    <Popover
-      content={<EnvInfo />}
-      title="环境说明"
-      trigger="click"
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
-    >
-      <Button icon={<DatabaseOutlined />} style={{ padding: '0px 2px 0px 8px' }}>
-        <Select defaultValue={env} style={{ width: 100 }} bordered={false} onChange={handleChange}>
-          {modeList.map(c => {
-            return (
-              <Option key={c.value} value={c.value}>
-                {c.label}
-              </Option>
-            );
-          })}
-        </Select>
-      </Button>
+    <Popover content={<EnvInfo IS_ONLINE_ENV={IS_ONLINE_ENV} />} title="环境说明" trigger="hover">
+      <Button icon={<DatabaseOutlined />}>{title}</Button>
     </Popover>
   );
 };
