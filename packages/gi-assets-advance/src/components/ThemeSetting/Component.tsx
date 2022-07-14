@@ -22,7 +22,8 @@ const ThemeSetting: React.FC<Props> = props => {
 
   const [state, updateState] = useImmer<IThemeSettingState>({
     themes: [],
-    isAddingTheme: false,
+    selectedTheme: "",
+    isAddingTheme: true,
   });
 
   const removeTheme = async (id: string) => {
@@ -63,9 +64,9 @@ const ThemeSetting: React.FC<Props> = props => {
     const parent_container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
     const container = parent_container.firstElementChild as HTMLElement;
     if (parent_container && container) {
-      const { background } = canvasConfig;
+      const { backgroundColor } = canvasConfig;
       const { backgroundImage } = canvasConfig;
-      container.style.background = background;
+      container.style.background = backgroundColor;
       container.style.backgroundImage = `url(${backgroundImage})`;
     }
     updateContext(draft => {
@@ -75,6 +76,10 @@ const ThemeSetting: React.FC<Props> = props => {
         edges: edgesConfig,
       };
     });
+
+    updateState(draft => {
+        draft.selectedTheme = theme.id;
+    })
   };
 
   React.useEffect(() => {
@@ -117,7 +122,7 @@ const ThemeSetting: React.FC<Props> = props => {
                   hoverable
                   cover={<img src={item.cover} style={{ height: '70px' }} />}
                   onClick={() => setTheme(item)}
-                  style={{ position: 'relative' }}
+                  style={{ position: 'relative',border: state.selectedTheme === item.id ? "#3056e3 1px solid": ""}}
                 >
                   <span className="name">{item.name || '自定义主题'}</span>
                   <Dropdown overlay={menu(item)}>
