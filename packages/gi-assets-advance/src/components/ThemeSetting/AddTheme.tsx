@@ -42,6 +42,7 @@ const AddTheme: React.FC<Props> = props => {
       const backgroundImage = container.style.backgroundImage;
       canvasConfig = { background, backgroundImage };
     } 
+    //@ts-ignore
     const res = await addThemeService({ id, name, cover: imgURL, nodesConfig, edgesConfig, canvasConfig });
     if (res.success) {
         //@ts-ignore
