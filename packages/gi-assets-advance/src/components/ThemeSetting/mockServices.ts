@@ -1,4 +1,4 @@
-import { ADD_THEME, GET_THEMES } from './const';
+import { ADD_THEME, GET_THEMES, REMOVE_THEME } from './const';
 import { ITheme } from './typing';
 
 const mockServices = () => {
@@ -27,7 +27,6 @@ const mockServices = () => {
         //@ts-ignore
         const { localforage } = window;
         const project = await localforage.getItem(projectId);
-        console.log('project', project, projectId);
         const themes = project.themes || [];
         //project.themes = [...themes, theme];
         const newThemes = [...themes, theme];
@@ -39,6 +38,24 @@ const mockServices = () => {
         };
       },
     },
+    {
+      id: REMOVE_THEME,
+      service: async (id: string) => {
+        const hash = window.location.hash;
+        const projectId = hash.split('/')[2].split('?')[0];
+        //@ts-ignore
+        const { localforage } = window;
+        const project = await localforage.getItem(projectId);
+        const themes = project.themes;
+        const filterThemes = themes.filter(item => item.id !== id);
+        localforage.setItem(projectId, { ...project, themes: filterThemes });
+        return {
+          success: true,
+          msg: "删除成功",
+          data: filterThemes
+        }
+      }
+    }
     // {
     //   id: SERVICE_ID,
     //   service: () => {
