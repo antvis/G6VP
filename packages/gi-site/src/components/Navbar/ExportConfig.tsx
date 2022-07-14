@@ -1,5 +1,6 @@
 import { ExportOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, message } from 'antd';
+import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { getRiddleAppCode, useCodeSandbox, useHtml, useRiddle } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';

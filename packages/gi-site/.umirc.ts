@@ -66,7 +66,6 @@ const externalScripts = isDev
       return c.url;
     });
 
-console.log('isDev', isDev, PACKAGES);
 export default {
   // 具体配置项
   // mode: "site",

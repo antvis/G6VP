@@ -1,5 +1,6 @@
 import ThemeSwitch from '@alipay/theme-tools';
 import { Avatar, Layout, Tooltip } from 'antd';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 import ThemeVars from '../ThemeVars';
