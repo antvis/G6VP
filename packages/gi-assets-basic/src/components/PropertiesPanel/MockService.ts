@@ -24,15 +24,15 @@ const mockServices = () => {
     {
       id: GraphScope_SERVICE_ID,
       service: (params: Parmas) => {
-        const { id } = params;
+        const { id, ...others } = params;
         return fetch(`http://dev.alipay.net:7001/graphcompute/properties`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
           body: JSON.stringify({
+            ...others,
             id: [id],
-            gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
           }),
         })
           .then(response => response.json())
