@@ -1,4 +1,4 @@
-export const IS_LOCAL_ENV = window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
+export const IS_LOCAL_ENV = window.location.host !== 'graphinsight.antgroup-inc.cn'; //window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
 
 // 本地环境
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
@@ -24,5 +24,3 @@ export const ASSET_TYPE = {
   PROJECT: 6, // 6 大分类 项目
   ASSET: 7, // 7 大分类 分析资产
 };
-
-export const IS_DYNAMIC_LOAD = false;

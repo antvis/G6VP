@@ -6,9 +6,8 @@ import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 临时方案，应该要走antbuc鉴权
-export const IS_PASS_BUC_AUTH = !!localStorage.getItem('_YUYAN_COOKIE_bucUserId');
-console.log('IS_PASS_BUC_AUTH', IS_PASS_BUC_AUTH);
-export const BIZ_PACKAGES = IS_PASS_BUC_AUTH
+export const IS_PASSED_BUC_AUTH = window.location.host === 'graphinsight.antgroup-inc.cn';
+export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
   ? getPackages([
       {
         name: '@alipay/gi-assets-yuque',
