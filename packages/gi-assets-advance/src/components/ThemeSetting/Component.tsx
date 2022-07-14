@@ -23,7 +23,7 @@ const ThemeSetting: React.FC<Props> = props => {
   const [state, updateState] = useImmer<IThemeSettingState>({
     themes: [],
     selectedTheme: "",
-    isAddingTheme: true,
+    isAddingTheme: false,
   });
 
   const removeTheme = async (id: string) => {
