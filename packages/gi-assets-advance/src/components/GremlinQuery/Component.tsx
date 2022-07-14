@@ -42,7 +42,13 @@ export interface IGremlinQueryProps {
   visible?: boolean;
 }
 
-const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', height = 220, serviceId, style, visible }) => {
+const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
+  initialValue = '',
+  height = 220,
+  serviceId,
+  style,
+  visible,
+}) => {
   const { updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
@@ -62,20 +68,12 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
     }
 
     // 查询之前判断是否已经实例化 GraphScope 实例
-    const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
-    // const isGraphScopeService = serviceId.startsWith('GraphScope');
-    if (!gremlinServer) {
-      setBtnLoading(false);
-      notification.error({
-        message: 'Gremlin 查询失败',
-        description: '使用 Gremlin 查询之前，请先实例化 GraphScope 实例！',
-      });
-      return;
-    }
+    const projectId = localStorage.getItem('GI_ACTIVE_PROJECT_ID');
 
     const result = await service({
       value: editorValue,
-      gremlinServer,
+      projectId,
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     });
 
     setBtnLoading(false);
@@ -135,7 +133,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({ initialValue = '', he
 
   useEffect(() => {
     setBtnLoading(false);
-  }, [visible])
+  }, [visible]);
 
   return (
     <div className={'gremlineQueryPanel'} style={style}>

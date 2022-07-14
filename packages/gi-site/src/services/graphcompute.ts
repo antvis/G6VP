@@ -210,7 +210,6 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
     return null
   }
   // 更新 localstorage 值
-  localStorage.setItem('graphScopeGremlinServer', graphURL)
   localStorage.setItem('graphScopeGraphName', graphName)
 
   return {
@@ -381,7 +380,8 @@ export const findNodeById = async nodeId => {
     method: 'get',
     params: {
       nodeId,
-      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     },
   });
 
@@ -394,7 +394,8 @@ export const gremlinQuery = async (statement: string) => {
     method: 'post',
     data: {
       statement,
-      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     },
   });
 
@@ -415,7 +416,8 @@ export const queryNeighbors = async (params: NeighborsProps) => {
     method: 'post',
     data: {
       ...params,
-      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     },
   });
 
@@ -430,8 +432,9 @@ export const queryElementProperties = async (id) => {
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/properties`, {
     method: 'post',
     data: {
-      id,
-      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+      id: [id],
+      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     },
   });
 
@@ -501,12 +504,15 @@ export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
 
 /**
  * 查询 GraphScope 中载入图的 Schema
+ * @param projectId 项目 ID
  */
-export const queryGraphSchema = async () => {
+export const queryGraphSchema = async (projectId: string, modeType) => {
+  const engineMode = modeType === 'LOCAL' ? 1 : 2
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/schema`, {
     method: 'GET',
     params: {
-      graphName: localStorage.getItem('graphScopeGraphName')
+      projectId,
+      mode: engineMode
     }
   })
 
@@ -746,3 +752,14 @@ export const loadOdpsDataToGraphScope = async (params: LoadODPSDataParams) => {
     },
   };
 };
+
+/**
+ * 查询当前机器上所有的 GraphScope 实例
+ */
+export const getGraphScopeInstances = async () => {
+  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/instances`, {
+    method: 'get'
+  })
+
+  return result
+}

@@ -6,7 +6,7 @@ import {
   LoadingOutlined,
   TableOutlined,
 } from '@ant-design/icons';
-import { Collapse, message, Modal, Popconfirm, Radio, Space, Table, Tag } from 'antd';
+import { Collapse, message, Modal, Popconfirm, Radio, Space, Table, Tag, Button } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
@@ -20,6 +20,7 @@ import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../../
 import DataSchema from './DataSchema';
 import DataService from './DataService';
 import DataSource from './DataSource';
+import InstanceManage from './InstanceManage'
 import './index.less';
 
 const { Panel } = Collapse;
@@ -66,6 +67,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   );
 
   const [closeLoading, setCloseLoading] = useImmer(false);
+  const [visible, setVisible] = useImmer(false)
 
   const Header = props => {
     const { title, uid, enable } = props;
@@ -212,7 +214,6 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
 
   const clearGraphScopeStorage = () => {
     localStorage.removeItem('graphScopeGraphName');
-    localStorage.removeItem('graphScopeGremlinServer');
     localStorage.removeItem('graphScopeFilesMapping');
     localStorage.removeItem('activeEngineInfo');
   };
@@ -239,11 +240,28 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     }
   };
 
+  const handleShowInstancePanel = () => {
+    setVisible(true)
+  }
+
   return (
     <>
       <div>
         <div className="gi-config-panel-title">数据</div>
-        <CollapseCard title="图数据源" extra={<DataSource data={data} />}>
+        <CollapseCard title={
+          <>
+            <span>图数据源</span>
+            {
+              instanceList.length > 0 &&
+              <Button 
+                size='small' 
+                type="dashed" 
+                style={{ marginLeft: 16 }}
+                onClick={handleShowInstancePanel}
+                >GS 实例管理</Button>
+            }
+          </>
+        } extra={<DataSource data={data} />}>
           {instanceList.map(d => {
             return (
               <ActionList
@@ -308,6 +326,10 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         </div>
         <Table dataSource={tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
       </Modal>
+      {
+        visible &&
+        <InstanceManage visible={visible} projectId={id} close={() => setVisible(false)} />
+      }
     </>
   );
 };

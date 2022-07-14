@@ -15,7 +15,7 @@ const { Step } = Steps;
 interface LocalFileProps {
   handleUploadFile: (isCover?: boolean) => Promise<any>;
   handleLoadData: () => void;
-  updateSchemaData: () => void;
+  updateSchemaData: (mode: string) => void;
   uploadLoading: boolean;
   filesMapping: any;
   close: () => void;
@@ -172,14 +172,13 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
         return;
       }
 
-      const { graphName, graphURL } = loadData;
+      const { graphName } = loadData;
       localStorage.setItem('graphScopeGraphName', graphName);
-      localStorage.setItem('graphScopeGremlinServer', graphURL);
 
       message.success('加载数据到 GraphScope 引擎成功');
 
       // 载图成功后，更新 Project 中的 SchemeData
-      updateSchemaData();
+      updateSchemaData(modeType);
       close();
     }
   };

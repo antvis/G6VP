@@ -107,3 +107,21 @@ export const findEngineInstanceList = async (projectId: string) => {
   });
   return response;
 };
+
+export const findAllEngineInstances = async (projectId: string) => {
+  if (IS_LOCAL_ENV) {
+    return new Promise(resolve => {
+      resolve({
+        data: [],
+        sucess: true,
+      });
+    });
+  }
+  const response = await request(`${SERVICE_URL_PREFIX}/engineinstance/all`, {
+    method: 'get',
+    params: {
+      projectId,
+    },
+  });
+  return response;
+};
