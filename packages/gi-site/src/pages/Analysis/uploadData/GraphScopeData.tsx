@@ -144,10 +144,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
     return true;
   };
 
-  const updateSchemaData = async () => {
+  const updateSchemaData = async modeType => {
     // 载图成功后，更新 Project 中的 SchemeData
     // 查询 GraphScope 中的 Schema
-    const result = await queryGraphSchema();
+    const result = await queryGraphSchema(id, modeType);
 
     if (result && result.success) {
       updateProjectById(id, {
@@ -188,10 +188,9 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       message.success('加载数据到 GraphScope 引擎成功');
       const { graphName, graphURL } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
-      localStorage.setItem('graphScopeGremlinServer', graphURL);
 
       // 载图成功后，更新 Project 中的 SchemeData
-      updateSchemaData();
+      updateSchemaData('LOCAL');
       // 关闭弹框
       close();
       return;
@@ -216,10 +215,9 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
       message.success('加载数据到 GraphScope 引擎成功');
       const { graphName, graphURL } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
-      localStorage.setItem('graphScopeGremlinServer', graphURL);
 
       // 载图成功后，更新 Project 中的 SchemeData
-      updateSchemaData();
+      updateSchemaData('LOCAL');
       // 关闭弹框
       close();
       return;
@@ -265,12 +263,11 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
     const { graphName, graphURL } = loadData;
     localStorage.setItem('graphScopeGraphName', graphName);
-    localStorage.setItem('graphScopeGremlinServer', graphURL);
 
     message.success('加载数据到 GraphScope 引擎成功');
 
     // 载图成功后，更新 Project 中的 SchemeData
-    updateSchemaData();
+    updateSchemaData('LOCAL');
     close();
   };
 
