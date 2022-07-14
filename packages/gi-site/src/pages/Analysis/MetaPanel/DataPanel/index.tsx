@@ -212,7 +212,6 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
 
   const clearGraphScopeStorage = () => {
     localStorage.removeItem('graphScopeGraphName');
-    localStorage.removeItem('graphScopeGremlinServer');
     localStorage.removeItem('graphScopeFilesMapping');
     localStorage.removeItem('activeEngineInfo');
   };

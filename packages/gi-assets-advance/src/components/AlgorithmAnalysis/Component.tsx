@@ -45,11 +45,6 @@ const AlgorithmAnalysis = ({ serviceId }) => {
       return;
     }
 
-    const { graphName, gremlinClientURL } = result;
-    // 更新 localstorage 中 graphScopeGraphName 和 graphScopeGremlinServer 地址
-    localStorage.setItem('graphScopeGremlinServer', gremlinClientURL);
-    localStorage.setItem('graphScopeGraphName', graphName);
-
     if (result.data.length > 50) {
       // 数量过多，结果下载成 csv 文件
       const json2csvParser = new Parser({ delimiter: ',' });

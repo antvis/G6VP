@@ -53,7 +53,8 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     const result = await service({
       ids: selectedIdArr,
       sep,
-      gremlinServer: localStorage.getItem('graphScopeGremlinServer'),
+      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ?  2 : 1
     });
     const newData = utils.handleExpand(data, result);
     const expandIds = result.nodes?.map(n => n.id) || [];

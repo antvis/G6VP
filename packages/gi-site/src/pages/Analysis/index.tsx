@@ -40,6 +40,11 @@ const Analysis = props => {
   const { match } = props;
   const { projectId } = match.params;
 
+  // 将 projectId 存到 localstorage 中
+  if (projectId) {
+    localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId)
+  }
+
   const [state, updateState] = useImmer<StateType>(initialState);
   const {
     config,
@@ -83,7 +88,6 @@ const Analysis = props => {
       if (engineInfoResult.success && engineInfoResult.data.length > 0) {
         engineInfos = engineInfoResult.data
         // 默认最新的实例
-        localStorage.setItem('graphScopeGremlinServer', engineInfos[0].gremlinServerUrl)
         localStorage.setItem('graphScopeGraphName', engineInfos[0].activeGraphName)
         localStorage.setItem('activeEngineInfo', JSON.stringify(engineInfos[0]))
       }

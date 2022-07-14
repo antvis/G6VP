@@ -51,7 +51,6 @@ const mockServices = () => {
     {
       id: SERVICE_GS_ID,
       service: (params = {}) => {
-        const { value = 'g.V().limit(5)', gremlinServer } = params as any;
         // 这里根据不同环境换成相应的地址
         // 测试环境：https://storehouse.test.alipay.net
         // 预发环境：https://graphinsight-pre.alipay.com
@@ -61,10 +60,7 @@ const mockServices = () => {
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
-          body: JSON.stringify({
-            value,
-            gremlinServer,
-          }),
+          body: JSON.stringify(params),
         }).then(response => response.json());
       },
     },
