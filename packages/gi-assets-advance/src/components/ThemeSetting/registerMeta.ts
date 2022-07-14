@@ -16,15 +16,35 @@ export default ({ services }) => {
     };
   });
   return {
-    serviceId: {
-      title: '保存服务',
+    getThemeServiceId: {
+      title: '获取主题服务',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
         options: serviceOptions,
       },
-      default: 'MOCK/ThemeSetting',
+      default: 'MOCK/getThemes',
+    },
+    addThemeServiceId: {
+      title:"添加主题服务",
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: serviceOptions,
+      },
+      default: 'MOCK/addTheme', 
+    },
+    removeThemeServiceId: {
+      title:"删除主题服务",
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: serviceOptions,
+      },
+      default: 'MOCK/removeTheme', 
     },
     ...metas,
   };
