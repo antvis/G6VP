@@ -345,6 +345,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   ];
   const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
   const defaultActiveKey = GI_UPLOADED_DATA ? 'document' : 'mockdata';
+  const IS_ONLINE_ENV = window.location.host === 'graphinsight.antgroup-inc.cn';
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs defaultActiveKey={defaultActiveKey}>
@@ -361,14 +362,18 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <MockData handleClose={handleClose} />
         </TabPane>
 
-        <TabPane tab="GraphScope" key="graphscope">
-          <Alert
-            message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
-            type="info"
-            showIcon
-            style={{ marginBottom: '12px' }}
-          />
-          <GraphScopeData close={handleClose} />
+        <TabPane tab="GraphScope" key="graphscope" disabled={!IS_ONLINE_ENV}>
+          {IS_ONLINE_ENV && (
+            <>
+              <Alert
+                message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
+                type="info"
+                showIcon
+                style={{ marginBottom: '12px' }}
+              />
+              <GraphScopeData close={handleClose} />
+            </>
+          )}
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
       </Tabs>
