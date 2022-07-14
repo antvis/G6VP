@@ -20,6 +20,7 @@ import Placeholder from './Placeholder';
 import PropertiesPanel from './PropertiesPanel';
 import Save from './Save';
 import SideTabs from './SideTabs';
+// import ThemeSetting from './ThemeSetting';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
@@ -72,4 +73,5 @@ export {
   PinNodeWithMenu,
   Overview,
   SankeyAnalysis,
+  // ThemeSetting,
 };
