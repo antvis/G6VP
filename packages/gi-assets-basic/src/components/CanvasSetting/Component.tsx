@@ -11,7 +11,7 @@ export interface CanvasSettingProps {
     enableOptimize: boolean;
   };
   styleCanvas: {
-    background: string;
+    backgroundColor: string;
     backgroundImage: string;
   };
   zoomCanvas: {
@@ -22,17 +22,17 @@ export interface CanvasSettingProps {
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   const { styleCanvas, dragCanvas, zoomCanvas } = props;
-  const { background, backgroundImage } = styleCanvas;
+  const { backgroundColor, backgroundImage } = styleCanvas;
   const { GISDK_ID } = useContext();
 
   React.useLayoutEffect(() => {
     const parent_container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
     const container = parent_container.firstElementChild as HTMLElement;
     if (parent_container && container) {
-      container.style.background = background;
+      container.style.backgroundColor = backgroundColor;
       container.style.backgroundImage = `url(${backgroundImage})`;
     }
-  }, [background, backgroundImage]);
+  }, [backgroundColor, backgroundImage]);
   return (
     <>
       <DragCanvas
