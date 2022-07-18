@@ -6,7 +6,7 @@ export interface IFilterCriteria {
   range?: number[][];
   selectValue?: (string | boolean)[];
   selectOptions?: IOption[];
-  analyzerType?: 'HISTOGRAM' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE';
+  analyzerType?: 'HISTOGRAM' | 'SELECT' | 'PIE' | 'WORDCLOUD' | 'NONE' | 'DATE' | 'COLUMN';
   chartData?: Map<string | number, number>;
   // 直方图的数据是一维的，单独列出
   histogramData?: IHistogramValue[] 
