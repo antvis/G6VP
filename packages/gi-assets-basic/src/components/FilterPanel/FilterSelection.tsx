@@ -73,7 +73,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       setEnableChangeChartType(false);
     } else if (elementProps[prop] === 'string') {
       const chartData = getValueMap(source, prop, elementType);
-      let selectOptions;
+      const selectOptions = [...chartData.keys()].map(key => ({
+        value: key,
+        label: key,
+      }));
       if (chartData.size <= 5) {
         analyzerType = 'PIE';
         //setChartData(valueMap);
@@ -82,10 +85,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         //setChartData(valueMap);
       } else {
         analyzerType = 'SELECT';
-        selectOptions = [...chartData.keys()].map(key => ({
-          value: key,
-          label: key,
-        }));
       }
       updateFilterCriteria(id, {
         id,
@@ -165,8 +164,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     }
   }, [source, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType]);
 
-  const menu = useMemo(() => {
-    return (
+  const menu =  (
       <Menu
         onClick={changeChartType}
         items={[
@@ -185,7 +183,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         ]}
       />
     );
-  }, []);
+ 
 
   return (
     <div key={filterCriteria.id} className="gi-filter-panel-group">
@@ -231,7 +229,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             <Button icon={analyzerType2Icon[filterCriteria.analyzerType!]} type="text"></Button>
           </Dropdown>
         )}
-        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text">
+        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{padding: "4px"}}>
           <DeleteOutlined className="gi-filter-panel-delete" />
         </Button>
       </div>
