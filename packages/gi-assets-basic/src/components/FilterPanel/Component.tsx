@@ -9,7 +9,7 @@ import './index.less';
 import { IFilterCriteria } from './type';
 import { filterGraphData, highlightSubGraph } from './utils';
 
-const { generatorSchemaByGraphData, isStyles } = utils;
+const { isStyles } = utils;
 
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
@@ -22,25 +22,24 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
-  const dataSchemas = schemaData; // useMemo(() => generatorSchemaByGraphData(source), [source]);
 
   const nodeProperties = useMemo(() => {
-    return dataSchemas.nodes.reduce((acc, cur) => {
+    return schemaData.nodes.reduce((acc, cur) => {
       return {
         ...acc,
         ...cur.properties,
       };
     }, {});
-  }, [dataSchemas]);
+  }, [schemaData]);
 
   const edgeProperties = useMemo(() => {
-    return dataSchemas.edges.reduce((acc, cur) => {
+    return schemaData.edges.reduce((acc, cur) => {
       return {
         ...acc,
         ...cur.properties,
       };
     }, {});
-  }, [dataSchemas]);
+  }, [schemaData]);
 
   const addFilter = (defaultKey?: string) => {
     const id = nanoid();

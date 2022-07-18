@@ -1,18 +1,32 @@
-import { DeleteOutlined, FieldStringOutlined, FieldTimeOutlined, NumberOutlined } from '@ant-design/icons';
+import {
+  BarChartOutlined,
+  DeleteOutlined,
+  FieldStringOutlined,
+  FieldTimeOutlined,
+  NumberOutlined,
+  PieChartOutlined,
+  SelectOutlined,
+} from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
-import { Button, Select } from 'antd';
-import React, { useEffect } from 'react';
-import { HistogramChart, PieChart, WordCloudChart } from './Charts';
+import { Button, Dropdown, Menu, Select } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
-import { getHistogramData, getValueMap } from './utils';
+import { getHistogramData,  getValueMap } from './utils';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   string: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
   date: <FieldTimeOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
+};
+
+const analyzerType2Icon = {
+  COLUMN: <BarChartOutlined />,
+  PIE: <PieChartOutlined />,
+  SELECT: <SelectOutlined />,
 };
 
 interface FilterSelectionProps {
@@ -27,9 +41,9 @@ interface FilterSelectionProps {
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
   const { filterCriteria, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, source } = props;
-  // const [chartData, setChartData] = useState<Map<string, number>>(new Map());
-  // const [histogramData, setHistogramData] = useState<IHistogramValue[]>([]);
-  // const { source } = useContext();
+
+  // 对于离散类型的数据支持切换图表类型
+  const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);
 
   const onSelectChange = value => {
     const id = filterCriteria.id as string;
@@ -39,43 +53,38 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     let analyzerType;
     if (elementProps[prop] === 'number') {
       analyzerType = 'HISTOGRAM';
-      // const histogramData = getHistogramData(source, prop, elementType);
       updateFilterCriteria(id, {
         id,
         analyzerType,
         isFilterReady: false,
         elementType,
         prop,
-        //range: [],
-        // histogramData,
       });
+      setEnableChangeChartType(false);
     } else if (elementProps[prop] === 'boolean') {
-      analyzerType = 'PIE';
-      // const chartData = getValueMap(source, prop, elementType);
-      //setChartData(valueMap);
+      analyzerType = 'Column';
       updateFilterCriteria(id, {
         id,
         isFilterReady: false,
         elementType,
         prop,
         analyzerType,
-        // chartData,
       });
+      setEnableChangeChartType(false);
     } else if (elementProps[prop] === 'string') {
       const chartData = getValueMap(source, prop, elementType);
-      let selectOptions;
-      if (chartData.size <= 10) {
+      const selectOptions = [...chartData.keys()].map(key => ({
+        value: key,
+        label: key,
+      }));
+      if (chartData.size <= 5) {
         analyzerType = 'PIE';
         //setChartData(valueMap);
-      } /* else if (chartData.size <= 10) {
-        analyzerType = 'WORDCLOUD';
+      } else if (chartData.size <= 10) {
+        analyzerType = 'COLUMN';
         //setChartData(valueMap);
-      } */ else {
+      } else {
         analyzerType = 'SELECT';
-        selectOptions = [...chartData.keys()].map(key => ({
-          value: key,
-          label: key,
-        }));
       }
       updateFilterCriteria(id, {
         id,
@@ -86,6 +95,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         selectOptions,
         chartData,
       });
+      setEnableChangeChartType(true);
     } else if (elementProps[prop] === 'date') {
       analyzerType = 'DATE';
       updateFilterCriteria(id, {
@@ -95,6 +105,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         prop,
         analyzerType,
       });
+      setEnableChangeChartType(false);
     } else {
       analyzerType = 'NONE';
       updateFilterCriteria(id, {
@@ -104,6 +115,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         prop,
         analyzerType,
       });
+      setEnableChangeChartType(false);
     }
   };
 
@@ -116,36 +128,62 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       selectValue: value,
     });
   };
+
+  const changeChartType = ({ key }) => {
+    updateFilterCriteria(filterCriteria.id as string, {
+      ...filterCriteria,
+      analyzerType: key,
+    });
+  };
+
   const elementProps = filterCriteria.elementType === 'node' ? nodeProperties : edgeProperties;
 
   // 初始展示筛选器
   useEffect(() => {
     if (filterCriteria.defaultKey) {
-      onSelectChange(filterCriteria.defaultKey)
+      onSelectChange(filterCriteria.defaultKey);
     }
-  }, [filterCriteria.defaultKey])
+  }, [filterCriteria.defaultKey]);
 
   useEffect(() => {
     const { prop, elementType, analyzerType } = filterCriteria;
-    if (prop && elementType && analyzerType && ["PIE", "SELECT", "WORDCLOUD"].indexOf(analyzerType) !== -1) {
+    if (prop && elementType && analyzerType && ['PIE', 'SELECT', 'WORDCLOUD'].indexOf(analyzerType) !== -1) {
       const chartData = getValueMap(source, prop, elementType);
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         chartData,
-      })
+      });
     }
 
-    if (prop && elementType && analyzerType && ["HISTOGRAM"].indexOf(analyzerType) !== -1) {
+    if (prop && elementType && analyzerType && ['HISTOGRAM'].indexOf(analyzerType) !== -1) {
       const histogramData = getHistogramData(source, prop, elementType);
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         histogramData,
-      })
+      });
     }
+  }, [source, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType]);
 
-  }, [source, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType ])
-
-
+  const menu =  (
+      <Menu
+        onClick={changeChartType}
+        items={[
+          {
+            key: 'COLUMN',
+            label: <BarChartOutlined />,
+          },
+          {
+            key: 'PIE',
+            label: <PieChartOutlined />,
+          },
+          {
+            key: 'SELECT',
+            label: <SelectOutlined />,
+          },
+        ]}
+      />
+    );
+ 
 
   return (
     <div key={filterCriteria.id} className="gi-filter-panel-group">
@@ -186,7 +224,12 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             })}
           </Select.OptGroup>
         </Select>
-        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text">
+        {enableChangeChartType && (
+          <Dropdown overlay={menu}>
+            <Button icon={analyzerType2Icon[filterCriteria.analyzerType!]} type="text"></Button>
+          </Dropdown>
+        )}
+        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{padding: "4px"}}>
           <DeleteOutlined className="gi-filter-panel-delete" />
         </Button>
       </div>
@@ -216,6 +259,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             updateFilterCriteria={updateFilterCriteria}
             //chartData={chartData}
           />
+        )}
+
+        {filterCriteria.analyzerType === 'COLUMN' && (
+          <ColumnChart filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} />
         )}
 
         {filterCriteria.analyzerType === 'HISTOGRAM' && (
