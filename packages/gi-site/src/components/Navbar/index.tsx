@@ -63,7 +63,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
     console.log(origin)
     // @ts-igono
     if (origin.type === 'case') { 
-      addProject({
+      const projectId = await addProject({
         name: origin?.name,
         type: "project",
         data: JSON.stringify(origin?.data),
@@ -72,6 +72,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         activeAssetsKeys: JSON.stringify(activeAssetsKeys),
         projectConfig: JSON.stringify(config),
       })
+      history.push(`/workspace/${projectId}?nav=data`)
     } else {
       updateProjectById(projectId, {
         serviceConfig: JSON.stringify(serviceConfig),

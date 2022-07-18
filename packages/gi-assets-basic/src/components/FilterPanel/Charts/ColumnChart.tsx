@@ -1,6 +1,6 @@
-import { value Column, value Datum, value G2 } from '@antv/g2plot';
-import React, { value useEffect } from 'react';
-import { value IFilterCriteria } from '../type';
+import { Column, Datum, G2 } from '@antv/g2plot';
+import React, { useEffect } from 'react';
+import { IFilterCriteria } from '../type';
 
 export interface IColumnChartProps {
   filterCriteria: IFilterCriteria;
