@@ -2,7 +2,7 @@ import { DeleteOutlined, FieldStringOutlined, FieldTimeOutlined, NumberOutlined 
 import { GraphinData } from '@antv/graphin';
 import { Button, Select } from 'antd';
 import React, { useEffect } from 'react';
-import { HistogramChart, PieChart, WordCloudChart } from './Charts';
+import { HistogramChart, PieChart, WordCloudChart, ColumnChart  } from './Charts';
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
@@ -50,7 +50,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         // histogramData,
       });
     } else if (elementProps[prop] === 'boolean') {
-      analyzerType = 'PIE';
+      analyzerType = 'Column';
       // const chartData = getValueMap(source, prop, elementType);
       //setChartData(valueMap);
       updateFilterCriteria(id, {
@@ -65,7 +65,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       const chartData = getValueMap(source, prop, elementType);
       let selectOptions;
       if (chartData.size <= 10) {
-        analyzerType = 'PIE';
+        analyzerType = 'COLUMN';
         //setChartData(valueMap);
       } /* else if (chartData.size <= 10) {
         analyzerType = 'WORDCLOUD';
@@ -217,6 +217,12 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             //chartData={chartData}
           />
         )}
+
+        {
+          filterCriteria.analyzerType === "COLUMN" && (
+            <ColumnChart filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria}/>
+          )
+        }
 
         {filterCriteria.analyzerType === 'HISTOGRAM' && (
           <HistogramChart filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} />
