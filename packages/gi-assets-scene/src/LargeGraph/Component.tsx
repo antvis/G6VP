@@ -12,11 +12,13 @@ export interface MapModeProps {
   maxSize: string;
   placement: 'LT' | 'RT' | 'LB' | 'RB';
   offset: number[];
+  highlightColor: string;
+  backgroundColor: string;
 }
 
 const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
   const GIAC = { ...props.GIAC };
-  const { visible: defaultVisible, maxSize, minSize, placement, offset } = props;
+  const { visible: defaultVisible, maxSize, minSize, placement, offset, highlightColor, backgroundColor } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
   GIAC.title = visible ? '切换至2D' : '切换至3D';
   return (
@@ -30,6 +32,8 @@ const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
       />
       {visible && (
         <ForceGraph
+          backgroundColor={backgroundColor}
+          highlightColor={highlightColor}
           minSize={minSize}
           maxSize={maxSize}
           placement={placement}

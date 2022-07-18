@@ -18,6 +18,20 @@ export default () => {
       'x-component': 'Switch',
       default: false,
     },
+    backgroundColor: {
+      title: '背景颜色',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'ColorInput',
+      default: '#fff',
+    },
+    highlightColor: {
+      title: '高亮颜色',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'ColorInput',
+      default: 'red',
+    },
 
     minSize: {
       type: 'string',
