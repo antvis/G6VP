@@ -8,7 +8,7 @@ const registerMeta = context => {
       title: '画布样式',
       type: 'object',
       properties: {
-        background: {
+        backgroundColor: {
           title: '背景颜色',
           'x-component': 'ColorInput',
           'x-decorator': 'FormItem',
