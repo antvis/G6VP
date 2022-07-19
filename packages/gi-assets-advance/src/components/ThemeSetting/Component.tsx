@@ -80,6 +80,9 @@ const ThemeSetting: React.FC<Props> = props => {
       container.style.background = backgroundColor;
       container.style.backgroundImage = backgroundImage;
     }
+
+    console.log(nodesConfig, edgesConfig)
+
     updateContext(draft => {
       draft.config = {
         ...draft.config,
@@ -152,7 +155,7 @@ const ThemeSetting: React.FC<Props> = props => {
           </Row>
         </div>
       )}
-      {!(state.status === 'show') && (
+      {state.status !== 'show' && (
         <AddTheme status={state.status} currentTheme={state.currentTheme!} updateState={updateState} />
       )}
     </div>
