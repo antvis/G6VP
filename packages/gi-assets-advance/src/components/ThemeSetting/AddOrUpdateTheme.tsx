@@ -1,21 +1,22 @@
+import { DisplayColor } from '@alipay/gi-common-components';
 import { useContext } from '@alipay/graphinsight';
 import { LeftOutlined } from '@ant-design/icons';
-import { Alert, Button, Form, Input, message } from 'antd';
+import { Alert, Button, Form, Input,  List, message } from 'antd';
 import { nanoid } from 'nanoid';
 import React from 'react';
-import { Updater } from 'use-immer';
+import {  Updater } from 'use-immer';
 import mockServices from './mockServices';
-import { ICanvasConfig, IThemeSettingState, ITheme } from './typing';
+import { ICanvasConfig,  ITheme, IThemeSettingState } from './typing';
 
 const msg = '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式';
 
 interface Props {
   updateState: Updater<IThemeSettingState>;
   status: 'update' | 'add';
-  currentTheme: ITheme;
+  currentTheme?: ITheme;
 }
 
-// 
+//
 
 const AddTheme: React.FC<Props> = props => {
   const { updateState, status, currentTheme } = props;
@@ -34,8 +35,9 @@ const AddTheme: React.FC<Props> = props => {
   };
 
   const handleConfirm = async () => {
-    const name = form.getFieldValue('name');
-    const nodesConfig = config.node;
+    const name = form.getFieldValue('name') || currentTheme?.name;
+    // console.log("form:",  form.getFieldValue('name'))
+    const nodesConfig = config.nodes;
     const edgesConfig = config.edges;
 
     const parent_container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
@@ -66,7 +68,7 @@ const AddTheme: React.FC<Props> = props => {
     } else if (status === 'update') {
       // @ts-ignore
       const res = await updateThemeService(currentTheme.id, {
-        id: currentTheme.id,
+        id: currentTheme?.id,
         name,
         cover: imgURL,
         nodesConfig,
@@ -79,14 +81,16 @@ const AddTheme: React.FC<Props> = props => {
         message.success(res.msg);
         updateState(draft => {
           draft.themes = res.data;
-        })
+        });
         goBack();
       } else {
         //@ts-ignore
-        message.error(res.msg)
+        message.error(res.msg);
       }
     }
   };
+
+  console.log('config:', config.nodes);
 
   return (
     <div className="add-theme">
@@ -96,63 +100,38 @@ const AddTheme: React.FC<Props> = props => {
       </header>
       <Form layout="vertical" form={form}>
         <Form.Item label="主题名称" name="name">
-          <Input defaultValue={currentTheme.name} />
+          <Input defaultValue={currentTheme?.name} />
         </Form.Item>
         <Form.Item label="描述">
           <Alert message={msg} type="info" />
         </Form.Item>
         <Form.Item label="主题样式">
           <div className="theme-style">
-            <Alert
-              type="info"
-              message={
-                <div className="canvas-style">
-                  <header>画布样式</header>
-                  {/*  <div>背景颜色: {canvasConfig.backgroundColor}</div>
-                  <div>背景图片: {canvasConfig.backgroundImage || ''}</div> */}
-                </div>
-              }
-            ></Alert>
-            <Alert
-              type="info"
-              message={
-                <div className="nodes-style">
-                  <header>节点样式</header>
-                  <ul>
-                    {config.nodes?.map((group, index) => {
-                      return (
-                        <li key={index}>
-                          <div>{group.groupName}</div>
-                          <div>节点颜色: {group.props.color}</div>
-                          <div>节点大小: {group.props.size}</div>
-                          <div>标签颜色: {group.props.advanced?.label?.fill ?? '#000'}</div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              }
-            ></Alert>
-            <Alert
-              type="info"
-              message={
-                <div className="edges-style">
-                  <header>边样式</header>
-                  <ul>
-                    {config.edges?.map((group, index) => {
-                      return (
-                        <li key={index}>
-                          <div>{group.groupName}</div>
-                          <div>边颜色: {group.props.color}</div>
-                          <div>边宽度: {group.props.size}</div>
-                          <div>标签颜色: {group.props.advanced?.label?.fill ?? '#000'}</div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              }
-            ></Alert>
+            <List
+              header={<span style={{ fontWeight: 'bold' }}>节点样式</span>}
+              style={{
+                padding: '10px',
+                boxShadow: '0px 0px 4px rgb(0 0 0 / 10%)',
+                borderRadius: '4px',
+              }}
+            >
+              {config.nodes?.map(group => {
+                return <List.Item extra={<DisplayColor color={group.props.color} />}>{group.groupName}</List.Item>;
+              })}
+            </List>
+            <List
+              header={<span style={{ fontWeight: 'bold' }}>边样式</span>}
+              style={{
+                padding: '10px',
+                boxShadow: '0px 0px 4px rgb(0 0 0 / 10%)',
+                borderRadius: '4px',
+                marginTop: '10px',
+              }}
+            >
+              {config.edges?.map(group => {
+                return <List.Item extra={<DisplayColor color={group.props.color} />}>{group.groupName}</List.Item>;
+              })}
+            </List>
           </div>
         </Form.Item>
         <Form.Item>
