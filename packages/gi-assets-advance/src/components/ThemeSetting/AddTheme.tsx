@@ -42,7 +42,7 @@ const AddTheme: React.FC<Props> = props => {
   const handleCreate = async () => {
     const name = form.getFieldValue('name');
     const id = nanoid();
-    const nodesConfig = config.node;
+    const nodesConfig = config.nodes;
     const edgesConfig = config.edges;
     //@ts-ignore
     const res = await addThemeService({ id, name, cover: imgURL, nodesConfig, edgesConfig, canvasConfig });
