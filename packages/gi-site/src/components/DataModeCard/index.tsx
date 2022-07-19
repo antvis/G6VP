@@ -1,6 +1,7 @@
 import { DatabaseOutlined } from '@ant-design/icons';
 import { Button, Popover, Typography } from 'antd';
 import React from 'react';
+import { IS_LOCAL_ENV } from '../../services/const';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -12,7 +13,10 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
         <p>✅ 支持域内用户，数据存放在云端，可根据权限进行查看与分享</p>
         <p>✅ 支持域内用户，根据权限，新增/查看/使用 业务沉淀的图分析资产</p>
         <p>✅ 支持集团用户，使用 ODPS 数据源，GraphScope 图计算。</p>
-        <p>❌ 蚂蚁集团用户，因为网络隔离问题，暂时无法使用上述图计算方案。推荐使用蚂蚁 GeaMaker 或 知蛛产品</p>
+        <p>
+          ☑️ 蚂蚁集团用户，目前只支持单机版 GraphScope，由于网络隔离原因不能使用 ODPS 数据源，推荐使用蚂蚁 GeaMaker 或
+          知蛛产品
+        </p>
       </div>
     );
   }
@@ -30,10 +34,10 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 };
 
 const DataModeCard = () => {
-  const IS_ONLINE_ENV = window.location.host === 'graphinsight.antgroup-inc.cn';
-  const title = IS_ONLINE_ENV ? '线上环境' : '本地环境';
+  const title = !IS_LOCAL_ENV ? '线上环境' : '本地环境';
+
   return (
-    <Popover content={<EnvInfo IS_ONLINE_ENV={IS_ONLINE_ENV} />} title="环境说明" trigger="hover">
+    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_LOCAL_ENV} />} title="环境说明" trigger="hover">
       <Button icon={<DatabaseOutlined />}>{title}</Button>
     </Popover>
   );
