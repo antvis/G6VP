@@ -1,4 +1,5 @@
 import { useContext } from '@alipay/graphinsight';
+import Graphin from '@antv/graphin';
 import { MoreOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Card,  Col,  Dropdown, Menu,  Popconfirm, Row } from 'antd';
 import React from 'react';
@@ -120,7 +121,7 @@ const ThemeSetting: React.FC<Props> = props => {
             <Col span={12}>
               <Card
                 hoverable
-                cover={<PlusOutlined style={{ fontSize: '70px', color: '#3056E3' }} />}
+                /* cover={<PlusOutlined style={{ fontSize: '70px', color: '#3056E3' }} />} */
                 onClick={() =>
                   updateState(draft => {
                     draft.status = 'add';
@@ -134,7 +135,7 @@ const ThemeSetting: React.FC<Props> = props => {
               <Col span={12}>
                 <Card
                   hoverable
-                  cover={<img src={item.cover} style={{ height: '70px' }} />}
+                  /* cover={<img src={item.cover} style={{ height: '70px' }} />} */
                   onClick={() => setTheme(item)}
                   style={{ position: 'relative', border: state.currentThemeId === item.id ? '#3056e3 1px solid' : '' }}
                 >

@@ -6,7 +6,6 @@ import * as React from 'react';
 import CollapseCard from '../../../../components/CollapseCard';
 import { updateProjectById } from '../../../../services';
 import { useContext } from '../../hooks/useContext';
-import getSchemaGraph from './getSchemaGraph';
 import SchemaEditor from './SchemaEditor';
 interface DataServiceProps {}
 
@@ -48,7 +47,7 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
     visible: false,
   });
   const schemaGraph = React.useMemo(() => {
-    return getSchemaGraph(schemaData, config);
+    return utils.getSchemaGraph(schemaData, config);
   }, [schemaData]);
 
   const { visible } = state;
