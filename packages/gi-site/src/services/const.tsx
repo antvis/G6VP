@@ -1,4 +1,5 @@
-export const IS_LOCAL_ENV = window.location.host !== 'graphinsight.antgroup-inc.cn'; //window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
+const GI_LOCAL_URL = ['graphinsight.antv.vision', 'graphinsight.antgroup.com', 'localhost:8000'];
+export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
 
 // 本地环境
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
@@ -7,7 +8,7 @@ export const IS_LOCAL_ENV = window.location.host !== 'graphinsight.antgroup-inc.
 // export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
 
 // 测试环境
-export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
+export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : window.location.origin; // 'https://storehouse.test.alipay.net';
 
 // 线上环境
 // export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
