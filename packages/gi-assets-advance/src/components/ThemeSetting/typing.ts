@@ -1,6 +1,6 @@
 export interface ICanvasConfig {
   backgroundColor: string;
-  backgroundImage?: string;  
+  backgroundImage: string;  
 }
 
 export interface ITheme {
@@ -15,6 +15,8 @@ export interface ITheme {
 
 export interface IThemeSettingState {
   themes: ITheme[];
-  selectedTheme: string,
-  isAddingTheme: boolean;
+  currentThemeId: string;
+  status: "show" | "add" | "update";
+  // currentTheme 字段用于编辑主题
+  currentTheme?: ITheme;
 }
