@@ -18,4 +18,5 @@ export { default as getServicesByConfig } from './getServicesByConfig';
 export { default as useGraphInsightContainerLayout } from './layout';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './schema';
 export { transDataByConfig } from './transDataByConfig';
-export { getSearchParams } from "./getSearchParams"
+export { getSearchParams } from "./getSearchParams";
+export { default as getSchemaGraph}  from "./getSchemaGraph";

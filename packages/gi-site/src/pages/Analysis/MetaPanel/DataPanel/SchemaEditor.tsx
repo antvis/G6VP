@@ -1,10 +1,9 @@
-import { GIConfig } from '@alipay/graphinsight';
+import { GIConfig,utils } from '@alipay/graphinsight';
 import { IGraphSchema } from '@alipay/graphinsight/lib/process/schema';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { Alert, Button, Card, Col, notification, Row } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import getSchemaGraph from './getSchemaGraph';
 interface SchemaEditorProps {
   schemaGraph: GraphinData;
   schemaData: IGraphSchema;
@@ -55,7 +54,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
 
     let newSchemaGraph = schemaGraph;
     try {
-      newSchemaGraph = getSchemaGraph(JSON.parse(content), config);
+      newSchemaGraph = utils.getSchemaGraph(JSON.parse(content), config);
     } catch (error) {
       console.log('error', error);
       notification.error({
