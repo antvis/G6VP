@@ -7,3 +7,4 @@ export { default as GroupContainer } from './GroupContainer';
 export { default as Icon } from './Icon/index';
 export { default as RadiusTabs } from './RadiusTabs';
 export { default as Utils } from './Utils';
+export { default as DisplayColor} from "./GroupContainer/DisplayColor"
