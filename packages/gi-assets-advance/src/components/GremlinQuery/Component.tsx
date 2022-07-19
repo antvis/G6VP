@@ -79,6 +79,10 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     setBtnLoading(false);
     console.log('Gremlin 查询结果', result);
     if (!result || !result.success) {
+      notification.error({
+        message: '执行 Gremlin 查询失败',
+        description: `查询失败：${result.errorMsg}`,
+      });
       return;
     }
 
