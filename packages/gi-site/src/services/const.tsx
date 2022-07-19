@@ -1,4 +1,5 @@
-export const IS_LOCAL_ENV = window.location.host !== 'graphinsight.antgroup-inc.cn'; //window.localStorage.getItem('GI_SERVER_ENV') === 'ONLINE' ? false : true;
+const GI_LOCAL_URL = ['graphinsight.antv.vision', 'graphinsight.antgroup.com', 'localhost:8000'];
+export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
 
 // 本地环境
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
