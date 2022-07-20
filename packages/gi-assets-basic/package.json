@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
