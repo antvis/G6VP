@@ -27,6 +27,7 @@ import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
 import ForceSimulation from './ForceSimulation';
 
+import Initializer from './Initializer';
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import SankeyAnalysis from './Sankey';
@@ -38,6 +39,7 @@ import ZoomOut from './ZoomOut';
 // import CreateCombo from './CreateCombo';
 
 export {
+  Initializer,
   Save,
   Placeholder,
   FitCenter,
