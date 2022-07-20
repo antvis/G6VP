@@ -8,7 +8,8 @@ import {  Updater } from 'use-immer';
 import mockServices from './mockServices';
 import { ICanvasConfig,  ITheme, IThemeSettingState } from './typing';
 
-const msg = '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式';
+const addMsg = '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式';
+const updateMsg = '请在【画布设置】资产中修改画布背景样式，在【样式设置】资产或左侧修改面板中配置元素样式';
 
 interface Props {
   updateState: Updater<IThemeSettingState>;
@@ -90,7 +91,6 @@ const AddTheme: React.FC<Props> = props => {
     }
   };
 
-  console.log('config:', config.nodes);
 
   return (
     <div className="add-theme">
@@ -103,7 +103,7 @@ const AddTheme: React.FC<Props> = props => {
           <Input defaultValue={currentTheme?.name} />
         </Form.Item>
         <Form.Item label="描述">
-          <Alert message={msg} type="info" />
+          <Alert message={status === "add" ? addMsg : updateMsg} type="info" />
         </Form.Item>
         <Form.Item label="主题样式">
           <div className="theme-style">
