@@ -14,8 +14,9 @@ export { getDefSpringLenFunction } from './getDefSpringLenFunction';
 export { default as getElementsByAssets } from './getElementsByAssets';
 export { getMetaDefaultValues } from './getMetaDefaultValues';
 export { default as getMockServiceConfig } from './getMockServiceConfig';
+export { getSearchParams } from './getSearchParams';
 export { default as getServicesByConfig } from './getServicesByConfig';
 export { default as useGraphInsightContainerLayout } from './layout';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './schema';
+export { getServiceOptions } from './services';
 export { transDataByConfig } from './transDataByConfig';
-export { getSearchParams } from "./getSearchParams"
