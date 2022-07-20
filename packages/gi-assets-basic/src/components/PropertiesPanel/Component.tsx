@@ -56,12 +56,9 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
-      const detail = await service(
-        model,
-        // id: model.id,
-        // projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
-        // mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
-      );
+      const detail = await service(model);
+
+      console.log('detail:', detail);
 
       setState(preState => {
         return {
