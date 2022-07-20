@@ -166,6 +166,7 @@ import {
   GI_LOCAL_DATA,
   GI_PROJECT_CONFIG,
   GI_SERVICES_OPTIONS,
+  GI_SCHEMA_DATA,
 } from "./GI_EXPORT_FILES";
 import { getCombinedAssets, getServicesByConfig } from "./utils";
 
