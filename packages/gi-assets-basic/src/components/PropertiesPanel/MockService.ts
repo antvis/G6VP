@@ -24,14 +24,18 @@ const mockServices = () => {
     {
       id: GraphScope_SERVICE_ID,
       service: (params: Parmas) => {
-        const { id, ...others } = params;
+        const id = params.id;
+        const projectId = localStorage.getItem('GI_ACTIVE_PROJECT_ID');
+        const mode = localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1;
+
         return fetch(`http://dev.alipay.net:7001/graphcompute/properties`, {
           method: 'post',
           headers: {
             'Content-Type': 'application/json;charset=utf-8',
           },
           body: JSON.stringify({
-            ...others,
+            projectId,
+            mode,
             id: [id],
           }),
         })
