@@ -215,10 +215,11 @@ const appendInfo = (itemAssets, version, name) => {
  */
 export const getCombinedAssets = async () => {
   const assets = await getAssets();
+  console.log('assets', assets);
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts } = curr;
+      const { components, version, name, elements, layouts, services } = curr;
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
@@ -236,12 +237,23 @@ export const getCombinedAssets = async () => {
           ...acc.layouts,
           ...lays,
         },
+        services: services
+          ? [
+              ...acc.services,
+              {
+                version,
+                pkg: name,
+                ...services,
+              },
+            ]
+          : acc.services,
       };
     },
     {
       components: {},
       elements: {},
       layouts: {},
+      services: [],
     },
   );
 };
