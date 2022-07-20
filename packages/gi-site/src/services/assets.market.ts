@@ -50,6 +50,7 @@ export const queryAssets = async (activeAssetsKeys: any) => {
       components,
       elements,
       layouts,
+      services: FinalAssets.services,
     } as GIAssets);
   });
 };
