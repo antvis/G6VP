@@ -29,7 +29,9 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
             <Icon type={icon} style={{ color: 'var(--primary-color)', fontSize: '20px', marginRight: '8px' }} />
             {item.name}
           </header>
-          <Component {...itemProps} />
+          <div className='gi-free-layout-component-body'>
+            <Component {...itemProps} />
+          </div>
         </div>
       );
     });
