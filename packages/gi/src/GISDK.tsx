@@ -17,13 +17,6 @@ const GISDK = (props: Props) => {
   const { children, assets, id } = props;
   let { services: Services } = props;
 
-  //@ts-ignore
-  if (assets.services) {
-    console.warn(`⚠️：assets.services 即将废弃，请使用 props.services 代替`);
-    //@ts-ignore
-    Services = assets.services;
-  }
-
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
       const defaultId = `${Math.random().toString(36).substr(2)}`;

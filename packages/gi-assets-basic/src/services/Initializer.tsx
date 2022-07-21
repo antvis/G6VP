@@ -7,7 +7,14 @@ export const GI_SERVICE_INTIAL_GRAPH = {
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
-    return project.data.transData;
+    const { type } = project;
+    if (type === 'project' || type === 'case') {
+      return project.data.transData;
+    }
+    if (type === 'save') {
+      const res = JSON.parse(project.params);
+      return res.data;
+    }
   },
 };
 
@@ -20,6 +27,14 @@ export const GI_SERVICE_SCHEMA = {
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
-    return project.schemaData;
+    const { type } = project;
+    if (type === 'project' || type === 'case') {
+      return project.schemaData;
+    }
+    if (type === 'save') {
+      const res = JSON.parse(project.params);
+      console.log('res', res);
+      return res.schemaData;
+    }
   },
 };
