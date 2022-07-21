@@ -19,7 +19,7 @@ import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
 import type { StateType } from './useModal';
 import { initialState } from './useModal';
-import { isObjectEmpty } from './utils';
+import { getAssetServices, isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
 
@@ -119,22 +119,7 @@ const Analysis = props => {
       (activeAssets: GIAssets) => {
         console.log('activeAssets', activeAssets);
         const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
-        let servicesOptions = [];
-        if (activeAssets.services) {
-          //@ts-ignore
-          servicesOptions = activeAssets.services.reduce((acc, curr) => {
-            const { id, name, pkg, version, ...otherServices } = curr;
-            const sers = Object.keys(otherServices).map(k => {
-              const ser = otherServices[k];
-              return {
-                id: `${id}/${k}`,
-                name: ser.name,
-                service: ser.service,
-              };
-            });
-            return [...acc, ...sers];
-          }, []);
-        }
+        const assetServices = getAssetServices(activeAssets?.services);
 
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
@@ -145,7 +130,7 @@ const Analysis = props => {
             assets: activeAssets,
             data,
             config,
-            serviceConfig: [...servicesOptions, ...combinedServiceConfig],
+            serviceConfig: [...assetServices, ...combinedServiceConfig],
             schemaData,
           });
 
@@ -183,7 +168,7 @@ const Analysis = props => {
           };
 
           /** 根据服务配置列表，得到真正运行的Service实例 */
-          const services = [...servicesOptions, ...getServicesByConfig(combinedServiceConfig, data, schemaData)];
+          const services = [...assetServices, ...getServicesByConfig(combinedServiceConfig, data, schemaData)];
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务
