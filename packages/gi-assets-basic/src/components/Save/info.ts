@@ -1,3 +1,4 @@
+const ASSET_ID = 'Save';
 const info = {
   id: 'Save',
   name: '保存分享',
@@ -6,5 +7,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'workbook',
   type: 'GIAC_CONTENT',
+  services: [ASSET_ID],
 };
 export default info;
