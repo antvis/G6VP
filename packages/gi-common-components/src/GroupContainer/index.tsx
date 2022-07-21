@@ -6,6 +6,7 @@ import type { ItemConfig } from '../CommonStyleSetting/typing';
 import { getAllkeysBySchema } from '../Utils/getAllkeysBySchema';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
+import DisplayColor from './DisplayColor';
 import PopoverContainer from './PopoverContainer';
 export interface ElementTypeOption {
   value: string;
@@ -127,32 +128,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       if (item && item.props) {
                         color = item.props.color;
                       }
-
-                      const DisplayColor = isActive ? null : (
-                        <Button
-                          size="small"
-                          type="text"
-                          style={{
-                            width: '24px',
-                            height: '24px',
-                            padding: ' 0px 0px',
-                            fontSize: '14px',
-                            borderRadius: '2px',
-                            verticalAlign: '-3px',
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: 'block',
-                              width: '14px',
-                              height: '14px',
-                              background: color,
-                              borderRadius: '50%',
-                              marginLeft: '3px',
-                            }}
-                          ></div>
-                        </Button>
-                      );
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
@@ -160,7 +135,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                           extra={
                             <div
                               style={{
-                                display: 'inline-block',
+                                display: 'flex',
+                                alignItems: 'center',
                                 verticalAlign: 'top',
                                 height: '32px',
                                 lineHeight: '32px',
@@ -170,7 +146,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                 e.stopPropagation();
                               }}
                             >
-                              {DisplayColor}
+                              {isActive ? null : <DisplayColor color={color}></DisplayColor>}
                               <PopoverContainer
                                 title="分组规则"
                                 disabled={index === 0}

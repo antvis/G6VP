@@ -1,4 +1,4 @@
-import { ADD_THEME, GET_THEMES, REMOVE_THEME } from './const';
+import { ADD_THEME, GET_THEMES, REMOVE_THEME, UPDATE_THEME } from './const';
 import { ITheme } from './typing';
 
 const mockServices = () => {
@@ -34,9 +34,35 @@ const mockServices = () => {
         return {
           success: true,
           msg: "主题创建成功！",
-          data: newThemes,
+          data: [...newThemes],
         };
       },
+    },
+    {
+      id: UPDATE_THEME,
+      service: async (id: string, theme: ITheme) => {
+        const hash = window.location.hash;
+        const projectId = hash.split('/')[2].split('?')[0];
+        //@ts-ignore
+        const { localforage } = window;
+        const project = await localforage.getItem(projectId);
+        const themes = project.themes || [];
+        const index = themes.findIndex(item => item.id === id);
+        if (index !== -1) {
+          themes[index] = theme;
+          localforage.setItem(projectId, {...project, themes});
+          return {
+            success: true,
+            msg: "主题更新成功",
+            data: [...themes]
+          }
+        } else {
+          return {
+            sucess: false,
+            msg: "主题不存在",
+          }
+        }
+      }
     },
     {
       id: REMOVE_THEME,
@@ -56,40 +82,6 @@ const mockServices = () => {
         }
       }
     }
-    // {
-    //   id: SERVICE_ID,
-    //   service: () => {
-    //     const themes: ITheme[] = window.localStorage.getItem(STORAGE_KEYS)
-    //       ? JSON.parse(window.localStorage.getItem(STORAGE_KEYS)!)
-    //       : [];
-
-    //     const addTheme = async (theme: ITheme) => {
-    //       const newThemes = [...themes, theme]
-    //       window.localStorage.setItem(STORAGE_KEYS, JSON.stringify(newThemes));
-    //       return {
-    //         success: true,
-    //         data: newThemes
-    //       }
-    //     };
-
-    //     const removeTheme = async (id: string) => {
-    //       const filterThemes = themes.filter(item => item.id !== id);
-    //       window.localStorage.setItem(STORAGE_KEYS, JSON.stringify(JSON.stringify(filterThemes)));
-    //       return {
-    //         success: true,
-    //         data: filterThemes,
-    //       }
-    //     }
-
-    //     return new Promise(resolve => {
-    //       resolve({
-    //         themes,
-    //         addTheme,
-    //         removeTheme,
-    //       });
-    //     });
-    //   },
-    // },
   ];
 };
 

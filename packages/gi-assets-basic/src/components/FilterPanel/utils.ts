@@ -36,7 +36,8 @@ export const filterGraphData = (
       if (
         analyzerType === "SELECT" ||
         analyzerType === "PIE" ||
-        analyzerType === "WORDCLOUD" || "COlUMN"
+        analyzerType === "WORDCLOUD" || 
+        analyzerType === "COLUMN"
       ) {
         if (
           node.data &&
@@ -80,7 +81,8 @@ export const filterGraphData = (
       if (
         analyzerType === "SELECT" ||
         analyzerType === "PIE" ||
-        analyzerType === "WORDCLOUD"  || "COlUMN"
+        analyzerType === "WORDCLOUD"  || 
+        analyzerType === "COLUMN"
       ) {
         if (
           edge.data &&
