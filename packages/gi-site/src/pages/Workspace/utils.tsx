@@ -182,7 +182,7 @@ const baseComponentsConfig = [
   {
     id: 'PropertiesPanel',
     props: {
-      serviceId: 'Mock/PropertiesPanel',
+      serviceId: 'GI/PropertiesPanel',
       title: '属性面板',
       placement: 'LB',
       width: '356px',
@@ -316,7 +316,7 @@ const baseComponentsConfig = [
     id: 'Save',
     name: '保存分享',
     props: {
-      serviceId: 'MOCK/Save',
+      serviceId: 'GI/Save',
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
@@ -445,7 +445,7 @@ const baseComponentsConfig = [
     id: 'NeighborsQuery',
     name: '邻居查询',
     props: {
-      serviceId: 'Mock/NeighborsQuery',
+      serviceId: 'GI/NeighborsQuery',
       degree: '1',
       isFocus: true,
     },
@@ -525,6 +525,15 @@ const baseComponentsConfig = [
         height: '60px',
         isVertical: true,
       },
+    },
+  },
+  {
+    id: 'Initializer',
+    name: '初始化器',
+    props: {
+      serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
+      schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
+      GI_INITIALIZER: true,
     },
   },
 ];
