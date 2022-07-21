@@ -295,6 +295,7 @@ const Analysis = props => {
           <div className="gi-analysis-workspace">
             <div className="gi-analysis-canvas">
               <GISDK
+                id="gi-site"
                 config={config}
                 /** 资产以Props的方式按需引入 */
                 assets={{
