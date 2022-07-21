@@ -2,6 +2,7 @@ import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
+import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
@@ -33,12 +34,12 @@ export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
   : [];
 
 setTimeout(() => {
-  !isDev && window.console.clear();
+  // !isDev && window.console.clear();
   console.log(
     '%c Thanks to pomelo.lcw zhanning.bzn xuying.xu yunyi jingxi.lp Yanyan-Wang axu.zx xx361452 baihui yifeng yuqi.pyq yuran.lcl qingyu hexiaonan.hxn who have contributed code to GraphInsight',
     'color: #ddd; font-size: 10px; font-style: italic;',
   );
-}, 2000);
+}, 3000);
 
 const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
   return {
@@ -62,6 +63,12 @@ const LOCAL_ASSETS = [
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
     ...GI_ASSETS_SCENE,
+  },
+  {
+    name: '@alipay/gi-assets-gs',
+    version: '1.0.0',
+    global: 'GI_ASSETS_GS',
+    ...GI_ASSETS_GS,
   },
   // {
   //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ANALYSIS'],
