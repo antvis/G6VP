@@ -1,10 +1,10 @@
 import { useContext } from '@alipay/graphinsight';
-import { MoreOutlined,  PlusOutlined } from '@ant-design/icons';
-import { theme } from '@antv/g2plot/lib/adaptor/common';
-import { Button, Card, Col,  Dropdown,  Menu, Popconfirm, Row } from 'antd';
+import Graphin from '@antv/graphin';
+import { MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Card,  Col,  Dropdown, Menu,  Popconfirm, Row } from 'antd';
 import React from 'react';
-import { useImmer } from 'use-immer';
-import AddTheme from './addTheme';
+import {useImmer } from 'use-immer';
+import AddTheme from './AddOrUpdateTheme';
 import './index.less';
 import mockServices from './mockServices';
 import { ITheme, IThemeSettingState } from './typing';
@@ -22,20 +22,20 @@ const ThemeSetting: React.FC<Props> = props => {
 
   const [state, updateState] = useImmer<IThemeSettingState>({
     themes: [],
-    selectedTheme: "",
-    isAddingTheme: false,
+    currentThemeId: '',
+    status: 'show',
   });
 
   const removeTheme = async (id: string) => {
     // @ts-ignore
     const res = await removeThemeService(id);
-    console.log("res:", res)
+    console.log('res:', res);
     if (res.success) {
-        updateState(draft => {
-            draft.themes = res.data;
-        })
+      updateState(draft => {
+        draft.themes = res.data;
+      });
     }
-  }
+  };
 
   const menu = (item: ITheme) => (
     <Menu
@@ -56,6 +56,18 @@ const ThemeSetting: React.FC<Props> = props => {
           删除主题
         </Popconfirm>
       </Menu.Item>
+      <Menu.Item
+        onClick={() => {
+          setTheme(item);
+          updateState(draft => {
+            draft.status = 'update';
+            draft.currentThemeId = item.id;
+            draft.currentTheme = item;
+          });
+        }}
+      >
+        编辑主题
+      </Menu.Item>
     </Menu>
   );
 
@@ -67,8 +79,11 @@ const ThemeSetting: React.FC<Props> = props => {
       const { backgroundColor } = canvasConfig;
       const { backgroundImage } = canvasConfig;
       container.style.background = backgroundColor;
-      container.style.backgroundImage = `url(${backgroundImage})`;
+      container.style.backgroundImage = backgroundImage;
     }
+
+    console.log(nodesConfig, edgesConfig)
+
     updateContext(draft => {
       draft.config = {
         ...draft.config,
@@ -78,8 +93,8 @@ const ThemeSetting: React.FC<Props> = props => {
     });
 
     updateState(draft => {
-        draft.selectedTheme = theme.id;
-    })
+      draft.currentThemeId = theme.id;
+    });
   };
 
   React.useEffect(() => {
@@ -100,16 +115,16 @@ const ThemeSetting: React.FC<Props> = props => {
 
   return (
     <div className="gi-theme-setting">
-      {!state.isAddingTheme && (
+      {state.status === 'show' && (
         <div className="theme-list">
           <Row gutter={[10, 10]}>
             <Col span={12}>
               <Card
                 hoverable
-                cover={<PlusOutlined style={{ fontSize: '70px', color: '#3056E3' }} />}
+                /* cover={<PlusOutlined style={{ fontSize: '70px', color: '#3056E3' }} />} */
                 onClick={() =>
                   updateState(draft => {
-                    draft.isAddingTheme = true;
+                    draft.status = 'add';
                   })
                 }
               >
@@ -120,9 +135,9 @@ const ThemeSetting: React.FC<Props> = props => {
               <Col span={12}>
                 <Card
                   hoverable
-                  cover={<img src={item.cover} style={{ height: '70px' }} />}
+                  /* cover={<img src={item.cover} style={{ height: '70px' }} />} */
                   onClick={() => setTheme(item)}
-                  style={{ position: 'relative',border: state.selectedTheme === item.id ? "#3056e3 1px solid": ""}}
+                  style={{ position: 'relative', border: state.currentThemeId === item.id ? '#3056e3 1px solid' : '' }}
                 >
                   <span className="name">{item.name || '自定义主题'}</span>
                   <Dropdown overlay={menu(item)}>
@@ -130,7 +145,9 @@ const ThemeSetting: React.FC<Props> = props => {
                       type="text"
                       icon={<MoreOutlined />}
                       style={{ position: 'absolute', right: '-1px' }}
-                      onClick={e => {e.stopPropagation()}}
+                      onClick={e => {
+                        e.stopPropagation();
+                      }}
                     ></Button>
                   </Dropdown>
                 </Card>
@@ -139,7 +156,9 @@ const ThemeSetting: React.FC<Props> = props => {
           </Row>
         </div>
       )}
-      {state.isAddingTheme && <AddTheme updateState={updateState} />}
+      {state.status !== 'show' && (
+        <AddTheme status={state.status} currentTheme={state.currentTheme!} updateState={updateState} />
+      )}
     </div>
   );
 };
