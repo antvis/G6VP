@@ -35,7 +35,7 @@ export const GetTheme = {
   },
 };
 export const UpdateTheme = {
-  id: '更新主题',
+  name: '更新主题',
   service: async (id: string, theme: ITheme) => {
     const hash = window.location.hash;
     const projectId = hash.split('/')[2].split('?')[0];
@@ -61,7 +61,7 @@ export const UpdateTheme = {
   },
 };
 export const RemoveTheme = {
-  id: '删除主题',
+  name: '删除主题',
   service: async (id: string) => {
     const hash = window.location.hash;
     const projectId = hash.split('/')[2].split('?')[0];
