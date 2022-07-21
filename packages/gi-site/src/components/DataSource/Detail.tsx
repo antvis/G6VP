@@ -1,4 +1,4 @@
-import { Button, Card, Input } from 'antd';
+import { Alert, Button, Card, Input } from 'antd';
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import './index.less';
@@ -64,6 +64,14 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
   return (
     <div className="gi-services-editor">
       <Card title="服务详情" extra={extra} style={{ borderTop: 'none', borderBottom: 'none', borderRight: 'none' }}>
+        <Alert
+          message="用户可在线自定义数据服务，需要注意编写的脚本是通过 eval() 运行在浏览器VM中，因此不支持ES6及其以上的JS语法"
+          type="warning"
+          showIcon
+          style={{
+            marginBottom: '12px',
+          }}
+        />
         服务ID:
         <Input
           placeholder="Basic usage"
