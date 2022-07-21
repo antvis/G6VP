@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra, utils } from '@alipay/graphinsight';
 import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -22,29 +22,29 @@ export default ({ services }) => {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        options: serviceOptions,
+        options: utils.getServiceOptions(services, 'GetTheme'),
       },
-      default: 'MOCK/getThemes',
+      default: 'GI/GetTheme',
     },
     addThemeServiceId: {
-      title:"添加主题服务",
+      title: '添加主题服务',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        options: serviceOptions,
+        options: utils.getServiceOptions(services, 'AddTheme'),
       },
-      default: 'MOCK/addTheme', 
+      default: 'GI/AddTheme',
     },
     removeThemeServiceId: {
-      title:"删除主题服务",
+      title: '删除主题服务',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        options: serviceOptions,
+        options: utils.getServiceOptions(services, 'RemoveTheme'),
       },
-      default: 'MOCK/removeTheme', 
+      default: 'GI/RemoveTheme',
     },
     ...metas,
   };
