@@ -9,27 +9,21 @@ export interface IProps {
   schemaServiceId: string;
 }
 
-// export const defaultInitializerCfg = {
-//   id: 'Initializer',
-//   props: {
-//     GI_INITIALIZER: true,
-//     serviceId: 'GI_SERVICE_INTIAL_GRAPH',
-//     schemaServiceId: 'GI_SERVICE_SCHEMA',
-//   },
-// };
-
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { serviceId, schemaServiceId } = props;
+  console.log('Initializer render...');
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
+    console.log('Initializer effect....', largeGraphLimit);
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
     const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
       service: () => Promise.resolve(null),
     };
 
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
+      console.log('promise...all', schema, data);
       updateContext(draft => {
         const { nodes, edges } = data;
 

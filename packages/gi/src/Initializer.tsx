@@ -20,10 +20,12 @@ export const defaultInitializerCfg = {
 
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
+  console.log('inner Initializer render....');
   const { serviceId, schemaServiceId } = props;
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
+    console.log('inner Initializer effect....');
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
     const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
       service: () => Promise.resolve(null),
