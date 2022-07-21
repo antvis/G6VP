@@ -17,7 +17,7 @@ const getServiceOptions = (services: Service[], serviceId) => {
     });
 };
 export default context => {
-  const { services, serviceEngine = 'GraphInsight' } = context;
+  const { services, serviceEngine = 'GI' } = context;
   const serviceOptions = getServiceOptions(services, info.services[0]);
 
   return {
