@@ -10,6 +10,13 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '
 
 const registerMeta = ({ schemaData }) => {
   const schema = {
+    isSelectedActive: {
+      title: '元素选中高亮',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     ...metas,
   };
 
