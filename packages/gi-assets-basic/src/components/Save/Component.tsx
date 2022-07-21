@@ -34,8 +34,12 @@ const Save: React.FunctionComponent<Props> = props => {
           duration: 3,
         });
         setTimeout(() => {
-          const herfURL = window.location.origin + '/#/share/' + res.data.shareId;
-          window.open(herfURL);
+          let url = res.data;
+          //兼容之前的旧逻辑：
+          if (res.shareId) {
+            url = window.location.origin + '/#/share/' + res.shareId;
+          }
+          window.open(url);
         }, 3000);
       }
     });

@@ -14,9 +14,8 @@ export const Save = {
     return new Promise(resolve => {
       return resolve({
         success: true,
-        data: {
-          shareId: uuid,
-        },
+        data: href,
+        shareId: uuid,
       });
     });
   },
