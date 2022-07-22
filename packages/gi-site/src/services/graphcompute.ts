@@ -27,7 +27,6 @@ export const createGraphScopeInstance = async (projectId: string, mode: string =
       },
       headers: {
         'Content-Type': 'application/json',
-        // 'x-csrf-token': Cookies.get('csrfToken')
       },
     });
   
@@ -44,7 +43,6 @@ export const createGraphScopeInstance = async (projectId: string, mode: string =
   const engineMode = mode === 'LOCAL' ? 1 : 2
   // 创建实例之前，先查找是否之前已经创建过图引擎实例
   const instanceResult = await findEngineInstanceByProjectID(projectId, engineMode)
-  console.log('查询', instanceResult)
   if (instanceResult.success && instanceResult.data.length > 0) {
     const currentInstance = instanceResult.data[0]
     const { instanceId } = currentInstance
