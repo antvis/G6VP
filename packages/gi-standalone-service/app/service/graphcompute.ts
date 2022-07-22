@@ -208,13 +208,10 @@ class GraphComputeService extends Service {
    */
   async queryByGremlinLanguage(params) {
     const { value, gremlinServer } = params;
-    console.log('查询参数', value, gremlinServer);
 
     const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
     const result = await clientInstance.submit(value);
-
-    console.log('Gremlin 查询结果', result);
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
