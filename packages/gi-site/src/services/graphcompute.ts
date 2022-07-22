@@ -1,6 +1,5 @@
 import request from 'umi-request';
 import { message } from 'antd'
-import localforage from 'localforage';
 import { SERVICE_URL_PREFIX, IS_LOCAL_ENV, LOCAL_GRAPHSCOPE_SERVER } from './const';
 import { findEngineInstanceByProjectID, updateEngineInstace, createEngineInstance, deleteInstance } from './engineInstace';
 
