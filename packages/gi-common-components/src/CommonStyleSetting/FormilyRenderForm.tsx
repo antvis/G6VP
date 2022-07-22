@@ -20,6 +20,7 @@ interface RenderFormProps {
   config: {
     id: string;
     props: {};
+    [key: string]: any;
   };
 }
 
@@ -70,6 +71,16 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { elementId } = state;
   const schema = elements[elementId].meta;
 
+  const jsonSchema = JSON.parse(JSON.stringify(schema))
+  const nodeTypeExpression = config.expressions.find(d => d.name === 'nodeType')
+  if (nodeTypeExpression) {
+    const currentNodeType = nodeTypeExpression.value
+    // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
+    const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(d => d.nodeType === currentNodeType)
+    jsonSchema.properties.label['x-component-props'].schemaData.length = 0
+    jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData)
+  }
+  
   const OPTIONS = React.useMemo(() => {
     if (!elements) {
       return [];
@@ -137,7 +148,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
       </div>
 
       <FormProvider form={form}>
-        <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
+        <SchemaField schema={JSON.parse(JSON.stringify(jsonSchema))} />
       </FormProvider>
     </>
   );
