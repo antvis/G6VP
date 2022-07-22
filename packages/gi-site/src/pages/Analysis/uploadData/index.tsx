@@ -364,18 +364,14 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <MockData handleClose={handleClose} />
         </TabPane>
 
-        <TabPane tab="GraphScope" key="graphscope" disabled={IS_LOCAL_ENV}>
-          {!IS_LOCAL_ENV && (
-            <>
-              <Alert
-                message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
-                type="info"
-                showIcon
-                style={{ marginBottom: '12px' }}
-              />
-              <GraphScopeData close={handleClose} />
-            </>
-          )}
+        <TabPane tab="GraphScope" key="graphscope">
+          <Alert
+            message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
+            type="info"
+            showIcon
+            style={{ marginBottom: '12px' }}
+          />
+          <GraphScopeData close={handleClose} />
         </TabPane>
         <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
       </Tabs>
