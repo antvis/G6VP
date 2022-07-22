@@ -1,9 +1,9 @@
-import { value useContext } from '@alipay/graphinsight';
-import { value S2Event, value SpreadSheet, S2Options, S2DataConfig } from '@antv/s2';
-import { value SheetComponent } from '@antv/s2-react';
+import { useContext } from '@alipay/graphinsight';
+import { IEdge, INode } from '@antv/g6';
+import { S2DataConfig, S2Event, S2Options, SpreadSheet } from '@antv/s2';
+import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { value Tabs } from 'antd';
-import { INode, IEdge} from "@antv/g6"
+import { Tabs } from 'antd';
 import React from 'react';
 import './index.less';
 
@@ -14,17 +14,16 @@ interface IState {
 
 const { TabPane } = Tabs;
 
-const TableMode = (props) => {
+const TableMode = props => {
   const { isSelectedActive } = props;
-  console.log("isSelectedActive:", isSelectedActive)
   const { schemaData, data: graphData, graph } = useContext();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
 
-  const [ options, setOptions ] = React.useState<S2Options>({});
+  const [options, setOptions] = React.useState<S2Options>({});
 
-  const nodeDataCfg:S2DataConfig = React.useMemo(() => {
+  const nodeDataCfg: S2DataConfig = React.useMemo(() => {
     const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
       return {
         ...acc,
@@ -47,7 +46,7 @@ const TableMode = (props) => {
     };
   }, [schemaData, graphData]);
 
-  const edgeDataCfg:S2DataConfig = React.useMemo(() => {
+  const edgeDataCfg: S2DataConfig = React.useMemo(() => {
     const edgeProperties = schemaData.edges.reduce((acc, cur) => {
       return {
         ...acc,
@@ -71,8 +70,7 @@ const TableMode = (props) => {
   }, [schemaData, graphData]);
 
   React.useEffect(() => {
-    nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, (cells) => {
-      console.log("isSelectedAcitve:", isSelectedActive)
+    nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
       // isSelectedActiv 为 false 时，不高亮选中元素
       if (!isSelectedActive) {
         return;
@@ -115,7 +113,7 @@ const TableMode = (props) => {
       });
     });
 
-    edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, (cells) => {
+    edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
       // isSelectedActiv 为 false 时，不高亮选中元素
       if (!isSelectedActive) {
         return;
@@ -150,14 +148,13 @@ const TableMode = (props) => {
       graphData.edges.forEach(edgeConfig => {
         const { id } = edgeConfig;
         const item = graph.findById(id) as IEdge;
-      
 
         if (selectedEdges.has(id)) {
           graph.setItemState(id, 'disabled', false);
           graph.setItemState(id, 'selected', true);
         } else {
-          !item.hasState("disabled") && graph.setItemState(id, 'disabled', true);
-          item.hasState("selected") && graph.setItemState(id, 'selected', false);
+          !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+          item.hasState('selected') && graph.setItemState(id, 'selected', false);
         }
       });
     });
@@ -168,18 +165,30 @@ const TableMode = (props) => {
     };
   }, [isSelectedActive]);
 
-  React.useLayoutEffect(() => {
-    const container = document.getElementById("gi-table-mode") as HTMLDivElement;
+  const setS2Options = () => {
+    const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     const width = container.clientWidth;
     const height = container.clientHeight;
     setOptions(preState => {
       return {
         ...preState,
         width,
-        height
-      }
-    })
-  }, [])  
+        height,
+      };
+    });
+  };
+
+  // S2 table 适应父容器存在 bug，
+  React.useEffect(() => {
+    window.addEventListener('resize', setS2Options);
+    return () => {
+      window.removeEventListener('resize', setS2Options);
+    };
+  }, []);
+
+  React.useLayoutEffect(() => {
+    setS2Options();
+  }, []);
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
