@@ -66,7 +66,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ close }) => {
 
   const handleUploadFiles = async (isCover = false) => {
     setUploadLoading(true);
-    debugger;
     const currentInstanceId = await initGraphScopeInstance();
     const values = await form.validateFields();
 
