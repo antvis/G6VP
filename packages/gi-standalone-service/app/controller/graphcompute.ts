@@ -7,9 +7,7 @@ class GraphComputeController extends Controller {
    */
   async createGraphScopeInstance() {
     const { ctx } = this;
-    const params = ctx.request.body;
-    const { mode } = params;
-    const result = ctx.service.graphcompute.createGraphScopeInstance(mode);
+    const result = await ctx.service.graphcompute.createGraphScopeInstance();
     responseData(ctx, result);
   }
 
@@ -18,9 +16,9 @@ class GraphComputeController extends Controller {
    */
   async closeGraphScopeInstance() {
     const { ctx } = this;
-    const { instanceId, mode } = ctx.query;
+    const { instanceId } = ctx.query;
 
-    const result = ctx.service.graphcompute.closeGraphScopeInstance(instanceId, mode);
+    const result = await ctx.service.graphcompute.closeGraphScopeInstance(instanceId);
     responseData(ctx, result);
   }
 
@@ -34,7 +32,7 @@ class GraphComputeController extends Controller {
       instanceId: params.instance_id,
       file: ctx.request.files[0],
     };
-    const result = ctx.service.graphcompute.uploadFileToService(uploadParams);
+    const result = await ctx.service.graphcompute.uploadFileToService(uploadParams);
     responseData(ctx, result);
   }
 
@@ -44,7 +42,7 @@ class GraphComputeController extends Controller {
   async loadDataToGraphScope() {
     const { ctx } = this;
     const params = ctx.request.body;
-    const result = ctx.service.graphcompute.loadDataToGraphScope(params);
+    const result = await ctx.service.graphcompute.loadDataToGraphScope(params);
     responseData(ctx, result);
   }
 
@@ -55,7 +53,7 @@ class GraphComputeController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    const result = ctx.service.graphcompute.queryByGremlinLanguage(params);
+    const result = await ctx.service.graphcompute.queryByGremlinLanguage(params);
     responseData(ctx, result);
   }
 
@@ -66,7 +64,7 @@ class GraphComputeController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    const result = ctx.service.graphcompute.queryNeighbors(params);
+    const result = await ctx.service.graphcompute.queryNeighbors(params);
     responseData(ctx, result);
   }
 
@@ -75,9 +73,9 @@ class GraphComputeController extends Controller {
    */
   async getSchema() {
     const { ctx } = this;
-    const { projectId, mode = '1' } = ctx.query;
+    const { graphName } = ctx.query;
 
-    const result = ctx.service.graphcompute.queryGraphSchema(projectId, parseInt(mode, 10));
+    const result = await ctx.service.graphcompute.queryGraphSchema(graphName);
     responseData(ctx, result);
   }
 
@@ -86,7 +84,7 @@ class GraphComputeController extends Controller {
    */
   async getInstance() {
     const { ctx } = this;
-    const result = ctx.service.graphcompute.getGraphScopeInstance();
+    const result = await ctx.service.graphcompute.getGraphScopeInstance();
     responseData(ctx, result);
   }
 
@@ -97,7 +95,7 @@ class GraphComputeController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    const result = ctx.service.graphcompute.queryElementProperties(params);
+    const result = await ctx.service.graphcompute.queryElementProperties(params);
     responseData(ctx, result);
   }
 }
