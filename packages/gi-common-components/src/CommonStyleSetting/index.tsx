@@ -144,6 +144,8 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
         return (
           <div>
             <RenderForm
+              elementType={elementType}
+              schemaData={schemaData}
               elements={elements}
               //@ts-ignore
               config={itemConfig}
