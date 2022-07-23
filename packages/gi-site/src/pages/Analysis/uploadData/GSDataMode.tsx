@@ -8,6 +8,7 @@ import ODPSTablePanel from './ODPSTablePanel';
 import ODPSMode from './ODPS';
 import { useContext } from '../hooks/useContext';
 import './index.less';
+import { IS_LOCAL_ENV } from '../../../services/const';
 const { Item } = Form;
 const { confirm } = Modal;
 
@@ -193,7 +194,9 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
               <Item label="模式" name="type" style={{ marginBottom: 8 }}>
                 <Radio.Group defaultValue="LOCAL" onChange={handleModelType}>
                   <Radio value="LOCAL">本地文件</Radio>
-                  <Radio value="ODPS">ODPS</Radio>
+                  <Radio value="ODPS" disabled={IS_LOCAL_ENV}>
+                    ODPS
+                  </Radio>
                   <Radio value="OSS" disabled>
                     OSS
                   </Radio>

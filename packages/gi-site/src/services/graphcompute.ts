@@ -1,6 +1,6 @@
 import request from 'umi-request';
 import { message } from 'antd'
-import { SERVICE_URL_PREFIX } from './const';
+import { SERVICE_URL_PREFIX, IS_LOCAL_ENV, LOCAL_GRAPHSCOPE_SERVER } from './const';
 import { findEngineInstanceByProjectID, updateEngineInstace, createEngineInstance, deleteInstance } from './engineInstace';
 
 /**
@@ -9,10 +9,40 @@ import { findEngineInstanceByProjectID, updateEngineInstace, createEngineInstanc
  * @param mode 创建实例模式，1 表示本地载图的 session 实例，2 表示 odps 载图的 session 实例
  */
 export const createGraphScopeInstance = async (projectId: string, mode: string = 'LOCAL') => {
+  if (IS_LOCAL_ENV) {
+    const graphScopeInstance = localStorage.getItem('GRAPHSCOPE_INSTANCE')
+    
+    if (graphScopeInstance) {
+      return {
+        success: true,
+        data: {
+          instanceId: graphScopeInstance
+        }
+      }
+    }
+    const gsResult = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/createGSInstance`, {
+      method: 'POST',
+      data: {
+        mode
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    if (!gsResult || !gsResult.success) {
+      message.error(`创建 GraphScope 引擎实例失败: ${gsResult.message}`);
+      return null;
+    }
+
+    // 将创建的 GS 实例存储到 localStorage 中
+    localStorage.setItem('GRAPHSCOPE_INSTANCE', gsResult.data.instanceId)
+    return gsResult
+  }
+
   const engineMode = mode === 'LOCAL' ? 1 : 2
   // 创建实例之前，先查找是否之前已经创建过图引擎实例
   const instanceResult = await findEngineInstanceByProjectID(projectId, engineMode)
-  console.log('查询', instanceResult)
   if (instanceResult.success && instanceResult.data.length > 0) {
     const currentInstance = instanceResult.data[0]
     const { instanceId } = currentInstance
@@ -71,11 +101,12 @@ interface UploadFileResponse {
 export const uploadLocalFileToGraphScope = async (params: UploadFileParams): Promise<UploadFileResponse> => {
   const { instanceId, fileList } = params;
 
+  const uploadServerURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
   const nodeFormData = new FormData();
   nodeFormData.append('file', fileList.file);
   nodeFormData.append('instance_id', instanceId);
 
-  const fileResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/uploadFile`, {
+  const fileResult = await request(`${uploadServerURL}/graphcompute/uploadFile`, {
     method: 'post',
     data: nodeFormData,
     contentType: false,
@@ -185,8 +216,9 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
   };
 
   console.log('载图参数', loadFileParams);
+  const loadDataServerURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
 
-  const loadResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/loadData`, {
+  const loadResult = await request(`${loadDataServerURL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
     headers: {
@@ -200,17 +232,20 @@ export const loadGraphToGraphScope = async (params: LoadGraphDataParams) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
   
-  const updateInstanceResult = await updateEngineInstace(instanceId, {
-    gremlinServerUrl: graphURL,
-    activeGraphName: graphName,
-  })
-
-  if (!updateInstanceResult || !updateInstanceResult.success) {
-    message.error(updateInstanceResult.errorMsg);
-    return null
+  if (!IS_LOCAL_ENV) {
+    const updateInstanceResult = await updateEngineInstace(instanceId, {
+      gremlinServerUrl: graphURL,
+      activeGraphName: graphName,
+    })
+  
+    if (!updateInstanceResult || !updateInstanceResult.success) {
+      message.error(updateInstanceResult.errorMsg);
+      return null
+    }
+  } else {
+    localStorage.setItem('graphScopeGraphName', graphName)
+    localStorage.setItem('graphScopeGremlinServer', graphURL)
   }
-  // 更新 localstorage 值
-  localStorage.setItem('graphScopeGraphName', graphName)
 
   return {
     success: true,
@@ -277,7 +312,9 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
     },
   };
 
-  const loadResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/loadData`, {
+  const loadDataServerURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
+
+  const loadResult = await request(`${loadDataServerURL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
     headers: {
@@ -291,14 +328,19 @@ export const loadDefaultGraphToGraphScope = async (params: LoadGraphParams) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
-  const updateInstanceResult = await updateEngineInstace(instanceId, {
-    gremlinServerUrl: graphURL,
-    activeGraphName: graphName,
-  })
-
-  if (!updateInstanceResult || !updateInstanceResult.success) {
-    message.error(updateInstanceResult.errorMsg);
-    return null
+  if (!IS_LOCAL_ENV) {
+    const updateInstanceResult = await updateEngineInstace(instanceId, {
+      gremlinServerUrl: graphURL,
+      activeGraphName: graphName,
+    })
+  
+    if (!updateInstanceResult || !updateInstanceResult.success) {
+      message.error(updateInstanceResult.errorMsg);
+      return null
+    }
+  } else {
+    localStorage.setItem('graphScopeGraphName', graphName)
+    localStorage.setItem('graphScopeGremlinServer', graphURL)
   }
 
   return {
@@ -339,8 +381,9 @@ export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
   };
 
   console.log('载图参数', loadFileParams);
+  const loadDataServerURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
 
-  const loadResult = await request(`${SERVICE_URL_PREFIX}/graphcompute/loadData`, {
+  const loadResult = await request(`${loadDataServerURL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
     headers: {
@@ -354,14 +397,19 @@ export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
-  const updateInstanceResult = await updateEngineInstace(instanceId, {
-    gremlinServerUrl: graphURL,
-    activeGraphName: graphName,
-  })
-
-  if (!updateInstanceResult || !updateInstanceResult.success) {
-    message.error(updateInstanceResult.errorMsg);
-    return null
+  if (!IS_LOCAL_ENV) {
+    const updateInstanceResult = await updateEngineInstace(instanceId, {
+      gremlinServerUrl: graphURL,
+      activeGraphName: graphName,
+    })
+  
+    if (!updateInstanceResult || !updateInstanceResult.success) {
+      message.error(updateInstanceResult.errorMsg);
+      return null
+    }
+  } else {
+    localStorage.setItem('graphScopeGraphName', graphName)
+    localStorage.setItem('graphScopeGremlinServer', graphURL)
   }
 
   return {
@@ -375,25 +423,25 @@ export const loadChinaVisGraphToGraphScope = async (params: ChinaVisParams) => {
   };
 }
 
-export const findNodeById = async nodeId => {
-  const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/findVertex`, {
-    method: 'get',
-    params: {
-      nodeId,
-      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
-      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
-    },
-  });
-
-  return response;
-};
-
 // queryByGremlinLanguage
-export const gremlinQuery = async (statement: string) => {
+export const gremlinQuery = async (value: string) => {
+  if (IS_LOCAL_ENV) {
+    const gremlinServer = localStorage.getItem('graphScopeGremlinServer')
+    const response = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/gremlinQuery`, {
+      method: 'post',
+      data: {
+        value,
+        gremlinServer
+      },
+    });
+  
+    return response;
+  }
+
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/gremlinQuery`, {
     method: 'post',
     data: {
-      statement,
+      value,
       projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
       mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
     },
@@ -412,13 +460,22 @@ interface NeighborsProps {
  * @param id 查询节点属性
  */
 export const queryNeighbors = async (params: NeighborsProps) => {
+  if (IS_LOCAL_ENV) {
+    const gremlinServer = localStorage.getItem('graphScopeGremlinServer')
+    const response = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/neighbors`, {
+      method: 'post',
+      data: {
+        ...params,
+        gremlinServer
+      },
+    });
+  
+    return response;
+  }
+
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/neighbors`, {
     method: 'post',
-    data: {
-      ...params,
-      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
-      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
-    },
+    data: params,
   });
 
   return response;
@@ -429,6 +486,19 @@ export const queryNeighbors = async (params: NeighborsProps) => {
  * @param id 查询节点属性
  */
 export const queryElementProperties = async (id) => {
+
+  if (IS_LOCAL_ENV) {
+    const response = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/properties`, {
+      method: 'post',
+      data: {
+        id: [id],
+        projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
+        mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
+      },
+    });
+  
+    return response;
+  }
   const response = await request(`${SERVICE_URL_PREFIX}/graphcompute/properties`, {
     method: 'post',
     data: {
@@ -445,6 +515,17 @@ export const queryElementProperties = async (id) => {
  * 关闭启动的 GraphScope 引擎
  */
 export const closeGraphInstance = async (projectId: string, mode: string = 'LOCAL') => {
+  if (IS_LOCAL_ENV) {
+    const localInstance = localStorage.getItem('GRAPHSCOPE_INSTANCE')
+    const result = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/closeGSInstance`, {
+      method: 'GET',
+      params: {
+        instanceId: localInstance,
+      },
+    });
+    
+    return result;
+  }
   const engineMode = mode === 'LOCAL' ? 1 : 2
   // 关闭实例之前，先查询相关信息
   const instanceResult = await findEngineInstanceByProjectID(projectId, engineMode);
@@ -494,7 +575,9 @@ interface GraphAlgorithmProps {
 
 // 调用图算法
 export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
-  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/execAlgorithm`, {
+  const serverURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
+
+  const result = await request(`${serverURL}/graphcompute/execAlgorithm`, {
     method: 'POST',
     data: params
   })
@@ -507,6 +590,17 @@ export const execGraphAlgorithm = async (params: GraphAlgorithmProps) => {
  * @param projectId 项目 ID
  */
 export const queryGraphSchema = async (projectId: string, modeType) => {
+  if (IS_LOCAL_ENV) {
+    const localGraphName = localStorage.getItem('graphScopeGraphName')
+    const result = await request(`${LOCAL_GRAPHSCOPE_SERVER}/graphcompute/schema`, {
+      method: 'GET',
+      params: {
+        graphName: localGraphName
+      }
+    })
+  
+    return result
+  }
   const engineMode = modeType === 'LOCAL' ? 1 : 2
   const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/schema`, {
     method: 'GET',
@@ -524,32 +618,12 @@ export const queryGraphSchema = async (projectId: string, modeType) => {
  * @param pattern JSON 描述的 Pattern
  */
 export const jsonToGremlin = async (pattern) => {
-  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/jsonToGremlin`, {
+  const serverURL = IS_LOCAL_ENV ? LOCAL_GRAPHSCOPE_SERVER : SERVICE_URL_PREFIX
+
+  const result = await request(`${serverURL}/graphcompute/jsonToGremlin`, {
     method: 'POST',
     data: {
       value: JSON.stringify(pattern)
-    }
-  })
-
-  return result
-}
-
-interface AddColumnsProps {
-  contextName: string;
-  colomnName: string;
-  needGremlin?: boolean;
-}
-
-/**
- * 将算法执行结果写到数据中
- * @param params 
- */
-export const addColumns = async (params: AddColumnsProps) => {
-  const result = await request(`${SERVICE_URL_PREFIX}/graphcompute/addColumns`, {
-    method: 'POST',
-    data: {
-      ...params,
-      graphName: localStorage.getItem('graphScopeGraphName'),
     }
   })
 

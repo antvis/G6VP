@@ -1,6 +1,4 @@
-/*
- * Graphinsight 用户与权限处理服务
- */
+// @ts-nocheck
 
 import { Service } from 'egg';
 
@@ -8,7 +6,7 @@ import gremlin from 'gremlin_patch';
 // @ts-ignore
 import fs from 'fs';
 import FormStream from 'formstream';
-import { GRAPHSCOPE_SERVICE_URL, GRAPHSCOPE_SERVICE_INTERNET_URL } from '../util';
+import { GRAPHSCOPE_SERVICE_URL } from '../util';
 
 class GremlinClass {
   public instance = null;
@@ -81,9 +79,8 @@ class GraphComputeService extends Service {
   /**
    * 创建 GraphScope 实例
    */
-  async createGraphScopeInstance(mode) {
-    const requestURL = mode === 'LOCAL' ? GRAPHSCOPE_SERVICE_URL : GRAPHSCOPE_SERVICE_INTERNET_URL;
-    const result = await this.ctx.curl(`${requestURL}/api/graphservice/createInstance`, {
+  async createGraphScopeInstance() {
+    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/createInstance`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -116,12 +113,8 @@ class GraphComputeService extends Service {
   /**
    * 关闭创建的 GraphScope 实例
    */
-  async closeGraphScopeInstance(instanceId, mode = 'LOCAL') {
-    const requestURL = mode === 'LOCAL' ? GRAPHSCOPE_SERVICE_URL : GRAPHSCOPE_SERVICE_INTERNET_URL;
-    // 关闭实例之前，先删除数据库中的记录
-    await this.ctx.service.engineInstance.deleteEngineInstance(instanceId);
-
-    const result = await this.ctx.curl(`${requestURL}/api/graphservice/closeInstance`, {
+  async closeGraphScopeInstance(instanceId) {
+    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/closeInstance`, {
       method: 'GET',
       data: {
         instance_id: instanceId,
@@ -140,8 +133,7 @@ class GraphComputeService extends Service {
    */
   async loadDataToGraphScope(params) {
     console.log('开始载图', params);
-    const requestURL = params.type === 'LOCAL' ? GRAPHSCOPE_SERVICE_URL : GRAPHSCOPE_SERVICE_INTERNET_URL;
-    const result = await this.ctx.curl(`${requestURL}/api/graphservice/loadData`, {
+    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/loadData`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -158,10 +150,7 @@ class GraphComputeService extends Service {
 
     const { graph_name, graph_url, success, code, hostname, hostip, message } = result.data;
     // 更新 Gremlin server，暂时固定写死
-    const graphURL =
-      params.type === 'LOCAL'
-        ? graph_url.replace(/(?<=\/\/)([0-9\.]*)(?=\:)/g, hostip || '47.242.172.5')
-        : 'ws://grape.alibaba-inc.com/gremlin';
+    const graphURL = graph_url.replace(/(?<=\/\/)([0-9\.]*)(?=\:)/g, hostip || '47.242.172.5');
 
     return {
       success,
@@ -218,35 +207,11 @@ class GraphComputeService extends Service {
    * @param gremlinSQL Gremlin 查询语句
    */
   async queryByGremlinLanguage(params) {
-    const { value, projectId, mode = 1 } = params;
+    const { value, gremlinServer } = params;
 
-    // 查询之前，先通过 projectId 查询 gremlinServer
-    const currentInstances = await this.ctx.service.engineInstance.findEngineInstanceByProjectID(projectId, mode);
-    let current = null;
-    if (currentInstances.success && currentInstances.data.length > 0) {
-      current = currentInstances.data[0];
-    }
-
-    if (!current) {
-      // 不存在具体的 graphName，则返回空的 schema
-      return {
-        success: false,
-        code: 500,
-        errorMsg: 'Gremlin Server 没有实例化，请先实例化后再使用 Gremlin 进行查询',
-        data: {
-          nodes: [],
-          edges: [],
-        },
-      };
-    }
-
-    const { gremlinServerUrl } = current;
-
-    const clientInstance = GremlinClass.getClientInstance(gremlinServerUrl);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
     const result = await clientInstance.submit(value);
-
-    console.log('Gremlin 查询结果', result);
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -458,7 +423,6 @@ class GraphComputeService extends Service {
       name,
       graphName,
       instanceId,
-      mode,
       colomnName,
       maxRound = 10,
       limit = 100,
@@ -545,17 +509,7 @@ class GraphComputeService extends Service {
     if (!addColumnResult || !addColumnResult.success) {
       return {};
     }
-    const { graph_name, graph_url, hostip } = addColumnResult;
-
-    const graphURL =
-      mode === 'LOCAL'
-        ? graph_url.replace(/(?<=\/\/)([0-9\.]*)(?=\:)/g, hostip || '47.242.172.5')
-        : 'ws://grape.alibaba-inc.com/gremlin';
-
-    await this.ctx.service.engineInstance.updateEngineInstance(instanceId, {
-      gremlinServerUrl: graphURL,
-      activeGraphName: graph_name,
-    });
+    const { graph_name, graph_url } = addColumnResult;
 
     // 算法执行成功，返回结果
     return {
@@ -605,36 +559,14 @@ class GraphComputeService extends Service {
    * @param params
    */
   async queryNeighbors(params) {
-    const { id = [], sep, projectId, mode = 1 } = params;
+    const { id = [], sep, gremlinServer } = params;
     let str = '';
 
     for (let i = 0; i < sep - 1; i++) {
       str += '.both()';
     }
 
-    // 邻居查询之前，先通过 projectId 查询 gremlinServer
-    const currentInstances = await this.ctx.service.engineInstance.findEngineInstanceByProjectID(projectId, mode);
-    let current = null;
-    if (currentInstances.success && currentInstances.data.length > 0) {
-      current = currentInstances.data[0];
-    }
-
-    if (!current) {
-      // 不存在具体的 graphName，则返回空的 schema
-      return {
-        success: false,
-        code: 500,
-        errorMsg: 'Gremlin Server 没有实例化，请先实例化后再使用 Gremlin 进行查询',
-        data: {
-          nodes: [],
-          edges: [],
-        },
-      };
-    }
-
-    const { gremlinServerUrl } = current;
-
-    const clientInstance = GremlinClass.getClientInstance(gremlinServerUrl);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
     const gremlinSQL = `g.V(${id.join(',')})${str}.bothE().limit(100)`;
     const result = await clientInstance.submit(gremlinSQL);
@@ -720,30 +652,9 @@ class GraphComputeService extends Service {
    * @param params 节点 ID
    */
   async queryElementProperties(params) {
-    const { id = [], projectId, mode = 1 } = params;
-    // 邻居查询之前，先通过 projectId 查询 gremlinServer
-    const currentInstances = await this.ctx.service.engineInstance.findEngineInstanceByProjectID(projectId, mode);
-    let current = null;
-    if (currentInstances.success && currentInstances.data.length > 0) {
-      current = currentInstances.data[0];
-    }
+    const { id = [], gremlinServer } = params;
 
-    if (!current) {
-      // 不存在具体的 graphName，则返回空的 schema
-      return {
-        success: false,
-        code: 500,
-        errorMsg: 'Gremlin Server 没有实例化，请先实例化后再使用 Gremlin 进行查询',
-        data: {
-          nodes: [],
-          edges: [],
-        },
-      };
-    }
-
-    const { gremlinServerUrl } = current;
-
-    const clientInstance = GremlinClass.getClientInstance(gremlinServerUrl);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
     // 查询属性的 Gremlin 已经
     const gremlinSQL = `g.V(${id.join(',')}).valueMap()`;
@@ -808,33 +719,12 @@ class GraphComputeService extends Service {
   /**
    * 根据 GraphName 查询 Schema 数据
    */
-  async queryGraphSchema(projectId, mode) {
-    // 通过 ProjectID 查询 activeGraphName
-    const currentInstances = await this.ctx.service.engineInstance.findEngineInstanceByProjectID(projectId, mode);
-    console.log('xxxcurrentInstance', currentInstances);
-    let current = null;
-    if (currentInstances.success && currentInstances.data.length > 0) {
-      current = currentInstances.data[0];
-    }
-
-    if (!current) {
-      // 不存在具体的 graphName，则返回空的 schema
-      return {
-        code: 404,
-        success: false,
-        errorMsg: `项目 ${projectId} 不存在 GraphScope 实例，无对应的 Schema 信息`,
-        data: {
-          nodes: [],
-          edges: [],
-        },
-      };
-    }
-
+  async queryGraphSchema(graphName) {
     const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/graphSchema`, {
       method: 'GET',
       data: {
         // @ts-ignore
-        graph_name: current.activeGraphName,
+        graph_name: graphName,
       },
       dataType: 'json',
     });
