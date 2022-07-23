@@ -10,7 +10,7 @@ interface CardsProps {
 // 已经在官方注册过的资产上架
 const defaltDesc = {
   GI: {
-    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*d--URL3WHPcAAAAAAAAAAAAAARQnAQ',
+    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*3YEZS6qSRgAAAAAAAAAAAAAAARQnAQ',
     title: 'GraphInsight 官网服务',
     desc: 'GraphInsight 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持',
     group: 'GraphInsight 官方',
