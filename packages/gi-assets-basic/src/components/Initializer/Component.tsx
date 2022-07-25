@@ -23,13 +23,15 @@ const Initializer: React.FunctionComponent<IProps> = props => {
     };
 
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
-      console.log('promise...all', schema, data);
       updateContext(draft => {
         const { nodes, edges } = data;
 
         if (schema) {
           // 更新schemaData
           draft.schemaData = schema as any;
+          const style = utils.generatorStyleConfigBySchema(schema);
+          draft.config.nodes = style.nodes;
+          draft.config.edges = style.edges;
         }
 
         const position = isPosition(nodes);
