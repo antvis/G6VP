@@ -35,7 +35,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const CustomServer = utils.getCombineServer(context.activeAssets.services).filter(c => {
     return ['GI', 'GS'].indexOf(c.id) === -1; //临时先剔除
   });
-  console.log('context', context, CustomServer);
+  console.log('context', CustomServer);
   const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
@@ -376,16 +376,17 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             style={{ marginBottom: '12px' }}
           />
           <GraphScopeData close={handleClose} />
-          {CustomServer.map(server => {
-            //@ts-ignore
-            const { component: ServerComponent } = server;
-            return (
-              <TabPane tab={server.name} key={server.id}>
-                <ServerComponent />
-              </TabPane>
-            );
-          })}
         </TabPane>
+        {CustomServer.map(server => {
+          //@ts-ignore
+          const { component: ServerComponent } = server;
+          return (
+            <TabPane tab={server.name} key={server.id}>
+              {/** @ts-ignore */}
+              <ServerComponent />
+            </TabPane>
+          );
+        })}
       </Tabs>
     </Drawer>
   );
