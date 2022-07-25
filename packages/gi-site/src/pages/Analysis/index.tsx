@@ -1,4 +1,4 @@
-import GISDK, { GIAssets } from '@alipay/graphinsight';
+import GISDK, { utils } from '@alipay/graphinsight';
 import { original } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
@@ -19,7 +19,7 @@ import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
 import type { StateType } from './useModal';
 import { initialState } from './useModal';
-import { getAssetServices, isObjectEmpty } from './utils';
+import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
 
@@ -116,10 +116,10 @@ const Analysis = props => {
     /** 根据活跃资产Key值，动态加载资产实例 */
     queryAssets(activeAssetsKeys).then(
       //@ts-ignore
-      (activeAssets: GIAssets) => {
+      activeAssets => {
         console.log('activeAssets', activeAssets);
         const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
-        const assetServices = getAssetServices(activeAssets?.services);
+        const assetServices = utils.getCombineServices(activeAssets.services);
 
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
