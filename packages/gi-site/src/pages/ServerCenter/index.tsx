@@ -1,3 +1,4 @@
+import { utils } from '@alipay/graphinsight';
 import { Card } from 'antd';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
@@ -15,6 +16,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     isReady: false,
     lists: [] as any[],
     serverId: 'GI',
+
     tables: [] as { id: string; name: string; table: any[] }[],
   });
   const changeServerId = val => {
@@ -28,35 +30,20 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
   React.useEffect(() => {
     getCombinedAssets().then(res => {
-      const { services } = res;
-      const servicesMap = new Map();
-      const servicesTable = [];
-      services.forEach(item => {
-        const { id, name, pkg, version, ...otherServices } = item;
-        const match = servicesMap[id];
-        if (match) {
-          servicesMap[id] = {
-            ...match,
-            ...otherServices,
-          };
-        } else {
-          servicesMap[id] = item;
-        }
-      });
-      const lists = Object.values(servicesMap);
+      const servers = utils.getCombineServer(res.services);
 
-      const tables = lists.map(server => {
-        const { id, name, pkg, version, ...otherServices } = server;
-        const matchTableData = Object.keys(otherServices).map(s => {
-          const val = otherServices[s];
+      const tables = servers.map(server => {
+        const { id, name, services } = server;
+        const matchTableData = Object.keys(services).map(s => {
+          const val = services[s];
           const args = getFuncArgs(val.service);
           const detail = stringify(val.service);
           return {
-            id: `${id}/${s}`,
-            name: val.name,
+            ...val,
             req: args.join(','),
             res: '-',
             detail,
+            id: `${id}/${s}`,
           };
         });
         return {
@@ -70,7 +57,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         return {
           ...preState,
           isReady: true,
-          lists,
+          lists: Object.values(servers),
           tables,
         };
       });
@@ -87,6 +74,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     table: [],
     name: '',
   };
+  console.log('state', state, matchServer);
 
   return (
     <>

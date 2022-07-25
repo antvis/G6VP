@@ -68,7 +68,7 @@ const PackageTable = ({ data }) => {
     });
   };
   const { visible } = state;
-  console.log('state', state);
+  console.log('state', state, data);
   return (
     <div
       style={{
