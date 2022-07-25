@@ -134,7 +134,7 @@ export interface ElementAsset {
   registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
 }
 
-export interface GIAssets {
+export type GIAssets = Partial<{
   components: {
     [key: string]: ComponentAsset;
   };
@@ -144,7 +144,14 @@ export interface GIAssets {
   layouts: {
     [key: string]: LayoutAsset;
   };
-}
+  services: {
+    /** 服务的唯一ID */
+    id: string;
+    /** 服务名称 */
+    name: string;
+    service: (params: any) => Promise<any>;
+  }[];
+}>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
   type?: 'preset' | 'graphin-force' | 'force' | 'grid' | 'dagre' | 'circular' | 'concentric';
