@@ -1,27 +1,18 @@
 import * as Initializer from './Initializer';
 import * as NeighborsQueryServices from './NeighborsQuery';
+import * as PropertiesPanel from './PropertiesPanel';
 import * as Save from './Save';
-
-export interface QueryPropertiesParams {
-  data: any;
-}
-
-export const PropertiesPanel = {
-  name: '查询属性详情',
-  service: (params: QueryPropertiesParams) => {
-    const { data } = params;
-    console.log('custom...', params);
-    return new Promise(resolve => {
-      return resolve(data);
-    });
-  },
-};
+import ServerComponent from './ServerComponent';
 
 export default {
   id: 'GI',
-  name: 'GraphInsight 官方数据服务',
-  PropertiesPanel,
-  ...NeighborsQueryServices,
-  ...Initializer,
-  ...Save,
+  name: 'GraphInsight',
+  desc: 'GraphInsight 官方数据服务',
+  component: ServerComponent,
+  services: {
+    ...PropertiesPanel,
+    ...NeighborsQueryServices,
+    ...Initializer,
+    ...Save,
+  },
 };
