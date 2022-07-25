@@ -1,3 +1,4 @@
+import { utils } from '@alipay/graphinsight';
 import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
 import { Alert, Button, Drawer, Form, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
@@ -8,7 +9,6 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import { IS_LOCAL_ENV } from '../../../services/const';
 import GraphScopeData from './GraphScopeData';
 import './index.less';
 import MockData from './MockData';
@@ -32,6 +32,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext } = useContext();
 
+  const CustomServer = utils.getCombineServer(context.activeAssets.services).filter(c => {
+    return ['GI', 'GS'].indexOf(c.id) === -1; //临时先剔除
+  });
+  console.log('context', CustomServer);
   const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
@@ -347,7 +351,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
   const defaultActiveKey = GI_UPLOADED_DATA ? 'document' : 'mockdata';
   const IS_ONLINE_ENV = window.location.host === 'graphinsight.antgroup-inc.cn';
-  
+
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs defaultActiveKey={defaultActiveKey}>
@@ -364,7 +368,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <MockData handleClose={handleClose} />
         </TabPane>
 
-        <TabPane tab="GraphScope" key="graphscope">
+        <TabPane tab="GraphScope" key="graphscope" disabled>
           <Alert
             message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
             type="info"
@@ -373,7 +377,16 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           />
           <GraphScopeData close={handleClose} />
         </TabPane>
-        <TabPane tab="OpenAPI" key="OpenAPI" disabled></TabPane>
+        {CustomServer.map(server => {
+          //@ts-ignore
+          const { component: ServerComponent } = server;
+          return (
+            <TabPane tab={server.name} key={server.id}>
+              {/** @ts-ignore */}
+              <ServerComponent />
+            </TabPane>
+          );
+        })}
       </Tabs>
     </Drawer>
   );

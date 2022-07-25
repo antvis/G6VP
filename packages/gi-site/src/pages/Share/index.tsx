@@ -1,11 +1,10 @@
-import GISDK from '@alipay/graphinsight';
+import GISDK, { utils } from '@alipay/graphinsight';
 import React from 'react';
 import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets.market';
 import { IS_LOCAL_ENV } from '../../services/const';
 import { querySharedAnalysisById } from '../../services/share';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';
-import { getAssetServices } from '../Analysis/utils';
 
 const Share = props => {
   const { match } = props;
@@ -32,7 +31,7 @@ const Share = props => {
         const services = getServicesByConfig(ServicesConfig, data, schema);
         queryAssets(activeAssetsKeys).then(res_assets => {
           setState(preState => {
-            const assetServices = getAssetServices(res_assets.services);
+            const assetServices = utils.getCombineServices(res_assets.services);
             return {
               ...preState,
               config,
@@ -61,7 +60,7 @@ const Share = props => {
           return c.content;
         });
         queryAssets(activeAssetsKeys).then(res_assets => {
-          const assetServices = getAssetServices(res_assets.services);
+          const assetServices = utils.getCombineServices(res_assets.services);
           console.log(assetServices, services, ServicesConfig);
           setState(preState => {
             return {

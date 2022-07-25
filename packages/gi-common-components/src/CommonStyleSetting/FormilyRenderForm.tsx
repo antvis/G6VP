@@ -47,7 +47,6 @@ const SchemaField = createSchemaField({
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { onChange, elements, config, schemaData, elementType } = props;
-  console.log('schemaData', schemaData, props);
 
   const form = createForm({
     initialValues: config.props,
