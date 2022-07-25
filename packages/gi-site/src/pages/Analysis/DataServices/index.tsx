@@ -88,7 +88,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   }
   return (
     <div>
-      <BaseNavbar />
+      <BaseNavbar active="services" />
       <DataSource defaultOptions={serviceConfig} onSave={onSave} onDelete={onDelete} defaultActiveId={serviceId} />
     </div>
   );

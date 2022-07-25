@@ -182,7 +182,7 @@ const baseComponentsConfig = [
   {
     id: 'PropertiesPanel',
     props: {
-      serviceId: 'Mock/PropertiesPanel',
+      serviceId: 'GI/PropertiesPanel',
       title: '属性面板',
       placement: 'LB',
       width: '356px',
@@ -316,7 +316,7 @@ const baseComponentsConfig = [
     id: 'Save',
     name: '保存分享',
     props: {
-      serviceId: 'MOCK/Save',
+      serviceId: 'GI/Save',
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
@@ -445,7 +445,7 @@ const baseComponentsConfig = [
     id: 'NeighborsQuery',
     name: '邻居查询',
     props: {
-      serviceId: 'Mock/NeighborsQuery',
+      serviceId: 'GI/NeighborsQuery',
       degree: '1',
       isFocus: true,
     },
@@ -527,6 +527,15 @@ const baseComponentsConfig = [
       },
     },
   },
+  {
+    id: 'Initializer',
+    name: '初始化器',
+    props: {
+      serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
+      schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
+      GI_INITIALIZER: true,
+    },
+  },
 ];
 const baseLayoutConfig = {
   id: 'GraphinForce',
@@ -551,28 +560,7 @@ export const activeAssetsKeys = {
   layouts: ['GraphinForce', 'Concentric', 'Dagre'],
 };
 
-export const serviceConfig = [
-  {
-    id: 'GI_SERVICE_INTIAL_GRAPH',
-    content: `export default (localData)=>{
-      return new Promise((resolve)=>{
-        resolve(localData)
-      })
-    }`,
-    mode: 'MOCK',
-    name: '初始化接口',
-  },
-  {
-    id: 'GI_SERVICE_SCHEMA',
-    content: `export default (localData,schemaData)=>{
-      return new Promise((resolve)=>{
-        resolve(schemaData)
-      })
-    }`,
-    mode: 'MOCK',
-    name: '初始化接口',
-  },
-];
+export const serviceConfig = [];
 
 export const schemaData = {
   nodes: [],

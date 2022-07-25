@@ -98,7 +98,7 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
           const { title, desc, group, cover, color } = extraInfo;
           console.log('cover', cover);
           return (
-            <Col span={8} key={global}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={global}>
               <Card hoverable cover={<img alt="example" src={cover} />}>
                 <div style={{ position: 'relative' }}>
                   <Meta title={title} description={desc}></Meta>

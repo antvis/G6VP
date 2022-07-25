@@ -1,45 +1,32 @@
-import Graphin, { GraphinData } from "@antv/graphin";
-import { original } from "immer";
-import React, { useMemo } from "react";
-import { useImmer } from "use-immer";
-import CanvasClick from "./components/ClickCanvas";
-import { GraphInsightContext } from "./context";
-import "./index.less";
-import DefaultInitializer, { defaultInitializerCfg } from "./Initializer";
-import * as utils from "./process";
-import { registerLayouts, registerShapes } from "./register";
-import SetupUseGraphinHook from "./SetupUseGraphinHook";
-import type { Props, State } from "./typing";
-import { GIComponentConfig } from "./typing";
+import Graphin, { GraphinData } from '@antv/graphin';
+import { original } from 'immer';
+import React, { useMemo } from 'react';
+import { useImmer } from 'use-immer';
+import CanvasClick from './components/ClickCanvas';
+import { GraphInsightContext } from './context';
+import './index.less';
+import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
+import * as utils from './process';
+import { registerLayouts, registerShapes } from './register';
+import SetupUseGraphinHook from './SetupUseGraphinHook';
+import type { Props, State } from './typing';
+import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
   let { services: Services } = props;
 
-  //@ts-ignore
-  if (assets.services) {
-    console.warn(`⚠️：assets.services 即将废弃，请使用 props.services 代替`);
-    //@ts-ignore
-    Services = assets.services;
-  }
-
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
       const defaultId = `${Math.random().toString(36).substr(2)}`;
-      console.warn(
-        `⚠️: props.id 缺失，默认生成 GISDK_ID : ${defaultId} 用于多实例管理`
-      );
+      console.warn(`⚠️: props.id 缺失，默认生成 GISDK_ID : ${defaultId} 用于多实例管理`);
       return defaultId;
     }
     return id;
   }, []);
 
-  const {
-    components: ComponentAssets,
-    elements: ElementAssets,
-    layouts: Layouts,
-  } = assets;
+  const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
 
   registerShapes(ElementAssets);
   registerLayouts(Layouts);
@@ -78,51 +65,43 @@ const GISDK = (props: Props) => {
   });
 
   React.useEffect(() => {
-    updateState((draft) => {
+    updateState(draft => {
       draft.config = props.config;
     });
   }, [props.config]);
 
-  const {
-    layout: layoutCfg,
-    components: componentsCfg = [],
-    nodes: nodesCfg,
-    edges: edgesCfg,
-  } = state.config;
+  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
-    const filteredComponents = componentsCfg.filter((c) => {
+    const filteredComponents = componentsCfg.filter(c => {
       /** 过滤初始化组件 */
       return !(c.props && c.props.GI_INITIALIZER);
     });
 
     /** 容器组件 */
-    const containerComponents = filteredComponents.filter((c) => {
+    const containerComponents = filteredComponents.filter(c => {
       return c.props && c.props.GI_CONTAINER;
     });
 
     /** 集成到容器组件中的原子组件 */
-    const needContainerComponentIds = containerComponents.reduce(
-      (acc: string[], curr) => {
-        const { GI_CONTAINER } = curr.props;
-        return [...acc, ...(GI_CONTAINER as string[])];
-      },
-      []
-    );
+    const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
+      const { GI_CONTAINER } = curr.props;
+      return [...acc, ...(GI_CONTAINER as string[])];
+    }, []);
     /** 最终需要渲染的组件 */
-    const finalComponents = filteredComponents.filter((c) => {
+    const finalComponents = filteredComponents.filter(c => {
       const { id } = c;
       return needContainerComponentIds.indexOf(id) === -1;
     });
     /** 初始化组件 */
     const initializerCfg =
-      componentsCfg.find((c) => {
+      componentsCfg.find(c => {
         return c.props && c.props.GI_INITIALIZER;
       }) || defaultInitializerCfg;
 
-    updateState((draft) => {
+    updateState(draft => {
       draft.config.components = componentsCfg;
       draft.components = finalComponents;
       //@ts-ignore
@@ -148,7 +127,7 @@ const GISDK = (props: Props) => {
         defSpringLen: utils.getDefSpringLenFunction(options.defSpringLenCfg),
       };
     }
-    updateState((draft) => {
+    updateState(draft => {
       draft.layout = {
         type,
         ...options,
@@ -172,20 +151,8 @@ const GISDK = (props: Props) => {
      * @returns
      */
     const transform = (data, reset?: boolean) => {
-      const nodes = utils.transDataByConfig(
-        "nodes",
-        data,
-        { nodes: nodesCfg, edges: edgesCfg },
-        ElementAssets,
-        reset
-      );
-      const edges = utils.transDataByConfig(
-        "edges",
-        data,
-        { nodes: nodesCfg, edges: edgesCfg },
-        ElementAssets,
-        reset
-      );
+      const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
+      const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
 
       return {
         nodes,
@@ -193,7 +160,7 @@ const GISDK = (props: Props) => {
       };
     };
 
-    updateState((draft) => {
+    updateState(draft => {
       if (draft.data.nodes.length !== 0) {
         const preData = original(draft.data);
         // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
@@ -235,21 +202,21 @@ const GISDK = (props: Props) => {
     assets,
     sourceDataMap,
     updateContext: updateState,
-    updateData: (res) => {
-      updateState((draft) => {
+    updateData: res => {
+      updateState(draft => {
         draft.data = transform(res);
         draft.source = transform(res);
         draft.layoutCache = false;
       });
     },
-    updateLayout: (res) => {
-      updateState((draft) => {
+    updateLayout: res => {
+      updateState(draft => {
         draft.layout = res;
         draft.layoutCache = false;
       });
     },
     updateDataAndLayout: (res, lay) => {
-      updateState((draft) => {
+      updateState(draft => {
         draft.data = transform(res);
         draft.source = transform(res);
         draft.layout = lay;
@@ -263,9 +230,7 @@ const GISDK = (props: Props) => {
       [curr.id]: curr,
     };
   }, {});
-  const { component: InitializerComponent } = ComponentAssets[
-    initializer.id
-  ] || {
+  const { component: InitializerComponent } = ComponentAssets[initializer.id] || {
     component: DefaultInitializer,
   };
   const { props: InitializerProps } = ComponentCfgMap[initializer.id] || {
@@ -277,7 +242,7 @@ const GISDK = (props: Props) => {
       return null;
     }
 
-    return components.map((c) => {
+    return components.map(c => {
       const { id, props: itemProps = {} } = c;
       const matchComponent = ComponentAssets[id]; //具体组件的实现
       if (!matchComponent) {
@@ -289,11 +254,7 @@ const GISDK = (props: Props) => {
       if (itemProps.GIAC_CONTENT || itemProps.GIAC_MENU || itemProps.GIAC) {
         return null;
       }
-      if (
-        info.type === "GIAC_CONTENT" ||
-        info.type === "GIAC" ||
-        info.type === "GIAC_MENU"
-      ) {
+      if (info.type === 'GIAC_CONTENT' || info.type === 'GIAC' || info.type === 'GIAC_MENU') {
         return null;
       }
 
@@ -302,7 +263,7 @@ const GISDK = (props: Props) => {
       let GIProps = {};
       if (GI_CONTAINER) {
         GIProps = {
-          components: GI_CONTAINER.map((c) => {
+          components: GI_CONTAINER.map(c => {
             return ComponentCfgMap[c];
           }),
           // assets: ComponentAssets,
@@ -327,14 +288,14 @@ const GISDK = (props: Props) => {
     const nodeMap = {};
     const edges: any[] = [];
     const nodes: any[] = [];
-    data.nodes?.forEach((node) => {
+    data.nodes?.forEach(node => {
       if (!nodeMap[node.id]) {
         nodeMap[node.id] = node;
         nodes.push(node);
       }
     });
     const edgeMap: any[] = [];
-    data.edges.forEach((edge) => {
+    data.edges.forEach(edge => {
       if (nodeMap[edge.source] && nodeMap[edge.target] && !edgeMap[edge.id]) {
         edges?.push(edge);
         edgeMap[edge.id] = edge;
@@ -348,14 +309,11 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <div
-        id={`${GISDK_ID}-container`}
-        style={{ width: "100%", height: "100%", ...props.style }}
-      >
+      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', ...props.style }}>
         <div id={`${GISDK_ID}-container-extra`}></div>
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
-          containerStyle={{ transform: "scale(1)" }}
+          containerStyle={{ transform: 'scale(1)' }}
           data={graphData}
           layout={layout}
           enabledStack={true}
@@ -363,9 +321,7 @@ const GISDK = (props: Props) => {
           layoutCache={state.layoutCache}
         >
           <>
-            {state.isContextReady && (
-              <InitializerComponent {...InitializerProps} />
-            )}
+            {state.isContextReady && <InitializerComponent {...InitializerProps} />}
             <SetupUseGraphinHook updateContext={updateState} />
             {isReady && <CanvasClick />}
             {isReady && renderComponents()}

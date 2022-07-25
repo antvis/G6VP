@@ -1,11 +1,13 @@
-/**   index.md 中解析得到默认值，也可用户手动修改 */
+const ASSET_ID = 'GremlinQuery';
+
 const info = {
-  id: 'GremlinQuery',
+  id: ASSET_ID,
   name: 'Gremlin 查询面板',
   desc: '通过 Gremlin 语句查询图数据',
   icon: 'icon-query',
   category: 'data-query',
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
+  services: [ASSET_ID],
 };
 export default info;

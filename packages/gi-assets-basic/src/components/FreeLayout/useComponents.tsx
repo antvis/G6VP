@@ -19,7 +19,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
         return null;
       }
 
-      console.log('item:', item);
+      // console.log('item:', item);
 
       const { component: Component } = asset;
       const { icon } = item.props.GIAC_CONTENT || {};

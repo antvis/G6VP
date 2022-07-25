@@ -1,11 +1,25 @@
+import info from './info';
+
+interface Service {
+  id: string;
+  service: Promise<any>;
+}
+const getServiceOptions = (services: Service[], serviceId) => {
+  return services
+    .filter(c => {
+      return c.id.includes(serviceId);
+    })
+    .map(c => {
+      return {
+        value: c.id,
+        label: c.id,
+      };
+    });
+};
 export default context => {
-  const { services } = context;
-  const serviceOptions = services.map(c => {
-    return {
-      value: c.id,
-      label: c.id,
-    };
-  });
+  const { services, serviceEngine = 'GI' } = context;
+  const serviceOptions = getServiceOptions(services, info.services[0]);
+
   return {
     serviceId: {
       title: '数据服务',

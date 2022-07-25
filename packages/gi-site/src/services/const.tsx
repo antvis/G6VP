@@ -1,4 +1,9 @@
-const GI_LOCAL_URL = ['graphinsight.antv.vision', 'graphinsight.antgroup.com', 'localhost:8000'];
+const GI_LOCAL_URL = [
+  'graphinsight.antv.vision',
+  'graphinsight.antgroup.com',
+  'graphinsight.antgroup.com:8000',
+  'localhost:8000',
+];
 export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
 export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
 // 本地环境
