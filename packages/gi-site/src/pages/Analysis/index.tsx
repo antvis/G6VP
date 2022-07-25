@@ -1,4 +1,4 @@
-import GISDK, { GIAssets } from '@alipay/graphinsight';
+import GISDK, { utils } from '@alipay/graphinsight';
 import { original } from 'immer';
 import React from 'react';
 import { useImmer } from 'use-immer';
@@ -7,13 +7,12 @@ import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById } from '../../services/';
-import { findEngineInstanceList } from '../../services/engineInstace'
 import { queryAssets } from '../../services/assets.market';
+import { findEngineInstanceList } from '../../services/engineInstace';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
-import getMockServiceConfig from './getAssets/getMockServiceConfig';
 import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
@@ -42,7 +41,7 @@ const Analysis = props => {
 
   // 将 projectId 存到 localstorage 中
   if (projectId) {
-    localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId)
+    localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
   }
 
   const [state, updateState] = useImmer<StateType>(initialState);
@@ -83,13 +82,13 @@ const Analysis = props => {
       const { transData, inputData } = data;
 
       // 根据 projectId，查询引擎实例信息
-      const engineInfoResult = await findEngineInstanceList(projectId)
-      let engineInfos = []
+      const engineInfoResult = await findEngineInstanceList(projectId);
+      let engineInfos = [];
       if (engineInfoResult.success && engineInfoResult.data.length > 0) {
-        engineInfos = engineInfoResult.data
+        engineInfos = engineInfoResult.data;
         // 默认最新的实例
-        localStorage.setItem('graphScopeGraphName', engineInfos[0].activeGraphName)
-        localStorage.setItem('activeEngineInfo', JSON.stringify(engineInfos[0]))
+        localStorage.setItem('graphScopeGraphName', engineInfos[0].activeGraphName);
+        localStorage.setItem('activeEngineInfo', JSON.stringify(engineInfos[0]));
       }
 
       updateState(draft => {
@@ -100,12 +99,11 @@ const Analysis = props => {
         draft.schemaData = schemaData; //图数据的Schema
         draft.inputData = inputData; //用户上传的数据（可展示在「数据」模块）
         draft.activeNavbar = activeNavbar; //当前激活的导航
-        draft.serviceConfig = serviceConfig; //服务配置
+        draft.serviceConfig = serviceConfig; //自定义服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
-        draft.engineInfos = engineInfos
-        draft.activeEngineInfo = engineInfos[0]
+        draft.engineInfos = engineInfos;
+        draft.activeEngineInfo = engineInfos[0];
       });
-      return;
     })();
     // 当项目ID变化，或者强制重新刷新的时候运行
   }, [projectId, key]);
@@ -118,18 +116,21 @@ const Analysis = props => {
     /** 根据活跃资产Key值，动态加载资产实例 */
     queryAssets(activeAssetsKeys).then(
       //@ts-ignore
-      (activeAssets: GIAssets) => {
-        const mockServiceConfig = getMockServiceConfig(activeAssets.components);
+      activeAssets => {
+        console.log('activeAssets', activeAssets);
+        const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
+        const assetServices = utils.getCombineServices(activeAssets.services);
 
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
+          console.log('combinedServiceConfig', combinedServiceConfig);
           const schemaData = original(draft.schemaData);
           const activeAssetsInformation = queryActiveAssetsInformation({
             assets: activeAssets,
             data,
             config,
-            serviceConfig: combinedServiceConfig,
+            serviceConfig: [...assetServices, ...combinedServiceConfig],
             schemaData,
           });
 
@@ -156,7 +157,8 @@ const Analysis = props => {
 
           const { id: layoutId, props: layoutProps } = draft.config.layout;
           // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
-          const defaultLayout = activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['GraphinForce'];
+          const defaultLayout =
+            activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['GraphinForce'];
           const layoutConfig = {
             id: layoutId,
             props: {
@@ -166,7 +168,7 @@ const Analysis = props => {
           };
 
           /** 根据服务配置列表，得到真正运行的Service实例 */
-          const services = getServicesByConfig(combinedServiceConfig, data, schemaData);
+          const services = [...assetServices, ...getServicesByConfig(combinedServiceConfig, data, schemaData)];
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务
@@ -278,6 +280,7 @@ const Analysis = props => {
           <div className="gi-analysis-workspace">
             <div className="gi-analysis-canvas">
               <GISDK
+                id="gi-site"
                 config={config}
                 /** 资产以Props的方式按需引入 */
                 assets={{

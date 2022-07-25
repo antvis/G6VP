@@ -2,9 +2,10 @@ import GISDK from '@alipay/graphinsight';
 import React from 'react';
 import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets.market';
+import { IS_LOCAL_ENV } from '../../services/const';
 import { querySharedAnalysisById } from '../../services/share';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';
-import { IS_LOCAL_ENV } from '../../services/const';
+import { getAssetServices } from '../Analysis/utils';
 
 const Share = props => {
   const { match } = props;
@@ -31,12 +32,13 @@ const Share = props => {
         const services = getServicesByConfig(ServicesConfig, data, schema);
         queryAssets(activeAssetsKeys).then(res_assets => {
           setState(preState => {
+            const assetServices = getAssetServices(res_assets.services);
             return {
               ...preState,
               config,
               isReady: true,
               assets: res_assets,
-              services,
+              services: [...assetServices, ...services],
             };
           });
         });
@@ -55,15 +57,19 @@ const Share = props => {
           elements: ['SimpleEdge', 'SimpleNode', 'DountNode'],
           layouts: ['GraphinForce', 'Concentric', 'Dagre'],
         };
-        const services = getServicesByConfig(ServicesConfig, data, schema);
+        const services = getServicesByConfig(ServicesConfig, data, schema).filter(c => {
+          return c.content;
+        });
         queryAssets(activeAssetsKeys).then(res_assets => {
+          const assetServices = getAssetServices(res_assets.services);
+          console.log(assetServices, services, ServicesConfig);
           setState(preState => {
             return {
               ...preState,
               config,
               isReady: true,
               assets: res_assets,
-              services,
+              services: [...assetServices, ...services],
             };
           });
         });
@@ -74,6 +80,7 @@ const Share = props => {
   if (!isReady) {
     return null;
   }
+  console.log('services', services);
   return (
     <GISDK
       config={config}

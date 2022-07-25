@@ -91,6 +91,7 @@ export default {
       component: 'Workspace',
     },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
+    { exact: true, path: '/services/', component: 'ServerCenter' },
     { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
     { exact: true, path: '/assets', component: 'Assets' },
     { exact: true, path: '/share/:shareId', component: 'Share' },

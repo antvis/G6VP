@@ -8,7 +8,7 @@ export interface Props {
 
 const Save: React.FunctionComponent<Props> = props => {
   const { serviceId } = props;
-  const { graph, GISDK_ID, config, services, schema } = useContext();
+  const { graph, GISDK_ID, config, services, schemaData } = useContext();
   const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
   const imgURL = graph.toDataURL('image/jpeg', '#fff');
@@ -23,7 +23,7 @@ const Save: React.FunctionComponent<Props> = props => {
       data, //数据，带布局信息
       config, //配置，可以还原画布状态
       services, //服务
-      schemaData: schema,
+      schemaData,
       cover: imgURL,
       gmtCreate: new Date(),
     }).then(res => {
@@ -34,8 +34,12 @@ const Save: React.FunctionComponent<Props> = props => {
           duration: 3,
         });
         setTimeout(() => {
-          const herfURL = window.location.origin + '/#/share/' + res.data.shareId;
-          window.open(herfURL);
+          let url = res.data;
+          //兼容之前的旧逻辑：
+          if (res.shareId) {
+            url = window.location.origin + '/#/share/' + res.shareId;
+          }
+          window.open(url);
         }, 3000);
       }
     });

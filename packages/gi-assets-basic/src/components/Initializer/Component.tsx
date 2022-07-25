@@ -1,37 +1,29 @@
 // import { notification } from 'antd';
+import { useContext, utils } from '@alipay/graphinsight';
 import * as React from 'react';
-import { useContext } from './context';
-import { isPosition, isStyles } from './process';
-import { GIService } from './typing';
+const { isPosition, isStyles } = utils;
 
+export type GIService = any;
 export interface IProps {
   serviceId: string;
   schemaServiceId: string;
 }
 
-export const defaultInitializerCfg = {
-  id: 'Initializer',
-  props: {
-    GI_INITIALIZER: true,
-    serviceId: 'GI_SERVICE_INTIAL_GRAPH',
-    schemaServiceId: 'GI_SERVICE_SCHEMA',
-  },
-};
-
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
-  console.log('inner Initializer render....');
   const { serviceId, schemaServiceId } = props;
+  console.log('Initializer render...');
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
-    console.log('inner Initializer effect....');
+    console.log('Initializer effect....', largeGraphLimit);
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
     const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
       service: () => Promise.resolve(null),
     };
 
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
+      console.log('promise...all', schema, data);
       updateContext(draft => {
         const { nodes, edges } = data;
 

@@ -5,7 +5,7 @@ import { getCombinedAssets } from '../loader';
  * 从全量的资产中Pick用户活跃的资产
  * @returns
  */
-export const queryAssets = async (activeAssetsKeys: any) => {
+export const queryAssets = async (activeAssetsKeys: any): Promise<GIAssets> => {
   let components = {};
   let elements;
   let layouts;
@@ -50,6 +50,7 @@ export const queryAssets = async (activeAssetsKeys: any) => {
       components,
       elements,
       layouts,
+      services: FinalAssets.services,
     } as GIAssets);
   });
 };

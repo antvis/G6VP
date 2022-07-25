@@ -24,7 +24,7 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
     <div className="gi-services-sidebar">
       <Card
         bordered={false}
-        title="数据服务"
+        title="自定义数据服务"
         extra={
           <Button size="small" onClick={handleAdd} icon={<PlusOutlined />} type="dashed">
             新增

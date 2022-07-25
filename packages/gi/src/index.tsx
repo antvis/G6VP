@@ -16,6 +16,7 @@ export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
+export type { EngineServer, GIService } from './process/services';
 export type {
   AssetCategory,
   AssetInfo,
@@ -25,7 +26,6 @@ export type {
   GIConfig,
   GIEdgeConfig,
   GINodeConfig,
-  GIService,
   ISourceDataMap,
 } from './typing';
 export { useContext, utils };

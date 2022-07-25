@@ -22,6 +22,11 @@ interface RenderFormProps {
     props: {};
     [key: string]: any;
   };
+  schemaData: {
+    nodes: [];
+    edges: [];
+  };
+  elementType: 'nodes' | 'edges';
 }
 
 const SchemaField = createSchemaField({
@@ -41,7 +46,8 @@ const SchemaField = createSchemaField({
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
-  const { onChange, elements, config } = props;
+  const { onChange, elements, config, schemaData, elementType } = props;
+  console.log('schemaData', schemaData, props);
 
   const form = createForm({
     initialValues: config.props,
@@ -71,16 +77,23 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const { elementId } = state;
   const schema = elements[elementId].meta;
 
-  const jsonSchema = JSON.parse(JSON.stringify(schema))
-  const nodeTypeExpression = config.expressions.find(d => d.name === 'nodeType')
+  const jsonSchema = JSON.parse(JSON.stringify(schema));
+  //@ts-ignore
+  const schemaType = schemaData[elementType][0];
+  const dataTypeKey = elementType === 'nodes' ? 'nodeTypeKeyFromProperties' : 'edgeTypeKeyFromProperties';
+  const typeKeyFromProperties = schemaType && schemaType[dataTypeKey];
+
+  const nodeTypeExpression = config.expressions.find(d => d.name === typeKeyFromProperties);
   if (nodeTypeExpression) {
-    const currentNodeType = nodeTypeExpression.value
+    const currentNodeType = nodeTypeExpression.value;
     // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
-    const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(d => d.nodeType === currentNodeType)
-    jsonSchema.properties.label['x-component-props'].schemaData.length = 0
-    jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData)
+    const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(
+      d => d.nodeType === currentNodeType,
+    );
+    jsonSchema.properties.label['x-component-props'].schemaData.length = 0;
+    jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData);
   }
-  
+
   const OPTIONS = React.useMemo(() => {
     if (!elements) {
       return [];
