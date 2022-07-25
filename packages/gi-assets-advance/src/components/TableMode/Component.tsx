@@ -6,6 +6,8 @@ import '@antv/s2-react/dist/style.min.css';
 import { Tabs } from 'antd';
 import React from 'react';
 import './index.less';
+import useNodeDataCfg from "./useNodeDataCfg";
+import useEdgeDataCfg from "./useEdgeDataCfg"
 
 interface IState {
   nodeData: any[];
@@ -16,58 +18,18 @@ const { TabPane } = Tabs;
 
 const TableMode = props => {
   const { isSelectedActive } = props;
-  const { schemaData, data: graphData, graph } = useContext();
+  const { schemaData, data: graphData, graph, largeGraphData, updateContext } = useContext();
+
+  console.log("largeGraphData:", largeGraphData)
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
-
+  // S2 的 options 配置
   const [options, setOptions] = React.useState<S2Options>({});
+  const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
+  const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
-  const nodeDataCfg: S2DataConfig = React.useMemo(() => {
-    const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
-      return {
-        ...acc,
-        ...cur.properties,
-      };
-    }, {});
-
-    let columns: string[] = [];
-    for (let key in nodeProperties) {
-      if (typeof nodeProperties[key] === 'number' || typeof nodeProperties[key] === 'string') {
-        columns.push(key);
-      }
-    }
-    const data = graphData.nodes.map(node => ({ ...node.data, id: node.id }));
-    return {
-      fields: {
-        columns,
-      },
-      data,
-    };
-  }, [schemaData, graphData]);
-
-  const edgeDataCfg: S2DataConfig = React.useMemo(() => {
-    const edgeProperties = schemaData.edges.reduce((acc, cur) => {
-      return {
-        ...acc,
-        ...cur.properties,
-      };
-    }, {});
-
-    let columns: string[] = [];
-    for (let key in edgeProperties) {
-      if (typeof edgeProperties[key] === 'number' || typeof edgeProperties[key] === 'string') {
-        columns.push(key);
-      }
-    }
-    const data = graphData.edges.map(edge => ({ ...edge.data, id: edge.id }));
-    return {
-      fields: {
-        columns,
-      },
-      data,
-    };
-  }, [schemaData, graphData]);
+  console.log("edgeConfig:", edgeDataCfg)
 
   React.useEffect(() => {
     nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
@@ -95,22 +57,37 @@ const TableMode = props => {
         const nodeID = rowData[rowId]?.id;
         selectedNodes.add(nodeID);
       });
-      graphData.edges.forEach(edgeConfig => {
-        const { id } = edgeConfig;
-        graph.setItemState(id, 'disabled', true);
-      });
 
-      graphData.nodes.forEach(nodeConfig => {
-        const { id } = nodeConfig;
-        const item = graph.findById(id) as INode;
-        if (selectedNodes.has(id)) {
-          graph.setItemState(id, 'disabled', false);
-          graph.setItemState(id, 'selected', true);
-        } else {
-          !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-          item.hasState('selected') && graph.setItemState(id, 'selected', false);
+      if (largeGraphData) {
+        const nodes = largeGraphData.nodes.filter(n => selectedNodes.has(n.id))
+        const edges = largeGraphData.edges.filter(e => selectedNodes.has(e.target) && selectedNodes.has(e.source));
+        const newData = {
+          nodes,
+          edges,
         }
-      });
+        updateContext(draft => {
+          draft.data = newData;
+          draft.source = newData;
+        })
+
+      } else {
+        graphData.edges.forEach(edgeConfig => {
+          const { id } = edgeConfig;
+          graph.setItemState(id, 'disabled', true);
+        });
+  
+        graphData.nodes.forEach(nodeConfig => {
+          const { id } = nodeConfig;
+          const item = graph.findById(id) as INode;
+          if (selectedNodes.has(id)) {
+            graph.setItemState(id, 'disabled', false);
+            graph.setItemState(id, 'selected', true);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
+        });
+      }
     });
 
     edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
@@ -135,28 +112,54 @@ const TableMode = props => {
         // @ts-ignore
         const rowData = edgeS2Ref.current?.dataSet.getMultiData();
         if (!rowData) return;
-        console.log('rowData:', rowData);
         const edgeID = rowData[rowId]?.id;
         selectedEdges.add(edgeID);
       });
-      graphData.nodes.forEach(edgeConfig => {
-        const { id } = edgeConfig;
+      console.log("selectedEdges: ", selectedEdges)
+      if (largeGraphData) {
+        // 与选中边相连的节点
+        const relatedNodes = new Set<string>();
+        const edges = largeGraphData.edges.filter(e => {
+          //console.log("id:", e.id)
+          if (selectedEdges.has(e.id)) {
+            relatedNodes.add(e.target);
+            relatedNodes.add(e.source);
+            return true;
+          }
+          return false;
+        });
 
-        graph.setItemState(id, 'disabled', true);
-      });
+        const nodes = largeGraphData.nodes.filter(n => relatedNodes.has(n.id));
 
-      graphData.edges.forEach(edgeConfig => {
-        const { id } = edgeConfig;
-        const item = graph.findById(id) as IEdge;
-
-        if (selectedEdges.has(id)) {
-          graph.setItemState(id, 'disabled', false);
-          graph.setItemState(id, 'selected', true);
-        } else {
-          !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-          item.hasState('selected') && graph.setItemState(id, 'selected', false);
+        const newData = {
+          nodes,
+          edges,
         }
-      });
+        //console.log("newData:", newData)
+        updateContext(draft => {
+          draft.source = newData;
+          draft.data = newData;
+        })
+
+      } else {
+        graphData.nodes.forEach(edgeConfig => {
+          const { id } = edgeConfig;
+          graph.setItemState(id, 'disabled', true);
+        });
+  
+        graphData.edges.forEach(edgeConfig => {
+          const { id } = edgeConfig;
+          const item = graph.findById(id) as IEdge;
+  
+          if (selectedEdges.has(id)) {
+            graph.setItemState(id, 'disabled', false);
+            graph.setItemState(id, 'selected', true);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
+        });
+      }
     });
 
     return () => {
