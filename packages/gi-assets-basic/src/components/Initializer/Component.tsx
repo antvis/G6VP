@@ -47,9 +47,10 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             console.warn(
               '加载的数据量过大，建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
             );
+            const newData = transform(data, true);
             draft.largeGraphMode = true;
-            draft.largeGraphData = data;
-            draft.source = data;
+            draft.largeGraphData = newData;
+            draft.source = newData;
             draft.data = {
               nodes: [],
               edges: [],
