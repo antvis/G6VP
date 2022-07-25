@@ -40,18 +40,18 @@ const defaltDesc = {
 };
 
 const MOCK = [
-  {
-    id: 'AKG',
-    name: '',
-    version: '',
-    pkg: '',
-  },
-  {
-    id: 'SHASENG',
-    name: '',
-    version: '',
-    pkg: '',
-  },
+  // {
+  //   id: 'AKG',
+  //   name: '',
+  //   version: '',
+  //   pkg: '',
+  // },
+  // {
+  //   id: 'SHASENG',
+  //   name: '',
+  //   version: '',
+  //   pkg: '',
+  // },
 ];
 
 const setDefaultDesc = () => {
@@ -74,7 +74,7 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
     <div>
       <Row gutter={[16, 16]}>
         {[...data, ...MOCK].map(item => {
-          const { id, name, version, pkg, ...services } = item;
+          const { id, name, services } = item;
           const serviceCount = Object.keys(services).length;
           const serviceKeys = Object.keys(services).join(',');
 

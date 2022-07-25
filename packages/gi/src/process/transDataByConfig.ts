@@ -65,6 +65,9 @@ export const transDataByConfig = (
     .map(item => {
       //@ts-ignore
       const { id, expressions, logic } = item;
+      if (!ElementAssets) {
+        return [];
+      }
       const Element = ElementAssets[id];
       const filterData = filterByRules(elementData, { logic, expressions });
       return Element.registerTransform(filterData, item, reset);

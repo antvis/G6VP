@@ -230,6 +230,9 @@ const GISDK = (props: Props) => {
       [curr.id]: curr,
     };
   }, {});
+  if (!ComponentAssets) {
+    return null;
+  }
   const { component: InitializerComponent } = ComponentAssets[initializer.id] || {
     component: DefaultInitializer,
   };
