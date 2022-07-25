@@ -9,6 +9,7 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import FreeLayout from './FreeLayout';
+import InfoDetection from './InfoDetection';
 import LassoSelect from './LassoSelect';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
@@ -74,4 +75,5 @@ export {
   Overview,
   SankeyAnalysis,
   // ThemeSetting,
+  InfoDetection
 };
