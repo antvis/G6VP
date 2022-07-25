@@ -57,7 +57,7 @@ export const getServiceOptions = (services: GIService[], serviceId) => {
 // };
 
 export const getCombineServer = (servers: EngineServer[]) => {
-  const serverMap: GIService[] = [];
+  const serverMap: EngineServer[] = [];
   servers.forEach(server => {
     const { id, services } = server;
     const matchServer = serverMap[id];
