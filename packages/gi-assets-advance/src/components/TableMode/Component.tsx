@@ -11,15 +11,18 @@ import useListenNodeSelect from "./hooks/useListenNodeSelect";
 import useListenEdgeSelect from "./hooks/useListenEdgeSelect";
 
 
-interface IState {
-  nodeData: any[];
-  edgeData: any[];
+interface IProps {
+  isSelectedActive: boolean;
+  containerHeight?: number;
+
 }
+
+
 
 const { TabPane } = Tabs;
 
-const TableMode = props => {
-  const { isSelectedActive } = props;
+const TableMode:React.FC<IProps> = props => {
+  const { isSelectedActive, containerHeight } = props;
   const { schemaData, data: graphData, graph, largeGraphData, updateContext } = useContext();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
@@ -56,6 +59,18 @@ const TableMode = props => {
   React.useLayoutEffect(() => {
     setS2Options();
   }, []);
+
+ /*  React.useEffect(() => {
+    console.log(containerHeight)
+    if (containerHeight) {
+      setOptions(preState => {
+        return {
+          ...preState,
+          height: containerHeight,
+        };
+      });
+    }
+  }, [containerHeight]) */
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">

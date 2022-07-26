@@ -36,9 +36,6 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
           selectedEdges.add(edgeID);
         });
   
-        
-  
-        console.log("selectedEdges: ", selectedEdges)
         if (largeGraphData) {
           
           const edges = largeGraphData.edges.filter(e => {
