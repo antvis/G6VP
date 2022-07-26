@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext,utils } from '@alipay/graphinsight';
 import { IEdge, INode } from '@antv/g6';
 import { S2DataConfig, S2Event, S2Options, SpreadSheet } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
@@ -18,7 +18,7 @@ const { TabPane } = Tabs;
 
 const TableMode = props => {
   const { isSelectedActive } = props;
-  const { schemaData, data: graphData, graph, largeGraphData, updateContext } = useContext();
+  const { schemaData, data: graphData, graph, largeGraphData, updateContext, transform } = useContext();
 
   console.log("largeGraphData:", largeGraphData)
 
@@ -29,7 +29,6 @@ const TableMode = props => {
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
-  console.log("edgeConfig:", edgeDataCfg)
 
   React.useEffect(() => {
     nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
@@ -58,6 +57,8 @@ const TableMode = props => {
         selectedNodes.add(nodeID);
       });
 
+      console.log("selectedNodes:", selectedNodes)
+
       if (largeGraphData) {
         const nodes = largeGraphData.nodes.filter(n => selectedNodes.has(n.id))
         const edges = largeGraphData.edges.filter(e => selectedNodes.has(e.target) && selectedNodes.has(e.source));
@@ -72,8 +73,17 @@ const TableMode = props => {
 
       } else {
         graphData.edges.forEach(edgeConfig => {
-          const { id } = edgeConfig;
-          graph.setItemState(id, 'disabled', true);
+          const { id, source, target } = edgeConfig;
+          //graph.setItemState(id, 'disabled', true);
+          const item = graph.findById(id) as IEdge;
+          if (selectedNodes.has(edgeConfig.target) && selectedNodes.has(edgeConfig.source)) {
+            // 两端节点都高亮时，对应的边也高亮
+            graph.setItemState(id, "selected", true);
+            graph.setItemState(id, "disabled", false);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
         });
   
         graphData.nodes.forEach(nodeConfig => {
@@ -106,6 +116,9 @@ const TableMode = props => {
         return;
       }
       const selectedEdges = new Set<string>();
+      // 与选中边相连的节点
+      const relatedNodes = new Set<string>();
+
       cells.forEach(cell => {
         const meta = cell.getMeta();
         const rowId = parseInt(meta.rowId);
@@ -115,10 +128,12 @@ const TableMode = props => {
         const edgeID = rowData[rowId]?.id;
         selectedEdges.add(edgeID);
       });
+
+      
+
       console.log("selectedEdges: ", selectedEdges)
       if (largeGraphData) {
-        // 与选中边相连的节点
-        const relatedNodes = new Set<string>();
+        
         const edges = largeGraphData.edges.filter(e => {
           //console.log("id:", e.id)
           if (selectedEdges.has(e.id)) {
@@ -142,16 +157,27 @@ const TableMode = props => {
         })
 
       } else {
-        graphData.nodes.forEach(edgeConfig => {
-          const { id } = edgeConfig;
-          graph.setItemState(id, 'disabled', true);
-        });
-  
         graphData.edges.forEach(edgeConfig => {
           const { id } = edgeConfig;
           const item = graph.findById(id) as IEdge;
   
           if (selectedEdges.has(id)) {
+            graph.setItemState(id, 'disabled', false);
+            graph.setItemState(id, 'selected', true);
+            relatedNodes.add(edgeConfig.target);
+            relatedNodes.add(edgeConfig.source);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
+        });
+
+        graphData.nodes.forEach(nodeConfig => {
+          const { id } = nodeConfig;
+          const item = graph.findById(id) as INode;
+          //graph.setItemState(id, 'disabled', true);
+          if (relatedNodes.has(id)) {
+            // 与高亮节点相连的边也要高亮
             graph.setItemState(id, 'disabled', false);
             graph.setItemState(id, 'selected', true);
           } else {
@@ -166,7 +192,7 @@ const TableMode = props => {
       nodeS2Ref.current?.off(S2Event.GLOBAL_SELECTED);
       edgeS2Ref.current?.off(S2Event.GLOBAL_SELECTED);
     };
-  }, [isSelectedActive]);
+  }, [isSelectedActive, largeGraphData, graphData]);
 
   const setS2Options = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
