@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra, utils } from '@alipay/graphinsight';
 import info from './info';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
@@ -9,12 +9,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 
 export default ({ services }) => {
-  const serviceOptions = services.map(c => {
-    return {
-      value: c.id,
-      label: c.id,
-    };
-  });
+  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
   return {
     serviceId: {
       title: '保存服务',
@@ -24,7 +19,7 @@ export default ({ services }) => {
       'x-component-props': {
         options: serviceOptions,
       },
-      default: 'MOCK/Save',
+      default: serviceOptions[0].value,
     },
     ...metas,
   };
