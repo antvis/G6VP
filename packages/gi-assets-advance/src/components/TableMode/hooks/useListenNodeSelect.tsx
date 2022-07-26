@@ -32,8 +32,6 @@ const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
         selectedNodes.add(nodeID);
       });
 
-      console.log('selectedNodes:', selectedNodes);
-
       if (largeGraphData) {
         const nodes = largeGraphData.nodes.filter(n => selectedNodes.has(n.id));
         const edges = largeGraphData.edges.filter(e => selectedNodes.has(e.target) && selectedNodes.has(e.source));
