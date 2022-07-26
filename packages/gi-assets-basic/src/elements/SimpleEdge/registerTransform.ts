@@ -56,7 +56,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
 
     const { keyshape: keyshape_CFG } = advanced;
 
-    const transEdges = edges.map(edge => {
+    const transEdges = edges.map((edge, index) => {
       const data = edge.data && Object.keys(edge.data)?.length ? edge.data : edge;
       const isLoop = edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
       const isPoly = edge.isMultiple;
@@ -146,9 +146,13 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         },
         preStyle,
       );
+      const { source, target } = edge;
 
       return {
         ...edge,
+        source,
+        target,
+        id: edge.id || `${source}-${target}-${index}`,
         data,
         type: 'graphin-line',
         edgeType: edge.edgeType || 'UNKOWN',
