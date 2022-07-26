@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra, utils } from '@alipay/graphinsight';
 import info from './info';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -7,12 +7,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 
 const registerMeta = context => {
   const { services } = context;
-  const serviceOptions = services.map(c => {
-    return {
-      value: c.id,
-      label: c.id,
-    };
-  });
+  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
 
   return {
     /** 分类信息 */
@@ -24,7 +19,7 @@ const registerMeta = context => {
       'x-component-props': {
         options: serviceOptions,
       },
-      default: 'Mock/GremlinQuery',
+      default: serviceOptions[0].value,
     },
     initialValue: {
       title: '初始查询',

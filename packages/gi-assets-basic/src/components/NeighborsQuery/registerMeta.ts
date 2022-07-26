@@ -1,24 +1,13 @@
+import { utils } from '@alipay/graphinsight';
 import info from './info';
 
 interface Service {
   id: string;
   service: Promise<any>;
 }
-const getServiceOptions = (services: Service[], serviceId) => {
-  return services
-    .filter(c => {
-      return c.id.includes(serviceId);
-    })
-    .map(c => {
-      return {
-        value: c.id,
-        label: c.id,
-      };
-    });
-};
 export default context => {
   const { services, serviceEngine = 'GI' } = context;
-  const serviceOptions = getServiceOptions(services, info.services[0]);
+  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
 
   return {
     serviceId: {
@@ -26,7 +15,7 @@ export default context => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      default: 'Mock/NeighborsQuery',
+      default: serviceOptions[0].value,
       'x-component-props': {
         options: serviceOptions,
       },
