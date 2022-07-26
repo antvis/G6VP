@@ -13,7 +13,7 @@ import useListenEdgeSelect from "./hooks/useListenEdgeSelect";
 
 interface IProps {
   isSelectedActive: boolean;
-  containerHeight?: number;
+  containerHeight?: string;
 
 }
 
@@ -60,17 +60,17 @@ const TableMode:React.FC<IProps> = props => {
     setS2Options();
   }, []);
 
- /*  React.useEffect(() => {
-    console.log(containerHeight)
+  React.useEffect(() => {
     if (containerHeight) {
       setOptions(preState => {
         return {
           ...preState,
-          height: containerHeight,
+          // 去掉像素单位：如 400px -> 400
+          height: Number(containerHeight.slice(0, containerHeight.length - 2)),
         };
       });
     }
-  }, [containerHeight]) */
+  }, [containerHeight])
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
