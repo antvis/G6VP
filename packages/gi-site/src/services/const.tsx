@@ -1,8 +1,9 @@
 const GI_LOCAL_URL = [
-  'graphinsight.antv.vision',
-  'graphinsight.antgroup.com',
-  'graphinsight.antgroup.com:8000',
-  'localhost:8000',
+  'graphinsight.antv.vision', //外网地址
+  'graphinsight.antgroup.com', //外网地址
+  'graphinsight.antgroup.com:8000', //本地绑定ihost
+  'localhost:8000', //本地地址
+  'gi-external-pre.alipay.com', //外网预发地址
 ];
 export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
 export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
