@@ -1,11 +1,9 @@
+import { utils } from '@alipay/graphinsight';
+import info from './info';
+
 const registerMeta = context => {
   const { services } = context;
-  const serviceOptions = services.map(c => {
-    return {
-      value: c.id,
-      label: c.id,
-    };
-  });
+  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
   return {
     serviceId: {
       title: '数据服务',
@@ -15,7 +13,7 @@ const registerMeta = context => {
       'x-component-props': {
         options: serviceOptions,
       },
-      default: 'Mock/PropertiesPanel',
+      default: serviceOptions[0].value,
     },
 
     defaultiStatistic: {
