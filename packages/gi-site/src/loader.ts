@@ -4,7 +4,7 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 /** 外部的引擎包，软连接到这里，临时方案，后续删除 */
-import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
+// import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
 import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
@@ -71,7 +71,7 @@ const LOCAL_ASSETS = [
     name: '@alipay/gi-assets-gs',
     version: '1.0.0',
     global: 'GI_ASSETS_GS',
-    ...GI_ASSETS_GS,
+    // ...GI_ASSETS_GS,
   },
   {
     name: '@alipay/gi-assets-shaseng',
