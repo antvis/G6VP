@@ -11,7 +11,9 @@ export interface IGraphData {
 export interface INodeSchema {
   nodeType: string;
   nodeTypeKeyFromProperties: string;
-  properties: Object;
+  properties: {
+    [key: string]: any;
+  };
 }
 
 export interface IEdgeSchema {
@@ -19,7 +21,9 @@ export interface IEdgeSchema {
   edgeTypeKeyFromProperties: string;
   sourceNodeType: string;
   targetNodeType: string;
-  properties: Object;
+  properties: {
+    [key: string]: any;
+  };
 }
 export interface IGraphSchema {
   nodes: INodeSchema[];
