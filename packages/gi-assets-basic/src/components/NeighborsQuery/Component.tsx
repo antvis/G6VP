@@ -35,26 +35,28 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
 
   const handleClick = async e => {
     const selectedItems = graph.findAllByState('node', 'selected');
-    const selectedIds = new Set();
-    selectedItems.forEach(item => {
-      selectedIds.add(item.getID());
-    });
 
+    const selectedNodes = new Map();
+    selectedItems.forEach(item => {
+      const model = item.getModel();
+      selectedNodes.set(model.id, model);
+    });
     const { key } = e;
     const sep = key.replace('expand-', '');
     const value = contextmenu.item.getModel();
     graph.setItemState(value.id, 'selected', true);
-    selectedIds.add(value.id);
-    const selectedIdArr = Array.from(selectedIds);
+    selectedNodes.set(value.id, value);
+
+    const ids = Object.keys(selectedNodes);
+    const nodes = Object.values(selectedNodes);
 
     updateContext(draft => {
       draft.isLoading = true;
     });
     const result = await service({
-      ids: selectedIdArr,
+      ids,
+      nodes,
       sep,
-      projectId: localStorage.getItem('GI_ACTIVE_PROJECT_ID'),
-      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ?  2 : 1
     });
     const newData = utils.handleExpand(data, result);
     const expandIds = result.nodes?.map(n => n.id) || [];
@@ -80,7 +82,6 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       if (expandIds.length === 0) {
         return;
       }
-
       expandIds.forEach(id => {
         const item = graph.findById(id);
         if (item && !item.destroyed) {
