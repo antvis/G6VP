@@ -1,18 +1,15 @@
-import { Alert, Button, Drawer, Form, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
+import { Alert, Button, Form, notification, Radio, Row, Steps, Table, Upload } from 'antd';
 import * as React from 'react';
-import { utils } from "@alipay/graphinsight"
 import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
 import { useImmer } from 'use-immer';
 import { edgeColumns, nodeColumns, translist } from './const';
 import { getOptions, GIDefaultTrans } from './utils';
 import xlsx2js from 'xlsx2js';
-import {getProjectById ,updateProjectById} from "./service"
-import { ServerComponentProps, IInputData } from "./type"
+import { updateData } from './service';
+import { ServerComponentProps, IInputData, ITableType, IColumns } from './type';
 import './index.less';
 import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
-
-const {generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
 
 const { Step } = Steps;
 const { Dragger } = Upload;
@@ -40,13 +37,12 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
     eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))(initData),
   );
   //当前显示
-  const [tableData, setTableData] = useImmer<any[]>([]);
-  const [columns, setColumns] = useImmer(nodeColumns);
-  const [transColumns, setTransColumns] = useImmer<any[]>([]);
+  const [tableData, setTableData] = useImmer<object[]>([]);
+  const [columns, setColumns] = useImmer<IColumns[]>(nodeColumns);
+  const [transColumns, setTransColumns] = useImmer<object[]>([]);
   const editableKeys = ['edit'];
   const [form] = Form.useForm();
-  const [tableType, setTableType] = useImmer('nodes');
- 
+  const [tableType, setTableType] = useImmer<ITableType>('nodes');
 
   const draggerProps = {
     name: 'file',
@@ -74,7 +70,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
       } else if (/\.(xls|xlsx|csv)$/.test(file.name.toLowerCase())) {
         const data = await xlsx2js(file);
 
-        console.log("data:", data)
+        console.log('data:', data);
 
         const firstData = data[0];
         const isEdge = firstData.source && firstData.target;
@@ -88,7 +84,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
               edges: [],
             };
 
-        const renderData:IInputData[] = [
+        const renderData: IInputData[] = [
           ...inputData,
           {
             uid: file.uid,
@@ -128,8 +124,8 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
   };
 
   const mergeData = (renderData: IInputData[] = inputData) => {
-    let nodes:IUserNode[] = [];
-    let edges:IUserEdge[] = [];
+    let nodes: IUserNode[] = [];
+    let edges: IUserEdge[] = [];
     renderData.map(d => {
       nodes = [...nodes, ...d.data.nodes];
       edges = [...edges, ...d.data.edges];
@@ -183,7 +179,6 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
     const transFunc = GIDefaultTrans(id, source, target, nodeType, edgeType);
 
     setTransfunc(transFunc);
-
     const result = eval(transFunc)(data);
     setTransData(result);
 
@@ -196,69 +191,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
       }),
     );
   };
-
-  const updateData = async () => {
-    try {
-      if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
-        throw 'nodes缺少对应字段';
-      }
-      if (transData.edges?.find(d => d.source === undefined || d.target === undefined || d.data === undefined)) {
-        throw 'edges缺少对应字段';
-      }
-
-      // 对于GI平台，是这样取得projectId的
-      const hash = window.location.hash;
-      const id = hash.split('/')[2].split('?')[0];
-
-      const result = await getProjectById(id);
-
-      const beforData = result.data.transData;
-      const mergeData = {
-        nodes: [...beforData.nodes, ...transData.nodes],
-        edges: [...beforData.edges, ...transData.edges],
-      };
-
-      // 进入分析之前，根据数据，生成 schema
-
-      const schemaData = generatorSchemaByGraphData(mergeData);
-      const newConfig = generatorStyleConfigBySchema(schemaData, result.config);
-
-      // 更新inputdata里面的 trans function
-      const renderData = inputData.map(d => {
-        return {
-          ...d,
-          transfunc,
-        };
-      });
-
-      console.log("renderData:", renderData)
-
-      updateProjectById(id, {
-        data: JSON.stringify({
-          transData: mergeData,
-          inputData: [...result.data.inputData, ...renderData],
-        }),
-        // schemaData: schemaData,
-        projectConfig: JSON.stringify(newConfig),
-        schemaData: JSON.stringify(schemaData),
-      }).then(res => {
-        location.reload();
-      });
-
-      notification.success({
-        message: `解析成功`,
-        description: `数据格式正确`,
-        placement: 'topLeft',
-      });
-    } catch (error) {
-      notification.error({
-        message: `解析出错`,
-        description: `请检查数据是否为严格JSON格式且存在对应字段:${error}`,
-        placement: 'topLeft',
-      });
-    }
-  };
-
+  
   const steps = [
     {
       title: '上传数据',
@@ -329,7 +262,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
             <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
               上一步
             </Button>
-            <Button type="primary" shape="round" onClick={updateData}>
+            <Button type="primary" shape="round" onClick={() => updateData(transData, inputData, transfunc)}>
               进入分析
             </Button>
           </Row>

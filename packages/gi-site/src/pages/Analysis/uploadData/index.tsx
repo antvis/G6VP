@@ -349,13 +349,13 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
     },
   ];
   const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
-  const defaultActiveKey = GI_UPLOADED_DATA ? 'document' : 'mockdata';
+  const defaultActiveKey = "GI";
   const IS_ONLINE_ENV = window.location.host === 'graphinsight.antgroup-inc.cn';
 
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs defaultActiveKey={defaultActiveKey}>
-        <TabPane tab="本地文件" key="document">
+        {/* <TabPane tab="本地文件" key="document">
           <Steps current={current.activeKey} type="navigation">
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
@@ -366,7 +366,18 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
         </TabPane>
         <TabPane tab="示例数据" key="mockdata">
           <MockData handleClose={handleClose} />
-        </TabPane>
+        </TabPane> */}
+
+        {CustomServer.map(server => {
+          //@ts-ignore
+          const { component: ServerComponent } = server;
+          return (
+            <TabPane tab={server.name} key={server.id}>
+              {/** @ts-ignore */}
+              <ServerComponent initData={initData} handleClose={handleClose} />
+            </TabPane>
+          );
+        })}
 
         <TabPane tab="GraphScope" key="graphscope" disabled>
           <Alert
@@ -377,16 +388,6 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           />
           <GraphScopeData close={handleClose} />
         </TabPane>
-        {CustomServer.map(server => {
-          //@ts-ignore
-          const { component: ServerComponent } = server;
-          return (
-            <TabPane tab={server.name} key={server.id}>
-              {/** @ts-ignore */}
-              <ServerComponent initData={initData} handleClose={handleClose}/>
-            </TabPane>
-          );
-        })}
       </Tabs>
     </Drawer>
   );
