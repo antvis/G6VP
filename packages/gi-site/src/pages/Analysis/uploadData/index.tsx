@@ -33,7 +33,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { context, updateContext } = useContext();
 
   const CustomServer = utils.getCombineServer(context.activeAssets.services).filter(c => {
-    return ['GI', 'GS'].indexOf(c.id) === -1; //临时先剔除
+    return ['GS'].indexOf(c.id) === -1; //临时先剔除
   });
   console.log('context', CustomServer);
   const { id } = context;
@@ -383,7 +383,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           return (
             <TabPane tab={server.name} key={server.id}>
               {/** @ts-ignore */}
-              <ServerComponent />
+              <ServerComponent initData={initData} handleClose={handleClose}/>
             </TabPane>
           );
         })}
