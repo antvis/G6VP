@@ -47,8 +47,8 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     graph.setItemState(value.id, 'selected', true);
     selectedNodes.set(value.id, value);
 
-    const ids = Object.keys(selectedNodes);
-    const nodes = Object.values(selectedNodes);
+    const ids = [...selectedNodes.keys()];
+    const nodes = [...selectedNodes.values()];
 
     updateContext(draft => {
       draft.isLoading = true;
