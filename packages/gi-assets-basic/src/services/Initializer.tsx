@@ -30,7 +30,7 @@ export interface GraphSchemaData {
 }
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
-  mothed: 'GET',
+  method: 'GET',
   req: ``,
   res: `
   {
@@ -77,7 +77,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
-  mothed: 'GET',
+  method: 'GET',
   req: ``,
   res: `
   {
