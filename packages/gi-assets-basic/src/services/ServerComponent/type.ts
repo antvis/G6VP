@@ -20,7 +20,6 @@ export interface IColumns {
 }
 
 export interface IState {
-
   activeKey: number;
   inputData: IInputData[];
   data: GraphinData;
