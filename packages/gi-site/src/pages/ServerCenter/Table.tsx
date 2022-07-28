@@ -1,4 +1,4 @@
-import { Button, Drawer, Table } from 'antd';
+import { Table } from 'antd';
 import * as React from 'react';
 
 const PackageTable = ({ data }) => {
@@ -26,36 +26,35 @@ const PackageTable = ({ data }) => {
     {
       title: '类型',
       dataIndex: 'type',
-      key: 'type',
+      key: 'method',
     },
     {
       title: '入参',
       dataIndex: 'req',
       key: 'req',
+      render: record => {
+        if (!record) {
+          return '-';
+        }
+        return (
+          <pre>
+            <code>{record}</code>
+          </pre>
+        );
+      },
     },
     {
       title: '出参',
       dataIndex: 'res',
       key: 'res',
-    },
-    {
-      title: '操作',
       render: record => {
+        if (!record) {
+          return '-';
+        }
         return (
-          <Button
-            onClick={() => {
-              setState(preState => {
-                return {
-                  ...preState,
-                  visible: true,
-                  detail: record.detail,
-                  serviceId: `${record.id} ：${record.name} `,
-                };
-              });
-            }}
-          >
-            查看详情
-          </Button>
+          <pre>
+            <code>{record}</code>
+          </pre>
         );
       },
     },
@@ -78,25 +77,6 @@ const PackageTable = ({ data }) => {
       ref={containerRef}
     >
       <Table dataSource={data} columns={columns}></Table>
-      <Drawer
-        title={state.serviceId}
-        placement="left"
-        getContainer={false}
-        // getContainer={containerRef.current as HTMLDivElement}
-        closable={false}
-        onClose={onClose}
-        visible={visible}
-        width="50%"
-        // mask={false}
-        maskStyle={{
-          background: 'transparent',
-        }}
-        style={{ position: 'absolute' }}
-      >
-        <code>
-          <pre>{state.detail}</pre>
-        </code>
-      </Drawer>
     </div>
   );
 };
