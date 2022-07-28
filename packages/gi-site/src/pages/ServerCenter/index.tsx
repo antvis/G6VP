@@ -3,12 +3,9 @@ import { Card } from 'antd';
 import * as React from 'react';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getCombinedAssets } from '../../loader';
-import { stringify } from '../Analysis/getAssets/utils';
 import Cards from './Cards';
 import './index.less';
 import ServiceTable from './Table';
-import UploadAssets from './Upload';
-import { getFuncArgs } from './utils';
 interface AssetsCenterProps {}
 
 const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
@@ -33,17 +30,19 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const servers = utils.getCombineServer(res.services);
 
       const tables = servers.map(server => {
-        const { id, name, services } = server;
+        const { id, services } = server;
         const matchTableData = Object.keys(services).map(s => {
           const val = services[s];
-          const args = getFuncArgs(val.service);
-          const detail = stringify(val.service);
+          const { req, res, method, name } = val;
+
+          // const args = getFuncArgs(val.service);
+          // const detail = stringify(val.service);
           return {
-            ...val,
-            req: args.join(','),
-            res: '-',
-            detail,
             id: `${id}/${s}`,
+            name,
+            req,
+            res,
+            method,
           };
         });
         return {
@@ -80,7 +79,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     <>
       <BaseNavbar active="services"></BaseNavbar>
       <div className="gi-assets-container">
-        <Card title="引擎管理" extra={<UploadAssets />}>
+        <Card title="引擎管理">
           <Cards data={lists} changeServerId={changeServerId}></Cards>
         </Card>
         <Card title={`${matchServer.name}`} style={{ margin: '12px 0px' }}>

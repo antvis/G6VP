@@ -148,7 +148,7 @@ export interface ServiceObject {
   // 出参文档
   res?: string;
   // 接口类型，RESTFul
-  mothed?: 'POST' | 'GET' | 'DELETE' | 'UPDATE';
+  method?: 'POST' | 'GET' | 'DELETE' | 'UPDATE';
 }
 
 /**
