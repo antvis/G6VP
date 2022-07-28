@@ -1,4 +1,4 @@
-import { GraphinData } from "@antv/graphin"
+import { GraphinData } from '@antv/graphin';
 export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
   const nodes = data.nodes.map(n=>{
@@ -34,13 +34,13 @@ export const getOptions = (data: GraphinData) => {
 
   let nodesOptions = {};
   let edgesOptions = {};
-  Object.keys(nodes[0]).forEach(key => {
-    nodesOptions[key] = { text: `${key}` };
-  });
+  if (nodes.length !== 0) {
+    Object.keys(nodes[0]).forEach(key => {
+      nodesOptions[key] = { text: `${key}` };
+    });
+  }
 
-  if (edges.length === 0) {
-    edgesOptions = {};
-  } else {
+  if (edges.length !== 0) {
     Object.keys(edges[0]).forEach(key => {
       edgesOptions[key] = { text: `${key}` };
     });
