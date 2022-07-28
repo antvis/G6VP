@@ -7,39 +7,38 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
    
-    edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
+    edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, () => {
         // isSelectedActiv 为 false 时，不高亮选中元素
         if (!isSelectedActive) {
           return;
         }
   
-        if (cells.length === 0) {
-          graphData.nodes.forEach(node => {
-            graph.clearItemStates(node.id);
-          });
-          graphData.edges.forEach(edge => {
-            graph.clearItemStates(edge.id);
-          });
-          return;
-        }
+        const cells = edgeS2Ref.current.interaction.getCells();
+
+        // if (cells.length === 0) {
+        //   graphData.nodes.forEach(node => {
+        //     graph.clearItemStates(node.id);
+        //   });
+        //   graphData.edges.forEach(edge => {
+        //     graph.clearItemStates(edge.id);
+        //   });
+        //   return;
+        // }
         const selectedEdges = new Set<string>();
         // 与选中边相连的节点
         const relatedNodes = new Set<string>();
   
         cells.forEach(cell => {
-          const meta = cell.getMeta();
-          const rowId = parseInt(meta.rowId);
-          // @ts-ignore
+          const { rowIndex } = cell;
+        // @ts-ignore
           const rowData = edgeS2Ref.current?.dataSet.getMultiData();
           if (!rowData) return;
-          const edgeID = rowData[rowId]?.id;
-          selectedEdges.add(edgeID);
+          const nodeID = rowData[rowIndex]?.id;
+          selectedEdges.add(nodeID);
         });
   
         if (largeGraphData) {
-          
           const edges = largeGraphData.edges.filter(e => {
-            //console.log("id:", e.id)
             if (selectedEdges.has(e.id)) {
               relatedNodes.add(e.target);
               relatedNodes.add(e.source);
