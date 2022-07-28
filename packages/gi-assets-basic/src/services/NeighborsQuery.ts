@@ -8,7 +8,7 @@ export interface NeighborsQueryParams {
 
 export const NeighborsQuery: ServiceObject = {
   name: '邻居查询',
-  mothed: 'POST',
+  method: 'POST',
   req: `
   {
     ids: string[]; //扩散的节点，是个节点ID数组

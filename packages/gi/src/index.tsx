@@ -47,7 +47,7 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.7.0';
+const version = '2.8.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;
