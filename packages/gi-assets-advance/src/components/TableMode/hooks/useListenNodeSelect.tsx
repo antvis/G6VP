@@ -6,29 +6,31 @@ import { useContext } from '@alipay/graphinsight';
 const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
-    nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, cells => {
+    
+    nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, () => {
       // isSelectedActiv 为 false 时，不高亮选中元素
       if (!isSelectedActive) {
         return;
       }
-
-      if (cells.length === 0) {
-        graphData.nodes.forEach(node => {
-          graph.clearItemStates(node.id);
-        });
-        graphData.edges.forEach(edge => {
-          graph.clearItemStates(edge.id);
-        });
-        return;
-      }
+      const cells = nodeS2Ref.current.interaction.getCells();
+      // if (cells.length === 0) {
+      //   graphData.nodes.forEach(node => {
+      //     graph.clearItemStates(node.id);
+      //   });
+      //   graphData.edges.forEach(edge => {
+      //     graph.clearItemStates(edge.id);
+      //   });
+      //   return;
+      // }
       const selectedNodes = new Set<string>();
+
+      console.log("cells:", cells)
       cells.forEach(cell => {
-        const meta = cell.getMeta();
-        const rowId = parseInt(meta.rowId);
+        const { rowIndex } = cell;
         // @ts-ignore
         const rowData = nodeS2Ref.current?.dataSet.getMultiData();
         if (!rowData) return;
-        const nodeID = rowData[rowId]?.id;
+        const nodeID = rowData[rowIndex]?.id;
         selectedNodes.add(nodeID);
       });
 

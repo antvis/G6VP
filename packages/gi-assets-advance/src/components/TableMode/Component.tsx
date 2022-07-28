@@ -11,13 +11,11 @@ import useListenNodeSelect from "./hooks/useListenNodeSelect";
 import useListenEdgeSelect from "./hooks/useListenEdgeSelect";
 
 
-interface IProps {
+export interface IProps {
   isSelectedActive: boolean;
   containerHeight?: string;
 
 }
-
-
 
 const { TabPane } = Tabs;
 
@@ -27,6 +25,8 @@ const TableMode:React.FC<IProps> = props => {
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
+
+  //nodeS2Ref.current?.interaction.setState()
   // S2 的 options 配置
   const [options, setOptions] = React.useState<S2Options>({});
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
@@ -60,17 +60,17 @@ const TableMode:React.FC<IProps> = props => {
     setS2Options();
   }, []);
 
-  React.useEffect(() => {
-    if (containerHeight) {
-      setOptions(preState => {
-        return {
-          ...preState,
-          // 去掉像素单位：如 400px -> 400
-          height: Number(containerHeight.slice(0, containerHeight.length - 2)),
-        };
-      });
-    }
-  }, [containerHeight])
+  // React.useEffect(() => {
+  //   if (containerHeight) {
+  //     setOptions(preState => {
+  //       return {
+  //         ...preState,
+  //         // 去掉像素单位：如 400px -> 400
+  //         height: Number(containerHeight.slice(0, containerHeight.length - 2)),
+  //       };
+  //     });
+  //   }
+  // }, [containerHeight])
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
