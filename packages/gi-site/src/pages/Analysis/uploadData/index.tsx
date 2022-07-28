@@ -374,7 +374,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           return (
             <TabPane tab={server.name} key={server.id}>
               {/** @ts-ignore */}
-              <ServerComponent initData={initData} handleClose={handleClose} />
+              <ServerComponent handleClose={handleClose} />
             </TabPane>
           );
         })}
