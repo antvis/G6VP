@@ -21,14 +21,19 @@ const { TabPane } = Tabs;
 
 const TableMode:React.FC<IProps> = props => {
   const { isSelectedActive, containerHeight } = props;
-  const { schemaData, data: graphData, graph, largeGraphData, updateContext } = useContext();
+  const { schemaData, data: graphData, graph, largeGraphData } = useContext();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
 
   //nodeS2Ref.current?.interaction.setState()
   // S2 的 options 配置
-  const [options, setOptions] = React.useState<S2Options>({});
+  const [options, setOptions] = React.useState<S2Options>({
+    showSeriesNumber: true,
+    interaction: {
+      autoResetSheetStyle: false
+    }
+  });
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
@@ -60,6 +65,18 @@ const TableMode:React.FC<IProps> = props => {
     setS2Options();
   }, []);
 
+
+  React.useEffect(() => {
+    const reset = () => {
+      nodeS2Ref.current?.interaction.reset();
+      edgeS2Ref.current?.interaction.reset();
+    }
+    graph.on("canvas:click", reset);
+
+    return () => {
+      graph.off("canvas:click", reset);
+    }
+  }, [nodeS2Ref, edgeS2Ref])
   // React.useEffect(() => {
   //   if (containerHeight) {
   //     setOptions(preState => {
