@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GIAssets, GIConfig, GIService } from '@alipay/graphinsight/src/typing';
 import { GraphinData } from '@antv/graphin';
+import { useImmer, Updater } from 'use-immer';
 
 export const initialState: StateType = {
   /** 项目ID */
@@ -113,3 +114,10 @@ export interface StateType {
   };
   schemaData: any;
 }
+
+const useModel: () => [StateType, Updater<StateType>] = () => {
+  const [state, updateState] = useImmer<StateType>(initialState);
+  return [state, updateState];
+};
+
+export default useModel;
