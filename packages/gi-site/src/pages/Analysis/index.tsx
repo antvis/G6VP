@@ -17,8 +17,8 @@ import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import type { StateType } from './useModel';
-import useModel, { initialState } from './useModel';
+import {IProject} from "../../services/typing"
+import useModel from './useModel';
 import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
@@ -79,7 +79,7 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId);
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId) as IProject;
       const { transData, inputData } = data;
 
       // 根据 projectId，查询引擎实例信息
@@ -94,8 +94,8 @@ const Analysis = props => {
 
       updateState(draft => {
         draft.id = projectId; //项目ID
-        draft.config = config; //项目配置
-        draft.projectConfig = config; //项目原始配置（从服务器中来的）
+        draft.config = config!; //项目配置
+        draft.projectConfig = config!; //项目原始配置（从服务器中来的）
         draft.data = transData; //画布数据
         draft.schemaData = schemaData; //图数据的Schema
         draft.inputData = inputData; //用户上传的数据（可展示在「数据」模块）
@@ -156,7 +156,7 @@ const Analysis = props => {
             };
           });
 
-          const { id: layoutId, props: layoutProps } = draft.config.layout;
+          const { id: layoutId, props: layoutProps } = draft.config.layout!;
           // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
           const defaultLayout =
             activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['GraphinForce'];
@@ -272,10 +272,10 @@ const Analysis = props => {
               activeAssetsKeys={activeAssetsKeys}
               /** 配置文件 */
               config={config}
-              components={activeAssetsInformation.components}
-              elements={activeAssetsInformation.elements}
+              components={activeAssetsInformation!.components}
+              elements={activeAssetsInformation!.elements}
               services={state.services}
-              layouts={activeAssetsInformation.layouts}
+              layouts={activeAssetsInformation!.layouts}
             />
           </div>
           <div className="gi-analysis-workspace">
@@ -285,9 +285,9 @@ const Analysis = props => {
                 config={config}
                 /** 资产以Props的方式按需引入 */
                 assets={{
-                  components: activeAssets.components,
-                  elements: activeAssets.elements,
-                  layouts: activeAssets.layouts,
+                  components: activeAssets!.components,
+                  elements: activeAssets!.elements,
+                  layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
               ></GISDK>

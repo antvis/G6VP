@@ -27,6 +27,7 @@ export type {
   GIEdgeConfig,
   GINodeConfig,
   ISourceDataMap,
+  IGraphSchema
 } from './typing';
 export { useContext, utils };
 export { extra };
