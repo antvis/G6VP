@@ -46,30 +46,30 @@ const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
           draft.source = newData;
         });
       } else {
-        graphData.edges.forEach(edgeConfig => {
-          const { id, source, target } = edgeConfig;
-          //graph.setItemState(id, 'disabled', true);
-          const item = graph.findById(id) as IEdge;
-          if (selectedNodes.has(edgeConfig.target) && selectedNodes.has(edgeConfig.source)) {
-            // 两端节点都高亮时，对应的边也高亮
-            graph.setItemState(id, 'selected', true);
-            graph.setItemState(id, 'disabled', false);
-          } else {
-            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-            item.hasState('selected') && graph.setItemState(id, 'selected', false);
-          }
-        });
+         graphData.nodes.forEach(nodeConfig => {
+           const { id } = nodeConfig;
+           const item = graph.findById(id) as INode;
+           if (selectedNodes.has(id)) {
+             item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
+             !item.hasState("selected") && graph.setItemState(id, 'selected', true);
+           } else {
+             !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+             item.hasState('selected') && graph.setItemState(id, 'selected', false);
+           }
+         });
 
-        graphData.nodes.forEach(nodeConfig => {
-          const { id } = nodeConfig;
-          const item = graph.findById(id) as INode;
-          if (selectedNodes.has(id)) {
-            graph.setItemState(id, 'disabled', false);
-            graph.setItemState(id, 'selected', true);
-          } else {
-            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-            item.hasState('selected') && graph.setItemState(id, 'selected', false);
-          }
+         graphData.edges.forEach(edgeConfig => {
+           const { id, source, target } = edgeConfig;
+           graph.setItemState(id, 'disabled', true);
+           const item = graph.findById(id) as IEdge;
+           if (selectedNodes.has(target) && selectedNodes.has(source)) {
+             // 两端节点都高亮时，对应的边也高亮
+             !item.hasState("selected") && graph.setItemState(id, 'selected', true);
+             item.hasState("disabled") && graph.setItemState(id, 'disabled', false);
+           } else {
+             !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+             item.hasState('selected') && graph.setItemState(id, 'selected', false);
+           }
         });
       }
     });
