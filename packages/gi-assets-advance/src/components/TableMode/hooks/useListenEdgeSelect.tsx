@@ -65,8 +65,8 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
             const item = graph.findById(id) as IEdge;
     
             if (selectedEdges.has(id)) {
-              !item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
-              item.hasState('selected') && graph.setItemState(id, 'selected', true);
+              item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
+              !item.hasState('selected') && graph.setItemState(id, 'selected', true);
               relatedNodes.add(edgeConfig.target);
               relatedNodes.add(edgeConfig.source);
             } else {
@@ -81,8 +81,8 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
             //graph.setItemState(id, 'disabled', true);
             if (relatedNodes.has(id)) {
               // 与高亮节点相连的边也要高亮
-              !item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
-              item.hasState('selected') && graph.setItemState(id, 'selected', true);
+              item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
+              !item.hasState('selected') && graph.setItemState(id, 'selected', true);
             } else {
               !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
               item.hasState('selected') && graph.setItemState(id, 'selected', false);
