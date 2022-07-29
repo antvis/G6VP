@@ -17,8 +17,8 @@ import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import type { StateType } from './useModal';
-import { initialState } from './useModal';
+import type { StateType } from './useModel';
+import useModel, { initialState } from './useModel';
 import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
@@ -44,7 +44,8 @@ const Analysis = props => {
     localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
   }
 
-  const [state, updateState] = useImmer<StateType>(initialState);
+  const [state, updateState] = useModel();
+  
   const {
     config,
     key,
