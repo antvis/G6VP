@@ -1,8 +1,8 @@
 // import { notification } from 'antd';
 import * as React from 'react';
 import { useContext } from './context';
+import { GIService } from './index';
 import { isPosition, isStyles } from './process';
-import { GIService } from './typing';
 
 export interface IProps {
   serviceId: string;

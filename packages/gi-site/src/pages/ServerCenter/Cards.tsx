@@ -54,38 +54,14 @@ const MOCK = [
   // },
 ];
 
-const setDefaultDesc = () => {
-  const servers = JSON.parse(localStorage.getItem('GI_SERVER_DESC') || '{}');
-  const defaultServers = { ...defaltDesc };
-  Object.keys(servers).forEach(k => {
-    defaultServers[k] = servers[k];
-  });
-  localStorage.setItem('GI_SERVER_DESC', JSON.stringify(defaultServers));
-};
-
-setDefaultDesc();
-
 const Cards: React.FunctionComponent<CardsProps> = props => {
   const { data, changeServerId } = props;
-
-  const CARD_MAP = JSON.parse(localStorage.getItem('GI_SERVER_DESC') || '{}');
 
   return (
     <div>
       <Row gutter={[16, 16]}>
         {[...data, ...MOCK].map(item => {
-          const { id, name, services } = item;
-          const serviceCount = Object.keys(services).length;
-          const serviceKeys = Object.keys(services).join(',');
-
-          const extraInfo = CARD_MAP[id] || {
-            title: name,
-            desc: `全局变量为: ${global}`,
-            group: 'unkown',
-            cover: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
-            color: '#000',
-          };
-          const { title, desc, group, cover, color } = extraInfo;
+          const { id, name, services, cover, desc } = item;
 
           return (
             <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
@@ -102,8 +78,8 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
                 }
               >
                 <div style={{ position: 'relative' }}>
-                  <Meta title={title} description={`${desc}${serviceCount}个接口服务`}></Meta>
-                  <Tag color={color} style={{ position: 'absolute', right: '0px', top: '2px' }}>
+                  <Meta title={name} description={desc}></Meta>
+                  <Tag color={'green'} style={{ position: 'absolute', right: '0px', top: '2px' }}>
                     {id}
                   </Tag>
                 </div>
