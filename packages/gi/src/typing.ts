@@ -1,5 +1,6 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { IGraphSchema } from './process/schema';
+
 export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
@@ -134,6 +135,30 @@ export interface ElementAsset {
   registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
 }
 
+/**
+ * 服务实例: GISDK.services
+ */
+export interface ServiceObject {
+  // 服务名称
+  name: string;
+  // 服务的具体实现
+  service: (params?: any) => Promise<any>;
+  // 入参文档
+  req?: string;
+  // 出参文档
+  res?: string;
+  // 接口类型，RESTFul
+  method?: 'POST' | 'GET' | 'DELETE' | 'UPDATE';
+}
+
+/**
+ * 服务实例: GISDK.services
+ */
+export interface GIService extends ServiceObject {
+  // 服务唯一ID,通常由 ServerID + Service Function Name 构成
+  id: string;
+}
+
 export type GIAssets = Partial<{
   components: {
     [key: string]: ComponentAsset;
@@ -144,13 +169,7 @@ export type GIAssets = Partial<{
   layouts: {
     [key: string]: LayoutAsset;
   };
-  services: {
-    /** 服务的唯一ID */
-    id: string;
-    /** 服务名称 */
-    name: string;
-    service: (params: any) => Promise<any>;
-  }[];
+  services: GIService[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
@@ -242,12 +261,6 @@ export interface GIServiceResponseDetailData {
   target?: string;
 }
 
-export interface GIService {
-  /** 获取初始化接口，获取初始图数据 */
-  id: string;
-  service: (params?: any) => Promise<GIServiceResponseData>;
-}
-
 export interface ISourceDataMap {
   nodes: {
     [id: string]: IUserNode;
@@ -284,3 +297,28 @@ export type AssetInfo = {
   desc?: string;
   [key: string]: any;
 };
+
+export interface GIGraphData {
+  nodes: {
+    // 节点ID
+    id: string;
+    // 节点类型的枚举值。Property Graph 也称之为 node.label
+    nodeType: string;
+    // 业务数据
+    data: {};
+  }[];
+  edges: {
+    // 边ID,默认构造为`${edge.source}-${edge.target}-{index}`
+    id: string;
+    // 边关联的 source 节点ID
+    source: string;
+    // 边关联的 target 节点ID
+    target: string;
+    // 边类型的枚举值。Property Graph 也称之为 edge.label
+    edgeType: string;
+    // 业务数据
+    data: {};
+  }[];
+}
+
+export type GIGraphSchema = IGraphSchema;
