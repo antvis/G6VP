@@ -123,7 +123,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     }
 
     canvasData = data;
-    filterData.current = data;
+    //filterData.current = data;
 
     //如果在limit内，则添加到画布上
     const isOverLimit = data.nodes.length > limit;
@@ -133,6 +133,10 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         edges: [],
       };
     }
+
+    filterData.current = canvasData;
+
+    console.log("canvasData:", canvasData)
 
     updateContext(draft => {
       if (largeGraphData && isStyles(largeGraphData.nodes)) {
