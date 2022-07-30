@@ -154,6 +154,7 @@ export const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
 };
     `,
   };
+
   files['src/index.tsx'] = {
     content: `
 // import GISDK from "@alipay/graphinsight"; （预计7月份开放）
@@ -283,7 +284,6 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <!--- GI DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
     ${GIAssetsScripts}
-    
      </body>
 </html>
     
