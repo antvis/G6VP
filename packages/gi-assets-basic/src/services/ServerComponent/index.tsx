@@ -1,28 +1,53 @@
-import { Button, Input, InputRef } from 'antd';
+import { Steps } from 'antd';
 import * as React from 'react';
+import { useImmer } from 'use-immer';
+import {  GIDefaultTrans } from './utils';
+import { ServerComponentProps, IState } from './type';
+import UploadLocalFile from "./UploadLocalFile";
+import ConfigData from './ConfigData';
+import './index.less';
 
-export interface ServerComponentProps {}
+const { Step } = Steps;
 
-const ServerComponent: React.FunctionComponent<ServerComponentProps> = props => {
-  const [state, setState] = React.useState();
-  const inputRef = React.useRef<InputRef>(null);
-  React.useEffect(() => {
-    const context = {
-      projectId: '',
-    };
-    window.localStorage.setItem('GI_SERVER_CONTEXT', JSON.stringify(context));
-  }, []);
-  const handleSave = () => {
-    console.log('inputRef', inputRef);
-  };
+const ServerComponent: React.FC<ServerComponentProps> = props => {
+  const [state, updateState] = useImmer<IState>({
+    activeKey: 0,
+    inputData:[],
+    data: {
+      nodes: [],
+      edges: [],
+    },
+    transfunc: GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'),
+    transData: eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))({ nodes: [], edges: [] }),
+    tableData: [],
+    transColumns: [],
+  });
+
+  const steps = [
+    {
+      title: '上传数据',
+      content: (
+        <UploadLocalFile state={state} updateState={updateState}/>
+      ),
+    },
+    {
+      title: '配置字段',
+      content: (
+        <ConfigData state={state} updateState={updateState}/>
+      ),
+    },
+  ];
+
   return (
-    <div>
-      hello ，欢迎来到 GraphInsight 官方数据服务
-      <Input placeholder="" ref={inputRef}></Input>
-      <Button type="primary" onClick={handleSave}>
-        保存
-      </Button>
-    </div>
+    <>
+      <Steps current={state.activeKey} type="navigation">
+        {steps.map(item => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[state.activeKey].content}</div>
+      <div className="steps-action"></div>
+    </>
   );
 };
 
