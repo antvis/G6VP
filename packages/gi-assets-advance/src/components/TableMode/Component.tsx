@@ -2,35 +2,37 @@ import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig, S2Options, SpreadSheet } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Tabs, Button } from 'antd';
+import { Tabs, Button, message } from 'antd';
 import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
 import './index.less';
 import { useNodeDataCfg, useEdgeDataCfg, useListenNodeSelect, useListenEdgeSelect, useFullScreen } from './hooks';
 
 export interface IProps {
   isSelectedActive: boolean;
+  enableCopy: boolean;
   containerHeight?: string;
 }
 
 const { TabPane } = Tabs;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, containerHeight } = props;
+  const { isSelectedActive, containerHeight, enableCopy } = props;
   const { schemaData, data: graphData, graph, largeGraphData } = useContext();
   const isFullScreen = useFullScreen();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
 
-  //nodeS2Ref.current?.interaction.setState()
   // S2 的 options 配置
-  const [options, setOptions] = React.useState<S2Options>({
+  const [options, updateOptions] = useImmer<S2Options>({
     showSeriesNumber: true,
     interaction: {
       autoResetSheetStyle: false,
     },
   });
+
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
@@ -41,13 +43,17 @@ const TableMode: React.FC<IProps> = props => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     const width = container.clientWidth;
     const height = container.clientHeight;
-    setOptions(preState => {
-      return {
-        ...preState,
-        width,
-        height,
-      };
-    });
+    // sOptions(preState => {
+    //   return {
+    //     ...preState,
+    //     width,
+    //     height,
+    //   };
+    // });
+    updateOptions(draft => {
+      draft.width = width;
+      draft.height = height;
+    })
   };
 
   // S2 table 适应父容器存在 bug，
@@ -100,6 +106,31 @@ const TableMode: React.FC<IProps> = props => {
       onClick={toggleFullScreen}
     />
   );
+
+  useEffect(() => {
+    updateOptions(draft => {
+      draft.interaction!.enableCopy = enableCopy;
+      draft.interaction!.copyWithHeader = enableCopy;
+    })
+  }, [enableCopy])
+
+  
+  /* 
+    todo：
+    s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发
+    但是这样的话会导致其他地方的 copy 也触发这一事件
+  */
+  // useEffect(() => {
+  //   const copyListen = (e) => {
+  //     console.log("e:", e)
+  //     message.success('表格选择内容已复制到剪切板');
+  //   };
+  //   const element = document.getElementById('gi-table-mode') as HTMLDivElement;
+  //   window.addEventListener('copy', copyListen);
+  //   return () => {
+  //     element.removeEventListener('copy', copyListen);
+  //   };
+  // }, []);
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
