@@ -27,9 +27,6 @@ const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|
       // }
       const selectedNodes = new Set<string>();
 
-      const data = copyData(s2Instance, '\t', false)
-      console.log("data:", data)
-
       cells.forEach(cell => {
         const { rowIndex } = cell;
         // @ts-ignore
