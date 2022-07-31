@@ -2,26 +2,23 @@ import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig, S2Options, SpreadSheet } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Tabs } from 'antd';
+import { Tabs, Button } from 'antd';
+import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons';
 import React from 'react';
 import './index.less';
-import useNodeDataCfg from "./hooks/useNodeDataCfg";
-import useEdgeDataCfg from "./hooks/useEdgeDataCfg";
-import useListenNodeSelect from "./hooks/useListenNodeSelect";
-import useListenEdgeSelect from "./hooks/useListenEdgeSelect";
-
+import { useNodeDataCfg, useEdgeDataCfg, useListenNodeSelect, useListenEdgeSelect, useFullScreen } from './hooks';
 
 export interface IProps {
   isSelectedActive: boolean;
   containerHeight?: string;
-
 }
 
 const { TabPane } = Tabs;
 
-const TableMode:React.FC<IProps> = props => {
+const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, containerHeight } = props;
   const { schemaData, data: graphData, graph, largeGraphData } = useContext();
+  const isFullScreen = useFullScreen();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
@@ -31,8 +28,8 @@ const TableMode:React.FC<IProps> = props => {
   const [options, setOptions] = React.useState<S2Options>({
     showSeriesNumber: true,
     interaction: {
-      autoResetSheetStyle: false
-    }
+      autoResetSheetStyle: false,
+    },
   });
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
@@ -65,18 +62,17 @@ const TableMode:React.FC<IProps> = props => {
     setS2Options();
   }, []);
 
-
   React.useEffect(() => {
     const reset = () => {
       nodeS2Ref.current?.interaction.reset();
       edgeS2Ref.current?.interaction.reset();
-    }
-    graph.on("canvas:click", reset);
+    };
+    graph.on('canvas:click', reset);
 
     return () => {
-      graph.off("canvas:click", reset);
-    }
-  }, [nodeS2Ref, edgeS2Ref])
+      graph.off('canvas:click', reset);
+    };
+  }, [nodeS2Ref, edgeS2Ref]);
   // React.useEffect(() => {
   //   if (containerHeight) {
   //     setOptions(preState => {
@@ -88,10 +84,26 @@ const TableMode:React.FC<IProps> = props => {
   //     });
   //   }
   // }, [containerHeight])
+  const toggleFullScreen = () => {
+    const container = document.getElementById('gi-table-mode') as HTMLDivElement;
+    if (!isFullScreen) {
+      container.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  const extra = (
+    <Button
+      type="text"
+      icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+      onClick={toggleFullScreen}
+    />
+  );
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
-      <Tabs tabPosition="top" tabBarExtraContent={<div>11111</div>}>
+      <Tabs tabPosition="top" tabBarExtraContent={extra}>
         <TabPane tab="点表" key="node">
           <SheetComponent
             ref={nodeS2Ref}
