@@ -1,19 +1,19 @@
 import React from 'react';
 import { IEdge, INode } from '@antv/g6';
-import { S2Event } from '@antv/s2';
+import { S2Event, SpreadSheet } from '@antv/s2';
 
 import { useContext } from '@alipay/graphinsight';
-const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
+const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance:SpreadSheet|null) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
    
-    edgeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, () => {
+    s2Instance?.on(S2Event.GLOBAL_SELECTED, () => {
         // isSelectedActiv 为 false 时，不高亮选中元素
         if (!isSelectedActive) {
           return;
         }
   
-        const cells = edgeS2Ref.current.interaction.getCells();
+        const cells = s2Instance.interaction.getCells();
 
         // if (cells.length === 0) {
         //   graphData.nodes.forEach(node => {
@@ -31,7 +31,7 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
         cells.forEach(cell => {
           const { rowIndex } = cell;
         // @ts-ignore
-          const rowData = edgeS2Ref.current?.dataSet.getMultiData();
+          const rowData = s2Instance.dataSet.getMultiData();
           if (!rowData) return;
           const nodeID = rowData[rowIndex]?.id;
           selectedEdges.add(nodeID);
@@ -92,9 +92,9 @@ const useListenEdgeSelect = (isSelectedActive, edgeS2Ref) => {
       });
 
     return () => {
-        edgeS2Ref.current?.off(S2Event.GLOBAL_SELECTED);
+        s2Instance?.off(S2Event.GLOBAL_SELECTED);
     }
-  }, [isSelectedActive, largeGraphData, graphData, edgeS2Ref]);
+  }, [isSelectedActive, largeGraphData, graphData, s2Instance]);
 };
 
 export default useListenEdgeSelect;
