@@ -37,8 +37,8 @@ const TableMode:React.FC<IProps> = props => {
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
-  useListenNodeSelect(isSelectedActive, nodeS2Ref);
-  useListenEdgeSelect(isSelectedActive, edgeS2Ref);
+  useListenNodeSelect(isSelectedActive, nodeS2Ref.current);
+  useListenEdgeSelect(isSelectedActive, edgeS2Ref.current);
 
   const setS2Options = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
@@ -91,7 +91,7 @@ const TableMode:React.FC<IProps> = props => {
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
-      <Tabs tabPosition="left">
+      <Tabs tabPosition="top" tabBarExtraContent={<div>11111</div>}>
         <TabPane tab="点表" key="node">
           <SheetComponent
             ref={nodeS2Ref}
