@@ -155,7 +155,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.20.0/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.6/dist/graphin.min.js',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.1/dist/graphin.min.js',
     /**  G2Plot */
     'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
@@ -173,7 +173,7 @@ export default {
       return c.replace('min.js', 'css');
     }),
     // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.1/dist/index.css',
   ],
   analyze: {
     analyzerMode: 'server',
