@@ -21,6 +21,9 @@ export type {
   AssetCategory,
   AssetInfo,
   AssetType,
+  GIComponentAssets,
+  GIElementsAssets,
+  GILayoutAssets,
   GIAssets,
   GIComponentConfig,
   GIConfig,
@@ -30,7 +33,8 @@ export type {
   GINodeConfig,
   GIService,
   ISourceDataMap,
-  IGraphSchema
+  IGraphSchema,
+  GIAC_ITEMS_TYPE
 } from './typing';
 export { useContext, utils };
 export { extra };

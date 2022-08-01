@@ -95,9 +95,22 @@ export type AssetType =
   | 'GI_CONTAINER'
   | 'GI_CONTAINER_INDEX';
 
+export type GIAC_ITEMS_TYPE = { label: string; value: string }[];
+
 export interface ComponentAsset {
   component: React.ElementType; // https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#polymorphic-components-eg-with-as-props
-  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerMeta: (context: {
+    data: any;
+    services: any[];
+    GI_CONTAINER_INDEXS: GIAC_ITEMS_TYPE;
+    keys: string[];
+    edgeKeys: string[];
+    schemaData: IGraphSchema;
+    config: GIConfig;
+    GIAC_ITEMS: GIAC_ITEMS_TYPE;
+    GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
+    GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
+  }) => any;
   mockServices?: () => any[];
   info: {
     id: string;
@@ -106,7 +119,13 @@ export interface ComponentAsset {
   };
 }
 export interface LayoutAsset {
-  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerMeta: (context: {
+    data: any;
+    services?: any[];
+    GI_CONTAINER_INDEX?: string[];
+    keys: string[];
+    schemaData: IGraphSchema;
+  }) => any;
   registerLayout?: () => any[];
   info: {
     id: string;
@@ -122,7 +141,13 @@ export interface LayoutAsset {
 }
 
 export interface ElementAsset {
-  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerMeta: (context: {
+    data: any;
+    services?: any[];
+    GI_CONTAINER_INDEXS?: string[];
+    keys?: string[];
+    schemaData: IGraphSchema;
+  }) => any;
   registerShape?: () => any[];
   info: {
     id: string;
@@ -159,16 +184,22 @@ export interface GIService extends ServiceObject {
   id: string;
 }
 
+export interface GIComponentAssets {
+  [key: string]: ComponentAsset;
+}
+
+export interface GIElementsAssets {
+  [key: string]: ElementAsset;
+}
+
+export interface GILayoutAssets {
+  [key: string]: LayoutAsset;
+}
+
 export type GIAssets = Partial<{
-  components: {
-    [key: string]: ComponentAsset;
-  };
-  elements: {
-    [key: string]: ElementAsset;
-  };
-  layouts: {
-    [key: string]: LayoutAsset;
-  };
+  components: GIComponentAssets;
+  elements: GIElementsAssets;
+  layouts: GILayoutAssets;
   services: GIService[];
 }>;
 export interface LayoutConfig {
