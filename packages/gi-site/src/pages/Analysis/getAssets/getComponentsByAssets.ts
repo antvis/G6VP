@@ -1,12 +1,12 @@
-import { utils } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
 import { getDefaultValues } from './utils';
-const { uniqueElementsBy } = utils;
+import { GraphinData } from '@antv/graphin';
+import type { GIComponentAssets, IGraphSchema, GIService, GIConfig, GIAC_ITEMS_TYPE } from '@alipay/graphinsight';
 
-const getAllkeysBySchema = (schema, shapeType) => {
+const getAllkeysBySchema = (schema, shapeType): string[] => {
   try {
     if (shapeType === 'node') {
-      const nodeKeySet = new Set();
+      const nodeKeySet = new Set<string>();
       schema.nodes.forEach(node => {
         Object.keys(node.properties).forEach(k => {
           nodeKeySet.add(k);
@@ -15,7 +15,7 @@ const getAllkeysBySchema = (schema, shapeType) => {
       return [...nodeKeySet];
     }
     if (shapeType === 'edge') {
-      const edgeKeySet = new Set();
+      const edgeKeySet = new Set<string>();
       schema.edges.forEach(edge => {
         Object.keys(edge.properties).forEach(k => {
           edgeKeySet.add(k);
@@ -23,9 +23,8 @@ const getAllkeysBySchema = (schema, shapeType) => {
       });
       return [...edgeKeySet];
     }
-  } catch (error) {
-    return [];
-  }
+  } catch (error) {}
+  return [];
 };
 /**
  *
@@ -33,10 +32,16 @@ const getAllkeysBySchema = (schema, shapeType) => {
  * @param data 图数据
  * @returns
  */
-const getComponentsByAssets = (assets, data, services, config, schemaData) => {
-  const GIAC_ITEMS = []; //属于GIAC的组件
-  const GIAC_MENU_ITEMS = []; //属于GIAC的菜单组件
-  const GIAC_CONTENT_ITEMS = []; //属于GIAC的内容组件
+const getComponentsByAssets = (
+  assets: GIComponentAssets,
+  data: GraphinData,
+  services: GIService[],
+  config: GIConfig,
+  schemaData: IGraphSchema,
+) => {
+  const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
+  const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
+  const GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的内容组件
 
   Object.values(assets).forEach((item: any) => {
     const info = ((item && item.info) || {}) as TypeAssetInfo;
