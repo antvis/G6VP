@@ -6,13 +6,13 @@ import { useContext } from '@alipay/graphinsight';
 
 
 
-const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|null) => {
+const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
     
     s2Instance?.on(S2Event.GLOBAL_SELECTED, () => {
-      // isSelectedActiv 为 false 时，不高亮选中元素
-      if (!isSelectedActive) {
+      // isSelectedActiv 为 false 或全屏时，不高亮选中元素
+      if (!isSelectedActive || isFullScreen) {
         return;
       }
       const cells = s2Instance.interaction.getCells();
@@ -79,7 +79,7 @@ const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|
     return () => {
         s2Instance?.off(S2Event.GLOBAL_SELECTED);
     }
-  }, [isSelectedActive, largeGraphData, graphData, s2Instance]);
+  }, [isSelectedActive, largeGraphData, graphData, s2Instance, isFullScreen]);
 };
 
 export default useListenNodeSelect;

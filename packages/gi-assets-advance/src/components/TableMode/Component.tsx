@@ -36,8 +36,8 @@ const TableMode: React.FC<IProps> = props => {
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
-  useListenNodeSelect(isSelectedActive, nodeS2Ref.current);
-  useListenEdgeSelect(isSelectedActive, edgeS2Ref.current);
+  useListenNodeSelect(isSelectedActive, nodeS2Ref.current, isFullScreen);
+  useListenEdgeSelect(isSelectedActive, edgeS2Ref.current, isFullScreen);
 
   const setS2Options = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
