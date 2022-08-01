@@ -16,7 +16,7 @@ export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
-export type { EngineServer, GIService } from './process/services';
+export type { EngineServer } from './process/services';
 export type {
   AssetCategory,
   AssetInfo,
@@ -25,7 +25,10 @@ export type {
   GIComponentConfig,
   GIConfig,
   GIEdgeConfig,
+  GIGraphData,
+  GIGraphSchema,
   GINodeConfig,
+  GIService,
   ISourceDataMap,
   IGraphSchema
 } from './typing';
@@ -44,7 +47,7 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.7.0';
+const version = '2.8.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;
