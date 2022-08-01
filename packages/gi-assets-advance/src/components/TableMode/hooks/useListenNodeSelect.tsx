@@ -1,18 +1,21 @@
 import React from 'react';
 import { IEdge, INode } from '@antv/g6';
-import { S2Event } from '@antv/s2';
+import { S2Event, copyData, copyToClipboard, download, SpreadSheet } from '@antv/s2';
 
 import { useContext } from '@alipay/graphinsight';
-const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
+
+
+
+const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
     
-    nodeS2Ref.current?.on(S2Event.GLOBAL_SELECTED, () => {
-      // isSelectedActiv 为 false 时，不高亮选中元素
-      if (!isSelectedActive) {
+    s2Instance?.on(S2Event.GLOBAL_SELECTED, () => {
+      // isSelectedActiv 为 false 或全屏时，不高亮选中元素
+      if (!isSelectedActive || isFullScreen) {
         return;
       }
-      const cells = nodeS2Ref.current.interaction.getCells();
+      const cells = s2Instance.interaction.getCells();
       // if (cells.length === 0) {
       //   graphData.nodes.forEach(node => {
       //     graph.clearItemStates(node.id);
@@ -24,11 +27,10 @@ const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
       // }
       const selectedNodes = new Set<string>();
 
-      console.log("cells:", cells)
       cells.forEach(cell => {
         const { rowIndex } = cell;
         // @ts-ignore
-        const rowData = nodeS2Ref.current?.dataSet.getMultiData();
+        const rowData = s2Instance.dataSet.getMultiData();
         if (!rowData) return;
         const nodeID = rowData[rowIndex]?.id;
         selectedNodes.add(nodeID);
@@ -75,9 +77,9 @@ const useListenNodeSelect = (isSelectedActive, nodeS2Ref) => {
     });
 
     return () => {
-        nodeS2Ref.current?.off(S2Event.GLOBAL_SELECTED);
+        s2Instance?.off(S2Event.GLOBAL_SELECTED);
     }
-  }, [isSelectedActive, largeGraphData, graphData, nodeS2Ref]);
+  }, [isSelectedActive, largeGraphData, graphData, s2Instance, isFullScreen]);
 };
 
 export default useListenNodeSelect;
