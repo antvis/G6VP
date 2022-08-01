@@ -1,6 +1,6 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { IGraphSchema } from './process/schema';
-
+export type { IGraphSchema };
 export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
