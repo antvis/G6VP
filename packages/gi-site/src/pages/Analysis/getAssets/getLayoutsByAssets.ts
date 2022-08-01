@@ -1,6 +1,6 @@
 import type { TypeAssetInfo } from './typing';
 import { GraphinData } from "@antv/graphin"
-import {,IGraphSchema, GILayoutAssets} from "@alipay/graphinsight"
+import {IGraphSchema, GILayoutAssets} from "@alipay/graphinsight"
 import { getDefaultValues, getKeysByData } from './utils';
 /**
  *
