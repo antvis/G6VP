@@ -1,15 +1,7 @@
 import React from 'react';
+import { GIService } from '../typing';
 
 export type AssetServices = Record<string, { name: string; service: () => Promise<any> }>;
-
-/**
- * 服务实例: GISDK.services
- */
-export interface GIService {
-  id: string;
-  name: string;
-  service: (params?: any) => Promise<any>;
-}
 
 /**
  * 引擎：一堆服务的集合
@@ -46,15 +38,6 @@ export const getServiceOptions = (services: GIService[], serviceId) => {
       };
     });
 };
-
-// export const getServicesByMap = (ServicesMap: EngineServer['services'], ENGINE_SERVER_ID: string): GIService[] => {
-//   return Object.keys(ServicesMap).map(key => {
-//     return {
-//       ...ServicesMap[key],
-//       id: `${ENGINE_SERVER_ID}/${key}`, //重新整理
-//     };
-//   });
-// };
 
 export const getCombineServer = (servers: EngineServer[]) => {
   const serverMap: EngineServer[] = [];

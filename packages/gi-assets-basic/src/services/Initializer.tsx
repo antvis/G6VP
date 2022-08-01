@@ -1,8 +1,54 @@
+export interface GraphData {
+  nodes: {
+    id: string;
+    nodeType: string;
+    data: {};
+  }[];
+  edges: {
+    id: string;
+    source: string;
+    target: string;
+    edgeType: string;
+    data: {};
+  }[];
+}
+export interface GraphSchemaData {
+  nodes: {
+    nodeType: string;
+    nodeTypeKeyFromProperties: string;
+    properties: {
+      [key: string]: any;
+    };
+  }[];
+  edges: {
+    edgeType: string;
+    edgeTypeKeyFromProperties: string;
+    properties: {
+      [key: string]: any;
+    };
+  }[];
+}
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
-  reqParams: [],
-  resParams: {},
-  service: async () => {
+  method: 'GET',
+  req: ``,
+  res: `
+  {
+    nodes: {
+      id: string;
+      nodeType: string;
+      data: {};
+    }[];
+    edges: {
+      id: string;
+      source: string;
+      target: string;
+      edgeType: string;
+      data: {};
+    }[];
+  }
+  `,
+  service: async (): Promise<GraphData> => {
     // Server 给的上下文
     const context = localStorage.getItem('GI_SERVER_CONTEXT');
     console.log('context', context);
@@ -22,12 +68,36 @@ export const GI_SERVICE_INTIAL_GRAPH = {
       const res = JSON.parse(project.params);
       return res.data;
     }
+    return {
+      nodes: [],
+      edges: [],
+    };
   },
 };
 
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
-  service: async () => {
+  method: 'GET',
+  req: ``,
+  res: `
+  {
+    nodes: {
+      nodeType: string;
+      nodeTypeKeyFromProperties: string;
+      properties: {
+        [key: string]: any;
+      };
+    }[];
+    edges: {
+      edgeType: string;
+      edgeTypeKeyFromProperties: string;
+      properties: {
+        [key: string]: any;
+      };
+    }[];
+  }
+`,
+  service: async (): Promise<GraphSchemaData> => {
     // 对于GI平台，是这样取得projectId的
     const hash = window.location.hash;
     const projectId = hash.split('/')[2].split('?')[0];
@@ -43,5 +113,9 @@ export const GI_SERVICE_SCHEMA = {
       console.log('res', res);
       return res.schemaData;
     }
+    return {
+      nodes: [],
+      edges: [],
+    };
   },
 };
