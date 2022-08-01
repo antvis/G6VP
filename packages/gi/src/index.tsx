@@ -30,7 +30,7 @@ export type {
   GINodeConfig,
   GIService,
   ISourceDataMap,
-  ServiceObject,
+  IGraphSchema
 } from './typing';
 export { useContext, utils };
 export { extra };
