@@ -24,9 +24,10 @@ import { isObjectEmpty } from './utils';
 setDefaultAssetPackages();
 
 const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData }) => {
+  console.log("assets:", assets)
   const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData);
   const elements = getElementsByAssets(assets.elements, data, schemaData);
-  const layouts = getLayoutsByAssets(assets.layouts, data);
+  const layouts = getLayoutsByAssets(assets.layouts, data, schemaData);
 
   return {
     components,

@@ -21,3 +21,4 @@ export { default as useGraphInsightContainerLayout } from './layout';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './schema';
 export { getCombineServer, getCombineServices, getServiceOptions } from './services';
 export { transDataByConfig } from './transDataByConfig';
+export { getDefSideCoe } from "./getDefSideCoe"
