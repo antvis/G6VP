@@ -1,6 +1,6 @@
 import type { TypeAssetInfo } from './typing';
 import { GraphinData } from "@antv/graphin"
-import { GIAssets, IGraphSchema} from "@alipay/graphinsight"
+import {,IGraphSchema, GILayoutAssets} from "@alipay/graphinsight"
 import { getDefaultValues, getKeysByData } from './utils';
 /**
  *
@@ -8,7 +8,7 @@ import { getDefaultValues, getKeysByData } from './utils';
  * @param data 图数据
  * @returns
  */
-const getLayoutsByAssets = (assets, data: GraphinData, schemaData: IGraphSchema) => {
+const getLayoutsByAssets = (assets: GILayoutAssets, data: GraphinData, schemaData: IGraphSchema) => {
   const layouts = Object.keys(assets)
     .map(key => {
       const layout = assets[key];
