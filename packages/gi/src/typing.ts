@@ -106,7 +106,7 @@ export interface ComponentAsset {
   };
 }
 export interface LayoutAsset {
-  registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
+  registerMeta: (context: { data: any; services?: any[]; GI_CONTAINER_INDEX?: string[]; keys: string[], schemaData: IGraphSchema }) => any;
   registerLayout?: () => any[];
   info: {
     id: string;
@@ -159,16 +159,23 @@ export interface GIService extends ServiceObject {
   id: string;
 }
 
+export interface GIComponentAssets {
+  [key: string]: ComponentAsset;
+}
+
+export interface GIElementsAssets {
+  [key: string]: ElementAsset;
+}
+
+export interface GILayoutAssets {
+  [key: string]: LayoutAsset;
+}
+
+
 export type GIAssets = Partial<{
-  components: {
-    [key: string]: ComponentAsset;
-  };
-  elements: {
-    [key: string]: ElementAsset;
-  };
-  layouts: {
-    [key: string]: LayoutAsset;
-  };
+  components: GIComponentAssets;
+  elements: GIElementsAssets;
+  layouts: GILayoutAssets;
   services: GIService[];
 }>;
 export interface LayoutConfig {
