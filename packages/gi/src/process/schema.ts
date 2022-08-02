@@ -19,22 +19,23 @@ export interface INodeSchema {
 export interface IEdgeSchema {
   edgeType: string;
   edgeTypeKeyFromProperties: string;
-  sourceNodeType: string;
-  targetNodeType: string;
+  sourceNodeType?: string;
+  targetNodeType?: string;
   properties: {
     [key: string]: any;
   };
 }
-export interface IGraphSchema {
+
+export interface GraphSchemaData {
   nodes: INodeSchema[];
-  edges: IEdgeSchema[];
+  edges: IEdgeSchema[]
 }
 
 /**
  * 通过 graphData 生成 Schema
  * @param graphData 图数据
  */
-export const generatorSchemaByGraphData = (graphData: IGraphData, defaultOptions?: any): IGraphSchema => {
+export const generatorSchemaByGraphData = (graphData: IGraphData, defaultOptions?: any): GraphSchemaData => {
   const { nodes, edges } = graphData;
   const nodeSchemas: INodeSchema[] = [];
   const edgeSchemas: IEdgeSchema[] = [];
@@ -176,7 +177,7 @@ const defaultEdgeConfig = {
   groupName: `默认样式`,
 };
 
-export const generatorStyleConfigBySchema = (schema: IGraphSchema, config: GIConfig = {}): GIConfig => {
+export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GIConfig = {}): GIConfig => {
   const { nodes, edges } = schema;
   let hasUnkownNodeType = false;
   let hasUnkownEdgeType = false;

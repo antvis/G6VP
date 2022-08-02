@@ -1,4 +1,4 @@
-import type { IGraphSchema, GIConfig } from '@alipay/graphinsight';
+import type { GraphSchemaData, GIConfig } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
@@ -23,6 +23,6 @@ export interface IProject {
   status?: number;
   tag?: string;
   gmtCreate?: any;
-  schemaData: IGraphSchema;
+  schemaData: GraphSchemaData;
   config?: GIConfig;
 }
