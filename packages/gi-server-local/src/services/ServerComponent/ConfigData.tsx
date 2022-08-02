@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
-import { IState, ITableType,IColumns } from './type';
+import { IState, ITableType,IColumns } from './typing';
 import { Alert, Button, Form, notification, Radio, Row, Steps, Table, Upload } from 'antd';
 import { updateData } from './service';
 import {  GIDefaultTrans } from './utils';

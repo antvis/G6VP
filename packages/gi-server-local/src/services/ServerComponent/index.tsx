@@ -2,7 +2,7 @@ import { Steps } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import {  GIDefaultTrans } from './utils';
-import { ServerComponentProps, IState } from './type';
+import { ServerComponentProps, IState } from './typing';
 import UploadLocalFile from "./UploadLocalFile";
 import ConfigData from './ConfigData';
 import './index.less';

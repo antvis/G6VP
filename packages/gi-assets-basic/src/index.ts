@@ -4,7 +4,6 @@ const { GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS, GIACompo
 
 import * as elements from './elements';
 import * as layouts from './layouts';
-import services from './services';
 const extra = {
   GIAComponent,
   GIAC_CONTENT_METAS,
@@ -13,4 +12,4 @@ const extra = {
   GIAC_CONTENT_PROPS,
 };
 
-export { components, elements, layouts, extra, services };
+export { components, elements, layouts, extra };
