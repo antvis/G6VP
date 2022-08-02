@@ -1,0 +1,9 @@
+import ServerComponent from './ServerComponent';
+
+export default {
+  id: 'GI',
+  name: 'GraphInsight',
+  desc: 'GraphInsight 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持10个接口服务',
+  component: ServerComponent,
+  cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*3YEZS6qSRgAAAAAAAAAAAAAAARQnAQ',
+};

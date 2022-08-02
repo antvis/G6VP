@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
-import { IState, IInputData } from './type';
-import { Alert, Button, Row, Upload } from 'antd';
+import { IState, IInputData } from './typing';
+import { Alert, Button, Row, Upload, message } from 'antd';
 import { FileTextOutlined } from '@ant-design/icons';
 import { IUserEdge, IUserNode } from '@antv/graphin';
 import { getOptions } from './utils';
@@ -87,7 +87,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
           ];
           updateState(draft => {
             draft.inputData = renderData;
-          })
+          });
           onSuccess('Ok');
           mergeData(renderData);
         };
@@ -98,22 +98,25 @@ const UploadLocalFile: React.FC<IProps> = props => {
   };
 
   const mergeData = (renderData: IInputData[] = state.inputData) => {
-    let nodes: IUserNode[] = [];
-    let edges: IUserEdge[] = [];
-    renderData.map(d => {
-      nodes = [...nodes, ...d.data.nodes];
-      edges = [...edges, ...d.data.edges];
-    });
-    updateState(draft => {
-      draft.data = { nodes, edges };
-      draft.transData = eval(state.transfunc)({ nodes, edges });
-    });
+    try {
+      let nodes: IUserNode[] = [];
+      let edges: IUserEdge[] = [];
+      renderData.map(d => {
+        nodes = [...nodes, ...d.data.nodes];
+        edges = [...edges, ...d.data.edges];
+      });
+      updateState(draft => {
+        draft.data = { nodes, edges };
+        draft.transData = eval(state.transfunc)({ nodes, edges });
+      });
+    } catch (e) {
+      message.error("请上传合法数据")
+    }
   };
 
   const checkData = () => {
     updateState(draft => {
       draft.activeKey++;
-      console.log("data:", state.data)
       draft.transColumns = getOptions(state.data);
       draft.tableData = state.transData?.nodes.map((d, i) => {
         return {
