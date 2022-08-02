@@ -31,6 +31,7 @@ const TableMode: React.FC<IProps> = props => {
     interaction: {
       autoResetSheetStyle: false,
     },
+    tooltip: {},
   });
 
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
@@ -53,7 +54,7 @@ const TableMode: React.FC<IProps> = props => {
     updateOptions(draft => {
       draft.width = width;
       draft.height = height;
-    })
+    });
   };
 
   // S2 table 适应父容器存在 bug，
@@ -111,10 +112,16 @@ const TableMode: React.FC<IProps> = props => {
     updateOptions(draft => {
       draft.interaction!.enableCopy = enableCopy;
       draft.interaction!.copyWithHeader = enableCopy;
-    })
-  }, [enableCopy])
+    });
+  }, [enableCopy]);
 
-  
+  useEffect(() => {
+    // 避免全屏状态下 tooltip 不显示
+    updateOptions(draft => {
+      const tooltipContainer =  document.getElementById('gi-table-mode') as HTMLDivElement
+      draft.tooltip!.getContainer = () => tooltipContainer;
+    });
+  }, []);
   /* 
     todo：
     s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发
