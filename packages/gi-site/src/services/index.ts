@@ -3,6 +3,7 @@ import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
 import { ASSET_TYPE, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
+import { IProject } from './typing';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -20,7 +21,7 @@ export function getEdgesByNodes(nodes, edges) {
  * @param id 项目id
  * @returns
  */
-export const getProjectById = async (id: string) => {
+export const getProjectById = async (id: string): Promise<IProject | undefined> => {
   if (IS_LOCAL_ENV) {
     const project: any = await localforage.getItem(id);
     if (!project) {
@@ -28,6 +29,8 @@ export const getProjectById = async (id: string) => {
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
     }
+
+    console.log('project:', project);
 
     return {
       schemaData: project.schemaData,
@@ -99,7 +102,10 @@ export const getProjectById = async (id: string) => {
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
+export const updateProjectById = async (
+  id: string,
+  params: { data?: string; [key: string]: any },
+): Promise<IProject> => {
   if (IS_LOCAL_ENV) {
     const origin: any = await localforage.getItem(id);
     const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData, expandInfo, type } = params;
@@ -145,8 +151,6 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
   return response.success;
 };
 
-
-
 // 软删除项目
 export const removeProjectById = async (id: string) => {
   if (IS_LOCAL_ENV) {
@@ -163,43 +167,17 @@ export const removeProjectById = async (id: string) => {
   return response.success;
 };
 
-export interface Project {
-  activeAssetsKeys: {
-    components: string[];
-    elements: string[];
-    layouts: string[];
-  };
-  data: {
-    transFunc?: string;
-    transData: {
-      nodes: any[];
-      edges: any[];
-    };
-  };
-  type: 'case' | 'project' | 'save';
-  id: string;
-  members: { name: string; id: string; state: 'master' | 'user' }[];
-  projectConfig: {};
-  serviceConfig: {
-    content: string;
-    id: string;
-    mode: 'MOCK' | 'API';
-    name: string;
-  }[];
-  status?: number;
-  tag?: string;
-}
 /**
  * 获取所有项目
  * @returns
  */
-export const getProjectList = async (type: 'project' | 'case' | 'save') => {
+export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise<IProject[]> => {
   if (IS_LOCAL_ENV) {
-    const projects = [];
-    const cases = [];
-    const save = [];
+    const projects: IProject[] = [];
+    const cases: IProject[] = [];
+    const save: IProject[] = [];
 
-    const iter = await localforage.iterate((value: Project) => {
+    const iter = await localforage.iterate((value: IProject) => {
       if (value.type === 'case') {
         cases.push(value);
       }
@@ -223,7 +201,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save') => {
       return projects;
     }
     if (type == 'case') {
-      console.log("case:", cases)
+      console.log('case:', cases);
       return cases;
     }
     if (type == 'save') {
@@ -244,7 +222,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save') => {
 /**
  * 增加项目
  */
-export const addProject = async (param: any) => {
+export const addProject = async (param: any): Promise<string | undefined> => {
   if (IS_LOCAL_ENV) {
     const projectId = getUid();
     const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, ...otherParams } = param;
@@ -274,8 +252,6 @@ export const addProject = async (param: any) => {
     return response.data?.insertId;
   }
 };
-
-
 
 /**
  * 收藏项目

@@ -4,8 +4,9 @@ import Concentric from './Concentric';
 import Dagre from './Dagre';
 import GraphinForce from './GraphinForce';
 import Grid from './Grid';
+import FundForce from './FundForce';
 import Radial from './Radial';
 import ClusteringDagre from './ClusteringDagre';
 // import Random from './Random';
-/** 图元素市场 */
-export { Concentric, Dagre, GraphinForce, Grid, Radial, Circular, ClusteringDagre };
+/** 图布局市场 */
+export { Concentric, Dagre, GraphinForce, Grid, Radial, Circular, ClusteringDagre, FundForce };
