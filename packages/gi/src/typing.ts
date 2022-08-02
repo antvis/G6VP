@@ -97,6 +97,19 @@ export type AssetType =
 
 export type GIAC_ITEMS_TYPE = { label: string; value: string }[];
 
+export interface EngineServer {
+  /** 引擎的ID */
+  id: 'GI' | 'AKG' | 'SHASENG';
+  /** 引擎的名称 */
+  name: string;
+  /** 引擎的配套组件 */
+  component?: React.ReactNode;
+  /** 引擎的实现 */
+  services?: {
+    [key: string]: GIService;
+  };
+}
+
 export interface ComponentAsset {
   component: React.ElementType; // https://react-typescript-cheatsheet.netlify.app/docs/advanced/patterns_by_usecase/#polymorphic-components-eg-with-as-props
   registerMeta: (context: {
@@ -200,7 +213,7 @@ export type GIAssets = Partial<{
   components: GIComponentAssets;
   elements: GIElementsAssets;
   layouts: GILayoutAssets;
-  services: GIService[];
+  services: EngineServer[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
