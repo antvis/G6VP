@@ -1,7 +1,7 @@
 import type { TypeAssetInfo } from './typing';
 import { getDefaultValues } from './utils';
 import { GraphinData } from '@antv/graphin';
-import type { GIComponentAssets, IGraphSchema, GIService, GIConfig, GIAC_ITEMS_TYPE } from '@alipay/graphinsight';
+import type { GIComponentAssets, GraphSchemaData, GIService, GIConfig, GIAC_ITEMS_TYPE } from '@alipay/graphinsight';
 
 const getAllkeysBySchema = (schema, shapeType): string[] => {
   try {
@@ -37,7 +37,7 @@ const getComponentsByAssets = (
   data: GraphinData,
   services: GIService[],
   config: GIConfig,
-  schemaData: IGraphSchema,
+  schemaData: GraphSchemaData,
 ) => {
   const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件

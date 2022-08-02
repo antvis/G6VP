@@ -1,12 +1,12 @@
 import { GIConfig,utils } from '@alipay/graphinsight';
-import { IGraphSchema } from '@alipay/graphinsight/lib/process/schema';
+import { GraphSchemaData } from '@alipay/graphinsight/lib/process/schema';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { Alert, Button, Card, Col, notification, Row } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 interface SchemaEditorProps {
   schemaGraph: GraphinData;
-  schemaData: IGraphSchema;
+  schemaData: GraphSchemaData;
   onSave: (params: any) => void;
   config: GIConfig;
 }
