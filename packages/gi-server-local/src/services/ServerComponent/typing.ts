@@ -21,7 +21,7 @@ export interface IColumns {
 
 export interface IState {
   activeKey: number;
-  inputData: IInputData[];
+  inputData: any;
   data: GraphinData;
   transfunc: string;
   transData: GraphinData;

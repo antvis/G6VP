@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { utils } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
 import { notification } from 'antd';
-import { IInputData } from './type';
+import { IInputData } from './typing';
 
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
 
