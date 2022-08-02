@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
-import { IState, IInputData } from './type';
+import { IState, IInputData } from './typing';
 import { Alert, Button, Row, Upload, message } from 'antd';
 import { FileTextOutlined } from '@ant-design/icons';
 import { IUserEdge, IUserNode } from '@antv/graphin';

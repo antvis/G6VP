@@ -34,7 +34,8 @@ export type {
   GIService,
   ISourceDataMap,
   IGraphSchema,
-  GIAC_ITEMS_TYPE
+  GIAC_ITEMS_TYPE,
+  ServiceObject
 } from './typing';
 export { useContext, utils };
 export { extra };
