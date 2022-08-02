@@ -1,13 +1,13 @@
 import { useContext } from '@alipay/graphinsight';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { S2DataConfig, S2Options, SpreadSheet } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Tabs, Button, message } from 'antd';
-import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons';
+import { Button, Tabs } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import { useEdgeDataCfg, useFullScreen, useListenEdgeSelect, useListenNodeSelect, useNodeDataCfg } from './hooks';
 import './index.less';
-import { useNodeDataCfg, useEdgeDataCfg, useListenNodeSelect, useListenEdgeSelect, useFullScreen } from './hooks';
 
 export interface IProps {
   isSelectedActive: boolean;
@@ -53,7 +53,7 @@ const TableMode: React.FC<IProps> = props => {
     updateOptions(draft => {
       draft.width = width;
       draft.height = height;
-    })
+    });
   };
 
   // S2 table 适应父容器存在 bug，
@@ -110,11 +110,11 @@ const TableMode: React.FC<IProps> = props => {
   useEffect(() => {
     updateOptions(draft => {
       draft.interaction!.enableCopy = enableCopy;
+      //@ts-ignore
       draft.interaction!.copyWithHeader = enableCopy;
-    })
-  }, [enableCopy])
+    });
+  }, [enableCopy]);
 
-  
   /* 
     todo：
     s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发
