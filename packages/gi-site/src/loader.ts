@@ -4,9 +4,9 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 /** 外部的引擎包，软连接到这里，临时方案，后续删除 */
-// import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
+import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-asset-gs-local';
 // import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
-import * as GI_SERVER_LOCAL from "@alipay/gi-server-local"
+import * as GI_SERVER_LOCAL from '@alipay/gi-server-local';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
@@ -27,7 +27,7 @@ export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
       //   version: '1.0.0',
       // },
       {
-        name: '@alipay/gi-assets-gs',
+        name: '@alipay/gi-asset-gs-local',
         version: '1.0.0',
       },
       {
@@ -68,15 +68,17 @@ const LOCAL_ASSETS = [
     ...GI_ASSETS_SCENE,
   },
   {
-    ...OFFICIAL_PACKAGES_MAP['GI_SERVER_LOCAL'],
+    name: '@alipay/gi-server-local',
+    version: '1.0.0',
+    global: 'GI_SERVER_LOCAL',
     ...GI_SERVER_LOCAL,
-  }
-  // {
-  //   name: '@alipay/gi-assets-gs',
-  //   version: '1.0.0',
-  //   global: 'GI_ASSETS_GS',
-  //   // ...GI_ASSETS_GS,
-  // },
+  },
+  {
+    name: '@alipay/gi-asset-gs-local',
+    version: '1.0.0',
+    global: 'GI_ASSETS_GS_LOCAL',
+    ...GI_ASSETS_GS_LOCAL,
+  },
   // {
   //   name: '@alipay/gi-assets-shaseng',
   //   version: '1.0.0',
@@ -192,7 +194,6 @@ export const getAssets = async () => {
   if (isDev) {
     return new Promise(resolve => {
       resolve(LOCAL_ASSETS);
-      
     });
   }
   return loader(packages).then(res => {
