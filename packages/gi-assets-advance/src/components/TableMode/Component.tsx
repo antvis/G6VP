@@ -2,55 +2,58 @@ import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig, S2Options, SpreadSheet } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Tabs } from 'antd';
-import React from 'react';
+import { Tabs, Button, message } from 'antd';
+import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons';
+import React, { useEffect } from 'react';
+import { useImmer } from 'use-immer';
 import './index.less';
-import useNodeDataCfg from "./hooks/useNodeDataCfg";
-import useEdgeDataCfg from "./hooks/useEdgeDataCfg";
-import useListenNodeSelect from "./hooks/useListenNodeSelect";
-import useListenEdgeSelect from "./hooks/useListenEdgeSelect";
-
+import { useNodeDataCfg, useEdgeDataCfg, useListenNodeSelect, useListenEdgeSelect, useFullScreen } from './hooks';
 
 export interface IProps {
   isSelectedActive: boolean;
+  enableCopy: boolean;
   containerHeight?: string;
-
 }
 
 const { TabPane } = Tabs;
 
-const TableMode:React.FC<IProps> = props => {
-  const { isSelectedActive, containerHeight } = props;
+const TableMode: React.FC<IProps> = props => {
+  const { isSelectedActive, containerHeight, enableCopy } = props;
   const { schemaData, data: graphData, graph, largeGraphData } = useContext();
+  const isFullScreen = useFullScreen();
 
   const nodeS2Ref = React.useRef<SpreadSheet>(null);
   const edgeS2Ref = React.useRef<SpreadSheet>(null);
 
-  //nodeS2Ref.current?.interaction.setState()
   // S2 的 options 配置
-  const [options, setOptions] = React.useState<S2Options>({
+  const [options, updateOptions] = useImmer<S2Options>({
     showSeriesNumber: true,
     interaction: {
-      autoResetSheetStyle: false
-    }
+      autoResetSheetStyle: false,
+    },
   });
+
   const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
 
-  useListenNodeSelect(isSelectedActive, nodeS2Ref);
-  useListenEdgeSelect(isSelectedActive, edgeS2Ref);
+  useListenNodeSelect(isSelectedActive, nodeS2Ref.current, isFullScreen);
+  useListenEdgeSelect(isSelectedActive, edgeS2Ref.current, isFullScreen);
 
   const setS2Options = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     const width = container.clientWidth;
     const height = container.clientHeight;
-    setOptions(preState => {
-      return {
-        ...preState,
-        width,
-        height,
-      };
-    });
+    // sOptions(preState => {
+    //   return {
+    //     ...preState,
+    //     width,
+    //     height,
+    //   };
+    // });
+    updateOptions(draft => {
+      draft.width = width;
+      draft.height = height;
+    })
   };
 
   // S2 table 适应父容器存在 bug，
@@ -65,18 +68,17 @@ const TableMode:React.FC<IProps> = props => {
     setS2Options();
   }, []);
 
-
   React.useEffect(() => {
     const reset = () => {
       nodeS2Ref.current?.interaction.reset();
       edgeS2Ref.current?.interaction.reset();
-    }
-    graph.on("canvas:click", reset);
+    };
+    graph.on('canvas:click', reset);
 
     return () => {
-      graph.off("canvas:click", reset);
-    }
-  }, [nodeS2Ref, edgeS2Ref])
+      graph.off('canvas:click', reset);
+    };
+  }, [nodeS2Ref, edgeS2Ref]);
   // React.useEffect(() => {
   //   if (containerHeight) {
   //     setOptions(preState => {
@@ -88,10 +90,51 @@ const TableMode:React.FC<IProps> = props => {
   //     });
   //   }
   // }, [containerHeight])
+  const toggleFullScreen = () => {
+    const container = document.getElementById('gi-table-mode') as HTMLDivElement;
+    if (!isFullScreen) {
+      container.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  const extra = (
+    <Button
+      type="text"
+      icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+      onClick={toggleFullScreen}
+    />
+  );
+
+  useEffect(() => {
+    updateOptions(draft => {
+      draft.interaction!.enableCopy = enableCopy;
+      draft.interaction!.copyWithHeader = enableCopy;
+    })
+  }, [enableCopy])
+
+  
+  /* 
+    todo：
+    s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发
+    但是这样的话会导致其他地方的 copy 也触发这一事件
+  */
+  // useEffect(() => {
+  //   const copyListen = (e) => {
+  //     console.log("e:", e)
+  //     message.success('表格选择内容已复制到剪切板');
+  //   };
+  //   const element = document.getElementById('gi-table-mode') as HTMLDivElement;
+  //   window.addEventListener('copy', copyListen);
+  //   return () => {
+  //     element.removeEventListener('copy', copyListen);
+  //   };
+  // }, []);
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
-      <Tabs tabPosition="left">
+      <Tabs tabPosition="top" tabBarExtraContent={extra}>
         <TabPane tab="点表" key="node">
           <SheetComponent
             ref={nodeS2Ref}

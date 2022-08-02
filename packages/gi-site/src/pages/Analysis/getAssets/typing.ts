@@ -1,5 +1,5 @@
 export interface TypeAssetInfo {
-  id: 'string';
+  id: string;
   type:
     | 'GI_CONTAINER_INDEX' //原子组件
     | 'GI_CONTAINER' // 容器组件

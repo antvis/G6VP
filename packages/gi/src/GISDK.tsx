@@ -127,6 +127,14 @@ const GISDK = (props: Props) => {
         defSpringLen: utils.getDefSpringLenFunction(options.defSpringLenCfg),
       };
     }
+
+    // 资金力导布局定制
+    if (layoutCfg.id === 'FundForce') {
+      otherOptions = {
+        defSideCoe: utils.getDefSideCoeFunction(options.income, options.outcome, options.isLog, options.multiple),
+      };
+    }
+
     updateState(draft => {
       draft.layout = {
         type,
@@ -177,7 +185,7 @@ const GISDK = (props: Props) => {
 
   const { data, layout, components, initializer, theme, transform } = state;
 
-  // console.log('%c GraphInsight Render...', 'color:red', state);
+  // console.log('%c GraphInsight Render...', 'color:red', state.layout);
   const sourceDataMap = useMemo(() => {
     const nodes = state.source.nodes.reduce((acc, cur) => {
       acc[cur.id] = cur;
