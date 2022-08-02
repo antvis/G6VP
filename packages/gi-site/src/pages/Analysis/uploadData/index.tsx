@@ -33,9 +33,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { context, updateContext } = useContext();
 
   const CustomServer = utils.getCombineServer(context.activeAssets.services).filter(c => {
-    return ['GS'].indexOf(c.id) === -1; //临时先剔除
+    return ['GI'].indexOf(c.id) === -1; //临时先剔除
   });
   console.log('context', CustomServer);
+
   const { id } = context;
   const [current, setCurrent] = useImmer({
     activeKey: 0,
@@ -368,18 +369,7 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
           <MockData handleClose={handleClose} />
         </TabPane> */}
 
-        {CustomServer.map(server => {
-          //@ts-ignore
-          const { component: ServerComponent } = server;
-          return (
-            <TabPane tab={server.name} key={server.id}>
-              {/** @ts-ignore */}
-              <ServerComponent handleClose={handleClose} />
-            </TabPane>
-          );
-        })}
-
-        <TabPane tab="GraphScope" key="graphscope" disabled>
+        {/* <TabPane tab="GraphScope" key="graphscope">
           <Alert
             message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
             type="info"
@@ -387,7 +377,17 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             style={{ marginBottom: '12px' }}
           />
           <GraphScopeData close={handleClose} />
-        </TabPane>
+        </TabPane> */}
+        {CustomServer.map(server => {
+          //@ts-ignore
+          const { component: ServerComponent } = server;
+          return (
+            <TabPane tab={server.name} key={server.id}>
+              {/** @ts-ignore */}
+              <ServerComponent onClose={handleClose} />
+            </TabPane>
+          );
+        })}
       </Tabs>
     </Drawer>
   );
