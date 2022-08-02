@@ -388,16 +388,6 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
             </TabPane>
           );
         })}
-
-        <TabPane tab="GraphScope" key="graphscope" disabled>
-          <Alert
-            message="该功能目前仅支持阿里集团，蚂蚁集团 域内同学使用，预计8月将开放所有用户使用"
-            type="info"
-            showIcon
-            style={{ marginBottom: '12px' }}
-          />
-          <GraphScopeData close={handleClose} />
-        </TabPane>
       </Tabs>
     </Drawer>
   );
