@@ -68,6 +68,12 @@ const LOCAL_ASSETS = [
     ...GI_ASSETS_SCENE,
   },
   {
+    name: '@alipay/gi-server-local',
+    version: '1.0.0',
+    global: 'GI_SERVER_LOCAL',
+    ...GI_SERVER_LOCAL,
+  },
+  {
     name: '@alipay/gi-asset-gs-local',
     version: '1.0.0',
     global: 'GI_ASSETS_GS_LOCAL',
