@@ -1,6 +1,5 @@
 // const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
-/** 是否为本地研发模式 */
 import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
 // import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
 import GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm/package.json';
@@ -9,6 +8,7 @@ import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import GI_SERVER_LOCAL from "@alipay/gi-server-local/package.json";
 import graphinsight from '@alipay/graphinsight/package.json';
 
+/** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
   {
