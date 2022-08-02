@@ -16,7 +16,6 @@ export { default as Icon } from './components/Icon';
 /** export typing */
 export { default as useGraphInsightContainerLayout } from './process/layout';
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
-export type { EngineServer } from './process/services';
 export type {
   AssetCategory,
   AssetInfo,
@@ -35,7 +34,8 @@ export type {
   ISourceDataMap,
   IGraphSchema,
   GIAC_ITEMS_TYPE,
-  ServiceObject
+  ServiceObject,
+  EngineServer,
 } from './typing';
 export { useContext, utils };
 export { extra };

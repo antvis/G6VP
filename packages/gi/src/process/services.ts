@@ -1,23 +1,12 @@
 import React from 'react';
-import { GIService } from '../typing';
+import { GIService, EngineServer } from '../typing';
 
 export type AssetServices = Record<string, { name: string; service: () => Promise<any> }>;
 
 /**
  * 引擎：一堆服务的集合
  */
-export interface EngineServer {
-  /** 引擎的ID */
-  id: 'GI' | 'AKG' | 'SHASENG';
-  /** 引擎的名称 */
-  name: string;
-  /** 引擎的配套组件 */
-  component?: React.ReactNode;
-  /** 引擎的实现 */
-  services: {
-    [key: string]: GIService;
-  };
-}
+
 
 export interface CustomServiceConfig {
   id: string;
@@ -69,7 +58,11 @@ export const getCombineServices = (servers: EngineServer[]) => {
   if (!servers) {
     return [];
   }
+  
   return servers.reduce((acc, curr) => {
+    if (!curr.services) {
+      return [...acc];
+    }
     const { id, services } = curr;
     const sers = Object.keys(services).map(key => {
       const service = services[key];
