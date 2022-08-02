@@ -118,14 +118,12 @@ const Analysis = props => {
     queryAssets(activeAssetsKeys).then(
       //@ts-ignore
       activeAssets => {
-        console.log('activeAssets', activeAssets);
         const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
-        const assetServices = utils.getCombineServices(activeAssets.services);
+        const assetServices = utils.getCombineServices(activeAssets.services!);
 
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
-          console.log('combinedServiceConfig', combinedServiceConfig);
           const schemaData = original(draft.schemaData);
           const activeAssetsInformation = queryActiveAssetsInformation({
             assets: activeAssets,
