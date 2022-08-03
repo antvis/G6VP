@@ -18,10 +18,6 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { context, updateContext } = useContext();
 
   const CustomServer = utils.getCombineServer(context.activeAssets.services);
-  // .filter(c => {
-  //   return ['GI', 'GS'].indexOf(c.id) === -1; //临时先剔除
-  // });
-  console.log('context', CustomServer);
 
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
