@@ -8,6 +8,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 const registerMeta = context => {
   const { services } = context;
   const serviceOptions = utils.getServiceOptions(services, info.services[0]);
+  console.log("context:", context, serviceOptions)
 
   return {
     /** 分类信息 */
@@ -26,7 +27,7 @@ const registerMeta = context => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input.TextArea',
-      default: 'g.V(1)',
+      default: 'g.V().hasLabel("Film").has("id","c54e6f7dd4dacc1ac5b0fa66565a4a60")',
     },
     height: {
       title: '高度',

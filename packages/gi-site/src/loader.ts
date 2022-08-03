@@ -4,14 +4,17 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 /** 外部的引擎包，软连接到这里，临时方案，后续删除 */
-import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-asset-gs-local';
+// import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-asset-gs-local';
 // import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
 import * as GI_SERVER_LOCAL from '@alipay/gi-server-local';
+import * as GI_ASSETS_AKG from '@alipay/gi-assets-akg';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 临时方案，应该要走antbuc鉴权
 export const IS_PASSED_BUC_AUTH = window.location.host === 'graphinsight.antgroup-inc.cn';
+
+// 业务包
 export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
   ? getPackages([
       {
@@ -68,16 +71,20 @@ const LOCAL_ASSETS = [
     ...GI_ASSETS_SCENE,
   },
   {
-    name: '@alipay/gi-server-local',
-    version: '1.0.0',
-    global: 'GI_SERVER_LOCAL',
+    ...OFFICIAL_PACKAGES_MAP['GI_SERVER_LOCAL'],
     ...GI_SERVER_LOCAL,
   },
+  // {
+  //   name: '@alipay/gi-asset-gs-local',
+  //   version: '1.0.0',
+  //   global: 'GI_ASSETS_GS_LOCAL',
+  //   ...GI_ASSETS_GS_LOCAL,
+  // },
   {
-    name: '@alipay/gi-asset-gs-local',
-    version: '1.0.0',
-    global: 'GI_ASSETS_GS_LOCAL',
-    ...GI_ASSETS_GS_LOCAL,
+    name: '@alipay/gi-assets-akg',
+    version: '1.2.2',
+    global: 'GI_ASSETS_AKG',
+    ...GI_ASSETS_AKG,
   },
   // {
   //   name: '@alipay/gi-assets-shaseng',
@@ -189,30 +196,17 @@ export const loader = options => {
 };
 
 export const getAssets = async () => {
-  const packages = getAssetPackages();
-
   if (isDev) {
     return new Promise(resolve => {
       resolve(LOCAL_ASSETS);
     });
   }
+
+  const packages = getAssetPackages();
   return loader(packages).then(res => {
     return res;
   });
 };
-
-type AssetsKey = 'components' | 'elements' | 'layouts';
-type AssetsValue = {
-  [id: string]: {
-    registerMeta: () => void;
-    info: {
-      id: string;
-    };
-    component: React.FunctionComponent | any;
-  };
-};
-
-export type IAssets = Record<AssetsKey, AssetsValue>;
 
 const appendInfo = (itemAssets, version, name) => {
   if (!itemAssets) {
@@ -237,7 +231,6 @@ const appendInfo = (itemAssets, version, name) => {
  */
 export const getCombinedAssets = async () => {
   const assets = await getAssets();
-  console.log('assets', assets);
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
@@ -279,3 +272,16 @@ export const getCombinedAssets = async () => {
     },
   );
 };
+
+type AssetsKey = 'components' | 'elements' | 'layouts';
+type AssetsValue = {
+  [id: string]: {
+    registerMeta: () => void;
+    info: {
+      id: string;
+    };
+    component: React.FunctionComponent | any;
+  };
+};
+
+export type IAssets = Record<AssetsKey, AssetsValue>;
