@@ -118,6 +118,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         {type === 'project' && addButton}
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
+          console.log("item:", item)
           return (
             <Col key={id} xs={24} sm={24} md={12} lg={8} xl={6}>
               <ProjectCard
