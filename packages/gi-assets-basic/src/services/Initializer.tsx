@@ -1,3 +1,4 @@
+import { GraphSchemaData } from "@alipay/graphinsight"
 export interface GraphData {
   nodes: {
     id: string;
@@ -12,22 +13,7 @@ export interface GraphData {
     data: {};
   }[];
 }
-export interface GraphSchemaData {
-  nodes: {
-    nodeType: string;
-    nodeTypeKeyFromProperties: string;
-    properties: {
-      [key: string]: any;
-    };
-  }[];
-  edges: {
-    edgeType: string;
-    edgeTypeKeyFromProperties: string;
-    properties: {
-      [key: string]: any;
-    };
-  }[];
-}
+
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
   method: 'GET',

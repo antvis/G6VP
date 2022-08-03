@@ -32,7 +32,7 @@ export type {
   GINodeConfig,
   GIService,
   ISourceDataMap,
-  IGraphSchema,
+  GraphSchemaData,
   GIAC_ITEMS_TYPE,
   ServiceObject,
   EngineServer,

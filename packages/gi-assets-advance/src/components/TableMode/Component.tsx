@@ -31,10 +31,11 @@ const TableMode: React.FC<IProps> = props => {
     interaction: {
       autoResetSheetStyle: false,
     },
+    tooltip: {},
   });
 
-  const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
-  const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
+  const nodeDataCfg: S2DataConfig = useNodeDataCfg();
+  const edgeDataCfg: S2DataConfig = useEdgeDataCfg();
 
   useListenNodeSelect(isSelectedActive, nodeS2Ref.current, isFullScreen);
   useListenEdgeSelect(isSelectedActive, edgeS2Ref.current, isFullScreen);
@@ -115,6 +116,13 @@ const TableMode: React.FC<IProps> = props => {
     });
   }, [enableCopy]);
 
+  useEffect(() => {
+    // 避免全屏状态下 tooltip 不显示
+    updateOptions(draft => {
+      const tooltipContainer = document.getElementById('gi-table-mode') as HTMLDivElement;
+      draft.tooltip!.getContainer = () => tooltipContainer;
+    });
+  }, []);
   /* 
     todo：
     s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发

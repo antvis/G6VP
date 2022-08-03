@@ -1,6 +1,6 @@
 import { utils } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
-import type { GIElementsAssets, IGraphSchema } from '@alipay/graphinsight';
+import type { GIElementsAssets, GraphSchemaData } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
 
 const { uniqueElementsBy } = utils;
@@ -10,7 +10,7 @@ const { uniqueElementsBy } = utils;
  * @param data 图数据
  * @returns
  */
-const getElementsByAssets = (assets: GIElementsAssets, data: GraphinData, schemaData: IGraphSchema) => {
+const getElementsByAssets = (assets: GIElementsAssets, data: GraphinData, schemaData: GraphSchemaData) => {
   let nodeElements = {};
   let edgeElements = {};
 
