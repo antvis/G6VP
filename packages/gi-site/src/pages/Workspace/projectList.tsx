@@ -1,24 +1,31 @@
 import { Icon, utils } from '@alipay/graphinsight';
-import { CopyFilled, EditFilled, MoreOutlined, StarFilled } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
+import { MoreOutlined } from '@ant-design/icons';
+import { Button, Col, Dropdown, Menu, Popconfirm, Row, Modal } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
+import ODPSDeploy from '../../components/ODPSDeploy';
 import MembersPanel from './Members';
 import { getProjectList, removeProjectById } from '../../services';
+import type { IProject } from '../../services/typing';
 
 interface ProjectListProps {
-  onCreate?: () => void;
+  onCreate: () => void;
   type: 'project' | 'case' | 'save';
+}
+
+interface ProjectListState {
+  lists: IProject[];
+  deployVisible: boolean;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const { type, onCreate } = props;
   const history = useHistory();
-  const [state, updateState] = useImmer({
+  const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
-    visible: false,
+    deployVisible: false,
   });
 
   const [member, setMember] = useImmer({
@@ -73,13 +80,25 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     });
   };
 
+  const handleDeployOpen = () => {
+    updateState(draft => {
+      draft.deployVisible = true;
+    });
+  };
+
+  const hanldeDeployClose = () => {
+    updateState(draft => {
+      draft.deployVisible = false;
+    });
+  };
+
   const menu = item => (
     <Menu>
       <Menu.Item>
         <Popconfirm
           title="是否删除该项目?"
           onConfirm={e => {
-            e.preventDefault();
+            e!.preventDefault();
             confirm(item.id);
           }}
           okText="Yes"
@@ -89,14 +108,8 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         </Popconfirm>
       </Menu.Item>
       <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>
+      <Menu.Item onClick={handleDeployOpen}>项目部署</Menu.Item>
     </Menu>
-  );
-  const projectButton = <EditFilled className="edit icon-buuton" />;
-  const collectButton = (
-    <>
-      <StarFilled className="star icon-buuton" />
-      <CopyFilled className="copy icon-buuton" />
-    </>
   );
 
   return (
@@ -112,7 +125,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                   history.push(`/workspace/${id}?nav=data`);
                 }}
                 cover={<Icon type="icon-analysis" style={{ fontSize: '70px' }} />}
-                title={name}
+                title={name || ''}
                 time={utils.time(gmtCreate)}
                 extra={
                   <Dropdown overlay={menu(item)} placement="bottomCenter">
@@ -126,6 +139,15 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         })}
       </Row>
       <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
+      <Modal
+        title="项目部署"
+        visible={state.deployVisible}
+        onCancel={hanldeDeployClose}
+        maskClosable={false}
+        footer={false}
+      >
+        <ODPSDeploy />
+      </Modal>
     </>
   );
 };

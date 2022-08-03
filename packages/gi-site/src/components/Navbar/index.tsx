@@ -2,16 +2,18 @@
 import { createFromIconfontCN, ExportOutlined, SaveOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
+import { useImmer } from 'use-immer';
 import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import { getProjectById, updateProjectById, addProject } from '../../services';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
-import './index.less';
 import ProjectTitle from '../ProjectTitle';
-import { useImmer } from 'use-immer';
-import { INavbarState } from './typing';
+import ODPSDeploy from '../ODPSDeploy';
+import { getProjectById, updateProjectById, addProject } from '../../services';
+import type { INavbarState } from './typing';
+import { IS_LOCAL_ENV } from '../../services/const';
+import './index.less';
 
 interface SvgIconProps {
   type: string; // 必传
@@ -39,15 +41,13 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const [state, updateState] = useImmer<INavbarState>({
     initProject: {},
     exportVisible: false,
+    deployVisible: false,
   });
-  // const [outVisible, setOutVisible] = React.useState(false);
-  // const [initProject, setInitProject] = React.useState({});
 
   const { context, updateContext } = useContext();
   const { config, serviceConfig, activeAssetsKeys } = context;
 
   const handleOutClose = () => {
-    //setOutVisible(false);
     updateState(draft => {
       draft.exportVisible = false;
     });
@@ -56,6 +56,18 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const handleOutOpen = () => {
     updateState(draft => {
       draft.exportVisible = true;
+    });
+  };
+
+  const handleDeployOpen = () => {
+    updateState(draft => {
+      draft.deployVisible = true;
+    });
+  };
+
+  const hanldeDeployClose = () => {
+    updateState(draft => {
+      draft.deployVisible = false;
     });
   };
 
@@ -147,7 +159,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         </Button>
       </Tooltip> */}
       <Tooltip title="部署项目">
-        <Button icon={<DeploymentUnitOutlined />} size="small">
+        <Button icon={<DeploymentUnitOutlined />} onClick={handleDeployOpen} size="small">
           部署
         </Button>
       </Tooltip>
@@ -168,6 +180,16 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         width="calc(100vw - 382px)"
       >
         {state.exportVisible && <ExportConfig></ExportConfig>}
+      </Drawer>
+      <Drawer
+        title="部署"
+        placement="right"
+        closable={false}
+        visible={state.deployVisible}
+        onClose={hanldeDeployClose}
+        width="25vw"
+      >
+        <ODPSDeploy />
       </Drawer>
     </BaseNavbar>
   );
