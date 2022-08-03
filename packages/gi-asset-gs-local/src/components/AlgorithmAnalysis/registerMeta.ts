@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra, utils } from '@alipay/graphinsight';
 import info from './info';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -128,12 +128,7 @@ export const SchemaData = {
 
 const registerMeta = context => {
   const { services } = context;
-  const serviceOptions = services.map(c => {
-    return {
-      value: c.id,
-      label: c.id,
-    };
-  });
+  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
 
   return {
     serviceId: {
