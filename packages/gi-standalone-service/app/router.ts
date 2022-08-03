@@ -11,4 +11,5 @@ export default (app: Application) => {
   router.post('/graphcompute/neighbors', controller.graphcompute.queryNeighbors);
   router.get('/graphcompute/schema', controller.graphcompute.getSchema);
   router.get('/graphcompute/instances', controller.graphcompute.getInstance);
+  router.get('/graphcompute/execAlgorithm', controller.graphcompute.execAlgorithm);
 };
