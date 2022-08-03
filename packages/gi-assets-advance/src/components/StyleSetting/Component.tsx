@@ -1,72 +1,22 @@
-import { CommonStyleSetting } from '@alipay/gi-common-components';
-import { useContext, utils } from '@alipay/graphinsight';
+import { Tabs } from 'antd';
 import React from 'react';
-export type NodesConfig = {
-  id: string;
-  groupId: string;
-  groupName: string;
-  expressions: any[];
-  props: any;
-}[];
+import StyleSettingPanel from './StyleSettingPanel';
+import "./index.less"
 
-interface MetaProps {
-  key: string;
-  meta: Object;
-}
+const { TabPane } = Tabs;
 
-export interface StyleSettingProps {
-  shapeOptions: MetaProps[];
-  data: { nodes: any[]; edges: any[] };
-  elementType: 'nodes' | 'edges';
-}
-
-const StyleSetting: React.FunctionComponent<StyleSettingProps> = ({ shapeOptions, elementType = 'nodes' }) => {
-  const {
-    updateContext,
-    data,
-    config,
-    assets,
-    schemaData = {
-      nodes: [],
-      edges: [],
-    },
-  } = useContext();
-
-  const elements = React.useMemo(() => {
-    return utils.getElementsByAssets(assets.elements, data, schemaData);
-  }, [schemaData, data]);
-
-  const handleChange = styleGroups => {
-    const nodesConfig: NodesConfig = styleGroups.map(c => {
-      const { id, groupId, groupName, expressions, logic } = c;
-      return {
-        id,
-        props: c.props,
-        groupId,
-        groupName,
-        expressions,
-        logic,
-      };
-    });
-    updateContext(draft => {
-      //@ts-ignore
-      draft.config.nodes = JSON.parse(JSON.stringify(nodesConfig));
-      //@ts-check
-      draft.layoutCache = true;
-    });
-  };
-  //@ts-ignore
+const StyleSetting: React.FunctionComponent = () => {
   return (
-    <CommonStyleSetting
-      schemaData={schemaData}
-      onChange={handleChange}
-      //@ts-ignore
-      config={config}
-      data={data}
-      elementType={elementType}
-      //@ts-ignore
-      elements={elements.nodes}
-    />
+    <div className='gi-style-setting'>
+      <Tabs>
+      <TabPane key="nodes" tab="节点">
+        <StyleSettingPanel elementType="nodes" />
+      </TabPane>
+      <TabPane key="edges" tab="边">
+        <StyleSettingPanel elementType="edges" />
+      </TabPane>
+    </Tabs>
+    </div>
   );
 };
 
