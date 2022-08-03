@@ -10,10 +10,9 @@ import { IFilterCriteria } from '../FilterPanel/type';
 import { filterGraphData } from '../FilterPanel/utils';
 import Interpretation from './Interpretation';
 
-const { generatorSchemaByGraphData, isStyles } = utils;
+const { isStyles } = utils;
 
 export interface FilterPanelProps {
-  histogramColor: string;
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
   limit: number;
@@ -21,11 +20,10 @@ export interface FilterPanelProps {
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { histogramColor, isFilterIsolatedNodes, limit, filterLogic } = props;
+  const { isFilterIsolatedNodes, limit, filterLogic } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { updateContext, transform, schemaData, largeGraphData } = useContext();
   const dataSchemas = schemaData;
-  const filterData = React.useRef({});
 
   const [state, setState] = React.useState({
     data: { nodes: [], edges: [] },
@@ -134,10 +132,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       };
     }
 
-    filterData.current = canvasData;
-
-    console.log("canvasData:", canvasData)
-
     updateContext(draft => {
       if (largeGraphData && isStyles(largeGraphData.nodes)) {
         draft.data = canvasData;
@@ -153,7 +147,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   return (
     <div className="gi-filter-panel">
       <Interpretation
-        data={filterData.current as GraphinData}
         filterOptions={filterOptions}
         filterLogic={filterLogic}
       />
