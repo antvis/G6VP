@@ -1,10 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import {
-  createFromIconfontCN,
-  ExportOutlined,
-  SaveOutlined,
-  DeploymentUnitOutlined,
-} from '@ant-design/icons';
+import { createFromIconfontCN, ExportOutlined, SaveOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +10,8 @@ import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import ProjectTitle from '../ProjectTitle';
+import { useImmer } from 'use-immer';
+import { INavbarState } from './typing';
 
 interface SvgIconProps {
   type: string; // 必传
@@ -36,20 +33,30 @@ interface NavbarProps {
  * @see {NavbarProps}
  * @returns
  */
+
 const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   const history = useHistory();
-  const [outVisible, setOutVisible] = React.useState(false);
-  const [initProject, setInitProject] = React.useState({});
+  const [state, updateState] = useImmer<INavbarState>({
+    initProject: {},
+    exportVisible: false,
+  });
+  // const [outVisible, setOutVisible] = React.useState(false);
+  // const [initProject, setInitProject] = React.useState({});
 
   const { context, updateContext } = useContext();
   const { config, serviceConfig, activeAssetsKeys } = context;
 
   const handleOutClose = () => {
-    setOutVisible(false);
+    //setOutVisible(false);
+    updateState(draft => {
+      draft.exportVisible = false;
+    });
   };
 
   const handleOutOpen = () => {
-    setOutVisible(true);
+    updateState(draft => {
+      draft.exportVisible = true;
+    });
   };
 
   const handleSave = async () => {
@@ -110,11 +117,13 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
   React.useEffect(() => {
     (async () => {
       const project = await getProjectById(projectId);
-      setInitProject(project);
+      updateState(draft => {
+        draft.initProject = project;
+      });
     })();
   }, []);
   //@ts-ignore
-  const { name } = initProject;
+  const { name } = state.initProject;
   const rightContent = (
     <>
       <Tooltip title="保存">
@@ -155,10 +164,10 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
         placement="right"
         closable={false}
         onClose={handleOutClose}
-        visible={outVisible}
+        visible={state.exportVisible}
         width="calc(100vw - 382px)"
       >
-        {outVisible && <ExportConfig></ExportConfig>}
+        {state.exportVisible && <ExportConfig></ExportConfig>}
       </Drawer>
     </BaseNavbar>
   );
