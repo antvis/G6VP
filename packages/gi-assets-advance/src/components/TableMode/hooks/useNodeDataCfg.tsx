@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig } from '@antv/s2';
 const useNodeDataCfg = (): S2DataConfig => {
-  const { schemaData, graphData, largeGraphData } = useContext();
+  const { schemaData, data: graphData, largeGraphData } = useContext();
 
   const nodeDataCfg: S2DataConfig = React.useMemo(() => {
     const nodeProperties = schemaData.nodes.reduce((acc, cur) => {

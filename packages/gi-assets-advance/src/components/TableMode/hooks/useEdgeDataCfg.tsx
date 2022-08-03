@@ -3,7 +3,7 @@ import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig } from '@antv/s2';
 
 const useEdgeDataCfg = (): S2DataConfig => {
-  const { schemaData, graphData, largeGraphData } = useContext();
+  const { schemaData, data: graphData, largeGraphData } = useContext();
   const edgeDataCfg: S2DataConfig = React.useMemo(() => {
     const edgeProperties = schemaData.edges.reduce((acc, cur) => {
       return {
