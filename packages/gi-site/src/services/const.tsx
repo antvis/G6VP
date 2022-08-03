@@ -2,7 +2,7 @@ const GI_LOCAL_URL = [
   'graphinsight.antv.vision', //外网地址
   'graphinsight.antgroup.com', //外网地址
   'graphinsight.antgroup.com:8000', //本地绑定ihost
-  'dev.alipay.net:8000',
+  'dev.alipay.net:8000', //本地地址
   'localhost:8000', //本地地址
   'gi-external-pre.alipay.com', //外网预发地址
 ];

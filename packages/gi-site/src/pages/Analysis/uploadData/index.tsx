@@ -32,9 +32,10 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext } = useContext();
 
-  const CustomServer = utils.getCombineServer(context.activeAssets.services).filter(c => {
-    return ['GI'].indexOf(c.id) === -1; //临时先剔除
-  });
+  const CustomServer = utils.getCombineServer(context.activeAssets.services)
+  // .filter(c => {
+  //   return ['GI'].indexOf(c.id) === -1; //临时先剔除
+  // });
   console.log('context', CustomServer);
 
   const { id } = context;

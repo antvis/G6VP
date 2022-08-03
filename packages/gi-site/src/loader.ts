@@ -14,6 +14,8 @@ import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 临时方案，应该要走antbuc鉴权
 export const IS_PASSED_BUC_AUTH = window.location.host === 'graphinsight.antgroup-inc.cn';
+
+// 业务包
 export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
   ? getPackages([
       {
@@ -204,30 +206,17 @@ export const loader = options => {
 };
 
 export const getAssets = async () => {
-  const packages = getAssetPackages();
-
   if (isDev) {
     return new Promise(resolve => {
       resolve(LOCAL_ASSETS);
     });
   }
+
+  const packages = getAssetPackages();
   return loader(packages).then(res => {
     return res;
   });
 };
-
-type AssetsKey = 'components' | 'elements' | 'layouts';
-type AssetsValue = {
-  [id: string]: {
-    registerMeta: () => void;
-    info: {
-      id: string;
-    };
-    component: React.FunctionComponent | any;
-  };
-};
-
-export type IAssets = Record<AssetsKey, AssetsValue>;
 
 const appendInfo = (itemAssets, version, name) => {
   if (!itemAssets) {
@@ -252,7 +241,6 @@ const appendInfo = (itemAssets, version, name) => {
  */
 export const getCombinedAssets = async () => {
   const assets = await getAssets();
-  console.log('assets', assets);
   //@ts-ignore
   return assets.reduce(
     (acc, curr) => {
@@ -294,3 +282,16 @@ export const getCombinedAssets = async () => {
     },
   );
 };
+
+type AssetsKey = 'components' | 'elements' | 'layouts';
+type AssetsValue = {
+  [id: string]: {
+    registerMeta: () => void;
+    info: {
+      id: string;
+    };
+    component: React.FunctionComponent | any;
+  };
+};
+
+export type IAssets = Record<AssetsKey, AssetsValue>;

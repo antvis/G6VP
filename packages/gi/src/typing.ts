@@ -1,6 +1,6 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-import type { IGraphSchema } from './process/schema';
-export type { IGraphSchema };
+import type { GraphSchemaData } from './process/schema';
+export type { GraphSchemaData };
 export interface State {
   /** graphin */
   graph: GraphinContextType['graph'];
@@ -25,7 +25,7 @@ export interface State {
   /** 大图模式 */
   largeGraphMode: boolean;
 
-  schemaData: IGraphSchema;
+  schemaData: GraphSchemaData;
 
   /** 布局 */
   layout: Layout;
@@ -76,7 +76,7 @@ export interface Props {
   /**
    * style
    */
-  schemaData?: IGraphSchema;
+  schemaData?: GraphSchemaData;
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
@@ -118,7 +118,7 @@ export interface ComponentAsset {
     GI_CONTAINER_INDEXS: GIAC_ITEMS_TYPE;
     keys: string[];
     edgeKeys: string[];
-    schemaData: IGraphSchema;
+    schemaData: GraphSchemaData;
     config: GIConfig;
     GIAC_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
@@ -137,7 +137,7 @@ export interface LayoutAsset {
     services?: any[];
     GI_CONTAINER_INDEX?: string[];
     keys: string[];
-    schemaData: IGraphSchema;
+    schemaData: GraphSchemaData;
   }) => any;
   registerLayout?: () => any[];
   info: {
@@ -159,7 +159,7 @@ export interface ElementAsset {
     services?: any[];
     GI_CONTAINER_INDEXS?: string[];
     keys?: string[];
-    schemaData: IGraphSchema;
+    schemaData: GraphSchemaData;
   }) => any;
   registerShape?: () => any[];
   info: {
@@ -365,4 +365,4 @@ export interface GIGraphData {
   }[];
 }
 
-export type GIGraphSchema = IGraphSchema;
+export type GIGraphSchema = GraphSchemaData;

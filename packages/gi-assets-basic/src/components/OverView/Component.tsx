@@ -45,7 +45,6 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
 
       {largeGraphData && (
         <FilterPanel
-          histogramColor="#3056E3"
           isFilterIsolatedNodes={true}
           highlightMode={true}
           limit={limit}
