@@ -1,4 +1,5 @@
 import { FileExcelOutlined, FilterOutlined } from '@ant-design/icons';
+import { useContext } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
 import { Button, Col, List, Popover, Row, Statistic, Tag, Tooltip } from 'antd';
 import * as React from 'react';
@@ -6,12 +7,12 @@ import downloadCsv from '../common/downloadCsv';
 import { IFilterCriteria } from '../FilterPanel/type';
 interface interpretationProps {
   filterLogic: 'and' | 'or';
-  data: GraphinData;
   filterOptions: { [id: string]: IFilterCriteria };
 }
 
 const interpretation: React.FunctionComponent<interpretationProps> = props => {
-  const { data, filterOptions, filterLogic } = props;
+  const { filterOptions, filterLogic } = props;
+  const { data } = useContext();
   const { nodes, edges } = data;
   if (!nodes) {
     return null;

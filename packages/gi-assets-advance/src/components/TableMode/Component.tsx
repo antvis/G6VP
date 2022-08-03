@@ -34,8 +34,8 @@ const TableMode: React.FC<IProps> = props => {
     tooltip: {},
   });
 
-  const nodeDataCfg: S2DataConfig = useNodeDataCfg(schemaData, graphData, largeGraphData);
-  const edgeDataCfg: S2DataConfig = useEdgeDataCfg(schemaData, graphData, largeGraphData);
+  const nodeDataCfg: S2DataConfig = useNodeDataCfg();
+  const edgeDataCfg: S2DataConfig = useEdgeDataCfg();
 
   useListenNodeSelect(isSelectedActive, nodeS2Ref.current, isFullScreen);
   useListenEdgeSelect(isSelectedActive, edgeS2Ref.current, isFullScreen);
