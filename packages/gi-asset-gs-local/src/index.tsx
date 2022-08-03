@@ -1,2 +1,3 @@
 import services from './services';
-export { services };
+import * as components from './components';
+export { components, services };

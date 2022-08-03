@@ -6,7 +6,7 @@ import { Parser } from 'json2csv';
 
 const { Option } = Select;
 
-const AlgorithmAnalysis = ({ serviceId }) => {
+const ExecAlgorithmPanel = ({ serviceId }) => {
   const [form] = Form.useForm();
   const { services } = useContext();
 
@@ -149,4 +149,4 @@ const AlgorithmAnalysis = ({ serviceId }) => {
   );
 };
 
-export default AlgorithmAnalysis;
+export default ExecAlgorithmPanel;
