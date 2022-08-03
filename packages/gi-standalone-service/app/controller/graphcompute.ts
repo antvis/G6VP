@@ -98,6 +98,17 @@ class GraphComputeController extends Controller {
     const result = await ctx.service.graphcompute.queryElementProperties(params);
     responseData(ctx, result);
   }
+
+  /**
+   * 执行图算法
+   */
+  async execAlgorithm() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+
+    const result = await ctx.service.graphcompute.execAlgorithm(params);
+    responseData(ctx, result);
+  }
 }
 
 export default GraphComputeController;

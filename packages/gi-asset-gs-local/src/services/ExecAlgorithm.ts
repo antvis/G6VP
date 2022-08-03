@@ -4,7 +4,6 @@ export const ExecAlgorithm = {
   name: '执行 GraphScope 图算法',
   service: async (params = {}) => {
     const graphName = localStorage.getItem('graphScopeGraphName');
-    const instanceId = localStorage.getItem('GRAPHSCOPE_INSTANCE');
 
     const response = await request(`${HTTP_SERVICE_URL}/graphcompute/execAlgorithm`, {
       method: 'post',
@@ -14,7 +13,6 @@ export const ExecAlgorithm = {
       data: {
         ...params,
         graphName,
-        instanceId,
       },
     });
     return response;
