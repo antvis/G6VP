@@ -1,0 +1,334 @@
+import SDK_PACKAGE from '@alipay/graphinsight/package.json';
+import { produce } from 'immer';
+import beautify from 'js-beautify';
+import { getAssetPackages, getCombinedAssets } from '../loader';
+export function beautifyCode(code: string) {
+  return beautify(code, {
+    indent_size: 2,
+    indent_char: ' ',
+    max_preserve_newlines: -1,
+    preserve_newlines: false,
+    keep_array_indentation: false,
+    break_chained_methods: false,
+    brace_style: 'collapse',
+    space_before_conditional: true,
+    unescape_strings: false,
+    jslint_happy: false,
+    end_with_newline: false,
+    wrap_line_length: 120,
+    e4x: false,
+  });
+}
+/**
+ * get js code for Riddle
+ * @param opts  previewer props
+ */
+const getHtmlAppCode = opts => {
+  const { data, id, schemaData } = opts;
+
+  const config = produce(opts.config, draft => {
+    try {
+      delete draft.node.meta;
+      delete draft.node.info;
+      delete draft.edge.meta;
+      delete draft.edge.info;
+    } catch (error) {
+      console.warn(error);
+    }
+  });
+  const serviceConfig = produce(opts.serviceConfig, draft => {
+    draft.forEach(s => {
+      delete s.others;
+    });
+  });
+
+  try {
+  } catch (error) {
+    console.log('error', error);
+  }
+
+  const configStr = beautifyCode(JSON.stringify(config));
+  const dataStr = beautifyCode(JSON.stringify(data));
+  const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
+  const packages = getAssetPackages();
+  const combinedAssets = getCombinedAssets();
+  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+
+  const GIAssetsScripts = packages
+    .map(pkg => {
+      return `<script src="${pkg.url}"></script>`;
+    })
+    .join('\n  ');
+  const GIAssetsLinks = packages
+    .map(pkg => {
+      const href = pkg.url.replace('min.js', 'css');
+      return `<link rel="stylesheet" href="${href}" />`;
+    })
+    .join('\n  ');
+  const packagesStr = beautifyCode(JSON.stringify(Object.values(packages)));
+
+  return `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!--- CSS -->
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css" />
+    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.css" /> 
+    ${GIAssetsLinks}
+ 
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+
+
+      /** 计算逻辑 **/
+      const packages = ${packagesStr};
+
+      const loadCss = options => {
+        const link = document.createElement('link');
+        link.type = 'text/css';
+        link.href = options.id || options.url;
+        if (options.url) {
+          const href = options.url.replace('min.js', 'css');
+          link.href = href;
+        }
+        link.rel = 'stylesheet';
+        document.head.append(link);
+      };
+
+       loadJS = options => {
+        return new Promise(resolve => {
+          const script = document.createElement('script');
+          script.type = options.type || 'text/javascript';
+          script.async = !!options.async;
+          script.id = options.id || options.url;
+          if (options.url) {
+            script.src = options.url;
+          }
+          if (options.text) {
+            script.text = options.text;
+          }
+          document.body.append(script);
+          script.onload = () => {
+            resolve(script);
+          };
+          script.onerror = () => {
+            resolve(script);
+          };
+        });
+      };
+
+     const loader = options => {
+      return Promise.all([
+        //js
+        ...options.map(opt => {
+          const asset = window[opt.global];
+          if (asset) {
+            return { ...asset, ...opt };
+          }
+          return loadJS(opt).then(_res => {
+            let assets = window[opt.global];
+            if (!assets) {
+              console.warn( opt.global + 'is not found');
+              return undefined;
+            }
+            if (assets.hasOwnProperty('default')) {
+              assets = assets.default;
+            }
+            return { ...assets, ...opt };
+          });
+        }),
+        //css
+        ...options.map(opt => {
+          if (window[opt.global]) {
+            return undefined;
+          }
+          return loadCss(opt);
+        }),
+      ]).then(res => {
+        return res.filter(c => {
+          return c;
+        });
+      });
+    };
+
+     const getAssets = async () => {
+      return loader(packages).then(res => {
+        return res;
+      });
+    };
+   
+    const appendInfo = (itemAssets, version, name) => {
+      if (!itemAssets) {
+        return {};
+      }
+      const coms = Object.keys(itemAssets).reduce((a, c) => {
+        return {
+          ...a,
+          [c]: {
+            ...itemAssets[c],
+            version,
+            pkg: name,
+          },
+        };
+      }, {});
+      return coms;
+    };
+    
+    /**
+   * 获取融合后的资产
+   * @returns
+   */
+  export const getCombinedAssets = async () => {
+    const assets = await getAssets();
+    console.log('assets', assets);
+    //@ts-ignore
+    return assets.reduce(
+      (acc, curr) => {
+        const { components, version, name, elements, layouts, services } = curr;
+        const coms = appendInfo(components, version, name);
+        const elems = appendInfo(elements, version, name);
+        const lays = appendInfo(layouts, version, name);
+
+        return {
+          components: {
+            ...acc.components,
+            ...coms,
+          },
+          elements: {
+            ...acc.elements,
+            ...elems,
+          },
+          layouts: {
+            ...acc.layouts,
+            ...lays,
+          },
+          services: services
+            ? [
+                ...acc.services,
+                {
+                  version,
+                  pkg: name,
+                  ...services,
+                },
+              ]
+            : acc.services,
+        };
+      },
+      {
+        components: {},
+        elements: {},
+        layouts: {},
+        services: [],
+      },
+    );
+  };
+  export const queryAssets = async (activeAssetsKeys) => {
+    let components = {};
+    let elements;
+    let layouts;
+ 
+    const FinalAssets = await getCombinedAssets();
+  
+    components = activeAssetsKeys.components.reduce((acc, curr) => {
+      const asset = FinalAssets.components[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
+    }, {});
+  
+    elements = activeAssetsKeys.elements.reduce((acc, curr) => {
+      const asset = FinalAssets.elements[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
+    }, {});
+  
+    layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
+      const asset = FinalAssets.layouts[curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
+    }, {});
+  
+    return await new Promise(resolve => {
+      resolve({
+        components,
+        elements,
+        layouts,
+        services: FinalAssets.services,
+      });
+    });
+  };
+  
+  
+
+
+      /**  由GI平台自动生成的，请勿修改 start **/
+ 
+      const GI_SERVICES_OPTIONS = ${serviceStr};
+      const GI_PROJECT_CONFIG = ${configStr};
+      const GI_LOCAL_DATA = ${dataStr};
+      const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
+      
+      /**  由GI平台自动生成的，请勿修改 end **/
+   
+      const assets = getCombinedAssets();
+    const MyGraphSdk = () => {
+      const config = GI_PROJECT_CONFIG;
+      const services = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA,GI_SCHEMA_DATA);
+    
+      return  <div style={{ height: '100vh' }}>
+        <GISDK.default config={config} assets={assets} services={services}/>
+      </div>;
+    };
+      window.onload = () => {
+        ReactDOM.render(<MyGraphSdk />, document.getElementById('root'));
+      };
+    </script>
+    
+    <!--- REACT DEPENDENCIES-->
+    <script crossorigin src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
+    <script
+      crossorigin
+      src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!--- Antd DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.20.4/dist/antd.min.js"></script>
+    <!--- Graphin DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
+    <!--- G2/G2Plot DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
+    <!--- GI DEPENDENCIES-->
+    <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
+    ${GIAssetsScripts}
+  </body>
+</html>
+    `;
+};
+
+export default getHtmlAppCode;

@@ -113,25 +113,35 @@ const getCombinedAssets = () => {
   const assets = getAssets();
   return assets.reduce(
     (acc, curr) => {
+      const {services,components,layouts,elements}= curr.assets;
       return {
         components: {
           ...acc.components,
-          ...curr.assets.components,
+          ...components,
         },
         elements: {
           ...acc.elements,
-          ...curr.assets.elements,
+          ...elements,
         },
         layouts: {
           ...acc.layouts,
-          ...curr.assets.layouts,
+          ...layouts,
         },
+        services: services
+        ? [
+            ...acc.services,
+            {
+              ...services,
+            },
+          ]
+        : acc.services,
       };
     },
     {
       components: {},
       elements: {},
       layouts: {},
+      services:[]
     },
   );
 };
@@ -156,6 +166,23 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
     };
   });
 };
+const getCombineServices = (servers) => {
+  if (!servers) {
+    return [];
+  }
+  return servers.reduce((acc, curr) => {
+    const { id, services } = curr;
+    const sers = Object.keys(services).map(key => {
+      const service = services[key];
+      return {
+        ...service,
+        id: id+'/'+key, //根据GI平台规范，服务ID 由 引擎ID+服务函数名 唯一标识
+      };
+    });
+    return [...acc, ...sers];
+  }, [] );
+};
+
 
 
 
@@ -167,11 +194,14 @@ const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
       const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
       
       /**  由GI平台自动生成的，请勿修改 end **/
-   
-      const assets = getCombinedAssets();
-    const MyGraphSdk = () => {
       const config = GI_PROJECT_CONFIG;
-      const services = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA,GI_SCHEMA_DATA);
+      const assets = getCombinedAssets();
+      const customServices = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA,GI_SCHEMA_DATA);
+      const assetServices = getCombineServices(assets.services)
+      const services = [...assetServices,...customServices];
+      console.log('services',services)
+
+    const MyGraphSdk = () => {
     
       return  <div style={{ height: '100vh' }}>
         <GISDK.default config={config} assets={assets} services={services}/>

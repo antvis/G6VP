@@ -2,7 +2,9 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import UploadPanel from '../../uploadData/index';
+// import UploadPanel from '../../uploadData/index';
+import UploadPanel from '../../DataSource';
+
 interface DataSourceProps {
   data: any;
 }

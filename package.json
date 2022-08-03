@@ -1,4 +1,37 @@
 {
+  "scripts": {
+    "assets": "cd packages/gi-assets-basic && npm run start",
+    "assets:advanced": "cd packages/gi-assets-advance && npm run start",
+    "assets:algorithm": "cd packages/gi-assets-algorithm && npm run start",
+    "assets:docs": "cd packages/gi-assets-basic && npm run docs",
+    "assets:testing": "cd packages/gi-assets-testing && npm run start",
+    "bootstrap": "lerna link && lerna bootstrap  --hoist --force-local",
+    "build": "npm run build:site && npm run move:dist",
+    "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:site": "cd packages/gi-site && tnpm install && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "clean": "lerna clean",
+    "common:components": "cd packages/gi-common-components && npm run start",
+    "common:components:docs": "cd packages/gi-common-components && npm run docs",
+    "core": "cd packages/gi && npm run start",
+    "link": "lerna link --force-local",
+    "list": "lerna list",
+    "move:dist": "node ./deploy.js",
+    "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@alipay/yuyan-config-data": "^2.0.7",
     "@ant-design/icons": "latest",
@@ -29,38 +62,5 @@
     "ts-loader": "^9.2.6",
     "umi": "^3.5.18",
     "webpack-bundle-analyzer": "^4.5.0"
-  },
-  "scripts": {
-    "core": "cd packages/gi && npm run start",
-    "assets": "cd packages/gi-assets-basic && npm run start",
-    "assets:advanced": "cd packages/gi-assets-advance && npm run start",
-    "assets:algorithm": "cd packages/gi-assets-algorithm && npm run start",
-    "common:components": "cd packages/gi-common-components && npm run start",
-    "assets:testing": "cd packages/gi-assets-testing && npm run start",
-    "assets:docs": "cd packages/gi-assets-basic && npm run docs",
-    "common:components:docs": "cd packages/gi-common-components && npm run docs",
-    "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
-    "bootstrap": "lerna link && lerna bootstrap  --hoist --force-local ",
-    "build": "npm run build:site && npm run move:dist",
-    "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "build:site": "cd packages/gi-site && tnpm install && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "move:dist": "node ./deploy.js",
-    "list": "lerna list",
-    "link": "lerna link --force-local",
-    "clean": "lerna clean"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
