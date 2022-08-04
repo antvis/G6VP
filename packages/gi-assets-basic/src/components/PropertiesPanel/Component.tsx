@@ -58,8 +58,6 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service(model);
 
-      console.log('detail:', detail);
-
       setState(preState => {
         return {
           ...preState,
@@ -103,7 +101,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
   const content =
     !isLoading && detail ? <Properties data={detail} defaultiStatistic={defaultiStatistic} /> : <Skeleton active />;
-  const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
+  
   return (
     <DivContainer
       animate={true}
