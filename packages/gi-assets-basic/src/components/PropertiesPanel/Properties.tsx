@@ -15,8 +15,6 @@ const Properties: React.FunctionComponent<PropertiesProps> = props => {
     isStatistic: defaultiStatistic,
   });
 
-  console.log("data:", data)
-
   const onChange = (checked: boolean) => {
     updateState(draft => {
       draft.isStatistic = checked;
