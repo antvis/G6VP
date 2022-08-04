@@ -11,7 +11,9 @@ export interface IProject {
   };
   type?: 'case' | 'project' | 'save';
   id?: string;
-  name?: string
+  name?: string;
+  cover?: string;
+  description?: string;
   members?: { name: string; id: string; state: 'master' | 'user' }[];
   projectConfig?: GIConfig;
   serviceConfig: {

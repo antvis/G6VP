@@ -12,6 +12,7 @@ import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
 import CreatePanel from './Create';
+import DeployedList from './DeployedList';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
@@ -20,7 +21,7 @@ setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
-const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOCAL_ENV
+const LIST_OPTIONS: { id: 'case' | 'project' | 'save' | 'deployed'; name: string }[] = IS_LOCAL_ENV
   ? [
       {
         id: 'case',
@@ -34,6 +35,11 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOC
         id: 'save',
         name: '我的保存',
       },
+      // 测试用，需要项目
+      {
+        id: 'deployed',
+        name: '已部署项目',
+      },
     ]
   : [
       {
@@ -43,6 +49,10 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save'; name: string }[] = IS_LOC
       {
         id: 'save',
         name: '我的保存',
+      },
+      {
+        id: 'deployed',
+        name: '已部署项目',
       },
     ];
 
@@ -93,7 +103,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const rightContentExtra = (
     <>
       {IS_LOCAL_ENV && <AlibabaLogin />}
-      {/* <Notification /> */}
+      <Notification />
       <QRcode />
       <DataModeCard />
     </>
@@ -129,6 +139,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
+                  {c.id === 'deployed' && <DeployedList />}
                 </TabPane>
               );
             })}
