@@ -20,22 +20,22 @@ export type {
   AssetCategory,
   AssetInfo,
   AssetType,
-  GIComponentAssets,
-  GIElementsAssets,
-  GILayoutAssets,
+  EngineServer,
+  GIAC_ITEMS_TYPE,
   GIAssets,
+  GIComponentAssets,
   GIComponentConfig,
   GIConfig,
   GIEdgeConfig,
+  GIElementsAssets,
   GIGraphData,
   GIGraphSchema,
+  GILayoutAssets,
   GINodeConfig,
   GIService,
-  ISourceDataMap,
   GraphSchemaData,
-  GIAC_ITEMS_TYPE,
+  ISourceDataMap,
   ServiceObject,
-  EngineServer,
 } from './typing';
 export { useContext, utils };
 export { extra };
@@ -52,7 +52,7 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.8.0';
+const version = '2.9.0';
 console.log(`%c GI_VERSION:${version}`, 'color:red');
 
 export default GISDK;
