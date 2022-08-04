@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getUser } from '../services/user';
+import { IS_LOCAL_ENV } from '../services/const';
 
 export default () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -13,7 +14,9 @@ export default () => {
   };
 
   useEffect(() => {
-    getLoginUserInfo();
+    if (!IS_LOCAL_ENV) {
+      getLoginUserInfo();
+    }
   }, []);
 
   return userInfo;

@@ -422,7 +422,6 @@ class GraphComputeService extends Service {
     const {
       name,
       graphName,
-      instanceId,
       colomnName,
       maxRound = 10,
       limit = 100,

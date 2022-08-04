@@ -8,16 +8,22 @@ import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
 import { queryShareList, deleteShareById } from '../../services/share';
 import { IS_LOCAL_ENV } from '../../services/const';
+import type { IProject } from '../../services/typing';
 
-interface ProjectListProps {
+interface SaveListState {
+  lists: IProject[];
+  visible: boolean;
+}
+
+interface SaveListProps {
   onCreate?: () => void;
   type: 'project' | 'case' | 'save';
 }
 
-const SaveList: React.FunctionComponent<ProjectListProps> = props => {
+const SaveList: React.FunctionComponent<SaveListProps> = props => {
   const { type } = props;
   const history = useHistory();
-  const [state, updateState] = useImmer({
+  const [state, updateState] = useImmer<SaveListState>({
     lists: [],
     visible: false,
   });
@@ -103,7 +109,7 @@ const SaveList: React.FunctionComponent<ProjectListProps> = props => {
                   history.push(`/share/${id}`);
                 }}
                 cover={<img src={cover} style={{ width: '70px', height: '70px' }} />}
-                title={name}
+                title={name || ""}
                 time={utils.time(gmtCreate)}
                 extra={
                   <Dropdown overlay={menu(id)} placement="bottomCenter">
