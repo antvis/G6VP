@@ -7,5 +7,6 @@ const info = {
   category: 'algorithm-analysis',
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
+  services: ['ExecAlgorithm'],
 };
 export default info;
