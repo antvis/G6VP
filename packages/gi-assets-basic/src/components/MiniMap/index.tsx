@@ -17,4 +17,4 @@ export default {
   info,
   component: MiniMap,
   registerMeta,
-};
+} as any;
