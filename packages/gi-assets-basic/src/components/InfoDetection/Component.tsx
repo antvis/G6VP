@@ -1,21 +1,20 @@
 import { useContext } from '@alipay/graphinsight';
-import { detectAllCycles, pageRank } from '@antv/algorithm';
+import { detectAllCycles } from '@antv/algorithm';
 import { INode } from '@antv/g6';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import DegreeScatter from './DegreeScatter';
-import { IDegreeState } from "./type"
 import './index.less';
+import { IDegreeState } from './type';
 
 interface IState {
   isolateNodes: NodeConfig[];
   circles: object[];
-//   avgPageRank: number;
-//   avgDegree: number;
+  //   avgPageRank: number;
+  //   avgDegree: number;
 }
-
 
 const InfoDetection = () => {
   const { data, graph } = useContext();
@@ -36,8 +35,7 @@ const InfoDetection = () => {
     inDegree: new Map(),
     outDegree: new Map(),
     totalDegree: new Map(),
-  })
-
+  });
 
   React.useEffect(() => {
     const isolateNodes = data.nodes.filter(item => {
@@ -59,24 +57,24 @@ const InfoDetection = () => {
     const outDegree = new Map();
     const totalDegree = new Map();
     data.nodes.forEach(node => {
-       const nodeItem = graph.findById(node.id) as INode;
-       const edges = nodeItem.getEdges(); 
-       // 总度数为节点相连的边的数量
-       const total = edges.length;
-       let inD = 0;
-       let outD = 0;
-       edges.forEach(edge => {
-          const { source } = edge.getModel();
-          if (source === node.id) {
-            outD++;
-          } else {
-            inD++;
-          }
-       })
-       inDegree.set(inD, inDegree.has(inD) ? inDegree.get(inD) + 1 : 1);
-       outDegree.set(outD, outDegree.has(outD) ? outDegree.get(outD) + 1 : 1);
-       totalDegree.set(total, totalDegree.has(total) ? totalDegree.get(total) + 1 : 1);
-    })
+      const nodeItem = graph.findById(node.id) as INode;
+      const edges = nodeItem.getEdges();
+      // 总度数为节点相连的边的数量
+      const total = edges.length;
+      let inD = 0;
+      let outD = 0;
+      edges.forEach(edge => {
+        const { source } = edge.getModel();
+        if (source === node.id) {
+          outD++;
+        } else {
+          inD++;
+        }
+      });
+      inDegree.set(inD, inDegree.has(inD) ? inDegree.get(inD) + 1 : 1);
+      outDegree.set(outD, outDegree.has(outD) ? outDegree.get(outD) + 1 : 1);
+      totalDegree.set(total, totalDegree.has(total) ? totalDegree.get(total) + 1 : 1);
+    });
 
     updateState(draft => {
       draft.isolateNodes = isolateNodes;
@@ -86,12 +84,10 @@ const InfoDetection = () => {
     });
 
     updateDegree(draft => {
-        draft.inDegree = inDegree;
-        draft.outDegree = outDegree;
-        draft.totalDegree = totalDegree;
-    })
-
-
+      draft.inDegree = inDegree;
+      draft.outDegree = outDegree;
+      draft.totalDegree = totalDegree;
+    });
   }, [data]);
 
   React.useEffect(() => {
@@ -122,7 +118,7 @@ const InfoDetection = () => {
           edges.forEach(edge => {
             const { source, target, id } = edge.getModel();
             if ((source === cur && target == next) || (source == next && target === cur)) {
-              graph.setItemState(edge, 'active', true);
+              graph.setItemState(edge.getID(), 'active', true);
             }
           });
           cur = next;

@@ -1,9 +1,9 @@
 import csvUtils from './csv';
-import hullUtils from './hull';
 import graphUtils from './graph';
+import hullUtils from './hull';
 
 export default {
-    ...csvUtils,
-    ...hullUtils,
-    ...graphUtils,
-}
+  ...csvUtils,
+  ...hullUtils,
+  ...graphUtils,
+} as any;
