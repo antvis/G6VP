@@ -8,7 +8,6 @@
 // import PatternMatch from './PatternMatch';
 // import SearchBar from './SearchBar';
 import AddSheetbar from './AddSheetbar';
-import AlgorithmAnalysis from './AlgorithmAnalysis';
 import GremlinQuery from './GremlinQuery';
 import Sheetbar from './Sheetbar';
 import SnapshotGallery from './SnapshotGallery';
@@ -16,13 +15,4 @@ import StyleSetting from './StyleSetting';
 import TableMode from './TableMode';
 import ThemeSetting from './ThemeSetting';
 
-export {
-  StyleSetting,
-  SnapshotGallery,
-  GremlinQuery,
-  Sheetbar,
-  AddSheetbar,
-  AlgorithmAnalysis,
-  ThemeSetting,
-  TableMode,
-};
+export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode };
