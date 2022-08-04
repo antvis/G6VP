@@ -1,7 +1,7 @@
-import type { GraphinData } from '@antv/graphin';
 import { Graph, Item } from '@antv/g6';
-import { isNumber } from 'lodash';
+import type { GraphinData } from '@antv/graphin';
 import { ext } from '@antv/matrix-util';
+import { isNumber } from 'lodash';
 
 const transform = ext.transform;
 
@@ -57,7 +57,7 @@ const scaleNodes = (graphData: GraphinData, value: number = 600) => {
  * @param focusNode 需要聚焦的节点 item
  * @param height 图的高度
  */
- export const focusNodeY = (graph, focusNode, height, focusTo: 'center' | 'top' | number = 'center') => {
+export const focusNodeY = (graph, focusNode, height, focusTo: 'center' | 'top' | number = 'center') => {
   const y = focusNode.getModel().y;
 
   const group = graph.getGroup();
@@ -77,15 +77,18 @@ const scaleNodes = (graphData: GraphinData, value: number = 600) => {
   const dy = vy * matrix[4];
   let lastY = 0;
   let newY = 0;
-  group.animate((ratio) => {
-    newY = dy * ratio;
-    matrix = transform(matrix, [['t', 0, newY - lastY]]);
-    lastY = newY;
-    return { matrix };
-  }, {
-    duration: 500
-  });
-}
+  group.animate(
+    ratio => {
+      newY = dy * ratio;
+      matrix = transform(matrix, [['t', 0, newY - lastY]]);
+      lastY = newY;
+      return { matrix };
+    },
+    {
+      duration: 500,
+    },
+  );
+};
 
 export const ADD_EDGE_ID = 'ADD_EDGE_ID';
 export const addEdge = (sourceId: string, graph: Graph) => {
@@ -107,10 +110,11 @@ export const addEdge = (sourceId: string, graph: Graph) => {
     curveLevel: 0,
     style: {
       lineAppendWidth: 30,
-      endArrow: true
-    }
+      endArrow: true,
+    },
   };
   const edge = graph.addItem('edge', edgeModel);
+  //@ts-ignore
   edge.toFront();
   source.toFront();
 };
@@ -128,11 +132,7 @@ const exportGraphData = (data, fileName = 'graph-data') => {
   return jsonText;
 };
 
-export function clearItemStates(
-  graph: Graph,
-  graphItem: Item,
-  states: string[],
-) {
+export function clearItemStates(graph: Graph, graphItem: Item, states: string[]) {
   states.forEach(state => {
     if (graphItem?.hasState(state)) {
       graph.setItemState(graphItem, state, false);
@@ -141,11 +141,7 @@ export function clearItemStates(
   });
 }
 
-export const clearItemsStates = (
-  graph: Graph,
-  items: Item[],
-  clearStates: string[],
-) => {
+export const clearItemsStates = (graph: Graph, items: Item[], clearStates: string[]) => {
   items.forEach(graphItem => {
     try {
       clearItemStates(graph, graphItem, clearStates);
@@ -153,8 +149,13 @@ export const clearItemsStates = (
       console.log('error :>> ', graphItem, error);
     }
   });
-}
+};
 
 export default {
-  scaleNodes, focusNodeY, addEdge, exportGraphData, clearItemsStates, clearItemStates
+  scaleNodes,
+  focusNodeY,
+  addEdge,
+  exportGraphData,
+  clearItemsStates,
+  clearItemStates,
 };
