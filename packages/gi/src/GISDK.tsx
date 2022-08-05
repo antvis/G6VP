@@ -232,6 +232,7 @@ const GISDK = (props: Props) => {
       });
     },
   };
+
   const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
     return {
       ...acc,

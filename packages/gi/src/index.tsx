@@ -25,6 +25,7 @@ export type {
   GILayoutAssets,
   GIAssets,
   GIComponentConfig,
+  GILayoutConfig,
   GIConfig,
   GIEdgeConfig,
   GIGraphData,
