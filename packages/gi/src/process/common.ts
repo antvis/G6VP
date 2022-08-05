@@ -1,3 +1,4 @@
+import { GraphinData } from "@antv/graphin";
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
@@ -124,4 +125,69 @@ export const getService = (services: any[], serviceId?: string) => {
     return null;
   }
   return service;
+};
+
+
+/**
+ *
+ * @param source 原数据 格式 { type:"object",properties:{}}
+ * @returns
+ */
+ export const getDefaultValues = s => {
+  const ROOT = 'props';
+  const result = {};
+  const walk = (schema, obj, k) => {
+    const { type, properties } = schema;
+    if (type === 'void') {
+      Object.keys(properties).forEach(key => {
+        walk(properties[key], obj, key);
+      });
+      return;
+    }
+    if (type === 'object') {
+      obj[k] = {};
+      const val = obj[k];
+      Object.keys(properties).forEach(key => {
+        walk(properties[key], val, key);
+      });
+      return;
+    }
+    obj[k] = schema.default;
+  };
+  walk(s, result, ROOT);
+  return result[ROOT];
+};
+
+const walkProperties = data => {
+  const result: string[] = [];
+  const walk = obj => {
+    Object.keys(obj).forEach((key: string) => {
+      const value = obj[key];
+      const isObject = Object.prototype.toString.call(value) === '[object Object]';
+      if (isObject) {
+        walk(value);
+      } else {
+        result.push(key);
+      }
+    });
+  };
+  walk(data);
+  return [...new Set(result)];
+};
+export const getKeysByData = (data: GraphinData, category: 'node' | 'edge'): string[] => {
+  try {
+    if (category === 'node') {
+      const node = data.nodes[0] || {};
+      const result = walkProperties(node);
+
+      return result;
+    }
+    if (category === 'edge') {
+      const edge = data.edges[0] || {};
+      const result = walkProperties(edge);
+
+      return result;
+    }
+  } catch (error) {}
+  return [];
 };

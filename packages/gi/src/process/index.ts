@@ -8,6 +8,8 @@ export {
   isStyles,
   time,
   uniqueElementsBy,
+  getDefaultValues,
+  getKeysByData
 } from './common';
 export { filterByRules } from './filterByRules';
 export { getDefSpringLenFunction } from './getDefSpringLenFunction';

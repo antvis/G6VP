@@ -11,6 +11,7 @@ import FitView from './FitView';
 import FreeLayout from './FreeLayout';
 import InfoDetection from './InfoDetection';
 import LassoSelect from './LassoSelect';
+import LayoutSwitch from './LayoutSwitch';
 import Loading from './Loading';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
@@ -21,7 +22,6 @@ import Placeholder from './Placeholder';
 import PropertiesPanel from './PropertiesPanel';
 import Save from './Save';
 import SideTabs from './SideTabs';
-// import ThemeSetting from './ThemeSetting';
 import ToggleClusterWithMenu from './ToggleClusterWithMenu';
 import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
@@ -76,6 +76,6 @@ export {
   PinNodeWithMenu,
   Overview,
   SankeyAnalysis,
-  // ThemeSetting,
-  InfoDetection
+  InfoDetection,
+  LayoutSwitch
 };
