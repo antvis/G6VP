@@ -9,13 +9,13 @@ const GI_LOCAL_URL = [
 export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
 export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
 // 本地环境
-export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+// export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 
 // 开发环境
 // export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
 
 // 测试环境
-// export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : window.location.origin; // 'https://storehouse.test.alipay.net';
+export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : window.location.origin; // 'https://storehouse.test.alipay.net';
 
 // 线上环境
 // export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
