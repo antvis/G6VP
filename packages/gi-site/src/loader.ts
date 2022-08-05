@@ -4,9 +4,9 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 /** 外部的引擎包，软连接到这里，临时方案，后续删除 */
-import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-assets-gs-local';
+// import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-assets-gs-local';
 // import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
-// import * as GI_SERVER_LOCAL from '@alipay/gi-server-local';
+import * as GI_SERVER_LOCAL from '@alipay/gi-server-local';
 // import * as GI_ASSETS_AKG from '@alipay/gi-assets-akg';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
@@ -55,10 +55,10 @@ const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
 }, {});
 const LOCAL_ASSETS = [
   /** 内置的引擎 */
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_SERVER_LOCAL'],
-  //   ...GI_SERVER_LOCAL,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_SERVER_LOCAL'],
+    ...GI_SERVER_LOCAL,
+  },
   /** 内置的资产 */
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_BASIC'],
@@ -97,12 +97,12 @@ const LOCAL_ASSETS = [
   //   ...OFFICIAL_PACKAGES_MAP['GI_SERVER_LOCAL'],
   //   ...GI_SERVER_LOCAL,
   // },
-  {
-    name: '@alipay/gi-assets-gs-local',
-    version: '1.0.0',
-    global: 'GI_ASSETS_GS_LOCAL',
-    ...GI_ASSETS_GS_LOCAL,
-  },
+  // {
+  //   name: '@alipay/gi-assets-gs-local',
+  //   version: '1.0.0',
+  //   global: 'GI_ASSETS_GS_LOCAL',
+  //   ...GI_ASSETS_GS_LOCAL,
+  // },
   // {
   //   name: '@alipay/gi-assets-akg',
   //   version: '1.2.2',
