@@ -46,7 +46,10 @@ export const getPackages = npm => {
     const name = c.name.replace('@alipay/', '');
     return {
       url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
-      global: name.split('-').join('_').toUpperCase(),
+      global: name
+        .split('-')
+        .join('_')
+        .toUpperCase(),
       ...c,
     };
   });
