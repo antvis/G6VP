@@ -18,7 +18,7 @@ const WrapTooltip = props => {
 };
 export interface GIAComponentProps {
   GIAC: IGIAC;
-  onClick: () => void;
+  onClick?: () => void;
   iconFontUrl?: string;
   className?: string;
 }
