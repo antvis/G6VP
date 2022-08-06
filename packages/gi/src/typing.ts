@@ -144,6 +144,7 @@ export interface LayoutAsset {
     id: string;
     name: string;
     type: AssetType;
+    icon?: string
     category: string;
     options: {
       type: string;
