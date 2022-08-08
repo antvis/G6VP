@@ -18,7 +18,7 @@ export interface IProps {
 const { TabPane } = Tabs;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, containerHeight, enableCopy } = props;
+  const { isSelectedActive, enableCopy } = props;
   const { graph } = useContext();
   const isFullScreen = useFullScreen();
 
@@ -31,7 +31,7 @@ const TableMode: React.FC<IProps> = props => {
     tooltip: {},
   });
 
-  const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: SpreadSheet | null; edgeTable: SpreadSheet | null }>({
+  const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable:any }>({
     nodeTable: null,
     edgeTable: null,
   });
@@ -41,29 +41,6 @@ const TableMode: React.FC<IProps> = props => {
 
   useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
   useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
-
-  // const setS2Options = () => {
-  //   const container = document.getElementById('gi-table-mode') as HTMLDivElement;
-  //   const width = container.clientWidth;
-  //   const height = container.clientHeight;
-  //   updateOptions(draft => {
-  //     draft.width = width;
-  //     draft.height = height;
-  //   });
-  // };
-
-  // // S2 table 适应父容器存在 bug，
-  // React.useEffect(() => {
-  //   window.addEventListener('resize', setS2Options);
-  //   return () => {
-  //     window.removeEventListener('resize', setS2Options);
-  //   };
-  // }, []);
-
-  // React.useLayoutEffect(() => {
-  //   setS2Options();
-  // }, []);
-
   React.useEffect(() => {
     const reset = () => {
       s2Instance.nodeTable?.interaction.reset();
@@ -75,17 +52,6 @@ const TableMode: React.FC<IProps> = props => {
       graph.off('canvas:click', reset);
     };
   }, [s2Instance.nodeTable, s2Instance.edgeTable]);
-  // React.useEffect(() => {
-  //   if (containerHeight) {
-  //     setOptions(preState => {
-  //       return {
-  //         ...preState,
-  //         // 去掉像素单位：如 400px -> 400
-  //         height: Number(containerHeight.slice(0, containerHeight.length - 2)),
-  //       };
-  //     });
-  //   }
-  // }, [containerHeight])
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     if (!isFullScreen) {
@@ -137,10 +103,9 @@ const TableMode: React.FC<IProps> = props => {
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
-      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane={false}>
+      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane>
         <TabPane tab="点表" key="node">
           <SheetComponent
-            //ref={nodeS2Ref}
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {
                 draft.nodeTable = s2;
@@ -155,7 +120,6 @@ const TableMode: React.FC<IProps> = props => {
         </TabPane>
         <TabPane tab="边表" key="edge">
           <SheetComponent
-            // ref={edgeS2Ref}
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {
                 draft.edgeTable = s2;
