@@ -234,6 +234,7 @@ export interface GIMeta {
 
 export interface GIComponentConfig {
   id: string;
+  name?: string;
   props: {
     GI_CONTAINER?: string[];
     GI_CONTAINER_INDEX?: number;
