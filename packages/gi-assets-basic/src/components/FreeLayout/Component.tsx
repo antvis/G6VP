@@ -39,7 +39,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
 
   const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets);
 
-  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets, bottomHeight);
+  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets);
 
   useFreeLayoutStyle(leftWidth, rightWidth, bottomHeight, leftVisible, rightVisible, bottomVisible, GISDK_ID);
 
