@@ -1,7 +1,9 @@
-import type { TypeAssetInfo } from './typing';
-import { getDefaultValues } from './utils';
 import { GraphinData } from '@antv/graphin';
+import { utils } from '@alipay/graphinsight';
 import type { GIComponentAssets, GraphSchemaData, GIService, GIConfig, GIAC_ITEMS_TYPE } from '@alipay/graphinsight';
+import type { TypeAssetInfo } from './typing';
+
+const { getDefaultValues } = utils;
 
 const getAllkeysBySchema = (schema, shapeType): string[] => {
   try {
