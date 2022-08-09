@@ -20,6 +20,7 @@
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.15",
     "@antv/graphin-icons": "^1.0.0",
+    "antd": "latest",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "install": "^0.13.0",
@@ -37,7 +38,6 @@
   },
   "peerDependencies": {
     "@antv/graphin": "2.x",
-    "antd": "latest",
     "react": "17.x",
     "react-dom": "17.x"
   },

@@ -1,14 +1,14 @@
 import GISDK, { utils } from '@alipay/graphinsight';
 import { original } from 'immer';
 import React from 'react';
-import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
-import { getProjectById } from '../../services/';
+import { getProjectById, updateProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { findEngineInstanceList } from '../../services/engineInstace';
+import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
@@ -17,7 +17,6 @@ import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import {IProject} from "../../services/typing"
 import useModel from './useModel';
 import { isObjectEmpty } from './utils';
 
@@ -45,7 +44,7 @@ const Analysis = props => {
   }
 
   const [state, updateState] = useModel();
-  
+
   const {
     config,
     key,
@@ -79,7 +78,9 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId) as IProject;
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = (await getProjectById(
+        projectId,
+      )) as IProject;
       const { transData, inputData } = data;
 
       // 根据 projectId，查询引擎实例信息
@@ -219,6 +220,22 @@ const Analysis = props => {
     };
   };
 
+  /** 更新站点的 SCHEMA 和 DATA */
+  const updateGISite = params => {
+    if (params) {
+      updateProjectById(projectId, {
+        schemaData: JSON.stringify(params.schemaData),
+        projectConfig: JSON.stringify({ ...config, ...params.config }),
+      }).then(res => {
+        updateState(draft => {
+          draft.schemaData = res.schemaData;
+          draft.config.nodes = res.projectConfig && res.projectConfig.nodes;
+          draft.config.edges = res.projectConfig && res.projectConfig.edges;
+        });
+      });
+    }
+  };
+
   // React.useLayoutEffect(() => {
   //   const { config, projectConfig, data } = state;
 
@@ -288,6 +305,7 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
+                updateGISite={updateGISite}
               ></GISDK>
             </div>
           </div>

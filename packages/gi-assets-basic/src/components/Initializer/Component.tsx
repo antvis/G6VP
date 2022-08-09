@@ -12,8 +12,7 @@ export interface IProps {
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { serviceId, schemaServiceId } = props;
-  console.log('Initializer render...');
-  const { services, updateContext, transform, largeGraphLimit } = context;
+  const { services, updateContext, transform, largeGraphLimit, updateGISite } = context;
 
   React.useEffect(() => {
     console.log('Initializer effect....', largeGraphLimit);
@@ -32,6 +31,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           const style = utils.generatorStyleConfigBySchema(schema);
           draft.config.nodes = style.nodes;
           draft.config.edges = style.edges;
+          if (updateGISite) {
+            updateGISite({ schemaData: schema, config: style });
+          }
         }
 
         const position = isPosition(nodes);

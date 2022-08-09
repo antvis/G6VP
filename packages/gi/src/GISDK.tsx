@@ -14,7 +14,7 @@ import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets, id } = props;
+  const { children, assets, id, updateGISite } = props;
   let { services: Services } = props;
 
   const GISDK_ID = React.useMemo(() => {
@@ -205,6 +205,7 @@ const GISDK = (props: Props) => {
 
   const ContextValue = {
     ...state,
+    updateGISite,
     GISDK_ID,
     services: Services,
     assets,
