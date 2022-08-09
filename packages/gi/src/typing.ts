@@ -80,10 +80,6 @@ export interface Props {
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
-  /**
-   * 临时方案：仅用于 gi-site 更新站点的 DATA 和 SCHEMA
-   */
-  updateGISite?: () => void;
 }
 
 export type AssetType =
