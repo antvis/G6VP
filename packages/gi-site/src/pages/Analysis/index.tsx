@@ -1,3 +1,4 @@
+import type { GISiteParams } from '@alipay/graphinsight';
 import GISDK, { utils } from '@alipay/graphinsight';
 import { original } from 'immer';
 import React from 'react';
@@ -59,6 +60,7 @@ const Analysis = props => {
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
+    engineId,
   } = state;
 
   const handleChangeNavbar = opt => {
@@ -78,7 +80,7 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = (await getProjectById(
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId } = (await getProjectById(
         projectId,
       )) as IProject;
       const { transData, inputData } = data;
@@ -94,6 +96,7 @@ const Analysis = props => {
       }
 
       updateState(draft => {
+        draft.engineId = engineId; // 项目绑定的引擎ID
         draft.id = projectId; //项目ID
         draft.config = config!; //项目配置
         draft.projectConfig = config!; //项目原始配置（从服务器中来的）
@@ -221,19 +224,36 @@ const Analysis = props => {
   };
 
   /** 更新站点的 SCHEMA 和 DATA */
-  const updateGISite = params => {
-    if (params) {
-      updateProjectById(projectId, {
-        schemaData: JSON.stringify(params.schemaData),
-        projectConfig: JSON.stringify({ ...config, ...params.config }),
-      }).then(res => {
-        updateState(draft => {
-          draft.schemaData = res.schemaData;
-          draft.config.nodes = res.projectConfig && res.projectConfig.nodes;
-          draft.config.edges = res.projectConfig && res.projectConfig.edges;
-        });
-      });
+  const updateGISite = (params: GISiteParams) => {
+    if (!params) {
+      return false;
     }
+    let { data, schemaData, tag, activeAssetsKeys, engineId } = params;
+    if (!schemaData || !engineId) {
+      return false;
+    }
+    const style = utils.generatorStyleConfigBySchema(schemaData);
+    const updateParams = {
+      engineId,
+      schemaData: JSON.stringify(schemaData),
+      projectConfig: JSON.stringify({ ...config, ...style }),
+    };
+    if (activeAssetsKeys) {
+      updateParams['activeAssetsKeys'] = JSON.stringify(activeAssetsKeys);
+    }
+    if (data) {
+      updateParams['data'] = JSON.stringify(data);
+    }
+
+    updateProjectById(projectId, updateParams).then(res => {
+      // updateState(draft => {
+      //   draft.schemaData = res.schemaData;
+      //   draft.activeAssetsKeys =res.activeAssetsKeys;
+      //   draft.config.nodes = res.projectConfig && res.projectConfig.nodes;
+      //   draft.config.edges = res.projectConfig && res.projectConfig.edges;
+      // });
+      window.location.reload();
+    });
   };
 
   // React.useLayoutEffect(() => {
@@ -266,9 +286,9 @@ const Analysis = props => {
       </div>
     );
   }
-  const context = { context: state, updateContext: updateState };
+  const context = { context: state, updateContext: updateState, updateGISite };
 
-  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
 
   return (
     <AnalysisContext.Provider value={context}>

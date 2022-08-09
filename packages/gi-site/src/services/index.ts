@@ -33,6 +33,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     console.log('project:', project);
 
     return {
+      engineId: project.engineId,
       schemaData: project.schemaData,
       config: project.projectConfig,
       data: project.data,
@@ -108,9 +109,22 @@ export const updateProjectById = async (
 ): Promise<IProject> => {
   if (IS_LOCAL_ENV) {
     const origin: any = await localforage.getItem(id);
-    const { data, serviceConfig, projectConfig, name, activeAssetsKeys, schemaData, expandInfo, type } = params;
+    const {
+      data,
+      serviceConfig,
+      projectConfig,
+      name,
+      activeAssetsKeys,
+      schemaData,
+      expandInfo,
+      type,
+      engineId,
+    } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
     // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
+    if (engineId) {
+      origin.engineId = engineId;
+    }
     if (data) {
       origin.data = JSON.parse(data);
     }

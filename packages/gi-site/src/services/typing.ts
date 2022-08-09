@@ -1,13 +1,15 @@
-import type { GraphSchemaData, GIConfig } from '@alipay/graphinsight';
+import type { GIConfig, GraphSchemaData } from '@alipay/graphinsight';
 import { GraphinData } from '@antv/graphin';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
 export interface IProject {
+  /** 引擎ID */
+  engineId: string;
   activeAssetsKeys: IActiveAssetsKeys;
   data: {
     transFunc?: string;
     transData: GraphinData;
-    inputData: any[]
+    inputData: any[];
   };
   type?: 'case' | 'project' | 'save';
   id?: string;
