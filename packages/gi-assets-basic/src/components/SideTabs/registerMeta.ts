@@ -4,8 +4,8 @@ const metas = deepClone(GI_CONTAINER_METAS);
 
 metas.height.default = 'calc(100vh - 120px)';
 metas.width.default = '450px';
-metas.offset.default = [0, 61];
-metas.placement.default = 'LB';
+metas.offset.default = [0, 0];
+metas.placement.default = 'LT';
 
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [] } = context;

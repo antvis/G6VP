@@ -4,6 +4,7 @@ export interface Options {
   offset: number[];
   width: string;
   height: string;
+  visible: boolean
 }
 
 /**
@@ -11,7 +12,7 @@ export interface Options {
  * @param props
  */
 const useGraphInsightContainerLayout = (GISDK_ID: string, outSideFromCanvas: boolean, options: Options) => {
-  const { width, height, placement } = options;
+  const { width, height, placement, visible } = options;
   React.useEffect(() => {
     const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
     const componentsContainer = document.getElementById(`${GISDK_ID}-container-extra`) as HTMLDivElement;
@@ -19,7 +20,7 @@ const useGraphInsightContainerLayout = (GISDK_ID: string, outSideFromCanvas: boo
       if (outSideFromCanvas) {
         container.className = `graphinsight-container ${placement}`;
         componentsContainer.className = `graphinsight-container-extra ${placement}`;
-        componentsContainer.style.width = width;
+        componentsContainer.style.width = visible ? width : "80px";
         componentsContainer.style.height = height;
       } else {
         container.className = '';
@@ -35,7 +36,7 @@ const useGraphInsightContainerLayout = (GISDK_ID: string, outSideFromCanvas: boo
       componentsContainer.style.width = 'unset';
       componentsContainer.style.height = 'unset';
     };
-  }, [outSideFromCanvas, placement, width, height]);
+  }, [outSideFromCanvas, placement, width, height, visible]);
 };
 
 export default useGraphInsightContainerLayout;
