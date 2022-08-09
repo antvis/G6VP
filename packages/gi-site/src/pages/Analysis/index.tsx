@@ -325,7 +325,6 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
-                updateGISite={updateGISite}
               ></GISDK>
             </div>
           </div>
