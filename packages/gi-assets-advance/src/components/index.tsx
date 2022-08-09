@@ -14,5 +14,6 @@ import SnapshotGallery from './SnapshotGallery';
 import StyleSetting from './StyleSetting';
 import TableMode from './TableMode';
 import ThemeSetting from './ThemeSetting';
+import ModeSwitch from './ModeSwitch';
 
-export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode };
+export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode, ModeSwitch };
