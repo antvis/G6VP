@@ -27,6 +27,7 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
     padding: '8px',
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
     transition: 'all 0.3s ease',
+    overflow: "visible",
   };
   const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px' };
   const handerBackStyles = {
@@ -58,12 +59,19 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
 
   const { children } = props;
   return (
-    <div style={styles} className="gi-side-tabs">
+    <div style={styles}>
       <div style={handerBackStyles as any}></div>
       <div onClick={handleToggle} style={handlerStyles as any}>
         <span style={handlerTextStyles as any}>||</span>
       </div>
-      <div className="gi-side-tabs-content">{children}</div>
+      <div
+        style={{
+          overflowY: 'auto',
+          height: '100%',
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };
