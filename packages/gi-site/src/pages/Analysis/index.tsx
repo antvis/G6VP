@@ -1,5 +1,7 @@
 import type { GISiteParams } from '@alipay/graphinsight';
 import GISDK, { utils } from '@alipay/graphinsight';
+import { SmileOutlined } from '@ant-design/icons';
+import { notification } from 'antd';
 import { original } from 'immer';
 import React from 'react';
 import { Navbar, Sidebar } from '../../components';
@@ -229,7 +231,12 @@ const Analysis = props => {
       return false;
     }
     let { data, schemaData, tag, activeAssetsKeys, engineId } = params;
+    debugger;
     if (!schemaData || !engineId) {
+      notification.error({
+        message: '服务引擎启动失败',
+        description: '没有查询到图模型，请检查接口是否正常',
+      });
       return false;
     }
     const style = utils.generatorStyleConfigBySchema(schemaData);
@@ -246,13 +253,14 @@ const Analysis = props => {
     }
 
     updateProjectById(projectId, updateParams).then(res => {
-      // updateState(draft => {
-      //   draft.schemaData = res.schemaData;
-      //   draft.activeAssetsKeys =res.activeAssetsKeys;
-      //   draft.config.nodes = res.projectConfig && res.projectConfig.nodes;
-      //   draft.config.edges = res.projectConfig && res.projectConfig.edges;
-      // });
-      window.location.reload();
+      notification.open({
+        message: '服务引擎启动成功',
+        description: '服务引擎启动成功，3秒后将重启窗口',
+        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     });
   };
 
