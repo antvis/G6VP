@@ -31,9 +31,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           const style = utils.generatorStyleConfigBySchema(schema);
           draft.config.nodes = style.nodes;
           draft.config.edges = style.edges;
-          if (updateGISite) {
-            updateGISite({ schemaData: schema, config: style });
-          }
+          // if (updateGISite) {
+          //   updateGISite({ schemaData: schema, config: style });
+          // }
         }
 
         const position = isPosition(nodes);
