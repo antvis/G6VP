@@ -3,11 +3,8 @@
   height: 100%;
   padding: 0px;
   border-right: 1px solid #ddd;
-  overflow-y: auto;
-  .gi-side-tabs-content {
-    overflow: hidden;
-    
-  }
+  overflow: auto;
+ 
   .ant-tabs {
     height: 100%;
   }
@@ -34,5 +31,7 @@
   .ant-tabs-content {
     height: 100%;
     padding: 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
   }
 }
