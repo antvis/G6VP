@@ -18,12 +18,9 @@ export interface IProps {
 const { TabPane } = Tabs;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, containerHeight, enableCopy } = props;
-  const { schemaData, data: graphData, graph, largeGraphData } = useContext();
+  const { isSelectedActive, enableCopy } = props;
+  const { graph } = useContext();
   const isFullScreen = useFullScreen();
-
-  const nodeS2Ref = React.useRef<SpreadSheet>(null);
-  const edgeS2Ref = React.useRef<SpreadSheet>(null);
 
   // S2 的 options 配置
   const [options, updateOptions] = useImmer<S2Options>({
@@ -34,63 +31,27 @@ const TableMode: React.FC<IProps> = props => {
     tooltip: {},
   });
 
+  const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable:any }>({
+    nodeTable: null,
+    edgeTable: null,
+  });
+
   const nodeDataCfg: S2DataConfig = useNodeDataCfg();
   const edgeDataCfg: S2DataConfig = useEdgeDataCfg();
 
-  useListenNodeSelect(isSelectedActive, nodeS2Ref.current, isFullScreen);
-  useListenEdgeSelect(isSelectedActive, edgeS2Ref.current, isFullScreen);
-
-  const setS2Options = () => {
-    const container = document.getElementById('gi-table-mode') as HTMLDivElement;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    // sOptions(preState => {
-    //   return {
-    //     ...preState,
-    //     width,
-    //     height,
-    //   };
-    // });
-    updateOptions(draft => {
-      draft.width = width;
-      draft.height = height;
-    });
-  };
-
-  // S2 table 适应父容器存在 bug，
-  React.useEffect(() => {
-    window.addEventListener('resize', setS2Options);
-    return () => {
-      window.removeEventListener('resize', setS2Options);
-    };
-  }, []);
-
-  React.useLayoutEffect(() => {
-    setS2Options();
-  }, []);
-
+  useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
+  useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
   React.useEffect(() => {
     const reset = () => {
-      nodeS2Ref.current?.interaction.reset();
-      edgeS2Ref.current?.interaction.reset();
+      s2Instance.nodeTable?.interaction.reset();
+      s2Instance.edgeTable?.interaction.reset();
     };
     graph.on('canvas:click', reset);
 
     return () => {
       graph.off('canvas:click', reset);
     };
-  }, [nodeS2Ref, edgeS2Ref]);
-  // React.useEffect(() => {
-  //   if (containerHeight) {
-  //     setOptions(preState => {
-  //       return {
-  //         ...preState,
-  //         // 去掉像素单位：如 400px -> 400
-  //         height: Number(containerHeight.slice(0, containerHeight.length - 2)),
-  //       };
-  //     });
-  //   }
-  // }, [containerHeight])
+  }, [s2Instance.nodeTable, s2Instance.edgeTable]);
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     if (!isFullScreen) {
@@ -142,20 +103,30 @@ const TableMode: React.FC<IProps> = props => {
 
   return (
     <div className="gi-table-mode" id="gi-table-mode">
-      <Tabs tabPosition="top" tabBarExtraContent={extra}>
+      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane>
         <TabPane tab="点表" key="node">
           <SheetComponent
-            ref={nodeS2Ref}
-            //adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            getSpreadSheet={s2 => {
+              updateS2Instance(draft => {
+                draft.nodeTable = s2;
+              });
+              // 处理你的业务逻辑
+            }}
+            adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
             options={options}
             dataCfg={nodeDataCfg}
             sheetType="table"
           />
         </TabPane>
-        <TabPane tab="边表" key="edge" forceRender>
+        <TabPane tab="边表" key="edge">
           <SheetComponent
-            ref={edgeS2Ref}
-            //adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            getSpreadSheet={s2 => {
+              updateS2Instance(draft => {
+                draft.edgeTable = s2;
+              });
+              // 处理你的业务逻辑
+            }}
+            adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
             options={options}
             dataCfg={edgeDataCfg}
             sheetType="table"
