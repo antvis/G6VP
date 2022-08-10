@@ -157,7 +157,6 @@ const Analysis = props => {
               defaultValues,
               matchItem.props,
             );
-            console.log('resProps', resProps);
 
             return {
               // ...matchItem,

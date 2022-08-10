@@ -22,7 +22,6 @@ const { TabPane } = Tabs;
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext, updateGISite } = useContext();
-  console.log('context', context, updateGISite);
 
   const CustomServer = utils.getCombineServer(context.activeAssets.services);
 
