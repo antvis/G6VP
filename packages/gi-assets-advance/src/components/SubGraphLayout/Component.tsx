@@ -1,6 +1,6 @@
 import { useContext } from '@alipay/graphinsight';
 import { Item } from '@antv/g6';
-import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Collapse, Select, message } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
@@ -12,28 +12,33 @@ const { Panel } = Collapse;
 
 interface IState {
   activeKeys: string[];
-  selectedNodes: any[];
+  // selectedNodes: any[];
   layouts: {
     type: string;
-    nodes: any[];
-    options: {};
+    nodes: { id: string }[];
+    options: object;
   }[];
 }
 
-const SubGraphLayout = () => {
+export interface ISubGraphLayoutProps {
+  isDefaultSubGraph: boolean;
+  sortKey: string;
+}
+
+const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
+  const { graph, data } = useContext();
+  const { isDefaultSubGraph, sortKey } = props;
+
   const [state, updateState] = useImmer<IState>({
-    activeKeys: ['0'],
-    selectedNodes: [],
+    // 默认全部 panel 展开
+    activeKeys: [],
+    // selectedNodes: [],
     layouts: [],
   });
 
-  const { graph } = useContext();
-
   const handleClick = async () => {
-    console.log('state', state);
     getLayoutsByOptions(state.layouts, graph);
   };
-  const { layouts } = state;
 
   const handlePlus = () => {
     const selectedNodes = graph
@@ -44,7 +49,7 @@ const SubGraphLayout = () => {
           id: node.id,
         };
       });
-    console.log(selectedNodes);
+
     if (selectedNodes.length === 0) {
       message.error('当前画布中无选中元素');
     } else {
@@ -52,15 +57,54 @@ const SubGraphLayout = () => {
         draft.layouts.push({
           type: 'circular',
           nodes: selectedNodes,
-          //@ts-ignore
           options: {
             type: 'circular',
           },
         });
-        
+
+        // 新添加的 panel 默认展开
+        draft.activeKeys.push(String(draft.layouts.length - 1));
       });
     }
   };
+
+  React.useEffect(() => {
+    if (!isDefaultSubGraph) {
+      updateState(draft => {
+        draft.activeKeys = [];
+        draft.layouts = [];
+      })
+      return;
+    }
+
+    const subGraph: { [key: string]: { id: string }[] } = {};
+
+    data.nodes.forEach(node => {
+      const value = node.data[sortKey];
+      if (!subGraph[value]) {
+        subGraph[value] = [{ id: node.id }];
+      } else {
+        subGraph[value].push({
+          id: node.id,
+        });
+      }
+    });
+
+    const layouts = Object.keys(subGraph).map(key => {
+      return {
+        type: 'circular',
+        nodes: subGraph[key],
+        options: {
+          key: 'circular',
+        },
+      };
+    });
+
+    updateState(draft => {
+      draft.activeKeys = layouts.map((_, i) => String(i));
+      draft.layouts = layouts;
+    });
+  }, [isDefaultSubGraph, sortKey, data]);
 
   // React.useEffect(() => {
   //   const onNodeSelectChange = e => {
@@ -102,7 +146,7 @@ const SubGraphLayout = () => {
           });
         }}
       >
-        {layouts.map((item, index) => {
+        {state.layouts.map((item, index) => {
           return (
             <Panel
               header={`布局${index}`}
