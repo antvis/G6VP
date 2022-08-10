@@ -1,6 +1,8 @@
 import { GraphinData } from '@antv/graphin';
-import React from 'react';
-export interface ServerComponentProps {}
+export interface ServerComponentProps {
+  updateGISite: (params: any) => void;
+  giSiteContext: any;
+}
 
 export interface IInputData {
   uid: string;
