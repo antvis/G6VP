@@ -1,7 +1,5 @@
 import { CircularLayout, DagreLayout, GridLayout,  ConcentricLayout , RadialLayout,  } from '@antv/layout';
 
-export const GAP = 50;
-
 export const LAYOUTS = [
   {
     value: 'grid',
