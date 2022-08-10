@@ -125,12 +125,14 @@ export interface ComponentAsset {
     GIAC_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
+    engineId: string;
   }) => any;
   mockServices?: () => any[];
   info: {
     id: string;
     name: string;
     type: AssetType;
+    category: AssetCategory;
   };
 }
 export interface LayoutAsset {

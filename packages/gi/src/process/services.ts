@@ -1,12 +1,10 @@
-import React from 'react';
-import { GIService, EngineServer } from '../typing';
+import { EngineServer, GIService } from '../typing';
 
 export type AssetServices = Record<string, { name: string; service: () => Promise<any> }>;
 
 /**
  * 引擎：一堆服务的集合
  */
-
 
 export interface CustomServiceConfig {
   id: string;
@@ -26,6 +24,27 @@ export const getServiceOptions = (services: GIService[], serviceId) => {
         label: c.id,
       };
     });
+};
+
+export const getServiceOptionsByEngineId = (services: GIService[], serviceId: string, engineId: string) => {
+  const options = services
+    .filter(c => {
+      return c.id.includes(serviceId);
+    })
+    .map(c => {
+      return {
+        value: c.id,
+        label: c.id,
+      };
+    });
+  const defaultValue =
+    options.find(c => {
+      return c.value.startsWith(engineId);
+    }) || options[0];
+  return {
+    options,
+    defaultValue: defaultValue.value,
+  };
 };
 
 export const getCombineServer = (servers: EngineServer[]) => {
@@ -58,7 +77,7 @@ export const getCombineServices = (servers: EngineServer[]) => {
   if (!servers) {
     return [];
   }
-  
+
   return servers.reduce((acc, curr) => {
     if (!curr.services) {
       return [...acc];

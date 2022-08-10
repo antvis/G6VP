@@ -6,8 +6,8 @@ interface Service {
   service: Promise<any>;
 }
 export default context => {
-  const { services, serviceEngine = 'GI' } = context;
-  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
+  const { services, engineId } = context;
+  const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
 
   return {
     serviceId: {
@@ -15,9 +15,9 @@ export default context => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      default: serviceOptions[0].value,
+      default: defaultValue,
       'x-component-props': {
-        options: serviceOptions,
+        options: options,
       },
     },
     degree: {
