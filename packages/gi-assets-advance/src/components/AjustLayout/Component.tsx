@@ -107,6 +107,7 @@ const getLayoutsByOptions = (layouts, graph) => {
       console.log('COUNT:', count, 'INDEX', index, 'OPTIONS', layoutOptions);
       const instance = new LayoutMap[type](layoutOptions);
       const newGraphData = cropGraphByNodes(source, nodes);
+      console.log("newGraphData:", newGraphData)
       const newModel = instance.layout(newGraphData);
       return newModel;
     });

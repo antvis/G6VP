@@ -15,5 +15,6 @@ import StyleSetting from './StyleSetting';
 import TableMode from './TableMode';
 import ThemeSetting from './ThemeSetting';
 import ModeSwitch from './ModeSwitch';
+import SubGraphLayout from './SubGraphLayout';
 
-export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode, ModeSwitch, AjustLayout };
+export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode, ModeSwitch, AjustLayout, SubGraphLayout };
