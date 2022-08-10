@@ -1,4 +1,4 @@
-import { GraphinData } from "@antv/graphin";
+import { GraphinData } from '@antv/graphin';
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
@@ -127,13 +127,12 @@ export const getService = (services: any[], serviceId?: string) => {
   return service;
 };
 
-
 /**
  *
  * @param source 原数据 格式 { type:"object",properties:{}}
  * @returns
  */
- export const getDefaultValues = s => {
+export const getDefaultValues = s => {
   const ROOT = 'props';
   const result = {};
   const walk = (schema, obj, k) => {
@@ -190,4 +189,34 @@ export const getKeysByData = (data: GraphinData, category: 'node' | 'edge'): str
     }
   } catch (error) {}
   return [];
+};
+
+/**
+ * 合并对象根据自定义规则
+ * @param condition 判断条件
+ * @returns
+ * @example 
+
+const a = { name: 'USA', serviceId: 'AKG/USA'};
+const b = {  name: 'China', serviceId: 'GI/China'};
+
+const res = mergeObjectByRule((acc, curr) =>   curr.includes('AKG'),a,b);
+// res:{ name:"China",serviceId: 'AKG/USA' }
+
+ */
+export const mergeObjectByRule = (condition: Function, ...objArray): Object => {
+  // 为了默认合并对象的习惯，后者覆盖前者，所以需要将数组revert
+  const objects = [...objArray].reverse();
+  return objects.reduce((acc, obj, index) => {
+    Object.keys(obj).forEach(k => {
+      if (!acc.hasOwnProperty(k)) {
+        //key值不存在的条件，合并进去
+        acc[k] = obj[k];
+      } else if (condition(acc[k], obj[k])) {
+        //只有符合自定义判断条件才合并
+        acc[k] = obj[k];
+      }
+    });
+    return acc;
+  }, {});
 };
