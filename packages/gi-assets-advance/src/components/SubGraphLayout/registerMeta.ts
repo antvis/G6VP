@@ -28,6 +28,34 @@ export default ({ keys, schemaData }) => {
       enum: keys,
       default: nodeTypeKeyFromProperties || '',
     },
+    gap: {
+      title: '子图间距',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {
+        min: 0,
+        max: 1000,
+      },
+      default: 200,
+    },
+    direction: {
+      title: '子图排列方向',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [
+        {
+          value: 'vertical',
+          label: '垂直',
+        },
+        {
+          value: 'horizontal',
+          label: '水平',
+        },
+      ],
+      default: 'horizontal',
+    },
     ...metas,
   };
 };

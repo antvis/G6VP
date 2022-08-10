@@ -6,6 +6,7 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import { getLayoutsByOptions } from './utils';
 import { LAYOUTS } from './const';
+import { ILayoutOption } from './typing';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -13,21 +14,19 @@ const { Panel } = Collapse;
 interface IState {
   activeKeys: string[];
   // selectedNodes: any[];
-  layouts: {
-    type: string;
-    nodes: { id: string }[];
-    options: object;
-  }[];
+  layouts: ILayoutOption[];
 }
 
 export interface ISubGraphLayoutProps {
   isDefaultSubGraph: boolean;
   sortKey: string;
+  gap: number;
+  direction: 'vertical' | 'horizontal';
 }
 
 const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
   const { graph, data } = useContext();
-  const { isDefaultSubGraph, sortKey } = props;
+  const { isDefaultSubGraph, sortKey, gap, direction } = props;
 
   const [state, updateState] = useImmer<IState>({
     // 默认全部 panel 展开
@@ -37,7 +36,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
   });
 
   const handleClick = async () => {
-    getLayoutsByOptions(state.layouts, graph);
+    getLayoutsByOptions(state.layouts, graph, gap, direction);
   };
 
   const handlePlus = () => {
@@ -73,7 +72,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
       updateState(draft => {
         draft.activeKeys = [];
         draft.layouts = [];
-      })
+      });
       return;
     }
 
