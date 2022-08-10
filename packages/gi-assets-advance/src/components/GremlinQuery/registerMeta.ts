@@ -6,8 +6,9 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 
 const registerMeta = context => {
-  const { services } = context;
-  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
+  const { services, engineId } = context;
+
+  const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
 
   return {
     /** 分类信息 */
@@ -17,9 +18,9 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        options: serviceOptions,
+        options: options,
       },
-      default: serviceOptions[0].value,
+      default: defaultValue,
     },
     initialValue: {
       title: '初始查询',

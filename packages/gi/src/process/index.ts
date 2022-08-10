@@ -1,17 +1,19 @@
 export { default as processEdges } from './/processEdges';
 export {
+  getDefaultValues,
+  getKeysByData,
   getPositionStyles,
   getService,
   handleCollaspe,
   handleExpand,
   isPosition,
   isStyles,
+  mergeObjectByRule,
   time,
   uniqueElementsBy,
-  getDefaultValues,
-  getKeysByData
 } from './common';
 export { filterByRules } from './filterByRules';
+export { getDefSideCoeFunction } from './getDefSideCoeFunction';
 export { getDefSpringLenFunction } from './getDefSpringLenFunction';
 export { default as getElementsByAssets } from './getElementsByAssets';
 export { getMetaDefaultValues } from './getMetaDefaultValues';
@@ -21,6 +23,5 @@ export { getSearchParams } from './getSearchParams';
 export { default as getServicesByConfig } from './getServicesByConfig';
 export { default as useGraphInsightContainerLayout } from './layout';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './schema';
-export { getCombineServer, getCombineServices, getServiceOptions } from './services';
+export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 export { transDataByConfig } from './transDataByConfig';
-export { getDefSideCoeFunction } from "./getDefSideCoeFunction"

@@ -1,6 +1,5 @@
 import type { GISiteParams } from '@alipay/graphinsight';
 import GISDK, { utils } from '@alipay/graphinsight';
-import { SmileOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
 import { original } from 'immer';
 import React from 'react';
@@ -25,8 +24,8 @@ import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
 
-const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData }) => {
-  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData);
+const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData, engineId }) => {
+  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData, engineId);
   const elements = getElementsByAssets(assets.elements, data, schemaData);
   const layouts = getLayoutsByAssets(assets.layouts, data, schemaData);
 
@@ -131,7 +130,9 @@ const Analysis = props => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
           const schemaData = original(draft.schemaData);
+
           const activeAssetsInformation = queryActiveAssetsInformation({
+            engineId,
             assets: activeAssets,
             data,
             config,
@@ -143,20 +144,26 @@ const Analysis = props => {
             const defaultValues = c.props;
             //@ts-ignore
             const cfgComponents = draft.config.components.find(d => d.id === c.id);
-            let matchItem = c;
+            let matchItem = c as any;
             if (cfgComponents) {
               matchItem = original(cfgComponents);
             }
-            // console.log('matchItem', matchItem);
+
+            /** 将config.components 中的值与 assets.components 中的值进行合并 */
+            const resProps = utils.mergeObjectByRule(
+              (_acc, curr) => {
+                return typeof curr === 'string' && curr.startsWith(engineId);
+              },
+              defaultValues,
+              matchItem.props,
+            );
+            console.log('resProps', resProps);
+
             return {
               // ...matchItem,
               id: matchItem.id,
               name: matchItem.name,
-              props: {
-                /** 将config.components 中的值与 assets.components 中的值进行合并 */
-                ...defaultValues,
-                ...matchItem.props,
-              },
+              props: resProps,
             };
           });
 
@@ -231,7 +238,7 @@ const Analysis = props => {
       return false;
     }
     let { data, schemaData, tag, activeAssetsKeys, engineId } = params;
-    debugger;
+
     if (!schemaData || !engineId) {
       notification.error({
         message: '服务引擎启动失败',
@@ -253,10 +260,9 @@ const Analysis = props => {
     }
 
     updateProjectById(projectId, updateParams).then(res => {
-      notification.open({
+      notification.success({
         message: '服务引擎启动成功',
         description: '服务引擎启动成功，3秒后将重启窗口',
-        icon: <SmileOutlined style={{ color: '#108ee9' }} />,
       });
       setTimeout(() => {
         window.location.reload();
