@@ -84,7 +84,7 @@ const LayoutMap = {
 };
 
 const GAP = 50;
-const getLayoutsByOptions = (layouts, graph) => {
+export const getLayoutsByOptions = (layouts, graph) => {
   const count = layouts.length;
   const source = graph.save();
 
@@ -109,6 +109,7 @@ const getLayoutsByOptions = (layouts, graph) => {
       const newGraphData = cropGraphByNodes(source, nodes);
       console.log("newGraphData:", newGraphData)
       const newModel = instance.layout(newGraphData);
+      console.log("newModel:", newModel)
       return newModel;
     });
   const newDatas = datas.reduce(
