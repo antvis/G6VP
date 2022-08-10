@@ -1,18 +1,19 @@
 import { Steps } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import {  GIDefaultTrans } from './utils';
-import { ServerComponentProps, IState } from './typing';
-import UploadLocalFile from "./UploadLocalFile";
 import ConfigData from './ConfigData';
 import './index.less';
+import { IState, ServerComponentProps } from './typing';
+import UploadLocalFile from './UploadLocalFile';
+import { GIDefaultTrans } from './utils';
 
 const { Step } = Steps;
 
 const ServerComponent: React.FC<ServerComponentProps> = props => {
+  const { updateGISite, giSiteContext } = props;
   const [state, updateState] = useImmer<IState>({
     activeKey: 0,
-    inputData:[],
+    inputData: [],
     data: {
       nodes: [],
       edges: [],
@@ -26,14 +27,12 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
   const steps = [
     {
       title: '上传数据',
-      content: (
-        <UploadLocalFile state={state} updateState={updateState}/>
-      ),
+      content: <UploadLocalFile state={state} updateState={updateState} />,
     },
     {
       title: '配置字段',
       content: (
-        <ConfigData state={state} updateState={updateState}/>
+        <ConfigData state={state} updateState={updateState} updateGISite={updateGISite} giSiteContext={giSiteContext} />
       ),
     },
   ];

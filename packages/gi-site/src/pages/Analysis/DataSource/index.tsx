@@ -22,17 +22,18 @@ const { TabPane } = Tabs;
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext, updateGISite } = useContext();
+  console.log('context', context, updateGISite);
 
   const CustomServer = utils.getCombineServer(context.activeAssets.services);
 
   return (
-    <Drawer title="导入数据" visible={visible} width={'calc(100vw - 0px)'} onClose={handleClose}>
+    <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs tabPosition="left">
         {CustomServer.map(server => {
           //@ts-ignore
           const { component: ServerComponent } = server;
 
-          const { icon } = TYPE_ICONS[server.type];
+          const { icon, name } = TYPE_ICONS[server.type];
           const TabTitle = (
             <div
               style={{
@@ -41,13 +42,14 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
                 alignItems: 'center',
               }}
             >
-              <Icon type={icon} style={{ fontSize: '26px' }} /> {server.name}
+              <Icon type={icon} style={{ fontSize: '26px' }} />
+              {name}
             </div>
           );
           return (
             <TabPane tab={TabTitle} key={server.id}>
               {/** @ts-ignore */}
-              <ServerComponent updateGISite={updateGISite} />
+              <ServerComponent updateGISite={updateGISite} giSiteContext={context} />
             </TabPane>
           );
         })}

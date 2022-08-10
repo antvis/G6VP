@@ -1,5 +1,5 @@
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Space, Tooltip } from 'antd';
+import { Alert, Button, Space, Tooltip } from 'antd';
 import * as React from 'react';
 import ActionList from '../../../../components/ActionList';
 import CollapseCard from '../../../../components/CollapseCard';
@@ -20,7 +20,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
   return (
     <div>
       <CollapseCard
-        title="数据服务"
+        title="自定义服务"
         extra={
           <Button
             type="dashed"
@@ -34,6 +34,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           </Button>
         }
       >
+        <Alert type="info" message="用户可在线自定义数据服务" showIcon></Alert>
         {serviceLists.map(item => {
           return (
             <ActionList
