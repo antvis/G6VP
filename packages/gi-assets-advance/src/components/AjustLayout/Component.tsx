@@ -204,7 +204,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
       style={
         {
           background: '#fff',
-          width: '420px',
+          width: '100%',
           padding: '12px',
           boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
           ...style,
