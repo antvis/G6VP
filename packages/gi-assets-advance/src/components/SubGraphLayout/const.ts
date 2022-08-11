@@ -1,5 +1,7 @@
 import { CircularLayout, DagreLayout, GridLayout, ConcentricLayout, RadialLayout } from '@antv/layout';
 
+export const NODE_SPACING = 10;
+
 export const LAYOUTS = [
   {
     value: 'grid',
@@ -14,7 +16,7 @@ export const LAYOUTS = [
     value: 'circular',
     label: '圆形布局',
     options: {
-      nodeSpacing: 20,
+      nodeSpacing: NODE_SPACING,
     },
   },
   {
