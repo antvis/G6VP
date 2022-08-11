@@ -1,5 +1,11 @@
 import { Icon } from '@alipay/graphinsight';
-import { CheckCircleOutlined, DeleteOutlined, EditOutlined, TableOutlined } from '@ant-design/icons';
+import {
+  CheckCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+  TableOutlined,
+} from '@ant-design/icons';
 import { Collapse, Space } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
@@ -49,14 +55,25 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
     visible: false,
   });
 
-  const { icon, name } = ENGINE_TYPE[engineId];
-  console.log(icon, name);
+  const { icon, name } = ENGINE_TYPE[engineId] || { icon: '', name: '' };
 
-  const GIEngineView = inputData.map((d, i) => {
-    return (
+  let EngineView;
+  if (!engineId && context.data.nodes.length === 0) {
+    EngineView = (
       <ActionList
-        key={i}
-        title={`${name}: ${d.name}`}
+        title={`请点击「导入」，选择数据源`}
+        extra={
+          <Space>
+            <ExclamationCircleOutlined style={{ color: 'orangered' }} />
+          </Space>
+        }
+      ></ActionList>
+    );
+  }
+  if (engineId === 'AKG' || engineId === 'SHASENG') {
+    EngineView = (
+      <ActionList
+        title={`${name}: ${engineId}`}
         extra={
           <Space>
             <Icon type={icon} style={{ fontSize: '16px' }} />
@@ -65,19 +82,23 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         }
       ></ActionList>
     );
-  });
-  const ApiEngine = (
-    <ActionList
-      title={`${name}: ${engineId}`}
-      extra={
-        <Space>
-          <Icon type={icon} style={{ fontSize: '16px' }} />
-          <CheckCircleOutlined style={{ color: 'green' }} />
-        </Space>
-      }
-    ></ActionList>
-  );
-  const EngineView = engineId === 'GI' ? GIEngineView : ApiEngine;
+  }
+  if (engineId === 'GI' || (!engineId && context.data.nodes.length > 0)) {
+    EngineView = inputData.map((d, i) => {
+      return (
+        <ActionList
+          key={i}
+          title={`${name}: ${d.name}`}
+          extra={
+            <Space>
+              <Icon type={icon} style={{ fontSize: '16px' }} />
+              <CheckCircleOutlined style={{ color: 'green' }} />
+            </Space>
+          }
+        ></ActionList>
+      );
+    });
+  }
 
   return (
     <>
