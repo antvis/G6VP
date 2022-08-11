@@ -1,11 +1,13 @@
-import { GIAssets, GIComponentConfig, useGraphInsightContainerLayout } from '@alipay/graphinsight';
-import { Tabs } from 'antd';
+import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
+import { Tabs, Button } from 'antd';
+import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import CollapseContainer from './CollapseContainer';
 import './index.less';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
+import { useGraphInsightContainerLayout } from './hooks';
 const { TabPane } = Tabs;
 
 export interface SideTabsProps extends ContainerProps {
@@ -32,15 +34,18 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
     defaultVisible,
     outSideFromCanvas,
     GISDK_ID,
-
     tabPosition,
   } = props;
+
+  // 独立 DOM 状态下是否可见
+  const [visible, setVisible] = React.useState<boolean>(true);
 
   useGraphInsightContainerLayout(GISDK_ID, outSideFromCanvas, {
     placement,
     offset,
     width,
     height,
+    visible,
   });
 
   const sortedComponents = React.useMemo(() => {
@@ -74,9 +79,19 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
     });
   }, [sortedComponents]);
 
+  const toggleVisible = () => {
+    setVisible(preState => !preState);
+  };
+
+  const tabBarExtraContent = (
+    <Button type="text" icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />} onClick={toggleVisible} />
+  );
+
   const Content = (
     <div className="gi-side-tabs">
-      <Tabs tabPosition={tabPosition}>{panes}</Tabs>
+      <Tabs tabPosition={tabPosition} tabBarExtraContent={outSideFromCanvas ? tabBarExtraContent : null}>
+        {panes}
+      </Tabs>
     </div>
   );
 

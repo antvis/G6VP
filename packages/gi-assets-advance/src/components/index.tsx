@@ -1,5 +1,5 @@
 // import AddNode from './AddNode';
-// import AjustLayout from './AjustLayout';
+//import AjustLayout from './AjustLayout';
 // import EdgeBunding from './EdgeBundling';
 // import NodeAttrs from './NodeAttrs';
 // import NodeExpand from './NodeExpand';
@@ -14,5 +14,7 @@ import SnapshotGallery from './SnapshotGallery';
 import StyleSetting from './StyleSetting';
 import TableMode from './TableMode';
 import ThemeSetting from './ThemeSetting';
+import ModeSwitch from './ModeSwitch';
+import SubGraphLayout from './SubGraphLayout';
 
-export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode };
+export { StyleSetting, SnapshotGallery, GremlinQuery, Sheetbar, AddSheetbar, ThemeSetting, TableMode, ModeSwitch, SubGraphLayout };

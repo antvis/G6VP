@@ -1,7 +1,10 @@
+import { GraphinData } from '@antv/graphin';
+import { utils } from '@alipay/graphinsight';
+import type { GraphSchemaData, GILayoutAssets } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
-import { GraphinData } from "@antv/graphin"
-import type {GraphSchemaData, GILayoutAssets} from "@alipay/graphinsight"
-import { getDefaultValues, getKeysByData } from './utils';
+
+const { getDefaultValues, getKeysByData } = utils;
+
 /**
  *
  * @param assets 服务端拿到的资产: Components
