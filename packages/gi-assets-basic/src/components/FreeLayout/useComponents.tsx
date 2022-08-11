@@ -2,7 +2,7 @@ import { Icon } from '@alipay/graphinsight';
 import React from 'react';
 import { Empty } from 'antd';
 
-const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, containerHeight?) => {
+const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
   return React.useMemo(() => {
     const components = GI_CONTAINER.map(id => ComponentCfgMap[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
@@ -47,7 +47,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, containerHeight?) 
           </header>
           <div className="gi-free-layout-component-body">
             {/* containerHeight 是为了让 TableMode 组件能适应父容器高度，临时方案后续优化*/}
-            <Component {...itemProps} containerHeight={containerHeight} />
+            <Component {...itemProps} />
           </div>
         </div>
       );

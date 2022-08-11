@@ -4,11 +4,14 @@ const metas = deepClone(GI_CONTAINER_METAS);
 
 metas.height.default = 'calc(100vh - 120px)';
 metas.width.default = '450px';
-metas.offset.default = [0, 0];
+metas.offset.default = [120, 70];
 metas.placement.default = 'LT';
+
+const modes = ['TableMode'];
 
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [] } = context;
+  const modeItems = GIAC_CONTENT_ITEMS.filter(item => modes.includes(item.value));
 
   const schema = {
     GI_CONTAINER: {
@@ -19,28 +22,8 @@ const registerMeta = context => {
       'x-component-props': {
         mode: 'multiple',
       },
-      enum: GIAC_CONTENT_ITEMS,
+      enum: modeItems,
       default: [],
-    },
-    outSideFromCanvas: {
-      title: '独立DOM',
-      type: 'boolean',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: true,
-    },
-    tabPosition: {
-      title: '导航布局',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      enum: [
-        { label: 'left', value: 'left' },
-        { label: 'right', value: 'right' },
-        { label: 'top', value: 'top' },
-        { label: 'bottom', value: 'bottom' },
-      ],
-      default: 'left',
     },
     ...metas,
   };
