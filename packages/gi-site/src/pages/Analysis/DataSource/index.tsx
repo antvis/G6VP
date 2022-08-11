@@ -1,6 +1,7 @@
 import { Icon, utils } from '@alipay/graphinsight';
 import { Drawer, Steps, Tabs, Upload } from 'antd';
 import * as React from 'react';
+import FileServerEngine from '../../../components/FileServerEngine';
 import { useContext } from '../../Analysis/hooks/useContext';
 
 const { Step } = Steps;
@@ -22,8 +23,8 @@ const { TabPane } = Tabs;
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose, initData } = props;
   const { context, updateContext, updateGISite } = useContext();
-
-  const CustomServer = utils.getCombineServer(context.activeAssets.services);
+  // 补充一个GI的ServerComponent实现：FileServerEngine
+  const CustomServer = [...utils.getCombineServer([...context.activeAssets.services, FileServerEngine])];
 
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
@@ -31,7 +32,6 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         {CustomServer.map(server => {
           //@ts-ignore
           const { component: ServerComponent } = server;
-
           const { icon, name } = TYPE_ICONS[server.type];
           const TabTitle = (
             <div
