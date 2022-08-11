@@ -88,7 +88,6 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         });
       }
     });
-
     const layouts = Object.keys(subGraph).map(key => {
       return {
         type: 'circular',
@@ -124,16 +123,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
   // }, [graph]);
 
   return (
-    <div
-      style={
-        {
-          background: '#fff',
-          width: '100%',
-          padding: '12px',
-          boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
-        } as any
-      }
-    >
+    <div className="gi-subGraph-layout">
       <Collapse
         bordered={false}
         activeKey={state.activeKeys}
