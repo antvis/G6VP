@@ -84,7 +84,7 @@ const LayoutMap = {
 };
 
 const GAP = 50;
-const getLayoutsByOptions = (layouts, graph) => {
+export const getLayoutsByOptions = (layouts, graph) => {
   const count = layouts.length;
   const source = graph.save();
 
@@ -107,7 +107,9 @@ const getLayoutsByOptions = (layouts, graph) => {
       console.log('COUNT:', count, 'INDEX', index, 'OPTIONS', layoutOptions);
       const instance = new LayoutMap[type](layoutOptions);
       const newGraphData = cropGraphByNodes(source, nodes);
+      console.log("newGraphData:", newGraphData)
       const newModel = instance.layout(newGraphData);
+      console.log("newModel:", newModel)
       return newModel;
     });
   const newDatas = datas.reduce(
@@ -204,7 +206,7 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
       style={
         {
           background: '#fff',
-          width: '420px',
+          width: '100%',
           padding: '12px',
           boxShadow: '0 2px 4px 0 rgb(0 0 0 / 10%)',
           ...style,

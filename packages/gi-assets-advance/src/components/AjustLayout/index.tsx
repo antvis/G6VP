@@ -5,10 +5,10 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'AjustLayout',
   name: '布局调整面板',
-  category: 'components',
+  category: 'canvas-interaction',
   desc: '布局调整面板',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  type: 'GIAC_CONTENT',
 };
 
 export default {
