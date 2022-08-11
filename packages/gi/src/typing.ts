@@ -100,6 +100,8 @@ export type GIAC_ITEMS_TYPE = { label: string; value: string }[];
 export interface EngineServer {
   /** 引擎的ID */
   id: 'GI' | 'AKG' | 'SHASENG';
+  /** 引擎的类型 */
+  type: 'file' | 'api' | 'database';
   /** 引擎的名称 */
   name: string;
   /** 引擎的配套组件 */
@@ -123,12 +125,14 @@ export interface ComponentAsset {
     GIAC_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
+    engineId: string;
   }) => any;
   mockServices?: () => any[];
   info: {
     id: string;
     name: string;
     type: AssetType;
+    category: AssetCategory;
   };
 }
 export interface LayoutAsset {
@@ -144,7 +148,7 @@ export interface LayoutAsset {
     id: string;
     name: string;
     type: AssetType;
-    icon?: string
+    icon?: string;
     category: string;
     options: {
       type: string;
@@ -368,3 +372,18 @@ export interface GIGraphData {
 }
 
 export type GIGraphSchema = GraphSchemaData;
+
+export type GISiteParams = Partial<{
+  engineId: string;
+  /** 数据，原始上传的数据与转化后的数据 */
+  data: {
+    transData: GIGraphData;
+    inputData: GraphinData[];
+  };
+  /** 哪些活跃的资产 */
+  activeAssetsKeys: string[];
+  /** 图模型 */
+  schemaData: GraphSchemaData;
+  /** 属于什么模版 */
+  tag: string;
+}>;

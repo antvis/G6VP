@@ -2,8 +2,10 @@ import { utils } from '@alipay/graphinsight';
 import info from './info';
 
 const registerMeta = context => {
-  const { services } = context;
-  const serviceOptions = utils.getServiceOptions(services, info.services[0]);
+  const { services, engineId } = context;
+
+  const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
+
   return {
     serviceId: {
       title: '数据服务',
@@ -11,9 +13,9 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
-        options: serviceOptions,
+        options: options,
       },
-      default: serviceOptions[0].value,
+      default: defaultValue,
     },
 
     defaultiStatistic: {

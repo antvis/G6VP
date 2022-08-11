@@ -1,6 +1,6 @@
-import { GraphinData } from '@antv/graphin';
+import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSchemaData } from '@alipay/graphinsight';
 import { utils } from '@alipay/graphinsight';
-import type { GIComponentAssets, GraphSchemaData, GIService, GIConfig, GIAC_ITEMS_TYPE } from '@alipay/graphinsight';
+import { GraphinData } from '@antv/graphin';
 import type { TypeAssetInfo } from './typing';
 
 const { getDefaultValues } = utils;
@@ -40,6 +40,7 @@ const getComponentsByAssets = (
   services: GIService[],
   config: GIConfig,
   schemaData: GraphSchemaData,
+  engineId: string,
 ) => {
   const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
@@ -82,7 +83,7 @@ const getComponentsByAssets = (
         registerMeta = () => {
           return {};
         },
-        info = {},
+        info,
       } = component;
       const keys = getAllkeysBySchema(schemaData, 'node');
       const edgeKeys = getAllkeysBySchema(schemaData, 'edge');
@@ -98,6 +99,7 @@ const getComponentsByAssets = (
         GIAC_MENU_ITEMS,
         GIAC_CONTENT_ITEMS,
         schemaData,
+        engineId,
       });
       //@ts-ignore
       const defaultProps = getDefaultValues({ type: 'object', properties: configObj });

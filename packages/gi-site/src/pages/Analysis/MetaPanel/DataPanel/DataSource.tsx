@@ -7,18 +7,20 @@ import UploadPanel from '../../DataSource';
 
 interface DataSourceProps {
   data: any;
+  engineId: string;
 }
 
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
-  const { data } = props;
+  const { data, engineId } = props;
 
   // 如果是使用 GraphScope 模式，则不默认展示弹框
   const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
 
   const [state, updateState] = useImmer({
-    visible: data.nodes.length === 0 && !graphScopeGraphName,
+    visible: !engineId,
   });
   const { visible } = state;
+
   const uploadData = () => {
     updateState(draft => {
       draft.visible = true;

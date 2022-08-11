@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useImmer, Updater } from 'use-immer';
-import { StateType } from "./typing"
+import { Updater, useImmer } from 'use-immer';
+import { StateType } from './typing';
 
 export const initialState: StateType = {
+  engineId: '',
   /** 项目ID */
   id: '',
   /** 强制渲染的React Key */
@@ -57,8 +58,6 @@ export const initialState: StateType = {
     edges: [],
   },
 };
-
-
 
 const useModel: () => [StateType, Updater<StateType>] = () => {
   const [state, updateState] = useImmer<StateType>(initialState);
