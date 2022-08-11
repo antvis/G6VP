@@ -1,4 +1,4 @@
-import { GIAssets, GIComponentConfig, useGraphInsightContainerLayout } from '@alipay/graphinsight';
+import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
 import { Tabs, Button } from 'antd';
 import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons';
 import * as React from 'react';
@@ -7,6 +7,7 @@ import CollapseContainer from './CollapseContainer';
 import './index.less';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
+import { useGraphInsightContainerLayout } from './hooks';
 const { TabPane } = Tabs;
 
 export interface SideTabsProps extends ContainerProps {
@@ -71,7 +72,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
 
       const { component: Component } = asset;
       return (
-        <TabPane key={index} tab={<WrapTab {...itemProps} />} style={{ padding: 'none' }}>
+        <TabPane key={index} tab={<WrapTab {...itemProps} />}>
           <Component {...itemProps} />
         </TabPane>
       );
@@ -93,8 +94,6 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
       </Tabs>
     </div>
   );
-
-  React.useLayoutEffect(() => {}, [visible]);
 
   if (!outSideFromCanvas) {
     return (
