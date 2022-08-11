@@ -1,4 +1,4 @@
-import { CircularLayout, DagreLayout, GridLayout,  ConcentricLayout , RadialLayout,  } from '@antv/layout';
+import { CircularLayout, DagreLayout, GridLayout, ConcentricLayout, RadialLayout } from '@antv/layout';
 
 export const LAYOUTS = [
   {
@@ -13,6 +13,9 @@ export const LAYOUTS = [
   {
     value: 'circular',
     label: '圆形布局',
+    options: {
+      nodeSpacing: 20,
+    },
   },
   {
     value: 'dagre',
@@ -25,7 +28,7 @@ export const LAYOUTS = [
   {
     value: 'radial',
     label: '径向布局',
-  }
+  },
 ];
 
 export const LayoutMap = {
@@ -33,5 +36,5 @@ export const LayoutMap = {
   circular: CircularLayout,
   dagre: DagreLayout,
   concentric: ConcentricLayout,
-  radial: RadialLayout
+  radial: RadialLayout,
 };
