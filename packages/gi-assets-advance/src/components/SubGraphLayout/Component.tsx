@@ -4,7 +4,7 @@ import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Collapse, Select, message } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { getLayoutsByOptions } from './utils';
+import { updateLayout } from './utils';
 import { LAYOUTS } from './const';
 import { ILayoutOption } from './typing';
 import './index.less';
@@ -35,8 +35,10 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
     layouts: [],
   });
 
+  console.log('state:', state);
+
   const handleClick = async () => {
-    getLayoutsByOptions(state.layouts, graph, gap, direction);
+    updateLayout(state.layouts, graph, gap, direction);
   };
 
   const handlePlus = () => {
@@ -57,7 +59,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
           type: 'circular',
           nodes: selectedNodes,
           options: {
-            type: 'circular',
+            nodeSpacing: 20,
           },
         });
 
@@ -93,7 +95,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         type: 'circular',
         nodes: subGraph[key],
         options: {
-          key: 'circular',
+          nodeSpacing: 20,
         },
       };
     });
@@ -191,6 +193,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
                     onChange={val => {
                       updateState(draft => {
                         draft.layouts[index].type = val;
+                        draft.layouts[index].options = LAYOUTS.find(lay => lay.value === val)?.options || {};
                       });
                     }}
                   >

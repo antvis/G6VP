@@ -37,6 +37,7 @@
     "@ant-design/icons": "latest",
     "@antv/algorithm": "^0.1.24",
     "@antv/graphin": "2.x",
+    "@antv/layout": "^0.2.5",
     "@antv/s2": "^1.17.0",
     "@antv/s2-react": "^1.15.1",
     "antd": "latest",
