@@ -5,7 +5,7 @@ import { Button, Collapse, Select, message } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import { updateLayout } from './utils';
-import { LAYOUTS } from './const';
+import { LAYOUTS, NODE_SPACING } from './const';
 import { ILayoutOption } from './typing';
 import './index.less';
 
@@ -35,8 +35,6 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
     layouts: [],
   });
 
-  console.log('state:', state);
-
   const handleClick = async () => {
     updateLayout(state.layouts, graph, gap, direction);
   };
@@ -59,7 +57,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
           type: 'circular',
           nodes: selectedNodes,
           options: {
-            nodeSpacing: 20,
+            nodeSpacing: NODE_SPACING,
           },
         });
 
@@ -95,7 +93,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         type: 'circular',
         nodes: subGraph[key],
         options: {
-          nodeSpacing: 20,
+          nodeSpacing: NODE_SPACING,
         },
       };
     });

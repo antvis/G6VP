@@ -64,10 +64,7 @@ export const updateLayout = (
       };
       const instance = new LayoutMap[type](layoutOptions);
       const newGraphData = cropGraphByNodes(source, nodes);
-      console.log('newGraphData:', newGraphData);
-      // debugger
       instance.layout(newGraphData);
-      console.log('newGraphData222:', newGraphData);
     });
 
   graph.positionsAnimate();
