@@ -1,14 +1,16 @@
+import type { GISiteParams } from '@alipay/graphinsight';
 import GISDK, { utils } from '@alipay/graphinsight';
+import { notification } from 'antd';
 import { original } from 'immer';
 import React from 'react';
-import { useImmer } from 'use-immer';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
-import { getProjectById } from '../../services/';
+import { getProjectById, updateProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { findEngineInstanceList } from '../../services/engineInstace';
+import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
@@ -17,14 +19,13 @@ import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
-import {IProject} from "../../services/typing"
 import useModel from './useModel';
 import { isObjectEmpty } from './utils';
 
 setDefaultAssetPackages();
 
-const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData }) => {
-  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData);
+const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData, engineId }) => {
+  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData, engineId);
   const elements = getElementsByAssets(assets.elements, data, schemaData);
   const layouts = getLayoutsByAssets(assets.layouts, data, schemaData);
 
@@ -45,7 +46,7 @@ const Analysis = props => {
   }
 
   const [state, updateState] = useModel();
-  
+
   const {
     config,
     key,
@@ -60,6 +61,7 @@ const Analysis = props => {
     activeAssetsInformation,
     activeAssetsKeys,
     activeAssets,
+    engineId,
   } = state;
 
   const handleChangeNavbar = opt => {
@@ -79,7 +81,9 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData } = await getProjectById(projectId) as IProject;
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId } = (await getProjectById(
+        projectId,
+      )) as IProject;
       const { transData, inputData } = data;
 
       // 根据 projectId，查询引擎实例信息
@@ -93,6 +97,7 @@ const Analysis = props => {
       }
 
       updateState(draft => {
+        draft.engineId = engineId; // 项目绑定的引擎ID
         draft.id = projectId; //项目ID
         draft.config = config!; //项目配置
         draft.projectConfig = config!; //项目原始配置（从服务器中来的）
@@ -125,7 +130,9 @@ const Analysis = props => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
           const schemaData = original(draft.schemaData);
+
           const activeAssetsInformation = queryActiveAssetsInformation({
+            engineId,
             assets: activeAssets,
             data,
             config,
@@ -137,20 +144,25 @@ const Analysis = props => {
             const defaultValues = c.props;
             //@ts-ignore
             const cfgComponents = draft.config.components.find(d => d.id === c.id);
-            let matchItem = c;
+            let matchItem = c as any;
             if (cfgComponents) {
               matchItem = original(cfgComponents);
             }
-            // console.log('matchItem', matchItem);
+
+            /** 将config.components 中的值与 assets.components 中的值进行合并 */
+            const resProps = utils.mergeObjectByRule(
+              (_acc, curr) => {
+                return typeof curr === 'string' && curr.startsWith(engineId);
+              },
+              defaultValues,
+              matchItem.props,
+            );
+
             return {
               // ...matchItem,
               id: matchItem.id,
               name: matchItem.name,
-              props: {
-                /** 将config.components 中的值与 assets.components 中的值进行合并 */
-                ...defaultValues,
-                ...matchItem.props,
-              },
+              props: resProps,
             };
           });
 
@@ -219,6 +231,44 @@ const Analysis = props => {
     };
   };
 
+  /** 更新站点的 SCHEMA 和 DATA */
+  const updateGISite = (params: GISiteParams) => {
+    if (!params) {
+      return false;
+    }
+    let { data, schemaData, tag, activeAssetsKeys, engineId } = params;
+
+    if (!schemaData || !engineId) {
+      notification.error({
+        message: '服务引擎启动失败',
+        description: '没有查询到图模型，请检查接口是否正常',
+      });
+      return false;
+    }
+    const style = utils.generatorStyleConfigBySchema(schemaData);
+    const updateParams = {
+      engineId,
+      schemaData: JSON.stringify(schemaData),
+      projectConfig: JSON.stringify({ ...config, ...style }),
+    };
+    if (activeAssetsKeys) {
+      updateParams['activeAssetsKeys'] = JSON.stringify(activeAssetsKeys);
+    }
+    if (data) {
+      updateParams['data'] = JSON.stringify(data);
+    }
+
+    updateProjectById(projectId, updateParams).then(res => {
+      notification.success({
+        message: '服务引擎启动成功',
+        description: '服务引擎启动成功，3秒后将重启窗口',
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    });
+  };
+
   // React.useLayoutEffect(() => {
   //   const { config, projectConfig, data } = state;
 
@@ -249,9 +299,9 @@ const Analysis = props => {
       </div>
     );
   }
-  const context = { context: state, updateContext: updateState };
+  const context = { context: state, updateContext: updateState, updateGISite };
 
-  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state);
+  console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
 
   return (
     <AnalysisContext.Provider value={context}>

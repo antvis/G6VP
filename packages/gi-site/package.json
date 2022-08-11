@@ -2,35 +2,28 @@
   "name": "@alipay/gi-site",
   "version": "2.2.0",
   "description": "GraphInsight Site",
-  "main": "dist/app.js",
-  "scripts": {
-    "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build && node ./scripts/copy.js",
-    "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "deploy": "node ./scripts/deploy.js"
-  },
+  "license": "MIT",
+  "author": "AntV",
   "sideEffects": [
     "*.less",
     "*.css"
   ],
-  "peerDependencies": {
-    "react": "17.x",
-    "react-dom": "17.x",
-    "antd": "latest",
-    "@antv/graphin": "2.x"
+  "main": "dist/app.js",
+  "scripts": {
+    "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build && node ./scripts/copy.js",
+    "deploy": "node ./scripts/deploy.js",
+    "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "dependencies": {
-    "@fast-csv/format": "latest",
-    "@faker-js/faker": "latest",
-    "@alipay/graphinsight": "*",
-    "@alipay/gi-assets-basic": "*",
-    "@alipay/gi-assets-scene": "*",
     "@alipay/gi-assets-advance": "*",
-    "@alipay/gi-assets-analysis": "*",
     "@alipay/gi-assets-algorithm": "*",
-    "@alipay/gi-common-components": "*",
-    "@alipay/gi-server-local": "*",
+    "@alipay/gi-assets-analysis": "*",
+    "@alipay/gi-assets-basic": "*",
     "@alipay/gi-assets-gs-local": "*",
+    "@alipay/gi-assets-scene": "*",
+    "@alipay/gi-common-components": "*",
+    "@alipay/graphinsight": "*",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
     "@ant-design/charts": "^1.0.21",
@@ -38,6 +31,8 @@
     "@ant-design/icons": "^4.0.6",
     "@ant-design/pro-table": "^2.66.4",
     "@antv/dw-analyzer": "^1.1.5",
+    "@faker-js/faker": "latest",
+    "@fast-csv/format": "latest",
     "@types/classnames": "^2.2.9",
     "@types/systemjs": "latest",
     "@umijs/preset-react": "^1.8.12",
@@ -62,11 +57,15 @@
     "use-immer": "latest",
     "xlsx2js": "^1.3.8"
   },
-  "author": "AntV",
-  "license": "MIT",
   "devDependencies": {
-    "perf_hooks": "^0.0.1",
-    "gh-pages": "latest"
+    "gh-pages": "latest",
+    "perf_hooks": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@antv/graphin": "2.x",
+    "antd": "latest",
+    "react": "17.x",
+    "react-dom": "17.x"
   },
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"

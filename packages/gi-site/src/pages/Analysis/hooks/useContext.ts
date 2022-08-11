@@ -4,12 +4,14 @@ import type { Updater } from 'use-immer';
 export interface ContextType {
   updateContext: Updater<any>;
   context: any;
+  updateGISite: (params: any) => void;
 }
 
 //@ts-ignore
 const defaultContext = {
   updateContext: () => {},
   context: {},
+  updateGISite: () => {},
 } as ContextType;
 
 export const AnalysisContext = React.createContext(defaultContext);

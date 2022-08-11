@@ -2,9 +2,16 @@ import { utils } from '@alipay/graphinsight';
 import info from './info';
 
 export default context => {
-  const { services, serviceEngine = 'GI' } = context;
-  const initializerServiceOptions = utils.getServiceOptions(services, info.services[0]);
-  const schemaServiceOptions = utils.getServiceOptions(services, info.services[1]);
+  const { services, engineId } = context;
+  const {
+    options: initializerServiceOptions,
+    defaultValue: defaultInitializerService,
+  } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
+  const { options: schemaServiceOptions, defaultValue: defaultschemaService } = utils.getServiceOptionsByEngineId(
+    services,
+    info.services[1],
+    engineId,
+  );
 
   return {
     serviceId: {
@@ -15,7 +22,7 @@ export default context => {
       'x-component-props': {
         options: initializerServiceOptions,
       },
-      default: initializerServiceOptions[0].value,
+      default: defaultInitializerService,
     },
     schemaServiceId: {
       title: '查询图模型',
@@ -25,7 +32,7 @@ export default context => {
       'x-component-props': {
         options: schemaServiceOptions,
       },
-      default: schemaServiceOptions[0].value,
+      default: defaultschemaService,
     },
     // 注意⚠️：GI_INITIALIZER 是必须的属性字段，千万不要漏掉
     GI_INITIALIZER: {

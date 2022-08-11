@@ -1,4 +1,5 @@
-import { GraphinContext, IG6GraphEvent } from '@antv/graphin';
+import { useContext } from '@alipay/graphinsight';
+import { IG6GraphEvent } from '@antv/graphin';
 import React, { useEffect } from 'react';
 
 export interface ContextMenuProps {
@@ -20,7 +21,7 @@ export interface State {
 
 const useContextMenu = (props: ContextMenuProps): any => {
   const { bindType = 'node', container } = props;
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
 
   const [state, setState] = React.useState<State>({
     visible: false,

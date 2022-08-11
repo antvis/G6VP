@@ -2,8 +2,9 @@ import ServerComponent from './ServerComponent';
 
 export default {
   id: 'GI',
+  type: 'file',
   name: 'GraphInsight',
-  desc: 'GraphInsight 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持10个接口服务',
+  desc: 'GraphInsight 官方提供的本地文件导入服务，根据部署环境的不同，可以将数据存储在浏览器 IndexDB 或者 云端服务器中',
   component: ServerComponent,
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*3YEZS6qSRgAAAAAAAAAAAAAAARQnAQ',
 };

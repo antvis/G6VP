@@ -12,11 +12,10 @@ export interface IProps {
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { serviceId, schemaServiceId } = props;
-  console.log('Initializer render...');
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
-    console.log('Initializer effect....', largeGraphLimit);
+    console.log('Initializer effect....');
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
     const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
       service: () => Promise.resolve(null),
@@ -32,6 +31,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           const style = utils.generatorStyleConfigBySchema(schema);
           draft.config.nodes = style.nodes;
           draft.config.edges = style.edges;
+          // if (updateGISite) {
+          //   updateGISite({ schemaData: schema, config: style });
+          // }
         }
 
         const position = isPosition(nodes);

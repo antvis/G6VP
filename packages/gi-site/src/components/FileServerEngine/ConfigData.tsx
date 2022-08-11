@@ -1,15 +1,17 @@
+import { utils } from '@alipay/graphinsight';
+import { EditableProTable } from '@ant-design/pro-table';
+import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
-import { IState, ITableType,IColumns } from './typing';
-import { Alert, Button, Form, notification, Radio, Row, Steps, Table, Upload } from 'antd';
-import { updateData } from './service';
-import {  GIDefaultTrans } from './utils';
 import { edgeColumns, nodeColumns, translist } from './const';
-import { EditableProTable } from '@ant-design/pro-table';
+import { IColumns, IState, ITableType } from './typing';
+import { GIDefaultTrans } from './utils';
 
 interface IProps {
   state: IState;
   updateState: Updater<IState>;
+  giSiteContext: any;
+  updateGISite: (params: any) => void;
 }
 
 const columnsData = {
@@ -18,9 +20,9 @@ const columnsData = {
 };
 
 const ConfigData: React.FC<IProps> = props => {
-  const { state, updateState } = props;
+  const { state, updateState, updateGISite, giSiteContext } = props;
   const [tableType, setTableType] = useState<ITableType>('nodes');
-  const [columns, setColumns] = useState<IColumns[]>(nodeColumns)
+  const [columns, setColumns] = useState<IColumns[]>(nodeColumns);
   const [form] = Form.useForm();
 
   const onChange = value => {
@@ -58,6 +60,58 @@ const ConfigData: React.FC<IProps> = props => {
     });
   };
 
+  const handleSave = () => {
+    const { transData, inputData, transfunc } = state;
+
+    try {
+      if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
+        throw 'nodes缺少对应字段';
+      }
+      if (transData.edges?.find(d => d.source === undefined || d.target === undefined || d.data === undefined)) {
+        throw 'edges缺少对应字段';
+      }
+
+      const beforData = giSiteContext.data;
+      const mergeData = {
+        nodes: [...beforData.nodes, ...transData.nodes],
+        edges: [...beforData.edges, ...transData.edges],
+      };
+
+      // 进入分析之前，根据数据，生成 schema
+
+      const schemaData = utils.generatorSchemaByGraphData(mergeData);
+
+      // 更新inputdata里面的 trans function
+      const renderData = inputData.map(d => {
+        return {
+          ...d,
+          transfunc,
+        };
+      });
+
+      updateGISite({
+        engineId: 'GI',
+        data: {
+          transData: mergeData,
+          inputData: [...giSiteContext.inputData, ...renderData],
+        },
+        schemaData: schemaData,
+      });
+
+      notification.success({
+        message: `解析成功`,
+        description: `数据格式正确`,
+        placement: 'topLeft',
+      });
+    } catch (error) {
+      notification.error({
+        message: `解析出错`,
+        description: `请检查数据是否为严格JSON格式且存在对应字段:${error}`,
+        placement: 'topLeft',
+      });
+    }
+  };
+
   return (
     <div className="dataCheck-panel">
       <Alert
@@ -92,7 +146,12 @@ const ConfigData: React.FC<IProps> = props => {
         <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
           上一步
         </Button>
-        <Button type="primary" shape="round" onClick={() => updateData(state.transData, state.inputData, state.transfunc)}>
+        <Button
+          type="primary"
+          shape="round"
+          // onClick={() => updateData(state.transData, state.inputData, state.transfunc)}
+          onClick={handleSave}
+        >
           进入分析
         </Button>
       </Row>
