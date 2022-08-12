@@ -14,6 +14,14 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
   });
   const newNodes = nodes!.filter(node => {
     return ids.indexOf(node.id) !== -1;
+  }).map(node => {
+    // 映射节点大小，用于圆形布局防重叠：https://github.com/antvis/layout/blob/master/src/layout/circular.ts#L213
+    node.size = node.style?.keyshape.size || 26;
+    /* 
+        注意：这里不能使用 return {...node, size: node.style?.keyshape.size || 26}，
+        因为我们需要将原来的那批节点返回，进行布局转化
+    */
+    return node;
   });
   return {
     nodes: newNodes,
@@ -21,7 +29,7 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
   };
 };
 
-export const getLayoutsByOptions = (
+export const updateLayout = (
   layouts: ILayoutOption[],
   graph: Graph,
   gap: number,
@@ -48,8 +56,6 @@ export const getLayoutsByOptions = (
         center = [width / 2, gap + index * gap];
       }
 
-      console.log('center:', center);
-
       const layoutOptions = {
         width,
         height,
@@ -63,3 +69,5 @@ export const getLayoutsByOptions = (
 
   graph.positionsAnimate();
 };
+
+export const getCircularRadius = () => {};
