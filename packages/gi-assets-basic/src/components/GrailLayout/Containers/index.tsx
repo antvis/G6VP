@@ -1,3 +1,4 @@
-import SideContainer from './SideContainer';
+import LeftContainer from './LeftContainer';
 import BottomContainer from './BottomContainer';
-export { SideContainer, BottomContainer };
+import RightContainer from './RightContainer';
+export { LeftContainer, BottomContainer, RightContainer };
