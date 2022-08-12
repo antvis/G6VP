@@ -33,7 +33,9 @@ const BottomContainer: React.FC<BottomContainerProps> = props => {
         onClick={toggleVisible}
         style={{
           position: 'absolute',
-          bottom: '100%',
+          bottom: 'calc(100% + 2px)',
+          boxShadow: "0px 0px 2px 2px rgb(0 0 0 / 10%)",
+          backgroundColor: "#fff",
         }}
         icon={state.visible ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
         type="text"

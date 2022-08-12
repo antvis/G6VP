@@ -24,7 +24,9 @@ const RightContainer: React.FC<RightContainerProps> = props => {
         icon={visible ? <VerticalLeftOutlined /> : <VerticalRightOutlined />}
         style={{
           position: 'absolute',
-          right: '100%',
+          right: 'calc(100% + 2px)',
+          boxShadow: "0px 0px 2px 2px rgb(0 0 0 / 10%)",
+          backgroundColor: "#fff",
         }}
       />
       {children}
