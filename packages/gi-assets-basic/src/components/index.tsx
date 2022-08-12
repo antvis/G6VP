@@ -9,6 +9,7 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import FreeLayout from './FreeLayout';
+import GrailLayout from './GrailLayout';
 import InfoDetection from './InfoDetection';
 import LassoSelect from './LassoSelect';
 import LayoutSwitch from './LayoutSwitch';
@@ -45,7 +46,7 @@ export {
   Placeholder,
   FitCenter,
   FitView,
-  FreeLayout,
+  // FreeLayout,
   OperatorBar,
   NodeLegend,
   MiniMap,
@@ -77,5 +78,6 @@ export {
   Overview,
   SankeyAnalysis,
   InfoDetection,
-  LayoutSwitch
+  LayoutSwitch,
+  GrailLayout
 };
