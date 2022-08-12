@@ -6,8 +6,8 @@ export interface LeftContainerProps {
   width: string;
   isDisplay: boolean;
   children: any;
-  toggleVisible: () => void
-  visible: boolean
+  toggleVisible: () => void;
+  visible: boolean;
 }
 
 const LeftContainer: React.FC<LeftContainerProps> = props => {
@@ -24,9 +24,12 @@ const LeftContainer: React.FC<LeftContainerProps> = props => {
         icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />}
         style={{
           position: 'absolute',
-          left: '100%',
+          left: 'calc(100% + 2px)',
+          boxShadow: '0px 0px 2px 2px rgb(0 0 0 / 10%)',
+          backgroundColor: '#fff',
         }}
       />
+
       {children}
     </div>
   );
