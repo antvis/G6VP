@@ -1,13 +1,13 @@
 import { useContext } from '@alipay/graphinsight';
-import { Item } from '@antv/g6';
 import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Collapse, Select, message } from 'antd';
+import { Item } from '@antv/g6';
+import { Button, Collapse, message, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { getLayoutsByOptions } from './utils';
 import { LAYOUTS } from './const';
-import { ILayoutOption } from './typing';
 import './index.less';
+import { ILayoutOption } from './typing';
+import { getLayoutsByOptions } from './utils';
 
 const { Panel } = Collapse;
 
@@ -36,12 +36,14 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
   });
 
   const handleClick = async () => {
+    //@ts-ignore
     getLayoutsByOptions(state.layouts, graph, gap, direction);
   };
 
   const handlePlus = () => {
     const selectedNodes = graph
       .findAllByState('node', 'selected')
+      //@ts-ignore
       .map((item: Item) => item.get('model'))
       .map(node => {
         return {

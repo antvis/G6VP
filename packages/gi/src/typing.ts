@@ -375,6 +375,7 @@ export type GIGraphSchema = GraphSchemaData;
 
 export type GISiteParams = Partial<{
   engineId: string;
+  engineContext: Record<any, string>;
   /** 数据，原始上传的数据与转化后的数据 */
   data: {
     transData: GIGraphData;

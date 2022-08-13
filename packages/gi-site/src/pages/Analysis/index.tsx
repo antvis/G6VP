@@ -40,11 +40,6 @@ const Analysis = props => {
   const { match } = props;
   const { projectId } = match.params;
 
-  // 将 projectId 存到 localstorage 中
-  if (projectId) {
-    localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
-  }
-
   const [state, updateState] = useModel();
 
   const {
@@ -81,9 +76,26 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId } = (await getProjectById(
-        projectId,
-      )) as IProject;
+      const {
+        data,
+        config,
+        activeAssetsKeys,
+        serviceConfig,
+        schemaData,
+        engineId,
+        engineContext,
+      } = (await getProjectById(projectId)) as IProject;
+
+      localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
+      localStorage.setItem(
+        'SERVER_ENGINE_CONTEXT',
+        JSON.stringify({
+          id: engineId,
+          projectId,
+          ...engineContext,
+        }),
+      );
+
       const { transData, inputData } = data;
 
       // 根据 projectId，查询引擎实例信息
@@ -98,6 +110,7 @@ const Analysis = props => {
 
       updateState(draft => {
         draft.engineId = engineId; // 项目绑定的引擎ID
+        draft.engineContext = engineContext; //项目绑定的引擎上下文
         draft.id = projectId; //项目ID
         draft.config = config!; //项目配置
         draft.projectConfig = config!; //项目原始配置（从服务器中来的）
@@ -236,7 +249,7 @@ const Analysis = props => {
     if (!params) {
       return false;
     }
-    let { data, schemaData, tag, activeAssetsKeys, engineId } = params;
+    let { data, schemaData, tag, activeAssetsKeys, engineId, engineContext } = params;
 
     if (!schemaData || !engineId) {
       notification.error({
@@ -248,6 +261,7 @@ const Analysis = props => {
     const style = utils.generatorStyleConfigBySchema(schemaData);
     const updateParams = {
       engineId,
+      engineContext: JSON.stringify(engineContext),
       schemaData: JSON.stringify(schemaData),
       projectConfig: JSON.stringify({ ...config, ...style }),
     };
@@ -261,11 +275,24 @@ const Analysis = props => {
     updateProjectById(projectId, updateParams).then(res => {
       notification.success({
         message: '服务引擎启动成功',
-        description: '服务引擎启动成功，3秒后将重启窗口',
+        description: '服务引擎启动成功，1秒后将重启窗口',
       });
+      console.log('set....SERVER_ENGINE_CONTEXT', {
+        id: engineId,
+        projectId,
+        ...engineContext,
+      });
+      localStorage.setItem(
+        'SERVER_ENGINE_CONTEXT',
+        JSON.stringify({
+          id: engineId,
+          projectId,
+          ...engineContext,
+        }),
+      );
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 1000);
     });
   };
 

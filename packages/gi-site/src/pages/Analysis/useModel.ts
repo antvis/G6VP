@@ -4,6 +4,7 @@ import { StateType } from './typing';
 
 export const initialState: StateType = {
   engineId: '',
+  engineContext: {},
   /** 项目ID */
   id: '',
   /** 强制渲染的React Key */
