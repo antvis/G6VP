@@ -1,3 +1,4 @@
+import { GIAssets } from '@alipay/graphinsight';
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
 import { produce } from 'immer';
 import beautify from 'js-beautify';
@@ -19,8 +20,35 @@ export function beautifyCode(code: string) {
     e4x: false,
   });
 }
-export const getActivePackageName = (activeAssets): string[] => {
-  return ['@alipay/gi-assets-basic'];
+export const getActivePackageName = (activeAssets: GIAssets): string[] => {
+  const { services, components, elements, layouts } = activeAssets;
+  const match = new Set<string>();
+  if (services) {
+    services.forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+
+  if (components) {
+    Object.values(components).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  if (elements) {
+    Object.values(elements).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  if (layouts) {
+    Object.values(layouts).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  return [...match.values()];
 };
 
 /**
@@ -63,13 +91,14 @@ const getHtmlAppCode = opts => {
   const dataStr = beautifyCode(JSON.stringify(data));
   const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
   const activePackages = getActivePackageName(activeAssets);
+
   const allPackages = getAssetPackages();
   const packages = activePackages.map(k => {
     return allPackages.find(c => {
       return k == c.name;
     });
   });
-  console.log('packages', packages);
+  console.log('activePackages', activePackages, packages);
 
   const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
 
