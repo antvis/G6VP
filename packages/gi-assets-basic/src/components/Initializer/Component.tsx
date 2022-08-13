@@ -62,6 +62,8 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             draft.rawData = { ...data };
             draft.data = newData;
             draft.source = newData;
+            draft.largeGraphMode = false;
+            draft.largeGraphData = undefined;
           }
         }
         draft.initialized = true;

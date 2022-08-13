@@ -1,0 +1,55 @@
+
+.graphinsight-grail-layout {
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid rgba(196, 186, 186, 0.4);
+  box-sizing: border-box;
+}
+
+.graphinsight-grail-layout-left {
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow-x: visible;
+}
+
+.graphinsight-grail-layout-right {
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  height: 100%;
+  overflow-x: visible;
+}
+
+.graphinsight-grail-layout-bottom {
+  flex-direction: row;
+  // width: 100%;
+  bottom: 0;
+  overflow-y: visible;
+  border-left: none;
+  border-right: none;
+}
+
+.gi-grail-layout-component-container {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 4px 0 rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  header {
+    padding: 4px 12px;
+    font-weight: bold;
+    font-size: 16px;
+    border-left: 3px solid var(--primary-color);
+    box-sizing: border-box;
+    height: 35px;
+  }
+  .gi-grail-layout-component-body {
+    width: 100%;
+    height: calc(100% - 35px);
+  }
+}
