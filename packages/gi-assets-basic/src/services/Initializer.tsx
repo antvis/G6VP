@@ -66,8 +66,9 @@ export const GI_SERVICE_SCHEMA = {
 `,
   service: async (): Promise<GraphSchemaData> => {
     const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+
     const context = JSON.parse(ContextString);
-    const { dataSchema } = context;
-    return dataSchema;
+    const { schemaData } = context;
+    return schemaData;
   },
 };
