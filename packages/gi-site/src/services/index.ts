@@ -30,10 +30,12 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
       window.location.href = window.location.origin;
     }
 
-    console.log('project:', project);
-
     return {
-      engineId: project.engineId,
+      engineId: project.engineId || 'GI', // 兼容过去的版本
+      engineContext: project.engineContext || {
+        schemaData: project.schemaData,
+        data: project.data.transData,
+      },
       schemaData: project.schemaData,
       config: project.projectConfig,
       data: project.data,
@@ -46,6 +48,8 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
 
   const getResult = project => {
     const config = JSON.parse(project.projectConfig);
+    const engineId = project.id;
+    const engineContext = JSON.parse(project.engineContext);
 
     const data = JSON.parse(project.data);
     const serviceConfig = JSON.parse(project.serviceConfig);
@@ -74,6 +78,8 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     }
 
     return {
+      engineId,
+      engineContext,
       config,
       data,
       activeAssetsKeys,
@@ -119,11 +125,15 @@ export const updateProjectById = async (
       expandInfo,
       type,
       engineId,
+      engineContext,
     } = params;
     // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
     // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
     if (engineId) {
       origin.engineId = engineId;
+    }
+    if (engineContext) {
+      origin.engineContext = JSON.parse(engineContext);
     }
     if (data) {
       origin.data = JSON.parse(data);
