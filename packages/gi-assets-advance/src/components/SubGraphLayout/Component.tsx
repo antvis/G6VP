@@ -4,10 +4,10 @@ import { Item } from '@antv/g6';
 import { Button, Collapse, message, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { LAYOUTS } from './const';
+import { LAYOUTS, NODE_SPACING } from './const';
 import './index.less';
 import { ILayoutOption } from './typing';
-import { getLayoutsByOptions } from './utils';
+import { updateLayout } from './utils';
 
 const { Panel } = Collapse;
 
@@ -37,7 +37,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
 
   const handleClick = async () => {
     //@ts-ignore
-    getLayoutsByOptions(state.layouts, graph, gap, direction);
+    updateLayout(state.layouts, graph, gap, direction);
   };
 
   const handlePlus = () => {
@@ -59,7 +59,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
           type: 'circular',
           nodes: selectedNodes,
           options: {
-            type: 'circular',
+            nodeSpacing: NODE_SPACING,
           },
         });
 
@@ -95,7 +95,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         type: 'circular',
         nodes: subGraph[key],
         options: {
-          key: 'circular',
+          nodeSpacing: NODE_SPACING,
         },
       };
     });
@@ -193,6 +193,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
                     onChange={val => {
                       updateState(draft => {
                         draft.layouts[index].type = val;
+                        draft.layouts[index].options = LAYOUTS.find(lay => lay.value === val)?.options || {};
                       });
                     }}
                   >
