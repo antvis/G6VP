@@ -4,7 +4,6 @@ import iconLoader from '@antv/graphin-icons';
 import { Button, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import request from 'umi-request';
 import GremlinEditor from './GremlinEditor';
 import './index.less';
 
@@ -49,7 +48,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   style,
   visible,
 }) => {
-  const { updateContext, transform, services } = useContext();
+  const { updateContext, transform, services, graph } = useContext();
 
   const service = utils.getService(services, serviceId);
 
@@ -99,39 +98,9 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       // @ts-ignore
       draft.key = Math.random();
       const res = transform(result.data);
-      res.nodes.forEach(node => {
-        if (!node.style.badges) {
-          node.style.badges = [];
-        }
-        // 保留其他位置的 badges，例如锁定和标签
-        node.style.badges = node.style.badges.filter(({ position }) => position !== 'LB') || [];
-
-        const expandIds = result.data.nodes.map(n => n.id);
-        if (expandIds.indexOf(node.id) !== -1) {
-          node.style.badges.push({
-            position: 'LB',
-            type: 'font',
-            fontFamily: 'graphin',
-            value: icons['plus-circle'],
-            size: [12, 12],
-            color: '#fff',
-            fill: '#4DB6AC',
-            stroke: '#4DB6AC',
-          });
-        }
-      });
-
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
-      draft.layout = {
-        type: 'graphin-force',
-        animation: false,
-        preset: {
-          type: 'concentric',
-        },
-        defSpringLen,
-      };
     });
   };
 
