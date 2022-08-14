@@ -1,8 +1,8 @@
 import type { GISiteParams } from '@alipay/graphinsight';
-import GISDK, { utils } from '@alipay/graphinsight';
+import GISDK, { useContext as useGIContext, utils } from '@alipay/graphinsight';
 import { notification } from 'antd';
 import { original } from 'immer';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
@@ -36,9 +36,16 @@ const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, sch
   };
 };
 
+const GraphRef = props => {
+  const { graphRef } = props;
+  const { graph } = useGIContext();
+  graphRef.current = graph;
+  return null;
+};
 const Analysis = props => {
   const { match } = props;
   const { projectId } = match.params;
+  const graphRef = useRef(null);
 
   const [state, updateState] = useModel();
 
@@ -87,14 +94,20 @@ const Analysis = props => {
       } = (await getProjectById(projectId)) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
-      localStorage.setItem(
-        'SERVER_ENGINE_CONTEXT',
-        JSON.stringify({
-          id: engineId,
-          projectId,
-          ...engineContext,
-        }),
-      );
+      const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+      const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
+      const { projectId: PROJECT_ID } = SERVER_ENGINE_CONTEXT;
+      if (PROJECT_ID !== projectId) {
+        console.log('PROJECT_ID !== projectId', PROJECT_ID, projectId);
+        localStorage.setItem(
+          'SERVER_ENGINE_CONTEXT',
+          JSON.stringify({
+            id: engineId,
+            projectId,
+            ...engineContext,
+          }),
+        );
+      }
 
       const { transData, inputData } = data;
 
@@ -334,7 +347,7 @@ const Analysis = props => {
     <AnalysisContext.Provider value={context}>
       <div className="gi">
         <div className="gi-navbar">
-          <Navbar projectId={projectId} enableAI={enableAI} />
+          <Navbar projectId={projectId} enableAI={enableAI} graphRef={graphRef} />
         </div>
         <div className="gi-analysis">
           <div className="gi-analysis-sidebar">
@@ -365,7 +378,9 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
-              ></GISDK>
+              >
+                <GraphRef graphRef={graphRef} />
+              </GISDK>
             </div>
           </div>
         </div>
