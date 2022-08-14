@@ -96,14 +96,13 @@ const Analysis = props => {
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
       const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
       const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-      const { projectId: PROJECT_ID } = SERVER_ENGINE_CONTEXT;
-      if (PROJECT_ID !== projectId) {
-        console.log('PROJECT_ID !== projectId', PROJECT_ID, projectId);
+      const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
+      if (GI_SITE_PROJECT_ID !== projectId) {
         localStorage.setItem(
           'SERVER_ENGINE_CONTEXT',
           JSON.stringify({
-            id: engineId,
-            projectId,
+            engineId: engineId,
+            GI_SITE_PROJECT_ID: projectId,
             ...engineContext,
           }),
         );
@@ -290,16 +289,12 @@ const Analysis = props => {
         message: '服务引擎启动成功',
         description: '服务引擎启动成功，1秒后将重启窗口',
       });
-      console.log('set....SERVER_ENGINE_CONTEXT', {
-        id: engineId,
-        projectId,
-        ...engineContext,
-      });
+
       localStorage.setItem(
         'SERVER_ENGINE_CONTEXT',
         JSON.stringify({
-          id: engineId,
-          projectId,
+          GI_SITE_PROJECT_ID: projectId,
+          engineId: engineId,
           ...engineContext,
         }),
       );
