@@ -1,5 +1,6 @@
 // 如果是要部署到外网，请使用 http://47.242.172.5:9527
 export const GRAPHSCOPE_SERVICE_URL = 'http://11.166.85.48:9527';
+export const TUGRAPH_SERVICE_URL = 'http://127.0.0.1:7090';
 
 export const responseData = (ctx, resp) => {
   if (!resp) {
