@@ -1,106 +1,26 @@
-import { GIAssets } from '@alipay/graphinsight';
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
-import { produce } from 'immer';
-import beautify from 'js-beautify';
-import { getAssetPackages } from '../loader';
-export function beautifyCode(code: string) {
-  return beautify(code, {
-    indent_size: 2,
-    indent_char: ' ',
-    max_preserve_newlines: -1,
-    preserve_newlines: false,
-    keep_array_indentation: false,
-    break_chained_methods: false,
-    brace_style: 'collapse',
-    space_before_conditional: true,
-    unescape_strings: false,
-    jslint_happy: false,
-    end_with_newline: false,
-    wrap_line_length: 120,
-    e4x: false,
-  });
-}
-export const getActivePackageName = (activeAssets: GIAssets): string[] => {
-  const { services, components, elements, layouts } = activeAssets;
-  const match = new Set<string>();
-  if (services) {
-    services.forEach(c => {
-      //@ts-ignore
-      match.add(c.pkg);
-    });
-  }
+import { getAssetPackages, Package } from '../loader';
+import { beautifyCode, getActivePackageName } from './common';
 
-  if (components) {
-    Object.values(components).forEach(c => {
-      //@ts-ignore
-      match.add(c.pkg);
-    });
-  }
-  if (elements) {
-    Object.values(elements).forEach(c => {
-      //@ts-ignore
-      match.add(c.pkg);
-    });
-  }
-  if (layouts) {
-    Object.values(layouts).forEach(c => {
-      //@ts-ignore
-      match.add(c.pkg);
-    });
-  }
-  return [...match.values()];
-};
-
-/**
- * get js code for Riddle
- * @param opts  previewer props
- */
 const getHtmlAppCode = opts => {
-  const { data, id, schemaData, engineId, engineContext, activeAssets } = opts;
+  const { id, engineId, engineContext, activeAssets, config, serviceConfig } = opts;
   console.log('opts', opts);
-
-  const config = produce(opts.config, draft => {
-    try {
-      delete draft.node.meta;
-      delete draft.node.info;
-      delete draft.edge.meta;
-      delete draft.edge.info;
-    } catch (error) {
-      console.warn(error);
-    }
-  });
-  const serviceConfig = produce(opts.serviceConfig, draft => {
-    draft.forEach(s => {
-      delete s.others;
-    });
-  });
-
-  try {
-  } catch (error) {
-    console.log('error', error);
-  }
   const engineContextStr = beautifyCode(
     JSON.stringify({
-      projectId: id,
+      GI_SITE_PROJECT_ID: id,
       engineId,
       ...engineContext,
     }),
   );
   const configStr = beautifyCode(JSON.stringify(config));
-
-  const dataStr = beautifyCode(JSON.stringify(data));
   const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
   const activePackages = getActivePackageName(activeAssets);
-
   const allPackages = getAssetPackages();
   const packages = activePackages.map(k => {
     return allPackages.find(c => {
       return k == c.name;
     });
-  });
-  console.log('activePackages', activePackages, packages);
-
-  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+  }) as Package[];
 
   const GIAssetsScripts = packages
     .map(pkg => {
