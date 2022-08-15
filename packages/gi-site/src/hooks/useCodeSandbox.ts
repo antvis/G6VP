@@ -1,24 +1,11 @@
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
-import { produce } from 'immer';
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
-import { getAssetPackages } from '../loader';
-import { beautifyCode } from './common';
+import { getAssetPackages, Package } from '../loader';
+import { beautifyCode, getActivePackageName } from './common';
 
 const packages = getAssetPackages();
 const packagesStr = beautifyCode(JSON.stringify(Object.values(packages)));
-
-const GIAssetsScripts = packages
-  .map(pkg => {
-    return `<script src="${pkg.url}"></script>`;
-  })
-  .join('\n  ');
-const GIAssetsLinks = packages
-  .map(pkg => {
-    const href = pkg.url.replace('min.js', 'css');
-    return `<link rel="stylesheet" href="${href}" />`;
-  })
-  .join('\n  ');
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';
 
@@ -30,38 +17,56 @@ function serialize(data: Record<string, any>) {
 }
 
 const getConstantFiles = opts => {
-  const { data, id, schemaData } = opts;
-
-  const config = produce(opts.config, draft => {
-    try {
-      delete draft.node.meta;
-      delete draft.node.info;
-      delete draft.edge.meta;
-      delete draft.edge.info;
-    } catch (error) {
-      console.warn(error);
-    }
-  });
-  const serviceConfig = produce(opts.serviceConfig, draft => {
-    draft.forEach(s => {
-      delete s.others;
-    });
-  });
-
-  try {
-  } catch (error) {
-    console.log('error', error);
-  }
+  const {
+    config,
+    id,
+    //  data, schemaData, serviceConfig,
+    engineId,
+    engineContext,
+    activeAssets,
+  } = opts;
+  const SERVER_ENGINE_CONTEXT = beautifyCode(
+    JSON.stringify({
+      GI_SITE_PROJECT_ID: id,
+      engineId,
+      ...engineContext,
+    }),
+  );
 
   const GI_PROJECT_CONFIG = beautifyCode(JSON.stringify(config));
-  const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
-  const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
-  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+  // const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
+  // const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
+  // const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+
+  const activePackages = getActivePackageName(activeAssets);
+  const allPackages = getAssetPackages();
+  const packages = activePackages.map(k => {
+    return allPackages.find(c => {
+      return k == c.name;
+    });
+  }) as Package[];
+
+  const GI_ASSETS_PACKAGE = beautifyCode(
+    JSON.stringify(
+      Object.values([
+        {
+          name: 'GISDK',
+          global: 'GISDK',
+          version: `${SDK_PACKAGE.version}`,
+          url: `https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js`,
+        },
+        ...packages,
+      ]),
+    ),
+  );
+
   return {
-    GI_SERVICES_OPTIONS,
+    SERVER_ENGINE_CONTEXT,
+    // GI_SERVICES_OPTIONS,
     GI_PROJECT_CONFIG,
-    GI_LOCAL_DATA,
-    GI_SCHEMA_DATA,
+    // GI_LOCAL_DATA,
+    // GI_SCHEMA_DATA,
+    GI_ASSETS_PACKAGE,
   };
 };
 function getCSBData(opts) {
@@ -72,86 +77,19 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const { GI_SERVICES_OPTIONS, GI_PROJECT_CONFIG, GI_LOCAL_DATA, GI_SCHEMA_DATA } = getConstantFiles(opts);
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE } = getConstantFiles(opts);
 
   files['src/GI_EXPORT_FILES.ts'] = {
-    content: `
-    export const GI_SERVICES_OPTIONS = ${GI_SERVICES_OPTIONS};
-    export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
-    export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
-    export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
-    `,
-  };
-  files['src/utils.ts'] = {
-    content: `
-export const packages = ${packagesStr};
-export const getAssets = () => {
-  return packages
-    .map((item) => {
-      let assets = window[item.global];
-      if (!assets) {
-        return null;
-      }
-      if (assets.hasOwnProperty("default")) {
-        assets = assets.default;
-      }
-      return {
-        ...item,
-        assets,
-      };
-    })
-    .filter((c) => {
-      return c;
-    });
-};
+    content: ` 
+      /** 动态请求需要的配套资产 **/
+      export const GI_ASSETS_PACKAGE = ${GI_ASSETS_PACKAGE};
 
-export const getCombinedAssets = () => {
-  const assets = getAssets();
-  return assets.reduce(
-    (acc, curr) => {
-      return {
-        components: {
-          ...acc.components,
-          ...curr.assets.components,
-        },
-        elements: {
-          ...acc.elements,
-          ...curr.assets.elements,
-        },
-        layouts: {
-          ...acc.layouts,
-          ...curr.assets.layouts,
-        },
-      };
-    },
-    {
-      components: {},
-      elements: {},
-      layouts: {},
-    }
-  );
-};
-
-export function looseJsonParse(obj) {
-  return Function('"use strict";return (' + obj + ")")();
-}
-export const defaultTransFn = (data, params) => {
-  return data;
-};
-export const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
-  return serviceConfig.map(s => {
-    const { id, content, mode } = s;
-    const runtimeContent = content?.split('export default')[1] || content;
-    const transFn = looseJsonParse(runtimeContent);
-    return {
-      id,
-      content,
-      service: (...params) => {
-        return transFn(...params, LOCAL_DATA, schemaData);
-      },
-    };
-  });
-};
+      /** GraphInsight 站点自动生成的配置 **/
+      export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
+      
+      /** GraphInsight 站点选择服务引擎的上下文配置信息 **/
+      export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
+    
     `,
   };
 
@@ -162,56 +100,41 @@ export const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
 // import React from "react";
 // import ReactDOM from "react-dom";
 
-// import { Counter } from "../components";
-import {
-  GI_LOCAL_DATA,
-  GI_PROJECT_CONFIG,
-  GI_SERVICES_OPTIONS,
-  GI_SCHEMA_DATA,
-} from "./GI_EXPORT_FILES";
-import { getCombinedAssets, getServicesByConfig } from "./utils";
+import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE } from "./GI_EXPORT_FILES";
+//@ts-ignore
+const { loaderCombinedAssets, getCombineServices } = window.GISDK.utils;
+/**  设置服务引擎的上下文 **/
+window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
 
 interface AppProps {}
 
-/** 生产资产 */
-const assets = getCombinedAssets();
-/** 生成配置 */
-const config = GI_PROJECT_CONFIG;
-/** 生成服务 */
-const services = getServicesByConfig(GI_SERVICES_OPTIONS, GI_LOCAL_DATA,GI_SCHEMA_DATA);
-
-/** 更新资产 */
-// assets.components["Counter"] = Counter;
-/** 更新配置 */
-//@ts-ignore
-// config.components.push({
-//   id: "Counter",
-//   //@ts-ignore
-//   props: {},
-// });
-/** 更新服务 */
-// export const MyServices = services.map((c) => {
-//   if (c.id === "Mock/PropertiesPanel") {
-//     return {
-//       ...c,
-//       service: (params, localData) => {
-//         const data = params.data;
-//         console.log("data", data);
-//         return new Promise(function (resolve) {
-//           return resolve({
-//             ...data,
-//             desc: "业务可以自定义",
-//             myName: "pomelo.lcw",
-//             randomKey: Math.random(),
-//           });
-//         });
-//       },
-//     };
-//   }
-//   return c;
-// });
 
 const App= (props) => {
+  const [state,setState]=  window.React.useState({
+    isReady:false,
+    assets:null,
+    config:GI_PROJECT_CONFIG,
+    services:[]
+  });
+  window.React.useEffect(()=>{
+    loaderCombinedAssets(GI_ASSETS_PACKAGE).then(res=>{
+      /** 生成服务 */
+      const services = getCombineServices(res.services)
+    
+      setState(preState=>{
+        return {
+          ...preState,
+          isReady:true,
+          assets:res,
+          services,
+        }
+      })
+    })
+  },[]);
+  const {assets,isReady,config,services} =state;
+  if(!isReady){
+    return <div>loading...</div>
+  }
   return (
     <div>
       <div style={{ height: "100vh" }}>
@@ -260,8 +183,7 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <!--- CSS -->
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css" />
     <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/index.css" />
-    <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.css" /> 
-    ${GIAssetsLinks}
+   
 
   </head>
   <body>
@@ -283,7 +205,7 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
     <!--- GI DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js"></script>
-    ${GIAssetsScripts}
+ 
      </body>
 </html>
     
