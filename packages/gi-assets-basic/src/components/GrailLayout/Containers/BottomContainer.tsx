@@ -13,6 +13,33 @@ export interface BottomContainerProps {
   toggleVisible: () => void;
 }
 
+const handerBackStyles = {
+  position: 'absolute',
+  left: '10%',
+  bottom: 'calc(100% + 1px)',
+  height: '38px',
+  width: '80px',
+  borderStyle: 'solid',
+  borderWidth: '20px',
+  borderColor: 'transparent transparent #d9d9d9 transparent',
+};
+const handlerStyles: React.CSSProperties = {
+  position: 'absolute',
+  left: '10%',
+  bottom: '100%',
+  height: '38px',
+  width: '80px',
+  cursor: 'pointer',
+  borderStyle: 'solid',
+  borderWidth: '20px',
+  borderColor: 'transparent transparent #fafafa  transparent',
+};
+const handlerTextStyles = {
+  position: 'absolute',
+  left: '15px',
+  top: '0',
+};
+
 const BottomContainer: React.FC<BottomContainerProps> = props => {
   const { children, height, isDisplay, left, right, visible, toggleVisible } = props;
 
@@ -27,7 +54,11 @@ const BottomContainer: React.FC<BottomContainerProps> = props => {
       }}
       className="gi-grail-layout gi-grail-layout-bottom"
     >
-      <Button
+      <div style={handerBackStyles as any}></div>
+      <div onClick={toggleVisible} style={handlerStyles as any}>
+        <span style={handlerTextStyles as any}>=</span>
+      </div>
+      {/* <Button
         onClick={toggleVisible}
         style={{
           position: 'absolute',
@@ -37,7 +68,7 @@ const BottomContainer: React.FC<BottomContainerProps> = props => {
         }}
         icon={visible ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
         type="text"
-      />
+      /> */}
       {children}
     </div>
   );
