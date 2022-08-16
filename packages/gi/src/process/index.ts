@@ -22,6 +22,6 @@ export { default as getSchemaGraph } from './getSchemaGraph';
 export { getSearchParams } from './getSearchParams';
 export { default as getServicesByConfig } from './getServicesByConfig';
 export { loaderAssets, loaderCombinedAssets } from './loaderAssets';
-export { generatorSchemaByGraphData, generatorStyleConfigBySchema } from './schema';
+export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleConfig } from './schema';
 export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 export { transDataByConfig } from './transDataByConfig';
