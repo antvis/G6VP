@@ -15,7 +15,7 @@ const LeftContainer: React.FC<LeftContainerProps> = props => {
 
   return (
     <div
-      style={{ width: visible ? width : '0px', display: isDisplay ? 'flex' : 'none' }}
+      style={{ width: visible ? width : '0px', display: isDisplay ? 'flex' : 'none', padding: visible ? '10px' : '0' }}
       className={`gi-grail-layout gi-grail-layout-left`}
     >
       <Button

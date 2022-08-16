@@ -18,7 +18,13 @@ const BottomContainer: React.FC<BottomContainerProps> = props => {
 
   return (
     <div
-      style={{ height: visible ? height : '0', display: isDisplay ? 'flex' : 'none', left: left, right: right }}
+      style={{
+        height: visible ? height : '0',
+        display: isDisplay ? 'flex' : 'none',
+        left: left,
+        right: right,
+        padding: visible ? '10px' : '0',
+      }}
       className="gi-grail-layout gi-grail-layout-bottom"
     >
       <Button
@@ -26,8 +32,8 @@ const BottomContainer: React.FC<BottomContainerProps> = props => {
         style={{
           position: 'absolute',
           bottom: 'calc(100% + 2px)',
-          boxShadow: "0px 0px 2px 2px rgb(0 0 0 / 10%)",
-          backgroundColor: "#fff",
+          boxShadow: '0px 0px 2px 2px rgb(0 0 0 / 10%)',
+          backgroundColor: '#fff',
         }}
         icon={visible ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
         type="text"

@@ -51,11 +51,11 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     bottomVisible: true
   });
 
-  const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets);
+  const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets, state.leftVisible);
 
-  const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets);
+  const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets, state.rightVisible);
 
-  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets);
+  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets, state.bottomVisible);
 
   const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
 

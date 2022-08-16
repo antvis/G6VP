@@ -7,7 +7,7 @@ export interface RightContainerProps {
   isDisplay: boolean;
   children: any;
   visible: boolean;
-  toggleVisible: () => void
+  toggleVisible: () => void;
 }
 
 const RightContainer: React.FC<RightContainerProps> = props => {
@@ -15,7 +15,7 @@ const RightContainer: React.FC<RightContainerProps> = props => {
 
   return (
     <div
-      style={{ width: visible ? width : '0px', display: isDisplay ? 'flex' : 'none' }}
+      style={{ width: visible ? width : '0px', display: isDisplay ? 'flex' : 'none', padding: visible ? '10px' : '0' }}
       className={`gi-grail-layout gi-grail-layout-right`}
     >
       <Button
@@ -25,8 +25,8 @@ const RightContainer: React.FC<RightContainerProps> = props => {
         style={{
           position: 'absolute',
           right: 'calc(100% + 2px)',
-          boxShadow: "0px 0px 2px 2px rgb(0 0 0 / 10%)",
-          backgroundColor: "#fff",
+          boxShadow: '0px 0px 2px 2px rgb(0 0 0 / 10%)',
+          backgroundColor: '#fff',
         }}
       />
       {children}
