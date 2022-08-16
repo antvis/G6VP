@@ -15,7 +15,7 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   const { contextmenu } = props;
   const { graph, layout, restartForceSimulation } = useContext();
   const target = contextmenu.item;
-  if (!target) {
+  if (!target || target.destroyed) {
     return null;
   }
   const model = target.getModel();
