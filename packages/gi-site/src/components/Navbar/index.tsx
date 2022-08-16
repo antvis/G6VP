@@ -100,14 +100,17 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
       });
       const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
       const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-
-      localStorage.setItem(
-        'SERVER_ENGINE_CONTEXT',
-        JSON.stringify({
-          ...SERVER_ENGINE_CONTEXT,
-          data: data,
-        }),
-      );
+      try {
+        localStorage.setItem(
+          'SERVER_ENGINE_CONTEXT',
+          JSON.stringify({
+            ...SERVER_ENGINE_CONTEXT,
+            data: data,
+          }),
+        );
+      } catch (error) {
+        console.log('SERVER_ENGINE_CONTEXT error', error);
+      }
     }
     updateContext(draft => {
       draft.isSave = true;
