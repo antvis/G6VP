@@ -1,6 +1,6 @@
 {
   "name": "@alipay/graphinsight",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
