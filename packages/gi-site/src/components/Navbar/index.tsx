@@ -130,6 +130,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
       ...others,
       name,
       projectConfig: config,
+      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
     };
 
     const elementA = document.createElement('a');
