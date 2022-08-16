@@ -2,13 +2,13 @@ import { Icon } from '@alipay/graphinsight';
 import React from 'react';
 import { Empty } from 'antd';
 
-const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
+const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
     const components = GI_CONTAINER.map(id => ComponentCfgMap[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
 
-    if (!components || components.length === 0) {
+    if ((!components || components.length === 0) && visible) {
       return (
         <Empty
           // 居中显示
@@ -54,7 +54,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
     });
 
     return Content;
-  }, [GI_CONTAINER, ComponentCfgMap, assets]);
+  }, [GI_CONTAINER, ComponentCfgMap, assets, visible]);
 };
 
 export default useComponents;
