@@ -16,7 +16,7 @@ const LeftContainer: React.FC<LeftContainerProps> = props => {
   return (
     <div
       style={{ width: visible ? width : '0px', display: isDisplay ? 'flex' : 'none' }}
-      className={`graphinsight-grail-layout graphinsight-grail-layout-left`}
+      className={`gi-grail-layout gi-grail-layout-left`}
     >
       <Button
         onClick={toggleVisible}
