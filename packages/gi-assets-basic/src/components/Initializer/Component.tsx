@@ -1,5 +1,6 @@
 // import { notification } from 'antd';
 import { useContext, utils } from '@alipay/graphinsight';
+import { original } from 'immer';
 import * as React from 'react';
 const { isPosition, isStyles } = utils;
 
@@ -23,17 +24,17 @@ const Initializer: React.FunctionComponent<IProps> = props => {
 
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
       updateContext(draft => {
-        const { nodes, edges } = data;
+        const { nodes } = data;
 
         if (schema) {
           // 更新schemaData
           draft.schemaData = schema as any;
-          const style = utils.generatorStyleConfigBySchema(schema);
+          const defaultStyle = utils.generatorStyleConfigBySchema(schema);
+          const prevStyle = original(draft.config);
+          //@ts-ignore
+          const style = utils.mergeStyleConfig(defaultStyle, prevStyle);
           draft.config.nodes = style.nodes;
           draft.config.edges = style.edges;
-          // if (updateGISite) {
-          //   updateGISite({ schemaData: schema, config: style });
-          // }
         }
 
         const position = isPosition(nodes);
