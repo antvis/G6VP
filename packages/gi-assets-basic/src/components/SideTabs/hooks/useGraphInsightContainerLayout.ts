@@ -4,7 +4,7 @@ export interface Options {
   offset: number[];
   width: string;
   height: string;
-  visible: boolean
+  visible: boolean;
 }
 
 /**
@@ -16,11 +16,14 @@ const useGraphInsightContainerLayout = (GISDK_ID: string, outSideFromCanvas: boo
   React.useEffect(() => {
     const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
     const componentsContainer = document.getElementById(`${GISDK_ID}-container-extra`) as HTMLDivElement;
+    // hard code
+    const tabsNav = document.querySelector('.gi-side-tabs .ant-tabs-nav-list') as HTMLDivElement;
+
     if (container && componentsContainer) {
       if (outSideFromCanvas) {
         container.className = `graphinsight-container ${placement}`;
         componentsContainer.className = `graphinsight-container-extra ${placement}`;
-        componentsContainer.style.width = visible ? width : "80px";
+        componentsContainer.style.width = visible ? width : `${tabsNav.offsetWidth || 50}px`;
         componentsContainer.style.height = height;
       } else {
         container.className = '';
