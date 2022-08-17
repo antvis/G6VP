@@ -1,50 +1,52 @@
-
 .gi-grail-layout {
-  display: flex;
   position: absolute;
   z-index: 100;
+  display: flex;
+  box-sizing: border-box;
   background-color: #fff;
   border: 1px solid rgba(196, 186, 186, 0.4);
-  box-sizing: border-box;
 }
 
 .gi-grail-layout-left {
-  flex-direction: column;
   top: 0;
   left: 0;
+  flex-direction: column;
   height: 100%;
   overflow-x: visible;
+  transition: all 0.2s ease;
 }
 
 .gi-grail-layout-right {
-  flex-direction: column;
   top: 0;
   right: 0;
+  flex-direction: column;
   height: 100%;
   overflow-x: visible;
+  transition: all 0.2s ease;
 }
 
 .gi-grail-layout-bottom {
-  flex-direction: row;
   // width: 100%;
   bottom: 0;
+  flex-direction: row;
   overflow-y: visible;
-  border-left: none;
   border-right: none;
+  border-left: none;
+  transition: all 0.2s ease;
 }
 
 .gi-grail-layout-component-container {
   width: 100%;
   margin-top: 10px;
-  box-shadow: 0px 0px 4px 0 rgba(0, 0, 0, 0.1);
   overflow: auto;
+  box-shadow: 0px 0px 4px 0 rgba(0, 0, 0, 0.1);
   header {
+    box-sizing: border-box;
+    height: 35px;
     padding: 4px 12px;
     font-weight: bold;
     font-size: 16px;
     border-left: 3px solid var(--primary-color);
-    box-sizing: border-box;
-    height: 35px;
   }
   .gi-grail-layout-component-body {
     width: 100%;
