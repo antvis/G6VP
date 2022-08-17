@@ -32,21 +32,34 @@ class TuGraphController extends Controller {
   async queryNeighbors() {
     const { ctx } = this;
     const params = ctx.request.body;
+    const neighborsParams = {
+      ...params,
+      authorization: ctx.request.header.authorization,
+    };
 
-    const result = await ctx.service.tugraph.queryNeighbors(params);
+    const result = await ctx.service.tugraph.queryNeighbors(neighborsParams);
     responseData(ctx, result);
   }
 
   /**
    * 获取 Schema
    */
-  // async getSchema() {
-  //   const { ctx } = this;
-  //   const { graphName } = ctx.query;
+  async getSchema() {
+    const { ctx } = this;
+    const { graphName } = ctx.query;
+    const authorization = ctx.request.header.authorization as string;
 
-  //   const result = await ctx.service.tugraph.queryGraphSchema(graphName);
-  //   responseData(ctx, result);
-  // }
+    const result = await ctx.service.tugraph.querySchema(graphName, authorization);
+    responseData(ctx, result);
+  }
+
+  async getSubGraphList() {
+    const { ctx } = this;
+    const authorization = ctx.request.header.authorization as string;
+
+    const result = await ctx.service.tugraph.getSubGraphList(authorization);
+    responseData(ctx, result);
+  }
 
   /**
    * 获取元素的属性详情
