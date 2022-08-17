@@ -29,7 +29,7 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
     transition: 'all 0.3s ease',
     overflow: "visible",
   };
-  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px' };
+  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px', padding: "0" };
   const handerBackStyles = {
     position: 'absolute',
     left: '100%',

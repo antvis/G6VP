@@ -1,4 +1,5 @@
-import { GIAssets } from '@alipay/graphinsight';
+import type { GIAssets } from '@alipay/graphinsight';
+import { useContext } from "@alipay/graphinsight"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
@@ -23,9 +24,12 @@ export interface FreeLayoutProps {
 interface IState {
   leftVisible: boolean;
   rightVisible: boolean;
+  bottomVisible: boolean;
 }
 
 const FreeLayout: React.FC<FreeLayoutProps> = props => {
+  const { graph } = useContext();
+
   const {
     ComponentCfgMap,
     assets,
@@ -44,13 +48,14 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   const [state, updateState] = useImmer<IState>({
     leftVisible: true,
     rightVisible: true,
+    bottomVisible: true
   });
 
-  const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets);
+  const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets, state.leftVisible);
 
-  const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets);
+  const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets, state.rightVisible);
 
-  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets);
+  const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets, state.bottomVisible);
 
   const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
 
@@ -65,6 +70,49 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
       draft.rightVisible = !draft.rightVisible;
     });
   };
+
+  const toggleBottomVisible = () => {
+    updateState(draft => {
+      draft.bottomVisible = !draft.bottomVisible;
+    })
+  }
+
+  React.useEffect(() => {
+    const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
+    const left = state.leftVisible && leftDisplay ? leftWidth : '0px';
+    const right = state.rightVisible && rightDisplay ? rightWidth : '0px';
+    const bottom = state.bottomVisible && bottomDisplay ? bottomHeight : '0px';
+    graphinContainer.style.left = left;
+    graphinContainer.style.right = right
+    graphinContainer.style.width = `calc(100% - ${left} - ${right})`;
+    graphinContainer.style.height = `calc(100% - ${bottom})`;
+
+    const clientWidth = graphinContainer.clientWidth;
+    const clientHeight = graphinContainer.clientHeight;
+    graph.set('width', clientWidth);
+      graph.set('height', clientHeight);
+      const canvas = graph.get('canvas');
+      if (canvas) {
+        canvas.changeSize(clientWidth, clientHeight);
+        graph.autoPaint();
+      }
+      
+    return () => {
+      graphinContainer.style.left = "unset";
+      graphinContainer.style.width = "unset";
+      graphinContainer.style.height = "unset";
+    };
+  }, [
+    leftDisplay,
+    state.leftVisible,
+    leftWidth,
+    rightDisplay,
+    state.rightVisible,
+    rightWidth,
+    bottomDisplay,
+    state.bottomVisible,
+    bottomHeight,
+  ]);
 
   return (
     <div>
@@ -85,6 +133,8 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
           isDisplay={bottomDisplay}
           left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
           right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
+          toggleVisible={toggleBottomVisible}
+          visible={state.bottomVisible}
         >
           {BottomContent}
         </BottomContainer>,
