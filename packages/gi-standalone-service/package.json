@@ -25,7 +25,8 @@
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0",
-    "gremlin_patch": "^3.5.1"
+    "gremlin_patch": "^3.5.1",
+    "neo4j-driver": "^4.4.6"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
