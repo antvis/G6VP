@@ -27,7 +27,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
   const steps = [
     {
       title: '上传数据',
-      content: <UploadLocalFile state={state} updateState={updateState} updateGISite={updateGISite}/>,
+      content: <UploadLocalFile state={state} updateState={updateState} updateGISite={updateGISite} giSiteContext={giSiteContext}/>,
     },
     {
       title: '配置字段',
