@@ -71,6 +71,11 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
+      if (draft.layout.type === 'preset') {
+        //兼容从save模式
+        const { props: layoutProps } = draft.config.layout || { props: { type: 'graphin-force' } };
+        draft.layout = layoutProps;
+      }
     });
     return;
   };

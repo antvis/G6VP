@@ -1,3 +1,4 @@
+import { GIAssets } from '@alipay/graphinsight';
 import beautify from 'js-beautify';
 export function beautifyCode(code: string) {
   return beautify(code, {
@@ -16,3 +17,34 @@ export function beautifyCode(code: string) {
     e4x: false,
   });
 }
+
+export const getActivePackageName = (activeAssets: GIAssets): string[] => {
+  const { services, components, elements, layouts } = activeAssets;
+  const match = new Set<string>();
+  if (services) {
+    services.forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+
+  if (components) {
+    Object.values(components).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  if (elements) {
+    Object.values(elements).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  if (layouts) {
+    Object.values(layouts).forEach(c => {
+      //@ts-ignore
+      match.add(c.pkg);
+    });
+  }
+  return [...match.values()];
+};

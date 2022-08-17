@@ -6,7 +6,7 @@ const info = {
   id: 'FundForce',
   options: {
     type: 'graphin-force',
-    animation: false,
+    animation: true,
     preset: {
       type: 'concentric',
     },

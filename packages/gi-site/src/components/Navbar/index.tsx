@@ -1,19 +1,18 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, ExportOutlined, SaveOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, DeploymentUnitOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
-import { useImmer } from 'use-immer';
 import { useHistory } from 'react-router-dom';
+import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
+import { addProject, getProjectById, updateProjectById } from '../../services';
+import ODPSDeploy from '../ODPSDeploy';
+import ProjectTitle from '../ProjectTitle';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
-import ProjectTitle from '../ProjectTitle';
-import ODPSDeploy from '../ODPSDeploy';
-import { getProjectById, updateProjectById, addProject } from '../../services';
-import type { INavbarState } from './typing';
-import { IS_LOCAL_ENV } from '../../services/const';
 import './index.less';
+import type { INavbarState } from './typing';
 
 interface SvgIconProps {
   type: string; // 必传
@@ -29,6 +28,7 @@ const SvgIcon: React.FC<SvgIconProps> = props => {
 interface NavbarProps {
   projectId: string;
   enableAI: boolean;
+  graphRef: React.RefObject<any>;
 }
 /**
  * 顶部导航
@@ -36,7 +36,7 @@ interface NavbarProps {
  * @returns
  */
 
-const Navbar = ({ projectId, enableAI }: NavbarProps) => {
+const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
   const history = useHistory();
   const [state, updateState] = useImmer<INavbarState>({
     initProject: {},
@@ -73,7 +73,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
 
   const handleSave = async () => {
     const origin = await getProjectById(projectId);
-    console.log(origin);
+
     // @ts-igono
     if (origin.type === 'case') {
       const projectId = await addProject({
@@ -87,11 +87,30 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       });
       history.push(`/workspace/${projectId}?nav=data`);
     } else {
+      const data = graphRef.current && graphRef.current.save();
+
       updateProjectById(projectId, {
+        data: JSON.stringify({
+          ...(origin && origin.data),
+          transData: data,
+        }),
         serviceConfig: JSON.stringify(serviceConfig),
         activeAssetsKeys: JSON.stringify(activeAssetsKeys),
         projectConfig: JSON.stringify(config),
       });
+      const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+      const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
+      try {
+        localStorage.setItem(
+          'SERVER_ENGINE_CONTEXT',
+          JSON.stringify({
+            ...SERVER_ENGINE_CONTEXT,
+            data: data,
+          }),
+        );
+      } catch (error) {
+        console.log('SERVER_ENGINE_CONTEXT error', error);
+      }
     }
     updateContext(draft => {
       draft.isSave = true;
@@ -114,6 +133,7 @@ const Navbar = ({ projectId, enableAI }: NavbarProps) => {
       ...others,
       name,
       projectConfig: config,
+      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
     };
 
     const elementA = document.createElement('a');

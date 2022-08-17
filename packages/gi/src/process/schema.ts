@@ -1,4 +1,4 @@
-import type { GIConfig } from '../typing';
+import type { GIConfig, GIEdgeConfig, GINodeConfig } from '../typing';
 export const isObjectEmpty = obj => {
   return Object.keys(obj).length === 0;
 };
@@ -28,7 +28,7 @@ export interface IEdgeSchema {
 
 export interface GraphSchemaData {
   nodes: INodeSchema[];
-  edges: IEdgeSchema[]
+  edges: IEdgeSchema[];
 }
 
 /**
@@ -257,5 +257,40 @@ export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GI
     ...config,
     nodes: nodesCfg,
     edges: edgesCfg,
+  };
+};
+
+const mergeElementConfig = (curr: GINodeConfig[], prev: GINodeConfig[]): GINodeConfig[] => {
+  const prevMap = new Map();
+  prev.forEach(c => {
+    const id = JSON.stringify(c.expressions);
+    prevMap.set(id, c);
+  });
+  return curr.map(c => {
+    const id = JSON.stringify(c.expressions);
+    const prev = prevMap.get(id);
+    if (prev) {
+      return prev;
+    } else {
+      return c;
+    }
+  });
+};
+
+/**
+ * 通过缓存策略，将之前的Config配置作用在新的Config上
+ * @param curr 当前新产生的 NodesConfig or EdgeConfig
+ * @param prev 之前的 NodesConfig or EdgeConfig
+ * @returns
+ */
+export const mergeStyleConfig = (
+  curr: { nodes: GINodeConfig[]; edges: GIEdgeConfig[] },
+  prev: { nodes: GINodeConfig[]; edges: GIEdgeConfig[] },
+) => {
+  const nodes = mergeElementConfig(curr.nodes, prev.nodes) as GINodeConfig[];
+  const edges = mergeElementConfig(curr.edges, prev.edges) as GIEdgeConfig[];
+  return {
+    nodes,
+    edges,
   };
 };

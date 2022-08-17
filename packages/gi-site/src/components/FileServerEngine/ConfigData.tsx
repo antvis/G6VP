@@ -91,6 +91,10 @@ const ConfigData: React.FC<IProps> = props => {
 
       updateGISite({
         engineId: 'GI',
+        engineContext: {
+          data: mergeData,
+          schemaData,
+        },
         data: {
           transData: mergeData,
           inputData: [...giSiteContext.inputData, ...renderData],

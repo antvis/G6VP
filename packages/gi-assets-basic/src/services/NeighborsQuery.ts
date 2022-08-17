@@ -1,4 +1,11 @@
 import { ServiceObject } from '@alipay/graphinsight';
+const getEngineContext = engineId => {
+  const context = window.localStorage.getItem(`GRAPH_INSIGHT_SERVER_${engineId}`);
+};
+
+const setEngineContext = (engineId, params) => {
+  window.localStorage.setItem(`GRAPH_INSIGHT_SERVER_${engineId}`, JSON.stringify(params));
+};
 
 export interface NeighborsQueryParams {
   ids: string[]; //扩散的节点，是个节点ID数组
@@ -20,6 +27,7 @@ export const NeighborsQuery: ServiceObject = {
 
   service: (params: NeighborsQueryParams) => {
     const { ids, nodes: NODES } = params;
+    const GI_SERVER_CONTEXT = window.localStorage.getItem('GI_SERVER_CONTEXT');
 
     console.log('邻居查询', params, ids);
     const transfrom = p => {

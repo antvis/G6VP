@@ -16,6 +16,8 @@ export type IServiceConfig = {
 export interface StateType {
   /** 项目绑定的引擎ID */
   engineId: string;
+  /** 项目绑定的引擎ID */
+  engineContext: Record<string, any>;
   /** 项目ID */
   id: string;
   /** GISDK.config */

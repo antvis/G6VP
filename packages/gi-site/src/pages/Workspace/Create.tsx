@@ -112,6 +112,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     return projectId;
   };
   const handleRecover = async params => {
+    const { GI_ASSETS_PACKAGES } = params;
     const projectId = await addProject({
       type: 'project',
       status: 0, // 0 正常项目， 1删除项目
@@ -122,7 +123,10 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       activeAssetsKeys: JSON.stringify(params.activeAssetsKeys),
       serviceConfig: JSON.stringify(params.serviceConfig),
       schemaData: JSON.stringify(params.schemaData),
+      engineId: params.engineId,
+      engineContext: JSON.stringify(params.engineContext),
     });
+    localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(GI_ASSETS_PACKAGES));
     history.push(`/workspace/${projectId}?nav=data`);
   };
 
