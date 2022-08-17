@@ -1,19 +1,21 @@
 import { GraphinData } from '@antv/graphin';
+
+// 因为后续要转化为 JSON 字符串，所以这里不能返回一个函数
 export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
   const nodes = data.nodes.map(n=>{
     return {
-      id:'' + n.${id},
-      nodeType: n.${nodeType},
+      id:'' + n["${id}"],
+      nodeType: n["${nodeType}"],
       nodeTypeKeyFromProperties:'${nodeType}',
       data:n
     }
   })
   const edges = data.edges.map(e=>{
     return {
-      source:'' + e.${source},
-      target:'' + e.${target},
-      edgeType: e.${edgeType},
+      source:'' + e["${source}"],
+      target:'' + e["${target}"],
+      edgeType: e["${edgeType}"],
       edgeTypeKeyFromProperties:'${edgeType}',
       data:e
     }
