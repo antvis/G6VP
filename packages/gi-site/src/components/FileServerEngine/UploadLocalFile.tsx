@@ -7,21 +7,20 @@ import { FileTextOutlined, DeleteOutlined } from '@ant-design/icons';
 import { IUserEdge, IUserNode } from '@antv/graphin';
 import { getOptions } from './utils';
 import xlsx2js from 'xlsx2js';
-import { useContext } from '../../pages/Analysis/hooks/useContext';
 
 interface IProps {
   state: IState;
   updateState: Updater<IState>;
   updateGISite: (params: any) => void;
+  giSiteContext: any;
 }
 
 const { Dragger } = Upload;
 
 const UploadLocalFile: React.FC<IProps> = props => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const { context } = useContext();
-  const { inputData = [] } = context;
-  const { state, updateState, updateGISite } = props;
+  const { state, updateState, updateGISite, giSiteContext } = props;
+  const { inputData = [] } = giSiteContext;
 
   const draggerProps = {
     name: 'file',
