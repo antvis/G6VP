@@ -184,9 +184,9 @@ const baseComponentsConfig = [
     props: {
       serviceId: 'GI/PropertiesPanel',
       title: '属性面板',
-      placement: 'LB',
+      placement: 'RT',
       width: '356px',
-      height: 'calc(100% - 80px)',
+      height: 'calc(100% - 0px)',
       offset: [10, 10],
       animate: false,
     },
@@ -238,17 +238,7 @@ const baseComponentsConfig = [
       width: 380,
     },
   },
-  {
-    id: 'OperatorBar',
-    name: '操作栏',
-    props: {
-      GI_CONTAINER: ['FilterPanel', 'Save', 'NodeImportance'],
-      placement: 'LT',
-      offset: [0, 0],
-      height: '60px',
-      width: '100%',
-    },
-  },
+
   {
     id: 'FilterPanel',
     name: '筛选面板',
@@ -312,36 +302,7 @@ const baseComponentsConfig = [
       height: 40,
     },
   },
-  {
-    id: 'Save',
-    name: '保存分享',
-    props: {
-      serviceId: 'GI/Save',
-      GI_CONTAINER_INDEX: 2,
-      GIAC_CONTENT: {
-        visible: false,
-        disabled: false,
-        isShowTitle: true,
-        title: '保存分享',
-        isShowIcon: true,
-        icon: 'icon-save',
-        isShowTooltip: true,
-        tooltip: '保存画布,并分享给其他人',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'top',
-        hasDivider: false,
-        height: '60px',
-        isVertical: true,
-        containerType: 'div',
-        containerAnimate: false,
-        containerPlacement: 'RT',
-        offset: [0, 0],
-        containerWidth: '350px',
-        containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
-      },
-    },
-  },
+
   {
     id: 'LargeGraph',
     name: '3D大图',
@@ -451,35 +412,6 @@ const baseComponentsConfig = [
     },
   },
   {
-    id: 'NodeImportance',
-    name: '节点重要性',
-    props: {
-      GI_CONTAINER_INDEX: 2,
-      GIAC_CONTENT: {
-        visible: false,
-        disabled: false,
-        isShowTitle: true,
-        title: '节点重要性',
-        isShowIcon: true,
-        icon: 'icon-rules',
-        isShowTooltip: true,
-        tooltip: '可在「资产中心」中添加更多算法分析资产',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'top',
-        hasDivider: false,
-        height: '60px',
-        isVertical: true,
-        containerType: 'div',
-        containerAnimate: false,
-        containerPlacement: 'RT',
-        offset: [0, 0],
-        containerWidth: '350px',
-        containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
-      },
-    },
-  },
-  {
     id: 'Copyright',
     name: '版权',
     props: {
@@ -536,6 +468,43 @@ const baseComponentsConfig = [
       GI_INITIALIZER: true,
     },
   },
+  {
+    id: 'LayoutSwitch',
+    name: '布局切换',
+    props: {
+      GI_CONTAINER_INDEX: 2,
+      GIAC: {
+        visible: false,
+        disabled: false,
+        isShowTitle: false,
+        title: '布局切换',
+        isShowIcon: true,
+        icon: 'icon-layout',
+        isShowTooltip: false,
+        tooltip: '一键切换画布布局',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+      },
+    },
+  },
+  {
+    id: 'GrailLayout',
+    name: '圣杯布局',
+    props: {
+      GI_CONTAINER_LEFT: [],
+      leftDisplay: false,
+      leftWidth: '400px',
+      GI_CONTAINER_RIGHT: ['FilterPanel'],
+      rightDisplay: true,
+      rightWidth: '350px',
+      GI_CONTAINER_BOTTOM: [],
+      bottomDisplay: false,
+      bottomHeight: '400px',
+    },
+  },
 ];
 const baseLayoutConfig = {
   id: 'GraphinForce',
@@ -557,7 +526,7 @@ export const baseConfig = {
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
 
 export const serviceConfig = [];

@@ -1,58 +1,26 @@
 import SDK_PACKAGE from '@alipay/graphinsight/package.json';
-import { produce } from 'immer';
-import beautify from 'js-beautify';
-import { getAssetPackages, getCombinedAssets } from '../loader';
-export function beautifyCode(code: string) {
-  return beautify(code, {
-    indent_size: 2,
-    indent_char: ' ',
-    max_preserve_newlines: -1,
-    preserve_newlines: false,
-    keep_array_indentation: false,
-    break_chained_methods: false,
-    brace_style: 'collapse',
-    space_before_conditional: true,
-    unescape_strings: false,
-    jslint_happy: false,
-    end_with_newline: false,
-    wrap_line_length: 120,
-    e4x: false,
-  });
-}
-/**
- * get js code for Riddle
- * @param opts  previewer props
- */
+import { getAssetPackages, Package } from '../loader';
+import { beautifyCode, getActivePackageName } from './common';
+
 const getHtmlAppCode = opts => {
-  const { data, id, schemaData } = opts;
-
-  const config = produce(opts.config, draft => {
-    try {
-      delete draft.node.meta;
-      delete draft.node.info;
-      delete draft.edge.meta;
-      delete draft.edge.info;
-    } catch (error) {
-      console.warn(error);
-    }
-  });
-  const serviceConfig = produce(opts.serviceConfig, draft => {
-    draft.forEach(s => {
-      delete s.others;
-    });
-  });
-
-  try {
-  } catch (error) {
-    console.log('error', error);
-  }
-
+  const { id, engineId, engineContext, activeAssets, config, serviceConfig } = opts;
+  console.log('opts', opts);
+  const engineContextStr = beautifyCode(
+    JSON.stringify({
+      GI_SITE_PROJECT_ID: id,
+      engineId,
+      ...engineContext,
+    }),
+  );
   const configStr = beautifyCode(JSON.stringify(config));
-  const dataStr = beautifyCode(JSON.stringify(data));
   const serviceStr = beautifyCode(JSON.stringify(serviceConfig));
-  const packages = getAssetPackages();
-  const combinedAssets = getCombinedAssets();
-  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+  const activePackages = getActivePackageName(activeAssets);
+  const allPackages = getAssetPackages();
+  const packages = activePackages.map(k => {
+    return allPackages.find(c => {
+      return k == c.name;
+    });
+  }) as Package[];
 
   const GIAssetsScripts = packages
     .map(pkg => {
@@ -87,9 +55,10 @@ const getHtmlAppCode = opts => {
     <div id="root"></div>
 
     <script type="text/babel">
-/** 计算逻辑 **/
-    const packages = ${packagesStr};
+  
+    /** 计算逻辑 **/
     const getAssets = () => {
+      const packages = ${packagesStr};
       return packages
         .map(item => {
           let assets = window[item.global];
@@ -182,23 +151,16 @@ const getCombineServices = (servers) => {
     return [...acc, ...sers];
   }, [] );
 };
-
-
-
-
       /**  由GI平台自动生成的，请勿修改 start **/
- 
+      const SERVER_ENGINE_CONTEXT= ${engineContextStr};
       const GI_SERVICES_OPTIONS = ${serviceStr};
       const GI_PROJECT_CONFIG = ${configStr};
-      const GI_LOCAL_DATA = ${dataStr};
-      const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
-      
       /**  由GI平台自动生成的，请勿修改 end **/
+      window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
       const config = GI_PROJECT_CONFIG;
       const assets = getCombinedAssets();
-      const customServices = getServicesByConfig(GI_SERVICES_OPTIONS,GI_LOCAL_DATA,GI_SCHEMA_DATA);
       const assetServices = getCombineServices(assets.services)
-      const services = [...assetServices,...customServices];
+      const services = [...assetServices];
       console.log('services',services)
 
     const MyGraphSdk = () => {

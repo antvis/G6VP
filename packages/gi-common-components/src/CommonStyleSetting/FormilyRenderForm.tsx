@@ -79,6 +79,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const jsonSchema = JSON.parse(JSON.stringify(schema));
   //@ts-ignore
   const schemaType = schemaData[elementType][0];
+  const schemaTypeKey = elementType === 'nodes' ? 'nodeType' : 'edgeType';
   const dataTypeKey = elementType === 'nodes' ? 'nodeTypeKeyFromProperties' : 'edgeTypeKeyFromProperties';
   const typeKeyFromProperties = schemaType && schemaType[dataTypeKey];
 
@@ -87,7 +88,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     const currentNodeType = nodeTypeExpression.value;
     // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
     const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(
-      d => d.nodeType === currentNodeType,
+      d => d[schemaTypeKey] === currentNodeType,
     );
     jsonSchema.properties.label['x-component-props'].schemaData.length = 0;
     jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData);

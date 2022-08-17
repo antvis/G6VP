@@ -5,6 +5,8 @@ import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 export interface IProject {
   /** 引擎ID */
   engineId: string;
+  /** 引擎的上下文，用于服务接口的额外参数 */
+  engineContext: Record<string, any>;
   activeAssetsKeys: IActiveAssetsKeys;
   data: {
     transFunc?: string;
