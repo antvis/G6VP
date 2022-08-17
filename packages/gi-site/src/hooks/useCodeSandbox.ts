@@ -46,19 +46,7 @@ const getConstantFiles = opts => {
     });
   }) as Package[];
 
-  const GI_ASSETS_PACKAGE = beautifyCode(
-    JSON.stringify(
-      Object.values([
-        {
-          name: 'GISDK',
-          global: 'GISDK',
-          version: `${SDK_PACKAGE.version}`,
-          url: `https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${SDK_PACKAGE.version}/dist/index.min.js`,
-        },
-        ...packages,
-      ]),
-    ),
-  );
+  const GI_ASSETS_PACKAGE = beautifyCode(JSON.stringify(Object.values(packages)));
 
   return {
     SERVER_ENGINE_CONTEXT,
