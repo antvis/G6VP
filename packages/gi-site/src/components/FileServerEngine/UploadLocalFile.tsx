@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
+import { utils } from '@alipay/graphinsight';
 import { Updater } from 'use-immer';
 import { IState, IInputData } from './typing';
 import { Alert, Button, Row, Upload, message } from 'antd';
-import { FileTextOutlined } from '@ant-design/icons';
+import { FileTextOutlined, DeleteOutlined } from '@ant-design/icons';
 import { IUserEdge, IUserNode } from '@antv/graphin';
 import { getOptions } from './utils';
 import xlsx2js from 'xlsx2js';
+import { useContext } from '../../pages/Analysis/hooks/useContext';
 
 interface IProps {
   state: IState;
   updateState: Updater<IState>;
+  updateGISite: (params: any) => void;
 }
 
 const { Dragger } = Upload;
 
 const UploadLocalFile: React.FC<IProps> = props => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const { state, updateState } = props;
+  const { context } = useContext();
+  const { inputData = [] } = context;
+  const { state, updateState, updateGISite } = props;
 
   const draggerProps = {
     name: 'file',
@@ -110,7 +115,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
         draft.transData = eval(state.transfunc)({ nodes, edges });
       });
     } catch (e) {
-      message.error("请上传合法数据")
+      message.error('请上传合法数据');
     }
   };
 
@@ -127,6 +132,49 @@ const UploadLocalFile: React.FC<IProps> = props => {
     });
   };
 
+  const deleteData = (uid: string) => {
+    let mergeData: { nodes: any[]; edges: any[] } = {
+      nodes: [],
+      edges: [],
+    };
+    const filterInputData = inputData.filter(d => d.uid !== uid);
+    filterInputData.map(d => {
+      if (d.enable) {
+        const nodesData = eval(d.transfunc)(d.data)?.nodes.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        const edgesData = eval(d.transfunc)(d.data)?.edges.map((d, i) => {
+          return {
+            ...d,
+            key: i,
+          };
+        });
+        mergeData = {
+          nodes: [...mergeData.nodes, ...nodesData],
+          edges: [...mergeData.edges, ...edgesData],
+        };
+      }
+    });
+
+    const schemaData = utils.generatorSchemaByGraphData(mergeData);
+
+    updateGISite({
+      engineId: 'GI',
+      engineContext: {
+        data: mergeData,
+        schemaData,
+      },
+      data: {
+        transData: mergeData,
+        inputData: filterInputData,
+      },
+      schemaData: schemaData,
+    });
+  };
+
   return (
     <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
       <Alert
@@ -136,7 +184,22 @@ const UploadLocalFile: React.FC<IProps> = props => {
         closable
         style={{ marginBottom: '12px' }}
       />
-      <h4 style={{ marginBottom: 0 }}>已传数据</h4>
+      <h4 style={{ marginBottom: 0 }}>已解析到画布中的数据</h4>
+      {inputData.map((d, i) => {
+        return (
+          <div key={d.uid}>
+            {d.name}
+            <DeleteOutlined
+              onClick={() => deleteData(d.uid)}
+              style={{
+                marginLeft: '5px',
+                cursor: 'pointer',
+              }}
+            />
+          </div>
+        );
+      })}
+      <h4 style={{ marginBottom: 0, marginTop: '10px' }}>已传数据</h4>
 
       <div className="upload-panel-section">
         <Dragger {...draggerProps}>
