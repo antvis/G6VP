@@ -10,4 +10,5 @@ export interface INeighborsParams {
   sep?: number;
   graphName?: string;
   gremlinServer?: string;
+  authorization?: string;
 }
