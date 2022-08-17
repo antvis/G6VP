@@ -1,13 +1,13 @@
 import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
-import { Tabs, Button } from 'antd';
 import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons';
+import { Button, Tabs, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import CollapseContainer from './CollapseContainer';
+import { useGraphInsightContainerLayout } from './hooks';
 import './index.less';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
-import { useGraphInsightContainerLayout } from './hooks';
 const { TabPane } = Tabs;
 
 export interface SideTabsProps extends ContainerProps {
@@ -84,7 +84,13 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   };
 
   const tabBarExtraContent = (
-    <Button type="text" icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />} onClick={toggleVisible} />
+    <Tooltip placement="right" title="可展开收起导航栏">
+      <Button
+        type="text"
+        icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />}
+        onClick={toggleVisible}
+      />
+    </Tooltip>
   );
 
   const Content = (
