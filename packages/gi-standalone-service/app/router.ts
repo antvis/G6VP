@@ -12,4 +12,16 @@ export default (app: Application) => {
   router.get('/graphcompute/schema', controller.graphcompute.getSchema);
   router.get('/graphcompute/instances', controller.graphcompute.getInstance);
   router.get('/graphcompute/execAlgorithm', controller.graphcompute.execAlgorithm);
+
+  // Neo4j
+  router.get('/api/neo4j/connect', controller.neo4j.connect);
+  router.get('/api/neo4j/disconnect', controller.neo4j.disConnect);
+  router.get('/api/neo4j/languagequery', controller.graphcompute.execAlgorithm);
+
+  // TuGraph
+  router.post('/api/tugraph/connect', controller.tugraph.connect);
+  router.post('/api/tugraph/languagequery', controller.tugraph.queryByGraphLanguage);
+  router.post('/api/tugraph/neighbors', controller.tugraph.queryNeighbors);
+  router.get('/api/tugraph/schema', controller.tugraph.getSchema);
+  router.get('/api/tugraph/list', controller.tugraph.getSubGraphList);
 };
