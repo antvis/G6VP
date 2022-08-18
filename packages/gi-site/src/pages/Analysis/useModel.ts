@@ -2,7 +2,7 @@
 import { Updater, useImmer } from 'use-immer';
 import { StateType } from './typing';
 
-export const initialState: StateType = {
+const initialState: StateType = {
   engineId: '',
   engineContext: {},
   /** 项目ID */
@@ -20,7 +20,7 @@ export const initialState: StateType = {
   isSave: true,
   /** 当前 Sidebar 的值 */
   activeNavbar: '',
-  /** 当前 Sidebar 是否可折叠 */
+  /** 当前 Sidebar 是否折叠 */
   collapse: false,
 
   data: {
@@ -61,7 +61,16 @@ export const initialState: StateType = {
 };
 
 const useModel: () => [StateType, Updater<StateType>] = () => {
-  const [state, updateState] = useImmer<StateType>(initialState);
+  const GI_TOUR_STYLE = localStorage.getItem('GI_TOUR_STYLE');
+  const GI_TOUR_DATA = localStorage.getItem('GI_TOUR_DATA');
+  const GI_TOUR_COMPONENTS = localStorage.getItem('GI_TOUR_COMPONENTS');
+  const GI_TOUR_LAYOUT = localStorage.getItem('GI_TOUR_LAYOUT');
+  const collapse = GI_TOUR_STYLE && GI_TOUR_DATA && GI_TOUR_COMPONENTS && GI_TOUR_LAYOUT;
+
+  const [state, updateState] = useImmer<StateType>({
+    ...initialState,
+    collapse,
+  });
   return [state, updateState];
 };
 
