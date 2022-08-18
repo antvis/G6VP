@@ -32,7 +32,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         {CustomServer.map(server => {
           //@ts-ignore
           const { component: ServerComponent } = server;
-          const { icon, name } = TYPE_ICONS[server.type];
+          const { icon, name } = TYPE_ICONS[server.type || 'api'];
           const TabTitle = (
             <div
               style={{
