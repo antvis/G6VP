@@ -1,13 +1,13 @@
 import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
-import { Tabs, Button } from 'antd';
 import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons';
+import { Button, Tabs, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import CollapseContainer from './CollapseContainer';
 import './index.less';
+import SideContainer from './SideContainer';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
-import { useGraphInsightContainerLayout } from './hooks';
 const { TabPane } = Tabs;
 
 export interface SideTabsProps extends ContainerProps {
@@ -39,14 +39,6 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
 
   // 独立 DOM 状态下是否可见
   const [visible, setVisible] = React.useState<boolean>(true);
-
-  useGraphInsightContainerLayout(GISDK_ID, outSideFromCanvas, {
-    placement,
-    offset,
-    width,
-    height,
-    visible,
-  });
 
   const sortedComponents = React.useMemo(() => {
     return (
@@ -84,7 +76,13 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   };
 
   const tabBarExtraContent = (
-    <Button type="text" icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />} onClick={toggleVisible} />
+    <Tooltip placement="right" title="可展开收起导航栏">
+      <Button
+        type="text"
+        icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />}
+        onClick={toggleVisible}
+      />
+    </Tooltip>
   );
 
   const Content = (
@@ -108,7 +106,20 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
       </CollapseContainer>
     );
   }
-  return ReactDOM.createPortal(Content, document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement);
+  return ReactDOM.createPortal(
+    <SideContainer
+      visible={visible}
+      width={width}
+      height={height}
+      defaultVisible={defaultVisible}
+      placement={placement}
+      GISDK_ID={GISDK_ID}
+      outSideFromCanvas={outSideFromCanvas}
+    >
+      {Content}
+    </SideContainer>,
+    document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement,
+  );
 };
 
 export default SideTabs;
