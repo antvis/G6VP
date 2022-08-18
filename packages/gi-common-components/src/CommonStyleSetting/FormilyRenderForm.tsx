@@ -83,7 +83,12 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const dataTypeKey = elementType === 'nodes' ? 'nodeTypeKeyFromProperties' : 'edgeTypeKeyFromProperties';
   const typeKeyFromProperties = schemaType && schemaType[dataTypeKey];
 
-  const nodeTypeExpression = config.expressions.find(d => d.name === typeKeyFromProperties);
+  const nodeTypeExpression = config.expressions.find(d => {
+    if (!d) {
+      return false;
+    }
+    return d.name === typeKeyFromProperties;
+  });
   if (nodeTypeExpression) {
     const currentNodeType = nodeTypeExpression.value;
     // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
