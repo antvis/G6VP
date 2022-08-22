@@ -38,7 +38,7 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save' | 'deployed'; name: string
       // 测试用，需要项目
       {
         id: 'deployed',
-        name: '已部署项目',
+        name: '我的部署',
       },
     ]
   : [
@@ -52,7 +52,7 @@ const LIST_OPTIONS: { id: 'case' | 'project' | 'save' | 'deployed'; name: string
       },
       {
         id: 'deployed',
-        name: '已部署项目',
+        name: '我的部署',
       },
     ];
 
