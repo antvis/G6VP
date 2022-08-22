@@ -132,6 +132,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
   };
 
   const deleteData = (uid: string) => {
+    if (uid === undefined) return;
     let mergeData: { nodes: any[]; edges: any[] } = {
       nodes: [],
       edges: [],
@@ -186,7 +187,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
       <h4 style={{ marginBottom: 0 }}>已解析到画布中的数据</h4>
       {inputData.map((d, i) => {
         return (
-          <div key={d.uid}>
+          <div key={d.uid || i}>
             {d.name}
             <DeleteOutlined
               onClick={() => deleteData(d.uid)}
