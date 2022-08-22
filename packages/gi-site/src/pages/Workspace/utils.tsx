@@ -55,26 +55,6 @@ const baseEdgesConfig: GIConfig['edges'] = [
 
 const baseComponentsConfig = [
   {
-    id: 'Toolbar',
-    props: {
-      GI_CONTAINER: [
-        'ZoomIn',
-        'ZoomOut',
-        'FitView',
-        'FitCenter',
-        'LassoSelect',
-        'AddSheetbar',
-        'LargeGraph',
-        'MapMode',
-        'SnapshotGallery',
-        'ForceSimulation',
-      ],
-      direction: 'vertical',
-      placement: 'LT',
-      offset: [24, 84],
-    },
-  },
-  {
     id: 'ZoomIn',
     props: {
       GI_CONTAINER_INDEX: 2,
@@ -271,38 +251,6 @@ const baseComponentsConfig = [
       },
     },
   },
-  {
-    id: 'AddSheetbar',
-    name: '新增页签',
-    props: {
-      isRelayout: true,
-      GI_CONTAINER_INDEX: 2,
-      GIAC: {
-        visible: false,
-        disabled: false,
-        isShowTitle: false,
-        title: '将选中的节点与边添加到新画布中',
-        isShowIcon: true,
-        icon: 'icon-plus',
-        isShowTooltip: true,
-        tooltip: '',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'right',
-        hasDivider: false,
-        height: '60px',
-        isVertical: true,
-      },
-    },
-  },
-  {
-    id: 'Sheetbar',
-    name: '多画布页签',
-    props: {
-      placement: 'bottom',
-      height: 40,
-    },
-  },
-
   {
     id: 'LargeGraph',
     name: '3D大图',
