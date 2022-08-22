@@ -13,12 +13,12 @@ interface SidebarProps {
 
 const SideList: React.FunctionComponent<SidebarProps> = props => {
   const { options, handleChange, handleAdd, handleDelete, activeId } = props;
-  React.useEffect(() => {
-    if (activeId === 'NEW_GI_SERVICE') {
-      handleChange('NEW_GI_SERVICE');
-      handleAdd();
-    }
-  }, [activeId]);
+  // React.useEffect(() => {
+  //   if (activeId === 'NEW_GI_SERVICE') {
+  //     handleChange('NEW_GI_SERVICE');
+  //     handleAdd();
+  //   }
+  // }, [activeId]);
 
   return (
     <div className="gi-services-sidebar">
@@ -39,7 +39,7 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
             const { id } = opt;
             const isActive = id === activeId;
             const classes = isActive ? 'active' : '';
-            const isShowDelete = isActive && id !== options[0].id;
+
             return (
               <li
                 className={classes}
@@ -49,19 +49,16 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
                 }}
               >
                 {id}
-
-                {isShowDelete && (
-                  <span
-                    className="delete"
-                    onClick={e => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleDelete(id);
-                    }}
-                  >
-                    <DeleteOutlined />
-                  </span>
-                )}
+                <span
+                  className="delete"
+                  onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleDelete(id);
+                  }}
+                >
+                  <DeleteOutlined />
+                </span>
               </li>
             );
           })}

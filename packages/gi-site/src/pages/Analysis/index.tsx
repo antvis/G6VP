@@ -204,7 +204,13 @@ const Analysis = props => {
           };
 
           /** 根据服务配置列表，得到真正运行的Service实例 */
-          const services = [...assetServices, ...getServicesByConfig(combinedServiceConfig, data, schemaData)];
+
+          const services = utils.uniqueElementsBy(
+            [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
+            (a, b) => {
+              return a.id === b.id;
+            },
+          );
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务
