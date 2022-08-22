@@ -1,754 +1,6 @@
 export default {
   engineId: 'GI',
   engineContext: {
-    data: {
-      nodes: [
-        {
-          id: 'account_7',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-03T00:00:00',
-            icon: 'account_balance',
-            id: 'account_7',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_20',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-05T00:00:00',
-            icon: 'account_balance',
-            id: 'account_20',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_55',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-07T00:00:00',
-            icon: 'account_balance',
-            id: 'account_55',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_81',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-15T00:00:00',
-            icon: 'account_balance',
-            id: 'account_81',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_103',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-15T00:00:00',
-            icon: 'account_balance',
-            id: 'account_103',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_901',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-03T00:00:00',
-            icon: 'account_balance',
-            id: 'account_901',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_902',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-10T00:00:00',
-            icon: 'account_balance',
-            id: 'account_902',
-            is_different_bank: 0,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_903',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-09T00:00:00',
-            icon: 'account_balance',
-            id: 'account_903',
-            is_different_bank: 1,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'account_904',
-          nodeType: 'account_balance',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            create_date: '2019-01-08T00:00:00',
-            icon: 'account_balance',
-            id: 'account_904',
-            is_different_bank: 1,
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          id: 'customer_7',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_7',
-            data: {},
-            defaultStyle: {},
-            address: '-',
-            customer_type: 'retail',
-            first_name: '-',
-            last_name: '-',
-            phone: '-',
-            remarks: "high-value IB txn into customer 103's account",
-            risk_category: 'medium',
-            risk_score: 50,
-          },
-        },
-        {
-          id: 'customer_20',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_20',
-            data: {},
-            defaultStyle: {},
-            address: '-',
-            customer_type: 'retail',
-            first_name: '-',
-            last_name: '-',
-            phone: '-',
-            remarks: "high-value IB txn into customer 103's account",
-            risk_category: 'medium',
-            risk_score: 50,
-          },
-        },
-        {
-          id: 'customer_55',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_55',
-            data: {},
-            defaultStyle: {},
-            address: '-',
-            customer_type: 'retail',
-            first_name: '-',
-            last_name: '-',
-            phone: '-',
-            remarks: "high-value IB txn into customer 103's account",
-            risk_category: 'medium',
-            risk_score: 50,
-          },
-        },
-        {
-          id: 'customer_81',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_81',
-            data: {},
-            defaultStyle: {},
-            address: '-',
-            customer_type: 'retail',
-            first_name: '-',
-            last_name: '-',
-            phone: '-',
-            remarks: "high-value IB txn into customer 103's account",
-            risk_category: 'medium',
-            risk_score: 50,
-          },
-        },
-        {
-          id: 'customer_103',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_103',
-            data: {},
-            defaultStyle: {},
-            address: '103 RD',
-            customer_type: 'retail',
-            first_name: 'john',
-            last_name: 'doe',
-            phone: '+65 0000 0103',
-            remarks: 'high-value purchases from luxury retailer. source of funds from 4 related accounts',
-            risk_category: 'high',
-            risk_score: 99,
-          },
-        },
-        {
-          id: 'customer_901',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_901',
-            data: {},
-            defaultStyle: {},
-            address: '901 RD',
-            customer_type: 'retail',
-            first_name: 'jane',
-            last_name: 'doe',
-            phone: '+65 0000 0103',
-            remarks:
-              "source of funds for customer 103's purchase of luxury items. customer has same phone number as customer 103.",
-            risk_category: 'medium',
-            risk_score: 74,
-          },
-        },
-        {
-          id: 'customer_902',
-          nodeType: 'account_box',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: 'account_box',
-            id: 'customer_902',
-            data: {},
-            defaultStyle: {},
-            address: '103 RD',
-            customer_type: 'retail',
-            first_name: 'jim',
-            last_name: 'smith',
-            phone: '+65 0000 0902',
-            remarks:
-              "source of funds for customer 103's purchase of luxury items. customer has same address as customer 103.",
-            risk_category: 'medium',
-            risk_score: 74,
-          },
-        },
-        {
-          id: 'other_banks',
-          nodeType: '-',
-          nodeTypeKeyFromProperties: 'icon',
-          data: {
-            icon: '-',
-            id: 'other_banks',
-            data: {},
-            defaultStyle: {},
-            address: '-',
-            customer_type: '-',
-            first_name: '-',
-            last_name: '-',
-            phone: '-',
-            remarks: 'other banks',
-            risk_category: '-',
-            risk_score: '-',
-          },
-        },
-      ],
-      edges: [
-        {
-          source: 'account_103',
-          target: 'account_904',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 1000000,
-            balance: 200000,
-            category: 'ib_txn',
-            date: '2020-01-01T00:00:00',
-            id: 'ib_txn_1',
-            is_foreign_source: 0,
-            is_foreign_target: 1,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_103',
-            source_owner: 'customer_103',
-            target: 'account_904',
-            target_owner: 'other_banks',
-            time: '00:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_903',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 100000,
-            balance: null,
-            category: 'ib_txn',
-            date: '2020-01-02T01:00:00',
-            id: 'ib_txn_2',
-            is_foreign_source: 1,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_903',
-            source_owner: 'other_banks',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '01:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_103',
-          target: 'account_904',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 50000,
-            balance: 250000,
-            category: 'ib_txn',
-            date: '2020-01-02T02:00:00',
-            id: 'ib_txn_3',
-            is_foreign_source: 0,
-            is_foreign_target: 1,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_103',
-            source_owner: 'customer_103',
-            target: 'account_904',
-            target_owner: 'other_banks',
-            time: '02:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_904',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 2000000,
-            balance: null,
-            category: 'ib_txn',
-            date: '2020-01-01T03:00:00',
-            id: 'ib_txn_4',
-            is_foreign_source: 1,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_904',
-            source_owner: 'other_banks',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '03:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_103',
-          target: 'account_903',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 1000000,
-            balance: 1250000,
-            category: 'ib_txn',
-            date: '2020-01-02T04:00:00',
-            id: 'ib_txn_5',
-            is_foreign_source: 0,
-            is_foreign_target: 1,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_103',
-            source_owner: 'customer_103',
-            target: 'account_903',
-            target_owner: 'other_banks',
-            time: '04:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_103',
-          target: 'account_903',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 1000000,
-            balance: 250000,
-            category: 'ib_txn',
-            date: '2020-01-02T05:00:00',
-            id: 'ib_txn_6',
-            is_foreign_source: 0,
-            is_foreign_target: 1,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_103',
-            source_owner: 'customer_103',
-            target: 'account_903',
-            target_owner: 'other_banks',
-            time: '05:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_901',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 250000,
-            balance: 10000,
-            category: 'ib_txn',
-            date: '2020-01-01T06:00:00',
-            id: 'ib_txn_7',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_901',
-            source_owner: 'customer_901',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '06:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_902',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 250000,
-            balance: 300000,
-            category: 'ib_txn',
-            date: '2020-01-01T06:30:00',
-            id: 'ib_txn_8',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_902',
-            source_owner: 'customer_902',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '06:30:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_903',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 250000,
-            balance: null,
-            category: 'ib_txn',
-            date: '2020-01-02T06:00:00',
-            id: 'ib_txn_9',
-            is_foreign_source: 1,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_903',
-            source_owner: 'other_banks',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '06:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_904',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 250000,
-            balance: null,
-            category: 'ib_txn',
-            date: '2020-01-01T00:00:00',
-            id: 'ib_txn_10',
-            is_foreign_source: 1,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_904',
-            source_owner: 'other_banks',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '00:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_7',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 125000,
-            balance: 225000,
-            category: 'ib_txn',
-            date: '2020-01-03T22:00:00',
-            id: 'ib_txn_72',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_7',
-            source_owner: 'customer_7',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '22:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_55',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 250000,
-            balance: 475000,
-            category: 'ib_txn',
-            date: '2020-01-03T22:00:00',
-            id: 'ib_txn_73',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_55',
-            source_owner: 'customer_55',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '22:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_20',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 150000,
-            balance: 625000,
-            category: 'ib_txn',
-            date: '2020-01-04T18:00:00',
-            id: 'ib_txn_74',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_20',
-            source_owner: 'customer_20',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '18:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'account_81',
-          target: 'account_103',
-          edgeType: 'ib_txn',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            amount: 300000,
-            balance: 925000,
-            category: 'ib_txn',
-            date: '2020-01-04T18:00:00',
-            id: 'ib_txn_75',
-            is_foreign_source: 0,
-            is_foreign_target: 0,
-            is_high_risk_source_target_location: 0,
-            relation: 'ib_transfer',
-            source: 'account_81',
-            source_owner: 'customer_81',
-            target: 'account_103',
-            target_owner: 'customer_103',
-            time: '18:00:00',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_7',
-          target: 'account_7',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_210',
-            relation: 'owns',
-            source: 'customer_7',
-            target: 'account_7',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_20',
-          target: 'account_20',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_223',
-            relation: 'owns',
-            source: 'customer_20',
-            target: 'account_20',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_55',
-          target: 'account_55',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_258',
-            relation: 'owns',
-            source: 'customer_55',
-            target: 'account_55',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_81',
-          target: 'account_81',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_284',
-            relation: 'owns',
-            source: 'customer_81',
-            target: 'account_81',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_103',
-          target: 'account_103',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_306',
-            relation: 'owns',
-            source: 'customer_103',
-            target: 'account_103',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_901',
-          target: 'account_901',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_307',
-            relation: 'owns',
-            source: 'customer_901',
-            target: 'account_901',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'customer_902',
-          target: 'account_902',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_308',
-            relation: 'owns',
-            source: 'customer_902',
-            target: 'account_902',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'other_banks',
-          target: 'account_903',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_310',
-            relation: 'owns',
-            source: 'other_banks',
-            target: 'account_903',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-        {
-          source: 'other_banks',
-          target: 'account_904',
-          edgeType: 'ownership',
-          edgeTypeKeyFromProperties: 'category',
-          data: {
-            category: 'ownership',
-            id: 'ownership_311',
-            relation: 'owns',
-            source: 'other_banks',
-            target: 'account_904',
-            data: {},
-            defaultStyle: {},
-          },
-        },
-      ],
-    },
     schemaData: {
       nodes: [
         {
@@ -831,6 +83,1203 @@ export default {
           },
         },
       ],
+    },
+    data: {
+      nodes: [
+        {
+          id: 'other_banks',
+          nodeType: '-',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: '-',
+            id: 'other_banks',
+            data: {},
+            defaultStyle: {},
+            address: '-',
+            customer_type: '-',
+            first_name: '-',
+            last_name: '-',
+            phone: '-',
+            remarks: 'other banks',
+            risk_category: '-',
+            risk_score: '-',
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 1065,
+          y: 100,
+          layout: {
+            degree: 2,
+            sDegree: 2,
+            tDegree: 0,
+          },
+          _order: 5,
+        },
+        {
+          id: 'customer_7',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_7',
+            data: {},
+            defaultStyle: {},
+            address: '-',
+            customer_type: 'retail',
+            first_name: '-',
+            last_name: '-',
+            phone: '-',
+            remarks: "high-value IB txn into customer 103's account",
+            risk_category: 'medium',
+            risk_score: 50,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 220,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 0,
+        },
+        {
+          id: 'customer_20',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_20',
+            data: {},
+            defaultStyle: {},
+            address: '-',
+            customer_type: 'retail',
+            first_name: '-',
+            last_name: '-',
+            phone: '-',
+            remarks: "high-value IB txn into customer 103's account",
+            risk_category: 'medium',
+            risk_score: 50,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 380,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 1,
+        },
+        {
+          id: 'customer_55',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_55',
+            data: {},
+            defaultStyle: {},
+            address: '-',
+            customer_type: 'retail',
+            first_name: '-',
+            last_name: '-',
+            phone: '-',
+            remarks: "high-value IB txn into customer 103's account",
+            risk_category: 'medium',
+            risk_score: 50,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 540,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 2,
+        },
+        {
+          id: 'customer_81',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_81',
+            data: {},
+            defaultStyle: {},
+            address: '-',
+            customer_type: 'retail',
+            first_name: '-',
+            last_name: '-',
+            phone: '-',
+            remarks: "high-value IB txn into customer 103's account",
+            risk_category: 'medium',
+            risk_score: 50,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 700,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 3,
+        },
+        {
+          id: 'customer_103',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_103',
+            data: {},
+            defaultStyle: {},
+            address: '103 RD',
+            customer_type: 'retail',
+            first_name: 'john',
+            last_name: 'doe',
+            phone: '+65 0000 0103',
+            remarks: 'high-value purchases from luxury retailer. source of funds from 4 related accounts',
+            risk_category: 'high',
+            risk_score: 99,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 60,
+          y: 380,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 0,
+        },
+        {
+          id: 'customer_901',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_901',
+            data: {},
+            defaultStyle: {},
+            address: '901 RD',
+            customer_type: 'retail',
+            first_name: 'jane',
+            last_name: 'doe',
+            phone: '+65 0000 0103',
+            remarks:
+              "source of funds for customer 103's purchase of luxury items. customer has same phone number as customer 103.",
+            risk_category: 'medium',
+            risk_score: 74,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 860,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 4,
+        },
+        {
+          id: 'customer_902',
+          nodeType: 'account_box',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            icon: 'account_box',
+            id: 'customer_902',
+            data: {},
+            defaultStyle: {},
+            address: '103 RD',
+            customer_type: 'retail',
+            first_name: 'jim',
+            last_name: 'smith',
+            phone: '+65 0000 0902',
+            remarks:
+              "source of funds for customer 103's purchase of luxury items. customer has same address as customer 103.",
+            risk_category: 'medium',
+            risk_score: 74,
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 1,
+          x: 1235,
+          y: 100,
+          layout: {
+            degree: 1,
+            sDegree: 1,
+            tDegree: 0,
+          },
+          _order: 6,
+        },
+        {
+          id: 'account_7',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-03T00:00:00',
+            icon: 'account_balance',
+            id: 'account_7',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 220,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 1,
+        },
+        {
+          id: 'account_20',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-05T00:00:00',
+            icon: 'account_balance',
+            id: 'account_20',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 380,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 2,
+        },
+        {
+          id: 'account_55',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-07T00:00:00',
+            icon: 'account_balance',
+            id: 'account_55',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 540,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 3,
+        },
+        {
+          id: 'account_81',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-15T00:00:00',
+            icon: 'account_balance',
+            id: 'account_81',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 700,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 4,
+        },
+        {
+          id: 'account_103',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-15T00:00:00',
+            icon: 'account_balance',
+            id: 'account_103',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 15,
+          x: 700,
+          y: 660,
+          layout: {
+            degree: 15,
+            sDegree: 4,
+            tDegree: 11,
+          },
+          _order: 0,
+        },
+        {
+          id: 'account_901',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-03T00:00:00',
+            icon: 'account_balance',
+            id: 'account_901',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 860,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 5,
+        },
+        {
+          id: 'account_902',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-10T00:00:00',
+            icon: 'account_balance',
+            id: 'account_902',
+            is_different_bank: 0,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 2,
+          x: 1235,
+          y: 380,
+          layout: {
+            degree: 2,
+            sDegree: 1,
+            tDegree: 1,
+          },
+          _order: 8,
+        },
+        {
+          id: 'account_903',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-09T00:00:00',
+            icon: 'account_balance',
+            id: 'account_903',
+            is_different_bank: 1,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 5,
+          x: 1020,
+          y: 380,
+          layout: {
+            degree: 5,
+            sDegree: 2,
+            tDegree: 3,
+          },
+          _order: 6,
+        },
+        {
+          id: 'account_904',
+          nodeType: 'account_balance',
+          nodeTypeKeyFromProperties: 'icon',
+          data: {
+            create_date: '2019-01-08T00:00:00',
+            icon: 'account_balance',
+            id: 'account_904',
+            is_different_bank: 1,
+            data: {},
+            defaultStyle: {},
+          },
+          type: 'graphin-circle',
+          depth: 0,
+          degree: 5,
+          x: 870,
+          y: 940,
+          layout: {
+            degree: 5,
+            sDegree: 2,
+            tDegree: 3,
+          },
+          _order: 0,
+        },
+      ],
+      edges: [
+        {
+          source: 'customer_7',
+          target: 'account_7',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_210',
+            relation: 'owns',
+            source: 'customer_7',
+            target: 'account_7',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_7-account_7-14',
+          type: 'graphin-line',
+          startPoint: {
+            x: 220,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 220,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_20',
+          target: 'account_20',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_223',
+            relation: 'owns',
+            source: 'customer_20',
+            target: 'account_20',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_20-account_20-15',
+          type: 'graphin-line',
+          startPoint: {
+            x: 380,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 380,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_55',
+          target: 'account_55',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_258',
+            relation: 'owns',
+            source: 'customer_55',
+            target: 'account_55',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_55-account_55-16',
+          type: 'graphin-line',
+          startPoint: {
+            x: 540,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 540,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_81',
+          target: 'account_81',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_284',
+            relation: 'owns',
+            source: 'customer_81',
+            target: 'account_81',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_81-account_81-17',
+          type: 'graphin-line',
+          startPoint: {
+            x: 700,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 700,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_103',
+          target: 'account_103',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_306',
+            relation: 'owns',
+            source: 'customer_103',
+            target: 'account_103',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_103-account_103-18',
+          type: 'graphin-line',
+          startPoint: {
+            x: 72.36812402117955,
+            y: 385.41105425926605,
+          },
+          endPoint: {
+            x: 687.6318759788204,
+            y: 654.588945740734,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_901',
+          target: 'account_901',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_307',
+            relation: 'owns',
+            source: 'customer_901',
+            target: 'account_901',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_901-account_901-19',
+          type: 'graphin-line',
+          startPoint: {
+            x: 860,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 860,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'customer_902',
+          target: 'account_902',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_308',
+            relation: 'owns',
+            source: 'customer_902',
+            target: 'account_902',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'customer_902-account_902-20',
+          type: 'graphin-line',
+          startPoint: {
+            x: 1235,
+            y: 113.5,
+          },
+          endPoint: {
+            x: 1235,
+            y: 366.5,
+          },
+          depth: 0,
+        },
+        {
+          source: 'other_banks',
+          target: 'account_903',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_310',
+            relation: 'owns',
+            source: 'other_banks',
+            target: 'account_903',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'other_banks-account_903-21',
+          type: 'graphin-line',
+          startPoint: {
+            x: 1062.8578457123192,
+            y: 113.32896001223543,
+          },
+          endPoint: {
+            x: 1022.1421542876807,
+            y: 366.6710399877646,
+          },
+          depth: 0,
+        },
+        {
+          source: 'other_banks',
+          target: 'account_904',
+          edgeType: 'ownership',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            category: 'ownership',
+            id: 'ownership_311',
+            relation: 'owns',
+            source: 'other_banks',
+            target: 'account_904',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'other_banks-account_904-22',
+          type: 'graphin-line',
+          startPoint: {
+            x: 1061.9472489528089,
+            y: 113.15031220328525,
+          },
+          endPoint: {
+            x: 873.0527510471912,
+            y: 926.8496877967148,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_103',
+          target: 'account_904',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 1000000,
+            balance: 200000,
+            category: 'ib_txn',
+            date: '2020-01-01T00:00:00',
+            id: 'ib_txn_1',
+            is_foreign_source: 0,
+            is_foreign_target: 1,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_103',
+            source_owner: 'customer_103',
+            target: 'account_904',
+            target_owner: 'other_banks',
+            time: '00:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_103-account_904-0',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 707.0062048122638,
+            y: 671.5396314554933,
+          },
+          endPoint: {
+            x: 862.9937951877362,
+            y: 928.4603685445067,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_103',
+          target: 'account_904',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 50000,
+            balance: 250000,
+            category: 'ib_txn',
+            date: '2020-01-02T02:00:00',
+            id: 'ib_txn_3',
+            is_foreign_source: 0,
+            is_foreign_target: 1,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_103',
+            source_owner: 'customer_103',
+            target: 'account_904',
+            target_owner: 'other_banks',
+            time: '02:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_103-account_904-2',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 707.0062048122638,
+            y: 671.5396314554933,
+          },
+          endPoint: {
+            x: 862.9937951877362,
+            y: 928.4603685445067,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_904',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 2000000,
+            balance: null,
+            category: 'ib_txn',
+            date: '2020-01-01T03:00:00',
+            id: 'ib_txn_4',
+            is_foreign_source: 1,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_904',
+            source_owner: 'other_banks',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '03:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_904-account_103-3',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 862.9937951877362,
+            y: 928.4603685445067,
+          },
+          endPoint: {
+            x: 707.0062048122638,
+            y: 671.5396314554933,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_904',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 250000,
+            balance: null,
+            category: 'ib_txn',
+            date: '2020-01-01T00:00:00',
+            id: 'ib_txn_10',
+            is_foreign_source: 1,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_904',
+            source_owner: 'other_banks',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '00:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_904-account_103-9',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 862.9937951877362,
+            y: 928.4603685445067,
+          },
+          endPoint: {
+            x: 707.0062048122638,
+            y: 671.5396314554933,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_903',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 100000,
+            balance: null,
+            category: 'ib_txn',
+            date: '2020-01-02T01:00:00',
+            id: 'ib_txn_2',
+            is_foreign_source: 1,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_903',
+            source_owner: 'other_banks',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '01:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_903-account_103-1',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 1009.8402146214571,
+            y: 388.889812206225,
+          },
+          endPoint: {
+            x: 710.1597853785429,
+            y: 651.110187793775,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_103',
+          target: 'account_903',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 1000000,
+            balance: 1250000,
+            category: 'ib_txn',
+            date: '2020-01-02T04:00:00',
+            id: 'ib_txn_5',
+            is_foreign_source: 0,
+            is_foreign_target: 1,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_103',
+            source_owner: 'customer_103',
+            target: 'account_903',
+            target_owner: 'other_banks',
+            time: '04:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_103-account_903-4',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 710.1597853785429,
+            y: 651.110187793775,
+          },
+          endPoint: {
+            x: 1009.8402146214571,
+            y: 388.889812206225,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_103',
+          target: 'account_903',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 1000000,
+            balance: 250000,
+            category: 'ib_txn',
+            date: '2020-01-02T05:00:00',
+            id: 'ib_txn_6',
+            is_foreign_source: 0,
+            is_foreign_target: 1,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_103',
+            source_owner: 'customer_103',
+            target: 'account_903',
+            target_owner: 'other_banks',
+            time: '05:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_103-account_903-5',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 710.1597853785429,
+            y: 651.110187793775,
+          },
+          endPoint: {
+            x: 1009.8402146214571,
+            y: 388.889812206225,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_903',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 250000,
+            balance: null,
+            category: 'ib_txn',
+            date: '2020-01-02T06:00:00',
+            id: 'ib_txn_9',
+            is_foreign_source: 1,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_903',
+            source_owner: 'other_banks',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '06:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_903-account_103-8',
+          isMultiple: true,
+          type: 'graphin-line',
+          startPoint: {
+            x: 1009.8402146214571,
+            y: 388.889812206225,
+          },
+          endPoint: {
+            x: 710.1597853785429,
+            y: 651.110187793775,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_901',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 250000,
+            balance: 10000,
+            category: 'ib_txn',
+            date: '2020-01-01T06:00:00',
+            id: 'ib_txn_7',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_901',
+            source_owner: 'customer_901',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '06:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_901-account_103-6',
+          type: 'graphin-line',
+          startPoint: {
+            x: 853.3021243321828,
+            y: 391.7212824186802,
+          },
+          endPoint: {
+            x: 706.6978756678172,
+            y: 648.2787175813198,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_902',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 250000,
+            balance: 300000,
+            category: 'ib_txn',
+            date: '2020-01-01T06:30:00',
+            id: 'ib_txn_8',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_902',
+            source_owner: 'customer_902',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '06:30:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_902-account_103-7',
+          type: 'graphin-line',
+          startPoint: {
+            x: 1223.0390870555725,
+            y: 386.25991705502753,
+          },
+          endPoint: {
+            x: 711.9609129444276,
+            y: 653.7400829449725,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_7',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 125000,
+            balance: 225000,
+            category: 'ib_txn',
+            date: '2020-01-03T22:00:00',
+            id: 'ib_txn_72',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_7',
+            source_owner: 'customer_7',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '22:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_7-account_103-10',
+          type: 'graphin-line',
+          startPoint: {
+            x: 231.66101516212885,
+            y: 386.8022588445752,
+          },
+          endPoint: {
+            x: 688.3389848378712,
+            y: 653.1977411554249,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_55',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 250000,
+            balance: 475000,
+            category: 'ib_txn',
+            date: '2020-01-03T22:00:00',
+            id: 'ib_txn_73',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_55',
+            source_owner: 'customer_55',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '22:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_55-account_103-11',
+          type: 'graphin-line',
+          startPoint: {
+            x: 546.6978756678172,
+            y: 391.7212824186802,
+          },
+          endPoint: {
+            x: 693.3021243321828,
+            y: 648.2787175813198,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_20',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 150000,
+            balance: 625000,
+            category: 'ib_txn',
+            date: '2020-01-04T18:00:00',
+            id: 'ib_txn_74',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_20',
+            source_owner: 'customer_20',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '18:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_20-account_103-12',
+          type: 'graphin-line',
+          startPoint: {
+            x: 390.15978537854284,
+            y: 388.889812206225,
+          },
+          endPoint: {
+            x: 689.8402146214571,
+            y: 651.110187793775,
+          },
+          depth: 0,
+        },
+        {
+          source: 'account_81',
+          target: 'account_103',
+          edgeType: 'ib_txn',
+          edgeTypeKeyFromProperties: 'category',
+          data: {
+            amount: 300000,
+            balance: 925000,
+            category: 'ib_txn',
+            date: '2020-01-04T18:00:00',
+            id: 'ib_txn_75',
+            is_foreign_source: 0,
+            is_foreign_target: 0,
+            is_high_risk_source_target_location: 0,
+            relation: 'ib_transfer',
+            source: 'account_81',
+            source_owner: 'customer_81',
+            target: 'account_103',
+            target_owner: 'customer_103',
+            time: '18:00:00',
+            data: {},
+            defaultStyle: {},
+          },
+          id: 'account_81-account_103-13',
+          type: 'graphin-line',
+          startPoint: {
+            x: 700,
+            y: 393.5,
+          },
+          endPoint: {
+            x: 700,
+            y: 646.5,
+          },
+          depth: 0,
+        },
+      ],
+      combos: [],
     },
   },
   schemaData: {
@@ -938,226 +1387,6 @@ export default {
             risk_score: '-',
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#795AE1',
-              fillOpacity: 0.8,
-              stroke: '#795AE1',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'other_banks',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: false,
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#795AE1',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#795AE1',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#795AE1',
-              fillOpacity: 0.8,
-              stroke: '#795AE1',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'other_banks',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: false,
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#795AE1',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#795AE1',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 1065,
@@ -1188,228 +1417,6 @@ export default {
             risk_score: 50,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_7',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_7',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 220,
@@ -1440,228 +1447,6 @@ export default {
             risk_score: 50,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_20',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_20',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 380,
@@ -1692,228 +1477,6 @@ export default {
             risk_score: 50,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_55',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_55',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 540,
@@ -1944,228 +1507,6 @@ export default {
             risk_score: 50,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_81',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_81',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 700,
@@ -2196,228 +1537,6 @@ export default {
             risk_score: 99,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_103',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_103',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 60,
@@ -2449,228 +1568,6 @@ export default {
             risk_score: 74,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_901',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_901',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 860,
@@ -2702,228 +1599,6 @@ export default {
             risk_score: 74,
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_902',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: 'rgba(245,166,35,1)',
-              fillOpacity: 0.8,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'customer_902',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: 'rgba(245,166,35,1)',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 1,
           x: 1235,
@@ -2948,228 +1623,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_7',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_7',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 220,
@@ -3194,228 +1647,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_20',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_20',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 380,
@@ -3440,228 +1671,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_55',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_55',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 540,
@@ -3686,228 +1695,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_81',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_81',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 700,
@@ -3932,228 +1719,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_103',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_103',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 15,
           x: 700,
@@ -4178,228 +1743,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_901',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_901',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 860,
@@ -4424,228 +1767,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_902',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_902',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 2,
           x: 1235,
@@ -4670,228 +1791,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_903',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_903',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 5,
           x: 1020,
@@ -4916,228 +1815,6 @@ export default {
             defaultStyle: {},
           },
           type: 'graphin-circle',
-          style: {
-            _theme: null,
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_904',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            badges: [],
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
-          _initialStyle: {
-            keyshape: {
-              size: 26,
-              fill: '#3056E3',
-              fillOpacity: 0.8,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineWidth: 1,
-              opacity: 1,
-              type: 'circle',
-            },
-            label: {
-              position: 'bottom',
-              value: 'account_904',
-              fill: '#000',
-              fontSize: 12,
-              offset: 0,
-              fillOpacity: 1,
-              visible: true,
-            },
-            icon: {
-              type: 'font',
-              value: '',
-              size: 13,
-              fill: '#fff',
-              fillOpacity: 1,
-              offset: [0, 0],
-              visible: true,
-              fontFamily: 'graphin',
-            },
-            badges: [],
-            halo: {
-              visible: false,
-              fillOpacity: 0.1,
-              lineWidth: 0,
-            },
-            _theme: null,
-            status: {
-              normal: {},
-              selected: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              hover: {
-                halo: {
-                  visible: true,
-                },
-              },
-              active: {
-                halo: {
-                  visible: true,
-                },
-                keyshape: {
-                  lineWidth: 5,
-                },
-              },
-              inactive: {
-                keyshape: {
-                  fillOpacity: 0.04,
-                  strokeOpacity: 0.04,
-                },
-                icon: {
-                  fillOpacity: 0.04,
-                },
-                label: {
-                  fillOpacity: 0.04,
-                },
-              },
-              disabled: {
-                halo: {
-                  visible: false,
-                },
-                keyshape: {
-                  fill: '#ddd',
-                  stroke: '#ddd',
-                },
-                icon: {
-                  fill: '#ddd',
-                },
-                label: {
-                  fill: '#ddd',
-                },
-              },
-              highlight: {
-                keyshape: {
-                  lineWidth: 4,
-                  fillOpacity: 0.6,
-                },
-              },
-              query_start: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 4,
-                  lineDash: [8, 8],
-                },
-              },
-              query_normal: {
-                halo: {
-                  visible: true,
-                  stroke: '#3056E3',
-                  lineWidth: 1,
-                  lineDash: [8, 8],
-                },
-              },
-            },
-          },
           depth: 0,
           degree: 5,
           x: 870,
@@ -5167,37 +1844,6 @@ export default {
           },
           id: 'customer_7-account_7-14',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 220,
             y: 113.5,
@@ -5205,46 +1851,6 @@ export default {
           endPoint: {
             x: 220,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5264,37 +1870,6 @@ export default {
           },
           id: 'customer_20-account_20-15',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 380,
             y: 113.5,
@@ -5302,46 +1877,6 @@ export default {
           endPoint: {
             x: 380,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5361,37 +1896,6 @@ export default {
           },
           id: 'customer_55-account_55-16',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 540,
             y: 113.5,
@@ -5399,46 +1903,6 @@ export default {
           endPoint: {
             x: 540,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5458,37 +1922,6 @@ export default {
           },
           id: 'customer_81-account_81-17',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 700,
             y: 113.5,
@@ -5496,46 +1929,6 @@ export default {
           endPoint: {
             x: 700,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5555,37 +1948,6 @@ export default {
           },
           id: 'customer_103-account_103-18',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 72.36812402117955,
             y: 385.41105425926605,
@@ -5593,46 +1955,6 @@ export default {
           endPoint: {
             x: 687.6318759788204,
             y: 654.588945740734,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5652,37 +1974,6 @@ export default {
           },
           id: 'customer_901-account_901-19',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 860,
             y: 113.5,
@@ -5690,46 +1981,6 @@ export default {
           endPoint: {
             x: 860,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5749,37 +2000,6 @@ export default {
           },
           id: 'customer_902-account_902-20',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 1235,
             y: 113.5,
@@ -5787,46 +2007,6 @@ export default {
           endPoint: {
             x: 1235,
             y: 366.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5846,37 +2026,6 @@ export default {
           },
           id: 'other_banks-account_903-21',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 1062.8578457123192,
             y: 113.32896001223543,
@@ -5884,46 +2033,6 @@ export default {
           endPoint: {
             x: 1022.1421542876807,
             y: 366.6710399877646,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -5943,37 +2052,6 @@ export default {
           },
           id: 'other_banks-account_904-22',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: 'owns',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: 'rgba(245,166,35,1)',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 1061.9472489528089,
             y: 113.15031220328525,
@@ -5981,46 +2059,6 @@ export default {
           endPoint: {
             x: 873.0527510471912,
             y: 926.8496877967148,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: 'rgba(245,166,35,1)',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: 'owns',
-              position: 'top',
-              fill: 'rgba(245,166,35,1)',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6048,37 +2086,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_103-account_904-0',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 30,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '1000000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6088,46 +2095,6 @@ export default {
           endPoint: {
             x: 862.9937951877362,
             y: 928.4603685445067,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 30,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '1000000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6155,37 +2122,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_103-account_904-2',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: -30,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '50000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6195,46 +2131,6 @@ export default {
           endPoint: {
             x: 862.9937951877362,
             y: 928.4603685445067,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: -30,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '50000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6262,37 +2158,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_904-account_103-3',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: -60,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '2000000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6302,46 +2167,6 @@ export default {
           endPoint: {
             x: 707.0062048122638,
             y: 671.5396314554933,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: -60,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '2000000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6369,37 +2194,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_904-account_103-9',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 60,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '250000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6409,46 +2203,6 @@ export default {
           endPoint: {
             x: 707.0062048122638,
             y: 671.5396314554933,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 60,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '250000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6476,37 +2230,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_903-account_103-1',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 30,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '100000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6516,46 +2239,6 @@ export default {
           endPoint: {
             x: 710.1597853785429,
             y: 651.110187793775,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 30,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '100000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6583,37 +2266,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_103-account_903-4',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 30,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '1000000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6623,46 +2275,6 @@ export default {
           endPoint: {
             x: 1009.8402146214571,
             y: 388.889812206225,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 30,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '1000000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6690,37 +2302,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_103-account_903-5',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: -60,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '1000000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6730,46 +2311,6 @@ export default {
           endPoint: {
             x: 1009.8402146214571,
             y: 388.889812206225,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: -60,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '1000000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6797,37 +2338,6 @@ export default {
             defaultStyle: {},
           },
           id: 'account_903-account_103-8',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: -60,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '250000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           isMultiple: true,
           type: 'graphin-line',
           startPoint: {
@@ -6837,46 +2347,6 @@ export default {
           endPoint: {
             x: 710.1597853785429,
             y: 651.110187793775,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: -60,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '250000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -6905,37 +2375,6 @@ export default {
           },
           id: 'account_901-account_103-6',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '250000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 853.3021243321828,
             y: 391.7212824186802,
@@ -6943,46 +2382,6 @@ export default {
           endPoint: {
             x: 706.6978756678172,
             y: 648.2787175813198,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '250000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -7011,37 +2410,6 @@ export default {
           },
           id: 'account_902-account_103-7',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '250000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 1223.0390870555725,
             y: 386.25991705502753,
@@ -7049,46 +2417,6 @@ export default {
           endPoint: {
             x: 711.9609129444276,
             y: 653.7400829449725,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '250000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -7117,37 +2445,6 @@ export default {
           },
           id: 'account_7-account_103-10',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '125000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 231.66101516212885,
             y: 386.8022588445752,
@@ -7155,46 +2452,6 @@ export default {
           endPoint: {
             x: 688.3389848378712,
             y: 653.1977411554249,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '125000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -7223,37 +2480,6 @@ export default {
           },
           id: 'account_55-account_103-11',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '250000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 546.6978756678172,
             y: 391.7212824186802,
@@ -7261,46 +2487,6 @@ export default {
           endPoint: {
             x: 693.3021243321828,
             y: 648.2787175813198,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '250000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -7329,37 +2515,6 @@ export default {
           },
           id: 'account_20-account_103-12',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '150000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 390.15978537854284,
             y: 388.889812206225,
@@ -7367,46 +2522,6 @@ export default {
           endPoint: {
             x: 689.8402146214571,
             y: 651.110187793775,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '150000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
@@ -7435,37 +2550,6 @@ export default {
           },
           id: 'account_81-account_103-13',
           type: 'graphin-line',
-          style: {
-            _theme: null,
-            keyshape: {
-              type: 'poly',
-              poly: {
-                distance: 0,
-              },
-              lineWidth: 1,
-              stroke: '#3056E3',
-              opacity: 1,
-              lineDash: [0, 0],
-              lineAppendWidth: 10,
-            },
-            label: {
-              value: '300000',
-              offset: [0, 0, 0, 0],
-              fontSize: 12,
-              fill: '#3056E3',
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-          },
           startPoint: {
             x: 700,
             y: 393.5,
@@ -7473,46 +2557,6 @@ export default {
           endPoint: {
             x: 700,
             y: 646.5,
-          },
-          _initialStyle: {
-            keyshape: {
-              type: 'poly',
-              lineWidth: 1,
-              stroke: '#3056E3',
-              strokeOpacity: 1,
-              lineAppendWidth: 10,
-              cursor: 'pointer',
-              poly: {
-                distance: 0,
-              },
-              opacity: 1,
-              lineDash: [0, 0],
-            },
-            halo: {
-              visible: false,
-              cursor: 'pointer',
-              strokeOpacity: 0.4,
-            },
-            label: {
-              value: '300000',
-              position: 'top',
-              fill: '#3056E3',
-              fontSize: 12,
-              textAlign: 'center',
-              offset: [0, 0, 0, 0],
-              background: {
-                fill: '#fff',
-                stroke: '#fff',
-              },
-            },
-            animate: {
-              visible: true,
-              type: 'circle-running',
-              color: '#3056E3',
-              repeat: true,
-              duration: 3000,
-            },
-            _theme: null,
           },
           depth: 0,
         },
