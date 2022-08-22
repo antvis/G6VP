@@ -1,18 +1,19 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, DeploymentUnitOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { addProject, getProjectById, updateProjectById } from '../../services';
-import ODPSDeploy from '../ODPSDeploy';
 import ProjectTitle from '../ProjectTitle';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';
+import type { IProject } from "../../services/typing"
+
 
 interface SvgIconProps {
   type: string; // 必传
@@ -59,22 +60,9 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     });
   };
 
-  const handleDeployOpen = () => {
-    updateState(draft => {
-      draft.deployVisible = true;
-    });
-  };
-
-  const hanldeDeployClose = () => {
-    updateState(draft => {
-      draft.deployVisible = false;
-    });
-  };
-
   const handleSave = async () => {
-    const origin = await getProjectById(projectId);
+    const origin = await getProjectById(projectId) as IProject;
 
-    // @ts-igono
     if (origin.type === 'case') {
       const projectId = await addProject({
         name: origin?.name,
@@ -127,7 +115,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     });
   };
   const handleDownloadProject = async () => {
-    const project = await getProjectById(projectId);
+    const project = await getProjectById(projectId) as IProject;
     const { config, name, ...others } = project;
     const params = {
       ...others,
@@ -137,7 +125,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     };
 
     const elementA = document.createElement('a');
-    elementA.download = name;
+    elementA.download = name as string;
     elementA.style.display = 'none';
     const blob = new Blob([JSON.stringify(params, null, 2)]);
     elementA.href = URL.createObjectURL(blob);
@@ -178,11 +166,6 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
           <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
         </Button>
       </Tooltip> */}
-      <Tooltip title="部署项目">
-        <Button icon={<DeploymentUnitOutlined />} onClick={handleDeployOpen} size="small">
-          部署
-        </Button>
-      </Tooltip>
       <Tooltip title="指引手册">
         <Tour />
       </Tooltip>
@@ -200,16 +183,6 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
         width="calc(100vw - 382px)"
       >
         {state.exportVisible && <ExportConfig></ExportConfig>}
-      </Drawer>
-      <Drawer
-        title="部署"
-        placement="right"
-        closable={false}
-        visible={state.deployVisible}
-        onClose={hanldeDeployClose}
-        width="25vw"
-      >
-        <ODPSDeploy />
       </Drawer>
     </BaseNavbar>
   );
