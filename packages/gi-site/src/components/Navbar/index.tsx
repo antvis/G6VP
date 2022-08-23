@@ -6,14 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { addProject, getProjectById, updateProjectById } from '../../services';
+import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';
-import type { IProject } from "../../services/typing"
-
 
 interface SvgIconProps {
   type: string; // 必传
@@ -37,7 +36,11 @@ interface NavbarProps {
  * @returns
  */
 
-const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
+const Navbar = ({
+  //  graphRef
+  projectId,
+  enableAI,
+}: NavbarProps) => {
   const history = useHistory();
   const [state, updateState] = useImmer<INavbarState>({
     initProject: {},
@@ -61,7 +64,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
   };
 
   const handleSave = async () => {
-    const origin = await getProjectById(projectId) as IProject;
+    const origin = (await getProjectById(projectId)) as IProject;
 
     if (origin.type === 'case') {
       const projectId = await addProject({
@@ -75,30 +78,30 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
       });
       history.push(`/workspace/${projectId}?nav=data`);
     } else {
-      const data = graphRef.current && graphRef.current.save();
+      // const data = graphRef.current && graphRef.current.save();
 
       updateProjectById(projectId, {
-        data: JSON.stringify({
-          ...(origin && origin.data),
-          transData: data,
-        }),
+        // data: JSON.stringify({
+        //   ...(origin && origin.data),
+        //   transData: data,
+        // }),
         serviceConfig: JSON.stringify(serviceConfig),
         activeAssetsKeys: JSON.stringify(activeAssetsKeys),
         projectConfig: JSON.stringify(config),
       });
-      const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-      const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-      try {
-        localStorage.setItem(
-          'SERVER_ENGINE_CONTEXT',
-          JSON.stringify({
-            ...SERVER_ENGINE_CONTEXT,
-            data: data,
-          }),
-        );
-      } catch (error) {
-        console.log('SERVER_ENGINE_CONTEXT error', error);
-      }
+      // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+      // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
+      // try {
+      //   localStorage.setItem(
+      //     'SERVER_ENGINE_CONTEXT',
+      //     JSON.stringify({
+      //       ...SERVER_ENGINE_CONTEXT,
+      //       data: data,
+      //     }),
+      //   );
+      // } catch (error) {
+      //   console.log('SERVER_ENGINE_CONTEXT error', error);
+      // }
     }
     updateContext(draft => {
       draft.isSave = true;
@@ -115,7 +118,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     });
   };
   const handleDownloadProject = async () => {
-    const project = await getProjectById(projectId) as IProject;
+    const project = (await getProjectById(projectId)) as IProject;
     const { config, name, ...others } = project;
     const params = {
       ...others,
@@ -175,7 +178,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     <BaseNavbar rightContent={rightContent} leftContent={<></>}>
       <ProjectTitle name={name} projectId={projectId} />
       <Drawer
-        title="导出配置"
+        title="导出SDK"
         placement="right"
         closable={false}
         onClose={handleOutClose}
