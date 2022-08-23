@@ -135,7 +135,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
           >
             {LIST_OPTIONS.map(c => {
               return (
-                <TabPane tab={c.name} key={c.id}>
+                <TabPane tab={c.name} key={c.id} disabled={c.id === 'deployed'}>
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}

@@ -34,7 +34,18 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           </Button>
         }
       >
-        <Alert type="info" message="用户可在线自定义数据服务" showIcon></Alert>
+        <Alert
+          type="info"
+          message={
+            <>
+              用户可在线自定义,点击查看
+              <a href="https://www.yuque.com/antv/gi/iwiv6g" target="_black">
+                文档
+              </a>
+            </>
+          }
+          showIcon
+        ></Alert>
         {serviceLists.map(item => {
           return (
             <ActionList
