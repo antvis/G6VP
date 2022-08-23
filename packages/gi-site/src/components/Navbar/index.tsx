@@ -6,14 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { addProject, getProjectById, updateProjectById } from '../../services';
+import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';
-import type { IProject } from "../../services/typing"
-
 
 interface SvgIconProps {
   type: string; // 必传
@@ -61,7 +60,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
   };
 
   const handleSave = async () => {
-    const origin = await getProjectById(projectId) as IProject;
+    const origin = (await getProjectById(projectId)) as IProject;
 
     if (origin.type === 'case') {
       const projectId = await addProject({
@@ -115,7 +114,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     });
   };
   const handleDownloadProject = async () => {
-    const project = await getProjectById(projectId) as IProject;
+    const project = (await getProjectById(projectId)) as IProject;
     const { config, name, ...others } = project;
     const params = {
       ...others,
@@ -175,7 +174,7 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
     <BaseNavbar rightContent={rightContent} leftContent={<></>}>
       <ProjectTitle name={name} projectId={projectId} />
       <Drawer
-        title="导出配置"
+        title="导出SDK"
         placement="right"
         closable={false}
         onClose={handleOutClose}
