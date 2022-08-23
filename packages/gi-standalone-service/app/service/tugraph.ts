@@ -137,16 +137,12 @@ class TuGraphService extends Service {
    */
   async queryNeighbors(params: INeighborsParams) {
     const { ids, graphName = TUGRAPH_DEFAULT_GRAPHNAME, sep = 1, authorization = '' } = params;
-    if (ids.length !== 1) {
+    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m`;
+
+    if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
-      return {
-        data: null,
-        code: 500,
-        success: false,
-        message: '目前只支持一个节点的邻居查询',
-      };
+      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m`;
     }
-    const cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} return n, m`;
 
     const responseData = await this.querySubGraphByCypher(cypher, graphName, authorization);
     return {
@@ -180,7 +176,6 @@ class TuGraphService extends Service {
     }
 
     const edgeSchema = result.data.result;
-    console.log('edgeSchema', JSON.parse(edgeSchema[0][0]).constraints);
     const { constraints, label, properties } = JSON.parse(edgeSchema[0][0]);
     if (constraints.length === 0) {
       // 忽略这条信息
@@ -264,7 +259,7 @@ class TuGraphService extends Service {
 
     const graphSchema = {
       nodes: nodeSchema,
-      edges: edgeSchema,
+      edges: edgeSchema.filter(d => d),
     };
     return {
       code: 200,
@@ -311,6 +306,67 @@ class TuGraphService extends Service {
       success: true,
       code: 200,
       data: list,
+    };
+  }
+
+  /**
+   * 查询指定子图中节点和边的数量
+   * @param graphName 子图名称
+   * @param authorization 认证信息
+   */
+  async getVertexEdgeCount(graphName: string, authorization: string) {
+    const nodeResult = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/node`, {
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authorization,
+      },
+      method: 'GET',
+      timeout: [30000, 50000],
+      dataType: 'json',
+    });
+
+    if (nodeResult.status !== 200) {
+      return {
+        success: false,
+        code: nodeResult.status,
+        data: null,
+      };
+    }
+
+    const { num_vertex, num_label } = nodeResult.data;
+
+    // 查询 graph 中边的数量
+    const edgeCypher = 'MATCH ()-->() RETURN count(*)';
+    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authorization,
+      },
+      method: 'POST',
+      data: {
+        graph: graphName,
+        script: edgeCypher,
+      },
+      timeout: [30000, 50000],
+      dataType: 'json',
+    });
+
+    if (result.status !== 200) {
+      return {
+        success: false,
+        code: result.status,
+        data: result.data,
+      };
+    }
+
+    return {
+      success: true,
+      code: 200,
+      data: {
+        nodeCount: num_vertex,
+        nodeLabelCount: num_label,
+        edgeCount: result.data.result[0][0],
+      },
     };
   }
 }
