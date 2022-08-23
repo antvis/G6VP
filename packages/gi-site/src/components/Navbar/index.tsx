@@ -36,7 +36,11 @@ interface NavbarProps {
  * @returns
  */
 
-const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
+const Navbar = ({
+  //  graphRef
+  projectId,
+  enableAI,
+}: NavbarProps) => {
   const history = useHistory();
   const [state, updateState] = useImmer<INavbarState>({
     initProject: {},
@@ -74,30 +78,30 @@ const Navbar = ({ projectId, enableAI, graphRef }: NavbarProps) => {
       });
       history.push(`/workspace/${projectId}?nav=data`);
     } else {
-      const data = graphRef.current && graphRef.current.save();
+      // const data = graphRef.current && graphRef.current.save();
 
       updateProjectById(projectId, {
-        data: JSON.stringify({
-          ...(origin && origin.data),
-          transData: data,
-        }),
+        // data: JSON.stringify({
+        //   ...(origin && origin.data),
+        //   transData: data,
+        // }),
         serviceConfig: JSON.stringify(serviceConfig),
         activeAssetsKeys: JSON.stringify(activeAssetsKeys),
         projectConfig: JSON.stringify(config),
       });
-      const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-      const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-      try {
-        localStorage.setItem(
-          'SERVER_ENGINE_CONTEXT',
-          JSON.stringify({
-            ...SERVER_ENGINE_CONTEXT,
-            data: data,
-          }),
-        );
-      } catch (error) {
-        console.log('SERVER_ENGINE_CONTEXT error', error);
-      }
+      // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+      // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
+      // try {
+      //   localStorage.setItem(
+      //     'SERVER_ENGINE_CONTEXT',
+      //     JSON.stringify({
+      //       ...SERVER_ENGINE_CONTEXT,
+      //       data: data,
+      //     }),
+      //   );
+      // } catch (error) {
+      //   console.log('SERVER_ENGINE_CONTEXT error', error);
+      // }
     }
     updateContext(draft => {
       draft.isSave = true;
