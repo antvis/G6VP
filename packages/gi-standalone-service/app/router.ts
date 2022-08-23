@@ -24,4 +24,5 @@ export default (app: Application) => {
   router.post('/api/tugraph/neighbors', controller.tugraph.queryNeighbors);
   router.get('/api/tugraph/schema', controller.tugraph.getSchema);
   router.get('/api/tugraph/list', controller.tugraph.getSubGraphList);
+  router.get('/api/tugraph/count', controller.tugraph.getVertexEdgeCount);
 };
