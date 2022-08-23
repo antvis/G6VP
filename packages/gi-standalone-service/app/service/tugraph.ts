@@ -137,7 +137,7 @@ class TuGraphService extends Service {
    */
   async queryNeighbors(params: INeighborsParams) {
     const { ids, graphName = TUGRAPH_DEFAULT_GRAPHNAME, sep = 1, authorization = '' } = params;
-    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m`;
+    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
