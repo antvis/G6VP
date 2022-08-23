@@ -54,7 +54,7 @@ export const transDataByConfig = (
   if (elementType === 'edges') {
     // 先整体做个多边处理
     elementData = processEdges(elementData as IUserEdge[], {
-      poly: 30,
+      poly: 40,
       loop: 10,
     });
   }
