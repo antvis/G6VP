@@ -24,7 +24,7 @@ const processEdges = (
     /** loop distance */
     loop: number;
   } = {
-    poly: 30,
+    poly: 35,
     loop: 10,
   },
 ) => {
