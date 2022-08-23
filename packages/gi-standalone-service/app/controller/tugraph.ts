@@ -61,6 +61,15 @@ class TuGraphController extends Controller {
     responseData(ctx, result);
   }
 
+  async getVertexEdgeCount() {
+    const { ctx } = this;
+    const { graphName } = ctx.query;
+    const authorization = ctx.request.header.authorization as string;
+
+    const result = await ctx.service.tugraph.getVertexEdgeCount(graphName, authorization);
+    responseData(ctx, result);
+  }
+
   /**
    * 获取元素的属性详情
    */
