@@ -39,28 +39,13 @@ const defaltDesc = {
   },
 };
 
-const MOCK = [
-  // {
-  //   id: 'AKG',
-  //   name: '',
-  //   version: '',
-  //   pkg: '',
-  // },
-  // {
-  //   id: 'SHASENG',
-  //   name: '',
-  //   version: '',
-  //   pkg: '',
-  // },
-];
-
 const Cards: React.FunctionComponent<CardsProps> = props => {
   const { data, changeServerId } = props;
 
   return (
     <div>
       <Row gutter={[16, 16]}>
-        {[...data, ...MOCK].map(item => {
+        {data.map(item => {
           const { id, name, services, cover, desc } = item;
 
           return (

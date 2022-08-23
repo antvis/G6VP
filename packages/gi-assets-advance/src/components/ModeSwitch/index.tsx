@@ -5,7 +5,7 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'ModeSwitch',
   name: '模式切换',
-  desc: '一键切换分析模式，打造沉浸式分析体验',
+  desc: '集成多个分析模式，支持切换',
   icon: 'icon-sidebar',
   cover: 'http://xxxx.jpg',
   category: 'container-components',
