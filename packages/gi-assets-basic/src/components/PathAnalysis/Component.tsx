@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext, utils } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Timeline, Switch } from 'antd';
 import { enableMapSet } from 'immer';
@@ -8,8 +8,9 @@ import FilterRule from './FilterRule';
 import './index.less';
 import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
-import { findAllPath, getPathByWeight } from './utils';
-import { findShortestPath } from '@antv/algorithm'
+import { getPathByWeight } from './utils';
+
+const { findAllPath } = utils;
 
 const { Panel } = Collapse;
 
@@ -33,9 +34,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     filterRule: {
       type: 'All-Path',
     },
-    selecting: ''
+    selecting: '',
   });
-  let nodeClickListener = (e) => {};
+  let nodeClickListener = e => {};
 
   // 缓存被高亮的节点和边
   const highlightElementRef = useRef<IHighlightElement>({
@@ -103,7 +104,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     });
   };
 
-  const beginSelect = (type) => {
+  const beginSelect = type => {
     updateState(draft => {
       draft.selecting = type;
     });
@@ -116,9 +117,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       const { item } = e;
       if (!item || item.destroyed) return;
       form.setFieldsValue({ [type]: item.getID() });
-    }
+    };
     graph.once('node:click', nodeClickListener);
-  }
+  };
 
   useEffect(() => {
     for (let i = 0; i < state.nodePath.length; i++) {
