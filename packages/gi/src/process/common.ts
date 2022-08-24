@@ -1,4 +1,5 @@
 import { GraphinData } from '@antv/graphin';
+import { GIService } from '../typing';
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
@@ -114,7 +115,7 @@ export const handleCollaspe = (data, responseData) => {
  * @param serviceId 组件绑定的 serviceId
  * @returns
  */
-export const getService = (services: any[], serviceId?: string) => {
+export const getService = (services: any[], serviceId?: string): GIService | null => {
   if (!serviceId) {
     console.warn('not found serviceId', serviceId);
     return null;
