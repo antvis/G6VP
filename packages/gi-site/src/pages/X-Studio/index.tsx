@@ -3,8 +3,6 @@ import request from 'umi-request';
 
 const getBankCase = async () => {
   const res = await request('https://gw.alipayobjects.com/os/bmw-prod/f9daec5b-4e2e-42e6-9e71-21d0cecb3966.json');
-  const { GI_ASSETS_PACKAGES } = res;
-  localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(GI_ASSETS_PACKAGES));
   return {
     ...res,
     id: 'demo-bank',
