@@ -76,5 +76,5 @@ export {
   SankeyAnalysis,
   InfoDetection,
   LayoutSwitch,
-  GrailLayout
+  GrailLayout,
 };
