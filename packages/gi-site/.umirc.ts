@@ -26,10 +26,6 @@ const assets_npm = [
     name: GI_ASSETS_ALGORITHM.name,
     version: GI_ASSETS_ALGORITHM.version,
   },
-  // {
-  //   name: GI_SERVER_LOCAL.name,
-  //   version: GI_SERVER_LOCAL.version,
-  // },
 ];
 const NPM_INFO = [
   {
