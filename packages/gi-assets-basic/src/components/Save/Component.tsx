@@ -11,6 +11,9 @@ const Save: React.FunctionComponent<Props> = props => {
   const { graph, GISDK_ID, config, services, schemaData } = useContext();
   const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
+  if (!service) {
+    return null;
+  }
   const imgURL = graph.toDataURL('image/jpeg', '#fff');
   const handleSave = () => {
     const { name, description } = form.getFieldsValue();

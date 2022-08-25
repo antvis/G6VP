@@ -115,12 +115,12 @@ export const handleCollaspe = (data, responseData) => {
  * @param serviceId 组件绑定的 serviceId
  * @returns
  */
-export const getService = (services: any[], serviceId?: string): GIService | null => {
+export const getService = (services: any[], serviceId?: string): GIService['service'] | null => {
   if (!serviceId) {
     console.warn('not found serviceId', serviceId);
     return null;
   }
-  const { service } = services.find(s => s.id === serviceId);
+  const { service } = services.find(s => s.id === serviceId) || {};
   if (!service) {
     console.warn('Component need a service', serviceId);
     return null;
