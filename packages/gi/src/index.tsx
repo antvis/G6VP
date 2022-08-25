@@ -1,5 +1,5 @@
 /** export  */
-import { version } from '../package.json';
+const version = '2.13.0';
 import {
   deepClone,
   GIAC_CONTENT_METAS,
