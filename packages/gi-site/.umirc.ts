@@ -155,8 +155,7 @@ export default {
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.20.0/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js',
-    // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.5/dist/graphin.min.js',
-    "https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.8/dist/graphin.min.js",
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.8/dist/graphin.min.js',
     /**  G2Plot */
     'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
