@@ -11,7 +11,7 @@ const getBankCase = async () => {
 };
 
 const getCloudSecurityCase = async () => {
-  const res = await request('https://gw.alipayobjects.com/os/bmw-prod/58fb60f9-b66d-4a82-856b-af1a90265f5c.json');
+  const res = await request('https://gw.alipayobjects.com/os/bmw-prod/55424c1c-1da0-4e68-a6a9-c59835fb5ba8.json');
   return {
     ...res,
     id: 'demo-supply-chain',
