@@ -91,7 +91,7 @@ const ExportConfig = props => {
           >
             <div className="card-meta">
               <div className="title">云端部署</div>
-              <div>GraphScope 计算+ ODPS 存储部署</div>
+              <div>GraphScope 计算+ ODPS 存储部署，详情请咨询 @击铗</div>
             </div>
           </Card>
         </Col>
