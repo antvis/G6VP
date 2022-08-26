@@ -1,4 +1,5 @@
 /** export  */
+const version = '2.13.1';
 import {
   deepClone,
   GIAC_CONTENT_METAS,
@@ -7,6 +8,7 @@ import {
   GIAC_PROPS,
   GI_CONTAINER_METAS,
 } from './components/const';
+
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
@@ -38,7 +40,7 @@ export type {
   ISourceDataMap,
   ServiceObject,
 } from './typing';
-export { useContext, utils };
+export { useContext, utils, version };
 export { extra };
 
 const extra = {
@@ -53,7 +55,6 @@ const extra = {
   GIAComponent,
 };
 
-const version = '2.9.0';
-console.log(`%c GI_VERSION:${version}`, 'color:red');
+console.log(`%c 🎉 GI_VERSION:${version}`, 'color:#3e5dff');
 
 export default GISDK;

@@ -16,7 +16,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
-    console.log('Initializer effect....');
     const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
     const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
       service: () => Promise.resolve(null),

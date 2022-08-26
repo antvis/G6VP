@@ -1,8 +1,8 @@
 const info = {
   id: 'Initializer',
   name: '初始化器',
-  desc: '初始化画布，查询图数据与图模型（⚠️：必选）',
-  icon: 'icon-export',
+  desc: '必选！初始化查询图数据与图模型',
+  // icon: 'icon-export',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
   type: 'INITIALIZER',
