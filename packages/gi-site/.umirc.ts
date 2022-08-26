@@ -173,7 +173,7 @@ export default {
       return c.replace('min.js', 'css');
     }),
     // 'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.css',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.1/dist/index.css',
+    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.8/dist/index.css',
   ],
   analyze: {
     analyzerMode: 'server',
