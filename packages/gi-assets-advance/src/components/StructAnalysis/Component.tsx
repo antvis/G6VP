@@ -175,7 +175,7 @@ const StructAnalysis = () => {
     <Graphin
       data={state.graphStruct}
       layout={{
-        type: 'dagree',
+        type: 'dagre',
       }}
     ></Graphin>
   );
