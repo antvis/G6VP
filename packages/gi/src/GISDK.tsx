@@ -71,7 +71,6 @@ const GISDK = (props: Props) => {
   }, [props.config]);
 
   const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
-  console.log('layoutCfg:', layoutCfg);
   /** 根据注册的图元素，生成Transform函数 */
 
   /** 节点和边的配置发生改变 */
@@ -319,8 +318,6 @@ const GISDK = (props: Props) => {
       edges,
     };
   }, [data]);
-
-  console.log('layout:', layout);
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
