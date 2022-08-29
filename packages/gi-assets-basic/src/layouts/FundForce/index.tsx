@@ -5,7 +5,7 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'FundForce',
   options: {
-    type: 'graphin-force',
+    type: 'force2',
     animation: true,
     preset: {
       type: 'concentric',

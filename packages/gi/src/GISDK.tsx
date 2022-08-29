@@ -130,8 +130,16 @@ const GISDK = (props: Props) => {
 
     // 资金力导布局定制
     if (layoutCfg.id === 'FundForce') {
+      if (!state.graph) return;
+
       otherOptions = {
-        defSideCoe: utils.getDefSideCoeFunction(options.income, options.outcome, options.isLog, options.multiple),
+        getCenter: utils.getDefGetCenterFunction(
+          options.income,
+          options.outcome,
+          options.isLog,
+          options.multiple,
+          state.graph,
+        ),
       };
     }
 
@@ -144,7 +152,8 @@ const GISDK = (props: Props) => {
       draft.config.layout = layoutCfg;
       draft.layoutCache = false;
     });
-  }, [layoutCfg]);
+  }, [layoutCfg,  state.graph]);
+
 
   /** 增加多元素 */
   React.useEffect(() => {

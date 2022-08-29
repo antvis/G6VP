@@ -14,7 +14,7 @@ export {
 } from './common';
 export { filterByRules } from './filterByRules';
 export { findAllPath, getNeighbors } from './findAllPath';
-export { getDefSideCoeFunction } from './getDefSideCoeFunction';
+export { getDefGetCenterFunction } from './getDefGetCenterFunction';
 export { getDefSpringLenFunction } from './getDefSpringLenFunction';
 export { default as getElementsByAssets } from './getElementsByAssets';
 export { getMetaDefaultValues } from './getMetaDefaultValues';
