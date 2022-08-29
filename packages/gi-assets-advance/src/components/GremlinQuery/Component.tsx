@@ -1,36 +1,10 @@
 import { useContext, utils } from '@alipay/graphinsight';
-import Graphin from '@antv/graphin';
-import iconLoader from '@antv/graphin-icons';
+
 import { Button, Col, Divider, notification, Row } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import GremlinEditor from './GremlinEditor';
 import './index.less';
-
-const icons = Graphin.registerFontFamily(iconLoader);
-const defSpringLen = (_edge, source, target) => {
-  // NOTE: 固定200还是效果好
-  // return 200;
-  /** 默认返回的是 200 的弹簧长度 */
-  /** 如果你要想要产生聚类的效果，可以考虑 根据边两边节点的度数来动态设置边的初始化长度：度数越小，则边越短 */
-  const defaultSpring = 100;
-  const Sdegree = source.data.layout.degree;
-  const Tdegree = target.data.layout.degree;
-  const MinDegree = Math.min(Sdegree, Tdegree);
-
-  let SpringLength = defaultSpring;
-  if (MinDegree < 5) {
-    SpringLength = defaultSpring * MinDegree;
-  } else {
-    SpringLength = 500;
-  }
-  // console.log(Sdegree, Tdegree, MinDegree, MaxDegree, "SpringLength", SpringLength);
-
-  return SpringLength;
-};
-
-export const SERVICE_URL_PREFIX = 'https://storehouse.test.alipay.net';
-// export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 
 export interface IGremlinQueryProps {
   initialValue?: string;

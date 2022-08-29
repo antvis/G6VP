@@ -1,9 +1,5 @@
-import iconLoader from '@antv/graphin-icons';
 import React from 'react';
 import { handlePinNode } from '../common/handlePinNode';
-
-// @ts-ignore
-const icons = Graphin.registerFontFamily(iconLoader);
 
 import type { IGIAC } from '@alipay/graphinsight';
 import { extra, useContext } from '@alipay/graphinsight';

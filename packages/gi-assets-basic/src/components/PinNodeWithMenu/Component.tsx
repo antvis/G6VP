@@ -1,11 +1,8 @@
 import { useContext } from '@alipay/graphinsight';
-import iconLoader from '@antv/graphin-icons';
 import { Menu } from 'antd';
 import React from 'react';
 
 import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
-// @ts-ignore
-const icons = Graphin.registerFontFamily(iconLoader);
 
 export interface PinNodeMenuItemProps {
   contextmenu: any;
