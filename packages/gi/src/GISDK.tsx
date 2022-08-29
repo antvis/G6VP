@@ -137,7 +137,8 @@ const GISDK = (props: Props) => {
 
     updateState(draft => {
       draft.layout = {
-        type: type === 'graphin-force' ? 'force2' : type,
+        // type: type === 'graphin-force' ? 'force2' : type,
+        type,
         ...options,
         ...otherOptions,
       };
