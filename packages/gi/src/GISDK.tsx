@@ -114,7 +114,6 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
-    // const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
 
     // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
