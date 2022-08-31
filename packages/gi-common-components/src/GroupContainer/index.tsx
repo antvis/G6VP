@@ -143,7 +143,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       if (item && item.props) {
                         color = item.props.color;
                       }
-                      console.log(initValues?.groups[name]?.logic, name, '@@');
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
