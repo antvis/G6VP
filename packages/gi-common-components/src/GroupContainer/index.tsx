@@ -8,6 +8,7 @@ import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 import DisplayColor from './DisplayColor';
 import PopoverContainer from './PopoverContainer';
+
 export interface ElementTypeOption {
   value: string;
   properties: any[];
@@ -66,7 +67,19 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
-  console.log("initValues:", initValues)
+  // 为 groupId 添加唯一标识
+  initValues.groups = initValues.groups.map(group => {
+    if (group.groupId) {
+      return {
+        ...group,
+      };
+    }
+
+    return {
+      ...group,
+      groupId: Math.random().toString(36).slice(-8),
+    };
+  });
 
   return (
     /** 让fixed定位从该容器开始 */
@@ -85,8 +98,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
         >
           <Form.List name="groups">
             {(fields, { add, remove }) => {
-              console.log("fields:", fields);
-
               return (
                 <>
                   <Button
@@ -171,8 +182,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                             className="switch-button"
                                             checkedChildren="and"
                                             unCheckedChildren="or"
-                                            defaultChecked={initValues?.groups[name]?.logic || true}
-                                            disabled
+                                            defaultChecked={initValues?.groups[name]?.logic}
                                           />
                                         </Form.Item>
                                       </div>
