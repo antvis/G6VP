@@ -2,12 +2,14 @@ import { CaretRightOutlined, DeleteOutlined, FilterOutlined, PlusOutlined } from
 import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
+import { nanoid } from 'nanoid';
 import type { ItemConfig } from '../CommonStyleSetting/typing';
 import { getAllkeysBySchema } from '../Utils/getAllkeysBySchema';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 import DisplayColor from './DisplayColor';
 import PopoverContainer from './PopoverContainer';
+
 export interface ElementTypeOption {
   value: string;
   properties: any[];
@@ -66,7 +68,19 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
-  console.log("initValues:", initValues)
+  // 为 groupId 添加唯一标识
+  initValues.groups = initValues.groups.map(group => {
+    if (group.groupId) {
+      return {
+        ...group
+      }
+    } 
+
+    return {
+      ...group,
+      groupId: nanoid(),
+    }
+  })
 
   return (
     /** 让fixed定位从该容器开始 */
@@ -84,9 +98,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group', id: 'SimpleNode', props: {} }]}
         >
           <Form.List name="groups">
-            {(fields, { add, remove }) => {
-              console.log("fields:", fields);
-
+            {(fields, { add, remove }) => {         
               return (
                 <>
                   <Button
@@ -132,6 +144,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       if (item && item.props) {
                         color = item.props.color;
                       }
+                      console.log(initValues?.groups[name]?.logic, "@@")
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
