@@ -2,7 +2,6 @@ import { CaretRightOutlined, DeleteOutlined, FilterOutlined, PlusOutlined } from
 import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
 import React, { useCallback } from 'react';
 import { useImmer } from 'use-immer';
-import { nanoid } from 'nanoid';
 import type { ItemConfig } from '../CommonStyleSetting/typing';
 import { getAllkeysBySchema } from '../Utils/getAllkeysBySchema';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
@@ -185,7 +184,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                             checkedChildren="and"
                                             unCheckedChildren="or"
                                             defaultChecked={initValues?.groups[name]?.logic}
-                                            // disabled
                                           />
                                         </Form.Item>
                                       </div>
