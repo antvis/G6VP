@@ -3,16 +3,17 @@
     height: calc(100vh - 180px);
   }
   .ant-tabs-nav-list {
-    width: 320px;
+    width: 100%;
     padding: 0px 0px;
     background: #fafafa;
     border-radius: 4px;
   }
   .ant-tabs-tab {
-    width: 160px;
+    display: flex;
+    justify-content: center;
+    width: 50%;
     height: 32px;
     line-height: 32px;
-    text-align: center;
   }
   .ant-tabs-tab-active {
     color: '#fff';
@@ -27,7 +28,10 @@
     margin: 0 0 0 2px;
   }
   .ant-tabs-nav-wrap {
-    padding: 4px;
+    padding: 0 12px;
+  }
+  .ant-tabs-nav-wrap::before {
+    display: none;
   }
   .tab-title {
     display: block;
