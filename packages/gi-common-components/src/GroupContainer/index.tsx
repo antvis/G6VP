@@ -66,6 +66,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
+  console.log("initValues:", initValues)
+
   return (
     /** 让fixed定位从该容器开始 */
     <div className="gi-group-contaner" style={{ transform: 'scale(1)', height: '100%' }}>
@@ -83,6 +85,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
         >
           <Form.List name="groups">
             {(fields, { add, remove }) => {
+              console.log("fields:", fields);
+
               return (
                 <>
                   <Button
@@ -161,12 +165,14 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                         form={form}
                                       />
                                       <div className="switch-button-wrap">
-                                        <Form.Item name={[name, 'logic']} initialValue={false}>
+                                        <Form.Item name={[name, 'logic']}>
                                           <Switch
                                             size="small"
                                             className="switch-button"
                                             checkedChildren="and"
                                             unCheckedChildren="or"
+                                            defaultChecked={initValues?.groups[name]?.logic || true}
+                                            disabled
                                           />
                                         </Form.Item>
                                       </div>
