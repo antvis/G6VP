@@ -1,3 +1,4 @@
+import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
 // @ts-ignore
 const icons = Graphin.registerFontFamily(iconLoader);

@@ -3,6 +3,7 @@ import { GraphinData } from '@antv/graphin';
 // 因为后续要转化为 JSON 字符串，所以这里不能返回一个函数
 export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
+  const {combos} = data;
   const nodes = data.nodes.map(n=>{
     return {
       id:'' + n["${id}"],
@@ -20,7 +21,8 @@ data => {
       data:e
     }
   })
-  return { nodes, edges }
+  
+  return { nodes, edges,combos }
 }
 `;
 

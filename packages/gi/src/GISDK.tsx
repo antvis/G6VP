@@ -162,10 +162,11 @@ const GISDK = (props: Props) => {
     const transform = (data, reset?: boolean) => {
       const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
       const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
-
+      const { combos } = data;
       return {
         nodes,
         edges,
+        combos,
       };
     };
 
@@ -299,24 +300,27 @@ const GISDK = (props: Props) => {
 
   const graphData = useMemo(() => {
     const nodeMap = {};
+    const edgeMap = {};
     const edges: any[] = [];
     const nodes: any[] = [];
     data.nodes?.forEach(node => {
       if (!nodeMap[node.id]) {
-        nodeMap[node.id] = node;
         nodes.push(node);
+        nodeMap[node.id] = node;
       }
     });
-    const edgeMap: any[] = [];
+
     data.edges.forEach(edge => {
       if (nodeMap[edge.source] && nodeMap[edge.target] && !edgeMap[edge.id]) {
         edges?.push(edge);
         edgeMap[edge.id] = edge;
       }
     });
+    const { combos } = data;
     return {
       nodes,
       edges,
+      combos,
     };
   }, [data]);
 

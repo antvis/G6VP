@@ -1,5 +1,6 @@
 import { utils } from '@alipay/graphinsight';
 import { EditableProTable } from '@ant-design/pro-table';
+import { GraphinData } from '@antv/graphin';
 import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
@@ -62,6 +63,7 @@ const ConfigData: React.FC<IProps> = props => {
 
   const handleSave = () => {
     const { transData, inputData, transfunc } = state;
+    console.log('transData', transData);
 
     try {
       if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
@@ -71,10 +73,11 @@ const ConfigData: React.FC<IProps> = props => {
         throw 'edges缺少对应字段';
       }
 
-      const beforData = giSiteContext.data;
+      const beforData = giSiteContext.data as GraphinData;
       const mergeData = {
         nodes: [...beforData.nodes, ...transData.nodes],
         edges: [...beforData.edges, ...transData.edges],
+        combos: [...(beforData.combos ? beforData.combos : []), ...(transData.combos ? transData.combos : [])],
       };
 
       // 进入分析之前，根据数据，生成 schema

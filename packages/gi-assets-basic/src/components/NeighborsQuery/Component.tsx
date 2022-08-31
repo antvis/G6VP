@@ -1,11 +1,7 @@
 import { useContext, utils } from '@alipay/graphinsight';
-import Graphin from '@antv/graphin';
-import iconLoader from '@antv/graphin-icons';
-import '@antv/graphin-icons/dist/index.css';
+
 import { Menu } from 'antd';
 import React, { useEffect, useRef } from 'react';
-
-const icons = Graphin.registerFontFamily(iconLoader);
 
 const { SubMenu } = Menu;
 export interface QueryNeighborsProps {

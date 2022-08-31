@@ -132,20 +132,27 @@ export const generatorSchemaByGraphData = (graphData: IGraphData, defaultOptions
 
 export const COLORS = [
   '#3056E3',
-  '#F58CCB',
-  '#795AE1',
-  '#622CD8',
-  '#82E6C7',
-  '#F6D87B',
-  '#F69F7F',
-  '#E96075',
-  '#CB6EF8',
-  '#85C98E',
-  '#3E34E5',
-  '#2959C1',
-  '#4D92DE',
-  '#5CB5D4',
-  '#B9D569',
+  '#faad14',
+  '#a0d911',
+  '#f5222d',
+  '#722ed1',
+  '#eb2f96',
+  '#2f54eb',
+  '#13c2c2',
+  '#52c41a',
+  '#fadb14',
+  '#fa8c16',
+  '#820014',
+  '#873800',
+  '#874d00',
+  '#876800',
+  '#3f6600',
+  '#135200',
+  '#00474f',
+  '#003a8c',
+  '#061178',
+  '#22075e',
+  '#780650',
 ];
 
 const colorMap = new Map();
@@ -179,11 +186,15 @@ const defaultEdgeConfig = {
 
 export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GIConfig = {}): GIConfig => {
   const { nodes, edges } = schema;
+
   let hasUnkownNodeType = false;
   let hasUnkownEdgeType = false;
+
   const nodesConfig = nodes
     .map((c, index) => {
-      colorMap.set(c.nodeType, COLORS[index]);
+      const COLOR_INDEX = index % COLORS.length;
+
+      colorMap.set(c.nodeType, COLORS[COLOR_INDEX]);
       if (c.nodeType === 'UNKNOW') {
         hasUnkownNodeType = true;
         return { ...defaultNodeConfig };
@@ -192,7 +203,7 @@ export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GI
         id: 'SimpleNode',
         props: {
           size: 26,
-          color: COLORS[index] || '#ddd',
+          color: COLORS[COLOR_INDEX] || '#ddd',
           label: [`${c.nodeType}.id`],
         },
         name: '官方节点',
