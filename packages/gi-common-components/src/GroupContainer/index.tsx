@@ -72,15 +72,15 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   initValues.groups = initValues.groups.map(group => {
     if (group.groupId) {
       return {
-        ...group
-      }
-    } 
+        ...group,
+      };
+    }
 
     return {
       ...group,
-      groupId: nanoid(),
-    }
-  })
+      groupId: Math.random().toString(36).slice(-8),
+    };
+  });
 
   return (
     /** 让fixed定位从该容器开始 */
@@ -98,7 +98,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group', id: 'SimpleNode', props: {} }]}
         >
           <Form.List name="groups">
-            {(fields, { add, remove }) => {         
+            {(fields, { add, remove }) => {
               return (
                 <>
                   <Button
@@ -144,7 +144,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       if (item && item.props) {
                         color = item.props.color;
                       }
-                      console.log(initValues?.groups[name]?.logic, "@@")
+                      console.log(initValues?.groups[name]?.logic, name, '@@');
                       return (
                         <Panel
                           className="gi-group-contaner-panel"
@@ -184,8 +184,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                             className="switch-button"
                                             checkedChildren="and"
                                             unCheckedChildren="or"
-                                            defaultChecked={initValues?.groups[name]?.logic || true}
-                                            disabled
+                                            defaultChecked={initValues?.groups[name]?.logic}
+                                            // disabled
                                           />
                                         </Form.Item>
                                       </div>
