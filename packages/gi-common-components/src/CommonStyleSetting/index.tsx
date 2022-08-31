@@ -29,6 +29,7 @@ const defaultGroupOption = {
     groupName: `自定义样式`,
     groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleNode',
+    logic: true,
     expressions: [
       {
         name: 'id',
@@ -46,6 +47,7 @@ const defaultGroupOption = {
     groupName: `自定义样式`,
     groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleEdge',
+    logic: true,
     expressions: [
       {
         name: 'id',
