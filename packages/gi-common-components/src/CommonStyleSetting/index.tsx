@@ -29,6 +29,7 @@ const defaultGroupOption = {
     groupName: `自定义样式`,
     groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleNode',
+    logic: true,
     expressions: [
       {
         name: 'id',
@@ -46,6 +47,7 @@ const defaultGroupOption = {
     groupName: `自定义样式`,
     groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleEdge',
+    logic: true,
     expressions: [
       {
         name: 'id',
@@ -113,7 +115,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     const resultGroup: any = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
-      const currentGroup = preStyleGroup.current?.find((pg: any) => pg.groupName === group.groupName);
+      const currentGroup = preStyleGroup.current?.find((pg: any) => pg.groupId === group.groupId);
       if (currentGroup) {
         // 进行 merge
         const result = Object.assign({}, currentGroup, group);
