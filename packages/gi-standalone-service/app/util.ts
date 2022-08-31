@@ -1,6 +1,6 @@
 // 如果是要部署到外网，请使用 http://47.242.172.5:9527
 export const GRAPHSCOPE_SERVICE_URL = 'http://11.166.85.48:9527';
-export const TUGRAPH_SERVICE_URL = 'http://30.230.64.249:7090';
+export const TUGRAPH_SERVICE_URL = 'http://30.230.65.41:7090';
 export const TUGRAPH_DEFAULT_GRAPHNAME = 'MovieDemo1';
 
 export const responseData = (ctx, resp) => {
