@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
 import { utils } from '@alipay/graphinsight';
+import { DeleteOutlined, FileTextOutlined } from '@ant-design/icons';
+import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
+import { Alert, Button, message, Row, Upload } from 'antd';
+import React, { useState } from 'react';
 import { Updater } from 'use-immer';
-import { IState, IInputData } from './typing';
-import { Alert, Button, Row, Upload, message } from 'antd';
-import { FileTextOutlined, DeleteOutlined } from '@ant-design/icons';
-import { IUserEdge, IUserNode } from '@antv/graphin';
-import { getOptions } from './utils';
 import xlsx2js from 'xlsx2js';
+import { IInputData, IState } from './typing';
+import { getOptions } from './utils';
 
 interface IProps {
   state: IState;
@@ -105,9 +105,11 @@ const UploadLocalFile: React.FC<IProps> = props => {
     try {
       let nodes: IUserNode[] = [];
       let edges: IUserEdge[] = [];
+      let combos: any[] = [];
       renderData.map(d => {
         nodes = [...nodes, ...d.data.nodes];
         edges = [...edges, ...d.data.edges];
+        combos = [...combos, ...(d.data.combos ? d.data.combos : [])];
       });
       updateState(draft => {
         draft.data = { nodes, edges };
@@ -133,9 +135,10 @@ const UploadLocalFile: React.FC<IProps> = props => {
 
   const deleteData = (uid: string) => {
     if (uid === undefined) return;
-    let mergeData: { nodes: any[]; edges: any[] } = {
+    let mergeData: GraphinData = {
       nodes: [],
       edges: [],
+      combos: [],
     };
     const filterInputData = inputData.filter(d => d.uid !== uid);
     filterInputData.map(d => {
@@ -155,6 +158,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
         mergeData = {
           nodes: [...mergeData.nodes, ...nodesData],
           edges: [...mergeData.edges, ...edgesData],
+          combos: [...(mergeData.combos ? mergeData.combos : []), ...(d.data.combos ? d.data.combos : [])],
         };
       }
     });
