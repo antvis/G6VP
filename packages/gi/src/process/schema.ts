@@ -160,7 +160,7 @@ const defaultNodeConfig = {
   name: '官方节点',
   order: -1,
   expressions: [],
-  logic: false,
+  logic: true,
   groupName: `默认样式`,
 };
 const defaultEdgeConfig = {
@@ -173,7 +173,7 @@ const defaultEdgeConfig = {
   name: '官方边',
   order: -1,
   expressions: [],
-  logic: false,
+  logic: true,
   groupName: `默认样式`,
 };
 
@@ -204,7 +204,7 @@ export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GI
           },
         ],
         order: index,
-        logic: false,
+        logic: true,
         groupName: `${String(c.nodeType).toUpperCase()} TYPE`,
       };
     })
@@ -235,7 +235,7 @@ export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GI
           },
         ],
         order: index,
-        logic: false,
+        logic: true,
         groupName: `${String(c.edgeType).toUpperCase()} TYPE`,
       };
     })

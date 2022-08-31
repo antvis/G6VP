@@ -24,27 +24,6 @@ export const transDataByConfig = (
 
   const elementConfig = config[elementType];
 
-  const defaultConfig =
-    elementType === 'nodes'
-      ? {
-          id: 'SimpleNode',
-          props: {},
-          name: '官方节点',
-          order: -1,
-          expressions: [],
-          logic: false,
-          groupName: `GLOBAL TYPE`,
-        }
-      : {
-          id: 'SimpleEdge',
-          props: {},
-          name: '官方边',
-          order: -1,
-          expressions: [],
-          logic: false,
-          groupName: `GLOBAL TYPE`,
-        };
-
   if (!elementConfig) {
     return {};
   }
