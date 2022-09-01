@@ -16,7 +16,7 @@ export interface ElementTypeOption {
 
 export interface GroupContainerProps {
   data: any[];
-  children?: any;
+  children?: (id: number) => React.ReactNode;
   initValues?: any;
   valuesChange: (currenr: any, allValues: any) => void;
   defaultGroupOption: ItemConfig;
@@ -115,6 +115,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       const idx = fields.length + 1;
                       const options = {
                         ...defaultGroupOption,
+                        groupId: Math.random().toString(36).slice(-8),
                         groupName: `自定义样式 ${idx}`,
                       };
                       add(options);
@@ -228,7 +229,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                           }
                         >
                           <Col span={24} className="xrender-form-container">
-                            {children(index)}
+                            {children && children(index)}
                           </Col>
                         </Panel>
                       );
