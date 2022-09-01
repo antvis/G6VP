@@ -2,10 +2,9 @@ import { extra } from '@alipay/graphinsight';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 
-metas.height.default = 'calc(100vh - 120px)';
-metas.width.default = '450px';
-metas.offset.default = [0, 0];
-metas.placement.default = 'LT';
+metas.placement.default = 'LB';
+metas.height.default = '400px';
+metas.width.default = '400px';
 
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [] } = context;
