@@ -25,8 +25,7 @@ export const GetTheme = {
     const projectId = hash.split('/')[2].split('?')[0];
     //@ts-ignore
     const { localforage } = window;
-    const project = await localforage.getItem(projectId);
-    console.log('project', project, projectId);
+    const project = await localforage.getItem(projectId)
     const themes = project.themes || [];
     return {
       success: true,
