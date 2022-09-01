@@ -1,5 +1,5 @@
 import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
-import { VerticalLeftOutlined, VerticalRightOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Tabs, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
@@ -77,11 +77,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
 
   const tabBarExtraContent = (
     <Tooltip placement="right" title="可展开收起导航栏">
-      <Button
-        type="text"
-        icon={visible ? <VerticalRightOutlined /> : <VerticalLeftOutlined />}
-        onClick={toggleVisible}
-      />
+      <Button type="text" icon={visible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={toggleVisible} />
     </Tooltip>
   );
 
@@ -118,7 +114,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
     >
       {Content}
     </SideContainer>,
-    document.getElementById(`${GISDK_ID}-container-extra`) as HTMLElement,
+    document.getElementById(`${GISDK_ID}-container`) as HTMLElement,
   );
 };
 
