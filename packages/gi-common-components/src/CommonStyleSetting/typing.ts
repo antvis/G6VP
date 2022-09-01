@@ -13,4 +13,6 @@ export interface ItemConfig {
     value: string | number;
   }[];
   groupName: string;
+  groupId: string;
+  logic: boolean;
 }

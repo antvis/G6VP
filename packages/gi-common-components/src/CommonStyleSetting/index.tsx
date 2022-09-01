@@ -106,7 +106,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param all
    */
   const handleGroupChange = (_current, all) => {
-    const resultGroup: any = [];
+    const resultGroup: ItemConfig[] = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
       const currentGroup = preStyleGroup.current?.find((pg: any) => pg.groupId === group.groupId);
