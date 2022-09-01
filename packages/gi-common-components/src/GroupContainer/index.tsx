@@ -17,8 +17,15 @@ export interface ElementTypeOption {
 export interface GroupContainerProps {
   data: any[];
   children?: (id: number) => React.ReactNode;
-  initValues?: any;
-  valuesChange: (currenr: any, allValues: any) => void;
+  initValues: {
+    groups: ItemConfig[];
+  };
+  valuesChange: (
+    currenr: any,
+    allValues: {
+      groups: ItemConfig[];
+    },
+  ) => void;
   defaultGroupOption: ItemConfig;
   schemaData: any;
   elementType: 'nodes' | 'edges';
@@ -52,7 +59,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     });
   };
 
-  const onValuesChange = useCallback((changedValue: any, allValues: any) => {
+  const onValuesChange = useCallback((changedValue: any, allValues: { groups: ItemConfig[] }) => {
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }
@@ -66,6 +73,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
       key: c,
     };
   });
+
+  console.log('initValues:', initValues);
 
   // 为 groupId 添加唯一标识
   initValues.groups = initValues.groups.map(group => {
