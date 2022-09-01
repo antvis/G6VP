@@ -26,8 +26,6 @@ export interface StyleSettingProps {
 
 const defaultGroupOption = {
   nodes: {
-    groupName: `自定义样式`,
-    groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleNode',
     logic: true,
     expressions: [
@@ -44,8 +42,6 @@ const defaultGroupOption = {
     },
   },
   edges: {
-    groupName: `自定义样式`,
-    groupId: Math.random().toString(36).slice(-8),
     id: 'SimpleEdge',
     logic: true,
     expressions: [
@@ -84,8 +80,6 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param all
    */
   const handleChange = (all, groupIndex = 0, elementId) => {
-    //(all, groupIndex, elementId, preStyleGroup.current);
-
     if (preStyleGroup.current[groupIndex]) {
       preStyleGroup.current[groupIndex].props = all;
       preStyleGroup.current[groupIndex].id = elementId;
@@ -112,7 +106,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param all
    */
   const handleGroupChange = (_current, all) => {
-    const resultGroup: any = [];
+    const resultGroup: ItemConfig[] = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
       const currentGroup = preStyleGroup.current?.find((pg: any) => pg.groupId === group.groupId);

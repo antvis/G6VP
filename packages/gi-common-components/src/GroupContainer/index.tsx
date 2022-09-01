@@ -16,9 +16,16 @@ export interface ElementTypeOption {
 
 export interface GroupContainerProps {
   data: any[];
-  children?: any;
-  initValues?: any;
-  valuesChange: (currenr: any, allValues: any) => void;
+  children?: (id: number) => React.ReactNode;
+  initValues: {
+    groups: ItemConfig[];
+  };
+  valuesChange: (
+    currenr: any,
+    allValues: {
+      groups: ItemConfig[];
+    },
+  ) => void;
   defaultGroupOption: ItemConfig;
   schemaData: any;
   elementType: 'nodes' | 'edges';
@@ -52,7 +59,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     });
   };
 
-  const onValuesChange = useCallback((changedValue: any, allValues: any) => {
+  const onValuesChange = useCallback((changedValue: any, allValues: { groups: ItemConfig[] }) => {
     if (valuesChange) {
       valuesChange(changedValue, allValues);
     }
@@ -66,6 +73,8 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
       key: c,
     };
   });
+
+  console.log('initValues:', initValues);
 
   // 为 groupId 添加唯一标识
   initValues.groups = initValues.groups.map(group => {
@@ -115,6 +124,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       const idx = fields.length + 1;
                       const options = {
                         ...defaultGroupOption,
+                        groupId: Math.random().toString(36).slice(-8),
                         groupName: `自定义样式 ${idx}`,
                       };
                       add(options);
@@ -228,7 +238,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                           }
                         >
                           <Col span={24} className="xrender-form-container">
-                            {children(index)}
+                            {children && children(index)}
                           </Col>
                         </Panel>
                       );
