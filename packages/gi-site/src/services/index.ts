@@ -33,6 +33,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     return {
       engineId: project.engineId || 'GI', // 兼容过去的版本
       engineContext: project.engineContext || {
+        // 兼容过去的版本
         schemaData: project.schemaData,
         data: project.data.transData,
       },
@@ -249,13 +250,15 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
 export const addProject = async (param: any): Promise<string | undefined> => {
   if (IS_LOCAL_ENV) {
     const projectId = getUid();
-    const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, ...otherParams } = param;
+    const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, engineContext, ...otherParams } = param;
+
     const p = {
       ...otherParams,
       schemaData: JSON.parse(schemaData),
       projectConfig: JSON.parse(projectConfig),
       activeAssetsKeys: JSON.parse(activeAssetsKeys),
       data: JSON.parse(data),
+      engineContext: engineContext ? JSON.parse(engineContext) : {},
       serviceConfig: JSON.parse(serviceConfig),
       id: projectId,
       isProject: true,
