@@ -74,8 +74,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
-  console.log('initValues:', initValues);
-
   // 为 groupId 添加唯一标识
   initValues.groups = initValues.groups.map(group => {
     if (group.groupId) {

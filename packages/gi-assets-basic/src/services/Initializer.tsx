@@ -68,6 +68,7 @@ export const GI_SERVICE_SCHEMA = {
     const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
 
     const context = JSON.parse(ContextString);
+
     const { schemaData } = context;
     return schemaData;
   },
