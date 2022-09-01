@@ -1,9 +1,9 @@
+import { utils } from '@alipay/graphinsight';
 import type { ITheme } from '../components/ThemeSetting/typing';
 export const AddTheme = {
   name: '添加主题',
   service: async (theme: ITheme) => {
-    const hash = window.location.hash;
-    const projectId = hash.split('/')[2].split('?')[0];
+    const projectId = utils.getProjectId();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
@@ -21,8 +21,7 @@ export const AddTheme = {
 export const GetTheme = {
   name: '获取主题',
   service: async () => {
-    const hash = window.location.hash;
-    const projectId = hash.split('/')[2].split('?')[0];
+    const projectId = utils.getProjectId();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId)
@@ -36,8 +35,7 @@ export const GetTheme = {
 export const UpdateTheme = {
   name: '更新主题',
   service: async (id: string, theme: ITheme) => {
-    const hash = window.location.hash;
-    const projectId = hash.split('/')[2].split('?')[0];
+    const projectId = utils.getProjectId();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
@@ -62,8 +60,7 @@ export const UpdateTheme = {
 export const RemoveTheme = {
   name: '删除主题',
   service: async (id: string) => {
-    const hash = window.location.hash;
-    const projectId = hash.split('/')[2].split('?')[0];
+    const projectId = utils.getProjectId();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);

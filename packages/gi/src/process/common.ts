@@ -221,3 +221,10 @@ export const mergeObjectByRule = (condition: Function, ...objArray): Object => {
     return acc;
   }, {});
 };
+
+export const getProjectId = () => {
+  const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+  const context = JSON.parse(ContextString);
+  const { GI_SITE_PROJECT_ID } = context;
+  return GI_SITE_PROJECT_ID;
+};

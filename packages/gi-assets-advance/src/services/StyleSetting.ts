@@ -1,4 +1,5 @@
-import { GIConfig } from '@alipay/graphinsight';
+import type { GIConfig } from '@alipay/graphinsight';
+import { utils } from '@alipay/graphinsight';
 
 export interface ServiceObject {
   name: string;
@@ -11,18 +12,18 @@ export interface ServiceObject {
 export const StyleSetting: ServiceObject = {
   name: '样式设置',
   service: async (elementConfig: GIConfig['nodes'] | GIConfig['edges'], elementType: string) => {
-    const hash = window.location.hash;
-    const projectId = hash.split('/')[2].split('?')[0];
-    //@ts-ignore
-    const { localforage } = window;
-    //  debugger
-    const project = await localforage.getItem(projectId);
-    project.projectConfig[elementType] = elementConfig;
+    const projectId = utils.getProjectId();
+    if (projectId) {
+      //@ts-ignore
+      const { localforage } = window;
+      //  debugger
+      const project = await localforage.getItem(projectId);
+      project.projectConfig[elementType] = elementConfig;
 
-    localforage.setItem(projectId, {
-      ...project,
-    });
-
+      localforage.setItem(projectId, {
+        ...project,
+      });
+    }
     return elementConfig;
   },
 };
