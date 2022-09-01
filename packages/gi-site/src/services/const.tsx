@@ -4,6 +4,7 @@ const GI_LOCAL_URL = [
   'graphinsight.antgroup.com:8000', //本地绑定ihost
   'dev.alipay.net:8000', //本地地址
   'localhost:8000', //本地地址
+  'localhost:8001', //本地地址
   '127.0.0.1:5500', // 本地打包后启动server的地址
   'gi-external-pre.alipay.com', //外网预发地址
 ];
