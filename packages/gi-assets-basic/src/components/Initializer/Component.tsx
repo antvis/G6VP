@@ -1,6 +1,5 @@
 // import { notification } from 'antd';
 import { useContext, utils } from '@alipay/graphinsight';
-import { original } from 'immer';
 import * as React from 'react';
 const { isPosition, isStyles } = utils;
 
@@ -28,12 +27,12 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         if (schema) {
           // 更新schemaData
           draft.schemaData = schema as any;
-          const defaultStyle = utils.generatorStyleConfigBySchema(schema);
-          const prevStyle = original(draft.config);
-          //@ts-ignore
-          const style = utils.mergeStyleConfig(defaultStyle, prevStyle);
-          draft.config.nodes = style.nodes;
-          draft.config.edges = style.edges;
+          //只有当config中没有nodes和edges的时候，才会用schema生成一个默认样式
+          if (draft.config.nodes?.length === 0 || draft.config.edges?.length === 0) {
+            const schemaStyle = utils.generatorStyleConfigBySchema(schema);
+            draft.config.nodes = schemaStyle.nodes;
+            draft.config.edges = schemaStyle.edges;
+          }
         }
 
         const position = isPosition(nodes);
