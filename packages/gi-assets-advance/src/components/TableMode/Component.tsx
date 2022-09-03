@@ -23,7 +23,7 @@ const TableMode: React.FC<IProps> = props => {
   const isFullScreen = useFullScreen();
 
   // S2 的 options 配置
-  const [options, updateOptions] = useImmer<S2Options>({
+  const [options, updateOptions] = useImmer<any>({
     showSeriesNumber: true,
     interaction: {
       autoResetSheetStyle: false,

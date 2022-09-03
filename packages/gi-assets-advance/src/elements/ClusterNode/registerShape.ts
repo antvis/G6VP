@@ -319,14 +319,14 @@ const registerShape = Graphin => {
         const { circleMap, borderMap } = getCircleStyles(colors, state);
         if (!isEmpty(borderMap)) {
           Object.keys(borderMap).forEach(key => {
-            const border = borderMap[key];
+            const border = borderMap[key] as any;
             const currentShape = shapes.find(shape => shape.get('name') === border.id);
             currentShape.attr(border);
           });
         }
         if (!isEmpty(circleMap)) {
           Object.keys(circleMap).forEach(key => {
-            const circle = circleMap[key];
+            const circle = circleMap[key] as any;
             const currentShape = shapes.find(shape => shape.get('name') === circle.id);
             currentShape.attr(circle);
           });

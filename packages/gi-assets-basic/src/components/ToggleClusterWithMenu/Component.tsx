@@ -30,6 +30,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       //@ts-ignore
       const leafNodeIds = getLeafNodes(targetNode).map(node => node.getModel().id as string);
       if (model.folded) {
+        //@ts-ignore
         graph.updateItem(targetNode, {
           folded: false,
         });
@@ -42,6 +43,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
         });
         nodeIdsCache.add(nodeId);
         leafNodeIdsCache[nodeId] = leafNodeIds;
+        //@ts-ignore
         graph.updateItem(targetNode, {
           folded: true,
         });
