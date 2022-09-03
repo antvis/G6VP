@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Column } from "@antv/g2plot";
 import { GraphinContext } from "@antv/graphin";
 import { groupBy } from "lodash";
