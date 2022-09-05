@@ -3,7 +3,7 @@ import React from 'react';
 const backStyleMap = {
   left: {
     left: '100%',
-    top: '10%',
+    top: '30%',
     height: '80px',
     width: '38px',
     borderColor: 'transparent transparent transparent #d9d9d9',
@@ -11,7 +11,7 @@ const backStyleMap = {
 
   right: {
     right: '100%',
-    top: '10%',
+    top: '30%',
     height: '80px',
     width: '38px',
     borderColor: 'transparent #d9d9d9 transparent transparent',
@@ -29,14 +29,14 @@ const backStyleMap = {
 const handlerStyleMap = {
   left: {
     left: 'calc(100% - 1px)',
-    top: '10%',
+    top: '30%',
     height: '80px',
     width: '38px',
     borderColor: 'transparent transparent transparent #fafafa',
   },
   right: {
     right: 'calc(100% - 1px)',
-    top: '10%',
+    top: '30%',
     height: '80px',
     width: '38px',
     borderColor: 'transparent #fafafa transparent transparent ',
