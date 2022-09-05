@@ -1,6 +1,8 @@
 import React from 'react';
 import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig } from '@antv/s2';
+
+// 生成点表的数据
 const useNodeDataCfg = (): S2DataConfig => {
   const { schemaData, data: graphData, largeGraphData } = useContext();
 
@@ -18,7 +20,11 @@ const useNodeDataCfg = (): S2DataConfig => {
         columns.push(key);
       }
     }
-    //const data = graphData.nodes.map(node => ({ ...node.data, id: node.id }));
+    
+    /* 
+      在大图模式下，表格的数据源为 largeGraphData
+      此时刷选和点选表格时会过滤画布数据
+    */
     let data;
     if (largeGraphData) {
       data = largeGraphData.nodes.map(node => ({ ...node.data, id: node.id }));

@@ -2,6 +2,12 @@ import { LayoutMap } from './const';
 import { Graph, GraphData } from '@antv/g6';
 import { ILayoutOption } from './typing';
 
+/**
+ * 根据目标节点生成子图
+ * @param graphData 画布图数据
+ * @param targetNodes 目标节点
+ * @returns 生成的子图
+ */
 export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string }[]) => {
   const { edges, nodes } = graphData;
   const ids = targetNodes.map(node => node.id);
@@ -29,6 +35,13 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
   };
 };
 
+/**
+ * 更新布局
+ * @param layouts 布局信息
+ * @param graph G6 graph 实例
+ * @param gap 子图之间的间隙
+ * @returns 
+ */
 export const updateLayout = (
   layouts: ILayoutOption[],
   graph: Graph,
@@ -69,5 +82,3 @@ export const updateLayout = (
 
   graph.positionsAnimate();
 };
-
-export const getCircularRadius = () => {};

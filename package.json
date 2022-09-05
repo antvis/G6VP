@@ -36,6 +36,7 @@
     "@alipay/yuyan-config-data": "^2.0.7",
     "@ant-design/icons": "latest",
     "@antv/algorithm": "^0.1.24",
+    "@antv/g6": "^4.7.0",
     "@antv/graphin": "2.x",
     "@antv/layout": "^0.2.5",
     "@antv/s2": "^1.17.0",
