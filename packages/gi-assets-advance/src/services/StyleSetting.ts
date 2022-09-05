@@ -12,7 +12,7 @@ export interface ServiceObject {
 export const StyleSetting: ServiceObject = {
   name: '样式设置',
   service: async (elementConfig: GIConfig['nodes'] | GIConfig['edges'], elementType: string) => {
-    const projectId = utils.getProjectId();
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     if (projectId) {
       //@ts-ignore
       const { localforage } = window;
