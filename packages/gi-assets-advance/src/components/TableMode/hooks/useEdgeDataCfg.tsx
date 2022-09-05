@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig } from '@antv/s2';
 
+// 生成边表的数据
 const useEdgeDataCfg = (): S2DataConfig => {
   const { schemaData, data: graphData, largeGraphData } = useContext();
   const edgeDataCfg: S2DataConfig = React.useMemo(() => {
@@ -18,7 +19,11 @@ const useEdgeDataCfg = (): S2DataConfig => {
         columns.push(key);
       }
     }
-    //const data = graphData.edges.map(edge => ({ ...edge.data, id: edge.id }));
+   
+    /* 
+      在大图模式下，表格的数据源为 largeGraphData
+      此时刷选和点选表格时会过滤画布数据
+    */
     let data;
     if (largeGraphData) {
       data = largeGraphData.edges.map(edge => ({ ...edge.data, id: edge.id }));

@@ -1,4 +1,5 @@
 import { utils } from '@alipay/graphinsight';
+import { Handler } from '@alipay/gi-common-components';
 import * as React from 'react';
 import type { ContainerProps } from './typing';
 
@@ -27,43 +28,16 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
     padding: '8px',
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
     transition: 'all 0.3s ease',
-    overflow: "visible",
+    overflow: 'visible',
   };
-  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px', padding: "0" };
-  const handerBackStyles = {
-    position: 'absolute',
-    left: '100%',
-    top: '50%',
-    height: '80px',
-    width: '38px',
-    borderStyle: 'solid',
-    borderWidth: '20px',
-    borderColor: 'transparent transparent transparent #d9d9d9',
-  };
-  const handlerStyles: React.CSSProperties = {
-    position: 'absolute',
-    left: 'calc(100% - 1px)',
-    top: '50%',
-    height: '80px',
-    width: '38px',
-    cursor: 'pointer',
-    borderStyle: 'solid',
-    borderWidth: '20px',
-    borderColor: 'transparent transparent transparent #fafafa',
-  };
-  const handlerTextStyles = {
-    position: 'absolute',
-    left: '-15px',
-    top: '8px',
-  };
+  const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px', padding: '0' };
+
+  console.log('placement:', placement);
 
   const { children } = props;
   return (
     <div style={styles}>
-      <div style={handerBackStyles as any}></div>
-      <div onClick={handleToggle} style={handlerStyles as any}>
-        <span style={handlerTextStyles as any}>||</span>
-      </div>
+      <Handler type={placement === 'LB' || placement === 'LT' ? 'left' : 'right'} handleClick={handleToggle} />
       <div
         style={{
           overflowY: 'auto',

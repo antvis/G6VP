@@ -16,9 +16,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@alipay/gi-common-components": "1.x",
     "@alipay/graphinsight": "2.x",
     "@ant-design/icons": "latest",
-    "@antv/g2plot": "^2.4.15",
+    "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
     "antd": "latest",
     "d3-scale": "^4.0.0",
