@@ -41,6 +41,7 @@ const TableMode: React.FC<IProps> = props => {
 
   useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
   useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
+  
   React.useEffect(() => {
     const reset = () => {
       s2Instance.nodeTable?.interaction.reset();
@@ -52,6 +53,7 @@ const TableMode: React.FC<IProps> = props => {
       graph.off('canvas:click', reset);
     };
   }, [s2Instance.nodeTable, s2Instance.edgeTable]);
+
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
     if (!isFullScreen) {

@@ -1,10 +1,8 @@
 import React from 'react';
 import { IEdge, INode } from '@antv/g6';
-import { S2Event, copyData, copyToClipboard, download, SpreadSheet } from '@antv/s2';
+import { S2Event, SpreadSheet } from '@antv/s2';
 
 import { useContext } from '@alipay/graphinsight';
-
-
 
 const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();

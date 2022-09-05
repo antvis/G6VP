@@ -133,24 +133,38 @@ export const filterGraphData = (
   return newData;
 };
 
-export const getValueMap = (
+/**
+ *
+ * @param graphData 画布数据
+ * @param prop 节点/边属性
+ * @param elementType 元素类型
+ * @returns 图表数据
+ */
+export const getChartData = (
   graphData: GraphinData,
   prop: string,
   elementType: "node" | "edge"
 ) => {
   const elements = elementType === "node" ? graphData.nodes : graphData.edges;
-  const valueMap = new Map<string, number>();
+  const chartData = new Map<string, number>();
   elements?.forEach((e) => {
     e.data &&
       e.data[prop] != undefined &&
-      valueMap.set(
+      chartData.set(
         e.data[prop],
-        valueMap.has(e.data[prop]) ? valueMap.get(e.data[prop])! + 1 : 1
+        chartData.has(e.data[prop]) ? chartData.get(e.data[prop])! + 1 : 1
       );
   });
-  return valueMap;
+  return chartData;
 };
 
+/**
+ *
+ * @param graphData 画布数据
+ * @param prop 节点/边属性
+ * @param elementType 元素类型
+ * @returns 直方图图表数据
+ */
 export const getHistogramData = (
   graphData,
   prop: string,
@@ -165,6 +179,12 @@ export const getHistogramData = (
 };
 
 //@todo 感觉需要算法优化下，后面再做吧
+/**
+ *高亮选中的节点和边
+ * @param graph G6 graph 实例
+ * @param data 子图数据
+ * @returns 
+ */
 export const highlightSubGraph = (graph, data: GraphinData) => {
   const source = graph.save() as GraphinData;
 

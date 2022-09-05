@@ -14,7 +14,7 @@ import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts'
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
-import { getHistogramData,  getValueMap } from './utils';
+import { getHistogramData,  getChartData } from './utils';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -72,7 +72,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       });
       setEnableChangeChartType(false);
     } else if (elementProps[prop] === 'string') {
-      const chartData = getValueMap(source, prop, elementType);
+      const chartData = getChartData(source, prop, elementType);
       const selectOptions = [...chartData.keys()].map(key => ({
         value: key,
         label: key,
@@ -148,7 +148,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
   useEffect(() => {
     const { prop, elementType, analyzerType } = filterCriteria;
     if (prop && elementType && analyzerType && ['PIE', 'SELECT', 'WORDCLOUD'].indexOf(analyzerType) !== -1) {
-      const chartData = getValueMap(source, prop, elementType);
+      const chartData = getChartData(source, prop, elementType);
       updateFilterCriteria(filterCriteria.id!, {
         ...filterCriteria,
         chartData,
