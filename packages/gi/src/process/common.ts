@@ -221,3 +221,9 @@ export const mergeObjectByRule = (condition: Function, ...objArray): Object => {
     return acc;
   }, {});
 };
+
+export const getProjectContext = () => {
+  const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+  const context = JSON.parse(ContextString);
+  return context;
+};
