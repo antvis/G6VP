@@ -36,14 +36,12 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
   });
 
   const handleClick = async () => {
-    //@ts-ignore
     updateLayout(state.layouts, graph, gap, direction);
   };
 
   const handlePlus = () => {
     const selectedNodes = graph
       .findAllByState('node', 'selected')
-      //@ts-ignore
       .map((item: Item) => item.get('model'))
       .map(node => {
         return {
