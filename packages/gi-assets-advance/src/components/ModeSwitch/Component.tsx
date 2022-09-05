@@ -26,6 +26,13 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
   const positionStyle = utils.getPositionStyles(placement, offset);
 
   const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+  const parentNode = container.parentNode as HTMLDivElement;
+  let modeSwitchContainer = document.getElementById('gi-mode-switch-container');
+  if (!modeSwitchContainer) {
+    modeSwitchContainer = document.createElement('div');
+    modeSwitchContainer.id = 'gi-mode-switch-container';
+    parentNode.insertBefore(modeSwitchContainer, container);
+  }
 
   const sortedComponents = React.useMemo(() => {
     return (
@@ -50,7 +57,6 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
   });
 
   const onChange = value => {
-    console.log(value)
     updateState(draft => {
       draft.mode = value;
     });
@@ -58,18 +64,29 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
 
   React.useEffect(() => {
     const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
-    graphinContainer.style.display = state.mode === 'CanvasMode' ? 'block' : 'none'
+    graphinContainer.style.display = state.mode === 'CanvasMode' ? 'block' : 'none';
   }, [state.mode, GISDK_ID]);
 
   return (
     <>
       {ReactDOM.createPortal(
-        <div style={{ ...positionStyle, zIndex: 100 }}>
-          <Segmented value={state.mode} options={options} onChange={onChange} block></Segmented>
-        </div>,
-        container,
+        <Segmented value={state.mode} options={options} onChange={onChange} block></Segmented>,
+        modeSwitchContainer,
       )}
-      {state.mode === 'TableMode' && ReactDOM.createPortal(<TableMode isSelectedActive={false} enableCopy />, container)}
+      {state.mode === 'TableMode' &&
+        ReactDOM.createPortal(
+          <TableMode
+            // 设置绝对定位 和 zIndex，保证表格能够盖住画布及其组件资产
+            style={{
+              position: 'absolute',
+              zIndex: 200,
+              backgroundColor: 'white',
+            }}
+            isSelectedActive={false}
+            enableCopy
+          />,
+          container,
+        )}
     </>
   );
 };

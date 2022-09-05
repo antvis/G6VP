@@ -13,12 +13,13 @@ export interface IProps {
   isSelectedActive: boolean;
   enableCopy: boolean;
   containerHeight?: string;
+  style?: React.CSSProperties;
 }
 
 const { TabPane } = Tabs;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, enableCopy } = props;
+  const { isSelectedActive, enableCopy, style = {} } = props;
   const { graph } = useContext();
   const isFullScreen = useFullScreen();
 
@@ -31,7 +32,7 @@ const TableMode: React.FC<IProps> = props => {
     tooltip: {},
   });
 
-  const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable:any }>({
+  const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable: any }>({
     nodeTable: null,
     edgeTable: null,
   });
@@ -102,7 +103,7 @@ const TableMode: React.FC<IProps> = props => {
   // }, []);
 
   return (
-    <div className="gi-table-mode" id="gi-table-mode">
+    <div className="gi-table-mode" id="gi-table-mode" style={style}>
       <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane>
         <TabPane tab="点表" key="node">
           <SheetComponent
