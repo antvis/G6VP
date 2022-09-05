@@ -1,25 +1,13 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils, GIConfig } from '@alipay/graphinsight';
 import React from 'react';
-
-export type NodesConfig = {
-  id: string;
-  groupId: string;
-  groupName: string;
-  expressions: any[];
-  props: any;
-}[];
-
-interface MetaProps {
-  key: string;
-  meta: Object;
-}
 
 export interface StyleSettingProps {
   elementType: 'nodes' | 'edges';
+  service?: any;
 }
 
-const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ elementType = 'nodes' }) => {
+const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ elementType = 'nodes', service }) => {
   const {
     updateContext,
     data,
@@ -36,7 +24,7 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ element
   }, [schemaData, data]);
 
   const handleChange = styleGroups => {
-    const elementConfig: NodesConfig = styleGroups.map(c => {
+    const elementConfig: GIConfig['nodes'] | GIConfig['edges'] = styleGroups.map(c => {
       const { id, groupId, groupName, expressions, logic } = c;
       return {
         id,
@@ -47,12 +35,18 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ element
         logic,
       };
     });
+
     updateContext(draft => {
       draft.config[elementType] = JSON.parse(JSON.stringify(elementConfig));
       draft.layoutCache = true;
     });
+
+    if (service) {
+      // debugger
+      service(JSON.parse(JSON.stringify(elementConfig)), elementType);
+    }
   };
-  
+
   return (
     <CommonStyleSetting
       schemaData={schemaData}
