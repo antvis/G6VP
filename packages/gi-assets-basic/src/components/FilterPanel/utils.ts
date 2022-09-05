@@ -165,7 +165,7 @@ export const getHistogramData = (
 };
 
 //@todo 感觉需要算法优化下，后面再做吧
-export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
+export const highlightSubGraph = (graph, data: GraphinData) => {
   const source = graph.save() as GraphinData;
 
   const nodeIds = data.nodes.map((node) => node.id);
