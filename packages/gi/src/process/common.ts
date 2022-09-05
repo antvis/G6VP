@@ -222,9 +222,8 @@ export const mergeObjectByRule = (condition: Function, ...objArray): Object => {
   }, {});
 };
 
-export const getProjectId = () => {
+export const getProjectContext = () => {
   const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
   const context = JSON.parse(ContextString);
-  const { GI_SITE_PROJECT_ID } = context;
-  return GI_SITE_PROJECT_ID;
+  return context;
 };
