@@ -191,7 +191,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
               <div style={{ position: 'absolute', top: '-31px', left: '70px' }}>
                 <Alert
                   style={{ padding: '2px 16px', fontWeight: '100', fontSize: '12px' }}
-                  message="当前版本(1.0) 仅提供空白模版，暂未开放其他类型模版"
+                  message="当前版本 仅提供空白模版，暂未开放其他类型模版"
                   type="warning"
                   showIcon
                 />

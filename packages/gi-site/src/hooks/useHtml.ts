@@ -115,43 +115,18 @@ const getCombinedAssets = () => {
   );
 };
 
-function looseJsonParse(obj) {
-  return Function('"use strict";return (' + obj + ')')();
-}
-const defaultTransFn = (data, params) => {
-  return data;
-};
-const getServicesByConfig = (serviceConfig, LOCAL_DATA, schemaData) => {
-  return serviceConfig.map(s => {
-    const { id, content, mode } = s;
-    const runtimeContent = content?.split('export default')[1] || content;
-    const transFn = looseJsonParse(runtimeContent);
-    return {
-      id,
-      content,
-      service: (...params) => {
-        return transFn(...params, LOCAL_DATA, schemaData);
-      },
-    };
-  });
-};
-const getCombineServices = (servers) => {
-  if (!servers) {
-    return [];
+  function looseJsonParse(obj) {
+    return Function('"use strict";return (' + obj + ')')();
   }
-  return servers.reduce((acc, curr) => {
-    const { id, services } = curr;
-    const sers = Object.keys(services).map(key => {
-      const service = services[key];
-      return {
-        ...service,
-        id: id+'/'+key, //根据GI平台规范，服务ID 由 引擎ID+服务函数名 唯一标识
-      };
-    });
-    return [...acc, ...sers];
-  }, [] );
-};
+  const defaultTransFn = (data, params) => {
+    return data;
+  };
+ 
       /**  由GI平台自动生成的，请勿修改 start **/
+
+      //@ts-ignore
+      const {  getCombineServices } = window.GISDK.utils;
+
       const SERVER_ENGINE_CONTEXT= ${engineContextStr};
       const GI_SERVICES_OPTIONS = ${serviceStr};
       const GI_PROJECT_CONFIG = ${configStr};
@@ -185,8 +160,8 @@ const getCombineServices = (servers) => {
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.20.4/dist/antd.min.js"></script>
     <!--- Graphin DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.9/dist/graphin.min.js"></script>
     <!--- G2/G2Plot DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
     <!--- GI DEPENDENCIES-->
