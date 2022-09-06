@@ -2,6 +2,10 @@ import { Controller } from 'egg';
 import { responseData } from '../util';
 
 class TuGraphController extends Controller {
+  async index() {
+    const { ctx } = this;
+    await ctx.render('tugraph.html');
+  }
   /**
    * 创建 GraphScope 实例
    */
@@ -9,8 +13,8 @@ class TuGraphController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
     console.log(params);
-    const { username, password } = params;
-    const result = await ctx.service.tugraph.connect(username, password);
+    const { username, password, serverUrl } = params;
+    const result = await ctx.service.tugraph.connect(username, password, serverUrl);
     responseData(ctx, result);
   }
 

@@ -19,6 +19,7 @@ export default (app: Application) => {
   router.get('/api/neo4j/languagequery', controller.graphcompute.execAlgorithm);
 
   // TuGraph
+  router.get('/tugraph/explore.html', controller.tugraph.index);
   router.post('/api/tugraph/connect', controller.tugraph.connect);
   router.post('/api/tugraph/languagequery', controller.tugraph.queryByGraphLanguage);
   router.post('/api/tugraph/neighbors', controller.tugraph.queryNeighbors);
