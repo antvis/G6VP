@@ -50,7 +50,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
   const getResult = project => {
     const config = JSON.parse(project.projectConfig);
     const engineId = project.id;
-    const engineContext = JSON.parse(project.engineContext);
+    const engineContext = project?.engineContext ? JSON.parse(project.engineContext) : {};
 
     const data = JSON.parse(project.data);
     const serviceConfig = JSON.parse(project.serviceConfig);

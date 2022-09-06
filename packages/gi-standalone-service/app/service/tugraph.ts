@@ -1,10 +1,12 @@
 import { Service } from 'egg';
-import { TUGRAPH_SERVICE_URL, getNodeIdsByResponse, TUGRAPH_DEFAULT_GRAPHNAME } from '../util';
+import { getNodeIdsByResponse } from '../util';
 import { ILanguageQueryParams, INeighborsParams } from './serviceInterface';
+const fs = require('fs');
 
 class TuGraphService extends Service {
-  async connect(username, password) {
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/login`, {
+  async connect(username, password, serverUrl) {
+    fs.writeFileSync('SERVER_URL', serverUrl);
+    const result = await this.ctx.curl(`${serverUrl}/login`, {
       headers: {
         'content-type': 'application/json',
       },
@@ -40,6 +42,8 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async querySubGraphByCypher(cypher: string, graphName: string, authorization: string) {
+    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
+
     const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
       headers: {
         'content-type': 'application/json',
@@ -121,7 +125,7 @@ class TuGraphService extends Service {
    * @param params
    */
   async queryByGraphLanguage(params: ILanguageQueryParams) {
-    const { graphName = TUGRAPH_DEFAULT_GRAPHNAME, value, authorization = '' } = params;
+    const { graphName = '', value, authorization = '' } = params;
 
     const responseData = await this.querySubGraphByCypher(value, graphName, authorization);
     return {
@@ -136,7 +140,7 @@ class TuGraphService extends Service {
    * @param params
    */
   async queryNeighbors(params: INeighborsParams) {
-    const { ids, graphName = TUGRAPH_DEFAULT_GRAPHNAME, sep = 1, authorization = '' } = params;
+    const { ids, graphName = '', sep = 1, authorization = '' } = params;
     let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
 
     if (ids.length > 1) {
@@ -153,6 +157,7 @@ class TuGraphService extends Service {
   }
 
   async queryEdgeSchema(edgeType: string, graphName: string, authorization: string) {
+    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
     const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
       headers: {
         'content-type': 'application/json',
@@ -204,6 +209,7 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async querySchema(graphName: string, authorization: string) {
+    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
     const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/label`, {
       headers: {
         'content-type': 'application/json',
@@ -273,6 +279,7 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async getSubGraphList(authorization: string) {
+    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
     const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db`, {
       headers: {
         'content-type': 'application/json',
@@ -315,6 +322,7 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async getVertexEdgeCount(graphName: string, authorization: string) {
+    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
     const nodeResult = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/node`, {
       headers: {
         'content-type': 'application/json',
@@ -347,7 +355,7 @@ class TuGraphService extends Service {
         graph: graphName,
         script: edgeCypher,
       },
-      timeout: [30000, 50000],
+      timeout: [30000, 500000],
       dataType: 'json',
     });
 
