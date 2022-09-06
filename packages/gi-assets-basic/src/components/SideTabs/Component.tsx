@@ -1,4 +1,4 @@
-import { GIAssets, GIComponentConfig } from '@alipay/graphinsight';
+import { GIComponentAssets, GIComponentConfig } from '@alipay/graphinsight';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Tabs, Tooltip } from 'antd';
 import * as React from 'react';
@@ -13,7 +13,7 @@ const { TabPane } = Tabs;
 export interface SideTabsProps extends ContainerProps {
   GI_CONTAINER: string[];
   components: GIComponentConfig[];
-  assets: GIAssets;
+  assets: GIComponentAssets;
   tabPosition: 'left' | 'right' | 'top' | 'bottom';
   /**
    * 是否在画布的外围
