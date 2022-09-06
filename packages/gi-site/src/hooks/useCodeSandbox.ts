@@ -187,8 +187,8 @@ window.ReactDOM.render(<App />, document.getElementById("root"));
     <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
     <script src="https://gw.alipayobjects.com/os/lib/antd/4.20.4/dist/antd.min.js"></script>
     <!--- Graphin DEPENDENCIES-->
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.6.4/dist/g6.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.5/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.9/dist/graphin.min.js"></script>
     <!--- G2/G2Plot DEPENDENCIES-->
     <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
     <!--- GI DEPENDENCIES-->

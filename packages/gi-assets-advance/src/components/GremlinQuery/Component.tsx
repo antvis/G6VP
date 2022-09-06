@@ -1,7 +1,6 @@
 import { useContext, utils } from '@alipay/graphinsight';
-
-import { Button, Col, Divider, notification, Row } from 'antd';
-import classNames from 'classnames';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { Button, Divider, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import GremlinEditor from './GremlinEditor';
 import './index.less';
@@ -26,7 +25,20 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
   const service = utils.getService(services, serviceId);
 
-  const [editorValue, setEditorValue] = useState(initialValue || '');
+  // const [editorValue, setEditorValue] = useState(initialValue || '');
+  const [state, setState] = React.useState({
+    editorValue: initialValue || '',
+    isFullScreen: false,
+  });
+  const setEditorValue = val => {
+    setState(preState => {
+      return {
+        ...preState,
+        editorValue: val,
+      };
+    });
+  };
+  const { editorValue, isFullScreen } = state;
 
   const handleChangeEditorValue = (value: string) => {
     setEditorValue(value);
@@ -70,11 +82,19 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
     updateContext(draft => {
       // @ts-ignore
-      draft.key = Math.random();
+
       const res = transform(result.data);
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
+    });
+  };
+  const toggleFullScreen = () => {
+    setState(preState => {
+      return {
+        ...preState,
+        isFullScreen: !preState.isFullScreen,
+      };
     });
   };
 
@@ -82,13 +102,27 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     setBtnLoading(false);
   }, [visible]);
 
+  const containerStyle: React.CSSProperties = isFullScreen
+    ? {
+        position: 'fixed',
+        left: '0px',
+        right: '0px',
+        top: '0px',
+        zIndex: 9999,
+      }
+    : {};
+
   return (
-    <div className={'gremlineQueryPanel'} style={style}>
-      <Row className={classNames('header', 'handle')}>
-        <Col span={22} className={'title'}>
-          请输入 Gremlin 语句进行查询
-        </Col>
-      </Row>
+    <div className={'gremlineQueryPanel'} style={{ ...style, ...containerStyle }}>
+      <div style={{ height: '32px', lineHeight: '32px' }}>
+        请输入 Gremlin 语句进行查询
+        <Button
+          style={{ float: 'right' }}
+          type="text"
+          onClick={toggleFullScreen}
+          icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+        ></Button>
+      </div>
       <div className={'contentContainer'}>
         <div className={'blockContainer'}>
           <div style={{ border: '1px solid #bfbfbf', borderRadius: '2px' }}>
