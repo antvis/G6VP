@@ -8,7 +8,7 @@
     "declarations": true
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-gi-standalone-service",
+    "pro": "npm run tsc && egg-scripts start",
     "stop": "egg-scripts stop --title=egg-server-gi-standalone-service",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
@@ -25,6 +25,7 @@
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0",
+    "egg-view-nunjucks": "^2.3.0",
     "gremlin_patch": "^3.5.1",
     "neo4j-driver": "^4.4.6"
   },

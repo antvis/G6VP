@@ -1,7 +1,5 @@
 // 如果是要部署到外网，请使用 http://47.242.172.5:9527
 export const GRAPHSCOPE_SERVICE_URL = 'http://11.166.85.48:9527';
-export const TUGRAPH_SERVICE_URL = 'http://30.230.65.41:7090';
-export const TUGRAPH_DEFAULT_GRAPHNAME = 'MovieDemo1';
 
 export const responseData = (ctx, resp) => {
   if (!resp) {
@@ -24,7 +22,9 @@ interface ICypherResponse {
   size: number;
 }
 
-export const getNodeIdsByResponse = (params: ICypherResponse): { nodeIds: Array<number>; edgeIds: Array<string> } => {
+export const getNodeIdsByResponseBak = (
+  params: ICypherResponse,
+): { nodeIds: Array<number>; edgeIds: Array<string> } => {
   const nodeIds: Array<number> = [];
   const edgeIds: Array<string> = [];
 
@@ -89,6 +89,78 @@ export const getNodeIdsByResponse = (params: ICypherResponse): { nodeIds: Array<
     }
   });
 
+  return {
+    // @ts-ignore
+    nodeIds: [...new Set(nodeIds)],
+    // @ts-ignore
+    edgeIds: [...new Set(edgeIds)],
+  };
+};
+
+export const getNodeIdsByResponse = (params: any): { nodeIds: Array<number>; edgeIds: Array<string> } => {
+  let nodeIds: Array<number> = [];
+  let edgeIds: Array<string> = [];
+
+  console.log('返回的结果');
+  let result = params.result;
+  let headers = params.header;
+
+  // 节点索引
+  let vidIndex: Array<number> = [];
+  let edgeIndexList: Array<number> = [];
+  let pathIndexList: Array<number> = [];
+
+  headers.forEach((item: any, index: number) => {
+    if (item.type === 1) {
+      vidIndex.push(index);
+    } else if (item.type === 4) {
+      pathIndexList.push(index);
+    } else if (item.type === 2) {
+      edgeIndexList.push(index);
+    }
+  });
+
+  result.forEach(item => {
+    pathIndexList.forEach(c => {
+      if (item && item[c]) {
+        // @ts-ignore
+        let data = JSON.parse(item[c]);
+        Object.keys(data).forEach(id => {
+          if (id.startsWith('E[')) {
+            let eid: any = id.replace(
+              /(E\[)([0-9]*_[0-9]*_[0-9]*_[0-9]*)(])/g,
+              // @ts-ignore
+              ($1: string, $2: string, $3: string) => {
+                return $3;
+              },
+            );
+            if (eid) {
+              edgeIds.push(eid + '_0'); //应急5元组
+              let n = eid.split('_');
+              nodeIds.push(parseInt(n[0]), parseInt(n[1]));
+            }
+          }
+        });
+      }
+    });
+
+    edgeIndexList.forEach(c => {
+      if (item && item[c]) {
+        // @ts-ignore
+        let data = JSON.parse(item[c]);
+        let eid = `${data.start}_${data.end}_${data.label_id}_0_${data.identity}`; //应急5元组
+        edgeIds.push(eid);
+        nodeIds.push(parseInt(data.start), parseInt(data.end));
+      }
+    });
+
+    vidIndex.forEach(c => {
+      if (item && item[c]) {
+        const vid = JSON.parse(item[c]).identity;
+        nodeIds.push(parseInt(vid));
+      }
+    });
+  });
   return {
     // @ts-ignore
     nodeIds: [...new Set(nodeIds)],
