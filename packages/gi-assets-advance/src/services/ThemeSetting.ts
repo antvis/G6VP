@@ -3,7 +3,7 @@ import type { ITheme } from '../components/ThemeSetting/typing';
 export const AddTheme = {
   name: '添加主题',
   service: async (theme: ITheme) => {
-    const projectId = utils.getProjectId();
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
@@ -21,7 +21,7 @@ export const AddTheme = {
 export const GetTheme = {
   name: '获取主题',
   service: async () => {
-    const projectId = utils.getProjectId();
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId)
@@ -35,7 +35,7 @@ export const GetTheme = {
 export const UpdateTheme = {
   name: '更新主题',
   service: async (id: string, theme: ITheme) => {
-    const projectId = utils.getProjectId();
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
