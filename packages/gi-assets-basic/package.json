@@ -21,12 +21,15 @@
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
+    "@antv/util": "^3.2.5",
     "antd": "latest",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
+    "immer": "^9.0.15",
     "install": "^0.13.0",
     "motif-gi": "latest",
-    "npm": "^8.5.5"
+    "npm": "^8.5.5",
+    "use-immer": "^0.7.0"
   },
   "devDependencies": {
     "dumi": "^1.1.38",

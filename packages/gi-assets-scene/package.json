@@ -21,6 +21,7 @@
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",
+    "@turf/turf": "^6.5.0",
     "react-spring": "^9.4.4",
     "three": "^0.139.2"
   },

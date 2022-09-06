@@ -1,10 +1,9 @@
-// @ts-nocheck
-import React from 'react';
-import { Button, Tooltip } from 'antd';
-import { MonacoEnvironment, EditorProvider } from '@alipay/e2-editor-core';
+import { EditorProvider, MonacoEnvironment } from '@alipay/e2-editor-core';
 import dsl from '@alipay/e2-language-gremlin';
-import elementResizeDetectorMaker from 'element-resize-detector';
 import { FormatPainterOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
+import elementResizeDetectorMaker from 'element-resize-detector';
+import React from 'react';
 import './index.less';
 
 interface Props {
@@ -97,6 +96,7 @@ export const GremlinEditor: React.FC<Props> = props => {
         if (onSelectionChange) {
           editor.codeEditor.onDidChangeCursorSelection(() => {
             const selection = editor.codeEditor.getSelection();
+            //@ts-ignore
             const selected = editor.codeEditor.getModel().getValueInRange(selection);
             onSelectionChange(selected);
           });

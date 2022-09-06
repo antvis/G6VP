@@ -17,8 +17,13 @@
     "@antv/graphin-icons": "^1.0.0",
     "@formily/antd": "^2.1.0",
     "@formily/core": "^2.1.0",
+    "@formily/json-schema": "^2.2.2",
     "@formily/react": "^2.1.0",
-    "react-color": "^2.19.3"
+    "@formily/reactive": "^2.2.2",
+    "@formily/shared": "^2.2.2",
+    "classnames": "^2.2.6",
+    "react-color": "^2.19.3",
+    "use-immer": "^0.7.0"
   },
   "devDependencies": {
     "father": "^2.30.6",
