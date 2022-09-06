@@ -7,7 +7,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
     const components = GI_CONTAINER.map(id => ComponentCfgMap[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
-
+    
     if ((!components || components.length === 0) && visible) {
       return (
         <Empty

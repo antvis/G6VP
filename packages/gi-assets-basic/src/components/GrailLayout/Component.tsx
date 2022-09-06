@@ -4,18 +4,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
 import useComponents from './useComponents';
-import { LeftContainer, BottomContainer, RightContainer } from './Containers';
+import { LeftContainer, BottomContainer, RightContainer, TopContainer } from './Containers';
 
 export interface FreeLayoutProps {
   GI_CONTAINER_LEFT: string[];
   GI_CONTAINER_RIGHT: string[];
   GI_CONTAINER_BOTTOM: string[];
+  GI_CONTAINER_TOP: string[];
   leftWidth: string;
   rightWidth: string;
   bottomHeight: string;
+  topHeight: string;
   leftDisplay: boolean;
   rightDisplay: boolean;
   bottomDisplay: boolean;
+  topDisplay: boolean;
   ComponentCfgMap: object;
   assets: GIAssets;
   GISDK_ID: string;
@@ -25,6 +28,7 @@ interface IState {
   leftVisible: boolean;
   rightVisible: boolean;
   bottomVisible: boolean;
+  topVisible: boolean;
 }
 
 const FreeLayout: React.FC<FreeLayoutProps> = props => {
@@ -37,18 +41,22 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     GI_CONTAINER_LEFT = [],
     GI_CONTAINER_RIGHT = [],
     GI_CONTAINER_BOTTOM = [],
+    GI_CONTAINER_TOP = [],
     leftWidth,
     rightWidth,
     bottomHeight,
+    topHeight,
     leftDisplay,
     rightDisplay,
     bottomDisplay,
+    topDisplay
   } = props;
 
   const [state, updateState] = useImmer<IState>({
     leftVisible: true,
     rightVisible: true,
     bottomVisible: true,
+    topVisible: true,
   });
 
   const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets, state.leftVisible);
@@ -56,6 +64,8 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   const RightContent = useComponents(GI_CONTAINER_RIGHT, ComponentCfgMap, assets, state.rightVisible);
 
   const BottomContent = useComponents(GI_CONTAINER_BOTTOM, ComponentCfgMap, assets, state.bottomVisible);
+
+  const TopContent = useComponents(GI_CONTAINER_TOP, ComponentCfgMap, assets, state.topVisible);
 
   const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
 
@@ -74,6 +84,12 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   const toggleBottomVisible = () => {
     updateState(draft => {
       draft.bottomVisible = !draft.bottomVisible;
+    });
+  };
+
+  const toggleTopVisible = () => {
+    updateState(draft => {
+      draft.topVisible = !draft.topVisible;
     });
   };
 
@@ -112,7 +128,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
 
     // 组件卸载时重置画布和 DOM 样式
     return () => {
-      graphinContainer.style.position = "relative"
+      graphinContainer.style.position = 'relative';
       graphinContainer.style.left = '0';
       graphinContainer.style.right = '0';
       graphinContainer.style.width = '100%';
@@ -126,7 +142,6 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
         graph.autoPaint();
       }
     };
-
   }, []);
 
   return (
@@ -164,6 +179,19 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
         >
           {RightContent}
         </RightContainer>,
+        container,
+      )}
+      {ReactDOM.createPortal(
+        <TopContainer
+          height={topHeight}
+          isDisplay={topDisplay}
+          left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
+          right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
+          toggleVisible={toggleTopVisible}
+          visible={state.topVisible}
+        >
+          {TopContent}
+        </TopContainer>,
         container,
       )}
     </div>
