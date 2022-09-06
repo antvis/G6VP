@@ -326,7 +326,7 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', ...props.style }}>
+      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
         <Graphin
           containerId={`${GISDK_ID}-graphin-container`}
           containerStyle={{ transform: 'scale(1)' }}
