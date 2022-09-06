@@ -1,15 +1,14 @@
-import { GIAssets, GIComponentConfig, utils } from '@alipay/graphinsight';
+import { GIComponentAssets, GIComponentConfig, utils } from '@alipay/graphinsight';
 import { Segmented } from 'antd';
 import { useImmer } from 'use-immer';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import TableMode from '../TableMode/Component';
 import type { ContainerProps } from './typing';
 
 export interface ModeSwitchProps extends ContainerProps {
   GI_CONTAINER: string[];
   components: GIComponentConfig[];
-  assets: GIAssets;
+  assets: GIComponentAssets;
   GISDK_ID: string;
 }
 
@@ -18,12 +17,10 @@ interface IState {
 }
 
 const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
-  const { components, assets, placement, offset, GISDK_ID, GI_CONTAINER } = props;
+  const { components, assets, GISDK_ID } = props;
   const [state, updateState] = useImmer<IState>({
     mode: 'CanvasMode',
   });
-
-  const positionStyle = utils.getPositionStyles(placement, offset);
 
   const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
   const parentNode = container.parentNode as HTMLDivElement;
@@ -62,6 +59,19 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
     });
   };
 
+  const Content = React.useMemo(() => {
+    const item = sortedComponents.find(item => item.id === state.mode);
+    if (!item) return null;
+
+    const { id } = item;
+    const Component = assets[id].component as any;
+    if (id === 'TableMode') {
+      return <Component isSelectedActive={false} enableCopy />;
+    } else {
+      return <Component />;
+    }
+  }, [sortedComponents, state.mode, assets]);
+
   React.useEffect(() => {
     const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
     graphinContainer.style.display = state.mode === 'CanvasMode' ? 'block' : 'none';
@@ -73,18 +83,20 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
         <Segmented value={state.mode} options={options} onChange={onChange} block></Segmented>,
         modeSwitchContainer,
       )}
-      {state.mode === 'TableMode' &&
+      {Content &&
         ReactDOM.createPortal(
-          <TableMode
-            // 设置绝对定位 和 zIndex，保证表格能够盖住画布及其组件资产
+          <div
             style={{
+              // 设置绝对定位 和 zIndex，保证表格能够盖住画布及其组件资产
               position: 'absolute',
               zIndex: 200,
               backgroundColor: 'white',
+              height: '100%',
+              width: '100%',
             }}
-            isSelectedActive={false}
-            enableCopy
-          />,
+          >
+            {Content}
+          </div>,
           container,
         )}
     </>

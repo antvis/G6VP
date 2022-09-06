@@ -7,11 +7,11 @@ metas.width.default = '450px';
 metas.offset.default = [120, 70];
 metas.placement.default = 'LT';
 
-const modes = ['TableMode'];
+const modes = ['TableMode', 'MapMode'];
 
 const registerMeta = context => {
-  const { GIAC_CONTENT_ITEMS = [] } = context;
-  const modeItems = GIAC_CONTENT_ITEMS.filter(item => modes.includes(item.value));
+  const { GIAC_CONTENT_ITEMS = [], GIAC_ITEMS } = context;
+  const modeItems = [...GIAC_CONTENT_ITEMS].filter(item => modes.includes(item.value));
 
   const schema = {
     GI_CONTAINER: {
