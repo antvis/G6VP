@@ -63,13 +63,9 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
     const item = sortedComponents.find(item => item.id === state.mode);
     if (!item) return null;
 
-    const { id } = item;
+    const { props: itemProps, id } = item;
     const Component = assets[id].component as any;
-    if (id === 'TableMode') {
-      return <Component isSelectedActive={false} enableCopy />;
-    } else {
-      return <Component />;
-    }
+    return <Component {...itemProps} />;
   }, [sortedComponents, state.mode, assets]);
 
   React.useEffect(() => {
