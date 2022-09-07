@@ -24,7 +24,7 @@ export const GetTheme = {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
-    const project = await localforage.getItem(projectId)
+    const project = await localforage.getItem(projectId);
     const themes = project.themes || [];
     return {
       success: true,
@@ -60,7 +60,7 @@ export const UpdateTheme = {
 export const RemoveTheme = {
   name: '删除主题',
   service: async (id: string) => {
-    const projectId = utils.getProjectId();
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);

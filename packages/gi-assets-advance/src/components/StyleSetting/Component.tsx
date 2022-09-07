@@ -1,9 +1,8 @@
+import { useContext, utils } from '@alipay/graphinsight';
 import { Tabs } from 'antd';
-import { utils, useContext } from '@alipay/graphinsight';
 import React from 'react';
-import StyleSettingPanel from './StyleSettingPanel';
 import './index.less';
-import { string } from 'prop-types';
+import StyleSettingPanel from './StyleSettingPanel';
 
 const { TabPane } = Tabs;
 
