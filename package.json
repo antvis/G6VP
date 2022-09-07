@@ -1,5 +1,9 @@
 {
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
+    "clean": "pnpm remove ./ -r",
     "assets": "cd packages/gi-assets-basic && npm run start",
     "assets:advanced": "cd packages/gi-assets-advance && npm run start",
     "assets:algorithm": "cd packages/gi-assets-algorithm && npm run start",
@@ -30,18 +34,18 @@
   },
   "dependencies": {
     "@alipay/yuyan-config-data": "^2.0.7",
-    "@ant-design/icons": "latest",
+    "@ant-design/icons": "4.7.0",
     "@antv/algorithm": "^0.1.24",
-    "@antv/g6": "^4.7.0",
-    "@antv/graphin": "2.x",
+    "@antv/g6": "^4.7.1",
+    "@antv/graphin": "~2.7.9",
     "@antv/layout": "^0.2.5",
-    "@antv/s2": "^1.17.0",
-    "@antv/s2-react": "^1.15.1",
-    "antd": "latest",
+    "@antv/s2": "^1.29.0",
+    "@antv/s2-react": "^1.26.0",
+    "antd": "4.23.0",
     "json2csv": "^5.0.7",
     "nanoid": "^4.0.0",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "react": "~17.0.2",
+    "react-dom": "~17.0.2"
   },
   "devDependencies": {
     "@types/react": "17.x",
@@ -58,7 +62,7 @@
     "monaco-editor": "^0.25.2",
     "source-map-loader": "^3.0.1",
     "ts-loader": "^9.2.6",
-    "umi": "^3.5.18",
+    "umi": "^3.5.34",
     "webpack-bundle-analyzer": "^4.5.0"
   }
 }
