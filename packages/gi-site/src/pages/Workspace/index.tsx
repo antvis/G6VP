@@ -8,11 +8,11 @@ import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
+import { getAssetPackages } from '../../loader';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
 import CreatePanel from './Create';
-import DeployedList from './DeployedList';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
@@ -21,40 +21,42 @@ setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
-const LIST_OPTIONS: { id: 'case' | 'project' | 'save' | 'deployed'; name: string }[] = IS_LOCAL_ENV
-  ? [
-      {
-        id: 'case',
-        name: '行业案例',
-      },
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-      {
-        id: 'save',
-        name: '我的保存',
-      },
-      // 测试用，需要项目
-      {
-        id: 'deployed',
-        name: '我的部署',
-      },
-    ]
-  : [
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-      {
-        id: 'save',
-        name: '我的保存',
-      },
-      {
-        id: 'deployed',
-        name: '我的部署',
-      },
-    ];
+
+/**
+ * 硬编码
+ *
+ */
+
+const GI_ASSETS_GS = window['GI_ASSETS_GS'];
+export type NavbarId = 'case' | 'project' | 'save' | 'deployed';
+const LIST_DEPLOY: {
+  id: NavbarId;
+  name: string;
+  component: React.ReactNode;
+}[] = [];
+if (GI_ASSETS_GS && GI_ASSETS_GS.deploy) {
+  LIST_DEPLOY.push({
+    id: 'deployed',
+    name: '我的部署',
+    component: GI_ASSETS_GS.deploy,
+  });
+}
+
+const LIST_OPTIONS: { id: NavbarId; name: string; component?: React.ReactNode }[] = [
+  {
+    id: 'case',
+    name: '行业案例',
+  },
+  {
+    id: 'project',
+    name: '我的项目',
+  },
+  {
+    id: 'save',
+    name: '我的保存',
+  },
+  ...LIST_DEPLOY,
+];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
@@ -109,6 +111,11 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     </>
   );
 
+  React.useEffect(() => {
+    const packages = getAssetPackages();
+    console.log('packages', packages);
+  }, []);
+
   return (
     <>
       <div className="workspace">
@@ -139,7 +146,8 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
-                  {c.id === 'deployed' && <DeployedList />}
+                  {/** @ts-ignore */}
+                  {c.id === 'deployed' && c.component && <c.component />}
                 </TabPane>
               );
             })}
