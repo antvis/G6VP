@@ -26,7 +26,6 @@
     "use-immer": "^0.7.0"
   },
   "devDependencies": {
-    "father": "^2.30.6",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {

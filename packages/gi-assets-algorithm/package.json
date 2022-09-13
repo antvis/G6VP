@@ -39,11 +39,8 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "dumi": "^1.1.38",
-    "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
-    "umi": "^3.5.20",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
   },

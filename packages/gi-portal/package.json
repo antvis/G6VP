@@ -20,9 +20,6 @@
     "@ali/global-locale": "^1.0.5",
     "@ali/global-string-format": "^1.0.7"
   },
-  "devDependencies": {
-    "umi": "^3.5.18"
-  },
   "author": "AntV",
   "license": "MIT",
   "publishConfig": {

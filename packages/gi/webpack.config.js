@@ -54,22 +54,16 @@ module.exports = (env, argv) => {
           ],
         },
         {
-          test: /\.less$/,
+          test: /\.less$/i,
           use: [
+            // compiles Less to CSS
+            // 'style-loader',
             {
               loader: MiniCssExtractPlugin.loader,
             },
-            {
-              loader: 'css-loader', // translates CSS into CommonJS
-            },
-            {
-              loader: 'less-loader', // compiles Less to CSS
-              options: {
-                javascriptEnabled: true,
-              },
-            },
+            'css-loader',
+            'less-loader',
           ],
-          sideEffects: true,
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
