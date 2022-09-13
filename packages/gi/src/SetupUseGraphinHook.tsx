@@ -8,17 +8,20 @@ const SetupUseGraphinHook = props => {
   React.useEffect(() => {
     const stopForceSimulation = () => {
       const { instance } = layout;
-      const { type, simulation } = instance;
-      if (type === 'graphin-force') {
-        simulation.stop();
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.stop();
+        }
       }
     };
     const restartForceSimulation = (nodes = []) => {
       const { instance } = layout;
-
-      const { type, simulation } = instance;
-      if (type === 'graphin-force') {
-        simulation.restart(nodes, graph);
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.restart(nodes, graph);
+        }
       }
     };
     updateContext(draft => {
