@@ -8,7 +8,7 @@ import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
-import { getAssetPackages } from '../../loader';
+import { loader } from '../../loader';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
@@ -22,27 +22,14 @@ setDefaultDemo();
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
 
-/**
- * 硬编码
- *
- */
-
-const GI_ASSETS_GS = window['GI_ASSETS_GS'];
 export type NavbarId = 'case' | 'project' | 'save' | 'deployed';
-const LIST_DEPLOY: {
+export interface DeployItem {
   id: NavbarId;
   name: string;
   component: React.ReactNode;
-}[] = [];
-if (GI_ASSETS_GS && GI_ASSETS_GS.deploy) {
-  LIST_DEPLOY.push({
-    id: 'deployed',
-    name: '我的部署',
-    component: GI_ASSETS_GS.deploy,
-  });
 }
 
-const LIST_OPTIONS: { id: NavbarId; name: string; component?: React.ReactNode }[] = [
+const LIST_OPTIONS: { id: NavbarId; name: string }[] = [
   {
     id: 'case',
     name: '行业案例',
@@ -55,24 +42,18 @@ const LIST_OPTIONS: { id: NavbarId; name: string; component?: React.ReactNode }[
     id: 'save',
     name: '我的保存',
   },
-  ...LIST_DEPLOY,
 ];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'project';
-
   const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
   const defaultActiveKey = GI_UPLOADED_DATA ? type : 'case';
 
   const [state, updateState] = useImmer({
     visible: false,
     activeKey: defaultActiveKey,
-    drawerVisible: false,
-    version: '',
-    content: '',
-    isShowMore: false,
-    imgUrl: '',
+    deploys: [] as DeployItem[],
   });
 
   const handleClose = () => {
@@ -87,7 +68,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     });
   };
 
-  const { visible, activeKey } = state;
+  const { visible, activeKey, deploys } = state;
   const handleChange = val => {
     try {
       const { searchParams } = getSearchParams(location);
@@ -112,9 +93,25 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   );
 
   React.useEffect(() => {
-    const packages = getAssetPackages();
-    console.log('packages', packages);
+    const GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+    const { GI_ASSETS_GS } = GI_ASSETS_PACKAGES;
+    if (GI_ASSETS_GS) {
+      loader([GI_ASSETS_GS]).then(res => {
+        const assets_deploys = res.map(item => {
+          return {
+            id: 'deployed',
+            name: '我的部署',
+            //@ts-ignore
+            component: item.deploy,
+          };
+        }) as DeployItem[];
+        updateState(draft => {
+          draft.deploys = assets_deploys;
+        });
+      });
+    }
   }, []);
+  console.log('packages', state);
 
   return (
     <>
@@ -146,8 +143,16 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
-                  {/** @ts-ignore */}
-                  {c.id === 'deployed' && c.component && <c.component />}
+                </TabPane>
+              );
+            })}
+            {deploys.map(c => {
+              return (
+                <TabPane tab={c.name} key={c.id}>
+                  {
+                    //@ts-ignore
+                    c.component && <c.component />
+                  }
                 </TabPane>
               );
             })}
