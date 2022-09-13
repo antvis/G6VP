@@ -34,14 +34,16 @@ const NPM_INFO = [
     version: graphinsight.version,
     global: 'GISDK',
   },
+
   ...assets_npm,
 ];
 
 export const getPackages = npm => {
   return npm.map(c => {
     const name = c.name.replace('@alipay/', '');
+
     return {
-      url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      url: c.url || `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
       global: name.split('-').join('_').toUpperCase(),
       ...c,
     };
@@ -155,12 +157,13 @@ export default {
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     `https://gw.alipayobjects.com/os/lib/antd/${antd.version}/dist/antd.min.js`,
+
+    /** Graphin */
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.9/dist/graphin.min.js',
 
     /**  G2Plot */
     'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
-    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 
     /** GI */
@@ -174,7 +177,6 @@ export default {
     ...externalScripts.map(c => {
       return c.replace('min.js', 'css');
     }),
-    'https://gw.alipayobjects.com/os/lib/antd/4.23.0/dist/antd.min.css',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.8/dist/index.css',
   ],
   analyze: {
@@ -186,5 +188,23 @@ export default {
     statsFilename: 'stats.json',
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
+  },
+  theme: {
+    black: '#000',
+    white: '#fff',
+    'primary-color': '#3056E3', // 全局主色
+    'link-color': '#3056E3', // 链接色
+    'success-color': '#52c41a', // 成功色
+    'warning-color': '#faad14', // 警告色
+    'error-color': '#f5222d', // 错误色
+    'font-size-base': ' 14px', // 主字号
+    'heading-color': ' rgba(0, 0, 0, 0.85)', // 标题色
+    'text-color': ' rgba(0, 0, 0, 0.65)', // 主文本色
+    'text-color-secondary': ' rgba(0, 0, 0, 0.45)', // 次文本色
+    'disabled-color': ' rgba(0, 0, 0, 0.25)', // 失效色
+    'border-radius-base': ' 2px', // 组件/浮层圆角
+    'border-color-base': '#d9d9d9', // 边框色
+    'box-shadow-base':
+      '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),0 9px 28px 8px rgba(0, 0, 0, 0.05)', // 浮层阴影
   },
 };

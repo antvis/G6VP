@@ -8,11 +8,11 @@ import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
+import { loader } from '../../loader';
 import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
 import CreatePanel from './Create';
-import DeployedList from './DeployedList';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
@@ -21,56 +21,39 @@ setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
-const LIST_OPTIONS: { id: 'case' | 'project' | 'save' | 'deployed'; name: string }[] = IS_LOCAL_ENV
-  ? [
-      {
-        id: 'case',
-        name: '行业案例',
-      },
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-      {
-        id: 'save',
-        name: '我的保存',
-      },
-      // 测试用，需要项目
-      {
-        id: 'deployed',
-        name: '我的部署',
-      },
-    ]
-  : [
-      {
-        id: 'project',
-        name: '我的项目',
-      },
-      {
-        id: 'save',
-        name: '我的保存',
-      },
-      {
-        id: 'deployed',
-        name: '我的部署',
-      },
-    ];
+
+export type NavbarId = 'case' | 'project' | 'save' | 'deployed';
+export interface DeployItem {
+  id: NavbarId;
+  name: string;
+  component: React.ReactNode;
+}
+
+const LIST_OPTIONS: { id: NavbarId; name: string }[] = [
+  {
+    id: 'case',
+    name: '行业案例',
+  },
+  {
+    id: 'project',
+    name: '我的项目',
+  },
+  {
+    id: 'save',
+    name: '我的保存',
+  },
+];
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
   const type = searchParams.get('type') || 'project';
-
   const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
   const defaultActiveKey = GI_UPLOADED_DATA ? type : 'case';
 
   const [state, updateState] = useImmer({
     visible: false,
     activeKey: defaultActiveKey,
-    drawerVisible: false,
-    version: '',
-    content: '',
-    isShowMore: false,
-    imgUrl: '',
+    deploys: [] as DeployItem[],
   });
 
   const handleClose = () => {
@@ -85,7 +68,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
     });
   };
 
-  const { visible, activeKey } = state;
+  const { visible, activeKey, deploys } = state;
   const handleChange = val => {
     try {
       const { searchParams } = getSearchParams(location);
@@ -108,6 +91,27 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       <DataModeCard />
     </>
   );
+
+  React.useEffect(() => {
+    const GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+    const { GI_ASSETS_GS } = GI_ASSETS_PACKAGES;
+    if (GI_ASSETS_GS) {
+      loader([GI_ASSETS_GS]).then(res => {
+        const assets_deploys = res.map(item => {
+          return {
+            id: 'deployed',
+            name: '我的部署',
+            //@ts-ignore
+            component: item.deploy,
+          };
+        }) as DeployItem[];
+        updateState(draft => {
+          draft.deploys = assets_deploys;
+        });
+      });
+    }
+  }, []);
+  console.log('packages', state);
 
   return (
     <>
@@ -139,7 +143,16 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
-                  {c.id === 'deployed' && <DeployedList />}
+                </TabPane>
+              );
+            })}
+            {deploys.map(c => {
+              return (
+                <TabPane tab={c.name} key={c.id}>
+                  {
+                    //@ts-ignore
+                    c.component && <c.component />
+                  }
                 </TabPane>
               );
             })}

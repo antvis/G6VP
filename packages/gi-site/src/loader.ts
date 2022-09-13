@@ -8,6 +8,7 @@ import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 // import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
 
 // import * as GI_ASSETS_AKG from '@alipay/gi-assets-akg';
+// import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
