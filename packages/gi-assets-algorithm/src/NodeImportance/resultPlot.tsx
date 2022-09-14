@@ -74,7 +74,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, edgeType }) => {
   }, [data]);
 
   const getPlotData = () => {
-    const plotData = [];
+    const plotData: any[] = [];
     const countMap = groupBy(data.node?.data || [], "value");
     Object.keys(countMap).forEach((key) => {
       plotData.push({
