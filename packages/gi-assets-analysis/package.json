@@ -9,7 +9,7 @@
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
     "build": "npm run clean && father build & npm run build:umd",
-    "build:umd": "node --max_old_space_size=8192 ../../node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "build:umd": "webpack  --mode production  -c ./webpack.config.js ",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
