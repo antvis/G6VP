@@ -1,5 +1,5 @@
 export default {
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   esm: 'babel',
   cjs: 'babel',
   lessInBabelMode: true,

@@ -14,8 +14,8 @@
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "2.x",
-    "@alipay/gi-assets-basic": "2.x"
+    "@alipay/graphinsight": "workspace:*",
+    "@alipay/gi-assets-basic": "*"
   },
   "peerDependencies": {
     "react": "17.x",

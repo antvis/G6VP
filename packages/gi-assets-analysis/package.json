@@ -8,14 +8,15 @@
   "scripts": {
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
-    "build": "npm run clean && father build & npm run build:umd",
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
     "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-analysis",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "*",
+    "@alipay/graphinsight": "workspace:*",
     "@alipay/aa-embed": "0.0.0-S2900174368.5"
   },
   "peerDependencies": {
