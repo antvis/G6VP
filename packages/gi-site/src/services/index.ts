@@ -254,12 +254,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
 
     const p = {
       ...otherParams,
-      schemaData: JSON.parse(schemaData),
-      projectConfig: JSON.parse(projectConfig),
-      activeAssetsKeys: JSON.parse(activeAssetsKeys),
-      data: JSON.parse(data),
-      engineContext: engineContext ? JSON.parse(engineContext) : {},
-      serviceConfig: JSON.parse(serviceConfig),
+      engineContext: engineContext || {},
       id: projectId,
       isProject: true,
       gmtCreate: new Date(),
