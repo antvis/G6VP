@@ -279,15 +279,15 @@ const Analysis = props => {
     const style = utils.generatorStyleConfigBySchema(schemaData);
     const updateParams = {
       engineId,
-      engineContext: JSON.stringify(engineContext),
-      schemaData: JSON.stringify(schemaData),
-      projectConfig: JSON.stringify({ ...config, ...style }),
+      engineContext,
+      schemaData,
+      projectConfig: { ...config, ...style },
     };
     if (activeAssetsKeys) {
-      updateParams['activeAssetsKeys'] = JSON.stringify(activeAssetsKeys);
+      updateParams['activeAssetsKeys'] = activeAssetsKeys;
     }
     if (data) {
-      updateParams['data'] = JSON.stringify(data);
+      updateParams['data'] = data;
     }
 
     updateProjectById(projectId, updateParams).then(res => {

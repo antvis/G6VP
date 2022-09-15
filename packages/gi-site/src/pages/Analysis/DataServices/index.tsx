@@ -51,7 +51,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
     });
 
     updateProjectById(projectId, {
-      serviceConfig: JSON.stringify(newServiceConfig),
+      serviceConfig: newServiceConfig,
     }).then(res => {
       if (res) {
         notification['success']({
@@ -69,7 +69,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
       });
     });
     updateProjectById(projectId, {
-      serviceConfig: JSON.stringify(newServiceConfig),
+      serviceConfig: newServiceConfig,
     }).then(res => {
       if (res) {
         notification['success']({

@@ -96,35 +96,45 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       name: value.title,
       status: 1, // 1 正常项目， 0 删除项目
       tag: value.tag,
-      members: JSON.stringify(dataSource),
-      data: JSON.stringify({
+      members: dataSource,
+      data: {
         transData,
         inputData: [],
         transfunc: GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'),
-      }),
-      projectConfig: JSON.stringify(baseConfig),
-      activeAssetsKeys: JSON.stringify(activeAssetsKeys),
-      serviceConfig: JSON.stringify(serviceConfig),
-      schemaData: JSON.stringify(schemaData),
+      },
+      projectConfig: baseConfig,
+      activeAssetsKeys,
+      serviceConfig,
+      schemaData,
       type: 'project',
     });
 
     return projectId;
   };
   const handleRecover = async params => {
-    const { GI_ASSETS_PACKAGES } = params;
+    const {
+      GI_ASSETS_PACKAGES,
+      name,
+      data,
+      projectConfig,
+      activeAssetsKeys,
+      serviceConfig,
+      schemaData,
+      engineContext,
+      engineId,
+    } = params;
     const projectId = await addProject({
       type: 'project',
       status: 0, // 0 正常项目， 1删除项目
       members: '',
-      name: params.name,
-      data: JSON.stringify(params.data),
-      projectConfig: JSON.stringify(params.projectConfig),
-      activeAssetsKeys: JSON.stringify(params.activeAssetsKeys),
-      serviceConfig: JSON.stringify(params.serviceConfig),
-      schemaData: JSON.stringify(params.schemaData),
-      engineId: params.engineId,
-      engineContext: JSON.stringify(params.engineContext),
+      name,
+      data,
+      projectConfig,
+      activeAssetsKeys,
+      serviceConfig,
+      schemaData,
+      engineId,
+      engineContext,
     });
     localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(GI_ASSETS_PACKAGES));
     history.push(`/workspace/${projectId}?nav=data`);

@@ -55,7 +55,7 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
 
   const handleUpdateMemebers = async () => {
     const result = await updateProjectById(projectId, {
-      members: JSON.stringify(dataSource),
+      members: dataSource,
     });
 
     const { success, errorMsg } = result;

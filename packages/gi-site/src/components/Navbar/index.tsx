@@ -66,15 +66,17 @@ const Navbar = ({
   const handleSave = async () => {
     const origin = (await getProjectById(projectId)) as IProject;
 
+    // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
+      const { data = {}, schemaData = {} } = origin
       const projectId = await addProject({
         name: origin?.name,
-        type: 'project',
-        data: JSON.stringify(origin?.data),
-        schemaData: JSON.stringify(origin?.schemaData),
-        serviceConfig: JSON.stringify(serviceConfig),
-        activeAssetsKeys: JSON.stringify(activeAssetsKeys),
-        projectConfig: JSON.stringify(config),
+        type: 'case',
+        data,
+        schemaData,
+        serviceConfig,
+        activeAssetsKeys,
+        projectConfig: config,
       });
       history.push(`/workspace/${projectId}?nav=data`);
     } else {
@@ -85,9 +87,9 @@ const Navbar = ({
         //   ...(origin && origin.data),
         //   transData: data,
         // }),
-        serviceConfig: JSON.stringify(serviceConfig),
-        activeAssetsKeys: JSON.stringify(activeAssetsKeys),
-        projectConfig: JSON.stringify(config),
+        serviceConfig,
+        activeAssetsKeys,
+        projectConfig: config,
       });
       // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
       // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);

@@ -134,30 +134,30 @@ export const updateProjectById = async (
       origin.engineId = engineId;
     }
     if (engineContext) {
-      origin.engineContext = JSON.parse(engineContext);
+      origin.engineContext = engineContext;
     }
     if (data) {
-      origin.data = JSON.parse(data);
+      origin.data = data;
     }
     if (serviceConfig) {
-      origin.serviceConfig = JSON.parse(serviceConfig);
+      origin.serviceConfig = serviceConfig;
     }
     if (projectConfig) {
-      origin.projectConfig = JSON.parse(projectConfig);
+      origin.projectConfig = projectConfig;
     }
     if (schemaData) {
-      origin.schemaData = JSON.parse(schemaData);
+      origin.schemaData = schemaData;
     }
 
     if (activeAssetsKeys) {
-      origin.activeAssetsKeys = JSON.parse(activeAssetsKeys);
+      origin.activeAssetsKeys = activeAssetsKeys;
     }
     if (name) {
       origin.name = name;
     }
 
     if (expandInfo) {
-      origin.expandInfo = JSON.parse(expandInfo);
+      origin.expandInfo = expandInfo;
     }
 
     /* if (type) {
@@ -254,12 +254,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
 
     const p = {
       ...otherParams,
-      schemaData: JSON.parse(schemaData),
-      projectConfig: JSON.parse(projectConfig),
-      activeAssetsKeys: JSON.parse(activeAssetsKeys),
-      data: JSON.parse(data),
-      engineContext: engineContext ? JSON.parse(engineContext) : {},
-      serviceConfig: JSON.parse(serviceConfig),
+      engineContext: engineContext || {},
       id: projectId,
       isProject: true,
       gmtCreate: new Date(),
