@@ -21,6 +21,16 @@
     "move:dist": "node ./deploy.js",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start"
   },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "17"
+      }
+    },
+    "overrides": {
+      "antd": "4.23.0"
+    }
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
