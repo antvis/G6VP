@@ -6,8 +6,9 @@
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run clean && father build & npm run build:umd",
-    "build:umd": "node --max_old_space_size=8192 ../../node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-scene",
     "clean": "rimraf es esm lib dist",
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
@@ -17,19 +18,17 @@
   "dependencies": {
     "3d-force-graph": "^1.70.10",
     "@alipay/gi-assets-testing": "2.x",
-    "@alipay/graphinsight": "2.x",
+    "@alipay/graphinsight": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",
+    "@turf/turf": "^6.5.0",
     "react-spring": "^9.4.4",
     "three": "^0.139.2"
   },
   "devDependencies": {
-    "dumi": "^1.1.38",
-    "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
     "rimraf": "^3.0.2",
-    "umi": "^3.5.20",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
   },

@@ -1,25 +1,38 @@
 {
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
-    "assets": "cd packages/gi-assets-basic && npm run start",
-    "assets:advanced": "cd packages/gi-assets-advance && npm run start",
-    "assets:algorithm": "cd packages/gi-assets-algorithm && npm run start",
-    "assets:docs": "cd packages/gi-assets-basic && npm run docs",
-    "assets:testing": "cd packages/gi-assets-testing && npm run start",
-    "bootstrap": "lerna link && lerna bootstrap  --hoist --force-local",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "npm run build:all:es",
+    "build:all:es": "npm-run-all -s gi-common-component gi -p gi-assets-basic gi-assets-advance gi-assets-algorithm gi-assets-scene",
+    "start": "cd packages/gi-site && npm run start",
+    "clean": "pnpm remove ./ -r",
+    "gi-common-component": "cd packages/gi-common-components && npm run build",
+    "gi": "cd packages/gi && npm run build:es",
+    "gi-assets-basic": "cd packages/gi-assets-basic && npm run build:es",
+    "gi-assets-advance": "cd packages/gi-assets-advance && npm run build:es",
+    "gi-assets-algorithm": "cd packages/gi-assets-algorithm && npm run build:es",
+    "gi-assets-scene": "cd packages/gi-assets-scene && npm run build:es",
     "build": "npm run build:site && npm run move:dist",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:site": "cd packages/gi-site && tnpm install && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
-    "clean": "lerna clean",
-    "common:components": "cd packages/gi-common-components && npm run start",
-    "common:components:docs": "cd packages/gi-common-components && npm run docs",
     "core": "cd packages/gi && npm run start",
-    "link": "lerna link --force-local",
-    "list": "lerna list",
     "move:dist": "node ./deploy.js",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "17"
+      }
+    },
+    "overrides": {
+      "antd": "4.23.0"
+    }
   },
   "husky": {
     "hooks": {
@@ -33,37 +46,33 @@
     ]
   },
   "dependencies": {
-    "@alipay/yuyan-config-data": "^2.0.7",
-    "@ant-design/icons": "latest",
+    "@ant-design/icons": "4.7.0",
     "@antv/algorithm": "^0.1.24",
-    "@antv/g6": "^4.7.0",
-    "@antv/graphin": "2.x",
+    "@antv/g6": "^4.7.1",
+    "@antv/graphin": "~2.7.9",
     "@antv/layout": "^0.2.5",
-    "@antv/s2": "^1.17.0",
-    "@antv/s2-react": "^1.15.1",
-    "antd": "latest",
-    "json2csv": "^5.0.7",
-    "nanoid": "^4.0.0",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "@antv/s2": "^1.29.0",
+    "@antv/s2-react": "^1.26.0",
+    "@antv/util": "^3.2.5",
+    "antd": "4.23.0",
+    "react": "17",
+    "react-dom": "17.x",
+    "umi": "3.x"
   },
   "devDependencies": {
     "@types/react": "17.x",
     "@types/react-dom": "17.x",
-    "@umijs/plugin-antd": "^0.11.0",
-    "@umijs/plugin-layout": "^0.17.2",
-    "@umijs/plugin-locale": "^0.14.2",
-    "@umijs/plugin-test": "^1.0.2",
-    "ajv": "^8.10.0",
-    "css-loader": "^6.6.0",
-    "husky": "^6.0.0",
-    "lerna": "^4.0.0",
-    "less": "^3.13.1",
-    "less-loader": "^5.0.0",
-    "monaco-editor": "^0.25.2",
-    "source-map-loader": "^3.0.1",
-    "ts-loader": "^9.2.6",
-    "umi": "^3.5.18",
-    "webpack-bundle-analyzer": "^4.5.0"
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "father": "^2.30.6",
+    "less-loader": "^11.0.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "source-map-loader": "^4.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   }
 }
