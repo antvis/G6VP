@@ -1,4 +1,4 @@
-import { Alert, Card, Col, Modal, Row } from 'antd';
+import { Alert, Card, Col, Drawer, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import { useCodeSandbox, useHtml } from '../../hooks';
@@ -26,13 +26,13 @@ const ExportConfig = props => {
     saveAs(code, `gi-export-project-id-${st.id}${ext}`);
   };
 
-  const handleOpenModal = () => {
+  const handleOpen = () => {
     updateState(draft => {
       draft.visible = true;
     });
   };
 
-  const handleCloseModal = () => {
+  const handleClose = () => {
     updateState(draft => {
       draft.visible = false;
     });
@@ -85,7 +85,7 @@ const ExportConfig = props => {
             cover={
               <img
                 src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*A9m5R7wxY54AAAAAAAAAAAAAARQnAQ'}
-                onClick={handleOpenModal}
+                onClick={handleOpen}
               />
             }
           >
@@ -96,16 +96,17 @@ const ExportConfig = props => {
           </Card>
         </Col>
       </Row>
-      <Modal
+      <Drawer
         visible={state.visible}
-        onCancel={handleCloseModal}
-        mask={false}
-        maskClosable={false}
-        footer={null}
-        bodyStyle={{ paddingTop: '40px' }}
+        onClose={handleClose}
+        width={600}
+        // mask={false}
+        // maskClosable={false}
+        // footer={null}
+        // bodyStyle={{ paddingTop: '40px' }}
       >
         <ODPSDeploy></ODPSDeploy>
-      </Modal>
+      </Drawer>
     </div>
   );
 };
