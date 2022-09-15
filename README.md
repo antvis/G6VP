@@ -31,3 +31,37 @@ npm run start
 | packages/gi-site               | `-`                            | 官方站点   |
 | packages/gi-portal             | `-`                            | 官方首页   |
 | packages/gi-standalone-service | `-`                            | BFF 服务   |
+
+## 进入到每个子包中启动
+
+注意 ⚠️： cd 到每个子包的目录时候，一定要注意查看 node 的版本，比如我的默认 node 版本是 12， 切换到 16 装完所有依赖，此时进入到每个子包中， node 的版本自动切换到 12，执行命令是找不到安装的依赖的，所以得重新 `nvm use 16`，这样就可以了
+
+- node 版本 12，直接启动报错找不到依赖
+
+```ts
+sh: father: command not found
+npm ERR! code ELIFECYCLE
+npm ERR! syscall spawn
+npm ERR! file sh
+npm ERR! errno ENOENT
+npm ERR! @alipay/gi-common-components@1.7.0 start: `npm run clean && father build --watch`
+```
+
+- node 版本切换到 16，就能成功执行
+
+```ts
+ gi-common-components git:(master) ✗
+node -v
+v12.22.8
+➜  gi-common-components git:(master) ✗ nvm use 16
+Now using node v16.17.0 (npm v8.15.0)
+➜  gi-common-components git:(master) ✗ npm run start
+> @alipay/gi-common-components@1.7.0 start
+> npm run clean && father build --watch
+```
+
+> 为解决这个问题，可以在 zsh terminal 中设置
+
+```bash
+nvm alias default v16.17.0
+```

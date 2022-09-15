@@ -1,10 +1,7 @@
-import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
-import { FormItem, Input, NumberPicker, Radio, Switch } from '@formily/antd';
-import { createForm, onFormInputChange } from '@formily/core';
-import { createSchemaField, FormProvider } from '@formily/react';
-import { Collapse, Select } from 'antd';
+import { createForm, FormProvider, onFormInputChange, SchemaField } from '@alipay/gi-common-components';
+
+import { Collapse } from 'antd';
 import React, { useState } from 'react';
-import { SketchPicker } from 'react-color';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import AssetsSelect from '../../../../components/AssetsSelect';
 import { useContext } from '../../hooks/useContext';
@@ -36,21 +33,6 @@ interface NodeStylePanelProps {
 }
 
 const { Panel } = Collapse;
-const SchemaField = createSchemaField({
-  components: {
-    Radio,
-    FormItem,
-    Input,
-    FormCollapse,
-    Select,
-    NumberPicker,
-    Switch,
-    SketchPicker,
-    ColorInput,
-    Offset,
-    AssetCollapse,
-  },
-});
 
 const cache = {};
 
@@ -155,6 +137,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         }}
       >
         <FormProvider form={form}>
+          {/** @ts-ignore */}
           <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
         </FormProvider>
       </div>

@@ -1,30 +1,11 @@
-import { AssetCollapse, ColorInput, FormCollapse, Offset } from '@alipay/gi-common-components';
-import GroupSelect from '@alipay/gi-common-components/es/CommonStyleSetting/GroupSelect';
+import { createForm, FormProvider, onFormInputChange, SchemaField } from '@alipay/gi-common-components';
 import { Icon } from '@alipay/graphinsight';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { FormItem, Input, NumberPicker, Radio, Select, Switch } from '@formily/antd';
-import { createForm, onFormInputChange } from '@formily/core';
-import { createSchemaField, FormProvider } from '@formily/react';
+
 import { Collapse } from 'antd';
 import * as React from 'react';
-import { SketchPicker } from 'react-color';
+
 const { Panel } = Collapse;
-const SchemaField = createSchemaField({
-  components: {
-    Radio,
-    FormItem,
-    Input,
-    FormCollapse,
-    Select,
-    NumberPicker,
-    Switch,
-    SketchPicker,
-    ColorInput,
-    Offset,
-    AssetCollapse,
-    GroupSelect,
-  },
-});
 
 interface RenderFormProps {}
 
@@ -71,6 +52,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
           style={{ padding: '0px' }}
         >
           <FormProvider form={form}>
+            {/** @ts-ignore */}
             <SchemaField schema={JSON.parse(JSON.stringify(schema))} />
           </FormProvider>
         </Panel>

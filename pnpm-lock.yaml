@@ -376,9 +376,6 @@ importers:
       '@antv/graphin': 2.x
       '@faker-js/faker': latest
       '@fast-csv/format': latest
-      '@formily/antd': ^2.1.0
-      '@formily/core': ^2.1.0
-      '@formily/react': ^2.1.0
       '@types/classnames': ^2.2.9
       '@types/systemjs': latest
       '@umijs/preset-react': ^1.8.12
@@ -429,9 +426,6 @@ importers:
       '@antv/graphin': 2.7.9_sfoxds7t5ydpegc3knd667wn6m
       '@faker-js/faker': 7.5.0
       '@fast-csv/format': 4.3.5
-      '@formily/antd': 2.2.4_mnljbxhdoseb2udkka3tkqquua
-      '@formily/core': 2.2.4
-      '@formily/react': 2.2.4_np2a44eor6rvc5qhdnppnsmzmy
       '@types/classnames': 2.3.1
       '@types/systemjs': 6.1.1
       '@umijs/preset-react': 1.8.31_oprxadcprbpfors3h7bbwrligy
@@ -8553,44 +8547,6 @@ packages:
       - typescript
     dev: false
 
-  /@formily/antd/2.2.4_mnljbxhdoseb2udkka3tkqquua:
-    resolution: {integrity: sha512-sRQxTA2TbBAlP+EPVkxTML4VBVgJ26tcmhwhwPRlp4/2pG87mdEypoL300CztZA8ZHBv+a16l80/nvLi8oI4oA==, tarball: '@formily/antd/download/@formily/antd-2.2.4.tgz'}
-    engines: {npm: '>=3.0.0'}
-    peerDependencies:
-      '@ant-design/icons': 4.x
-      '@types/react': '>=16.8.0'
-      '@types/react-dom': '>=16.8.0'
-      antd: 4.x
-      react: '>=16.8.0 || 17'
-      react-dom: '>=16.8.0'
-      react-is: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-    dependencies:
-      '@ant-design/icons': 4.7.0_sfoxds7t5ydpegc3knd667wn6m
-      '@formily/core': 2.2.4
-      '@formily/grid': 2.2.4
-      '@formily/json-schema': 2.2.4
-      '@formily/react': 2.2.4_np2a44eor6rvc5qhdnppnsmzmy
-      '@formily/reactive': 2.2.4
-      '@formily/reactive-react': 2.2.4_np2a44eor6rvc5qhdnppnsmzmy
-      '@formily/shared': 2.2.4
-      '@types/react': 17.0.50
-      antd: 4.23.1_sfoxds7t5ydpegc3knd667wn6m
-      classnames: 2.3.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 18.2.0
-      react-sortable-hoc: 1.11.0_oxfzelaz5ynxsop2v2nu2h2m64
-      react-sticky-box: 0.9.3_at7mkepldmzoo6silmqc5bca74
-    transitivePeerDependencies:
-      - prop-types
-      - typescript
-    dev: false
-
   /@formily/core/2.2.4:
     resolution: {integrity: sha512-Gkl3hP6PGAaep9hLeDqRQTIY+q6qacSRzvLJAtyHy58l/AaX075JWWioDth0xuyFt8oRHk4i/dY55tYyvFJSlw==, tarball: '@formily/core/download/@formily/core-2.2.4.tgz'}
     engines: {npm: '>=3.0.0'}
@@ -8598,16 +8554,6 @@ packages:
       '@formily/reactive': 2.2.4
       '@formily/shared': 2.2.4
       '@formily/validator': 2.2.4
-    dev: false
-
-  /@formily/grid/2.2.4:
-    resolution: {integrity: sha512-+w/HbunFYc7QJwJ0V5xI1/9AV/wZwfQXldKvtdxnuzjYZCV+izMn5TTKgZ+Im92vp2rhMm3/F3YrBciJGX0irw==, tarball: '@formily/grid/download/@formily/grid-2.2.4.tgz'}
-    engines: {npm: '>=3.0.0'}
-    peerDependencies:
-      typescript: ^4.1.0
-    dependencies:
-      '@formily/reactive': 2.2.4
-      '@juggle/resize-observer': 3.4.0
     dev: false
 
   /@formily/grid/2.2.4_typescript@4.8.3:
@@ -8619,17 +8565,6 @@ packages:
       '@formily/reactive': 2.2.4
       '@juggle/resize-observer': 3.4.0
       typescript: 4.8.3
-    dev: false
-
-  /@formily/json-schema/2.2.4:
-    resolution: {integrity: sha512-n1wMIYK+JDMA3Ul6Rhij6Y6m81abOC9Jd22Zr7UR2xKcEgqVxcZIRFZHaWNdxYKbpizAHw39tvxTUPp9W0n4Wg==, tarball: '@formily/json-schema/download/@formily/json-schema-2.2.4.tgz'}
-    engines: {npm: '>=3.0.0'}
-    peerDependencies:
-      typescript: ^4.1.5
-    dependencies:
-      '@formily/core': 2.2.4
-      '@formily/reactive': 2.2.4
-      '@formily/shared': 2.2.4
     dev: false
 
   /@formily/json-schema/2.2.4_typescript@4.8.3:
@@ -8647,36 +8582,6 @@ packages:
   /@formily/path/2.2.4:
     resolution: {integrity: sha512-9EsIGgjrE+8nRUBQt9ZYi1wYTv4rDSyTTxYe5XnGMlSgUyKW/8eRHk/EYVUvtIK2ml5BYkoSwZTvI+E9A6EYRA==, tarball: '@formily/path/download/@formily/path-2.2.4.tgz'}
     engines: {npm: '>=3.0.0'}
-    dev: false
-
-  /@formily/react/2.2.4_np2a44eor6rvc5qhdnppnsmzmy:
-    resolution: {integrity: sha512-RE/5RLpmj+pugcEyt2jQl4DVcTQwE5W1e2HZuD3aXwwnMLPwLdrArc0ov0uiw8ydN6BiY5PcmQn4Qq+V5XgwvQ==, tarball: '@formily/react/download/@formily/react-2.2.4.tgz'}
-    engines: {npm: '>=3.0.0'}
-    peerDependencies:
-      '@types/react': '>=16.8.0'
-      '@types/react-dom': '>=16.8.0'
-      react: '>=16.8.0 || 17'
-      react-dom: '>=16.8.0'
-      react-is: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-    dependencies:
-      '@formily/core': 2.2.4
-      '@formily/json-schema': 2.2.4
-      '@formily/reactive': 2.2.4
-      '@formily/reactive-react': 2.2.4_np2a44eor6rvc5qhdnppnsmzmy
-      '@formily/shared': 2.2.4
-      '@formily/validator': 2.2.4
-      '@types/react': 17.0.50
-      hoist-non-react-statics: 3.3.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 18.2.0
-    transitivePeerDependencies:
-      - typescript
     dev: false
 
   /@formily/react/2.2.4_v6ww3773wvfpuaoyttmn5ktlfm:
@@ -8706,29 +8611,6 @@ packages:
       react-is: 18.2.0
     transitivePeerDependencies:
       - typescript
-    dev: false
-
-  /@formily/reactive-react/2.2.4_np2a44eor6rvc5qhdnppnsmzmy:
-    resolution: {integrity: sha512-wn3pongbxRhEOUNrvYb6liGFbZ7SQQNw3P8FlffISMTw9kX/JoDoqFYlxLuYkPjBfNoa+G9iNlfQzw2jlq4Dlw==, tarball: '@formily/reactive-react/download/@formily/reactive-react-2.2.4.tgz'}
-    engines: {npm: '>=3.0.0'}
-    peerDependencies:
-      '@types/react': '>=16.8.0'
-      '@types/react-dom': '>=16.8.0'
-      react: '>=16.8.0 || 17'
-      react-dom: '>=16.8.0'
-      react-is: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-    dependencies:
-      '@formily/reactive': 2.2.4
-      '@types/react': 17.0.50
-      hoist-non-react-statics: 3.3.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 18.2.0
     dev: false
 
   /@formily/reactive-react/2.2.4_v5ja746gkdtknuc6tj46sve3be:
@@ -16065,7 +15947,7 @@ packages:
     resolution: {integrity: sha512-mu/N4uvfDN2zVQQ5AYJI/g4qxn2bHB6521t1UuH09ShNWjebTqN0ZFuYK9uYjcgmI0dTQEs+Owi1EO6U0OkOZQ==, tarball: '@types/superagent/download/@types/superagent-4.1.15.tgz'}
     dependencies:
       '@types/cookiejar': 2.1.2
-      '@types/node': 7.10.14
+      '@types/node': 18.7.18
     dev: true
 
   /@types/supertest/2.0.12:
