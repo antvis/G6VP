@@ -1,6 +1,22 @@
 ## 开发 GraphInsight
 
-GraphInsight 采用 pnpm 管理仓库，packages 中包含以下 5 个 package：
+GraphInsight 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
+
+### 安装依赖
+
+```bash
+pnpm install
+```
+
+### 启动站点
+
+```bash
+npm run start
+```
+
+### 项目结构
+
+项目中 packages 包含以下 9 个 package：
 
 他们依次对应的包名与解释如下：
 
@@ -15,15 +31,3 @@ GraphInsight 采用 pnpm 管理仓库，packages 中包含以下 5 个 package�
 | packages/gi-site               | `-`                            | 官方站点   |
 | packages/gi-portal             | `-`                            | 官方首页   |
 | packages/gi-standalone-service | `-`                            | BFF 服务   |
-
-## 安装
-
-```bash
-pnpm install
-```
-
-## 启动站点
-
-```bash
-npm run start
-```
