@@ -2,5 +2,5 @@ export default {
   entry: './src/index.ts',
   esm: 'babel',
   cjs: 'babel',
-  lessInBabelMode: true,
+  lessInBabelMode: false,
 };

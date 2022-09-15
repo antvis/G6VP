@@ -7,7 +7,6 @@ import { useContext } from '@alipay/graphinsight';
 import { DeleteOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
-import 'antd/dist/antd.css';
 import React, { useEffect, useState } from 'react';
 import './index.less';
 import PropertyContent from './propertyContent';

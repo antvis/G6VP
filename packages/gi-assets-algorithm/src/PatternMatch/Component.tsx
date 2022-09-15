@@ -3,23 +3,22 @@
  */
 
 import { useContext } from '@alipay/graphinsight';
-import ReactDOM from 'react-dom';
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
-import { Button, Tabs, Tooltip, Menu, Modal, Dropdown, message, Row, Col } from 'antd';
-import { ExclamationCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
+import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
-import { PatternMatchProps, SPLITOR } from './registerMeta';
-import FormattedMessage, { formatMessage } from './locale';
-import ResultTable from './resultTable';
-import PatternEditor, { TypeProperties } from './patternEditor';
-import PatternPane from './patternPane';
-import { ITEM_STATE } from './registerMeta';
-import { filterByPatternRules } from './util';
+import ReactDOM from 'react-dom';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
-import 'antd/dist/antd.css';
+import FormattedMessage, { formatMessage } from './locale';
+import PatternEditor, { TypeProperties } from './patternEditor';
+import PatternPane from './patternPane';
+import { ITEM_STATE, PatternMatchProps, SPLITOR } from './registerMeta';
+import ResultTable from './resultTable';
+import { filterByPatternRules } from './util';
+
 import './index.less';
 
 const { confirm } = Modal;
@@ -31,20 +30,13 @@ const MAX_PATTERN_NUM = 4;
 const EXTRACT_MESSAGE_KEY = 'kg-pattern-match-extract-message';
 const EXTRACT_MODE_CANVAS_CLASSNAME = 'kg-pattern-match-extract-mode-canvas';
 
-
 let newTabIndex = 1;
 let previousSize = { width: 500, height: 500 };
 let keydown = false;
 
-const PatternMatch: React.FC<PatternMatchProps> = ({
-  style,
-  onClose,
-  onOpen,
-  options = {},
-}) => {
+const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, options = {} }) => {
   const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
   const { graph, data, schemaData } = useContext();
-
 
   const [activeKey, setActiveKey] = useState('1');
   const [editorVisible, setEditorVisible] = useState(false);
@@ -53,47 +45,52 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   const [loading, setLoading] = useState(false);
   const [extracting, setExtracting] = useState<string | false>(false);
   // 数据结构 { [nodeType: string]: Set }
-  const [nodeProperties, setNodeProperties] = useState({} as  TypeProperties);
+  const [nodeProperties, setNodeProperties] = useState({} as TypeProperties);
   // 数据结构 { [edgeType: string]: Set }
-  const [edgeProperties, setEdgeProperties] = useState({} as  TypeProperties);
+  const [edgeProperties, setEdgeProperties] = useState({} as TypeProperties);
   const [nodeTypes, setNodeTypes] = useState([] as TypeInfo[]);
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
   const [schemaEdgeMap, setSchemaEdgeMap] = useState({});
   const [schemaNodeMap, setSchemaNodeMap] = useState({});
-  
-  const intialPatternInfoMap = useMemo(() => ({
-    '1': {
-      id: '1',
-      title: <FormattedMessage id="pattern-title" value={'1'} />,
-      data: null
-    }
-  }), []);
+
+  const intialPatternInfoMap = useMemo(
+    () => ({
+      '1': {
+        id: '1',
+        title: <FormattedMessage id="pattern-title" value={'1'} />,
+        data: null,
+      },
+    }),
+    [],
+  );
   const [patternInfoMap, setPatternInfoMap] = useState(intialPatternInfoMap);
 
   const importData = (data, patternId) => {
     const newPatternInfoMap = { ...patternInfoMap };
     newPatternInfoMap[patternId].data = data;
     setPatternInfoMap(newPatternInfoMap);
-  }
+  };
 
   const [panes, setPanes] = useState(() => [
     {
       title: <FormattedMessage id="pattern-title" value={intialPatternInfoMap['1'].id} />,
-      content: <PatternPane
-        {...intialPatternInfoMap['1']}
-        schemaEdgeMap={schemaEdgeMap}
-        editPattern={() => setEditorVisible(true)}
-        importData={importData}
-      />,
-      key: intialPatternInfoMap['1'].id
+      content: (
+        <PatternPane
+          {...intialPatternInfoMap['1']}
+          schemaEdgeMap={schemaEdgeMap}
+          editPattern={() => setEditorVisible(true)}
+          importData={importData}
+        />
+      ),
+      key: intialPatternInfoMap['1'].id,
     },
   ]);
 
   useEffect(() => {
     const sEdgeMap = {};
     const sNodeMap = {};
-    schemaData.edges.forEach(schemaEdge => sEdgeMap[schemaEdge.edgeType] = schemaEdge);
-    schemaData.nodes.forEach(schemaNode => sNodeMap[schemaNode.nodeType] = schemaNode);
+    schemaData.edges.forEach(schemaEdge => (sEdgeMap[schemaEdge.edgeType] = schemaEdge));
+    schemaData.nodes.forEach(schemaNode => (sNodeMap[schemaNode.nodeType] = schemaNode));
 
     // 数据结构 { [nodeType: string]: Set }
     const nodeTypeProperties = {};
@@ -106,9 +103,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       return {
         key,
         text: key,
-        content: <Tooltip title={fittedText?.includes('…') ? key : ''}>
-          {fittedText}
-        </Tooltip>
+        content: <Tooltip title={fittedText?.includes('…') ? key : ''}>{fittedText}</Tooltip>,
       };
     });
     // 数据结构 { [edgeType: string]: Set }
@@ -131,13 +126,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         typeName,
         sourceNodeType,
         targetNodeType,
-        content: <Tooltip
-          title={(fittedText?.includes('…') || fittedSubText?.includes('…')) ? `${typeName} (${subText})` : ''}
-        >
-          {fittedText}
-          <p className="kg-node-importance-tip">{fittedSubText}</p>
-        </Tooltip>
-      }
+        content: (
+          <Tooltip title={fittedText?.includes('…') || fittedSubText?.includes('…') ? `${typeName} (${subText})` : ''}>
+            {fittedText}
+            <p className="kg-node-importance-tip">{fittedSubText}</p>
+          </Tooltip>
+        ),
+      };
     });
     setSchemaEdgeMap(sEdgeMap);
     setSchemaNodeMap(sNodeMap);
@@ -154,19 +149,21 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   useEffect(() => {
     const newPanes = panes.map(pane => ({
       ...pane,
-      content: <PatternPane
-        id={pane.key}
-        data={patternInfoMap[pane.key]?.data}
-        schemaEdgeMap={schemaEdgeMap}
-        editPattern={() => setEditorVisible(true)}
-        extractPattern={enableExtractingMode}
-        importData={importData}
-      />
+      content: (
+        <PatternPane
+          id={pane.key}
+          data={patternInfoMap[pane.key]?.data}
+          schemaEdgeMap={schemaEdgeMap}
+          editPattern={() => setEditorVisible(true)}
+          extractPattern={enableExtractingMode}
+          importData={importData}
+        />
+      ),
     }));
     setPanes(newPanes);
   }, [patternInfoMap]);
 
-  const enableExtractingMode = (patternId) => {
+  const enableExtractingMode = patternId => {
     if (!graph || graph.destroyed) return;
     previousSize = { width: graph.getWidth(), height: graph.getHeight() };
     message.info({
@@ -175,20 +172,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       duration: 0,
       content: formatMessage({ id: 'extract-pattern-tip-long' }),
       style: {
-        marginTop: '20px'
-      }
+        marginTop: '20px',
+      },
     });
     graph.setMode('pattern-match-lasso'); // 切换为 lasso 交互模式，该模式下没有其他 behavior
     // 恢复图上的选中状态，为拉索框选做准备
     clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
     clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
     setExtracting(patternId);
-    
+
     onClose?.(); // 隐藏抽屉;
     onExtractModeChange?.(true);
     // 设置 canvas dom 描边样式
     setCanvasDomStyle(true);
-  }
+  };
 
   const quitExtractMode = () => {
     graph.setMode('default'); // 恢复默认交互模式
@@ -199,7 +196,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     onExtractModeChange?.(false);
     // 设置 canvas dom 描边样式
     setCanvasDomStyle(false);
-  }
+  };
 
   const extractPattern = () => {
     if (!graph || graph.destroyed) {
@@ -217,20 +214,25 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     // 验证当前模式图是连通的
     const data: GraphinData = {
       nodes: nodes.map(node => node.getModel() as any),
-      edges: edges.map(edge => edge.getModel() as any)
-    }
+      edges: edges.map(edge => edge.getModel() as any),
+    };
     const traversedTag = {};
-    breadthFirstSearch(data, data.nodes[0].id, {
-      enter: ({ current }) => {
-        traversedTag[current] = true;
-      }
-    }, false);
+    breadthFirstSearch(
+      data,
+      data.nodes[0].id,
+      {
+        enter: ({ current }) => {
+          traversedTag[current] = true;
+        },
+      },
+      false,
+    );
     if (Object.keys(traversedTag).length < data.nodes.length) {
       message.info(formatMessage({ id: 'save-failed-must-connected' }));
       return;
     }
 
-    const newPatternInfoMap = {...patternInfoMap};
+    const newPatternInfoMap = { ...patternInfoMap };
     // 抽取成模式
     const newIdMap = {};
     const pattern: GraphinData = { nodes: [], edges: [] };
@@ -249,7 +251,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         style: {
           label: {
             value: `${nodeType}-${pattern.nodes.length}`,
-          }
+          },
         },
         originLabel: `${nodeType}-${pattern.nodes.length}`,
         data: { id, nodeType },
@@ -270,7 +272,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       }
       const { id: source, nodeType: sourceNodeType } = newIdMap[dataSource];
       const { id: target, nodeType: targetNodeType } = newIdMap[dataTarget];
-      
+
       pattern.edges.push({
         id: `${source}-${target}-${createUuid()}`,
         oriId: dataId,
@@ -285,7 +287,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         style: {
           label: {
             value: `${edgeType}-${pattern.edges.length}`,
-          }
+          },
         },
         label: `${edgeType}-${pattern.edges.length}`,
         labelCfg: { autoRotate: true },
@@ -304,7 +306,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     setPatternInfoMap(newPatternInfoMap); // 放入模式编辑器中
 
     quitExtractMode();
-  }
+  };
 
   const cancelExtracting = () => {
     setExtracting(false);
@@ -314,9 +316,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     const selectedEdges = graph.findAllByState('node', ITEM_STATE.Selected);
     if (selectedNodes?.length || selectedEdges?.length) {
       confirm({
-        title: formatMessage({ id: "extract-confirm-cancel" }),
+        title: formatMessage({ id: 'extract-confirm-cancel' }),
         icon: <ExclamationCircleOutlined />,
-        content: formatMessage({ id: "extract-confirm-cancel-content" }),
+        content: formatMessage({ id: 'extract-confirm-cancel-content' }),
         onOk() {
           clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
           clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
@@ -332,7 +334,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       onOpen?.(); // 显示抽屉
       quitExtractMode();
     }
-  }
+  };
 
   // 为 graph 绑定元素更新监听，更新 hulll
   const updateHull = e => {
@@ -346,8 +348,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       if (id === undefined) foundHullKeys.push(key);
       else if (hull?.members?.find(node => node.getID?.() === id)) foundHullKeys.push(key);
     });
-    foundHullKeys.forEach(key => hulls[key].updateData(hulls[key].members, []))
-  }
+    foundHullKeys.forEach(key => hulls[key].updateData(hulls[key].members, []));
+  };
 
   const removeHulls = () => {
     setHullIds(ids => {
@@ -359,16 +361,16 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       });
       return [];
     });
-  }
+  };
 
-  const handleKeydown = (e) => {
+  const handleKeydown = e => {
     const code = e.key;
     if (!code) return;
     if (code.toLowerCase() === 'w') keydown = true;
     else keydown = false;
-  }
+  };
 
-  const handleKeyup = e => keydown = false
+  const handleKeyup = e => (keydown = false);
 
   // tab 切换，取消图上的选中状态
   useEffect(() => {
@@ -381,19 +383,22 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
   useEffect(() => {
     message.destroy(EXTRACT_MESSAGE_KEY); // 销毁提示 message
     if (!graph || graph.destroyed) return;
-    graph.addBehaviors([
-      {
-        type: 'lasso-select',
-        trigger: 'drag',
-        shouldDeselect: () => false
-      } as any,
-      'click-select',
-      'zoom-canvas',
-      {
-        type: 'drag-canvas',
-        shouldBegin: () => keydown,
-      }
-    ], 'pattern-match-lasso');
+    graph.addBehaviors(
+      [
+        {
+          type: 'lasso-select',
+          trigger: 'drag',
+          shouldDeselect: () => false,
+        } as any,
+        'click-select',
+        'zoom-canvas',
+        {
+          type: 'drag-canvas',
+          shouldBegin: () => keydown,
+        },
+      ],
+      'pattern-match-lasso',
+    );
 
     graph.on('afterupdateitem', updateHull);
     graph.on('afterlayout', updateHull);
@@ -401,7 +406,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     graph.on('node:toggleevent' as any, removeHulls);
     graph.on('sizechange' as any, updateDomSize);
     graph.on('keydown', handleKeydown);
-    graph.on('keyup', handleKeyup)
+    graph.on('keyup', handleKeyup);
     return () => {
       message.destroy(EXTRACT_MESSAGE_KEY); // 销毁提示 message
       if (graph && !graph.destroyed) {
@@ -412,9 +417,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         graph.off('node:toggleevent', removeHulls);
         graph.off('sizechange', updateDomSize);
         graph.off('keydown', handleKeydown);
-        graph.off('keyup', handleKeyup)
+        graph.off('keyup', handleKeyup);
       }
-    }
+    };
   }, []);
 
   /** 浏览器宽高改变时，在抽取状态下需要更新画布宽高以便显示画布外边框 */
@@ -428,9 +433,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     } else if (width !== graph.getWidth() || height !== graph.getHeight()) {
       graph.changeSize(width, height);
     }
-  }
+  };
 
-  const setCanvasDomStyle = (extractMode) => {
+  const setCanvasDomStyle = extractMode => {
     const canvasDOM = graph.get('canvas').get('el');
     if (extractMode) {
       graph.changeSize(previousSize.width - 32, previousSize.height - 32);
@@ -440,7 +445,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       graph.changeSize(width, height);
       canvasDOM.classList.remove(EXTRACT_MODE_CANVAS_CLASSNAME);
     }
-  }
+  };
 
   const addTab = copyItem => {
     if (panes.length > MAX_PATTERN_NUM - 1) {
@@ -450,32 +455,34 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     newTabIndex += 1;
     const id = `${newTabIndex}`;
     const newPanes = [...panes];
-    const newPatternInfoMap = {...patternInfoMap};
+    const newPatternInfoMap = { ...patternInfoMap };
     newPatternInfoMap[id] = {
       id,
       title: <FormattedMessage id="pattern-title" value={id} />,
-      data: null
+      data: null,
     };
     if (copyItem && patternInfoMap[copyItem.key]?.data) {
       newPatternInfoMap[id].data = cloneDeep(patternInfoMap[copyItem.key].data);
     }
     newPanes.push({
-      content: <PatternPane
-        id={id}
-        data={newPatternInfoMap[id]}
-        schemaEdgeMap={schemaEdgeMap}
-        editPattern={() => setEditorVisible(true)}
-        importData={importData}
-      />,
+      content: (
+        <PatternPane
+          id={id}
+          data={newPatternInfoMap[id]}
+          schemaEdgeMap={schemaEdgeMap}
+          editPattern={() => setEditorVisible(true)}
+          importData={importData}
+        />
+      ),
       title: <FormattedMessage id="pattern-title" value={id} />,
-      key: id
+      key: id,
     });
     setPanes(newPanes);
     setPatternInfoMap(newPatternInfoMap);
     setActiveKey(id);
-  }
+  };
 
-  const removeTab = (key) => {
+  const removeTab = key => {
     let newActiveKey = activeKey;
     let lastIndex;
     panes.forEach((pane, i) => {
@@ -491,16 +498,16 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         newActiveKey = newPanes[0].key;
       }
     }
-    const newPatternInfoMap = {...patternInfoMap};
+    const newPatternInfoMap = { ...patternInfoMap };
     delete newPatternInfoMap[key];
     setActiveKey(newActiveKey);
     setPatternInfoMap(newPatternInfoMap);
     setPanes(newPanes);
-  }
+  };
 
   const onTabEdit = (targetKey, action) => {
     if (action === 'remove') removeTab(targetKey);
-  }
+  };
 
   const drawHulls = matches => {
     removeHulls();
@@ -516,7 +523,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       });
     });
     setHullIds(ids);
-  }
+  };
 
   const onMatch = async () => {
     if (!graph || graph.destroyed) return;
@@ -531,30 +538,30 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
           id: node.id,
           label: node.nodeType,
           name: node.nodeType,
-          rules: node.rules
+          rules: node.rules,
         };
       }),
-      edges: res.edges.map(edge =>  {
+      edges: res.edges.map(edge => {
         return {
           id: edge.id,
           label: edge.edgeType,
           source: edge.source,
           target: edge.target,
-          rules: edge.rules
+          rules: edge.rules,
         };
       }),
     };
     const graphData: GraphinData = {
       nodes: [],
-      edges: []
+      edges: [],
     };
     data.nodes.forEach(node => {
       if (!graph.findById(node.id)?.isVisible()) return;
       graphData.nodes.push({
         id: node.id,
         data: node.data,
-        label: node.nodeType
-      })
+        label: node.nodeType,
+      });
     });
     data.edges.forEach(edge => {
       if (!graph.findById(edge.id)?.isVisible()) return;
@@ -563,7 +570,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         data: edge.data,
         source: edge.source,
         target: edge.target,
-        label: edge.edgeType
+        label: edge.edgeType,
       });
     });
 
@@ -572,15 +579,15 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     const directed = true;
     let matches: GraphinData[] = [];
     try {
-      matches = await GADDI(
+      matches = (await GADDI(
         graphData,
         pattern,
         directed,
         undefined as any,
         undefined as any,
         'label',
-        'label'
-      ) as GraphinData[];
+        'label',
+      )) as GraphinData[];
     } catch (error) {
       console.warn('Pattern Matching Failed.', error);
     }
@@ -591,7 +598,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
       setResult([]);
       return;
     }
-    
+
     // 对结果 matches 进行 rules 的筛选
     filterByPatternRules(graphData, pattern, matches, directed);
     // 进行 rules 筛选之后，若 matches 被删空了，提示没找到匹配
@@ -602,7 +609,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     setLoading(false);
     drawHulls(matches);
     setResult(matches);
-  }
+  };
 
   const onExport = () => {
     if (!graph || graph.destroyed) return;
@@ -617,43 +624,47 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
         node.data.rules = node.rules;
         return node.data;
       }),
-      edges: res.edges.map(edge =>  {
+      edges: res.edges.map(edge => {
         edge.data.label = edge.nodeType;
         edge.data.rules = edge.rules;
         return edge.data;
       }),
-    }
+    };
     exportPattern?.(pattern);
-  }
+  };
 
   const savePattern = (id, saveData) => {
-    const newPatternInfoMap = {...patternInfoMap};
+    const newPatternInfoMap = { ...patternInfoMap };
     if (!newPatternInfoMap[id]) {
       newPatternInfoMap[id] = {
         id,
         title: <FormattedMessage id="pattern-title" value={id} />,
-      }
+      };
     }
     newPatternInfoMap[id].data = saveData;
     setPatternInfoMap(newPatternInfoMap);
-  }
+  };
 
   const reset = () => {
     clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
     clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
     removeHulls();
     setResult([]);
-  }
+  };
 
-  const patternTabsMenu = <Menu className="kg-pattern-match-patten-tab-dropdown">
-    <Menu.Item key='new' onClick={addTab}><FormattedMessage id="new-pattern" /></Menu.Item>
-    {panes?.map(item => (
-      <Menu.Item key={item.key} onClick={() => addTab(item)}>
-        <FormattedMessage id="clone-title" value={item.key} />
+  const patternTabsMenu = (
+    <Menu className="kg-pattern-match-patten-tab-dropdown">
+      <Menu.Item key="new" onClick={addTab}>
+        <FormattedMessage id="new-pattern" />
       </Menu.Item>
-    ))}
-  </Menu>;
-  
+      {panes?.map(item => (
+        <Menu.Item key={item.key} onClick={() => addTab(item)}>
+          <FormattedMessage id="clone-title" value={item.key} />
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
   // 组件挂载时，获取 Canvas 的父元素，用于通过 Portal 放置额外按钮。
   const [extraButtonsContainer, setExtraButtonsContainer] = useState<HTMLDivElement>();
   useEffect(() => {
@@ -664,28 +675,38 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
     setExtraButtonsContainer(container);
     return () => {
       container.parentNode?.removeChild(container);
-    }
+    };
   }, []);
 
-  const buttonsPortal = extracting && extraButtonsContainer && ReactDOM.createPortal(
-    <div className="kg-pattern-match-extract-buttons">
-      <Button onClick={cancelExtracting}><FormattedMessage id='cancel' /></Button>
-      <Button type="primary" onClick={extractPattern}><FormattedMessage id='confirm' /></Button>
-    </div>,
-    extraButtonsContainer,
-  );
+  const buttonsPortal =
+    extracting &&
+    extraButtonsContainer &&
+    ReactDOM.createPortal(
+      <div className="kg-pattern-match-extract-buttons">
+        <Button onClick={cancelExtracting}>
+          <FormattedMessage id="cancel" />
+        </Button>
+        <Button type="primary" onClick={extractPattern}>
+          <FormattedMessage id="confirm" />
+        </Button>
+      </div>,
+      extraButtonsContainer,
+    );
 
-  return <div style={style}>
-      <div className="kg-pattern-match-content-wrapper" >
+  return (
+    <div style={style}>
+      <div className="kg-pattern-match-content-wrapper">
         <div
           className="kg-pattern-match-pattern-add-wrapper"
           style={{
-            left: panes.length === 1 ? 79 : (106 + (panes.length - 1) * 108),
-            display: panes.length > (MAX_PATTERN_NUM - 1) ? 'none' : 'block'
+            left: panes.length === 1 ? 79 : 106 + (panes.length - 1) * 108,
+            display: panes.length > MAX_PATTERN_NUM - 1 ? 'none' : 'block',
           }}
         >
           <Dropdown overlay={patternTabsMenu} placement="bottomCenter">
-            <div className="kg-pattern-match-pattern-add" onClick={addTab}>+</div>
+            <div className="kg-pattern-match-pattern-add" onClick={addTab}>
+              +
+            </div>
           </Dropdown>
         </div>
         <Tabs
@@ -695,7 +716,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
           onEdit={onTabEdit}
           hideAdd
           style={{
-            marginTop: panes.length > (MAX_PATTERN_NUM - 1) ? '-4px' : '-40px'
+            marginTop: panes.length > MAX_PATTERN_NUM - 1 ? '-4px' : '-40px',
           }}
         >
           {panes.map(pane => (
@@ -710,7 +731,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
           <Button
             className="kg-pattern-match-apply-button"
             style={{ display: extracting ? 'none' : 'inline-block' }}
-            type='primary'
+            type="primary"
             loading={loading}
             onClick={onMatch}
           >
@@ -718,46 +739,44 @@ const PatternMatch: React.FC<PatternMatchProps> = ({
           </Button>
         </Col>
         <Col span={6}>
-          {patternInfoMap[+activeKey]?.data ?  <Button
-            className="kg-pattern-match-export-button"
-            style={{
-              ...(exportButton?.style || {}),
-              display: extracting ? 'none' : 'inline-block'
-            }}
-            loading={loading}
-            disabled={!!extracting}
-            onClick={onExport}
-          >
-            {exportButton?.text || <FormattedMessage id="export-pattern" />}
-          </Button> : ''}
+          {patternInfoMap[+activeKey]?.data ? (
+            <Button
+              className="kg-pattern-match-export-button"
+              style={{
+                ...(exportButton?.style || {}),
+                display: extracting ? 'none' : 'inline-block',
+              }}
+              loading={loading}
+              disabled={!!extracting}
+              onClick={onExport}
+            >
+              {exportButton?.text || <FormattedMessage id="export-pattern" />}
+            </Button>
+          ) : (
+            ''
+          )}
         </Col>
         <Col span={4} offset={6}>
-          <Button
-            className="kg-pattern-match-reset-button"
-            danger
-            onClick={reset}
-            icon={<DeleteOutlined />}
-          ></Button>
+          <Button className="kg-pattern-match-reset-button" danger onClick={reset} icon={<DeleteOutlined />}></Button>
         </Col>
       </Row>
-      
-      {result?.length && !extracting ? <ResultTable
-        matches={result}
-      /> : ''}
-    <PatternEditor
-      visible={editorVisible}
-      patternInfo={patternInfoMap[activeKey]}
-      setVisible={setEditorVisible}
-      savePattern={savePattern}
-      nodeProperties={nodeProperties}
-      edgeProperties={edgeProperties}
-      nodeTypes={nodeTypes}
-      edgeTypes={edgeTypes}
-      schemaNodeMap={schemaNodeMap}
-      schemaEdgeMap={schemaEdgeMap}
-    />
-    {buttonsPortal}
-  </div>;
+
+      {result?.length && !extracting ? <ResultTable matches={result} /> : ''}
+      <PatternEditor
+        visible={editorVisible}
+        patternInfo={patternInfoMap[activeKey]}
+        setVisible={setEditorVisible}
+        savePattern={savePattern}
+        nodeProperties={nodeProperties}
+        edgeProperties={edgeProperties}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        schemaNodeMap={schemaNodeMap}
+        schemaEdgeMap={schemaEdgeMap}
+      />
+      {buttonsPortal}
+    </div>
+  );
 };
 
 export default PatternMatch;
