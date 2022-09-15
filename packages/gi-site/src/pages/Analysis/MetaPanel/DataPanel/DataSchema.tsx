@@ -75,12 +75,12 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
     const edgesConfig = getStyleConfig(styleConfig.edges, config.edges);
 
     updateProjectById(id, {
-      projectConfig: JSON.stringify({
+      projectConfig: {
         ...config,
         nodes: nodesConfig,
         edges: edgesConfig,
-      }),
-      schemaData: JSON.stringify(params.schemaData),
+      },
+      schemaData,
     }).then(res => {
       updateContext(draft => {
         draft.key = Math.random();

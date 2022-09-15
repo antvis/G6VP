@@ -71,15 +71,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       return;
     }
 
-    const locationHash = location.hash.match(/(?<=workspace\/)([0-9\.]*)(?=\?)/g);
-    if (locationHash && locationHash.length === 1) {
-      // schemaData 统一在项目的Schema管理中去处理
-      // await updateProjectById(locationHash[0], {
-      //   // projectConfig: JSON.stringify(newConfig),
-      //   schemaData: JSON.stringify(schema),
-      // });
-    }
-
     updateContext(draft => {
       // @ts-ignore
 

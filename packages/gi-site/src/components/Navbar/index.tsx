@@ -85,9 +85,9 @@ const Navbar = ({
         //   ...(origin && origin.data),
         //   transData: data,
         // }),
-        serviceConfig: JSON.stringify(serviceConfig),
-        activeAssetsKeys: JSON.stringify(activeAssetsKeys),
-        projectConfig: JSON.stringify(config),
+        serviceConfig,
+        activeAssetsKeys,
+        projectConfig: config,
       });
       // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
       // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);

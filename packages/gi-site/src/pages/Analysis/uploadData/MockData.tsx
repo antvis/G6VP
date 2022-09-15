@@ -156,13 +156,12 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
       });
 
       updateProjectById(id, {
-        data: JSON.stringify({
+        data: {
           transData: mergeData,
           inputData: [...result.data.inputData, ...renderData],
-        }),
-        // schemaData: schemaData,
-        projectConfig: JSON.stringify(newConfig),
-        schemaData: JSON.stringify(schemaData),
+        },
+        projectConfig: newConfig,
+        schemaData,
       }).then(res => {
         updateContext(draft => {
           draft.key = Math.random();
