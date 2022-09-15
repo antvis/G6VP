@@ -1,8 +1,8 @@
-import { GIComponentAssets, GIComponentConfig } from '@alipay/graphinsight';
+import { GIComponentAssets, GIComponentConfig, utils } from '@alipay/graphinsight';
 import { Segmented } from 'antd';
+import { useImmer } from 'use-immer';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { useImmer } from 'use-immer';
 import type { ContainerProps } from './typing';
 
 export interface ModeSwitchProps extends ContainerProps {
@@ -22,8 +22,14 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
     mode: 'CanvasMode',
   });
 
-  const container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
-  const childrenContainer = container.firstChild;
+  const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+  const parentNode = container.parentNode as HTMLDivElement;
+  let modeSwitchContainer = document.getElementById('gi-mode-switch-container');
+  if (!modeSwitchContainer) {
+    modeSwitchContainer = document.createElement('div');
+    modeSwitchContainer.id = 'gi-mode-switch-container';
+    parentNode.insertBefore(modeSwitchContainer, container);
+  }
 
   const sortedComponents = React.useMemo(() => {
     return (
@@ -64,54 +70,29 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
 
   React.useEffect(() => {
     const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
-    const hasChildren = graphinContainer.childElementCount > 0;
-    if (hasChildren) {
-      graphinContainer.childNodes.forEach(item => {
-        if (item.nodeName === 'SECTION') {
-          //@ts-ignore
-          item.style.display = state.mode === 'TableMode' ? 'block' : 'none';
-        }
-        if (item.nodeName === 'DIV') {
-          //@ts-ignore
-          item.style.display = state.mode === 'CanvasMode' ? 'block' : 'none';
-        }
-      });
-    }
+    graphinContainer.style.display = state.mode === 'CanvasMode' ? 'block' : 'none';
   }, [state.mode, GISDK_ID]);
 
   return (
     <>
       {ReactDOM.createPortal(
-        <nav
-          style={{
-            top: '0px',
-            left: '0px',
-            right: '0px',
-            zIndex: 300,
-            position: 'fixed',
-          }}
-        >
-          <div>
-            <Segmented value={state.mode} options={options} onChange={onChange} block></Segmented>
-          </div>
-        </nav>,
-        container,
+        <Segmented value={state.mode} options={options} onChange={onChange} block></Segmented>,
+        modeSwitchContainer,
       )}
-
       {Content &&
         ReactDOM.createPortal(
-          <section
+          <div
             style={{
-              background: '#fff',
-              position: 'fixed',
+              // 设置绝对定位 和 zIndex，保证表格能够盖住画布及其组件资产
+              position: 'absolute',
+              zIndex: 200,
+              backgroundColor: 'white',
+              height: '100%',
               width: '100%',
-              top: '32px',
-              bottom: '0px',
-              zIndex: 300,
             }}
           >
             {Content}
-          </section>,
+          </div>,
           container,
         )}
     </>

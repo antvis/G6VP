@@ -34,14 +34,16 @@ const NPM_INFO = [
     version: graphinsight.version,
     global: 'GISDK',
   },
+
   ...assets_npm,
 ];
 
 export const getPackages = npm => {
   return npm.map(c => {
     const name = c.name.replace('@alipay/', '');
+
     return {
-      url: `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      url: c.url || `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
       global: name.split('-').join('_').toUpperCase(),
       ...c,
     };
