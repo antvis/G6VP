@@ -2,13 +2,17 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const packages = require('./package.json');
-const globalName = packages.name.replace('@alipay/', '').split('-').join('_').toUpperCase();
 
 module.exports = (env, argv) => {
+  const ASSETS_PATH = path.join(__dirname, env.path);
+  const ENTRY_PATH = path.join(ASSETS_PATH, 'src/index.tsx');
+  const DIST_PATH = path.join(ASSETS_PATH, 'dist/');
+  const ASSETS_UMD = env.path.replace('/packages/', '').split('-').join('_').toUpperCase();
+  console.log(ASSETS_UMD);
+
   return {
     entry: {
-      index: './src/index.tsx',
+      index: ENTRY_PATH,
     },
     mode: argv.mode,
     module: {
@@ -17,6 +21,7 @@ module.exports = (env, argv) => {
           test: /\.js$/,
           use: ['source-map-loader'],
           enforce: 'pre',
+          exclude: /node_modules/, //不包含 node_modules 中的JS文件
         },
         {
           test: /\.(js|jsx)$/,
@@ -24,7 +29,12 @@ module.exports = (env, argv) => {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/env', '@babel/preset-react'],
-            plugins: [['@babel/plugin-proposal-class-properties', { loose: true }], ['react-hot-loader/babel']],
+            plugins: [
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              ['@babel/plugin-proposal-private-methods', { loose: true }],
+              ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+              ['react-hot-loader/babel'],
+            ],
           },
         },
         {
@@ -61,7 +71,9 @@ module.exports = (env, argv) => {
             {
               loader: 'less-loader', // compiles Less to CSS
               options: {
-                javascriptEnabled: true,
+                lessOptions: {
+                  javascriptEnabled: true,
+                },
               },
             },
           ],
@@ -76,25 +88,31 @@ module.exports = (env, argv) => {
 
     resolve: {
       extensions: ['*', '.ts', '.tsx', '.js', '.jsx'],
+      fallback: {
+        fs: false, //https://webpack.js.org/migrate/5/#clean-up-configuration
+      },
     },
     // devtool: 'cheap-module-source-map',
     output: {
-      library: globalName,
+      library: ASSETS_UMD === 'GI' ? 'GISDK' : ASSETS_UMD,
       libraryTarget: 'umd',
-      path: path.resolve(__dirname, 'dist/'),
+      path: DIST_PATH,
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
+    plugins: [
+      new MiniCssExtractPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerPort: Math.round(Math.random() * 100 + 8000),
+      }),
+    ],
     externals: {
       lodash: '_',
       react: 'React',
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
-      '@antv/g2plot': 'G2Plot',
       '@antv/g6': 'G6',
-      antd: 'antd',
-      '@alipay/graphinsight': 'GISDK',
+      '@alipay/grapphinsight': 'GISDK',
     },
   };
 };

@@ -9,14 +9,13 @@
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
     "build": "npm run clean && father build & npm run build:umd",
-    "build:umd": "webpack  --mode production  -c ./webpack.config.js ",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-analysis",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist"
   },
   "dependencies": {
-    "@alipay/graphinsight": "2.x",
-    "@alipay/gi-assets-testing": "2.x",
+    "@alipay/graphinsight": "*",
     "@alipay/aa-embed": "0.0.0-S2900174368.5"
   },
   "peerDependencies": {
@@ -24,12 +23,6 @@
     "react-dom": "17.x",
     "antd": "latest",
     "@antv/graphin": "2.x"
-  },
-  "devDependencies": {
-    "mini-css-extract-plugin": "^2.3.0",
-    "rimraf": "^3.0.2",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"

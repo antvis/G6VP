@@ -40,6 +40,7 @@
     "@antv/layout": "^0.2.5",
     "@antv/s2": "^1.29.0",
     "@antv/s2-react": "^1.26.0",
+    "@antv/util": "^3.2.5",
     "antd": "4.23.0",
     "react": "17",
     "react-dom": "17.x",
@@ -48,12 +49,16 @@
   "devDependencies": {
     "@types/react": "17.x",
     "@types/react-dom": "17.x",
+    "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
     "father": "^2.30.6",
     "less-loader": "^11.0.0",
     "mini-css-extract-plugin": "^2.3.0",
+    "rimraf": "^3.0.2",
     "source-map-loader": "^4.0.0",
     "style-loader": "^3.3.1",
-    "ts-loader": "^9.3.1"
+    "ts-loader": "^9.3.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   }
 }
