@@ -1,7 +1,7 @@
 import { utils } from '@alipay/graphinsight';
 import { FileTextOutlined } from '@ant-design/icons';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Alert, Button, Drawer, Form, notification, Radio, Row, Steps, Table, Tabs, Upload } from 'antd';
+import { Alert, Button, Drawer, Form, notification, Radio, Row, Table, Tabs, Upload } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import xlsx2js from 'xlsx2js';
@@ -9,11 +9,8 @@ import { getProjectById, updateProjectById } from '../../../services';
 import { useContext } from '../../Analysis/hooks/useContext';
 import { generatorSchemaByGraphData, generatorStyleConfigBySchema } from '../utils';
 import { edgeColumns, getOptions, GIDefaultTrans, nodeColumns, translist } from './const';
-import GraphScopeData from './GraphScopeData';
 import './index.less';
-import MockData from './MockData';
 
-const { Step } = Steps;
 const { Dragger } = Upload;
 interface uploadPanel {
   visible: boolean;
