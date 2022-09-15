@@ -7,7 +7,6 @@ import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import graphinsight from '@alipay/graphinsight/package.json';
 import * as antd from 'antd';
-
 /** 是否为本地研发模式 */
 export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
@@ -70,9 +69,6 @@ const externalScripts = isDev
     });
 
 export default {
-  // 具体配置项
-  // mode: "site",
-  // webpack5: {},
   base: '/',
   publicPath: '/',
   hash: true,
@@ -101,11 +97,6 @@ export default {
 
     { component: '404' },
   ],
-  // mfsu: {},
-  // antd: {
-  //   dark: false,
-  //   compact: false,
-  // },
   request: {
     dataField: '',
   },
@@ -147,7 +138,6 @@ export default {
     xlsx: 'XLSX',
     '@antv/g2plot': 'G2Plot',
     localforage: 'localforage',
-    // 'react-monaco-editor': 'ReactMonacoEditor',
     ...externals,
   },
   scripts: [
@@ -170,7 +160,6 @@ export default {
     ...externalScripts,
 
     /** editor */
-    // 'https://gw.alipayobjects.com/os/lib/react-monaco-editor/0.48.0/lib/index.js',
     'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
   ],
   styles: [
