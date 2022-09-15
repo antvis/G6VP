@@ -16,7 +16,7 @@
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "resolutions": {
-    "antd": "4.20.6"
+    "antd": "4.23.0"
   },
   "dependencies": {
     "@alipay/gi-assets-advance": "*",

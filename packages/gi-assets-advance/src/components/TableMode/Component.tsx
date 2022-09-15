@@ -1,6 +1,6 @@
 import { useContext } from '@alipay/graphinsight';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
-import { S2DataConfig, S2Options, SpreadSheet } from '@antv/s2';
+import { S2DataConfig } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
 import { Button, Tabs } from 'antd';
@@ -42,7 +42,7 @@ const TableMode: React.FC<IProps> = props => {
 
   useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
   useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
-  
+
   React.useEffect(() => {
     const reset = () => {
       s2Instance.nodeTable?.interaction.reset();
@@ -106,7 +106,7 @@ const TableMode: React.FC<IProps> = props => {
 
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={style}>
-      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane>
+      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane centered>
         <TabPane tab="点表" key="node">
           <SheetComponent
             getSpreadSheet={s2 => {
