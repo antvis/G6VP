@@ -9,7 +9,6 @@ import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
 import FitView from './FitView';
 import GrailLayout from './GrailLayout';
-import InfoDetection from './InfoDetection';
 import LassoSelect from './LassoSelect';
 import LayoutSwitch from './LayoutSwitch';
 import Loading from './Loading';
@@ -74,7 +73,6 @@ export {
   PinNodeWithMenu,
   Overview,
   SankeyAnalysis,
-  InfoDetection,
   LayoutSwitch,
   GrailLayout,
 };

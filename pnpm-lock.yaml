@@ -145,6 +145,7 @@ importers:
       lodash: ^4.17.21
       react: 17.x || 17
       react-dom: 17.x
+      use-immer: ^0.7.0
     dependencies:
       '@alipay/graphinsight': link:../gi
       '@ant-design/icons': 4.7.0_sfoxds7t5ydpegc3knd667wn6m
@@ -159,6 +160,7 @@ importers:
       lodash: 4.17.21
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      use-immer: 0.7.0_immer@9.0.15+react@17.0.2
 
   packages/gi-assets-analysis:
     specifiers:

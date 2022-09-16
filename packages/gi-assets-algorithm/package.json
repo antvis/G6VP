@@ -41,7 +41,8 @@
     "@antv/s2-react": "^1.3.0",
     "antd": "4.20.6",
     "deepmerge": "^4.2.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "use-immer": "^0.7.0"
   },
   "peerDependencies": {
     "@ant-design/icons": "^4.6.2",
