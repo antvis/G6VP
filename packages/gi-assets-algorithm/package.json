@@ -6,6 +6,10 @@
     "type": "git",
     "url": "http://gitlab.alipay-inc.com/aife/gi-assets-kg.git"
   },
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "author": "yifeng.dst <yifeng.dst@antgroup.com>",
   "main": "lib/index.js",
   "module": "es/index.js",

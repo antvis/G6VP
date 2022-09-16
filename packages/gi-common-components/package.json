@@ -5,6 +5,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "build": "npm run clean && father build",
     "clean": "rimraf es esm lib dist",

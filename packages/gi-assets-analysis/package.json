@@ -5,6 +5,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
