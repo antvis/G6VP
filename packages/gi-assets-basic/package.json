@@ -18,7 +18,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@alipay/gi-common-components": "workspace:*",
@@ -32,7 +33,6 @@
     "deepmerge": "^4.2.2",
     "immer": "^9.0.15",
     "json2csv": "^5.0.7",
-    "motif-gi": "latest",
     "nanoid": "^4.0.0",
     "use-immer": "^0.7.0"
   },

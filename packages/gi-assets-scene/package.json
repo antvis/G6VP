@@ -17,7 +17,8 @@
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",

@@ -65,3 +65,12 @@ Now using node v16.17.0 (npm v8.15.0)
 ```bash
 nvm alias default v16.17.0
 ```
+
+### 版本发布
+
+因为我们组件间的依赖关系用 pnpm 管理的，即`workspace:*`，因此发布到 npm 仓库，可以使用`pnpm publish`，该命令会自动将`workspace:*`转化为对应的版本。如果我们是私有仓库，比如阿里内部的 tnpm 仓库，
+便可以使用下述 script 命令，将代码发布到 tnpm 仓库中
+
+```
+npm run tnpm:publish
+```
