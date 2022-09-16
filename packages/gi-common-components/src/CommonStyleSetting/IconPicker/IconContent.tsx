@@ -1,5 +1,5 @@
 import { createFromIconfontCN } from '@ant-design/icons';
-import iconLoader from '@antv/graphin-icons';
+
 import { Input, Menu } from 'antd';
 import React from 'react';
 export const MyIcon = createFromIconfontCN({
@@ -13,8 +13,6 @@ interface IconContentProps {
   onChange: (icon: string) => void;
   updateState: (state: any) => void;
 }
-
-const { fontFamily, glyphs } = iconLoader();
 
 const basic = [
   'user',

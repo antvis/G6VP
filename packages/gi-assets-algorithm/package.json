@@ -1,11 +1,15 @@
 {
   "name": "@alipay/gi-assets-algorithm",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "GraphInsight 图分析算法资产库",
   "repository": {
     "type": "git",
     "url": "http://gitlab.alipay-inc.com/aife/gi-assets-kg.git"
   },
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "author": "yifeng.dst <yifeng.dst@antgroup.com>",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -22,7 +26,8 @@
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "resolutions": {
     "antd": "4.23.0"
@@ -37,7 +42,8 @@
     "@antv/s2-react": "^1.3.0",
     "antd": "4.20.6",
     "deepmerge": "^4.2.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "use-immer": "^0.7.0"
   },
   "peerDependencies": {
     "@ant-design/icons": "^4.6.2",

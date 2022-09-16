@@ -5,6 +5,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "docs": "dumi dev",
     "start": "npm run clean && father build --watch",
@@ -13,7 +17,8 @@
     "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-analysis",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
-    "clean": "rimraf es esm lib dist"
+    "clean": "rimraf es esm lib dist",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@alipay/graphinsight": "workspace:*",

@@ -1,20 +1,24 @@
 {
   "name": "@alipay/gi-common-components",
-  "version": "1.7.0",
+  "version": "1.9.1",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "build": "npm run clean && father build",
     "clean": "rimraf es esm lib dist",
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/graphin-icons": "^1.0.0",
     "classnames": "^2.2.6",
     "react-color": "^2.19.3",
     "use-immer": "^0.7.0",

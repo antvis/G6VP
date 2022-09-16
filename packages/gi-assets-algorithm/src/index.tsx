@@ -1,4 +1,5 @@
 import CommunityDetection from './CommunityDetection';
+import InfoDetection from './InfoDetection';
 import NodeImportance from './NodeImportance';
 import NodesClustering from './NodesClustering';
 import NodesSimilarity from './NodesSimilarity';
@@ -10,6 +11,7 @@ const components = {
   CommunityDetection,
   NodeImportance,
   PatternMatch,
+  InfoDetection,
 };
 
 export { components };

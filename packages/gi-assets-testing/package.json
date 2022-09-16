@@ -5,13 +5,18 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "build": "NODE_OPTIONS=--max_old_space_size=2048 npm run clean && father build",
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
-    "clean": "rimraf es esm lib dist"
+    "clean": "rimraf es esm lib dist",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@alipay/graphinsight": "workspace:*",

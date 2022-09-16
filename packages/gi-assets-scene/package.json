@@ -1,10 +1,14 @@
 {
   "name": "@alipay/gi-assets-scene",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
@@ -13,11 +17,11 @@
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",
-    "@alipay/gi-assets-testing": "2.x",
     "@alipay/graphinsight": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
@@ -39,6 +43,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.antfin-inc.com"
   }
 }

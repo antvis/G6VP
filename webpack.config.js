@@ -112,8 +112,9 @@ module.exports = (env, argv) => {
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
       '@antv/g6': 'G6',
-      '@alipay/grapphinsight': 'GISDK',
+      '@alipay/graphinsight': 'GISDK',
       antd: 'antd',
+      '@antv/g2plot': 'G2Plot',
     },
   };
 };
