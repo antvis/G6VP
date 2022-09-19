@@ -3,20 +3,11 @@ import React, { useState } from 'react';
 import {
   createGraphScopeInstance,
   loadChinaVisGraphToGraphScope,
-  loadDefaultGraphToGraphScope,
   loadGraphToGraphScope,
   uploadLocalFileToGraphScope,
   queryGraphSchema,
 } from '../GraphScopeService';
-import {
-  ChinaVisEdgeColumns,
-  ChinaVisEdgeData,
-  ChinaVisNodeColumns,
-  ChinaVisNodeData,
-  DefaultGraphScopeEdgeFilePath,
-  DefaultGraphScopeNodeFilePath,
-  LoadChinaVisDataSource,
-} from '../Constants';
+import { DefaultGraphScopeEdgeFilePath, DefaultGraphScopeNodeFilePath, LoadChinaVisDataSource } from '../Constants';
 import GSDataMode from './GSDataMode';
 
 export interface GraphModelProps {
@@ -27,15 +18,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
 
   const graphScopeFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping') as string);
 
-  const [dataType, setDataType] = useState('real');
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping);
   const [formValue, setFormValue] = useState({});
-
-  const handleDataTypeChange = e => {
-    setDataType(e.target.value);
-  };
 
   /**
    * 实例化GraphScope引擎实例
@@ -153,43 +139,11 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     }
   };
 
-  const handleSubmitForm = async () => {
+  const handleSubmitForm = async (dataType: 'LOCAL' | 'DEMO') => {
     setLoading(true);
-    // 使用示例数据
-    if (dataType === 'demo') {
-      const loadResult = await loadDefaultGraphToGraphScope({
-        nodeFilePath: DefaultGraphScopeNodeFilePath,
-        nodeType: 'v0',
-        edgeType: 'e0',
-        sourceNodeType: 'v0',
-        targetNodeType: 'v0',
-        edgeFilePath: DefaultGraphScopeEdgeFilePath,
-        directed: true,
-        delimiter: ',',
-        hasHeaderRow: true,
-      });
 
-      setLoading(false);
-      console.log('加载数据到 GraphScope', loadResult);
-      // 每次载图以后，获取最新 Gremlin server
-      const { success: loadSuccess, message: loadMessage, data } = loadResult;
-      if (!loadSuccess) {
-        message.error(`数据加载失败: ${loadMessage}`);
-        return;
-      }
-      message.success('加载数据到 GraphScope 引擎成功');
-      const { graphName, graphURL } = data;
-      localStorage.setItem('graphScopeGraphName', graphName);
-
-      // 载图成功后，更新 Project 中的 SchemeData
-      updateSchemaData('LOCAL');
-      // 关闭弹框
-      onClose();
-      return;
-    }
-
-    // 载图 ChinaVis 数据
-    if (dataType === 'chinavis') {
+    // 载图 ChinaVis 示例数据
+    if (dataType === 'DEMO') {
       // loadChinaVisGraphToGraphScope
       const loadResult = await loadChinaVisGraphToGraphScope({
         dataSource: LoadChinaVisDataSource,
@@ -266,6 +220,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     directed: true,
     hasHeaderRow: true,
     delimiter: ',',
+    isStringType: true,
+    httpServerURL: 'https://graphinsight.antgroup-inc.cn',
     nodeConfigList: [
       {
         nodeType: '',
@@ -276,11 +232,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
   return (
     <div>
       <Form name="gsform" form={form} initialValues={formInitValue}>
-        <Radio.Group defaultValue={dataType} buttonStyle="solid" onChange={handleDataTypeChange}>
-          <Radio.Button value="demo">p2p示例数据</Radio.Button>
+        {/* <Radio.Group defaultValue={dataType} buttonStyle="solid" onChange={handleDataTypeChange}>
           <Radio.Button value="chinavis">ChinaVis示例数据</Radio.Button>
           <Radio.Button value="real">我有数据</Radio.Button>
-        </Radio.Group>
+        </Radio.Group> */}
         {loading && (
           <Alert
             type="info"
@@ -289,53 +244,17 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
             message="正在将点边数据载入到 GraphScope 引擎中，请耐心等待……"
           />
         )}
-        {dataType === 'demo' && (
-          <div style={{ marginTop: 16 }}>
-            <p>默认使用 GraphScope 引擎内置的点边数据，文件基本信息如下</p>
-            <p>点文件名称：p2p-31_property_v_0</p>
-            <p>边文件：p2p-31_property_e_0</p>
-            <p>测试数据共包括 62586 节点，147892 条边</p>
-          </div>
-        )}
-        {dataType === 'chinavis' && (
-          <div style={{ marginTop: 16 }}>
-            <p>
-              默认使用ChinaVis 赛道1{' '}
-              <a href="http://chinavis.org/2022/challenge.html" target="_blank">
-                数据安全可视分析
-              </a>
-              的点边数据，文件基本信息如下
-            </p>
-            <p>点文件名称：Node.csv</p>
-            <p>边文件：Link.csv</p>
-            <p>测试数据共包括 237 万个与黑灰产相关的网络资产（节点）和 328 万条资产关联关系</p>
-            <p>点类型：</p>
-            <Table
-              columns={ChinaVisNodeColumns}
-              dataSource={ChinaVisNodeData}
-              pagination={{ hideOnSinglePage: true }}
-            />
-            <p>边类型：</p>
-            <Table
-              columns={ChinaVisEdgeColumns}
-              dataSource={ChinaVisEdgeData}
-              pagination={{ hideOnSinglePage: true, pageSize: 11 }}
-            />
-          </div>
-        )}
-        {dataType === 'real' && (
-          <GSDataMode
-            handleUploadFile={handleUploadFiles}
-            handleLoadData={handleSubmitForm}
-            updateSchemaData={updateSchemaData}
-            close={onClose}
-            filesMapping={filesMapping}
-            uploadLoading={uploadLoading}
-            loading={loading}
-            form={form}
-          />
-        )}
-        {dataType !== 'real' && (
+        <GSDataMode
+          handleUploadFile={handleUploadFiles}
+          handleLoadData={handleSubmitForm}
+          updateSchemaData={updateSchemaData}
+          close={onClose}
+          filesMapping={filesMapping}
+          uploadLoading={uploadLoading}
+          loading={loading}
+          form={form}
+        />
+        {/* {dataType !== 'real' && (
           <Form.Item>
             <Space style={{ marginTop: 16 }}>
               <Button onClick={onClose}>取消</Button>
@@ -349,7 +268,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
               </Button>
             </Space>
           </Form.Item>
-        )}
+        )} */}
       </Form>
     </div>
   );

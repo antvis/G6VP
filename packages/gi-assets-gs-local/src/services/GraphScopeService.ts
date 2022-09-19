@@ -1,6 +1,33 @@
 import request from "umi-request";
 import { HTTP_SERVICE_URL } from "./Constants";
 
+interface ConnectProps {
+  engineServerURL: string;
+  httpServerURL: string;
+  isStringType: boolean;
+}
+
+export const connectGraphScopeService = async (params: ConnectProps) => {
+  const { httpServerURL } = params
+  const result = await request(
+    `${httpServerURL}/graphcompute/connect`,
+    {
+      method: "POST",
+      data: params,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  if (result.success) {
+    const { httpServerURL } = result.data
+    localStorage.setItem('GRAPHSCOPE_HTTP_SERVER', httpServerURL)
+  }
+
+  return result;
+}
+
 export const createGraphScopeInstance = async () => {
   const currentInstance = localStorage.getItem("GI_CURRENT_GRAPHSCOPE_INSTANCE")
 
