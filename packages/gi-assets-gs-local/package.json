@@ -29,15 +29,8 @@
     "antd": "^4.20.0",
     "json2csv": "^5.0.7",
     "react": "17.x",
-    "umi-request": "^1.4.0"
-  },
-  "devDependencies": {
-    "@ali/react-datav-gui-utils": "latest",
-    "@alipay/gi-assets-testing": "latest",
-    "mini-css-extract-plugin": "^2.3.0",
-    "rimraf": "^3.0.2",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
+    "umi-request": "^1.4.0",
+    "use-immer": "^0.7.0"
   },
   "peerDependencies": {},
   "publishConfig": {
