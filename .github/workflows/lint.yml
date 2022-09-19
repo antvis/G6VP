@@ -1,0 +1,47 @@
+name: lint
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{github.workflow}}-${{github.event_name}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: macos-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    strategy:
+      matrix:
+        node-version: [16]
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint scripts, type, style and docs
+        run: npm run lint
+
+      - name: Build
+        run: npm run build:all:es
+
+      - name: Workflow failed alert
+        if: ${{ failure() }}
+        uses: actions-cool/maintain-one-comment@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            你好, @${{ github.event.pull_request.user.login }} CI 执行失败, 请点击 [Details] 按钮查看, 并根据日志修复
+
+            Hello, @${{ github.event.pull_request.user.login }} CI run failed, please click the [Details] button for detailed log information and fix it.
+            <!-- Created by actions-cool/maintain-one-comment -->
+          emojis: 'eyes'
+          body-include: '<!-- Created by actions-cool/maintain-one-comment -->'
