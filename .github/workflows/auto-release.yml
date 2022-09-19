@@ -1,0 +1,54 @@
+name: 🚀 Auto Release
+on:
+  push:
+    branches:
+      - latest # 正式版
+      - beta
+      - alpha
+      - next
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && startsWith(github.event.head_commit.message , 'chore(release):')"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16 # semantic-release 需要 >= 16 的 Node.js 环境
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: npm run build:all:es
+
+      # 自动发布完成后 触发 github.release.published 事件
+      # 如果是 action 自带的 机器人 token, 出于安全考虑, github 会禁止循环触发, 使用真实用户的 token 可解决这个问题
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.POMELO_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run release
+
+      # 发布失败通知内部开发群
+      - name: Release failed ding talk dev group notify
+        if: ${{ failure() }}
+        uses: zcong1993/actions-ding@master
+        with:
+          dingToken: ${{ secrets.DING_TALK_ACCESS_TOKEN }}
+          ignoreError: true
+          body: |
+            {
+              "msgtype": "link",
+              "link": {
+                "title": "🚨 自动发布失败",
+                "text": "🔗 请点击链接查看具体原因, 及时修复, 尝试点击右上角 [Re-run all jobs] 重试, 或手动发布 🚑",
+                "messageUrl": "https://github.com/antvis/GraphInsight/actions/workflows/auto-release.yml",
+                "picUrl": "https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*wnCMQpZDfAQAAAAAAAAAAAAAARQnAQ"
+              }
+            }
