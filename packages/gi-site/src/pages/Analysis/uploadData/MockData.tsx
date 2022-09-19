@@ -20,7 +20,7 @@ const MockData = {
 };
 
 const { Step } = Steps;
-interface uploadPanel {
+interface MockDataPanelProps {
   handleClose: () => void;
 }
 
@@ -29,7 +29,7 @@ const columnsData = {
   edges: edgeColumns,
 };
 
-const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
+const MockDataPanel: React.FunctionComponent<MockDataPanelProps> = props => {
   const { handleClose } = props;
   const { context, updateContext } = useContext();
 
@@ -294,4 +294,4 @@ const UploadPanel: React.FunctionComponent<uploadPanel> = props => {
   );
 };
 
-export default UploadPanel;
+export default MockDataPanel;
