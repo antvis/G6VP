@@ -3,37 +3,27 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-/** 外部的引擎包，软连接到这里，临时方案，后续删除 */
-// import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-assets-gs-local';
-// import * as GI_ASSETS_SHASENG from '@alipay/gi-assets-shaseng';
+import * as GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone';
 
-// import * as GI_ASSETS_AKG from '@alipay/gi-assets-akg';
-// import * as GI_ASSETS_GS from '@alipay/gi-assets-gs';
+import { IS_LOCAL_ENV } from './services/const';
 
 import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
 
-// 临时方案，应该要走antbuc鉴权
-export const IS_PASSED_BUC_AUTH = window.location.host === 'graphinsight.antgroup-inc.cn';
-
 // 业务包
-export const BIZ_PACKAGES = IS_PASSED_BUC_AUTH
+export const BIZ_PACKAGES = !IS_LOCAL_ENV
   ? getPackages([
-      {
-        name: '@alipay/gi-assets-yuque',
-        version: '1.0.0',
-      },
-      {
-        name: '@alipay/gi-assets-shaseng',
-        version: '1.1.0',
-      },
       // {
-      //   name: '@alipay/gi-assets-security',
+      //   name: '@alipay/gi-assets-yuque',
       //   version: '1.0.0',
       // },
       // {
-      //   name: '@alipay/gi-assets-gs-local',
-      //   version: '1.0.0',
+      //   name: '@alipay/gi-assets-shaseng',
+      //   version: '1.1.0',
       // },
+      {
+        name: '@alipay/gi-assets-gs',
+        version: '1.5.0',
+      },
       {
         name: '@alipay/gi-assets-akg',
         version: '1.1.0',
@@ -72,43 +62,15 @@ const LOCAL_ASSETS = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
     ...GI_ASSETS_SCENE,
   },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ANALYSIS'],
-  //   ...GI_ASSETS_ANALYSIS,
-  // },
-  /** 第三方资产库 **/
-  // {
-  //   name: '@alipay/gi-assets-gs',
-  //   version: '1.0.0',
-  //   global: 'GI_ASSETS_GS',
-  //   ...GI_ASSETS_GS,
-  // },
-  // {
-  //   name: '@alipay/gi-assets-akg',
-  //   version: '1.0.0',
-  //   global: 'GI_ASSETS_AKG',
-  //   ...GI_ASSETS_AKG,
-  // },
-
-  // {
-  //   name: '@alipay/gi-assets-gs-local',
-  //   version: '1.0.0',
-  //   global: 'GI_ASSETS_GS_LOCAL',
-  //   ...GI_ASSETS_GS_LOCAL,
-  // },
-  // {
-  //   name: '@alipay/gi-assets-akg',
-  //   version: '1.2.2',
-  //   global: 'GI_ASSETS_AKG',
-  //   ...GI_ASSETS_AKG,
-  // },
-  // {
-  //   name: '@alipay/gi-assets-shaseng',
-  //   version: '1.0.0',
-  //   global: 'GI_ASSETS_SHASENG',
-  //   ...GI_ASSETS_SHASENG,
-  // },
 ];
+
+// 非本地环境，默认添加 GS 单机版引擎
+if (!IS_LOCAL_ENV) {
+  LOCAL_ASSETS.push({
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS_STANDALONE'],
+    ...GI_ASSETS_GS_STANDALONE,
+  });
+}
 
 export interface Package {
   name: string;

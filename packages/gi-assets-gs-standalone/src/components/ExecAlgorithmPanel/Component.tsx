@@ -12,6 +12,10 @@ const ExecAlgorithmPanel = ({ serviceId }) => {
 
   const service = utils.getService(services, serviceId);
 
+  if (!service) {
+    return;
+  }
+
   const [algorithmParams, setAlgorithmParams] = useState({});
   const [params, setParams] = useState({
     visible: false,

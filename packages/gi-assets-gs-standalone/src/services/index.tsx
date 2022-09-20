@@ -9,6 +9,7 @@ export default {
   id: 'GS',
   name: 'GraphScope',
   desc: 'GraphScope 引擎服务',
+  type: 'database',
   component: ServerComponent,
   services: {
     ...GremlinQuery,
