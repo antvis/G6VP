@@ -364,7 +364,7 @@ importers:
       '@alipay/gi-assets-algorithm': workspace:*
       '@alipay/gi-assets-analysis': workspace:*
       '@alipay/gi-assets-basic': workspace:*
-      '@alipay/gi-assets-gs-local': workspace:*
+      '@alipay/gi-assets-gs-standalone': workspace:*
       '@alipay/gi-assets-scene': workspace:*
       '@alipay/gi-common-components': workspace:*
       '@alipay/graphinsight': workspace:*
@@ -415,7 +415,7 @@ importers:
       '@alipay/gi-assets-algorithm': link:../gi-assets-algorithm
       '@alipay/gi-assets-analysis': link:../gi-assets-analysis
       '@alipay/gi-assets-basic': link:../gi-assets-basic
-      '@alipay/gi-assets-gs-local': link:../gi-assets-gs-local
+      '@alipay/gi-assets-gs-standalone': link:../gi-assets-gs-local
       '@alipay/gi-assets-scene': link:../gi-assets-scene
       '@alipay/gi-common-components': link:../gi-common-components
       '@alipay/graphinsight': link:../gi

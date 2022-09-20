@@ -3,7 +3,7 @@ import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
-import * as GI_ASSETS_GS_LOCAL from '@alipay/gi-assets-gs-local';
+import * as GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone';
 
 import { IS_LOCAL_ENV } from './services/const';
 
@@ -67,8 +67,8 @@ const LOCAL_ASSETS = [
 // 非本地环境，默认添加 GS 单机版引擎
 if (!IS_LOCAL_ENV) {
   LOCAL_ASSETS.push({
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS_LOCAL'],
-    ...GI_ASSETS_GS_LOCAL,
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS_STANDALONE'],
+    ...GI_ASSETS_GS_STANDALONE,
   });
 }
 

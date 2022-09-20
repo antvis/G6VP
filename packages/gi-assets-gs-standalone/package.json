@@ -1,5 +1,5 @@
 {
-  "name": "@alipay/gi-assets-gs-local",
+  "name": "@alipay/gi-assets-gs-standalone",
   "version": "1.0.0",
   "description": "GraphScope 团队的图分析资产包",
   "main": "lib/index.js",
