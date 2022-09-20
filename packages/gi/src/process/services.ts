@@ -1,5 +1,5 @@
 import { EngineServer, GIService } from '../typing';
-
+import { uniqueElementsBy } from './common';
 export type AssetServices = Record<string, { name: string; service: () => Promise<any> }>;
 
 /**
@@ -77,8 +77,7 @@ export const getCombineServices = (servers: EngineServer[]) => {
   if (!servers) {
     return [];
   }
-
-  return servers.reduce((acc, curr) => {
+  const sers = servers.reverse().reduce((acc, curr) => {
     if (!curr.services) {
       return [...acc];
     }
@@ -92,4 +91,7 @@ export const getCombineServices = (servers: EngineServer[]) => {
     });
     return [...acc, ...sers];
   }, [] as GIService[]);
+  return uniqueElementsBy(sers, (a, b) => {
+    return a.id === b.id;
+  });
 };
