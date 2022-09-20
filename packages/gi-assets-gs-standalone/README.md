@@ -1,3 +1,3 @@
-## @alipay/gi-assets-gs-local
+## @alipay/gi-assets-gs-standalone
 
 GraphScope 团队的图分析资产包

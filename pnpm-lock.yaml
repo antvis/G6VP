@@ -364,7 +364,7 @@ importers:
       '@alipay/gi-assets-algorithm': workspace:*
       '@alipay/gi-assets-analysis': workspace:*
       '@alipay/gi-assets-basic': workspace:*
-      '@alipay/gi-assets-gs-local': workspace:*
+      '@alipay/gi-assets-gs-standalone': workspace:*
       '@alipay/gi-assets-scene': workspace:*
       '@alipay/gi-common-components': workspace:*
       '@alipay/graphinsight': workspace:*
@@ -415,7 +415,7 @@ importers:
       '@alipay/gi-assets-algorithm': link:../gi-assets-algorithm
       '@alipay/gi-assets-analysis': link:../gi-assets-analysis
       '@alipay/gi-assets-basic': link:../gi-assets-basic
-      '@alipay/gi-assets-gs-local': link:../gi-assets-gs-local
+      '@alipay/gi-assets-gs-standalone': link:../gi-assets-gs-local
       '@alipay/gi-assets-scene': link:../gi-assets-scene
       '@alipay/gi-common-components': link:../gi-common-components
       '@alipay/graphinsight': link:../gi
@@ -42807,6 +42807,30 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 17.0.2
       react-dom: 16.14.0_react@17.0.2
+      react-is: 18.2.0
+      shallowequal: 1.1.0
+      supports-color: 5.5.0
+    dev: false
+
+  /styled-components/5.3.5_xxhtnsvzyftnv6slrlimkmjhqa:
+    resolution: {integrity: sha512-ndETJ9RKaaL6q41B69WudeqLzOpY1A/ET/glXkNZ2T7dPjPqpPCXXQjDFYZWwNnE5co0wX+gTCqx9mfxTmSIPg==, tarball: styled-components/download/styled-components-5.3.5.tgz}
+    engines: {node: '>=10'}
+    requiresBuild: true
+    peerDependencies:
+      react: '>= 16.8.0 || 17'
+      react-dom: '>= 16.8.0'
+      react-is: '>= 16.8.0'
+    dependencies:
+      '@babel/helper-module-imports': 7.18.6
+      '@babel/traverse': 7.19.1_supports-color@5.5.0
+      '@emotion/is-prop-valid': 1.2.0
+      '@emotion/stylis': 0.8.5
+      '@emotion/unitless': 0.7.5
+      babel-plugin-styled-components: 2.0.7_styled-components@5.3.5
+      css-to-react-native: 3.0.0
+      hoist-non-react-statics: 3.3.2
+      react: 16.14.0
+      react-dom: 17.0.2_react@17.0.2
       react-is: 18.2.0
       shallowequal: 1.1.0
       supports-color: 5.5.0

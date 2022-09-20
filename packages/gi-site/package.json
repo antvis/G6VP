@@ -20,7 +20,7 @@
     "@alipay/gi-assets-algorithm": "workspace:*",
     "@alipay/gi-assets-analysis": "workspace:*",
     "@alipay/gi-assets-basic": "workspace:*",
-    "@alipay/gi-assets-gs-local": "workspace:*",
+    "@alipay/gi-assets-gs-standalone": "workspace:*",
     "@alipay/gi-assets-scene": "workspace:*",
     "@alipay/gi-common-components": "workspace:*",
     "@alipay/graphinsight": "workspace:*",
