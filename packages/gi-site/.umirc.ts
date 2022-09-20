@@ -7,7 +7,14 @@ import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import graphinsight from '@alipay/graphinsight/package.json';
 import * as antd from 'antd';
+export const G6_VERSION = '4.7.0';
+export const GRAPHIN_VERSION = '2.7.9';
+export const G2PLOT_VERSION = '2.4.16';
+export const ANTD_VERSION = antd.version;
+export const GI_VERSION = graphinsight.version;
+
 /** 是否为本地研发模式 */
+//@ts-ignore
 export const isDev = process.env.NODE_ENV === 'development';
 const assets_npm = [
   {
@@ -146,14 +153,14 @@ export default {
     'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
-    `https://gw.alipayobjects.com/os/lib/antd/${antd.version}/dist/antd.min.js`,
+    `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
 
     /** Graphin */
-    'https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js',
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.9/dist/graphin.min.js',
+    `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+    `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
 
     /**  G2Plot */
-    'https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js',
+    `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
 
     /** GI */
@@ -166,7 +173,7 @@ export default {
     ...externalScripts.map(c => {
       return c.replace('min.js', 'css');
     }),
-    'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.8/dist/index.css',
+    `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
   ],
   analyze: {
     analyzerMode: 'server',
