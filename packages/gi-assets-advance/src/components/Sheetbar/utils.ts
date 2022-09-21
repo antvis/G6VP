@@ -23,7 +23,7 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
 
   return {
     container: {
-      position: 'unset',
+      position: 'relative',
       top: `unset`,
       height: `calc( 100% - ${height}px )`,
     },
