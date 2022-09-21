@@ -22,12 +22,13 @@
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
     "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-algorithm",
+    "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-algorithm analysis=true",
     "clean": "rimraf es esm lib dist",
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@alipay/graphinsight": "workspace:*",

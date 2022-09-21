@@ -9,7 +9,14 @@ module.exports = (env, argv) => {
   const DIST_PATH = path.join(ASSETS_PATH, 'dist/');
   const ASSETS_UMD = env.path.replace('/packages/', '').split('-').join('_').toUpperCase();
   console.log(ASSETS_UMD);
-
+  const plugins = env.analysis
+    ? [
+        new MiniCssExtractPlugin(),
+        new BundleAnalyzerPlugin({
+          analyzerPort: Math.round(Math.random() * 100 + 8000),
+        }),
+      ]
+    : [new MiniCssExtractPlugin()];
   return {
     entry: {
       index: ENTRY_PATH,
@@ -100,12 +107,7 @@ module.exports = (env, argv) => {
       publicPath: './',
       filename: 'index.min.js',
     },
-    plugins: [
-      new MiniCssExtractPlugin(),
-      new BundleAnalyzerPlugin({
-        analyzerPort: Math.round(Math.random() * 100 + 8000),
-      }),
-    ],
+    plugins: plugins,
     externals: {
       lodash: '_',
       react: 'React',
