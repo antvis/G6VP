@@ -1,4 +1,4 @@
-import { Switch } from 'antd';
+// import { Switch } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import './index.less';
@@ -15,20 +15,20 @@ const Properties: React.FunctionComponent<PropertiesProps> = props => {
     isStatistic: defaultiStatistic,
   });
 
-  const onChange = (checked: boolean) => {
-    updateState(draft => {
-      draft.isStatistic = checked;
-    });
-  };
+  // const onChange = (checked: boolean) => {
+  //   updateState(draft => {
+  //     draft.isStatistic = checked;
+  //   });
+  // };
 
   return (
     <div className="gi-properties-pannel">
       <header className="gi-properties-pannel-header">
         <h3>{data.id}</h3>
-        <div>
+        {/* <div>
           图表展示
           <Switch checked={state.isStatistic} onChange={onChange} />
-        </div>
+        </div> */}
       </header>
       {state.isStatistic ? <Statistic data={data} /> : <PropertiesDetail data={data} />}
     </div>

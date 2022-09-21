@@ -15,7 +15,7 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
         height: `${height + 1}px`,
         lineHeight: `${height + 1}px`,
         background: '#fff',
-        zIndex: 9999,
+        zIndex: 300,
         borderBottom: '1px solid #ddd',
       },
     };
@@ -36,7 +36,7 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
       height: `${height + 1}px`,
       lineHeight: `${height + 1}px`,
       background: '#fff',
-      zIndex: 9999,
+      zIndex: 300,
       borderTop: '1px solid #ddd',
     },
   };

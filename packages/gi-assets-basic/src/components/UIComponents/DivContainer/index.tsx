@@ -36,6 +36,11 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
   } = props;
 
   const styles = utils.getPositionStyles(containerPlacement, offset);
+  if (containerPlacement === 'RT' || containerPlacement === 'LB') {
+    styles.bottom = '50px';
+    styles.height = 'unset';
+  }
+
   const ps = POSITION_MAP[containerPlacement];
   const classes = animate ? (visible ? `${ps} open` : `${ps} close`) : '';
   const displayStyle = animate
@@ -46,11 +51,11 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
   return (
     <div
       style={{
-        ...styles,
-        ...displayStyle,
         width: containerWidth,
         height: containerHeight,
         boxShadow: '6px 0 16px -8px rgb(0 0 0 / 8%), 9px 0 28px 0 rgb(0 0 0 / 5%), 12px 0 48px 16px rgb(0 0 0 / 3%)',
+        ...styles,
+        ...displayStyle,
       }}
       className={`gi-panel-div ${classes}`}
     >
