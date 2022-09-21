@@ -26,13 +26,14 @@
     "@alipay/graphinsight": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
-    "antd": "^4.20.0",
     "json2csv": "^5.0.7",
-    "react": "17.x",
     "umi-request": "^1.4.0",
     "use-immer": "^0.7.0"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "antd": "latest",
+    "react": "17.x"
+  },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
   }

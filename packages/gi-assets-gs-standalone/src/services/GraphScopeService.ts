@@ -1,55 +1,49 @@
-import request from "umi-request";
-import { HTTP_SERVICE_URL } from "./Constants";
+import request from 'umi-request';
+import { HTTP_SERVICE_URL } from './Constants';
 
-interface ConnectProps {
+export interface ConnectProps {
   engineServerURL: string;
   httpServerURL: string;
   isStringType: boolean;
 }
 
 export const connectGraphScopeService = async (params: ConnectProps) => {
-  const { httpServerURL } = params
-  const result = await request(
-    `${httpServerURL}/graphcompute/connect`,
-    {
-      method: "POST",
-      data: params,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
+  const { httpServerURL } = params;
+  const result = await request(`${httpServerURL}/graphcompute/connect`, {
+    method: 'POST',
+    data: params,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   if (result.success) {
-    const { httpServerURL } = result.data
-    localStorage.setItem('GRAPHSCOPE_HTTP_SERVER', httpServerURL)
+    const { httpServerURL } = result.data;
+    localStorage.setItem('GRAPHSCOPE_HTTP_SERVER', httpServerURL);
   }
 
   return result;
-}
+};
 
 export const createGraphScopeInstance = async () => {
-  const currentInstance = localStorage.getItem("GI_CURRENT_GRAPHSCOPE_INSTANCE")
+  const currentInstance = localStorage.getItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
 
   // 创建实例之前，先查找是否之前已经创建过图引擎实例
   if (currentInstance) {
     return {
       success: true,
       data: {
-        instanceId: currentInstance
-      }
+        instanceId: currentInstance,
+      },
     };
   }
 
-  const gsResult = await request(
-    `${HTTP_SERVICE_URL}/graphcompute/createGSInstance`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-  );
+  const gsResult = await request(`${HTTP_SERVICE_URL}/graphcompute/createGSInstance`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   if (!gsResult || !gsResult.success) {
     return gsResult;
@@ -58,31 +52,28 @@ export const createGraphScopeInstance = async () => {
   const { data } = gsResult;
   const { instanceId: newInstanceId } = data;
 
-  localStorage.setItem("GI_CURRENT_GRAPHSCOPE_INSTANCE", newInstanceId)
+  localStorage.setItem('GI_CURRENT_GRAPHSCOPE_INSTANCE', newInstanceId);
   return gsResult;
-}
+};
 
 export const closeGraphInstance = async () => {
-  const currentInstance = localStorage.getItem("GI_CURRENT_GRAPHSCOPE_INSTANCE")
+  const currentInstance = localStorage.getItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
 
-  const result = await request(
-    `${HTTP_SERVICE_URL}/graphcompute/closeGSInstance`,
-    {
-      method: "GET",
-      params: {
-        instanceId: currentInstance,
-      }
-    }
-  );
+  const result = await request(`${HTTP_SERVICE_URL}/graphcompute/closeGSInstance`, {
+    method: 'GET',
+    params: {
+      instanceId: currentInstance,
+    },
+  });
 
-  localStorage.removeItem("GI_CURRENT_GRAPHSCOPE_INSTANCE")
-  localStorage.removeItem('graphScopeGremlinServer')
-  localStorage.removeItem('graphScopeGraphName')
+  localStorage.removeItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
+  localStorage.removeItem('graphScopeGremlinServer');
+  localStorage.removeItem('graphScopeGraphName');
 
   return result;
-}
+};
 
-export const uploadLocalFileToGraphScope = async (params) => {
+export const uploadLocalFileToGraphScope = async params => {
   const { instanceId, fileList } = params;
 
   const nodeFormData = new FormData();
@@ -104,60 +95,72 @@ export const uploadLocalFileToGraphScope = async (params) => {
     success: true,
     data: fileResult.data,
   };
-}
+};
 
-export const loadGraphToGraphScope = async (params) => {
-  const { nodeConfigList, edgeConfigList, fileMapping, isStringType, directed = true, delimiter = ',', hasHeaderRow = true } = params;
+export const loadGraphToGraphScope = async params => {
+  const {
+    nodeConfigList,
+    edgeConfigList,
+    fileMapping,
+    isStringType,
+    directed = true,
+    delimiter = ',',
+    hasHeaderRow = true,
+  } = params;
 
-  const instanceResult = await createGraphScopeInstance()
+  const instanceResult = await createGraphScopeInstance();
 
   if (!instanceResult.success) {
-    return
+    return;
   }
 
-  const { instanceId } = instanceResult.data
+  const { instanceId } = instanceResult.data;
 
   // 构造载图时的 nodes 对象
-  const nodeSources = nodeConfigList.filter(d => {
-    // nodeType 必须存在
-    
-    // nodeFileList 必须存在，
-    const { nodeType, nodeFileList } = d
+  const nodeSources = nodeConfigList
+    .filter(d => {
+      // nodeType 必须存在
 
-    // filePath 必须存在
-    const filePath = fileMapping[nodeFileList?.file?.name]
+      // nodeFileList 必须存在，
+      const { nodeType, nodeFileList } = d;
 
-    return nodeType && filePath
-  }).map(d => {
-    const { nodeType, nodeFileList } = d;
-    return {
-      label: nodeType,
-      location: fileMapping[nodeFileList.file.name],
-      config: {
-        header_row: hasHeaderRow,
-        delimiter,
-      },
-    };
-  });
+      // filePath 必须存在
+      const filePath = fileMapping[nodeFileList?.file?.name];
 
-  const edgeSources = edgeConfigList.filter(d => {
-    // edgeType source target 都必须存在
-    const { edgeType, edgeFileList, sourceNodeType, targetNodeType } = d
-    const filePath = fileMapping[edgeFileList?.file?.name]
-    return edgeType && filePath && sourceNodeType && targetNodeType
-  }).map(d => {
-    const { edgeType, sourceNodeType, targetNodeType, edgeFileList } = d;
-    return {
-      label: edgeType,
-      location: fileMapping[edgeFileList.file.name],
-      srcLabel: sourceNodeType,
-      dstLabel: targetNodeType,
-      config: {
-        header_row: hasHeaderRow,
-        delimiter,
-      },
-    };
-  });
+      return nodeType && filePath;
+    })
+    .map(d => {
+      const { nodeType, nodeFileList } = d;
+      return {
+        label: nodeType,
+        location: fileMapping[nodeFileList.file.name],
+        config: {
+          header_row: hasHeaderRow,
+          delimiter,
+        },
+      };
+    });
+
+  const edgeSources = edgeConfigList
+    .filter(d => {
+      // edgeType source target 都必须存在
+      const { edgeType, edgeFileList, sourceNodeType, targetNodeType } = d;
+      const filePath = fileMapping[edgeFileList?.file?.name];
+      return edgeType && filePath && sourceNodeType && targetNodeType;
+    })
+    .map(d => {
+      const { edgeType, sourceNodeType, targetNodeType, edgeFileList } = d;
+      return {
+        label: edgeType,
+        location: fileMapping[edgeFileList.file.name],
+        srcLabel: sourceNodeType,
+        dstLabel: targetNodeType,
+        config: {
+          header_row: hasHeaderRow,
+          delimiter,
+        },
+      };
+    });
 
   const loadFileParams = {
     type: 'LOCAL',
@@ -185,9 +188,9 @@ export const loadGraphToGraphScope = async (params) => {
   }
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
-  
-  localStorage.setItem('graphScopeGremlinServer', graphURL)
-  localStorage.setItem('graphScopeGraphName', graphName)
+
+  localStorage.setItem('graphScopeGremlinServer', graphURL);
+  localStorage.setItem('graphScopeGraphName', graphName);
 
   return {
     success: true,
@@ -198,27 +201,26 @@ export const loadGraphToGraphScope = async (params) => {
       hostName,
     },
   };
-}
+};
 
-
-export const loadChinaVisGraphToGraphScope = async (params) => {
+export const loadChinaVisGraphToGraphScope = async params => {
   // const context =  localStorage.getItem("GS_SERVER_CONTEXT");
-  
-  const { dataSource } = params
 
-  const instanceResult = await createGraphScopeInstance()
+  const { dataSource } = params;
+
+  const instanceResult = await createGraphScopeInstance();
 
   if (!instanceResult.success) {
-    return instanceResult
+    return instanceResult;
   }
 
-  const { instanceId } = instanceResult.data
+  const { instanceId } = instanceResult.data;
   const loadFileParams = {
     type: 'LOCAL',
     directed: true,
     oid_type: 'string',
     instance_id: instanceId,
-    dataSource
+    dataSource,
   };
 
   console.log('载图参数', loadFileParams);
@@ -237,8 +239,8 @@ export const loadChinaVisGraphToGraphScope = async (params) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
-  localStorage.setItem('graphScopeGremlinServer', graphURL)
-  localStorage.setItem('graphScopeGraphName', graphName)
+  localStorage.setItem('graphScopeGremlinServer', graphURL);
+  localStorage.setItem('graphScopeGraphName', graphName);
 
   return {
     success: true,
@@ -249,11 +251,11 @@ export const loadChinaVisGraphToGraphScope = async (params) => {
       hostName,
     },
   };
-}
+};
 
-export const loadDefaultGraphToGraphScope = async (params) => {
+export const loadDefaultGraphToGraphScope = async params => {
   // const context =  localStorage.getItem("GS_SERVER_CONTEXT");
-  
+
   const {
     nodeFilePath,
     edgeFilePath,
@@ -266,13 +268,13 @@ export const loadDefaultGraphToGraphScope = async (params) => {
     hasHeaderRow = true,
   } = params;
 
-  const instanceResult = await createGraphScopeInstance()
+  const instanceResult = await createGraphScopeInstance();
 
   if (!instanceResult.success) {
-    return
+    return;
   }
 
-  const { instanceId } = instanceResult.data
+  const { instanceId } = instanceResult.data;
 
   const loadFileParams = {
     type: 'LOCAL',
@@ -289,19 +291,21 @@ export const loadDefaultGraphToGraphScope = async (params) => {
           },
         },
       ],
-      edges: [{
-        label: edgeType,
-        location: edgeFilePath,
-        srcLabel: sourceNodeType,
-        dstLabel: targetNodeType,
-        config: {
-          header_row: hasHeaderRow,
-          delimiter,
+      edges: [
+        {
+          label: edgeType,
+          location: edgeFilePath,
+          srcLabel: sourceNodeType,
+          dstLabel: targetNodeType,
+          config: {
+            header_row: hasHeaderRow,
+            delimiter,
+          },
         },
-      }],
+      ],
     },
   };
-  
+
   const loadResult = await request(`${HTTP_SERVICE_URL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
@@ -316,8 +320,8 @@ export const loadDefaultGraphToGraphScope = async (params) => {
 
   const { graphURL, graphName, hostIp, hostName } = loadResult.data;
 
-  localStorage.setItem('graphScopeGremlinServer', graphURL)
-  localStorage.setItem('graphScopeGraphName', graphName)
+  localStorage.setItem('graphScopeGremlinServer', graphURL);
+  localStorage.setItem('graphScopeGraphName', graphName);
 
   return {
     success: true,
@@ -328,25 +332,25 @@ export const loadDefaultGraphToGraphScope = async (params) => {
       hostName,
     },
   };
-}
+};
 
 export const queryGraphSchema = async () => {
-  const graphName = localStorage.getItem("graphScopeGraphName") as string;
+  const graphName = localStorage.getItem('graphScopeGraphName') as string;
 
   const result = await request(`${HTTP_SERVICE_URL}/graphcompute/schema`, {
     method: 'GET',
     params: {
       graphName,
-    }
-  })
+    },
+  });
 
-  return result
-}
+  return result;
+};
 
 export const getGraphScopeInstances = async () => {
   const result = await request(`${HTTP_SERVICE_URL}/graphcompute/instances`, {
-    method: 'get'
-  })
+    method: 'get',
+  });
 
-  return result
-}
+  return result;
+};

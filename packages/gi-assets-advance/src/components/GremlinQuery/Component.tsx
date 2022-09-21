@@ -25,7 +25,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
   const service = utils.getService(services, serviceId);
 
-  // const [editorValue, setEditorValue] = useState(initialValue || '');
   const [state, setState] = React.useState({
     editorValue: initialValue || '',
     isFullScreen: false,
@@ -52,13 +51,14 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       return;
     }
 
-    // 查询之前判断是否已经实例化 GraphScope 实例
-    const projectId = localStorage.getItem('GI_ACTIVE_PROJECT_ID');
-
     const result = await service({
       value: editorValue,
-      projectId,
-      mode: localStorage.getItem('GI_CURRENT_QUERY_MODE') === 'ODPS' ? 2 : 1,
+    }).catch(error => {
+      setBtnLoading(false);
+      notification.error({
+        message: '服务请求失败',
+        description: error,
+      });
     });
 
     setBtnLoading(false);
@@ -73,7 +73,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
     updateContext(draft => {
       // @ts-ignore
-
       const res = transform(result.data);
       draft.data = res;
       draft.source = res;

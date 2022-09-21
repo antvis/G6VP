@@ -163,7 +163,8 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
 
     const transNodes = nodes.map(node => {
       // properties
-      const data = node.data || node;
+      const data = node.data || node.properties || node;
+
       const keyshape = {
         ...advanced.keyshape,
         fill: color,
@@ -246,7 +247,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       return {
         ...node,
         id: node.id,
-        data: node.data || node,
+        data,
         nodeType: node.nodeType || 'UNKNOW',
         type: 'graphin-circle',
         // 数据中的style还是优先级最高的

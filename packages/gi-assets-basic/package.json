@@ -28,7 +28,6 @@
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/util": "^3.2.5",
-    "antd": "latest",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "immer": "^9.0.15",
@@ -39,7 +38,8 @@
   "peerDependencies": {
     "@antv/graphin": "2.x",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "antd": "latest"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
