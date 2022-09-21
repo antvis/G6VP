@@ -68,7 +68,8 @@ const Navbar = ({
 
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
-      const { data = {}, schemaData = {} } = origin
+      const { data = {}, schemaData = {} } = origin;
+
       const projectId = await addProject({
         name: origin?.name,
         type: 'case',
@@ -77,6 +78,11 @@ const Navbar = ({
         serviceConfig,
         activeAssetsKeys,
         projectConfig: config,
+        engineContext: {
+          //@ts-ignore
+          data: data.transData,
+          schemaData,
+        },
       });
       history.push(`/workspace/${projectId}?nav=data`);
     } else {
