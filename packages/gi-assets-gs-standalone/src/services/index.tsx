@@ -1,8 +1,8 @@
+import * as ElementProperties from './ElementProperties';
+import * as ExecAlgorithm from './ExecAlgorithm';
+import * as GraphScopeServices from './GraphScopeService';
 import * as GremlinQuery from './GremlinQuery';
 import * as NeighborsQuery from './NeighborsQuery';
-import * as ElementProperties from './ElementProperties';
-import * as GraphScopeServices from './GraphScopeService';
-import * as ExecAlgorithm from './ExecAlgorithm';
 import ServerComponent from './ServerComponent';
 
 export default {

@@ -250,7 +250,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
 export const addProject = async (param: any): Promise<string | undefined> => {
   if (IS_LOCAL_ENV) {
     const projectId = getUid();
-    const { projectConfig, activeAssetsKeys, data, serviceConfig, schemaData, engineContext, ...otherParams } = param;
+    const { engineContext, ...otherParams } = param;
 
     const p = {
       ...otherParams,

@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npm run build:all:es",
-    "build:all:es": "npm-run-all -s gi-common-component gi -p gi-assets-basic gi-assets-advance gi-assets-algorithm gi-assets-scene",
+    "build:all:es": "npm-run-all -s gi-common-component gi -p gi-assets-basic gi-assets-advance gi-assets-algorithm gi-assets-scene gi-assets-gs-standalone",
     "start": "cd packages/gi-site && npm run start",
     "clean": "pnpm remove ./ -r",
     "gi-common-component": "cd packages/gi-common-components && npm run build",
@@ -14,6 +14,7 @@
     "gi-assets-advance": "cd packages/gi-assets-advance && npm run build:es",
     "gi-assets-algorithm": "cd packages/gi-assets-algorithm && npm run build:es",
     "gi-assets-scene": "cd packages/gi-assets-scene && npm run build:es",
+    "gi-assets-gs-standalone": "cd packages/gi-assets-gs-standalone && npm run build:es",
     "build": "npm run build:site && npm run move:dist",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:basicAssets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
@@ -31,7 +32,7 @@
       }
     },
     "overrides": {
-      "antd": "4.23.0"
+      "antd": "latest"
     }
   },
   "husky": {
@@ -54,7 +55,7 @@
     "@antv/s2": "^1.29.0",
     "@antv/s2-react": "^1.26.0",
     "@antv/util": "^3.2.5",
-    "antd": "4.23.0",
+    "antd": "latest",
     "react": "17",
     "react-dom": "17.x",
     "umi": "3.x"

@@ -29,9 +29,6 @@
     "test": "jest",
     "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
-  "resolutions": {
-    "antd": "4.23.0"
-  },
   "dependencies": {
     "@alipay/graphinsight": "workspace:*",
     "@ant-design/icons": "^4.6.2",
@@ -40,7 +37,6 @@
     "@antv/matrix-util": "^3.0.4",
     "@antv/s2": "^1.3.0",
     "@antv/s2-react": "^1.3.0",
-    "antd": "4.20.6",
     "deepmerge": "^4.2.2",
     "lodash": "^4.17.21",
     "use-immer": "^0.7.0"

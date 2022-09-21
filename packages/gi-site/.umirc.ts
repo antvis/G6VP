@@ -174,6 +174,7 @@ export default {
       return c.replace('min.js', 'css');
     }),
     `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
+    `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.dark.css`,
   ],
   analyze: {
     analyzerMode: 'server',

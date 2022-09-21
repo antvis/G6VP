@@ -34,7 +34,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     nodes: [],
     edges: [],
   });
-  const [coreDegreeK, setCoreDegreeK] = useState(2);
+  const [coreDegreeK, setCoreDegreeK] = useState<number | null>(2);
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [hulls, setHulls] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -198,6 +198,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           if (!graph || graph.destroyed) {
             return;
           }
+          //@ts-ignore
           const coreData = (kCore(formatData, coreDegreeK) || {
             nodes: [],
             edges: [],

@@ -23,6 +23,7 @@ const Offset: React.FC<IOffsetProps> = props => {
         min={min}
         max={max}
         onChange={v => {
+          //@ts-ignore
           props.onChange([v, y]);
         }}
         placeholder="X轴偏移量"
@@ -34,6 +35,7 @@ const Offset: React.FC<IOffsetProps> = props => {
         min={min}
         max={max}
         onChange={v => {
+          //@ts-ignore
           props.onChange([x, v]);
         }}
         placeholder="Y轴偏移量"
