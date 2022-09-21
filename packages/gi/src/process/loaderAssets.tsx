@@ -22,6 +22,7 @@ const loadJS = options => {
     const script = document.createElement('script');
     script.type = options.type || 'text/javascript';
     script.async = !!options.async;
+    script.charset = 'UTF-8';
     script.id = options.id || options.url;
     if (options.url) {
       script.src = options.url;
