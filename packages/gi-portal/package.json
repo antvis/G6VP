@@ -24,5 +24,8 @@
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"
+  },
+  "devDependencies": {
+    "react-spring": "^9.5.4"
   }
 }

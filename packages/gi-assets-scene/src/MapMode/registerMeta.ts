@@ -41,7 +41,7 @@ export default context => {
           },
         ],
       },
-      default: 'mapbox',
+      default: 'amap',
     },
     theme: {
       type: 'string',
