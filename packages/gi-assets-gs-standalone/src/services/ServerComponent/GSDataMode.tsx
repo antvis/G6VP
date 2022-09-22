@@ -58,6 +58,7 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
     const result = await connectGraphScopeService(values);
     if (!result.success) {
       message.error('连接GraphScope失败');
+      return;
     }
     message.success('连接成功');
     next();
