@@ -1,4 +1,4 @@
-import { Alert, Button, Form, message, Radio, Space, Table } from 'antd';
+import { Alert, Form, message } from 'antd';
 import React, { useState } from 'react';
 import {
   createGraphScopeInstance,
@@ -7,7 +7,7 @@ import {
   uploadLocalFileToGraphScope,
   queryGraphSchema,
 } from '../GraphScopeService';
-import { DefaultGraphScopeEdgeFilePath, DefaultGraphScopeNodeFilePath, LoadChinaVisDataSource } from '../Constants';
+import { LoadChinaVisDataSource } from '../Constants';
 import GSDataMode from './GSDataMode';
 
 export interface GraphModelProps {
@@ -21,7 +21,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [filesMapping, setFilesMapping] = useState(graphScopeFilesMapping);
-  const [formValue, setFormValue] = useState({});
 
   /**
    * 实例化GraphScope引擎实例
@@ -52,9 +51,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     const currentInstanceId = await initGraphScopeInstance();
     const values = await form.validateFields();
 
-    setFormValue(values);
     // 如果 isCover = false， 则需要先过滤掉 nodeConfigList, edgeConfigList 中已经存在于 localstorage 中的文件
-    const { nodeConfigList, edgeConfigList = [] } = values;
+    const { nodeConfigList = [], edgeConfigList = [] } = values;
 
     const nodeFileLists = nodeConfigList
       .filter(d => d.nodeFileList && d.nodeType)
@@ -158,7 +156,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
         return;
       }
       message.success('加载数据到 GraphScope 引擎成功');
-      const { graphName, graphURL } = data;
+      const { graphName } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
 
       // 载图成功后，更新 Project 中的 SchemeData
@@ -175,26 +173,15 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     }
 
     const values = await form.validateFields();
-    const { isStringType = true } = values;
-    console.log('xxx', formValue, values);
+    console.log('xxx', values);
 
-    const {
-      nodeConfigList,
-      edgeConfigList = [],
-      directed = true,
-      delimiter = ',',
-      hasHeaderRow = true,
-    } = formValue as any;
+    const { nodeConfigList, edgeConfigList = [] } = values as any;
 
     // 加上传的文件加载仅 GraphScope
     const loadResult = await loadGraphToGraphScope({
       nodeConfigList,
       edgeConfigList,
       fileMapping: filesMapping,
-      directed,
-      delimiter,
-      hasHeaderRow,
-      isStringType,
     });
 
     console.log('载图到 GraphScope 中', loadResult);
@@ -207,6 +194,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
 
     const { graphName, graphURL } = loadData;
     localStorage.setItem('graphScopeGraphName', graphName);
+    localStorage.setItem('graphScopeGremlinServer', graphURL);
 
     message.success('加载数据到 GraphScope 引擎成功');
 
@@ -217,11 +205,9 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
 
   const formInitValue = {
     type: 'LOCAL',
-    directed: true,
-    hasHeaderRow: true,
-    delimiter: ',',
     isStringType: true,
-    httpServerURL: 'https://graphinsight.antgroup-inc.cn',
+    engineServerURL: 'http://11.166.85.48:9527',
+    httpServerURL: 'http://127.0.0.1:7001', //'https://graphinsight.antgroup-inc.cn',
     nodeConfigList: [
       {
         nodeType: '',
@@ -232,10 +218,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
   return (
     <div>
       <Form name="gsform" form={form} initialValues={formInitValue}>
-        {/* <Radio.Group defaultValue={dataType} buttonStyle="solid" onChange={handleDataTypeChange}>
-          <Radio.Button value="chinavis">ChinaVis示例数据</Radio.Button>
-          <Radio.Button value="real">我有数据</Radio.Button>
-        </Radio.Group> */}
         {loading && (
           <Alert
             type="info"
@@ -248,27 +230,12 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
           handleUploadFile={handleUploadFiles}
           handleLoadData={handleSubmitForm}
           updateSchemaData={updateSchemaData}
-          close={onClose}
+          onClose={onClose}
           filesMapping={filesMapping}
           uploadLoading={uploadLoading}
           loading={loading}
           form={form}
         />
-        {/* {dataType !== 'real' && (
-          <Form.Item>
-            <Space style={{ marginTop: 16 }}>
-              <Button onClick={onClose}>取消</Button>
-              <Button
-                type="primary"
-                disabled={dataType === 'real' && !filesMapping}
-                onClick={handleSubmitForm}
-                loading={loading}
-              >
-                开始载图
-              </Button>
-            </Space>
-          </Form.Item>
-        )} */}
       </Form>
     </div>
   );

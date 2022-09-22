@@ -48,7 +48,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
           return (
             <TabPane tab={TabTitle} key={server.id}>
               {/** @ts-ignore */}
-              <ServerComponent updateGISite={updateGISite} giSiteContext={context} />
+              <ServerComponent updateGISite={updateGISite} giSiteContext={context} onClose={handleClose} />
             </TabPane>
           );
         })}
