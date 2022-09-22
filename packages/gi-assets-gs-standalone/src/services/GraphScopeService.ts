@@ -9,7 +9,7 @@ export interface ConnectProps {
 
 export const connectGraphScopeService = async (params: ConnectProps) => {
   const { httpServerURL, engineServerURL, isStringType } = params;
-  debugger
+  
   const result = await request(`${httpServerURL[0]}/graphcompute/connect`, {
     method: 'POST',
     data: {

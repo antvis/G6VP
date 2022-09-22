@@ -1,11 +1,9 @@
 import { Icon, utils } from '@alipay/graphinsight';
-import { Drawer, Steps, Tabs, Upload } from 'antd';
+import { Drawer, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../../components/FileServerEngine';
 import { useContext } from '../../Analysis/hooks/useContext';
 
-const { Step } = Steps;
-const { Dragger } = Upload;
 interface uploadPanel {
   visible: boolean;
   initData: any;
@@ -21,8 +19,8 @@ const TYPE_ICONS = {
 const { TabPane } = Tabs;
 
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
-  const { visible, handleClose, initData } = props;
-  const { context, updateContext, updateGISite } = useContext();
+  const { visible, handleClose } = props;
+  const { context, updateGISite } = useContext();
   // 补充一个GI的ServerComponent实现：FileServerEngine
   const CustomServer = [...utils.getCombineServer([...context.activeAssets.services, FileServerEngine])];
 
