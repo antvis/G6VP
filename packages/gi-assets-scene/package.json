@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-scene",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
