@@ -1,13 +1,8 @@
-// 这里根据不同环境换成相应的地址
-// 测试环境：https://storehouse.test.alipay.net
-// 预发环境：https://graphinsight-pre.alipay.com
-// 生产环境：http://graphinsight-api.antgroup-inc.cn
-
-// TODO：这里的地址可以做成可配置的，让用户自己选择环境
-export const HTTP_SERVICE_URL = 'http://127.0.0.1:7001';
-
-export const DefaultGraphScopeNodeFilePath = '/home/graphscope/.gshttpserver/dataset/vis/p2p-31_property_v_0';
-export const DefaultGraphScopeEdgeFilePath = '/home/graphscope/.gshttpserver/dataset/vis/p2p-31_property_e_0';
+export const localLoadGraphConfig = {
+  directed: true,
+  delimiter: ',',
+  hasHeaderRow: true,
+};
 
 // /home/graphscope/.gshttpserver/dataset/vis/
 const ChinaVisDataPathMapping = {

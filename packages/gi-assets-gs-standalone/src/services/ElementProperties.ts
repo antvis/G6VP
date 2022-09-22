@@ -1,4 +1,3 @@
-import { HTTP_SERVICE_URL } from './Constants';
 import request from 'umi-request';
 
 export const PropertiesPanel = {
@@ -6,8 +5,9 @@ export const PropertiesPanel = {
   service: async params => {
     const id = params.id;
     const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
+    const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
 
-    const response = await request(`${HTTP_SERVICE_URL}/graphcompute/properties`, {
+    const response = await request(`${httpServerURL}/graphcompute/properties`, {
       method: 'post',
       data: {
         id: [id],
