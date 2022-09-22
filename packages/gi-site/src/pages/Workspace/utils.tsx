@@ -283,7 +283,7 @@ const baseComponentsConfig = [
     name: '地图模式',
     props: {
       visible: false,
-      type: 'mapbox',
+      type: 'amap',
       theme: 'light',
       minSize: '50%',
       maxSize: '100%',
