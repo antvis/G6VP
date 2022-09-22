@@ -1,5 +1,5 @@
 import request from 'umi-request';
-import { HTTP_SERVICE_URL } from './Constants';
+import { localLoadGraphConfig } from './Constants';
 
 export interface ConnectProps {
   engineServerURL: string;
@@ -8,10 +8,14 @@ export interface ConnectProps {
 }
 
 export const connectGraphScopeService = async (params: ConnectProps) => {
-  const { httpServerURL } = params;
-  const result = await request(`${httpServerURL}/graphcompute/connect`, {
+  const { httpServerURL, engineServerURL, isStringType } = params;
+  const result = await request(`${httpServerURL[0]}/graphcompute/connect`, {
     method: 'POST',
-    data: params,
+    data: {
+      httpServerURL: httpServerURL[0],
+      engineServerURL: engineServerURL[0],
+      isStringType
+    },
     headers: {
       'Content-Type': 'application/json',
     },
@@ -27,7 +31,8 @@ export const connectGraphScopeService = async (params: ConnectProps) => {
 
 export const createGraphScopeInstance = async () => {
   const currentInstance = localStorage.getItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
-
+  const projectId = localStorage.getItem('GI_ACTIVE_PROJECT_ID');
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
   // 创建实例之前，先查找是否之前已经创建过图引擎实例
   if (currentInstance) {
     return {
@@ -38,8 +43,11 @@ export const createGraphScopeInstance = async () => {
     };
   }
 
-  const gsResult = await request(`${HTTP_SERVICE_URL}/graphcompute/createGSInstance`, {
+  const gsResult = await request(`${httpServerURL}/graphcompute/createGSInstance`, {
     method: 'POST',
+    data: {
+      projectId
+    },
     headers: {
       'Content-Type': 'application/json',
     },
@@ -58,8 +66,8 @@ export const createGraphScopeInstance = async () => {
 
 export const closeGraphInstance = async () => {
   const currentInstance = localStorage.getItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
-
-  const result = await request(`${HTTP_SERVICE_URL}/graphcompute/closeGSInstance`, {
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
+  const result = await request(`${httpServerURL}/graphcompute/closeGSInstance`, {
     method: 'GET',
     params: {
       instanceId: currentInstance,
@@ -75,12 +83,13 @@ export const closeGraphInstance = async () => {
 
 export const uploadLocalFileToGraphScope = async params => {
   const { instanceId, fileList } = params;
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
 
   const nodeFormData = new FormData();
   nodeFormData.append('file', fileList.file);
   nodeFormData.append('instance_id', instanceId);
 
-  const fileResult = await request(`${HTTP_SERVICE_URL}/graphcompute/uploadFile`, {
+  const fileResult = await request(`${httpServerURL}/graphcompute/uploadFile`, {
     method: 'post',
     data: nodeFormData,
     contentType: false,
@@ -102,11 +111,10 @@ export const loadGraphToGraphScope = async params => {
     nodeConfigList,
     edgeConfigList,
     fileMapping,
-    isStringType,
-    directed = true,
-    delimiter = ',',
-    hasHeaderRow = true,
   } = params;
+
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
+  const { directed, delimiter, hasHeaderRow } = localLoadGraphConfig
 
   const instanceResult = await createGraphScopeInstance();
 
@@ -165,7 +173,6 @@ export const loadGraphToGraphScope = async params => {
   const loadFileParams = {
     type: 'LOCAL',
     directed,
-    oid_type: isStringType ? 'string' : 'int64_t',
     instance_id: instanceId,
     dataSource: {
       nodes: nodeSources,
@@ -175,7 +182,7 @@ export const loadGraphToGraphScope = async params => {
 
   console.log('载图参数', loadFileParams);
 
-  const loadResult = await request(`${HTTP_SERVICE_URL}/graphcompute/loadData`, {
+  const loadResult = await request(`${httpServerURL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
     headers: {
@@ -204,9 +211,8 @@ export const loadGraphToGraphScope = async params => {
 };
 
 export const loadChinaVisGraphToGraphScope = async params => {
-  // const context =  localStorage.getItem("GS_SERVER_CONTEXT");
-
   const { dataSource } = params;
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
 
   const instanceResult = await createGraphScopeInstance();
 
@@ -218,95 +224,13 @@ export const loadChinaVisGraphToGraphScope = async params => {
   const loadFileParams = {
     type: 'LOCAL',
     directed: true,
-    oid_type: 'string',
     instance_id: instanceId,
     dataSource,
   };
 
   console.log('载图参数', loadFileParams);
 
-  const loadResult = await request(`${HTTP_SERVICE_URL}/graphcompute/loadData`, {
-    method: 'post',
-    data: loadFileParams,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!loadResult || !loadResult.success) {
-    return loadResult;
-  }
-
-  const { graphURL, graphName, hostIp, hostName } = loadResult.data;
-
-  localStorage.setItem('graphScopeGremlinServer', graphURL);
-  localStorage.setItem('graphScopeGraphName', graphName);
-
-  return {
-    success: true,
-    data: {
-      graphURL,
-      graphName,
-      hostIp,
-      hostName,
-    },
-  };
-};
-
-export const loadDefaultGraphToGraphScope = async params => {
-  // const context =  localStorage.getItem("GS_SERVER_CONTEXT");
-
-  const {
-    nodeFilePath,
-    edgeFilePath,
-    directed = true,
-    nodeType,
-    edgeType,
-    sourceNodeType,
-    targetNodeType,
-    delimiter = ',',
-    hasHeaderRow = true,
-  } = params;
-
-  const instanceResult = await createGraphScopeInstance();
-
-  if (!instanceResult.success) {
-    return;
-  }
-
-  const { instanceId } = instanceResult.data;
-
-  const loadFileParams = {
-    type: 'LOCAL',
-    directed,
-    instance_id: instanceId,
-    dataSource: {
-      nodes: [
-        {
-          label: nodeType,
-          location: nodeFilePath,
-          config: {
-            header_row: hasHeaderRow,
-            delimiter,
-          },
-        },
-      ],
-      edges: [
-        {
-          label: edgeType,
-          location: edgeFilePath,
-          srcLabel: sourceNodeType,
-          dstLabel: targetNodeType,
-          config: {
-            header_row: hasHeaderRow,
-            delimiter,
-          },
-        },
-      ],
-    },
-  };
-
-  const loadResult = await request(`${HTTP_SERVICE_URL}/graphcompute/loadData`, {
+  const loadResult = await request(`${httpServerURL}/graphcompute/loadData`, {
     method: 'post',
     data: loadFileParams,
     headers: {
@@ -336,8 +260,8 @@ export const loadDefaultGraphToGraphScope = async params => {
 
 export const queryGraphSchema = async () => {
   const graphName = localStorage.getItem('graphScopeGraphName') as string;
-
-  const result = await request(`${HTTP_SERVICE_URL}/graphcompute/schema`, {
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
+  const result = await request(`${httpServerURL}/graphcompute/schema`, {
     method: 'GET',
     params: {
       graphName,
@@ -348,7 +272,8 @@ export const queryGraphSchema = async () => {
 };
 
 export const getGraphScopeInstances = async () => {
-  const result = await request(`${HTTP_SERVICE_URL}/graphcompute/instances`, {
+  const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
+  const result = await request(`${httpServerURL}/graphcompute/instances`, {
     method: 'get',
   });
 
