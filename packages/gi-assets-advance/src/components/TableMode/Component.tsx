@@ -25,6 +25,7 @@ const TableMode: React.FC<IProps> = props => {
 
   // S2 的 options 配置
   const [options, updateOptions] = useImmer<any>({
+    supportCSSTransform: true,
     showSeriesNumber: true,
     interaction: {
       autoResetSheetStyle: false,

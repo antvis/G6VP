@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.19.0",
+  "version": "2.20.1",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -19,11 +19,12 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-basic analysis=true",
+    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/gi-common-components": "workspace:*",
-    "@alipay/graphinsight": "workspace:*",
+    "@alipay/gi-common-components": "*",
+    "@alipay/graphinsight": "*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
@@ -42,6 +43,6 @@
     "antd": "latest"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.antfin-inc.com"
   }
 }

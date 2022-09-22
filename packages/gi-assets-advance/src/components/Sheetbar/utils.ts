@@ -2,7 +2,7 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
   if (placement === 'top') {
     return {
       container: {
-        position: 'absolute',
+        position: 'relative',
         top: `${height}px`,
         height: `calc( 100% - ${height}px )`,
       },
@@ -12,18 +12,18 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
         top: '0px',
         left: '0px',
         right: '0px',
-        height: `${height}px`,
-        lineHeight: `${height}px`,
+        height: `${height + 1}px`,
+        lineHeight: `${height + 1}px`,
         background: '#fff',
-        border: '1px solid rgb(250, 250, 250)',
-        zIndex: 99,
+        zIndex: 300,
+        borderBottom: '1px solid #ddd',
       },
     };
   }
 
   return {
     container: {
-      position: 'unset',
+      position: 'relative',
       top: `unset`,
       height: `calc( 100% - ${height}px )`,
     },
@@ -33,11 +33,11 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
       bottom: '0px',
       left: '0px',
       right: '0px',
-      height: `${height}px`,
-      lineHeight: `${height}px`,
+      height: `${height + 1}px`,
+      lineHeight: `${height + 1}px`,
       background: '#fff',
-      border: '1px solid rgb(250, 250, 250)',
-      zIndex: 99,
+      zIndex: 300,
+      borderTop: '1px solid #ddd',
     },
   };
 };

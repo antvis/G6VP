@@ -125,9 +125,9 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
             return c.id !== 'Sheetbar';
           });
           const sheetItemService = services.map(c => {
-            if (c.id === 'GI_SERVICE_INTIAL_GRAPH') {
+            if (c.id.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1) {
               return {
-                id: 'GI_SERVICE_INTIAL_GRAPH',
+                ...c,
                 service: () => {
                   return new Promise(resolve => {
                     resolve(option.data);
@@ -156,10 +156,10 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
                 handleReCover(sheetId);
               }}
               style={{
-                // background: `${isActive ? '#3056e3' : '#fff'}`,
                 color: `${isActive ? '#3056e3' : '#000'}`,
-                padding: '0px 12px',
+                padding: '0px 0px 0px 12px',
                 cursor: 'pointer',
+                background: `${isActive ? '#fff' : '#fafafa'}`,
               }}
             >
               {sheetName}

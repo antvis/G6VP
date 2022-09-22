@@ -1,6 +1,6 @@
 {
   "name": "@alipay/graphinsight",
-  "version": "2.17.0",
+  "version": "2.18.1",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -13,11 +13,12 @@
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
     "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi",
+    "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi analysis=true",
     "clean": "rimraf es esm lib dist",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

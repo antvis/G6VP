@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-scene",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -18,7 +18,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-scene analysis=true",
+    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",

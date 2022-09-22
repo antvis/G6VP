@@ -2,14 +2,12 @@ import { Tabs } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 
-import AlibabaLogin from '../../components/AlibabaLogin';
 import DataModeCard from '../../components/DataModeCard';
 import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
 import { loader } from '../../loader';
-import { IS_LOCAL_ENV } from '../../services/const';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
 import CreatePanel from './Create';
@@ -85,7 +83,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const rightContentExtra = (
     <>
-      {IS_LOCAL_ENV && <AlibabaLogin />}
+      {/* {IS_LOCAL_ENV && <AlibabaLogin />} */}
       <Notification />
       <QRcode />
       <DataModeCard />
