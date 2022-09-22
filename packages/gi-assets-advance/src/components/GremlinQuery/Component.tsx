@@ -53,20 +53,13 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
     const result = await service({
       value: editorValue,
-    }).catch(error => {
-      setBtnLoading(false);
-      notification.error({
-        message: '服务请求失败',
-        description: error,
-      });
     });
 
     setBtnLoading(false);
-    console.log('Gremlin 查询结果', result);
     if (!result || !result.success) {
       notification.error({
         message: '执行 Gremlin 查询失败',
-        description: `查询失败：${result.errorMsg}`,
+        description: `失败原因：${result.message}`,
       });
       return;
     }

@@ -1,14 +1,11 @@
 const GI_LOCAL_URL = [
   'graphinsight.antv.vision', //外网地址
   'graphinsight.antgroup.com', //外网地址
-  'graphinsight.antgroup.com:8000', //本地绑定ihost
-  // 'dev.alipay.net:8000', //本地地址
-  'localhost:8000', //本地地址
-  'localhost:8001', //本地地址
-  '127.0.0.1:5500', // 本地打包后启动server的地址
+  'localhost', //本地地址
+  '127.0.0.1', // 本地打包后启动server的地址
   'gi-external-pre.alipay.com', //外网预发地址
 ];
-export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.host); //window.location.host === 'graphinsight.antgroup.com';
+export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
 export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
 // 本地环境
 export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
