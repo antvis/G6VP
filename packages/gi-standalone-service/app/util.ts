@@ -1,5 +1,4 @@
-// 如果是要部署到外网，请使用 http://47.242.172.5:9527
-export const GRAPHSCOPE_SERVICE_URL = 'http://11.166.85.48:9527';
+import fs from 'fs';
 
 export const responseData = (ctx, resp) => {
   if (!resp) {
@@ -167,4 +166,12 @@ export const getNodeIdsByResponse = (params: any): { nodeIds: Array<number>; edg
     // @ts-ignore
     edgeIds: [...new Set(edgeIds)],
   };
+};
+
+/**
+ * 读取 GraphScope 配置文件
+ */
+export const readGraphScopeConfig = () => {
+  const data = fs.readFileSync(`${__dirname}/service/GRAPHSCOPE_CONFIG.json`);
+  return JSON.parse(data.toString());
 };

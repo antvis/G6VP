@@ -2,6 +2,13 @@ import { Controller } from 'egg';
 import { responseData } from '../util';
 
 class GraphComputeController extends Controller {
+  async connectGraphScope() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+
+    const result = await ctx.service.graphcompute.connectGraphScope(params);
+    responseData(ctx, result);
+  }
   /**
    * 创建 GraphScope 实例
    */
