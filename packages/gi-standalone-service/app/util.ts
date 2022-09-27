@@ -175,3 +175,11 @@ export const readGraphScopeConfig = () => {
   const data = fs.readFileSync(`${__dirname}/service/GRAPHSCOPE_CONFIG.json`);
   return JSON.parse(data.toString());
 };
+
+/**
+ * 读取 TuGraph 配置文件
+ */
+export const readTuGraphConfig = () => {
+  const data = fs.readFileSync(`${__dirname}/service/TUGRAPH_CONFIG.json`);
+  return JSON.parse(data.toString());
+};

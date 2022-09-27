@@ -1,11 +1,15 @@
 import { Service } from 'egg';
-import { getNodeIdsByResponse } from '../util';
+import { getNodeIdsByResponse, readTuGraphConfig } from '../util';
 import { ILanguageQueryParams, INeighborsParams } from './serviceInterface';
 const fs = require('fs');
 
 class TuGraphService extends Service {
   async connect(username, password, serverUrl) {
-    fs.writeFileSync('SERVER_URL', serverUrl);
+    const config = {
+      engineServerURL: serverUrl,
+    };
+    fs.writeFileSync(`${__dirname}/TUGRAPH_CONFIG.json`, JSON.stringify(config, null, 2), 'utf-8');
+
     const result = await this.ctx.curl(`${serverUrl}/login`, {
       headers: {
         'content-type': 'application/json',
@@ -18,7 +22,6 @@ class TuGraphService extends Service {
       timeout: [30000, 50000],
       dataType: 'json',
     });
-    console.log('结果', result);
 
     if (result.status !== 200) {
       return {
@@ -42,9 +45,9 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async querySubGraphByCypher(cypher: string, graphName: string, authorization: string) {
-    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
+    const { engineServerURL } = readTuGraphConfig();
 
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
+    const result = await this.ctx.curl(`${engineServerURL}/cypher`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -70,7 +73,7 @@ class TuGraphService extends Service {
     const { nodeIds } = elementIds;
     // 拿到节点 ID 后，查询子图
 
-    const subGraphResult = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/misc/sub_graph`, {
+    const subGraphResult = await this.ctx.curl(`${engineServerURL}/db/${graphName}/misc/sub_graph`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -157,8 +160,9 @@ class TuGraphService extends Service {
   }
 
   async queryEdgeSchema(edgeType: string, graphName: string, authorization: string) {
-    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
+    const { engineServerURL } = readTuGraphConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/cypher`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -209,8 +213,9 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async querySchema(graphName: string, authorization: string) {
-    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/label`, {
+    const { engineServerURL } = readTuGraphConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/db/${graphName}/label`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -232,7 +237,7 @@ class TuGraphService extends Service {
     const { vertex, edge } = labels;
 
     const nodePromise = vertex.map(async v => {
-      const nodeLabelResult = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/label/node/${v}`, {
+      const nodeLabelResult = await this.ctx.curl(`${engineServerURL}/db/${graphName}/label/node/${v}`, {
         headers: {
           'content-type': 'application/json',
           Authorization: authorization,
@@ -279,8 +284,9 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async getSubGraphList(authorization: string) {
-    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db`, {
+    const { engineServerURL } = readTuGraphConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/db`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -322,8 +328,9 @@ class TuGraphService extends Service {
    * @param authorization 认证信息
    */
   async getVertexEdgeCount(graphName: string, authorization: string) {
-    const TUGRAPH_SERVICE_URL = fs.readFileSync('SERVER_URL').toString();
-    const nodeResult = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/db/${graphName}/node`, {
+    const { engineServerURL } = readTuGraphConfig();
+
+    const nodeResult = await this.ctx.curl(`${engineServerURL}/db/${graphName}/node`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
@@ -345,7 +352,7 @@ class TuGraphService extends Service {
 
     // 查询 graph 中边的数量
     const edgeCypher = 'MATCH ()-->() RETURN count(*)';
-    const result = await this.ctx.curl(`${TUGRAPH_SERVICE_URL}/cypher`, {
+    const result = await this.ctx.curl(`${engineServerURL}/cypher`, {
       headers: {
         'content-type': 'application/json',
         Authorization: authorization,
