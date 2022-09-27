@@ -1,5 +1,5 @@
 # /usr/src/graph_vis_service/Dockerfile
-FROM node:14.0
+FROM node:16.17.0
 
 # 在容器中创建一个目录
 RUN mkdir -p /usr/src/graph_vis_service/
