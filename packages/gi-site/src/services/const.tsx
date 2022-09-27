@@ -6,9 +6,8 @@ const GI_LOCAL_URL = [
   'gi-external-pre.alipay.com', //外网预发地址
 ];
 export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
-export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
 // 本地环境
-export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
+export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7002';
 
 // 开发环境
 // export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';

@@ -2,6 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
+  router.post('/graphcompute/connect', controller.graphcompute.connectGraphScope);
   router.post('/graphcompute/createGSInstance', controller.graphcompute.createGraphScopeInstance);
   router.get('/graphcompute/closeGSInstance', controller.graphcompute.closeGraphScopeInstance);
   router.post('/graphcompute/uploadFile', controller.graphcompute.uploadFile);

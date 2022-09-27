@@ -19,3 +19,5 @@ app/**/*.map
 test/**/*.map
 config/**/*.map
 .github
+GRAPHSCOPE_CONFIG.json
+TUGRAPH_CONFIG.json

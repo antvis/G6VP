@@ -6,7 +6,13 @@ import gremlin from 'gremlin_patch';
 // @ts-ignore
 import fs from 'fs';
 import FormStream from 'formstream';
-import { GRAPHSCOPE_SERVICE_URL } from '../util';
+import { readGraphScopeConfig } from '../util';
+
+interface ConnectProps {
+  engineServerURL: string;
+  httpServerURL: string;
+  isStringType: boolean;
+}
 
 class GremlinClass {
   public instance = null;
@@ -76,11 +82,28 @@ class GremlinClass {
 }
 
 class GraphComputeService extends Service {
+  async connectGraphScope(params: ConnectProps) {
+    const { isStringType, ...others } = params;
+    const oidType = isStringType ? 'string' : 'int64_t';
+    const config = {
+      ...others,
+      oidType,
+    };
+
+    fs.writeFileSync(`${__dirname}/GRAPHSCOPE_CONFIG.json`, JSON.stringify(config, null, 2), 'utf-8');
+    return {
+      success: true,
+      data: others,
+      code: 200,
+    };
+  }
   /**
    * 创建 GraphScope 实例
    */
   async createGraphScopeInstance() {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/createInstance`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/createInstance`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -114,7 +137,9 @@ class GraphComputeService extends Service {
    * 关闭创建的 GraphScope 实例
    */
   async closeGraphScopeInstance(instanceId) {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/closeInstance`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/closeInstance`, {
       method: 'GET',
       data: {
         instance_id: instanceId,
@@ -132,13 +157,19 @@ class GraphComputeService extends Service {
    * @param params
    */
   async loadDataToGraphScope(params) {
-    console.log('开始载图', params);
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/loadData`, {
+    const { engineServerURL, oidType } = readGraphScopeConfig();
+
+    const loadParams = {
+      ...params,
+      oid_type: oidType,
+    };
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/loadData`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      data: params,
+      data: loadParams,
       timeout: [5000, 60000],
       dataType: 'json',
     });
@@ -169,7 +200,9 @@ class GraphComputeService extends Service {
    * 将加载到 GraphScope 中的数据卸载掉
    */
   async unloadDataFromGraphScope(graphName) {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/unloadData`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/unloadData`, {
       method: 'GET',
       data: {
         graph_name: graphName,
@@ -212,6 +245,9 @@ class GraphComputeService extends Service {
     const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
     const result = await clientInstance.submit(value);
+
+    let mode = 'graph';
+    const propertyList: any[] = [];
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -289,48 +325,90 @@ class GraphComputeService extends Service {
             };
           }
         });
-      } else {
+      } else if (`${id}` && label) {
         // Node
         nodeItemsMapping[id] = {
           ...baseicInfo,
           nodeType: label,
         };
+      } else {
+        // 属性
+        mode = 'table';
+        // count
+        if (typeof value === 'number') {
+          // 执行的是 count()
+          propertyList.push({
+            count: value,
+          });
+        } else if (typeof value === 'string') {
+          propertyList.push({
+            value,
+          });
+        } else {
+          // Properties
+          const entries = value.entries();
+          const currentObj = {} as any;
+          for (const current of entries) {
+            const [key, v] = current;
+            if (typeof v === 'number') {
+              currentObj[key] = v;
+            } else {
+              currentObj[key] = v.join(',');
+            }
+          }
+          propertyList.push(currentObj);
+        }
       }
     }
 
-    // 查询点的详情
-    const nodeIds = Object.keys(nodeItemsMapping);
-    const propertiesArr = await this.queryNodesProperties(clientInstance, nodeIds);
+    if (mode === 'graph') {
+      // 查询点的详情
+      const nodeIds = Object.keys(nodeItemsMapping);
+      const propertiesArr = await this.queryNodesProperties(clientInstance, nodeIds);
 
-    // 构造 { id: properties } 对象
-    for (let i = 0; i < nodeIds.length; i++) {
-      nodeItemsMapping[nodeIds[i]] = {
-        ...nodeItemsMapping[nodeIds[i]],
-        data: propertiesArr[i],
+      // 构造 { id: properties } 对象
+      for (let i = 0; i < nodeIds.length; i++) {
+        nodeItemsMapping[nodeIds[i]] = {
+          ...nodeItemsMapping[nodeIds[i]],
+          data: propertiesArr[i],
+        };
+      }
+
+      const nodes = [];
+      const edges = [];
+
+      // 将点边 map 转换成数组
+      for (const nodeKey in nodeItemsMapping) {
+        nodes.push(nodeItemsMapping[nodeKey]);
+      }
+
+      for (const edgeKey in edgeItemsMapping) {
+        edges.push(edgeItemsMapping[edgeKey]);
+      }
+
+      return {
+        success: true,
+        code: 200,
+        message: 'Gremlin 查询成功',
+        mode,
+        data: {
+          nodes,
+          edges,
+          mode,
+        },
       };
-    }
-
-    const nodes = [];
-    const edges = [];
-
-    // 将点边 map 转换成数组
-    for (const nodeKey in nodeItemsMapping) {
-      nodes.push(nodeItemsMapping[nodeKey]);
-    }
-
-    for (const edgeKey in edgeItemsMapping) {
-      // TODO：临时删掉边的ID
-      delete edgeItemsMapping[edgeKey].id;
-      edges.push(edgeItemsMapping[edgeKey]);
     }
 
     return {
       success: true,
       code: 200,
       message: 'Gremlin 查询成功',
+      mode,
       data: {
-        nodes,
-        edges,
+        nodes: [],
+        edges: [],
+        mode,
+        propertyList,
       },
     };
   }
@@ -379,17 +457,18 @@ class GraphComputeService extends Service {
       return;
     }
 
+    const { engineServerURL } = readGraphScopeConfig();
+
     const { filepath, filename } = file;
     const fileContent = fs.readFileSync(filepath, {
       encoding: 'utf8',
     });
 
-    console.log('上传文件参数', file);
     const form = new FormStream();
     form.buffer('file', new Buffer(fileContent, 'utf8'), filename);
     form.field('instance_id', instanceId);
 
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/uploadFile`, {
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/uploadFile`, {
       method: 'POST',
       headers: form.headers(),
       stream: form,
@@ -466,8 +545,9 @@ class GraphComputeService extends Service {
     }
 
     console.log('执行图算法参数', algorithmParams);
+    const { engineServerURL } = readGraphScopeConfig();
 
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/algorithm`, {
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/algorithm`, {
       method: 'GET',
       data: algorithmParams,
       timeout: [10000, 30000],
@@ -630,8 +710,6 @@ class GraphComputeService extends Service {
     }
 
     for (const edgeKey in edgeItemsMapping) {
-      // TODO：临时删掉边的ID
-      delete edgeItemsMapping[edgeKey].id;
       edges.push(edgeItemsMapping[edgeKey]);
     }
 
@@ -719,7 +797,9 @@ class GraphComputeService extends Service {
    * 根据 GraphName 查询 Schema 数据
    */
   async queryGraphSchema(graphName) {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/graphSchema`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/graphSchema`, {
       method: 'GET',
       data: {
         // @ts-ignore
@@ -786,8 +866,10 @@ class GraphComputeService extends Service {
    * @param params
    */
   async addColumnToData(params) {
+    const { engineServerURL } = readGraphScopeConfig();
+
     const { graphName, contextName, colomnName, needGremlin } = params;
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/addColumn`, {
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/addColumn`, {
       method: 'GET',
       data: {
         graph_name: graphName,
@@ -811,7 +893,9 @@ class GraphComputeService extends Service {
    * @param value JSON 值
    */
   async jsonToGremlin(value) {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/jsonToGremlin`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/jsonToGremlin`, {
       method: 'GET',
       data: {
         json_str: value,
@@ -824,13 +908,13 @@ class GraphComputeService extends Service {
       return result;
     }
 
-    console.log('jsonToGremlin', result);
-
     return result.data;
   }
 
   async getGraphScopeInstance() {
-    const result = await this.ctx.curl(`${GRAPHSCOPE_SERVICE_URL}/api/graphservice/getInstance`, {
+    const { engineServerURL } = readGraphScopeConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/getInstance`, {
       method: 'GET',
       timeout: [10000, 30000],
       dataType: 'json',
@@ -839,8 +923,6 @@ class GraphComputeService extends Service {
     if (!result || !result.data) {
       return result;
     }
-
-    console.log('getGraphScopeInstance', result);
 
     return result.data;
   }
