@@ -17,24 +17,13 @@ interface LocalFileProps {
   updateSchemaData: (mode: string) => void;
   uploadLoading: boolean;
   filesMapping: any;
-  close: () => void;
+  onClose: () => void;
   loading: boolean;
   form: any;
 }
 
 const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
-  const {
-    handleUploadFile,
-    handleLoadData,
-    updateSchemaData,
-    close,
-    filesMapping,
-    uploadLoading,
-    loading,
-    form,
-  } = props;
-
-  const projectId = localStorage.getItem('GI_ACTIVE_PROJECT_ID');
+  const { handleUploadFile, handleLoadData, onClose, filesMapping, uploadLoading, loading, form } = props;
 
   const [current, setCurrent] = useImmer({
     activeKey: 0,
@@ -46,7 +35,6 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
   });
 
   const [modeType, setModeType] = useState<'LOCAL' | 'DEMO'>('LOCAL');
-  const [odpsFormValue, setOdpsFormValue] = useState({} as any);
 
   const next = () => {
     setCurrent(draft => {
@@ -66,12 +54,13 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
 
   const handleConnectGs = async () => {
     const values = await form.validateFields();
-    console.log('values', values);
     // 调用接口，将用户输入的服务地址及 ID 类型缓存起来，供后面的服务使用
     const result = await connectGraphScopeService(values);
     if (!result.success) {
       message.error('连接GraphScope失败');
+      return;
     }
+    message.success('连接成功');
     next();
   };
 
@@ -87,18 +76,20 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
           icon: <ExclamationCircleOutlined />,
           content:
             '你已经有上传的文件，是否选择忽略已经上传的文件，，如果选择「忽略已上传文件」，则已经上传的文件不会再次上传，如果选择全量覆盖，若上传同名文件，会覆盖之前上传的文件',
-          onOk: async () => {
+          onOk: async close => {
             // 忽略已上传文件
+            close();
             const status = await handleUploadFile(false);
             if (status) {
-              next();
+              await handleLoadData(modeType);
             }
           },
-          onCancel: async () => {
+          onCancel: async close => {
             // 全量覆盖
+            close();
             const status = await handleUploadFile(true);
             if (status) {
-              next();
+              await handleLoadData(modeType);
             }
           },
           okText: '忽略已上传文件',
@@ -111,13 +102,15 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
         });
         // 上传
         const status = await handleUploadFile(false);
+
         if (status) {
-          next();
+          await handleLoadData(modeType);
         }
       }
+    } else {
+      // 示例数据，开始载图
+      await handleLoadData(modeType);
     }
-    // 本地数据，则开始载图
-    await handleLoadData(modeType);
   };
 
   const steps = [
@@ -127,7 +120,7 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
         <div style={{ margin: '10px 0px 0px 0px' }}>
           <ConnectGraphScope />,
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
-            <Button onClick={close} style={{ margin: '0 10px' }} shape="round">
+            <Button onClick={onClose} style={{ margin: '0 10px' }} shape="round">
               取消
             </Button>
             <Button type="primary" onClick={handleConnectGs} shape="round" loading={gsLoading.step1Loading}>

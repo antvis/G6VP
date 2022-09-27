@@ -49,8 +49,8 @@ const ServiceHeader = props => {
 };
 
 const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
-  const { updateContext, context } = useContext();
-  const { data, inputData = [], id, serviceConfig, engineInfos, engineId } = context;
+  const { context } = useContext();
+  const { data, inputData = [], id, serviceConfig, engineId } = context;
   const [state, updateState] = useImmer({
     visible: false,
   });

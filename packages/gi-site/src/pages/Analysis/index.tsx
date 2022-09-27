@@ -9,7 +9,6 @@ import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById, updateProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
-import { findEngineInstanceList } from '../../services/engineInstace';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
@@ -110,16 +109,6 @@ const Analysis = props => {
 
       const { transData, inputData } = data;
 
-      // 根据 projectId，查询引擎实例信息
-      const engineInfoResult = await findEngineInstanceList(projectId);
-      let engineInfos = [];
-      if (engineInfoResult.success && engineInfoResult.data.length > 0) {
-        engineInfos = engineInfoResult.data;
-        // 默认最新的实例
-        localStorage.setItem('graphScopeGraphName', engineInfos[0].activeGraphName);
-        localStorage.setItem('activeEngineInfo', JSON.stringify(engineInfos[0]));
-      }
-
       updateState(draft => {
         draft.engineId = engineId; // 项目绑定的引擎ID
         draft.engineContext = engineContext; //项目绑定的引擎上下文
@@ -132,8 +121,6 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.serviceConfig = serviceConfig; //自定义服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
-        draft.engineInfos = engineInfos;
-        draft.activeEngineInfo = engineInfos[0];
       });
     })();
     // 当项目ID变化，或者强制重新刷新的时候运行
