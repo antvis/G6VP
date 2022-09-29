@@ -1,8 +1,9 @@
-export { default as processEdges } from './/processEdges';
+export { default as aggregateEdges } from './aggregateEdges';
 export {
   getDefaultValues,
   getKeysByData,
   getPositionStyles,
+  getProjectContext,
   getService,
   handleCollaspe,
   handleExpand,
@@ -11,7 +12,6 @@ export {
   mergeObjectByRule,
   time,
   uniqueElementsBy,
-  getProjectContext
 } from './common';
 export { filterByRules } from './filterByRules';
 export { findAllPath, getNeighbors } from './findAllPath';
@@ -24,6 +24,7 @@ export { default as getSchemaGraph } from './getSchemaGraph';
 export { getSearchParams } from './getSearchParams';
 export { default as getServicesByConfig } from './getServicesByConfig';
 export { loaderAssets, loaderCombinedAssets } from './loaderAssets';
+export { default as processEdges } from './processEdges';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleConfig } from './schema';
 export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 export { transDataByConfig } from './transDataByConfig';
