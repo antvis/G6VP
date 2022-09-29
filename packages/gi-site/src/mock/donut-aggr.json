@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "id": "person A",
+      "label": "person A",
+      "income": 10,
+      "outcome": 20,
+      "unknown": 25
+    },
+    {
+      "id": "person B",
+      "label": "person B",
+
+      "income": 20,
+      "outcome": 10,
+      "unknown": 5
+    },
+    {
+      "id": "person C",
+      "label": "person C",
+      "income": 200,
+      "outcome": 20,
+      "unknown": 25
+    }
+  ],
+  "edges": [
+    { "source": "person A", "target": "person B", "type": "family", "size": 10 },
+    { "source": "person A", "target": "person C", "type": "family", "size": 140 },
+    { "source": "person A", "target": "person B", "type": "transfer", "amount": 20, "time": "2022-9-30 18:00" },
+    { "source": "person A", "target": "person B", "type": "transfer", "amount": 100, "time": "2022-9-30 19:00" },
+    { "source": "person A", "target": "person B", "type": "transfer", "amount": 320, "time": "2022-9-30 20:00" },
+    { "source": "person B", "target": "person A", "type": "transfer", "amount": 120, "time": "2022-9-30 20:05" },
+    { "source": "person B", "target": "person A", "type": "transfer", "amount": 220, "time": "2022-9-30 21:05" },
+    { "source": "person A", "target": "person B", "type": "transfer", "amount": 100, "time": "2022-9-30 21:00" },
+    { "source": "person B", "target": "person C", "type": "transfer", "amount": 100, "time": "2022-9-30 11:00" },
+    { "source": "person B", "target": "person C", "type": "transfer", "amount": 300, "time": "2022-9-30 12:00" },
+    { "source": "person B", "target": "person C", "type": "transfer", "amount": 400, "time": "2022-9-30 21:00" }
+  ]
+}
