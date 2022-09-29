@@ -8,19 +8,19 @@ import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
 import { loader } from '../../loader';
+import DatasetList from '../Dataset/List';
 import setDefaultDemo from '../X-Studio';
 import Case from './Case';
 import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
-
 setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
 
-export type NavbarId = 'case' | 'project' | 'save' | 'deployed';
+export type NavbarId = 'case' | 'project' | 'save' | 'deployed' | 'dataset';
 export interface DeployItem {
   id: NavbarId;
   name: string;
@@ -34,7 +34,11 @@ const LIST_OPTIONS: { id: NavbarId; name: string }[] = [
   },
   {
     id: 'project',
-    name: '我的项目',
+    name: '我的分析',
+  },
+  {
+    id: 'dataset',
+    name: '我的数据',
   },
   {
     id: 'save',
@@ -141,6 +145,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
                   {c.id === 'case' && <Case />}
                   {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
                   {c.id === 'save' && <SaveList type={c.id}></SaveList>}
+                  {c.id === 'dataset' && <DatasetList></DatasetList>}
                 </TabPane>
               );
             })}

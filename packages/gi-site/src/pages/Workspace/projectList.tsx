@@ -1,14 +1,14 @@
 import { Icon, utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row, Modal } from 'antd';
+import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
-import ODPSDeploy from '../../components/ODPSDeploy';
-import MembersPanel from './Members';
+
 import { getProjectList, removeProjectById } from '../../services';
 import type { IProject } from '../../services/typing';
+import MembersPanel from './Members';
 
 interface ProjectListProps {
   onCreate: () => void;
@@ -17,7 +17,6 @@ interface ProjectListProps {
 
 interface ProjectListState {
   lists: IProject[];
-  deployVisible: boolean;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -25,7 +24,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const history = useHistory();
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
-    deployVisible: false,
   });
 
   const [member, setMember] = useImmer({
@@ -79,18 +77,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     });
   };
 
-  const handleDeployOpen = () => {
-    updateState(draft => {
-      draft.deployVisible = true;
-    });
-  };
-
-  const hanldeDeployClose = () => {
-    updateState(draft => {
-      draft.deployVisible = false;
-    });
-  };
-
   const menu = item => (
     <Menu>
       <Menu.Item>
@@ -107,7 +93,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         </Popconfirm>
       </Menu.Item>
       <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>
-      <Menu.Item onClick={handleDeployOpen}>项目部署</Menu.Item>
     </Menu>
   );
 
@@ -138,15 +123,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         })}
       </Row>
       <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
-      <Modal
-        title="项目部署"
-        visible={state.deployVisible}
-        onCancel={hanldeDeployClose}
-        maskClosable={false}
-        footer={false}
-      >
-        <ODPSDeploy />
-      </Modal>
     </>
   );
 };

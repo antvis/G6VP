@@ -10,6 +10,18 @@ export const LOCAL_GRAPHSCOPE_SERVER = 'http://127.0.0.1:7001';
 // 本地环境
 export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001';
 
+import localforage from 'localforage';
+
+export const DB_DATASETS = localforage.createInstance({
+  description: 'GraphInsight 本地数据集',
+  name: 'gi-dataset',
+});
+
+export const DB_PROJECT = localforage.createInstance({
+  description: 'GraphInsight 分析画布',
+  name: 'gi-analysis',
+});
+
 // 开发环境
 // export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
 

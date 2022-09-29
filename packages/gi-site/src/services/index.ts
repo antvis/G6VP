@@ -2,7 +2,8 @@ import { message } from 'antd';
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { ASSET_TYPE, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
+import { ASSET_TYPE, DB_DATASETS, DB_PROJECT, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
+
 import { IProject } from './typing';
 
 export function getEdgesByNodes(nodes, edges) {
@@ -217,6 +218,18 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
       }
       if (value.type === 'project') {
         projects.push(value);
+        const { id, data, ...others } = value;
+        const { engineId, schemaData, name } = others;
+        DB_DATASETS.setItem(id as string, {
+          data: data?.transData,
+          engineId,
+          schemaData,
+          title: `${name}项目的数据集`,
+        });
+        DB_PROJECT.setItem(id as string, others);
+        localforage.dropInstance({
+          name: 'dataset',
+        });
       }
     });
     if (type === 'project') {
