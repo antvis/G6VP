@@ -127,7 +127,13 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     }
 
     if (highlightMode) {
-      highlightSubGraph(graph, data);
+      const { isEmpty, isFull } = highlightSubGraph(graph, data);
+
+      updateContext(draft => {
+        //@ts-ignore
+        draft.persistentHighlight = !isEmpty && !isFull;
+      });
+
       return;
     }
 

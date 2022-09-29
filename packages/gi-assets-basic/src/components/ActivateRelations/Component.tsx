@@ -1,3 +1,4 @@
+import { useContext } from '@alipay/graphinsight';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
 
@@ -23,10 +24,11 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
     enableEdgeHover,
     enableNodeHover,
   } = props;
+  const { persistentHighlight } = useContext();
 
   return (
     <>
-      {enable && <ActivateRelations trigger={trigger} />}
+      {enable && !persistentHighlight && <ActivateRelations trigger={trigger} />}
       {enableNodeHover && <Hoverable bindType="node" />}
       {enableEdgeHover && <Hoverable bindType="edge" />}
     </>

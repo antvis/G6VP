@@ -178,7 +178,7 @@ export const highlightSubGraph = (graph, data: GraphinData) => {
     source.edges.forEach(function (edge) {
       graph.clearItemStates(edge.id);
     });
-    return;
+    return { isEmpty, isFull };
   }
 
   source.nodes.forEach(node => {
@@ -213,4 +213,8 @@ export const highlightSubGraph = (graph, data: GraphinData) => {
       graph.setItemState(edge.id, 'disabled', true);
     }
   });
+  return {
+    isEmpty,
+    isFull,
+  };
 };
