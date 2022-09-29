@@ -165,7 +165,7 @@ export const highlightSubGraph = (graph, data: GraphinData) => {
   });
 
   const sourceNodesCount = source.nodes.length;
-  const sourceEdgesCount = source.edges.length;
+  const sourceEdgesCount = edgeIds.length; //考虑聚合边
   const nodesCount = data.nodes.length;
   const edgesCount = data.edges.length;
   const isEmpty = nodesCount === 0 && edgesCount === 0;
