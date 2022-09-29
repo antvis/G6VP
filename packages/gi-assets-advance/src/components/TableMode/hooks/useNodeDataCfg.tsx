@@ -1,10 +1,10 @@
-import React from 'react';
 import { useContext } from '@alipay/graphinsight';
 import { S2DataConfig } from '@antv/s2';
+import React from 'react';
 
 // 生成点表的数据
 const useNodeDataCfg = (): S2DataConfig => {
-  const { schemaData, data: graphData, largeGraphData } = useContext();
+  const { schemaData, source: graphData, largeGraphData } = useContext();
 
   const nodeDataCfg: S2DataConfig = React.useMemo(() => {
     const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
@@ -20,7 +20,7 @@ const useNodeDataCfg = (): S2DataConfig => {
         columns.push(key);
       }
     }
-    
+
     /* 
       在大图模式下，表格的数据源为 largeGraphData
       此时刷选和点选表格时会过滤画布数据
