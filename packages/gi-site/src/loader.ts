@@ -22,7 +22,7 @@ export const BIZ_PACKAGES = !IS_LOCAL_ENV
       // },
       {
         name: '@alipay/gi-assets-gs',
-        version: '1.6.0',
+        version: '1.7.0',
       },
       {
         name: '@alipay/gi-assets-akg',
