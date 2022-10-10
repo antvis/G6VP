@@ -49,10 +49,12 @@ export type EdgeConfig = typeof defaultConfig;
 /** 数据映射函数  需要根据配置自动生成*/
 const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
   try {
-    const { color: color_CFG, size: size_CFG, label: LABEL_KEYS, advanced } = merge(
-      defaultConfig,
-      config.props,
-    ) as EdgeConfig;
+    const {
+      color: color_CFG,
+      size: size_CFG,
+      label: LABEL_KEYS,
+      advanced,
+    } = merge(defaultConfig, config.props) as EdgeConfig;
 
     const { keyshape: keyshape_CFG } = advanced;
 
@@ -92,14 +94,33 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
 
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
         const [edgeType, propObjKey, propName] = d.split('.');
+        console.log(d, edgeType, propObjKey, propName, data);
+        // 只有当 nodeType 匹配时才取对应的属性值
         if (edge.edgeType || 'UNKNOW' === edgeType) {
-          // 只有当 nodeType 匹配时才取对应的属性值
+          // propName 存在，则 propObjKey 值一定为 properties
           if (propName) {
-            // propName 存在，则 propObjKey 值一定为 properties
             return data[propObjKey][propName];
+          }
+          /** 如果有汇总边，则强制使用汇总边的文本展示 */
+          const { aggregate } = data;
+          if (aggregate) {
+            const sum = aggregate.reduce((acc, curr) => {
+              const val = curr.data[propObjKey];
+              if (typeof val === 'number') {
+                acc = acc + val;
+                return acc;
+              } else {
+                return '';
+              }
+            }, 0);
+            if (sum === '') {
+              return data['aggregateCount'];
+            }
+            return `汇总：${sum}`;
           }
           return data[propObjKey];
         }
+
         return data[edgeType];
       })
         .filter(d => d)
