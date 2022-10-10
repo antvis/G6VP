@@ -3,10 +3,8 @@ import info from './info';
 
 export default context => {
   const { services, engineId } = context;
-  const {
-    options: initializerServiceOptions,
-    defaultValue: defaultInitializerService,
-  } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
+  const { options: initializerServiceOptions, defaultValue: defaultInitializerService } =
+    utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
   const { options: schemaServiceOptions, defaultValue: defaultschemaService } = utils.getServiceOptionsByEngineId(
     services,
     info.services[1],
@@ -33,6 +31,13 @@ export default context => {
         options: schemaServiceOptions,
       },
       default: defaultschemaService,
+    },
+    aggregate: {
+      title: '汇总边',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
     },
     // 注意⚠️：GI_INITIALIZER 是必须的属性字段，千万不要漏掉
     GI_INITIALIZER: {
