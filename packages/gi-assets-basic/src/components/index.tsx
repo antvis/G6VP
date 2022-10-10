@@ -32,6 +32,7 @@ import PinNodeWithMenu from './PinNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+import SideSelectTabs from './SideSelectTabs';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -75,4 +76,5 @@ export {
   SankeyAnalysis,
   LayoutSwitch,
   GrailLayout,
+  SideSelectTabs,
 };

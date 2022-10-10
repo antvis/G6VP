@@ -38,6 +38,8 @@ npm run start
 
 - node 版本 12，直接启动报错找不到依赖
 
+> **在子包中使用 npm 启动或编译，使用 tnpm 也会报如下的错误。**
+
 ```ts
 sh: father: command not found
 npm ERR! code ELIFECYCLE
