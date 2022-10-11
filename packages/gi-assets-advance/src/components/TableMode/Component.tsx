@@ -1,13 +1,16 @@
 import { useContext } from '@alipay/graphinsight';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { GraphinData } from '@antv/graphin';
 import { S2DataConfig } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
 import { Button, Tabs } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { useEdgeDataCfg, useFullScreen, useListenEdgeSelect, useListenNodeSelect, useNodeDataCfg } from './hooks';
+import { useFullScreen, useListenEdgeSelect, useListenNodeSelect } from './hooks';
 import './index.less';
+import getColumns from './utils/getColumns';
+import getData from './utils/getData';
 
 export interface IProps {
   isSelectedActive: boolean;
@@ -20,7 +23,7 @@ const { TabPane } = Tabs;
 
 const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, style = {} } = props;
-  const { graph } = useContext();
+  const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
 
   // S2 的 options 配置
@@ -38,8 +41,28 @@ const TableMode: React.FC<IProps> = props => {
     edgeTable: null,
   });
 
-  const nodeDataCfg: S2DataConfig = useNodeDataCfg();
-  const edgeDataCfg: S2DataConfig = useEdgeDataCfg();
+  const [selectItems, setSelectItems] = React.useState<GraphinData>({
+    nodes: [],
+    edges: [],
+  });
+
+  const NODES_FIELDS_COLUMNS = getColumns(schemaData, 'nodes');
+  const EDGES_FIELDS_COLUMNS = getColumns(schemaData, 'edges');
+  const NODES_DATA = getData('nodes', { selectItems, largeGraphData, graphData });
+  const EDGES_DATA = getData('edges', { selectItems, largeGraphData, graphData });
+
+  const nodeDataCfg: S2DataConfig = {
+    fields: {
+      columns: NODES_FIELDS_COLUMNS,
+    },
+    data: NODES_DATA,
+  }; //useNodeDataCfg();
+  const edgeDataCfg: S2DataConfig = {
+    fields: {
+      columns: EDGES_FIELDS_COLUMNS,
+    },
+    data: EDGES_DATA,
+  }; //useEdgeDataCfg();
 
   useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
   useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
@@ -48,13 +71,55 @@ const TableMode: React.FC<IProps> = props => {
     const reset = () => {
       s2Instance.nodeTable?.interaction.reset();
       s2Instance.edgeTable?.interaction.reset();
+      if (selectItems.nodes.length !== 0) {
+        setSelectItems({
+          nodes: [],
+          edges: [],
+        });
+      }
     };
     graph.on('canvas:click', reset);
 
     return () => {
       graph.off('canvas:click', reset);
     };
-  }, [s2Instance.nodeTable, s2Instance.edgeTable]);
+  }, [s2Instance.nodeTable, s2Instance.edgeTable, selectItems]);
+
+  React.useEffect(() => {
+    graph.on('nodeselectchange', e => {
+      const { selectedItems, select } = e;
+      if (!select) {
+        return;
+      }
+      //@ts-ignore
+      const { nodes, edges } = selectedItems;
+      const res = edges.reduce((acc, curr) => {
+        const model = curr.getModel();
+        if (model.aggregate) {
+          return [...acc, ...model.aggregate];
+        }
+        return [...acc, model];
+      }, []);
+
+      setSelectItems({
+        nodes: nodes.map(c => c.getModel()),
+        edges: res,
+      });
+    });
+    graph.on('edge:click', e => {
+      if (!e.item) {
+        return;
+      }
+      const model = e.item.getModel();
+      //@ts-ignore
+      setSelectItems(preState => {
+        return {
+          ...preState,
+          edges: model.aggregate ? model.aggregate : [model],
+        };
+      });
+    });
+  }, [setSelectItems]);
 
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
