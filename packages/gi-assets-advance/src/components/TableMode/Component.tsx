@@ -1,13 +1,14 @@
 import { useContext } from '@alipay/graphinsight';
-import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { S2DataConfig } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Button, Tabs } from 'antd';
+import { Button, Tabs, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { useFullScreen, useListenEdgeSelect, useListenNodeSelect } from './hooks';
+import { useFullScreen } from './hooks';
+import useCellSelect from './hooks/useCellSelect';
 import './index.less';
 import getColumns from './utils/getColumns';
 import getData from './utils/getData';
@@ -25,6 +26,7 @@ const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, style = {} } = props;
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
+  const targetWindowRef = React.useRef<null | Window>(null);
 
   // S2 的 options 配置
   const [options, updateOptions] = useImmer<any>({
@@ -45,6 +47,11 @@ const TableMode: React.FC<IProps> = props => {
     nodes: [],
     edges: [],
   });
+  const [state, setState] = React.useState({
+    isPostStart: false,
+    postParmas: {},
+  });
+  const { isPostStart, postParmas } = state;
 
   const NODES_FIELDS_COLUMNS = getColumns(schemaData, 'nodes');
   const EDGES_FIELDS_COLUMNS = getColumns(schemaData, 'edges');
@@ -64,14 +71,31 @@ const TableMode: React.FC<IProps> = props => {
     data: EDGES_DATA,
   }; //useEdgeDataCfg();
 
-  useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
-  useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
+  // useListenNodeSelect(isSelectedActive, s2Instance.nodeTable, isFullScreen);
+  // useListenEdgeSelect(isSelectedActive, s2Instance.edgeTable, isFullScreen);
+  useCellSelect(isSelectedActive, s2Instance, isFullScreen);
 
   React.useEffect(() => {
     const reset = () => {
       s2Instance.nodeTable?.interaction.reset();
       s2Instance.edgeTable?.interaction.reset();
-      if (selectItems.nodes.length !== 0) {
+      targetWindowRef.current?.postMessage({
+        /** ${Onwer}_${ComponentName}_${Action} */
+        type: 'TABS_TABLEMODE_CLEAR',
+        payload: {},
+      });
+
+      if (selectItems.nodes.length !== 0 || selectItems.edges.length !== 0) {
+        targetWindowRef.current?.postMessage({
+          /** ${Onwer}_${ComponentName}_${Action} */
+          type: 'TABS_TABLEMODE_SELECT',
+          payload: {
+            selectItems: {
+              nodes: [],
+              edges: [],
+            },
+          },
+        });
         setSelectItems({
           nodes: [],
           edges: [],
@@ -85,6 +109,7 @@ const TableMode: React.FC<IProps> = props => {
     };
   }, [s2Instance.nodeTable, s2Instance.edgeTable, selectItems]);
 
+  /** 从画布到表格的交互逻辑 */
   React.useEffect(() => {
     graph.on('nodeselectchange', e => {
       const { selectedItems, select } = e;
@@ -93,18 +118,26 @@ const TableMode: React.FC<IProps> = props => {
       }
       //@ts-ignore
       const { nodes, edges } = selectedItems;
-      const res = edges.reduce((acc, curr) => {
+      const resEdges = edges.reduce((acc, curr) => {
         const model = curr.getModel();
         if (model.aggregate) {
           return [...acc, ...model.aggregate];
         }
         return [...acc, model];
       }, []);
-
-      setSelectItems({
+      const res = {
         nodes: nodes.map(c => c.getModel()),
-        edges: res,
+        edges: resEdges,
+      };
+
+      targetWindowRef.current?.postMessage({
+        /** ${Onwer}_${ComponentName}_${Action} */
+        type: 'TABS_TABLEMODE_SELECT',
+        payload: {
+          selectItems: res,
+        },
       });
+      setSelectItems(res);
     });
     graph.on('edge:click', e => {
       if (!e.item) {
@@ -118,6 +151,17 @@ const TableMode: React.FC<IProps> = props => {
           edges: model.aggregate ? model.aggregate : [model],
         };
       });
+
+      targetWindowRef.current?.postMessage({
+        /** ${Onwer}_${ComponentName}_${Action} */
+        type: 'TABS_TABLEMODE_SELECT',
+        payload: {
+          selectItems: {
+            nodes: [],
+            edges: model.aggregate ? model.aggregate : [model],
+          },
+        },
+      });
     });
   }, [setSelectItems]);
 
@@ -130,12 +174,61 @@ const TableMode: React.FC<IProps> = props => {
     }
   };
 
+  const handleOpen = () => {
+    const params = {
+      // dataCfg: {
+      //   nodeDataCfg,
+      //   edgeDataCfg,
+      // },
+      options: {
+        supportCSSTransform: true,
+        showSeriesNumber: true,
+        interaction: {
+          autoResetSheetStyle: false,
+        },
+      },
+      largeGraphData,
+      graphData,
+      NODES_FIELDS_COLUMNS,
+      EDGES_FIELDS_COLUMNS,
+    };
+    setState({ isPostStart: true, postParmas: params });
+  };
+  React.useEffect(() => {
+    if (!isPostStart) {
+      return;
+    }
+    const targetOrigin = window.location.origin + '/#/tabs/table';
+
+    const targetWindow = window.open(window.location.origin + '/#/tabs/table', '_black');
+    targetWindowRef.current = targetWindow;
+    const handleMessage = e => {
+      if (e.data.type === 'GI_TABLEMODE_READY' && e.data.payload.isReady) {
+        targetWindow?.postMessage(
+          {
+            type: 'TABS_TABLEMODE_INIT', //  /** ${Onwer}_${ComponentName}_${Action} */
+            payload: postParmas,
+          },
+          targetOrigin,
+        );
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [isPostStart, postParmas]);
   const extra = (
-    <Button
-      type="text"
-      icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-      onClick={toggleFullScreen}
-    />
+    <>
+      <Button
+        type="text"
+        icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+        onClick={toggleFullScreen}
+      />
+      <Tooltip title="使用浏览器新页签打开，分屏操作更高效">
+        <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
+      </Tooltip>
+    </>
   );
 
   useEffect(() => {
