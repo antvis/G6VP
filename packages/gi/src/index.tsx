@@ -1,5 +1,5 @@
 /** export  */
-const version = '2.16.0';
+const version = '2.19.0';
 import {
   deepClone,
   GIAC_CONTENT_METAS,

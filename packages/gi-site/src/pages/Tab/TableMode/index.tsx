@@ -146,11 +146,7 @@ const TableMode: React.FunctionComponent<TableModeProps> = props => {
 
   return (
     <>
-      <Alert
-        message="当前版本只支持从表格到画布的交互，从画布到表格的交互下个版本上线。您可以利用浏览器特性，分屏展示，操作更加高效。"
-        type="info"
-        showIcon
-      />
+      <Alert message="您可以利用浏览器特性，分屏展示，操作更加高效。" type="info" showIcon />
       <Tabs tabPosition="top" destroyInactiveTabPane centered style={{ height: '100%', width: '100%' }}>
         <TabPane tab="点表" key="node" style={{ height: '100%' }}>
           <div style={{ height: 'calc(100vh - 60px)' }}>
