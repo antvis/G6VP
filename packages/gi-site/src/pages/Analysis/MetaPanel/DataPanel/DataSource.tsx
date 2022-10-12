@@ -43,7 +43,7 @@ const DataSource: React.FunctionComponent<DataSourceProps> = props => {
       >
         <UploadOutlined /> 导入
       </Button>
-      <UploadPanel visible={visible} handleClose={handleClose} initData={data}></UploadPanel>
+      <UploadPanel visible={visible} handleClose={handleClose}></UploadPanel>
     </div>
   );
 };
