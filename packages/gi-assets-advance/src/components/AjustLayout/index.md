@@ -10,7 +10,6 @@ const services = [
   {
     id: 'GI_SERVICE_INTIAL_GRAPH',
     service: params => {
-      console.log(params);
       return new Promise(resolve => {
         resolve(Utils.mock(20).tree().graphin());
       });

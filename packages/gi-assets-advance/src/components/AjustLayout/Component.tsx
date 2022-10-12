@@ -104,12 +104,12 @@ export const getLayoutsByOptions = (layouts, graph) => {
         center: [width / 2 + index * width + GAP, 0, height / 2],
         ...options,
       };
-      console.log('COUNT:', count, 'INDEX', index, 'OPTIONS', layoutOptions);
+
       const instance = new LayoutMap[type](layoutOptions);
       const newGraphData = cropGraphByNodes(source, nodes);
-      console.log("newGraphData:", newGraphData)
+
       const newModel = instance.layout(newGraphData);
-      console.log("newModel:", newModel)
+
       return newModel;
     });
   const newDatas = datas.reduce(
@@ -132,7 +132,6 @@ export const getLayoutsByOptions = (layouts, graph) => {
       return a.source === b.source && a.target === b.target;
     }),
   };
-  console.log('datas', datas, filteredDatas);
 
   // graph.refreshPositions();
   graph.positionsAnimate();
@@ -178,11 +177,10 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
   }, [graph, updateState]);
 
   const handleClick = async () => {
-    console.log('state', state);
     getLayoutsByOptions(state.layouts, graph);
   };
   const { layouts } = state;
-  console.log('state', state);
+
   const handlePlus = () => {
     updateState(draft => {
       draft.layouts.push({

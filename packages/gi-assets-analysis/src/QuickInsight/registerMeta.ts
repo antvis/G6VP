@@ -17,7 +17,6 @@ metas.GIAC.properties.GIAC.properties.isVertical.default = true;
 metas.GIAC.properties.GIAC.properties.tooltipPlacement.default = 'right';
 export default context => {
   const { keys } = context;
-  console.log('keys', keys);
 
   return {
     visible: {

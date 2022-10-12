@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { Handler } from '@alipay/gi-common-components';
+import { utils } from '@alipay/graphinsight';
 import * as React from 'react';
 import type { ContainerProps } from './typing';
 
@@ -31,8 +31,6 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
     overflow: 'visible',
   };
   const styles = state.visible ? baseStyle : { ...baseStyle, width: '0px', padding: '0' };
-
-  console.log('placement:', placement);
 
   const { children } = props;
   return (

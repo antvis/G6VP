@@ -1,13 +1,13 @@
 import { Icon } from '@alipay/graphinsight';
-import React from 'react';
 import { Empty } from 'antd';
+import React from 'react';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
     const components = GI_CONTAINER.map(id => ComponentCfgMap[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
-    
+
     if ((!components || components.length === 0) && visible) {
       return (
         <Empty
@@ -34,8 +34,6 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
         console.warn(`asset: ${itemId} not found`);
         return null;
       }
-
-      // console.log('item:', item);
 
       const { component: Component } = asset;
       const { icon } = item.props.GIAC_CONTENT || {};

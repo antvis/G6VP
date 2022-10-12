@@ -29,7 +29,6 @@ export const NeighborsQuery: ServiceObject = {
     const { ids, nodes: NODES } = params;
     const GI_SERVER_CONTEXT = window.localStorage.getItem('GI_SERVER_CONTEXT');
 
-    console.log('邻居查询', params, ids);
     const transfrom = p => {
       const { nodes, edges } = p;
       return {

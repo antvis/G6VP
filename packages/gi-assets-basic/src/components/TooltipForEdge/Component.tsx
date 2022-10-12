@@ -37,14 +37,13 @@ const EdgeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
     <Tooltip bindType="edge" placement={placement} hasArrow={hasArrow} style={{ background, color, width }}>
       {renderProps => {
         const { model } = renderProps;
-        console.log('model', model, keys);
+
         return (
           <div>
             <ul className="tooltip-content">
               {keys.map((key: string) => {
                 //@ts-ignore
                 const val = model.data[key];
-                console.log('val', val);
 
                 if (val !== undefined) {
                   return (

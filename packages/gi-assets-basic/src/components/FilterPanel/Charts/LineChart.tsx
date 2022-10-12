@@ -29,7 +29,6 @@ const LineChart: React.FunctionComponent<LineChartProps> = props => {
         }
         return 1;
       });
-    console.log('PlotRef', data);
 
     const line = new Column(PlotRef.current as any, {
       data: data,
@@ -50,7 +49,6 @@ const LineChart: React.FunctionComponent<LineChartProps> = props => {
     };
   }, [yField]);
   const onSelectChange = val => {
-    console.log('val', val);
     setState(pre => {
       return {
         ...pre,
@@ -59,7 +57,6 @@ const LineChart: React.FunctionComponent<LineChartProps> = props => {
     });
   };
 
-  console.log('line chart', elementProps, props);
   return (
     <div>
       <Select

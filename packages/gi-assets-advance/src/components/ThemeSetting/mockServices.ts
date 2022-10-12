@@ -11,7 +11,7 @@ const mockServices = () => {
         //@ts-ignore
         const { localforage } = window;
         const project = await localforage.getItem(projectId);
-        console.log('project', project, projectId);
+
         const themes = project.themes || [];
         return {
           success: true,
@@ -33,7 +33,7 @@ const mockServices = () => {
         localforage.setItem(projectId, { ...project, themes: newThemes });
         return {
           success: true,
-          msg: "主题创建成功！",
+          msg: '主题创建成功！',
           data: [...newThemes],
         };
       },
@@ -50,19 +50,19 @@ const mockServices = () => {
         const index = themes.findIndex(item => item.id === id);
         if (index !== -1) {
           themes[index] = theme;
-          localforage.setItem(projectId, {...project, themes});
+          localforage.setItem(projectId, { ...project, themes });
           return {
             success: true,
-            msg: "主题更新成功",
-            data: [...themes]
-          }
+            msg: '主题更新成功',
+            data: [...themes],
+          };
         } else {
           return {
             sucess: false,
-            msg: "主题不存在",
-          }
+            msg: '主题不存在',
+          };
         }
-      }
+      },
     },
     {
       id: REMOVE_THEME,
@@ -77,11 +77,11 @@ const mockServices = () => {
         localforage.setItem(projectId, { ...project, themes: filterThemes });
         return {
           success: true,
-          msg: "删除成功",
-          data: filterThemes
-        }
-      }
-    }
+          msg: '删除成功',
+          data: filterThemes,
+        };
+      },
+    },
   ];
 };
 

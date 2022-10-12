@@ -1,9 +1,8 @@
 import { useContext } from '@alipay/graphinsight';
-import Graphin from '@antv/graphin';
-import { MoreOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Card,  Col,  Dropdown, Menu,  Popconfirm, Row } from 'antd';
+import { MoreOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import React from 'react';
-import {useImmer } from 'use-immer';
+import { useImmer } from 'use-immer';
 import AddTheme from './AddOrUpdateTheme';
 import './index.less';
 import mockServices from './mockServices';
@@ -29,7 +28,7 @@ const ThemeSetting: React.FC<Props> = props => {
   const removeTheme = async (id: string) => {
     // @ts-ignore
     const res = await removeThemeService(id);
-    console.log('res:', res);
+
     if (res.success) {
       updateState(draft => {
         draft.themes = res.data;
@@ -82,8 +81,6 @@ const ThemeSetting: React.FC<Props> = props => {
       container.style.backgroundImage = backgroundImage;
     }
 
-    console.log(nodesConfig, edgesConfig)
-
     updateContext(draft => {
       draft.config = {
         ...draft.config,
@@ -101,7 +98,6 @@ const ThemeSetting: React.FC<Props> = props => {
     try {
       //@ts-ignore
       getThemeService().then(res => {
-        console.log('res:', res);
         if (res.success) {
           updateState(draft => {
             draft.themes = res.data;

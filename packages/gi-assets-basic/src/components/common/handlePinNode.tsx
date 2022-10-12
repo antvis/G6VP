@@ -54,7 +54,6 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
     // 重启力导
     restartForceSimulation([newModel], graph);
     // simulation.restart([newModel], graph);
-    // console.log('simulation', simulation, layoutInstance.instance.simulation);
   }
 };
 

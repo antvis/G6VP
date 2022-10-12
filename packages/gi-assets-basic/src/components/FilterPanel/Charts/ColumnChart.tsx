@@ -51,9 +51,6 @@ const ColumnChart: React.FC<IColumnChartProps> = props => {
 
       const selectValue = elements.filter(e => e.states.indexOf('active') !== -1).map(e => e.data.x);
 
-      console.log('elements: ', elements);
-      console.log('selectValue:', selectValue);
-
       const isFilterReady = selectValue.length !== 0;
       updateFilterCriteria(id, {
         ...filterCriteria,

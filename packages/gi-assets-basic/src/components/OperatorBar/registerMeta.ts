@@ -9,7 +9,7 @@ const registerMeta = context => {
       label: c.label + ' (建议集成在工具栏) ',
     };
   });
-  console.log;
+
   return {
     /** 分类信息 */
     GI_CONTAINER: {
