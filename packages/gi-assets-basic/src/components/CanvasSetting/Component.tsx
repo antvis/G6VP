@@ -1,6 +1,7 @@
 import { useContext } from '@alipay/graphinsight';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
+import CanvasClick from './CanvasClick';
 
 const { DragCanvas, ZoomCanvas, BrushSelect, Hoverable, ActivateRelations } = Behaviors;
 
@@ -18,10 +19,11 @@ export interface CanvasSettingProps {
     disabled: boolean;
     enableOptimize: boolean;
   };
+  clearStatus: boolean;
 }
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
-  const { styleCanvas, dragCanvas, zoomCanvas } = props;
+  const { styleCanvas, dragCanvas, zoomCanvas, clearStatus } = props;
   const { backgroundColor, backgroundImage } = styleCanvas;
   const { GISDK_ID } = useContext();
 
@@ -42,10 +44,7 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       />
       <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
       <BrushSelect />
-      {/* {highlight.enable && <ActivateRelations trigger={highlight.trigger} />}
-
-      {enableNodeHover && <Hoverable bindType="node" />}
-      {enableEdgeHover && <Hoverable bindType="edge" />} */}
+      {clearStatus !== false && <CanvasClick />}
     </>
   );
 };

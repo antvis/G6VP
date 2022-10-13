@@ -1,4 +1,5 @@
-import { Graph, GraphinContext } from '@antv/graphin';
+import { useContext } from '@alipay/graphinsight';
+import { Graph } from '@antv/graphin';
 import React from 'react';
 /**
  * 清除所有的样式
@@ -22,7 +23,7 @@ export const clearAllStates = (graph: Graph) => {
  * @returns 点击Canvas的交互逻辑
  */
 const CanvasClick = () => {
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
 
   React.useEffect(() => {
     const handleClear = () => {

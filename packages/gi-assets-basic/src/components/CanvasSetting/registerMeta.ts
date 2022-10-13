@@ -25,7 +25,7 @@ const registerMeta = context => {
       },
     },
     dragCanvas: {
-      title: '画布样式',
+      title: '拖拽画布',
       type: 'object',
       properties: {
         disabled: {
@@ -68,7 +68,7 @@ const registerMeta = context => {
       },
     },
     zoomCanvas: {
-      title: '画布样式',
+      title: '缩放画布',
       type: 'object',
       properties: {
         disabled: {
@@ -86,6 +86,13 @@ const registerMeta = context => {
           default: true,
         },
       },
+    },
+    clearStatus: {
+      title: '点击画布,清空状态',
+      'x-component': 'Switch',
+      'x-decorator': 'FormItem',
+      type: 'boolean',
+      default: true,
     },
   };
 };

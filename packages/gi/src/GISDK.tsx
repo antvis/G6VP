@@ -2,7 +2,6 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
-import CanvasClick from './components/ClickCanvas';
 import { GraphInsightContext } from './context';
 import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
@@ -339,7 +338,6 @@ const GISDK = (props: Props) => {
           <>
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}
             <SetupUseGraphinHook updateContext={updateState} />
-            {isReady && <CanvasClick />}
             {isReady && renderComponents()}
             {isReady && children}
           </>
