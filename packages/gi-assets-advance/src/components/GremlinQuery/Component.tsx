@@ -1,8 +1,10 @@
 import { useContext, utils } from '@alipay/graphinsight';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { Button, Divider, notification } from 'antd';
+import { useImmer } from 'use-immer';
 import React, { useEffect, useState } from 'react';
 import GremlinEditor from './GremlinEditor';
+import PublishTemplate from '../PublishTemplate';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -10,31 +12,39 @@ export interface IGremlinQueryProps {
   height?: number;
   showGutter?: boolean;
   serviceId: string;
+  saveTemplateServceId?: string;
   style?: React.CSSProperties | undefined;
   visible?: boolean;
+  isShowPublishButton?: boolean;
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   initialValue = '',
   height = 220,
   serviceId,
+  saveTemplateServceId = 'GI/PublishTemplate',
   style,
   visible,
+  isShowPublishButton,
 }) => {
-  const { updateContext, transform, services, graph } = useContext();
+  console.log('saveTemplateServceId', saveTemplateServceId, serviceId);
+  const { updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useImmer<{
+    editorValue: string;
+    isFullScreen: boolean;
+    modalVisible: boolean;
+  }>({
     editorValue: initialValue || '',
     isFullScreen: false,
+    modalVisible: false,
   });
+
   const setEditorValue = val => {
-    setState(preState => {
-      return {
-        ...preState,
-        editorValue: val,
-      };
+    setState(draft => {
+      draft.editorValue = val;
     });
   };
   const { editorValue, isFullScreen } = state;
@@ -73,11 +83,14 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     });
   };
   const toggleFullScreen = () => {
-    setState(preState => {
-      return {
-        ...preState,
-        isFullScreen: !preState.isFullScreen,
-      };
+    setState(draft => {
+      draft.isFullScreen = !state.isFullScreen;
+    });
+  };
+
+  const handleShowModal = () => {
+    setState(draft => {
+      draft.modalVisible = true;
     });
   };
 
@@ -119,10 +132,29 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       </div>
       <div className={'buttonContainer'}>
         <Divider className={'divider'} />
+        {isShowPublishButton && (
+          <Button className={'publishButton'} disabled={!editorValue} onClick={handleShowModal}>
+            发布成模板
+          </Button>
+        )}
+
         <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
           开始查询
         </Button>
       </div>
+      {state.modalVisible && (
+        <PublishTemplate
+          saveTemplateServceId={saveTemplateServceId}
+          visible={state.modalVisible}
+          value={editorValue}
+          close={() => {
+            setState(draft => {
+              draft.modalVisible = false;
+            });
+          }}
+          fileType={'GREMLIN'}
+        />
+      )}
     </div>
   );
 };

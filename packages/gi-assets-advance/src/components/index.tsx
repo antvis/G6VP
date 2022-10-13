@@ -17,6 +17,7 @@ import ThemeSetting from './ThemeSetting';
 import ModeSwitch from './ModeSwitch';
 import StructAnalysis from './StructAnalysis';
 import SubGraphLayout from './SubGraphLayout';
+import TemplateQuery from './TemplateQuery';
 
 export {
   StyleSetting,
@@ -29,4 +30,5 @@ export {
   ModeSwitch,
   SubGraphLayout,
   StructAnalysis,
+  TemplateQuery,
 };

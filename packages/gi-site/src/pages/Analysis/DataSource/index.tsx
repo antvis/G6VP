@@ -23,14 +23,13 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   // 补充一个GI的ServerComponent实现：FileServerEngine
   const CustomServer = [...utils.getCombineServer([...context.activeAssets.services, FileServerEngine])];
 
-  console.log('导入数据', CustomServer);
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs tabPosition="left">
         {CustomServer.map(server => {
           //@ts-ignore
           const { component: ServerComponent } = server;
-          console.log('渲染中', server, ServerComponent);
+
           const { icon, name } = TYPE_ICONS[server.type || 'api'];
           const TabTitle = (
             <div
