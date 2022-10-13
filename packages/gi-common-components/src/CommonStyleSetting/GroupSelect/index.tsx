@@ -1,6 +1,6 @@
+import { FieldStringOutlined, NumberOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
 import React from 'react';
-import { NumberOutlined, FieldStringOutlined } from '@ant-design/icons';
 import './index.less';
 
 const { Option, OptGroup } = Select;
@@ -27,7 +27,7 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData,
           const current: any = [];
           for (const p in properties) {
             current.push({
-              key: `${d.nodeType || d.edgeType}.${p}`,
+              key: `${d.nodeType || d.edgeType}^^${p}`,
               value: p,
               type: properties[p],
             });
