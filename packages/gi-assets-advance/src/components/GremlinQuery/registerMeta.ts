@@ -22,6 +22,33 @@ const registerMeta = context => {
       },
       default: defaultValue,
     },
+    isShowPublishButton: {
+      title: '发布成模板',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      'x-reactions': [
+        {
+          target: 'saveTemplateServceId',
+          fulfill: {
+            state: {
+              visible: '{{$self.value}}',
+            },
+          },
+        },
+      ],
+      default: false,
+    },
+    saveTemplateServceId: {
+      title: '发布模板服务',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: options,
+      },
+      default: undefined,
+    },
     initialValue: {
       title: '初始查询',
       type: 'string',
