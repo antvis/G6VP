@@ -121,9 +121,10 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
   const publishTemplate = async () => {
     const values = await form.validateFields();
     if (!values.templateName) {
-      message.error('模板名称必填');
+      message.error('模板名称为空或格式不正确!');
       return;
     }
+
     setState(draft => {
       draft.btnLoading = true;
     });
@@ -240,13 +241,6 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
                 title: '模板名称只能包含字母、数字或下划线，且只能以字母开头',
                 icon: <InfoCircleOutlined />,
               }}
-              rules={[
-                {
-                  required: true,
-                  message: '模板名称为空或格式不正确!',
-                  pattern: /^[A-Za-z]+([0-9a-zA-Z_#]*[0-9A-Za-z]+)?$/,
-                },
-              ]}
             >
               <Input
                 size="small"
