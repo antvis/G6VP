@@ -29,6 +29,10 @@ export interface IEdgeSchema {
 export interface GraphSchemaData {
   nodes: INodeSchema[];
   edges: IEdgeSchema[];
+  meta?: {
+    /** 默认的标签映射字段 */
+    defaultLabelField: string;
+  };
 }
 
 /**
@@ -185,7 +189,8 @@ const defaultEdgeConfig = {
 };
 
 export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GIConfig = {}): GIConfig => {
-  const { nodes, edges } = schema;
+  const { nodes, edges, meta = { defaultLabelField: 'id' } } = schema;
+  const { defaultLabelField } = meta;
 
   let hasUnkownNodeType = false;
   let hasUnkownEdgeType = false;
@@ -204,7 +209,8 @@ export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GI
         props: {
           size: 26,
           color: COLORS[COLOR_INDEX] || '#ddd',
-          label: [`${c.nodeType}.id`],
+          label: [`${c.nodeType}^^${defaultLabelField}`],
+          // label:[[c.nodeType,defaultLabelField]]
         },
         name: '官方节点',
         expressions: [
