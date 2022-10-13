@@ -8,6 +8,6 @@ const info = {
   category: 'data-query',
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
-  services: [ASSET_ID],
+  services: [ASSET_ID, 'PublishTemplate'],
 };
 export default info;
