@@ -175,7 +175,22 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       //这里的逻辑彻底变成了 {id,nodeType,nodeTypeFromProperties,data}为必填的格式，否则文本这块有问题，可以使用「扩散组件」验证
       /** 根据Size字段映射的枚举值 */
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
-        const [nodeType, propObjKey, propName] = d.split('.');
+        /**
+         * 兼容性处理：原先的label 逻辑是 ${type}.${properpertiesKey}
+         * 现在改为 ${type}^^${properpertiesKey}
+         */
+        const newLabelArray = d.split('^^');
+        const oldLabelArray = d.split('.');
+        let [nodeType, propObjKey, propName] = newLabelArray;
+        const isOld = newLabelArray.length === 1 && newLabelArray[0].split('.').length > 1;
+        if (isOld) {
+          nodeType = oldLabelArray[0];
+          propObjKey = oldLabelArray[1];
+          propName = oldLabelArray[2];
+        }
+
+        // const [nodeType, propObjKey, propName] = d.split('^^');
+
         if ((node.nodeType || 'UNKNOW') === nodeType) {
           // 只有当 nodeType 匹配时才取对应的属性值
           if (propName) {

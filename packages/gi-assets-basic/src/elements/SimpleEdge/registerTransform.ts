@@ -93,7 +93,21 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       // const LABEL_VALUE = LABEL_KEYS.map(l => data[l]).join('_');
 
       const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
-        const [edgeType, propObjKey, propName] = d.split('.');
+        /**
+         * 兼容性处理：原先的label 逻辑是 ${type}.${properpertiesKey}
+         * 现在改为 ${type}^^${properpertiesKey}
+         */
+        const newLabelArray = d.split('^^');
+        const oldLabelArray = d.split('.');
+        let [edgeType, propObjKey, propName] = newLabelArray;
+        const isOld = newLabelArray.length === 1 && newLabelArray[0].split('.').length > 1;
+        if (isOld) {
+          edgeType = oldLabelArray[0];
+          propObjKey = oldLabelArray[1];
+          propName = oldLabelArray[2];
+        }
+
+        // const [edgeType, propObjKey, propName] = d.split('^^');
 
         // 只有当 nodeType 匹配时才取对应的属性值
         if (edge.edgeType || 'UNKNOW' === edgeType) {
