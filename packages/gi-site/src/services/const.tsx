@@ -10,7 +10,7 @@ export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.hostname); //w
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7002';
 
 // 开发环境
-// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-29149.gz00b.dev.alipay.net';
+// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-39730.gz00b.dev.alipay.net';
 
 // 测试环境
 export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : window.location.origin; // 'https://storehouse.test.alipay.net';

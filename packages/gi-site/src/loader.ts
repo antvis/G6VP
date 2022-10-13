@@ -28,6 +28,10 @@ export const BIZ_PACKAGES = !IS_LOCAL_ENV
         name: '@alipay/gi-assets-akg',
         version: '1.1.0',
       },
+      {
+        name: '@alipay/gi-assets-gs-standalone',
+        version: '1.1.0',
+      },
     ])
   : [];
 

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { GISiteParams } from '@alipay/graphinsight';
-import { Alert, Switch, Col, Form, Input, Row, Select } from 'antd';
+import { Alert, Switch, Col, Form, Row, Select } from 'antd';
 import React from 'react';
 import './index.less';
 
