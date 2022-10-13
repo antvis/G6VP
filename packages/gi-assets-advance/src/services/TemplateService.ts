@@ -2,20 +2,36 @@ export interface ServiceObject {
   name: string;
   service: (params: any) => Promise<{}>;
 }
+import { utils } from '@alipay/graphinsight';
 
+const DEFAULT_TEMPLATE = {
+  queryTemplate: 'g.V({{ID}})',
+  templateId: '3283',
+  graphLanguageType: 'GREMLIN',
+  templateName: 'defaultTemplateName',
+  templateParameterList: [{ parameterName: 'ID', parameterValue: '1', valueType: 'STRING' }],
+};
 export const PublishTemplate: ServiceObject = {
   name: '发布模板',
-  service: params => {
+  service: async params => {
     const uid = 'mock_publish_template';
     console.log('参数', params);
+
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
+    //@ts-ignore
+    const { localforage } = window;
+    const project = await localforage.getItem(projectId);
+    const gremlin_template = project._gremlin_template || [DEFAULT_TEMPLATE];
+    //project.themes = [...themes, theme];
+    const new_gremlin_template = [...gremlin_template, params];
+
+    localforage.setItem(projectId, { ...project, _gremlin_template: new_gremlin_template });
+
     return new Promise(resolve => {
       return resolve({
         success: true,
         message: 'GI 默认提供的发布模板的服务',
-        data: {
-          ...params,
-          uid,
-        },
+        data: params,
       });
     });
   },
@@ -23,20 +39,18 @@ export const PublishTemplate: ServiceObject = {
 
 export const TemplateListService = {
   name: '查询模板列表',
-  service: () => {
+  service: async () => {
+    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
+    //@ts-ignore
+    const { localforage } = window;
+    const project = await localforage.getItem(projectId);
+    const gremlin_template = project._gremlin_template || [DEFAULT_TEMPLATE];
+
     return new Promise(resolve => {
       return resolve({
         success: true,
         message: 'GI 默认提供的发布模板的服务',
-        data: [
-          {
-            queryTemplate: 'g.V({{ID}})',
-            templateId: '3283',
-            graphLanguageType: 'GREMLIN',
-            templateName: 'defaultTemplateName',
-            templateParameterList: [{ parameterName: 'ID', parameterValue: '1', valueType: 'STRING' }],
-          },
-        ],
+        data: gremlin_template,
       });
     });
   },
