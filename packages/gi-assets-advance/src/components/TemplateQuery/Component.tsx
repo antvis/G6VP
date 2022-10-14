@@ -104,7 +104,7 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
     const { data } = result;
     const options: JSX.Element[] = [];
     data
-      .filter(item => item.graphLanguageType === 'GREMLIN' || item.graphLanguageType === 'ISOGQL')
+      // .filter(item => item.graphLanguageType === 'GREMLIN' || item.graphLanguageType === 'ISOGQL')
       .forEach(item => {
         options.push(
           <Option key={item.templateId} value={item.templateId}>
@@ -211,23 +211,6 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
     setState(draft => {
       draft.btnLoading = false;
     });
-
-    // 查询后除了改变画布节点/边数据，还需要保存“初始数据”，供类似 Filter 组件作为初始化数据使用
-
-    // updateContext(draft => {
-    //   const res = transform(result.data);
-    //   draft.data = res;
-    //   draft.source = res;
-    //   if (layoutInstance.options.type !== 'graphin-force') {
-    //     draft.config.layout = {
-    //       id: 'graphin-force',
-    //       props: {
-    //         type: 'graphin-force',
-    //         animation: false,
-    //       },
-    //     };
-    //   }
-    // });
 
     updateContext(draft => {
       // @ts-ignore

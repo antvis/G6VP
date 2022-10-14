@@ -27,7 +27,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   visible,
   isShowPublishButton,
 }) => {
-  console.log('saveTemplateServceId', saveTemplateServceId, serviceId);
   const { updateContext, transform, services } = useContext();
 
   const service = utils.getService(services, serviceId);
@@ -131,7 +130,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
         </div>
       </div>
       <div className={'buttonContainer'}>
-        <Divider className={'divider'} />
+        <Divider />
         {isShowPublishButton && (
           <Button className={'publishButton'} disabled={!editorValue} onClick={handleShowModal}>
             发布成模板
@@ -139,7 +138,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
         )}
 
         <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
-          开始查询
+          执行查询
         </Button>
       </div>
       {state.modalVisible && (

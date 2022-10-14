@@ -47,7 +47,7 @@ const CypherEditor: React.FC<CyperEditorProps> = ({ onValueChange }) => {
     editorSupport.setSchema(defaultCypherSchema);
   }, []);
 
-  return <div className="Codemirror-Container" ref={contianer} style={{ height: '50vh' }} />;
+  return <div className="Codemirror-Container" ref={contianer} />;
 };
 
 export default CypherEditor;

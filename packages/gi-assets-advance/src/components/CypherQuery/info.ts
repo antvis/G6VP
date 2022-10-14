@@ -6,6 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
   icon: 'icon-query',
-  services: ['LanguageQueryService'],
+  services: ['LanguageQueryService', 'PublishTemplate'],
 };
 export default info;
