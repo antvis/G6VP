@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-advance",
-  "version": "2.17.0",
+  "version": "2.18.0",
   "description": "GraphInsight 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
