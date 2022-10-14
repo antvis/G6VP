@@ -1,0 +1,839 @@
+{
+  "columns": ["name", "signature", "description", "roles"],
+  "data": [
+    {
+      "row": [
+        "apoc.coll.avg",
+        "apoc.coll.avg(numbers :: LIST? OF NUMBER?) :: (FLOAT?)",
+        "apoc.coll.avg([0.5,1,2.3])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.contains",
+        "apoc.coll.contains(coll :: LIST? OF ANY?, value :: ANY?) :: (BOOLEAN?)",
+        "apoc.coll.contains(coll, value) optimized contains operation (using a HashSet) (returns single row or not)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.containsAll",
+        "apoc.coll.containsAll(coll :: LIST? OF ANY?, values :: LIST? OF ANY?) :: (BOOLEAN?)",
+        "apoc.coll.containsAll(coll, values) optimized contains-all operation (using a HashSet) (returns single row or not)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.containsAllSorted",
+        "apoc.coll.containsAllSorted(coll :: LIST? OF ANY?, values :: LIST? OF ANY?) :: (BOOLEAN?)",
+        "apoc.coll.containsAllSorted(coll, value) optimized contains-all on a sorted list operation (Collections.binarySearch) (returns single row or not)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.containsSorted",
+        "apoc.coll.containsSorted(coll :: LIST? OF ANY?, value :: ANY?) :: (BOOLEAN?)",
+        "apoc.coll.containsSorted(coll, value) optimized contains on a sorted list operation (Collections.binarySearch) (returns single row or not)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.disjunction",
+        "apoc.coll.disjunction(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.disjunction(first, second) - returns the disjunct set of the two lists",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.indexOf",
+        "apoc.coll.indexOf(coll :: LIST? OF ANY?, value :: ANY?) :: (INTEGER?)",
+        "apoc.coll.indexOf(coll, value) | position of value in the list",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.intersection",
+        "apoc.coll.intersection(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.intersection(first, second) - returns the unique intersection of the two lists",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.max",
+        "apoc.coll.max(values :: LIST? OF ANY?) :: (ANY?)",
+        "apoc.coll.max([0.5,1,2.3])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.min",
+        "apoc.coll.min(values :: LIST? OF ANY?) :: (ANY?)",
+        "apoc.coll.min([0.5,1,2.3])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.pairs",
+        "apoc.coll.pairs(list :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.pairs([1,2,3]) returns [1,2],[2,3],[3,null] ",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.pairsMin",
+        "apoc.coll.pairsMin(list :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.pairsMin([1,2,3]) returns [1,2],[2,3]",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.removeAll",
+        "apoc.coll.removeAll(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.removeAll(first, second) - returns first list with all elements of second list removed",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.sort",
+        "apoc.coll.sort(coll :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.sort(coll) sort on Collections",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.sortMaps",
+        "apoc.coll.sortMaps(coll :: LIST? OF MAP?, prop :: STRING?) :: (LIST? OF ANY?)",
+        "apoc.coll.sortMaps([maps], 'name') - sort maps by property",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.sortNodes",
+        "apoc.coll.sortNodes(coll :: LIST? OF NODE?, prop :: STRING?) :: (LIST? OF ANY?)",
+        "apoc.coll.sortNodes([nodes], 'name') sort nodes by property",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.subtract",
+        "apoc.coll.subtract(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.subtract(first, second) - returns unique set of first list with all elements of second list removed",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.sum",
+        "apoc.coll.sum(numbers :: LIST? OF NUMBER?) :: (FLOAT?)",
+        "apoc.coll.sum([0.5,1,2.3])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.sumLongs",
+        "apoc.coll.sumLongs(numbers :: LIST? OF NUMBER?) :: (INTEGER?)",
+        "apoc.coll.sumLongs([1,3,3])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.toSet",
+        "apoc.coll.toSet(values :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.toSet([list]) returns a unique list backed by a set",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.union",
+        "apoc.coll.union(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.union(first, second) - creates the distinct union of the 2 lists",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.unionAll",
+        "apoc.coll.unionAll(first :: LIST? OF ANY?, second :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.unionAll(first, second) - creates the full union with duplicates of the two lists",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.coll.zip",
+        "apoc.coll.zip(list1 :: LIST? OF ANY?, list2 :: LIST? OF ANY?) :: (LIST? OF ANY?)",
+        "apoc.coll.zip([list1],[list2])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.fromJsonList",
+        "apoc.convert.fromJsonList(list :: STRING?) :: (LIST? OF ANY?)",
+        "apoc.convert.fromJsonList('[1,2,3]')",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.fromJsonMap",
+        "apoc.convert.fromJsonMap(map :: STRING?) :: (MAP?)",
+        "apoc.convert.fromJsonMap('{\"a\":42,\"b\":\"foo\",\"c\":[1,2,3]}')",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.getJsonProperty",
+        "apoc.convert.getJsonProperty(node :: NODE?, key :: STRING?) :: (ANY?)",
+        "apoc.json.getJsonProperty(node,key) - converts serialized JSON in property back to original object",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.getJsonPropertyMap",
+        "apoc.convert.getJsonPropertyMap(node :: NODE?, key :: STRING?) :: (MAP?)",
+        "apoc.json.getJsonPropertyMap(node,key) - converts serialized JSON in property back to map",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toBoolean",
+        "apoc.convert.toBoolean(bool :: ANY?) :: (BOOLEAN?)",
+        "apoc.convert.toBoolean(value) | tries it's best to convert the value to a boolean",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toJson",
+        "apoc.convert.toJson(value :: ANY?) :: (STRING?)",
+        "apoc.convert.toJson([1,2,3]) or toJson({a:42,b:\"foo\",c:[1,2,3]})",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toList",
+        "apoc.convert.toList(list :: ANY?) :: (LIST? OF ANY?)",
+        "apoc.convert.toList(value) | tries it's best to convert the value to a list",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toMap",
+        "apoc.convert.toMap(map :: ANY?) :: (MAP?)",
+        "apoc.convert.toMap(value) | tries it's best to convert the value to a map",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toNode",
+        "apoc.convert.toNode(node :: ANY?) :: (NODE?)",
+        "apoc.convert.toNode(value) | tries it's best to convert the value to a node",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toRelationship",
+        "apoc.convert.toRelationship(relationship :: ANY?) :: (RELATIONSHIP?)",
+        "apoc.convert.toRelationship(value) | tries it's best to convert the value to a relationship",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toSet",
+        "apoc.convert.toSet(list :: ANY?) :: (LIST? OF ANY?)",
+        "apoc.convert.toSet(value) | tries it's best to convert the value to a set",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.convert.toString",
+        "apoc.convert.toString(string :: ANY?) :: (STRING?)",
+        "apoc.convert.toString(value) | tries it's best to convert the value to a string",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.create.uuid",
+        "apoc.create.uuid() :: (STRING?)",
+        "apoc.create.uuid() - creates an UUID",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.data.domain",
+        "apoc.data.domain(url_or_email_address :: STRING?) :: (STRING?)",
+        "apoc.data.domain('url_or_email_address') YIELD domain - extract the domain name from a url or an email address. If nothing was found, yield null.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.date.fields",
+        "apoc.date.fields(date :: STRING?, pattern = yyyy-MM-dd HH:mm:ss :: STRING?) :: (MAP?)",
+        "apoc.date.fields('2012-12-23',('yyyy-MM-dd')) - return columns and a map representation of date parsed with the given format with entries for years,months,weekdays,days,hours,minutes,seconds,zoneid",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.date.format",
+        "apoc.date.format(time :: INTEGER?, unit = ms :: STRING?, format = yyyy-MM-dd HH:mm:ss :: STRING?, timezone =  :: STRING?) :: (STRING?)",
+        "apoc.date.format(12345,('ms|s|m|h|d'),('yyyy-MM-dd HH:mm:ss zzz'),('TZ')) get string representation of time value optionally using the specified unit (default ms) using specified format (default ISO) and specified time zone (default current TZ)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.date.parse",
+        "apoc.date.parse(time :: STRING?, unit = ms :: STRING?, format = yyyy-MM-dd HH:mm:ss :: STRING?, timezone =  :: STRING?) :: (INTEGER?)",
+        "apoc.date.parse('2012-12-23','ms|s|m|h|d','yyyy-MM-dd') parse date string using the specified format into the specified time unit",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.date.systemTimezone",
+        "apoc.date.systemTimezone() :: (STRING?)",
+        "apoc.date.systemTimezone() returns the system timezone display name",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.date.toYears",
+        "apoc.date.toYears(value :: ANY?, format = yyyy-MM-dd HH:mm:ss :: STRING?) :: (FLOAT?)",
+        "toYears(timestap) or toYears(date[,format]) converts timestamp into floating point years",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.clean",
+        "apoc.map.clean(map :: MAP?, keys :: LIST? OF STRING?, values :: LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.clean(map,[skip,keys],[skip,values]) yield map removes the keys and values contained in those lists, good for data cleaning from CSV/JSON",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.flatten",
+        "apoc.map.flatten(map :: MAP?) :: (MAP?)",
+        "apoc.map.flatten(map) yield map - flattens nested items in map using dot notation",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.fromLists",
+        "apoc.map.fromLists(keys :: LIST? OF STRING?, values :: LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.fromLists([keys],[values])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.fromNodes",
+        "apoc.map.fromNodes(label :: STRING?, property :: STRING?) :: (MAP?)",
+        "apoc.map.fromNodes(label, property)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.fromPairs",
+        "apoc.map.fromPairs(pairs :: LIST? OF LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.fromPairs([[key,value],[key2,value2],...])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.fromValues",
+        "apoc.map.fromValues(values :: LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.fromValues([key1,value1,key2,value2,...])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.groupBy",
+        "apoc.map.groupBy(values :: LIST? OF ANY?, key :: STRING?) :: (MAP?)",
+        "apoc.map.groupBy([maps/nodes/relationships],'key') yield value - creates a map of the list keyed by the given property, with single values",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.groupByMulti",
+        "apoc.map.groupByMulti(values :: LIST? OF ANY?, key :: STRING?) :: (MAP?)",
+        "apoc.map.groupByMulti([maps/nodes/relationships],'key') yield value - creates a map of the list keyed by the given property, with list values",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.merge",
+        "apoc.map.merge(first :: MAP?, second :: MAP?) :: (MAP?)",
+        "apoc.map.merge(first,second) - merges two maps",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.mergeList",
+        "apoc.map.mergeList(maps :: LIST? OF MAP?) :: (MAP?)",
+        "apoc.map.mergeList([{maps}]) yield value - merges all maps in the list into one",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.removeKey",
+        "apoc.map.removeKey(map :: MAP?, key :: STRING?) :: (MAP?)",
+        "apoc.map.removeKey(map,key)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.removeKeys",
+        "apoc.map.removeKeys(map :: MAP?, keys :: LIST? OF STRING?) :: (MAP?)",
+        "apoc.map.removeKeys(map,keys)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.setEntry",
+        "apoc.map.setEntry(map :: MAP?, key :: STRING?, value :: ANY?) :: (MAP?)",
+        "apoc.map.setEntry(map,key,value)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.setKey",
+        "apoc.map.setKey(map :: MAP?, key :: STRING?, value :: ANY?) :: (MAP?)",
+        "apoc.map.setKey(map,key,value)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.setLists",
+        "apoc.map.setLists(map :: MAP?, keys :: LIST? OF STRING?, values :: LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.setLists(map,[keys],[values])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.setPairs",
+        "apoc.map.setPairs(map :: MAP?, pairs :: LIST? OF LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.setPairs(map,[[key1,value1],[key2,value2])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.map.setValues",
+        "apoc.map.setValues(map :: MAP?, pairs :: LIST? OF ANY?) :: (MAP?)",
+        "apoc.map.setValues(map,[key1,value1,key2,value2])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.math.round",
+        "apoc.math.round(value :: FLOAT?, precision = 0 :: INTEGER?, mode = HALF_UP :: STRING?) :: (FLOAT?)",
+        "apoc.math.round(value,[prec],mode=[CEILING,FLOOR,UP,DOWN,HALF_EVEN,HALF_DOWN,HALF_UP,DOWN,UNNECESSARY])",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.meta.isType",
+        "apoc.meta.isType(value :: ANY?, type :: STRING?) :: (BOOLEAN?)",
+        "apoc.meta.isType(value,type) - returns a row if type name matches none if not (INTEGER,FLOAT,STRING,BOOLEAN,RELATIONSHIP,NODE,PATH,NULL,UNKNOWN,MAP,LIST)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.meta.type",
+        "apoc.meta.type(value :: ANY?) :: (STRING?)",
+        "apoc.meta.type(value) - type name of a value (INTEGER,FLOAT,STRING,BOOLEAN,RELATIONSHIP,NODE,PATH,NULL,UNKNOWN,MAP,LIST)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.meta.typeName",
+        "apoc.meta.typeName(value :: ANY?) :: (STRING?)",
+        "apoc.meta.typeName(value) - type name of a value (INTEGER,FLOAT,STRING,BOOLEAN,RELATIONSHIP,NODE,PATH,NULL,UNKNOWN,MAP,LIST)",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.meta.types",
+        "apoc.meta.types(properties :: ANY?) :: (MAP?)",
+        "apoc.meta.types(node-relationship-map)  - returns a map of keys to types",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.node.relationship.exists",
+        "apoc.node.relationship.exists(node :: NODE?, types :: STRING?) :: (BOOLEAN?)",
+        "apoc.node.relationship.exists(node, rel-direction-pattern) - yields true effectively when the node has the relationships of the pattern",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.nodes.isDense",
+        "apoc.nodes.isDense(node :: NODE?) :: (BOOLEAN?)",
+        "apoc.nodes.isDense(node) - returns true if it is a dense node",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.number.format",
+        "apoc.number.format(number :: ANY?, pattern =  :: STRING?, lang =  :: STRING?) :: (STRING?)",
+        "apoc.number.format(number)  | format a long or double using the default system pattern and language to produce a string",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.number.parseFloat",
+        "apoc.number.parseFloat(text :: STRING?, pattern =  :: STRING?, lang =  :: STRING?) :: (FLOAT?)",
+        "apoc.number.parseFloat(text)  | parse a text using the default system pattern and language to produce a double",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.number.parseInt",
+        "apoc.number.parseInt(text :: STRING?, pattern =  :: STRING?, lang =  :: STRING?) :: (INTEGER?)",
+        "apoc.number.parseInt(text)  | parse a text using the default system pattern and language to produce a long",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.scoring.existence",
+        "apoc.scoring.existence(score :: INTEGER?, exists :: BOOLEAN?) :: (FLOAT?)",
+        "apoc.scoring.existence(5, true) returns the provided score if true, 0 if false",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.scoring.pareto",
+        "apoc.scoring.pareto(minimumThreshold :: INTEGER?, eightyPercentValue :: INTEGER?, maximumValue :: INTEGER?, score :: INTEGER?) :: (FLOAT?)",
+        "apoc.scoring.pareto(10, 20, 100, 11) applies a Pareto scoring function over the inputs",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.clean",
+        "apoc.text.clean(text :: STRING?) :: (STRING?)",
+        "apoc.text.clean(text) - strip the given string of everything except alpha numeric characters and convert it to lower case.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.compareCleaned",
+        "apoc.text.compareCleaned(text1 :: STRING?, text2 :: STRING?) :: (BOOLEAN?)",
+        "apoc.text.compareCleaned(text1, text2) - compare the given strings stripped of everything except alpha numeric characters converted to lower case.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.join",
+        "apoc.text.join(texts :: LIST? OF STRING?, delimiter :: STRING?) :: (STRING?)",
+        "apoc.text.join(['text1','text2',...], delimiter) - join the given strings with the given delimiter.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.regreplace",
+        "apoc.text.regreplace(text :: STRING?, regex :: STRING?, replacement :: STRING?) :: (STRING?)",
+        "apoc.text.regreplace(text, regex, replacement) - replace each substring of the given string that matches the given regular expression with the given replacement.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.replace",
+        "apoc.text.replace(text :: STRING?, regex :: STRING?, replacement :: STRING?) :: (STRING?)",
+        "apoc.text.replace(text, regex, replacement) - replace each substring of the given string that matches the given regular expression with the given replacement.",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.urldecode",
+        "apoc.text.urldecode(text :: STRING?) :: (STRING?)",
+        "apoc.text.urldecode(text) - return the urldecoded text",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.text.urlencode",
+        "apoc.text.urlencode(text :: STRING?) :: (STRING?)",
+        "apoc.text.urlencode(text) - return the urlencoded text",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.trigger.nodesByLabel",
+        "apoc.trigger.nodesByLabel(labelEntries :: ANY?, label :: STRING?) :: (LIST? OF ANY?)",
+        "",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.trigger.propertiesByKey",
+        "apoc.trigger.propertiesByKey(propertyEntries :: ANY?, key :: STRING?) :: (LIST? OF ANY?)",
+        "",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.util.md5",
+        "apoc.util.md5(values :: LIST? OF ANY?) :: (STRING?)",
+        "apoc.util.md5([values]) | computes the md5 of the concatenation of all string values of the list",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    },
+    {
+      "row": [
+        "apoc.util.sha1",
+        "apoc.util.sha1(values :: LIST? OF ANY?) :: (STRING?)",
+        "apoc.util.sha1([values]) | computes the sha1 of the concatenation of all string values of the list",
+        ["admin", "reader", "publisher", "architect"]
+      ],
+      "meta": [null, null, null, null],
+      "graph": { "nodes": [], "relationships": [] }
+    }
+  ],
+  "stats": {
+    "nodes_created": 0,
+    "nodes_deleted": 0,
+    "relationships_created": 0,
+    "relationships_deleted": 0,
+    "properties_set": 0,
+    "labels_added": 0,
+    "labels_removed": 0,
+    "indexes_added": 0,
+    "indexes_removed": 0,
+    "constraints_added": 0,
+    "constraints_removed": 0,
+    "contains_updates": false
+  }
+}
