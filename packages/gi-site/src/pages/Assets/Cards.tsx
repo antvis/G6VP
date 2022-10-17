@@ -31,9 +31,16 @@ const CARD_MAP = {
   },
   GI_ASSETS_GS: {
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ',
-    title: '图计算引擎',
+    title: '图计算引擎（分布式）',
     desc: '包含运维管理，集群管理，数据管理，部署概览等资产模块',
-    group: 'GraphInsight 官方',
+    group: 'GraphScope 官方',
+    color: '#2281f2',
+  },
+  GI_ASSETS_GS_STANDALONE: {
+    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ',
+    title: '图计算引擎（单机版）',
+    desc: '包含运维管理，集群管理，数据管理，部署概览等资产模块',
+    group: 'GraphScope 官方',
     color: '#2281f2',
   },
   GeaMakerGraphStudio: {

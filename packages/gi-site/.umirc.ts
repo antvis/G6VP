@@ -4,6 +4,7 @@ import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
 // import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
 import GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
+import GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone/package.json';
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import graphinsight from '@alipay/graphinsight/package.json';
 import * as antd from 'antd';
@@ -32,6 +33,10 @@ const assets_npm = [
   {
     name: GI_ASSETS_ALGORITHM.name,
     version: GI_ASSETS_ALGORITHM.version,
+  },
+  {
+    name: GI_ASSETS_GS_STANDALONE.name,
+    version: GI_ASSETS_GS_STANDALONE.version,
   },
 ];
 const NPM_INFO = [

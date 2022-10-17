@@ -2,8 +2,8 @@ import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
 import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
-import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 import * as GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone';
+import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
 
 import { IS_LOCAL_ENV } from './services/const';
 
@@ -20,18 +20,14 @@ export const BIZ_PACKAGES = !IS_LOCAL_ENV
       //   name: '@alipay/gi-assets-shaseng',
       //   version: '1.1.0',
       // },
-      {
-        name: '@alipay/gi-assets-gs',
-        version: '1.8.0',
-      },
-      {
-        name: '@alipay/gi-assets-akg',
-        version: '1.1.0',
-      },
-      {
-        name: '@alipay/gi-assets-gs-standalone',
-        version: '1.1.0',
-      },
+      // {
+      //   name: '@alipay/gi-assets-gs',
+      //   version: '1.8.0',
+      // },
+      // {
+      //   name: '@alipay/gi-assets-akg',
+      //   version: '1.2.7',
+      // },
     ])
   : [];
 
@@ -66,15 +62,12 @@ const LOCAL_ASSETS = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
     ...GI_ASSETS_SCENE,
   },
-];
-
-// 非本地环境，默认添加 GS 单机版引擎
-if (!IS_LOCAL_ENV) {
-  LOCAL_ASSETS.push({
+  /** 内置 GS 单机版 */
+  {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS_STANDALONE'],
     ...GI_ASSETS_GS_STANDALONE,
-  });
-}
+  },
+];
 
 export interface Package {
   name: string;
