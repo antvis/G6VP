@@ -4,26 +4,41 @@ export interface ServiceObject {
 }
 import { utils } from '@alipay/graphinsight';
 
-const DEFAULT_TEMPLATE = {
-  queryTemplate: 'g.V({{ID}})',
-  templateId: '3283',
-  graphLanguageType: 'GREMLIN',
-  templateName: 'defaultTemplateName',
-  templateParameterList: [{ parameterName: 'ID', parameterValue: '1', valueType: 'STRING' }],
-};
+const DEFAULT_LANGUAGE_TEMPLATE = [
+  {
+    queryTemplate: 'g.V({{ID}})',
+    templateId: '3283',
+    graphLanguageType: 'GREMLIN',
+    templateName: 'defaultTemplateName',
+    templateParameterList: [{ parameterName: 'ID', parameterValue: '1', valueType: 'STRING' }],
+  },
+  {
+    queryTemplate: 'MATCH n RETURN n LIMIT {{count}}',
+    templateId: '13283',
+    graphLanguageType: 'CYPHER',
+    templateName: 'defaultTemplateName',
+    templateParameterList: [{ parameterName: 'count', parameterValue: '1', valueType: 'STRING' }],
+  },
+];
+
 export const PublishTemplate: ServiceObject = {
   name: '发布模板',
   service: async params => {
-    const uid = 'mock_publish_template';
-    console.log('参数', params);
-
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
-    const gremlin_template = project._gremlin_template || [DEFAULT_TEMPLATE];
+    const gremlin_template = project && project._gremlin_template ? project._gremlin_template : [];
     //project.themes = [...themes, theme];
-    const new_gremlin_template = [...gremlin_template, params];
+    const new_gremlin_template = [
+      ...gremlin_template,
+      {
+        ...params,
+        templateId: Math.random()
+          .toString(36)
+          .slice(3),
+      },
+    ];
 
     localforage.setItem(projectId, { ...project, _gremlin_template: new_gremlin_template });
 
@@ -44,7 +59,7 @@ export const TemplateListService = {
     //@ts-ignore
     const { localforage } = window;
     const project = await localforage.getItem(projectId);
-    const gremlin_template = project._gremlin_template || [DEFAULT_TEMPLATE];
+    const gremlin_template = project._gremlin_template || [DEFAULT_LANGUAGE_TEMPLATE];
 
     return new Promise(resolve => {
       return resolve({

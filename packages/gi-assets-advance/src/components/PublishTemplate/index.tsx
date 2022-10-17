@@ -12,7 +12,7 @@ export interface IProps {
   value: string;
   visible: boolean;
   close: () => void;
-  fileType: 'GREMLIN' | 'GQL' | 'ISOGQL' | 'UNKNOWN';
+  fileType: 'GREMLIN' | 'GQL' | 'ISOGQL' | 'CYPHER' | 'UNKNOWN';
   saveTemplateServceId: string;
 }
 

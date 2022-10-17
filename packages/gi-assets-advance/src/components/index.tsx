@@ -18,6 +18,7 @@ import ModeSwitch from './ModeSwitch';
 import StructAnalysis from './StructAnalysis';
 import SubGraphLayout from './SubGraphLayout';
 import TemplateQuery from './TemplateQuery';
+import CypherQuery from './CypherQuery';
 
 export {
   StyleSetting,
@@ -31,4 +32,5 @@ export {
   SubGraphLayout,
   StructAnalysis,
   TemplateQuery,
+  CypherQuery,
 };

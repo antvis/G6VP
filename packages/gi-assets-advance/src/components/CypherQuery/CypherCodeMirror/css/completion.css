@@ -1,0 +1,137 @@
+/*
+ * Copyright (c) 2002-2017 "Neo Technology,"
+ * Network Engine for Objects in Lund AB [http://neotechnology.com]
+ *
+ * This file is part of Neo4j.
+ *
+ * Neo4j is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@import "_solarized.css";
+
+.CodeMirror-hints {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 10;
+  list-style: none;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid silver;
+  background: white;
+  font-size: 90%;
+  font-family: monospace;
+
+  max-height: 30em;
+  max-width: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.CodeMirror-hint {
+  margin: 2px 0;
+  padding: 0 4px;
+  white-space: pre;
+  color: #657b83;
+  cursor: pointer;
+  font-size: 11pt;
+  background-position-x: 5px;
+}
+
+.CodeMirror-hint b {
+  color: #073642;
+}
+
+.CodeMirror-hint-active {
+  background-color: #efeff4;
+}
+
+.cm-hint-label {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>L</text></svg>");
+}
+
+.cm-hint-relationshipType {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23cb4b16'>R</text></svg>");
+}
+
+.cm-hint-variable {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23268bd2'>V</text></svg>");
+}
+
+.cm-hint-procedure {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%236c71c4'>λ</text></svg>");
+}
+
+.cm-hint-function {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%236c71c4'>λ</text></svg>");
+}
+
+.cm-hint-parameter {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23dc322f'>$</text></svg>");
+}
+
+.cm-hint-propertyKey {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23586e75'>P</text></svg>");
+}
+
+.cm-hint-consoleCommand {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23d33682'>C</text></svg>");
+}
+
+.cm-hint-consoleCommandSubcommand {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23d33682'>C</text></svg>");
+}
+
+.cm-hint-procedureOutput {
+  padding-left: 22px !important;
+  background-size: auto 80% !important;
+  background-position: 3px center;
+  background-repeat: no-repeat !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 40 40'><circle cx='20' cy='20' r='19' stroke='black' stroke-width='1' fill='white'></circle><text x='50%' y='50%' text-anchor='middle' dy='.35em' font-size='28' font-family='Monaco' fill='%23268bd2'>V</text></svg>");
+}
