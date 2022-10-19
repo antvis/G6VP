@@ -1,0 +1,7 @@
+src_id,dst_id,category,id,relation
+"customer_20","account_20","ownership","customer_20-account_20-15","owns"
+"customer_55","account_55","ownership","customer_55-account_55-16","owns"
+"customer_81","account_81","ownership","customer_81-account_81-17","owns"
+"customer_103","account_103","ownership","customer_103-account_103-18","owns"
+"customer_901","account_901","ownership","customer_901-account_901-19","owns"
+"customer_902","account_902","ownership","customer_902-account_902-20","owns"
