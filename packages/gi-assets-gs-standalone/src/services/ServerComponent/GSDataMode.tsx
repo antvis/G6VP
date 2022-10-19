@@ -2,7 +2,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Form, Radio, Row, Steps, message, Modal, Spin, Upload } from 'antd';
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import { connectGraphScopeService } from '../GraphScopeService';
+import { connectGraphScopeService, closeGraphInstance } from '../GraphScopeService';
 import LocalFilePanel from './LocalFile';
 import ChinaVisDataPanel from './ChinaVisDataPanel';
 import ConnectGraphScope from './ConnectGS';
@@ -14,7 +14,6 @@ const { Step } = Steps;
 interface LocalFileProps {
   handleUploadFile: (isCover?: boolean) => Promise<any>;
   handleLoadData: (type: 'LOCAL' | 'DEMO') => void;
-  updateSchemaData: (mode: string) => void;
   uploadLoading: boolean;
   filesMapping: any;
   onClose: () => void;
@@ -32,6 +31,7 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
   const [gsLoading, setGsLoading] = useState({
     step1Loading: uploadLoading,
     step2Loading: loading,
+    closeLoading: false,
   });
 
   const [modeType, setModeType] = useState<'LOCAL' | 'DEMO'>('LOCAL');
@@ -113,6 +113,24 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
     }
   };
 
+  const deleteInstance = async () => {
+    setGsLoading({
+      ...gsLoading,
+      closeLoading: true,
+      step1Loading: false,
+    });
+    const result = await closeGraphInstance();
+    setGsLoading({
+      ...gsLoading,
+      closeLoading: false,
+    });
+    if (result.success) {
+      message.success('关闭 GraphScope 实例成功');
+      return false;
+    }
+    message.error('关闭 GraphScope 实例失败');
+  };
+
   const steps = [
     {
       title: '配置服务器信息',
@@ -156,6 +174,9 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
             {modeType === 'DEMO' && <ChinaVisDataPanel />}
           </Row>
           <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
+            <Button style={{ margin: '0 10px' }} shape="round" onClick={deleteInstance}>
+              删除实例
+            </Button>
             <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
               上一步
             </Button>

@@ -33,6 +33,7 @@ const ConnectGraphScope: React.FC<GraphModelProps> = ({ loading }) => {
         >
           <Select mode="tags" style={{ width: '100%' }}>
             <Option key="http://127.0.0.1:7001">GI 本地开发环境地址</Option>
+            <Option key="http://storehouse-afx-39730.gz00b.dev.alipay.net">GI 开发环境地址「不定时过期」</Option>
             <Option key="http://storehouse.test.alipay.net">GI 测试环境地址</Option>
             <Option key="http://graphinsight-pre.alipay.com">GI 预发环境地址</Option>
             <Option key="http://graphinsight.antgroup-inc.cn">GI 生产环境地址</Option>
