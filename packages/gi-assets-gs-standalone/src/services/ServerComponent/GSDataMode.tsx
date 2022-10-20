@@ -108,8 +108,16 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
         }
       }
     } else {
+      setGsLoading({
+        ...gsLoading,
+        step1Loading: true,
+      });
       // 示例数据，开始载图
       await handleLoadData(modeType);
+      setGsLoading({
+        ...gsLoading,
+        step1Loading: false,
+      });
     }
   };
 

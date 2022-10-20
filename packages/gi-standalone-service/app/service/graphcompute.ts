@@ -710,6 +710,7 @@ class GraphComputeService extends Service {
     }
 
     for (const edgeKey in edgeItemsMapping) {
+      delete edgeItemsMapping[edgeKey].id;
       edges.push(edgeItemsMapping[edgeKey]);
     }
 
