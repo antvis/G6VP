@@ -5,7 +5,7 @@ export const responseData = (ctx, resp) => {
     ctx.status = 500;
     ctx.body = {
       success: false,
-      code: 500,
+      code: 200,
     };
   }
   ctx.status = parseInt(resp.code, 10);
