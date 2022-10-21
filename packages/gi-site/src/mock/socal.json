@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "Bob",
+      "type": "user"
+    },
+    {
+      "id": "Olly",
+      "type": "user"
+    },
+    {
+      "id": "Tom",
+      "type": "user"
+    },
+    {
+      "id": "Dan",
+      "type": "user"
+    },
+    {
+      "id": "Gina",
+      "type": "user"
+    }
+  ],
+  "edges": [
+    {
+      "source": "Bob",
+      "target": "Olly",
+      "type": "Friends_With"
+    },
+    {
+      "source": "Olly",
+      "target": "Tom",
+      "type": "Friends_With"
+    },
+    {
+      "source": "Olly",
+      "target": "Dan",
+      "type": "Friends_With"
+    },
+    {
+      "source": "Olly",
+      "target": "Gina",
+      "type": "Friends_With"
+    },
+    {
+      "source": "Tom",
+      "target": "Gina",
+      "type": "Friends_With"
+    },
+    {
+      "source": "Dan",
+      "target": "Gina",
+      "type": "Friends_With"
+    }
+  ]
+}
