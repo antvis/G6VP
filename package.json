@@ -49,7 +49,7 @@
   "dependencies": {
     "@ant-design/icons": "4.7.0",
     "@antv/algorithm": "^0.1.24",
-    "@antv/g6": "^4.7.1",
+    "@antv/g6": "^4.7.8",
     "@antv/graphin": "~2.7.9",
     "@antv/layout": "^0.2.5",
     "@antv/s2": "^1.29.0",

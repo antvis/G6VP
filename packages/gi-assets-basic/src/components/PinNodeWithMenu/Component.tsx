@@ -12,7 +12,8 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   const { contextmenu } = props;
   const { graph, layout, restartForceSimulation } = useContext();
   const target = contextmenu.item;
-  if (!target || target.destroyed) {
+  // 仅支持对节点的操作
+  if (!target || target.destroyed || target.getType?.() !== 'node') {
     return null;
   }
   const model = target.getModel();

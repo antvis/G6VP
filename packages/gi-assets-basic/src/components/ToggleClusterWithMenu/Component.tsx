@@ -19,7 +19,8 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { contextmenu, isReLayout, degree } = props;
   const { graph, updateContext, source, data } = useContext();
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
-  if (!targetNode || targetNode.destroyed) {
+  // 仅支持对节点的操作
+  if (!targetNode || targetNode.destroyed || targetNode.getType?.() !== 'node') {
     return null;
   }
   const model = targetNode.getModel();

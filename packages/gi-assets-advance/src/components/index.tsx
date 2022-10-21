@@ -19,6 +19,7 @@ import StructAnalysis from './StructAnalysis';
 import SubGraphLayout from './SubGraphLayout';
 import TemplateQuery from './TemplateQuery';
 import CypherQuery from './CypherQuery';
+import GraphAnnotation from './GraphAnnotation';
 
 export {
   StyleSetting,
@@ -33,4 +34,5 @@ export {
   StructAnalysis,
   TemplateQuery,
   CypherQuery,
+  GraphAnnotation
 };
