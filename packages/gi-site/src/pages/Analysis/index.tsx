@@ -6,7 +6,6 @@ import React, { useRef } from 'react';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
-import { setDefaultAssetPackages } from '../../loader';
 import { getProjectById, updateProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { IProject } from '../../services/typing';
@@ -20,8 +19,6 @@ import MetaPanel from './MetaPanel';
 import { ConfigRecommedor } from './recommendTools';
 import useModel from './useModel';
 import { isObjectEmpty } from './utils';
-
-setDefaultAssetPackages();
 
 const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData, engineId }) => {
   const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData, engineId);
@@ -82,15 +79,8 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const {
-        data,
-        config,
-        activeAssetsKeys,
-        serviceConfig,
-        schemaData,
-        engineId,
-        engineContext,
-      } = (await getProjectById(projectId)) as IProject;
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId, engineContext } =
+        (await getProjectById(projectId)) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
       const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';

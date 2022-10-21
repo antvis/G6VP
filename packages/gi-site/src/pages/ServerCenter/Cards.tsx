@@ -9,43 +9,40 @@ interface CardsProps {
 
 // 已经在官方注册过的资产上架
 const defaltDesc = {
-  GI: {
-    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*3YEZS6qSRgAAAAAAAAAAAAAAARQnAQ',
-    title: 'GraphInsight 官网服务',
-    desc: 'GraphInsight 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持',
-    group: 'GraphInsight 官方',
-    color: 'green',
-  },
-  GS: {
-    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ',
-    title: 'GraphScope 图计算服务',
-    desc: '阿里达摩院 GraphScope 提供的大规模图计算服务，可对接集团ODPS，目前已支持',
-    group: 'GraphInsight 官方',
-    color: '#2281f2',
-  },
   AKG: {
+    id: 'AKG',
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*jFagT7R_T0UAAAAAAAAAAAAAARQnAQ',
-    title: 'AKG 蚂蚁知识图谱服务',
+    name: 'AKG 蚂蚁知识图谱服务',
     desc: '由蚂蚁知蛛团队（https://akg.alipay.com）提供的图谱知识服务。目前已支持',
     group: '知蛛前端团队',
     color: '#2f54eb',
   },
+  TUGRAPH: {
+    id: 'TUGRAPH',
+    name: 'TuGraph 单机版引擎',
+    desc: '由 TuGraph 团队提供的单机版图存储服务,支持TB级单机存储，高性能图计算',
+    group: 'TuGraph 前端团队',
+    color: '#2f54eb',
+    cover: 'https://gw.alipayobjects.com/mdn/rms_3ff49c/afts/img/A*xqsZTKLVHPsAAAAAAAAAAAAAARQnAQ',
+  },
   SHASENG: {
+    id: 'SHASENG',
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*HaLlTKJhhagAAAAAAAAAAAAAARQnAQ',
-    title: '大安全异常检测服务',
+    name: '大安全异常检测服务',
     desc: '由大安全异常检测团队提供的资金网络异常检测服务。目前已支持',
     group: '知蛛前端团队',
     color: '#2f54eb',
   },
 };
 
+const defaultEngines = Object.values(defaltDesc);
 const Cards: React.FunctionComponent<CardsProps> = props => {
   const { data, changeServerId } = props;
 
   return (
     <div>
       <Row gutter={[16, 16]}>
-        {data.map(item => {
+        {[...data, ...defaultEngines].map(item => {
           const { id, name, services, cover, desc } = item;
 
           return (
