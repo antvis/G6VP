@@ -1,19 +1,21 @@
+import { GISiteParams } from '@alipay/graphinsight';
 import { Alert, Form, message } from 'antd';
 import React, { useState } from 'react';
+import { LoadChinaVisDataSource } from '../Constants';
 import {
   createGraphScopeInstance,
   loadChinaVisGraphToGraphScope,
   loadGraphToGraphScope,
-  uploadLocalFileToGraphScope,
   queryGraphSchema,
+  uploadLocalFileToGraphScope,
 } from '../GraphScopeService';
-import { LoadChinaVisDataSource } from '../Constants';
 import GSDataMode from './GSDataMode';
 
 export interface GraphModelProps {
+  updateGISite?: (params: GISiteParams) => void;
   onClose: () => void;
 }
-const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
+const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) => {
   const [form] = Form.useForm();
 
   const graphScopeFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping') as string);
@@ -149,6 +151,16 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
 
       // 关闭弹框
       onClose();
+      const schemaData = await queryGraphSchema();
+      console.log('schemaData', schemaData);
+      if (updateGISite) {
+        updateGISite({
+          schemaData: { nodes: [], edges: [] },
+          engineId: 'GS_Standalone',
+          engineContext: {},
+        });
+      }
+
       return true;
     }
 
