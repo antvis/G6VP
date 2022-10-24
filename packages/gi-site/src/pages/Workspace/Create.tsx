@@ -136,8 +136,13 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       engineId,
       engineContext,
     });
-    localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(GI_ASSETS_PACKAGES));
-    history.push(`/workspace/${projectId}?nav=data`);
+    try {
+      const PRE_GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+      localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify({ ...PRE_GI_ASSETS_PACKAGES, GI_ASSETS_PACKAGES }));
+      history.push(`/workspace/${projectId}?nav=data`);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const goAnalysis = async () => {
