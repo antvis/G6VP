@@ -95,20 +95,22 @@ export default {
     type: 'none',
   },
   routes: [
-    { exact: true, path: '/', redirect: '/workspace?type=project' },
-    {
-      exact: true,
-      path: '/workspace',
-      component: 'Workspace',
-    },
+    { exact: true, path: '/', redirect: '/workspace' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
-    { exact: true, path: '/services/', component: 'ServerCenter' },
-    { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
-    { exact: true, path: '/assets', component: 'Assets' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
+    {
+      path: '/',
+      component: '@/layouts/index',
+      routes: [
+        { exact: true, path: '/workspace', component: 'Workspace' },
+        { exact: true, path: '/services', component: 'ServerCenter' },
+        { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
+        { exact: true, path: '/assets', component: 'Assets' },
 
-    { component: '404' },
+        { component: '404' },
+      ],
+    },
   ],
   request: {
     dataField: '',

@@ -1,5 +1,5 @@
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button, Form, Modal, Space, message } from 'antd';
+import { Button, Form, message, Modal, Space } from 'antd';
 import React, { useState } from 'react';
 import { updateProjectById } from '../../services';
 import './index.less';
@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
-  console.log(values);
   if (!values) {
     return null;
   }

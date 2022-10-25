@@ -43,6 +43,13 @@ const CARD_MAP = {
     group: 'GraphScope 官方',
     color: '#2281f2',
   },
+  GI_ASSETS_TUGRAPH: {
+    cover: 'https://gw.alipayobjects.com/mdn/rms_3ff49c/afts/img/A*xqsZTKLVHPsAAAAAAAAAAAAAARQnAQ',
+    title: '图数据库（单机版）',
+    desc: '支持TB级单机存储，高性能图计算，支持 Cypher 语句查询',
+    group: 'TuGraph 官方',
+    color: '#2281f2',
+  },
   GeaMakerGraphStudio: {
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*yDeARar2jLIAAAAAAAAAAAAAARQnAQ',
     title: '蚂蚁图数据库',
@@ -89,7 +96,7 @@ const CARD_MAP = {
 
 const Cards: React.FunctionComponent<CardsProps> = props => {
   const { data } = props;
-  console.log('data', data);
+
   return (
     <div>
       <Row gutter={[16, 16]}>
@@ -103,7 +110,7 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
             color: '#000',
           };
           const { title, desc, group, cover, color } = extraInfo;
-          console.log('cover', cover);
+
           return (
             <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={global}>
               <Card hoverable cover={<img alt="example" src={cover} />}>

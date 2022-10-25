@@ -7,6 +7,8 @@ export { default as ColorInput } from './CommonStyleSetting/ColorInput';
 export { default as GroupSelect } from './CommonStyleSetting/GroupSelect';
 export { default as IconPicker } from './CommonStyleSetting/IconPicker';
 export { default as IconSelector } from './CommonStyleSetting/IconSelector';
+export { default as FilterPannel } from './FilterPanel/Component';
+export { default as FilterSelection } from './FilterPanel/FilterSelection';
 export { AssetCollapse, FormCollapse, Offset } from './FormilyForm';
 export { default as GroupContainer } from './GroupContainer';
 export { default as DisplayColor } from './GroupContainer/DisplayColor';

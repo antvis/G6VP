@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-common-components",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,10 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "lib",
+    "es"
   ],
   "scripts": {
     "build": "npm run clean && father build",
@@ -19,15 +23,18 @@
     "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "classnames": "^2.2.6",
-    "react-color": "^2.19.3",
-    "use-immer": "^0.7.0",
+    "@antv/g2plot": "^2.4.20",
     "@formily/antd": "^2.1.0",
     "@formily/core": "^2.1.0",
-    "@formily/react": "^2.1.0",
     "@formily/json-schema": "^2.2.2",
+    "@formily/react": "^2.1.0",
     "@formily/reactive": "^2.2.2",
-    "@formily/shared": "^2.2.2"
+    "@formily/shared": "^2.2.2",
+    "classnames": "^2.2.6",
+    "dumi": "^1.1.38",
+    "nanoid": "^4.0.0",
+    "react-color": "^2.19.3",
+    "use-immer": "^0.7.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
@@ -39,6 +46,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://registry.antfin-inc.com"
   }
 }
