@@ -96,7 +96,7 @@ const CARD_MAP = {
 
 const Cards: React.FunctionComponent<CardsProps> = props => {
   const { data } = props;
-  console.log('data', data);
+
   return (
     <div>
       <Row gutter={[16, 16]}>
@@ -110,7 +110,7 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
             color: '#000',
           };
           const { title, desc, group, cover, color } = extraInfo;
-          console.log('cover', cover);
+
           return (
             <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={global}>
               <Card hoverable cover={<img alt="example" src={cover} />}>
