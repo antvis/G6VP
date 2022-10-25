@@ -1,7 +1,6 @@
 import { utils } from '@alipay/graphinsight';
 import { Card } from 'antd';
 import * as React from 'react';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getCombinedAssets } from '../../loader';
 import Cards from './Cards';
 import './index.less';
@@ -77,15 +76,12 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
   return (
     <>
-      <BaseNavbar active="services"></BaseNavbar>
-      <div className="gi-assets-container">
-        <Card title="引擎管理">
-          <Cards data={lists} changeServerId={changeServerId}></Cards>
-        </Card>
-        <Card title={`${matchServer.name}`} style={{ margin: '12px 0px' }}>
-          <ServiceTable data={matchServer.table} />
-        </Card>
-      </div>
+      <Card title="引擎管理">
+        <Cards data={lists} changeServerId={changeServerId}></Cards>
+      </Card>
+      <Card title={`${matchServer.name}`} style={{ margin: '12px 0px' }}>
+        <ServiceTable data={matchServer.table} />
+      </Card>
     </>
   );
 };
