@@ -43,6 +43,13 @@ const CARD_MAP = {
     group: 'GraphScope 官方',
     color: '#2281f2',
   },
+  GI_ASSETS_TUGRAPH: {
+    cover: 'https://gw.alipayobjects.com/mdn/rms_3ff49c/afts/img/A*xqsZTKLVHPsAAAAAAAAAAAAAARQnAQ',
+    title: '图数据库（单机版）',
+    desc: '支持TB级单机存储，高性能图计算，支持 Cypher 语句查询',
+    group: 'TuGraph 官方',
+    color: '#2281f2',
+  },
   GeaMakerGraphStudio: {
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*yDeARar2jLIAAAAAAAAAAAAAARQnAQ',
     title: '蚂蚁图数据库',
