@@ -1,5 +1,6 @@
 import { BugOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
+import React from 'react';
 import './index.less';
 const QRcode = () => {
   const menu = (
