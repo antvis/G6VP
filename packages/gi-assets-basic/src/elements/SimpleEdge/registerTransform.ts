@@ -63,17 +63,17 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       const { source, target } = edge;
       const id = edge.id || `${source}-${target}-${index}`;
       const data = edge.data || edge.properties || edge;
-      const isLoop = edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
+      const isLoop = edge.source === edge.target; //edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
       const isPoly = edge.isMultiple;
       const { customPoly } = keyshape_CFG;
       const shape: any = {};
       if (isLoop) {
         shape.type = 'loop';
-        shape.loop = { ...edge.style.keyshape.loop };
+        shape.loop = { ...edge.style?.keyshape.loop };
       }
       if (isPoly) {
         shape.type = 'poly';
-        shape.poly = { ...edge.style.keyshape.poly };
+        shape.poly = { ...edge.style?.keyshape.poly };
       }
       if (!isPoly && !isLoop) {
         //只有直线的时候才支持设置弧度，多边的默认是系统分配的弧度
