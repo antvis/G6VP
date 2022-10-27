@@ -8,7 +8,7 @@ import GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone/package.jso
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
 import graphinsight from '@alipay/graphinsight/package.json';
 import * as antd from 'antd';
-export const G6_VERSION = '4.7.9'; //4.7.0
+export const G6_VERSION = '4.7.10';
 export const GRAPHIN_VERSION = '2.7.13';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = antd.version;
