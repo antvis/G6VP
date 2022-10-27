@@ -85,24 +85,36 @@ const processEdges = (
         };
 
         if (isLoop) {
-          keyshapeStyle = {
-            type: 'loop',
-            // @ts-ignore
-            loop: {
-              distance: index * loop,
+          newEdges.push({
+            ...edge,
+            isLoop: true,
+            style: {
+              ...edge.style,
+              keyshape: {
+                ...edge.style?.keyshape,
+                type: 'loop',
+                loop: {
+                  distance: index * loop,
+                },
+              },
             },
-          };
+          });
+        } else {
+          newEdges.push({
+            ...edge,
+            isMultiple: true,
+            style: {
+              ...edge.style,
+              keyshape: {
+                ...edge.style?.keyshape,
+                type: 'poly',
+                poly: {
+                  distance: resultDistance,
+                },
+              },
+            },
+          });
         }
-
-        edge.style = {
-          ...edge.style,
-          keyshape: {
-            ...edge.style?.keyshape,
-            ...keyshapeStyle,
-          },
-        };
-        edge.isMultiple = true;
-        newEdges.push(edge);
       });
     } else {
       newEdges.push(edges[0]);
