@@ -26,5 +26,6 @@ export { default as getServicesByConfig } from './getServicesByConfig';
 export { loaderAssets, loaderCombinedAssets } from './loaderAssets';
 export { default as processEdges } from './processEdges';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleConfig } from './schema';
+export { getServerEngineContext, setServerEngineContext } from './serverEngineContext';
 export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 export { transDataByConfig } from './transDataByConfig';

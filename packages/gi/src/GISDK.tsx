@@ -2,6 +2,7 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
+import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
 import './index.less';
 import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
@@ -340,6 +341,7 @@ const GISDK = (props: Props) => {
             <SetupUseGraphinHook updateContext={updateState} />
             {isReady && renderComponents()}
             {isReady && children}
+            {isReady && <FitCenterAfterMount />}
           </>
         </Graphin>
       </div>

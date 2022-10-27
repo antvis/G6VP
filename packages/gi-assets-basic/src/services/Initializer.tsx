@@ -1,4 +1,5 @@
-import { GraphSchemaData } from '@alipay/graphinsight';
+import { GraphSchemaData, utils } from '@alipay/graphinsight';
+const { getServerEngineContext } = utils;
 export interface GraphData {
   nodes: {
     id: string;
@@ -35,8 +36,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
   }
   `,
   service: async (): Promise<GraphData> => {
-    const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-    const context = JSON.parse(ContextString);
+    const context = getServerEngineContext();
     const { data } = context;
     return data;
   },
@@ -65,10 +65,7 @@ export const GI_SERVICE_SCHEMA = {
   }
 `,
   service: async (): Promise<GraphSchemaData> => {
-    const ContextString = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-
-    const context = JSON.parse(ContextString);
-
+    const context = getServerEngineContext();
     const { schemaData } = context;
     return schemaData;
   },
