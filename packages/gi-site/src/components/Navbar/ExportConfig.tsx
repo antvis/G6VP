@@ -1,9 +1,9 @@
-import { Alert, Card, Col, Drawer, Row } from 'antd';
+import { Alert, Card, Col, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import { useCodeSandbox, useHtml } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import ODPSDeploy from '../ODPSDeploy';
+
 import { saveAs } from '../utils';
 import './index.less';
 
@@ -96,17 +96,6 @@ const ExportConfig = props => {
           </Card>
         </Col>
       </Row>
-      <Drawer
-        visible={state.visible}
-        onClose={handleClose}
-        width={600}
-        // mask={false}
-        // maskClosable={false}
-        // footer={null}
-        // bodyStyle={{ paddingTop: '40px' }}
-      >
-        <ODPSDeploy></ODPSDeploy>
-      </Drawer>
     </div>
   );
 };
