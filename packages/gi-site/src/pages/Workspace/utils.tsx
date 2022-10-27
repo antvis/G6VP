@@ -192,7 +192,7 @@ const baseComponentsConfig = [
       dragCanvas: {
         disabled: false,
         direction: 'both',
-        enableOptimize: false,
+        enableOptimize: true,
       },
       zoomCanvas: {
         disabled: false,
