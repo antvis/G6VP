@@ -37,7 +37,8 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
 
   const styles = utils.getPositionStyles(containerPlacement, offset);
   if (containerPlacement === 'RT' || containerPlacement === 'LB') {
-    styles.bottom = '50px';
+    styles.bottom = '4px';
+    styles.top = '4px';
     styles.height = 'unset';
   }
 
