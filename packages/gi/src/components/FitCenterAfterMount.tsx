@@ -4,7 +4,11 @@ const FitCenterAfterMount = () => {
   const { graph, layout } = useContext();
   let timer;
   React.useEffect(() => {
-    if (layout.type === 'dagre') {
+    const { type } = layout;
+    if (type === 'graphin-force' || type === 'force2') {
+      return;
+    }
+    if (type === 'dagre') {
       timer = setTimeout(() => {
         graph.fitCenter(true);
       }, 200);
