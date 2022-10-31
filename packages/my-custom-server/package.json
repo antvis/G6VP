@@ -1,0 +1,29 @@
+{
+  "name": "my-custom-server",
+  "version": "0.1.0",
+  "description": "我的自定义资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/my-custom-server",
+    "build:umd:watch": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/my-custom-server watch=true",
+    "clean": "rimraf es esm lib dist",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "start": "npm run clean && father build --watch",
+    "test": "jest",
+    "server": "http-server ./dist -p 9527"
+  },
+  "publishConfig": {
+    "registry": "https://registry.antfin-inc.com"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

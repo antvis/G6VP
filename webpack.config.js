@@ -118,5 +118,6 @@ module.exports = (env, argv) => {
       antd: 'antd',
       '@antv/g2plot': 'G2Plot',
     },
+    watch: Boolean(env.watch),
   };
 };

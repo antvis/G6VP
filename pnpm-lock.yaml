@@ -494,6 +494,12 @@ importers:
       eslint-config-egg: 12.0.0_irgkl5vooow2ydyo6aokmferha
       typescript: 4.8.3
 
+  packages/my-custom-server:
+    specifiers:
+      http-server: ^14.1.1
+    devDependencies:
+      http-server: 14.1.1
+
 packages:
 
   /3d-force-graph/1.70.13:
@@ -20274,6 +20280,13 @@ packages:
   /base64-js/1.5.1:
     resolution: {integrity: sha1-GxtEAWClv3rUC2UPCVljSBkDkwo=, tarball: base64-js/download/base64-js-1.5.1.tgz}
 
+  /basic-auth/2.0.1:
+    resolution: {integrity: sha1-uZgnm/R844NEtPPPkW1Gebv1Hjo=, tarball: basic-auth/download/basic-auth-2.0.1.tgz}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: true
+
   /batch-processor/1.0.0:
     resolution: {integrity: sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=, tarball: batch-processor/download/batch-processor-1.0.0.tgz}
 
@@ -22236,6 +22249,11 @@ packages:
       - supports-color
       - webpack-cli
       - webpack-command
+    dev: true
+
+  /corser/2.0.1:
+    resolution: {integrity: sha1-jtolLsqrWEDc2XXOuQ2TcMgZ/4c=, tarball: corser/download/corser-2.0.1.tgz}
+    engines: {node: '>= 0.4.0'}
     dev: true
 
   /cosmiconfig/5.2.1:
@@ -26820,6 +26838,16 @@ packages:
     dependencies:
       tslib: 2.4.0
 
+  /follow-redirects/1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==, tarball: follow-redirects/download/follow-redirects-1.15.2.tgz}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dev: true
+
   /follow-redirects/1.15.2_debug@4.3.4:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==, tarball: follow-redirects/download/follow-redirects-1.15.2.tgz}
     engines: {node: '>=4.0'}
@@ -28285,6 +28313,13 @@ packages:
       whatwg-encoding: 1.0.5
     dev: false
 
+  /html-encoding-sniffer/3.0.0:
+    resolution: {integrity: sha1-LLGozw21JBR3blsqegTV3ZgVjek=, tarball: html-encoding-sniffer/download/html-encoding-sniffer-3.0.0.tgz}
+    engines: {node: '>=12'}
+    dependencies:
+      whatwg-encoding: 2.0.0
+    dev: true
+
   /html-entities/1.4.0:
     resolution: {integrity: sha1-z70bAdKvr5rcobEK59/6uYxx0tw=, tarball: html-entities/download/html-entities-1.4.0.tgz}
     dev: true
@@ -28486,6 +28521,17 @@ packages:
       - supports-color
     dev: true
 
+  /http-proxy/1.18.1:
+    resolution: {integrity: sha1-QBVB8FNIhLv5UmAzTnL4juOXZUk=, tarball: http-proxy/download/http-proxy-1.18.1.tgz}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      eventemitter3: 4.0.7
+      follow-redirects: 1.15.2
+      requires-port: 1.0.0
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
   /http-proxy/1.18.1_debug@4.3.4:
     resolution: {integrity: sha1-QBVB8FNIhLv5UmAzTnL4juOXZUk=, tarball: http-proxy/download/http-proxy-1.18.1.tgz}
     engines: {node: '>=8.0.0'}
@@ -28495,6 +28541,29 @@ packages:
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
+    dev: true
+
+  /http-server/14.1.1:
+    resolution: {integrity: sha512-+cbxadF40UXd9T01zUHgA+rlo2Bg1Srer4+B4NwIHdaGxAGGv59nYRnGGDJ9LBk7alpS0US+J+bLLdQOOkJq4A==, tarball: http-server/download/http-server-14.1.1.tgz}
+    engines: {node: '>=12'}
+    hasBin: true
+    dependencies:
+      basic-auth: 2.0.1
+      chalk: 4.1.2
+      corser: 2.0.1
+      he: 1.2.0
+      html-encoding-sniffer: 3.0.0
+      http-proxy: 1.18.1
+      mime: 1.6.0
+      minimist: 1.2.6
+      opener: 1.5.2
+      portfinder: 1.0.32
+      secure-compare: 3.0.1
+      union: 0.5.0
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
     dev: true
 
   /http-signature/1.2.0:
@@ -35845,6 +35914,17 @@ packages:
     deprecated: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
     dev: true
 
+  /portfinder/1.0.32:
+    resolution: {integrity: sha512-on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==, tarball: portfinder/download/portfinder-1.0.32.tgz}
+    engines: {node: '>= 0.12.0'}
+    dependencies:
+      async: 2.6.4
+      debug: 3.2.7
+      mkdirp: 0.5.6
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /portfinder/1.0.32_supports-color@6.1.0:
     resolution: {integrity: sha512-on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==, tarball: portfinder/download/portfinder-1.0.32.tgz}
     engines: {node: '>= 0.12.0'}
@@ -42325,6 +42405,10 @@ packages:
     resolution: {integrity: sha1-bpU23vCD3cTeoCB9ci4OgNDzcvg=, tarball: seamless-immutable/download/seamless-immutable-7.1.4.tgz}
     dev: false
 
+  /secure-compare/3.0.1:
+    resolution: {integrity: sha1-8aAymzCLIh+uN7mXTz1XjQypmeM=, tarball: secure-compare/download/secure-compare-3.0.1.tgz}
+    dev: true
+
   /select-hose/2.0.0:
     resolution: {integrity: sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=, tarball: select-hose/download/select-hose-2.0.0.tgz}
     dev: true
@@ -45225,6 +45309,13 @@ packages:
       is-extendable: 0.1.1
       set-value: 2.0.1
 
+  /union/0.5.0:
+    resolution: {integrity: sha1-ssEb6E9gU4U3uEbtuboma6AJAHU=, tarball: union/download/union-0.5.0.tgz}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      qs: 6.11.0
+    dev: true
+
   /uniq/1.0.1:
     resolution: {integrity: sha1-sxxa6CVIRKOoKBVBzisEuGWnNP8=, tarball: uniq/download/uniq-1.0.1.tgz}
 
@@ -45511,6 +45602,10 @@ packages:
   /urix/0.1.0:
     resolution: {integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=, tarball: urix/download/urix-0.1.0.tgz}
     deprecated: Please see https://github.com/lydell/urix#deprecated
+
+  /url-join/4.0.1:
+    resolution: {integrity: sha1-tkLiGiZGgI/6F4xMX9o5hE4Szec=, tarball: url-join/download/url-join-4.0.1.tgz}
+    dev: true
 
   /url-loader/1.1.2_webpack@4.46.0:
     resolution: {integrity: sha1-uXHRkbg69pPF4/6kBkvp4fLX+Ng=, tarball: url-loader/download/url-loader-1.1.2.tgz}
@@ -46484,6 +46579,13 @@ packages:
     resolution: {integrity: sha1-WrrPd3wyFmpR0IXWtPPn0nET3bA=, tarball: whatwg-encoding/download/whatwg-encoding-1.0.5.tgz}
     dependencies:
       iconv-lite: 0.4.24
+
+  /whatwg-encoding/2.0.0:
+    resolution: {integrity: sha1-52NfWX/YcCCFhiaAWicp+naYrFM=, tarball: whatwg-encoding/download/whatwg-encoding-2.0.0.tgz}
+    engines: {node: '>=12'}
+    dependencies:
+      iconv-lite: 0.6.3
+    dev: true
 
   /whatwg-fetch/3.6.2:
     resolution: {integrity: sha1-3O0k838mJO0CgXJdUdDi4/5nf4w=, tarball: whatwg-fetch/download/whatwg-fetch-3.6.2.tgz}
