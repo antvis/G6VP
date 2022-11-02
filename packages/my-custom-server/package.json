@@ -23,6 +23,9 @@
   "publishConfig": {
     "registry": "https://registry.antfin-inc.com"
   },
+  "dependencies": {
+    "@alipay/graphinsight": "workspace:*"
+  },
   "devDependencies": {
     "http-server": "^14.1.1"
   }
