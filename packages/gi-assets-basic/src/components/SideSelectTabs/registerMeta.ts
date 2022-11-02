@@ -2,10 +2,10 @@ import { extra } from '@alipay/graphinsight';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 
-metas.height.default = 'calc(100vh - 120px)';
-metas.width.default = '450px';
-metas.offset.default = [0, 61];
-metas.placement.default = 'LB';
+const { width, offset, placement } = metas;
+
+width.default = '350px';
+offset.default = [0, 2];
 
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [] } = context;
@@ -22,27 +22,23 @@ const registerMeta = context => {
       enum: GIAC_CONTENT_ITEMS,
       default: [],
     },
-    outSideFromCanvas: {
-      title: '独立DOM',
-      type: 'boolean',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: false,
-    },
-    tabPosition: {
-      title: '导航布局',
+    width,
+    offset,
+    placement: {
+      title: '放置方位',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      enum: [
-        { label: 'left', value: 'left' },
-        { label: 'right', value: 'right' },
-        { label: 'top', value: 'top' },
-        { label: 'bottom', value: 'bottom' },
-      ],
-      default: 'left',
+      'x-component-props': {
+        options: [
+          {
+            value: 'LB',
+            label: '左下 / left',
+          },
+        ],
+      },
+      default: 'LB',
     },
-    ...metas,
   };
 
   return schema;

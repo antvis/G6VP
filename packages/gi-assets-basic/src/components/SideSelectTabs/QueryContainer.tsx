@@ -29,13 +29,14 @@ const QueryContainer: React.FunctionComponent<ContainerProps> = props => {
 
   const baseStyle = {
     ...postionStyles,
-    height,
+    top: '0px',
     width,
+
     boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
     transition: 'all 0.1s ease',
   };
   // 利用1像素尺寸变化监听left值
-  const styles = state.visible ? baseStyle : { ...baseStyle, left: '-332px', width: '343px' };
+  const styles = state.visible ? baseStyle : { ...baseStyle, left: '0px', width: '0px' };
   const handerBackStyles = {
     position: 'absolute',
     left: '100%',
