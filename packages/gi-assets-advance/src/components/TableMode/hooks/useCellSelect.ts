@@ -50,8 +50,9 @@ const useCellSelect = (
           // @ts-ignore
           const rowData = edgeTable.dataSet.getMultiData();
           if (!rowData) return;
-          const nodeID = rowData[rowIndex]?.id;
-          selectedEdges.add(nodeID);
+          const rd = rowData[rowIndex];
+          const { id: edgeID, GI_AGGREGATE_ID } = rd;
+          selectedEdges.add(GI_AGGREGATE_ID ? GI_AGGREGATE_ID : edgeID);
         });
 
         highlightBySelectedEdges(selectedEdges, { updateContext, largeGraphData, data: graphData, graph });

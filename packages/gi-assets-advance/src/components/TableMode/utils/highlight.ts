@@ -65,10 +65,11 @@ export const highlightBySelectedEdges = (selectedEdges: Set<any>, context) => {
     });
   } else {
     graphData.edges.forEach(edgeConfig => {
-      const { id } = edgeConfig;
+      const { id, GI_AGGREGATE_ID } = edgeConfig;
+
       const item = graph.findById(id) as IEdge;
 
-      if (selectedEdges.has(id)) {
+      if (selectedEdges.has(GI_AGGREGATE_ID ? GI_AGGREGATE_ID : id)) {
         item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
         !item.hasState('selected') && graph.setItemState(id, 'selected', true);
         relatedNodes.add(edgeConfig.target);

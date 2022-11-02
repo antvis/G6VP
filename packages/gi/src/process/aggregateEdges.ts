@@ -27,8 +27,16 @@ const aggregate = data => {
         target,
         edgeType,
         edgeTypeKeyFromProperties,
-        aggregate: children,
-        aggregateKey: key,
+        aggregate: children.map(item => {
+          return {
+            ...item,
+            data: {
+              ...item.data,
+              GI_AGGREGATE_ID: key,
+            },
+          };
+        }),
+        GI_AGGREGATE_ID: key,
         data: {
           source,
           target,
@@ -42,6 +50,7 @@ const aggregate = data => {
       ...firstEdge,
     };
   });
+  console.log('aggregateEdges', aggregateEdges);
 
   return {
     nodes,
