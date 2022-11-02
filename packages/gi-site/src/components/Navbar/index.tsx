@@ -71,8 +71,8 @@ const Navbar = ({
       const { data = {}, schemaData = {} } = origin;
 
       const projectId = await addProject({
-        name: origin?.name,
-        type: 'case',
+        name: origin?.name + '_复制',
+        type: 'project',
         data,
         schemaData,
         serviceConfig,
