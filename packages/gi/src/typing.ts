@@ -354,8 +354,10 @@ export interface GIGraphData {
     id: string;
     // 节点类型的枚举值。Property Graph 也称之为 node.label
     nodeType: string;
-    // 业务数据
+    // 业务数据,注意需要打平,暂不支持嵌套
     data: {};
+    // 业务数据（data）中的哪个字段，用来映射节点类型
+    nodeTypeKeyFromProperties?: string;
   }[];
   edges: {
     // 边ID,默认构造为`${edge.source}-${edge.target}-{index}`
@@ -366,8 +368,10 @@ export interface GIGraphData {
     target: string;
     // 边类型的枚举值。Property Graph 也称之为 edge.label
     edgeType: string;
-    // 业务数据
+    // 业务数据,注意需要打平,暂不支持嵌套
     data: {};
+    // 业务数据（data）中的哪个字段，用来映射边类型
+    edgeTypeKeyFromProperties?: string;
   }[];
 }
 

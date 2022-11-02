@@ -9,26 +9,35 @@ export interface IGraphData {
 }
 
 export interface INodeSchema {
+  /** 节点类型 */
   nodeType: string;
+  /** 节点类型，通过业务数据（data）中的哪个字段映射的 */
   nodeTypeKeyFromProperties: string;
+  /** 业务数据（data）中的字段类型，目前不支持嵌套 */
   properties: {
-    [key: string]: any;
+    [key: string]: 'string' | 'number' | 'date';
   };
 }
 
 export interface IEdgeSchema {
+  /** 边类型 */
   edgeType: string;
+  /** 边类型，通过业务数据（data）中的哪个字段映射的 */
   edgeTypeKeyFromProperties: string;
+  /** 边上开端节点类型 */
   sourceNodeType?: string;
+  /** 边上目标节点类型 */
   targetNodeType?: string;
+  /** 业务数据（data）中的字段类型，目前不支持嵌套 */
   properties: {
-    [key: string]: any;
+    [key: string]: 'string' | 'number' | 'date';
   };
 }
 
 export interface GraphSchemaData {
   nodes: INodeSchema[];
   edges: IEdgeSchema[];
+  /** Schema 额外配置信息 */
   meta?: {
     /** 默认的标签映射字段 */
     defaultLabelField: string;

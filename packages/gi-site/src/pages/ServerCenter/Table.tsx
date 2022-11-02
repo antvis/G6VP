@@ -44,7 +44,7 @@ const PackageTable = ({ data }) => {
       },
     },
     {
-      title: '出参',
+      title: '出参: Promise<T>',
       dataIndex: 'res',
       key: 'res',
       render: record => {
