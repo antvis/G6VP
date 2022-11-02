@@ -40,7 +40,7 @@ const GIAComponent = (props: GIAComponentProps) => {
     isShowIcon,
     icon,
     isVertical,
-    height = '60px',
+    height = '40px',
     disabled,
     isShowTooltip,
   } = GIAC || GIAC_PROPS.GIAC;

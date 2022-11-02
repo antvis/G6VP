@@ -398,7 +398,7 @@ const GIAC = {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: '60px',
+          default: '46px',
         },
         isVertical: {
           title: '垂直排列',
@@ -457,7 +457,7 @@ export const GIAC_CONTENT_PROPS = {
     tooltipPlacement: 'top',
     tooltipColor: '#3056e3',
     isVertical: false,
-    height: '60px',
+    height: '40px',
     containerType: 'drawer',
     containerWidth: '400px',
     contaienrMask: false,
@@ -478,7 +478,7 @@ export const GIAC_PROPS = {
     tooltipColor: '#3056e3',
     hasDivider: false,
     isVertical: false,
-    height: '60px',
+    height: '40px',
   },
 };
 
@@ -523,7 +523,7 @@ export const GI_CONTAINER_METAS = {
     'x-decorator': 'FormItem',
     'x-component': 'Input',
     'x-component-props': {},
-    default: '60px',
+    default: '46px',
   },
   width: {
     title: '宽度',
