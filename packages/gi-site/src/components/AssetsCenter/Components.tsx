@@ -30,7 +30,7 @@ const COLOR_MAP = {
 };
 const cardContent = item => {
   const { desc, version } = item;
-  const pkg = item.pkg.replace('@alipay/gi-assets-', '');
+  const pkg = item.pkg.replace('@antv/gi-assets-', '');
   return <div className="asset-detail">{desc}</div>;
 };
 

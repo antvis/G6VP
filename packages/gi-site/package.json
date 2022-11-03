@@ -18,7 +18,6 @@
   "dependencies": {
     "@antv/gi-assets-advance": "workspace:*",
     "@antv/gi-assets-algorithm": "workspace:*",
-    "@alipay/gi-assets-analysis": "workspace:*",
     "@antv/gi-assets-basic": "workspace:*",
     "@antv/gi-assets-gs-standalone": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",

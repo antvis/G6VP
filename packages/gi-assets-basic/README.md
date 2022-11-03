@@ -62,7 +62,7 @@
 
 ## 03.发布
 
-第一次发布资产，需要手动在雨燕上「新建三方库」：[https://yuyan.antfin-inc.com/lib/new](https://yuyan.antfin-inc.com/lib/new) ，以「@alipay/gi-assets-basic」为例如下图所示，点击新建。
+第一次发布资产，需要手动在雨燕上「新建三方库」：[https://yuyan.antfin-inc.com/lib/new](https://yuyan.antfin-inc.com/lib/new) ，以「@antv/gi-assets-basic」为例如下图所示，点击新建。
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2022/png/97618/1641377456620-2fcfd738-a023-4a4e-8130-2f5b6c365ac1.png#clientId=u9eac05c3-3072-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=1089&id=uc8c36365&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1089&originWidth=1316&originalType=binary&ratio=1&rotation=0&showTitle=false&size=101250&status=done&style=none&taskId=uf198441f-5243-45fe-b6df-e98581bb060&title=&width=1316)
 
 - 点击发布，发布到 CDN 上，之后每次发布的版本，直接点击同步即可。

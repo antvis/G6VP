@@ -51,7 +51,7 @@ const NPM_INFO = [
 
 export const getPackages = npm => {
   return npm.map(c => {
-    const name = c.name.replace('@alipay/', '');
+    const name = c.name.replace('@antv/', '');
 
     return {
       url: c.url || `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
