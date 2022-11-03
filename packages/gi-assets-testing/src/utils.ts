@@ -1,4 +1,4 @@
-import * as GI_BASIC_ASSETS from '@alipay/gi-assets-basic';
+import * as GI_BASIC_ASSETS from '@antv/gi-assets-basic';
 import { produce } from 'immer';
 import { GI_PROJECT_CONFIG } from './Mock/index';
 import type { TestSDKProps } from './TestSDK';

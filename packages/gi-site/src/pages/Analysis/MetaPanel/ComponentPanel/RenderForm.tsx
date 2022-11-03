@@ -1,5 +1,5 @@
-import { createForm, FormProvider, onFormInputChange, SchemaField } from '@alipay/gi-common-components';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { createForm, FormProvider, onFormInputChange, SchemaField } from '@antv/gi-common-components';
 import { Icon } from '@antv/gi-sdk';
 
 import { Collapse } from 'antd';

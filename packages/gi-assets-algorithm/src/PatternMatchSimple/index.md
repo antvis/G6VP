@@ -1,16 +1,16 @@
 ## PatternMatch 模式匹配
 
 ```jsx
-import TestSDK, { Mock } from "@alipay/gi-assets-testing";
-import * as React from "react";
-import Asset from "./index.tsx";
+import TestSDK, { Mock } from '@antv/gi-assets-testing';
+import * as React from 'react';
+import Asset from './index.tsx';
 
 const services = [
   {
-    id: "My_Service",
-    service: (params) => {
+    id: 'My_Service',
+    service: params => {
       console.log(params);
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         resolve({
           nodes: [
             {
@@ -24,7 +24,7 @@ const services = [
   },
 ];
 
-const App = (props) => {
+const App = props => {
   return (
     <div>
       <TestSDK asset={Asset} services={services} type="GIAC_CONTENT" />

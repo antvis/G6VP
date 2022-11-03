@@ -1,4 +1,4 @@
-import { CommonStyleSetting } from '@alipay/gi-common-components';
+import { CommonStyleSetting } from '@antv/gi-common-components';
 import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import React from 'react';
 

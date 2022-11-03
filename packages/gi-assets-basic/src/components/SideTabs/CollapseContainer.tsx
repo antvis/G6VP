@@ -1,4 +1,4 @@
-import { Handler } from '@alipay/gi-common-components';
+import { Handler } from '@antv/gi-common-components';
 import { utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import type { ContainerProps } from './typing';

@@ -28,7 +28,7 @@
     "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/gi-common-components": "*",
+    "@antv/gi-common-components": "*",
     "@antv/gi-sdk": "*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",

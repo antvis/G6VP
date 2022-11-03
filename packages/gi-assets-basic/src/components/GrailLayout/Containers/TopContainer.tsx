@@ -1,5 +1,4 @@
 import React from 'react';
-import { Handler } from '@alipay/gi-common-components';
 
 export interface TopContainerProps {
   height: string;

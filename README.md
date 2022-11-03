@@ -20,17 +20,17 @@ npm run start
 
 他们依次对应的包名与解释如下：
 
-| 文件路径                       | 包名                           | 说明       |
-| ------------------------------ | ------------------------------ | ---------- |
-| packages/gi                    | `@antv/gi-sdk`         | GISDK      |
-| packages/gi-assets-basic       | `@alipay/gi-assets-basic`      | 基础资产包 |
-| packages/gi-assets-advance     | `@alipay/gi-assets-advance`    | 高级资产包 |
-| packages/gi-assets-scene       | `@alipay/gi-assets-scene`      | 场景资产包 |
-| packages/gi-assets-algorithm   | `@alipay/gi-assets-algorithm`  | 算法资产包 |
-| packages/gi-common-components  | `@alipay/gi-common-components` | 通用组件   |
-| packages/gi-site               | `-`                            | 官方站点   |
-| packages/gi-portal             | `-`                            | 官方首页   |
-| packages/gi-standalone-service | `-`                            | BFF 服务   |
+| 文件路径                       | 包名                         | 说明       |
+| ------------------------------ | ---------------------------- | ---------- |
+| packages/gi                    | `@antv/gi-sdk`               | GISDK      |
+| packages/gi-assets-basic       | `@antv/gi-assets-basic`      | 基础资产包 |
+| packages/gi-assets-advance     | `@antv/gi-assets-advance`    | 高级资产包 |
+| packages/gi-assets-scene       | `@antv/gi-assets-scene`      | 场景资产包 |
+| packages/gi-assets-algorithm   | `@antv/gi-assets-algorithm`  | 算法资产包 |
+| packages/gi-common-components  | `@antv/gi-common-components` | 通用组件   |
+| packages/gi-site               | `-`                          | 官方站点   |
+| packages/gi-portal             | `-`                          | 官方首页   |
+| packages/gi-standalone-service | `-`                          | BFF 服务   |
 
 ## 进入到每个子包中启动
 
@@ -46,7 +46,7 @@ npm ERR! code ELIFECYCLE
 npm ERR! syscall spawn
 npm ERR! file sh
 npm ERR! errno ENOENT
-npm ERR! @alipay/gi-common-components@1.7.0 start: `npm run clean && father build --watch`
+npm ERR! @antv/gi-common-components@1.7.0 start: `npm run clean && father build --watch`
 ```
 
 - node 版本切换到 16，就能成功执行
@@ -58,7 +58,7 @@ v12.22.8
 ➜  gi-common-components git:(master) ✗ nvm use 16
 Now using node v16.17.0 (npm v8.15.0)
 ➜  gi-common-components git:(master) ✗ npm run start
-> @alipay/gi-common-components@1.7.0 start
+> @antv/gi-common-components@1.7.0 start
 > npm run clean && father build --watch
 ```
 

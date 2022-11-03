@@ -28,7 +28,7 @@
   "dependencies": {
     "@alipay/e2-editor-core": "^2.1.0",
     "@alipay/e2-language-gremlin": "^2.1.0",
-    "@alipay/gi-common-components": "*",
+    "@antv/gi-common-components": "*",
     "@antv/gi-sdk": "*",
     "@ant-design/icons": "^4.6.2",
     "@antv/algorithm": "^0.1.17",

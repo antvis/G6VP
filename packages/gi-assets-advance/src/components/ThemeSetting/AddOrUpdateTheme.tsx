@@ -1,5 +1,5 @@
-import { DisplayColor } from '@alipay/gi-common-components';
 import { LeftOutlined } from '@ant-design/icons';
+import { DisplayColor } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import { Alert, Button, Form, Input, List, message } from 'antd';
 import { nanoid } from 'nanoid';

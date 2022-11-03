@@ -1,11 +1,11 @@
 // const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
-import GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance/package.json';
+import GI_ASSETS_ADVANCE from '@antv/gi-assets-advance/package.json';
 // import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
-import GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm/package.json';
-import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
-import GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone/package.json';
-import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
+import GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm/package.json';
+import GI_ASSETS_BASIC from '@antv/gi-assets-basic/package.json';
+import GI_ASSETS_GS_STANDALONE from '@antv/gi-assets-gs-standalone/package.json';
+import GI_ASSETS_SCENE from '@antv/gi-assets-scene/package.json';
 import graphinsight from '@antv/gi-sdk/package.json';
 import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';

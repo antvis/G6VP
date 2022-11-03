@@ -578,14 +578,14 @@
       "updated": 1666315672471,
       "link": null,
       "locked": false,
-      "text": "@alipay/gi-assets-gs-standalone",
+      "text": "@antv/gi-assets-gs-standalone",
       "fontSize": 20,
       "fontFamily": 3,
       "textAlign": "left",
       "verticalAlign": "top",
       "baseline": 19,
       "containerId": null,
-      "originalText": "@alipay/gi-assets-gs-standalone"
+      "originalText": "@antv/gi-assets-gs-standalone"
     },
     {
       "id": "5bMfjJk7Ot0Nm91EUm0bq",

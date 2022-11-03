@@ -1,4 +1,4 @@
-import { createForm, FormProvider, onFormInputChange, SchemaField } from '@alipay/gi-common-components';
+import { createForm, FormProvider, onFormInputChange, SchemaField } from '@antv/gi-common-components';
 
 import { Collapse } from 'antd';
 import React, { useState } from 'react';

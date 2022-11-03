@@ -57,7 +57,7 @@
 
 ## 02.本地测试
 
-每个资产都有一个`index.md` 文件，采用 dumi 进行渲染，用户使用 `@alipay/gi-assets-testing` 包即可快速测试。
+每个资产都有一个`index.md` 文件，采用 dumi 进行渲染，用户使用 `@antv/gi-assets-testing` 包即可快速测试。
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2022/png/97618/1641378392662-b39f89d8-9daa-410e-aba7-d590d83d4a49.png#clientId=u9eac05c3-3072-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=1231&id=uaf3645c9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1231&originWidth=1361&originalType=binary&ratio=1&rotation=0&showTitle=false&size=206752&status=done&style=none&taskId=uedbfb812-ae5e-485c-8b3a-beb980f802b&title=&width=1361)
 
 ## 03.发布
