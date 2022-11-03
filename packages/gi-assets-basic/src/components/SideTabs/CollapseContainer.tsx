@@ -1,5 +1,5 @@
 import { Handler } from '@alipay/gi-common-components';
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import type { ContainerProps } from './typing';
 

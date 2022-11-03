@@ -1,5 +1,5 @@
 // import { notification } from 'antd';
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import * as React from 'react';
 const { isPosition, isStyles } = utils;
 

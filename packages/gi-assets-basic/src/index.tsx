@@ -1,4 +1,4 @@
-import { extra as GIExtra } from '@alipay/graphinsight';
+import { extra as GIExtra } from '@antv/gi-sdk';
 import * as components from './components';
 import services from './services';
 const { GIAC_CONTENT_METAS, GIAC_CONTENT_PROPS, GIAC_METAS, GIAC_PROPS, GIAComponent } = GIExtra;

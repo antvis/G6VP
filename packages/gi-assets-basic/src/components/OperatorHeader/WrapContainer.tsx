@@ -1,4 +1,4 @@
-import { Icon } from '@alipay/graphinsight';
+import { Icon } from '@antv/gi-sdk';
 import { Button, Divider, Drawer, Modal, Tooltip } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';

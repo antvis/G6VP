@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { Graph } from '@antv/graphin';
 import React from 'react';
 /**

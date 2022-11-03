@@ -1,4 +1,4 @@
-import { Icon } from '@alipay/graphinsight';
+import { Icon } from '@antv/gi-sdk';
 import { Empty } from 'antd';
 import React from 'react';
 

@@ -1,5 +1,5 @@
-import { extra, useContext } from '@alipay/graphinsight';
-import type { GIAComponentProps } from '@alipay/graphinsight/lib/components/GIAC';
+import { extra, useContext } from '@antv/gi-sdk';
+import type { GIAComponentProps } from '@antv/gi-sdk/lib/components/GIAC';
 import { DrawBoxSelect } from '@antv/l7-draw';
 import { L7Plot, L7PlotOptions } from '@antv/l7plot';
 import * as turf from '@turf/turf';

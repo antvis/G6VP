@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { EditFilled } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import { Button, Drawer } from 'antd';
 import * as React from 'react';

@@ -1,4 +1,4 @@
-import { GraphSchemaData, utils } from '@alipay/graphinsight';
+import { GraphSchemaData, utils } from '@antv/gi-sdk';
 const { getServerEngineContext } = utils;
 export interface GraphData {
   nodes: {

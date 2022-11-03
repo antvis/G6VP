@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import { useContext, utils } from '@antv/gi-sdk';
 import Graphin, { GraphinData } from '@antv/graphin';
+import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
-import { useContext, utils } from '@alipay/graphinsight';
 
 const StructAnalysis = () => {
   const { data, sourceDataMap, config, schemaData } = useContext();

@@ -6,7 +6,7 @@ import GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm/package.json';
 import GI_ASSETS_BASIC from '@alipay/gi-assets-basic/package.json';
 import GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone/package.json';
 import GI_ASSETS_SCENE from '@alipay/gi-assets-scene/package.json';
-import graphinsight from '@alipay/graphinsight/package.json';
+import graphinsight from '@antv/gi-sdk/package.json';
 import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';
 export const GRAPHIN_VERSION = '2.7.13';

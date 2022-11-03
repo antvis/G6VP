@@ -11,7 +11,7 @@
       '@antv/g6': 'G6',
       antd: 'antd',
       '@antv/graphin': 'Graphin',
-      '@alipay/graphinsight': 'GISDK',
+      '@antv/gi-sdk': 'GISDK',
     },
 ```
 

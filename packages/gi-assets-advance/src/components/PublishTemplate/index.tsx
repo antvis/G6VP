@@ -1,8 +1,8 @@
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Col, Drawer, Form, Input, Modal, Popconfirm, Row, Select, Table, Tooltip, message } from 'antd';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Col, Drawer, Form, Input, message, Modal, Popconfirm, Row, Select, Table, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { useContext, utils } from '@alipay/graphinsight';
 import GremlinEditor from '../GremlinQuery/GremlinEditor';
 import './index.less';
 

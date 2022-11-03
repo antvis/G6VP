@@ -1,5 +1,5 @@
-import { GIConfig,utils } from '@alipay/graphinsight';
-import { GraphSchemaData } from '@alipay/graphinsight/lib/process/schema';
+import { GIConfig, utils } from '@antv/gi-sdk';
+import { GraphSchemaData } from '@antv/gi-sdk/lib/process/schema';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { Alert, Button, Card, Col, notification, Row } from 'antd';
 import * as React from 'react';

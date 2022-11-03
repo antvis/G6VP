@@ -1,6 +1,5 @@
 import { FileExcelOutlined, FilterOutlined } from '@ant-design/icons';
-import { useContext } from '@alipay/graphinsight';
-import { GraphinData } from '@antv/graphin';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Col, List, Popover, Row, Statistic, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import downloadCsv from '../common/downloadCsv';

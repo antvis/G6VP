@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { EditableProTable } from '@ant-design/pro-table';
+import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';

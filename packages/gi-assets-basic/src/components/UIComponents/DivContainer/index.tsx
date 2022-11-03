@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { CloseOutlined } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import { Button } from 'antd';
 import * as React from 'react';
 import './index.less';

@@ -1,4 +1,4 @@
-import { GISiteParams } from '@alipay/graphinsight';
+import { GISiteParams } from '@antv/gi-sdk';
 import { Alert, Form, message } from 'antd';
 import React, { useState } from 'react';
 import { LoadChinaVisDataSource } from '../Constants';

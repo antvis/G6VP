@@ -1,12 +1,12 @@
 import { DisplayColor } from '@alipay/gi-common-components';
-import { useContext } from '@alipay/graphinsight';
 import { LeftOutlined } from '@ant-design/icons';
-import { Alert, Button, Form, Input,  List, message } from 'antd';
+import { useContext } from '@antv/gi-sdk';
+import { Alert, Button, Form, Input, List, message } from 'antd';
 import { nanoid } from 'nanoid';
 import React from 'react';
-import {  Updater } from 'use-immer';
+import { Updater } from 'use-immer';
 import mockServices from './mockServices';
-import { ICanvasConfig,  ITheme, IThemeSettingState } from './typing';
+import { ICanvasConfig, ITheme, IThemeSettingState } from './typing';
 
 const addMsg = '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式';
 const updateMsg = '请在【画布设置】资产中修改画布背景样式，在【样式设置】资产或左侧修改面板中配置元素样式';
@@ -91,7 +91,6 @@ const AddTheme: React.FC<Props> = props => {
     }
   };
 
-
   return (
     <div className="add-theme">
       <header>
@@ -103,7 +102,7 @@ const AddTheme: React.FC<Props> = props => {
           <Input defaultValue={currentTheme?.name} />
         </Form.Item>
         <Form.Item label="描述">
-          <Alert message={status === "add" ? addMsg : updateMsg} type="info" />
+          <Alert message={status === 'add' ? addMsg : updateMsg} type="info" />
         </Form.Item>
         <Form.Item label="主题样式">
           <div className="theme-style">

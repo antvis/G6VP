@@ -1,4 +1,4 @@
-import type { GIConfig } from '@alipay/graphinsight';
+import type { GIConfig } from '@antv/gi-sdk';
 /**
  *
  * @param

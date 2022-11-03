@@ -24,7 +24,7 @@
     "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@alipay/gi-assets-basic": "*"
   },
   "peerDependencies": {

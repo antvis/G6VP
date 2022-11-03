@@ -1,5 +1,5 @@
-import GISDK, { useContext } from '@alipay/graphinsight';
 import { DeleteOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import GISDK, { useContext } from '@antv/gi-sdk';
 import { Button, Dropdown, Menu } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';

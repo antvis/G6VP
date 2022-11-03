@@ -1,4 +1,3 @@
-import { Icon } from '@alipay/graphinsight';
 import {
   CheckCircleOutlined,
   DeleteOutlined,
@@ -6,6 +5,7 @@ import {
   ExclamationCircleOutlined,
   TableOutlined,
 } from '@ant-design/icons';
+import { Icon } from '@antv/gi-sdk';
 import { Collapse, Space } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';

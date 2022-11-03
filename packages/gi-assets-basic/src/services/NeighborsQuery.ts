@@ -1,4 +1,4 @@
-import { GIGraphData, ServiceObject } from '@alipay/graphinsight';
+import { GIGraphData, ServiceObject } from '@antv/gi-sdk';
 
 export interface ReqNeighborsQuery {
   //扩散的节点，是个节点ID数组

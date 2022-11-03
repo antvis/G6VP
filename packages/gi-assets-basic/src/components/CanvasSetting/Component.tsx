@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
 import CanvasClick from './CanvasClick';

@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Skeleton } from 'antd';
 import React from 'react';
 import DivContainer from '../UIComponents/DivContainer';
@@ -101,7 +101,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
   const content =
     !isLoading && detail ? <Properties data={detail} defaultiStatistic={defaultiStatistic} /> : <Skeleton active />;
-  
+
   return (
     <DivContainer
       animate={true}

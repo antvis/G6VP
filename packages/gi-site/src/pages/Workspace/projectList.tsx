@@ -1,5 +1,5 @@
-import { Icon, utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
+import { Icon, utils } from '@antv/gi-sdk';
 import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';

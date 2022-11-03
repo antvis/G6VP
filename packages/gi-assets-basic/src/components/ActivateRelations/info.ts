@@ -1,4 +1,4 @@
-import { AssetInfo } from '@alipay/graphinsight';
+import { AssetInfo } from '@antv/gi-sdk';
 const info: AssetInfo = {
   id: 'ActivateRelations',
   name: '元素高亮',

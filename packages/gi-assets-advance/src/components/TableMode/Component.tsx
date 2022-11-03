@@ -1,5 +1,5 @@
-import { useContext } from '@alipay/graphinsight';
 import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { S2DataConfig } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';

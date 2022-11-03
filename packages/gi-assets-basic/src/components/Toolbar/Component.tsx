@@ -1,4 +1,4 @@
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import Toolbar from './Toolbar';
 const { getPositionStyles } = utils;

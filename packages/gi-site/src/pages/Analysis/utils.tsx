@@ -1,4 +1,4 @@
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema };

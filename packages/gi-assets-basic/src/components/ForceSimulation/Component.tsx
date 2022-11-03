@@ -1,8 +1,8 @@
 import React from 'react';
 import { handlePinNode } from '../common/handlePinNode';
 
-import type { IGIAC } from '@alipay/graphinsight';
-import { extra, useContext } from '@alipay/graphinsight';
+import type { IGIAC } from '@antv/gi-sdk';
+import { extra, useContext } from '@antv/gi-sdk';
 
 const { GIAComponent, deepClone } = extra;
 

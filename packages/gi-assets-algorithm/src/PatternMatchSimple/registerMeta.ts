@@ -1,8 +1,8 @@
-import { extra } from "@alipay/graphinsight";
+import { extra } from '@antv/gi-sdk';
 
 const { GIAC_CONTENT_METAS } = extra;
 
-const registerMeta = (context) => {
+const registerMeta = context => {
   return {
     /** 分类信息 */
     ...GIAC_CONTENT_METAS,

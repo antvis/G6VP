@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 
 import { Menu } from 'antd';
 import React, { useEffect, useRef } from 'react';

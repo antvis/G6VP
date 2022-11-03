@@ -1,10 +1,10 @@
-import type { GIAssets } from '@alipay/graphinsight';
-import { useContext } from '@alipay/graphinsight';
+import type { GIAssets } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
+import { BottomContainer, LeftContainer, RightContainer, TopContainer } from './Containers';
 import useComponents from './useComponents';
-import { LeftContainer, BottomContainer, RightContainer, TopContainer } from './Containers';
 
 export interface FreeLayoutProps {
   GI_CONTAINER_LEFT: string[];
@@ -49,7 +49,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     leftDisplay,
     rightDisplay,
     bottomDisplay,
-    topDisplay
+    topDisplay,
   } = props;
 
   const [state, updateState] = useImmer<IState>({

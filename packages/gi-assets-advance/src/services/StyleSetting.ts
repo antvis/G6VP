@@ -1,5 +1,5 @@
-import type { GIConfig } from '@alipay/graphinsight';
-import { utils } from '@alipay/graphinsight';
+import type { GIConfig } from '@antv/gi-sdk';
+import { utils } from '@antv/gi-sdk';
 
 export interface ServiceObject {
   name: string;

@@ -1,5 +1,5 @@
 import { CommonStyleSetting } from '@alipay/gi-common-components';
-import { useContext, utils, GIConfig } from '@alipay/graphinsight';
+import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import React from 'react';
 
 export interface StyleSettingProps {

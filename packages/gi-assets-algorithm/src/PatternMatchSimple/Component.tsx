@@ -1,5 +1,5 @@
-import { useContext } from '@alipay/graphinsight';
 import Algorithm from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, Form, Radio, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';

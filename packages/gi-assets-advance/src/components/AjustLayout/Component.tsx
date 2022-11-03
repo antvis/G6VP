@@ -1,5 +1,5 @@
-import { useContext } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '@ant-design/icons';
+import { useContext } from '@antv/gi-sdk';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
 import { Button, Collapse, Select } from 'antd';
 import React from 'react';

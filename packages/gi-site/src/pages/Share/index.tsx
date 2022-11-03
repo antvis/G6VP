@@ -1,4 +1,4 @@
-import GISDK, { utils } from '@alipay/graphinsight';
+import GISDK, { utils } from '@antv/gi-sdk';
 import React from 'react';
 import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets.market';

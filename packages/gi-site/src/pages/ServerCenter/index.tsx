@@ -1,4 +1,4 @@
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 import { Card } from 'antd';
 import * as React from 'react';
 import { getCombinedAssets } from '../../loader';

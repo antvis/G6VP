@@ -1,4 +1,4 @@
-import { GIAssets } from '@alipay/graphinsight';
+import { GIAssets } from '@antv/gi-sdk';
 import beautify from 'js-beautify';
 import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
 import type { Package } from '../loader';

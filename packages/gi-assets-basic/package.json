@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@alipay/gi-common-components": "*",
-    "@alipay/graphinsight": "*",
+    "@antv/gi-sdk": "*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",

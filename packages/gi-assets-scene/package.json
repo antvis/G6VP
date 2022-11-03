@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",

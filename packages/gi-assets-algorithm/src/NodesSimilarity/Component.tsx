@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { FormOutlined, ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { Button, Col, Empty, Input, message, Radio, Row } from 'antd';
 import { cloneDeep } from 'lodash';

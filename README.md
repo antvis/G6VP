@@ -22,7 +22,7 @@ npm run start
 
 | 文件路径                       | 包名                           | 说明       |
 | ------------------------------ | ------------------------------ | ---------- |
-| packages/gi                    | `@alipay/graphinsight`         | GISDK      |
+| packages/gi                    | `@antv/gi-sdk`         | GISDK      |
 | packages/gi-assets-basic       | `@alipay/gi-assets-basic`      | 基础资产包 |
 | packages/gi-assets-advance     | `@alipay/gi-assets-advance`    | 高级资产包 |
 | packages/gi-assets-scene       | `@alipay/gi-assets-scene`      | 场景资产包 |

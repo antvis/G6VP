@@ -1,5 +1,5 @@
-import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSchemaData } from '@alipay/graphinsight';
-import { utils } from '@alipay/graphinsight';
+import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSchemaData } from '@antv/gi-sdk';
+import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import type { TypeAssetInfo } from './typing';
 

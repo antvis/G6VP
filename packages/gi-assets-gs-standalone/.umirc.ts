@@ -15,7 +15,7 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    '@alipay/graphinsight': 'GISDK',
+    '@antv/gi-sdk': 'GISDK',
     '@alipay/gi-assets-basic': 'GI_ASSETS_BAISC',
     '@alipay/gi-assets-advance': 'GI_ASSETS_ADVANCE',
     '@alipay/gi-assets-scene': 'GI_ASSETS_SCENE',

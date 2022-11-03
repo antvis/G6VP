@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { ReloadOutlined } from '@ant-design/icons';
 import { kMeans } from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { Button, Empty, InputNumber, Radio, Select, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';

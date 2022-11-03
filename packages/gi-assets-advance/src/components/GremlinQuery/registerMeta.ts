@@ -1,4 +1,4 @@
-import { extra, utils } from '@alipay/graphinsight';
+import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);

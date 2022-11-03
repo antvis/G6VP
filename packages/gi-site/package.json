@@ -23,7 +23,7 @@
     "@alipay/gi-assets-gs-standalone": "workspace:*",
     "@alipay/gi-assets-scene": "workspace:*",
     "@alipay/gi-common-components": "workspace:*",
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
     "@ant-design/charts": "^1.0.21",

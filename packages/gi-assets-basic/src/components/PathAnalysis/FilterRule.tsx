@@ -1,5 +1,5 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { FilterOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Form, Popover, Select } from 'antd';
 import React, { useMemo } from 'react';
 import { IState } from './typing';

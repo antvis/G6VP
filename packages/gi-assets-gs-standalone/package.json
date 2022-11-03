@@ -28,7 +28,7 @@
     "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
     "json2csv": "^5.0.7",

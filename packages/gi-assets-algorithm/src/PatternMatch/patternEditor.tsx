@@ -1,21 +1,21 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Tabs, Row, Col, Button, Divider, Layout, Menu, message, Input, Tooltip } from 'antd';
-import { IItemBase } from '@antv/g6';
-import { useContext, extra, IEdgeSchema, INodeSchema } from '@alipay/graphinsight';
-import Graphin, { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { uniqueId } from '@antv/algorithm/lib/util';
 import Algorithm from '@antv/algorithm';
-import { cloneDeep } from 'lodash';
+import { uniqueId } from '@antv/algorithm/lib/util';
+import { IItemBase } from '@antv/g6';
+import { extra, IEdgeSchema, INodeSchema, useContext } from '@antv/gi-sdk';
+import Graphin, { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
+import { Button, Col, Divider, Input, Layout, Menu, message, Row, Tabs } from 'antd';
 import deepmerge from 'deepmerge';
-import FormattedMessage, { formatMessage } from './locale';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import Util from '../utils';
 import AddRelation from './AddRelation';
 import EditDrawer, { TypeInfo } from './editDrawer';
-import templates from './templates';
-import Util from '../utils';
-import { ITEM_STATE, SPLITOR } from './registerMeta';
-import { formatDataModels } from './util';
 import './index.less';
+import FormattedMessage, { formatMessage } from './locale';
+import { ITEM_STATE, SPLITOR } from './registerMeta';
+import templates from './templates';
+import { formatDataModels } from './util';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -26,17 +26,17 @@ const { createUuid, fittingString, focusNodeY } = Util;
 const { deepClone } = extra;
 
 type ItemBriefInfo = {
-  id: string,
-  type: 'node' | 'edge'
-}
+  id: string;
+  type: 'node' | 'edge';
+};
 type ContextMenu = {
-  type: 'node' | 'edge',
-  visible: boolean,
-  item: IItemBase | null,
-  x: number,
-  y: number
-}
-export type TypeProperties =  { [type: string]: Set<string> };
+  type: 'node' | 'edge';
+  visible: boolean;
+  item: IItemBase | null;
+  x: number;
+  y: number;
+};
+export type TypeProperties = { [type: string]: Set<string> };
 interface Props {
   visible: boolean;
   patternInfo: {
@@ -57,7 +57,6 @@ interface Props {
 let currentNodeIdx = 0;
 const emptyData = { nodes: [], edges: [] };
 
-
 const PatternEditor: React.FC<Props> = ({
   visible,
   patternInfo,
@@ -70,30 +69,29 @@ const PatternEditor: React.FC<Props> = ({
   setVisible,
   savePattern,
 }) => {
-
   const { schemaData, data, config } = useContext();
 
   const graphRef = useRef();
   const schemaGraphRef = useRef();
   const menuRef = React.createRef<HTMLDivElement>();
 
-  const [graphData, setGraphData] = useState(patternInfo?.data || {
-    nodes: [],
-    edges: []
-  });
+  const [graphData, setGraphData] = useState(
+    patternInfo?.data || {
+      nodes: [],
+      edges: [],
+    },
+  );
   const [schemaNodes, setSchemaNodes] = useState([] as any[]);
   const [contextMenu, setContextMenu] = useState({
     type: 'node',
     visible: false,
     item: null,
     x: 0,
-    y: 0
+    y: 0,
   } as ContextMenu);
   const [editItem, setEditItem] = useState({} as ItemBriefInfo);
   const [activePanel, setActivePanel] = useState('node');
   const [editData, setEditData] = useState();
-
-
 
   const clearSchemaNodeStates = () => {
     const schemaGraph = (schemaGraphRef?.current as any)?.graph;
@@ -103,7 +101,7 @@ const PatternEditor: React.FC<Props> = ({
         schemaGraph.updateItem(node, {});
       });
     }
-  }
+  };
 
   // 编辑器每次显示出来的时候，修改一下编辑图和 schema 选择图的大小。每次隐藏时，左侧恢复到默认的选择面板（schema 节点选择的面板）
   useEffect(() => {
@@ -122,19 +120,18 @@ const PatternEditor: React.FC<Props> = ({
       const schemaNodeData = cloneDeep(schemaData) as any;
       schemaNodeData.nodes.forEach(node => {
         const { nodeType } = node;
-        node.id = `${nodeType}-${createUuid()}`
+        node.id = `${nodeType}-${createUuid()}`;
         node.originLabel = nodeType;
         node.ellipsedLabel = fittingString(nodeType, 140, 12);
         node.style = {
           ...node.style,
           label: {
-            value: node.ellipsedLabel
-          }
+            value: node.ellipsedLabel,
+          },
         };
       });
       const nodes = schemaNodeData.nodes.filter(node => !!nodeProperties[node.nodeType]);
       setSchemaNodes(formatDataModels('node', nodes, config));
-
     } else if (!visible) {
       setActivePanel('node');
     }
@@ -147,7 +144,7 @@ const PatternEditor: React.FC<Props> = ({
         setTimeout(() => {
           schemaGraph.updateItem(schemaNodes[0].id, {
             x: 30,
-            y: 50
+            y: 50,
           });
         }, 0);
       } else {
@@ -155,7 +152,7 @@ const PatternEditor: React.FC<Props> = ({
           type: 'grid',
           cols: 3,
           width: 200,
-          nodeSize: 50
+          nodeSize: 50,
         });
       }
     }
@@ -175,7 +172,7 @@ const PatternEditor: React.FC<Props> = ({
         style: {
           ...nodeSchema.style,
           label: {
-            value: `${nodeSchema.nodeType}-n${currentNodeIdx}`
+            value: `${nodeSchema.nodeType}-n${currentNodeIdx}`,
           },
         },
         id: nodeId,
@@ -185,7 +182,7 @@ const PatternEditor: React.FC<Props> = ({
       delete newNode.y;
       setGraphData(oldData => ({
         nodes: [...oldData.nodes].concat([newNode]),
-        edges: GraphinUtils.processEdges(oldData.edges)
+        edges: GraphinUtils.processEdges(oldData.edges),
       }));
     });
 
@@ -195,7 +192,7 @@ const PatternEditor: React.FC<Props> = ({
     graph.on('node:contextmenu', e => {
       e.preventDefault();
       const nodeModel = e.item.getModel();
-      const pos = graph.getCanvasByPoint(nodeModel.x, nodeModel.y)
+      const pos = graph.getCanvasByPoint(nodeModel.x, nodeModel.y);
 
       const graphTop = graph.getContainer().offsetTop;
       const graphLeft = graph.getContainer().offsetLeft;
@@ -205,11 +202,11 @@ const PatternEditor: React.FC<Props> = ({
         item: e.item,
         x: pos.x + graphLeft,
         y: pos.y + graphTop,
-      })
+      });
     });
     graph.on('edge:contextmenu', e => {
       e.preventDefault();
-      const pos = graph.getCanvasByPoint(e.x, e.y)
+      const pos = graph.getCanvasByPoint(e.x, e.y);
       const graphTop = graph.getContainer().offsetTop;
       const graphLeft = graph.getContainer().offsetLeft;
       setContextMenu({
@@ -218,7 +215,7 @@ const PatternEditor: React.FC<Props> = ({
         item: e.item,
         x: pos.x + graphLeft,
         y: pos.y + graphTop,
-      })
+      });
     });
     graph.on('canvas:click', e => {
       setContextMenu(oldMenu => ({
@@ -232,7 +229,7 @@ const PatternEditor: React.FC<Props> = ({
     graph.on('node:click', e => {
       setEditItem({
         type: 'node',
-        id: e.item.getID()
+        id: e.item.getID(),
       });
     });
 
@@ -241,7 +238,7 @@ const PatternEditor: React.FC<Props> = ({
       const model = e.item.getModel();
       setEditItem({
         type: 'edge',
-        id: model.id
+        id: model.id,
       });
     });
 
@@ -249,19 +246,19 @@ const PatternEditor: React.FC<Props> = ({
       schemaGraph.updateItem(e.item, {
         style: {
           label: {
-            value: e.item.getModel?.()?.originLabel || ''
-          }
-        }
-      })
+            value: e.item.getModel?.()?.originLabel || '',
+          },
+        },
+      });
     });
     schemaGraph.on('node:mouseleave', e => {
       schemaGraph.updateItem(e.item, {
         style: {
           label: {
-            value: e.item.getModel?.()?.ellipsedLabel || ''
-          }
-        }
-      })
+            value: e.item.getModel?.()?.ellipsedLabel || '',
+          },
+        },
+      });
     });
   }, []);
 
@@ -274,23 +271,21 @@ const PatternEditor: React.FC<Props> = ({
     });
   }, [patternInfo?.data]);
 
-
   useEffect(() => {
-    const data = visible && patternInfo?.data || emptyData
+    const data = (visible && patternInfo?.data) || emptyData;
     setGraphData({
       nodes: formatDataModels('node', data.nodes, config),
       edges: GraphinUtils.processEdges(formatDataModels('edge', data.edges, config, schemaEdgeMap)),
     });
-  }, [visible])
-
+  }, [visible]);
 
   const closeEditor = () => {
     setVisible(false);
-  }
+  };
 
   const onSave = () => {
     const saveData = (graphRef?.current as any).graph.save();
-    
+
     //  若当前模式为空，则无法保存
     if (!saveData?.nodes?.length) {
       message.info(formatMessage({ id: 'save-failed-not-empty' }));
@@ -310,11 +305,16 @@ const PatternEditor: React.FC<Props> = ({
 
     // 验证当前模式图是连通的
     const traversedTag = {};
-    breadthFirstSearch(saveData, saveData.nodes[0].id, {
-      enter: ({ current }) => {
-        traversedTag[current] = true;
-      }
-    }, false);
+    breadthFirstSearch(
+      saveData,
+      saveData.nodes[0].id,
+      {
+        enter: ({ current }) => {
+          traversedTag[current] = true;
+        },
+      },
+      false,
+    );
     if (Object.keys(traversedTag).length < saveData.nodes.length) {
       message.info(formatMessage({ id: 'save-failed-must-connected' }));
       return;
@@ -322,22 +322,22 @@ const PatternEditor: React.FC<Props> = ({
 
     savePattern(patternInfo?.id, saveData);
     closeEditor();
-  }
+  };
 
   const updateItem = (
     type: 'node' | 'edge',
     updateConfig: {
-      id: string,
-      nodeType?: string,
-      edgeType?: string,
-      rules?: string[]
+      id: string;
+      nodeType?: string;
+      edgeType?: string;
+      rules?: string[];
     },
-    oldGraphData: GraphinData
+    oldGraphData: GraphinData,
   ): {
-    newGraphData: GraphinData,
-    oldDataItem,
-    newItem,
-    hasRelated: boolean
+    newGraphData: GraphinData;
+    oldDataItem;
+    newItem;
+    hasRelated: boolean;
   } => {
     const oldDataItem = (oldGraphData[`${type}s`] as any).find(item => item.id === updateConfig.id);
     // 在编辑图上没有找到相应 item
@@ -345,7 +345,7 @@ const PatternEditor: React.FC<Props> = ({
       return {} as any;
     }
 
-    const name = updateConfig?.[`${type}Type`] || oldDataItem[`${type}Type`]
+    const name = updateConfig?.[`${type}Type`] || oldDataItem[`${type}Type`];
     let edgeSchema: IEdgeSchema = {} as any;
     let newItem;
     let hasRelated = false;
@@ -355,7 +355,7 @@ const PatternEditor: React.FC<Props> = ({
       const schemaMap = type === 'node' ? schemaNodeMap : schemaEdgeMap;
       edgeSchema = schemaMap[name] as IEdgeSchema;
     }
-    
+
     const transData: GraphinData = { nodes: [], edges: [] };
     if (type === 'node') {
       transData.nodes = [newData];
@@ -365,8 +365,8 @@ const PatternEditor: React.FC<Props> = ({
         newData.style = {
           ...newData.style,
           label: {
-            value: edgeSchema.edgeType
-          }
+            value: edgeSchema.edgeType,
+          },
         };
         newData.label = edgeSchema.edgeType;
       }
@@ -383,7 +383,7 @@ const PatternEditor: React.FC<Props> = ({
       newItem = nodes[0];
       newGraphData = {
         nodes: [],
-        edges: oldGraphData.edges
+        edges: oldGraphData.edges,
       };
 
       if (name !== oldDataItem.nodeType) {
@@ -392,8 +392,8 @@ const PatternEditor: React.FC<Props> = ({
         newItem.style = {
           ...newItem.style,
           label: {
-            value: `${name}-n${currentNodeIdx}`
-          }
+            value: `${name}-n${currentNodeIdx}`,
+          },
         };
         // 更新相关边的 sourceNodeType 和 targetNodeType
         newGraphData.edges.forEach((edge, i) => {
@@ -407,8 +407,8 @@ const PatternEditor: React.FC<Props> = ({
               type: 'graphin-line',
               sourceNodeType: edge.source === newItem.id ? name : edge.sourceNodeType,
               targetNodeType: edge.target === newItem.id ? name : edge.targetNodeType,
-            }
-    
+            };
+
             const processedEdges = formatDataModels('edge', [newEdgeData], config, schemaEdgeMap);
             newGraphData.edges.splice(i, 1, processedEdges[0]);
           }
@@ -418,24 +418,24 @@ const PatternEditor: React.FC<Props> = ({
       newItem = edges[0];
       newGraphData = {
         nodes: oldGraphData.nodes,
-        edges: []
-      }
+        edges: [],
+      };
     }
     newItem.rules = updateConfig.rules || newItem.rules;
     oldGraphData[`${type}s`].forEach(item => {
       newGraphData[`${type}s`].push(item.id === updateConfig.id ? newItem : item);
     });
 
-    return { newGraphData, oldDataItem, newItem, hasRelated }
-  }
+    return { newGraphData, oldDataItem, newItem, hasRelated };
+  };
 
   const saveItem = (type, updateConfig) => {
     setGraphData(oldGraphData => {
       let newGraphData, newItem, hasRelated;
       let oldDataItem = oldGraphData[`${type}s`].find(item => item.id === updateConfig.id);
       // 在编辑图上没有找到相应 item
-      if (!oldDataItem) return oldGraphData
-      
+      if (!oldDataItem) return oldGraphData;
+
       if (type === 'node') {
         if (oldDataItem.nodeType !== updateConfig.nodeType) {
           ({ newGraphData, oldDataItem, newItem, hasRelated } = updateItem(type, updateConfig, oldGraphData));
@@ -448,30 +448,34 @@ const PatternEditor: React.FC<Props> = ({
           oldDataItem.rules = updateConfig.rules;
           newGraphData = {
             nodes: oldGraphData.nodes,
-            edges: oldGraphData.edges
-          }
+            edges: oldGraphData.edges,
+          };
         }
       } else if (type === 'edge') {
         newGraphData = {
           nodes: oldGraphData.nodes,
           edges: GraphinUtils.processEdges(oldGraphData.edges),
-        }
+        };
         // 如果传过来 sourceNodeType targetNodeType 代表原本的起点终点没有类型，此时同时设置起点和终点的类型
         if (updateConfig.sourceNodeType) {
-          newGraphData = updateItem('node',
+          newGraphData = updateItem(
+            'node',
             {
               id: oldDataItem.source,
-              nodeType: updateConfig.sourceNodeType
+              nodeType: updateConfig.sourceNodeType,
             },
-            newGraphData).newGraphData;
+            newGraphData,
+          ).newGraphData;
         }
         if (updateConfig.targetNodeType) {
-          newGraphData = updateItem('node',
+          newGraphData = updateItem(
+            'node',
             {
               id: oldDataItem.target,
-              nodeType: updateConfig.targetNodeType
+              nodeType: updateConfig.targetNodeType,
             },
-            newGraphData).newGraphData;
+            newGraphData,
+          ).newGraphData;
         }
 
         // 更新该边
@@ -479,11 +483,13 @@ const PatternEditor: React.FC<Props> = ({
         // 如果保存的是边，挂载起点类型和终点类型
         newItem.sourceNodeType = updateConfig.sourceNodeType || oldDataItem.sourceNodeType;
         newItem.targetNodeType = updateConfig.targetNodeType || oldDataItem.targetNodeType;
-        newGraphData.edges = GraphinUtils.processEdges(formatDataModels('edge', newGraphData.edges, config, schemaEdgeMap));
+        newGraphData.edges = GraphinUtils.processEdges(
+          formatDataModels('edge', newGraphData.edges, config, schemaEdgeMap),
+        );
       }
       return newGraphData || oldGraphData;
     });
-  }
+  };
 
   const onContextMenuClick = key => {
     const model = contextMenu.item?.getModel();
@@ -502,13 +508,18 @@ const PatternEditor: React.FC<Props> = ({
         setGraphData(oldGraphData => {
           const newData = {
             nodes: oldGraphData.nodes.filter(node => !selectedNodeIds.includes(node.id)),
-            edges: GraphinUtils.processEdges(oldGraphData.edges.filter(edge => !selectedNodeIds.includes(edge.target) && !selectedNodeIds.includes(edge.source))),
+            edges: GraphinUtils.processEdges(
+              oldGraphData.edges.filter(
+                edge => !selectedNodeIds.includes(edge.target) && !selectedNodeIds.includes(edge.source),
+              ),
+            ),
           };
           return newData;
         });
         setEditItem({} as ItemBriefInfo);
         break;
-      } case 'removeEdge': {
+      }
+      case 'removeEdge': {
         // 寻找通过多选选中的边
         const selectedEdgeIds = graph.findAllByState('edge', ITEM_STATE.Selected)?.map(edge => edge.getID());
         // 若没有选中的边，代表仅对当前菜单操作的边进行删除
@@ -524,14 +535,15 @@ const PatternEditor: React.FC<Props> = ({
         });
         setEditItem({} as ItemBriefInfo);
         break;
-      } default:
+      }
+      default:
         break;
     }
     setContextMenu(oldMenu => ({
       ...oldMenu,
-      visible: false
+      visible: false,
     }));
-  }
+  };
 
   const createEdge = ({ source, target }) => {
     let sourceType, targetType;
@@ -543,7 +555,7 @@ const PatternEditor: React.FC<Props> = ({
       if (node.id === target) {
         targetType = node.nodeType;
       }
-    })
+    });
 
     let hasRelatedEdges = false;
     if (!sourceType || !targetType) {
@@ -587,14 +599,14 @@ const PatternEditor: React.FC<Props> = ({
       return {
         nodes: oldData.nodes,
         edges: GraphinUtils.processEdges(newEdges),
-      }
+      };
     });
-  }
+  };
 
   const processTemplateData = data => {
     const newData: GraphinData = {
       nodes: [],
-      edges: []
+      edges: [],
     };
     const nodeMap = {};
     data.nodes.forEach(node => {
@@ -605,7 +617,7 @@ const PatternEditor: React.FC<Props> = ({
           keyshape: {
             stroke: '#959595',
             fill: '#959595',
-          }
+          },
         },
       };
       nodeMap[node.id] = newNode;
@@ -622,21 +634,21 @@ const PatternEditor: React.FC<Props> = ({
         style: {
           keyshape: {
             stroke: '#959595',
-            lineDash: [5, 5]
-          }
+            lineDash: [5, 5],
+          },
         },
       });
     });
     return newData;
-  }
+  };
 
   const addTemplate = template => {
     const newData = processTemplateData(template.data);
-    setGraphData(oldGraphData =>({
+    setGraphData(oldGraphData => ({
       nodes: oldGraphData.nodes.concat(newData.nodes),
-      edges: GraphinUtils.processEdges(oldGraphData.edges.concat(newData.edges))
+      edges: GraphinUtils.processEdges(oldGraphData.edges.concat(newData.edges)),
     }));
-  }
+  };
 
   useEffect(() => {
     if (editItem?.type) {
@@ -650,9 +662,8 @@ const PatternEditor: React.FC<Props> = ({
   const onSearch = value => {
     clearSchemaNodeStates();
     const lowerCaseValue = value.toLowerCase();
-    const nodeData = schemaNodes.find(node =>
-      node.nodeType === value ||
-      node.nodeType.toLowerCase() === lowerCaseValue
+    const nodeData = schemaNodes.find(
+      node => node.nodeType === value || node.nodeType.toLowerCase() === lowerCaseValue,
     );
     if (nodeData) {
       const schemaGraph = (schemaGraphRef?.current as any)?.graph;
@@ -665,12 +676,10 @@ const PatternEditor: React.FC<Props> = ({
         schemaGraph.setItemState(nodeItem, ITEM_STATE.Active, true);
       }
     }
-  }
+  };
 
-  return (<Layout
-      className="kg-pattern-match-editor-container"
-      style={{display: visible ? 'block' : 'none'}}
-    >
+  return (
+    <Layout className="kg-pattern-match-editor-container" style={{ display: visible ? 'block' : 'none' }}>
       <Header className="kg-pattern-match-editor-header">
         <Row>
           <Col span={4} onClick={closeEditor}>
@@ -678,17 +687,18 @@ const PatternEditor: React.FC<Props> = ({
             <span className="kg-pattern-match-editor-title">{patternInfo?.title}</span>
           </Col>
           <Col span={4} offset={16}>
-            <Button onClick={closeEditor}><FormattedMessage id="cancel" /></Button>
-            <Button className="kg-pattern-match-editor-save" type="primary" onClick={onSave}><FormattedMessage id="save" /></Button>
+            <Button onClick={closeEditor}>
+              <FormattedMessage id="cancel" />
+            </Button>
+            <Button className="kg-pattern-match-editor-save" type="primary" onClick={onSave}>
+              <FormattedMessage id="save" />
+            </Button>
           </Col>
         </Row>
       </Header>
-      <Divider className="kg-pattern-match-editor-divider"/>
+      <Divider className="kg-pattern-match-editor-divider" />
       <Layout className="kg-pattern-match-editor-content">
-        <Sider
-          className="kg-pattern-match-editor-left-sider"
-          width={240}
-        >
+        <Sider className="kg-pattern-match-editor-left-sider" width={240}>
           <Tabs
             className="kg-pattern-match-editor-adder"
             defaultActiveKey="node"
@@ -696,27 +706,33 @@ const PatternEditor: React.FC<Props> = ({
             onChange={key => setActivePanel(key)}
           >
             <TabPane tab={<FormattedMessage id="add-node" />} key="node">
-              <Search placeholder={formatMessage({ id: "input-name-search-node" })} onSearch={onSearch} style={{ width: 200 }} />
+              <Search
+                placeholder={formatMessage({ id: 'input-name-search-node' })}
+                onSearch={onSearch}
+                style={{ width: 200 }}
+              />
               <div className="kg-pattern-match-schema-graph-wrapper">
                 <Graphin
                   data={{
                     nodes: schemaNodes,
-                    edges: []
+                    edges: [],
                   }}
                   ref={schemaGraphRef as any}
                   layout={{
                     type: 'grid',
                     cols: 3,
                     width: 200,
-                    nodeSize: 50
+                    nodeSize: 50,
                   }}
                   animate={false}
                   modes={{
-                    default: [{
-                      type: 'scroll-canvas',
-                      direction: 'y',
-                      scalableRange: -0.99
-                    }]
+                    default: [
+                      {
+                        type: 'scroll-canvas',
+                        direction: 'y',
+                        scalableRange: -0.99,
+                      },
+                    ],
                   }}
                 >
                   <ClickSelect disabled />
@@ -737,7 +753,7 @@ const PatternEditor: React.FC<Props> = ({
                     onClick={() => addTemplate(template)}
                     style={{
                       backgroundImage: `url("${template.screenshot}")`,
-                      backgroundSize: '100%'
+                      backgroundSize: '100%',
                     }}
                   />
                 ))}
@@ -751,12 +767,12 @@ const PatternEditor: React.FC<Props> = ({
             ref={graphRef as any}
             layout={{
               type: 'dagre',
-              rankdir: 'lr'
+              rankdir: 'lr',
             }}
             animate={false}
             minZoom={0.1}
             modes={{
-              default: [ 'kg-drag-node', 'kg-zoom-canvas', 'kg-click', 'kg-hover'],
+              default: ['kg-drag-node', 'kg-zoom-canvas', 'kg-click', 'kg-hover'],
               edit: ['kg-drag-canvas', 'kg-zoom-canvas', 'kg-drag-node', 'kg-link-edge'],
             }}
           >
@@ -767,31 +783,39 @@ const PatternEditor: React.FC<Props> = ({
             <DragNode disabled />
             <DragCombo disabled />
             <div
-              className='graph-contextmenu-content'
+              className="graph-contextmenu-content"
               style={{
                 width: '80px',
                 visibility: contextMenu.visible ? 'visible' : 'hidden',
                 position: 'absolute',
                 top: `${contextMenu.y}px`,
-                left: `${contextMenu.x}px`
+                left: `${contextMenu.x}px`,
               }}
-              ref={menuRef} 
+              ref={menuRef}
             >
-             {contextMenu.type === 'node' ? <Menu>
-                <Menu.Item key='removeNode' onClick={() => onContextMenuClick('removeNode')}><FormattedMessage id="delete-node" /></Menu.Item>
-                <Menu.Item key='addRelation' onClick={() => onContextMenuClick('addRelation')}>
-                  <AddRelation
-                    graph={(graphRef?.current as any)?.graph}
-                    currentItem={contextMenu.item}
-                    options={{
-                      onOk: createEdge
-                    }}
-                    name={<FormattedMessage id="contextmenu-add-relation" />}
-                  />
-                </Menu.Item>
-              </Menu> : <Menu>
-                <Menu.Item key='removeEdge' onClick={() => onContextMenuClick('removeEdge')}><FormattedMessage id="delete-relation" /></Menu.Item>
-              </Menu>} 
+              {contextMenu.type === 'node' ? (
+                <Menu>
+                  <Menu.Item key="removeNode" onClick={() => onContextMenuClick('removeNode')}>
+                    <FormattedMessage id="delete-node" />
+                  </Menu.Item>
+                  <Menu.Item key="addRelation" onClick={() => onContextMenuClick('addRelation')}>
+                    <AddRelation
+                      graph={(graphRef?.current as any)?.graph}
+                      currentItem={contextMenu.item}
+                      options={{
+                        onOk: createEdge,
+                      }}
+                      name={<FormattedMessage id="contextmenu-add-relation" />}
+                    />
+                  </Menu.Item>
+                </Menu>
+              ) : (
+                <Menu>
+                  <Menu.Item key="removeEdge" onClick={() => onContextMenuClick('removeEdge')}>
+                    <FormattedMessage id="delete-relation" />
+                  </Menu.Item>
+                </Menu>
+              )}
             </div>
           </Graphin>
         </Content>
@@ -805,7 +829,9 @@ const PatternEditor: React.FC<Props> = ({
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         saveItem={saveItem}
-        onClose={() => { setEditItem({} as ItemBriefInfo) }}
+        onClose={() => {
+          setEditItem({} as ItemBriefInfo);
+        }}
       />
     </Layout>
   );

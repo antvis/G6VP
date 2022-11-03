@@ -1,5 +1,5 @@
-import { Icon } from '@alipay/graphinsight';
 import { CheckCard } from '@alipay/tech-ui';
+import { Icon } from '@antv/gi-sdk';
 import { Avatar, Tag } from 'antd';
 import * as React from 'react';
 

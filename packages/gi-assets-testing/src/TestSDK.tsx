@@ -1,4 +1,4 @@
-import GISDK, { utils } from '@alipay/graphinsight';
+import GISDK, { utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import Offset from './DataVGui/Offset';
 import TagsSelect from './DataVGui/TagsSelect';

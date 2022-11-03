@@ -1,5 +1,5 @@
-import type { IGIAC } from '@alipay/graphinsight';
-import { extra, useContext, utils } from '@alipay/graphinsight';
+import type { IGIAC } from '@antv/gi-sdk';
+import { extra, useContext, utils } from '@antv/gi-sdk';
 import { enableMapSet } from 'immer';
 import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';

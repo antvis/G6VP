@@ -1,5 +1,5 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';

@@ -1,5 +1,5 @@
-import type { GISiteParams } from '@alipay/graphinsight';
-import GISDK, { useContext as useGIContext, utils } from '@alipay/graphinsight';
+import type { GISiteParams } from '@antv/gi-sdk';
+import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import { original } from 'immer';
 import React, { useRef } from 'react';

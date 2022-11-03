@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Form, Input, message, Select, Spin } from 'antd';
 import copy from 'copy-to-clipboard';
 import queryString from 'query-string';

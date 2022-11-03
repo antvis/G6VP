@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@alipay/graphinsight": "workspace:*"
+    "@antv/gi-sdk": "workspace:*"
   },
   "devDependencies": {
     "http-server": "^14.1.1"

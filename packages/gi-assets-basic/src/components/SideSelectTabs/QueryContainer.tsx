@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import * as React from 'react';
 
 export interface ContainerProps {
