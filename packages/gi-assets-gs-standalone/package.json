@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-gs-standalone",
-  "version": "1.1.0",
+  "name": "@antv/gi-assets-gs-standalone",
+  "version": "1.0.0-beta.0",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,11 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
   ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
@@ -35,6 +40,6 @@
     "react": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "access": "public"
   }
 }

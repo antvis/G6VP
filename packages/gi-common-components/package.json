@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-common-components",
-  "version": "1.11.0",
+  "name": "@antv/gi-common-components",
+  "version": "1.0.0",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,7 +20,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.20",
@@ -46,6 +46,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

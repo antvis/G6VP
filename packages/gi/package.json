@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/graphinsight",
-  "version": "2.23.0",
+  "name": "@antv/gi-sdk",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -18,7 +18,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -32,6 +32,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "access": "public"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-testing",
-  "version": "2.0.0",
+  "name": "@antv/gi-assets-testing",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 资产测试包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,11 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
   ],
   "scripts": {
     "remove:antd": "rm -rf ./node_modules/antd",
@@ -35,6 +40,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

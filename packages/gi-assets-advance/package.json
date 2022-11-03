@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-advance",
-  "version": "2.20.0",
+  "name": "@antv/gi-assets-advance",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,11 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "es",
+    "lib",
+    "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
@@ -52,6 +57,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

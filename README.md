@@ -76,3 +76,7 @@ nvm alias default v16.17.0
 ```
 npm run tnpm:publish
 ```
+
+## CDN 地址
+
+- 资产包发布后，如果是公开的，国内用：https://www.jsdelivr.com/ ，国外可用：https://unpkg.com/
