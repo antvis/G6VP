@@ -101,7 +101,7 @@ module.exports = (env, argv) => {
     },
     // devtool: 'cheap-module-source-map',
     output: {
-      library: ASSETS_UMD === 'GI' ? 'GISDK' : ASSETS_UMD,
+      library: ASSETS_UMD === 'GI_SDK' ? 'GISDK' : ASSETS_UMD,
       libraryTarget: 'umd',
       path: DIST_PATH,
       publicPath: './',
