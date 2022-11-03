@@ -2,6 +2,7 @@ import { Avatar, Layout, Tooltip } from 'antd';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
+import ThemeSwitch from '../ThemeSwitch';
 //@ts-ignore
 import styles from './index.less';
 
@@ -64,6 +65,8 @@ const BaseNavbar = props => {
               light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css',
             }}
           ></ThemeSwitch> */}
+
+          <ThemeSwitch />
         </Tooltip>
       </div>
     </Header>

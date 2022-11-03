@@ -34,6 +34,7 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
               width: '230px',
               display: 'flex',
               justifyContent: 'space-between',
+              color: 'var(--text-color)',
             }}
           >
             {AssetName}
@@ -50,7 +51,12 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
         }
         avatar={
           <Avatar
-            style={{ backgroundColor: '#EAEEFC', color: '#3056E3', fontSize: '34px' }}
+            style={{
+              //  backgroundColor: '#EAEEFC',
+              background: 'var(--background-color-3)',
+              color: '#3056E3',
+              fontSize: '34px',
+            }}
             icon={<Icon type={icon} />}
             size={50}
           ></Avatar>
