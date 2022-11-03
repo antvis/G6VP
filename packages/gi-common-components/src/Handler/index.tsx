@@ -6,7 +6,7 @@ const backStyleMap = {
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent transparent transparent #d9d9d9',
+    borderColor: 'transparent transparent transparent var(--border-color-base)',
   },
 
   right: {
@@ -14,7 +14,7 @@ const backStyleMap = {
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent #d9d9d9 transparent transparent',
+    borderColor: 'transparent var(--border-color-base) transparent transparent',
   },
 
   bottom: {
@@ -22,7 +22,7 @@ const backStyleMap = {
     bottom: 'calc(100% + 1px)',
     height: '38px',
     width: '80px',
-    borderColor: 'transparent transparent #d9d9d9 transparent',
+    borderColor: 'transparent transparent var(--border-color-base) transparent',
   },
 };
 
@@ -32,21 +32,21 @@ const handlerStyleMap = {
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent transparent transparent #fafafa',
+    borderColor: 'transparent transparent transparent var(--background-color-2)',
   },
   right: {
     right: 'calc(100% - 1px)',
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent #fafafa transparent transparent ',
+    borderColor: 'transparent var(--background-color-2) transparent transparent ',
   },
   bottom: {
     left: '10%',
     bottom: '100%',
     height: '38px',
     width: '80px',
-    borderColor: 'transparent transparent #fafafa  transparent',
+    borderColor: 'transparent transparent var(--background-color-2)  transparent',
   },
 };
 
