@@ -2,15 +2,31 @@ import { Avatar, Layout, Tooltip } from 'antd';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
-import ThemeSwitch from '../ThemeSwitch';
+// import ThemeSwitch from '../ThemeSwitch';
+import { ThemeSwitch } from '@antv/gi-theme-antd';
+import ThemeVars from '../ThemeVars';
 //@ts-ignore
 import styles from './index.less';
+
+const LOGO_URL = {
+  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
+  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*TawEQ6nGf-AAAAAAAAAAAAAADmJ7AQ/original',
+};
 
 const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
   const { active = 'workspace' } = props;
   const userInfo = useUserInfo() as any;
+  const [state, setState] = React.useState({
+    logo: LOGO_URL.light,
+  });
+  const { logo } = state;
+  const handleChange = val => {
+    setState({
+      logo: LOGO_URL[val],
+    });
+  };
 
   const defaultLeft = (
     <>
@@ -37,7 +53,8 @@ const BaseNavbar = props => {
     <Header className={styles.headerContainer}>
       <div className={styles.left}>
         <img
-          src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
+          // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
+          src={logo}
           alt="logo"
           style={{ height: '30px', marginRight: '40px', cursor: 'pointer' }}
           onClick={() => {
@@ -58,15 +75,16 @@ const BaseNavbar = props => {
           />
         )}
         <Tooltip title="切换主题">
-          {/* <ThemeSwitch
+          <ThemeSwitch
+            //@ts-ignore
             themeVars={ThemeVars}
             antdCssLinks={{
-              dark: 'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/dark.css',
-              light: ' https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css',
+              dark: 'http://127.0.0.1:5500/dark.css',
+              light: 'http://127.0.0.1:5500/light.css',
             }}
-          ></ThemeSwitch> */}
+          ></ThemeSwitch>
 
-          <ThemeSwitch />
+          {/* <ThemeSwitch onChange={handleChange} /> */}
         </Tooltip>
       </div>
     </Header>

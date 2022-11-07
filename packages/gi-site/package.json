@@ -16,6 +16,7 @@
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "dependencies": {
+    "@antv/gi-theme-antd": "workspace:*",
     "@antv/gi-assets-advance": "workspace:*",
     "@antv/gi-assets-algorithm": "workspace:*",
     "@antv/gi-assets-basic": "workspace:*",

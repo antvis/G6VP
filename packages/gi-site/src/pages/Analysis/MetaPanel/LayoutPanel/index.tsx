@@ -132,8 +132,9 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
           margin: '8px',
           padding: '12px',
           borderRadius: '8px',
-          boxShadow:
-            '-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%), 2px 3px 8px 2px rgb(151 151 151 / 5%)',
+          boxShadow: 'var(--box-shadow-pannel)',
+          // boxShadow:
+          //   '-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%), 2px 3px 8px 2px rgb(151 151 151 / 5%)',
         }}
       >
         <FormProvider form={form}>
