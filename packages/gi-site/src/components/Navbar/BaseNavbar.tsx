@@ -16,16 +16,19 @@ const LOGO_URL = {
 const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
-  const { active = 'workspace' } = props;
+  const { active = 'workspace', onChangeTheme } = props;
   const userInfo = useUserInfo() as any;
+  const theme = localStorage.getItem('@theme') || 'light';
   const [state, setState] = React.useState({
-    logo: LOGO_URL.light,
+    logo: LOGO_URL[theme],
   });
   const { logo } = state;
-  const handleChange = val => {
+
+  const handleChangeTheme = val => {
     setState({
       logo: LOGO_URL[val],
     });
+    onChangeTheme && onChangeTheme(val);
   };
 
   const defaultLeft = (
@@ -34,7 +37,7 @@ const BaseNavbar = props => {
         <a href={location.origin + '/home.html'}> 首页</a>
       </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
-        <Link to="/workspace?type=project">项目列表</Link>
+        <Link to="/workspace?type=project">我的项目</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
@@ -56,7 +59,7 @@ const BaseNavbar = props => {
           // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
           src={logo}
           alt="logo"
-          style={{ height: '30px', marginRight: '40px', cursor: 'pointer' }}
+          style={{ height: '46px', marginRight: '40px', marginLeft: '-24px', cursor: 'pointer' }}
           onClick={() => {
             history.push('/workspace?type=project');
           }}
@@ -82,9 +85,8 @@ const BaseNavbar = props => {
               dark: 'http://127.0.0.1:5500/dark.css',
               light: 'http://127.0.0.1:5500/light.css',
             }}
+            onChange={handleChangeTheme}
           ></ThemeSwitch>
-
-          {/* <ThemeSwitch onChange={handleChange} /> */}
         </Tooltip>
       </div>
     </Header>

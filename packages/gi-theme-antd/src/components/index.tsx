@@ -22,7 +22,7 @@ const DEFAULT_ANTD_CSS_LINKS = {
   light: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/light.css`,
 };
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
-  const { themeVars, antdCssLinks, localStorageKey = '@theme' } = props;
+  const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange } = props;
   const { dark: darkVars, light: lightVars } = themeVars;
   const { dark: darkLink, light: lightLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
   if (localStorage.getItem(localStorageKey)) {
@@ -78,6 +78,7 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
         theme: value,
       };
     });
+    onChange && onChange(value);
   };
   return (
     <div className="theme-switch">

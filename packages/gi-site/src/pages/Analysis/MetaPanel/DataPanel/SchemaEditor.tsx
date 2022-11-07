@@ -110,7 +110,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
 
             <Card title="预览图模型" style={{ height: '100%' }} bodyStyle={{ height: '100%' }}>
               <Graphin
-                style={{ minHeight: '300px' }}
+                style={{ minHeight: '300px', background: 'var(--background-color)' }}
                 data={schemaGraph}
                 fitView
                 layout={{ type: 'graphin-force', animation: false }}
