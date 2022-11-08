@@ -67,4 +67,5 @@ export interface StateType {
     hash: string;
   };
   schemaData: any;
+  themes?: any[];
 }

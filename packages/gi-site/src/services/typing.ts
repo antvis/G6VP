@@ -31,4 +31,5 @@ export interface IProject {
   gmtCreate?: any;
   schemaData: GraphSchemaData;
   config?: GIConfig;
+  themes?: any[];
 }

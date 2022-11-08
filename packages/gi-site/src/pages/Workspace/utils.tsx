@@ -186,7 +186,7 @@ const baseComponentsConfig = [
     id: 'CanvasSetting',
     props: {
       styleCanvas: {
-        background: '#fff',
+        backgroundColor: '#fff',
         backgroundImage: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*k9t4QamMuQ4AAAAAAAAAAAAAARQnAQ',
       },
       dragCanvas: {
