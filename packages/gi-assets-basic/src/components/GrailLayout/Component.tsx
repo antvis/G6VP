@@ -101,16 +101,23 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     graphinContainer.style.position = 'absolute';
     graphinContainer.style.left = left;
     graphinContainer.style.right = right;
+
     graphinContainer.style.width = `calc(100% - ${left} - ${right})`;
     graphinContainer.style.height = `calc(100% - ${bottom})`;
 
-    const clientWidth = graphinContainer.clientWidth;
-    const clientHeight = graphinContainer.clientHeight;
-    const canvas = graph.get('canvas');
-    if (canvas) {
-      canvas.changeSize(clientWidth, clientHeight);
-      graph.autoPaint();
-    }
+    const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+
+    const clientWidth = container.clientWidth;
+    const clientHeight = container.clientHeight;
+    try {
+      const width = clientWidth - (Number(left.split('px')[0]) + Number(right.split('px')[0]));
+      const height = clientHeight - Number(bottom.split('px')[0]);
+      const canvas = graph.get('canvas');
+      if (canvas) {
+        canvas.changeSize(width, height);
+        graph.autoPaint();
+      }
+    } catch (error) {}
   }, [
     leftDisplay,
     state.leftVisible,
@@ -137,6 +144,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
       const clientWidth = graphinContainer.clientWidth;
       const clientHeight = graphinContainer.clientHeight;
       const canvas = graph.get('canvas');
+
       if (canvas) {
         canvas.changeSize(clientWidth, clientHeight);
         graph.autoPaint();
