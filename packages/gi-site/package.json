@@ -18,7 +18,6 @@
   "dependencies": {
     "@alipay/gi-assets-advance": "workspace:*",
     "@alipay/gi-assets-algorithm": "workspace:*",
-    "@alipay/gi-assets-analysis": "workspace:*",
     "@alipay/gi-assets-basic": "workspace:*",
     "@alipay/gi-assets-gs-standalone": "workspace:*",
     "@alipay/gi-assets-scene": "workspace:*",
