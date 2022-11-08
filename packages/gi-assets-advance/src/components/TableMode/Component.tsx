@@ -1,7 +1,7 @@
 import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import { S2DataConfig } from '@antv/s2';
+import { generatePalette, getPalette, S2DataConfig } from '@antv/s2';
 import { SheetComponent } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
 import { Button, Tabs, Tooltip } from 'antd';
@@ -27,6 +27,18 @@ const TableMode: React.FC<IProps> = props => {
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
+
+  // 使用内置的 colorful 色板作为参考色板
+  const palette = getPalette('colorful');
+  // 使用参考色板 & 主题色值生成新色板
+  const newPalette = generatePalette({
+    ...palette,
+    brandColor: localStorage.getItem('@theme') === 'dark' ? '#1f1f1f' : '#3056e3',
+  });
+  const themeCfg = {
+    name: 'colorful',
+    palette: newPalette,
+  };
 
   // S2 的 options 配置
   const [options, updateOptions] = useImmer<any>({
@@ -278,6 +290,7 @@ const TableMode: React.FC<IProps> = props => {
             options={options}
             dataCfg={nodeDataCfg}
             sheetType="table"
+            themeCfg={themeCfg}
           />
         </TabPane>
         <TabPane tab="边表" key="edge">
@@ -292,6 +305,7 @@ const TableMode: React.FC<IProps> = props => {
             options={options}
             dataCfg={edgeDataCfg}
             sheetType="table"
+            themeCfg={themeCfg}
           />
         </TabPane>
       </Tabs>
