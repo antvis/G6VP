@@ -156,10 +156,10 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
                 handleReCover(sheetId);
               }}
               style={{
-                color: `${isActive ? '#3056e3' : '#000'}`,
+                color: `${isActive ? 'var(--primary-color)' : 'var(--text-color)'}`,
                 padding: '0px 0px 0px 12px',
                 cursor: 'pointer',
-                background: `${isActive ? '#fff' : '#fafafa'}`,
+                background: `${isActive ? 'var(--background-color-2)' : 'var(--background-color)'}`,
               }}
             >
               {sheetName}

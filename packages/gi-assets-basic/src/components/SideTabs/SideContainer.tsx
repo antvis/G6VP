@@ -139,7 +139,7 @@ const SideContainer: React.FC<SideContainerProps> = props => {
   }, [graph, visible, outSideFromCanvas, placement]);
 
   return (
-    <div className="gi-side-tabs-container" ref={divRef} style={{ background: '#fff' }}>
+    <div className="gi-side-tabs-container" ref={divRef}>
       {children}
     </div>
   );

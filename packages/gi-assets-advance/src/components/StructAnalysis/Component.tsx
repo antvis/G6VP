@@ -174,6 +174,7 @@ const StructAnalysis = () => {
   return (
     <Graphin
       data={state.graphStruct}
+      style={{ background: 'var(--background-color)' }}
       layout={{
         type: 'dagre',
       }}

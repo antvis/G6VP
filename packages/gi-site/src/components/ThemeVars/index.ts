@@ -14,14 +14,15 @@ export default {
 
     // 边框颜色
     '--border-color': '#ddd',
+    '--primary-border': '1px solid #ddd',
 
     //主要文本颜色
     '--hr-color': '#ddd',
     '--primary-text-color': 'rgba(0, 0, 0, 0.85)',
 
     '--header-bg-color': 'rgb(255,255,255)',
-    '--background-color-1': '#fafafa',
-    '--background-color-2': '#eaeefc',
+    '--background-color-2': '#fafafa',
+    '--background-color-3': '#eaeefc',
     '--background-color-card': '#fff',
     '--text-color-2': 'rgba(0, 0, 0, 0.65)', // 主文本色
 
@@ -54,17 +55,15 @@ export default {
     // 边框颜色
     '--border-color': '#434343',
     '--border-color-base': '#434343', // 边框色
+    '--primary-border': '1px solid #434343',
 
     '--hr-color': '#303030',
     // 主要文本颜色
     '--primary-text-color': 'rgba(255, 255, 255, 0.85)',
     '--header-bg-color': 'rgba(255, 255, 255 0.65)',
-    '--black-1': 'rgba(30, 30, 30, 1)',
-    '--black-2': 'rgba(40, 40, 40, 1)',
-    '--black-3': 'rgba(50, 50, 50, 1)',
 
-    '--background-color-2': 'rgba(40, 40, 40, 1)',
-    '--background-color-3': 'rgba(50, 50, 50, 1)',
+    '--background-color-2': 'rgba(50, 50, 50, 1)',
+    '--background-color-3': 'rgba(80, 80, 80, 1)',
     '--background-color-card': 'rgb(45, 45, 45)',
 
     '--link-color': '#3056e3', // 链接色
