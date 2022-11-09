@@ -1,30 +1,34 @@
-import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
+// import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import { Segmented } from 'antd';
 import React from 'react';
-import pkg from '../../package.json';
-const { version, name } = pkg;
+// import pkg from '../../package.json';
+// // const { version, name } = pkg;
 
 export interface ThemeSwitchProps {
   themeVars: {
     dark: any;
     light: any;
   };
-  antdCssLinks?: {
+  antdCssLinks: {
     dark: string;
     light: string;
   };
   localStorageKey?: string;
   onChange?: (value: 'dark' | 'light') => void;
+  options: {
+    value: string;
+    icon: React.ReactNode;
+  }[];
 }
 
-const DEFAULT_ANTD_CSS_LINKS = {
-  dark: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/dark.css`,
-  light: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/light.css`,
-};
+// const DEFAULT_ANTD_CSS_LINKS = {
+//   dark: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/dark.css`,
+//   light: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/light.css`,
+// };
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
-  const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange } = props;
+  const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options } = props;
   const { dark: darkVars, light: lightVars } = themeVars;
-  const { dark: darkLink, light: lightLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
+  const { dark: darkLink, light: lightLink } = antdCssLinks;
   if (localStorage.getItem(localStorageKey)) {
   }
   const [state, updateState] = React.useState({
@@ -32,7 +36,6 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   });
   const { theme } = state;
   React.useEffect(() => {
-    console.log('effect...', theme);
     /** var css */
     let themeObj: any = {};
     if (theme === 'light') {
@@ -85,16 +88,19 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
       <Segmented
         onChange={handleChange}
         value={theme}
-        options={[
-          {
-            value: 'light',
-            icon: <BarsOutlined />,
-          },
-          {
-            value: 'dark',
-            icon: <AppstoreOutlined />,
-          },
-        ]}
+        options={
+          options
+          //   [
+          //   {
+          //     value: 'light',
+          //     icon: <BarsOutlined />,
+          //   },
+          //   {
+          //     value: 'dark',
+          //     icon: <AppstoreOutlined />,
+          //   },
+          // ]
+        }
       />
     </div>
   );

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 // import ThemeSwitch from '../ThemeSwitch';
+import { Icon } from '@antv/gi-sdk';
 import { ThemeSwitch } from '@antv/gi-theme-antd';
 import ThemeVars from '../ThemeVars';
 
@@ -86,6 +87,16 @@ const BaseNavbar = props => {
               light: 'http://127.0.0.1:5500/light.css',
             }}
             onChange={handleChangeTheme}
+            options={[
+              {
+                value: 'light',
+                icon: <Icon type="icon-taiyang" />,
+              },
+              {
+                value: 'dark',
+                icon: <Icon type="icon-moon_line" />,
+              },
+            ]}
           ></ThemeSwitch>
         </Tooltip>
       </div>
