@@ -260,11 +260,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   }, []);
 
   return (
-    <div
-      style={{
-        background: '#fff',
-      }}
-    >
+    <div>
       <div className="nodes-clustering-wrapper">
         <div className="top-info">
           <p className="nodes-clustering-title">

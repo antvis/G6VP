@@ -51,6 +51,8 @@ const Navbar = ({
 
   const { context, updateContext } = useContext();
   const { config, serviceConfig, activeAssetsKeys } = context;
+  // 主题切换Hook
+  const { changeTheme } = useTheme(context, updateContext);
 
   const handleOutClose = () => {
     updateState(draft => {
@@ -145,9 +147,6 @@ const Navbar = ({
     elementA.click();
     document.body.removeChild(elementA);
   };
-  const handleChangeTheme = value => {
-    useTheme(context, updateContext, value);
-  };
 
   const { name } = state.initProject;
   const rightContent = (
@@ -178,7 +177,7 @@ const Navbar = ({
     </>
   );
   return (
-    <BaseNavbar rightContent={rightContent} leftContent={<></>} onChangeTheme={handleChangeTheme}>
+    <BaseNavbar rightContent={rightContent} leftContent={<></>} onChangeTheme={changeTheme}>
       <ProjectTitle name={name} projectId={projectId} />
       <Drawer
         title="导出SDK"

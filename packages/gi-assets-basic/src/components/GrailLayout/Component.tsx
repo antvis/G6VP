@@ -116,6 +116,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
       if (canvas) {
         canvas.changeSize(width, height);
         graph.autoPaint();
+        graph.fitView();
       }
     } catch (error) {}
   }, [

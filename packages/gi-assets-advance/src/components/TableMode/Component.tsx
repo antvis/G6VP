@@ -290,6 +290,7 @@ const TableMode: React.FC<IProps> = props => {
             options={options}
             dataCfg={nodeDataCfg}
             sheetType="table"
+            //@ts-ignore
             themeCfg={themeCfg}
           />
         </TabPane>
@@ -305,6 +306,7 @@ const TableMode: React.FC<IProps> = props => {
             options={options}
             dataCfg={edgeDataCfg}
             sheetType="table"
+            //@ts-ignore
             themeCfg={themeCfg}
           />
         </TabPane>

@@ -282,13 +282,13 @@ export interface GIEdgeConfig {
 export interface GIConfig {
   // 支持配置多布局，如子图布局
   // layouts?: GILayoutConfig[] | GILayoutConfig;
-  layout?: GILayoutConfig;
-  components?: GIComponentConfig[];
+  layout: GILayoutConfig;
+  components: GIComponentConfig[];
   node?: GINodeConfig;
   edge?: GIEdgeConfig;
   /** 支持多元素组合 */
-  nodes?: GINodeConfig[];
-  edges?: GIEdgeConfig[];
+  nodes: GINodeConfig[];
+  edges: GIEdgeConfig[];
 }
 
 interface GINodeData {

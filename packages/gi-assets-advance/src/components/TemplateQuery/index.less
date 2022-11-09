@@ -9,29 +9,20 @@
     height: 92%;
     padding: 12px 16px;
     overflow-y: scroll;
-    color: rgba(0, 0, 0, 0.85);
+
     .template-title {
       font-weight: bold;
     }
     :global {
-      .ant-select-selection-placeholder {
-        color: rgba(0, 0, 0, 0.45);
-      }
       .ant-select-selector {
-        border-color: rgba(0, 0, 0, 0.15);
+        border-color: var(--border-color);
         border-radius: 0;
       }
       .ant-select-multiple .ant-select-selection-item {
-        border-color: rgba(0, 0, 0, 0.15);
+        border-color: var(--border-color);
       }
-      .ant-select {
-        color: rgba(0, 0, 0, 0.85);
-      }
-      .ant-select-multiple .ant-select-selection-item-remove {
-        color: rgba(0, 0, 0, 0.65);
-      }
+
       .ant-input-group-addon {
-        border-color: rgba(0, 0, 0, 0.15);
         border-radius: 0;
       }
       .ant-input {
@@ -40,7 +31,7 @@
     }
     .blockContainer {
       margin-bottom: 24px;
-      color: rgba(0, 0, 0, 0.85);
+
       font-size: 14px;
       .templateSelector {
         width: 100%;
@@ -53,42 +44,31 @@
         font-size: 14px;
         white-space: pre-wrap;
         word-wrap: break-word;
-        background: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
         border-radius: 8px;
       }
       .description {
         display: inline-block;
-        color: rgba(0, 0, 0, 0.65);
+
         font-size: 12px;
       }
       :global {
-        .ant-form-item-label > label {
-          color: rgba(0, 0, 0, 0.85) !important;
-        }
         .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-          color: rgba(0, 0, 0, 0.85) !important;
-          border: 1px solid rgba(0, 0, 0, 0.15) !important;
+          border: 1px solid var(--border-color) !important;
         }
         .ant-select-selector {
           box-shadow: none !important;
         }
         .ant-input {
-          color: rgba(0, 0, 0, 0.85) !important;
-          border: 1px solid rgba(0, 0, 0, 0.15) !important;
+          border: 1px solid var(--border-color) !important;
           box-shadow: none !important;
         }
         .ant-select-dropdown {
-          background: #fff !important;
+          background: var(--background-color) !important;
         }
         .ace-clouds-midnight {
-          background: #fff !important;
-        }
-        .ant-radio-wrapper {
-          color: rgba(0, 0, 0, 0.85);
-        }
-        .ant-select-arrow {
-          color: rgba(0, 0, 0, 0.65);
+          background: var(--background-color) !important;
         }
       }
     }
@@ -108,13 +88,12 @@
     width: 100%;
     padding: 12px 16px;
     text-align: right;
-    border-top: 1px solid #e3e4e6;
+    border-top: 1px solid var(--border-color);
     .ant-btn:not(:last-child) {
       margin-right: 10px;
     }
   }
   .description {
     margin-top: 8px;
-    color: rgba(255, 255, 255, 0.45);
   }
 }

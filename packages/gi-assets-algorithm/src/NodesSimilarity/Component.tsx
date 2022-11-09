@@ -207,8 +207,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     <div
       style={
         {
-          background: '#fff',
-          padding: '5px',
           ...style,
         } as any
       }
