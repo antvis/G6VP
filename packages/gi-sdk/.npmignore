@@ -2,4 +2,3 @@ src
 node_modules
 tsconfig.json
 .fatherrc.js
-.umirc.ts

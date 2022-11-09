@@ -83,8 +83,8 @@ const BaseNavbar = props => {
             //@ts-ignore
             themeVars={ThemeVars}
             antdCssLinks={{
-              dark: 'http://127.0.0.1:5500/dark.css',
-              light: 'http://127.0.0.1:5500/light.css',
+              dark: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
+              light: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
             }}
             onChange={handleChangeTheme}
             options={[

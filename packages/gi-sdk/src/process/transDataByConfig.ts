@@ -16,7 +16,7 @@ import processEdges from './processEdges';
 export const transDataByConfig = (
   elementType: 'nodes' | 'edges',
   data: GraphinData,
-  config: GIConfig,
+  config: Partial<GIConfig>,
   ElementAssets: GIAssets['elements'],
   reset?: boolean,
 ) => {

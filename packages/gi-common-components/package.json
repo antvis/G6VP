@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-common-components",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
