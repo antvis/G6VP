@@ -53,7 +53,7 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
           <Avatar
             style={{
               //  backgroundColor: '#EAEEFC',
-              background: 'var(--background-color-3)',
+              background: 'var(--primary-color-opacity-1)',
               color: '#3056E3',
               fontSize: '34px',
             }}

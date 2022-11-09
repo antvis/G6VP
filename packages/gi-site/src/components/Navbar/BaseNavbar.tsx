@@ -5,8 +5,8 @@ import useUserInfo from '../../hooks/useUserInfo';
 // import ThemeSwitch from '../ThemeSwitch';
 import { ThemeSwitch } from '@antv/gi-theme-antd';
 import ThemeVars from '../ThemeVars';
-//@ts-ignore
-import styles from './index.less';
+
+import './index.less';
 
 const LOGO_URL = {
   light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
@@ -33,19 +33,19 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' && styles.active}>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
         <a href={location.origin + '/home.html'}> 首页</a>
       </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' && styles.active}>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
         <Link to="/workspace?type=project">我的项目</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
       </div> */}
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' && styles.active}>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' ? 'active' : ''}>
         <Link to="/assets">资产中心</Link>
       </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'services' && styles.active}>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'services' ? 'active' : ''}>
         <Link to="/services">服务中心</Link>
       </div>
     </>
@@ -53,8 +53,8 @@ const BaseNavbar = props => {
 
   const { children, leftContent = defaultLeft, rightContent, rightContentExtra = '' } = props;
   return (
-    <Header className={styles.headerContainer}>
-      <div className={styles.left}>
+    <Header className="gi-navbar-container">
+      <div className="left">
         <img
           // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
           src={logo}
@@ -67,7 +67,7 @@ const BaseNavbar = props => {
         {leftContent}
       </div>
       {children}
-      <div className={styles.right}>
+      <div className="right">
         {rightContentExtra}
         {rightContent}
 

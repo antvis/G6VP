@@ -1,11 +1,14 @@
 export default {
   light: {
     // 主题色
-    '--primary-color': '#3056e3',
+    '--primary-color': '#3056e3', //'rgba(48,86,227,1)',
+    '--primary-color-opacity-1': 'rgba(48,86,227,0.1)',
+
     // 背景色
     '--background-color': 'rgba(255,255,255,1)',
     '--background-color-2': 'rgba(245,245,245,1)',
     '--background-color-3': 'rgba(235,235,235,1)',
+
     // 主文本色
     '--text-color': 'rgba(0, 0, 0, 0.85)',
     // 阴影
@@ -41,6 +44,7 @@ export default {
   dark: {
     // 主题色
     '--primary-color': '#3056e3',
+    '--primary-color-opacity-1': 'rgba(48,86,227,0.1)',
     // 背景色
     '--background-color': 'rgba(31, 31, 31, 1)',
     '--background-color-2': 'rgba(41, 41, 41, 1)',
