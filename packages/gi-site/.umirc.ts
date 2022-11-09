@@ -49,12 +49,18 @@ const NPM_INFO = [
   ...assets_npm,
 ];
 
+const getCDN = (name: string, version: string, type?: any) => {
+  if (type === 'antgroup') {
+    const _name = name.replace('@antv/', '');
+    return `https://gw.alipayobjects.com/os/lib/antv/${_name}/${version}/dist/index.min.js`;
+  }
+  return `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/index.min.js`;
+};
 export const getPackages = npm => {
   return npm.map(c => {
     const name = c.name.replace('@antv/', '');
-
     return {
-      url: c.url || `https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      url: c.url || getCDN(c.name, c.version), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
       global: name.split('-').join('_').toUpperCase(),
       ...c,
     };

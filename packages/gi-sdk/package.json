@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "GraphInsight 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",

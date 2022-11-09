@@ -1,5 +1,5 @@
 // import { notification } from 'antd';
-import { useContext, utils } from '@antv/gi-sdk';
+import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import * as React from 'react';
 const { isPosition, isStyles } = utils;
 
@@ -39,7 +39,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         /** 只有当 config 中没有 nodes 和 edges 的时候，才会用 schema 生成一个默认样式 */
 
         if (schema && (draft.config.nodes?.length === 0 || draft.config.edges?.length === 0)) {
-          const schemaStyle = utils.generatorStyleConfigBySchema(schema);
+          const schemaStyle = utils.generatorStyleConfigBySchema(schema) as GIConfig;
           draft.config.nodes = schemaStyle.nodes;
           draft.config.edges = schemaStyle.edges;
         }

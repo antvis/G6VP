@@ -25,11 +25,11 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-basic analysis=true",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-common-components": "*",
-    "@antv/gi-sdk": "*",
+    "@antv/gi-common-components": "workspace:*",
+    "@antv/gi-sdk": "worksapce:*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",

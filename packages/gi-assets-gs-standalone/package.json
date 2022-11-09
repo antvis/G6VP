@@ -1,6 +1,6 @@
 {
-  "name": "@antv/gi-assets-gs-standalone",
-  "version": "1.0.0-beta.0",
+  "name": "@antv/gi-assets-gs",
+  "version": "1.0.0-beta.1",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -25,10 +25,10 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-sdk": "workspace:*",
+    "@antv/gi-sdk": "*",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
     "json2csv": "^5.0.7",

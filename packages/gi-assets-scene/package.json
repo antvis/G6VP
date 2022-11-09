@@ -24,7 +24,7 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-scene analysis=true",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",
