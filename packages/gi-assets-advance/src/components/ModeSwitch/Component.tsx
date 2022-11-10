@@ -1,4 +1,4 @@
-import { GIComponentAssets, GIComponentConfig } from '@alipay/graphinsight';
+import { GIComponentAssets, GIComponentConfig } from '@antv/gi-sdk';
 import { Segmented } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';

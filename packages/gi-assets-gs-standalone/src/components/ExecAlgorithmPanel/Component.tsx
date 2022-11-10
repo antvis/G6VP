@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Form, InputNumber, Input, Select, Button, Switch, message } from 'antd';
-import { useContext, utils } from '@alipay/graphinsight';
-import AlgorithmResultPanel from './AlgorithmResultPanel';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Form, Input, InputNumber, message, Select, Switch } from 'antd';
 import { Parser } from 'json2csv';
+import React, { useState } from 'react';
+import AlgorithmResultPanel from './AlgorithmResultPanel';
 
 const { Option } = Select;
 

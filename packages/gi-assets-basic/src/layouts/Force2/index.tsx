@@ -11,7 +11,7 @@ const info = {
       type: 'concentric',
     },
   },
-  name: '渐进力导',
+  name: '渐进力导(force2)',
   category: 'basic',
   type: 'LAYOUT',
   desc: '渐进式力导布局，可用于动态布局',

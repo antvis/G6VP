@@ -1,9 +1,9 @@
 .gi-side-select-tabs {
   position: relative;
-  background-color: #f8f9fa;
-  border-right: 1px solid #edeeef;
 
   .gi-side-select-tabs-content {
+    background: var(--background-color);
+    border-right: 1px solid var(--border-color);
     position: relative;
     height: 100%;
     overflow: hidden;
@@ -11,28 +11,27 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      padding: 0px 12px;
       &-title {
+        padding: 4px 0px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 4px 16px;
-        background-color: #fff;
-        border-top: 1px solid #e3e4e6;
-        border-bottom: 1px solid #e3e4e6;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
         .ant-select {
           .ant-select-selection-item,
           .ant-select-arrow {
-            color: rgba(0, 10, 26, 0.89);
             font-weight: bold;
           }
         }
         .anticon-question-circle {
-          color: rgba(0, 10, 26, 0.47);
           font-size: 14px;
           cursor: pointer;
         }
       }
       &-detail {
+        padding: 12px 4px;
         flex: 1;
         overflow: hidden;
       }

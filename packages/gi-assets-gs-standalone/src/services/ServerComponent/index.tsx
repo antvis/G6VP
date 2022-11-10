@@ -1,19 +1,21 @@
+import { GISiteParams } from '@antv/gi-sdk';
 import { Alert, Form, message } from 'antd';
 import React, { useState } from 'react';
+import { LoadChinaVisDataSource } from '../Constants';
 import {
   createGraphScopeInstance,
   loadChinaVisGraphToGraphScope,
   loadGraphToGraphScope,
-  uploadLocalFileToGraphScope,
   queryGraphSchema,
+  uploadLocalFileToGraphScope,
 } from '../GraphScopeService';
-import { LoadChinaVisDataSource } from '../Constants';
 import GSDataMode from './GSDataMode';
 
 export interface GraphModelProps {
+  updateGISite?: (params: GISiteParams) => void;
   onClose: () => void;
 }
-const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
+const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) => {
   const [form] = Form.useForm();
 
   const graphScopeFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping') as string);
@@ -121,20 +123,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     setFilesMapping(allUploadFiles);
 
     localStorage.setItem('graphScopeFilesMapping', JSON.stringify(allUploadFiles));
-    message.success('文件上传成功，可以点击进入分析开始载图并分析');
+    message.success('文件上传成功，开始载图……');
     return true;
-  };
-
-  const updateSchemaData = async modeType => {
-    // 载图成功后，更新 Project 中的 SchemeData
-    // 查询 GraphScope 中的 Schema
-    const result = await queryGraphSchema();
-
-    if (result && result.success) {
-      // await updateProjectById(projectId, {
-      //   schemaData: JSON.stringify(result.data),
-      // })
-    }
   };
 
   const handleSubmitForm = async (dataType: 'LOCAL' | 'DEMO') => {
@@ -153,23 +143,33 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
       const { success: loadSuccess, message: loadMessage, data } = loadResult;
       if (!loadSuccess) {
         message.error(`数据加载失败: ${loadMessage}`);
-        return;
+        return false;
       }
       message.success('加载数据到 GraphScope 引擎成功');
       const { graphName } = data;
       localStorage.setItem('graphScopeGraphName', graphName);
 
-      // 载图成功后，更新 Project 中的 SchemeData
-      updateSchemaData('LOCAL');
       // 关闭弹框
       onClose();
-      return;
+      const schemaData = await queryGraphSchema();
+      console.log('schemaData', schemaData);
+      if (updateGISite) {
+        updateGISite({
+          schemaData: { nodes: [], edges: [] },
+          engineId: 'GS_Standalone',
+          engineContext: {},
+        });
+      }
+
+      return true;
     }
 
+    const allFilesMapping = JSON.parse(localStorage.getItem('graphScopeFilesMapping') as string);
+
     // 没有上传文件
-    if (!filesMapping) {
+    if (!filesMapping && !allFilesMapping) {
       message.error('请先上传文件后再进行载图');
-      return;
+      return false;
     }
 
     const values = await form.validateFields();
@@ -181,7 +181,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     const loadResult = await loadGraphToGraphScope({
       nodeConfigList,
       edgeConfigList,
-      fileMapping: filesMapping,
+      fileMapping: filesMapping || allFilesMapping,
     });
 
     console.log('载图到 GraphScope 中', loadResult);
@@ -189,7 +189,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
     const { success: loadSuccess, message: loadMessage, data: loadData } = loadResult;
     if (!loadSuccess) {
       message.error(`数据加载失败: ${loadMessage}`);
-      return;
+      return false;
     }
 
     const { graphName, graphURL } = loadData;
@@ -198,9 +198,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
 
     message.success('加载数据到 GraphScope 引擎成功');
 
-    // 载图成功后，更新 Project 中的 SchemeData
-    updateSchemaData('LOCAL');
     onClose();
+    return true;
   };
 
   const formInitValue = {
@@ -229,7 +228,6 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose }) => {
         <GSDataMode
           handleUploadFile={handleUploadFiles}
           handleLoadData={handleSubmitForm}
-          updateSchemaData={updateSchemaData}
           onClose={onClose}
           filesMapping={filesMapping}
           uploadLoading={uploadLoading}

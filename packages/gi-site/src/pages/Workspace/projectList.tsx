@@ -1,15 +1,14 @@
-import { Icon, utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row, Modal } from 'antd';
+import { Icon, utils } from '@antv/gi-sdk';
+import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
-import ODPSDeploy from '../../components/ODPSDeploy';
-import MembersPanel from './Members';
 import { getProjectList, removeProjectById } from '../../services';
+import { IS_LOCAL_ENV } from '../../services/const';
 import type { IProject } from '../../services/typing';
-
+import MembersPanel from './Members';
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -17,7 +16,6 @@ interface ProjectListProps {
 
 interface ProjectListState {
   lists: IProject[];
-  deployVisible: boolean;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -25,7 +23,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const history = useHistory();
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
-    deployVisible: false,
   });
 
   const [member, setMember] = useImmer({
@@ -45,11 +42,11 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const { lists } = state;
 
   const addButton = (
-    <Col key={'new'} xs={24} sm={24} md={12} lg={8} xl={6}>
+    <Col key={'new'} xs={24} sm={24} md={12} lg={8} xl={8}>
       <ProjectCard
         style={{ color: 'var(--primary-color)', border: '2px dashed var(--primary-color)' }}
         onClick={onCreate}
-        cover={<Icon type="icon-plus" style={{ fontSize: '70px' }} />}
+        cover={<Icon type="icon-plus" style={{ fontSize: '60px' }} />}
         title={'创建项目'}
         time={''}
         description=""
@@ -79,18 +76,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     });
   };
 
-  const handleDeployOpen = () => {
-    updateState(draft => {
-      draft.deployVisible = true;
-    });
-  };
-
-  const hanldeDeployClose = () => {
-    updateState(draft => {
-      draft.deployVisible = false;
-    });
-  };
-
   const menu = item => (
     <Menu>
       <Menu.Item>
@@ -106,8 +91,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>
-      <Menu.Item onClick={handleDeployOpen}>项目部署</Menu.Item>
+      {!IS_LOCAL_ENV && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
 
@@ -118,12 +102,12 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
-            <Col key={id} xs={24} sm={24} md={12} lg={8} xl={6}>
+            <Col key={id} xs={24} sm={24} md={12} lg={8} xl={8}>
               <ProjectCard
                 onClick={() => {
                   history.push(`/workspace/${id}?nav=data`);
                 }}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '70px' }} />}
+                cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
                 extra={
@@ -138,15 +122,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         })}
       </Row>
       <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
-      <Modal
-        title="项目部署"
-        visible={state.deployVisible}
-        onCancel={hanldeDeployClose}
-        maskClosable={false}
-        footer={false}
-      >
-        <ODPSDeploy />
-      </Modal>
     </>
   );
 };

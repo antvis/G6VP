@@ -1,5 +1,5 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { PlusOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';

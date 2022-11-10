@@ -1,5 +1,5 @@
-import { GIComponentAssets, GIComponentConfig } from '@alipay/graphinsight';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { GIComponentAssets, GIComponentConfig } from '@antv/gi-sdk';
 import { Button, Tabs, Tooltip } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';

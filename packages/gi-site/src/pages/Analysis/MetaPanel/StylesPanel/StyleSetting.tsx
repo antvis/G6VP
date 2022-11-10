@@ -1,4 +1,4 @@
-import { CommonStyleSetting } from '@alipay/gi-common-components';
+import { CommonStyleSetting } from '@antv/gi-common-components';
 import React from 'react';
 import { useContext } from '../../hooks/useContext';
 type NodeConfig = any;

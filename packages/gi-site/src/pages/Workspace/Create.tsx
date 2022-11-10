@@ -3,7 +3,7 @@ import { Alert, Button, Form, Input, Modal, Radio, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addProject } from '../../services';
-import { GIDefaultTrans } from '../Analysis/uploadData/const';
+
 import './index.less';
 import Recover from './Recover';
 import { activeAssetsKeys, baseConfig, getMockData, schemaData, serviceConfig } from './utils';
@@ -12,6 +12,29 @@ interface IProps {
   visible: boolean;
   handleClose: () => void;
 }
+
+export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
+data => {
+  const nodes = data.nodes.map(n=>{
+    return {
+      id:'' + n.${id},
+      nodeType: n.${nodeType},
+      nodeTypeKeyFromProperties:'${nodeType}',
+      data:n
+    }
+  })
+  const edges = data.edges.map(e=>{
+    return {
+      source:'' + e.${source},
+      target:'' + e.${target},
+      edgeType: e.${edgeType},
+      edgeTypeKeyFromProperties:'${edgeType}',
+      data:e
+    }
+  })
+  return { nodes, edges }
+}
+`;
 
 const SOLUTIONS = [
   {
@@ -136,8 +159,13 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
       engineId,
       engineContext,
     });
-    localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(GI_ASSETS_PACKAGES));
-    history.push(`/workspace/${projectId}?nav=data`);
+    try {
+      const PRE_GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+      localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify({ ...PRE_GI_ASSETS_PACKAGES, ...GI_ASSETS_PACKAGES }));
+      history.push(`/workspace/${projectId}?nav=data`);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const goAnalysis = async () => {

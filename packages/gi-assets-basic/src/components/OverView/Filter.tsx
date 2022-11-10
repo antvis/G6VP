@@ -1,5 +1,5 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { PlusOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
@@ -146,10 +146,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
 
   return (
     <div className="gi-filter-panel">
-      <Interpretation
-        filterOptions={filterOptions}
-        filterLogic={filterLogic}
-      />
+      <Interpretation filterOptions={filterOptions} filterLogic={filterLogic} />
       <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
         增加筛选器
       </Button>

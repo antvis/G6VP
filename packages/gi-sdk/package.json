@@ -1,0 +1,37 @@
+{
+  "name": "@antv/gi-sdk",
+  "version": "1.0.0-beta.2",
+  "description": "GraphInsight 核心画布渲染",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-sdk",
+    "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi analysis=true",
+    "clean": "rimraf es esm lib dist",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "start": "npm run clean && father build --watch",
+    "test": "jest",
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "immer": "^9.0.7",
+    "use-immer": "^0.6.0"
+  },
+  "peerDependencies": {
+    "@antv/graphin": "2.x",
+    "antd": "latest",
+    "react": "17.x",
+    "react-dom": "17.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

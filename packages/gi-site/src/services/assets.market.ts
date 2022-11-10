@@ -1,4 +1,4 @@
-import { GIAssets } from '@alipay/graphinsight';
+import { GIAssets } from '@antv/gi-sdk';
 import { getCombinedAssets } from '../loader';
 
 /**

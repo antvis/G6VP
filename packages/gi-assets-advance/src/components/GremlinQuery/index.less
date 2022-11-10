@@ -1,15 +1,15 @@
 .editor-toolbar {
   display: flex;
   flex-direction: row-reverse;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .gremlineQueryPanel {
   z-index: 3;
   padding: 16px 24px;
-  background-color: #fff;
+  background-color: var(--background-color);
   border-radius: 6px;
-  box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow-pannel);
   transition: height 0.3s ease;
   .header {
     display: inline-flex;
@@ -17,23 +17,18 @@
     margin: 0;
     cursor: grab;
     .title {
-      color: rgba(0, 0, 0, 0.85);
       font-weight: 500;
       cursor: grab;
     }
     .collapseIcon {
       right: 0;
-      color: rgba(0, 0, 0, 0.85);
+
       cursor: pointer;
     }
   }
   .contentContainer {
     margin-top: 16px;
     overflow-y: auto;
-    color: rgba(0, 0, 0, 0.85);
-    .blockContainer {
-      color: rgba(0, 0, 0, 0.85);
-    }
   }
   .buttonContainer {
     position: relative;

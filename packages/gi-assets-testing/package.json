@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-testing",
-  "version": "2.0.0",
+  "name": "@antv/gi-assets-testing",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 资产测试包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -9,6 +9,11 @@
     "*.css",
     "*.less"
   ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
   "scripts": {
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
@@ -16,11 +21,11 @@
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "tnpm:publish": "node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/graphinsight": "workspace:*",
-    "@alipay/gi-assets-basic": "*"
+    "@antv/gi-sdk": "workspace:*",
+    "@antv/gi-assets-basic": "*"
   },
   "peerDependencies": {
     "react": "17.x",
@@ -35,6 +40,6 @@
     "webpack-cli": "^4.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

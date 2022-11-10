@@ -107,14 +107,14 @@
 .datav-collapse {
   margin: 8px;
   padding: 4px;
-  background: #fff;
+  background: var(--background-color);
   border-radius: 8px;
   // border: 1px solid #ddd;
   box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5),
     2px 3px 8px 2px rgba(151, 151, 151, 0.05);
 }
 .datav-collapse-panel-header {
-  background: #fff;
+  background: var(--background-color);
 }
 .datav-gui .datav-gui-collapse .datav-collapse-panel-header::before {
   display: none;
@@ -133,8 +133,9 @@
   .ant-collapse-item {
     margin: 0px 8px !important;
     border-radius: 4px !important;
-    box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5),
-      2px 3px 8px 2px rgba(151, 151, 151, 0.05) !important;
+    // box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5),
+    //   2px 3px 8px 2px rgba(151, 151, 151, 0.05) !important;
+    box-shadow: var(--box-shadow-pannel) !important;
     .ant-formily-item {
       margin: 4px;
       font-size: 14px;
@@ -145,11 +146,13 @@
   .ant-collapse-item {
     margin: 4px 0px !important;
     border-radius: 4px !important;
-    box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5),
-      2px 3px 8px 2px rgba(151, 151, 151, 0.05) !important;
+    // box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5),
+    //   2px 3px 8px 2px rgba(151, 151, 151, 0.05) !important;
+    box-shadow: var(--box-shadow-pannel) !important;
   }
 }
 .ant-formily-item-label-align-right > .ant-formily-item-label {
+  color: var(--text-color);
   justify-content: center;
   width: 74px;
   font-size: 13px;

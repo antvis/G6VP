@@ -3,7 +3,6 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 
 import DataModeCard from '../../components/DataModeCard';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
@@ -109,53 +108,42 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
       });
     }
   }, []);
-  console.log('packages', state);
 
   return (
     <>
       <div className="workspace">
-        <BaseNavbar rightContentExtra={rightContentExtra}></BaseNavbar>
-        <div
+        <Tabs
+          tabPosition="left"
           style={{
-            overflow: 'scroll',
-            padding: '24px 48px',
-            height: 'calc(100vh - 64px)',
-            background: '#fafafa',
+            background: 'var(--background-color)',
+            height: '100%',
+            padding: '24px 0px',
+            paddingRight: '24px',
+            overflow: 'auto',
           }}
+          activeKey={activeKey}
+          onChange={handleChange}
         >
-          <Tabs
-            tabPosition="left"
-            style={{
-              background: '#fff',
-              height: '100%',
-              padding: '24px 0px',
-              paddingRight: '24px',
-              overflow: 'auto',
-            }}
-            activeKey={activeKey}
-            onChange={handleChange}
-          >
-            {LIST_OPTIONS.map(c => {
-              return (
-                <TabPane tab={c.name} key={c.id} disabled={c.id === 'deployed'}>
-                  {c.id === 'case' && <Case />}
-                  {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
-                  {c.id === 'save' && <SaveList type={c.id}></SaveList>}
-                </TabPane>
-              );
-            })}
-            {deploys.map(c => {
-              return (
-                <TabPane tab={c.name} key={c.id}>
-                  {
-                    //@ts-ignore
-                    c.component && <c.component />
-                  }
-                </TabPane>
-              );
-            })}
-          </Tabs>
-        </div>
+          {LIST_OPTIONS.map(c => {
+            return (
+              <TabPane tab={c.name} key={c.id} disabled={c.id === 'deployed'}>
+                {c.id === 'case' && <Case />}
+                {c.id === 'project' && <ProjectList type={c.id} onCreate={handleOpen} />}
+                {c.id === 'save' && <SaveList type={c.id}></SaveList>}
+              </TabPane>
+            );
+          })}
+          {deploys.map(c => {
+            return (
+              <TabPane tab={c.name} key={c.id}>
+                {
+                  //@ts-ignore
+                  c.component && <c.component />
+                }
+              </TabPane>
+            );
+          })}
+        </Tabs>
       </div>
       <CreatePanel visible={visible} handleClose={handleClose} />
     </>

@@ -1,6 +1,6 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
-import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Timeline, Switch } from 'antd';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
@@ -100,7 +100,21 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       graph.findById(nodeId) && graph.setItemState(nodeId, 'active', false);
     });
     [...highlightElementRef.current.edges].forEach(edgeId => {
-      graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
+      // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
+      if (graph.findById(edgeId)) {
+        graph.setItemState(edgeId, 'active', false);
+        graph.updateItem(edgeId, {
+          style: {
+            animate: {
+              visible: false,
+              type: 'circle-running',
+              color: 'rgba(236,65,198,1)',
+              repeat: true,
+              duration: 1000,
+            },
+          },
+        });
+      }
     });
   };
 
@@ -148,7 +162,21 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
           highlightElementRef.current?.nodes.add(nodeId);
         });
         edges.forEach(edgeId => {
-          graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
+          // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
+          if (graph.findById(edgeId)) {
+            graph.setItemState(edgeId, 'active', true);
+            graph.updateItem(edgeId, {
+              style: {
+                animate: {
+                  visible: true,
+                  type: 'circle-running',
+                  color: 'rgba(236,65,198,1)',
+                  repeat: true,
+                  duration: 1000,
+                },
+              },
+            });
+          }
           highlightElementRef.current?.edges.add(edgeId);
         });
       }

@@ -1,6 +1,6 @@
+import type { GILayoutAssets, GraphSchemaData } from '@antv/gi-sdk';
+import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import { utils } from '@alipay/graphinsight';
-import type { GraphSchemaData, GILayoutAssets } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
 
 const { getDefaultValues, getKeysByData } = utils;

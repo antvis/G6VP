@@ -1,5 +1,5 @@
-import { useContext } from '@alipay/graphinsight';
 import { Sankey } from '@antv/g2plot';
+import { useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 
 export interface IProps {

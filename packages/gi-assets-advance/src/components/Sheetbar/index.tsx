@@ -1,4 +1,4 @@
-import { AssetInfo } from '@alipay/graphinsight';
+import { AssetInfo } from '@antv/gi-sdk';
 import Component from './Component';
 import registerMeta from './registerMeta';
 

@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { Alert, Col, Row, Statistic } from 'antd';
 import * as React from 'react';
 import FilterPanel from './Filter';
@@ -44,12 +44,7 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
       <Alert message={title} type="info" />
 
       {largeGraphData && (
-        <FilterPanel
-          isFilterIsolatedNodes={true}
-          highlightMode={true}
-          limit={limit}
-          filterLogic={filterLogic}
-        />
+        <FilterPanel isFilterIsolatedNodes={true} highlightMode={true} limit={limit} filterLogic={filterLogic} />
       )}
     </div>
   );

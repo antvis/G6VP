@@ -1,9 +1,7 @@
 import React from 'react';
 import './index.less';
 
-const defaultStyle: React.CSSProperties = {
-  background: '#fff',
-};
+const defaultStyle: React.CSSProperties = {};
 
 export interface ToolBarItemType {
   name: string | JSX.Element;

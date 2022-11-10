@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import { L7Plot } from '@antv/l7plot';
 import { Drawer, Skeleton } from 'antd';
 import React from 'react';

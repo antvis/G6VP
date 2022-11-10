@@ -1,10 +1,10 @@
-import { useContext, utils } from '@alipay/graphinsight';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Divider, notification } from 'antd';
-import { useImmer } from 'use-immer';
 import React, { useEffect, useState } from 'react';
-import GremlinEditor from './GremlinEditor';
+import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
+import GremlinEditor from './GremlinEditor';
 import './index.less';
 
 export interface IGremlinQueryProps {

@@ -1,7 +1,7 @@
 .gi-assets-center-handler {
   height: 56px;
   padding: 0px 12px;
-  color: #000000;
+
   font-size: 18px;
 
   line-height: 56px;
@@ -19,11 +19,11 @@
   &:hover {
     box-shadow: 0px 0px 6px 0 var(--primary-color) !important;
   }
-  background: #ffffff !important;
-  background-color: #fff !important;
+  background: var(--background-color) !important;
+  background-color: var(--background-color) !important;
   border: none !important;
   border-radius: 8px !important;
-  box-shadow: 0px 0px 3px 0 #ddd;
+  box-shadow: var(--box-shadow-base);
   cursor: pointer;
   .ant-pro-checkcard-content {
     height: 100%;
@@ -31,6 +31,7 @@
     .ant-pro-checkcard-detail {
       // overflow:unset;
       .ant-pro-checkcard-description {
+        color: var(--text-color);
         height: 100%;
         .asset-detail {
           position: relative;
@@ -41,7 +42,7 @@
           ul {
             margin: 0;
             padding: 0;
-            color: #999;
+
             font-size: 12px;
             list-style: none;
             li {
@@ -77,11 +78,11 @@
               width: 64px;
               height: 24px;
               margin-left: 5px;
-              color: #a9a9a9;
+
               font-size: 12px;
               line-height: 24px;
               text-align: center;
-              background-color: #ffffff;
+              background-color: var(--background-color);
               border-radius: 2px;
               box-shadow: 1px -1px 4px 0 rgba(213, 213, 213, 0.5), -1px 1px 4px 0 rgba(213, 213, 213, 0.5);
             }
@@ -93,7 +94,7 @@
               font-size: 12px;
               line-height: 24px;
               text-align: center;
-              background-color: #3056e3;
+              background-color: var(--primary-color);
               border-radius: 2px;
               box-shadow: 1px 2px 3px 0 #95acff;
             }

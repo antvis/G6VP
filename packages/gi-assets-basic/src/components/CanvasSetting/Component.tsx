@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
 import CanvasClick from './CanvasClick';
@@ -12,6 +12,7 @@ export interface CanvasSettingProps {
     enableOptimize: boolean;
   };
   styleCanvas: {
+    background?: string;
     backgroundColor: string;
     backgroundImage: string;
   };
@@ -24,7 +25,7 @@ export interface CanvasSettingProps {
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   const { styleCanvas, dragCanvas, zoomCanvas, clearStatus } = props;
-  const { backgroundColor, backgroundImage } = styleCanvas;
+  const { backgroundColor, backgroundImage, background } = styleCanvas;
   const { GISDK_ID } = useContext();
 
   React.useLayoutEffect(() => {

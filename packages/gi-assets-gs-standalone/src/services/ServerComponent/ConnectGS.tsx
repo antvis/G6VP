@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { GISiteParams } from '@alipay/graphinsight';
-import { Alert, Switch, Col, Form, Row, Select } from 'antd';
+import { GISiteParams } from '@antv/gi-sdk';
+import { Alert, Col, Form, Row, Select, Switch } from 'antd';
 import React from 'react';
 import './index.less';
 
@@ -32,7 +32,8 @@ const ConnectGraphScope: React.FC<GraphModelProps> = ({ loading }) => {
           rules={[{ required: true, message: '部署GraphScope的服务器地址必填!' }]}
         >
           <Select mode="tags" style={{ width: '100%' }}>
-            <Option key="http://127.0.0.1:7001">GI 本地开发环境地址</Option>
+            <Option key="http://127.0.0.1:7001">ttp://127.0.0.1:7001</Option>
+            <Option key="http://storehouse-afx-39730.gz00b.dev.alipay.net">GI 开发环境地址「不定时过期」</Option>
             <Option key="http://storehouse.test.alipay.net">GI 测试环境地址</Option>
             <Option key="http://graphinsight-pre.alipay.com">GI 预发环境地址</Option>
             <Option key="http://graphinsight.antgroup-inc.cn">GI 生产环境地址</Option>
@@ -45,6 +46,7 @@ const ConnectGraphScope: React.FC<GraphModelProps> = ({ loading }) => {
           rules={[{ required: true, message: '部署GraphScope的服务器地址必填!' }]}
         >
           <Select mode="tags" style={{ width: '100%' }}>
+            <Option key="http://172.17.0.2:9527">http://172.17.0.2:9527</Option>
             <Option key="http://11.166.85.48:9527">蚂蚁线下环境</Option>
             <Option key="http://grape.alibaba-inc.com">阿里线上环境</Option>
           </Select>

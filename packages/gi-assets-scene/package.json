@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-scene",
-  "version": "2.7.1",
+  "name": "@antv/gi-assets-scene",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,11 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
   ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
@@ -19,11 +24,11 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-scene analysis=true",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "3d-force-graph": "^1.70.10",
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",
@@ -44,6 +49,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

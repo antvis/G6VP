@@ -3,11 +3,15 @@
   z-index: 100;
   display: flex;
   box-sizing: border-box;
-  background-color: #fff;
-  border: 1px solid rgba(196, 186, 186, 0.4);
+  border: var(--border-color);
+  background: var(--background-color);
+  color: var(--text-color);
 }
 
 .gi-grail-layout-left {
+  background: var(--background-color);
+  border-right: 1px solid var(--border-color);
+  color: var(--text-color);
   top: 0;
   left: 0;
   flex-direction: column;
@@ -17,6 +21,9 @@
 }
 
 .gi-grail-layout-right {
+  background: var(--background-color);
+  border-left: 1px solid var(--border-color);
+  color: var(--text-color);
   top: 0;
   right: 0;
   flex-direction: column;
@@ -26,6 +33,9 @@
 }
 
 .gi-grail-layout-bottom {
+  background: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-color);
   bottom: 0;
   flex-direction: row;
   overflow-y: visible;
@@ -35,6 +45,9 @@
 }
 
 .gi-grail-layout-top {
+  background: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
   top: 0;
   flex-direction: row;
   overflow-y: visible;

@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra } from '@antv/gi-sdk';
 import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -25,13 +25,13 @@ const registerMeta = ({ schemaData }) => {
 
   const nodeOptions = Object.entries(nodeProperties).map(e => {
     const [key, value] = e;
-    return {label: `node-${key}`, value: `node-${key}`}
-  })
+    return { label: `node-${key}`, value: `node-${key}` };
+  });
 
-  const edgeOptions =  Object.entries(edgeProperties).map(e => {
+  const edgeOptions = Object.entries(edgeProperties).map(e => {
     const [key, value] = e;
-    return {label: `edge-${key}`, value: `edge-${key}`}
-  })
+    return { label: `edge-${key}`, value: `edge-${key}` };
+  });
 
   const schema = {
     filterKeys: {
@@ -39,8 +39,8 @@ const registerMeta = ({ schemaData }) => {
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
-      "x-component-props": {
-        mode: "multiple",
+      'x-component-props': {
+        mode: 'multiple',
       },
       enum: [...nodeOptions, ...edgeOptions],
       default: [],

@@ -3,9 +3,9 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { useContext } from '@alipay/graphinsight';
 import { DeleteOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.less';

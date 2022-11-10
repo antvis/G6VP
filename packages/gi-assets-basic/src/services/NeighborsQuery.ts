@@ -1,33 +1,66 @@
-import { ServiceObject } from '@alipay/graphinsight';
-const getEngineContext = engineId => {
-  const context = window.localStorage.getItem(`GRAPH_INSIGHT_SERVER_${engineId}`);
-};
+import { GIGraphData, ServiceObject } from '@antv/gi-sdk';
 
-const setEngineContext = (engineId, params) => {
-  window.localStorage.setItem(`GRAPH_INSIGHT_SERVER_${engineId}`, JSON.stringify(params));
-};
-
-export interface NeighborsQueryParams {
-  ids: string[]; //扩散的节点，是个节点ID数组
-  sep: number; //扩散的度数
-  nodes: any[]; //扩散的节点的全部信息
+export interface ReqNeighborsQuery {
+  //扩散的节点，是个节点ID数组
+  ids: string[];
+  //扩散的节点的全部信息
+  nodes: any[];
+  //扩散的度数
+  sep: number;
+}
+export interface ResNeighborsQuery {
+  //扩散的节点，是个节点ID数组
+  ids: string[];
+  //扩散的节点的全部信息
+  nodes: any[];
+  //扩散的度数
+  sep: number;
 }
 
 export const NeighborsQuery: ServiceObject = {
   name: '邻居查询',
   method: 'POST',
   req: `
-  {
-    ids: string[]; //扩散的节点，是个节点ID数组
-    nodes:any[]; // 扩散的节点的全部信息
-    sep: number; //扩散的度数
+  export interface ReqNeighborsQuery {
+    //扩散的节点，是个节点ID数组
+    ids: string[];
+    //扩散的节点的全部信息
+    nodes: any[];
+    //扩散的度数
+    sep: number;
+  }  
+  `,
+  res: `
+  export interface GIGraphData {
+    nodes: {
+      // 节点ID
+      id: string;
+      // 节点类型的枚举值。Property Graph 也称之为 node.label
+      nodeType: string;
+      // 业务数据,注意需要打平,暂不支持嵌套
+      data: {};
+      // 业务数据（data）中的哪个字段，用来映射节点类型
+      nodeTypeKeyFromProperties?: string;
+    }[];
+    edges: {
+      // 边ID
+      id: string;
+      // 边关联的 source 节点ID
+      source: string;
+      // 边关联的 target 节点ID
+      target: string;
+      // 边类型的枚举值。Property Graph 也称之为 edge.label
+      edgeType: string;
+      // 业务数据,注意需要打平,暂不支持嵌套
+      data: {};
+      // 业务数据（data）中的哪个字段，用来映射边类型
+      edgeTypeKeyFromProperties?: string;
+    }[];
   }
   `,
-  res: `{}`,
 
-  service: (params: NeighborsQueryParams) => {
+  service: (params: ReqNeighborsQuery): Promise<GIGraphData> => {
     const { ids, nodes: NODES } = params;
-    const GI_SERVER_CONTEXT = window.localStorage.getItem('GI_SERVER_CONTEXT');
 
     const transfrom = p => {
       const { nodes, edges } = p;

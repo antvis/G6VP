@@ -1,6 +1,6 @@
+import { Icon } from '@antv/gi-sdk';
 import { Divider, Tooltip } from 'antd';
 import React from 'react';
-import { Icon } from '@alipay/graphinsight';
 
 export interface GIContianerProps {
   color: string;

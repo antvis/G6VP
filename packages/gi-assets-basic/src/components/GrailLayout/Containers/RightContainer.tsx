@@ -1,5 +1,5 @@
+import { Handler } from '@antv/gi-common-components';
 import React from 'react';
-import { Handler } from '@alipay/gi-common-components';
 
 export interface RightContainerProps {
   width: string;

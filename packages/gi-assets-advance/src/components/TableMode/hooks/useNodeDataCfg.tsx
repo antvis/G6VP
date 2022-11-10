@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { S2DataConfig } from '@antv/s2';
 import React from 'react';
 

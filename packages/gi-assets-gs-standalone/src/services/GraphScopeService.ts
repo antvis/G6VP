@@ -68,18 +68,29 @@ export const createGraphScopeInstance = async () => {
 export const closeGraphInstance = async () => {
   const currentInstance = localStorage.getItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
   const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER')
-  const result = await request(`${httpServerURL}/graphcompute/closeGSInstance`, {
-    method: 'GET',
-    params: {
-      instanceId: currentInstance,
-    },
-  });
+  try {
+    const result = await request(`${httpServerURL}/graphcompute/closeGSInstance`, {
+      method: 'GET',
+      params: {
+        instanceId: currentInstance,
+      },
+    });
+  
+    localStorage.removeItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
+    localStorage.removeItem('graphScopeGremlinServer');
+    localStorage.removeItem('graphScopeGraphName');
+  
+    return result;
+  } catch (error) {
+    localStorage.removeItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
+    localStorage.removeItem('graphScopeGremlinServer');
+    localStorage.removeItem('graphScopeGraphName');
 
-  localStorage.removeItem('GI_CURRENT_GRAPHSCOPE_INSTANCE');
-  localStorage.removeItem('graphScopeGremlinServer');
-  localStorage.removeItem('graphScopeGraphName');
-
-  return result;
+    return {
+      success: false,
+      message: '关闭实例失败'
+    };
+  }
 };
 
 export const uploadLocalFileToGraphScope = async params => {
@@ -183,32 +194,42 @@ export const loadGraphToGraphScope = async params => {
 
   console.log('载图参数', loadFileParams);
 
-  const loadResult = await request(`${httpServerURL}/graphcompute/loadData`, {
-    method: 'post',
-    data: loadFileParams,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!loadResult || !loadResult.success) {
-    return loadResult;
+  try {
+    const loadResult = await request(`${httpServerURL}/graphcompute/loadData`, {
+      method: 'post',
+      data: loadFileParams,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  
+    if (!loadResult || !loadResult.success) {
+      return loadResult;
+    }
+  
+    const { graphURL, graphName, hostIp, hostName } = loadResult.data;
+  
+    localStorage.setItem('graphScopeGremlinServer', graphURL);
+    localStorage.setItem('graphScopeGraphName', graphName);
+  
+    return {
+      success: true,
+      data: {
+        graphURL,
+        graphName,
+        hostIp,
+        hostName,
+      },
+    };
+  } catch (error) {
+    // 载图失败
+    return {
+      success: false,
+      message: error,
+      data: {
+      },
+    };
   }
-
-  const { graphURL, graphName, hostIp, hostName } = loadResult.data;
-
-  localStorage.setItem('graphScopeGremlinServer', graphURL);
-  localStorage.setItem('graphScopeGraphName', graphName);
-
-  return {
-    success: true,
-    data: {
-      graphURL,
-      graphName,
-      hostIp,
-      hostName,
-    },
-  };
 };
 
 export const loadChinaVisGraphToGraphScope = async params => {

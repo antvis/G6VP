@@ -91,7 +91,7 @@ module.exports = (env, argv) => {
       '@antv/graphin': 'Graphin',
 
       '@antv/g6': 'G6',
-      '@alipay/grapphinsight': 'GISDK',
+      '@antv/gi-sdk': 'GISDK',
       antd: 'antd',
     },
   };

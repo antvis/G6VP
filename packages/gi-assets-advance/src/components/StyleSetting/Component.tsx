@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Tabs } from 'antd';
 import React from 'react';
 import './index.less';

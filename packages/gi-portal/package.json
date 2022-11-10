@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-portal",
-  "version": "2.2.0",
+  "name": "@antv/gi-portal",
+  "version": "1.0.0",
   "description": "GraphInsight Portal",
   "main": "dist/app.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "author": "AntV",
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   },
   "devDependencies": {
     "react-spring": "^9.5.4"

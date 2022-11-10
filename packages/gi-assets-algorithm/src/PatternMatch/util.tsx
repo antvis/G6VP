@@ -1,13 +1,8 @@
-import { GIConfig, GIEdgeConfig, GINodeConfig, IEdgeSchema } from '@alipay/graphinsight';
+import { GIConfig, GIEdgeConfig, GINodeConfig, IEdgeSchema } from '@antv/gi-sdk';
 import { GraphinData, Utils } from '@antv/graphin';
 
 // 模式匹配结果根据条件进行筛选
-export const filterByPatternRules = (
-  oriGraphData: GraphinData,
-  pattern,
-  matches,
-  directed
-) => {
+export const filterByPatternRules = (oriGraphData: GraphinData, pattern, matches, directed) => {
   const graphNodeTypeMap = {};
   const nodeDataMap = {};
   oriGraphData.nodes.forEach(node => {
@@ -46,7 +41,7 @@ export const filterByPatternRules = (
             case 'label':
               mPropertyValue = mNode.label;
               break;
-            default: 
+            default:
               break;
           }
           switch (rule.rule) {
@@ -63,12 +58,12 @@ export const filterByPatternRules = (
               if (mPropertyValue === rule.value) allRuleMatched = false;
               break;
             case 'like':
-              if (!(`${mPropertyValue}`.includes(rule.value))) allRuleMatched = false;
+              if (!`${mPropertyValue}`.includes(rule.value)) allRuleMatched = false;
               break;
             case 'unlike':
               if (`${mPropertyValue}`.includes(rule.value)) allRuleMatched = false;
               break;
-            default: 
+            default:
               break;
           }
           if (!allRuleMatched) break;
@@ -132,7 +127,7 @@ export const filterByPatternRules = (
               if (mPropertyValue === rule.value) allRuleMatched = false;
               break;
             case 'like':
-              if (!(`${mPropertyValue}`.includes(rule.value))) allRuleMatched = false;
+              if (!`${mPropertyValue}`.includes(rule.value)) allRuleMatched = false;
               break;
             case 'unlike':
               if (`${mPropertyValue}`.includes(rule.value)) allRuleMatched = false;
@@ -159,43 +154,55 @@ export const filterByPatternRules = (
   }
 };
 
-export const formatDataModels = (dataType: 'node' | 'edge', models, config: GIConfig, schemaEdgeMap: { [key: string]: IEdgeSchema } = {}) => {
-  return models?.map(model => {
-    const type = model[`${dataType}Type`];
-    let modelConfig = {} as GINodeConfig | GIEdgeConfig;
-    if (type) {
-      modelConfig = (config[`${dataType}s`] as GINodeConfig[] | GIEdgeConfig[]).find(config => config.groupName === `${type.toUpperCase()} TYPE`) || modelConfig;
-    }
-    const { color = '#ccc', size = dataType === 'node' ? 30 : 1 } = modelConfig.props || {};
-    const res = {
-      ...model,
-      style: {
-        ...model.style,
-        keyshape: {
-          size,
-          fill: dataType === 'node' ? color : undefined,
-          stroke: color,
+export const formatDataModels = (
+  dataType: 'node' | 'edge',
+  models,
+  config: GIConfig,
+  schemaEdgeMap: { [key: string]: IEdgeSchema } = {},
+) => {
+  return (
+    models?.map(model => {
+      const type = model[`${dataType}Type`];
+      let modelConfig = {} as GINodeConfig | GIEdgeConfig;
+      if (type) {
+        modelConfig =
+          (config[`${dataType}s`] as GINodeConfig[] | GIEdgeConfig[]).find(
+            config => config.groupName === `${type.toUpperCase()} TYPE`,
+          ) || modelConfig;
+      }
+      const { color = '#ccc', size = dataType === 'node' ? 30 : 1 } = modelConfig.props || {};
+      const res = {
+        ...model,
+        style: {
+          ...model.style,
+          keyshape: {
+            size,
+            fill: dataType === 'node' ? color : undefined,
+            stroke: color,
+          },
+          label:
+            typeof model.label === 'string'
+              ? {
+                  value: model.label,
+                }
+              : model.style?.label || model.label,
         },
-        label: typeof model.label === 'string' ? {
-          value: model.label
-        } : (model.style?.label || model.label)
+      };
+      if (dataType === 'edge') {
+        const edgeSchema = schemaEdgeMap[model.edgeType];
+        if (edgeSchema) {
+          res.sourceNodeType = edgeSchema.sourceNodeType;
+          res.targeteEdgeType = edgeSchema.targetNodeType;
+        }
       }
-    }
-    if (dataType === 'edge') {
-      const edgeSchema = schemaEdgeMap[model.edgeType];
-      if (edgeSchema) {
-        res.sourceNodeType = edgeSchema.sourceNodeType;
-        res.targeteEdgeType = edgeSchema.targetNodeType;
-      }
-    }
-    return res
-  }) || [];
+      return res;
+    }) || []
+  );
 };
 
 export const formatData = (graphData, config, schemaEdgeMap): GraphinData => ({
   nodes: formatDataModels('node', graphData.nodes, config),
-  edges: Utils.processEdges(formatDataModels('edge', graphData.edges, config, schemaEdgeMap))
-})
-
+  edges: Utils.processEdges(formatDataModels('edge', graphData.edges, config, schemaEdgeMap)),
+});
 
 export default { filterByPatternRules, formatDataModels, formatData };

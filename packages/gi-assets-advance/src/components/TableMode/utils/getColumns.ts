@@ -1,4 +1,4 @@
-import { GraphSchemaData } from '@alipay/graphinsight';
+import { GraphSchemaData } from '@antv/gi-sdk';
 
 const getColumns = (schemaData: GraphSchemaData, type: 'nodes' | 'edges') => {
   const schema = schemaData[type];

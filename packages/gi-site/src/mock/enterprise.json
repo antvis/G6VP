@@ -1,244 +1,146 @@
 {
   "nodes": [
     {
-      "id": "node1",
-      "label": "node1",
-      "entityTypeName": "RiskEnterprise",
-      "coord": [112.345, 30.455],
-      "level": 0
+      "id": "某A控股公司",
+      "nodeType": "company"
     },
     {
-      "id": "node2",
-      "label": "node2",
-      "entityTypeName": "Province",
-      "coord": [114.345, 32.455],
-      "level": 1
+      "id": "某B中国控股公司",
+      "nodeType": "company"
     },
     {
-      "id": "node3",
-      "label": "node3",
-      "entityTypeName": "RiskEnterprise",
-      "coord": [113.345, 31.455],
-      "level": 1
+      "id": "XX(中国)软件有限公司",
+      "nodeType": "company"
     },
     {
-      "id": "node4",
-      "label": "node4",
-      "entityTypeName": "RiskEnterprise",
-      "coord": [113.145, 32.455],
-      "level": 1
+      "id": "陕西XXX网络科技有限公司",
+      "nodeType": "company"
     },
     {
-      "id": "node5",
-      "label": "node5",
-      "coord": [113.345, 30.455],
-      "entityTypeName": "AlipayAccount2"
+      "id": "XXX集团控股有限公司",
+      "nodeType": "company"
     },
     {
-      "id": "node6",
-      "label": "node6",
-      "coord": [112.345, 31.455],
-      "entityTypeName": "IndustryStd"
+      "id": "XXX科技集团股份有限公司",
+      "nodeType": "company"
     },
     {
-      "id": "node7",
-      "label": "node7",
-      "coord": [112.345, 30.855],
-      "entityTypeName": "District"
+      "id": "张某",
+      "nodeType": "person"
     },
     {
-      "id": "node8",
-      "label": "node8",
-      "coord": [112.345, 31.455],
-      "entityTypeName": "City"
+      "id": "王某",
+      "nodeType": "person"
     },
     {
-      "id": "node9",
-      "label": "node9",
-      "coord": [113.345, 31.455],
-      "entityTypeName": "RiskEnterprise",
-      "level": 0
+      "id": "李某",
+      "nodeType": "person"
     },
     {
-      "id": "node10",
-      "label": "node10",
-      "coord": [110.845, 31.455],
-      "entityTypeName": "Province",
-      "level": 1
+      "id": "周某",
+      "nodeType": "person"
     },
     {
-      "id": "node11",
-      "label": "node11",
-      "coord": [110.145, 31.655],
-      "entityTypeName": "RiskEnterprise",
-      "level": 1
-    },
-    {
-      "id": "node12",
-      "label": "node12",
-      "coord": [110.395, 31.655],
-      "entityTypeName": "RiskEnterprise",
-      "level": 1
-    },
-    {
-      "id": "node13",
-      "label": "node13",
-      "coord": [110.145, 31.755],
-      "entityTypeName": "AlipayAccount2"
-    },
-    {
-      "id": "node14",
-      "label": "node14",
-      "coord": [110.945, 31.255],
-      "entityTypeName": "IndustryStd"
-    },
-    {
-      "id": "node15",
-      "label": "node15",
-      "coord": [111.245, 31.955],
-      "entityTypeName": "District"
+      "id": "罗某",
+      "nodeType": "person"
     }
   ],
   "edges": [
     {
-      "id": "1",
-      "source": "node1",
-      "target": "node2",
-      "coord": [
-        [112.345, 30.455],
-        [114.345, 32.455]
-      ],
-      "relationTypeName": "legalAlipayAccount"
+      "source": "某A控股公司",
+      "target": "某B中国控股公司",
+      "edgeType": "shareHolding",
+      "percent": "100%"
     },
     {
-      "id": "2",
-      "source": "node1",
-      "target": "node3",
-      "coord": [
-        [112.345, 30.455],
-        [113.345, 31.455]
-      ],
-      "relationTypeName": "legalAlipayAccount"
+      "source": "某B中国控股公司",
+      "target": "XX(中国)软件有限公司",
+      "edgeType": "shareHolding",
+      "percent": "100%"
     },
     {
-      "id": "3",
-      "source": "node1",
-      "target": "node4",
-      "coord": [
-        [112.345, 30.455],
-        [113.145, 32.455]
-      ],
-      "relationTypeName": "shareHolder"
+      "source": "XX(中国)软件有限公司",
+      "target": "陕西XXX网络科技有限公司",
+      "edgeType": "shareHolding",
+      "percent": "100%"
     },
     {
-      "id": "4",
-      "source": "node1",
-      "target": "node5",
-      "coord": [
-        [112.345, 30.455],
-        [113.345, 30.455]
-      ],
-      "relationTypeName": "competeGridRelation"
+      "source": "陕西XXX网络科技有限公司",
+      "target": "XXX科技集团股份有限公司",
+      "edgeType": "shareHolding",
+      "percent": "32.65"
     },
     {
-      "id": "5",
-      "source": "node1",
-      "target": "node6",
-      "coord": [
-        [112.345, 30.455],
-        [112.345, 31.455]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "周某",
+      "target": "XXX集团控股有限公司",
+      "edgeType": "manager",
+      "position": "实际控制人(疑似)"
     },
     {
-      "id": "6",
-      "source": "node1",
-      "target": "node7",
-      "coord": [
-        [112.345, 30.455],
-        [112.345, 30.855]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "周某",
+      "target": "XXX科技集团股份有限公司",
+      "edgeType": "manager",
+      "position": "实际控制人"
     },
     {
-      "id": "7",
-      "source": "node1",
-      "target": "node8",
-      "coord": [
-        [112.345, 30.455],
-        [112.345, 31.455]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "罗某",
+      "target": "XXX科技集团股份有限公司",
+      "edgeType": "manager",
+      "position": "执行董事"
     },
     {
-      "id": "8",
-      "source": "node1",
-      "target": "node9",
-      "coord": [
-        [112.345, 30.455],
-        [113.345, 31.455]
-      ],
-      "relationTypeName": "legalAlipayAccount"
+      "source": "罗某",
+      "target": "XXX集团控股有限公司",
+      "edgeType": "manager",
+      "position": "执行董事"
     },
     {
-      "id": "9",
-      "source": "node1",
-      "target": "node10",
-      "coord": [
-        [112.345, 30.455],
-        [110.845, 31.455]
-      ],
-      "relationTypeName": "legalAlipayAccount"
+      "source": "张某",
+      "target": "XXX集团控股有限公司",
+      "edgeType": "manager",
+      "position": "CEO"
     },
     {
-      "id": "9",
-      "source": "node1",
-      "target": "node11",
-      "coord": [
-        [112.345, 30.455],
-        [110.145, 31.655]
-      ],
-      "relationTypeName": "shareHolder"
+      "source": "张某",
+      "target": "XX(中国)软件有限公司",
+      "edgeType": "manager",
+      "position": "总经理"
     },
     {
-      "id": "10",
-      "source": "node1",
-      "target": "node12",
-      "coord": [
-        [112.345, 30.455],
-        [110.395, 31.655]
-      ],
-      "relationTypeName": "competeGridRelation"
+      "source": "张某",
+      "target": "陕西XXX网络科技有限公司",
+      "edgeType": "manager",
+      "position": "总经理"
     },
     {
-      "id": "11",
-      "source": "node1",
-      "target": "node13",
-      "coord": [
-        [112.345, 30.455],
-        [110.145, 31.755]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "王某",
+      "target": "陕西XXX网络科技有限公司",
+      "edgeType": "manager",
+      "position": "董事"
     },
     {
-      "id": "12",
-      "source": "node1",
-      "target": "node14",
-      "coord": [
-        [112.345, 30.455],
-        [110.945, 31.255]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "李某",
+      "target": "陕西XXX网络科技有限公司",
+      "edgeType": "manager",
+      "position": "非执行董事"
     },
     {
-      "id": "13",
-      "source": "node1",
-      "target": "node15",
-      "coord": [
-        [112.345, 30.455],
-        [111.245, 31.955]
-      ],
-      "relationTypeName": "guaranteeRelation"
+      "source": "李某",
+      "target": "XX(中国)软件有限公司",
+      "edgeType": "manager",
+      "position": "董事"
+    },
+    {
+      "source": "李某",
+      "target": "陕西XXX网络科技有限公司",
+      "edgeType": "manager",
+      "position": "董事"
+    },
+    {
+      "source": "XXX集团控股有限公司",
+      "target": "某A控股公司",
+      "edgeType": "shareHolding",
+      "percent": "100%"
     }
   ]
 }

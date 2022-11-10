@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-basic",
-  "version": "2.22.0",
+  "name": "@antv/gi-assets-basic",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,6 +8,11 @@
   "sideEffects": [
     "*.css",
     "*.less"
+  ],
+  "files": [
+    "es",
+    "lib",
+    "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
@@ -20,11 +25,11 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-basic analysis=true",
-    "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/gi-common-components": "*",
-    "@alipay/graphinsight": "*",
+    "@antv/gi-common-components": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
@@ -43,6 +48,6 @@
     "antd": "latest"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

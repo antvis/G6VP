@@ -1,5 +1,5 @@
-import { extra } from '@alipay/graphinsight';
-import { IGIAC } from '@alipay/graphinsight/lib/components/const';
+import { extra } from '@antv/gi-sdk';
+import { IGIAC } from '@antv/gi-sdk/lib/components/const';
 import * as React from 'react';
 import useRedoUndo from '../hooks/useRedoUndo';
 const { GIAComponent } = extra;

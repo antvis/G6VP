@@ -1,0 +1,11 @@
+src_id,dst_id,amount,balance,category,date,id,is_foreign_source,is_foreign_target,is_high_risk_source_target_location,relation,source_owner,target_owner,time
+"account_103","account_904",0,0,"ib_txn","","account_103-account_904-9","",0,0,0,"","",""
+"account_904","account_103",0,0,"ib_txn","","account_904-account_103-10","",0,0,0,"","",""
+"account_903","account_103",0,0,"ib_txn","","account_903-account_103-11","",0,0,0,"","",""
+"account_103","account_903",0,0,"ib_txn","","account_103-account_903-12","",0,0,0,"","",""
+"account_901","account_103",250000,10000,"ib_txn","2020-01-01T06:00:00","account_901-account_103-6",0,0,0,"ib_transfer","customer_901","customer_103","6:00:00"
+"account_902","account_103",250000,300000,"ib_txn","2020-01-01T06:30:00","account_902-account_103-7",0,0,0,"ib_transfer","customer_902","customer_103","6:30:00"
+"account_7","account_103",125000,225000,"ib_txn","2020-01-03T22:00:00","account_7-account_103-10",0,0,0,"ib_transfer","customer_7","customer_103","22:00:00"
+"account_55","account_103",250000,475000,"ib_txn","2020-01-03T22:00:00","account_55-account_103-11",0,0,0,"ib_transfer","customer_55","customer_103","22:00:00"
+"account_20","account_103",150000,625000,"ib_txn","2020-01-04T18:00:00","account_20-account_103-12",0,0,0,"ib_transfer","customer_20","customer_103","18:00:00"
+"account_81","account_103",300000,925000,"ib_txn","2020-01-04T18:00:00","account_81-account_103-13",0,0,0,"ib_transfer","customer_81","customer_103","18:00:00"

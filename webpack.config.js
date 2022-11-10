@@ -7,8 +7,16 @@ module.exports = (env, argv) => {
   const ASSETS_PATH = path.join(__dirname, env.path);
   const ENTRY_PATH = path.join(ASSETS_PATH, 'src/index.tsx');
   const DIST_PATH = path.join(ASSETS_PATH, 'dist/');
-  const ASSETS_UMD = env.path.replace('/packages/', '').split('-').join('_').toUpperCase();
+  let ASSETS_UMD = env.path.replace('/packages/', '').split('-').join('_').toUpperCase();
+
+  if (ASSETS_UMD === 'GI_SDK') {
+    ASSETS_UMD = 'GISDK';
+  }
+  if (ASSETS_UMD === 'GI_ASSETS_GS_STANDALONE') {
+    ASSETS_UMD = 'GI_ASSETS_GS';
+  }
   console.log(ASSETS_UMD);
+
   const plugins = env.analysis
     ? [
         new MiniCssExtractPlugin(),
@@ -101,7 +109,7 @@ module.exports = (env, argv) => {
     },
     // devtool: 'cheap-module-source-map',
     output: {
-      library: ASSETS_UMD === 'GI' ? 'GISDK' : ASSETS_UMD,
+      library: ASSETS_UMD,
       libraryTarget: 'umd',
       path: DIST_PATH,
       publicPath: './',
@@ -114,9 +122,10 @@ module.exports = (env, argv) => {
       'react-dom': 'ReactDOM',
       '@antv/graphin': 'Graphin',
       '@antv/g6': 'G6',
-      '@alipay/graphinsight': 'GISDK',
+      '@antv/gi-sdk': 'GISDK',
       antd: 'antd',
       '@antv/g2plot': 'G2Plot',
     },
+    watch: Boolean(env.watch),
   };
 };

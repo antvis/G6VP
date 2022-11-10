@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { CloseOutlined } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import { Button } from 'antd';
 import * as React from 'react';
 import './index.less';
@@ -37,7 +37,8 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
 
   const styles = utils.getPositionStyles(containerPlacement, offset);
   if (containerPlacement === 'RT' || containerPlacement === 'LB') {
-    styles.bottom = '50px';
+    styles.bottom = '4px';
+    styles.top = '4px';
     styles.height = 'unset';
   }
 

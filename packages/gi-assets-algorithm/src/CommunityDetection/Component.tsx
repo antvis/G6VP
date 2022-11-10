@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { ReloadOutlined } from '@ant-design/icons';
 import { connectedComponent, iLouvain, kCore, louvain } from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import Graphin, { Behaviors } from '@antv/graphin';
 import { Button, Empty, InputNumber, message, Radio, Spin } from 'antd';

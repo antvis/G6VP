@@ -1,13 +1,13 @@
-import { utils } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Empty, Menu, Popconfirm, Row, Typography, message } from 'antd';
+import { utils } from '@antv/gi-sdk';
+import { Button, Col, Dropdown, Empty, Menu, message, Popconfirm, Row, Typography } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
-import { queryShareList, deleteShareById } from '../../services/share';
 import { IS_LOCAL_ENV } from '../../services/const';
+import { deleteShareById, queryShareList } from '../../services/share';
 import type { IProject } from '../../services/typing';
 
 interface SaveListState {
@@ -109,7 +109,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
                   history.push(`/share/${id}`);
                 }}
                 cover={<img src={cover} style={{ width: '70px', height: '70px' }} />}
-                title={name || ""}
+                title={name || ''}
                 time={utils.time(gmtCreate)}
                 extra={
                   <Dropdown overlay={menu(id)} placement="bottomCenter">

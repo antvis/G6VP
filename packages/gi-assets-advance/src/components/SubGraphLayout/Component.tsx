@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Item } from '@antv/g6';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, message, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';

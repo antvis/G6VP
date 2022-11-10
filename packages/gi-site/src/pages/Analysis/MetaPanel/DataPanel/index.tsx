@@ -1,4 +1,3 @@
-import { Icon } from '@alipay/graphinsight';
 import {
   CheckCircleOutlined,
   DeleteOutlined,
@@ -6,13 +5,14 @@ import {
   ExclamationCircleOutlined,
   TableOutlined,
 } from '@ant-design/icons';
+import { Icon } from '@antv/gi-sdk';
 import { Collapse, Space } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import ActionList from '../../../../components/ActionList';
 import CollapseCard from '../../../../components/CollapseCard';
+import { edgeColumns, nodeColumns } from '../../../../components/FileServerEngine/const';
 import { useContext } from '../../hooks/useContext';
-import { edgeColumns, nodeColumns } from '../../uploadData/const';
 import DataSchema from './DataSchema';
 import DataService from './DataService';
 import DataSource from './DataSource';

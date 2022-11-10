@@ -1,13 +1,12 @@
-import React from 'react';
 import { IEdge, INode } from '@antv/g6';
 import { S2Event, SpreadSheet } from '@antv/s2';
+import React from 'react';
 
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 
-const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|null, isFullScreen: boolean) => {
+const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet | null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
-    
     s2Instance?.on(S2Event.GLOBAL_SELECTED, () => {
       // isSelectedActiv 为 false 或全屏时，不高亮选中元素
       if (!isSelectedActive || isFullScreen) {
@@ -46,37 +45,37 @@ const useListenNodeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet|
           draft.source = newData;
         });
       } else {
-         graphData.nodes.forEach(nodeConfig => {
-           const { id } = nodeConfig;
-           const item = graph.findById(id) as INode;
-           if (selectedNodes.has(id)) {
-             item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
-             !item.hasState("selected") && graph.setItemState(id, 'selected', true);
-           } else {
-             !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-             item.hasState('selected') && graph.setItemState(id, 'selected', false);
-           }
-         });
+        graphData.nodes.forEach(nodeConfig => {
+          const { id } = nodeConfig;
+          const item = graph.findById(id) as INode;
+          if (selectedNodes.has(id)) {
+            item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
+            !item.hasState('selected') && graph.setItemState(id, 'selected', true);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
+        });
 
-         graphData.edges.forEach(edgeConfig => {
-           const { id, source, target } = edgeConfig;
-           graph.setItemState(id, 'disabled', true);
-           const item = graph.findById(id) as IEdge;
-           if (selectedNodes.has(target) && selectedNodes.has(source)) {
-             // 两端节点都高亮时，对应的边也高亮
-             !item.hasState("selected") && graph.setItemState(id, 'selected', true);
-             item.hasState("disabled") && graph.setItemState(id, 'disabled', false);
-           } else {
-             !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
-             item.hasState('selected') && graph.setItemState(id, 'selected', false);
-           }
+        graphData.edges.forEach(edgeConfig => {
+          const { id, source, target } = edgeConfig;
+          graph.setItemState(id, 'disabled', true);
+          const item = graph.findById(id) as IEdge;
+          if (selectedNodes.has(target) && selectedNodes.has(source)) {
+            // 两端节点都高亮时，对应的边也高亮
+            !item.hasState('selected') && graph.setItemState(id, 'selected', true);
+            item.hasState('disabled') && graph.setItemState(id, 'disabled', false);
+          } else {
+            !item.hasState('disabled') && graph.setItemState(id, 'disabled', true);
+            item.hasState('selected') && graph.setItemState(id, 'selected', false);
+          }
         });
       }
     });
 
     return () => {
-        s2Instance?.off(S2Event.GLOBAL_SELECTED);
-    }
+      s2Instance?.off(S2Event.GLOBAL_SELECTED);
+    };
   }, [isSelectedActive, largeGraphData, graphData, s2Instance, isFullScreen]);
 };
 

@@ -1,0 +1,27 @@
+.gi-filter-panel {
+  //height: 100%;
+  padding: 10px;
+  // overflow-y: auto;
+  .gi-filter-panel-criteria-container {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    margin-top: 15px;
+
+    .gi-filter-panel-group {
+      padding: 8px;
+      border-radius: 4px;
+      box-shadow: var(--box-shadow-light);
+
+      .gi-filter-panel-prop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .gi-filter-panel-value {
+        margin-top: 6px;
+      }
+    }
+  }
+}

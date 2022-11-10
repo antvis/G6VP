@@ -1,7 +1,6 @@
 import { Card, Space } from 'antd';
 import * as React from 'react';
 import AllAssets from '../../components/AssetsCenter/AllAssets';
-import BaseNavbar from '../../components/Navbar/BaseNavbar';
 import { getAssetPackages, setDefaultAssetPackages } from '../../loader';
 import Cards from './Cards';
 import './index.less';
@@ -44,24 +43,21 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   }
   return (
     <>
-      <BaseNavbar active="assets"></BaseNavbar>
-      <div className="gi-assets-container">
-        <Card
-          title="资产管理"
-          extra={
-            <Space>
-              <ViewMode value={mode} onChange={handleChangeMode} />
-              <UploadAssets></UploadAssets>
-            </Space>
-          }
-        >
-          {mode === 'table' && <PackageTable data={lists}></PackageTable>}
-          {mode === 'card' && <Cards data={lists}></Cards>}
-        </Card>
-        <Card title="资产列表" style={{ margin: '12px 0px' }}>
-          <AllAssets assetsCenter={{ hash: 'components' }} activeAssetsKeys={[]} onChange={() => {}} />
-        </Card>
-      </div>
+      <Card
+        title="资产管理"
+        extra={
+          <Space>
+            <ViewMode value={mode} onChange={handleChangeMode} />
+            <UploadAssets></UploadAssets>
+          </Space>
+        }
+      >
+        {mode === 'table' && <PackageTable data={lists}></PackageTable>}
+        {mode === 'card' && <Cards data={lists}></Cards>}
+      </Card>
+      <Card title="资产列表" style={{ margin: '12px 0px' }}>
+        <AllAssets assetsCenter={{ hash: 'components' }} activeAssetsKeys={[]} onChange={() => {}} />
+      </Card>
     </>
   );
 };

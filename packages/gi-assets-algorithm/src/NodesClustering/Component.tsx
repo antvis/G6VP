@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { ReloadOutlined } from '@ant-design/icons';
 import { kMeans } from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { Button, Empty, InputNumber, Radio, Select, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
@@ -260,11 +260,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   }, []);
 
   return (
-    <div
-      style={{
-        background: '#fff',
-      }}
-    >
+    <div>
       <div className="nodes-clustering-wrapper">
         <div className="top-info">
           <p className="nodes-clustering-title">

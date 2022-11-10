@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { EditFilled } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import { Button, Drawer } from 'antd';
 import * as React from 'react';
@@ -40,6 +40,7 @@ export interface FormValues {
 }
 const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
   const { updateContext, context } = useContext();
+  const theme = localStorage.getItem('@theme') || 'light';
 
   const { id, serviceConfig, schemaData, config } = context;
 
@@ -98,7 +99,12 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
         }
       >
         <Graphin
-          style={{ width: '322px', height: '300px', minHeight: '300px' }}
+          style={{
+            width: '300px',
+            height: '300px',
+            minHeight: '300px',
+            background: 'var(--background-color)',
+          }}
           data={schemaGraph}
           fitView
           layout={{ type: 'graphin-force', animation: false }}

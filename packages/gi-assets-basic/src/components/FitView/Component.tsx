@@ -1,5 +1,5 @@
-import type { IGIAC } from '@alipay/graphinsight';
-import { extra } from '@alipay/graphinsight';
+import type { IGIAC } from '@antv/gi-sdk';
+import { extra } from '@antv/gi-sdk';
 import { GraphinContext } from '@antv/graphin';
 import * as React from 'react';
 const { GIAComponent } = extra;

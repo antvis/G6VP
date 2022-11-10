@@ -1,10 +1,10 @@
-import type { GIAssets } from '@alipay/graphinsight';
-import { useContext } from '@alipay/graphinsight';
+import type { GIAssets } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
+import { BottomContainer, LeftContainer, RightContainer, TopContainer } from './Containers';
 import useComponents from './useComponents';
-import { LeftContainer, BottomContainer, RightContainer, TopContainer } from './Containers';
 
 export interface FreeLayoutProps {
   GI_CONTAINER_LEFT: string[];
@@ -49,7 +49,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     leftDisplay,
     rightDisplay,
     bottomDisplay,
-    topDisplay
+    topDisplay,
   } = props;
 
   const [state, updateState] = useImmer<IState>({
@@ -101,16 +101,24 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     graphinContainer.style.position = 'absolute';
     graphinContainer.style.left = left;
     graphinContainer.style.right = right;
+
     graphinContainer.style.width = `calc(100% - ${left} - ${right})`;
     graphinContainer.style.height = `calc(100% - ${bottom})`;
 
-    const clientWidth = graphinContainer.clientWidth;
-    const clientHeight = graphinContainer.clientHeight;
-    const canvas = graph.get('canvas');
-    if (canvas) {
-      canvas.changeSize(clientWidth, clientHeight);
-      graph.autoPaint();
-    }
+    const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
+
+    const clientWidth = container.clientWidth;
+    const clientHeight = container.clientHeight;
+    try {
+      const width = clientWidth - (Number(left.split('px')[0]) + Number(right.split('px')[0]));
+      const height = clientHeight - Number(bottom.split('px')[0]);
+      const canvas = graph.get('canvas');
+      if (canvas) {
+        canvas.changeSize(width, height);
+        graph.autoPaint();
+        graph.fitView();
+      }
+    } catch (error) {}
   }, [
     leftDisplay,
     state.leftVisible,
@@ -137,6 +145,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
       const clientWidth = graphinContainer.clientWidth;
       const clientHeight = graphinContainer.clientHeight;
       const canvas = graph.get('canvas');
+
       if (canvas) {
         canvas.changeSize(clientWidth, clientHeight);
         graph.autoPaint();

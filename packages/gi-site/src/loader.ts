@@ -1,9 +1,9 @@
-import * as GI_ASSETS_ADVANCE from '@alipay/gi-assets-advance';
-import * as GI_ASSETS_ALGORITHM from '@alipay/gi-assets-algorithm';
+import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
+import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
 // import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
-import * as GI_ASSETS_BASIC from '@alipay/gi-assets-basic';
-import * as GI_ASSETS_GS_STANDALONE from '@alipay/gi-assets-gs-standalone';
-import * as GI_ASSETS_SCENE from '@alipay/gi-assets-scene';
+import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
+import * as GI_ASSETS_GS_STANDALONE from '@antv/gi-assets-gs-standalone';
+import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 
 import { IS_LOCAL_ENV } from './services/const';
 
