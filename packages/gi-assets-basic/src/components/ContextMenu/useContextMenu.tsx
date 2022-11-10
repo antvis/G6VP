@@ -3,7 +3,7 @@ import { IG6GraphEvent } from '@antv/graphin';
 import React, { useEffect } from 'react';
 
 export interface ContextMenuProps {
-  bindType?: 'node' | 'edge' | 'canvas';
+  bindTypes?: ('node' | 'edge' | 'canvas' | 'combo')[];
   container: React.RefObject<HTMLDivElement>;
 }
 
@@ -20,7 +20,7 @@ export interface State {
 }
 
 const useContextMenu = (props: ContextMenuProps): any => {
-  const { bindType = 'node', container } = props;
+  const { bindTypes = ['node'], container } = props;
   const { graph } = useContext();
 
   const [state, setState] = React.useState<State>({
@@ -60,7 +60,7 @@ const useContextMenu = (props: ContextMenuProps): any => {
       y = e.canvasY - bbox.height - offsetY + graphTop;
     }
 
-    if (bindType === 'node') {
+    if (e.item?.getType?.() === 'node') {
       // 如果是节点，则x，y指定到节点的中心点
       // eslint-disable-next-line no-underscore-dangle
       const { x: PointX, y: PointY } = (e.item && e.item.getModel()) as { x: number; y: number };
@@ -107,23 +107,27 @@ const useContextMenu = (props: ContextMenuProps): any => {
       });
     };
     // @ts-ignore
-    graph.on(`${bindType}:contextmenu`, handleShow);
+    bindTypes.forEach(bindType => {
+      graph.on(`${bindType}:contextmenu`, handleShow);
+    });
     graph.on('canvas:click', handleClose);
     graph.on('canvas:drag', handleClose);
     graph.on('wheelzoom', handleClose);
-    if (bindType === 'canvas') {
+    if (bindTypes.includes('canvas')) {
       //@ts-ignore
       graph.on('nodeselectchange', handleSaveAllItem);
     }
 
     return () => {
-      graph.off(`${bindType}:contextmenu`, handleShow);
+      bindTypes.forEach(bindType => {
+        graph.off(`${bindType}:contextmenu`, handleShow);
+      });
       graph.off('canvas:click', handleClose);
       graph.off('canvas:drag', handleClose);
       graph.off('wheelzoom', handleClose);
       graph.off('nodeselectchange', handleSaveAllItem);
     };
-  }, [graph, bindType]);
+  }, [graph, bindTypes]);
   const { x, y, visible, item, selectedItems } = state;
 
   return {

@@ -48,7 +48,8 @@
     "react-force-graph-3d": "^1.21.10",
     "react-spring": "^9.3.2",
     "three": "^0.135.0",
-    "use-immer": "^0.6.0"
+    "use-immer": "^0.6.0",
+    "insert-css": "^2.0.0"
   },
   "peerDependencies": {
     "@antv/graphin": "2.x",
