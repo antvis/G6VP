@@ -1,5 +1,5 @@
-import { extra, GIConfig } from '@alipay/graphinsight';
-import { IGIAC } from '@alipay/graphinsight/lib/components/const';
+import { extra, GIConfig } from '@antv/gi-sdk';
+import { IGIAC } from '@antv/gi-sdk/lib/components/const';
 import * as React from 'react';
 import Toolbar from '../../CommonCmponents/Toolbar';
 import { getToolbarStyleByConfig } from '../../utils';

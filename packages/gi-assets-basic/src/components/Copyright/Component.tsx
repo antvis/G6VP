@@ -1,6 +1,6 @@
+import { utils } from '@antv/gi-sdk';
 import React from 'react';
 import './index.less';
-import { utils } from '@alipay/graphinsight';
 const { getPositionStyles } = utils;
 
 export interface CopyrightProps {
@@ -12,7 +12,7 @@ export interface CopyrightProps {
 }
 
 const Copyright: React.FunctionComponent<CopyrightProps> = props => {
-  const { imageUrl, width, height, placement, offset} = props;
+  const { imageUrl, width, height, placement, offset } = props;
   const positionStyles = getPositionStyles(placement, offset);
 
   return (

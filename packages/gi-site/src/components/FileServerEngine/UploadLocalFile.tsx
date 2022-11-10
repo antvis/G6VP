@@ -1,5 +1,5 @@
-import { utils } from '@alipay/graphinsight';
 import { DeleteOutlined, FileTextOutlined } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
 import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
 import { Alert, Button, message, Row, Upload } from 'antd';
 import React, { useState } from 'react';

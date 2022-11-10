@@ -4,7 +4,7 @@ export const isDev = process.env.NODE_ENV === 'development';
 const localDeps = isDev
   ? {}
   : {
-      '@alipay/graphinsight': 'GISDK',
+      '@antv/gi-sdk': 'GISDK',
     };
 
 const localScripts = isDev ? [] : ['https://gw.alipayobjects.com/os/lib/alipay/graphinsight/1.2.1/dist/index.min.js'];

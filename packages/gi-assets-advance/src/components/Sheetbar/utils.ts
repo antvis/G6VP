@@ -14,9 +14,9 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
         right: '0px',
         height: `${height + 1}px`,
         lineHeight: `${height + 1}px`,
-        background: '#fff',
+        background: `var(--background-color)`,
         zIndex: 300,
-        borderBottom: '1px solid #ddd',
+        borderBottom: `1px solid var(--border-color)`,
       },
     };
   }
@@ -35,9 +35,9 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
       right: '0px',
       height: `${height + 1}px`,
       lineHeight: `${height + 1}px`,
-      background: '#fff',
+      background: `var(--background-color)`,
       zIndex: 300,
-      borderTop: '1px solid #ddd',
+      borderTop: `1px solid var(--border-color)`,
     },
   };
 };

@@ -1,9 +1,8 @@
-import { useContext } from '@alipay/graphinsight';
+import type { IGIAC } from '@antv/gi-sdk';
+import { extra, useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import type { IGIAC } from '@alipay/graphinsight';
-import { extra } from '@alipay/graphinsight';
 const { GIAComponent } = extra;
 const { BrushSelect, DragCanvas } = Behaviors;
 

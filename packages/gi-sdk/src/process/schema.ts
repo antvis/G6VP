@@ -197,7 +197,10 @@ const defaultEdgeConfig = {
   groupName: `默认样式`,
 };
 
-export const generatorStyleConfigBySchema = (schema: GraphSchemaData, config: GIConfig = {}): GIConfig => {
+export const generatorStyleConfigBySchema = (
+  schema: GraphSchemaData,
+  config: Partial<GIConfig> = {},
+): Partial<GIConfig> => {
   const { nodes, edges, meta = { defaultLabelField: 'id' } } = schema;
   const { defaultLabelField } = meta;
 

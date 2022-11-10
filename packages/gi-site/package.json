@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-site",
-  "version": "2.6.0",
+  "name": "@antv/gi-site",
+  "version": "1.0.0-beta.0",
   "description": "GraphInsight Site",
   "license": "MIT",
   "author": "AntV",
@@ -16,13 +16,14 @@
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "dependencies": {
-    "@alipay/gi-assets-advance": "workspace:*",
-    "@alipay/gi-assets-algorithm": "workspace:*",
-    "@alipay/gi-assets-basic": "workspace:*",
-    "@alipay/gi-assets-gs-standalone": "workspace:*",
-    "@alipay/gi-assets-scene": "workspace:*",
-    "@alipay/gi-common-components": "workspace:*",
-    "@alipay/graphinsight": "workspace:*",
+    "@antv/gi-theme-antd": "workspace:*",
+    "@antv/gi-assets-advance": "workspace:*",
+    "@antv/gi-assets-algorithm": "workspace:*",
+    "@antv/gi-assets-basic": "workspace:*",
+    "@antv/gi-assets-gs": "workspace:*",
+    "@antv/gi-assets-scene": "workspace:*",
+    "@antv/gi-common-components": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@alipay/tech-ui": "^2.12.1",
     "@alipay/theme-tools": "^0.2.1",
     "@ant-design/charts": "^1.0.21",
@@ -71,6 +72,6 @@
     "react-dom": "17.x"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

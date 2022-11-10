@@ -35,17 +35,12 @@ export interface TestSDKProps {
     info: {
       id: string;
       name: string;
-      type: "GI_CONTAINER" | "GI_CONTAINER_INDEX";
+      type: 'GI_CONTAINER' | 'GI_CONTAINER_INDEX';
     };
-    registerMeta: (context: {
-      data: any;
-      services: any[];
-      GI_CONTAINER_INDEXS: string[];
-      keys: string[];
-    }) => any;
+    registerMeta: (context: { data: any; services: any[]; GI_CONTAINER_INDEXS: string[]; keys: string[] }) => any;
   };
   /** Component 组件类型 */
-  type?: "GICC" | "GICC_MENU" | "GIAC" | "GIAC_CONTENT" | "GIAC_MENU";
+  type?: 'GICC' | 'GICC_MENU' | 'GIAC' | 'GIAC_CONTENT' | 'GIAC_MENU';
   /** 自定义数据服务 */
   services: {
     id: string;
@@ -70,7 +65,7 @@ export interface TestSDKProps {
 
 ```bash
 npm run build  // 本地执行产生es/ lib/ dist/ 文件
-tnpm publish // 使用tnpm发布到内部npm仓库，如果第一次发布，需要tnpm login 登陆
+npm publish --tag beta // 使用tnpm发布到内部npm仓库，如果第一次发布，需要tnpm login 登陆
 ```
 
 ### 3.2 CDN 同步

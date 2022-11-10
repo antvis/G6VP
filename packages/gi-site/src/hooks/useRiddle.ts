@@ -57,7 +57,7 @@ export default opts => {
           "name": "riddle",
           "dependencies": {
            "@alipay/gi-assets": "^0.3.x",
-            "@alipay/graphinsight": "^0.3.x",
+            "@antv/gi-sdk": "^0.3.x",
             "@antv/graphin": "^2.x",
             "react":"17.x",
             "react-dom":"17.x"

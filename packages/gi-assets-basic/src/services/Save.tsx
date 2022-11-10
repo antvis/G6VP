@@ -1,4 +1,4 @@
-import { GIConfig, GraphSchemaData } from '@alipay/graphinsight';
+import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 
 export interface SaveReqParams {

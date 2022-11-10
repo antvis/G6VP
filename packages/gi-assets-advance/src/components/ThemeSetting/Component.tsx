@@ -1,5 +1,5 @@
-import { useContext } from '@alipay/graphinsight';
 import { MoreOutlined } from '@ant-design/icons';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Card, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';

@@ -1,6 +1,6 @@
-import { utils } from '@alipay/graphinsight';
+import type { GIElementsAssets, GraphSchemaData } from '@antv/gi-sdk';
+import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import type { GIElementsAssets, GraphSchemaData } from '@alipay/graphinsight';
 import type { TypeAssetInfo } from './typing';
 
 const { uniqueElementsBy } = utils;

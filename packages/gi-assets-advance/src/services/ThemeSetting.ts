@@ -1,4 +1,4 @@
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 import type { ITheme } from '../components/ThemeSetting/typing';
 export const AddTheme = {
   name: '添加主题',

@@ -3,7 +3,7 @@
 注意 ⚠️：启动该资产，数据结构有一个要求：数据中`latitude`和`longitude`属性必须存在，并且必须是数字。
 
 ```jsx
-import TestSDK, { Mock } from '@alipay/gi-assets-testing';
+import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
 import Asset from './index.tsx';
 

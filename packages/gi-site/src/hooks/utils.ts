@@ -37,7 +37,7 @@ export const getRiddleAppCode = opts => {
   const serviceConfigStr = beautifyCode(JSON.stringify(serviceConfig));
 
   return `
-  import GISDK from '@alipay/graphinsight';
+  import GISDK from '@antv/gi-sdk';
   import ASSETS from '@alipay/gi-assets';
   import Graphin from '@antv/graphin';
  

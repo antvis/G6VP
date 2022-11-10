@@ -1,5 +1,5 @@
 /** export  */
-const version = '2.23.0';
+const version = '1.0.0-beta.2';
 import {
   deepClone,
   GIAC_CONTENT_METAS,
@@ -55,6 +55,6 @@ const extra = {
   GIAComponent,
 };
 
-console.log(`%c 🎉 GI_VERSION:${version}`, 'color:#3e5dff');
+console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 
 export default GISDK;

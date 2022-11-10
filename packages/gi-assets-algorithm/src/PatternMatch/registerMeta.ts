@@ -1,19 +1,19 @@
-import { extra } from "@alipay/graphinsight";
+import { extra } from '@antv/gi-sdk';
 import { CSSProperties } from 'react';
-import info from "./info";
+import info from './info';
 
 export const SPLITOR = '|SPLITOR|';
 
 export enum ITEM_STATE {
-  Active = "active",
-  Default = "default",
-  Selected = "selected",
-  Disable = "disable",
-  Highlight = "highlight",
-  Inactive = "inactive",
+  Active = 'active',
+  Default = 'default',
+  Selected = 'selected',
+  Disable = 'disable',
+  Highlight = 'highlight',
+  Inactive = 'inactive',
 }
 export interface PropertyContentProps {
-  type: "node" | "edge";
+  type: 'node' | 'edge';
   visible: boolean;
   form;
   properties: string[];
@@ -23,15 +23,15 @@ export interface PatternMatchProps {
   IconWrapper: React.FC;
   visible: boolean;
   disabled?: boolean;
-  style?: CSSProperties,
+  style?: CSSProperties;
   setDisabledTools?: (toolKeys: string[]) => void;
   onClose?: () => void;
   onOpen?: () => void;
   options?: {
     exportButton?: {
-      text: string,
-      style: CSSProperties,
-    },
+      text: string;
+      style: CSSProperties;
+    };
     // 模式匹配算法应用时的回调
     onApply?: (params: object) => void;
     // 开启/关闭配置面板时的回调

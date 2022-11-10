@@ -1,5 +1,5 @@
-import { Icon } from '@alipay/graphinsight';
 import { CheckCard } from '@alipay/tech-ui';
+import { Icon } from '@antv/gi-sdk';
 import { Avatar, Tag } from 'antd';
 import * as React from 'react';
 
@@ -21,7 +21,7 @@ const COLOR_MAP = {
 
 const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
   const { name: AssetName, version, icon = 'icon-robot', desc, id: AssetId } = props;
-  const pkg = props.pkg?.replace('@alipay/gi-assets-', '') || '';
+  const pkg = props.pkg?.replace('@antv/gi-assets-', '') || '';
 
   return (
     <div>
@@ -34,6 +34,7 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
               width: '230px',
               display: 'flex',
               justifyContent: 'space-between',
+              color: 'var(--text-color)',
             }}
           >
             {AssetName}
@@ -50,7 +51,12 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
         }
         avatar={
           <Avatar
-            style={{ backgroundColor: '#EAEEFC', color: '#3056E3', fontSize: '34px' }}
+            style={{
+              //  backgroundColor: '#EAEEFC',
+              background: 'var(--primary-color-opacity-1)',
+              color: '#3056E3',
+              fontSize: '34px',
+            }}
             icon={<Icon type={icon} />}
             size={50}
           ></Avatar>

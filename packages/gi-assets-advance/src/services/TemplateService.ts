@@ -2,7 +2,7 @@ export interface ServiceObject {
   name: string;
   service: (params: any) => Promise<{}>;
 }
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 
 const DEFAULT_LANGUAGE_TEMPLATE = [
   {
@@ -34,9 +34,7 @@ export const PublishTemplate: ServiceObject = {
       ...gremlin_template,
       {
         ...params,
-        templateId: Math.random()
-          .toString(36)
-          .slice(3),
+        templateId: Math.random().toString(36).slice(3),
       },
     ];
 

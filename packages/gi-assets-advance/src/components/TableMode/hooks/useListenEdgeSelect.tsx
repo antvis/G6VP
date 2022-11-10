@@ -1,8 +1,8 @@
-import React from 'react';
 import { IEdge, INode } from '@antv/g6';
 import { S2Event, SpreadSheet } from '@antv/s2';
+import React from 'react';
 
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet | null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {
@@ -13,7 +13,7 @@ const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet 
       }
 
       const cells = s2Instance.interaction.getCells();
-      console.log("cells:", cells)
+      console.log('cells:', cells);
 
       // if (cells.length === 0) {
       //   graphData.nodes.forEach(node => {

@@ -1,5 +1,5 @@
-import { extra } from '@alipay/graphinsight';
-import type { GIAComponentProps } from '@alipay/graphinsight/lib/components/GIAC';
+import { extra } from '@antv/gi-sdk';
+import type { GIAComponentProps } from '@antv/gi-sdk/lib/components/GIAC';
 import * as React from 'react';
 import ForceGraph from './ForceGraph';
 const { GIAComponent } = extra;

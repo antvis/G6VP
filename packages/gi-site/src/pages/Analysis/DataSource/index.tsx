@@ -1,4 +1,4 @@
-import { Icon, utils } from '@alipay/graphinsight';
+import { Icon, utils } from '@antv/gi-sdk';
 import { Drawer, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../../components/FileServerEngine';

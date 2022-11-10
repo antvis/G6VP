@@ -58,6 +58,7 @@ const initialState: StateType = {
     nodes: [],
     edges: [],
   },
+  themes: [],
 };
 
 const useModel: () => [StateType, Updater<StateType>] = () => {

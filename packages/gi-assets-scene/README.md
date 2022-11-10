@@ -67,7 +67,7 @@ export interface TestSDKProps {
 
 ```bash
 npm run build  // 本地执行产生es/ lib/ dist/ 文件
-tnpm publish // 使用tnpm发布到内部npm仓库，如果第一次发布，需要tnpm login 登陆
+npm publish --tag beta // 使用tnpm发布到内部npm仓库，如果第一次发布，需要tnpm login 登陆
 ```
 
 ### 3.2 CDN 同步

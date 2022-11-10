@@ -1,8 +1,8 @@
-import React from 'react';
-import { Card, Button, Image } from 'antd';
-import { useSpring, animated } from 'react-spring';
 import { DeleteOutlined, ZoomInOutlined } from '@ant-design/icons';
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
+import { Button, Card } from 'antd';
+import React from 'react';
+import { animated, useSpring } from 'react-spring';
 import { IHistoryObj } from './typing';
 
 export interface ISnapShotProps {

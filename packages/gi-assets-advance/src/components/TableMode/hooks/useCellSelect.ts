@@ -1,7 +1,7 @@
 import { S2Event, SpreadSheet } from '@antv/s2';
 import React from 'react';
 
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { highlightBySelectedEdges, highlightBySelectedNodes } from '../utils/highlight';
 
 const useCellSelect = (

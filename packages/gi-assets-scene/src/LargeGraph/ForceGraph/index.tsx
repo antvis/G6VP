@@ -1,5 +1,5 @@
 import ForceGraph3D, { ForceGraph3DInstance } from '3d-force-graph';
-import { extra, IGIAC, useContext, utils } from '@alipay/graphinsight';
+import { extra, IGIAC, useContext, utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';

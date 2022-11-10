@@ -1,4 +1,4 @@
-import { Icon } from '@alipay/graphinsight';
+import { Icon } from '@antv/gi-sdk';
 import { Select } from 'antd';
 import * as React from 'react';
 import './index.less';

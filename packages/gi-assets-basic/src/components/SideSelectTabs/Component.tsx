@@ -1,11 +1,11 @@
-import { GIAssets, GIComponentConfig } from "@alipay/graphinsight";
-import { CaretDownOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { Select, Tooltip } from "antd";
-import * as React from "react";
-import ReactDOM from "react-dom";
-import { useImmer } from "use-immer";
-import QueryContainer from "./QueryContainer";
-import "./index.less";
+import { CaretDownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { GIAssets, GIComponentConfig } from '@antv/gi-sdk';
+import { Select, Tooltip } from 'antd';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import { useImmer } from 'use-immer';
+import './index.less';
+import QueryContainer from './QueryContainer';
 
 export interface SideTabsProps {
   GI_CONTAINER: string[];
@@ -15,36 +15,26 @@ export interface SideTabsProps {
    * 是否在画布的外围
    */
   outSideFromCanvas: boolean;
-  flexDirection: "row" | "column";
+  flexDirection: 'row' | 'column';
   GISDK_ID: string;
-  placement: "LT" | "LB" | "RT" | "RB";
+  placement: 'LT' | 'LB' | 'RT' | 'RB';
   offset: number[];
   width: string;
   height: string;
   defaultVisible: boolean;
 }
 
-const SideTabs: React.FunctionComponent<SideTabsProps> = (props) => {
-  const {
-    components,
-    assets,
-    placement,
-    offset,
-    width,
-    height,
-    defaultVisible,
-    outSideFromCanvas,
-    GISDK_ID
-  } = props;
-  
+const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
+  const { components, assets, placement, offset, width, height, defaultVisible, outSideFromCanvas, GISDK_ID } = props;
+
   const sortedComponents = React.useMemo(() => {
     return components
       .sort((a, b) => (a.props?.GI_CONTAINER_INDEX || 0) - (b.props?.GI_CONTAINER_INDEX || 0))
-      .filter((item) => item && item.props && item.props.GIAC_CONTENT);
+      .filter(item => item && item.props && item.props.GIAC_CONTENT);
   }, [components]);
 
   const componentOptions = React.useMemo(() => {
-    return sortedComponents.map((cp) => {
+    return sortedComponents.map(cp => {
       const asset = assets[cp.id];
       const cpInfo = asset?.info;
       if (cpInfo) {
@@ -53,23 +43,23 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = (props) => {
           label: cpInfo.name,
           value: cpInfo.id,
           Cp: asset.component,
-          cpProps: cp.props
+          cpProps: cp.props,
         };
       }
     });
   }, [sortedComponents]);
 
   const [state, setState] = useImmer<{ currentCp: any }>({
-    currentCp: componentOptions[0] || {}
+    currentCp: componentOptions[0] || {},
   });
 
   React.useEffect(() => {
     if (componentOptions.length > 0) {
-      setState((draft) => {
+      setState(draft => {
         draft.currentCp = componentOptions[0];
       });
     }
-  }, [componentOptions.length])
+  }, [componentOptions.length]);
 
   if (!componentOptions.length) {
     return null;
@@ -79,17 +69,17 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = (props) => {
   const { cpProps, Cp } = currentCp;
 
   if (!Cp) {
-    return null
+    return null;
   }
 
   const onContentChange = (value: any, option: any) => {
-    setState((draft) => {
+    setState(draft => {
       draft.currentCp = option;
     });
   };
   const Content = (
-    <div className='content'>
-      <div className='content-title'>
+    <div className="content">
+      <div className="content-title">
         <Select
           options={componentOptions}
           onChange={onContentChange}
@@ -98,11 +88,11 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = (props) => {
           style={{ width: 200 }}
           suffixIcon={<CaretDownOutlined />}
         />
-        <Tooltip title={currentCp.desc} placement='right'>
+        <Tooltip title={currentCp.desc} placement="right">
           <QuestionCircleOutlined />
         </Tooltip>
       </div>
-      <div className='content-detail'>
+      <div className="content-detail">
         <Cp {...cpProps} />
       </div>
     </div>
@@ -115,21 +105,17 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = (props) => {
         height={height}
         defaultVisible={defaultVisible}
         placement={placement}
-        offset={offset}>
+        offset={offset}
+      >
         {Content}
       </QueryContainer>
     );
   }
   return ReactDOM.createPortal(
-    <QueryContainer
-      width={width}
-      height={height}
-      defaultVisible={defaultVisible}
-      placement={placement}
-      offset={offset}>
+    <QueryContainer width={width} height={height} defaultVisible={defaultVisible} placement={placement} offset={offset}>
       {Content}
     </QueryContainer>,
-    document.getElementById(`${GISDK_ID}-container`) as HTMLElement
+    document.getElementById(`${GISDK_ID}-container`) as HTMLElement,
   );
 };
 

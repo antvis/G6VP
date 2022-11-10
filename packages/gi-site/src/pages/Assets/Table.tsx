@@ -34,7 +34,7 @@ const PackageTable = ({ data }) => {
     {
       title: '操作',
       render: record => {
-        const disabled = record.name === '@alipay/gi-assets-basic';
+        const disabled = record.name === '@antv/gi-assets-basic';
         if (disabled) {
           return null;
         }

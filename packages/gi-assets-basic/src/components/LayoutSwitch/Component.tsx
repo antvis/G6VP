@@ -1,7 +1,7 @@
+import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
+import { extra, Icon, useContext, utils } from '@antv/gi-sdk';
+import { Card, Popover, Radio, Space } from 'antd';
 import React, { useMemo } from 'react';
-import { Popover, Card, Radio, Space } from 'antd';
-import { useContext, utils, extra, Icon } from '@alipay/graphinsight';
-import type { IGIAC, GILayoutConfig } from '@alipay/graphinsight';
 const { GIAComponent } = extra;
 
 export interface LayoutSwitchProps {
@@ -35,7 +35,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
           } = layout;
           const keys = utils.getKeysByData(data, 'node');
           // @ts-ignore
-          const { id, name, options = {}, icon = "" } = info;
+          const { id, name, options = {}, icon = '' } = info;
           const configObj = registerMeta({ data, keys, schemaData });
           /** 默认的配置值 */
           const defaultProps = utils.getDefaultValues({ type: 'object', properties: configObj });
@@ -48,7 +48,8 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
           };
           return (
             <Radio value={id} onClick={() => handleClick(layoutConfig)}>
-              <Icon type={icon}/>{name}
+              <Icon type={icon} />
+              {name}
             </Radio>
           );
         })}

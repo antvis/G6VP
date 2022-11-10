@@ -1,4 +1,4 @@
-import { extra } from '@alipay/graphinsight';
+import { extra } from '@antv/gi-sdk';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 //@ts-ignore

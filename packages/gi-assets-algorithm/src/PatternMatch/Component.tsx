@@ -2,9 +2,9 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { useContext } from '@alipay/graphinsight';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
+import { useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
 import { cloneDeep } from 'lodash';

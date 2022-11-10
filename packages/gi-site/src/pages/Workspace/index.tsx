@@ -115,7 +115,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
         <Tabs
           tabPosition="left"
           style={{
-            background: '#fff',
+            background: 'var(--background-color)',
             height: '100%',
             padding: '24px 0px',
             paddingRight: '24px',

@@ -1,4 +1,4 @@
-import { useContext, utils } from '@alipay/graphinsight';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Form, Input, notification } from 'antd';
 import React from 'react';
 

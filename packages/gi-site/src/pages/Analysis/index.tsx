@@ -1,5 +1,5 @@
-import type { GISiteParams } from '@alipay/graphinsight';
-import GISDK, { useContext as useGIContext, utils } from '@alipay/graphinsight';
+import type { GISiteParams } from '@antv/gi-sdk';
+import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import { original } from 'immer';
 import React, { useRef } from 'react';
@@ -79,7 +79,7 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId, engineContext } =
+      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId, engineContext, themes } =
         (await getProjectById(projectId)) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
@@ -111,6 +111,7 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.serviceConfig = serviceConfig; //自定义服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
+        draft.themes = themes;
       });
     })();
     // 当项目ID变化，或者强制重新刷新的时候运行
@@ -143,6 +144,7 @@ const Analysis = props => {
           });
 
           const configComponents = activeAssetsInformation.components.map(c => {
+            //@ts-ignore
             const defaultValues = c.props;
             //@ts-ignore
             const cfgComponents = draft.config.components.find(d => d.id === c.id);

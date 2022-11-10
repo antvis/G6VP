@@ -12,7 +12,7 @@ export interface GraphData {
     data: {};
   }[];
 }
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 const {
   // getServerEngineContext,
   generatorSchemaByGraphData,

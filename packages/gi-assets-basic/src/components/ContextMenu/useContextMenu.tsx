@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import { IG6GraphEvent } from '@antv/graphin';
 import React, { useEffect } from 'react';
 

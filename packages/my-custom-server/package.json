@@ -9,6 +9,11 @@
     "*.css",
     "*.less"
   ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
@@ -21,10 +26,10 @@
     "server": "http-server ./dist -p 9527"
   },
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   },
   "dependencies": {
-    "@alipay/graphinsight": "workspace:*"
+    "@antv/gi-sdk": "workspace:*"
   },
   "devDependencies": {
     "http-server": "^14.1.1"

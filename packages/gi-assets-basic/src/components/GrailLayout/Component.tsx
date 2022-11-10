@@ -1,5 +1,5 @@
-import type { GIAssets } from '@alipay/graphinsight';
-import { useContext } from '@alipay/graphinsight';
+import type { GIAssets } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
@@ -116,6 +116,7 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
       if (canvas) {
         canvas.changeSize(width, height);
         graph.autoPaint();
+        graph.fitView();
       }
     } catch (error) {}
   }, [

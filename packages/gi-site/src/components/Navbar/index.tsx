@@ -8,6 +8,7 @@ import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { addProject, getProjectById, updateProjectById } from '../../services';
 import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
+import useTheme from '../ThemeVars/useTheme';
 import Tour from '../Tour';
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
@@ -50,6 +51,8 @@ const Navbar = ({
 
   const { context, updateContext } = useContext();
   const { config, serviceConfig, activeAssetsKeys } = context;
+  // 主题切换Hook
+  const { changeTheme } = useTheme(context, updateContext);
 
   const handleOutClose = () => {
     updateState(draft => {
@@ -145,15 +148,6 @@ const Navbar = ({
     document.body.removeChild(elementA);
   };
 
-  React.useEffect(() => {
-    (async () => {
-      const project = await getProjectById(projectId);
-      updateState(draft => {
-        draft.initProject = project;
-      });
-    })();
-  }, []);
-  //@ts-ignore
   const { name } = state.initProject;
   const rightContent = (
     <>
@@ -183,7 +177,7 @@ const Navbar = ({
     </>
   );
   return (
-    <BaseNavbar rightContent={rightContent} leftContent={<></>}>
+    <BaseNavbar rightContent={rightContent} leftContent={<></>} onChangeTheme={changeTheme}>
       <ProjectTitle name={name} projectId={projectId} />
       <Drawer
         title="导出SDK"

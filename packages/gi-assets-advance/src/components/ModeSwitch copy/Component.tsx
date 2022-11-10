@@ -1,8 +1,8 @@
-import { GIComponentAssets, GIComponentConfig, utils } from '@alipay/graphinsight';
+import { GIComponentAssets, GIComponentConfig } from '@antv/gi-sdk';
 import { Segmented } from 'antd';
-import { useImmer } from 'use-immer';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import { useImmer } from 'use-immer';
 import type { ContainerProps } from './typing';
 
 export interface ModeSwitchProps extends ContainerProps {

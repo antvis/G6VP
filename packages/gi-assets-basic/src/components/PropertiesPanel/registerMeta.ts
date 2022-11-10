@@ -1,4 +1,4 @@
-import { utils } from '@alipay/graphinsight';
+import { utils } from '@antv/gi-sdk';
 import info from './info';
 
 const registerMeta = context => {

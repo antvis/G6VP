@@ -1,4 +1,4 @@
-import type { GIEdgeConfig } from '@alipay/graphinsight/lib/typing';
+import type { GIEdgeConfig } from '@antv/gi-sdk/lib/typing';
 import { Utils } from '@antv/graphin';
 import merge from 'deepmerge';
 

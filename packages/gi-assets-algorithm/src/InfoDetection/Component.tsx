@@ -1,6 +1,6 @@
-import { useContext } from '@alipay/graphinsight';
 import { detectAllCycles } from '@antv/algorithm';
 import { INode } from '@antv/g6';
+import { useContext } from '@antv/gi-sdk';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
 import React from 'react';

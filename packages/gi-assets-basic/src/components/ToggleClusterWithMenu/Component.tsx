@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import type { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import * as React from 'react';
@@ -61,7 +61,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
         const newData = filterGraphDataByNodes(source, hiddenNodeIds);
         updateContext(draft => {
           draft.data = newData;
-        })
+        });
       }
     }
     onClose();

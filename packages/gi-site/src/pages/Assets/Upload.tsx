@@ -46,7 +46,7 @@ const UploadAssets = () => {
             name="name"
             rules={[{ required: true, message: 'Please input your package name!' }]}
           >
-            <Input placeholder="@alipay/gi-assets-basic" />
+            <Input placeholder="@antv/gi-assets-basic" />
           </Form.Item>
           <Form.Item
             label="版本号"

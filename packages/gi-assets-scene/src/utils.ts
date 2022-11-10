@@ -1,4 +1,4 @@
-import { GIConfig, utils } from '@alipay/graphinsight';
+import { GIConfig, utils } from '@antv/gi-sdk';
 
 export const getToolbarStyleByConfig = (config: GIConfig) => {
   //@ts-ignore

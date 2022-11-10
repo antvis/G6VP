@@ -1,4 +1,4 @@
-import { extra, IGIAC, useContext } from '@alipay/graphinsight';
+import { extra, IGIAC, useContext } from '@antv/gi-sdk';
 import { message } from 'antd';
 import * as React from 'react';
 

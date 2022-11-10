@@ -34,16 +34,17 @@
   width: 50px;
   height: 100%;
   color: var(--primary-text-color);
-  box-shadow: 1px 0px 8px 1px #ddd;
+  box-shadow: var(--box-shadow-right);
 }
 .gi-analysis-conf {
+  z-index: 8;
   flex-basis: 345px;
   flex-shrink: 0;
   width: 345px;
   // overflow: scroll;
-  background: var(--component-background);
-  border-right: 1px solid #ddd;
-  box-shadow: 3px 1px 4px 0 rgb(0 21 41 / 12%);
+  background: var(--background-color);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--box-shadow-right);
   opacity: 1;
   transition: all 0.2s ease;
   &.collapse {

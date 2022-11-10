@@ -1,4 +1,4 @@
-import type { GIConfig } from '@alipay/graphinsight';
+import type { GIConfig } from '@antv/gi-sdk';
 /**
  *
  * @param
@@ -186,7 +186,7 @@ const baseComponentsConfig = [
     id: 'CanvasSetting',
     props: {
       styleCanvas: {
-        background: '#fff',
+        backgroundColor: '#fff',
         backgroundImage: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*k9t4QamMuQ4AAAAAAAAAAAAAARQnAQ',
       },
       dragCanvas: {
