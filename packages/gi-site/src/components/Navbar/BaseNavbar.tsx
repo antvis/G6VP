@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useUserInfo from '../../hooks/useUserInfo';
 // import ThemeSwitch from '../ThemeSwitch';
 import { Icon } from '@antv/gi-sdk';
-import { ThemeSwitch } from '@antv/gi-theme-antd';
+import ThemeSwitch from '@antv/gi-theme-antd';
 import ThemeVars from '../ThemeVars';
 
 import './index.less';
