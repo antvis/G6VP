@@ -339,6 +339,7 @@ const baseComponentsConfig = [
     id: 'ContextMenu',
     name: '右键菜单',
     props: {
+      GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
       nodeMenuComponents: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
     },
   },

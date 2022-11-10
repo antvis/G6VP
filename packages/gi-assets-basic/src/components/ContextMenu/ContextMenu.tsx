@@ -1,8 +1,8 @@
+import { Item } from '@antv/g6';
 import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import React, { useMemo } from 'react';
 import ContextMenu from './Container';
-import { Item } from '@antv/g6';
 
 // const { ContextMenu } = Components;
 
@@ -11,7 +11,7 @@ const defaultStyle = {
 };
 
 interface ContextMenuState {
-  item: Item | undefined
+  item: Item | undefined;
 }
 
 const ContextMenuContainer = props => {
@@ -22,17 +22,17 @@ const ContextMenuContainer = props => {
     nodeMenuComponents = [],
     edgeMenuComponents = [],
     canvasMenuComponents = [],
-    comboMenuComponents = []
+    comboMenuComponents = [],
   } = props;
 
   const [state, setState] = React.useState<ContextMenuState>({
-    item: undefined
+    item: undefined,
   });
 
   const sortedComponents = useMemo(() => {
     const itemType = state.item?.getType?.() || 'canvas';
     let componentIds = [];
-    switch(itemType) {
+    switch (itemType) {
       case 'edge':
         componentIds = edgeMenuComponents;
         break;
@@ -45,10 +45,13 @@ const ContextMenuContainer = props => {
       default:
         componentIds = nodeMenuComponents;
     }
-    const useComponents = componentIds.map(name => components.find(component => component.id === name)).filter(component => !!component)
+    console.log('components', components, componentIds);
+    const useComponents = componentIds
+      .map(name => components.find(component => component.id === name))
+      .filter(component => !!component);
     return useComponents.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
   }, [components, nodeMenuComponents, edgeMenuComponents, canvasMenuComponents, comboMenuComponents, state.item]);
-  
+
   return (
     //@ts-ignore
     <ContextMenu bindTypes={bindTypes} style={defaultStyle} setItem={item => setState({ item })}>
