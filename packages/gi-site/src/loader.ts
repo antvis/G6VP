@@ -1,8 +1,7 @@
 import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
 import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
-// import * as GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
-import * as GI_ASSETS_GS_STANDALONE from '@antv/gi-assets-gs-standalone';
+import * as GI_ASSETS_GS from '@antv/gi-assets-gs';
 import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 
 import { IS_LOCAL_ENV } from './services/const';
@@ -64,8 +63,8 @@ const LOCAL_ASSETS = [
   },
   /** 内置 GS 单机版 */
   {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS_STANDALONE'],
-    ...GI_ASSETS_GS_STANDALONE,
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS'],
+    ...GI_ASSETS_GS,
   },
 ];
 
