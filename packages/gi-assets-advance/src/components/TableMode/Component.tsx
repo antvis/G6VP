@@ -2,13 +2,14 @@ import { useContext } from '@alipay/graphinsight';
 import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { S2DataConfig } from '@antv/s2';
-import { SheetComponent } from '@antv/s2-react';
+import { SheetComponent, Switcher } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
 import { Button, Tabs, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { useFullScreen } from './hooks';
 import useCellSelect from './hooks/useCellSelect';
+import useSwitcher from './hooks/useSwitcher';
 import './index.less';
 import getColumns from './utils/getColumns';
 import getData from './utils/getData';
@@ -21,6 +22,11 @@ export interface IProps {
 }
 
 const { TabPane } = Tabs;
+const preS2Container = {
+  width: 0,
+  height: 0,
+};
+const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, style = {} } = props;
@@ -36,6 +42,7 @@ const TableMode: React.FC<IProps> = props => {
       autoResetSheetStyle: false,
     },
     tooltip: {},
+    refreshIndex: INTIAL_NUMBER,
   });
 
   const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable: any }>({
@@ -51,23 +58,43 @@ const TableMode: React.FC<IProps> = props => {
     isPostStart: false,
     postParmas: {},
   });
+
   const { isPostStart, postParmas } = state;
 
-  const NODES_FIELDS_COLUMNS = getColumns(schemaData, 'nodes');
-  const EDGES_FIELDS_COLUMNS = getColumns(schemaData, 'edges');
+  const NODES_FIELDS_COLUMNS = React.useMemo(() => {
+    return getColumns(schemaData, 'nodes');
+  }, [schemaData]);
+
+  const EDGES_FIELDS_COLUMNS = React.useMemo(() => {
+    return getColumns(schemaData, 'edges');
+  }, [schemaData]);
+
   const NODES_DATA = getData('nodes', { selectItems, largeGraphData, graphData });
   const EDGES_DATA = getData('edges', { selectItems, largeGraphData, graphData });
 
+  const {
+    fields: fields_NODES,
+    switcherFields: switcherFields_NODES,
+
+    onSwitch: onSwitch_NODES,
+  } = useSwitcher({
+    columns: NODES_FIELDS_COLUMNS,
+  });
+  const {
+    fields: fields_EDGES,
+    switcherFields: switcherFields_EDGES,
+
+    onSwitch: onSwitch_EDGES,
+  } = useSwitcher({
+    columns: EDGES_FIELDS_COLUMNS,
+  });
+
   const nodeDataCfg: S2DataConfig = {
-    fields: {
-      columns: NODES_FIELDS_COLUMNS,
-    },
+    fields: fields_NODES,
     data: NODES_DATA,
   }; //useNodeDataCfg();
   const edgeDataCfg: S2DataConfig = {
-    fields: {
-      columns: EDGES_FIELDS_COLUMNS,
-    },
+    fields: fields_EDGES,
     data: EDGES_DATA,
   }; //useEdgeDataCfg();
 
@@ -231,6 +258,7 @@ const TableMode: React.FC<IProps> = props => {
     </>
   );
 
+  console.log('RENDE>>>>>>>');
   useEffect(() => {
     updateOptions(draft => {
       draft.interaction!.enableCopy = enableCopy;
@@ -241,11 +269,30 @@ const TableMode: React.FC<IProps> = props => {
 
   useEffect(() => {
     // 避免全屏状态下 tooltip 不显示
-    updateOptions(draft => {
-      const tooltipContainer = document.getElementById('gi-table-mode') as HTMLDivElement;
-      draft.tooltip!.getContainer = () => tooltipContainer;
-    });
-  }, []);
+    const tooltipContainer = document.getElementById('gi-table-mode') as HTMLDivElement;
+    const width = tooltipContainer.clientWidth;
+    const height = tooltipContainer.clientHeight;
+    console.log(options.refreshIndex, width, height);
+    if (options.refreshIndex === INTIAL_NUMBER) {
+      updateOptions(draft => {
+        draft.tooltip!.getContainer = () => tooltipContainer;
+        if (width === 0 || height === 0) {
+          // 新开页签就有这个bug，找不到dom，先用这个方案解决
+          draft.refreshIndex = Math.random();
+        } else {
+          draft.width = width;
+          draft.height = height;
+          preS2Container.width = width;
+          preS2Container.height = height;
+        }
+      });
+    } else {
+      updateOptions(draft => {
+        draft.width = preS2Container.width;
+        draft.height = preS2Container.height;
+      });
+    }
+  }, [options.refreshIndex]);
   /* 
     todo：
     s2 copy 事件的触发对象是 body，所以必须监听事件必须绑定在在body及其父元素上才能触发
@@ -262,11 +309,22 @@ const TableMode: React.FC<IProps> = props => {
   //     element.removeEventListener('copy', copyListen);
   //   };
   // }, []);
-
+  const SwitcherTitle = (
+    <Button size="small" style={{ position: 'absolute', right: '77px', top: '-51px' }}>
+      自定义列
+    </Button>
+  );
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={style}>
       <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane centered>
         <TabPane tab="点表" key="node">
+          <Switcher
+            sheetType="table"
+            {...switcherFields_NODES}
+            onSubmit={onSwitch_NODES}
+            contentTitleText="自定义列"
+            title={SwitcherTitle}
+          />
           <SheetComponent
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {
@@ -274,13 +332,21 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
-            adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            adaptive={false}
+            // adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
             options={options}
             dataCfg={nodeDataCfg}
             sheetType="table"
           />
         </TabPane>
         <TabPane tab="边表" key="edge">
+          <Switcher
+            sheetType="table"
+            {...switcherFields_EDGES}
+            onSubmit={onSwitch_EDGES}
+            contentTitleText="自定义列"
+            title={SwitcherTitle}
+          />
           <SheetComponent
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {
@@ -288,7 +354,8 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
-            adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            // adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            adaptive={false}
             options={options}
             dataCfg={edgeDataCfg}
             sheetType="table"
