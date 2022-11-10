@@ -156,171 +156,6 @@ class Neo4jService extends Service {
   }
 
   /**
-   * 通过 Gremlin 语句查询
-   * @param gremlinSQL Gremlin 查询语句
-   */
-  async queryByGremlinLanguage(params) {
-    const { value, gremlinServer } = params;
-
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
-
-    const result = await clientInstance.submit(value);
-
-    const edgeItemsMapping = {};
-    const nodeItemsMapping = {};
-    for (const value of result) {
-      const { id, label, outV, inV, objects } = value;
-      const baseicInfo = this.generatorGraphData(value);
-
-      // Edge
-      if (outV && inV) {
-        // 存在 outV 及 inV，则说明是 Edge
-        edgeItemsMapping[id] = {
-          ...baseicInfo,
-          edgeType: label,
-          source: `${outV.id}`,
-          target: `${inV.id}`,
-        };
-
-        const { id: outVID, label: outLabel } = outV;
-        const { id: inVID, label: inLabel } = inV;
-        // Source
-        if (outVID) {
-          const edgeOutObj = this.generatorGraphData(outV);
-          nodeItemsMapping[outVID] = {
-            ...edgeOutObj,
-            nodeType: outLabel,
-          };
-        }
-
-        // Target
-        if (inVID) {
-          const edgeInObj = this.generatorGraphData(inV);
-          nodeItemsMapping[inVID] = {
-            ...edgeInObj,
-            nodeType: inLabel,
-          };
-        }
-      } else if (objects) {
-        // Path
-        objects.forEach(o => {
-          const { outV: pathOutV, inV: pathInV } = o;
-          // 点边基础的信息
-          const baseicObjInfo = this.generatorGraphData(o);
-          if (pathOutV && pathInV) {
-            // 边
-            edgeItemsMapping[id] = {
-              ...baseicObjInfo,
-              edgeType: label,
-              source: `${outV.id}`,
-              target: `${inV.id}`,
-            };
-
-            const { id: pathOutVID, label: pathOutLabel } = pathOutV;
-            const { id: pathInVID, label: pathInLabel } = pathInV;
-            // Source
-            if (pathOutVID) {
-              const outObj = this.generatorGraphData(pathOutV);
-              nodeItemsMapping[pathOutVID] = {
-                ...outObj,
-                nodeType: pathOutLabel,
-              };
-            }
-
-            // Target
-            if (pathInVID) {
-              const inObj = this.generatorGraphData(pathInV);
-              nodeItemsMapping[pathOutVID] = {
-                ...inObj,
-                nodeType: pathInLabel,
-              };
-            }
-          } else {
-            nodeItemsMapping[id] = {
-              ...baseicObjInfo,
-              nodeType: o.label,
-            };
-          }
-        });
-      } else {
-        // Node
-        nodeItemsMapping[id] = {
-          ...baseicInfo,
-          nodeType: label,
-        };
-      }
-    }
-
-    // 查询点的详情
-    const nodeIds = Object.keys(nodeItemsMapping);
-    const propertiesArr = await this.queryNodesProperties(clientInstance, nodeIds);
-
-    // 构造 { id: properties } 对象
-    for (let i = 0; i < nodeIds.length; i++) {
-      nodeItemsMapping[nodeIds[i]] = {
-        ...nodeItemsMapping[nodeIds[i]],
-        data: propertiesArr[i],
-      };
-    }
-
-    const nodes = [];
-    const edges = [];
-
-    // 将点边 map 转换成数组
-    for (const nodeKey in nodeItemsMapping) {
-      nodes.push(nodeItemsMapping[nodeKey]);
-    }
-
-    for (const edgeKey in edgeItemsMapping) {
-      // TODO：临时删掉边的ID
-      delete edgeItemsMapping[edgeKey].id;
-      edges.push(edgeItemsMapping[edgeKey]);
-    }
-
-    return {
-      success: true,
-      code: 200,
-      message: 'Gremlin 查询成功',
-      data: {
-        nodes,
-        edges,
-      },
-    };
-  }
-
-  /**
-   * 批量查询节点的属性
-   * @param gremlinClientInsance Gremlin 客户端实例
-   * @param nodeIds 节点ID数组
-   */
-  async queryNodesProperties(gremlinClientInsance, nodeIds) {
-    const propertiesArr = [];
-    if (!nodeIds || nodeIds.length === 0) {
-      return propertiesArr;
-    }
-
-    for (const id of nodeIds) {
-      const propertyGremlinSQL = `g.V(${id}).valueMap()`;
-      const propertiesResult = await gremlinClientInsance.submit(propertyGremlinSQL);
-
-      if (propertiesResult && propertiesResult.length === 1) {
-        for (const properties of propertiesResult) {
-          const entries = properties.entries();
-          const currentObj = {};
-          for (const current of entries) {
-            const [key, value] = current;
-            currentObj[key] = value.join(',');
-          }
-          propertiesArr.push(currentObj);
-        }
-      } else {
-        propertiesArr.push({});
-      }
-    }
-    return propertiesArr;
-  }
-
-  /**
    * 邻居查询
    * @param params
    */
@@ -332,14 +167,20 @@ class Neo4jService extends Service {
       str += '.both()';
     }
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
+    const readQuery = `MATCH (p:Person)
+                       WHERE p.name = 'Alice'
+                       RETURN p`;
 
-    const gremlinSQL = `g.V(${id.join(',')})${str}.bothE().limit(100)`;
-    const result = await clientInstance.submit(gremlinSQL);
+    const { value = readQuery } = params;
+    const session = Neo4jDriverInstanceClass.getSessionInstance(this.uri, this.username, this.password);
+
+    const readResult = await session.readTransaction(tx => tx.run(value));
+
+    console.log('查询结果', readResult);
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
-    for (const value of result) {
+    for (const value of readResult) {
       const { id: itemId, label, outV, inV } = value;
       const baseicInfo = this.generatorGraphData(value);
 
