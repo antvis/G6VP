@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@antv/gi-common-components": "workspace:*",
-    "@antv/gi-sdk": "worksapce:*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",

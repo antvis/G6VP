@@ -20,7 +20,7 @@
     "@antv/gi-assets-advance": "workspace:*",
     "@antv/gi-assets-algorithm": "workspace:*",
     "@antv/gi-assets-basic": "workspace:*",
-    "@antv/gi-assets-gs-standalone": "workspace:*",
+    "@antv/gi-assets-gs": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
