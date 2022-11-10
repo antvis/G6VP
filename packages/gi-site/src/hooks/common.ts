@@ -94,9 +94,11 @@ export const HTML_HEADER = `
 <title>GISDK EXPORT FILE</title>
 <!--- CSS -->
 <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${G6_VERSION}/dist/index.css" />
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${GI_VERSION}/dist/index.css" /> 
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
 <!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> 
+<!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css" /> 
+
 </head>
 `;
 
@@ -114,7 +116,7 @@ export const HTML_SCRIPTS = `
 <!--- G2/G2Plot DEPENDENCIES-->
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
 <!--- GI DEPENDENCIES-->
-<script src="https://gw.alipayobjects.com/os/lib/alipay/graphinsight/${GI_VERSION}/dist/index.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js"></script>
 `;
 
 export const MY_GRAPH_SDK = `
