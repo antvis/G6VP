@@ -4,10 +4,10 @@ import GI_ASSETS_ADVANCE from '@antv/gi-assets-advance/package.json';
 // import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
 import GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm/package.json';
 import GI_ASSETS_BASIC from '@antv/gi-assets-basic/package.json';
-import GI_ASSETS_GS from '@antv/gi-assets-gs/package.json';
+import GI_ASSETS_GS from '@antv/gi-assets-graphscope/package.json';
+import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json';
 import GI_ASSETS_SCENE from '@antv/gi-assets-scene/package.json';
 import GI_SDK from '@antv/gi-sdk/package.json';
-import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json';
 import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';
 export const GRAPHIN_VERSION = '2.7.13';
@@ -64,11 +64,8 @@ export const getPackages = npm => {
   return npm.map(c => {
     const name = c.name.replace('@antv/', '');
     return {
-      url: c.url || getCDN(name, c.version), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
-      global: name
-        .split('-')
-        .join('_')
-        .toUpperCase(),
+      url: c.url || getCDN(name, c.version, 'antgroup'), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      global: name.split('-').join('_').toUpperCase(),
       ...c,
     };
   });

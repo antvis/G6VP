@@ -1,5 +1,5 @@
 {
-  "name": "@antv/gi-assets-gs",
+  "name": "@antv/gi-assets-graphscope",
   "version": "1.0.0-beta.1",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",

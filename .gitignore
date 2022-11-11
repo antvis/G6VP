@@ -10,12 +10,14 @@ lerna-debug.log
 # Coverage directory used by tools like istanbul
 coverage
 
+
 # Dependency directories
 node_modules
 **/node_modules
 **/lib
 **/es
 jspm_packages/
+pnpm-lock.yaml
 
 .umi
 

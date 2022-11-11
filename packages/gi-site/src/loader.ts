@@ -1,9 +1,9 @@
 import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
 import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
-import * as GI_ASSETS_GS from '@antv/gi-assets-gs';
-import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
+import * as GI_ASSETS_GS from '@antv/gi-assets-graphscope';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
+import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 
 import { IS_LOCAL_ENV } from './services/const';
 
