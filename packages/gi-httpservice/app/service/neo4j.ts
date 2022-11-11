@@ -152,13 +152,16 @@ class Neo4jService extends Service {
         // start && end && identity 都存在的为边
         if (start && end && identity) {
           // 不存在 labels 则说明是边
-          edgeArray.push({
-            id: identity.low,
-            source: `${start.low}`,
-            target: `${end.low}`,
-            edgeType: type,
-            properties,
-          });
+          const hasRelation = edgeArray.find(d => d.id === `${identity.low}`);
+          if (!hasRelation) {
+            edgeArray.push({
+              id: identity.low,
+              source: `${start.low}`,
+              target: `${end.low}`,
+              edgeType: type,
+              properties,
+            });
+          }
         }
 
         // labels && identity 存在，start && end 不存在的为点
@@ -222,20 +225,57 @@ class Neo4jService extends Service {
     const edgeArray = [];
     responseData.records.forEach(record => {
       // console.log(`Found person: ${record.get('name')}`, record);
-      console.log(`Found person:`, record.toObject());
       const currentObj = record.toObject();
-      for (const key in currentObj) {
-        const { start, end, segments } = currentObj[key];
+      // console.log(`Found person:`, currentObj.data);
+      const { segments } = currentObj.data;
 
-        // start && end 存在，identity 不存在的为 path
-        if (start && end && segments) {
-          console.log(segments);
-        }
+      // segments存在为 path
+      if (segments) {
+        console.log(segments);
+        segments.forEach(segment => {
+          const { start, end, relationship } = segment;
+          const { identity: startIdentity, labels: startLabels, properties: startProperties } = start;
+          const { identity: endIdentity, labels: endLabels, properties: endProperties } = end;
+          const hasStartNode = nodeArray.find(d => d.id === `${startIdentity.low}`);
+          if (!hasStartNode) {
+            nodeArray.push({
+              id: `${startIdentity.low}`,
+              label: startLabels[0],
+              nodeType: startLabels[0],
+              properties: startProperties,
+            });
+          }
+
+          const hasEndtNode = nodeArray.find(d => d.id === `${endIdentity.low}`);
+          if (!hasEndtNode) {
+            nodeArray.push({
+              id: `${endIdentity.low}`,
+              label: endLabels[0],
+              nodeType: endLabels[0],
+              properties: endProperties,
+            });
+          }
+
+          const { identity, type, start: source, end: target, properties } = relationship;
+          const hasRelation = edgeArray.find(d => d.id === `${identity.low}`);
+          if (!hasRelation) {
+            edgeArray.push({
+              // id: `${identity.low}`,
+              source: `${source.low}`,
+              target: `${target.low}`,
+              edgeType: type,
+              properties,
+            });
+          }
+        });
       }
     });
 
     return {
-      data: responseData,
+      data: {
+        nodes: nodeArray,
+        edges: edgeArray,
+      },
       code: 200,
       success: true,
     };
