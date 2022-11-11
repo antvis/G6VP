@@ -130,7 +130,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
             if (sum === '') {
               return data['aggregateCount'];
             }
-            return `汇总：${sum}`;
+            return `(${aggregate.length} 条)：${sum.toFixed(2)}`;
           }
           return data[propObjKey];
         }

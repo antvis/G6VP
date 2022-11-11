@@ -1,6 +1,7 @@
 import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
+import ActiveEdge from './ActiveEdge';
 
 const { ActivateRelations, Hoverable } = Behaviors;
 
@@ -31,6 +32,7 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
       {enable && !persistentHighlight && <ActivateRelations trigger={trigger} />}
       {enableNodeHover && <Hoverable bindType="node" />}
       {enableEdgeHover && <Hoverable bindType="edge" />}
+      {enable && !persistentHighlight && <ActiveEdge />}
     </>
   );
 };

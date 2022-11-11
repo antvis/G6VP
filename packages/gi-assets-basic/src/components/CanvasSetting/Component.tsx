@@ -2,6 +2,7 @@ import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React from 'react';
 import CanvasClick from './CanvasClick';
+import CanvasDoubleClick from './CanvasDoubleClick';
 
 const { DragCanvas, ZoomCanvas, BrushSelect, Hoverable, ActivateRelations } = Behaviors;
 
@@ -21,11 +22,12 @@ export interface CanvasSettingProps {
     enableOptimize: boolean;
   };
   clearStatus: boolean;
+  doubleClick: boolean;
 }
 
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
-  const { styleCanvas, dragCanvas, zoomCanvas, clearStatus } = props;
-  const { backgroundColor, backgroundImage, background } = styleCanvas;
+  const { styleCanvas, dragCanvas, zoomCanvas, clearStatus, doubleClick } = props;
+  const { backgroundColor, backgroundImage } = styleCanvas;
   const { GISDK_ID } = useContext();
 
   React.useLayoutEffect(() => {
@@ -46,6 +48,7 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
       <BrushSelect />
       {clearStatus !== false && <CanvasClick />}
+      {doubleClick !== false && <CanvasDoubleClick />}
     </>
   );
 };

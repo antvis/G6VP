@@ -94,6 +94,13 @@ const registerMeta = context => {
       type: 'boolean',
       default: true,
     },
+    doubleClick: {
+      title: '双击画布,自适应',
+      'x-component': 'Switch',
+      'x-decorator': 'FormItem',
+      type: 'boolean',
+      default: true,
+    },
   };
 };
 
