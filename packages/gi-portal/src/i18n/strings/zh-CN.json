@@ -24,6 +24,7 @@
   "gi-portal.src.pages.const.GetStartedAtZeroCost": "零成本上手开发，专注你所关心的",
   "gi-portal.src.pages.const.Developer": "开发者",
   "gi-portal.components.Navbar.ExpectedToOpenInAugust": "预计8月份开放",
+  "gi-portal.components.Navbar.ComingSoon": "敬请期待",
   "gi-portal.src.pages.const.InGraphAnalysisDataNeeds": "图的分析中需要对数据频繁做关联、分组、筛选、下钻、查询，用户很容易思路分叉，丢失灵感甚至误操作。GraphInsight 提供了布局缓存、多画布、撤销重做、分析画廊、筛选查询等丰富的分析资产，让你的分析过程从容不迫",
   "gi-portal.src.pages.const.GraphAnalysisApplication": "图分析应用",
   "gi-portal.components.Navbar.PracticeCase": "实践案例",
