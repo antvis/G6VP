@@ -21,6 +21,7 @@
     "@antv/gi-assets-algorithm": "workspace:*",
     "@antv/gi-assets-basic": "workspace:*",
     "@antv/gi-assets-gs": "workspace:*",
+    "@antv/gi-assets-neo4j": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",

@@ -1,7 +1,7 @@
 {
-  "name": "@antv/gi-assets-gs",
-  "version": "1.0.0-beta.1",
-  "description": "GraphScope 单机版资产包",
+  "name": "@antv/gi-assets-neo4j",
+  "version": "1.0.0",
+  "description": "Neo4j 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
@@ -28,8 +28,9 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-sdk": "*",
+    "@alipay/graphinsight": "^2.23.0",
     "@ant-design/icons": "^4.6.2",
+    "@antv/gi-sdk": "*",
     "@antv/graphin": "2.x",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",
