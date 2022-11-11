@@ -1,36 +1,21 @@
-import type { GISiteParams } from '@antv/gi-sdk';
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
-import { notification } from 'antd';
 import { original } from 'immer';
 import React, { useRef } from 'react';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
-import { getProjectById, updateProjectById } from '../../services/';
+import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets.market';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
-import { getComponentsByAssets, getElementsByAssets, getServicesByConfig } from './getAssets';
+import { getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
-import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
 import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
-import { ConfigRecommedor } from './recommendTools';
+
 import useModel from './useModel';
-import { isObjectEmpty } from './utils';
-
-const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData, engineId }) => {
-  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData, engineId);
-  const elements = getElementsByAssets(assets.elements, data, schemaData);
-  const layouts = getLayoutsByAssets(assets.layouts, data, schemaData);
-
-  return {
-    components,
-    elements,
-    layouts,
-  };
-};
+import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
 
 const GraphRef = props => {
   const { graphRef } = props;
@@ -111,7 +96,7 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.serviceConfig = serviceConfig; //自定义服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
-        draft.themes = themes;
+        draft.themes = themes; //主题
       });
     })();
     // 当项目ID变化，或者强制重新刷新的时候运行
@@ -203,112 +188,8 @@ const Analysis = props => {
     );
   }, [activeAssetsKeys]);
 
-  const getRecommenderCfg = params => {
-    const { config, data } = params;
-    const Recommender = new ConfigRecommedor(data);
-    const layoutCfg = Recommender.recLayoutCfg();
-    const nodeCfg = Recommender.recNodeCfg();
-    const edgeCfg = Recommender.recEdgeCfg();
-    const newGraphData = Recommender.graphData;
-    // console.log('newGraphData', newGraphData)
-    const newConfig = {
-      ...config,
-      node: {
-        ...config.node,
-        props: {
-          ...config.node.props,
-          ...nodeCfg,
-        },
-      },
-      edge: {
-        ...config.edge,
-        props: {
-          ...config.edge.props,
-          ...edgeCfg,
-        },
-      },
-      layout: {
-        ...config.layout,
-        props: {
-          ...config.layout.props,
-          ...layoutCfg,
-        },
-      },
-    };
-    return {
-      newConfig: newConfig,
-      newData: newGraphData,
-    };
-  };
-
   /** 更新站点的 SCHEMA 和 DATA */
-  const updateGISite = (params: GISiteParams) => {
-    if (!params) {
-      return false;
-    }
-    let { data, schemaData, tag, activeAssetsKeys, engineId, engineContext } = params;
-
-    if (!schemaData || !engineId) {
-      notification.error({
-        message: '服务引擎启动失败',
-        description: '没有查询到图模型，请检查接口是否正常',
-      });
-      return false;
-    }
-    const style = utils.generatorStyleConfigBySchema(schemaData);
-    const updateParams = {
-      engineId,
-      engineContext,
-      schemaData,
-      projectConfig: { ...config, ...style },
-    };
-    if (activeAssetsKeys) {
-      updateParams['activeAssetsKeys'] = activeAssetsKeys;
-    }
-    if (data) {
-      updateParams['data'] = data;
-    }
-
-    updateProjectById(projectId, updateParams).then(res => {
-      notification.success({
-        message: '服务引擎启动成功',
-        description: '服务引擎启动成功，1秒后将重启窗口',
-      });
-
-      localStorage.setItem(
-        'SERVER_ENGINE_CONTEXT',
-        JSON.stringify({
-          GI_SITE_PROJECT_ID: projectId,
-          engineId: engineId,
-          ...engineContext,
-        }),
-      );
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
-  };
-
-  // React.useLayoutEffect(() => {
-  //   const { config, projectConfig, data } = state;
-
-  //   if (isReady && data && enableAI) {
-  //     const { newData, newConfig } = getRecommenderCfg({
-  //       data: JSON.parse(JSON.stringify(data)),
-  //       config,
-  //     });
-  //     updateState(draft => {
-  //       draft.id = projectId;
-  //       draft.config = newConfig;
-  //       draft.data = newData; // 改变 data 是为了能把衍生出的属性加进去，比如 degree
-  //     });
-  //   } else if (!enableAI) {
-  //     updateState(draft => {
-  //       draft.id = projectId;
-  //       draft.config = projectConfig;
-  //     });
-  //   }
-  // }, [projectId, isReady, enableAI]);
+  const updateGISite = getUpdateGISite({ config, projectId });
 
   const isLoading = isObjectEmpty(config) || !isReady;
 

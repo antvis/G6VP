@@ -50,6 +50,7 @@ export const getActivePackageName = (activeAssets: GIAssets): string[] => {
       match.add(c.pkg);
     });
   }
+  debugger;
   return [...match.values()];
 };
 
@@ -134,6 +135,8 @@ const MyGraphApp= (props) => {
   });
   React.useEffect(()=>{
     loaderCombinedAssets(GI_ASSETS_PACKAGE).then(res=>{
+
+
       /** 生成服务 */
       const services = getCombineServices(res.services)
       setState(preState=>{
