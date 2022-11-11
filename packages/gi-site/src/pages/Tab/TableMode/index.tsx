@@ -100,7 +100,6 @@ const TableMode: React.FunctionComponent<TableModeProps> = props => {
     if (edgeTable) {
       /** 圈选边表 */
       edgeTable.on(S2Event.GLOBAL_SELECTED, () => {
-        debugger;
         const cells = edgeTable.interaction.getCells();
         const selectedEdges = new Set<string>();
         cells.forEach(cell => {

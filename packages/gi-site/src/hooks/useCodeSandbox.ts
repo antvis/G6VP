@@ -1,6 +1,6 @@
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
-import { getConstantFiles, HTML_HEADER, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
+import { getConstantFiles, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';
 
@@ -17,7 +17,8 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE } = getConstantFiles(opts);
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, HTML_HEADER, THEME_STYLE } =
+    getConstantFiles(opts);
 
   files['src/GI_EXPORT_FILES.ts'] = {
     content: ` 
@@ -60,17 +61,15 @@ function getCSBData(opts) {
 
   files['public/index.html'] = {
     content: `
-<!DOCTYPE html>
-<html lang="en">
- ${HTML_HEADER}
-  <body>
-    <div id="root"></div>
-    <!--- REACT DEPENDENCIES-->
-   ${HTML_SCRIPTS}
-     </body>
-</html>
-    
-  
+    <!DOCTYPE html >
+    <html lang="en" ${THEME_STYLE}>
+    ${HTML_HEADER}
+      <body>
+        <div id="root"></div>
+        <!--- REACT DEPENDENCIES-->
+      ${HTML_SCRIPTS}
+        </body>
+    </html>
   `,
   };
 

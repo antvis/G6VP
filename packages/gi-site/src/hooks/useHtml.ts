@@ -1,14 +1,13 @@
-import { getConstantFiles, HTML_HEADER, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
+import { getConstantFiles, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
 
 const getHtmlAppCode = opts => {
-  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE } = getConstantFiles(opts);
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, THEME_STYLE, HTML_HEADER } =
+    getConstantFiles(opts);
 
   return `
   <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" ${THEME_STYLE} >
   ${HTML_HEADER}
-
   <body>
     <div id="root"></div>
     <script src="https://gw.alipayobjects.com/os/lib/babel/standalone/7.19.2/babel.min.js"></script>

@@ -93,6 +93,7 @@ const useTheme = (context, updateState) => {
         localforage.setItem(projectId, { ...project, themes: defaultThemes });
         updateState(draft => {
           draft.themes = defaultThemes;
+          draft.theme = themeValue;
           draft.config = themeValue === 'light' ? lightConfig : darkConfig;
         });
       });
@@ -112,6 +113,7 @@ const useTheme = (context, updateState) => {
 
     updateState(draft => {
       draft.config = newConfig;
+      draft.theme = themeValue;
     });
   };
   return {
