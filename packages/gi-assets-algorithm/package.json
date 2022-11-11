@@ -4,7 +4,7 @@
   "description": "GraphInsight 图分析算法资产库",
   "repository": {
     "type": "git",
-    "url": "http://gitlab.alipay-inc.com/aife/gi-assets-kg.git"
+    "url": "https://github.com/antvis/GraphInsight.git"
   },
   "sideEffects": [
     "*.css",

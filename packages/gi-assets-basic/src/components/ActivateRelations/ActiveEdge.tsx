@@ -1,4 +1,4 @@
-import { useContext } from '@alipay/graphinsight';
+import { useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 interface ActiveEdgeProps {}
 

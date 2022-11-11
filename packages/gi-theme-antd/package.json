@@ -5,6 +5,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antvis/GraphInsight.git"
+  },
   "files": [
     "dist",
     "es",
@@ -22,9 +26,6 @@
     "clean:css": "rimraf dist",
     "clean": "rimraf es esm lib",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git"
   },
   "publishConfig": {
     "access": "public"

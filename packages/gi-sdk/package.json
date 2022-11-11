@@ -5,6 +5,15 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antvis/GraphInsight.git"
+  },
+  "files": [
+    "es",
+    "lib",
+    "dist"
+  ],
   "sideEffects": [
     "*.css",
     "*.less"
