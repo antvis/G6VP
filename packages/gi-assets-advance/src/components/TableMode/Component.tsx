@@ -258,7 +258,6 @@ const TableMode: React.FC<IProps> = props => {
     </>
   );
 
-  console.log('RENDE>>>>>>>');
   useEffect(() => {
     updateOptions(draft => {
       draft.interaction!.enableCopy = enableCopy;
@@ -272,7 +271,7 @@ const TableMode: React.FC<IProps> = props => {
     const tooltipContainer = document.getElementById('gi-table-mode') as HTMLDivElement;
     const width = tooltipContainer.clientWidth;
     const height = tooltipContainer.clientHeight;
-    console.log(options.refreshIndex, width, height);
+
     if (options.refreshIndex === INTIAL_NUMBER) {
       updateOptions(draft => {
         draft.tooltip!.getContainer = () => tooltipContainer;

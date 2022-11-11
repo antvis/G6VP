@@ -1,6 +1,6 @@
 {
   "name": "@alipay/gi-assets-basic",
-  "version": "2.26.0",
+  "version": "2.27.0",
   "description": "GraphInsight 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -23,8 +23,8 @@
     "tnpm:publish": "npm run build && node ../../scripts/publish_backup.js && tnpm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/gi-common-components": "*",
-    "@alipay/graphinsight": "*",
+    "@alipay/gi-common-components": "workspace:*",
+    "@alipay/graphinsight": "workspace:*",
     "@ant-design/icons": "latest",
     "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
