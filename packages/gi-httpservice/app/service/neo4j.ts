@@ -201,18 +201,38 @@ class Neo4jService extends Service {
    */
   async queryNeighbors(params) {
     const { ids, sep = 1 } = params;
-    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
+    const query1 = `match data=(n)-[*..1]-(m) WHERE id(n)=1 RETURN data LIMIT 50`;
+
+    let cypher = `match data=(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN data LIMIT 100`;
+
+    // let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
-      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m LIMIT 200`;
+      cypher = `match data=(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN data LIMIT 200`;
     }
 
-    const session = Neo4jDriverInstanceClass.getSessionInstance(this.uri, this.username, this.password);
+    const { uri, username, password } = readNeo4jConfig();
+
+    const session = Neo4jDriverInstanceClass.getSessionInstance(uri, username, password);
 
     const responseData = await session.readTransaction(tx => tx.run(cypher));
 
-    console.log('查询结果', responseData);
+    const nodeArray = [];
+    const edgeArray = [];
+    responseData.records.forEach(record => {
+      // console.log(`Found person: ${record.get('name')}`, record);
+      console.log(`Found person:`, record.toObject());
+      const currentObj = record.toObject();
+      for (const key in currentObj) {
+        const { start, end, segments } = currentObj[key];
+
+        // start && end 存在，identity 不存在的为 path
+        if (start && end && segments) {
+          console.log(segments);
+        }
+      }
+    });
 
     return {
       data: responseData,

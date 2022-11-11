@@ -17,7 +17,7 @@
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
-    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-gs-standalone",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-graphscope",
     "clean": "rimraf es esm lib dist",
     "demo": "umi dev",
     "docs": "dumi dev",

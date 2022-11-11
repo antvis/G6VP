@@ -14,7 +14,7 @@
     "gi-assets-advance": "cd packages/gi-assets-advance && npm run build:es",
     "gi-assets-algorithm": "cd packages/gi-assets-algorithm && npm run build:es",
     "gi-assets-scene": "cd packages/gi-assets-scene && npm run build:es",
-    "gi-assets-gs": "cd packages/gi-assets-gs-standalone && npm run build:es",
+    "gi-assets-gs": "cd packages/gi-assets-graphscope && npm run build:es",
     "gi-theme-antd": "cd packages/gi-theme-antd && npm run build",
     "build": "npm run build:site && npm run move:dist",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",

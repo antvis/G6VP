@@ -17,7 +17,7 @@
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
-    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-gs-standalone",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-graphscope",
     "clean": "rimraf es esm lib dist",
     "demo": "umi dev",
     "docs": "dumi dev",
@@ -28,15 +28,14 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@alipay/graphinsight": "^2.23.0",
     "@ant-design/icons": "^4.6.2",
-    "@antv/gi-sdk": "*",
-    "@antv/graphin": "2.x",
+    "@antv/gi-sdk": "workspace:*",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",
     "use-immer": "^0.7.0"
   },
   "peerDependencies": {
+    "@antv/graphin": "2.x",
     "antd": "latest",
     "react": "17.x"
   },

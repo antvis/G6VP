@@ -1,10 +1,10 @@
-import { GISiteParams, GraphSchemaData, utils } from '@alipay/graphinsight';
+import { GISiteParams, GraphSchemaData, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import { Button, Col, Row, Statistic } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import CollapseCard from './CollapseCard';
-import { getSchemaGraph } from '../util';
+// import { getSchemaGraph } from '../util';
 import { queryGraphSchema } from '../services/Neo4jService';
 
 interface SchemaGraphProps {
@@ -69,7 +69,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   };
 
   const defaultStyleConfig = utils.generatorStyleConfigBySchema(schemaData);
-  const schemaGraph = getSchemaGraph(schemaData, defaultStyleConfig);
+  const schemaGraph = utils.getSchemaGraph(schemaData, defaultStyleConfig);
   console.log('state', state, defaultStyleConfig, schemaGraph);
   const isEmpty = schemaData.nodes.length === 0;
 

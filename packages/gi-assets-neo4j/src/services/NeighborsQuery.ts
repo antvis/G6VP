@@ -4,15 +4,13 @@ export const NeighborsQuery = {
   service: async params => {
     const { ids, sep } = params;
 
-    const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
-    const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
+    const httpServerURL = localStorage.getItem('Neo4j_HTTP_SERVER');
 
-    const response = await request(`${httpServerURL}/graphcompute/neighbors`, {
+    const response = await request(`${httpServerURL}/api/neo4j/neighbors`, {
       method: 'post',
       data: {
-        id: ids,
+        ids,
         sep,
-        gremlinServer,
       },
     });
 

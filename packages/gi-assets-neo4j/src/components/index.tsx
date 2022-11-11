@@ -1,4 +1,4 @@
-import { GISiteParams } from '@alipay/graphinsight';
+import { GISiteParams } from '@antv/gi-sdk';
 import { Select, Button } from 'antd';
 import React from 'react';
 import Connect from './Connect';

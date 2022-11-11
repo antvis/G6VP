@@ -188,7 +188,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       use-immer: 0.7.0_immer@9.0.16+react@17.0.2
 
-  packages/gi-assets-gs-standalone:
+  packages/gi-assets-graphscope:
     specifiers:
       '@ant-design/icons': ^4.6.2
       '@antv/gi-sdk': '*'
@@ -211,7 +211,7 @@ importers:
   packages/gi-assets-neo4j:
     specifiers:
       '@ant-design/icons': ^4.6.2
-      '@antv/gi-sdk': '*'
+      '@antv/gi-sdk': workspace:*
       '@antv/graphin': 2.x
       antd: latest
       json2csv: ^5.0.7
@@ -467,7 +467,7 @@ importers:
       '@antv/gi-assets-advance': link:../gi-assets-advance
       '@antv/gi-assets-algorithm': link:../gi-assets-algorithm
       '@antv/gi-assets-basic': link:../gi-assets-basic
-      '@antv/gi-assets-gs': link:../gi-assets-gs-standalone
+      '@antv/gi-assets-gs': link:../gi-assets-graphscope
       '@antv/gi-assets-neo4j': link:../gi-assets-neo4j
       '@antv/gi-assets-scene': link:../gi-assets-scene
       '@antv/gi-common-components': link:../gi-common-components
