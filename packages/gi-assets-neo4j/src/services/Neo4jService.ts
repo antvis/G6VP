@@ -1,5 +1,4 @@
 import request from 'umi-request';
-import { localLoadGraphConfig } from './Constants';
 
 export interface ConnectProps {
   httpServerURL: string;

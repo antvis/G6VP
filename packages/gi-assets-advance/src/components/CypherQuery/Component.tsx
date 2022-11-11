@@ -39,22 +39,14 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
       return;
     }
 
-    const result = await service({
+    const resultData = await service({
       value: state.value,
     });
-
-    if (!result || !result.success) {
-      notification.error({
-        message: '执行 Cypher 查询失败',
-        description: `查询失败：${result.message}`,
-      });
-      return;
-    }
 
     updateContext(draft => {
       // @ts-ignore
       draft.key = Math.random();
-      const res = transform(result.data);
+      const res = transform(resultData);
       res.nodes.forEach(node => {
         if (!node.style.badges) {
           node.style.badges = [];
@@ -62,7 +54,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
         // 保留其他位置的 badges，例如锁定和标签
         node.style.badges = node.style.badges.filter(({ position }) => position !== 'LB') || [];
 
-        const expandIds = result.data.nodes.map(n => n.id);
+        const expandIds = resultData.nodes.map(n => n.id);
         if (expandIds.indexOf(node.id) !== -1) {
           node.style.badges.push({
             position: 'LB',

@@ -1,6 +1,4 @@
-import * as ElementProperties from './ElementProperties';
-import * as ExecAlgorithm from './ExecAlgorithm';
-import * as GraphScopeServices from './Neo4jService';
+import * as Neo4jService from './Neo4jService';
 import * as LanguageQueryService from './LanguageQueryService';
 import * as NeighborsQuery from './NeighborsQuery';
 import ServerComponent from '../components';
@@ -19,8 +17,6 @@ export default {
     ...Initializer,
     ...LanguageQueryService,
     ...NeighborsQuery,
-    // ...ElementProperties,
-    ...ExecAlgorithm,
-    ...GraphScopeServices,
+    ...Neo4jService,
   },
 };
