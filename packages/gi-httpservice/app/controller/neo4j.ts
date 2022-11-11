@@ -8,8 +8,7 @@ class Neo4jController extends Controller {
   async connect() {
     const { ctx } = this;
     const params = ctx.request.body;
-    const { uri, username, password } = params;
-    const result = await ctx.service.neo4j.connect(uri, username, password);
+    const result = await ctx.service.neo4j.connect(params);
     responseData(ctx, result);
   }
 
@@ -34,7 +33,7 @@ class Neo4jController extends Controller {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    const result = await ctx.service.graphcompute.queryNeighbors(params);
+    const result = await ctx.service.neo4j.queryNeighbors(params);
     responseData(ctx, result);
   }
 
@@ -43,20 +42,8 @@ class Neo4jController extends Controller {
    */
   async getSchema() {
     const { ctx } = this;
-    const { graphName } = ctx.query;
 
-    const result = await ctx.service.graphcompute.queryGraphSchema(graphName);
-    responseData(ctx, result);
-  }
-
-  /**
-   * 获取元素的属性详情
-   */
-  async queryElementProperties() {
-    const { ctx } = this;
-    const params = ctx.request.body;
-
-    const result = await ctx.service.graphcompute.queryElementProperties(params);
+    const result = await ctx.service.neo4j.getGraphSchema();
     responseData(ctx, result);
   }
 }

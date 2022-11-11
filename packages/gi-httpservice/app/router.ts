@@ -15,9 +15,11 @@ export default (app: Application) => {
   router.get('/graphcompute/execAlgorithm', controller.graphcompute.execAlgorithm);
 
   // Neo4j
-  router.get('/api/neo4j/connect', controller.neo4j.connect);
+  router.post('/api/neo4j/connect', controller.neo4j.connect);
   router.get('/api/neo4j/disconnect', controller.neo4j.disConnect);
-  router.get('/api/neo4j/languagequery', controller.graphcompute.execAlgorithm);
+  router.get('/api/neo4j/schema', controller.neo4j.getSchema);
+  router.post('/api/neo4j/languagequery', controller.neo4j.queryByGraphLanguage);
+  router.post('/api/neo4j/neighbors', controller.neo4j.queryNeighbors);
 
   // TuGraph
   router.get('/tugraph/explore.html', controller.tugraph.index);
