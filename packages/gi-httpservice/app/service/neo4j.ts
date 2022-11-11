@@ -126,31 +126,18 @@ class Neo4jService extends Service {
   }
 
   /**
-   * 使用 Graph Language 语句进行查询
-   * @param params 查询参数
+   * 将 Neo4j 查询结果转成图结构
+   * @param records
    */
-  async queryByGraphLanguage(params) {
-    const readQuery = `MATCH (p) RETURN p LIMIT 6`;
-    const query = `match (n)-[r:*..1]-(m) WHERE id(n)=1 RETURN r, n, m LIMIT 50`;
-
-    const query1 = `match data=(n)-[*..1]-(m) WHERE id(n)=1 RETURN data LIMIT 50`;
-    const { value = readQuery } = params;
-    const { uri, username, password } = readNeo4jConfig();
-
-    const session = Neo4jDriverInstanceClass.getSessionInstance(uri, username, password);
-
-    const readResult = await session.readTransaction(tx => tx.run(value));
-    // console.log('查询结果', readResult);
+  generatorGraphData(records) {
     const nodeArray = [];
     const edgeArray = [];
-    readResult.records.forEach(record => {
-      // console.log(`Found person: ${record.get('name')}`, record);
-      // console.log(`Found person:`, record.toObject());
+    records.forEach(record => {
       const currentObj = record.toObject();
       for (const key in currentObj) {
-        const { labels, properties, identity, start, end, type } = currentObj[key];
+        const { labels, properties, identity, start, end, type, segments } = currentObj[key];
         // start && end && identity 都存在的为边
-        if (start && end && identity) {
+        if (start && end && identity && !segments) {
           // 不存在 labels 则说明是边
           const hasRelation = edgeArray.find(d => d.id === `${identity.low}`);
           if (!hasRelation) {
@@ -165,7 +152,7 @@ class Neo4jService extends Service {
         }
 
         // labels && identity 存在，start && end 不存在的为点
-        if (labels && identity) {
+        if (labels && identity && !segments) {
           // 不存在 labels 则说明是边
           // 是否已经存在该节点
           const hasNode = nodeArray.find(d => d.id === `${identity.low}`);
@@ -180,21 +167,70 @@ class Neo4jService extends Service {
         }
 
         // start && end 存在，identity 不存在的为 path
-        if (start && end && !identity) {
-          console.log(currentObj[key]);
-          const { start: pathStart, end: pathEnd } = currentObj[key];
-          console.log(pathStart, pathEnd);
+        if (segments) {
+          segments.forEach(segment => {
+            const { start, end, relationship } = segment;
+            const { identity: startIdentity, labels: startLabels, properties: startProperties } = start;
+            const { identity: endIdentity, labels: endLabels, properties: endProperties } = end;
+            const hasStartNode = nodeArray.find(d => d.id === `${startIdentity.low}`);
+            if (!hasStartNode) {
+              nodeArray.push({
+                id: `${startIdentity.low}`,
+                label: startLabels[0],
+                nodeType: startLabels[0],
+                properties: startProperties,
+              });
+            }
+
+            const hasEndtNode = nodeArray.find(d => d.id === `${endIdentity.low}`);
+            if (!hasEndtNode) {
+              nodeArray.push({
+                id: `${endIdentity.low}`,
+                label: endLabels[0],
+                nodeType: endLabels[0],
+                properties: endProperties,
+              });
+            }
+
+            const { identity, type, start: source, end: target, properties } = relationship;
+            const hasRelation = edgeArray.find(d => d.id === `${identity.low}`);
+            if (!hasRelation) {
+              edgeArray.push({
+                source: `${source.low}`,
+                target: `${target.low}`,
+                edgeType: type,
+                properties,
+              });
+            }
+          });
         }
       }
     });
+    return {
+      nodes: nodeArray,
+      edges: edgeArray,
+    };
+  }
+
+  /**
+   * 使用 Graph Language 语句进行查询
+   * @param params 查询参数
+   */
+  async queryByGraphLanguage(params) {
+    const defaultQuery = `MATCH (p) RETURN p LIMIT 6`;
+    const { value = defaultQuery } = params;
+    const { uri, username, password } = readNeo4jConfig();
+
+    const session = Neo4jDriverInstanceClass.getSessionInstance(uri, username, password);
+
+    const response = await session.readTransaction(tx => tx.run(value));
+
+    const graphData = this.generatorGraphData(response.records);
 
     return {
       success: true,
       code: 200,
-      data: {
-        nodes: nodeArray,
-        edges: edgeArray,
-      },
+      data: graphData,
     };
   }
 
@@ -204,11 +240,8 @@ class Neo4jService extends Service {
    */
   async queryNeighbors(params) {
     const { ids, sep = 1 } = params;
-    const query1 = `match data=(n)-[*..1]-(m) WHERE id(n)=1 RETURN data LIMIT 50`;
 
     let cypher = `match data=(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN data LIMIT 100`;
-
-    // let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
@@ -219,63 +252,12 @@ class Neo4jService extends Service {
 
     const session = Neo4jDriverInstanceClass.getSessionInstance(uri, username, password);
 
-    const responseData = await session.readTransaction(tx => tx.run(cypher));
+    const response = await session.readTransaction(tx => tx.run(cypher));
 
-    const nodeArray = [];
-    const edgeArray = [];
-    responseData.records.forEach(record => {
-      // console.log(`Found person: ${record.get('name')}`, record);
-      const currentObj = record.toObject();
-      // console.log(`Found person:`, currentObj.data);
-      const { segments } = currentObj.data;
-
-      // segments存在为 path
-      if (segments) {
-        console.log(segments);
-        segments.forEach(segment => {
-          const { start, end, relationship } = segment;
-          const { identity: startIdentity, labels: startLabels, properties: startProperties } = start;
-          const { identity: endIdentity, labels: endLabels, properties: endProperties } = end;
-          const hasStartNode = nodeArray.find(d => d.id === `${startIdentity.low}`);
-          if (!hasStartNode) {
-            nodeArray.push({
-              id: `${startIdentity.low}`,
-              label: startLabels[0],
-              nodeType: startLabels[0],
-              properties: startProperties,
-            });
-          }
-
-          const hasEndtNode = nodeArray.find(d => d.id === `${endIdentity.low}`);
-          if (!hasEndtNode) {
-            nodeArray.push({
-              id: `${endIdentity.low}`,
-              label: endLabels[0],
-              nodeType: endLabels[0],
-              properties: endProperties,
-            });
-          }
-
-          const { identity, type, start: source, end: target, properties } = relationship;
-          const hasRelation = edgeArray.find(d => d.id === `${identity.low}`);
-          if (!hasRelation) {
-            edgeArray.push({
-              // id: `${identity.low}`,
-              source: `${source.low}`,
-              target: `${target.low}`,
-              edgeType: type,
-              properties,
-            });
-          }
-        });
-      }
-    });
+    const graphData = this.generatorGraphData(response.records);
 
     return {
-      data: {
-        nodes: nodeArray,
-        edges: edgeArray,
-      },
+      data: graphData,
       code: 200,
       success: true,
     };
