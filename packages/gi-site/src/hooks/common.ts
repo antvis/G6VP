@@ -23,6 +23,57 @@ export function beautifyCode(code: string) {
   });
 }
 
+export const getActivePackage = (activeAssets: GIAssets) => {
+  const { services, components, elements, layouts } = activeAssets;
+
+  const componentsMap = new Map<string, any>();
+  const elementsMap = new Map<string, any>();
+  const layoutsMap = new Map<string, any>();
+
+  if (components) {
+    Object.values(components).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = componentsMap.get(id);
+      if (val) {
+        componentsMap.set(id, [...val, c]);
+      } else {
+        componentsMap.set(id, [c]);
+      }
+    });
+  }
+  if (elements) {
+    Object.values(elements).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = elementsMap.get(id);
+      if (val) {
+        elementsMap.set(id, [...val, c]);
+      } else {
+        elementsMap.set(id, [c]);
+      }
+    });
+  }
+  if (layouts) {
+    Object.values(layouts).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = layoutsMap.get(id);
+      if (val) {
+        layoutsMap.set(id, [...val, c]);
+      } else {
+        layoutsMap.set(id, [c]);
+      }
+    });
+  }
+
+  return {
+    layoutsMap,
+    elementsMap,
+    componentsMap,
+  };
+};
+
 export const getActivePackageName = (activeAssets: GIAssets): string[] => {
   const { services, components, elements, layouts } = activeAssets;
   const match = new Set<string>();
@@ -98,6 +149,7 @@ export const getConstantFiles = opts => {
       return k == c.name;
     });
   }) as Package[];
+  console.log(packages);
 
   const GI_ASSETS_PACKAGE = beautifyCode(JSON.stringify(Object.values(packages)));
 
@@ -107,6 +159,8 @@ export const getConstantFiles = opts => {
     GI_ASSETS_PACKAGE,
     THEME_STYLE: `style="${THEME_STYLE}"`,
     HTML_HEADER,
+    packages,
+    THEME_VALUE: theme,
     // GI_SERVICES_OPTIONS,
     // GI_LOCAL_DATA,
     // GI_SCHEMA_DATA,

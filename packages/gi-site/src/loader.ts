@@ -84,6 +84,7 @@ export interface Package {
   name: string;
   url: string;
   global: string;
+  version: string;
 }
 
 export const setDefaultAssetPackages = () => {
