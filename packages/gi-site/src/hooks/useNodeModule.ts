@@ -1,3 +1,4 @@
+import { version as GI_THEME_ANTD_VERSION } from '@antv/gi-theme-antd/package.json';
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
 import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
@@ -185,6 +186,7 @@ ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
           react: '17.x',
           'react-dom': '17.x',
           antd: ANTD_VERSION,
+          '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
           '@antv/g6': G6_VERSION,
           '@antv/graphin': GRAPHIN_VERSION,
           '@antv/gi-sdk': GI_VERSION,
