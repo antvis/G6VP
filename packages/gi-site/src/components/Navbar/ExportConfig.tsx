@@ -1,7 +1,7 @@
 import { Alert, Card, Col, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { useCodeSandbox, useHtml } from '../../hooks';
+import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 
 import { saveAs } from '../utils';
@@ -18,6 +18,7 @@ const ExportConfig = props => {
 
   const htmlCode = useHtml(st);
   const openCSB = useCodeSandbox(st);
+  const openNodeModule = useNodeModule(st);
 
   /** 下载 */
   const handleExport = () => {
@@ -46,8 +47,8 @@ const ExportConfig = props => {
         showIcon
       ></Alert>
       <br />
-      <Row gutter={20}>
-        <Col span={8}>
+      <Row gutter={[20, 20]}>
+        <Col span={12}>
           <Card
             hoverable
             cover={
@@ -63,23 +64,7 @@ const ExportConfig = props => {
             </div>
           </Card>
         </Col>
-        <Col span={8}>
-          <Card
-            hoverable
-            cover={
-              <img
-                src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*M_9oSKjA9ksAAAAAAAAAAAAAARQnAQ'}
-                onClick={openCSB}
-              />
-            }
-          >
-            <div className="card-meta">
-              <div className="title">在 CodeSandbox 中打开</div>
-              <div>适合集成到 React 项目</div>
-            </div>
-          </Card>
-        </Col>
-        <Col span={8}>
+        <Col span={12}>
           <Card
             hoverable
             cover={
@@ -92,6 +77,38 @@ const ExportConfig = props => {
             <div className="card-meta">
               <div className="title">云端部署</div>
               <div>GraphScope 计算+ ODPS 存储部署，详情请咨询 @击铗</div>
+            </div>
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card
+            hoverable
+            cover={
+              <img
+                src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*M_9oSKjA9ksAAAAAAAAAAAAAARQnAQ'}
+                onClick={openCSB}
+              />
+            }
+          >
+            <div className="card-meta">
+              <div className="title">在 CodeSandbox 中打开</div>
+              <div>提供 UMD 包，可 CDN 加载，快速集成到 React 项目中</div>
+            </div>
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card
+            hoverable
+            cover={
+              <img
+                src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*M_9oSKjA9ksAAAAAAAAAAAAAARQnAQ'}
+                onClick={openNodeModule}
+              />
+            }
+          >
+            <div className="card-meta">
+              <div className="title">在 CodeSandbox 中打开</div>
+              <div>提供 NPM 包，支持 Tree Shaking，原生集成到 React 项目中 </div>
             </div>
           </Card>
         </Col>
