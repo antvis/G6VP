@@ -1,21 +1,21 @@
 // import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import { Segmented } from 'antd';
 import React from 'react';
-// import pkg from '../../package.json';
-// // const { version, name } = pkg;
+import { DEFAULT_ANTD_CSS_LINKS, DEFAULT_THEME_VARS } from './const';
 
 export interface ThemeSwitchProps {
-  themeVars: {
+  style?: React.CSSProperties;
+  themeVars?: {
     dark: any;
     light: any;
   };
-  antdCssLinks: {
+  antdCssLinks?: {
     dark: string;
     light: string;
   };
   localStorageKey?: string;
   onChange?: (value: 'dark' | 'light') => void;
-  options: {
+  options?: {
     value: string;
     icon: React.ReactNode;
   }[];
@@ -26,9 +26,9 @@ export interface ThemeSwitchProps {
 //   light: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/light.css`,
 // };
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
-  const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options } = props;
-  const { dark: darkVars, light: lightVars } = themeVars;
-  const { dark: darkLink, light: lightLink } = antdCssLinks;
+  const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options, style } = props;
+  const { dark: darkVars, light: lightVars } = themeVars || DEFAULT_THEME_VARS;
+  const { dark: darkLink, light: lightLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
   if (localStorage.getItem(localStorageKey)) {
   }
   const [state, updateState] = React.useState({
@@ -48,9 +48,7 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
     const dom = window.document.getElementById('theme-style') as HTMLLinkElement;
 
     const isLightTheme = theme === 'light';
-    const cssUrl = isLightTheme
-      ? lightLink // "https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.1.2/dist/light.css " // 'https://gw.alipayobjects.com/os/lib/antd/4.16.12/dist/antd.css'
-      : darkLink; //  "https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.1.2/dist/dark.css"; // 'https://gw.alipayobjects.com/os/lib/antd/4.16.12/dist/antd.dark.css';
+    const cssUrl = isLightTheme ? lightLink : darkLink;
 
     if (dom) {
       dom.href = cssUrl;
@@ -84,24 +82,8 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
     onChange && onChange(value);
   };
   return (
-    <div className="theme-switch">
-      <Segmented
-        onChange={handleChange}
-        value={theme}
-        options={
-          options
-          //   [
-          //   {
-          //     value: 'light',
-          //     icon: <BarsOutlined />,
-          //   },
-          //   {
-          //     value: 'dark',
-          //     icon: <AppstoreOutlined />,
-          //   },
-          // ]
-        }
-      />
+    <div className="theme-switch" style={style}>
+      <Segmented onChange={handleChange} value={theme} options={options || ['light', 'dark']} />
     </div>
   );
 };

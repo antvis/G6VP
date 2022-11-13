@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-theme-antd",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "设置 Antd 主题样式的脚本，同时提供主题切换组件",
   "main": "lib/index.js",
   "module": "es/index.js",
