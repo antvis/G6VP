@@ -134,7 +134,6 @@ const SideContainer: React.FC<SideContainerProps> = props => {
       tabsContainer.style.bottom = 'unset';
       tabsContainer.style.right = 'unset';
       tabsContainer.style.left = 'unset';
-      tabsContainer.style.background = '#fff';
     };
   }, [graph, visible, outSideFromCanvas, placement]);
 
