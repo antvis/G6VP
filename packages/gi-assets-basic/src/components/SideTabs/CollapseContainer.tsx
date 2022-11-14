@@ -24,9 +24,7 @@ const CollapseContainer: React.FunctionComponent<ContainerProps> = props => {
     ...postionStyles,
     height,
     width,
-    backgroundColor: '#fff',
     padding: '8px',
-    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1)',
     transition: 'all 0.3s ease',
     overflow: 'visible',
   };

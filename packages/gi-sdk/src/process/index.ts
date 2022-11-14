@@ -23,7 +23,7 @@ export { default as getMockServiceConfig } from './getMockServiceConfig';
 export { default as getSchemaGraph } from './getSchemaGraph';
 export { getSearchParams } from './getSearchParams';
 export { default as getServicesByConfig } from './getServicesByConfig';
-export { loaderAssets, loaderCombinedAssets } from './loaderAssets';
+export { getAssetPackages, loaderAssets, loaderCombinedAssets } from './loaderAssets';
 export { default as processEdges } from './processEdges';
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleConfig } from './schema';
 export { getServerEngineContext, setServerEngineContext } from './serverEngineContext';

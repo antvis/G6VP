@@ -1,13 +1,15 @@
 // const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
-
+import GI_SDK from '@antv/gi-sdk/package.json';
+/** build-in assets */
 import GI_ASSETS_ADVANCE from '@antv/gi-assets-advance/package.json';
-// import GI_ASSETS_ANALYSIS from '@alipay/gi-assets-analysis/package.json';
 import GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm/package.json';
 import GI_ASSETS_BASIC from '@antv/gi-assets-basic/package.json';
-import GI_ASSETS_GS from '@antv/gi-assets-gs/package.json';
 import GI_ASSETS_SCENE from '@antv/gi-assets-scene/package.json';
-import GI_SDK from '@antv/gi-sdk/package.json';
+
+/** build-in engine */
+import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json';
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json';
+
 import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';
 export const GRAPHIN_VERSION = '2.7.13';
@@ -36,8 +38,8 @@ const assets_npm = [
     version: GI_ASSETS_ALGORITHM.version,
   },
   {
-    name: GI_ASSETS_GS.name,
-    version: GI_ASSETS_GS.version,
+    name: GI_ASSETS_GTAPHSCOPE.name,
+    version: GI_ASSETS_GTAPHSCOPE.version,
   },
   {
     name: GI_ASSETS_NEO4J.name,
@@ -64,11 +66,8 @@ export const getPackages = npm => {
   return npm.map(c => {
     const name = c.name.replace('@antv/', '');
     return {
-      url: c.url || getCDN(name, c.version), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
-      global: name
-        .split('-')
-        .join('_')
-        .toUpperCase(),
+      url: c.url || getCDN(name, c.version, 'antgroup'), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
+      global: name.split('-').join('_').toUpperCase(),
       ...c,
     };
   });
@@ -127,31 +126,7 @@ export default {
   request: {
     dataField: '',
   },
-  // chainWebpack(config: any) {
-  //   // config.plugin('HtmlWebpackPlugin').use(
-  //   //   new HtmlWebpackPlugin({
-  //   //     filename: 'home.html',
-  //   //     template: 'src/pages/Home/index.html',
-  //   //   }),
-  //   // );
-  //   // {
-  //   //   filename: 'home.html',
-  //   //   template: 'src/pages/Home/index.html',
-  //   // }
-  //   //   config.plugin('monaco-editor').use(
-  //   //     new MonacoWebpackPlugin({
-  //   //       languages: ['javascript', 'json'],
-  //   //     }),
-  //   //   );
-  //   // },
-  //   // chainWebpack: memo => {
-  //   //   // 更多配置 https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-  //   //   memo.plugin('monaco-editor-webpack-plugin').use(MonacoWebpackPlugin, [
-  //   //     // 按需配置
-  //   //     { languages: ['javascript', 'json'] },
-  //   //   ]);
-  //   //   return memo;
-  // },
+
   externals: {
     lodash: '_',
     react: 'React',
@@ -194,7 +169,6 @@ export default {
       return c.replace('min.js', 'css');
     }),
     `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
-    // `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css`,
   ],
   analyze: {
     analyzerMode: 'server',
@@ -205,23 +179,5 @@ export default {
     statsFilename: 'stats.json',
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
-  },
-  theme: {
-    black: '#000',
-    white: '#fff',
-    'primary-color': '#3056E3', // 全局主色
-    'link-color': '#3056E3', // 链接色
-    'success-color': '#52c41a', // 成功色
-    'warning-color': '#faad14', // 警告色
-    'error-color': '#f5222d', // 错误色
-    'font-size-base': ' 14px', // 主字号
-    'heading-color': ' rgba(0, 0, 0, 0.85)', // 标题色
-    'text-color': ' rgba(0, 0, 0, 0.65)', // 主文本色
-    'text-color-secondary': ' rgba(0, 0, 0, 0.45)', // 次文本色
-    'disabled-color': ' rgba(0, 0, 0, 0.25)', // 失效色
-    'border-radius-base': ' 2px', // 组件/浮层圆角
-    'border-color-base': '#d9d9d9', // 边框色
-    'box-shadow-base':
-      '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),0 9px 28px 8px rgba(0, 0, 0, 0.05)', // 浮层阴影
   },
 };

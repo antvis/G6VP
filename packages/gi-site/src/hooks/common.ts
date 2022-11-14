@@ -1,6 +1,7 @@
 import { GIAssets } from '@antv/gi-sdk';
 import beautify from 'js-beautify';
 import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
+import ThemeVars from '../components/ThemeVars';
 import type { Package } from '../loader';
 import { getAssetPackages } from '../loader';
 
@@ -21,6 +22,57 @@ export function beautifyCode(code: string) {
     e4x: false,
   });
 }
+
+export const getActivePackage = (activeAssets: GIAssets) => {
+  const { services, components, elements, layouts } = activeAssets;
+
+  const componentsMap = new Map<string, any>();
+  const elementsMap = new Map<string, any>();
+  const layoutsMap = new Map<string, any>();
+
+  if (components) {
+    Object.values(components).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = componentsMap.get(id);
+      if (val) {
+        componentsMap.set(id, [...val, c]);
+      } else {
+        componentsMap.set(id, [c]);
+      }
+    });
+  }
+  if (elements) {
+    Object.values(elements).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = elementsMap.get(id);
+      if (val) {
+        elementsMap.set(id, [...val, c]);
+      } else {
+        elementsMap.set(id, [c]);
+      }
+    });
+  }
+  if (layouts) {
+    Object.values(layouts).forEach(c => {
+      //@ts-ignore
+      const id = c.pkg;
+      const val = layoutsMap.get(id);
+      if (val) {
+        layoutsMap.set(id, [...val, c]);
+      } else {
+        layoutsMap.set(id, [c]);
+      }
+    });
+  }
+
+  return {
+    layoutsMap,
+    elementsMap,
+    componentsMap,
+  };
+};
 
 export const getActivePackageName = (activeAssets: GIAssets): string[] => {
   const { services, components, elements, layouts } = activeAssets;
@@ -50,14 +102,38 @@ export const getActivePackageName = (activeAssets: GIAssets): string[] => {
       match.add(c.pkg);
     });
   }
+
   return [...match.values()];
 };
 
 export const getConstantFiles = opts => {
-  const { config, id, engineId, engineContext, activeAssets } = opts;
+  const { config, id, engineId, engineContext, activeAssets, theme } = opts;
   // const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
   // const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
   // const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+  const THEME_STYLE = Object.entries(ThemeVars[theme])
+    //@ts-ignore
+    .reduce((acc, curr) => {
+      return [...acc, curr.join(':')];
+    }, [])
+    .join(';');
+
+  const HTML_HEADER = `
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GISDK EXPORT FILE</title>
+<!--- CSS -->
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${G6_VERSION}/dist/index.css" />
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
+<!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
+<!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/${theme}.css" /> 
+
+</head>
+`;
+
   const SERVER_ENGINE_CONTEXT = beautifyCode(
     JSON.stringify({
       GI_SITE_PROJECT_ID: id,
@@ -73,6 +149,7 @@ export const getConstantFiles = opts => {
       return k == c.name;
     });
   }) as Package[];
+  console.log(packages);
 
   const GI_ASSETS_PACKAGE = beautifyCode(JSON.stringify(Object.values(packages)));
 
@@ -80,6 +157,10 @@ export const getConstantFiles = opts => {
     SERVER_ENGINE_CONTEXT,
     GI_PROJECT_CONFIG,
     GI_ASSETS_PACKAGE,
+    THEME_STYLE: `style="${THEME_STYLE}"`,
+    HTML_HEADER,
+    packages,
+    THEME_VALUE: theme,
     // GI_SERVICES_OPTIONS,
     // GI_LOCAL_DATA,
     // GI_SCHEMA_DATA,
@@ -97,7 +178,9 @@ export const HTML_HEADER = `
 <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
 <!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
 <!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css" /> 
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/${
+  localStorage.getItem('@theme') || 'light'
+}.css" /> 
 
 </head>
 `;

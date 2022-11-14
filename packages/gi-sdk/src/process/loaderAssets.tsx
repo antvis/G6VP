@@ -9,27 +9,19 @@ const loadCss = options => {
   const link = document.createElement('link');
   link.type = 'text/css';
   link.href = options.id || options.url;
-  if (options.url) {
-    const href = options.url.replace('min.js', 'css');
-    link.href = href;
-  }
+  const href = options.url.replace('min.js', 'css');
+  link.href = href;
   link.rel = 'stylesheet';
   document.head.append(link);
 };
 
-const loadJS = options => {
+const loadJS = async (options: AssetPackage) => {
   return new Promise(resolve => {
     const script = document.createElement('script');
-    script.type = options.type || 'text/javascript';
-    script.async = !!options.async;
+    script.type = 'text/javascript';
     script.charset = 'UTF-8';
-    script.id = options.id || options.url;
-    if (options.url) {
-      script.src = options.url;
-    }
-    if (options.text) {
-      script.text = options.text;
-    }
+    script.id = options.global || options.url;
+    script.src = options.url;
     document.body.append(script);
     script.onload = () => {
       resolve(script);
@@ -40,11 +32,8 @@ const loadJS = options => {
   });
 };
 
-const loader = options => {
-  // const queries
-
+const loader = async (options: AssetPackage[]) => {
   return Promise.all([
-    //js
     ...options.map(opt => {
       const asset = window[opt.global];
       if (asset) {
@@ -52,7 +41,6 @@ const loader = options => {
       }
       return loadJS(opt).then(_res => {
         let assets = window[opt.global];
-
         if (!assets) {
           console.warn(`${opt.global} is not found`);
           return undefined;
@@ -79,7 +67,7 @@ const loader = options => {
   });
 };
 
-const appendInfo = (itemAssets, version, name) => {
+const appendInfo = (itemAssets, version: string, name: string) => {
   if (!itemAssets) {
     return {};
   }
@@ -106,12 +94,15 @@ export const loaderAssets = async (packages: AssetPackage[]) => {
  * 获取融合后的资产
  * @returns
  */
-export const loaderCombinedAssets = async (packages: AssetPackage[]) => {
-  const assets = await loader(packages).then(res => {
-    return res;
-  });
-
-  //@ts-ignore
+export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: any) => {
+  let assets;
+  if (ASSETS) {
+    assets = ASSETS;
+  } else {
+    assets = await loader(packages).then(res => {
+      return res;
+    });
+  }
   return assets.reduce(
     (acc, curr) => {
       const { components, version, name, elements, layouts, services } = curr;
@@ -151,4 +142,9 @@ export const loaderCombinedAssets = async (packages: AssetPackage[]) => {
       services: [],
     },
   );
+};
+
+export const getAssetPackages = () => {
+  const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+  return Object.values(packages) as AssetPackage[];
 };
