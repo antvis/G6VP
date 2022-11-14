@@ -38,7 +38,7 @@ const extra = () => {
           </li> */}
           <li
             className="disabled"
-            title={$i18n.get({ id: 'gi-portal.components.Navbar.ExpectedToOpenInAugust', dm: '预计8月份开放' })}
+            title={$i18n.get({ id: 'gi-portal.components.Navbar.ComingSoon', dm: '敬请期待' })}
           >
             {$i18n.get({ id: 'gi-portal.components.Navbar.Solution', dm: '解决方案' })}
           </li>
