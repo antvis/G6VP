@@ -1,5 +1,5 @@
 {
-  "name": "@antv/gi-http-server",
+  "name": "@antv/gi-httpservice",
   "version": "1.0.0",
   "description": "GraphInsight 对接社区引擎的 HTTPServer，基于 Egg 框架",
   "private": true,

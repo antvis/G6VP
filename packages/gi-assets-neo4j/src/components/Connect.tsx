@@ -66,7 +66,7 @@ const ConnectNeo4j: React.FC<ConnectProps> = ({ updateToken, token }) => {
             style={{
               border: '2px dashed #1665ff',
             }}
-            src="https://gw.alipayobjects.com/mdn/rms_3ff49c/afts/img/A*xqsZTKLVHPsAAAAAAAAAAAAAARQnAQ"
+            src="https://dist.neo4j.com/wp-content/uploads/20210423072428/neo4j-logo-2020-1.svg"
             alt=""
           />
         </Col>

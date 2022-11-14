@@ -10,26 +10,30 @@ export interface ConnectProps {
 export const connectNeo4jService = async (params: ConnectProps) => {
   const { uri, username, password, httpServerURL } = params;
 
-  const result = await request(`${httpServerURL}/api/neo4j/connect`, {
-    method: 'POST',
-    data: {
-      uri,
-      username,
-      password,
-      httpServerURL,
-    },
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    const result = await request(`${httpServerURL}/api/neo4j/connect`, {
+      method: 'POST',
+      data: {
+        uri,
+        username,
+        password,
+        httpServerURL,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  if (result.success) {
-    const { httpServerURL } = result.data;
-    localStorage.setItem('Neo4j_HTTP_SERVER', httpServerURL);
-    localStorage.setItem('Neo4j_CONNECT_URI', uri);
+    if (result.success) {
+      const { httpServerURL } = result.data;
+      localStorage.setItem('Neo4j_HTTP_SERVER', httpServerURL);
+      localStorage.setItem('Neo4j_CONNECT_URI', uri);
+    }
+
+    return result;
+  } catch (error) {
+    return null;
   }
-
-  return result;
 };
 
 export const queryGraphSchema = async () => {
