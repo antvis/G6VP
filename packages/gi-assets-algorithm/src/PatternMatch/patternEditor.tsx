@@ -284,20 +284,18 @@ const PatternEditor: React.FC<Props> = ({
   };
 
   const onSave = () => {
-    const saveData = (graphRef?.current as any).graph.save();
-
     //  若当前模式为空，则无法保存
-    if (!saveData?.nodes?.length) {
+    if (!graphData?.nodes?.length) {
       message.info(formatMessage({ id: 'save-failed-not-empty' }));
       return;
     }
     //  验证当前模式中每个节点和边有类型
-    const emptyNodes = saveData.nodes.filter(node => !node.nodeType);
+    const emptyNodes = graphData.nodes.filter(node => !node.nodeType);
     if (emptyNodes?.length) {
       message.info(formatMessage({ id: 'save-failed-no-empty-type' }));
       return;
     }
-    const emptyEdges = saveData.edges.filter(edge => !edge.edgeType);
+    const emptyEdges = graphData.edges.filter(edge => !edge.edgeType);
     if (emptyEdges?.length) {
       message.info(formatMessage({ id: 'save-failed-no-empty-type' }));
       return;
@@ -306,8 +304,8 @@ const PatternEditor: React.FC<Props> = ({
     // 验证当前模式图是连通的
     const traversedTag = {};
     breadthFirstSearch(
-      saveData,
-      saveData.nodes[0].id,
+      graphData,
+      graphData.nodes[0].id,
       {
         enter: ({ current }) => {
           traversedTag[current] = true;
@@ -315,12 +313,12 @@ const PatternEditor: React.FC<Props> = ({
       },
       false,
     );
-    if (Object.keys(traversedTag).length < saveData.nodes.length) {
+    if (Object.keys(traversedTag).length < graphData.nodes.length) {
       message.info(formatMessage({ id: 'save-failed-must-connected' }));
       return;
     }
 
-    savePattern(patternInfo?.id, saveData);
+    savePattern(patternInfo?.id, graphData);
     closeEditor();
   };
 
@@ -828,6 +826,7 @@ const PatternEditor: React.FC<Props> = ({
         edgeProperties={edgeProperties}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
+        container={graphRef?.current}
         saveItem={saveItem}
         onClose={() => {
           setEditItem({} as ItemBriefInfo);

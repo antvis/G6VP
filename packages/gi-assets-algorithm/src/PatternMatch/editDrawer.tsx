@@ -17,6 +17,7 @@ interface Props {
   edgeProperties: object;
   nodeTypes: TypeInfo[];
   edgeTypes: TypeInfo[];
+  container?: HTMLElement | undefined,
   saveItem: (type: 'node' | 'edge', data: any) => void;
   onClose: () => void,
 }
@@ -58,6 +59,7 @@ const EditDrawer: React.FC<Props> = ({
   edgeProperties,
   nodeTypes,
   edgeTypes,
+  container,
   saveItem,
   onClose,
 }) => {
@@ -428,7 +430,7 @@ const EditDrawer: React.FC<Props> = ({
     mask={false}
     style={{ textAlign: 'left' }}
     footerStyle={{ textAlign: 'right' }}
-    getContainer={false}
+    getContainer={container || false}
     footer={
       <>
         <Button onClick={cancelEdit}><FormattedMessage id="cancel"/></Button>

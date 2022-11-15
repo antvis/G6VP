@@ -207,19 +207,19 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     if (!extracting) return;
 
     const patternId = extracting;
-    const nodes = graph.findAllByState('node', ITEM_STATE.Selected) || [];
-    const edges = graph.findAllByState('edge', ITEM_STATE.Selected) || [];
-    if (!nodes.length) return;
+    const selectedNodeIds = (graph.findAllByState('node', ITEM_STATE.Selected) || []).map(node => node.getID());
+    const selectedEdgeIds = (graph.findAllByState('edge', ITEM_STATE.Selected) || []).map(node => node.getID());
+    if (!selectedNodeIds.length) return;
 
     // 验证当前模式图是连通的
-    const data: GraphinData = {
-      nodes: nodes.map(node => node.getModel() as any),
-      edges: edges.map(edge => edge.getModel() as any),
+    const patternGraphData: GraphinData = {
+      nodes: data.nodes.filter(node => selectedNodeIds.includes(node.id)),
+      edges: data.edges.filter(edge => selectedEdgeIds.includes(edge.id)),
     };
     const traversedTag = {};
     breadthFirstSearch(
-      data,
-      data.nodes[0].id,
+      patternGraphData,
+      patternGraphData.nodes[0].id,
       {
         enter: ({ current }) => {
           traversedTag[current] = true;
@@ -227,7 +227,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
       },
       false,
     );
-    if (Object.keys(traversedTag).length < data.nodes.length) {
+    if (Object.keys(traversedTag).length < patternGraphData.nodes.length) {
       message.info(formatMessage({ id: 'save-failed-must-connected' }));
       return;
     }
@@ -236,10 +236,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     // 抽取成模式
     const newIdMap = {};
     const pattern: GraphinData = { nodes: [], edges: [] };
-    data.nodes.forEach((node, i) => {
-      const { data: nodeData, id: dataId } = node;
-      const schema = schemaData.nodes.find(item => item.nodeType === nodeData.nodeType);
-      const { nodeType = nodeData.nodeType } = schema || {};
+    patternGraphData.nodes.forEach((node, i) => {
+      const { id: dataId, nodeType } = node;
       const id = createUuid();
       newIdMap[dataId] = { id, nodeType };
       pattern.nodes.push({
@@ -261,11 +259,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     // 抽取边的同时，验证当前模式图中所有边的端点都在 nodes 中
     let invalid = false;
 
-    for (let i = 0; i < data.edges.length; i++) {
-      const edge = data.edges[i];
-      const { id: dataId, source: dataSource, target: dataTarget, data: edgeData } = edge;
-      const schema = schemaData.edges.find(item => item.edgeType === edgeData.edgeType);
-      const { edgeType = edgeData.edgeType } = schema || {};
+    for (let i = 0; i < patternGraphData.edges.length; i++) {
+      const edge = patternGraphData.edges[i];
+      const { id: dataId, source: dataSource, target: dataTarget, edgeType } = edge;
       if (!newIdMap[dataSource] || !newIdMap[dataTarget]) {
         invalid = true;
         break;
