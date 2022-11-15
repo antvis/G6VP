@@ -9,12 +9,13 @@ import {
 } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
 import { Button, Dropdown, Menu, Select } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
+import HistogramOptions from './Charts/HistogramOptions';
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
-import { getHistogramData,  getChartData } from './utils';
+import { getChartData, getHistogramData } from './utils';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -164,26 +165,25 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     }
   }, [source, filterCriteria.prop, filterCriteria.elementType, filterCriteria.analyzerType]);
 
-  const menu =  (
-      <Menu
-        onClick={changeChartType}
-        items={[
-          {
-            key: 'COLUMN',
-            label: <BarChartOutlined />,
-          },
-          {
-            key: 'PIE',
-            label: <PieChartOutlined />,
-          },
-          {
-            key: 'SELECT',
-            label: <SelectOutlined />,
-          },
-        ]}
-      />
-    );
- 
+  const menu = (
+    <Menu
+      onClick={changeChartType}
+      items={[
+        {
+          key: 'COLUMN',
+          label: <BarChartOutlined />,
+        },
+        {
+          key: 'PIE',
+          label: <PieChartOutlined />,
+        },
+        {
+          key: 'SELECT',
+          label: <SelectOutlined />,
+        },
+      ]}
+    />
+  );
 
   return (
     <div key={filterCriteria.id} className="gi-filter-panel-group">
@@ -229,7 +229,8 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             <Button icon={analyzerType2Icon[filterCriteria.analyzerType!]} type="text"></Button>
           </Dropdown>
         )}
-        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{padding: "4px"}}>
+        <HistogramOptions filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} />
+        <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{ padding: '4px' }}>
           <DeleteOutlined className="gi-filter-panel-delete" />
         </Button>
       </div>
