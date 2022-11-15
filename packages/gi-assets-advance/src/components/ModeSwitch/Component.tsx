@@ -96,8 +96,8 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
               value={state.mode}
               options={options}
               onChange={onChange}
-              // onResize={undefined}
-              // onResizeCapture={undefined}
+              onResize={undefined}
+              onResizeCapture={undefined}
             ></Segmented>
           </div>
         </nav>,
