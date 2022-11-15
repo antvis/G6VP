@@ -1,4 +1,3 @@
-// import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons';
 import { Segmented } from 'antd';
 import React from 'react';
 import { DEFAULT_ANTD_CSS_LINKS, DEFAULT_THEME_VARS } from './const';
@@ -21,10 +20,6 @@ export interface ThemeSwitchProps {
   }[];
 }
 
-// const DEFAULT_ANTD_CSS_LINKS = {
-//   dark: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/dark.css`,
-//   light: `https://cdn.jsdelivr.net/npm/${name}@${version}/dist/light.css`,
-// };
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options, style } = props;
   const { dark: darkVars, light: lightVars } = themeVars || DEFAULT_THEME_VARS;
@@ -83,6 +78,7 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   };
   return (
     <div className="theme-switch" style={style}>
+      {/** @ts-ignore */}
       <Segmented onChange={handleChange} value={theme} options={options || ['light', 'dark']} />
     </div>
   );
