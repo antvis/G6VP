@@ -1,7 +1,7 @@
 import GISDK, { utils } from '@antv/gi-sdk';
 import React from 'react';
 import { getProjectList } from '../../services';
-import { queryAssets } from '../../services/assets.market';
+import { queryAssets } from '../../services/assets';
 import { IS_LOCAL_ENV } from '../../services/const';
 import { querySharedAnalysisById } from '../../services/share';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';

@@ -36,7 +36,7 @@
     "use-immer": "^0.7.0"
   },
   "peerDependencies": {
-    "antd": "latest",
+    "antd": "4.x",
     "react": "17.x"
   },
   "publishConfig": {

@@ -6,6 +6,7 @@ import type { Package } from '../loader';
 import { getAssetPackages } from '../loader';
 
 export function beautifyCode(code: string) {
+  //@ts-ignore
   return beautify(code, {
     indent_size: 2,
     indent_char: ' ',

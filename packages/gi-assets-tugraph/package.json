@@ -24,14 +24,14 @@
     "test": "jest"
   },
   "resolutions": {
-    "antd": "latest"
+    "antd": "4.x"
   },
   "dependencies": {
     "@alipay/graphinsight": "latest",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
     "@antv/graphin-icons": "^1.0.0",
-    "antd": "latest",
+    "antd": "4.x",
     "codemirror": "^5.25.0",
     "cypher-editor-support": "^1.1.10",
     "monaco-editor": "^0.34.0",

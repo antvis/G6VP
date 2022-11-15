@@ -36,7 +36,7 @@
   },
   "peerDependencies": {
     "@antv/graphin": "2.x",
-    "antd": "latest",
+    "antd": "4.x",
     "react": "17.x"
   },
   "publishConfig": {

@@ -5,7 +5,7 @@ import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { getProjectById } from '../../services/';
-import { queryAssets } from '../../services/assets.market';
+import { queryAssets } from '../../services/assets';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getServicesByConfig } from './getAssets';

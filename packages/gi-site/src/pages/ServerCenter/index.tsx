@@ -1,7 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { Card } from 'antd';
 import * as React from 'react';
-import { getCombinedAssets } from '../../loader';
+import { queryAssets } from '../../services/assets';
 import Cards from './Cards';
 import './index.less';
 import ServiceTable from './Table';
@@ -25,7 +25,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   };
 
   React.useEffect(() => {
-    getCombinedAssets().then(res => {
+    queryAssets().then(res => {
       const servers = utils.getCombineServer(res.services);
 
       const tables = servers.map(server => {

@@ -1,36 +1,9 @@
-import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
-import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
-import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
-import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
-import * as GI_ASSETS_GS from '@antv/gi-assets-graphscope';
-import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
-import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
-
 import { IS_LOCAL_ENV } from './services/const';
 
-import { getPackages, isDev, OFFICIAL_PACKAGES } from '../.umirc';
+import { getPackages, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 业务包
-export const BIZ_PACKAGES = !IS_LOCAL_ENV
-  ? getPackages([
-      // {
-      //   name: '@alipay/gi-assets-yuque',
-      //   version: '1.0.0',
-      // },
-      // {
-      //   name: '@alipay/gi-assets-shaseng',
-      //   version: '1.1.0',
-      // },
-      // {
-      //   name: '@alipay/gi-assets-gs',
-      //   version: '1.8.0',
-      // },
-      // {
-      //   name: '@alipay/gi-assets-akg',
-      //   version: '1.2.7',
-      // },
-    ])
-  : [];
+export const BIZ_PACKAGES = !IS_LOCAL_ENV ? getPackages([]) : [];
 
 // setTimeout(() => {
 //   // !isDev && window.console.clear();
@@ -39,46 +12,6 @@ export const BIZ_PACKAGES = !IS_LOCAL_ENV
 //     'color: #ddd; font-size: 10px; font-style: italic;',
 //   );
 // }, 3000);
-const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
-  return {
-    ...acc,
-    [curr.global]: curr,
-  };
-}, {});
-const LOCAL_ASSETS = [
-  /** 内置的资产 */
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_BASIC'],
-    ...GI_ASSETS_BASIC,
-  },
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
-    ...GI_ASSETS_ADVANCE,
-  },
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ALGORITHM'],
-    ...GI_ASSETS_ALGORITHM,
-  },
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
-    ...GI_ASSETS_SCENE,
-  },
-  /** 内置 GS 单机版 */
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GS'],
-    ...GI_ASSETS_GS,
-  },
-  // 内置 Neo4j
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_NEO4J'],
-    ...GI_ASSETS_NEO4J,
-  },
-  // 内置 Neo4j
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
-    ...GI_ASSETS_GRAPHSCOPE,
-  },
-];
 
 export interface Package {
   name: string;
@@ -179,12 +112,6 @@ export const loader = options => {
 };
 
 export const getAssets = async () => {
-  if (isDev) {
-    return new Promise(resolve => {
-      resolve(LOCAL_ASSETS);
-    });
-  }
-
   const packages = getAssetPackages();
   return loader(packages).then(res => {
     return res;
