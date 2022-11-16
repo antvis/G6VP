@@ -13,7 +13,8 @@
     "module": "esnext",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "outDir": "dist"
   },
   "include": ["src"]
 }
