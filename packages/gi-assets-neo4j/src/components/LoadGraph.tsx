@@ -35,7 +35,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
   const queryCurrentSchema = async () => {
     const schemaData = (await queryGraphSchema()) as GraphSchemaData;
-    debugger;
+
     updateState(draft => {
       if (schemaData.nodes && schemaData.edges) {
         draft.schemaData = schemaData;
@@ -49,7 +49,6 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
   const handleSubmit = () => {
     if (updateGISite) {
-      debugger;
       updateGISite({
         engineId: 'Neo4j',
         schemaData: {

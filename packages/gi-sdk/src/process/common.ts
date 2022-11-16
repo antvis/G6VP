@@ -14,6 +14,14 @@ export const isStyles = nodes => {
   }
   return nodes.every(node => node.style);
 };
+export const createUuid = () =>
+  'xxxxxxxxxxxx'.replace(/[x]/g, c => {
+    // eslint-disable-next-line
+    const r = (Math.random() * 16) | 0;
+    // eslint-disable-next-line
+    const v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 
 export const getPositionStyles = (placement = 'LT', offset: number[] = [24, 64]) => {
   const styles: { [key: string]: string } = {
