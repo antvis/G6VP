@@ -24,6 +24,7 @@
   "gi-portal.src.pages.const.GetStartedAtZeroCost": "Start development at zero cost, focus on what you care about",
   "gi-portal.src.pages.const.Developer": "Developer",
   "gi-portal.components.Navbar.ExpectedToOpenInAugust": "Expected to open in August",
+  "gi-portal.components.Navbar.ComingSoon": "Coming soon",
   "gi-portal.src.pages.const.InGraphAnalysisDataNeeds": "In the analysis of graphs, data needs to be frequently associated, grouped, filtered, drilled down, and queried. It is easy for users to fork their thinking, lose inspiration or even misuse them. GraphInsight provides rich analysis assets such as layout cache, multi-canvas, undo-redo, analysis gallery, filter query, etc., so that your analysis process can be leisurely",
   "gi-portal.components.Navbar.PracticeCase": "Practice Case",
   "gi-portal.src.pages.const.GraphAnalysisApplication": "A ",

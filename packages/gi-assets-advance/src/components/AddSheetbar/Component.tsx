@@ -28,7 +28,7 @@ const AddSheetbar: React.FunctionComponent<AddSheetbarProps> = props => {
       return;
     }
     if (!handleAddSheetbar) {
-      message.warn('请在默认画布中使用改功能，暂不支持其他画布的「添加页签」功能，预计7月份支持');
+      message.warn('请在默认画布中使用该功能，暂不支持其他画布的「添加页签」功能');
     }
     handleAddSheetbar &&
       handleAddSheetbar({
