@@ -12,14 +12,10 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
   const {
     histogramData = [{}],
     //@ts-ignore
-    chartOptions = {
-      min: 0,
-      max: 8000,
-      binWidth: 500,
-    },
+    histogramOptions,
   } = filterCriteria;
-  console.log('filterCriteria', filterCriteria);
-  const { min, max, binWidth } = chartOptions;
+
+  const { min, max, binWidth, isCustom } = histogramOptions || {};
 
   useEffect(() => {
     G2.registerInteraction('element-highlight', {
@@ -28,6 +24,33 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
   }, []);
 
   useEffect(() => {
+    const binOptions = isCustom
+      ? {
+          binWidth: binWidth,
+          meta: {
+            range: {
+              min: min,
+              max: max,
+              nice: true,
+            },
+            count: {
+              // type: 'log',
+              nice: true,
+            },
+          },
+        }
+      : {
+          meta: {
+            range: {
+              nice: true,
+            },
+            count: {
+              // type: 'log',
+              nice: true,
+            },
+          },
+        };
+
     const histogramPlot = new Histogram(`${filterCriteria.id}-chart-container`, {
       data: histogramData,
       height: 200,
@@ -44,18 +67,7 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
           },
         },
       },
-      binWidth: binWidth,
-      meta: {
-        range: {
-          min: min,
-          max: max,
-          nice: true,
-        },
-        count: {
-          // type: 'log',
-          nice: true,
-        },
-      },
+      ...binOptions,
     });
 
     histogramPlot.on('element:click', ({ view }) => {
@@ -77,7 +89,7 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
     // 初次渲染时，处于筛选范围内的图表元素高亮
     histogramPlot.setState('active', (item: any) => {
       if (!filterCriteria.range || !filterCriteria.isFilterReady) return false;
-      console.log('active', filterCriteria.range, item.range);
+
       for (let arr of filterCriteria.range) {
         const min = arr[0];
         const max = arr[1];
@@ -92,7 +104,6 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
     });
 
     histogramPlot.setState('inactive', (item: any) => {
-      console.log('inactive', filterCriteria.range, item.range);
       if (!filterCriteria.range || !filterCriteria.isFilterReady) return false;
       for (let arr of filterCriteria.range) {
         const min = arr[0];
@@ -110,7 +121,7 @@ const HistogramChart: React.FC<IHistogramChartProps> = props => {
     return () => {
       histogramPlot.destroy();
     };
-  }, [histogramData, min, max, binWidth]);
+  }, [histogramData, min, max, binWidth, isCustom]);
 
   return <div id={`${filterCriteria.id}-chart-container`} />;
 };

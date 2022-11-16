@@ -55,6 +55,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     if (elementProps[prop] === 'number') {
       analyzerType = 'HISTOGRAM';
       updateFilterCriteria(id, {
+        ...filterCriteria,
         id,
         analyzerType,
         isFilterReady: false,
@@ -65,6 +66,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else if (elementProps[prop] === 'boolean') {
       analyzerType = 'Column';
       updateFilterCriteria(id, {
+        ...filterCriteria,
         id,
         isFilterReady: false,
         elementType,
@@ -88,6 +90,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         analyzerType = 'SELECT';
       }
       updateFilterCriteria(id, {
+        ...filterCriteria,
         id,
         isFilterReady: false,
         elementType,
@@ -100,6 +103,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else if (elementProps[prop] === 'date') {
       analyzerType = 'DATE';
       updateFilterCriteria(id, {
+        ...filterCriteria,
         id,
         isFilterReady: false,
         elementType,
@@ -110,6 +114,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     } else {
       analyzerType = 'NONE';
       updateFilterCriteria(id, {
+        ...filterCriteria,
         id,
         isFilterReady: false,
         elementType,

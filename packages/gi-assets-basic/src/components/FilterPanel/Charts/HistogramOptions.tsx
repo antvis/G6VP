@@ -10,13 +10,11 @@ interface HistogramOptionsProps {
 const Content = (props: HistogramOptionsProps & { onClose: () => void }) => {
   const { filterCriteria, updateFilterCriteria, onClose } = props;
   const onFinish = e => {
-    console.log(e);
-
-    console.log('filterCriteria', filterCriteria);
     //@ts-ignore
     updateFilterCriteria(filterCriteria.id, {
       ...filterCriteria,
-      chartOptions: {
+      histogramOptions: {
+        isCustom: true,
         binWidth: e.binWidth,
         min: e.min,
         max: e.max,
@@ -24,24 +22,29 @@ const Content = (props: HistogramOptionsProps & { onClose: () => void }) => {
     });
     onClose && onClose();
   };
+  const { binWidth, min, max } = filterCriteria.histogramOptions || {};
   return (
     <Form
       name="basic"
       labelCol={{ span: 10 }}
       wrapperCol={{ span: 14 }}
-      initialValues={{ remember: true }}
+      initialValues={{
+        binWidth,
+        min,
+        max,
+      }}
       onFinish={onFinish}
       autoComplete="off"
       style={{ width: '250px' }}
     >
-      <Form.Item label="范围最小值" name="min" rules={[{ required: true, message: 'Please input your username!' }]}>
+      <Form.Item label="范围最小值" name="min">
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
 
-      <Form.Item label="范围最大值" name="max" rules={[{ required: true, message: 'Please input your password!' }]}>
+      <Form.Item label="范围最大值" name="max">
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
-      <Form.Item label="分箱值" name="binWidth" rules={[{ required: true, message: 'Please input your password!' }]}>
+      <Form.Item label="分箱值" name="binWidth">
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
 

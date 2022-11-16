@@ -193,6 +193,7 @@ export const highlightSubGraph = (graph, data: GraphinData) => {
   });
   source.edges.forEach(edge => {
     const { aggregate, id } = edge;
+
     let hasMatch = false;
     /** 考虑聚合边的情况，aggregate 数据中的 edgeId 匹配上一个就可以高亮整个聚合边 */
     if (aggregate) {
@@ -206,6 +207,7 @@ export const highlightSubGraph = (graph, data: GraphinData) => {
     }
 
     if (hasMatch) {
+      console.log('match edge', edge);
       graph.setItemState(edge.id, 'disabled', false);
       graph.setItemState(edge.id, 'selected', true);
     } else {
