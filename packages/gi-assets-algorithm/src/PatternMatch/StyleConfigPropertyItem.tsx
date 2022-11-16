@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Row, Col, Select, Input, Form } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import Util from '../utils';
 import { formatMessage } from './locale';
 import { SPLITOR } from './registerMeta';
@@ -120,7 +121,7 @@ const StyleConfigPropertyItem: React.FC<Props> = ({
       }
     </Col>}
     <Col span={1} offset={configColor ? 0 : 1}>
-      <i className="icon-delete iconfont kg-style-config-property-item-delete" onClick={() => deleteItem(pid)} />
+      <DeleteOutlined onClick={() => deleteItem(pid)} />
     </Col>
   </Row>) : <div key={pid}></div>
 };
