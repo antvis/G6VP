@@ -3,7 +3,7 @@ import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Col, Drawer, Form, Input, message, Modal, Popconfirm, Row, Select, Table, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import GremlinEditor from '../GremlinQuery/GremlinEditor';
+import GremlinEditor from 'ace-gremlin-editor';
 import './index.less';
 
 const { Option } = Select;
@@ -286,7 +286,7 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
             initialValue={initValue}
             height={150}
             isReadOnly={true}
-            onSelectionChange={handleValueSelectChange}
+            onSelectChange={handleValueSelectChange}
           />
         </Col>
         <Col span={24} className="title">
