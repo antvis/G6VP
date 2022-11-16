@@ -4,7 +4,7 @@ import { Button, Divider, notification } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
-import GremlinEditor from './GremlinEditor';
+import GremlinEditor from 'ace-gremlin-editor';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -124,6 +124,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
             <GremlinEditor
               initialValue={editorValue}
               height={height}
+              gremlinId="gi-assets-gremlin"
               onValueChange={value => handleChangeEditorValue(value)}
             />
           </div>
