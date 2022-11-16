@@ -32,13 +32,7 @@ export default context => {
       },
       default: defaultschemaService,
     },
-    aggregate: {
-      title: '汇总边',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: true,
-    },
+
     // 注意⚠️：GI_INITIALIZER 是必须的属性字段，千万不要漏掉
     GI_INITIALIZER: {
       title: '默认启动',
@@ -49,6 +43,13 @@ export default context => {
         disabled: true,
       },
       default: true,
+    },
+    aggregate: {
+      title: '汇总边',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
     },
   };
 };

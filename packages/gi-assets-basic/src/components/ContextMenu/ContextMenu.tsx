@@ -45,7 +45,7 @@ const ContextMenuContainer = props => {
       default:
         componentIds = nodeMenuComponents;
     }
-    console.log('components', components, componentIds);
+
     const useComponents = componentIds
       .map(name => components.find(component => component.id === name))
       .filter(component => !!component);

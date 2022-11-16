@@ -70,6 +70,70 @@ const registerMeta = ({ schemaData }) => {
       ],
       default: 'and',
     },
+    histogramOptions: {
+      type: 'object',
+      'x-decorator': 'FormItem',
+      'x-component': 'FormCollapse.CollapsePanel',
+      'x-component-props': {
+        header: '分箱设置',
+      },
+      properties: {
+        isCustom: {
+          title: '自定义分箱',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: false,
+          'x-reactions': [
+            {
+              target: 'histogramOptions.min',
+              fulfill: {
+                state: {
+                  visible: '{{$self.value}}',
+                },
+              },
+            },
+            {
+              target: 'histogramOptions.max',
+              fulfill: {
+                state: {
+                  visible: '{{$self.value}}',
+                },
+              },
+            },
+            {
+              target: 'histogramOptions.binWidth',
+              fulfill: {
+                state: {
+                  visible: '{{$self.value}}',
+                },
+              },
+            },
+          ],
+        },
+        min: {
+          title: '区间最小值',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: null,
+        },
+        max: {
+          title: '区间最大值',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: null,
+        },
+        binWidth: {
+          title: '分箱值',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: null,
+        },
+      },
+    },
     ...metas,
   };
 

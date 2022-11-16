@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
 import './index.less';
-import { IFilterCriteria } from './type';
+import { HistogramOpt, IFilterCriteria } from './type';
 import { filterGraphData, highlightSubGraph } from './utils';
 
 const { isStyles } = utils;
@@ -16,10 +16,11 @@ export interface FilterPanelProps {
   highlightMode?: boolean;
   filterLogic: 'and' | 'or';
   filterKeys: string[];
+  histogramOptions?: HistogramOpt;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys } = props;
+  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys, histogramOptions } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
 
@@ -46,6 +47,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     const filterCriteria = {
       id,
       defaultKey,
+      histogramOptions,
       isFilterReady: false,
     };
 
@@ -90,6 +92,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         const filterCriteria = {
           id,
           defaultKey,
+          histogramOptions,
           isFilterReady: false,
         };
         return filterCriteria;
