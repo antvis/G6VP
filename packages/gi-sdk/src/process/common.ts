@@ -23,6 +23,15 @@ export const createUuid = () =>
     return v.toString(16);
   });
 
+export const debounce = (fn, ms = 0) => {
+  let timeoutId;
+  return function (...args) {
+    clearTimeout(timeoutId);
+    //@ts-ignores
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+  };
+};
+
 export const getPositionStyles = (placement = 'LT', offset: number[] = [24, 64]) => {
   const styles: { [key: string]: string } = {
     position: 'absolute',
