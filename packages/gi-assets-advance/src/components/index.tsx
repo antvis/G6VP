@@ -8,18 +8,18 @@
 // import PatternMatch from './PatternMatch';
 // import SearchBar from './SearchBar';
 import AddSheetbar from './AddSheetbar';
-import GremlinQuery from './GremlinQuery';
-import Sheetbar from './Sheetbar';
-import SnapshotGallery from './SnapshotGallery';
-import StyleSetting from './StyleSetting';
-import TableMode from './TableMode';
-import ThemeSetting from './ThemeSetting';
-import ModeSwitch from './ModeSwitch';
-import StructAnalysis from './StructAnalysis';
-import SubGraphLayout from './SubGraphLayout';
-import TemplateQuery from './TemplateQuery';
 import CypherQuery from './CypherQuery';
 import GraphAnnotation from './GraphAnnotation';
+import GremlinQuery from './GremlinQuery';
+import ModeSwitch from './ModeSwitch';
+import Sheetbar from './Sheetbar';
+import SnapshotGallery from './SnapshotGallery';
+import StructAnalysis from './StructAnalysis';
+import StyleSetting from './StyleSetting';
+import SubGraphLayout from './SubGraphLayout';
+import TableMode from './TableMode';
+import TemplateQuery from './TemplateQuery';
+import ThemeSetting from './ThemeSetting';
 
 export {
   StyleSetting,
@@ -34,5 +34,5 @@ export {
   StructAnalysis,
   TemplateQuery,
   CypherQuery,
-  GraphAnnotation
+  GraphAnnotation,
 };
