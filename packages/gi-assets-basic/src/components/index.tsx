@@ -26,6 +26,7 @@ import Toolbar from './Toolbar';
 import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
 // import ContentContainer from './ContentContainer';
+import ChartAnalysis from './ChartAnalysis';
 import ForceSimulation from './ForceSimulation';
 import Initializer from './Initializer';
 import Overview from './OverView';
@@ -79,4 +80,5 @@ export {
   GrailLayout,
   SideSelectTabs,
   // ContentContainer,
+  ChartAnalysis,
 };
