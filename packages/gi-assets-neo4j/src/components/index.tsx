@@ -1,10 +1,9 @@
 import { GISiteParams } from '@antv/gi-sdk';
-import { Select, Button } from 'antd';
+import { Select } from 'antd';
 import React from 'react';
 import Connect from './Connect';
-import LoadGraph from './LoadGraph';
 import './index.less';
-import { queryGraphSchema } from '../services/Neo4jService';
+import LoadGraph from './LoadGraph';
 
 const { Option } = Select;
 export interface GraphModelProps {
@@ -25,16 +24,10 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ updateGISite }) => {
     });
   };
 
-  const query = async () => {
-    const result = await queryGraphSchema();
-    console.log(result);
-  };
-
   return (
     <div>
       <Connect updateToken={updateToken} token={connectURI} />
       {connectURI && <LoadGraph updateGISite={updateGISite} />}
-      <Button onClick={query}>测试查询</Button>
     </div>
   );
 };

@@ -29,14 +29,7 @@ const CARD_MAP = {
     group: '大安全前端团队',
     color: '#8171ff',
   },
-  GI_ASSETS_GS: {
-    cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ',
-    title: '图计算引擎（分布式）',
-    desc: '包含运维管理，集群管理，数据管理，部署概览等资产模块',
-    group: 'GraphScope 官方',
-    color: '#2281f2',
-  },
-  GI_ASSETS_GS_STANDALONE: {
+  GI_ASSETS_GRAPHSCOPE: {
     cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ',
     title: '图计算引擎（单机版）',
     desc: '包含运维管理，集群管理，数据管理，部署概览等资产模块',
@@ -62,6 +55,13 @@ const CARD_MAP = {
     title: '蚂蚁图数据库',
     desc: '包含 Gremlin查询，高级查询，可视化建模等资产模块',
     group: 'GeaMaker 前端团队',
+    color: '#091e35',
+  },
+  GI_ASSETS_NEO4J: {
+    cover: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*6NRERpsvzMcAAAAAAAAAAAAADmJ7AQ/original',
+    title: 'Neo4j 图数据库',
+    desc: '包含 Gremlin查询，高级查询，可视化建模等资产模块',
+    group: 'GraphInsight 前端团队',
     color: '#091e35',
   },
   GI_ASSETS_BASIC: {
@@ -102,6 +102,7 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
       <Row gutter={[16, 16]}>
         {data.map(item => {
           const { global, name, url, version } = item;
+          console.log('item', item);
           const extraInfo = CARD_MAP[global] || {
             title: name,
             desc: `全局变量为: ${global}`,

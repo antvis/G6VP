@@ -1,8 +1,8 @@
-import * as Neo4jService from './Neo4jService';
-import * as LanguageQueryService from './LanguageQueryService';
-import * as NeighborsQuery from './NeighborsQuery';
 import ServerComponent from '../components';
 import * as Initializer from './Initializer';
+import * as LanguageQueryService from './LanguageQueryService';
+import * as NeighborsQuery from './NeighborsQuery';
+import * as Neo4jService from './Neo4jService';
 
 export default {
   id: 'Neo4j',
@@ -10,8 +10,8 @@ export default {
   title: 'Neo4j 引擎服务',
   desc: 'GI 团队默认提供的 Neo4j 计算引擎资产包',
   type: 'database',
-  cover: 'https://dist.neo4j.com/wp-content/uploads/20210423072428/neo4j-logo-2020-1.svg',
-  group: 'GI 团队',
+  cover: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*6NRERpsvzMcAAAAAAAAAAAAADmJ7AQ/original',
+  group: 'GraphInsight 团队',
   component: ServerComponent,
   services: {
     ...Initializer,

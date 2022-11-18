@@ -20,17 +20,19 @@ const { TabPane } = Tabs;
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { visible, handleClose } = props;
   const { context, updateGISite } = useContext();
-  // 补充一个GI的ServerComponent实现：FileServerEngine
-  const CustomServer = [...utils.getCombineServer([...context.activeAssets.services, FileServerEngine])];
+
+  const CustomServer = [...utils.getCombineServer([FileServerEngine, ...context.activeAssets.services])];
 
   return (
     <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
       <Tabs tabPosition="left">
         {CustomServer.map(server => {
-          //@ts-ignore
-          const { component: ServerComponent } = server;
+          const { component: ServerComponent, name } = server;
+          if (!ServerComponent) {
+            return null;
+          }
+          const { icon } = TYPE_ICONS[server.type || 'api'];
 
-          const { icon, name } = TYPE_ICONS[server.type || 'api'];
           const TabTitle = (
             <div
               style={{
