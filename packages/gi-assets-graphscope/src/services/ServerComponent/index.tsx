@@ -205,8 +205,8 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) =>
   const formInitValue = {
     type: 'LOCAL',
     isStringType: true,
-    engineServerURL: ['http://11.166.85.48:9527'],
-    httpServerURL: ['http://127.0.0.1:7001'], //'https://graphinsight.antgroup-inc.cn',
+    engineServerURL: ['https://gi-api.graphscope.app'],
+    httpServerURL: [' https://gi-api.graphscope.app'], //'https://graphinsight.antgroup-inc.cn',
     nodeConfigList: [
       {
         nodeType: '',

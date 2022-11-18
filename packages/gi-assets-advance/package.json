@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "description": "GraphInsight 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -23,14 +23,14 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/algorithm": "^0.1.17",
     "@antv/g2plot": "^2.4.4",
-    "@antv/gi-common-components": "*",
-    "@antv/gi-sdk": "*",
+    "@antv/gi-common-components": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/util": "^3.2.5",
     "ace-gremlin-editor": "^0.0.14",
