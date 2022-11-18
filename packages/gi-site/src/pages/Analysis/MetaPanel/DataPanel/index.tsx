@@ -29,9 +29,11 @@ const columnsData = {
 /** 临时方案 */
 const ENGINE_TYPE = {
   GI: { icon: 'icon-file-excel', name: '本地文件' },
+  GS: { icon: 'icon-file-database', name: '图数据库' },
+  TuGraph: { icon: 'icon-file-database', name: '图数据库' },
+  Neo4j: { icon: 'icon-file-database', name: '图数据库' },
   AKG: { icon: 'icon-file-api', name: '在线接口' },
   SHASENG: { icon: 'icon-file-api', name: '在线接口' },
-  GS: { icon: 'icon-file-database', name: '图数据库' },
 };
 
 const ServiceHeader = props => {
@@ -70,19 +72,6 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
       ></ActionList>
     );
   }
-  if (engineId === 'AKG' || engineId === 'SHASENG') {
-    EngineView = (
-      <ActionList
-        title={`${name}: ${engineId}`}
-        extra={
-          <Space>
-            <Icon type={icon} style={{ fontSize: '16px' }} />
-            <CheckCircleOutlined style={{ color: 'green' }} />
-          </Space>
-        }
-      ></ActionList>
-    );
-  }
   if (engineId === 'GI' || (!engineId && context.data.nodes.length > 0)) {
     EngineView = inputData.map((d, i) => {
       return (
@@ -98,6 +87,18 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
         ></ActionList>
       );
     });
+  } else {
+    EngineView = (
+      <ActionList
+        title={`${name}: ${engineId}`}
+        extra={
+          <Space>
+            <Icon type={icon} style={{ fontSize: '16px' }} />
+            <CheckCircleOutlined style={{ color: 'green' }} />
+          </Space>
+        }
+      ></ActionList>
+    );
   }
 
   return (

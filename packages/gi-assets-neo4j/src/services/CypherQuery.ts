@@ -1,7 +1,7 @@
-import request from 'umi-request';
 import { notification } from 'antd';
+import request from 'umi-request';
 
-export const LanguageQueryService = {
+export const CypherQuery = {
   name: 'Neo4j Cypher 查询',
   service: async (params = {}) => {
     const { value } = params as any;

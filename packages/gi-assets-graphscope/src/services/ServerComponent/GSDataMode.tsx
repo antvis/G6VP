@@ -1,12 +1,12 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Alert, Button, Col, Form, Radio, Row, Steps, message, Modal, Spin, Upload } from 'antd';
+import { Alert, Button, Col, Form, message, Modal, Radio, Row, Steps } from 'antd';
 import React, { useState } from 'react';
 import { useImmer } from 'use-immer';
-import { connectGraphScopeService, closeGraphInstance } from '../GraphScopeService';
-import LocalFilePanel from './LocalFile';
+import { closeGraphInstance, connectGraphScopeService } from '../GraphScopeService';
 import ChinaVisDataPanel from './ChinaVisDataPanel';
 import ConnectGraphScope from './ConnectGS';
 import './index.less';
+import LocalFilePanel from './LocalFile';
 const { Item } = Form;
 const { confirm } = Modal;
 
@@ -34,7 +34,7 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
     closeLoading: false,
   });
 
-  const [modeType, setModeType] = useState<'LOCAL' | 'DEMO'>('LOCAL');
+  const [modeType, setModeType] = useState<'LOCAL' | 'DEMO'>('DEMO');
 
   const next = () => {
     setCurrent(draft => {
@@ -170,8 +170,8 @@ const GSDataMode: React.FunctionComponent<LocalFileProps> = props => {
             <Col span={24}>
               <Item label="模式" name="type" style={{ marginBottom: 8 }}>
                 <Radio.Group defaultValue="LOCAL" onChange={handleModelType}>
-                  <Radio value="LOCAL">本地文件</Radio>
                   <Radio value="DEMO">示例数据</Radio>
+                  <Radio value="LOCAL">本地文件</Radio>
                   <Radio value="OSS" disabled>
                     OSS
                   </Radio>

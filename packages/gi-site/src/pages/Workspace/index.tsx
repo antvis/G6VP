@@ -91,9 +91,9 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   React.useEffect(() => {
     const GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-    const { GI_ASSETS_GS } = GI_ASSETS_PACKAGES;
-    if (GI_ASSETS_GS) {
-      loader([GI_ASSETS_GS]).then(res => {
+    const { GI_ASSETS_GS_ODPS } = GI_ASSETS_PACKAGES;
+    if (GI_ASSETS_GS_ODPS) {
+      loader([GI_ASSETS_GS_ODPS]).then(res => {
         const assets_deploys = res.map(item => {
           return {
             id: 'deployed',

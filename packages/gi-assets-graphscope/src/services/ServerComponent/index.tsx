@@ -151,16 +151,15 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) =>
 
       // 关闭弹框
       onClose();
-      const schemaData = await queryGraphSchema();
+      const schemaData = (await queryGraphSchema()) || { nodes: [], edges: [] };
       console.log('schemaData', schemaData);
       if (updateGISite) {
         updateGISite({
-          schemaData: { nodes: [], edges: [] },
-          engineId: 'GS_Standalone',
+          engineId: 'GS',
+          schemaData: schemaData,
           engineContext: {},
         });
       }
-
       return true;
     }
 

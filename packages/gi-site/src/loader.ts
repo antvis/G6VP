@@ -20,16 +20,25 @@ export interface Package {
   version: string;
 }
 
+const DEFAULT_PACKAGES_MAP: Record<string, Package> = OFFICIAL_PACKAGES.reduce((acc, curr) => {
+  return {
+    ...acc,
+    [curr.global]: curr,
+  };
+}, {});
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-
-  /** 保持内置的组件都是最新版本 */
+  console.log('packages', packages);
   [...OFFICIAL_PACKAGES, ...BIZ_PACKAGES].forEach(pkg => {
-    packages[pkg.global] = {
-      ...pkg,
-    };
+    const { global } = pkg;
+    const curr = packages[global];
+    const defs = DEFAULT_PACKAGES_MAP[global];
+    if (curr) {
+      packages[global] = defs.version < curr.version ? curr : defs;
+    } else {
+      packages[global] = defs;
+    }
   });
-
   localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
 };
 

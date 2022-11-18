@@ -1,6 +1,6 @@
 import ServerComponent from '../components';
+import * as CypherQuery from './CypherQuery';
 import * as Initializer from './Initializer';
-import * as LanguageQueryService from './LanguageQueryService';
 import * as NeighborsQuery from './NeighborsQuery';
 import * as Neo4jService from './Neo4jService';
 
@@ -15,7 +15,7 @@ export default {
   component: ServerComponent,
   services: {
     ...Initializer,
-    ...LanguageQueryService,
+    ...CypherQuery,
     ...NeighborsQuery,
     ...Neo4jService,
   },

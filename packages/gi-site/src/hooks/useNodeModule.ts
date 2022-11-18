@@ -143,6 +143,7 @@ ${import_servers}
 
 
 const {  getCombineServices } = utils;
+//@ts-ignores
 const services = getCombineServices(SERVER);
 /** 设置服务引擎 Context **/
 window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));

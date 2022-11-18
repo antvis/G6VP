@@ -12,9 +12,7 @@ module.exports = (env, argv) => {
   if (ASSETS_UMD === 'GI_SDK') {
     ASSETS_UMD = 'GISDK';
   }
-  if (ASSETS_UMD === 'GI_ASSETS_GS_STANDALONE') {
-    ASSETS_UMD = 'GI_ASSETS_GS';
-  }
+
   console.log(ASSETS_UMD);
 
   const plugins = env.analysis

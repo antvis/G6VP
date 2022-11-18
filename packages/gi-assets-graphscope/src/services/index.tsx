@@ -2,6 +2,7 @@ import * as ElementProperties from './ElementProperties';
 import * as ExecAlgorithm from './ExecAlgorithm';
 import * as GraphScopeServices from './GraphScopeService';
 import * as GremlinQuery from './GremlinQuery';
+import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
 import ServerComponent from './ServerComponent';
 
@@ -15,6 +16,7 @@ export default {
   group: 'GraphScope 团队',
   component: ServerComponent,
   services: {
+    ...Initializer,
     ...GremlinQuery,
     ...NeighborsQuery,
     ...ElementProperties,

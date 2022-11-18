@@ -1,5 +1,5 @@
-import request from 'umi-request';
 import { message } from 'antd';
+import request from 'umi-request';
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
   service: async () => {
