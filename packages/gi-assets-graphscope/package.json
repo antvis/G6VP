@@ -25,10 +25,10 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-sdk": "*",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
     "json2csv": "^5.0.7",

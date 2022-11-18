@@ -1,11 +1,15 @@
 import { GIAssets, utils } from '@antv/gi-sdk';
 // import { getCombinedAssets } from '../loader';
+
 import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
 import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
+import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
+/** 引擎包 */
 import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
-import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
+import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
+
 import { OFFICIAL_PACKAGES } from '../../.umirc';
 import { IS_LOCAL_ENV } from './const';
 
@@ -44,6 +48,10 @@ const LOCAL_ASSETS: any[] = [
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
     ...GI_ASSETS_GRAPHSCOPE,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
+    ...GI_ASSETS_TUGRAPH,
   },
 ];
 

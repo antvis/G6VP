@@ -1,6 +1,6 @@
 {
-  "name": "@alipay/gi-assets-tugraph",
-  "version": "1.3.1",
+  "name": "@antv/gi-assets-tugraph",
+  "version": "1.0.0",
   "description": "TuGraph 团队的图分析资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "build": "npm run clean && father build & npm run build:umd",
-    "build:site": "npm run clean && umi build",
-    "build:umd": "node --max_old_space_size=8192 ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js ",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-tugraph",
     "build:umd:watch": "node ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js --env watch=true",
     "clean": "rimraf es esm lib dist",
     "dev": "umi dev",
@@ -27,13 +27,12 @@
     "antd": "4.x"
   },
   "dependencies": {
-    "@alipay/graphinsight": "latest",
+    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/graphin": "2.x",
     "@antv/graphin-icons": "^1.0.0",
     "antd": "4.x",
     "codemirror": "^5.25.0",
-    "cypher-editor-support": "^1.1.10",
     "monaco-editor": "^0.34.0",
     "react": "17.x",
     "react-monaco-editor": "^0.48.0",
@@ -41,8 +40,6 @@
     "use-immer": "^0.7.0"
   },
   "devDependencies": {
-    "@ali/react-datav-gui-utils": "latest",
-    "@ant-design/pro-table": "^2.78.3",
     "dumi": "^1.1.38",
     "father": "^2.30.6",
     "mini-css-extract-plugin": "^2.3.0",
@@ -53,6 +50,6 @@
   },
   "peerDependencies": {},
   "publishConfig": {
-    "registry": "https://registry.antfin-inc.com"
+    "access": "public"
   }
 }

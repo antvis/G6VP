@@ -22,6 +22,7 @@
     "@antv/gi-assets-basic": "workspace:*",
     "@antv/gi-assets-graphscope": "workspace:*",
     "@antv/gi-assets-neo4j": "workspace:*",
+    "@antv/gi-assets-tugraph": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",

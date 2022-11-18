@@ -9,6 +9,7 @@ import GI_ASSETS_SCENE from '@antv/gi-assets-scene/package.json';
 /** build-in engine */
 import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json';
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json';
+import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json';
 
 import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';
@@ -44,6 +45,10 @@ const assets_npm = [
   {
     name: GI_ASSETS_NEO4J.name,
     version: GI_ASSETS_NEO4J.version,
+  },
+  {
+    name: GI_ASSETS_TUGRAPH.name,
+    version: GI_ASSETS_TUGRAPH.version,
   },
 ];
 const NPM_INFO = [
