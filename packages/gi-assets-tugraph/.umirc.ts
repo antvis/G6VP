@@ -22,7 +22,7 @@ export default {
     '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
-    '@alipay/graphinsight': 'GISDK',
+    '@antv/gi-sdk': 'GISDK',
   },
   scripts: [
     'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',

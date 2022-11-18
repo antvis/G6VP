@@ -1,35 +1,31 @@
 // @ts-nocheck
-import * as React from "react";
-import { useContext } from "@alipay/graphinsight";
-import { GraphinData } from "@antv/graphin";
-import { useImmer } from "use-immer";
-import { Col, Row, Statistic, Tag, Select, notification } from "antd";
-import { CollapseCard } from "../../../components-ui";
-import Import from "./Import";
-import {
-  queryVertexLabelCount,
-  querySubGraphList,
-  queryGraphSchema
-} from "../../../services/TuGraphService";
+import { useContext } from '@antv/gi-sdk';
+import { GraphinData } from '@antv/graphin';
+import { Col, notification, Row, Select, Statistic, Tag } from 'antd';
+import * as React from 'react';
+import { useImmer } from 'use-immer';
+import { CollapseCard } from '../../../components-ui';
+import { queryGraphSchema, querySubGraphList, queryVertexLabelCount } from '../../../services/TuGraphService';
+import Import from './Import';
 
 const { Option } = Select;
 export interface DataImportProps {}
 
 const DataImport: React.FunctionComponent<DataImportProps> = props => {
-  const useToken = localStorage.getItem("TUGRAPH_USER_TOKEN");
+  const useToken = localStorage.getItem('TUGRAPH_USER_TOKEN');
 
   const { graph, updateContext } = useContext();
   const [state, setState] = useImmer({
     data: {
       nodes: [],
-      edges: []
+      edges: [],
     },
     count: {
       node: 0,
-      edge: 0
+      edge: 0,
     },
     subGraphList: [],
-    defaultGraphName: localStorage.getItem("CURRENT_TUGRAPH_SUBGRAPH")
+    defaultGraphName: localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH'),
   });
 
   const getVertexLabelCount = async () => {
@@ -41,7 +37,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     setState(draft => {
       draft.count = {
         node: data.nodeCount,
-        edge: data.edgeCount
+        edge: data.edgeCount,
       };
     });
   };
@@ -50,8 +46,8 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     const result = await querySubGraphList();
     if (!result.success) {
       notification.error({
-        message: "查询子图列表失败",
-        description: `查询失败：${result.message}`
+        message: '查询子图列表失败',
+        description: `查询失败：${result.message}`,
       });
       return;
     }
@@ -65,11 +61,11 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     setState(draft => {
       draft.defaultGraphName = value;
     });
-    localStorage.setItem("CURRENT_TUGRAPH_SUBGRAPH", value);
+    localStorage.setItem('CURRENT_TUGRAPH_SUBGRAPH', value);
 
     // 切换子图后，同步查询 Schema
     const schemaData = await queryGraphSchema({
-      graphName: value
+      graphName: value,
     });
     console.log(schemaData);
     updateContext(draft => {
@@ -78,11 +74,11 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
   };
 
   React.useEffect(() => {
-    graph.on("graphin:datachange", () => {
+    graph.on('graphin:datachange', () => {
       const res = graph.save() as GraphinData;
       setState({
         ...state,
-        data: res
+        data: res,
       });
     });
   }, [graph]);
@@ -105,24 +101,20 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
       <CollapseCard title="图数据" extra={<Import />}>
         <div
           style={{
-            borderBottom: "1px solid #d9d9d9",
-            marginBottom: "14px",
-            padding: "0px 0px 14px 0px"
+            borderBottom: '1px solid #d9d9d9',
+            marginBottom: '14px',
+            padding: '0px 0px 14px 0px',
           }}
         >
           {useToken ? (
             <>
               <Tag color="green">已连接</Tag>
-              <span style={{ color: "rgba(0, 0, 0, 0.45)" }}>
-                TuGraph 数据源已连接, 开始分析
-              </span>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>TuGraph 数据源已连接, 开始分析</span>
             </>
           ) : (
             <>
               <Tag color="red">未连接</Tag>
-              <span style={{ color: "rgba(0, 0, 0, 0.45)" }}>
-                TuGraph 数据源未连接, 请先连接
-              </span>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>TuGraph 数据源未连接, 请先连接</span>
             </>
           )}
         </div>
@@ -138,11 +130,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
             style={{ width: 215 }}
           >
             {subGraphList.map((d: any) => {
-              return (
-                <Option value={d.value}>
-                  {!d.description ? d.label : `${d.label}(${d.description})`}
-                </Option>
-              );
+              return <Option value={d.value}>{!d.description ? d.label : `${d.label}(${d.description})`}</Option>;
             })}
           </Select>
         </div>

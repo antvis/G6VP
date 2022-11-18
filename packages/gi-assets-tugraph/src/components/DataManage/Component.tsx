@@ -1,8 +1,8 @@
-import { extra } from "@alipay/graphinsight";
-import * as React from "react";
-import ContainerHeader from "../../components-ui/ContainerHeader";
-import DataImport from "./DataImport";
-import DataSchema from "./DataSchema";
+import { extra } from '@antv/gi-sdk';
+import * as React from 'react';
+import ContainerHeader from '../../components-ui/ContainerHeader';
+import DataImport from './DataImport';
+import DataSchema from './DataSchema';
 
 const { GIAComponent, deepClone } = extra;
 

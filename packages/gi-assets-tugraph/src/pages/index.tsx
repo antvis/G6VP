@@ -1,4 +1,4 @@
-// import GISDK from "@alipay/graphinsight"; （预计7月份开放）
+// import GISDK from "@antv/gi-sdk"; （预计7月份开放）
 // 因为没有做 external，避免多个版本react冲突，统一从window对象中获取
 // import { cloneDeep } from "lodash";
 import React from 'react';
