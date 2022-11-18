@@ -23,7 +23,6 @@ const ColumnChart: React.FC<ColumnChartProps> = props => {
     if (!chartRef.current) {
       return;
     }
-    console.log('render...');
 
     const plot = new Column(chartRef.current, {
       data,
@@ -55,6 +54,7 @@ const ColumnChart: React.FC<ColumnChartProps> = props => {
     const handleHighlight = evt => {
       const { highlightElements = [] } = evt.data;
       const ids = highlightElements.map(ele => ele.getData().id);
+
       highlight(ids);
     };
     plot.on(G2.ELEMENT_RANGE_HIGHLIGHT_EVENTS.AFTER_HIGHLIGHT, debounce(handleHighlight, 250));

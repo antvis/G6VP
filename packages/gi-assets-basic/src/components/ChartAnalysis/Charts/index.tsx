@@ -65,12 +65,16 @@ const ChartCard: React.FC<ChartCardProps> = props => {
   }, [schemaData, dataType]);
 
   const data = useMemo(() => {
-    const res = source[dataType].map(item => {
-      return {
-        ...item.data,
-        id: item.id,
-      };
-    });
+    const res = source[dataType]
+      .map(item => {
+        return {
+          ...item.data,
+          id: item.id,
+        };
+      })
+      .filter(item => {
+        return item[xField]; //过滤掉不合理的数据
+      });
 
     try {
       const firstValue = res[0][xField];
