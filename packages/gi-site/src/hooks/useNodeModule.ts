@@ -14,7 +14,7 @@ function serialize(data: Record<string, any>) {
 }
 
 function getCSBData(opts) {
-  const { activeAssets, activeAssetsKeys } = opts;
+  const { activeAssets, activeAssetsKeys, theme } = opts;
   const nodemodules = getActivePackage(activeAssets);
 
   const ext = '.tsx';
@@ -112,14 +112,14 @@ const SERVER = [
 
   files['src/GI_EXPORT_FILES.ts'] = {
     content: ` 
-      /** 动态请求需要的配套资产 **/
-      export const GI_ASSETS_PACKAGE = ${GI_ASSETS_PACKAGE};
-
       /** GraphInsight 站点自动生成的配置 **/
       export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
       
       /** GraphInsight 站点选择服务引擎的上下文配置信息 **/
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
+      
+      /** 导出的主题 **/
+      export const THEME_VALUE = ${theme};
     `,
   };
 
@@ -149,11 +149,7 @@ window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGI
 /** 设置主题 **/
 window.localStorage.setItem("@theme", THEME_VALUE);
 
-const MyGraphApp= (props) => {
-   
-   React.useEffect(()=>{
-  
-   },[]);
+const MyGraphApp= () => {
    return (
      <div>
        <div style={{ height: "100vh" }}>
