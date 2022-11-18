@@ -17,12 +17,21 @@ const loadCss = options => {
 
 const loadJS = async (options: AssetPackage) => {
   return new Promise(resolve => {
+    // load js
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
     script.id = options.global || options.url;
     script.src = options.url;
     document.body.append(script);
+    // load css
+    const link = document.createElement('link');
+    const href = options.url.replace('min.js', 'css');
+    link.href = href;
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    document.head.append(link);
+
     script.onload = () => {
       resolve(script);
     };
@@ -52,13 +61,6 @@ const loader = async (options: AssetPackage[]) => {
         }
         return { ...assets, ...opt };
       });
-    }),
-    //css
-    ...options.map(opt => {
-      if (window[opt.global]) {
-        return undefined;
-      }
-      return loadCss(opt);
     }),
   ]).then(res => {
     return res.filter(c => {

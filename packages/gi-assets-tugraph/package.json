@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-tugraph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TuGraph 团队的图分析资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,7 +21,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
-    "test": "jest"
+    "test": "jest",
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "resolutions": {
     "antd": "4.x"
