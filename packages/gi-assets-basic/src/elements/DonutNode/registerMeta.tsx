@@ -22,6 +22,20 @@ const registerMeta = context => {
             mode: 'multiple',
           },
         },
+        donutColors: {
+          title: '环色彩',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: '',
+        },
+        size: {
+          title: '环大小',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: undefined,
+        },
         label: {
           title: '文本',
           type: 'array',
