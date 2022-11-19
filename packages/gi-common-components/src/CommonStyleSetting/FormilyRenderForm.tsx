@@ -90,13 +90,17 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     return d.name === typeKeyFromProperties;
   });
   if (nodeTypeExpression) {
-    const currentNodeType = nodeTypeExpression.value;
-    // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
-    const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(
-      d => d[schemaTypeKey] === currentNodeType,
-    );
-    jsonSchema.properties.label['x-component-props'].schemaData.length = 0;
-    jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData);
+    try {
+      const currentNodeType = nodeTypeExpression.value;
+      // 过滤掉 schema 中 nodeType 值不等于 currentNodeType 的所有选项
+      const currentSchemaData = jsonSchema.properties.label['x-component-props'].schemaData.filter(
+        d => d[schemaTypeKey] === currentNodeType,
+      );
+      jsonSchema.properties.label['x-component-props'].schemaData.length = 0;
+      jsonSchema.properties.label['x-component-props'].schemaData.push(...currentSchemaData);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const OPTIONS = React.useMemo(() => {
