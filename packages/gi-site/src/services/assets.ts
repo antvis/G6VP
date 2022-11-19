@@ -128,7 +128,7 @@ export const queryAssetList = async () => {
   let FinalAssets;
 
   const packages = getAssetPackages();
-  if (IS_LOCAL_ENV) {
+  if (IS_LOCAL_ENV && isDev) {
     FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
   } else {
     FinalAssets = await loaderCombinedAssets(packages);
