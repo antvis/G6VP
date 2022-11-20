@@ -1,17 +1,16 @@
 <p align="center">
   <a href="https://graphinsight.antgroup.com">
-    <img width="150" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ">
+    <img width="350" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*M6mmTLq_u98AAAAAAAAAAAAADmJ7AQ/original">
   </a>
 </p>
-<!-- <h1 align="center">GraphInsight</h1> -->
 
 <div align="center">
 
-A low-code graph analysis application building platform, and also a graph visual analysis product
+GraphInsight 是一款在线图可视分析产品，也是一款基于 G6/Graphin 的低代码图应用搭建工具。
 
 [![Version](https://badgen.net/npm/v/@antv/gi-sdk)](https://www.npmjs.com/@antv/gi-sdk)
 [![NPM downloads](http://img.shields.io/npm/dm/@antv/gi-sdk.svg)](http://npmjs.com/@antv/gi-sdk)
-![Latest commit](https://badgen.net/github/last-commit/antvis/gi-sdk)
+![Latest commit](https://badgen.net/github/last-commit/antvis/graphinsight)
 
 </div>
 
