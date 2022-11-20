@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://graphinsight.antgroup.com">
-    <img width="350" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*M6mmTLq_u98AAAAAAAAAAAAADmJ7AQ/original">
+    <img width="300" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*M6mmTLq_u98AAAAAAAAAAAAADmJ7AQ/original">
   </a>
 </p>
 
@@ -200,21 +200,21 @@ RemoveTheme | 添加主题
 
 ### 3.2.2 内置连接 GraphScope 单机版图计算引擎
 
-> 详情参考「[如何使用 GraphScope 开源版引擎](https://www.yuque.com/antv/gi/xikt2gmg0mhv9nw2)」。
+> 详情参考「[如何使用 GraphScope 开源版引擎](https://www.yuque.com/antv/gi/xikt2gmg0mhv9nw2)」
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480722372-27b73761-78a9-424f-88c8-47e491ba2a33.png#averageHue=%23e1e1e0&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=103&id=ud5111901&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1322&originWidth=3200&originalType=binary&ratio=1&rotation=0&showTitle=true&size=456446&status=done&style=none&taskId=ucd1d0e7c-e998-4604-be5d-27a48a7838c&title=%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E4%BF%A1%E6%81%AF&width=250 '配置服务信息')![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480749773-3e53629c-a0dc-4853-b544-3ef19bb3615b.png#averageHue=%23dfdfdf&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=103&id=EOSTg&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1330&originWidth=3214&originalType=binary&ratio=1&rotation=0&showTitle=true&size=454769&status=done&style=none&taskId=u8768f926-a96d-4ef4-8c27-55e1ff1d2d3&title=%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF&width=249 '配置数据信息')![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480916893-58777f58-24d8-4440-ba50-93d48f9aa08b.png#averageHue=%23fbfafa&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=103&id=u087a1ad5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1452&originWidth=3246&originalType=binary&ratio=1&rotation=0&showTitle=true&size=331553&status=done&style=none&taskId=uf6883498-ce09-40f4-950c-e065d18a97e&title=%E4%BD%BF%E7%94%A8%20Gremlin%20%E8%AF%AD%E5%8F%A5%E6%9F%A5%E8%AF%A2&width=230 '使用 Gremlin 语句查询')
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480916893-58777f58-24d8-4440-ba50-93d48f9aa08b.png#averageHue=%23fbfafa&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=103&id=u087a1ad5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1452&originWidth=3246&originalType=binary&ratio=1&rotation=0&showTitle=true&size=331553&status=done&style=none&taskId=uf6883498-ce09-40f4-950c-e065d18a97e&title=%E4%BD%BF%E7%94%A8%20Gremlin%20%E8%AF%AD%E5%8F%A5%E6%9F%A5%E8%AF%A2&width=230 '使用 Gremlin 语句查询')
 
 ### 3.2.3 内置连接 TuGraph 单机版图数据库
 
 > 详情参考「[如何使用 TuGraph 数据库](https://www.yuque.com/antv/gi/wuvtyf)」。
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668474481802-b9c08d52-c4fd-4eba-a2fa-ed9b73031d5c.png#averageHue=%23fcfbfb&clientId=u66492888-2fab-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=227&id=ue7603542&margin=%5Bobject%20Object%5D&name=image.png&originHeight=830&originWidth=1222&originalType=binary&ratio=1&rotation=0&showTitle=true&size=134695&status=done&style=shadow&taskId=u91518819-266d-4e38-84fa-d1d02c1edee&title=%E8%BF%9E%E6%8E%A5TuGraph&width=334 '连接TuGraph')![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668474518287-2a292c00-5f7d-47ff-b255-05418267b452.png#averageHue=%23fcfbfb&clientId=u66492888-2fab-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=229&id=u858312fb&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1093&originWidth=1838&originalType=binary&ratio=1&rotation=0&showTitle=true&size=204828&status=done&style=shadow&taskId=ue02b7880-61fb-4982-9ea2-1f504b7955d&title=%E9%80%9A%E8%BF%87%20Cypher%20%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE&width=385 '通过 Cypher 查询数据')
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668474481802-b9c08d52-c4fd-4eba-a2fa-ed9b73031d5c.png#averageHue=%23fcfbfb&clientId=u66492888-2fab-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=227&id=ue7603542&margin=%5Bobject%20Object%5D&name=image.png&originHeight=830&originWidth=1222&originalType=binary&ratio=1&rotation=0&showTitle=true&size=134695&status=done&style=shadow&taskId=u91518819-266d-4e38-84fa-d1d02c1edee&title=%E8%BF%9E%E6%8E%A5TuGraph&width=334 '连接TuGraph')
 
 ### 3.2.4 内置连接 Neo4J 在线版图数据库
 
 > 详情参考「[如何使用 Neo4j 图数据库](https://www.yuque.com/antv/gi/otnlbq2dc9q1f8gt)」。
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480174359-e9b068e3-8bee-46fe-94b8-609f29070555.png#averageHue=%23d2d0cb&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=182&id=ufe19cb35&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1360&originWidth=2692&originalType=binary&ratio=1&rotation=0&showTitle=true&size=1057858&status=done&style=none&taskId=ub453ff3d-f321-4e09-9e9a-05bd1a8c780&title=%E8%BF%9E%E6%8E%A5%20Neo4j&width=360 '连接 Neo4j')![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480403254-59dc6998-ab8e-42d6-8b91-a50d2e9446b0.png#averageHue=%23f0e8d9&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=182&id=ue9621795&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1354&originWidth=2684&originalType=binary&ratio=1&rotation=0&showTitle=true&size=2207282&status=done&style=none&taskId=u5bfe8a84-05d1-489e-9ea9-7729680d937&title=%E9%80%9A%E8%BF%87%20Cypher%20%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE&width=360 '通过 Cypher 查询数据')
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/244306/1668480174359-e9b068e3-8bee-46fe-94b8-609f29070555.png#averageHue=%23d2d0cb&clientId=ucd4e2c34-6bc2-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=182&id=ufe19cb35&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1360&originWidth=2692&originalType=binary&ratio=1&rotation=0&showTitle=true&size=1057858&status=done&style=none&taskId=ub453ff3d-f321-4e09-9e9a-05bd1a8c780&title=%E8%BF%9E%E6%8E%A5%20Neo4j&width=360 '连接 Neo4j')
 
 ## 3.3 开放中心：一键导出 SDK，极速原生部署
 
