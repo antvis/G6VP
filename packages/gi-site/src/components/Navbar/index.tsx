@@ -9,11 +9,12 @@ import { addProject, getProjectById, updateProjectById } from '../../services';
 import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
-import Tour from '../Tour';
+
 import BaseNavbar from './BaseNavbar';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';
+// import Tour from '../Tour';
 
 interface SvgIconProps {
   type: string; // 必传
@@ -171,9 +172,9 @@ const Navbar = ({
           <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
         </Button>
       </Tooltip> */}
-      <Tooltip title="指引手册">
+      {/* <Tooltip title="指引手册">
         <Tour />
-      </Tooltip>
+      </Tooltip> */}
     </>
   );
   return (

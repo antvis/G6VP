@@ -1,4 +1,3 @@
-import { CheckCard } from '@alipay/tech-ui';
 import {
   BarChartOutlined,
   BgColorsOutlined,
@@ -11,6 +10,7 @@ import {
   SelectOutlined,
   SlackOutlined,
 } from '@ant-design/icons';
+import { CheckCard } from '@ant-design/pro-components';
 import { Col, Collapse, Row } from 'antd';
 import * as React from 'react';
 import AssetCard from './Card';

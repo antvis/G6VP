@@ -1,4 +1,4 @@
-import { CheckCard } from '@alipay/tech-ui';
+import { CheckCard } from '@ant-design/pro-components';
 import { Icon } from '@antv/gi-sdk';
 import { Avatar, Tag } from 'antd';
 import * as React from 'react';

@@ -1,5 +1,5 @@
-import { CheckCard } from '@alipay/tech-ui';
 import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined } from '@ant-design/icons';
+import { CheckCard } from '@ant-design/pro-components';
 import { Col, Row, Tabs, Typography } from 'antd';
 import React from 'react';
 import { queryAssetList } from '../../services/assets';
