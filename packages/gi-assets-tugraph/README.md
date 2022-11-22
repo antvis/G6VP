@@ -1,8 +1,8 @@
 ## TuGraph 资产包
 
-@alipay/gi-assets-tugraph 是基于 GraphInsight 规范开发的资产包，用于搭建 TuGraph Explore。
+@antv/gi-assets-tugraph 是基于 GraphInsight 规范开发的资产包，用于搭建 TuGraph Explore。
 
-TuGraph Explore 资产包：@alipay/gi-assets-tugraph
+TuGraph Explore 资产包：@antv/gi-assets-tugraph
 
 GraphScope 团队的图分析资产包
 

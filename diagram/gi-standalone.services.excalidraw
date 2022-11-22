@@ -728,12 +728,12 @@
       "locked": false,
       "fontSize": 20,
       "fontFamily": 3,
-      "text": "@alipay/gi-standalone-server",
+      "text": "@antv/gi-standalone-server",
       "baseline": 19,
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "@alipay/gi-standalone-server"
+      "originalText": "@antv/gi-standalone-server"
     },
     {
       "id": "YGhzMrC03N23fVa5BZmNp",
