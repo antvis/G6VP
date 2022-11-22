@@ -1,4 +1,4 @@
-import locale from '@ali/global-locale';
+import locale from '@aligov/global-locale';
 import * as React from 'react';
 import i18n from '../../i18n/index';
 import './index.less';

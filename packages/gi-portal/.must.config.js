@@ -13,7 +13,7 @@ module.exports = {
       placeholder: variable => {
         return `{${variable}}`;
       },
-      dependencies: ['@ali/global-locale', '@ali/global-string-format'],
+      dependencies: ['@aligov/global-locale', '@aligov/global-string-format'],
     },
     babel: {
       allowImportExportEverywhere: true,
