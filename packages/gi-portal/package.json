@@ -20,10 +20,7 @@
     "react": "17.x",
     "react-dom": "17.x"
   },
-  "dependencies": {
-    "@ali/global-locale": "^1.0.5",
-    "@ali/global-string-format": "^1.0.7"
-  },
+  "dependencies": {},
   "author": "AntV",
   "license": "MIT",
   "publishConfig": {
