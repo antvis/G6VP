@@ -1,9 +1,9 @@
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
+import GremlinEditor from 'ace-gremlin-editor';
 import { Button, Col, Drawer, Form, Input, message, Modal, Popconfirm, Row, Select, Table, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import GremlinEditor from 'ace-gremlin-editor';
 import './index.less';
 
 const { Option } = Select;
@@ -100,22 +100,27 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
     resultParams.push(values);
 
     // 替换 Gremlin 语句
-    const reg = new RegExp(`${selectValue}`);
-    const templateStr = initValue
-      .replace(reg, `{{${values.parameterName}}}`)
-      .replace(/(\"|\')(?=\{\{)/, '')
-      .replace(/(?<=\}\})(\"|\')/, '');
+    try {
+      const reg = new RegExp(`${selectValue}`);
+      const templateStr = initValue
+        .replace(reg, `{{${values.parameterName}}}`)
+        .replace(/(\"|\')(?=\{\{)/, '')
+        // .replace(/(?<=\}\})(\"|\')/, ''); // https://stackoverflow.com/questions/51568821/works-in-chrome-but-breaks-in-safari-invalid-regular-expression-invalid-group?noredirect=1&lq=1
+        .replace(/(?:\}\})(\"|\')/, '');
 
-    setState(draft => {
-      draft.paramsList = [...resultParams];
-      draft.initValue = templateStr;
-      draft.modalVisible = false;
-      draft.defaultFormValue = {
-        parameterName: '',
-        valueType: 'string',
-        parameterValue: '',
-      };
-    });
+      setState(draft => {
+        draft.paramsList = [...resultParams];
+        draft.initValue = templateStr;
+        draft.modalVisible = false;
+        draft.defaultFormValue = {
+          parameterName: '',
+          valueType: 'string',
+          parameterValue: '',
+        };
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const publishTemplate = async () => {
