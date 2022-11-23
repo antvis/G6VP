@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          
+      - name: Install dependencies
+        run: pnpm install
 
       - uses: actions/checkout@v3
       - uses: preactjs/compressed-size-action@v2

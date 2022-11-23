@@ -4,7 +4,6 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "postinstall": "pnpm install",
     "build:all:es": "npm-run-all -s gi-common-component gi-sdk -p gi-assets-basic gi-assets-advance gi-assets-algorithm gi-assets-scene gi-assets-graphscope gi-assets-neo4j gi-assets-tugraph gi-theme-antd",
     "start": "cd packages/gi-site && npm run start",
     "clean": "pnpm remove ./ -r",
