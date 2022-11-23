@@ -17,7 +17,6 @@ node_modules
 **/lib
 **/es
 jspm_packages/
-pnpm-lock.yaml
 
 .umi
 
