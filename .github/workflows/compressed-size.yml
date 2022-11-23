@@ -10,11 +10,21 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7.14.0
 
-    - uses: actions/checkout@v3
-    - uses: preactjs/compressed-size-action@v2
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        pattern: "./packages/**/dist/**/*.{js,css}"
-        build-script: "build:umd"
-        # clean-script: "clean:lock-file"
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - uses: actions/checkout@v3
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          pattern: "./packages/**/dist/**/*.{js,css}"
+          build-script: "build:all:es"
+          # clean-script: "clean:lock-file"

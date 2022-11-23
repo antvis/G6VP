@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint scripts, type, style and docs
-        run: npm run lint
-
       - name: Build
         run: npm run build:all:es
 
