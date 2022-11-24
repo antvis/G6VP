@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
-        run: npm run build:all:es
-
       - name: Workflow failed alert
         if: ${{ failure() }}
         uses: actions-cool/maintain-one-comment@main
