@@ -1,18 +1,17 @@
-import React from "react";
-//@ts-ignore
-const { useContext } = window.GISDK;
-const Counter = (props) => {
+import { useContext } from '@antv/gi-sdk';
+import React from 'react';
+const Counter = props => {
   const { graph, data } = useContext();
-  console.log("graph instance", graph);
+
   const nodes = data.nodes.length;
   const edges = data.edges.length;
   return (
     <div
       style={{
-        position: "absolute",
-        bottom: "100px",
-        left: "50px",
-        background: "red",
+        position: 'absolute',
+        bottom: '100px',
+        left: '50px',
+        background: 'red',
       }}
     >
       Nodes Count: {nodes} <br />
