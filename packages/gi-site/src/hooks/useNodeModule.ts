@@ -119,7 +119,7 @@ const SERVER = [
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
       
       /** 导出的主题 **/
-      export const THEME_VALUE = ${theme};
+      export const THEME_VALUE = "${theme}";
     `,
   };
 
