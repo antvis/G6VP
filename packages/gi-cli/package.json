@@ -1,7 +1,7 @@
 {
-  "name": "gi-create",
-  "version": "0.0.3",
-  "description": "the create CLI tool fro GraphInsight assets",
+  "name": "@antv/gi-cli",
+  "version": "1.0.0",
+  "description": "the create CLI tool for GraphInsight assets",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -14,7 +14,9 @@
     "prepublishOnly": "father doctor && npm run build"
   },
   "keywords": [],
-  "authors": ["yang"],
+  "authors": [
+    "yang"
+  ],
   "license": "MIT",
   "files": [
     "dist",
@@ -24,7 +26,7 @@
     "access": "public"
   },
   "dependencies": {
-      "@umijs/utils": "^4.0.29"
+    "@umijs/utils": "^4.0.29"
   },
   "devDependencies": {
     "father": "^4.0.7"
