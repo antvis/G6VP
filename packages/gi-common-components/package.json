@@ -18,7 +18,7 @@
     "es"
   ],
   "scripts": {
-    "build": "npm run clean && father build",
+    "build:es": "npm run clean && father build",
     "clean": "rimraf es esm lib dist",
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
