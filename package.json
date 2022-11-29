@@ -23,6 +23,7 @@
     "build:core": "cd packages/gi && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:site": "cd packages/gi-site && tnpm install && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
     "build:testing": "cd packages/gi-assets-testing && NODE_OPTIONS=--max_old_space_size=2048 npm run build",
+    "clean:all": "pnpm run -r clean",
     "core": "cd packages/gi && npm run start",
     "move:dist": "node ./deploy.js",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start"
