@@ -107,3 +107,18 @@ export const getOptions = (data: GraphinData) => {
     },
   ];
 };
+
+export const downloadFile = async (mockUrls: string[]) => {
+  mockUrls.forEach(item => {
+    const url = item
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.style.height = '0';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    setTimeout(() => {
+      iframe.remove();
+    }, 1000);
+  })
+
+}

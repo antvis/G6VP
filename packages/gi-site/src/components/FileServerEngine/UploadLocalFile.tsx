@@ -1,12 +1,12 @@
 import { DeleteOutlined, FileTextOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
-import { Alert, Button, message, Row, Upload } from 'antd';
+import { Alert, Button, Col, Divider, message, Row, Space, Upload } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import xlsx2js from 'xlsx2js';
 import { IInputData, IState } from './typing';
-import { getOptions } from './utils';
+import { downloadFile, getOptions } from './utils';
 
 interface IProps {
   state: IState;
@@ -50,13 +50,13 @@ const UploadLocalFile: React.FC<IProps> = props => {
         const isEdge = firstData.source && firstData.target;
         fileData = isEdge
           ? {
-              nodes: [],
-              edges: data,
-            }
+            nodes: [],
+            edges: data,
+          }
           : {
-              nodes: data,
-              edges: [],
-            };
+            nodes: data,
+            edges: [],
+          };
 
         const renderData: IInputData[] = [
           ...state.inputData,
@@ -100,6 +100,14 @@ const UploadLocalFile: React.FC<IProps> = props => {
       }
     },
   };
+
+  const downloadMockFiles = async () => {
+    const mockFileUrls = [
+      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/pjilTbaCECgAAAAAAAAAABAADnV5AQBr/bank.nodes.xlsx',
+      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/UOj4R7u2sRoAAAAAAAAAABAADnV5AQBr/bank.edges.xlsx'
+    ]
+    await downloadFile(mockFileUrls)
+  }
 
   const mergeData = (renderData: IInputData[] = state.inputData) => {
     try {
@@ -182,11 +190,18 @@ const UploadLocalFile: React.FC<IProps> = props => {
   return (
     <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
       <Alert
-        message="如果暂时没有数据，可以切换上方导航栏到「示例数据」进行体验"
+        message="如果暂时没有数据，可以点击下载「示例数据」进行体验，EXCEL格式，JSON格式"
         type="info"
         showIcon
         closable
         style={{ marginBottom: '12px' }}
+        action={
+          <Space direction="vertical">
+            <Button size="small" type="primary" onClick={downloadMockFiles}>
+              下载示例数据
+            </Button>
+          </Space>
+        }
       />
       <h4 style={{ marginBottom: 0 }}>已解析到画布中的数据</h4>
       {inputData.map((d, i) => {
@@ -211,10 +226,21 @@ const UploadLocalFile: React.FC<IProps> = props => {
             <FileTextOutlined />
           </p>
           <p>点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式</p>
-          <p>CSV/XLS/XLSX文件规范：</p>
-          <p>分别上传点表和边表，点表：必须要有 id 字段，边表：必须要有 source 和 target 字段</p>
-          <p>JSON 文件规范：</p>
-          <p>点表和边表放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合，其属性字段的规范同上</p>
+          <Divider />
+          <Row >
+            <Col span={12} style={{display:'flex',justifyContent:"center",alignItems:"center",flexWrap:'wrap'}}>
+              <div style={{ width: '90%' }}>
+                <p>CSV/XLS/XLSX文件规范：</p>
+                <p>分别上传点表和边表，点表：必须要有 id 字段，边表：必须要有 source 和 target 字段</p>
+              </div>
+            </Col>
+            <Col span={12} style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexWrap: 'wrap' }}>
+              <div style={{ width: '90%' }}>
+                <p>JSON 文件规范：</p>
+                <p>点表和边表放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合</p>
+                </div>
+              </Col>
+          </Row>
         </Dragger>
       </div>
       <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
