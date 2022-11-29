@@ -1,9 +1,9 @@
-import { IS_LOCAL_ENV } from './services/const';
+import { IS_INDEXEDDB_MODE } from './services/const';
 
 import { getPackages, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 业务包
-export const BIZ_PACKAGES = !IS_LOCAL_ENV ? getPackages([]) : [];
+export const BIZ_PACKAGES = !IS_INDEXEDDB_MODE ? getPackages([]) : [];
 
 // setTimeout(() => {
 //   // !isDev && window.console.clear();

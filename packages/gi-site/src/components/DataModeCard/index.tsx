@@ -1,7 +1,7 @@
 import { DatabaseOutlined } from '@ant-design/icons';
 import { Button, Popover, Typography } from 'antd';
 import React from 'react';
-import { IS_LOCAL_ENV } from '../../services/const';
+import { IS_INDEXEDDB_MODE } from '../../services/const';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -34,10 +34,10 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 };
 
 const DataModeCard = () => {
-  const title = !IS_LOCAL_ENV ? '线上环境' : '本地环境';
+  const title = !IS_INDEXEDDB_MODE ? '线上环境' : '本地环境';
 
   return (
-    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_LOCAL_ENV} />} title="环境说明" trigger="hover">
+    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
       <Button icon={<DatabaseOutlined />}>{title}</Button>
     </Popover>
   );

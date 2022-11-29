@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
-import { IS_LOCAL_ENV } from '../../services/const';
+import { IS_INDEXEDDB_MODE } from '../../services/const';
 import type { IProject } from '../../services/typing';
 import MembersPanel from './Members';
 interface ProjectListProps {
@@ -91,7 +91,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      {!IS_LOCAL_ENV && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
+      {!IS_INDEXEDDB_MODE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
 

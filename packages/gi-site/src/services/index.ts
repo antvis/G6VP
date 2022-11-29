@@ -2,7 +2,7 @@ import { message } from 'antd';
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { ASSET_TYPE, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
+import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IProject } from './typing';
 
 export function getEdgesByNodes(nodes, edges) {
@@ -38,7 +38,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
       type: project.type,
     };
   };
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     const project: any = await localforage.getItem(id);
     if (!project) {
       message.info('请先在「工作台」页面选择环境...');
@@ -67,7 +67,7 @@ export const updateProjectById = async (
   id: string,
   params: { data?: string; [key: string]: any },
 ): Promise<IProject> => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     const origin: any = await localforage.getItem(id);
     const {
       data,
@@ -131,7 +131,7 @@ export const updateProjectById = async (
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     return await localforage.removeItem(id);
   }
 
@@ -150,7 +150,7 @@ export const removeProjectById = async (id: string) => {
  * @returns
  */
 export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise<IProject[]> => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     const projects: IProject[] = [];
     const cases: IProject[] = [];
     const save: IProject[] = [];
@@ -211,7 +211,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
     isProject: true,
     gmtCreate: new Date(),
   };
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     localforage.setItem(projectId, p);
     return new Promise(resolve => {
       resolve(projectId);

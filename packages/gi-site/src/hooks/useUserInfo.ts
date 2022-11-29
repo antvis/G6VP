@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { IS_INDEXEDDB_MODE } from '../services/const';
 import { getUser } from '../services/user';
-import { IS_LOCAL_ENV } from '../services/const';
 
 export default () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -14,7 +14,7 @@ export default () => {
   };
 
   useEffect(() => {
-    if (!IS_LOCAL_ENV) {
+    if (!IS_INDEXEDDB_MODE) {
       getLoginUserInfo();
     }
   }, []);

@@ -82,7 +82,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const rightContentExtra = (
     <>
-      {/* {IS_LOCAL_ENV && <AlibabaLogin />} */}
+      {/* {IS_INDEXEDDB_MODE && <AlibabaLogin />} */}
       <Notification />
       <QRcode />
       <DataModeCard />
