@@ -5,7 +5,13 @@ const GI_LOCAL_URL = [
   '127.0.0.1', // 本地打包后启动server的地址
   'gi-external-pre.alipay.com', //外网预发地址
 ];
-export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
+export const IS_LOCAL_ENV = false; // GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
+
+/** 是否使用本地 IndexedDB 数据库 */
+export const IS_INDEXEDDB_MODE = IS_LOCAL_ENV;
+/** 是否时本地开发环境 */
+export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
+
 // 本地环境
 // export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7002';
 
@@ -13,7 +19,7 @@ export const IS_LOCAL_ENV = GI_LOCAL_URL.includes(window.location.hostname); //w
 // export const SERVICE_URL_PREFIX = 'http://storehouse-afx-39730.gz00b.dev.alipay.net';
 
 // 测试环境
-export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : window.location.origin; // 'https://storehouse.test.alipay.net';
+export const SERVICE_URL_PREFIX = IS_LOCAL_ENV ? 'https://storehouse.test.alipay.net' : 'http://dev.alipay.net:7001'; // window.location.origin; // 'https://storehouse.test.alipay.net';
 
 // 线上环境
 // export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
