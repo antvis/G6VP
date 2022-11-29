@@ -826,7 +826,7 @@ const PatternEditor: React.FC<Props> = ({
         edgeProperties={edgeProperties}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        container={graphRef?.current}
+        container={(graphRef?.current as any)?.graphDOM}
         saveItem={saveItem}
         onClose={() => {
           setEditItem({} as ItemBriefInfo);
