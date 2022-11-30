@@ -64,8 +64,9 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, serviceConfig, schemaData, engineId, engineContext, themes } =
-        (await getProjectById(projectId)) as IProject;
+      const { data, config, activeAssetsKeys, schemaData, engineId, engineContext, themes } = (await getProjectById(
+        projectId,
+      )) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
       const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
@@ -94,7 +95,6 @@ const Analysis = props => {
         draft.schemaData = schemaData; //图数据的Schema
         draft.inputData = inputData; //用户上传的数据（可展示在「数据」模块）
         draft.activeNavbar = activeNavbar; //当前激活的导航
-        draft.serviceConfig = serviceConfig; //自定义服务配置
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
         draft.themes = themes; //主题
       });

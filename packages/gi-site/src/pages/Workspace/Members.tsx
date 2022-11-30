@@ -16,7 +16,7 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
 
   const { members, id: projectId } = values;
   const [form] = Form.useForm();
-  const defaultData = JSON.parse(members);
+  const defaultData = members;
   const [dataSource, setDataSource] = useState(() => defaultData);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
   const columns = [
@@ -56,13 +56,10 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
     const result = await updateProjectById(projectId, {
       members: dataSource,
     });
-
-    const { success, errorMsg } = result;
-    if (success) {
+    if (result) {
       message.success('更新成功');
       handleClose();
     }
-    message.error(`更新失败：${errorMsg}`);
   };
 
   return (

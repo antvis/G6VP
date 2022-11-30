@@ -2,7 +2,7 @@ import { message } from 'antd';
 import localforage from 'localforage';
 import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
-import { ASSET_TYPE, IS_LOCAL_ENV, SERVICE_URL_PREFIX } from './const';
+import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IProject } from './typing';
 
 export function getEdgesByNodes(nodes, edges) {
@@ -22,14 +22,7 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string): Promise<IProject | undefined> => {
-  if (IS_LOCAL_ENV) {
-    const project: any = await localforage.getItem(id);
-    if (!project) {
-      message.info('请先在「工作台」页面选择环境...');
-      //可能是用户第一进来的时候，没有选择环境
-      window.location.href = window.location.origin;
-    }
-
+  const trans = project => {
     return {
       engineId: project.engineId || 'GI', // 兼容过去的版本
       engineContext: project.engineContext || {
@@ -42,65 +35,25 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
       data: project.data,
       activeAssetsKeys: project.activeAssetsKeys,
       name: project.name,
-      serviceConfig: project.serviceConfig,
       type: project.type,
     };
+  };
+  if (IS_INDEXEDDB_MODE) {
+    const project: any = await localforage.getItem(id);
+    if (!project) {
+      message.info('请先在「工作台」页面选择环境...');
+      //可能是用户第一进来的时候，没有选择环境
+      window.location.href = window.location.origin;
+    }
+
+    return trans(project);
   }
 
-  const getResult = project => {
-    const config = JSON.parse(project.projectConfig);
-    const engineId = project.id;
-    const engineContext = project?.engineContext ? JSON.parse(project.engineContext) : {};
-
-    const data = JSON.parse(project.data);
-    const serviceConfig = JSON.parse(project.serviceConfig);
-    const expandInfo = JSON.parse(project.expandInfo);
-    let activeAssetsKeys;
-    if (project.activeAssetsKeys) {
-      activeAssetsKeys = JSON.parse(project.activeAssetsKeys);
-    } else {
-      activeAssetsKeys = {
-        elements: [...config.nodes.map(node => node.id), ...config.edges.map(edge => edge.id)],
-        components: config.components ? [...config.components.map(c => c.id)] : [],
-        layouts: ['Grid', 'GraphinForce', 'D3Force', 'Concentric', 'Dagre', 'Radial', 'Circular'], // [config.layout.id],
-      };
-    }
-    let currentSchema = {
-      nodes: [],
-      edges: [],
-    };
-    if (project.schemaData) {
-      currentSchema = JSON.parse(
-        project.schemaData || {
-          nodes: [],
-          edges: [],
-        },
-      );
-    }
-
-    return {
-      engineId,
-      engineContext,
-      config,
-      data,
-      activeAssetsKeys,
-      name: project.name,
-      serviceConfig,
-      expandInfo,
-      schemaData: currentSchema,
-    };
-  };
-
-  // TODO response 返回为数组，应该返回为对象
   const response = await request(`${SERVICE_URL_PREFIX}/project/${id}`, {
     method: 'get',
-    // data: {
-    //   id,
-    // },
   });
-  if (response.success && response.data?.length > 0) {
-    const res = response.data[0];
-    return getResult(res);
+  if (response.success) {
+    return trans(response.data);
   }
 };
 
@@ -114,7 +67,7 @@ export const updateProjectById = async (
   id: string,
   params: { data?: string; [key: string]: any },
 ): Promise<IProject> => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     const origin: any = await localforage.getItem(id);
     const {
       data,
@@ -178,7 +131,7 @@ export const updateProjectById = async (
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     return await localforage.removeItem(id);
   }
 
@@ -197,7 +150,7 @@ export const removeProjectById = async (id: string) => {
  * @returns
  */
 export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise<IProject[]> => {
-  if (IS_LOCAL_ENV) {
+  if (IS_INDEXEDDB_MODE) {
     const projects: IProject[] = [];
     const cases: IProject[] = [];
     const save: IProject[] = [];
@@ -248,23 +201,22 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
  * 增加项目
  */
 export const addProject = async (param: any): Promise<string | undefined> => {
-  if (IS_LOCAL_ENV) {
-    const projectId = getUid();
-    const { engineContext, ...otherParams } = param;
+  const projectId = getUid();
+  const { engineContext, ...otherParams } = param;
 
-    const p = {
-      ...otherParams,
-      engineContext: engineContext || {},
-      id: projectId,
-      isProject: true,
-      gmtCreate: new Date(),
-    };
+  const p = {
+    ...otherParams,
+    engineContext: engineContext || {},
+    id: projectId,
+    isProject: true,
+    gmtCreate: new Date(),
+  };
+  if (IS_INDEXEDDB_MODE) {
     localforage.setItem(projectId, p);
     return new Promise(resolve => {
       resolve(projectId);
     });
   }
-
   const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
     method: 'post',
     data: param,

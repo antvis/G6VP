@@ -7,7 +7,7 @@ import './index.less';
 interface ILayoutProps {}
 const rightContentExtra = (
   <>
-    {/* {IS_LOCAL_ENV && <AlibabaLogin />} */}
+    {/* {IS_INDEXEDDB_MODE && <AlibabaLogin />} */}
     <Notification />
     <QRcode />
     <DataModeCard />

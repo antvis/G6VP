@@ -10,8 +10,8 @@ import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 
-import { isDev, OFFICIAL_PACKAGES } from '../../.umirc';
-import { IS_LOCAL_ENV } from './const';
+import { OFFICIAL_PACKAGES } from '../../.umirc';
+import { IS_DEV_ENV } from './const';
 
 const { loaderCombinedAssets, getAssetPackages } = utils;
 const OFFICIAL_PACKAGES_MAP = OFFICIAL_PACKAGES.reduce((acc, curr) => {
@@ -66,7 +66,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   let FinalAssets;
 
   const packages = getAssetPackages();
-  if (IS_LOCAL_ENV && isDev) {
+  if (IS_DEV_ENV) {
     FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
   } else {
     FinalAssets = await loaderCombinedAssets(packages);
@@ -128,7 +128,7 @@ export const queryAssetList = async () => {
   let FinalAssets;
 
   const packages = getAssetPackages();
-  if (IS_LOCAL_ENV && isDev) {
+  if (IS_DEV_ENV) {
     FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
   } else {
     FinalAssets = await loaderCombinedAssets(packages);

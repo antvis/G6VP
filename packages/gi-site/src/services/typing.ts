@@ -7,12 +7,15 @@ export interface IProject {
   engineId: string;
   /** 引擎的上下文，用于服务接口的额外参数 */
   engineContext: Record<string, any>;
+  /** 项目激活的资产ID */
   activeAssetsKeys: IActiveAssetsKeys;
+  /** 项目数据 */
   data: {
     transFunc?: string;
     transData: GraphinData;
     inputData: any[];
   };
+  /** 项目类型 */
   type?: 'case' | 'project' | 'save';
   id?: string;
   name?: string;

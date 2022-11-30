@@ -6,9 +6,9 @@ import {
   createGraphScopeInstance,
   loadChinaVisGraphToGraphScope,
   loadGraphToGraphScope,
-  queryGraphSchema,
   uploadLocalFileToGraphScope,
 } from '../GraphScopeService';
+import { GI_SERVICE_SCHEMA } from '../Initializer';
 import GSDataMode from './GSDataMode';
 
 export interface GraphModelProps {
@@ -151,7 +151,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) =>
 
       // 关闭弹框
       onClose();
-      const schemaData = (await queryGraphSchema()) || { nodes: [], edges: [] };
+      const schemaData = await GI_SERVICE_SCHEMA.service();
       console.log('schemaData', schemaData);
       if (updateGISite) {
         updateGISite({
