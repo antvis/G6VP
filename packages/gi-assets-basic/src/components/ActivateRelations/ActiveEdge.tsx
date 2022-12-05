@@ -8,7 +8,14 @@ const ActiveEdge: React.FunctionComponent<ActiveEdgeProps> = props => {
   React.useEffect(() => {
     const handleClick = e => {
       const { item } = e;
+
+      graph.getNodes().forEach(node => {
+        graph.clearItemStates(node);
+      });
+
       graph.getEdges().forEach(edge => {
+        graph.clearItemStates(edge);
+
         const sourceNode = edge.get('sourceNode');
         const targetNode = edge.get('targetNode');
         const isSelectedEdge = edge.getID() === item.getID();
