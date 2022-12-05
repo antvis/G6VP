@@ -32,10 +32,11 @@ export interface IProject {
 }
 
 export interface ICase extends IProject {
+  id: string;
   title: string;
   tag: string;
   author: string;
   time: string;
   video: string;
-  img: string;
+  coverImg: string;
 }

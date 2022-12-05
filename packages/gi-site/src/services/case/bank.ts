@@ -1,3 +1,4 @@
+import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 import { ICase } from '../typing';
 const source = {
   nodes: [
@@ -525,7 +526,7 @@ const source = {
   ],
 };
 
-const schema = {
+const schema: GraphSchemaData = {
   nodes: [
     {
       nodeType: 'account_balance',
@@ -665,7 +666,7 @@ const activeAssetsKeys = {
   ],
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
-const projectConfig = {
+const projectConfig: GIConfig = {
   nodes: [
     {
       id: 'SimpleNode',
@@ -1416,7 +1417,7 @@ const project: ICase = {
   author: '山果',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
-  img: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ',
+  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ',
 };
 
 export default project;

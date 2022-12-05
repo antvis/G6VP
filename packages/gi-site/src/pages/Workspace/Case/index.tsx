@@ -33,7 +33,7 @@ const Case: React.FunctionComponent<CaseProps> = props => {
       <Row gutter={24}>
         {state.lists.map(c => {
           //@ts-ignore
-          const { id, name, img, title, tag, time, author, video } = c;
+          const { id, name, coverImg: img, title, tag, time, author, video } = c;
 
           return (
             <Col key={id} span={12}>

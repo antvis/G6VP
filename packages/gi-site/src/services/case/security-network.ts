@@ -1,3 +1,4 @@
+import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 import { ICase } from '../typing';
 const activeAssetsKeys = {
   elements: ['SimpleNode', 'SimpleEdge'],
@@ -34,7 +35,7 @@ const activeAssetsKeys = {
   ],
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
-const projectConfig = {
+const projectConfig: GIConfig = {
   nodes: [
     {
       id: 'SimpleNode',
@@ -1001,7 +1002,6 @@ const projectConfig = {
 const transform = source => {
   return {
     nodes: source.nodes.map(item => {
-      console.log(String(item.id), item.id);
       return {
         id: String(item.id),
         data: item,
@@ -5202,7 +5202,7 @@ const source = {
   ],
 };
 
-const schemaData = {
+const schemaData: GraphSchemaData = {
   nodes: [
     {
       nodeType: '在线设备资产',
@@ -5395,7 +5395,7 @@ const project: ICase = {
   author: '刘宏达',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
-  img: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*qBabR5ADNmwAAAAAAAAAAAAAARQnAQ',
+  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*qBabR5ADNmwAAAAAAAAAAAAAARQnAQ',
 };
 
 export default project;
