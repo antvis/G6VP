@@ -20,6 +20,13 @@ const registerMeta = context => {
       'x-component': 'Switch',
       default: true,
     },
+    leftVisible: {
+      title: '默认展开左侧容器',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     leftWidth: {
       title: '左侧宽度',
       type: 'string',
@@ -41,6 +48,13 @@ const registerMeta = context => {
     },
     rightDisplay: {
       title: '显示右侧容器',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
+    rightVisible: {
+      title: '默认展开右侧容器',
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -72,6 +86,13 @@ const registerMeta = context => {
       'x-component': 'Switch',
       default: true,
     },
+    bottomVisible: {
+      title: '默认展开底部容器',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     bottomHeight: {
       title: '底部高度',
       type: 'string',
@@ -93,6 +114,13 @@ const registerMeta = context => {
     },
     topDisplay: {
       title: '显示顶部容器',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
+    topVisible: {
+      title: '默认展开顶部容器',
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',

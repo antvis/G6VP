@@ -6,7 +6,7 @@ import { useImmer } from 'use-immer';
 import { BottomContainer, LeftContainer, RightContainer, TopContainer } from './Containers';
 import useComponents from './useComponents';
 
-export interface FreeLayoutProps {
+export interface FreeLayoutProps extends IContainersVisible {
   GI_CONTAINER_LEFT: string[];
   GI_CONTAINER_RIGHT: string[];
   GI_CONTAINER_BOTTOM: string[];
@@ -24,7 +24,7 @@ export interface FreeLayoutProps {
   GISDK_ID: string;
 }
 
-interface IState {
+interface IContainersVisible {
   leftVisible: boolean;
   rightVisible: boolean;
   bottomVisible: boolean;
@@ -50,13 +50,17 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     rightDisplay,
     bottomDisplay,
     topDisplay,
+    leftVisible,
+    rightVisible,
+    bottomVisible,
+    topVisible,
   } = props;
 
-  const [state, updateState] = useImmer<IState>({
-    leftVisible: true,
-    rightVisible: true,
-    bottomVisible: true,
-    topVisible: true,
+  const [state, updateState] = useImmer<IContainersVisible>({
+    leftVisible,
+    rightVisible,
+    bottomVisible,
+    topVisible,
   });
 
   const LeftContent = useComponents(GI_CONTAINER_LEFT, ComponentCfgMap, assets, state.leftVisible);
