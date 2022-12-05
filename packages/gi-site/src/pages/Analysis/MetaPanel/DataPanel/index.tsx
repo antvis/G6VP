@@ -14,7 +14,6 @@ import CollapseCard from '../../../../components/CollapseCard';
 import { edgeColumns, nodeColumns } from '../../../../components/FileServerEngine/const';
 import { useContext } from '../../hooks/useContext';
 import DataSchema from './DataSchema';
-import DataService from './DataService';
 import DataSource from './DataSource';
 import './index.less';
 
@@ -109,7 +108,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
           {EngineView}
         </CollapseCard>
         <DataSchema />
-        <DataService projectId={id} serviceLists={serviceConfig} />
+        {/* <DataService projectId={id} serviceLists={serviceConfig} /> */}
       </div>
     </>
   );

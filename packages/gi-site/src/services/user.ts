@@ -1,5 +1,5 @@
-import request from 'umi-request';
 import { SERVICE_URL_PREFIX } from './const';
+import { request } from './utils';
 
 export const getUser = async () => {
   const response = await request(`${SERVICE_URL_PREFIX}/user/info`, {
