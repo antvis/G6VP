@@ -7,14 +7,12 @@ import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
 import { loader } from '../../loader';
-import setDefaultDemo from '../X-Studio';
+
 import Case from './Case';
 import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
-
-setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;

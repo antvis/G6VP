@@ -23,16 +23,19 @@ export interface IProject {
   description?: string;
   members?: { name: string; id: string; state: 'master' | 'user' }[];
   projectConfig?: GIConfig;
-  serviceConfig: {
-    content: string;
-    id: string;
-    mode: 'MOCK' | 'API';
-    name: string;
-  }[];
   status?: number;
   tag?: string;
   gmtCreate?: any;
   schemaData: GraphSchemaData;
   config?: GIConfig;
   themes?: any[];
+}
+
+export interface ICase extends IProject {
+  title: string;
+  tag: string;
+  author: string;
+  time: string;
+  video: string;
+  img: string;
 }

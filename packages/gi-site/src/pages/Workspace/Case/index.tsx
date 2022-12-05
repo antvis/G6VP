@@ -3,56 +3,27 @@ import { Card, Col, Row, Tag } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
-import { getProjectList } from '../../../services/index';
+import { queryCaseList } from '../../../services/case';
+import { IProject } from '../../../services/typing';
 import './index.less';
 interface CaseProps {}
 
-const CONSTS_MAP = {
-  'demo-bank': {
-    title: '在银行反洗钱分析场景的应用实践',
-    tag: '金融风控',
-    author: '山果',
-    time: '2022.06.06',
-    video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
-    img: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ',
-  },
-  'demo-supply-chain': {
-    title: '在供应链漏洞分析场景的应用实践',
-    tag: '网络安全',
-    author: '刘宏达',
-    time: '2022.06.06',
-    video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
-    img: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*qBabR5ADNmwAAAAAAAAAAAAAARQnAQ',
-  },
-};
 const Case: React.FunctionComponent<CaseProps> = props => {
   const history = useHistory();
   const [state, updateState] = useImmer({
-    lists: [],
+    lists: [] as IProject[],
     visible: false,
-    isLoad: true,
   });
-  const { isLoad } = state;
 
   React.useLayoutEffect(() => {
     (async () => {
-      const lists = await getProjectList('case');
-      const filterLists = lists.filter(d => {
-        return CONSTS_MAP[d.id];
-      });
-      if (filterLists.length === 0) {
-        updateState(draft => {
-          draft.isLoad = false;
-        });
-        return;
-      }
+      const lists = await queryCaseList();
       updateState(draft => {
-        draft.lists = filterLists;
+        draft.lists = lists;
       });
     })();
-  }, [isLoad]);
+  }, []);
 
-  console.log(state.lists);
   if (state.lists.length === 0) {
     return null;
   }
@@ -61,8 +32,9 @@ const Case: React.FunctionComponent<CaseProps> = props => {
     <div>
       <Row gutter={24}>
         {state.lists.map(c => {
-          const { id, name } = c;
-          const { img, title, tag, time, author, video } = CONSTS_MAP[id];
+          //@ts-ignore
+          const { id, name, img, title, tag, time, author, video } = c;
+
           return (
             <Col key={id} span={12}>
               <Card
