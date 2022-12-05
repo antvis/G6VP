@@ -1,9 +1,9 @@
 import { message } from 'antd';
 import localforage from 'localforage';
-import request from 'umi-request';
 import { getUid } from '../pages/Workspace/utils';
 import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IProject } from './typing';
+import { request } from './utils';
 
 export function getEdgesByNodes(nodes, edges) {
   const ids = nodes.map(node => node.id);
@@ -69,54 +69,7 @@ export const updateProjectById = async (
 ): Promise<IProject> => {
   if (IS_INDEXEDDB_MODE) {
     const origin: any = await localforage.getItem(id);
-    const {
-      data,
-      serviceConfig,
-      projectConfig,
-      name,
-      activeAssetsKeys,
-      schemaData,
-      expandInfo,
-      type,
-      engineId,
-      engineContext,
-    } = params;
-    // 为了兼容OB的存储，仅为string，因此所有传入的数据格式都是string，但是本地IndexDB存储的是object
-    // 未来也可以改造为出入params为对象，给到OB的借口全部JSON.stringify
-    if (engineId) {
-      origin.engineId = engineId;
-    }
-    if (engineContext) {
-      origin.engineContext = engineContext;
-    }
-    if (data) {
-      origin.data = data;
-    }
-    if (serviceConfig) {
-      origin.serviceConfig = serviceConfig;
-    }
-    if (projectConfig) {
-      origin.projectConfig = projectConfig;
-    }
-    if (schemaData) {
-      origin.schemaData = schemaData;
-    }
-
-    if (activeAssetsKeys) {
-      origin.activeAssetsKeys = activeAssetsKeys;
-    }
-    if (name) {
-      origin.name = name;
-    }
-
-    if (expandInfo) {
-      origin.expandInfo = expandInfo;
-    }
-
-    /* if (type) {
-      origin.type = type;
-    } */
-    return await localforage.setItem(id, origin);
+    return await localforage.setItem(id, { ...origin, ...params });
   }
 
   params.id = id;
