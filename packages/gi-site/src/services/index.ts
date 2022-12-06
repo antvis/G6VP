@@ -25,11 +25,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
   const trans = project => {
     return {
       engineId: project.engineId || 'GI', // 兼容过去的版本
-      engineContext: project.engineContext || {
-        // 兼容过去的版本
-        schemaData: project.schemaData,
-        data: project.data.transData,
-      },
+      engineContext: project.engineContext,
       schemaData: project.schemaData,
       config: project.projectConfig,
       data: project.data,
@@ -45,7 +41,6 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
     }
-
     return trans(project);
   }
 
@@ -53,6 +48,8 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     method: 'get',
   });
   if (response.success) {
+    // 如果是在线模式，在本地备份一份，用于后续的初始化查询和scehma查询
+    localforage.setItem(id, response.data);
     return trans(response.data);
   }
 };
@@ -63,38 +60,34 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
  * @param p 项目配置
  * @returns
  */
-export const updateProjectById = async (
-  id: string,
-  params: { data?: string; [key: string]: any },
-): Promise<IProject> => {
-  if (IS_INDEXEDDB_MODE) {
-    const origin: any = await localforage.getItem(id);
-    return await localforage.setItem(id, { ...origin, ...params });
-  }
+export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   params.id = id;
+  const origin: any = await localforage.getItem(id);
+  localforage.setItem(id, { ...origin, ...params });
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
-    method: 'post',
-    data: params,
-  });
-
-  return response.success;
+  /** 如果是在线模式，则备份一份 **/
+  if (!IS_INDEXEDDB_MODE) {
+    const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
+      method: 'post',
+      data: params,
+    });
+    return response.success;
+  }
 };
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
-  if (IS_INDEXEDDB_MODE) {
-    return await localforage.removeItem(id);
+  localforage.removeItem(id);
+  /** 如果是在线模式，则备份一份 **/
+  if (!IS_INDEXEDDB_MODE) {
+    const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
+      method: 'post',
+      data: {
+        id,
+      },
+    });
+    return response.success;
   }
-
-  const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
-    method: 'post',
-    data: {
-      id,
-    },
-  });
-
-  return response.success;
 };
 
 /**
@@ -174,6 +167,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
     data: param,
   }).catch(error => {
     console.log('error', error);
+    message.error(error);
   });
 
   if (response.success && response.data?.insertId) {
