@@ -50,7 +50,7 @@ const Navbar = ({
   });
 
   const { context, updateContext } = useContext();
-  const { config, serviceConfig, activeAssetsKeys, name } = context;
+  const { config, activeAssetsKeys, name } = context;
   // 主题切换Hook
   const { changeTheme } = useTheme(context, updateContext);
 
@@ -78,7 +78,7 @@ const Navbar = ({
         type: 'project',
         data,
         schemaData,
-        serviceConfig,
+
         activeAssetsKeys,
         projectConfig: config,
         engineContext: {
@@ -96,7 +96,6 @@ const Navbar = ({
         //   ...(origin && origin.data),
         //   transData: data,
         // }),
-        serviceConfig,
         activeAssetsKeys,
         projectConfig: config,
       });
