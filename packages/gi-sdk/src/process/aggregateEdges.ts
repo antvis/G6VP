@@ -19,7 +19,7 @@ const aggregate = data => {
     const children = edgeMap.get(key);
 
     const firstEdge = children[0];
-    console.log(' children', children);
+
     const { source, target, edgeType, edgeTypeKeyFromProperties } = firstEdge;
 
     const aggregate = children.length > 1;
