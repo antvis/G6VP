@@ -1,5 +1,5 @@
 import { VideoCameraOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Tag } from 'antd';
+import { Card, Col, Row, Skeleton, Tag } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -13,6 +13,7 @@ const Case: React.FunctionComponent<CaseProps> = props => {
   const [state, updateState] = useImmer({
     lists: [] as IProject[],
     visible: false,
+    isLoading: true,
   });
 
   React.useLayoutEffect(() => {
@@ -20,12 +21,22 @@ const Case: React.FunctionComponent<CaseProps> = props => {
       const lists = await queryCaseList();
       updateState(draft => {
         draft.lists = lists;
+        draft.isLoading = false;
       });
     })();
   }, []);
 
   if (state.lists.length === 0) {
     return null;
+  }
+  if (state.isLoading) {
+    return (
+      <>
+        <Skeleton active />
+        <Skeleton active />
+        <Skeleton active />
+      </>
+    );
   }
 
   return (

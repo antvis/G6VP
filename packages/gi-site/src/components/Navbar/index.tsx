@@ -45,13 +45,12 @@ const Navbar = ({
 }: NavbarProps) => {
   const history = useHistory();
   const [state, updateState] = useImmer<INavbarState>({
-    initProject: {},
     exportVisible: false,
     deployVisible: false,
   });
 
   const { context, updateContext } = useContext();
-  const { config, serviceConfig, activeAssetsKeys } = context;
+  const { config, serviceConfig, activeAssetsKeys, name } = context;
   // 主题切换Hook
   const { changeTheme } = useTheme(context, updateContext);
 
@@ -149,7 +148,6 @@ const Navbar = ({
     document.body.removeChild(elementA);
   };
 
-  const { name } = state.initProject;
   const rightContent = (
     <>
       <Tooltip title="保存">

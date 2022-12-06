@@ -64,9 +64,8 @@ const Analysis = props => {
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, schemaData, engineId, engineContext, themes } = (await getProjectById(
-        projectId,
-      )) as IProject;
+      const { data, config, activeAssetsKeys, schemaData, engineId, engineContext, themes, name } =
+        (await getProjectById(projectId)) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
       const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
@@ -89,6 +88,7 @@ const Analysis = props => {
         draft.engineId = engineId; // 项目绑定的引擎ID
         draft.engineContext = engineContext; //项目绑定的引擎上下文
         draft.id = projectId; //项目ID
+        draft.name = name; // 项目绑定的引擎ID
         draft.config = config!; //项目配置
         draft.projectConfig = config!; //项目原始配置（从服务器中来的）
         draft.data = transData; //画布数据

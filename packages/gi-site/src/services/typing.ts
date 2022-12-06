@@ -18,6 +18,7 @@ export interface IProject {
   /** 项目类型 */
   type?: 'case' | 'project' | 'save';
   id?: string;
+  /** 项目名称 */
   name?: string;
   cover?: string;
   description?: string;
