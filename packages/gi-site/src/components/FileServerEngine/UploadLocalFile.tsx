@@ -50,13 +50,13 @@ const UploadLocalFile: React.FC<IProps> = props => {
         const isEdge = firstData.source && firstData.target;
         fileData = isEdge
           ? {
-            nodes: [],
-            edges: data,
-          }
+              nodes: [],
+              edges: data,
+            }
           : {
-            nodes: data,
-            edges: [],
-          };
+              nodes: data,
+              edges: [],
+            };
 
         const renderData: IInputData[] = [
           ...state.inputData,
@@ -104,10 +104,10 @@ const UploadLocalFile: React.FC<IProps> = props => {
   const downloadMockFiles = async () => {
     const mockFileUrls = [
       'https://mass-office.alipay.com/huamei_koqzbu/afts/file/pjilTbaCECgAAAAAAAAAABAADnV5AQBr/bank.nodes.xlsx',
-      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/UOj4R7u2sRoAAAAAAAAAABAADnV5AQBr/bank.edges.xlsx'
-    ]
-    await downloadFile(mockFileUrls)
-  }
+      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/UOj4R7u2sRoAAAAAAAAAABAADnV5AQBr/bank.edges.xlsx',
+    ];
+    await downloadFile(mockFileUrls);
+  };
 
   const mergeData = (renderData: IInputData[] = state.inputData) => {
     try {
@@ -175,10 +175,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
 
     updateGISite({
       engineId: 'GI',
-      engineContext: {
-        data: mergeData,
-        schemaData,
-      },
+      engineContext: {},
       data: {
         transData: mergeData,
         inputData: filterInputData,
@@ -227,19 +224,25 @@ const UploadLocalFile: React.FC<IProps> = props => {
           </p>
           <p>点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式</p>
           <Divider />
-          <Row >
-            <Col span={12} style={{display:'flex',justifyContent:"center",alignItems:"center",flexWrap:'wrap'}}>
+          <Row>
+            <Col
+              span={12}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}
+            >
               <div style={{ width: '90%' }}>
                 <p>CSV/XLS/XLSX文件规范：</p>
                 <p>分别上传点表和边表，点表：必须要有 id 字段，边表：必须要有 source 和 target 字段</p>
               </div>
             </Col>
-            <Col span={12} style={{ display: 'flex', justifyContent: "center", alignItems: "center", flexWrap: 'wrap' }}>
+            <Col
+              span={12}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}
+            >
               <div style={{ width: '90%' }}>
                 <p>JSON 文件规范：</p>
                 <p>点表和边表放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合</p>
-                </div>
-              </Col>
+              </div>
+            </Col>
           </Row>
         </Dragger>
       </div>

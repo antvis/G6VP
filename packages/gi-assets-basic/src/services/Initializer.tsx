@@ -1,5 +1,7 @@
 import { GraphSchemaData, utils } from '@antv/gi-sdk';
+
 const { getServerEngineContext } = utils;
+
 export interface GraphData {
   nodes: {
     id: string;
@@ -49,8 +51,17 @@ export const GI_SERVICE_INTIAL_GRAPH = {
   `,
   service: async (): Promise<GraphData> => {
     const context = getServerEngineContext();
-    const { data } = context;
-    return data;
+    const { GI_SITE_PROJECT_ID } = context;
+    try {
+      //@ts-ignore
+      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
+      return project.data.transData;
+    } catch (error) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
   },
 };
 
@@ -92,8 +103,16 @@ export const GI_SERVICE_SCHEMA = {
 }
 `,
   service: async (): Promise<GraphSchemaData> => {
-    const context = getServerEngineContext();
-    const { schemaData } = context;
-    return schemaData;
+    const { GI_SITE_PROJECT_ID } = getServerEngineContext();
+    try {
+      //@ts-ignore
+      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
+      return project.schemaData;
+    } catch (error) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
   },
 };

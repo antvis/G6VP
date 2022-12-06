@@ -28,7 +28,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
       notification.error({
         message: '画布渲染失败',
         description: `缺少 ${serviceId} 服务，请检查相关资产是否加载成功`,
-        duration: null,
       });
       initialService = {
         service: () => {
@@ -45,7 +44,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
       notification.error({
         message: '图模型获取失败',
         description: `缺少 ${serviceId} 服务，请检查相关资产是否加载成功`,
-        duration: null,
       });
       schemaService = {
         service: () => {
@@ -67,7 +65,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           notification.warn({
             message: '加载的数据量过大',
             description: `建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染`,
-            duration: null,
           });
         }
 
