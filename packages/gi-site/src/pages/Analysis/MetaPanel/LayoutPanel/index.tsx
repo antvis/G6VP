@@ -62,7 +62,7 @@ const getCacheValues = (object, layoutId) => {
 };
 
 const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
-  const { data, layouts, config = { layout: { props: {} } } } = props;
+  const { layouts, config = { layout: { props: {} } } } = props;
   const { updateContext } = useContext();
   const { layout: layoutConfig } = config;
 

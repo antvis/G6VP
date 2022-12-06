@@ -11,10 +11,7 @@ interface DataSourceProps {
 }
 
 const DataSource: React.FunctionComponent<DataSourceProps> = props => {
-  const { data, engineId } = props;
-
-  // 如果是使用 GraphScope 模式，则不默认展示弹框
-  const graphScopeGraphName = localStorage.getItem('graphScopeGraphName');
+  const { engineId } = props;
 
   const [state, updateState] = useImmer({
     visible: !engineId,

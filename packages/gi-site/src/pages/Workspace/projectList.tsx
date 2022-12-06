@@ -1,6 +1,6 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
+import { Button, Col, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -16,6 +16,7 @@ interface ProjectListProps {
 
 interface ProjectListState {
   lists: IProject[];
+  isLoading: boolean;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -23,6 +24,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const history = useHistory();
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
+    isLoading: true,
   });
 
   const [member, setMember] = useImmer({
@@ -34,6 +36,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     (async () => {
       const lists = await getProjectList(type);
       updateState(draft => {
+        draft.isLoading = false;
         draft.lists = lists;
       });
     })();
@@ -94,6 +97,15 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       {!IS_INDEXEDDB_MODE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
+  if (state.isLoading) {
+    return (
+      <>
+        <Skeleton active />
+        <Skeleton active />
+        <Skeleton active />
+      </>
+    );
+  }
 
   return (
     <>

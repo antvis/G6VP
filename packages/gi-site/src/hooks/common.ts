@@ -108,10 +108,10 @@ export const getActivePackageName = (activeAssets: GIAssets): string[] => {
 };
 
 export const getConstantFiles = opts => {
-  const { config, id, engineId, engineContext, activeAssets, theme } = opts;
-  // const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
+  const { config, id, engineId, engineContext, activeAssets, theme, data, schemaData } = opts;
+  const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
   // const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
-  // const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
+  const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));
   const THEME_STYLE = Object.entries(ThemeVars[theme])
     //@ts-ignore
     .reduce((acc, curr) => {
@@ -163,8 +163,8 @@ export const getConstantFiles = opts => {
     packages,
     THEME_VALUE: theme,
     // GI_SERVICES_OPTIONS,
-    // GI_LOCAL_DATA,
-    // GI_SCHEMA_DATA,
+    GI_LOCAL_DATA,
+    GI_SCHEMA_DATA,
   };
 };
 
@@ -190,7 +190,7 @@ export const HTML_SCRIPTS = `
 <!--- REACT DEPENDENCIES-->
 <script crossorigin src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
 <script crossorigin src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
-
+<script src="https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js"></script>
 <!--- Antd DEPENDENCIES-->
 <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
 <script src="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js"></script>
@@ -207,7 +207,14 @@ export const MY_GRAPH_SDK = `
 
 //@ts-ignore
 const {  getCombineServices,loaderCombinedAssets } = window.GISDK.utils;
+const { GI_SITE_PROJECT_ID } =SERVER_ENGINE_CONTEXT;
+// 设置引擎上下文
 window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
+// 将用户本地上传的数据，存储到 IndexedDB 中
+window.localforage.setItem(GI_SITE_PROJECT_ID,{
+  data:{ transData:GI_LOCAL_DATA },
+  schemaData:GI_SCHEMA_DATA
+});
 
 const MyGraphApp= (props) => {
   const [state,setState]= React.useState({

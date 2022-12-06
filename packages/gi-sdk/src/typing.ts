@@ -248,7 +248,7 @@ export interface GIComponentConfig {
 
 export interface GINodeConfig {
   id: string;
-  name: string;
+  name?: string;
   props: {
     size: number;
     color: string;
@@ -260,11 +260,12 @@ export interface GINodeConfig {
     operator: string;
     value: string | number;
   }[];
+  logic: boolean;
   groupName: string;
 }
 export interface GIEdgeConfig {
   id: string;
-  name: string;
+  name?: string;
   props: {
     color: string;
     size: number;
@@ -276,6 +277,7 @@ export interface GIEdgeConfig {
     operator: string;
     value: string | number;
   }[];
+  logic: boolean;
   groupName: string;
 }
 

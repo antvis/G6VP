@@ -7,14 +7,12 @@ import Notification from '../../components/Notification';
 import QRcode from '../../components/QRcode';
 import { getSearchParams } from '../../components/utils';
 import { loader } from '../../loader';
-import setDefaultDemo from '../X-Studio';
+
 import Case from './Case';
 import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './projectList';
 import SaveList from './SaveList';
-
-setDefaultDemo();
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
@@ -43,13 +41,11 @@ const LIST_OPTIONS: { id: NavbarId; name: string }[] = [
 
 const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
   const { searchParams } = getSearchParams(location);
-  const type = searchParams.get('type') || 'project';
-  const GI_UPLOADED_DATA = localStorage.getItem('GI_UPLOADED_DATA') === 'true';
-  const defaultActiveKey = GI_UPLOADED_DATA ? type : 'case';
+  const type = searchParams.get('type') || 'case';
 
   const [state, updateState] = useImmer({
     visible: false,
-    activeKey: defaultActiveKey,
+    activeKey: type,
     deploys: [] as DeployItem[],
   });
 

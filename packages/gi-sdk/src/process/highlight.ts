@@ -59,7 +59,6 @@ export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
     }
 
     if (hasMatch) {
-      console.log('match edge', edge);
       graph.setItemState(edge.id, 'disabled', false);
       graph.setItemState(edge.id, 'selected', true);
     } else {

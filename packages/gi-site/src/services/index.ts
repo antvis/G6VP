@@ -71,7 +71,6 @@ export const updateProjectById = async (
     const origin: any = await localforage.getItem(id);
     return await localforage.setItem(id, { ...origin, ...params });
   }
-
   params.id = id;
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
@@ -173,6 +172,8 @@ export const addProject = async (param: any): Promise<string | undefined> => {
   const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
     method: 'post',
     data: param,
+  }).catch(error => {
+    console.log('error', error);
   });
 
   if (response.success && response.data?.insertId) {

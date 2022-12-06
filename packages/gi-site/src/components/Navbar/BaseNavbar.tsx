@@ -72,12 +72,6 @@ const BaseNavbar = props => {
         {rightContentExtra}
         {rightContent}
 
-        {userInfo && (
-          <Avatar
-            style={{ width: '21px', height: '21px', marginLeft: 5 }}
-            src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
-          />
-        )}
         <Tooltip title="切换主题">
           <ThemeSwitch
             //@ts-ignore
@@ -99,6 +93,12 @@ const BaseNavbar = props => {
             ]}
           ></ThemeSwitch>
         </Tooltip>
+        {userInfo && (
+          <Avatar
+            style={{ width: '24px', height: '24px', marginLeft: 8 }}
+            src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
+          />
+        )}
       </div>
     </Header>
   );

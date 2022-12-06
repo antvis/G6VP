@@ -20,6 +20,8 @@ export interface StateType {
   engineContext: Record<string, any>;
   /** 项目ID */
   id: string;
+  /** 项目名称 */
+  name?: string;
   /** GISDK.config */
   config: GIConfig;
   /** GISDK.services */

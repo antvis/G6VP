@@ -1,7 +1,7 @@
-import React from 'react';
 import { EditOutlined } from '@ant-design/icons';
+import React from 'react';
 import { updateProjectById } from '../../services';
-import "./index.less"
+import './index.less';
 
 export interface IProjectTitleProps {
   projectId: string;
@@ -19,6 +19,7 @@ const ProjectTitle: React.FC<IProjectTitleProps> = props => {
       name: newTitle,
     });
   };
+  console.log('name', name);
 
   const handleKeyDown = e => {
     //禁用回车的默认事件
