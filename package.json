@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npm run build:all:es",
-    "build:all:es": "pnpm run -r build:es",
+    "build:all:es": "turbo run build:es",
     "start": "cd packages/gi-site && npm run start",
     "gi-common-component": "cd packages/gi-common-components && npm run build:es",
     "gi-sdk": "cd packages/gi-sdk && npm run build:es",
@@ -77,6 +77,7 @@
     "source-map-loader": "^4.0.0",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
+    "turbo": "^1.6.3",
     "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0"
   }
