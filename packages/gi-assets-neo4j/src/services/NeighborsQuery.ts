@@ -4,8 +4,8 @@ export const NeighborsQuery = {
   service: async params => {
     const { ids, sep } = params;
 
-    const httpServerURL = localStorage.getItem('Neo4j_HTTP_SERVER');
-
+    const httpServerURL = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!).httpServerURL
+    
     const response = await request(`${httpServerURL}/api/neo4j/neighbors`, {
       method: 'post',
       data: {
