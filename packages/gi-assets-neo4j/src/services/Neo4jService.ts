@@ -26,8 +26,8 @@ export const connectNeo4jService = async (params: ConnectProps) => {
 
     if (result.success) {
       const { httpServerURL } = result.data;
-      localStorage.setItem('Neo4j_HTTP_SERVER', httpServerURL);
-      localStorage.setItem('Neo4j_CONNECT_URI', uri);
+      const PROJECT_SERVER_ENGINE_CONTEXT = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!)
+      localStorage.setItem('SERVER_ENGINE_CONTEXT', JSON.stringify({ ...PROJECT_SERVER_ENGINE_CONTEXT,uri, username, password, httpServerURL }))
     }
 
     return result;
