@@ -22,8 +22,16 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, HTML_HEADER, THEME_STYLE, packages } =
-    getConstantFiles(opts);
+  const {
+    GI_PROJECT_CONFIG,
+    SERVER_ENGINE_CONTEXT,
+    GI_ASSETS_PACKAGE,
+    HTML_HEADER,
+    THEME_STYLE,
+    packages,
+    GI_LOCAL_DATA,
+    GI_SCHEMA_DATA,
+  } = getConstantFiles(opts);
 
   const assets_packages_json = packages.reduce((acc, curr) => {
     const { name, version } = curr;
@@ -117,6 +125,13 @@ const SERVER = [
       
       /** GraphInsight 站点选择服务引擎的上下文配置信息 **/
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
+
+
+      /** GraphInsight 站点 本地上传的数据 **/
+      export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
+
+      /** GraphInsight 站点 本地上传的数据的 Schema 信息 **/
+      export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
       
       /** 导出的主题 **/
       export const THEME_VALUE = "${theme}";
@@ -128,6 +143,7 @@ const SERVER = [
 import React from "react";
 import ReactDOM from "react-dom";
 import GISDK,{utils} from '@antv/gi-sdk';
+import localforage from 'localforage';
 
 ${import_pakages}
 ${import_servers_package}
@@ -149,6 +165,13 @@ const services = getCombineServices(SERVER);
 window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
 /** 设置主题 **/
 window.localStorage.setItem("@theme", THEME_VALUE);
+/** 如果是本地上传的数据，需要将数据存储在IndexedDB中，避免数据量大导致的内存报错 **/
+//@ts-ignore
+localforage.setItem(GI_SITE_PROJECT_ID,{
+  data:{ transData:GI_LOCAL_DATA },
+  schemaData:GI_SCHEMA_DATA
+});
+
 
 const MyGraphApp= () => {
    return (
@@ -182,6 +205,7 @@ ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
         dependencies: {
           react: '17.x',
           'react-dom': '17.x',
+          localforage: '1.10.0',
           antd: ANTD_VERSION,
           '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
           '@antv/g6': G6_VERSION,

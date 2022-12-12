@@ -17,8 +17,15 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, HTML_HEADER, THEME_STYLE } =
-    getConstantFiles(opts);
+  const {
+    GI_PROJECT_CONFIG,
+    SERVER_ENGINE_CONTEXT,
+    GI_ASSETS_PACKAGE,
+    HTML_HEADER,
+    THEME_STYLE,
+    GI_LOCAL_DATA,
+    GI_SCHEMA_DATA,
+  } = getConstantFiles(opts);
 
   files['src/GI_EXPORT_FILES.ts'] = {
     content: ` 
@@ -30,6 +37,12 @@ function getCSBData(opts) {
       
       /** GraphInsight 站点选择服务引擎的上下文配置信息 **/
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
+
+      /** GraphInsight 站点 本地上传的数据 **/
+      export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
+
+      /** GraphInsight 站点 本地上传的数据的 Schema 信息 **/
+      export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
     `,
   };
 
@@ -39,7 +52,7 @@ function getCSBData(opts) {
     // import React from "react";
     // import ReactDOM from "react-dom";
 
-    import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE } from "./GI_EXPORT_FILES";
+    import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE,GI_LOCAL_DATA,GI_SCHEMA_DATA } from "./GI_EXPORT_FILES";
 
     ${MY_GRAPH_SDK}
     `,
