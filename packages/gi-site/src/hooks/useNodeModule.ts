@@ -116,8 +116,6 @@ const SERVER = [
   ]
     `;
 
-  console.log('assets_import_components', import_pakages, import_components);
-
   files['src/GI_EXPORT_FILES.ts'] = {
     content: ` 
       /** GraphInsight 站点自动生成的配置 **/
@@ -147,7 +145,7 @@ import localforage from 'localforage';
 
 ${import_pakages}
 ${import_servers_package}
-import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE,THEME_VALUE } from "./GI_EXPORT_FILES";  
+import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,THEME_VALUE,GI_LOCAL_DATA,GI_SCHEMA_DATA } from "./GI_EXPORT_FILES";  
 import ThemeSwitch from '@antv/gi-theme-antd';
 /** 资产可按需引入 **/
 ${import_components}
@@ -166,7 +164,7 @@ window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGI
 /** 设置主题 **/
 window.localStorage.setItem("@theme", THEME_VALUE);
 /** 如果是本地上传的数据，需要将数据存储在IndexedDB中，避免数据量大导致的内存报错 **/
-//@ts-ignore
+const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
 localforage.setItem(GI_SITE_PROJECT_ID,{
   data:{ transData:GI_LOCAL_DATA },
   schemaData:GI_SCHEMA_DATA
@@ -214,6 +212,11 @@ ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
           ...assets_packages_json,
         },
         devDependencies: { typescript: '^3' },
+        pnpm: {
+          overrides: {
+            '@antv/gi-sdk': 'latest',
+          },
+        },
       },
       null,
       2,
