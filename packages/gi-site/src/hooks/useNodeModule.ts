@@ -165,6 +165,8 @@ window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGI
 window.localStorage.setItem("@theme", THEME_VALUE);
 /** 如果是本地上传的数据，需要将数据存储在IndexedDB中，避免数据量大导致的内存报错 **/
 const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
+//@ts-ignore
+window.localforage = localforage; // 如果是GI引擎，在初始化的时候，查询的是window.localforage.getItem('GI_SITE_PROJECT_ID')，因此需要将localforage设置为全局变量
 localforage.setItem(GI_SITE_PROJECT_ID,{
   data:{ transData:GI_LOCAL_DATA },
   schemaData:GI_SCHEMA_DATA
@@ -212,10 +214,8 @@ ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
           ...assets_packages_json,
         },
         devDependencies: { typescript: '^3' },
-        pnpm: {
-          overrides: {
-            '@antv/gi-sdk': 'latest',
-          },
+        resolutions: {
+          '@antv/gi-sdk': 'latest',
         },
       },
       null,
