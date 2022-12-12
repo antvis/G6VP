@@ -1,4 +1,4 @@
-import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
+import { GraphSchemaData } from '@antv/gi-sdk';
 import { ICase } from '../typing';
 const source = {
   nodes: [
@@ -663,10 +663,12 @@ const activeAssetsKeys = {
     'TableMode',
     'InfoDetection',
     'SankeyAnalysis',
+    'ChartAnalysis',
   ],
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
-const projectConfig: GIConfig = {
+
+const projectConfig = {
   nodes: [
     {
       id: 'SimpleNode',
@@ -674,6 +676,11 @@ const projectConfig: GIConfig = {
         size: 26,
         color: '#ddd',
         label: [],
+        advanced: {
+          label: {
+            fill: '#000',
+          },
+        },
       },
       groupName: '默认样式',
       expressions: [],
@@ -684,8 +691,14 @@ const projectConfig: GIConfig = {
       props: {
         size: 26,
         color: '#3056E3',
-        label: ['account_balance.id'],
+        label: ['account_balance^^id'],
         advanced: {
+          label: {
+            fill: '#000',
+            visible: true,
+            fontSize: 12,
+            position: 'bottom',
+          },
           icon: {
             type: 'font',
             value: 'bank',
@@ -694,12 +707,6 @@ const projectConfig: GIConfig = {
           },
           keyshape: {
             fillOpacity: 0.8,
-          },
-          label: {
-            visible: true,
-            fill: '#000',
-            fontSize: 12,
-            position: 'bottom',
           },
           badge: {
             visible: false,
@@ -720,9 +727,15 @@ const projectConfig: GIConfig = {
       id: 'SimpleNode',
       props: {
         size: 26,
-        color: 'rgba(245,166,35,1)',
-        label: ['account_box.id'],
+        color: '#faad14',
+        label: ['account_box^^id'],
         advanced: {
+          label: {
+            fill: '#000',
+            visible: true,
+            fontSize: 12,
+            position: 'bottom',
+          },
           icon: {
             type: 'font',
             value: 'user',
@@ -731,12 +744,6 @@ const projectConfig: GIConfig = {
           },
           keyshape: {
             fillOpacity: 0.8,
-          },
-          label: {
-            visible: true,
-            fill: '#000',
-            fontSize: 12,
-            position: 'bottom',
           },
           badge: {
             visible: false,
@@ -757,8 +764,13 @@ const projectConfig: GIConfig = {
       id: 'SimpleNode',
       props: {
         size: 26,
-        color: '#795AE1',
-        label: ['-.id'],
+        color: '#a0d911',
+        label: ['-^^id'],
+        advanced: {
+          label: {
+            fill: '#000',
+          },
+        },
       },
       groupName: '- TYPE',
       expressions: [
@@ -778,25 +790,6 @@ const projectConfig: GIConfig = {
         size: 1,
         color: '#ddd',
         label: [],
-        advanced: {
-          keyshape: {
-            customPoly: false,
-            lineDash: [],
-            opacity: 1,
-          },
-          label: {
-            visible: true,
-            fontSize: 12,
-            offset: [0, 0],
-            fill: '#ddd',
-            backgroundEnable: true,
-            backgroundFill: '#fff',
-            backgroundStroke: '#fff',
-          },
-          animate: {
-            visible: true,
-          },
-        },
       },
       groupName: '默认样式',
       expressions: [],
@@ -807,7 +800,7 @@ const projectConfig: GIConfig = {
       props: {
         size: 1,
         color: '#3056E3',
-        label: ['ib_txn.amount'],
+        label: ['ib_txn^^amount'],
         advanced: {
           keyshape: {
             customPoly: false,
@@ -846,8 +839,8 @@ const projectConfig: GIConfig = {
       id: 'SimpleEdge',
       props: {
         size: 1,
-        color: 'rgba(245,166,35,1)',
-        label: ['ownership.relation'],
+        color: '#faad14',
+        label: ['ownership^^relation'],
         advanced: {
           keyshape: {
             customPoly: false,
@@ -858,17 +851,13 @@ const projectConfig: GIConfig = {
             visible: true,
             fontSize: 12,
             offset: [0, 0],
-            fill: 'rgba(245,166,35,1)',
-            backgroundEnable: true,
+            fill: '#faad14',
+            backgroundEnable: false,
             backgroundFill: '#fff',
             backgroundStroke: '#fff',
           },
           animate: {
             visible: false,
-            type: 'circle-running',
-            dotColor: 'red',
-            repeat: true,
-            duration: 3000,
           },
         },
       },
@@ -910,7 +899,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -931,7 +920,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -952,7 +941,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -973,7 +962,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -994,7 +983,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -1027,18 +1016,21 @@ const projectConfig: GIConfig = {
       id: 'CanvasSetting',
       props: {
         styleCanvas: {
-          background: '#fff',
+          backgroundColor: '#fff',
           backgroundImage: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*k9t4QamMuQ4AAAAAAAAAAAAAARQnAQ',
+          background: '#fff',
         },
         dragCanvas: {
           disabled: false,
           direction: 'both',
-          enableOptimize: false,
+          enableOptimize: true,
         },
         zoomCanvas: {
           disabled: false,
           enableOptimize: true,
         },
+        clearStatus: true,
+        doubleClick: true,
       },
     },
     {
@@ -1063,10 +1055,13 @@ const projectConfig: GIConfig = {
       id: 'FilterPanel',
       name: '筛选面板',
       props: {
-        filterKeys: ['node-address', 'edge-amount'],
+        filterKeys: ['edge-amount', 'node-icon'],
         isFilterIsolatedNodes: true,
         highlightMode: true,
         filterLogic: 'and',
+        histogramOptions: {
+          isCustom: false,
+        },
         GI_CONTAINER_INDEX: 2,
         GIAC_CONTENT: {
           visible: false,
@@ -1080,7 +1075,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'top',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
           containerType: 'div',
           containerAnimate: false,
@@ -1115,7 +1110,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
         backgroundColor: '#fff',
@@ -1127,7 +1122,7 @@ const projectConfig: GIConfig = {
       name: '地图模式',
       props: {
         visible: false,
-        type: 'mapbox',
+        type: 'amap',
         theme: 'light',
         minSize: '50%',
         maxSize: '100%',
@@ -1148,7 +1143,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -1174,7 +1169,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -1184,6 +1179,11 @@ const projectConfig: GIConfig = {
       name: '右键菜单',
       props: {
         GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
+        nodeMenuComponents: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
+        bindTypes: ['node'],
+        edgeMenuComponents: [],
+        canvasMenuComponents: [],
+        comboMenuComponents: [],
       },
     },
     {
@@ -1246,7 +1246,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -1258,6 +1258,7 @@ const projectConfig: GIConfig = {
         serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
         schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
+        aggregate: false,
       },
     },
     {
@@ -1277,7 +1278,7 @@ const projectConfig: GIConfig = {
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
         },
       },
@@ -1286,66 +1287,86 @@ const projectConfig: GIConfig = {
       id: 'GrailLayout',
       name: '圣杯布局',
       props: {
-        GI_CONTAINER_LEFT: ['FilterPanel'],
-        leftDisplay: true,
+        GI_CONTAINER_LEFT: [],
+        leftDisplay: false,
+        leftVisible: true,
         leftWidth: '400px',
-        GI_CONTAINER_RIGHT: ['SankeyAnalysis', 'InfoDetection'],
+        GI_CONTAINER_RIGHT: ['FilterPanel', 'SankeyAnalysis'],
         rightDisplay: true,
+        rightVisible: true,
         rightWidth: '350px',
-        GI_CONTAINER_BOTTOM: ['TableMode'],
+        GI_CONTAINER_BOTTOM: ['ChartAnalysis'],
         bottomDisplay: true,
-        bottomHeight: '400px',
+        bottomVisible: true,
+        bottomHeight: '300px',
+        GI_CONTAINER_TOP: [],
+        topDisplay: false,
+        topVisible: false,
+        topHeight: '200px',
       },
     },
     {
-      id: 'TableMode',
-      name: '表格模式',
+      id: 'Toolbar',
+      name: '工具栏',
       props: {
-        enableCopy: true,
-        isSelectedActive: true,
+        GI_CONTAINER: [
+          'ZoomIn',
+          'ZoomOut',
+          'FitView',
+          'FitCenter',
+          'LargeGraph',
+          'MapMode',
+          'ForceSimulation',
+          'LayoutSwitch',
+          'Export',
+        ],
+        direction: 'vertical',
+        placement: 'LT',
+        offset: [24, 64],
+      },
+    },
+    {
+      id: 'Export',
+      name: '导出',
+      props: {
         GI_CONTAINER_INDEX: 2,
-        GIAC_CONTENT: {
+        GIAC: {
           visible: false,
           disabled: false,
-          isShowTitle: true,
-          title: '表格模式',
+          isShowTitle: false,
+          title: '导出',
           isShowIcon: true,
-          icon: 'icon-table',
+          icon: 'icon-export',
           isShowTooltip: true,
-          tooltip: '将画布中的节点和边以表格形式展示',
+          tooltip: '导出CSV,PNG,JSON数据',
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
-          containerType: 'div',
-          containerAnimate: false,
-          containerPlacement: 'RT',
-          offset: [0, 0],
-          containerWidth: '400px',
-          containerHeight: 'calc(100% - 100px)',
-          contaienrMask: false,
         },
       },
     },
     {
-      id: 'InfoDetection',
-      name: '信息检测',
+      id: 'Overview',
+      name: '大图概览',
       props: {
+        limit: 600,
+        filterLogic: 'and',
         GI_CONTAINER_INDEX: 2,
         GIAC_CONTENT: {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '信息检测',
+          title: '大图概览',
           isShowIcon: true,
-          icon: 'icon-infomation',
+          icon: 'icon-dashboard',
           isShowTooltip: true,
-          tooltip: '检测画布中孤立点、环等',
+          tooltip: '',
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
-          height: '60px',
+          height: '46px',
           isVertical: true,
           containerType: 'div',
           containerAnimate: false,
@@ -1387,15 +1408,47 @@ const projectConfig: GIConfig = {
         },
       },
     },
+    {
+      id: 'ChartAnalysis',
+      name: '图表分析',
+      props: {
+        title: '未命名图表',
+        chartType: 'columnChart',
+        height: 150,
+        dataType: 'edges',
+        xField_edges: 'time',
+        yField_edges: 'amount',
+        GI_CONTAINER_INDEX: 2,
+        GIAC_CONTENT: {
+          visible: false,
+          disabled: false,
+          isShowTitle: true,
+          title: '图表分析',
+          isShowIcon: true,
+          icon: 'icon-barchart',
+          isShowTooltip: true,
+          tooltip: '图中数据通过统计图表展示分析',
+          tooltipColor: '#3056e3',
+          tooltipPlacement: 'right',
+          hasDivider: false,
+          height: '60px',
+          isVertical: true,
+          containerType: 'div',
+          containerAnimate: false,
+          containerPlacement: 'RT',
+          offset: [0, 0],
+          containerWidth: '400px',
+          containerHeight: 'calc(100% - 100px)',
+          contaienrMask: false,
+        },
+      },
+    },
   ],
 };
 
 const project: ICase = {
   engineId: 'GI',
-  engineContext: {
-    schemaData: schema,
-    data: transform(source),
-  },
+  engineContext: {},
   data: {
     inputData: [
       {

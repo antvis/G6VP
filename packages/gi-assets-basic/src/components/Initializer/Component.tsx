@@ -56,7 +56,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         },
       };
     }
-
+    updateContext(draft => {
+      draft.isLoading = true;
+    });
     Promise.all([schemaService.service(), initialService.service()]).then(
       ([schema, data = { nodes: [], edges: [] }]) => {
         const { nodes } = data;
@@ -95,6 +97,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           if (style) {
             draft.data = data;
             draft.source = data;
+            draft.isLoading = false;
             return;
           }
           /** 如果是大图模式 */
@@ -107,6 +110,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
               nodes: [],
               edges: [],
             };
+            draft.isLoading = false;
             return;
           }
           /** 如果是聚合模式 */
@@ -117,6 +121,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             draft.largeGraphMode = false;
             draft.largeGraphData = undefined;
             draft.data = transform(utils.aggregateEdges(data), true);
+            draft.isLoading = false;
             return;
           }
           /** 默认是普通模式 */
@@ -126,6 +131,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           draft.source = newData;
           draft.largeGraphMode = false;
           draft.largeGraphData = undefined;
+          draft.isLoading = false;
         });
       },
     );

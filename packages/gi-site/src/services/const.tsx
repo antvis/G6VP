@@ -12,22 +12,7 @@ export const IS_INDEXEDDB_MODE = GI_LOCAL_URL.includes(window.location.hostname)
 /** 是否是开发环境 */
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
-// 本地环境
-// export const SERVICE_URL_PREFIX = 'http://dev.alipay.net:7002';
-
-// 开发环境
-// export const SERVICE_URL_PREFIX = 'http://storehouse-afx-39730.gz00b.dev.alipay.net';
-
-// 测试环境
-export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE
-  ? 'https://storehouse.test.alipay.net'
-  : 'http://dev.alipay.net:7001'; // window.location.origin; // 'https://storehouse.test.alipay.net';
-
-// 线上环境
-// export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
-
-// 预发环境
-// export const SERVICE_URL_PREFIX = 'https://graphinsight-pre.alipay.com';
+export const SERVICE_URL_PREFIX = IS_DEV_ENV ? 'https://graphinsight-pre.alipay.com' : 'http://dev.alipay.net:7001'; // window.location.origin;
 
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件

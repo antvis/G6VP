@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>GraphInsight</title>
+  <title>图可视分析平台：GraphInsight</title>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z6Z0NTLFB"></script>
   <script>
@@ -15,16 +15,11 @@
 
     gtag('config', 'G-9Z6Z0NTLFB');
   </script>
-  <!-- <script>
-    // 针对蚂蚁集团内部用户，追加的埋点，外部用户不影响
+  <script>
+    // 针对内网用户，追加的埋点，外部用户不影响，在 `pacakges/gi-site/src/hooks/useUserInfo.ts`　中开启埋点
     window.TracertCmdCache = window.TracertCmdCache || []; var t = window.Tracert || { _isRenderInit: !0, call: function () { window.TracertCmdCache.push(arguments) } }, f = ["call", "start", "config", "logPv", "info", "err", "click", "expo", "pageName", "pageState", "time", "timeEnd", "parse", "checkExpo", "stringify", "report", "set", "before"]; for (let i = 0; i < f.length; i++) { (function (fn) { t[fn] = function () { var a = [], l = arguments.length; for (var j = 0; j < l; j++) { a.push(arguments[j]) } a.unshift(fn); window.TracertCmdCache.push(a) } })(f[i]) } window.Tracert = t; window._to = window._to || {};
-    // fetch('https://storehouse.test.alipay.net/user/info').then(res => {
-    //   console.log('res', res)
-    // })
-    // window.Tracert.start({roleId: "XXX"}); // 用户账号信息。若需要采集用户ID ，请在start中添加此项。
-    window.Tracert.start({});
   </script>
-  <script async src="https://ur.alipay.com/tracert_a3220.js"></script> -->
+  <script async src="https://ur.alipay.com/tracert_a3220.js"></script>
 </head>
 
 <body style="background: var(--background-color);color: var(--text-color);">
@@ -32,14 +27,3 @@
 </body>
 
 </html>
-
-<!-- 
-style="
-    --primary-color: #3056e3;
-    --component-background: #fff;
-    --hr-color: #ddd;
-    --primary-text-color: rgba(0, 0, 0, 0.85);
-    --border-color: #ddd;
- 
-    --header-bg-color: rgb(255, 255, 255);
-  " -->
