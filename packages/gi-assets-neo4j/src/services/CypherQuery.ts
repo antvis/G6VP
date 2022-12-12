@@ -6,7 +6,7 @@ export const CypherQuery = {
   service: async (params = {}) => {
     const { value } = params as any;
 
-    const httpServerURL = localStorage.getItem('Neo4j_HTTP_SERVER');
+    const httpServerURL = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!).httpServerURL
 
     const response = await request(`${httpServerURL}/api/neo4j/languagequery`, {
       method: 'post',
