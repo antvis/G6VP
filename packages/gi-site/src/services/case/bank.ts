@@ -1448,10 +1448,7 @@ const projectConfig = {
 
 const project: ICase = {
   engineId: 'GI',
-  engineContext: {
-    schemaData: schema,
-    data: transform(source),
-  },
+  engineContext: {},
   data: {
     inputData: [
       {
