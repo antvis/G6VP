@@ -1,9 +1,9 @@
 import React from 'react';
-import type { Updater } from 'use-immer';
+import type { DraftFunction } from 'use-immer';
 import { GIAssets, GIService, ISourceDataMap, State } from './typing';
 
 interface ContextType extends State {
-  updateContext: Updater<State>;
+  updateContext: (fn: DraftFunction<State>)=> any;
   updateData: (data: any) => any;
   assets: GIAssets;
   services: GIService[];
