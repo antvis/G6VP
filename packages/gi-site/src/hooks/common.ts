@@ -126,7 +126,7 @@ export const getConstantFiles = opts => {
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GISDK EXPORT FILE</title>
 <!--- CSS -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${G6_VERSION}/dist/index.css" />
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css" />
 <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
 <!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
 <!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
@@ -175,7 +175,7 @@ export const HTML_HEADER = `
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GISDK EXPORT FILE</title>
 <!--- CSS -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${G6_VERSION}/dist/index.css" />
+<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css" />
 <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
 <!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
 <!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
