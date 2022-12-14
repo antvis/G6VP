@@ -16,19 +16,20 @@ export const setAssetPackages = newAssets => {
 };
 
 export default () => {
-  const [userInfo, setUserInfo] = useState(null);
+  const [GI_USER_INFO, setUserInfo] = useState(null);
 
   const getLoginUserInfo = async () => {
     // 仅针对内网用户进行用户访问记录
     try {
       const result = await getUser();
       if (result) {
-        const { assets, nickName, outUserNo } = result;
+        const { assets, outUserNo } = result;
         //@ts-ignore
         window.Tracert.start({ roleId: outUserNo });
         setAssetPackages(assets);
         setUserInfo(result);
-        window.localStorage.setItem('userInfo', nickName);
+        //@ts-ignore
+        window.GI_USER_INFO = result;
       }
     } catch (error) {
       console.log(error);
@@ -41,5 +42,5 @@ export default () => {
     } catch (error) {}
   }, []);
 
-  return userInfo;
+  return GI_USER_INFO;
 };

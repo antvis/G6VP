@@ -18,7 +18,7 @@ const { Header } = Layout;
 const BaseNavbar = props => {
   const history = useHistory();
   const { active = 'workspace', onChangeTheme } = props;
-  const userInfo = useUserInfo() as any;
+  const GI_USER_INFO = useUserInfo() as any;
   const theme = localStorage.getItem('@theme') || 'light';
   const [state, setState] = React.useState({
     logo: LOGO_URL[theme],
@@ -93,10 +93,10 @@ const BaseNavbar = props => {
             ]}
           ></ThemeSwitch>
         </Tooltip>
-        {userInfo && (
+        {GI_USER_INFO && (
           <Avatar
             style={{ width: '24px', height: '24px', marginLeft: 8 }}
-            src={`https://work.alibaba-inc.com/photo/${userInfo && userInfo.outUserNo}.220x220.jpg`}
+            src={`https://work.alibaba-inc.com/photo/${GI_USER_INFO && GI_USER_INFO.outUserNo}.220x220.jpg`}
           />
         )}
       </div>
