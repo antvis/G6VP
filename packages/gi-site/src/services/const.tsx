@@ -12,8 +12,10 @@ export const IS_INDEXEDDB_MODE = GI_LOCAL_URL.includes(window.location.hostname)
 /** 是否是开发环境 */
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
-// export const SERVICE_URL_PREFIX = 'https://graphinsight.antgroup-inc.cn';
-export const SERVICE_URL_PREFIX = IS_DEV_ENV ? 'https://graphinsight.antgroup-inc.cn' : window.location.origin;
+const DEV_SERVICE_URL_PREFIX = 'http://dev.alipay.net:7001'; //'https://graphinsight-pre.alipay.com';
+const ONELINE_SERVER_URL_PREFIX =
+  window.location.hostname === 'dev.alipay.net' ? DEV_SERVICE_URL_PREFIX : window.location.origin;
+export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONELINE_SERVER_URL_PREFIX;
 
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件
