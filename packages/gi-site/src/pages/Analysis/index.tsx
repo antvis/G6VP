@@ -90,7 +90,7 @@ const Analysis = props => {
         draft.id = projectId; //项目ID
         draft.name = name; // 项目绑定的引擎ID
         draft.config = config!; //项目配置
-        draft.projectConfig = config!; //项目原始配置（从服务器中来的）
+        // draft.projectConfig = config!; //项目原始配置（从服务器中来的）
         draft.data = transData; //画布数据
         draft.schemaData = schemaData; //图数据的Schema
         draft.inputData = inputData; //用户上传的数据（可展示在「数据」模块）

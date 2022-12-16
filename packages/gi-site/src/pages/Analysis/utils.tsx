@@ -28,7 +28,15 @@ export const getUpdateGISite =
     if (!params) {
       return false;
     }
-    let { data, schemaData, tag, activeAssetsKeys, engineId, engineContext } = params;
+    let {
+      data,
+      schemaData,
+      tag,
+      activeAssetsKeys,
+      engineId,
+      engineContext,
+      projectConfig: ENGINE_PROJECT_CONFIG,
+    } = params;
 
     if (!schemaData || !engineId) {
       notification.error({
@@ -38,11 +46,28 @@ export const getUpdateGISite =
       return false;
     }
     const style = utils.generatorStyleConfigBySchema(schemaData);
+    const preContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}');
+    let projectConfig;
+    debugger;
+    if (preContext.engineId === engineId) {
+      projectConfig = {
+        ...ENGINE_PROJECT_CONFIG, //引擎设置的拥有最低优先级
+        ...style, // GI默认生成的节点和边的样式
+        ...config, // 默认的GI配置
+      };
+    } else {
+      projectConfig = {
+        ...config, // 默认的GI配置
+        ...style, // GI默认生成的节点和边的样式
+        ...ENGINE_PROJECT_CONFIG, //引擎设置的拥有最高优先级
+      };
+    }
+    console.log('project', projectConfig, config);
     const updateParams = {
       engineId,
       engineContext,
       schemaData,
-      projectConfig: { ...config, ...style },
+      projectConfig,
     };
     if (activeAssetsKeys) {
       updateParams['activeAssetsKeys'] = activeAssetsKeys;
@@ -54,7 +79,7 @@ export const getUpdateGISite =
     updateProjectById(projectId, updateParams).then(res => {
       notification.success({
         message: '服务引擎启动成功',
-        description: '服务引擎启动成功，1秒后将重启窗口',
+        description: '服务引擎启动成功,正在重启窗口',
       });
 
       localStorage.setItem(
@@ -67,6 +92,6 @@ export const getUpdateGISite =
       );
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 200);
     });
   };

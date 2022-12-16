@@ -393,4 +393,11 @@ export type GISiteParams = Partial<{
   schemaData: GraphSchemaData;
   /** 属于什么模版 */
   tag: string;
+  /** 项目模版 */
+  projectConfig: {
+    nodes?: GINodeConfig[];
+    edges?: GIEdgeConfig[];
+    components: GIComponentConfig[];
+    layout: GILayoutConfig;
+  };
 }>;
