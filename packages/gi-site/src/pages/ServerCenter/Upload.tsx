@@ -46,7 +46,7 @@ const UploadAssets = () => {
             name="title"
             rules={[{ required: true, message: 'Please input your package name!' }]}
           >
-            <Input placeholder="GraphInsight 官方服务" />
+            <Input placeholder="G6VP 官方服务" />
           </Form.Item>
           <Form.Item
             label="引擎ID"
@@ -56,7 +56,7 @@ const UploadAssets = () => {
             <Input placeholder="GI" />
           </Form.Item>
           <Form.Item label="引擎介绍" name="desc" rules={[{ required: true, message: 'Please input your password!' }]}>
-            <TextArea placeholder="GraphInsight 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持" />
+            <TextArea placeholder="G6VP 提供的数据服务，数据存储在浏览器IndexDB，目前已经支持" />
           </Form.Item>
           <Form.Item label="引擎封面" name="cover" rules={[{ required: true, message: 'Please input your password!' }]}>
             <TextArea placeholder="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*d--URL3WHPcAAAAAAAAAAAAAARQnAQ" />

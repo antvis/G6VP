@@ -5,7 +5,7 @@ import * as TemplateService from './TemplateService';
 import * as LanguageQueryService from './LanguageQueryService';
 export default {
   id: 'GI',
-  name: 'GraphInsight 官方数据服务',
+  name: 'G6VP 官方数据服务',
   services: {
     ...GremlinQueryServices,
     ...ThemeSetting,

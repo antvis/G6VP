@@ -187,7 +187,7 @@ const GISDK = (props: Props) => {
 
   const { data, layout, components, initializer, theme, transform } = state;
 
-  // console.log('%c GraphInsight Render...', 'color:red', state.layout);
+  // console.log('%c G6VP Render...', 'color:red', state.layout);
   const sourceDataMap = useMemo(() => {
     const nodes = state.source.nodes.reduce((acc, cur) => {
       acc[cur.id] = cur;

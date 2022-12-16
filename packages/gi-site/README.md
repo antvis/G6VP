@@ -1,1 +1,1 @@
-## GraphInsight 官方站点
+## G6VP 官方站点

@@ -48,7 +48,7 @@ const Notification = () => {
 
   const content = (
     <div>
-      <p>GraphInsight 新版本上线啦 🎉</p>
+      <p>G6VP 新版本上线啦 🎉</p>
     </div>
   );
 

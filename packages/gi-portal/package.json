@@ -1,11 +1,11 @@
 {
   "name": "@antv/gi-portal",
   "version": "1.0.0",
-  "description": "GraphInsight Portal",
+  "description": "G6VP Portal",
   "main": "dist/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight.git"
+    "url": "https://github.com/antvis/G6VP.git"
   },
   "scripts": {
     "start": " PORT=3000 umi dev",

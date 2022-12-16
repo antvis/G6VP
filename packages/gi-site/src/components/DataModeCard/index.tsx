@@ -8,7 +8,7 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
     return (
       <div style={{ width: '500px' }}>
         <p>
-          当前您处于 GraphInsight <Typography.Text type="success">「线上环境」 </Typography.Text>
+          当前您处于 G6VP <Typography.Text type="success">「线上环境」 </Typography.Text>
         </p>
         <p>✅ 支持域内用户，数据存放在云端，可根据权限进行查看与分享</p>
         <p>✅ 支持域内用户，根据权限，新增/查看/使用 业务沉淀的图分析资产</p>
@@ -23,7 +23,7 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
   return (
     <div style={{ width: '500px' }}>
       <p>
-        当前您处于 GraphInsight <Typography.Text type="success">「本地环境」 </Typography.Text>
+        当前您处于 G6VP <Typography.Text type="success">「本地环境」 </Typography.Text>
       </p>
       <p>✅ 数据安全：所有的数据（上传数据，画布操作配置）均存在你的本地浏览器 IndexDB 中，请放心使用</p>
       <p>✅ 支持规模：本地上传文件无限制，但是目前仅支持10万节点内的网络分析，请提前处理好数据。</p>

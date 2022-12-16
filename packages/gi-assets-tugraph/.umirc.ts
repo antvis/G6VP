@@ -44,7 +44,7 @@ export default {
   ],
   styles: [
     // "https://gw.alipayobjects.com/os/lib/antd/4.18.3/dist/antd.min.css",
-    // "https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css",
+    // "https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/G6VP/light.css",
     'https://gw.alipayobjects.com/os/lib/antd/4.23.5/dist/antd.css',
   ],
 };

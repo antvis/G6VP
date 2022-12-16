@@ -136,7 +136,7 @@ const TestSDK: React.FunctionComponent<TestSDKProps> = props => {
     <div style={{ ...styles.root, ...props.style }}>
       {/* @ts-ignore */}
       <div style={styles.meta}>
-        <h3>GraphInsight 属性面板配置</h3>
+        <h3>G6VP 属性面板配置</h3>
       </div>
       <div style={styles.content}>
         {/* @ts-ignore */}

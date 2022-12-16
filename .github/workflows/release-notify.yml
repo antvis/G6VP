@@ -20,6 +20,6 @@ jobs:
             ${{ secrets.DING_TALK_PUBLIC_TOKEN }}
           notify_title: '🎉 新版本发布 🎉'
           notify_body: '## { title } <hr /> ![preview](https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*wnCMQpZDfAQAAAAAAAAAAAAAARQnAQ) <hr /> 看看有哪些更新吧 <hr />'
-          notify_footer: '> 前往 [**AntV/S2 Releases**](https://github.com/antvis/GraphInsight/releases/latest) 查看完整信息.'
+          notify_footer: '> 前往 [**AntV/S2 Releases**](https://github.com/antvis/G6VP/releases/latest) 查看完整信息.'
           at_all: false
           enable_prerelease: false

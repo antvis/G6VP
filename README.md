@@ -6,7 +6,7 @@
 
 <div align="center">
 
-GraphInsight 是一款在线图可视分析产品，也是一款基于 G6/Graphin 的低代码图应用搭建工具。
+G6VP 是一款在线图可视分析产品，也是一款基于 G6/Graphin 的低代码图应用搭建工具。
 
 [![Version](https://badgen.net/npm/v/@antv/gi-sdk)](https://www.npmjs.com/@antv/gi-sdk)
 [![NPM downloads](http://img.shields.io/npm/dm/@antv/gi-sdk.svg)](http://npmjs.com/@antv/gi-sdk)
@@ -14,22 +14,22 @@ GraphInsight 是一款在线图可视分析产品，也是一款基于 G6/Graphi
 
 </div>
 
-# 号外！GraphInsight 开源啦
+# 号外！G6VP 开源啦
 
-自从今年 6 月 6 号开放使用以来，社区的很多朋友提了很多宝贵的建议，同时也欣喜看到好几家公司已经把 GraphInsight 当作标准化的分析工具在内部使用，也不断有朋友私信，称赞我们的产品理念，想要加入一起共建。为此，我们在 11.22 这个特殊的日子正式开源啦，希望我们的工作，能帮助到社区的用户，大家在图可视分析这条道路上一起越走越远。
+自从今年 6 月 6 号开放使用以来，社区的很多朋友提了很多宝贵的建议，同时也欣喜看到好几家公司已经把 G6VP 当作标准化的分析工具在内部使用，也不断有朋友私信，称赞我们的产品理念，想要加入一起共建。为此，我们在 11.22 这个特殊的日子正式开源啦，希望我们的工作，能帮助到社区的用户，大家在图可视分析这条道路上一起越走越远。
 
-GraphInsight 这个产品孵化于内部，当时我们的初心很简单，帮助业务快速创新，业务想要快速创新，研发速度得跟得上，于是我们在 1.0 阶段，做了`GISDK`，它的核心作用是用将图分析画布用一份`Schema JSON`配置描述。这样用户只需要可视化配置面板，即可完成配置，从而导出一个图分析画布。这个就是现在的「开放中心」的雏形。
+G6VP 这个产品孵化于内部，当时我们的初心很简单，帮助业务快速创新，业务想要快速创新，研发速度得跟得上，于是我们在 1.0 阶段，做了`GISDK`，它的核心作用是用将图分析画布用一份`Schema JSON`配置描述。这样用户只需要可视化配置面板，即可完成配置，从而导出一个图分析画布。这个就是现在的「开放中心」的雏形。
 
 研发速度虽然快了，但是显然不如定制开发来的精致，后来我们发现业务方对此非常包容， 样式丑点，功能弱点没关系，只要能跑通 POC，做一些关键问题验证就好。于是我们思考，既然目标是要做 POC 验证，那么将分析能力原子化，业务方自己来组合图分析应用岂不是更自由，更高效，于是我们上线了「资产中心」，容器组件，原子组件，分析能力资产化这些概念逐渐被提了出来。
 再到后来，越来越多的业务提出数据源怎么解决的问题，我们再次将「资产包」的概念扩展到数据服务中，开始对接各种数据源，上线了「服务中心」这个模块。
 
-我们始终坚信，无论在哪个流程中，图可视分析都有着非常重要的价值。帮助这些用户（无论是图数据研发者，算法工程师，业务分析师）更好更快地上手图，用图的方式，启发解决业务问题，就是 GraphInsight 这个产品最大的存在价值。
+我们始终坚信，无论在哪个流程中，图可视分析都有着非常重要的价值。帮助这些用户（无论是图数据研发者，算法工程师，业务分析师）更好更快地上手图，用图的方式，启发解决业务问题，就是 G6VP 这个产品最大的存在价值。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957903537-ea489c1f-a836-434a-94db-2112bd64880e.png#averageHue=%23543517&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=316&id=WwUIs&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=3520&originalType=binary&ratio=1&rotation=0&showTitle=false&size=714388&status=done&style=none&taskId=u21543359-2a5c-433d-ad01-bde46467df4&title=&width=1760)
 
-# 01. 开发 GraphInsight
+# 01. 开发 G6VP
 
-GraphInsight 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
+G6VP 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
 
 ## 安装依赖
 
@@ -40,7 +40,7 @@ pnpm install // 会安装全部的依赖，且将子包的产物一次性运行�
 ## 启动站点
 
 ```bash
-npm run start // 启动 GraphInsight 站点
+npm run start // 启动 G6VP 站点
 ```
 
 ## 项目结构
@@ -58,14 +58,14 @@ npm run start // 启动 GraphInsight 站点
 | packages/gi-assets-graphscope | `@antv/gi-assets-graphscope` | GraphScope 引擎服务（单机版） |
 | packages/gi-assets-neo4j      | `@antv/gi-assets-neo4j`      | Neo4j 引擎服务                |
 | packages/gi-assets-tugraph    | `@antv/gi-assets-tugraph`    | TuGraph 引擎服务              |
-| packages/gi-cli               | `@antv/gi-cli`               | GraphInsight 资产 CLI         |
+| packages/gi-cli               | `@antv/gi-cli`               | G6VP 资产 CLI                 |
 | packages/gi-common-components | `@antv/gi-common-components` | 通用组件包                    |
-| packages/gi-sdk               | `@antv/gi-sdk`               | GraphInsight SDK              |
-| packages/gi-site              | `-`                          | GraphInsight 站点             |
-| packages/gi-portal            | `-`                          | GraphInsight 首页             |
-| packages/gi-httpservice       | `@antv/gi-httpservices`      | GraphInsight BFF 服务         |
+| packages/gi-sdk               | `@antv/gi-sdk`               | G6VP SDK                      |
+| packages/gi-site              | `-`                          | G6VP 站点                     |
+| packages/gi-portal            | `-`                          | G6VP 首页                     |
+| packages/gi-httpservice       | `@antv/gi-httpservices`      | G6VP BFF 服务                 |
 
-# 02. 十分钟，快速体验 GraphInsight
+# 02. 十分钟，快速体验 G6VP
 
 我们以网络上一份 [公开数据集](https://storage.googleapis.com/cylynx-landing-content/banking-connections-demo.json) 为例，原始数据是一份「银行卡之间转账关系」的 JSON，处理下导出到 Excel 表中，于是得到下图两张 Excel 表，左边是点表（银行卡号），右边是边表（转账关系）。
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667952736544-b0395067-ce22-4618-ae3b-35d6c7f8f999.png#averageHue=%23eceae2&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=573&id=pbo4c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1146&originWidth=3448&originalType=binary&ratio=1&rotation=0&showTitle=false&size=3295593&status=done&style=none&taskId=u90a513f2-a33b-45e4-9f14-81aadbfee68&title=&width=1724)
@@ -74,12 +74,12 @@ npm run start // 启动 GraphInsight 站点
 
 ## 1min：让枯燥的关联表格，变成形象易理解的关系图
 
-打开 GraphInsight 官方站点：[https://graphinsight.antgroup.com/#/workspace](https://graphinsight.antgroup.com/#/workspace) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 GraphInsight 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
+打开 G6VP 官方站点：[https://graphinsight.antgroup.com/#/workspace](https://graphinsight.antgroup.com/#/workspace) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 G6VP 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
 ![导入数据.gif](https://cdn.nlark.com/yuque/0/2022/gif/160133/1668414976266-f337c2d4-c030-4baa-b463-a208ee75d2a7.gif#averageHue=%23fefefe&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=ui&id=ud83f3609&margin=%5Bobject%20Object%5D&name=%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE.gif&originHeight=537&originWidth=960&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1607226&status=done&style=shadow&taskId=u6bf0ed57-aaee-4db0-a554-88d9d7a7995&title=)
 
 ## 3min：自定义样式，交互，布局，让关系图栩栩如生
 
-GraphInsight 中内置了基础样式，交互，布局设置，所有的配置都可自定义，并能所见即所得反馈给用户。
+G6VP 中内置了基础样式，交互，布局设置，所有的配置都可自定义，并能所见即所得反馈给用户。
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668415472638-ab744466-257a-465b-83b0-45ee17a66810.png#averageHue=%23fcfbfa&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=301&id=ua26af518&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=1399&originalType=binary&ratio=1&rotation=0&showTitle=true&size=182795&status=done&style=shadow&taskId=u62e1466c-96a7-47ec-a14b-26be3e942a4&title=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F&width=365.5 '自定义样式')
 
 ## 6min：自由组装资产，持续探索分析
@@ -89,13 +89,13 @@ GraphInsight 中内置了基础样式，交互，布局设置，所有的配置�
 通过与统计图表交互分析，我们开源发现该数据中，存在同手机号注册，同地址注册的情况，网络中大额资金的转出时间都在凌晨这样的异常情况，稍微有业务经验的朋友就会迅速反应出，这是一个典型的洗钱网络
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957533825-0fc3d3ac-d3ea-423d-aee0-956d5b7498e5.png#averageHue=%23f5f2f0&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=484&id=uce10dd36&margin=%5Bobject%20Object%5D&name=image.png&originHeight=968&originWidth=2392&originalType=binary&ratio=1&rotation=0&showTitle=false&size=762852&status=done&style=none&taskId=ud67cbe61-0e52-4821-ae2f-3e84d9b273b&title=&width=1196)
 
-# 03. GraphInsight 三大核心产品能力
+# 03. G6VP 三大核心产品能力
 
-GraphInsight 做为一款技术产品，始终围绕一个问题来设计产品：关系数据从哪儿来？关系数据怎么分析？
+G6VP 做为一款技术产品，始终围绕一个问题来设计产品：关系数据从哪儿来？关系数据怎么分析？
 
 - **「服务中心」** 用来解决关系数据从哪来的问题：数据可以是本地 Excel 文件，可以是开放 API 接口，抑或是图数据库中的数据。
 - **「资产中心」** 用来解决关系数据怎么分析的问题：不同的人群，不同的业务，不同的分析场景，使用的分析方案一定是有差异的。
-  GraphInsight 创新性地提出了分析能力原子化，资产化。将架构技术的可插拔设计应用于产品上，于是无论是数据来源还是数据分析问题，产品层面表现出来的都是功能高度自由化，可插拔，按需使用。因此可以在产品发展初期不断做加法，而不用担心加的内容过多，导致功能混乱。
+  G6VP 创新性地提出了分析能力原子化，资产化。将架构技术的可插拔设计应用于产品上，于是无论是数据来源还是数据分析问题，产品层面表现出来的都是功能高度自由化，可插拔，按需使用。因此可以在产品发展初期不断做加法，而不用担心加的内容过多，导致功能混乱。
 - **「开放中心」** 用来解决「研发提效」问题，作为基于 AntV 技术栈 G6/Graphin 之上的产品，基本职责是要满足研发提效，极大降低图分析应用的研发门槛，同时提效的同时，也能帮助用户做低成本的 POC 验证。
   让我们来一起来看看吧～
 
@@ -167,18 +167,18 @@ GraphInsight 做为一款技术产品，始终围绕一个问题来设计产品�
 
 ## 3.2 服务中心：内置三款图引擎，支持用户自定义数据服务
 
-在项目的 POC 阶段，我们可以通过样本数据，利用 GraphInsight 的可视化分析能力，从而得出一个验证结果：图分析这套东西，能不能解决我的业务问题？一旦验证通过，我们自然不能再使用样本数据了，想要在真实的业务场景中用起来，此时就需要一套标准的全流程图链路，这条链路中涉及关系数据的存储，加工，计算，以及最后的可视化与业务分析。
+在项目的 POC 阶段，我们可以通过样本数据，利用 G6VP 的可视化分析能力，从而得出一个验证结果：图分析这套东西，能不能解决我的业务问题？一旦验证通过，我们自然不能再使用样本数据了，想要在真实的业务场景中用起来，此时就需要一套标准的全流程图链路，这条链路中涉及关系数据的存储，加工，计算，以及最后的可视化与业务分析。
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957903537-ea489c1f-a836-434a-94db-2112bd64880e.png#averageHue=%23543517&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=316&id=gAupH&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=3520&originalType=binary&ratio=1&rotation=0&showTitle=false&size=714388&status=done&style=none&taskId=u21543359-2a5c-433d-ad01-bde46467df4&title=&width=1760)
 对于一般的业务决策者而言，面对这条链路显然会沉默很久，因为不仅要考虑新链路带来的技术成本与维护成本，还要考虑实际的效果究竟如何，最终用户是否买单。最最关键的问题还在于，不同的业务场景下，所面临的用户群体是不一样的， 并不是所有的业务都需要标准全链路，比如对于一个算法团队而言，处于成本与实际需要考虑，他们可能只需要图计算而不需要图存储。
-GraphInsight 的服务中心就是来解决这个问题的，对于需要全流程验证的用户，我们提供了蚂蚁集团的 TuGraph，以及社区的 Neo4J 数据库的连接方式， 对于只想体验图计算链路的用户，我们提供了阿里巴巴集团的 GraphScope 图计算引擎的连接方式。最后，对于特殊业务场景，需要完全定制数据服务的用户，我们提供了自定义引擎服务的能力。
+G6VP 的服务中心就是来解决这个问题的，对于需要全流程验证的用户，我们提供了蚂蚁集团的 TuGraph，以及社区的 Neo4J 数据库的连接方式， 对于只想体验图计算链路的用户，我们提供了阿里巴巴集团的 GraphScope 图计算引擎的连接方式。最后，对于特殊业务场景，需要完全定制数据服务的用户，我们提供了自定义引擎服务的能力。
 
 ### 3.2.1 支持用户自定义数据服务
 
 我们先来说最重要的能力：支持用户自定义数据服务。
-在 GraphInsight 的产品设计中，分析资产是第一等公民，它决定了如何与用户进行交互与展示，有的分析资产运行起来需要数据接口的协同，比如「邻居查询」资产。用户右键交互查询，需要一个下钻的接口，此时该资产也决定了如何与服务端进行交互与接口规范。
+在 G6VP 的产品设计中，分析资产是第一等公民，它决定了如何与用户进行交互与展示，有的分析资产运行起来需要数据接口的协同，比如「邻居查询」资产。用户右键交互查询，需要一个下钻的接口，此时该资产也决定了如何与服务端进行交互与接口规范。
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668470736892-42137160-89a0-4c9b-bc2d-a057e43571e3.png#averageHue=%23f7f4f2&clientId=u66492888-2fab-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=459&id=COV3M&margin=%5Bobject%20Object%5D&name=image.png&originHeight=918&originWidth=2410&originalType=binary&ratio=1&rotation=0&showTitle=false&size=691220&status=done&style=shadow&taskId=u62cb4ad3-b22d-404d-98ce-5fbabf41e00&title=&width=1205)
 如上图所示，用户右键菜单选择「1 度扩散」的时候，发一起一个服务查询，该服务接口（`NeighborsQuery`）与当前项目选择的引擎 ID（`TuGraph`）会拼凑成唯一的服务 ID（`TuGraph/NeighborsQuery`），从而具体匹配到服务中心里的接口，实现数据查询。
-**_自定义资产数据服务，其实就是用户按照规范实现每一个分析资产需要的服务接口，然而将这些资产服务打包成一个服务资产包，上传到 GI 站点中即可使用。_**在开源仓库中，我们也实现了一个`[MyCustomServer](https://github.com/antvis/GraphInsight/tree/master/packages/my-custom-server)` 的自定义服务包，欢迎大家感兴趣移步查看。
+**_自定义资产数据服务，其实就是用户按照规范实现每一个分析资产需要的服务接口，然而将这些资产服务打包成一个服务资产包，上传到 GI 站点中即可使用。_**在开源仓库中，我们也实现了一个`[MyCustomServer](https://github.com/antvis/G6VP/tree/master/packages/my-custom-server)` 的自定义服务包，欢迎大家感兴趣移步查看。
 目前官方提供的资产服务接口汇总如下：
 
 | 资产 ID              | 资产名称   | 服务 ID                 | 服务名称         |
@@ -219,7 +219,7 @@ RemoveTheme | 添加主题
 
 ## 3.3 开放中心：一键导出 SDK，极速原生部署
 
-开放中心 是 GraphInsight 用来解决「研发提效」问题，作为基于 AntV 技术栈 G6/Graphin 之上的产品，基本职责是要满足研发提效，极大降低图分析应用的研发门槛，同时提效的同时，也能帮助用户做低成本的 POC 验证。
+开放中心 是 G6VP 用来解决「研发提效」问题，作为基于 AntV 技术栈 G6/Graphin 之上的产品，基本职责是要满足研发提效，极大降低图分析应用的研发门槛，同时提效的同时，也能帮助用户做低成本的 POC 验证。
 用户在分析页面，点击「导出 SDK」，便可以看到有 4 种导出方式：
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668475003259-bb8cd4c9-3717-45d5-876c-fce8039ec3c2.png#averageHue=%23e9e8e4&clientId=ua4df3ded-9acc-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=492&id=ub87a5aa3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=984&originWidth=1406&originalType=binary&ratio=1&rotation=0&showTitle=false&size=427186&status=done&style=none&taskId=u9e79bb2d-2245-4ae2-9fc9-953ddd741c5&title=&width=703)
 其中「云端部署」是主要是配合「GraphScope」使用的，目前暂时仅在阿里集团内部使用。因为开源，我们也支持了导出「NPM」包的方式，支持 Tree Shaking，原生集成到 React 项目中。

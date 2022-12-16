@@ -118,17 +118,17 @@ const SERVER = [
 
   files['src/GI_EXPORT_FILES.ts'] = {
     content: ` 
-      /** GraphInsight 站点自动生成的配置 **/
+      /** G6VP 站点自动生成的配置 **/
       export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
       
-      /** GraphInsight 站点选择服务引擎的上下文配置信息 **/
+      /** G6VP 站点选择服务引擎的上下文配置信息 **/
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
 
 
-      /** GraphInsight 站点 本地上传的数据 **/
+      /** G6VP 站点 本地上传的数据 **/
       export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
 
-      /** GraphInsight 站点 本地上传的数据的 Schema 信息 **/
+      /** G6VP 站点 本地上传的数据的 Schema 信息 **/
       export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
       
       /** 导出的主题 **/

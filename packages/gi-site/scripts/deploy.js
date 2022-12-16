@@ -16,7 +16,7 @@ ghpages.publish(
   {
     remote: 'upstream',
     branch: 'gh-pages',
-    repo: 'https://github.com/antvis/GraphInsight.git',
+    repo: 'https://github.com/antvis/G6VP.git',
     message: 'Auto-generated commit',
   },
   error => {

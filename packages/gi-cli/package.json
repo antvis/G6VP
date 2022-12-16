@@ -1,7 +1,7 @@
 {
   "name": "@antv/gi-cli",
   "version": "1.0.0",
-  "description": "the create CLI tool for GraphInsight assets",
+  "description": "the create CLI tool for G6VP assets",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight"
+    "url": "https://github.com/antvis/G6VP"
   },
-  "homepage": "https://github.com/antvis/GraphInsight#readme"
+  "homepage": "https://github.com/antvis/G6VP#readme"
 }

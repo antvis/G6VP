@@ -20,7 +20,7 @@ export const GI_ASSETS_PACKAGE = [
   },
 ];
 
-/** GraphInsight 站点自动生成的配置 **/
+/** G6VP 站点自动生成的配置 **/
 export const GI_PROJECT_CONFIG = {
   nodes: [
     {
@@ -681,7 +681,7 @@ export const GI_PROJECT_CONFIG = {
   ],
 };
 
-/** GraphInsight 站点选择服务引擎的上下文配置信息 **/
+/** G6VP 站点选择服务引擎的上下文配置信息 **/
 export const SERVER_ENGINE_CONTEXT = {
   GI_SITE_PROJECT_ID: '28c24593-7377-49da-9858-8365f22ce491',
   engineId: 'TuGraph',

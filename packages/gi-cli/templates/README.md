@@ -1,4 +1,4 @@
-## GraphInsight 资产包的模版
+## G6VP 资产包的模版
 
 ## 安装
 
@@ -17,7 +17,7 @@ npm run start
 
 ## 自定义分析资产
 
-我们以自定义一个统计器为例： `src/components/Counter`，没有什么高科技，就是普通的 React 组件，只是会比普通的组件包，导出结构多几个字段参数，用于在 GraphInsight 站点上协同。
+我们以自定义一个统计器为例： `src/components/Counter`，没有什么高科技，就是普通的 React 组件，只是会比普通的组件包，导出结构多几个字段参数，用于在 G6VP 站点上协同。
 
 ```jsx
 import Component from './Component'; // 组件实现
@@ -79,9 +79,9 @@ npm run build
 const ASSETS_UMD = name.split('-').join('_').toUpperCase();
 ```
 
-本地启动 HTTPServer，比如 VsCode 的 [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 插件。然后上传到 [GraphInsight 资产中心 ](https://graphinsight.antgroup.com/#/assets)
+本地启动 HTTPServer，比如 VsCode 的 [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) 插件。然后上传到 [G6VP 资产中心 ](https://graphinsight.antgroup.com/#/assets)
 
-于是我们便可以在 GraphInsight 中享用自定义的资产和服务啦
+于是我们便可以在 G6VP 中享用自定义的资产和服务啦
 
 ![消费自定义服务](https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ZmYESK-f3RAAAAAAAAAAAAAADmJ7AQ/original)
 ![消费自定义资产](https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*6H8qQqKdDL0AAAAAAAAAAAAADmJ7AQ/original)

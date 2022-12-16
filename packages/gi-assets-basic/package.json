@@ -1,13 +1,13 @@
 {
   "name": "@antv/gi-assets-basic",
   "version": "1.2.0",
-  "description": "GraphInsight 基础资产包",
+  "description": "G6VP 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight.git"
+    "url": "https://github.com/antvis/G6VP.git"
   },
   "sideEffects": [
     "*.css",

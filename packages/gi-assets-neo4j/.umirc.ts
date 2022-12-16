@@ -52,6 +52,6 @@ export default {
     'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/2.2.7/dist/index.css',
     'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-advance/2.2.9/dist/index.css',
     'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-scene/2.2.3/dist/index.css',
-    'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/GraphInsight/light.css',
+    'https://gw.alipayobjects.com/os/lib/alipay/theme-tools/0.3.0/dist/G6VP/light.css',
   ],
 };

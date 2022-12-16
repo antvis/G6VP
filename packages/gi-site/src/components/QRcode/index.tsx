@@ -18,7 +18,7 @@ const QRcode = () => {
         <Menu.Item
           style={{ textAlign: 'center' }}
           onClick={() => {
-            window.open('https://github.com/antvis/GraphInsight/issues', '_blank');
+            window.open('https://github.com/antvis/G6VP/issues', '_blank');
           }}
         >
           提需求/Bug

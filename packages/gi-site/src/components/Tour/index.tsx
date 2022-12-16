@@ -24,11 +24,11 @@
 //   data: [
 //     {
 //       selector: '.step-button',
-//       title: '欢迎使用 GraphInsight 帮助指南',
+//       title: '欢迎使用 G6VP 帮助指南',
 //       content: () => (
 //         <div style={{ width: '500px' }} className="gi-tour-p">
 //           您可以在页面的 <Text type="success">任意导航位置</Text>，激活该指引。 此时，您正处于
-//           <Text type="success">「数据」</Text>模块,该模块是我们使用 GraphInsight 产品的第一步，让我们一起来看看吧～
+//           <Text type="success">「数据」</Text>模块,该模块是我们使用 G6VP 产品的第一步，让我们一起来看看吧～
 //           <Paragraph>
 //             <img
 //               className="gi-tour-image"
@@ -44,7 +44,7 @@
 //       title: 'Step1: 导入你的数据',
 //       content: () => (
 //         <div style={{ width: '600px' }} className="gi-tour-p">
-//           点击「导入」按钮，即可出现倒入数据的弹窗，目前 GraphInsight
+//           点击「导入」按钮，即可出现倒入数据的弹窗，目前 G6VP
 //           仅提供「本地数据」导入方式（开放API与GraphScope后续接入）
 //           <img
 //             width="600px"
@@ -80,7 +80,7 @@
 //       title: 'Step3: 保存全部操作配置',
 //       content: () => (
 //         <div style={{ width: '400px' }} className="gi-tour-p">
-//           目前 GraphInsight 还没有做 <Text type="success">「自动保存」</Text>
+//           目前 G6VP 还没有做 <Text type="success">「自动保存」</Text>
 //           的功能，因此需要您手动保存，这样刷新浏览器后，配置才不会丢失。
 //         </div>
 //       ),
@@ -127,7 +127,7 @@
 //       content: () => {
 //         return (
 //           <div style={{ width: '500px' }}>
-//             GraphInsight 支持属性规则设置，满足该规则的元素分为一组，规则支持「AND」和「OR」的运算逻辑
+//             G6VP 支持属性规则设置，满足该规则的元素分为一组，规则支持「AND」和「OR」的运算逻辑
 //             <img
 //               className="gi-tour-image"
 //               src="https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*rDKhSpiKeGIAAAAAAAAAAAAAARQnAQ"
@@ -144,7 +144,7 @@
 //       content: () => {
 //         return (
 //           <div style={{ width: '500px' }}>
-//             GraphInsight 支持不同元素的切换，丰富的元素满足用户的个性化需求，更多元素资产请在「资产中心」查看
+//             G6VP 支持不同元素的切换，丰富的元素满足用户的个性化需求，更多元素资产请在「资产中心」查看
 //             <img
 //               className="gi-tour-image"
 //               src="https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*nLmaTp3zLigAAAAAAAAAAAAAARQnAQ"
@@ -205,7 +205,7 @@
 //       content: () => {
 //         return (
 //           <div style={{ width: '500px' }}>
-//             在 GraphInsight
+//             在 G6VP
 //             产品中，最重要的组件就是「容器组件」，它们可以集成任意「原子组件」,并决定了其何时渲染，何时交互。
 //             <blockquote>
 //               <Text type="warning" italic>
@@ -227,7 +227,7 @@
 //       content: () => {
 //         return (
 //           <div style={{ width: '500px' }}>
-//             在 GraphInsight 产品中，「原子组件」负责画布的众多功能实现，它们需要被集成在「容器组件」
+//             在 G6VP 产品中，「原子组件」负责画布的众多功能实现，它们需要被集成在「容器组件」
 //             <Text type="success" italic>
 //               原子组件可以决定自己的展示名称，展示图标，展示顺序，触发条件等
 //             </Text>

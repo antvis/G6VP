@@ -24,7 +24,7 @@ const Banner: React.FunctionComponent<any> = props => {
     >
       <div className="title">
         <h1>
-          GraphInsight <span style={{ fontSize: '2rem', fontWeight: 300 }}>{slogan}</span>
+          G6VP <span style={{ fontSize: '2rem', fontWeight: 300 }}>{slogan}</span>
         </h1>
         <h3>{desc}</h3>
         {isMobile ? (
@@ -36,7 +36,7 @@ const Banner: React.FunctionComponent<any> = props => {
             <a href="/#/workspace" className="button">
               {$i18n.get({ id: 'gi-portal.components.Banner.EnterTheWorkbench', dm: '进入工作台' })}
             </a>
-            <a className="button github" href="https://github.com/antvis/GraphInsight" target="_blank">
+            <a className="button github" href="https://github.com/antvis/G6VP" target="_blank">
               <svg
                 viewBox="64 64 896 896"
                 focusable="false"
