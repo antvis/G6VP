@@ -14,6 +14,11 @@ export interface PropertiesPanelProps {
   defaultiStatistic: boolean;
 }
 
+const CLOSE_STATE = {
+  visible: false,
+  isLoading: false,
+  detail: null
+}
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
@@ -29,16 +34,23 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
     visible: false,
     detail: null,
     isLoading: false,
+    animate: true
   });
 
+  // 区分叉号和点击 canvas 关闭的效果
   const handleClose = () => {
+    setState({
+      ...CLOSE_STATE,
+      animate: false
+    })
+  };
+  const handleCanvasClose = () => {
     setState(preState => {
       if (preState.visible) {
         return {
-          visible: false,
-          isLoading: false,
-          detail: null,
-        };
+          ...CLOSE_STATE,
+          animate: true
+        }
       }
       return preState;
     });
@@ -90,10 +102,10 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
     graph.on('node:click', handleNodeClick);
     graph.on('edge:click', handleEdgeClick);
-    graph.on('canvas:click', handleClose);
+    graph.on('canvas:click', handleCanvasClose);
     return () => {
       graph.off('node:click', handleNodeClick);
-      graph.off('canvas:click', handleClose);
+      graph.off('canvas:click', handleCanvasClose);
       graph.off('edge:click', handleEdgeClick);
     };
   }, [graph, setState, service]);
@@ -104,7 +116,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
   return (
     <DivContainer
-      animate={true}
+      animate={state.animate}
       title={title}
       visible={visible}
       containerPlacement={placement}
