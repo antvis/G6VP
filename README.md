@@ -27,6 +27,10 @@ GraphInsight 这个产品孵化于内部，当时我们的初心很简单，帮�
 
 ![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957903537-ea489c1f-a836-434a-94db-2112bd64880e.png#averageHue=%23543517&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=316&id=WwUIs&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=3520&originalType=binary&ratio=1&rotation=0&showTitle=false&size=714388&status=done&style=none&taskId=u21543359-2a5c-433d-ad01-bde46467df4&title=&width=1760)
 
+# Documentation
+
+- [中文文档](https://graphinsight.antgroup.com/home.html#/)
+
 # 01. 开发 GraphInsight
 
 GraphInsight 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
