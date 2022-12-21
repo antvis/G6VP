@@ -56,7 +56,7 @@ const BaseNavbar = props => {
           alt="logo"
           style={{
             height: '46px',
-            marginRight: IS_ANALYSIS_SPACE ? '40px' : '0px',
+            marginRight: '40px',
             marginLeft: IS_ANALYSIS_SPACE ? '-48px' : '0px',
             cursor: 'pointer',
           }}

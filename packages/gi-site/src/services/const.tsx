@@ -37,3 +37,9 @@ export const G6VP_LOGO_URL = {
 };
 
 export const LOGO_URL = IS_INDEXEDDB_MODE ? G6VP_LOGO_URL : GI_LOGO_URL;
+
+export const GI_QR_URL =
+  'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*AC9gR462u1wAAAAAAAAAAAAADmJ7AQ/original';
+export const G6VP_QR_URL =
+  'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*H5-ERLOWTqIAAAAAAAAAAAAADmJ7AQ/original';
+export const QR_URL = IS_INDEXEDDB_MODE ? G6VP_QR_URL : GI_QR_URL;
