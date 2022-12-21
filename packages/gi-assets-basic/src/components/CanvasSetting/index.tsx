@@ -11,6 +11,13 @@ const info: AssetInfo = {
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',
+  feature: [
+    '支持「按住」Shift 框选画布，从而选中节点或者边元素',
+    '支持「缩放」画布，「拖拽」平移',
+    '支持「设置」画布的背景色和背景图片',
+    '支持「双击」画布，将画布中的图调整到正中间',
+    '支持「点击」画布，清空所有交互状态',
+  ],
 };
 
 export default {
