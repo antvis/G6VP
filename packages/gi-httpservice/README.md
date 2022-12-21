@@ -1,6 +1,6 @@
 ## GI_STANDALONE_SERVICE
 
-GraphInsight 的 HTTPServer，用于对接各种引擎，规范查询接口
+G6VP 的 HTTPServer，用于对接各种引擎，规范查询接口
 
 ### Development
 

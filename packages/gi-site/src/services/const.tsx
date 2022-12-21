@@ -26,3 +26,20 @@ export const ASSET_TYPE = {
   PROJECT: 6, // 6 大分类 项目
   ASSET: 7, // 7 大分类 分析资产
 };
+
+export const GI_LOGO_URL = {
+  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
+  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*TawEQ6nGf-AAAAAAAAAAAAAADmJ7AQ/original',
+};
+export const G6VP_LOGO_URL = {
+  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*WDF_R6NLDHwAAAAAAAAAAAAADmJ7AQ/original',
+  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ckelSIEoPj4AAAAAAAAAAAAADmJ7AQ/original',
+};
+
+export const LOGO_URL = IS_INDEXEDDB_MODE ? G6VP_LOGO_URL : GI_LOGO_URL;
+
+export const GI_QR_URL =
+  'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*AC9gR462u1wAAAAAAAAAAAAADmJ7AQ/original';
+export const G6VP_QR_URL =
+  'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*H5-ERLOWTqIAAAAAAAAAAAAADmJ7AQ/original';
+export const QR_URL = IS_INDEXEDDB_MODE ? G6VP_QR_URL : GI_QR_URL;

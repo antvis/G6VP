@@ -11,7 +11,7 @@ export default {
   desc: 'GI 团队默认提供的 Neo4j 计算引擎资产包',
   type: 'database',
   cover: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*6NRERpsvzMcAAAAAAAAAAAAADmJ7AQ/original',
-  group: 'GraphInsight 团队',
+  group: 'G6VP 团队',
   component: ServerComponent,
   services: {
     ...Initializer,

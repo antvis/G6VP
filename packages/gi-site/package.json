@@ -1,7 +1,7 @@
 {
   "name": "@antv/gi-site",
   "version": "1.2.0",
-  "description": "GraphInsight Site",
+  "description": "G6VP Site",
   "license": "MIT",
   "author": "AntV",
   "sideEffects": [
@@ -11,7 +11,7 @@
   "main": "dist/app.js",
   "scripts": {
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build && node ./scripts/copy.js",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },

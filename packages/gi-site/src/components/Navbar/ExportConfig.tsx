@@ -43,7 +43,7 @@ const ExportConfig = props => {
     <div className="export-panel">
       <Alert
         type="info"
-        message="GraphInsight 提供了 3 种导出SDK的方式，用户可以根据自己需要选择。其中「云端部署」仅限阿里集团使用 ODPS 数据源的用户使用"
+        message="G6VP 提供了 3 种导出SDK的方式，用户可以根据自己需要选择。其中「云端部署」仅限阿里集团使用 ODPS 数据源的用户使用"
         showIcon
       ></Alert>
       <br />

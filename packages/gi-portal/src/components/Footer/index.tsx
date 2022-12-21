@@ -14,7 +14,7 @@ const Footer: React.FunctionComponent<FooterProps> = props => {
           {$i18n.get({ id: 'gi-portal.components.Footer.AboutUs', dm: '关于我们' })}
         </a>
       </div>
-      <div className="gi-footer-right">AntV ©2022 Created by GraphInsight Team</div>
+      <div className="gi-footer-right">AntV ©2022 Created by G6VP Team</div>
     </div>
   );
 };

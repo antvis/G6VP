@@ -73,7 +73,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
 
   return (
     <div>
-      <Alert message="该图模型（Graph Schema）是 GraphInsight 平台根据您上传数据时，指定的节点类型（NodeType）和边类型（EdgeType）自动生成的，您可以在此二次编辑，目前仅提供代码编辑功能，可视化编辑功能，还在开发中..." />
+      <Alert message="该图模型（Graph Schema）是 G6VP 平台根据您上传数据时，指定的节点类型（NodeType）和边类型（EdgeType）自动生成的，您可以在此二次编辑，目前仅提供代码编辑功能，可视化编辑功能，还在开发中..." />
       <Row gutter={8} style={{ marginTop: '12px' }}>
         <Col span={12}>
           <Card

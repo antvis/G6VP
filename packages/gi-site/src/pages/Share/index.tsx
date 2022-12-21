@@ -64,7 +64,7 @@ const Share = props => {
         //@ts-ignore
         const assetServices = utils.getCombineServices(res_assets.services);
         assetServices.forEach(item => {
-          // 在 GraphInsight 上的保存，本质是重新复写了初始化函数
+          // 在 G6VP 上的保存，本质是重新复写了初始化函数
           if (item.id === 'GI/GI_SERVICE_INTIAL_GRAPH') {
             item.service = () => {
               return new Promise(resolve => {

@@ -1,10 +1,10 @@
 {
   "name": "@antv/gi-assets-algorithm",
   "version": "1.0.0",
-  "description": "GraphInsight 图分析算法资产库",
+  "description": "G6VP 图分析算法资产库",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight.git"
+    "url": "https://github.com/antvis/G6VP.git"
   },
   "sideEffects": [
     "*.css",

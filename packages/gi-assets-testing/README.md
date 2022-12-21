@@ -1,4 +1,4 @@
-# GraphInsight Test SDK
+# G6VP Test SDK
 
 ## 使用说明
 

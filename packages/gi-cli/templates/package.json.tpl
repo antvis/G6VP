@@ -8,7 +8,7 @@
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
     "start": "umi dev"
   },
-  "keywords": ["GraphInsight", "gi-asstes"],
+  "keywords": ["G6VP", "gi-asstes"],
   "authors": [{{#author}}
     "{{{ author }}}"
   {{/author}}],

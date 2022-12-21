@@ -1,1 +1,1 @@
-## GraphInsight 探索分析画布
+## G6VP 探索分析画布

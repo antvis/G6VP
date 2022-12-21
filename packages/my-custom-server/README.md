@@ -12,7 +12,7 @@ npm run server
 npm run build:umd:watch
 ```
 
-### 03. 访问 GraphInsight 官网，添加引擎包
+### 03. 访问 G6VP 官网，添加引擎包
 
 - 访问：https://graphinsight.antgroup.com/#/assets
 - tnpm 名：my-custom-server

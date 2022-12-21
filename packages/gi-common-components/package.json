@@ -1,13 +1,13 @@
 {
   "name": "@antv/gi-common-components",
   "version": "1.0.0",
-  "description": "GraphInsight 通用UI组件",
+  "description": "G6VP 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight.git"
+    "url": "https://github.com/antvis/G6VP.git"
   },
   "sideEffects": [
     "*.css",

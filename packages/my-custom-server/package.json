@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antvis/GraphInsight.git"
+    "url": "https://github.com/antvis/G6VP.git"
   },
   "sideEffects": [
     "*.css",
