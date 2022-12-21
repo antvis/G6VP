@@ -15,7 +15,7 @@ interface SchemaGraphProps {
 const { Option } = Select;
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const { updateGISite } = props;
-  const useToken = localStorage.getItem('TUGRAPH_USER_TOKEN');
+  const { TUGRAPH_USER_TOKEN: useToken, CURRENT_TUGRAPH_SUBGRAPH } = utils.getServerEngineContext();
 
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
@@ -36,7 +36,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     },
     defaultLabelField: 'name',
     subGraphList: [],
-    defaultGraphName: localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH') || 'MovieDemo1',
+    defaultGraphName: CURRENT_TUGRAPH_SUBGRAPH,
   });
   const { schemaData, count, subGraphList, defaultGraphName, defaultLabelField } = state;
 
@@ -69,7 +69,9 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   };
 
   const handleChange = async value => {
-    localStorage.setItem('CURRENT_TUGRAPH_SUBGRAPH', value);
+    utils.setServerEngineContext({
+      CURRENT_TUGRAPH_SUBGRAPH: value,
+    });
 
     // 切换子图后，同步查询 Schema
     const schemaData = (await queryGraphSchema({
@@ -108,10 +110,6 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
           },
         },
         engineContext: {},
-        /**
-         * GI平台上会localStorage.setItem('SERVER_ENGINE_CONTEXT',JSON.stringify(engineContext))
-         * 因此，在接口层，只需要调用 localStorage.getItem('SERVER_ENGINE_CONTEXT') 即可拿到服务上下文
-         */
       });
     }
   };

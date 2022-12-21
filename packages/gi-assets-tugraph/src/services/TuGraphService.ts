@@ -1,44 +1,40 @@
-import request from "umi-request";
-import { HTTP_SERVICE_URL, TUGRAPH_DEFAULT_GRAPHNAME } from "./Constants";
+import { utils } from '@antv/gi-sdk';
+import request from 'umi-request';
 
-export const connectTuGraphDataSource = async (
-  username: string,
-  password: string,
-  serverUrl: string
-) => {
-  // const token = localStorage.getItem("TUGRAPH_USER_TOKEN") as string;
-
+export const connectTuGraphDataSource = async () => {
+  const { username, password, engineServerURL, HTTP_SERVICE_URL } = utils.getServerEngineContext();
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/connect`, {
-    method: "POST",
+    method: 'POST',
     data: {
       username,
       password,
-      serverUrl,
+      serverUrl: engineServerURL,
     },
     headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      Accept: "application/json; charset=UTF-8",
+      'Content-Type': 'application/json; charset=UTF-8',
+      Accept: 'application/json; charset=UTF-8',
     },
-  }).catch((error) => {});
+  }).catch(error => {});
 
   if (!result || !result.success) {
     return result;
   }
 
   const { data } = result;
-  localStorage.setItem("TUGRAPH_USER_TOKEN", `Bearer ${data.jwt}`);
-
+  utils.setServerEngineContext({
+    TUGRAPH_USER_TOKEN: `Bearer ${data.jwt}`,
+  });
   return result;
 };
 
 export const querySubGraphList = async () => {
-  const token = localStorage.getItem("TUGRAPH_USER_TOKEN") as string;
+  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/list`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
-      Authorization: token,
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: TUGRAPH_USER_TOKEN,
     },
   });
 
@@ -46,13 +42,13 @@ export const querySubGraphList = async () => {
 };
 
 export const queryVertexLabelCount = async (graphName: string) => {
-  const token = localStorage.getItem("TUGRAPH_USER_TOKEN") as string;
+  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/count`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
-      Authorization: token,
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: TUGRAPH_USER_TOKEN,
     },
     params: {
       graphName,
@@ -62,15 +58,16 @@ export const queryVertexLabelCount = async (graphName: string) => {
   return result;
 };
 
-export const queryGraphSchema = async (params) => {
+export const queryGraphSchema = async params => {
+  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+
   let res = {
     nodes: [],
     edges: [],
   };
-  const { graphName = TUGRAPH_DEFAULT_GRAPHNAME } = (params as any) || {};
+  const { graphName } = (params as any) || {};
 
-  const token = localStorage.getItem("TUGRAPH_USER_TOKEN") as string;
-  if (!token) {
+  if (!TUGRAPH_USER_TOKEN) {
     // 没有登录信息，需要先登录再查询 schema
     return {
       success: false,
@@ -82,11 +79,11 @@ export const queryGraphSchema = async (params) => {
   }
 
   try {
-    const result = await request(HTTP_SERVICE_URL + "/api/tugraph/schema", {
-      method: "get",
+    const result = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
+      method: 'get',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Authorization: token,
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: TUGRAPH_USER_TOKEN,
       },
       params: {
         graphName,
