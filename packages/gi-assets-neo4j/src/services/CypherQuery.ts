@@ -1,12 +1,12 @@
+import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import request from 'umi-request';
-
 export const CypherQuery = {
   name: 'Neo4j Cypher 查询',
   service: async (params = {}) => {
     const { value } = params as any;
 
-    const httpServerURL = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!).httpServerURL
+    const { httpServerURL } = utils.getServerEngineContext();
 
     const response = await request(`${httpServerURL}/api/neo4j/languagequery`, {
       method: 'post',
