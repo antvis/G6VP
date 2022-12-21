@@ -5,14 +5,9 @@ import useUserInfo from '../../hooks/useUserInfo';
 // import ThemeSwitch from '../ThemeSwitch';
 import { Icon } from '@antv/gi-sdk';
 import ThemeSwitch from '@antv/gi-theme-antd';
+import { LOGO_URL } from '../../services/const';
 import ThemeVars from '../ThemeVars';
-
 import './index.less';
-
-const LOGO_URL = {
-  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
-  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*TawEQ6nGf-AAAAAAAAAAAAAADmJ7AQ/original',
-};
 
 const { Header } = Layout;
 const BaseNavbar = props => {
@@ -25,6 +20,8 @@ const BaseNavbar = props => {
   });
   const { logo } = state;
 
+  const IS_ANALYSIS_SPACE = history.location?.query.nav;
+
   const handleChangeTheme = val => {
     setState({
       logo: LOGO_URL[val],
@@ -34,9 +31,6 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
-        <a href={location.origin + '/home.html'}> 首页</a>
-      </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
         <Link to="/workspace?type=project">我的项目</Link>
       </div>
@@ -60,7 +54,12 @@ const BaseNavbar = props => {
           // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
           src={logo}
           alt="logo"
-          style={{ height: '46px', marginRight: '40px', marginLeft: '-24px', cursor: 'pointer' }}
+          style={{
+            height: '46px',
+            marginRight: IS_ANALYSIS_SPACE ? '40px' : '0px',
+            marginLeft: IS_ANALYSIS_SPACE ? '-48px' : '0px',
+            cursor: 'pointer',
+          }}
           onClick={() => {
             history.push('/workspace?type=project');
           }}

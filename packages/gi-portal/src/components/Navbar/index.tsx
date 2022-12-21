@@ -36,10 +36,7 @@ const extra = () => {
           >
             {$i18n.get({ id: 'gi-portal.components.Navbar.PracticeCase', dm: '实践案例' })}
           </li> */}
-          <li
-            className="disabled"
-            title={$i18n.get({ id: 'gi-portal.components.Navbar.ComingSoon', dm: '敬请期待' })}
-          >
+          <li className="disabled" title={$i18n.get({ id: 'gi-portal.components.Navbar.ComingSoon', dm: '敬请期待' })}>
             {$i18n.get({ id: 'gi-portal.components.Navbar.Solution', dm: '解决方案' })}
           </li>
 
@@ -62,7 +59,8 @@ const Navbar = () => {
       <Link to="/">
         <img
           className="logo"
-          src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
+          // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
+          src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*WDF_R6NLDHwAAAAAAAAAAAAADmJ7AQ/original"
           alt=""
           style={{ height: '30px' }}
         />
