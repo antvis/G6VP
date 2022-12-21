@@ -25,7 +25,14 @@ export default () => {
       if (result) {
         const { assets, outUserNo } = result;
         //@ts-ignore
-        window.Tracert.start({ roleId: outUserNo });
+        window.Tracert.call('set', { roleId: outUserNo });
+        //@ts-ignore
+        if (Tracert.ready) {
+          //@ts-ignore
+          window.Tracert.call('logPv');
+          //@ts-ignore
+          window.Tracert.call('expoCheck');
+        }
         setAssetPackages(assets);
         setUserInfo(result);
         //@ts-ignore
