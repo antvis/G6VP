@@ -3,9 +3,9 @@ import Graphin from '@antv/graphin';
 import { Button, Col, Row, Statistic } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import CollapseCard from './CollapseCard';
-// import { getSchemaGraph } from '../util';
 import { queryGraphSchema } from '../services/Neo4jService';
+import CollapseCard from './CollapseCard';
+import { components } from './template';
 
 interface SchemaGraphProps {
   updateGISite?: (params: GISiteParams) => void;
@@ -48,21 +48,27 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   }, []);
 
   const handleSubmit = () => {
+    const engineId = 'Neo4j';
+    const newSchemaData = {
+      ...schemaData,
+      meta: {
+        defaultLabelField: defaultLabelField,
+      },
+    };
+    utils.setServerEngineContext({
+      engineId,
+      schemaData: newSchemaData,
+    });
+    const engineContext = utils.getServerEngineContext();
     if (updateGISite) {
       updateGISite({
-        engineId: 'Neo4j',
-        schemaData: {
-          ...schemaData,
-          //@ts-ignore
-          meta: {
-            defaultLabelField: defaultLabelField,
-          },
+        engineId,
+        schemaData: newSchemaData,
+        engineContext,
+        //@ts-ignore
+        projectConfig: {
+          components,
         },
-        engineContext: {},
-        /**
-         * GI平台上会localStorage.setItem('SERVER_ENGINE_CONTEXT',JSON.stringify(engineContext))
-         * 因此，在接口层，只需要调用 localStorage.getItem('SERVER_ENGINE_CONTEXT') 即可拿到服务上下文
-         */
       });
     }
   };

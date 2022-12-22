@@ -1,5 +1,5 @@
 /** export  */
-const version = '1.1.0';
+const version = '1.1.2';
 import {
   deepClone,
   GIAC_CONTENT_METAS,
@@ -14,6 +14,7 @@ import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
 export type { IGIAC } from './components/const';
+export { default as EngineBanner } from './components/EngineBanner';
 export { default as Icon } from './components/Icon';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';

@@ -189,7 +189,7 @@ const Analysis = props => {
   }, [activeAssetsKeys]);
 
   /** 更新站点的 SCHEMA 和 DATA */
-  const updateGISite = getUpdateGISite({ config, projectId });
+  const updateGISite = getUpdateGISite({ config, projectId, activeAssetsKeys });
 
   const isLoading = isObjectEmpty(config) || !isReady;
 

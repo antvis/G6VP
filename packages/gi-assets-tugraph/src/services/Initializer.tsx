@@ -1,48 +1,46 @@
-import request from "umi-request";
-import { message } from "antd";
-import { HTTP_SERVICE_URL, TUGRAPH_DEFAULT_GRAPHNAME } from "./Constants";
+import { utils } from '@antv/gi-sdk';
+import { message } from 'antd';
+import request from 'umi-request';
+
 export const GI_SERVICE_INTIAL_GRAPH = {
-  name: "初始化查询",
+  name: '初始化查询',
   service: async () => {
     return new Promise(resolve => {
       resolve({
         nodes: [],
-        edges: []
+        edges: [],
       });
     });
-  }
+  },
 };
 
 export const GI_SERVICE_SCHEMA = {
-  name: "查询图模型",
+  name: '查询图模型',
   service: async params => {
+    const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
     let res = {
       nodes: [],
-      edges: []
+      edges: [],
     };
-    let { graphName = TUGRAPH_DEFAULT_GRAPHNAME } = (params as any) || {};
+    let { graphName } = (params as any) || {};
 
-    const token = localStorage.getItem("TUGRAPH_USER_TOKEN") as string;
-    if (!token) {
+    if (!TUGRAPH_USER_TOKEN) {
       // 没有登录信息，需要先登录再查询 schema
       message.error(
-        `TuGraph 数据源连接失败: 没有获取到连接 TuGraph 数据库的 Token 信息，请先连接 TuGraph 数据库再进行尝试！`
+        `TuGraph 数据源连接失败: 没有获取到连接 TuGraph 数据库的 Token 信息，请先连接 TuGraph 数据库再进行尝试！`,
       );
       return;
     }
 
     if (!graphName) {
       // 不存在GraphName，则查询子图列表，默认取第一个
-      const subGraphResult = await request(
-        `${HTTP_SERVICE_URL}/api/tugraph/list`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            Authorization: token
-          }
-        }
-      );
+      const subGraphResult = await request(`${HTTP_SERVICE_URL}/api/tugraph/list`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: TUGRAPH_USER_TOKEN,
+        },
+      });
 
       if (subGraphResult) {
         if (!subGraphResult.success) {
@@ -53,7 +51,9 @@ export const GI_SERVICE_SCHEMA = {
         const subGraphList = subGraphResult.data;
         if (subGraphList && subGraphList.length > 0) {
           graphName = subGraphList[0].value;
-          localStorage.setItem("CURRENT_TUGRAPH_SUBGRAPH", graphName);
+          utils.setServerEngineContext({
+            CURRENT_TUGRAPH_SUBGRAPH: graphName,
+          });
         }
       }
     }
@@ -64,15 +64,15 @@ export const GI_SERVICE_SCHEMA = {
     }
 
     try {
-      const result = await request(HTTP_SERVICE_URL + "/api/tugraph/schema", {
-        method: "get",
+      const result = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
+        method: 'get',
         headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          Authorization: token
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: TUGRAPH_USER_TOKEN,
         },
         params: {
-          graphName
-        }
+          graphName,
+        },
       });
       if (result.success) {
         res = result.data;
@@ -82,5 +82,5 @@ export const GI_SERVICE_SCHEMA = {
       message.error(`图模型查询失败: ${e}`);
     }
     return res;
-  }
+  },
 };

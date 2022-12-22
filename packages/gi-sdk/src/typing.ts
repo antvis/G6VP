@@ -398,6 +398,6 @@ export type GISiteParams = Partial<{
     nodes?: GINodeConfig[];
     edges?: GIEdgeConfig[];
     components: GIComponentConfig[];
-    layout: GILayoutConfig;
+    layout?: GILayoutConfig;
   };
 }>;

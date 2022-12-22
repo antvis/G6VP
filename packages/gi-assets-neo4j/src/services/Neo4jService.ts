@@ -1,5 +1,5 @@
+import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
-
 export interface ConnectProps {
   httpServerURL: string;
   uri: string;
@@ -7,8 +7,8 @@ export interface ConnectProps {
   password: boolean;
 }
 
-export const connectNeo4jService = async (params: ConnectProps) => {
-  const { uri, username, password, httpServerURL } = params;
+export const connectNeo4jService = async () => {
+  const { uri, username, password, httpServerURL } = utils.getServerEngineContext();
 
   try {
     const result = await request(`${httpServerURL}/api/neo4j/connect`, {
@@ -23,11 +23,10 @@ export const connectNeo4jService = async (params: ConnectProps) => {
         'Content-Type': 'application/json',
       },
     });
-
     if (result.success) {
-      const { httpServerURL } = result.data;
-      const PROJECT_SERVER_ENGINE_CONTEXT = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!)
-      localStorage.setItem('SERVER_ENGINE_CONTEXT', JSON.stringify({ ...PROJECT_SERVER_ENGINE_CONTEXT,uri, username, password, httpServerURL }))
+      utils.setServerEngineContext({
+        HAS_CONNECT_SUCCESS: true,
+      });
     }
 
     return result;
@@ -37,7 +36,7 @@ export const connectNeo4jService = async (params: ConnectProps) => {
 };
 
 export const queryGraphSchema = async () => {
-  const httpServerURL = localStorage.getItem('Neo4j_HTTP_SERVER');
+  const { httpServerURL } = utils.getServerEngineContext();
   const result = await request(`${httpServerURL}/api/neo4j/schema`, {
     method: 'GET',
   });
