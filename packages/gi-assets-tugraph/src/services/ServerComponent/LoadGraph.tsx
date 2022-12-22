@@ -99,17 +99,23 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     }
   }, []);
   const handleSubmit = () => {
+    const engineId = 'TuGraph';
+    const newSchemaData = {
+      ...schemaData,
+      meta: {
+        defaultLabelField: defaultLabelField,
+      },
+    };
+    utils.setServerEngineContext({
+      engineId,
+      schemaData: newSchemaData,
+    });
+    const engineContext = utils.getServerEngineContext();
     if (updateGISite) {
       updateGISite({
-        engineId: 'TuGraph',
-        schemaData: {
-          ...schemaData,
-          //@ts-ignore
-          meta: {
-            defaultLabelField: defaultLabelField,
-          },
-        },
-        engineContext: {},
+        engineId,
+        schemaData: newSchemaData,
+        engineContext: engineContext,
       });
     }
   };

@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { queryGraphSchema } from '../services/Neo4jService';
 import CollapseCard from './CollapseCard';
+import { components } from './template';
 
 interface SchemaGraphProps {
   updateGISite?: (params: GISiteParams) => void;
@@ -64,6 +65,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
         engineId,
         schemaData: newSchemaData,
         engineContext,
+        //@ts-ignore
+        projectConfig: {
+          components,
+        },
       });
     }
   };

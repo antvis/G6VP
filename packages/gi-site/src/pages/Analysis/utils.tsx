@@ -1,4 +1,5 @@
 import type { GISiteParams } from '@antv/gi-sdk';
+
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import { updateProjectById } from '../../services/';
@@ -23,20 +24,12 @@ export const queryActiveAssetsInformation = ({ assets, data, config, serviceConf
 
 /** 更新站点的 SCHEMA 和 DATA */
 export const getUpdateGISite =
-  ({ config, projectId }) =>
+  ({ config, projectId, activeAssetsKeys }) =>
   (params: GISiteParams) => {
     if (!params) {
       return false;
     }
-    let {
-      data,
-      schemaData,
-      tag,
-      activeAssetsKeys,
-      engineId,
-      engineContext,
-      projectConfig: ENGINE_PROJECT_CONFIG,
-    } = params;
+    let { data, schemaData, tag, engineId, engineContext, projectConfig: ENGINE_PROJECT_CONFIG } = params;
 
     if (!schemaData || !engineId) {
       notification.error({
@@ -48,8 +41,9 @@ export const getUpdateGISite =
     const style = utils.generatorStyleConfigBySchema(schemaData);
     const preContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}');
     let projectConfig;
-    debugger;
-    if (preContext.engineId === engineId) {
+
+    const IS_INITIAL_STYLE = config.nodes?.length === 1 && config.edges?.length === 1;
+    if (preContext.engineId === engineId && !IS_INITIAL_STYLE) {
       projectConfig = {
         ...ENGINE_PROJECT_CONFIG, //引擎设置的拥有最低优先级
         ...style, // GI默认生成的节点和边的样式
@@ -62,16 +56,18 @@ export const getUpdateGISite =
         ...ENGINE_PROJECT_CONFIG, //引擎设置的拥有最高优先级
       };
     }
-    console.log('project', projectConfig, config);
+
     const updateParams = {
       engineId,
       engineContext,
       schemaData,
       projectConfig,
     };
-    if (activeAssetsKeys) {
-      updateParams['activeAssetsKeys'] = activeAssetsKeys;
-    }
+
+    updateParams['activeAssetsKeys'] = {
+      ...activeAssetsKeys,
+      components: projectConfig.components.map(item => item.id),
+    };
     if (data) {
       updateParams['data'] = data;
     }
@@ -81,15 +77,10 @@ export const getUpdateGISite =
         message: '服务引擎启动成功',
         description: '服务引擎启动成功,正在重启窗口',
       });
-
-      localStorage.setItem(
-        'SERVER_ENGINE_CONTEXT',
-        JSON.stringify({
-          GI_SITE_PROJECT_ID: projectId,
-          engineId: engineId,
-          ...engineContext,
-        }),
-      );
+      utils.setServerEngineContext({
+        GI_SITE_PROJECT_ID: projectId,
+        engineId: engineId,
+      });
       setTimeout(() => {
         window.location.reload();
       }, 200);
