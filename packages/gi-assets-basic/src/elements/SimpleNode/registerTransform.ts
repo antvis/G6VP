@@ -13,6 +13,21 @@ const defaultNodeTheme = {
   mode: 'light' as 'light' | 'dark',
 };
 
+const getLabel = (data, LABEL_KEYS) => {
+  return LABEL_KEYS.map((d: string) => {
+    /**
+     * 兼容性处理：原先的label 逻辑是 ${type}.${properpertiesKey}
+     * 现在改为 ${type}^^${properpertiesKey}
+     */
+    const [newNodeType, newLabelKey] = d.split('^^');
+    const [oldNodeType, oldLabelKey] = d.split('.');
+    const key = newLabelKey || oldLabelKey || 'id';
+    return data[key];
+  })
+    .filter(d => d)
+    .join('\n');
+};
+
 const getIconStyleByConfig = (style, data) => {
   const { keyshape } = style;
   if (!style.icon || !keyshape) {
@@ -173,38 +188,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         size: size,
       };
       advanced.keyshape = keyshape;
-      //这里的逻辑彻底变成了 {id,nodeType,nodeTypeFromProperties,data}为必填的格式，否则文本这块有问题，可以使用「扩散组件」验证
-      /** 根据Size字段映射的枚举值 */
-      const LABEL_VALUE = LABEL_KEYS.map((d: string) => {
-        /**
-         * 兼容性处理：原先的label 逻辑是 ${type}.${properpertiesKey}
-         * 现在改为 ${type}^^${properpertiesKey}
-         */
-        const newLabelArray = d.split('^^');
-        const oldLabelArray = d.split('.');
-        let [nodeType, propObjKey, propName] = newLabelArray;
-        const isOld = newLabelArray.length === 1 && newLabelArray[0].split('.').length > 1;
-        if (isOld) {
-          nodeType = oldLabelArray[0];
-          propObjKey = oldLabelArray[1];
-          propName = oldLabelArray[2];
-        }
-
-        // const [nodeType, propObjKey, propName] = d.split('^^');
-
-        if ((node.nodeType || 'UNKNOW') === nodeType) {
-          // 只有当 nodeType 匹配时才取对应的属性值
-          if (propName) {
-            // propName 存在，则 propObjKey 值一定为 properties
-            return data[propObjKey][propName];
-          }
-          return data[propObjKey];
-        }
-        return data[nodeType];
-      })
-        .filter(d => d)
-        .join('\n');
-
+      const LABEL_VALUE = getLabel(data, LABEL_KEYS);
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
 
