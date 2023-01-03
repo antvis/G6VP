@@ -44,7 +44,7 @@ const Case: React.FunctionComponent<CaseProps> = props => {
       <Row gutter={24}>
         {state.lists.map(c => {
           //@ts-ignore
-          const { id, name, coverImg: img, title, tag, time, author, video } = c;
+          const { id, name, coverImg: img, title, tag, time, author, video, gmtCreate } = c;
 
           return (
             <Col key={id} span={12}>
@@ -60,14 +60,14 @@ const Case: React.FunctionComponent<CaseProps> = props => {
                 }
               >
                 <div className="gi-case-flex">
-                  <div className="title">{title}</div>
+                  <div className="title">{title || name}</div>
                   <div>
                     <Tag>{tag}</Tag>
                   </div>
                 </div>
                 <div className="gi-case-flex">
-                  <div className="time">{time}</div>
-                  <div className="author">{author}</div>
+                  <div className="time">{time || gmtCreate}</div>
+                  <div className="author">{author || 'GraphInsight 官方'}</div>
                   <div className="video">
                     <span
                       onClick={() => {

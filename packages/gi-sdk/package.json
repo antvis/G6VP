@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "G6VP 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,6 +32,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "immer": "^9.0.7",
+    "size-sensor": "^1.0.1",
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {

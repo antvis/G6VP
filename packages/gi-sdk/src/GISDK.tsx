@@ -9,6 +9,7 @@ import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
+import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
@@ -337,6 +338,7 @@ const GISDK = (props: Props) => {
           layoutCache={state.layoutCache}
         >
           <>
+            {isReady && <SizeSensor />}
             {state.isContextReady && <InitializerComponent {...InitializerProps} />}
             <SetupUseGraphinHook updateContext={updateState} />
             {isReady && renderComponents()}
