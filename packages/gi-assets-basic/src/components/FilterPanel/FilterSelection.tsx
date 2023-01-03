@@ -198,6 +198,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           onChange={onSelectChange}
           className="gi-filter-panel-prop-select"
           placeholder="选择元素属性"
+          showSearch
+          filterOption={(input, option) => {
+            return (option?.value as string)?.toLowerCase().includes(input.toLowerCase());
+          }}
           value={
             filterCriteria.elementType && filterCriteria.prop
               ? `${filterCriteria.elementType}-${filterCriteria.prop}`
