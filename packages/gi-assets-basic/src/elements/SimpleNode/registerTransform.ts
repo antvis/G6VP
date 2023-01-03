@@ -73,17 +73,18 @@ const getBadgesStyleByConfig = (style, data) => {
     const fontSize = size / 2;
     badge.size = size;
     badge.stroke = keyshape.stroke;
+
     if (badge.type === 'mapping') {
       const b = {
+        type: 'text',
         size,
         stroke: keyshape.stroke,
         fill: '#fff',
         color: keyshape.fill,
-        visible: data[value] ? true : false,
+        visible: Boolean(data[value]),
         value: data[value],
         fontSize,
       };
-
       return [b];
     }
     if (badge.type === 'font') {
