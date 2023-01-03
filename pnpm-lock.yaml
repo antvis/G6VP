@@ -443,6 +443,7 @@ importers:
       immer: ^9.0.7
       react: 17.x || 17
       react-dom: 17.x
+      size-sensor: ^1.0.1
       use-immer: ^0.6.0
     dependencies:
       '@ant-design/icons': 4.8.0_sfoxds7t5ydpegc3knd667wn6m
@@ -451,6 +452,7 @@ importers:
       immer: 9.0.16
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      size-sensor: 1.0.1
       use-immer: 0.6.0_immer@9.0.16+react@17.0.2
 
   packages/gi-site:
@@ -44313,7 +44315,7 @@ packages:
       sax: 1.2.4
 
   /size-sensor/1.0.1:
-    resolution: {integrity: sha1-+E5GIG0+JZ+v8dVI5LO+ypMhnbs=, tarball: size-sensor/download/size-sensor-1.0.1.tgz}
+    resolution: {integrity: sha512-QTy7MnuugCFXIedXRpUSk9gUnyNiaxIdxGfUjr8xxXOqIB3QvBUYP9+b51oCg2C4dnhaeNk/h57TxjbvoJrJUA==}
     dev: false
 
   /skmeans/0.9.7:
