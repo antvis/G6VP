@@ -15,6 +15,26 @@ const SideContainer: React.FC<SideContainerProps> = props => {
   const { children, width, visible, GISDK_ID, outSideFromCanvas, placement, height } = props;
   const { graph } = useContext();
   const divRef = React.useRef<HTMLDivElement>(null);
+    React.useEffect(() => {
+    if (!outSideFromCanvas) return;
+    const canvasContainer = document.getElementById(''.concat(GISDK_ID, '-graphin-container')) as HTMLElement;
+    if (!canvasContainer) return;
+    function ontransitionend(event) {
+      if (!['right', 'left', 'top', 'bottom'].includes(event.propertyName)) {
+        return;
+      }
+      var canvas = graph.get('canvas');
+      if (canvas) {
+        graph.changeSize(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
+        graph.autoPaint();
+      }
+    }
+    canvasContainer.addEventListener('transitionend', ontransitionend);
+    return () => {
+      canvasContainer.removeEventListener('transitionend', ontransitionend);
+    }
+  }, [outSideFromCanvas]);
+
   React.useEffect(() => {
     const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
     const canvasContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
@@ -107,11 +127,6 @@ const SideContainer: React.FC<SideContainerProps> = props => {
           }
         }
 
-        const canvas = graph.get('canvas');
-        if (canvas) {
-          graph.changeSize(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
-          graph.autoPaint();
-        }
       } else {
         container.className = '';
         tabsContainer.className = '';
@@ -122,6 +137,14 @@ const SideContainer: React.FC<SideContainerProps> = props => {
         canvasContainer.style.transition = 'all 0.3s ease';
         tabsContainer.style.transition = 'all 0.3s ease';
       }
+    }
+  }, [graph, visible, outSideFromCanvas, placement]);
+
+  React.useEffect(() => {
+    const tabsContainer = divRef.current;
+    const canvasContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
+    if (!tabsContainer) {
+      return;
     }
     return () => {
       tabsContainer.style.width = 'unset';
@@ -135,7 +158,7 @@ const SideContainer: React.FC<SideContainerProps> = props => {
       tabsContainer.style.right = 'unset';
       tabsContainer.style.left = 'unset';
     };
-  }, [graph, visible, outSideFromCanvas, placement]);
+  }, [placement]);
 
   return (
     <div className="gi-side-tabs-container" ref={divRef}>
