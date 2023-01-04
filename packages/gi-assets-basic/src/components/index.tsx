@@ -35,6 +35,7 @@ import SankeyAnalysis from './Sankey';
 import SideSelectTabs from './SideSelectTabs';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+import ZoomStatus from './ZoomStatus';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -81,4 +82,5 @@ export {
   SideSelectTabs,
   // ContentContainer,
   ChartAnalysis,
+  ZoomStatus,
 };
