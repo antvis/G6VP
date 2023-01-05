@@ -10,7 +10,9 @@ export default (props: Props) => {
   const graphContext = useContext();
   React.useEffect(() =>{
     const graph = graphContext.graph;
-    const onZoom = () => {
+    let timeoutId: any;
+    const execute = () => {
+      console.log('zooming');
       const zoom = graph.getZoom();
       const min = zoom <= minZoom;
       graph.getNodes().forEach((node) => {
@@ -19,6 +21,16 @@ export default (props: Props) => {
       graph.getEdges().forEach((edge) => {
         graph.setItemState(edge,statusName,min);
       });
+    }
+    const onZoom = () => {
+      if(timeoutId){
+        clearTimeout(timeoutId);
+        timeoutId = 0;
+      }
+      timeoutId = setTimeout(() => {
+        execute();
+        timeoutId = 0;
+      },100);
     }
     graph.on('wheelzoom',onZoom);
     return () => {

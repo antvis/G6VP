@@ -4,5 +4,6 @@ const info = {
   desc: '缩放时到某个阈值添加状态',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
+  type: 'AUTO',
 };
 export default info;

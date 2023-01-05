@@ -1,7 +1,7 @@
 export default () => {
   return {
     minZoom: {
-      title: '最小缩放比例',
+      title: '最小缩放',
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
