@@ -8,8 +8,8 @@ export interface Props{
 export default (props: Props) => {
   const {minZoom = 0.6,statusName = 'minZoom'} = props;
   const graphContext = useContext();
+  const graph = graphContext.graph;
   React.useEffect(() =>{
-    const graph = graphContext.graph;
     let timeoutId: any;
     const execute = () => {
       const zoom = graph.getZoom();
@@ -35,6 +35,6 @@ export default (props: Props) => {
     return () => {
       graph.off('wheelzoom',onZoom);
     }
-  },[graphContext.graph,minZoom,statusName]);
+  },[graph,minZoom,statusName]);
   return null;
 }
