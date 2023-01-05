@@ -12,7 +12,6 @@ export default (props: Props) => {
     const graph = graphContext.graph;
     let timeoutId: any;
     const execute = () => {
-      console.log('zooming');
       const zoom = graph.getZoom();
       const min = zoom <= minZoom;
       graph.getNodes().forEach((node) => {
