@@ -56,7 +56,7 @@ const UploadAssets = () => {
             <Input placeholder="0.12.0" />
           </Form.Item>
           <Form.Item label="UMD名" name="global" rules={[{ required: true, message: 'Please input your password!' }]}>
-            <Input placeholder="GI_Assets_Basic" />
+            <Input placeholder="GI_ASSETS_BASIC" />
           </Form.Item>
           <Form.Item label="CDN地址" name="url" rules={[{ required: true, message: 'Please input your password!' }]}>
             <TextArea placeholder="https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/0.12.0/dist/index.min.js" />
