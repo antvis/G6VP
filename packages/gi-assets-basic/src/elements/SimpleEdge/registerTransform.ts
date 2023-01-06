@@ -33,6 +33,8 @@ export const defaultConfig = {
       backgroundEnable: true,
       backgroundFill: '#fff',
       backgroundStroke: '#fff',
+      backgroundOpaciy: 1,
+      opacity: 1
     },
     animate: {
       visible: false,
@@ -42,6 +44,16 @@ export const defaultConfig = {
       duration: 3000,
     },
   },
+  status: {
+    minZoom:{
+      label: {
+        opacity: 0
+      },
+      'label-background': {
+        opacity: 0
+      }
+    },
+  }
 };
 
 export type EdgeConfig = typeof defaultConfig;
@@ -54,6 +66,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       size: size_CFG,
       label: LABEL_KEYS,
       advanced,
+      status: defaultStatus
     } = merge(defaultConfig, config.props) as EdgeConfig;
 
     const { keyshape: keyshape_CFG } = advanced;
@@ -145,6 +158,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         offset: advanced.label.offset,
         fontSize: advanced.label.fontSize,
         fill: advanced.label.fill,
+        opacity: advanced.label.opacity,
       };
       if (!advanced.label.visible) {
         label.value = '';
@@ -153,6 +167,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         label.background = {
           fill: advanced.label.backgroundFill,
           stroke: advanced.label.backgroundStroke,
+          opacity: advanced.label.backgroundOpaciy
         };
       }
 
@@ -181,6 +196,9 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
             repeat: advanced.animate.repeat,
             duration: advanced.animate.duration,
           },
+          status: {
+            ...defaultStatus
+          }
         },
         preStyle,
       );

@@ -134,6 +134,7 @@ export const defaultConfig = {
     },
     label: {
       ...label,
+      opacity: 1,
       visible: true,
     },
     icon: {
@@ -141,6 +142,7 @@ export const defaultConfig = {
       fill: '#fff',
       type: 'font',
       value: '',
+      opacity: 1,
       visible: false,
     },
     badge: {
@@ -160,6 +162,19 @@ export const defaultConfig = {
       lineWidth: 0,
     },
   },
+  status: {
+    minZoom:{
+      label: {
+        opacity: 0
+      },
+      icon: {
+        opacity: 0
+      },
+      badges: {
+        opacity: 0
+      }
+    },
+  }
 };
 export type NodeConfig = typeof defaultConfig;
 
@@ -168,7 +183,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 
-    const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
+    const { color, size, label: LABEL_KEYS, advanced,status: userStatus } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
     let isBug = false;
     //@ts-ignore
@@ -210,6 +225,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         badges,
         status: {
           ...status,
+          ...userStatus,
           highlight: {
             keyshape: {
               lineWidth: 4,
