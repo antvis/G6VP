@@ -24,7 +24,6 @@ export default (props: Props) => {
     const onZoom = () => {
       if(timeoutId){
         clearTimeout(timeoutId);
-        timeoutId = 0;
       }
       timeoutId = setTimeout(() => {
         execute();
@@ -34,6 +33,9 @@ export default (props: Props) => {
     graph.on('wheelzoom',onZoom);
     return () => {
       graph.off('wheelzoom',onZoom);
+      if(timeoutId){
+        clearTimeout(timeoutId);
+      }
     }
   },[graph,minZoom,statusName]);
   return null;
