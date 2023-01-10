@@ -2,5 +2,5 @@
 
 ```bash
 cd gi-site/docker
-make //声称站点 docker镜像
+make // 打包 docker 镜像
 ```
