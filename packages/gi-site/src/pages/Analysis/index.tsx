@@ -68,9 +68,10 @@ const Analysis = props => {
         (await getProjectById(projectId)) as IProject;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
-      const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-      const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-      const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
+      const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
+      // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
+      // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
+      // const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
       if (GI_SITE_PROJECT_ID !== projectId) {
         localStorage.setItem(
           'SERVER_ENGINE_CONTEXT',

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "G6VP 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",

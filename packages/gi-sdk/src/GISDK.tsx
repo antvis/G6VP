@@ -150,7 +150,7 @@ const GISDK = (props: Props) => {
 
   /** 增加多元素 */
   React.useEffect(() => {
-    if (!nodesCfg || !edgesCfg) {
+    if (!nodesCfg || !edgesCfg || nodesCfg.length === 0 || edgesCfg.length === 0) {
       return;
     }
 
