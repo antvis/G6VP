@@ -7,7 +7,7 @@ const GI_LOCAL_URL = [
 ];
 
 /** 是否使用本地 IndexedDB 数据库 */
-export const IS_INDEXEDDB_MODE = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
+export const IS_INDEXEDDB_MODE = true; // GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
 
 /** 是否是开发环境 */
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
