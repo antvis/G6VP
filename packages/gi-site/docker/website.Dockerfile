@@ -1,7 +1,8 @@
 # Website for graphinsight
 
 ######################## BUILDER: Website ##########################
-from docker.io/library/node:16.17.1 AS builder
+# from docker.io/library/node:16.17.1 AS builder
+from python:3.9-alpine AS builder
 
 COPY ./dist /work/dist
 
