@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "id": "Bob",
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "data": {
+        "id": "Bob",
+        "type": "user"
+      }
+    },
+    {
+      "id": "Olly",
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "data": {
+        "id": "Olly",
+        "type": "user"
+      }
+    },
+    {
+      "id": "Tom",
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "data": {
+        "id": "Tom",
+        "type": "user"
+      }
+    },
+    {
+      "id": "Dan",
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "data": {
+        "id": "Dan",
+        "type": "user"
+      }
+    },
+    {
+      "id": "Gina",
+      "nodeType": "user",
+      "nodeTypeKeyFromProperties": "type",
+      "data": {
+        "id": "Gina",
+        "type": "user"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "Bob",
+      "target": "Olly",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Bob",
+        "target": "Olly",
+        "type": "Friends_With"
+      }
+    },
+    {
+      "source": "Olly",
+      "target": "Tom",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Olly",
+        "target": "Tom",
+        "type": "Friends_With"
+      }
+    },
+    {
+      "source": "Olly",
+      "target": "Dan",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Olly",
+        "target": "Dan",
+        "type": "Friends_With"
+      }
+    },
+    {
+      "source": "Olly",
+      "target": "Gina",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Olly",
+        "target": "Gina",
+        "type": "Friends_With"
+      }
+    },
+    {
+      "source": "Tom",
+      "target": "Gina",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Tom",
+        "target": "Gina",
+        "type": "Friends_With"
+      }
+    },
+    {
+      "source": "Dan",
+      "target": "Gina",
+      "edgeType": "Friends_With",
+      "edgeTypeKeyFromProperties": "type",
+      "data": {
+        "source": "Dan",
+        "target": "Gina",
+        "type": "Friends_With"
+      }
+    }
+  ],
+  "combos": []
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@antv/gi-mock-data",
+  "version": "1.0.4",
+  "description": "G6VP MOCK DATA",
+  "main": "index.js",
+  "files": [
+    "cdn"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antvis/G6VP.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
