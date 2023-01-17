@@ -11,7 +11,7 @@ BUILD_PROGRESS = auto
 
 .PHONY: website
 website:
-	cd $(WORKING_DIR)/../../.. && \
+	cd $(WORKING_DIR) && \
 	docker build \
 		--progress=${BUILD_PROGRESS} \
 		-t ${REGISTRY}/graphinsight/website:${VERSION} \

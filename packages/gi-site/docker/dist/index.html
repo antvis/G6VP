@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html data-theme="">
+  <head>
+    <meta charset="utf-8" />
+    <title>图可视分析平台：G6VP</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async=""
+      src="https://www.googletagmanager.com/gtag/js?id=G-9Z6Z0NTLFB"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9Z6Z0NTLFB");
+    </script>
+    <script>
+      window.TracertCmdCache = window.TracertCmdCache || [];
+      var t = window.Tracert || {
+          _isRenderInit: !0,
+          call: function () {
+            window.TracertCmdCache.push(arguments);
+          },
+        },
+        f = [
+          "call",
+          "start",
+          "config",
+          "logPv",
+          "info",
+          "err",
+          "click",
+          "expo",
+          "pageName",
+          "pageState",
+          "time",
+          "timeEnd",
+          "parse",
+          "checkExpo",
+          "stringify",
+          "report",
+          "set",
+          "before",
+        ];
+      for (let i = 0; i < f.length; i++) {
+        (function (fn) {
+          t[fn] = function () {
+            var a = [],
+              l = arguments.length;
+            for (var j = 0; j < l; j++) {
+              a.push(arguments[j]);
+            }
+            a.unshift(fn);
+            window.TracertCmdCache.push(a);
+          };
+        })(f[i]);
+      }
+      window.Tracert = t;
+      window._to = window._to || {};
+      // 针对内网用户，追加的埋点，社区用户不会追踪
+      function filterLog(logType) {
+        return function (opts) {
+          return !!window.GI_USER_INFO?.outUserNo;
+        };
+      }
+      window.Tracert.call("before", "logPv", filterLog("PageMonitor"));
+      window.Tracert.call("before", "expo", filterLog("expo"));
+      window.Tracert.call("before", "click", filterLog("click"));
+    </script>
+    <script async="" src="https://ur.alipay.com/tracert_a3220.js"></script>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/1.2.1/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-basic/1.3.0/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-advance/1.1.1/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-scene/1.0.0/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-algorithm/1.0.0/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-graphscope/1.0.2/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-neo4j/1.1.2/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-tugraph/1.2.0/dist/index.css"
+    />
+    <link
+      charset="utf-8"
+      rel="stylesheet"
+      type="text/css"
+      href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/index.css"
+    />
+    <link rel="stylesheet" href="/umi.c8259bfc.css" />
+    <script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      //! umi version: 3.5.35
+    </script>
+  </head>
+
+  <body style="background: var(--background-color); color: var(--text-color)">
+    <div id="root"></div>
+
+    <script src="https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.24.3/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.7.10/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/1.2.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-basic/1.3.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-advance/1.1.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-scene/1.0.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-algorithm/1.0.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-graphscope/1.0.2/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-neo4j/1.1.2/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-tugraph/1.2.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js"></script>
+    <script src="/umi.211d8e07.js"></script>
+  </body>
+</html>
