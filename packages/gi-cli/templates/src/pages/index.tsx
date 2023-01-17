@@ -5,6 +5,11 @@ import ThemeSwitch from '@antv/gi-theme-antd';
 import React from 'react';
 import { Counter } from '../components';
 import { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, THEME_VALUE } from './GI_EXPORT_FILES';
+import ServerView from './ServerView';
+
+/** 自定义数据服务 */
+import MyServer from '../services/index';
+
 import update from './update';
 /** 资产可按需引入 **/
 const {
@@ -55,7 +60,7 @@ const ASSETS = {
   layouts: { GraphinForce, Concentric, Dagre, FundForce },
 };
 
-const SERVER = [GI_ASSETS_BASIC_SERVER];
+const SERVER = [GI_ASSETS_BASIC_SERVER, MyServer];
 
 //@ts-ignore
 const config = update(GI_PROJECT_CONFIG);
@@ -64,7 +69,7 @@ const { getCombineServices } = utils;
 //@ts-ignores
 const services = getCombineServices(SERVER);
 /** 设置服务引擎 Context **/
-window.localStorage.setItem('SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
+utils.setServerEngineContext(SERVER_ENGINE_CONTEXT);
 /** 设置主题 **/
 window.localStorage.setItem('@theme', THEME_VALUE);
 
@@ -72,6 +77,7 @@ const MyGraphApp = () => {
   return (
     <div style={{ height: '100vh' }}>
       <ThemeSwitch style={{ visibility: 'hidden' }} />
+      <ServerView />
       {/** @ts-ignore */}
       <GISDK config={config} assets={ASSETS} services={services} />
     </div>

@@ -1,5 +1,5 @@
 {
-  "name": "{{{ name }}}",
+  "name": "gi-assets-xxx",
   "version": "0.1.0",
   "description": "{{{ description }}}",
   "types": "dist/types.d.ts",
@@ -8,10 +8,11 @@
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
     "start": "umi dev"
   },
-  "keywords": ["G6VP", "gi-asstes"],
-  "authors": [{{#author}}
-    "{{{ author }}}"
-  {{/author}}],
+  "keywords": [
+    "G6VP",
+    "gi-asstes"
+  ],
+  "authors": "",
   "license": "MIT",
   "files": [
     "dist"
@@ -36,10 +37,11 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "father": "^2.30.6",
+    "localforage": "^1.10.0",
+    "ts-loader": "^9.4.2",
     "typescript": "^4.1.2",
     "umi": "3.x",
     "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
-    "ts-loader": "^9.4.2"
+    "webpack-cli": "^5.0.1"
   }
 }
