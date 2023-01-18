@@ -6,7 +6,8 @@
   "scripts": {
     "build": "father build && npm run build:umd",
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
-    "start": "umi dev"
+    "start": "umi dev",
+    "serve": "http-server dist -p 9527"
   },
   "keywords": ["G6VP", "gi-asstes"],
   "authors": [{{#author}}
@@ -40,6 +41,8 @@
     "umi": "3.x",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
-    "ts-loader": "^9.4.2"
+    "ts-loader": "^9.4.2",
+    "http-server": "^14.1.1",
+    "mini-css-extract-plugin": "^2.7.2"
   }
 }
