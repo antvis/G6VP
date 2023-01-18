@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "G6VP 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -27,7 +27,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

@@ -9,11 +9,14 @@ const Counter = props => {
     <div
       style={{
         position: 'absolute',
-        bottom: '100px',
-        left: '50px',
+        top: '50px',
+        left: '20px',
         background: 'red',
+        padding: '20px',
       }}
     >
+      自定义分析资产：计数器
+      <br />
       Nodes Count: {nodes} <br />
       Edges Count: {edges}
     </div>

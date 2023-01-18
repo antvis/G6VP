@@ -1,0 +1,1663 @@
+{
+  "nodes": [
+    {
+      "id": "8b6a17f2-eb82-4340-abc2-fd24c57bdd7a",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "8b6a17f2-eb82-4340-abc2-fd24c57bdd7a",
+        "_name": "Juan Hirthe",
+        "_phone": "474-339-7595",
+        "_email": "Selmer18@yahoo.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 55000
+      }
+    },
+    {
+      "id": "31da7f71-33f6-48f7-baff-ac88e8151a47",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "31da7f71-33f6-48f7-baff-ac88e8151a47",
+        "_name": "Agnes Dach",
+        "_phone": "1-587-272-2478 x88717",
+        "_email": "Ilene.Kub@gmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 17624,
+        "total_receive_amt": 14045.37
+      }
+    },
+    {
+      "id": "8f938ed2-5de5-46dc-9ea9-d70042028db3",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "8f938ed2-5de5-46dc-9ea9-d70042028db3",
+        "_name": "Angelina Zulauf DDS",
+        "_phone": "915.258.5287 x797",
+        "_email": "Gordon_Daniel@gmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 47867
+      }
+    },
+    {
+      "id": "bf508af3-4643-446f-8999-ef9ce39b7706",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "bf508af3-4643-446f-8999-ef9ce39b7706",
+        "_name": "Cody Thompson",
+        "_phone": "731-343-3677",
+        "_email": "Jake5@gmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 288399
+      }
+    },
+    {
+      "id": "42a11ed2-f793-401d-a4c3-f4711d9404f6",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "42a11ed2-f793-401d-a4c3-f4711d9404f6",
+        "_name": "Aubrey Rice DVM",
+        "_phone": "(204) 503-0524 x417",
+        "_email": "Constance_Prohaska@hotmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 33300
+      }
+    },
+    {
+      "id": "4d6f90db-2c98-4786-999a-60481586747e",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "4d6f90db-2c98-4786-999a-60481586747e",
+        "_name": "Phillip McDermott",
+        "_phone": "(934) 859-7673 x41343",
+        "_email": "Rose6@gmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 1667155.47
+      }
+    },
+    {
+      "id": "fe0efb9e-3b69-4c48-ae80-0b7d9fab2260",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "fe0efb9e-3b69-4c48-ae80-0b7d9fab2260",
+        "_name": "Woodrow Aufderhar",
+        "_phone": "(211) 772-8543",
+        "_email": "Layne.Farrell@hotmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 3820
+      }
+    },
+    {
+      "id": "bb904d2d-d83d-4041-aae2-3b148bb17675",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "bb904d2d-d83d-4041-aae2-3b148bb17675",
+        "_name": "Nicholas Gerhold",
+        "_phone": "(801) 548-2141 x135",
+        "_email": "Tamara97@hotmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 14
+      }
+    },
+    {
+      "id": "72ed2e5a-6efd-442d-993d-a895fadb45e7",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "72ed2e5a-6efd-442d-993d-a895fadb45e7",
+        "_name": "Margarita Hintz",
+        "_phone": "(293) 507-8009",
+        "_email": "Janae.McDermott@yahoo.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 49999
+      }
+    },
+    {
+      "id": "3eb5eedc-4234-4377-b7ea-88b3f647ee84",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "3eb5eedc-4234-4377-b7ea-88b3f647ee84",
+        "_name": "Dr. Clarence Nikolaus",
+        "_phone": "670-960-7260 x00701",
+        "_email": "Russel53@gmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 214970.5
+      }
+    },
+    {
+      "id": "857ddbcd-87dd-408b-aa92-09565bbd1514",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "857ddbcd-87dd-408b-aa92-09565bbd1514",
+        "_name": "Caleb Wiza",
+        "_phone": "1-399-381-5034",
+        "_email": "Hazel_Koch@yahoo.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 18678.65
+      }
+    },
+    {
+      "id": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+      "nodeType": "Others",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+        "_name": "Michelle Lang PhD",
+        "_phone": "(894) 368-7221 x336",
+        "_email": "Kitty.Hirthe@hotmail.com",
+        "user_type": "Others",
+        "total_pay_amt": 0,
+        "total_receive_amt": 221509.3
+      }
+    },
+    {
+      "id": "8e8e2e44-a4ff-489e-a463-31fe5bb91b88",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "8e8e2e44-a4ff-489e-a463-31fe5bb91b88",
+        "_name": "Alberta Considine II",
+        "_phone": "(816) 224-6119",
+        "_email": "Colby75@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 38000
+      }
+    },
+    {
+      "id": "e45ef83f-03c9-491d-89ab-a2663d37cc70",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "e45ef83f-03c9-491d-89ab-a2663d37cc70",
+        "_name": "Omar Kreiger",
+        "_phone": "(807) 388-1214 x64649",
+        "_email": "Precious49@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 10
+      }
+    },
+    {
+      "id": "6b109d3f-1c72-45c4-ab1f-4e4ee743fe73",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "6b109d3f-1c72-45c4-ab1f-4e4ee743fe73",
+        "_name": "Hattie Torphy",
+        "_phone": "926-997-2816",
+        "_email": "Angelita.MacGyver93@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 22
+      }
+    },
+    {
+      "id": "52badb8c-d50f-44a5-9b5e-3b3923422c05",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "52badb8c-d50f-44a5-9b5e-3b3923422c05",
+        "_name": "Jeffrey Wehner DVM",
+        "_phone": "1-382-812-3462",
+        "_email": "Kendra.Mitchell81@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 2
+      }
+    },
+    {
+      "id": "c25b880c-8434-4d11-83f8-c43f65e15f8f",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "c25b880c-8434-4d11-83f8-c43f65e15f8f",
+        "_name": "Darren Nienow",
+        "_phone": "833.879.7155",
+        "_email": "Jessy_Swaniawski@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 50
+      }
+    },
+    {
+      "id": "492681ca-5820-4d3c-91ad-98314cf284fc",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "492681ca-5820-4d3c-91ad-98314cf284fc",
+        "_name": "Dr. Reginald Harvey",
+        "_phone": "(955) 430-1484",
+        "_email": "Hardy79@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 20
+      }
+    },
+    {
+      "id": "c7d1f35b-face-4fb8-b861-4ad502e76c7d",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "c7d1f35b-face-4fb8-b861-4ad502e76c7d",
+        "_name": "Eugene Fadel",
+        "_phone": "274.338.6802 x890",
+        "_email": "Nicole.Zemlak@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 8.75
+      }
+    },
+    {
+      "id": "80a0329a-34c7-445f-aecc-0b3201c5267d",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "80a0329a-34c7-445f-aecc-0b3201c5267d",
+        "_name": "Teresa Grimes",
+        "_phone": "235.998.4288 x5180",
+        "_email": "Rosalinda_Lindgren@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 40
+      }
+    },
+    {
+      "id": "78bbeed3-44fd-41e0-8f3e-7ce875186719",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "78bbeed3-44fd-41e0-8f3e-7ce875186719",
+        "_name": "Zachary Stanton",
+        "_phone": "205.343.7728 x28741",
+        "_email": "Blaise42@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 1283929.4,
+        "total_receive_amt": 0
+      }
+    },
+    {
+      "id": "3a3373fe-18ae-49e2-8214-819e92a33b1d",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "3a3373fe-18ae-49e2-8214-819e92a33b1d",
+        "_name": "Ann Turner",
+        "_phone": "558.835.2229 x88773",
+        "_email": "Janessa_Hermann82@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 53.47
+      }
+    },
+    {
+      "id": "8b9cbe00-c3e7-4a98-97c0-32f6c8e3e600",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "8b9cbe00-c3e7-4a98-97c0-32f6c8e3e600",
+        "_name": "Gustavo Greenholt",
+        "_phone": "834-583-5470",
+        "_email": "Jayden.Koelpin2@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 19.91
+      }
+    },
+    {
+      "id": "ad3278d9-efc1-4753-a467-69e2397146d3",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "ad3278d9-efc1-4753-a467-69e2397146d3",
+        "_name": "Frankie Metz",
+        "_phone": "1-548-867-3858",
+        "_email": "Elise.Rogahn49@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 9000
+      }
+    },
+    {
+      "id": "153caf89-09ad-42cb-8c16-090a18eade59",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "153caf89-09ad-42cb-8c16-090a18eade59",
+        "_name": "Eva Runolfsdottir",
+        "_phone": "(413) 827-9337 x381",
+        "_email": "Oda_Deckow37@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 30
+      }
+    },
+    {
+      "id": "9392f625-d76c-4351-bf3d-47fa08a04ec9",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "9392f625-d76c-4351-bf3d-47fa08a04ec9",
+        "_name": "Bethany Zieme",
+        "_phone": "656-861-1469 x036",
+        "_email": "Curtis_King@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 19800
+      }
+    },
+    {
+      "id": "9cfd6a8c-9c02-4a8c-a30a-9484efaba01d",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "9cfd6a8c-9c02-4a8c-a30a-9484efaba01d",
+        "_name": "Ron Rutherford",
+        "_phone": "650.909.9954 x230",
+        "_email": "Grady26@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 667.97
+      }
+    },
+    {
+      "id": "9c51bdc1-0298-47c0-b375-213f1f22a663",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "9c51bdc1-0298-47c0-b375-213f1f22a663",
+        "_name": "Mrs. Arthur Runolfsdottir",
+        "_phone": "(232) 965-0830 x99584",
+        "_email": "Marquise_Donnelly@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 26
+      }
+    },
+    {
+      "id": "004fd4f0-84e9-4870-be57-2d79da62057c",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "004fd4f0-84e9-4870-be57-2d79da62057c",
+        "_name": "Kelley Hartmann",
+        "_phone": "1-624-983-5381",
+        "_email": "Reggie0@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 43000,
+        "total_receive_amt": 0
+      }
+    },
+    {
+      "id": "ee8e16db-7817-4332-a8f1-c3f5e00246d7",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "ee8e16db-7817-4332-a8f1-c3f5e00246d7",
+        "_name": "Damon Renner",
+        "_phone": "(499) 531-1734 x6617",
+        "_email": "Carol_Crist@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 10
+      }
+    },
+    {
+      "id": "8a71ad62-1768-4cc7-a430-575073352237",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "8a71ad62-1768-4cc7-a430-575073352237",
+        "_name": "Jamie Dooley",
+        "_phone": "298.526.1889 x30878",
+        "_email": "Percival.Christiansen@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 20
+      }
+    },
+    {
+      "id": "50bd809a-9a2a-475f-a5cf-61b8850dc201",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "50bd809a-9a2a-475f-a5cf-61b8850dc201",
+        "_name": "Miss Jorge Considine PhD",
+        "_phone": "1-525-424-7666",
+        "_email": "Rusty_Treutel74@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 30
+      }
+    },
+    {
+      "id": "6dfc6d3a-6396-45bc-9ade-60f844b7b41a",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "6dfc6d3a-6396-45bc-9ade-60f844b7b41a",
+        "_name": "Travis Kulas",
+        "_phone": "1-689-407-8279",
+        "_email": "Mateo_Windler75@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 58
+      }
+    },
+    {
+      "id": "88c4585b-995a-4b0e-a789-16e461fe8bb9",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "88c4585b-995a-4b0e-a789-16e461fe8bb9",
+        "_name": "Jordan Harris",
+        "_phone": "1-843-985-1032 x9794",
+        "_email": "Chad.Wisoky35@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 36
+      }
+    },
+    {
+      "id": "d7585106-7c40-41c4-88f7-b40b5b0947a5",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "d7585106-7c40-41c4-88f7-b40b5b0947a5",
+        "_name": "Pearl Donnelly",
+        "_phone": "1-801-639-2559 x028",
+        "_email": "Flavie27@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 25.36
+      }
+    },
+    {
+      "id": "6beaf355-1039-4d32-b5c5-9f728c5a999c",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "6beaf355-1039-4d32-b5c5-9f728c5a999c",
+        "_name": "Nadine Crona",
+        "_phone": "826.230.3769",
+        "_email": "Arnaldo_Senger@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 23.73
+      }
+    },
+    {
+      "id": "5e4038fe-3fa0-49b1-85d4-e4b59d21fe06",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "5e4038fe-3fa0-49b1-85d4-e4b59d21fe06",
+        "_name": "Doris Pouros",
+        "_phone": "1-474-703-1678",
+        "_email": "Whitney_Kerluke@hotmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 121.48
+      }
+    },
+    {
+      "id": "5ed292b3-1ae0-46c2-a67c-a8ca3b55acc1",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "5ed292b3-1ae0-46c2-a67c-a8ca3b55acc1",
+        "_name": "Jill Abbott",
+        "_phone": "967-820-3220 x1175",
+        "_email": "Simeon94@gmail.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 0,
+        "total_receive_amt": 19450
+      }
+    },
+    {
+      "id": "1f0c7472-52e4-4581-9d60-e07d3e09c902",
+      "nodeType": "Paypal",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "1f0c7472-52e4-4581-9d60-e07d3e09c902",
+        "_name": "Bert Gulgowski Jr.",
+        "_phone": "1-326-546-0491 x342",
+        "_email": "Jose_Rowe@yahoo.com",
+        "user_type": "Paypal",
+        "total_pay_amt": 693491.82,
+        "total_receive_amt": 0
+      }
+    },
+    {
+      "id": "53a056d9-4485-4138-9349-6053e9c41412",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "53a056d9-4485-4138-9349-6053e9c41412",
+        "_name": "Woodrow Wyman",
+        "_phone": "1-758-685-2394 x48628",
+        "_email": "Junior_Sipes@hotmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 1423169.71,
+        "total_receive_amt": 1283929.4
+      }
+    },
+    {
+      "id": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "_name": "Casey Raynor DVM",
+        "_phone": "1-789-577-3124 x93881",
+        "_email": "Rowan18@yahoo.com",
+        "user_type": "Bank",
+        "total_pay_amt": 868543.82,
+        "total_receive_amt": 105000
+      }
+    },
+    {
+      "id": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "_name": "Sabrina Gutkowski",
+        "_phone": "781-458-1599 x337",
+        "_email": "Sean.Nicolas@hotmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 652506.19,
+        "total_receive_amt": 693491.82
+      }
+    },
+    {
+      "id": "e808892a-0df4-48a4-995d-2674f4a7fc09",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "e808892a-0df4-48a4-995d-2674f4a7fc09",
+        "_name": "Santos Prohaska",
+        "_phone": "1-798-971-8143 x643",
+        "_email": "Agnes_Davis@gmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 438.9,
+        "total_receive_amt": 438.9
+      }
+    },
+    {
+      "id": "07e2d955-b703-4842-9f0d-50ad0edabd84",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "07e2d955-b703-4842-9f0d-50ad0edabd84",
+        "_name": "Elena Donnelly",
+        "_phone": "266.262.9468 x94411",
+        "_email": "Stephania.Hammes15@hotmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 49800.95,
+        "total_receive_amt": 44730
+      }
+    },
+    {
+      "id": "ac00be91-93bf-4641-b0f8-48781df68be7",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "ac00be91-93bf-4641-b0f8-48781df68be7",
+        "_name": "Jackie Armstrong",
+        "_phone": "1-344-533-2437 x041",
+        "_email": "Kiel38@gmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 12370.95,
+        "total_receive_amt": 1000
+      }
+    },
+    {
+      "id": "3ad545ab-4990-492d-ba40-5fbd7c700738",
+      "nodeType": "Bank",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "3ad545ab-4990-492d-ba40-5fbd7c700738",
+        "_name": "Lucas Balistreri",
+        "_phone": "312.791.3706 x33152",
+        "_email": "Janelle_Harris54@hotmail.com",
+        "user_type": "Bank",
+        "total_pay_amt": 26849.7,
+        "total_receive_amt": 26708.47
+      }
+    },
+    {
+      "id": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+        "_name": "Darla Weimann",
+        "_phone": "976-656-3572 x41935",
+        "_email": "Elyse58@gmail.com",
+        "total_pay_amt": 77026,
+        "total_receive_amt": 233543.16
+      }
+    },
+    {
+      "id": "d480abae-7e59-480d-b751-6c380394e34d",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "d480abae-7e59-480d-b751-6c380394e34d",
+        "_name": "Mary Balistreri",
+        "_phone": "432.601.4236",
+        "_email": "Neha.Reynolds@gmail.com",
+        "total_pay_amt": 79358.7,
+        "total_receive_amt": 206097
+      }
+    },
+    {
+      "id": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+        "_name": "Cary Goldner",
+        "_phone": "611.417.7372",
+        "_email": "Penelope.Medhurst16@yahoo.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 411896.02
+      }
+    },
+    {
+      "id": "45766e31-7adc-44d6-aadd-6bf8b4daf74b",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "45766e31-7adc-44d6-aadd-6bf8b4daf74b",
+        "_name": "Manuel Monahan III",
+        "_phone": "(772) 614-4466",
+        "_email": "Gaetano_Bode@hotmail.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 26.25
+      }
+    },
+    {
+      "id": "c6f1885f-8d24-44ae-aed4-1ff9348ec227",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "c6f1885f-8d24-44ae-aed4-1ff9348ec227",
+        "_name": "Celia Cruickshank I",
+        "_phone": "(303) 440-9529 x40334",
+        "_email": "Scarlett.Little@yahoo.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 108
+      }
+    },
+    {
+      "id": "364ebc1e-34b0-4387-a255-55540340b4f4",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "364ebc1e-34b0-4387-a255-55540340b4f4",
+        "_name": "Percy Carter",
+        "_phone": "979.798.4666 x8762",
+        "_email": "Wellington.Berge99@hotmail.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 12000
+      }
+    },
+    {
+      "id": "1feae764-b159-4f8c-98cf-fe6c21c9def8",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "1feae764-b159-4f8c-98cf-fe6c21c9def8",
+        "_name": "Jackie Gislason",
+        "_phone": "858-504-1063 x263",
+        "_email": "Halle.Will69@hotmail.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 23300
+      }
+    },
+    {
+      "id": "7e7abea6-a858-4887-a70a-b66ad72973a8",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "7e7abea6-a858-4887-a70a-b66ad72973a8",
+        "_name": "Matt Cassin",
+        "_phone": "(637) 268-7678 x984",
+        "_email": "Angus97@yahoo.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 5000
+      }
+    },
+    {
+      "id": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+        "_name": "Tanya Kozey IV",
+        "_phone": "1-298-929-9773 x53433",
+        "_email": "Sarah_Kshlerin86@yahoo.com",
+        "total_pay_amt": 35000,
+        "total_receive_amt": 18970
+      }
+    },
+    {
+      "id": "457f926f-1584-4bcf-aa8a-b53165c2815e",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "457f926f-1584-4bcf-aa8a-b53165c2815e",
+        "_name": "Daisy Monahan",
+        "_phone": "340-887-3982",
+        "_email": "Norbert_Schuster@hotmail.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 7500
+      }
+    },
+    {
+      "id": "f035a3ae-1a76-4936-af7f-b0fdb738c9d3",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "f035a3ae-1a76-4936-af7f-b0fdb738c9d3",
+        "_name": "Alexander Goldner",
+        "_phone": "829-719-9635 x4963",
+        "_email": "Winnifred60@yahoo.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 23300
+      }
+    },
+    {
+      "id": "bb77d857-cc0c-4f9b-b841-67d7b166a0f0",
+      "nodeTypeKeyFromProperties": "user_type",
+      "data": {
+        "id": "bb77d857-cc0c-4f9b-b841-67d7b166a0f0",
+        "_name": "Olivia Homenick",
+        "_phone": "1-435-386-7385",
+        "_email": "Scarlett_Dare@hotmail.com",
+        "total_pay_amt": 0,
+        "total_receive_amt": 25000
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+      "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "618ff2ba-4c70-4e18-9825-ae2c140c94c1",
+        "source": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+        "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "total_amt": 27000,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "09bb8cf1-fc11-464c-a8e0-c0d670d3d423",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "f936adc7-f660-4694-9ac9-1bff7d468d6f",
+        "total_amt": 233543,
+        "total_times": 7,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "78bbeed3-44fd-41e0-8f3e-7ce875186719",
+      "target": "53a056d9-4485-4138-9349-6053e9c41412",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "2fee70d1-605f-4d72-a4c0-d9303825d30f",
+        "source": "78bbeed3-44fd-41e0-8f3e-7ce875186719",
+        "target": "53a056d9-4485-4138-9349-6053e9c41412",
+        "total_amt": 1283929,
+        "total_times": 27,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "004fd4f0-84e9-4870-be57-2d79da62057c",
+      "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "896b92b0-8f09-41cf-b2a1-9496652769d1",
+        "source": "004fd4f0-84e9-4870-be57-2d79da62057c",
+        "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "total_amt": 43000,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "1f0c7472-52e4-4581-9d60-e07d3e09c902",
+      "target": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "570bdad9-b0e4-4a14-b60f-a911a79a2d04",
+        "source": "1f0c7472-52e4-4581-9d60-e07d3e09c902",
+        "target": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "total_amt": 693492,
+        "total_times": 60,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "8e8e2e44-a4ff-489e-a463-31fe5bb91b88",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "c57e62b3-8212-4b20-b953-4e0776448c76",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "8e8e2e44-a4ff-489e-a463-31fe5bb91b88",
+        "total_amt": 38000,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "ad3278d9-efc1-4753-a467-69e2397146d3",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "16b12f0e-65a3-486c-b021-1b6168e8ec37",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "ad3278d9-efc1-4753-a467-69e2397146d3",
+        "total_amt": 9000,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "77ea6bfa-7521-4b53-8226-5ce488de1679",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+        "total_amt": 213359,
+        "total_times": 6,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "4511cd0c-83d1-4caf-84ee-41029c3d5e16",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+        "total_amt": 258171,
+        "total_times": 7,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "4d6f90db-2c98-4786-999a-60481586747e",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "98fd97ff-493d-424c-bba8-07d9bbe62c2b",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "4d6f90db-2c98-4786-999a-60481586747e",
+        "total_amt": 847140,
+        "total_times": 19,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "72ed2e5a-6efd-442d-993d-a895fadb45e7",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "6325229b-142c-4395-ac4c-18aea075e6aa",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "72ed2e5a-6efd-442d-993d-a895fadb45e7",
+        "total_amt": 49999,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "53a056d9-4485-4138-9349-6053e9c41412",
+      "target": "457f926f-1584-4bcf-aa8a-b53165c2815e",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "00217a5c-fde0-4ec3-8bb3-854eb83f1b78",
+        "source": "53a056d9-4485-4138-9349-6053e9c41412",
+        "target": "457f926f-1584-4bcf-aa8a-b53165c2815e",
+        "total_amt": 7500,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "8b6a17f2-eb82-4340-abc2-fd24c57bdd7a",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "f7127358-cac5-4c5d-a3c5-8a9d429fda9e",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "8b6a17f2-eb82-4340-abc2-fd24c57bdd7a",
+        "total_amt": 55000,
+        "total_times": 4,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "d480abae-7e59-480d-b751-6c380394e34d",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "902c8e67-620c-44af-a2da-ba9aef902ad5",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "d480abae-7e59-480d-b751-6c380394e34d",
+        "total_amt": 206097,
+        "total_times": 8,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "31da7f71-33f6-48f7-baff-ac88e8151a47",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "9256472d-3946-4165-8649-195a7bad9318",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "31da7f71-33f6-48f7-baff-ac88e8151a47",
+        "total_amt": 0,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "8f938ed2-5de5-46dc-9ea9-d70042028db3",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "868c80cf-4284-4423-9b2b-c4b11cf27ec5",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "8f938ed2-5de5-46dc-9ea9-d70042028db3",
+        "total_amt": 25979,
+        "total_times": 3,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "42a11ed2-f793-401d-a4c3-f4711d9404f6",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "aab83119-09f5-46b2-81a8-07904f7f7f08",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "42a11ed2-f793-401d-a4c3-f4711d9404f6",
+        "total_amt": 33300,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "e45ef83f-03c9-491d-89ab-a2663d37cc70",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "fab0631c-729f-40a3-ba91-ec472c3fa9f7",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "e45ef83f-03c9-491d-89ab-a2663d37cc70",
+        "total_amt": 10,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "6b109d3f-1c72-45c4-ab1f-4e4ee743fe73",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "48f2145a-b53b-410f-aaa2-a8db4e9060af",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "6b109d3f-1c72-45c4-ab1f-4e4ee743fe73",
+        "total_amt": 22,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "52badb8c-d50f-44a5-9b5e-3b3923422c05",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "001ae075-4501-47d8-8727-f98b1f0439cd",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "52badb8c-d50f-44a5-9b5e-3b3923422c05",
+        "total_amt": 2,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "c7d1f35b-face-4fb8-b861-4ad502e76c7d",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "173cd119-6586-450f-94dc-7d37f4eb182f",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "c7d1f35b-face-4fb8-b861-4ad502e76c7d",
+        "total_amt": 9,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "80a0329a-34c7-445f-aecc-0b3201c5267d",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "36f072b5-7076-40af-9763-1d8dea37afbe",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "80a0329a-34c7-445f-aecc-0b3201c5267d",
+        "total_amt": 40,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "3a3373fe-18ae-49e2-8214-819e92a33b1d",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "df47a8c9-6ae7-4abb-8305-200292583b87",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "3a3373fe-18ae-49e2-8214-819e92a33b1d",
+        "total_amt": 53,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "153caf89-09ad-42cb-8c16-090a18eade59",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "ae3b4f8b-9813-4525-9d12-f073f786cfdc",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "153caf89-09ad-42cb-8c16-090a18eade59",
+        "total_amt": 30,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "8a71ad62-1768-4cc7-a430-575073352237",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "3a75a3a4-5f84-40d4-b18c-a994b1d9b860",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "8a71ad62-1768-4cc7-a430-575073352237",
+        "total_amt": 20,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "50bd809a-9a2a-475f-a5cf-61b8850dc201",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "c8fb4900-0801-42e0-bee9-cff5a4a5f86a",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "50bd809a-9a2a-475f-a5cf-61b8850dc201",
+        "total_amt": 30,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "6dfc6d3a-6396-45bc-9ade-60f844b7b41a",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "91c21281-8dae-4b42-9742-c1c2ac2a9aeb",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "6dfc6d3a-6396-45bc-9ade-60f844b7b41a",
+        "total_amt": 58,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "d7585106-7c40-41c4-88f7-b40b5b0947a5",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "94a7f310-5cf6-4227-a6e1-61bc3cd0453b",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "d7585106-7c40-41c4-88f7-b40b5b0947a5",
+        "total_amt": 25,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "6beaf355-1039-4d32-b5c5-9f728c5a999c",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "7b00953e-acd1-4824-9fda-acd01a97bfa5",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "6beaf355-1039-4d32-b5c5-9f728c5a999c",
+        "total_amt": 24,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "5e4038fe-3fa0-49b1-85d4-e4b59d21fe06",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "9af06861-7949-44ea-b5f5-8340157f469c",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "5e4038fe-3fa0-49b1-85d4-e4b59d21fe06",
+        "total_amt": 121,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "5ed292b3-1ae0-46c2-a67c-a8ca3b55acc1",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "34453053-0bf0-41cb-b015-40036c7653a1",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "5ed292b3-1ae0-46c2-a67c-a8ca3b55acc1",
+        "total_amt": 19450,
+        "total_times": 4,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "fe0efb9e-3b69-4c48-ae80-0b7d9fab2260",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "622675bd-3717-4a04-b994-8bc68c21827d",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "fe0efb9e-3b69-4c48-ae80-0b7d9fab2260",
+        "total_amt": 3820,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "1feae764-b159-4f8c-98cf-fe6c21c9def8",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "dbf82a09-31b6-410b-9ff4-2712e253fc27",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "1feae764-b159-4f8c-98cf-fe6c21c9def8",
+        "total_amt": 23300,
+        "total_times": 5,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "bb77d857-cc0c-4f9b-b841-67d7b166a0f0",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "578aa028-dbd3-4b01-bd4a-d1963bb6e9d5",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "bb77d857-cc0c-4f9b-b841-67d7b166a0f0",
+        "total_amt": 25000,
+        "total_times": 5,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "97134e96-9a95-4feb-908a-c3265bea4b84",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+        "total_amt": 121352,
+        "total_times": 5,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "c25b880c-8434-4d11-83f8-c43f65e15f8f",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "79ecc53e-9ed5-4f46-8a85-4efa6b654a04",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "c25b880c-8434-4d11-83f8-c43f65e15f8f",
+        "total_amt": 50,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "492681ca-5820-4d3c-91ad-98314cf284fc",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "daa73a48-4e46-4df4-8bb6-eddb4bebbe3a",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "492681ca-5820-4d3c-91ad-98314cf284fc",
+        "total_amt": 20,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "8b9cbe00-c3e7-4a98-97c0-32f6c8e3e600",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "85b92f58-4973-4177-aec0-04c99554634f",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "8b9cbe00-c3e7-4a98-97c0-32f6c8e3e600",
+        "total_amt": 20,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "9392f625-d76c-4351-bf3d-47fa08a04ec9",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "337ee841-e39d-40a2-92cf-a6715c336fe4",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "9392f625-d76c-4351-bf3d-47fa08a04ec9",
+        "total_amt": 19800,
+        "total_times": 4,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "9cfd6a8c-9c02-4a8c-a30a-9484efaba01d",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "42ca56b1-6ea6-4f28-9db0-d62faf4667f8",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "9cfd6a8c-9c02-4a8c-a30a-9484efaba01d",
+        "total_amt": 668,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "9c51bdc1-0298-47c0-b375-213f1f22a663",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "bf96988f-3de9-4337-ad27-2c344fbf6d58",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "9c51bdc1-0298-47c0-b375-213f1f22a663",
+        "total_amt": 26,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "ee8e16db-7817-4332-a8f1-c3f5e00246d7",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "801da6b6-824a-4a95-9275-32878adb58dd",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "ee8e16db-7817-4332-a8f1-c3f5e00246d7",
+        "total_amt": 10,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "88c4585b-995a-4b0e-a789-16e461fe8bb9",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "e00854df-b4ff-4227-bc85-a4e5120003cb",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "88c4585b-995a-4b0e-a789-16e461fe8bb9",
+        "total_amt": 36,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "bb904d2d-d83d-4041-aae2-3b148bb17675",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "5872e501-a02a-47d9-be37-eb4a7c77babe",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "bb904d2d-d83d-4041-aae2-3b148bb17675",
+        "total_amt": 14,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "45766e31-7adc-44d6-aadd-6bf8b4daf74b",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "5205762e-f5c0-42ee-8abe-02262c354cf9",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "45766e31-7adc-44d6-aadd-6bf8b4daf74b",
+        "total_amt": 26,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "c6f1885f-8d24-44ae-aed4-1ff9348ec227",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "74223c86-ea11-44fc-93b8-d0878cc53a73",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "c6f1885f-8d24-44ae-aed4-1ff9348ec227",
+        "total_amt": 108,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "364ebc1e-34b0-4387-a255-55540340b4f4",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "df22202e-8232-4599-85d6-1babda5fd164",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "364ebc1e-34b0-4387-a255-55540340b4f4",
+        "total_amt": 12000,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "7e7abea6-a858-4887-a70a-b66ad72973a8",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "5ecd74df-c813-4a09-be34-fbf71f223fc7",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "7e7abea6-a858-4887-a70a-b66ad72973a8",
+        "total_amt": 5000,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "c606ab6a-c04b-490d-9339-56241125b5c8",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+        "total_amt": 18970,
+        "total_times": 2,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+      "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "73359b0f-fa1d-45cd-9f95-0b983bf53ebd",
+        "source": "90cc177d-1b6e-4b7b-8125-6eff30448ad2",
+        "target": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "total_amt": 35000,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+      "target": "f035a3ae-1a76-4936-af7f-b0fdb738c9d3",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "1488e3b4-265c-4e47-ae6e-fca156f9dc0a",
+        "source": "b21900c3-8e3c-43e9-9065-16b8bb40428a",
+        "target": "f035a3ae-1a76-4936-af7f-b0fdb738c9d3",
+        "total_amt": 23300,
+        "total_times": 5,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "156d1f3d-9e88-4996-a8ba-d78595c7f16b",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+        "total_amt": 145814,
+        "total_times": 14,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "4036c8e2-662f-488b-bace-f9d989114030",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+        "total_amt": 68529,
+        "total_times": 12,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "4d6f90db-2c98-4786-999a-60481586747e",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "57ce3532-da2b-4fa4-a076-25a5a686e246",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "4d6f90db-2c98-4786-999a-60481586747e",
+        "total_amt": 307519,
+        "total_times": 18,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "857ddbcd-87dd-408b-aa92-09565bbd1514",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "3ddedc67-4ac8-4324-ab9e-1f5d7176bc78",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "857ddbcd-87dd-408b-aa92-09565bbd1514",
+        "total_amt": 8112,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "cec7d453-55f2-49ec-a346-60f8182fc9a0",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "c7b5a402-de0f-4d44-ab7c-aacf9df122e9",
+        "total_amt": 8150,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+      "target": "3eb5eedc-4234-4377-b7ea-88b3f647ee84",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "0872fe4c-bbe9-4118-b376-298e19763ef7",
+        "source": "83633978-7caf-4584-ab2a-67eaa53f48a1",
+        "target": "3eb5eedc-4234-4377-b7ea-88b3f647ee84",
+        "total_amt": 20144,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "e808892a-0df4-48a4-995d-2674f4a7fc09",
+      "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "5582dcc7-702a-44a3-a5f7-c0a50e59b9e9",
+        "source": "e808892a-0df4-48a4-995d-2674f4a7fc09",
+        "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+        "total_amt": 439,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "07e2d955-b703-4842-9f0d-50ad0edabd84",
+      "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "ef719de1-366f-4f48-ad5c-af3553848d7a",
+        "source": "07e2d955-b703-4842-9f0d-50ad0edabd84",
+        "target": "bf508af3-4643-446f-8999-ef9ce39b7706",
+        "total_amt": 2031,
+        "total_times": 3,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "ac00be91-93bf-4641-b0f8-48781df68be7",
+      "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "41fffccd-7d5a-4db9-be5a-45bff6f926cb",
+        "source": "ac00be91-93bf-4641-b0f8-48781df68be7",
+        "target": "aba6c902-40fa-48c0-b625-66e0ed84673f",
+        "total_amt": 6016,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "ac00be91-93bf-4641-b0f8-48781df68be7",
+      "target": "4d6f90db-2c98-4786-999a-60481586747e",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "9e43ba53-53bb-4994-b166-04dd43c69c13",
+        "source": "ac00be91-93bf-4641-b0f8-48781df68be7",
+        "target": "4d6f90db-2c98-4786-999a-60481586747e",
+        "total_amt": 5355,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    },
+    {
+      "source": "3ad545ab-4990-492d-ba40-5fbd7c700738",
+      "target": "4d6f90db-2c98-4786-999a-60481586747e",
+      "edgeType": "未知",
+      "edgeTypeKeyFromProperties": "trade_type",
+      "data": {
+        "id": "d504d41f-c935-45a7-ac1d-738433136ca1",
+        "source": "3ad545ab-4990-492d-ba40-5fbd7c700738",
+        "target": "4d6f90db-2c98-4786-999a-60481586747e",
+        "total_amt": 2147,
+        "total_times": 1,
+        "trade_type": "未知"
+      }
+    }
+  ],
+  "combos": []
+}

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-cli",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "the create CLI tool for G6VP assets",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     "dev": "father dev",
     "build": "father build",
     "build:deps": "father prebundle",
-    "prepublishOnly": "father doctor && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "authors": [
