@@ -19,22 +19,23 @@ const Server: React.FunctionComponent<ServerProps> = props => {
   const { updateGISite } = props;
 
   const [form] = Form.useForm();
+  const [isLoading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     form.setFieldsValue(getServerEngineContext(DEFAULT_INFO));
   }, []);
 
   const handleStart = async () => {
+    setLoading(true);
     const values = await form.validateFields();
-    console.log(values);
+    setServerEngineContext(values);
     const schema = await GI_SERVICE_SCHEMA.service();
     const engineContext = {
       engineId: 'MyServer',
       ...values,
     };
-
     setServerEngineContext(engineContext);
-
+    setLoading(false);
     updateGISite({
       engineId: 'MyServer',
       schemaData: schema,
@@ -69,7 +70,7 @@ const Server: React.FunctionComponent<ServerProps> = props => {
               <Input placeholder="可以为空，默认 MOCK 邻居查询数据" />
             </Form.Item>
             <Form.Item>
-              <Button style={{ width: '100%' }} onClick={handleStart} type="primary">
+              <Button style={{ width: '100%' }} onClick={handleStart} type="primary" loading={isLoading}>
                 开始分析
               </Button>
             </Form.Item>
