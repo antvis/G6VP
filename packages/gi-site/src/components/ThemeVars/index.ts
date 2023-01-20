@@ -9,6 +9,9 @@ export default {
     '--background-color-2': 'rgba(245,245,245,1)',
     '--background-color-3': 'rgba(235,235,235,1)',
 
+    // hover/active背景色
+    '--background-color-active': 'rgba(255,255,255)',
+
     // 主文本色
     '--text-color': 'rgba(0, 0, 0, 0.85)',
     // 阴影
@@ -49,6 +52,8 @@ export default {
     '--background-color': 'rgba(31, 31, 31, 1)',
     '--background-color-2': 'rgba(41, 41, 41, 1)',
     '--background-color-3': 'rgba(51, 51, 51, 1)',
+    // hover/active背景色
+    '--background-color-active': 'rgba(255,255,255, 0.6)',
     // 主文本色
     '--text-color': '#e2e2e2', // 主文本色
     // 阴影

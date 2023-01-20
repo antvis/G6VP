@@ -29,24 +29,14 @@ const BaseNavbar = props => {
     onChangeTheme && onChangeTheme(val);
   };
 
-  const defaultLeft = (
-    <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
-        <Link to="/workspace?type=project">我的项目</Link>
-      </div>
-      {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
-        <Link to="/market">云端研发资产</Link>
-      </div> */}
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' ? 'active' : ''}>
-        <Link to="/assets">资产中心</Link>
-      </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'services' ? 'active' : ''}>
-        <Link to="/services">服务中心</Link>
-      </div>
-    </>
-  );
+  const defaultMenuList = [
+    { title: '我的项目', src: '/workspace?type=project', key: 'workspace' },
+    // { title: '云端研发资产', src: '/market', key: 'market' },
+    { title: '资产中心', src: '/assets', key: 'assets' },
+    { title: '服务中心', src: '/services', key: 'services' },
+  ];
 
-  const { children, leftContent = defaultLeft, rightContent, rightContentExtra = '' } = props;
+  const { children, rightContent, rightContentExtra = '', menuList = defaultMenuList } = props;
   return (
     <Header className="gi-navbar-container">
       <div className="left">
@@ -57,14 +47,19 @@ const BaseNavbar = props => {
           style={{
             height: '46px',
             marginRight: '40px',
-            marginLeft: IS_ANALYSIS_SPACE ? '-48px' : '0px',
+            // marginLeft: IS_ANALYSIS_SPACE ? '-48px' : '0px',
+            marginLeft: '0px',
             cursor: 'pointer',
           }}
           onClick={() => {
             history.push('/workspace?type=project');
           }}
         />
-        {leftContent}
+        {menuList.map(item => (
+          <div key={item.key} className={`project-menu ${active === item.key ? 'project-menu-active' : ''}`}>
+            <Link to={item.src}>{item.title}</Link>
+          </div>
+        ))}
       </div>
       {children}
       <div className="right">
