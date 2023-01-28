@@ -9,9 +9,8 @@ export interface Redo {
 
 const Redo: React.FunctionComponent<Redo> = props => {
   const { GIAC } = props;
-  const { handleRedo, disableRedo } = useRedoUndo();
-
-  return <GIAComponent GIAC={{ ...GIAC, disabled: disableRedo }} onClick={handleRedo} />;
+  const { redo,redoStack } = useRedoUndo();
+  return <GIAComponent GIAC={{...GIAC,disabled: redoStack.length === 0}} onClick={redo} />;
 };
 
 export default Redo;

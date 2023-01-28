@@ -9,8 +9,8 @@ export interface Undo {
 
 const Undo: React.FunctionComponent<Undo> = props => {
   const { GIAC } = props;
-  const { handleUndo, disableUndo } = useRedoUndo();
-  return <GIAComponent GIAC={{ ...GIAC, disabled: disableUndo }} onClick={handleUndo} />;
+  const { undo,undoStack } = useRedoUndo();
+  return <GIAComponent GIAC={{...GIAC,disabled: undoStack.length < 3}} onClick={undo} />;
 };
 
 export default Undo;
