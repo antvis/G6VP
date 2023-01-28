@@ -74,6 +74,13 @@ const registerMeta = context => {
                       key: 'icon-panel',
                     },
                     properties: {
+                      hasArrow: {
+                        type: 'boolean',
+                        title: '箭头',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Switch',
+                        default: true,
+                      },
                       customPoly: {
                         type: 'boolean',
                         title: '定义弧度',
