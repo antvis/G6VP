@@ -12,6 +12,7 @@ import CypherQuery from './CypherQuery';
 import GraphAnnotation from './GraphAnnotation';
 import GremlinQuery from './GremlinQuery';
 import ModeSwitch from './ModeSwitch';
+import Redo from './Redo';
 import Sheetbar from './Sheetbar';
 import SnapshotGallery from './SnapshotGallery';
 import StructAnalysis from './StructAnalysis';
@@ -20,7 +21,7 @@ import SubGraphLayout from './SubGraphLayout';
 import TableMode from './TableMode';
 import TemplateQuery from './TemplateQuery';
 import ThemeSetting from './ThemeSetting';
-
+import Undo from './Undo';
 export {
   StyleSetting,
   SnapshotGallery,
@@ -35,4 +36,6 @@ export {
   TemplateQuery,
   CypherQuery,
   GraphAnnotation,
+  Undo,
+  Redo,
 };
