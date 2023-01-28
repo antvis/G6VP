@@ -24,6 +24,7 @@ export const defaultConfig = {
       lineDash: [0, 0],
       // lineAppendWidth: keyshape.lineWidth,
       opacity: keyshape.strokeOpacity,
+      hasArrow: true,
     },
     label: {
       visible: true,
@@ -34,7 +35,7 @@ export const defaultConfig = {
       backgroundFill: '#fff',
       backgroundStroke: '#fff',
       backgroundOpaciy: 1,
-      opacity: 1
+      opacity: 1,
     },
     animate: {
       visible: false,
@@ -45,15 +46,15 @@ export const defaultConfig = {
     },
   },
   status: {
-    minZoom:{
+    minZoom: {
       label: {
-        opacity: 0
+        opacity: 0,
       },
       'label-background': {
-        opacity: 0
-      }
+        opacity: 0,
+      },
     },
-  }
+  },
 };
 
 export type EdgeConfig = typeof defaultConfig;
@@ -66,7 +67,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       size: size_CFG,
       label: LABEL_KEYS,
       advanced,
-      status: defaultStatus
+      status: defaultStatus,
     } = merge(defaultConfig, config.props) as EdgeConfig;
 
     const { keyshape: keyshape_CFG } = advanced;
@@ -78,7 +79,16 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
       const data = edge.data || edge.properties || edge;
       const isLoop = edge.source === edge.target; //edge.style && edge.style.keyshape && edge.style.keyshape.type === 'loop';
       const isPoly = edge.isMultiple;
-      const { customPoly } = keyshape_CFG;
+      let endArrow = {};
+      const { customPoly, hasArrow } = keyshape_CFG;
+      if (!hasArrow) {
+        //@ts-ignore
+        endArrow = {
+          endArrow: {
+            path: '',
+          },
+        };
+      }
       const shape: any = {};
       if (isLoop) {
         shape.type = 'loop';
@@ -167,7 +177,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         label.background = {
           fill: advanced.label.backgroundFill,
           stroke: advanced.label.backgroundStroke,
-          opacity: advanced.label.backgroundOpaciy
+          opacity: advanced.label.backgroundOpaciy,
         };
       }
 
@@ -187,6 +197,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
             opacity: keyshape_CFG.opacity,
             lineDash: keyshape_CFG.lineDash,
             lineAppendWidth: 10, //keyshape_CFG.lineAppendWidth,
+            ...endArrow,
           },
           label,
           animate: {
@@ -197,8 +208,8 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
             duration: advanced.animate.duration,
           },
           status: {
-            ...defaultStatus
-          }
+            ...defaultStatus,
+          },
         },
         preStyle,
       );
