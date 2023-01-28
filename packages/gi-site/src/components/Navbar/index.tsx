@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, ExportOutlined, SaveOutlined, FileZipOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -146,36 +146,25 @@ const Navbar = ({
     elementA.click();
     document.body.removeChild(elementA);
   };
+  const rightList = [
+    { title: '保存', icon: <SaveOutlined />, onClick: handleSave },
+    { title: '下载项目', icon: <FileZipOutlined />, onClick: handleDownloadProject },
+    { title: '导出 SDK', icon: <ExportOutlined />, onClick: handleOutOpen },
+  ];
 
   const rightContent = (
     <>
-      <Tooltip title="保存">
-        <Button icon={<SaveOutlined />} onClick={handleSave} size="small" className="gi-intro-save">
-          保存
-        </Button>
-      </Tooltip>
-      <Tooltip title="下载项目">
-        <Button icon={<SaveOutlined />} onClick={handleDownloadProject} size="small" className="gi-intro-save">
-          下载项目
-        </Button>
-      </Tooltip>
-      <Tooltip title="导出 SDK">
-        <Button icon={<ExportOutlined />} onClick={handleOutOpen} size="small" className="gi-intro-export">
-          导出 SDK
-        </Button>
-      </Tooltip>
-      {/* <Tooltip title="自动推荐样式">
-        <Button onClick={handleAiIconClick} size="small">
-          <SvgIcon type="icon-magic1" style={{ color: enableAI ? '#3471f9' : '' }} />
-        </Button>
-      </Tooltip> */}
-      {/* <Tooltip title="指引手册">
-        <Tour />
-      </Tooltip> */}
+      {rightList.map(item => (
+        <Tooltip title={item.title} key={item.title}>
+          <Button icon={item.icon} onClick={item.onClick} size="small" className="gi-intro-export">
+            {item.title}
+          </Button>
+        </Tooltip>
+      ))}
     </>
   );
   return (
-    <BaseNavbar rightContent={rightContent} leftContent={<></>} onChangeTheme={changeTheme}>
+    <BaseNavbar rightContent={rightContent} menuList={[]} onChangeTheme={changeTheme}>
       <ProjectTitle name={name} projectId={projectId} />
       <Drawer
         title="导出SDK"

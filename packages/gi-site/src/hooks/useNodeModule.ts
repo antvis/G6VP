@@ -33,13 +33,15 @@ function getCSBData(opts) {
     GI_SCHEMA_DATA,
   } = getConstantFiles(opts);
 
-  const assets_packages_json = packages.reduce((acc, curr) => {
-    const { name, version } = curr;
-    return {
-      ...acc,
-      [name]: version,
-    };
-  }, {});
+  const assets_packages_json = packages
+    .filter(x => x)
+    .reduce((acc, curr) => {
+      const { name, version } = curr;
+      return {
+        ...acc,
+        [name]: version,
+      };
+    }, {});
   const import_pakages = [...nodemodules.componentsMap.keys()]
     .map(key => {
       const UMD = key.replace('@antv/', '').split('-').join('_').toUpperCase();

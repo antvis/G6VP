@@ -33,7 +33,12 @@ const DataModeCard = () => {
   const title = !IS_INDEXEDDB_MODE ? '线上环境' : '本地环境';
 
   return (
-    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
+    <Popover
+      content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />}
+      title="环境说明"
+      trigger="hover"
+      placement="bottomLeft"
+    >
       <Button icon={<DatabaseOutlined />}>{title}</Button>
     </Popover>
   );
