@@ -44,7 +44,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     return trans(project);
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/${id}`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/${id}`, {
     method: 'get',
   });
   if (response.success) {
@@ -67,7 +67,7 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
 
   /** 如果是在线模式，则备份一份 **/
   if (!IS_INDEXEDDB_MODE) {
-    const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
+    const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/update`, {
       method: 'post',
       data: params,
     });
@@ -80,7 +80,7 @@ export const removeProjectById = async (id: string) => {
   localforage.removeItem(id);
   /** 如果是在线模式，则备份一份 **/
   if (!IS_INDEXEDDB_MODE) {
-    const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
+    const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/delete`, {
       method: 'post',
       data: {
         id,
@@ -132,7 +132,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
     }
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/list`, {
     method: 'post',
   });
 
@@ -162,7 +162,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
       resolve(projectId);
     });
   }
-  const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
+  const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/create`, {
     method: 'post',
     data: param,
   }).catch(error => {
@@ -170,8 +170,8 @@ export const addProject = async (param: any): Promise<string | undefined> => {
     message.error(error);
   });
 
-  if (response.success && response.data?.insertId) {
-    return response.data?.insertId;
+  if (response.success) {
+    return response.data;
   }
 };
 

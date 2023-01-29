@@ -13,9 +13,15 @@ export const IS_INDEXEDDB_MODE = true; // GI_LOCAL_URL.includes(window.location.
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
 const DEV_SERVICE_URL_PREFIX = 'https://graphinsight-pre.alipay.com';
-const ONELINE_SERVER_URL_PREFIX =
+let ONLINE_SERVER_URL_PREFIX =
   window.location.hostname === 'dev.alipay.net' ? DEV_SERVICE_URL_PREFIX : window.location.origin;
-export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONELINE_SERVER_URL_PREFIX;
+if (!ONLINE_SERVER_URL_PREFIX.startsWith('http') && !ONLINE_SERVER_URL_PREFIX.startsWith('https')) {
+  ONLINE_SERVER_URL_PREFIX = 'http://' + ONLINE_SERVER_URL_PREFIX;
+}
+
+// export const SERVICE_URL_PREFIX_ = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONLINE_SERVER_URL_PREFIX;
+export const SERVICE_URL_PREFIX = "http://47.242.172.5:7001";
+
 
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件

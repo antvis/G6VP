@@ -22,22 +22,27 @@
     "clean": "ets clean"
   },
   "dependencies": {
+    "@antv/gi-sdk": "^1.1.0",
+    "@antv/graphin": "^2.7.13",
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0",
     "egg-view-nunjucks": "^2.3.0",
+    "etcd3": "^1.1.0",
     "gremlin_patch": "^3.5.1",
-    "neo4j-driver": "^4.4.6"
+    "neo4j-driver": "^4.4.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@eggjs/tsconfig": "^1.0.0",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "@types/supertest": "^2.0.0",
-    "@eggjs/tsconfig": "^1.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
-    "egg-ci": "^2.1.0",
     "egg-bin": "^4.11.0",
+    "egg-ci": "^2.1.0",
     "egg-mock": "^3.16.0",
     "eslint": "^8.0.0",
     "eslint-config-egg": "^12.0.0",
