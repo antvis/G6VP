@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://graphinsight.antgroup.com">
-    <img width="300" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*XfClS7s1anIAAAAAAAAAAAAADmJ7AQ/original">
+    <img width="100" src="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*JWHaT5RS95YAAAAAAAAAAAAADmJ7AQ/original">
   </a>
 </p>
 
@@ -14,20 +14,36 @@ G6VP 取名意为 AntV G6 Visualization Platform, 它是一款在线图可视分
 
 </div>
 
-# 号外！G6VP 开源啦
+# 01. 十分钟，快速体验 G6VP
 
-自从今年 6 月 6 号开放使用以来，社区的很多朋友提了很多宝贵的建议，同时也欣喜看到好几家公司已经把 G6VP 当作标准化的分析工具在内部使用，也不断有朋友私信，称赞我们的产品理念，想要加入一起共建。为此，我们在 11.22 这个特殊的日子正式开源啦，希望我们的工作，能帮助到社区的用户，大家在图可视分析这条道路上一起越走越远。
+我们以网络上一份 [公开数据集](https://storage.googleapis.com/cylynx-landing-content/banking-connections-demo.json) 为例，原始数据是一份「银行卡之间转账关系」的 JSON，处理下导出到 Excel 表中，于是得到下图两张 Excel 表，左边是点表（银行卡号），右边是边表（转账关系）。
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667952736544-b0395067-ce22-4618-ae3b-35d6c7f8f999.png#averageHue=%23eceae2&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=573&id=pbo4c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1146&originWidth=3448&originalType=binary&ratio=1&rotation=0&showTitle=false&size=3295593&status=done&style=none&taskId=u90a513f2-a33b-45e4-9f14-81aadbfee68&title=&width=1724)
 
-G6VP 这个产品孵化于内部，当时我们的初心很简单，帮助业务快速创新，业务想要快速创新，研发速度得跟得上，于是我们在 1.0 阶段，做了`GISDK`，它的核心作用是用将图分析画布用一份`Schema JSON`配置描述。这样用户只需要可视化配置面板，即可完成配置，从而导出一个图分析画布。这个就是现在的「开放中心」的雏形。
+> 相信我，即使你将下图表格放大，看清楚每个字段，你可能还是不清楚这个数据表达了什么，因为要理解这个「转账关系」，关键要把它变成我们脑海中天然浮现出的关系网络图，而不是平躺在表格中一个个生硬的「起点」和「终点」的字段标识。
 
-研发速度虽然快了，但是显然不如定制开发来的精致，后来我们发现业务方对此非常包容， 样式丑点，功能弱点没关系，只要能跑通 POC，做一些关键问题验证就好。于是我们思考，既然目标是要做 POC 验证，那么将分析能力原子化，业务方自己来组合图分析应用岂不是更自由，更高效，于是我们上线了「资产中心」，容器组件，原子组件，分析能力资产化这些概念逐渐被提了出来。
-再到后来，越来越多的业务提出数据源怎么解决的问题，我们再次将「资产包」的概念扩展到数据服务中，开始对接各种数据源，上线了「服务中心」这个模块。
+## 1min：让枯燥的关联表格，变成形象易理解的关系图
 
-我们始终坚信，无论在哪个流程中，图可视分析都有着非常重要的价值。帮助这些用户（无论是图数据研发者，算法工程师，业务分析师）更好更快地上手图，用图的方式，启发解决业务问题，就是 G6VP 这个产品最大的存在价值。
+打开 G6VP 官方站点：[https://graphinsight.antgroup.com/#/workspace](https://graphinsight.antgroup.com/#/workspace) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 G6VP 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
+![导入数据.gif](https://cdn.nlark.com/yuque/0/2022/gif/160133/1668414976266-f337c2d4-c030-4baa-b463-a208ee75d2a7.gif#averageHue=%23fefefe&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=ui&id=ud83f3609&margin=%5Bobject%20Object%5D&name=%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE.gif&originHeight=537&originWidth=960&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1607226&status=done&style=shadow&taskId=u6bf0ed57-aaee-4db0-a554-88d9d7a7995&title=)
 
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957903537-ea489c1f-a836-434a-94db-2112bd64880e.png#averageHue=%23543517&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=316&id=WwUIs&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=3520&originalType=binary&ratio=1&rotation=0&showTitle=false&size=714388&status=done&style=none&taskId=u21543359-2a5c-433d-ad01-bde46467df4&title=&width=1760)
+## 3min：自定义样式，交互，布局，让关系图栩栩如生
 
-# 01. 开发 G6VP
+G6VP 中内置了基础样式，交互，布局设置，所有的配置都可自定义，并能所见即所得反馈给用户。
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668415472638-ab744466-257a-465b-83b0-45ee17a66810.png#averageHue=%23fcfbfa&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=301&id=ua26af518&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=1399&originalType=binary&ratio=1&rotation=0&showTitle=true&size=182795&status=done&style=shadow&taskId=u62e1466c-96a7-47ec-a14b-26be3e942a4&title=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F&width=365.5 '自定义样式')
+
+## 6min：自由组装资产，持续探索分析
+
+我们在「组件」栏中，选择加载「筛选面板」，选择「高亮」模式，选择关键业务指标「Phone，Address，Amount」等字段，可以清楚看到该字段在图中数据的统计分析情况。
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668416957752-0fa1450e-0c53-41d1-955c-31e4ce0d1e97.png#averageHue=%23fdfcfc&clientId=u64c61c24-8cb7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=666&id=u8b1a9c5f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1331&originWidth=2558&originalType=binary&ratio=1&rotation=0&showTitle=false&size=337188&status=done&style=none&taskId=u2b5b4f1b-2251-4901-83ee-05babf39d1f&title=&width=1279)
+通过与统计图表交互分析，我们开源发现该数据中，存在同手机号注册，同地址注册的情况，网络中大额资金的转出时间都在凌晨这样的异常情况，稍微有业务经验的朋友就会迅速反应出，这是一个典型的洗钱网络
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957533825-0fc3d3ac-d3ea-423d-aee0-956d5b7498e5.png#averageHue=%23f5f2f0&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=484&id=uce10dd36&margin=%5Bobject%20Object%5D&name=image.png&originHeight=968&originWidth=2392&originalType=binary&ratio=1&rotation=0&showTitle=false&size=762852&status=done&style=none&taskId=ud67cbe61-0e52-4821-ae2f-3e84d9b273b&title=&width=1196)
+
+## 惊喜功能：一键导出 SDK，极速原生部署
+
+用户不仅仅可以在 G6VP 上完成关系数据的可视化与可视分析。还可以一键导出 SDK，集成到自己的业务系统中。极大降低图分析应用的研发门槛。
+![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667958140918-4410b14e-1304-431a-aabb-966e345ef4ba.png#averageHue=%239f9f9f&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=803&id=u8fd93ad9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1606&originWidth=2682&originalType=binary&ratio=1&rotation=0&showTitle=false&size=728802&status=done&style=none&taskId=u5d61a80d-c6ef-4c8b-a9e4-b910a7d0ef9&title=&width=1341)
+
+# 02. 开发 G6VP
 
 G6VP 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
 
@@ -65,30 +81,6 @@ npm run start // 启动 G6VP 站点
 | packages/gi-portal            | `-`                          | G6VP 首页                     |
 | packages/gi-httpservice       | `@antv/gi-httpservices`      | G6VP BFF 服务                 |
 
-# 02. 十分钟，快速体验 G6VP
-
-我们以网络上一份 [公开数据集](https://storage.googleapis.com/cylynx-landing-content/banking-connections-demo.json) 为例，原始数据是一份「银行卡之间转账关系」的 JSON，处理下导出到 Excel 表中，于是得到下图两张 Excel 表，左边是点表（银行卡号），右边是边表（转账关系）。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667952736544-b0395067-ce22-4618-ae3b-35d6c7f8f999.png#averageHue=%23eceae2&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=573&id=pbo4c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1146&originWidth=3448&originalType=binary&ratio=1&rotation=0&showTitle=false&size=3295593&status=done&style=none&taskId=u90a513f2-a33b-45e4-9f14-81aadbfee68&title=&width=1724)
-
-> 相信我，即使你将下图表格放大，看清楚每个字段，你可能还是不清楚这个数据表达了什么，因为要理解这个「转账关系」，关键要把它变成我们脑海中天然浮现出的关系网络图，而不是平躺在表格中一个个生硬的「起点」和「终点」的字段标识。
-
-## 1min：让枯燥的关联表格，变成形象易理解的关系图
-
-打开 G6VP 官方站点：[https://graphinsight.antgroup.com/#/workspace](https://graphinsight.antgroup.com/#/workspace) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 G6VP 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
-![导入数据.gif](https://cdn.nlark.com/yuque/0/2022/gif/160133/1668414976266-f337c2d4-c030-4baa-b463-a208ee75d2a7.gif#averageHue=%23fefefe&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=ui&id=ud83f3609&margin=%5Bobject%20Object%5D&name=%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE.gif&originHeight=537&originWidth=960&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1607226&status=done&style=shadow&taskId=u6bf0ed57-aaee-4db0-a554-88d9d7a7995&title=)
-
-## 3min：自定义样式，交互，布局，让关系图栩栩如生
-
-G6VP 中内置了基础样式，交互，布局设置，所有的配置都可自定义，并能所见即所得反馈给用户。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668415472638-ab744466-257a-465b-83b0-45ee17a66810.png#averageHue=%23fcfbfa&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=301&id=ua26af518&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1154&originWidth=1399&originalType=binary&ratio=1&rotation=0&showTitle=true&size=182795&status=done&style=shadow&taskId=u62e1466c-96a7-47ec-a14b-26be3e942a4&title=%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F&width=365.5 '自定义样式')
-
-## 6min：自由组装资产，持续探索分析
-
-我们在「组件」栏中，选择加载「筛选面板」，选择「高亮」模式，选择关键业务指标「Phone，Address，Amount」等字段，可以清楚看到该字段在图中数据的统计分析情况。
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1668416957752-0fa1450e-0c53-41d1-955c-31e4ce0d1e97.png#averageHue=%23fdfcfc&clientId=u64c61c24-8cb7-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=666&id=u8b1a9c5f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1331&originWidth=2558&originalType=binary&ratio=1&rotation=0&showTitle=false&size=337188&status=done&style=none&taskId=u2b5b4f1b-2251-4901-83ee-05babf39d1f&title=&width=1279)
-通过与统计图表交互分析，我们开源发现该数据中，存在同手机号注册，同地址注册的情况，网络中大额资金的转出时间都在凌晨这样的异常情况，稍微有业务经验的朋友就会迅速反应出，这是一个典型的洗钱网络
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/160133/1667957533825-0fc3d3ac-d3ea-423d-aee0-956d5b7498e5.png#averageHue=%23f5f2f0&clientId=ufafcc337-e0a5-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=484&id=uce10dd36&margin=%5Bobject%20Object%5D&name=image.png&originHeight=968&originWidth=2392&originalType=binary&ratio=1&rotation=0&showTitle=false&size=762852&status=done&style=none&taskId=ud67cbe61-0e52-4821-ae2f-3e84d9b273b&title=&width=1196)
-
 # 03. G6VP 三大核心产品能力
 
 G6VP 做为一款技术产品，始终围绕一个问题来设计产品：关系数据从哪儿来？关系数据怎么分析？
@@ -103,21 +95,18 @@ G6VP 做为一款技术产品，始终围绕一个问题来设计产品：关系
 
 在今年 6 月 6 日开放的时候，我们提供了 35 个分析资产，在今天 AntV 的开源日上，再次增加 26 个分析资产。
 
-| 资产分类             | 6.6（35 个）                                                     | 10.25（26 个）                                                 |
-| -------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
-| 布局资产             | 力导布局，圆形布局，径向布局，                                   |
-| 网格布局，同心圆布局 | 资金力导，聚类有向分层布局                                       |
-| 容器资产             | 右键菜单，操作栏，工具栏                                         | 圣杯布局，模式切换，侧边导航栏，                               |
-| 侧边下拉栏           |
-| 画布交互             | 画布设置，清空画布，下载，视图居中，自适应，自由圈选，放大，缩小 | 布局切换                                                       |
-| 元素交互             | 属性面板，节点提示框，样式设置                                   | 元素高亮，固定节点，展开收起                                   |
-| 系统交互             | 版权，加载动画，小地图，画布占位符，快照画廊                     | 力导控制器，初始化器，大图概览，新增页签，多画布页签，主题设置 |
-| 数据分析             | 筛选面板，节点图例，路径分析                                     | 桑基图分析，子图布局，表格模式，                               |
-| 信息监测             |
-| 数据查询             | 邻居查询                                                         | Gremlin 查询，Cypher 查询，模版查询                            |
-| 算法分析             | 节点聚类，节点相似性，社区发现，节点重要性，模式匹配             | 路径结构分析                                                   |
-| 场景分析             | 地图模式                                                         | 3D 大图                                                        |
-| 工作薄               | 保存分享                                                         | 导出                                                           |
+| 资产分类 | 6.6（35 个）                                                     | 10.25（26 个）                                                 |
+| -------- | ---------------------------------------------------------------- | -------------------------------------------------------------- |
+| 布局资产 | 力导布局，圆形布局，径向布局， 网格布局，同心圆布局              | 资金力导，聚类有向分层布局                                     |
+| 容器资产 | 右键菜单，操作栏，工具栏                                         | 圣杯布局，模式切换，侧边导航栏， 侧边下拉栏                    |
+| 画布交互 | 画布设置，清空画布，下载，视图居中，自适应，自由圈选，放大，缩小 | 布局切换                                                       |
+| 元素交互 | 属性面板，节点提示框，样式设置                                   | 元素高亮，固定节点，展开收起                                   |
+| 系统交互 | 版权，加载动画，小地图，画布占位符，快照画廊                     | 力导控制器，初始化器，大图概览，新增页签，多画布页签，主题设置 |
+| 数据分析 | 筛选面板，节点图例，路径分析                                     | 桑基图分析，子图布局，表格模式，信息监测                       |
+| 数据查询 | 邻居查询                                                         | Gremlin 查询，Cypher 查询，模版查询                            |
+| 算法分析 | 节点聚类，节点相似性，社区发现，节点重要性，模式匹配             | 路径结构分析                                                   |
+| 场景分析 | 地图模式                                                         | 3D 大图                                                        |
+| 工作薄   | 保存分享                                                         | 导出                                                           |
 
 资产数量不是关键，关键的是资产在什么场景下，怎么组合，从而完成业务的分析任务。要想回答这个问题，还需要一些时间的沉淀，这里，我们抛砖引玉，将新增的 26 个资产，总结为六大分析场景介绍如下：
 
