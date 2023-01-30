@@ -2,10 +2,6 @@ import { Controller } from 'egg';
 
 import { wrapperResult } from '../util';
 
-// import { Etcd3 } from 'etcd3';
-
-// const client = new Etcd3({hosts: '127.0.0.1:23799'});
-
 class GraphInsightController extends Controller {
 
   // find project case
