@@ -17,7 +17,7 @@ export const queryCaseList = async (): Promise<ICase[]> => {
     });
   }
 
-   const response = await request(`${SERVICE_URL_PREFIX}/api/graphinsight/project/case`, {
+   const response = await request(`${SERVICE_URL_PREFIX}/project/case`, {
      method: 'get',
    });
 

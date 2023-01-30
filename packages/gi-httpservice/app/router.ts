@@ -31,10 +31,10 @@ export default (app: Application) => {
   router.get('/api/tugraph/count', controller.tugraph.getVertexEdgeCount);
 
   // GraphInsight website service
-  router.post('/api/graphinsight/project/create', controller.graphinsight.createProject);
-  router.post('/api/graphinsight/project/list', controller.graphinsight.listProject);
-  router.post('/api/graphinsight/project/delete', controller.graphinsight.removeProjectById);
-  router.post('/api/graphinsight/project/update', controller.graphinsight.updateProjectById);
-  router.get('/api/graphinsight/project/case', controller.graphinsight.findCase);
-  router.get('/api/graphinsight/project/:id', controller.graphinsight.getProjectById);
+  router.post('/project/create', controller.graphinsight.createProject);
+  router.post('/project/list', controller.graphinsight.listProject);
+  router.post('/project/delete', controller.graphinsight.removeProjectById);
+  router.post('/project/update', controller.graphinsight.updateProjectById);
+  router.get('/project/case', controller.graphinsight.findCase);
+  router.get('/project/:id', controller.graphinsight.getProjectById);
 };

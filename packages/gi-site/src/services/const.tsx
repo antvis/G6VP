@@ -7,7 +7,7 @@ const GI_LOCAL_URL = [
 ];
 
 /** 是否使用本地 IndexedDB 数据库 */
-export const IS_INDEXEDDB_MODE = true; // GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
+export const IS_INDEXEDDB_MODE = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
 
 /** 是否是开发环境 */
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
@@ -19,9 +19,7 @@ if (!ONLINE_SERVER_URL_PREFIX.startsWith('http') && !ONLINE_SERVER_URL_PREFIX.st
   ONLINE_SERVER_URL_PREFIX = 'http://' + ONLINE_SERVER_URL_PREFIX;
 }
 
-// export const SERVICE_URL_PREFIX_ = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONLINE_SERVER_URL_PREFIX;
-export const SERVICE_URL_PREFIX = "http://47.242.172.5:7001";
-
+export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONLINE_SERVER_URL_PREFIX;
 
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件
