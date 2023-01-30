@@ -1,35 +1,37 @@
-## 打包镜像
+## 下载最新镜像
 
-cd gi-site/docker
-make // 打包 docker 镜像
-
-## 保存镜像
-
-docker save -o gi-site registry.cn-hongkong.aliyuncs.com/graphinsight/website:latest
-
-## 上传镜像
-
-scp gi-site root@x.x.x.x:/
-
-## 登陆到计算巢
-
-ssh root@x.x.x.x
-
-## 进入到 gi-site docker 中，启动服务
-
-docker run --rm -it -p 9999:9999 registry.cn-hongkong.aliyuncs.com/graphinsight/website:latest /bin/sh
-
-cd /work/dist && python3 -m http.server 9999
-
-## 下载 gi-site 镜像
-
+```bash
 docker pull antvis/gi-site:latest
+```
 
-## 启动 gi-site 容器
+## 本地构建镜像
 
-docker run -it -p 9000:9000 antvis/gi-site:latest /bin/sh
+```bash
+cd G6VP
+docker build -t antvis/gi-site:latest -f packages/gi-site/docker/website.Dockerfile --network=host .
+```
 
-## 进入容器中，启动服务
+### 保存镜像
 
-cd work/dist
-python3 -m http.server 9000
+```bash
+docker save -o gi-site antvis/gi-site:latest
+```
+
+### 上传镜像
+
+```bash
+scp gi-site root@x.x.x.x:/
+```
+
+### 登陆到计算巢，并载入镜像
+```bash
+ssh root@x.x.x.x:
+docker load < gi-site
+```
+
+## 启动 gi-site 服务
+
+```bash
+docker run --rm -it -p 8000:8000 antvis/gi-site:latest
+```
+
