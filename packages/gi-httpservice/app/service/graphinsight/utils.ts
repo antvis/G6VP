@@ -2,8 +2,9 @@ import { Etcd3 } from 'etcd3';
 
 export const ETCD_PREFIX = 'graphinsight';
 
+const ETCD_HOST = process.env.ETCD_HOST ? process.env.ETCD_HOST : '127.0.0.1:2379' 
 export const etcd = new Etcd3({
-  hosts: process.env.ETCD_HOSTS!.split(',')
+  hosts: ETCD_HOSTS.split(',')
 });
 
 export const getUid = () => {
