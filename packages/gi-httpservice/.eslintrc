@@ -1,6 +1,9 @@
 {
   "extends": "eslint-config-egg/typescript",
-  "parserOptions": {
-    "project": "./tsconfig.json"
+  // "parserOptions": {
+  //   "project": "./tsconfig.json"
+  // }
+  "rules": {
+    "array-bracket-spacing": "off"
   }
 }
