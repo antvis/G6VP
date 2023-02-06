@@ -7,7 +7,6 @@ import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
 import { IS_INDEXEDDB_MODE } from '../../services/const';
 import type { IProject } from '../../services/typing';
-import MembersPanel from './Members';
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -109,7 +108,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
-        {type === 'project' && addButton}
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
@@ -121,18 +119,13 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
-                extra={
-                  <Dropdown overlay={menu(item)} placement="bottomCenter">
-                    <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
-                  </Dropdown>
-                }
                 description=""
               ></ProjectCard>
             </Col>
           );
         })}
       </Row>
-      <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
+      {/* <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} /> */}
     </>
   );
 };

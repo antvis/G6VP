@@ -31,8 +31,11 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'dataset' ? 'active' : ''}>
+        <Link to="/dataset/list">数据集</Link>
+      </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
-        <Link to="/workspace?type=project">我的项目</Link>
+        <Link to="/workspace?type=project">工作薄</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
