@@ -142,6 +142,11 @@ export default {
               path: 'create',
               component: 'Dataset/Create',
             },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Dataset/Case',
+            },
           ],
         },
         { component: '404' },
