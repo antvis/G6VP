@@ -1,6 +1,5 @@
-import { MoreOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
+import { Col, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';

@@ -54,8 +54,11 @@ export const GI_SERVICE_INTIAL_GRAPH = {
     const { GI_SITE_PROJECT_ID } = context;
     try {
       //@ts-ignore
-      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
-      return project.data.transData;
+      const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
+      const { datasetId } = project;
+      //@ts-ignore
+      const dataset = await GI_DATASET_DB.getItem(datasetId);
+      return dataset.data.transData;
     } catch (error) {
       return {
         nodes: [],
@@ -106,8 +109,11 @@ export const GI_SERVICE_SCHEMA = {
     const { GI_SITE_PROJECT_ID } = getServerEngineContext();
     try {
       //@ts-ignore
-      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
-      return project.schemaData;
+      const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
+      const { datasetId } = project;
+      //@ts-ignore
+      const dataset = await GI_DATASET_DB.getItem(datasetId);
+      return dataset.schemaData;
     } catch (error) {
       return {
         nodes: [],

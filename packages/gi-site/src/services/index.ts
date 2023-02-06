@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import localforage from 'localforage';
+import { GI_PROJECT_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
 import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IProject } from './typing';
@@ -22,26 +23,19 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string): Promise<IProject | undefined> => {
-  const trans = project => {
-    return {
-      engineId: project.engineId || 'GI', // 兼容过去的版本
-      engineContext: project.engineContext,
-      schemaData: project.schemaData,
-      config: project.projectConfig,
-      data: project.data,
-      activeAssetsKeys: project.activeAssetsKeys,
-      name: project.name,
-      type: project.type,
-    };
-  };
   if (IS_INDEXEDDB_MODE) {
-    const project: any = await localforage.getItem(id);
+    const project: any = await GI_PROJECT_DB.getItem(id);
+    const { projectConfig, engineId, ...others } = project;
     if (!project) {
       message.info('请先在「工作台」页面选择环境...');
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
     }
-    return trans(project);
+    return {
+      ...others,
+      config: projectConfig,
+      engineId: engineId || 'GI',
+    };
   }
 
   const response = await request(`${SERVICE_URL_PREFIX}/project/${id}`, {
@@ -49,8 +43,13 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
   });
   if (response.success) {
     // 如果是在线模式，在本地备份一份，用于后续的初始化查询和scehma查询
-    localforage.setItem(id, response.data);
-    return trans(response.data);
+    // localforage.setItem(id, response.data);
+    const { projectConfig, engineId, ...others } = response.data;
+    return {
+      ...others,
+      config: projectConfig,
+      engineId: engineId || 'GI',
+    };
   }
 };
 
@@ -100,7 +99,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
     const cases: IProject[] = [];
     const save: IProject[] = [];
 
-    const iter = await localforage.iterate((value: IProject) => {
+    const iter = await GI_PROJECT_DB.iterate((value: IProject) => {
       if (value.type === 'case') {
         cases.push(value);
       }
@@ -117,6 +116,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
         projects.push(value);
       }
     });
+    console.log('projects', projects);
     if (type === 'project') {
       projects.sort((a, b) => {
         return a.gmtCreate - b.gmtCreate;
@@ -147,17 +147,16 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
  */
 export const addProject = async (param: any): Promise<string | undefined> => {
   const projectId = getUid();
-  const { engineContext, ...otherParams } = param;
+  const { ...otherParams } = param;
 
   const p = {
     ...otherParams,
-    engineContext: engineContext || {},
     id: projectId,
     isProject: true,
     gmtCreate: new Date(),
   };
   if (IS_INDEXEDDB_MODE) {
-    localforage.setItem(projectId, p);
+    GI_PROJECT_DB.setItem(projectId, p);
     return new Promise(resolve => {
       resolve(projectId);
     });

@@ -7,17 +7,19 @@ const GI_LOCAL_URL = [
 ];
 
 /** 是否使用本地 IndexedDB 数据库 */
-export const IS_INDEXEDDB_MODE = GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
+export const IS_INDEXEDDB_MODE = true; //false; // GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
 
 /** 是否是开发环境 */
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
 const DEV_SERVICE_URL_PREFIX = 'https://graphinsight-pre.alipay.com';
-let ONLINE_SERVER_URL_PREFIX =
-  window.location.hostname === 'dev.alipay.net' ? DEV_SERVICE_URL_PREFIX : window.location.origin;
-if (!ONLINE_SERVER_URL_PREFIX.startsWith('http') && !ONLINE_SERVER_URL_PREFIX.startsWith('https')) {
-  ONLINE_SERVER_URL_PREFIX = 'http://' + ONLINE_SERVER_URL_PREFIX;
-}
+// let ONLINE_SERVER_URL_PREFIX =
+//   window.location.hostname === 'dev.alipay.net' ? DEV_SERVICE_URL_PREFIX : window.location.origin;
+// if (!ONLINE_SERVER_URL_PREFIX.startsWith('http') && !ONLINE_SERVER_URL_PREFIX.startsWith('https')) {
+//   ONLINE_SERVER_URL_PREFIX = 'http://' + ONLINE_SERVER_URL_PREFIX;
+// }
+
+const ONLINE_SERVER_URL_PREFIX = `http://${window.location.hostname}:7001`;
 
 export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONLINE_SERVER_URL_PREFIX;
 

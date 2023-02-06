@@ -1,8 +1,9 @@
 import type { GISiteParams } from '@antv/gi-sdk';
-
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
-import { updateProjectById } from '../../services/';
+import { getSearchParams } from '../../components/utils';
+import { queryDatasetInfo } from '../../services/dataset';
+import { updateProjectById } from '../../services/index';
 import { getComponentsByAssets, getElementsByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
@@ -86,3 +87,21 @@ export const getUpdateGISite =
       }, 200);
     });
   };
+
+export const useDatasetInfo = async datasetId => {
+  const { searchParams } = getSearchParams(window.location);
+  const datasetInfoString = searchParams.get('datasetInfo');
+  let datasetInfo;
+  // 如果 URL中 直接带有这个参数，则直接解析使用
+  if (datasetInfoString) {
+    try {
+      datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
+    } catch (error) {
+      console.log('dataInfo parse error', datasetInfo);
+    }
+  } else {
+    // 正常情况，是根据datasetId查询需要的数据集信息
+    datasetInfo = await queryDatasetInfo(datasetId);
+  }
+  return datasetInfo;
+};

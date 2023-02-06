@@ -1,5 +1,4 @@
-import { DatabaseOutlined } from '@ant-design/icons';
-import { Button, Popover, Typography } from 'antd';
+import { Select, Typography } from 'antd';
 import React from 'react';
 import { IS_INDEXEDDB_MODE } from '../../services/const';
 
@@ -31,11 +30,27 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 
 const DataModeCard = () => {
   const title = !IS_INDEXEDDB_MODE ? '线上环境' : '本地环境';
+  const handleChange = () => {};
 
   return (
-    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
-      <Button icon={<DatabaseOutlined />}>{title}</Button>
-    </Popover>
+    // <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
+    // {/* <Button icon={<DatabaseOutlined />}>{title}</Button> */}
+    <Select
+      defaultValue={IS_INDEXEDDB_MODE}
+      style={{ width: 120, marginRight: '5px' }}
+      onChange={handleChange}
+      options={[
+        {
+          value: true,
+          label: '本地存储',
+        },
+        {
+          value: false,
+          label: '云端存储',
+        },
+      ]}
+    />
+    // </Popover>
   );
 };
 export default DataModeCard;

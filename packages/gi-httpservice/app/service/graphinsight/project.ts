@@ -7,14 +7,16 @@ import BANK_CASE from './case/bank';
 import SECURITY_NETWORK_CASE from './case/security-network';
 
 class GIProjectService extends Service {
-
   // find case
   async findCase() {
     const cases = [BANK_CASE, SECURITY_NETWORK_CASE];
+    console.log('case......');
     // set case in etcd if not exists
     for (const c of cases) {
       const id = c.id;
+      console.log('v', id);
       const v = await etcd.get(id).string();
+
       if (v === null) {
         await etcd.put(id).value(JSON.stringify(c));
       }

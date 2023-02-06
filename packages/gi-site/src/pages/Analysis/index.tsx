@@ -6,6 +6,7 @@ import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
 import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets';
+import { queryDatasetInfo } from '../../services/dataset';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getServicesByConfig } from './getAssets';
@@ -15,7 +16,7 @@ import './index.less';
 import MetaPanel from './MetaPanel';
 
 import useModel from './useModel';
-import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
+import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation, useDatasetInfo } from './utils';
 
 const GraphRef = props => {
   const { graphRef } = props;
@@ -63,9 +64,23 @@ const Analysis = props => {
       /** 从地址栏上选择默认展示的tab */
       const { searchParams } = getSearchParams(window.location);
       const activeNavbar = searchParams.get('nav') || 'data';
+
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, schemaData, engineId, engineContext, themes, name } =
-        (await getProjectById(projectId)) as IProject;
+      const { config, activeAssetsKeys, themes, name, datasetId } = (await getProjectById(projectId)) as IProject;
+      const datasetInfo = await useDatasetInfo(datasetId);
+      console.log('datasetInfo', datasetInfo);
+      let { engineId, engineContext, schemaData } = datasetInfo || {};
+
+      let {
+        data,
+        schemaData: OLD_SCHEMA_DATA,
+        engineId: OLD_ENGINE_ID,
+        engineContext: OLD_ENGINE_CONTEXT,
+      } = await queryDatasetInfo(datasetId);
+
+      schemaData = schemaData || OLD_SCHEMA_DATA;
+      engineId = engineId || OLD_ENGINE_ID;
+      engineContext = engineContext || OLD_ENGINE_CONTEXT;
 
       localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
       const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();

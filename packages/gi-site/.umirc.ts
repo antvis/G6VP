@@ -123,15 +123,30 @@ export default {
         { exact: true, path: '/services', component: 'ServerCenter' },
         { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
         { exact: true, path: '/assets', component: 'Assets' },
-
+        {
+          path: '/dataset',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'list',
+              component: 'Dataset/List',
+            },
+            {
+              exact: true,
+              path: 'create',
+              component: 'Dataset/Create',
+            },
+          ],
+        },
         { component: '404' },
       ],
     },
   ],
   proxy: {
     '/project': {
-      'target': 'http://127.0.0.1:7001',
-      'changeOrigin': true,
+      target: 'http://127.0.0.1:7001',
+      changeOrigin: true,
     },
   },
   request: {
