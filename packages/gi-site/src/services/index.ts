@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import localforage from 'localforage';
+
 import { GI_PROJECT_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
 import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
@@ -61,8 +61,8 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
  */
 export const updateProjectById = async (id: string, params: { data?: string; [key: string]: any }) => {
   params.id = id;
-  const origin: any = await localforage.getItem(id);
-  localforage.setItem(id, { ...origin, ...params });
+  const origin: any = await GI_PROJECT_DB.getItem(id);
+  GI_PROJECT_DB.setItem(id, { ...origin, ...params });
 
   /** 如果是在线模式，则备份一份 **/
   if (!IS_INDEXEDDB_MODE) {
@@ -76,7 +76,7 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
 
 // 软删除项目
 export const removeProjectById = async (id: string) => {
-  localforage.removeItem(id);
+  GI_PROJECT_DB.removeItem(id);
   /** 如果是在线模式，则备份一份 **/
   if (!IS_INDEXEDDB_MODE) {
     const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
@@ -117,6 +117,7 @@ export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise
       }
     });
     console.log('projects', projects);
+
     if (type === 'project') {
       projects.sort((a, b) => {
         return a.gmtCreate - b.gmtCreate;

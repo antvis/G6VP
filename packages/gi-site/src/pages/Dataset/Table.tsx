@@ -1,10 +1,13 @@
+import { utils } from '@antv/gi-sdk';
 import { Button, Space, Table } from 'antd';
 import * as React from 'react';
+import { deleteDataset } from '../../services/dataset';
 import { addProject } from '../../services/index';
 import { activeAssetsKeys, baseConfig } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
   const handleAnalysis = async record => {
     console.log(record);
+    const { schemaData } = record;
     // const info = encodeURIComponent(
     //   JSON.stringify({
     //     engineId: record.engineId,
@@ -15,17 +18,26 @@ const DatasetTable = ({ data }) => {
     // window.open(
     //   `${window.location.origin}/#/workspace/graphinsight-0f55-4971-9fcf-3be17c9f5503?nav=data&datasetInfo=${info}`,
     // );
+
+    const style = utils.generatorStyleConfigBySchema(schemaData);
+
     const projectId = await addProject({
       datasetId: record.id,
       name: '未命名画布',
       status: 1, // 1 正常项目， 0 删除项目
       tag: '',
       members: '',
-      projectConfig: baseConfig,
+      projectConfig: {
+        ...baseConfig,
+        ...style,
+      },
       activeAssetsKeys,
       type: 'project',
     });
     window.open(`${window.location.origin}/#/workspace/${projectId}`);
+  };
+  const handleDelete = async record => {
+    await deleteDataset(record.id);
   };
   const columns = [
     {
@@ -65,7 +77,9 @@ const DatasetTable = ({ data }) => {
               分享
             </Button>
             <Button type="text">复制</Button>
-            <Button type="text">删除</Button>
+            <Button type="text" onClick={() => handleDelete(record)}>
+              删除
+            </Button>
           </Space>
         );
       },

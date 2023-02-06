@@ -1,4 +1,4 @@
-import { GI_DATASET_DB } from '../hooks/useUpdate';
+import { GI_DATASET_DB, GI_PROJECT_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
 import { IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IDataset } from './typing';
@@ -28,6 +28,7 @@ export const createDataset = async (params: IDataset) => {
     return await GI_DATASET_DB.setItem(dsId, {
       id: dsId,
       ...params,
+      gmtCreate: new Date(),
     });
   } else {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/${id}`, {
@@ -49,6 +50,25 @@ export const queryDatasetList = async () => {
   } else {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/list`, {
       method: 'get',
+    });
+    return response.success;
+  }
+};
+
+export const deleteDataset = async (id: string) => {
+  /** 如果是在线模式，则备份一份 **/
+  if (IS_INDEXEDDB_MODE) {
+    GI_DATASET_DB.removeItem(id);
+    GI_PROJECT_DB.iterate(item => {
+      //@ts-ignore
+      const { datasetId, id: PROJECT_ID } = item;
+      if (datasetId === id) {
+        GI_PROJECT_DB.removeItem(PROJECT_ID);
+      }
+    });
+  } else {
+    const response = await request(`${SERVICE_URL_PREFIX}/dataset/delete`, {
+      method: 'DELETE',
     });
     return response.success;
   }
