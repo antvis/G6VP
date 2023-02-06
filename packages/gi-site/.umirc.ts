@@ -134,6 +134,11 @@ export default {
             },
             {
               exact: true,
+              path: 'list/:id',
+              component: 'Dataset/Detail',
+            },
+            {
+              exact: true,
               path: 'create',
               component: 'Dataset/Create',
             },

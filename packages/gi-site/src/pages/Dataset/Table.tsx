@@ -1,10 +1,12 @@
 import { utils } from '@antv/gi-sdk';
 import { Button, Space, Table } from 'antd';
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 import { addProject } from '../../services/index';
 import { activeAssetsKeys, baseConfig } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
+  const history = useHistory();
   const handleAnalysis = async record => {
     console.log(record);
     const { schemaData } = record;
@@ -39,6 +41,9 @@ const DatasetTable = ({ data }) => {
   const handleDelete = async record => {
     await deleteDataset(record.id);
   };
+  const handleView = record => {
+    history.push(`/dataset/list/${record.id}`);
+  };
   const columns = [
     {
       title: '数据集名称',
@@ -70,6 +75,9 @@ const DatasetTable = ({ data }) => {
       render: record => {
         return (
           <Space>
+            <Button type="text" onClick={() => handleView(record)}>
+              详情
+            </Button>
             <Button type="text" onClick={() => handleAnalysis(record)}>
               分析
             </Button>
