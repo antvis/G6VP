@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 import { addProject } from '../../services/index';
-import { activeAssetsKeys, baseConfig } from '../Workspace/utils';
+import { getConfigByEngineId } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
   const history = useHistory();
   const handleAnalysis = async record => {
@@ -22,6 +22,7 @@ const DatasetTable = ({ data }) => {
     // );
 
     const style = utils.generatorStyleConfigBySchema(schemaData);
+    const { config, activeAssetsKeys } = getConfigByEngineId(record.engineId);
 
     const projectId = await addProject({
       datasetId: record.id,
@@ -30,12 +31,13 @@ const DatasetTable = ({ data }) => {
       tag: '',
       members: '',
       projectConfig: {
-        ...baseConfig,
+        ...config,
         ...style,
       },
       activeAssetsKeys,
       type: 'project',
     });
+    // console.log('config', config, activeAssetsKeys);
     window.open(`${window.location.origin}/#/workspace/${projectId}`);
   };
   const handleDelete = async record => {

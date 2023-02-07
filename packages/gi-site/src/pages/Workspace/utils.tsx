@@ -551,6 +551,70 @@ export const activeAssetsKeys = {
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
 
+const Cypher_Template = [
+  {
+    id: 'CypherQuery',
+    name: 'Cypher 语句查询',
+    props: {
+      serviceId: 'GI/CypherQuery',
+      isShowPublishButton: false,
+      saveCypherTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'MATCH n RETURN LIMIT 100',
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Cypher 语句查询',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
+export const getConfigByEngineId = engineId => {
+  let componentConfig = [...baseComponentsConfig];
+  if (engineId === 'TuGraph' || engineId === 'Neo4j') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Cypher_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
+      }
+    });
+  }
+  const config = {
+    nodes: baseNodesConfig,
+    edges: baseEdgesConfig,
+    layout: baseLayoutConfig,
+    components: componentConfig,
+  };
+  const activeAssetsKeys = {
+    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
+    components: [...config.components.map(c => c.id)],
+    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  };
+  return {
+    config,
+    activeAssetsKeys,
+  };
+};
+
 export const serviceConfig = [];
 
 export const schemaData = {
