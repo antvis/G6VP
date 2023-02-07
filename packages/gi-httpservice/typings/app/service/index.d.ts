@@ -11,6 +11,7 @@ import ExportGraphcompute from '../../../app/service/graphcompute';
 import ExportNeo4j from '../../../app/service/neo4j';
 import ExportServiceInterface from '../../../app/service/serviceInterface';
 import ExportTugraph from '../../../app/service/tugraph';
+import ExportGraphinsightDataset from '../../../app/service/graphinsight/dataset';
 import ExportGraphinsightProject from '../../../app/service/graphinsight/project';
 import ExportGraphinsightTyping from '../../../app/service/graphinsight/typing';
 import ExportGraphinsightUtils from '../../../app/service/graphinsight/utils';
@@ -24,6 +25,7 @@ declare module 'egg' {
     serviceInterface: AutoInstanceType<typeof ExportServiceInterface>;
     tugraph: AutoInstanceType<typeof ExportTugraph>;
     graphinsight: {
+      dataset: AutoInstanceType<typeof ExportGraphinsightDataset>;
       project: AutoInstanceType<typeof ExportGraphinsightProject>;
       typing: AutoInstanceType<typeof ExportGraphinsightTyping>;
       utils: AutoInstanceType<typeof ExportGraphinsightUtils>;

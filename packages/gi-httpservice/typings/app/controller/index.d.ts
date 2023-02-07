@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import 'egg';
+import ExportDataset from '../../../app/controller/dataset';
 import ExportGraphcompute from '../../../app/controller/graphcompute';
 import ExportGraphinsight from '../../../app/controller/graphinsight';
 import ExportNeo4j from '../../../app/controller/neo4j';
@@ -10,6 +11,7 @@ import ExportTugraph from '../../../app/controller/tugraph';
 
 declare module 'egg' {
   interface IController {
+    dataset: ExportDataset;
     graphcompute: ExportGraphcompute;
     graphinsight: ExportGraphinsight;
     neo4j: ExportNeo4j;
