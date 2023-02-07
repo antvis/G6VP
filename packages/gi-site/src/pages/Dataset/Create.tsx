@@ -1,7 +1,8 @@
-import { Icon, utils } from '@antv/gi-sdk';
+import { EngineServer, Icon, utils } from '@antv/gi-sdk';
 import { Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
+import { queryAssets } from '../../services/assets';
 import { createDataset } from '../../services/dataset';
 
 interface uploadPanel {
@@ -21,16 +22,31 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   //@ts-ignore
   const { history } = props;
   //@ts-ignore
-  const CustomServer = [...utils.getCombineServer([FileServerEngine])];
+
   const callback = async params => {
     console.log('params', params);
     await createDataset(params);
     history.push('/dataset/list');
   };
+  const [state, setState] = React.useState<{ engines: EngineServer[] }>({
+    engines: [],
+  });
+
+  React.useEffect(() => {
+    (async () => {
+      const assets = await queryAssets();
+      //@ts-ignore
+      const CustomServer = [...utils.getCombineServer([FileServerEngine, ...assets.services])];
+      setState({
+        engines: CustomServer,
+      });
+    })();
+  }, []);
+  const { engines } = state;
 
   return (
     <Tabs tabPosition="left">
-      {CustomServer.map(server => {
+      {engines.map(server => {
         const { component: ServerComponent, name } = server;
         if (!ServerComponent) {
           return null;

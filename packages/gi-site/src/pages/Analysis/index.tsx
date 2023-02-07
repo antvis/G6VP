@@ -1,4 +1,5 @@
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
+import { message } from 'antd';
 import { original } from 'immer';
 import React, { useRef } from 'react';
 import { Navbar, Sidebar } from '../../components';
@@ -68,11 +69,16 @@ const Analysis = props => {
       /** 根据 projectId 获取项目的信息  */
       const { config, activeAssetsKeys, themes, name, datasetId } = (await getProjectById(projectId)) as IProject;
       const datasetInfo = await useDatasetInfo(datasetId);
+      if (!datasetInfo) {
+        window.location.href = window.location.origin;
+        message.info('请先选择数据集...');
+        return;
+      }
       console.log('datasetInfo', datasetInfo);
-      let { engineId, engineContext, schemaData } = datasetInfo || {};
+      let { engineId, engineContext, schemaData } = datasetInfo;
 
       let {
-        data,
+        data = { transData: { nodes: [], edges: [] }, inputData: [] },
         schemaData: OLD_SCHEMA_DATA,
         engineId: OLD_ENGINE_ID,
         engineContext: OLD_ENGINE_CONTEXT,
