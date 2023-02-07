@@ -1,6 +1,5 @@
 import { Select, Typography } from 'antd';
 import React from 'react';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -29,23 +28,27 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 };
 
 const DataModeCard = () => {
-  const title = !IS_INDEXEDDB_MODE ? '线上环境' : '本地环境';
-  const handleChange = () => {};
+  const defaultValue = localStorage.getItem('GI_SITE_ENV') || 'OFFLINE';
+  const handleChange = value => {
+    console.log(value);
+    localStorage.setItem('GI_SITE_ENV', value);
+    window.location.reload();
+  };
 
   return (
     // <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
     // {/* <Button icon={<DatabaseOutlined />}>{title}</Button> */}
     <Select
-      defaultValue={IS_INDEXEDDB_MODE}
+      defaultValue={defaultValue}
       style={{ width: 120, marginRight: '5px' }}
       onChange={handleChange}
       options={[
         {
-          value: true,
+          value: 'OFFLINE',
           label: '本地存储',
         },
         {
-          value: false,
+          value: 'ONLINE',
           label: '云端存储',
         },
       ]}
