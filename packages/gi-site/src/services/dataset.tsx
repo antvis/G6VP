@@ -10,29 +10,29 @@ import { request } from './utils';
  * @returns
  */
 export const queryDatasetInfo = async (id: string) => {
-  /** 如果是在线模式，则备份一份 **/
-  if (!IS_INDEXEDDB_MODE) {
+  if (IS_INDEXEDDB_MODE) {
+    return await GI_DATASET_DB.getItem(id);
+  } else {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/${id}`, {
       method: 'get',
     });
-    return response.success;
-  } else {
-    return await GI_DATASET_DB.getItem(id);
+    return response.data;
   }
 };
 
 export const createDataset = async (params: IDataset) => {
-  /** 如果是在线模式，则备份一份 **/
+  const dsId = `ds_${getUid()}`;
+  const payload = {
+    id: dsId,
+    ...params,
+    gmtCreate: new Date(),
+  };
   if (IS_INDEXEDDB_MODE) {
-    const dsId = `ds_${getUid()}`;
-    return await GI_DATASET_DB.setItem(dsId, {
-      id: dsId,
-      ...params,
-      gmtCreate: new Date(),
-    });
+    return await GI_DATASET_DB.setItem(dsId, payload);
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/${id}`, {
-      method: 'get',
+    const response = await request(`${SERVICE_URL_PREFIX}/dataset/create`, {
+      method: 'post',
+      data: payload,
     });
     return response.success;
   }
@@ -51,7 +51,7 @@ export const queryDatasetList = async () => {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/list`, {
       method: 'get',
     });
-    return response.success;
+    return response.data;
   }
 };
 

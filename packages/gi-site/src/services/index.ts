@@ -150,23 +150,22 @@ export const addProject = async (param: any): Promise<string | undefined> => {
   const projectId = getUid();
   const { ...otherParams } = param;
 
-  const p = {
+  const payload = {
     ...otherParams,
     id: projectId,
     isProject: true,
     gmtCreate: new Date(),
   };
   if (IS_INDEXEDDB_MODE) {
-    GI_PROJECT_DB.setItem(projectId, p);
+    GI_PROJECT_DB.setItem(projectId, payload);
     return new Promise(resolve => {
       resolve(projectId);
     });
   }
   const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
     method: 'post',
-    data: param,
+    data: payload,
   }).catch(error => {
-    console.log('error', error);
     message.error(error);
   });
 
