@@ -1,4 +1,4 @@
-import { AppstoreOutlined, DeleteOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, DeleteOutlined, GlobalOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import * as React from 'react';
 import './index.less';
@@ -20,6 +20,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
     { label: '新建数据', key: 'create', icon: <PlusOutlined /> },
     { label: '我的数据', key: 'list', icon: <MenuUnfoldOutlined /> },
     { label: '案例数据', key: 'case', icon: <AppstoreOutlined /> },
+    { label: '系统直连', key: 'SYSTEM_DIRECT_CONNECT', icon: <GlobalOutlined /> },
     { label: '回收站', key: 'delete', icon: <DeleteOutlined /> },
   ];
   const { active } = state;

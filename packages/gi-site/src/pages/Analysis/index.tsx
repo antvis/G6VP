@@ -17,7 +17,7 @@ import './index.less';
 import MetaPanel from './MetaPanel';
 
 import useModel from './useModel';
-import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation, useDatasetInfo } from './utils';
+import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
 
 const GraphRef = props => {
   const { graphRef } = props;
@@ -68,7 +68,7 @@ const Analysis = props => {
 
       /** 根据 projectId 获取项目的信息  */
       const { config, activeAssetsKeys, themes, name, datasetId } = (await getProjectById(projectId)) as IProject;
-      const datasetInfo = await useDatasetInfo(datasetId);
+      const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;
         message.info('请先选择数据集...');

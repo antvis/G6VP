@@ -3,6 +3,7 @@ import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import { getSearchParams } from '../../components/utils';
 import { queryDatasetInfo } from '../../services/dataset';
+
 import { updateProjectById } from '../../services/index';
 import { getComponentsByAssets, getElementsByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
@@ -87,6 +88,28 @@ export const getUpdateGISite =
       }, 200);
     });
   };
+
+/**
+ * 判断是否是引擎系统间直连，直接在GI上展示
+ * @returns
+ */
+export const useEngineSystemDirectConnect = async (projectId: string) => {
+  const { searchParams } = getSearchParams(window.location);
+  const IS_ENGINE_SYSTEM_DIRECT_CONNECT = projectId === 'ENGINE_SYSTEM_DIRECT_CONNECT';
+  const datasetInfoString = searchParams.get('datasetInfo');
+  // 如果 URL中 直接带有这个参数，则直接解析使用
+  if (datasetInfoString && IS_ENGINE_SYSTEM_DIRECT_CONNECT) {
+    try {
+      const datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
+
+      return datasetInfo;
+    } catch (error) {
+      console.log('dataInfo parse error', error);
+      return false;
+    }
+  }
+  return false;
+};
 
 export const useDatasetInfo = async datasetId => {
   const { searchParams } = getSearchParams(window.location);

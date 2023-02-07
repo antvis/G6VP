@@ -1,47 +1,53 @@
-import { utils } from '@antv/gi-sdk';
+// import { utils } from '@antv/gi-sdk';
 import { Button, Space, Table } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
-import { addProject } from '../../services/index';
-import { getConfigByEngineId } from '../Workspace/utils';
+import { getUid } from '../Workspace/utils';
+// import { addProject } from '../../services/index';
+// import { getConfigByEngineId } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
   const history = useHistory();
-  const handleAnalysis = async record => {
+
+  const handleEncode = record => {
     console.log(record);
     const { schemaData } = record;
-    // const info = encodeURIComponent(
-    //   JSON.stringify({
-    //     engineId: record.engineId,
-    //     engineContext: record.engineContext,
-    //     schemaData: record.schemaData,
-    //   }),
-    // );
-    // window.open(
-    //   `${window.location.origin}/#/workspace/graphinsight-0f55-4971-9fcf-3be17c9f5503?nav=data&datasetInfo=${info}`,
-    // );
+    const info = encodeURIComponent(
+      JSON.stringify({
+        id: `ds_${getUid()}`,
+        name: 'GraphScope SubGraph 1',
+        engineId: record.engineId,
+        engineContext: record.engineContext,
+        schemaData: record.schemaData,
+      }),
+    );
+    window.open(`${window.location.origin}/#/dataset/SYSTEM_DIRECT_CONNECT?datasetInfo=${info}`);
+  };
+  const handleAnalysis = async record => {
+    handleEncode(record);
+    return;
 
-    const style = utils.generatorStyleConfigBySchema(schemaData);
-    const { config, activeAssetsKeys } = getConfigByEngineId(record.engineId);
-    const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
-    const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
+    // const style = utils.generatorStyleConfigBySchema(schemaData);
+    // const { config, activeAssetsKeys } = getConfigByEngineId(record.engineId);
+    // const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
+    // const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
 
-    const projectId = await addProject({
-      datasetId: record.id,
-      name,
-      status: 1, // 1 正常项目， 0 删除项目
-      tag: '',
-      members: '',
-      projectConfig: {
-        ...config,
-        ...style,
-      },
-      activeAssetsKeys,
-      type: 'project',
-    });
-    localStorage.setItem('GI_SITE_CREATE_PROJECT_INDEX', String(Number(GI_SITE_CREATE_PROJECT_INDEX) + 1));
-    // console.log('config', config, activeAssetsKeys);
-    window.open(`${window.location.origin}/#/workspace/${projectId}`);
+    // const projectId = await addProject({
+    //   datasetId: record.id,
+    //   name,
+    //   status: 1, // 1 正常项目， 0 删除项目
+    //   tag: '',
+    //   members: '',
+    //   projectConfig: {
+    //     ...config,
+    //     ...style,
+    //   },
+    //   activeAssetsKeys,
+    //   type: 'project',
+    // });
+    // localStorage.setItem('GI_SITE_CREATE_PROJECT_INDEX', String(Number(GI_SITE_CREATE_PROJECT_INDEX) + 1));
+    // // console.log('config', config, activeAssetsKeys);
+    // window.open(`${window.location.origin}/#/workspace/${projectId}`);
   };
   const handleDelete = async record => {
     await deleteDataset(record.id);

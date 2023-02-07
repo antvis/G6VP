@@ -587,6 +587,43 @@ const Cypher_Template = [
   },
 ];
 
+const Gremlin_Template = [
+  {
+    id: 'GremlinQuery',
+    name: 'Gremlin 查询',
+    props: {
+      serviceId: 'GI/GremlinQuery',
+      isShowPublishButton: false,
+      saveTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'g.V().limit(10)',
+      height: 200,
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Gremlin',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
 export const getConfigByEngineId = engineId => {
   let componentConfig = [...baseComponentsConfig];
   if (engineId === 'TuGraph' || engineId === 'Neo4j') {
@@ -595,6 +632,15 @@ export const getConfigByEngineId = engineId => {
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
         item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
+      }
+    });
+  }
+  if (engineId === 'GraphScope' || engineId === 'GeaFlow') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Gremlin_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'GremlinQuery'];
       }
     });
   }

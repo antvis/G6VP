@@ -147,6 +147,11 @@ export default {
               path: 'case',
               component: 'Dataset/Case',
             },
+            {
+              exact: true,
+              path: 'SYSTEM_DIRECT_CONNECT',
+              component: 'Dataset/SystemDirectConnect',
+            },
           ],
         },
         { component: '404' },
