@@ -49,6 +49,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     updateContext(draft => {
       draft.isLoading = true;
     });
+
     const result = await service({
       ids,
       nodes,
@@ -101,18 +102,20 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     };
   }, [isFocus]);
 
+  const ChineseIndex = ['一', '二', '三'];
+  const menuItem = Array.from({ length: Number(degree) }).map((item, idx) => {
+    const name = ChineseIndex[idx] + '度扩展';
+    return (
+      <Menu.Item key={`expand-${idx}`} eventKey={`expand-${idx}`} onClick={handleClick}>
+        {name}
+      </Menu.Item>
+    );
+  });
+
   return (
     // @ts-ignore
     <SubMenu key="expand" eventKey="expand" title="扩展查询">
-      <Menu.Item key="expand-1" eventKey="expand-1" onClick={handleClick}>
-        一度扩展
-      </Menu.Item>
-      <Menu.Item key="expand-2" eventKey="expand-2" onClick={handleClick}>
-        二度扩展
-      </Menu.Item>
-      <Menu.Item key="expand-3" eventKey="expand-3" onClick={handleClick}>
-        三度扩展
-      </Menu.Item>
+      {menuItem}
     </SubMenu>
   );
 };

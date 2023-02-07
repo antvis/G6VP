@@ -16,7 +16,9 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   if (!target || target.destroyed || target.getType?.() !== 'node') {
     return null;
   }
+
   const model = target.getModel();
+
   const { pinned } = model;
   const isForce = layout.type === 'graphin-force';
 

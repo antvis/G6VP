@@ -21,27 +21,27 @@ export default context => {
       },
     },
     degree: {
-      title: '查询度数',
+      title: '可查询度数',
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
         options: [
           {
-            value: '1',
+            value: 1,
             label: '一度查询',
           },
           {
-            value: '2',
+            value: 2,
             label: '二度查询',
           },
           {
-            value: '3',
+            value: 3,
             label: '三度查询',
           },
         ],
       },
-      default: '1',
+      default: 3,
     },
     isFocus: {
       title: '是否聚焦到扩散点',
