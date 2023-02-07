@@ -1,5 +1,4 @@
 import { GI_DATASET_DB, GI_PROJECT_DB } from '../hooks/useUpdate';
-import { getUid } from '../pages/Workspace/utils';
 import { IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
 import { IDataset } from './typing';
 import { request } from './utils';
@@ -21,18 +20,12 @@ export const queryDatasetInfo = async (id: string) => {
 };
 
 export const createDataset = async (params: IDataset) => {
-  const dsId = `ds_${getUid()}`;
-  const payload = {
-    id: dsId,
-    ...params,
-    gmtCreate: new Date(),
-  };
   if (IS_INDEXEDDB_MODE) {
-    return await GI_DATASET_DB.setItem(dsId, payload);
+    return await GI_DATASET_DB.setItem(params.id, params);
   } else {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/create`, {
       method: 'post',
-      data: payload,
+      data: params,
     });
     return response.success;
   }

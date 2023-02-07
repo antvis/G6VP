@@ -23,10 +23,12 @@ const DatasetTable = ({ data }) => {
 
     const style = utils.generatorStyleConfigBySchema(schemaData);
     const { config, activeAssetsKeys } = getConfigByEngineId(record.engineId);
+    const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
+    const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
 
     const projectId = await addProject({
       datasetId: record.id,
-      name: '未命名画布',
+      name,
       status: 1, // 1 正常项目， 0 删除项目
       tag: '',
       members: '',
@@ -37,6 +39,7 @@ const DatasetTable = ({ data }) => {
       activeAssetsKeys,
       type: 'project',
     });
+    localStorage.setItem('GI_SITE_CREATE_PROJECT_INDEX', String(Number(GI_SITE_CREATE_PROJECT_INDEX) + 1));
     // console.log('config', config, activeAssetsKeys);
     window.open(`${window.location.origin}/#/workspace/${projectId}`);
   };

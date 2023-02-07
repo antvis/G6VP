@@ -2,6 +2,8 @@ import type { GIConfig, GIGraphData, GraphSchemaData } from '@antv/gi-sdk';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
 export interface IDataset {
+  id: string;
+  name?: string;
   /** 引擎ID */
   engineId: string;
   /** 引擎的上下文，用于服务接口的额外参数 */

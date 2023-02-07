@@ -1,9 +1,10 @@
 import { EngineServer, Icon, utils } from '@antv/gi-sdk';
-import { Tabs } from 'antd';
+import { Card, Input, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
 import { queryAssets } from '../../services/assets';
 import { createDataset } from '../../services/dataset';
+import { getUid } from '../Workspace/utils';
 
 interface uploadPanel {
   visible: boolean;
@@ -19,13 +20,24 @@ const TYPE_ICONS = {
 const { TabPane } = Tabs;
 
 const DataSource: React.FunctionComponent<uploadPanel> = props => {
+  const InputRef = React.useRef(null);
   //@ts-ignore
   const { history } = props;
   //@ts-ignore
 
   const callback = async params => {
-    console.log('params', params);
-    await createDataset(params);
+    //@ts-ignore
+
+    const payload = {
+      ...params,
+      id: `ds_${getUid()}`,
+      gmtCreate: new Date(),
+      //@ts-ignore
+      name: InputRef.current.input.value,
+      ...params,
+    };
+    console.log('payload', payload);
+    await createDataset(payload);
     history.push('/dataset/list');
   };
   const [state, setState] = React.useState<{ engines: EngineServer[] }>({
@@ -45,34 +57,42 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { engines } = state;
 
   return (
-    <Tabs tabPosition="left">
-      {engines.map(server => {
-        const { component: ServerComponent, name } = server;
-        if (!ServerComponent) {
-          return null;
-        }
-        const { icon } = TYPE_ICONS[server.type || 'api'];
+    <div>
+      <Card bordered={false}>
+        <div>
+          <Input placeholder="请输入数据集名称" ref={InputRef}></Input>
+        </div>
+      </Card>
 
-        const TabTitle = (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Icon type={icon} style={{ fontSize: '26px' }} />
-            {name}
-          </div>
-        );
-        return (
-          <TabPane tab={TabTitle} key={server.id}>
-            {/** @ts-ignore */}
-            <ServerComponent updateGISite={callback} />
-          </TabPane>
-        );
-      })}
-    </Tabs>
+      <Tabs tabPosition="left">
+        {engines.map(server => {
+          const { component: ServerComponent, name } = server;
+          if (!ServerComponent) {
+            return null;
+          }
+          const { icon } = TYPE_ICONS[server.type || 'api'];
+
+          const TabTitle = (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Icon type={icon} style={{ fontSize: '26px' }} />
+              {name}
+            </div>
+          );
+          return (
+            <TabPane tab={TabTitle} key={server.id}>
+              {/** @ts-ignore */}
+              <ServerComponent updateGISite={callback} />
+            </TabPane>
+          );
+        })}
+      </Tabs>
+    </div>
   );
 };
 

@@ -28,7 +28,15 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
       <div style={{ width: '300px', paddingRight: '12px' }}>
         <Menu items={items} onClick={onClick} selectedKeys={[active]} />
       </div>
-      <div style={{ flex: 1, background: 'var(--background-color)', padding: '12px' }}>{children}</div>
+      <div
+        style={{
+          flex: 1,
+          background: 'var(--background-color)',
+          padding: '12px',
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };
