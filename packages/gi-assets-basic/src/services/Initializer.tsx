@@ -51,14 +51,11 @@ export const GI_SERVICE_INTIAL_GRAPH = {
   `,
   service: async (): Promise<GraphData> => {
     const context = getServerEngineContext();
-    const { GI_SITE_PROJECT_ID } = context;
+
     try {
       //@ts-ignore
-      const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
-      const { datasetId } = project;
-      //@ts-ignore
-      const dataset = await GI_DATASET_DB.getItem(datasetId);
-      return dataset.data.transData;
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.data;
     } catch (error) {
       return {
         nodes: [],
@@ -106,14 +103,10 @@ export const GI_SERVICE_SCHEMA = {
 }
 `,
   service: async (): Promise<GraphSchemaData> => {
-    const { GI_SITE_PROJECT_ID } = getServerEngineContext();
     try {
       //@ts-ignore
-      const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
-      const { datasetId } = project;
-      //@ts-ignore
-      const dataset = await GI_DATASET_DB.getItem(datasetId);
-      return dataset.schemaData;
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.schemaData;
     } catch (error) {
       return {
         nodes: [],

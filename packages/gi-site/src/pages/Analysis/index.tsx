@@ -98,6 +98,11 @@ const Analysis = props => {
 
       const { transData, inputData } = data;
 
+      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+        data: transData,
+        schemaData,
+      };
+
       updateState(draft => {
         draft.engineId = engineId; // 项目绑定的引擎ID
         draft.engineContext = engineContext; //项目绑定的引擎上下文
