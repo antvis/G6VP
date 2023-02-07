@@ -68,8 +68,20 @@ export const deleteDataset = async (id: string) => {
     });
   } else {
     const response = await request(`${SERVICE_URL_PREFIX}/dataset/delete`, {
-      method: 'DELETE',
+      method: 'post',
+      data: { id },
     });
-    return response.success;
+    return response.data;
+  }
+};
+
+export const findDatasetCase = async (id: string) => {
+  /** 如果是在线模式，则备份一份 **/
+  if (IS_INDEXEDDB_MODE) {
+  } else {
+    const response = await request(`${SERVICE_URL_PREFIX}/dataset/case`, {
+      method: 'get',
+    });
+    return response.data;
   }
 };

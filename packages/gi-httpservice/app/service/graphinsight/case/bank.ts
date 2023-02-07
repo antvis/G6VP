@@ -1,5 +1,5 @@
 import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
-import { ICase } from '../typing';
+import { ICase, IDataset } from '../typing';
 
 const source = {
   nodes: [
@@ -617,7 +617,7 @@ const transform = source => {
       return {
         data: item,
         id: item.id,
-        nodeType: item['icon'],
+        nodeType: item.icon,
         nodeTypeKeyFromProperties: 'icon',
       };
     }),
@@ -627,7 +627,7 @@ const transform = source => {
         source: item.source,
         target: item.target,
         id: item.id,
-        edgeType: item['category'],
+        edgeType: item.category,
         edgeTypeKeyFromProperties: 'category',
       };
     }),
@@ -1447,9 +1447,27 @@ const projectConfig: GIConfig = {
   ],
 };
 
-const project: ICase = {
+export const project: ICase = {
+  activeAssetsKeys,
+  projectConfig,
+  type: 'case',
+  name: '银行案例',
+  gmtCreate: '2022-11-22',
+  id: 'pj-case-bank',
+  title: '在银行反洗钱分析场景的应用实践',
+  tag: '金融风控',
+  author: '山果',
+  time: '2022.06.06',
+  video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
+  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ',
+};
+
+export const dataset: IDataset = {
+  id: 'ds_case_bank',
   engineId: 'GI',
   engineContext: {},
+  gmtCreate: '2022-11-22',
+  schemaData: schema,
   data: {
     inputData: [
       {
@@ -1459,20 +1477,4 @@ const project: ICase = {
     ],
     transData: transform(source),
   },
-  schemaData: schema,
-  activeAssetsKeys: activeAssetsKeys,
-  type: 'case',
-  name: '银行案例',
-  projectConfig: projectConfig,
-  gmtCreate: '2022-11-22',
-  id: 'graphinsight-case-bank',
-  title: '在银行反洗钱分析场景的应用实践',
-  tag: '金融风控',
-  author: '山果',
-  time: '2022.06.06',
-  video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
-  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ',
 };
-
-export default project;
-

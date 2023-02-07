@@ -23,6 +23,8 @@ const ONLINE_SERVER_URL_PREFIX = `http://${window.location.hostname}:7001`;
 
 export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONLINE_SERVER_URL_PREFIX;
 
+localStorage.setItem('GI_SITE_ONLINE_URL', SERVICE_URL_PREFIX);
+
 export const ASSET_TYPE = {
   COMPONENT: 1, // 1 表示组件
   LAYOUT: 2, // 2 表示布局

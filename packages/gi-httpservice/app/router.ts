@@ -35,6 +35,7 @@ export default (app: Application) => {
   router.get('/dataset/list', controller.dataset.list);
   router.post('/dataset/create', controller.dataset.create);
   router.get('/dataset/:id', controller.dataset.getById);
+  router.post('/dataset/delete', controller.dataset.removeById);
 
   // router.post('/dataset/delete', controller.graphinsight.removeProjectById);
   // router.post('/dataset/update', controller.graphinsight.updateProjectById);

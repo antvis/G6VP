@@ -3,8 +3,8 @@ import { Service } from 'egg';
 import { IProject } from './typing';
 import { etcd, PROJECT_PREFIX } from './utils';
 
-import BANK_CASE from './case/bank';
-import SECURITY_NETWORK_CASE from './case/security-network';
+import { project as BANK_CASE } from './case/bank';
+import { project as SECURITY_NETWORK_CASE } from './case/security-network';
 
 class GIProjectService extends Service {
   // find case

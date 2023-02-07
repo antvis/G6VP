@@ -1,9 +1,23 @@
 import { Service } from 'egg';
-
+import { dataset as DATASET_BANK } from './case/bank';
 import { IDataset } from './typing';
 import { DATASET_PREFIX, etcd } from './utils';
 
 class GIDatasetService extends Service {
+  // find case
+  async findCase() {
+    const cases = [DATASET_BANK];
+    // set case in etcd if not exists
+    for (const c of cases) {
+      const id = c.id;
+      console.log('v', id);
+      const v = await etcd.get(id).string();
+      if (v === null) {
+        await etcd.put(id).value(JSON.stringify(c));
+      }
+    }
+    return cases;
+  }
   // list dataset
   async list() {
     const dataset: IDataset[] = [];
