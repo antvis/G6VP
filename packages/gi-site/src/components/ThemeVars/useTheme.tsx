@@ -23,34 +23,39 @@ const THEME_VARS = {
   },
 };
 const getConfigByTheme = (config: GIConfig, themeValue): GIConfig => {
-  const themeVars = THEME_VARS[themeValue] as ThemeVars;
-  return produce(config, draft => {
-    draft.nodes.forEach(itemCfg => {
-      if (itemCfg.props.advanced) {
-        itemCfg.props.advanced.label.fill = themeVars.textColor;
-      } else {
-        itemCfg.props.advanced = {
-          label: {
-            fill: themeVars.textColor,
-          },
-        };
-      }
-    });
-    draft.edges.forEach(itemCfg => {
-      if (itemCfg.props.advanced) {
-        if (itemCfg.props.advanced.label.backgroundEnable) {
-          itemCfg.props.advanced.label.backgroundFill = themeVars.backgroundColor;
-          itemCfg.props.advanced.label.backgroundStroke = themeVars.backgroundColor;
+  try {
+    const themeVars = THEME_VARS[themeValue] as ThemeVars;
+    return produce(config, draft => {
+      draft.nodes.forEach(itemCfg => {
+        if (itemCfg.props.advanced) {
+          itemCfg.props.advanced.label.fill = themeVars.textColor;
+        } else {
+          itemCfg.props.advanced = {
+            label: {
+              fill: themeVars.textColor,
+            },
+          };
         }
-      }
+      });
+      draft.edges.forEach(itemCfg => {
+        if (itemCfg.props.advanced) {
+          if (itemCfg.props.advanced.label.backgroundEnable) {
+            itemCfg.props.advanced.label.backgroundFill = themeVars.backgroundColor;
+            itemCfg.props.advanced.label.backgroundStroke = themeVars.backgroundColor;
+          }
+        }
+      });
+      draft.components.forEach(itemCfg => {
+        if (itemCfg.id === 'CanvasSetting') {
+          itemCfg.props.styleCanvas.backgroundColor = themeVars.backgroundColor;
+          itemCfg.props.styleCanvas.background = themeVars.backgroundColor;
+        }
+      });
     });
-    draft.components.forEach(itemCfg => {
-      if (itemCfg.id === 'CanvasSetting') {
-        itemCfg.props.styleCanvas.backgroundColor = themeVars.backgroundColor;
-        itemCfg.props.styleCanvas.background = themeVars.backgroundColor;
-      }
-    });
-  });
+  } catch (error) {
+    console.log('error', error);
+    return config;
+  }
 };
 
 const getCanvasStyle = config => {
