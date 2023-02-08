@@ -75,18 +75,7 @@ const Analysis = props => {
         return;
       }
       console.log('datasetInfo', datasetInfo);
-      let { engineId, engineContext, schemaData } = datasetInfo;
-
-      let {
-        data = { transData: { nodes: [], edges: [] }, inputData: [] },
-        schemaData: OLD_SCHEMA_DATA,
-        engineId: OLD_ENGINE_ID,
-        engineContext: OLD_ENGINE_CONTEXT,
-      } = await queryDatasetInfo(datasetId);
-
-      schemaData = schemaData || OLD_SCHEMA_DATA;
-      engineId = engineId || OLD_ENGINE_ID;
-      engineContext = engineContext || OLD_ENGINE_CONTEXT;
+      let { engineId, engineContext, schemaData, data } = datasetInfo;
 
       localStorage.setItem(
         'SERVER_ENGINE_CONTEXT',
@@ -96,7 +85,10 @@ const Analysis = props => {
         }),
       );
 
-      const { transData, inputData } = data;
+      const { transData, inputData } = data || {
+        transData: { nodes: [], edges: [] },
+        inputData: [{ nodes: [], edges: [] }],
+      };
 
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
         data: transData,
