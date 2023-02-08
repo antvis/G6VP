@@ -9,7 +9,7 @@ import SideContainer from './SideContainer';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
 const { TabPane } = Tabs;
-
+const defaultVisibleKey = 'side-tabs-default-visible';
 export interface SideTabsProps extends ContainerProps {
   GI_CONTAINER: string[];
   components: GIComponentConfig[];
@@ -38,8 +38,14 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   } = props;
 
   // 独立 DOM 状态下是否可见
-  const [visible, setVisible] = React.useState<boolean>(true);
-
+  const [visible, setVisible] = React.useState<boolean>(() => {
+    const defaultVisibleValue = localStorage.getItem(defaultVisibleKey);
+    if (defaultVisibleValue === null) {
+      return defaultVisible;
+    }
+    return defaultVisibleValue === 'true' ? true : false;
+  });
+ 
   const sortedComponents = React.useMemo(() => {
     return (
       components
@@ -72,7 +78,10 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   }, [sortedComponents]);
 
   const toggleVisible = () => {
-    setVisible(preState => !preState);
+    setVisible(preState => {
+      localStorage.setItem(defaultVisibleKey, String(!preState))
+      return !preState;
+    });
   };
 
   const tabBarExtraContent = (
