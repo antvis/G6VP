@@ -64,7 +64,7 @@ const Analysis = props => {
       });
       /** 从地址栏上选择默认展示的tab */
       const { searchParams } = getSearchParams(window.location);
-      const activeNavbar = searchParams.get('nav') || 'data';
+      const activeNavbar = searchParams.get('nav') || 'style';
 
       /** 根据 projectId 获取项目的信息  */
       const { config, activeAssetsKeys, themes, name, datasetId } = (await getProjectById(projectId)) as IProject;

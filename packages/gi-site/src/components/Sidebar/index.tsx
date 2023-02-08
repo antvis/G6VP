@@ -46,7 +46,7 @@ const Extra = () => {
 const Sidebar: React.FunctionComponent<SidebarProps> = props => {
   const { options, onChange } = props;
   const { searchParams, path } = getSearchParams(window.location);
-  const nav = searchParams.get('nav');
+  const nav = searchParams.get('nav') || 'style';
 
   return (
     <ul className="gi-sidebar">

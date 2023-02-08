@@ -114,7 +114,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
             <Col key={id} xs={24} sm={24} md={12} lg={8} xl={8}>
               <ProjectCard
                 onClick={() => {
-                  history.push(`/workspace/${id}?nav=data`);
+                  history.push(`/workspace/${id}?nav=style`);
                 }}
                 cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
                 title={name || ''}
