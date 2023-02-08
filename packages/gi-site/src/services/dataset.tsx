@@ -34,10 +34,28 @@ export const createDataset = async (params: IDataset) => {
 export const queryDatasetList = async () => {
   /** 如果是在线模式，则备份一份 **/
   if (IS_INDEXEDDB_MODE) {
-    const res = [];
-    await GI_DATASET_DB.iterate(item => {
-      //@ts-ignore
-      res.push(item);
+    const res: IDataset[] = [];
+    await GI_DATASET_DB.iterate((item: IDataset) => {
+      if (!item.from) {
+        res.push(item);
+      }
+    });
+    return res;
+  } else {
+    const response = await request(`${SERVICE_URL_PREFIX}/dataset/list`, {
+      method: 'get',
+    });
+    return response.data;
+  }
+};
+export const systemDirectConnectList = async () => {
+  /** 如果是在线模式，则备份一份 **/
+  if (IS_INDEXEDDB_MODE) {
+    const res: IDataset[] = [];
+    await GI_DATASET_DB.iterate((item: IDataset) => {
+      if (item.from) {
+        res.push(item);
+      }
     });
     return res;
   } else {

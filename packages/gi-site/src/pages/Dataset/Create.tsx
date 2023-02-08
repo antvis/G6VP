@@ -27,14 +27,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
 
   const callback = async params => {
     //@ts-ignore
-
     const payload = {
       ...params,
       id: `ds_${getUid()}`,
       gmtCreate: new Date(),
       //@ts-ignore
       name: InputRef.current.input.value,
-      ...params,
     };
     console.log('payload', payload);
     await createDataset(payload);

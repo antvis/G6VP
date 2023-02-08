@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { getSearchParams } from '../../components/utils';
 import { addProject } from '../../services';
-import { createDataset } from '../../services/dataset';
+import * as DatasetServices from '../../services/dataset';
 import DatasetTable from './Table';
 
 import { utils } from '@antv/gi-sdk';
 import { getConfigByEngineId } from '../Workspace/utils';
 
 const SystemDirectConnect: React.FunctionComponent = props => {
+  const [state, setState] = React.useState({
+    lists: [],
+  });
   const autoConnect = async () => {
     try {
       const { searchParams } = getSearchParams(window.location);
@@ -15,7 +18,7 @@ const SystemDirectConnect: React.FunctionComponent = props => {
       console.log('datasetInfoString', datasetInfoString);
       if (datasetInfoString) {
         const datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
-        const { id, name, schemaData, engineId, engineContext } = datasetInfo;
+        const { id, name, schemaData, engineId, engineContext, owner } = datasetInfo;
         const style = utils.generatorStyleConfigBySchema(schemaData);
         const { config, activeAssetsKeys } = getConfigByEngineId(engineId);
         const projectId = await addProject({
@@ -31,8 +34,11 @@ const SystemDirectConnect: React.FunctionComponent = props => {
           activeAssetsKeys,
           type: 'project',
         });
-        await createDataset({
+        await DatasetServices.createDataset({
           id,
+
+          type: 'system',
+          from: 'GraphScope',
           name,
           schemaData,
           engineId,
@@ -45,11 +51,19 @@ const SystemDirectConnect: React.FunctionComponent = props => {
     }
   };
   React.useEffect(() => {
-    autoConnect();
+    (async () => {
+      await autoConnect();
+      const res = await DatasetServices.systemDirectConnectList();
+      console.log('res', res);
+      setState({
+        lists: res,
+      });
+    })();
   }, []);
+  const { lists } = state;
   return (
     <div>
-      <DatasetTable data={[]} />
+      <DatasetTable data={lists} />
     </div>
   );
 };

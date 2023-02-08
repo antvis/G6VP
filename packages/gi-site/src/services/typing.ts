@@ -2,8 +2,14 @@ import type { GIConfig, GIGraphData, GraphSchemaData } from '@antv/gi-sdk';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
 export interface IDataset {
+  /** 数据集ID */
   id: string;
+  /** 数据集名称*/
   name?: string;
+  /** 数据集类型:用户/案例/系统直连 */
+  type: 'user' | 'case' | 'system';
+  /** 数据集的来源，用户「系统直连」展示 */
+  from?: string;
   /** 引擎ID */
   engineId: string;
   /** 引擎的上下文，用于服务接口的额外参数 */

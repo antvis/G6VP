@@ -592,7 +592,7 @@ const Gremlin_Template = [
     id: 'GremlinQuery',
     name: 'Gremlin 查询',
     props: {
-      serviceId: 'GI/GremlinQuery',
+      serviceId: 'GS/GremlinQuery',
       isShowPublishButton: false,
       saveTemplateServceId: 'GI/PublishTemplate',
       initialValue: 'g.V().limit(10)',
