@@ -30,7 +30,13 @@ const ContextMenuContainer = props => {
   });
 
   const sortedComponents = useMemo(() => {
-    const itemType = state.item?.getType?.() || 'canvas';
+    let itemType = 'canvas';
+    try {
+      itemType = state.item?.getType?.() || 'canvas';
+    } catch (error) {
+      console.log(error, state.item);
+    }
+
     let componentIds = [];
     switch (itemType) {
       case 'edge':
