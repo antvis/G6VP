@@ -91,6 +91,9 @@ const useTheme = (context, updateState) => {
         //@ts-ignore
         const { GI_PROJECT_DB } = window;
         const project = await GI_PROJECT_DB.getItem(projectId);
+        if (!project) {
+          return;
+        }
         GI_PROJECT_DB.setItem(projectId, { ...project, themes: defaultThemes });
         updateState(draft => {
           draft.themes = defaultThemes;
