@@ -1,11 +1,11 @@
-import { IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from '../const';
+import { GI_SITE } from '../const';
 import { ICase } from '../typing';
 import { request } from '../utils';
 import BANK_CASE from './bank';
 import SECURITY_NETWORK from './security-network';
 
 export const queryCaseList = async (): Promise<ICase[]> => {
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     const cases = [BANK_CASE, SECURITY_NETWORK];
     cases.forEach(item => {
       //@ts-ignore
@@ -16,7 +16,7 @@ export const queryCaseList = async (): Promise<ICase[]> => {
     });
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/case`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/project/case`, {
     method: 'get',
   });
 

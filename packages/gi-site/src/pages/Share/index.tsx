@@ -2,7 +2,7 @@ import GISDK, { utils } from '@antv/gi-sdk';
 import React from 'react';
 import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
+import { GI_SITE } from '../../services/const';
 import { querySharedAnalysisById } from '../../services/share';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';
 
@@ -18,7 +18,7 @@ const Share = props => {
 
   React.useEffect(() => {
     // 线上的保存
-    if (!IS_INDEXEDDB_MODE) {
+    if (!GI_SITE.IS_OFFLINE) {
       querySharedAnalysisById(shareId).then(res => {
         console.log('online', res);
         const { params } = res;

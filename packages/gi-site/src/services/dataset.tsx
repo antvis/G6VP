@@ -1,5 +1,5 @@
 import { GI_DATASET_DB, GI_PROJECT_DB } from '../hooks/useUpdate';
-import { IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
+import { GI_SITE } from './const';
 import { IDataset } from './typing';
 import { request } from './utils';
 /**
@@ -9,10 +9,10 @@ import { request } from './utils';
  * @returns
  */
 export const queryDatasetInfo = async (id: string) => {
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     return await GI_DATASET_DB.getItem(id);
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/${id}`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/${id}`, {
       method: 'get',
     });
     return response.data;
@@ -20,10 +20,10 @@ export const queryDatasetInfo = async (id: string) => {
 };
 
 export const createDataset = async (params: IDataset) => {
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     return await GI_DATASET_DB.setItem(params.id, params);
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/create`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/create`, {
       method: 'post',
       data: params,
     });
@@ -33,7 +33,7 @@ export const createDataset = async (params: IDataset) => {
 
 export const queryDatasetList = async () => {
   /** 如果是在线模式，则备份一份 **/
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
     await GI_DATASET_DB.iterate((item: IDataset) => {
       if (!item.from) {
@@ -42,7 +42,7 @@ export const queryDatasetList = async () => {
     });
     return res;
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/list`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
       method: 'get',
     });
     return response.data;
@@ -50,7 +50,7 @@ export const queryDatasetList = async () => {
 };
 export const systemDirectConnectList = async () => {
   /** 如果是在线模式，则备份一份 **/
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
     await GI_DATASET_DB.iterate((item: IDataset) => {
       if (item.from) {
@@ -59,7 +59,7 @@ export const systemDirectConnectList = async () => {
     });
     return res;
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/list`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
       method: 'get',
     });
     return response.data;
@@ -68,7 +68,7 @@ export const systemDirectConnectList = async () => {
 
 export const deleteDataset = async (id: string) => {
   /** 如果是在线模式，则备份一份 **/
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     GI_DATASET_DB.removeItem(id);
     GI_PROJECT_DB.iterate(item => {
       //@ts-ignore
@@ -78,7 +78,7 @@ export const deleteDataset = async (id: string) => {
       }
     });
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/delete`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/delete`, {
       method: 'post',
       data: { id },
     });
@@ -88,9 +88,9 @@ export const deleteDataset = async (id: string) => {
 
 export const findDatasetCase = async (id: string) => {
   /** 如果是在线模式，则备份一份 **/
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
   } else {
-    const response = await request(`${SERVICE_URL_PREFIX}/dataset/case`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/case`, {
       method: 'get',
     });
     return response.data;

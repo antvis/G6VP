@@ -2,7 +2,7 @@ import { message } from 'antd';
 
 import { GI_PROJECT_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
-import { ASSET_TYPE, IS_INDEXEDDB_MODE, SERVICE_URL_PREFIX } from './const';
+import { ASSET_TYPE, GI_SITE } from './const';
 import { IProject } from './typing';
 import { request } from './utils';
 
@@ -23,7 +23,7 @@ export function getEdgesByNodes(nodes, edges) {
  * @returns
  */
 export const getProjectById = async (id: string): Promise<IProject | undefined> => {
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     const project: any = await GI_PROJECT_DB.getItem(id);
     const { projectConfig, engineId, ...others } = project;
     if (!project) {
@@ -38,7 +38,7 @@ export const getProjectById = async (id: string): Promise<IProject | undefined> 
     };
   }
 
-  const response = await request(`${SERVICE_URL_PREFIX}/project/${id}`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/project/${id}`, {
     method: 'get',
   });
   if (response.success) {
@@ -65,8 +65,8 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
   GI_PROJECT_DB.setItem(id, { ...origin, ...params });
 
   /** 如果是在线模式，则备份一份 **/
-  if (!IS_INDEXEDDB_MODE) {
-    const response = await request(`${SERVICE_URL_PREFIX}/project/update`, {
+  if (!GI_SITE.IS_OFFLINE) {
+    const response = await request(`${GI_SITE.SERVICE_URL}/project/update`, {
       method: 'post',
       data: params,
     });
@@ -78,8 +78,8 @@ export const updateProjectById = async (id: string, params: { data?: string; [ke
 export const removeProjectById = async (id: string) => {
   GI_PROJECT_DB.removeItem(id);
   /** 如果是在线模式，则备份一份 **/
-  if (!IS_INDEXEDDB_MODE) {
-    const response = await request(`${SERVICE_URL_PREFIX}/project/delete`, {
+  if (!GI_SITE.IS_OFFLINE) {
+    const response = await request(`${GI_SITE.SERVICE_URL}/project/delete`, {
       method: 'post',
       data: {
         id,
@@ -94,46 +94,20 @@ export const removeProjectById = async (id: string) => {
  * @returns
  */
 export const getProjectList = async (type: 'project' | 'case' | 'save'): Promise<IProject[]> => {
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     const projects: IProject[] = [];
-    const cases: IProject[] = [];
-    const save: IProject[] = [];
-
-    const iter = await GI_PROJECT_DB.iterate((value: IProject) => {
-      if (value.type === 'case') {
-        cases.push(value);
-      }
-      if (value.type === 'save') {
-        //@ts-ignore
-        const { id, type, params } = value;
-        save.push({
-          id,
-          type,
-          ...JSON.parse(params),
-        });
-      }
+    await GI_PROJECT_DB.iterate((value: IProject) => {
       if (value.type === 'project') {
         projects.push(value);
       }
     });
-    console.log('projects', projects);
-
-    if (type === 'project') {
-      projects.sort((a, b) => {
-        return a.gmtCreate - b.gmtCreate;
-      });
-      return projects;
-    }
-    if (type == 'case') {
-      console.log('case:', cases);
-      return cases;
-    }
-    if (type == 'save') {
-      return save;
-    }
+    projects.sort((a, b) => {
+      return a.gmtCreate - b.gmtCreate;
+    });
+    return projects;
   }
-
-  const response = await request(`${SERVICE_URL_PREFIX}/project/list`, {
+  console.log(GI_SITE, GI_SITE.IS_OFFLINE, GI_SITE.SERVICE_URL);
+  const response = await request(`${GI_SITE.SERVICE_URL}/project/list`, {
     method: 'post',
   });
 
@@ -156,13 +130,13 @@ export const addProject = async (param: any): Promise<string | undefined> => {
     isProject: true,
     gmtCreate: new Date(),
   };
-  if (IS_INDEXEDDB_MODE) {
+  if (GI_SITE.IS_OFFLINE) {
     GI_PROJECT_DB.setItem(projectId, payload);
     return new Promise(resolve => {
       resolve(projectId);
     });
   }
-  const response = await request(`${SERVICE_URL_PREFIX}/project/create`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/project/create`, {
     method: 'post',
     data: payload,
   }).catch(error => {
@@ -179,7 +153,7 @@ export const addProject = async (param: any): Promise<string | undefined> => {
  * @returns
  */
 export const starProject = async (param: any) => {
-  const response = await request(`${SERVICE_URL_PREFIX}/favorite/add`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/favorite/add`, {
     method: 'post',
     data: param,
   });
@@ -195,7 +169,7 @@ export const starProject = async (param: any) => {
  * @returns
  */
 export const getFavoriteList = async () => {
-  const response = await request(`${SERVICE_URL_PREFIX}/favorite/get`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/favorite/get`, {
     method: 'post',
     data: { assetType: ASSET_TYPE.PROJECT },
   });

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
+import { GI_SITE } from '../../services/const';
 import type { IProject } from '../../services/typing';
 interface ProjectListProps {
   onCreate: () => void;
@@ -92,7 +92,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      {!IS_INDEXEDDB_MODE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
+      {!GI_SITE.IS_OFFLINE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
   if (state.isLoading) {

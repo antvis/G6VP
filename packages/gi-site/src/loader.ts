@@ -1,9 +1,9 @@
-import { IS_INDEXEDDB_MODE } from './services/const';
+import { GI_SITE } from './services/const';
 
 import { getPackages, OFFICIAL_PACKAGES } from '../.umirc';
 
 // 业务包
-export const BIZ_PACKAGES = !IS_INDEXEDDB_MODE ? getPackages([]) : [];
+export const BIZ_PACKAGES = !GI_SITE.IS_OFFLINE ? getPackages([]) : [];
 
 // setTimeout(() => {
 //   // !isDev && window.console.clear();

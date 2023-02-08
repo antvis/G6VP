@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { getProjectList, removeProjectById } from '../../services';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
+import { GI_SITE } from '../../services/const';
 import { deleteShareById, queryShareList } from '../../services/share';
 import type { IProject } from '../../services/typing';
 
@@ -31,7 +31,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
   React.useEffect(() => {
     (async () => {
       let lists = [];
-      if (IS_INDEXEDDB_MODE) {
+      if (GI_SITE.IS_OFFLINE) {
         lists = await getProjectList(type);
       } else {
         lists = await queryShareList();
@@ -45,7 +45,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
   const { lists } = state;
 
   const confirm = async id => {
-    if (IS_INDEXEDDB_MODE) {
+    if (GI_SITE.IS_OFFLINE) {
       const items = lists.filter(d => d.id !== id);
       updateState(draft => {
         draft.lists = items;

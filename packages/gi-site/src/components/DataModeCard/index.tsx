@@ -36,7 +36,7 @@ const DataModeCard = () => {
   };
 
   return (
-    // <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
+    // <Popover content={<EnvInfo IS_ONLINE_ENV={!GI_SITE.IS_OFFLINE} />} title="环境说明" trigger="hover">
     // {/* <Button icon={<DatabaseOutlined />}>{title}</Button> */}
     <Select
       defaultValue={defaultValue}

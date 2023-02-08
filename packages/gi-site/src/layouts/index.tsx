@@ -5,12 +5,12 @@ import BaseNavbar from '../components/Navbar/BaseNavbar';
 import Notification from '../components/Notification';
 import QRcode from '../components/QRcode';
 import useUpdate from '../hooks/useUpdate';
-import { IS_INDEXEDDB_MODE } from '../services/const';
+import { GI_SITE } from '../services/const';
 import './index.less';
 interface ILayoutProps {}
 const rightContentExtra = (
   <>
-    {IS_INDEXEDDB_MODE && <AntGroupLogin />}
+    {GI_SITE.IS_OFFLINE && <AntGroupLogin />}
     <Notification />
     <QRcode />
     <DataModeCard />
