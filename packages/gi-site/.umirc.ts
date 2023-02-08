@@ -155,6 +155,27 @@ export default {
           ],
         },
         {
+          path: '/workbook',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'project',
+              component: 'Workspace/Projects',
+            },
+            {
+              exact: true,
+              path: 'report',
+              component: 'Share',
+            },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Workspace/Case',
+            },
+          ],
+        },
+        {
           path: '/open',
           component: '@/layouts/SideNav',
           routes: [

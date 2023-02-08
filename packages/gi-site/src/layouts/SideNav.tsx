@@ -18,6 +18,13 @@ const OPEN_ITEMS = [
   { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
 ];
 
+const WORKBOOK_ITEMS = [
+  { label: '我的画布', key: '/workbook/project', icon: <PlusOutlined /> },
+  { label: '我的报表', key: '/workbook/report', icon: <MenuUnfoldOutlined /> },
+  { label: '分享给我的', key: '/workbook/others', icon: <AppstoreOutlined /> },
+  { label: '案例画布', key: '/workbook/case', icon: <AppstoreOutlined /> },
+];
+
 const getItems = location => {
   try {
     const module = location.pathname.split('/')[1];
@@ -26,6 +33,9 @@ const getItems = location => {
     }
     if (module === 'open') {
       return OPEN_ITEMS;
+    }
+    if (module === 'workbook') {
+      return WORKBOOK_ITEMS;
     }
   } catch (error) {
     return [];
@@ -50,7 +60,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   const { active } = state;
   return (
     <div style={{ display: 'flex' }}>
-      <div style={{ width: '300px', paddingRight: '12px' }}>
+      <div style={{ width: '240px', paddingRight: '12px' }}>
         <Menu items={items} onClick={onClick} selectedKeys={[active]} />
       </div>
       <div
