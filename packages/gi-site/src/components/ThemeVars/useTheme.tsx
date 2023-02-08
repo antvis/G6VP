@@ -61,43 +61,44 @@ const useTheme = (context, updateState) => {
   const { config, themes } = context;
 
   React.useEffect(() => {
-    const { config, themes, id: projectId } = context;
-    const themeValue = localStorage.getItem('@theme') || 'light';
+    (async () => {
+      const { config, themes, id: projectId } = context;
+      const themeValue = localStorage.getItem('@theme') || 'light';
 
-    if (!themes) {
-      //如果初始化阶段 Themes，则默认提供黑白两套主题的配置
-      const lightConfig = getConfigByTheme(config, 'light');
-      const darkConfig = getConfigByTheme(config, 'dark');
+      if (!themes) {
+        //如果初始化阶段 Themes，则默认提供黑白两套主题的配置
+        const lightConfig = getConfigByTheme(config, 'light');
+        const darkConfig = getConfigByTheme(config, 'dark');
 
-      //需要和「ThemeSetting」资产做联动
-      const lightTheme = {
-        canvasConfig: getCanvasStyle(lightConfig),
-        nodesConfig: lightConfig.nodes,
-        edgesConfig: lightConfig.edges,
-        name: '白天模式',
-        id: 'light',
-      };
-      const darkTheme = {
-        canvasConfig: getCanvasStyle(darkConfig),
-        nodesConfig: darkConfig.nodes,
-        edgesConfig: darkConfig.edges,
-        name: '黑夜模式',
-        id: 'dark',
-      };
+        //需要和「ThemeSetting」资产做联动
+        const lightTheme = {
+          canvasConfig: getCanvasStyle(lightConfig),
+          nodesConfig: lightConfig.nodes,
+          edgesConfig: lightConfig.edges,
+          name: '白天模式',
+          id: 'light',
+        };
+        const darkTheme = {
+          canvasConfig: getCanvasStyle(darkConfig),
+          nodesConfig: darkConfig.nodes,
+          edgesConfig: darkConfig.edges,
+          name: '黑夜模式',
+          id: 'dark',
+        };
 
-      const defaultThemes = [lightTheme, darkTheme];
+        const defaultThemes = [lightTheme, darkTheme];
 
-      //@ts-ignore
-      const { localforage } = window;
-      localforage.getItem(projectId).then(project => {
-        localforage.setItem(projectId, { ...project, themes: defaultThemes });
+        //@ts-ignore
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(projectId);
+        GI_PROJECT_DB.setItem(projectId, { ...project, themes: defaultThemes });
         updateState(draft => {
           draft.themes = defaultThemes;
           draft.theme = themeValue;
           draft.config = themeValue === 'light' ? lightConfig : darkConfig;
         });
-      });
-    }
+      }
+    })();
   }, []);
   const changeTheme = themeValue => {
     const theme = themes.find(item => item.id === themeValue);
