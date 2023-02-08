@@ -57,12 +57,12 @@ export const Save = {
   }
   `,
   service: (params: SaveReqParams, localData): Promise<SaveResParams> => {
-    const uuid = `${Math.random().toString(36).substr(2)}`;
+    const uuid = `rp_${Math.random().toString(36).substr(2)}`;
     const href = window.location.origin + '/#/share/' + uuid;
     //  window.localforage 是 G6VP 平台提供的全局变量，详情参考：https://github.com/localForage/localForage
     //@ts-ignore
-    const { localforage } = window;
-    localforage.setItem(uuid, {
+    const { GI_REPORT_DB } = window;
+    GI_REPORT_DB.setItem(uuid, {
       id: uuid,
       type: 'save',
       params: JSON.stringify(params),
