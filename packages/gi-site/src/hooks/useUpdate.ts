@@ -16,6 +16,7 @@ window.GI_DATASET_DB = GI_DATASET_DB;
 
 const useUpdate = async () => {
   //@ts-ignore
+  console.time('update db');
   const databases = await indexedDB.databases();
   const isLatest =
     databases.filter(item => {
@@ -28,7 +29,7 @@ const useUpdate = async () => {
       //@ts-ignore
       const { id, engineId, engineContext, data, schemaData, ...others } = item;
       const datasetId = `ds_${getUid()}`;
-      //@ts-ignore
+
       GI_PROJECT_DB.setItem(id, { ...others, datasetId });
       GI_DATASET_DB.setItem(datasetId, {
         id: datasetId,
@@ -38,6 +39,11 @@ const useUpdate = async () => {
         schemaData,
       });
     });
+
+    await GI_PROJECT_DB.ready();
+    await GI_DATASET_DB.ready();
+    await localforage.dropInstance({ name: 'localforage' });
+    console.timeEnd('update db');
   }
 };
 export default useUpdate;
