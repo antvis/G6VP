@@ -39,6 +39,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     });
     const { key } = e;
     const sep = key.replace('expand-', '');
+
     const value = contextmenu.item.getModel();
     graph.setItemState(value.id, 'selected', true);
     selectedNodes.set(value.id, value);
@@ -103,10 +104,11 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
   }, [isFocus]);
 
   const ChineseIndex = ['一', '二', '三'];
-  const menuItem = Array.from({ length: Number(degree) }).map((item, idx) => {
+  const menuItem = Array.from({ length: Number(degree) }).map((_item, idx) => {
     const name = ChineseIndex[idx] + '度扩展';
+    const sep = idx + 1;
     return (
-      <Menu.Item key={`expand-${idx}`} eventKey={`expand-${idx}`} onClick={handleClick}>
+      <Menu.Item key={`expand-${sep}`} eventKey={`expand-${sep}`} onClick={handleClick}>
         {name}
       </Menu.Item>
     );
