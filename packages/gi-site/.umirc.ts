@@ -154,6 +154,27 @@ export default {
             },
           ],
         },
+        {
+          path: '/open',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'assets',
+              component: 'Assets',
+            },
+            {
+              exact: true,
+              path: 'engines',
+              component: 'ServerCenter',
+            },
+            {
+              exact: true,
+              path: 'user',
+              component: 'Share',
+            },
+          ],
+        },
         { component: '404' },
       ],
     },
