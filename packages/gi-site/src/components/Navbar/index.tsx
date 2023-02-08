@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import { addProject, getProjectById, updateProjectById } from '../../services';
+import * as ProjectServices from '../../services/project';
 import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
@@ -67,13 +67,13 @@ const Navbar = ({
   };
 
   const handleSave = async () => {
-    const origin = (await getProjectById(projectId)) as IProject;
+    const origin = (await ProjectServices.getById(projectId)) as IProject;
 
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const { data = {}, schemaData = {} } = origin;
 
-      const projectId = await addProject({
+      const projectId = await ProjectServices.create({
         name: origin?.name + '_复制',
         type: 'project',
         data,
@@ -91,7 +91,7 @@ const Navbar = ({
     } else {
       // const data = graphRef.current && graphRef.current.save();
 
-      updateProjectById(projectId, {
+      ProjectServices.updateById(projectId, {
         // data: JSON.stringify({
         //   ...(origin && origin.data),
         //   transData: data,
@@ -128,7 +128,7 @@ const Navbar = ({
     });
   };
   const handleDownloadProject = async () => {
-    const project = (await getProjectById(projectId)) as IProject;
+    const project = (await ProjectServices.getById(projectId)) as IProject;
     const { config, name, ...others } = project;
     const params = {
       ...others,

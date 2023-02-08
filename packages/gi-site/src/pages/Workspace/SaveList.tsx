@@ -5,8 +5,8 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
-import { getProjectList, removeProjectById } from '../../services';
 import { GI_SITE } from '../../services/const';
+import * as ProjectServices from '../../services/project';
 import { deleteShareById, queryShareList } from '../../services/share';
 import type { IProject } from '../../services/typing';
 
@@ -32,7 +32,8 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
     (async () => {
       let lists = [];
       if (GI_SITE.IS_OFFLINE) {
-        lists = await getProjectList(type);
+        //@ts-ignore
+        lists = await ProjectServices.list(type);
       } else {
         lists = await queryShareList();
       }
@@ -50,7 +51,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
       updateState(draft => {
         draft.lists = items;
       });
-      removeProjectById(id);
+      ProjectServices.removeById(id);
     } else {
       const result = await deleteShareById(id);
       if (result) {
@@ -70,6 +71,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
         <Popconfirm
           title="是否删除该画布?"
           onConfirm={e => {
+            //@ts-ignore
             e.preventDefault();
             confirm(id);
           }}

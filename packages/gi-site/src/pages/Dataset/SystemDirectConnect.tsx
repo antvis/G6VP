@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getSearchParams } from '../../components/utils';
-import { addProject } from '../../services';
 import * as DatasetServices from '../../services/dataset';
+import * as ProjectServices from '../../services/project';
 import DatasetTable from './Table';
 
 import { utils } from '@antv/gi-sdk';
@@ -21,7 +21,7 @@ const SystemDirectConnect: React.FunctionComponent = props => {
         const { id, name, schemaData, engineId, engineContext, owner } = datasetInfo;
         const style = utils.generatorStyleConfigBySchema(schemaData);
         const { config, activeAssetsKeys } = getConfigByEngineId(engineId);
-        const projectId = await addProject({
+        const projectId = await ProjectServices.create({
           datasetId: id,
           name,
           status: 1, // 1 正常项目， 0 删除项目

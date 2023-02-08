@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
-import { addProject } from '../../services/index';
+import * as ProjectServices from '../../services/project';
 import { getConfigByEngineId } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
   const history = useHistory();
@@ -32,7 +32,7 @@ const DatasetTable = ({ data }) => {
     const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
     const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
 
-    const projectId = await addProject({
+    const projectId = await ProjectServices.create({
       datasetId: record.id,
       name,
       status: 1, // 1 正常项目， 0 删除项目

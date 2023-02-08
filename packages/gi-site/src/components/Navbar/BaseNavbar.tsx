@@ -61,7 +61,7 @@ const BaseNavbar = props => {
             cursor: 'pointer',
           }}
           onClick={() => {
-            history.push('/workspace?type=project');
+            history.push('/workbook/project');
           }}
         />
         {leftContent}

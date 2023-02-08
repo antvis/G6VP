@@ -1,8 +1,8 @@
 import GISDK, { utils } from '@antv/gi-sdk';
 import React from 'react';
-import { getProjectList } from '../../services';
 import { queryAssets } from '../../services/assets';
 import { GI_SITE } from '../../services/const';
+import * as ProjectServices from '../../services/project';
 import { querySharedAnalysisById } from '../../services/share';
 import getServicesByConfig from '../Analysis/getAssets/getServicesByConfig';
 
@@ -48,7 +48,7 @@ const Share = props => {
     }
 
     // 本地的保存分享
-    getProjectList('save').then(res => {
+    ProjectServices.list('save').then(res => {
       const project = res.find(d => d.id === shareId);
       if (!project) {
         return;

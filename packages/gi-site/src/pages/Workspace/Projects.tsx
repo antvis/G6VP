@@ -4,8 +4,8 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
-import { getProjectList, removeProjectById } from '../../services';
 import { GI_SITE } from '../../services/const';
+import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
 interface ProjectListProps {
   onCreate: () => void;
@@ -32,7 +32,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   React.useEffect(() => {
     (async () => {
-      const lists = await getProjectList(type);
+      const lists = await ProjectService.list(type);
       updateState(draft => {
         draft.isLoading = false;
         draft.lists = lists;
@@ -60,7 +60,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     updateState(draft => {
       draft.lists = items;
     });
-    removeProjectById(id);
+    ProjectService.removeById(id);
   };
 
   const handleShowMemberModal = item => {

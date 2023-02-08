@@ -5,9 +5,9 @@ import React, { useRef } from 'react';
 import { Navbar, Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import { getSearchParams } from '../../components/utils';
-import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets';
 import { queryDatasetInfo } from '../../services/dataset';
+import * as ProjectServices from '../../services/project';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getServicesByConfig } from './getAssets';
@@ -67,7 +67,9 @@ const Analysis = props => {
       const activeNavbar = searchParams.get('nav') || 'style';
 
       /** 根据 projectId 获取项目的信息  */
-      const { config, activeAssetsKeys, themes, name, datasetId } = (await getProjectById(projectId)) as IProject;
+      const { config, activeAssetsKeys, themes, name, datasetId } = (await ProjectServices.getById(
+        projectId,
+      )) as IProject;
       const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;

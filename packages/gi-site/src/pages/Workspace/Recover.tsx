@@ -80,6 +80,7 @@ const Recover: React.FunctionComponent<RecoverProps> = props => {
         reader.readAsText(file, 'utf-8');
         reader.onload = fileReader => {
           try {
+            //@ts-ignore
             fileData = JSON.parse(fileReader.target.result as string);
 
             setState(preState => {

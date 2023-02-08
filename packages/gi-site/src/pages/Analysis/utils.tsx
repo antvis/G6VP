@@ -4,7 +4,7 @@ import { notification } from 'antd';
 import { getSearchParams } from '../../components/utils';
 import { queryDatasetInfo } from '../../services/dataset';
 
-import { updateProjectById } from '../../services/index';
+import * as ProjectServices from '../../services/project';
 import { getComponentsByAssets, getElementsByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
@@ -74,7 +74,7 @@ export const getUpdateGISite =
       updateParams['data'] = data;
     }
 
-    updateProjectById(projectId, updateParams).then(res => {
+    ProjectServices.updateById(projectId, updateParams).then(res => {
       notification.success({
         message: '服务引擎启动成功',
         description: '服务引擎启动成功,正在重启窗口',
