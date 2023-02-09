@@ -1,4 +1,4 @@
-import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
+import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 
 export interface IActiveAssetsKeys {
   components: string[];

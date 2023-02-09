@@ -1,4 +1,4 @@
-import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
+import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 import { ICase, IDataset } from '../typing';
 
 const source = {
