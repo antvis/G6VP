@@ -12,6 +12,7 @@
   "scripts": {
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build": "NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build:docker": "BUILD_MODE=docker NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },

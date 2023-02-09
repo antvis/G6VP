@@ -96,9 +96,12 @@ const externalScripts = isDev
       return c.url;
     });
 
+//@ts-ignore
+const { BUILD_MODE } = process.env;
+console.log('BUILD_MODE', BUILD_MODE);
 export default {
   base: '/',
-  publicPath: '/public/',
+  publicPath: BUILD_MODE ? '/public/' : '/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
