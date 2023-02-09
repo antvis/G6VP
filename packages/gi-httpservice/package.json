@@ -10,6 +10,8 @@
   "scripts": {
     "pro": "npm run tsc && egg-scripts start",
     "stop": "egg-scripts stop --title=egg-server-gi-standalone-service",
+    "start": "egg-scripts start --port=7001 --daemon ",
+    "build": "npm run tsc && rm -rf ./node_modules && tnpm install --production && tar -zcvf ./release.tgz",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
@@ -30,6 +32,8 @@
     "neo4j-driver": "^4.4.6"
   },
   "devDependencies": {
+    "@antv/gi-sdk": "^1.1.0",
+    "@antv/graphin": "^2.7.13",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "@types/supertest": "^2.0.0",
