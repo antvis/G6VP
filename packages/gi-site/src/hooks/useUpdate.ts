@@ -29,8 +29,9 @@ const useUpdate = async () => {
       //@ts-ignore
       const { id, engineId, engineContext, data, schemaData, ...others } = item;
       const datasetId = `ds_${getUid()}`;
-
-      GI_PROJECT_DB.setItem(id, { ...others, datasetId });
+      if (id) {
+        GI_PROJECT_DB.setItem(id, { ...others, id, datasetId });
+      }
       GI_DATASET_DB.setItem(datasetId, {
         id: datasetId,
         engineId,
