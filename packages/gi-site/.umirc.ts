@@ -98,7 +98,7 @@ const externalScripts = isDev
 
 export default {
   base: '/',
-  publicPath: '/',
+  publicPath: '/public/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
@@ -111,7 +111,7 @@ export default {
     type: 'none',
   },
   routes: [
-    { exact: true, path: '/', redirect: '/workspace' },
+    { exact: true, path: '/', redirect: '/home' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
@@ -121,8 +121,7 @@ export default {
       routes: [
         { exact: true, path: '/workspace', component: 'Workspace' },
         { exact: true, path: '/services', component: 'ServerCenter' },
-        { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
-        { exact: true, path: '/assets', component: 'Assets' },
+        { exact: true, path: '/home', component: 'Home' },
         {
           path: '/dataset',
           component: '@/layouts/SideNav',
@@ -200,15 +199,6 @@ export default {
       ],
     },
   ],
-  proxy: {
-    '/project': {
-      target: 'http://127.0.0.1:7001',
-      changeOrigin: true,
-    },
-  },
-  request: {
-    dataField: '',
-  },
 
   externals: {
     lodash: '_',

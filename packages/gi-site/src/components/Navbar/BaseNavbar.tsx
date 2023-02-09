@@ -31,6 +31,9 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
+        <Link to="/home">首页</Link>
+      </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'dataset' ? 'active' : ''}>
         <Link to="/dataset/list">数据集</Link>
       </div>

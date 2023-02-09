@@ -6,6 +6,9 @@ const GI_DEPOLY_OFFLINE_SITE = [
   '127.0.0.1',
   'gi-external-pre.alipay.com',
 ];
+/** 是否是开发环境 */
+//@ts-ignore
+export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
 export const GI_SITE = {
   get IS_OFFLINE() {
@@ -18,15 +21,15 @@ export const GI_SITE = {
   get SERVICE_URL() {
     const { hostname, protocol } = window.location;
     const port = 7001;
+    let online = `${protocol}//${hostname}:${port}`;
+    if (!IS_DEV_ENV) {
+      online = window.location.origin;
+    }
+
     return GI_SITE.IS_OFFLINE ? 'https://graphinsight-pre.alipay.com' : `${protocol}//${hostname}:${port}`;
   },
 };
 
-/** 是否是开发环境 */
-//@ts-ignore
-export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
-
- 
 export const GI_LOGO_URL = {
   light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
   dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*TawEQ6nGf-AAAAAAAAAAAAAADmJ7AQ/original',
