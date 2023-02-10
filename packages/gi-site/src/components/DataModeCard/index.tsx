@@ -1,5 +1,6 @@
 import { Select, Typography } from 'antd';
 import React from 'react';
+import { GI_SITE } from '../../services/const';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -28,7 +29,7 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 };
 
 const DataModeCard = () => {
-  const defaultValue = localStorage.getItem('GI_SITE_ENV') || 'OFFLINE';
+  const defaultValue = GI_SITE.IS_OFFLINE ? 'OFFLINE' : 'ONLINE';
   const handleChange = value => {
     console.log(value);
     localStorage.setItem('GI_SITE_ENV', value);
