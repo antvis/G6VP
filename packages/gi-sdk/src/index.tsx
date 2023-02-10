@@ -13,6 +13,7 @@ import GIAComponent from './components/GIAC';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
+export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
 export { default as Icon } from './components/Icon';

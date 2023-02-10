@@ -1,6 +1,5 @@
 import { EditableProTable } from '@ant-design/pro-table';
 import { utils } from '@antv/gi-sdk';
-import { GraphinData } from '@antv/graphin';
 import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
@@ -11,7 +10,7 @@ import { GIDefaultTrans } from './utils';
 interface IProps {
   state: IState;
   updateState: Updater<IState>;
-  giSiteContext: any;
+
   updateGISite: (params: any) => void;
 }
 
@@ -21,7 +20,7 @@ const columnsData = {
 };
 
 const ConfigData: React.FC<IProps> = props => {
-  const { state, updateState, updateGISite, giSiteContext } = props;
+  const { state, updateState, updateGISite } = props;
   const [tableType, setTableType] = useState<ITableType>('nodes');
   const [columns, setColumns] = useState<IColumns[]>(nodeColumns);
   const [form] = Form.useForm();
@@ -73,11 +72,10 @@ const ConfigData: React.FC<IProps> = props => {
         throw 'edges缺少对应字段';
       }
 
-      const beforData = giSiteContext.data as GraphinData;
       const mergeData = {
-        nodes: [...beforData.nodes, ...transData.nodes],
-        edges: [...beforData.edges, ...transData.edges],
-        combos: [...(beforData.combos ? beforData.combos : []), ...(transData.combos ? transData.combos : [])],
+        nodes: [...transData.nodes],
+        edges: [...transData.edges],
+        combos: [...(transData.combos ? transData.combos : [])],
       };
 
       // 进入分析之前，根据数据，生成 schema
@@ -100,7 +98,7 @@ const ConfigData: React.FC<IProps> = props => {
         },
         data: {
           transData: mergeData,
-          inputData: [...giSiteContext.inputData, ...renderData],
+          inputData: [...renderData],
         },
         schemaData: schemaData,
       });

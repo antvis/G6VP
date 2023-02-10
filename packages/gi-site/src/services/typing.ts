@@ -1,22 +1,31 @@
-import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
-import { GraphinData } from '@antv/graphin';
+import type { GIConfig, GIGraphData, GraphSchemaData } from '@antv/gi-sdk';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
-export interface IProject {
+export interface IDataset {
+  /** 数据集ID */
+  id: string;
+  /** 数据集名称*/
+  name?: string;
+  /** 数据集类型:用户/案例/系统直连 */
+  type: 'user' | 'case' | 'system';
+  /** 数据集的来源，用户「系统直连」展示 */
+  from?: string;
   /** 引擎ID */
   engineId: string;
   /** 引擎的上下文，用于服务接口的额外参数 */
   engineContext: Record<string, any>;
+  /** 图模型 */
+  schemaData: GraphSchemaData;
+  /** 初始化图数据 */
+  data?: GIGraphData;
+}
+
+export interface IProject {
+  datasetId: string;
   /** 项目激活的资产ID */
   activeAssetsKeys: IActiveAssetsKeys;
-  /** 项目数据 */
-  data: {
-    transFunc?: string;
-    transData: GraphinData;
-    inputData: any[];
-  };
   /** 项目类型 */
-  type?: 'case' | 'project' | 'save';
+  type?: 'case' | 'project' | 'save' | 'template';
   id?: string;
   /** 项目名称 */
   name?: string;
@@ -27,7 +36,6 @@ export interface IProject {
   status?: number;
   tag?: string;
   gmtCreate?: any;
-  schemaData: GraphSchemaData;
   config?: GIConfig;
   themes?: any[];
 }

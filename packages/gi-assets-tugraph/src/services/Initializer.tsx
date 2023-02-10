@@ -1,5 +1,5 @@
 import { utils } from '@antv/gi-sdk';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import request from 'umi-request';
 
 export const GI_SERVICE_INTIAL_GRAPH = {
@@ -64,7 +64,7 @@ export const GI_SERVICE_SCHEMA = {
     }
 
     try {
-      const result = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
+      const { success, data, code } = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
         method: 'get',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
@@ -74,8 +74,18 @@ export const GI_SERVICE_SCHEMA = {
           graphName,
         },
       });
-      if (result.success) {
-        res = result.data;
+      if (success) {
+        res = data;
+      }
+      if (data.code === 401) {
+        notification.error({
+          message: '认证失败：Unauthorized',
+          description: data.data.error_message,
+        });
+        res = {
+          nodes: [],
+          edges: [],
+        };
       }
       return res;
     } catch (e) {
