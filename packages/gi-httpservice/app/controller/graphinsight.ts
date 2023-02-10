@@ -3,7 +3,10 @@ import { Controller } from 'egg';
 import { wrapperResult } from '../util';
 
 class GraphInsightController extends Controller {
-
+  async index() {
+    const { ctx } = this;
+    await ctx.render('index.html');
+  }
   // find project case
   async findCase() {
     const { ctx } = this;

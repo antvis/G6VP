@@ -1,5 +1,5 @@
-import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
-import { ICase } from '../typing';
+import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
+import { ICase, IDataset } from '../typing';
 
 const activeAssetsKeys = {
   elements: ['SimpleNode', 'SimpleEdge'],
@@ -1007,7 +1007,7 @@ const transform = source => {
       return {
         id: String(item.id),
         data: item,
-        nodeType: item['dataType'],
+        nodeType: item.dataType,
         nodeTypeKeyFromProperties: 'dataType',
       };
     }),
@@ -1016,7 +1016,7 @@ const transform = source => {
         data: item,
         source: String(item.source),
         target: String(item.target),
-        edgeType: item['edgeType'],
+        edgeType: item.edgeType,
         edgeTypeKeyFromProperties: 'edgeType',
       };
     }),
@@ -5370,7 +5370,23 @@ const schemaData: GraphSchemaData = {
   ],
 };
 
-const project: ICase = {
+export const project: ICase = {
+  activeAssetsKeys,
+  type: 'case',
+  name: '供应链漏洞分析',
+  projectConfig,
+  gmtCreate: '2022-11-22',
+  id: 'graphinsight-case-demo-supply-chain',
+  title: '在供应链漏洞分析场景的应用实践',
+  tag: '网络安全',
+  author: '刘宏达',
+  time: '2022.06.06',
+  video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
+  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*qBabR5ADNmwAAAAAAAAAAAAAARQnAQ',
+};
+
+export const dataset: IDataset = {
+  id: 'ds_securoty-network',
   engineId: 'GI',
   engineContext: {
     schemaData,
@@ -5386,18 +5402,5 @@ const project: ICase = {
     transData: transform(source),
   },
   schemaData,
-  activeAssetsKeys,
-  type: 'case',
-  name: '供应链漏洞分析',
-  projectConfig,
   gmtCreate: '2022-11-22',
-  id: 'graphinsight-case-demo-supply-chain',
-  title: '在供应链漏洞分析场景的应用实践',
-  tag: '网络安全',
-  author: '刘宏达',
-  time: '2022.06.06',
-  video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
-  coverImg: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*qBabR5ADNmwAAAAAAAAAAAAAARQnAQ',
 };
-
-export default project;

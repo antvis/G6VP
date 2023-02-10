@@ -1,14 +1,12 @@
-import { MoreOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { Button, Col, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
+import { Col, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
-import { getProjectList, removeProjectById } from '../../services';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
+import { GI_SITE } from '../../services/const';
+import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
-import MembersPanel from './Members';
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -34,7 +32,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   React.useEffect(() => {
     (async () => {
-      const lists = await getProjectList(type);
+      const lists = await ProjectService.list(type);
       updateState(draft => {
         draft.isLoading = false;
         draft.lists = lists;
@@ -62,7 +60,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     updateState(draft => {
       draft.lists = items;
     });
-    removeProjectById(id);
+    ProjectService.removeById(id);
   };
 
   const handleShowMemberModal = item => {
@@ -94,7 +92,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      {!IS_INDEXEDDB_MODE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
+      {!GI_SITE.IS_OFFLINE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
   if (state.isLoading) {
@@ -110,30 +108,24 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
-        {type === 'project' && addButton}
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
             <Col key={id} xs={24} sm={24} md={12} lg={8} xl={8}>
               <ProjectCard
                 onClick={() => {
-                  history.push(`/workspace/${id}?nav=data`);
+                  history.push(`/workspace/${id}?nav=style`);
                 }}
                 cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
-                extra={
-                  <Dropdown overlay={menu(item)} placement="bottomCenter">
-                    <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
-                  </Dropdown>
-                }
                 description=""
               ></ProjectCard>
             </Col>
           );
         })}
       </Row>
-      <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} />
+      {/* <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} /> */}
     </>
   );
 };

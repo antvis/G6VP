@@ -31,17 +31,20 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
-        <Link to="/workspace?type=project">我的项目</Link>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
+        <Link to="/home">首页</Link>
+      </div>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'dataset' ? 'active' : ''}>
+        <Link to="/dataset/list">数据集</Link>
+      </div>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workbook' ? 'active' : ''}>
+        <Link to="/workbook/project">工作薄</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
       </div> */}
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' ? 'active' : ''}>
-        <Link to="/assets">资产中心</Link>
-      </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'services' ? 'active' : ''}>
-        <Link to="/services">服务中心</Link>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
+        <Link to="/open/assets">开放中心</Link>
       </div>
     </>
   );
@@ -61,7 +64,7 @@ const BaseNavbar = props => {
             cursor: 'pointer',
           }}
           onClick={() => {
-            history.push('/workspace?type=project');
+            history.push('/workbook/project');
           }}
         />
         {leftContent}

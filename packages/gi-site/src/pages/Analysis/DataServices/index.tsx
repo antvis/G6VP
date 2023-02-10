@@ -5,7 +5,7 @@ import { useImmer } from 'use-immer';
 import DataSource from '../../../components/DataSource/index';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../../components/utils';
-import { getProjectById, updateProjectById } from '../../../services/index';
+import * as ProjectServices from '../../../services/project';
 interface DataServicesProps {}
 
 const DataServices: React.FunctionComponent<DataServicesProps> = props => {
@@ -22,7 +22,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   });
 
   React.useEffect(() => {
-    getProjectById(projectId).then((res: any) => {
+    ProjectServices.getById(projectId).then((res: any) => {
       const { data, serviceConfig } = res;
 
       updateState(draft => {
@@ -50,7 +50,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
       }
     });
 
-    updateProjectById(projectId, {
+    ProjectServices.updateById(projectId, {
       serviceConfig: newServiceConfig,
     }).then(res => {
       if (res) {

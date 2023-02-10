@@ -1,20 +1,22 @@
 import { Service } from 'egg';
 
 import { IProject } from './typing';
-import { etcd, ETCD_PREFIX, getUid } from './utils';
+import { etcd, PROJECT_PREFIX } from './utils';
 
-import BANK_CASE from './case/bank';
-import SECURITY_NETWORK_CASE from './case/security-network';
+import { project as BANK_CASE } from './case/bank';
+import { project as SECURITY_NETWORK_CASE } from './case/security-network';
 
 class GIProjectService extends Service {
-
   // find case
   async findCase() {
     const cases = [BANK_CASE, SECURITY_NETWORK_CASE];
+    console.log('case......');
     // set case in etcd if not exists
     for (const c of cases) {
       const id = c.id;
+      console.log('v', id);
       const v = await etcd.get(id).string();
+
       if (v === null) {
         await etcd.put(id).value(JSON.stringify(c));
       }
@@ -27,7 +29,7 @@ class GIProjectService extends Service {
     const projects: IProject[] = [];
 
     // get projects from etcd
-    const projectIDs = await etcd.getAll().prefix(ETCD_PREFIX).keys();
+    const projectIDs = await etcd.getAll().prefix(PROJECT_PREFIX).keys();
     for (const id of projectIDs) {
       const v = await etcd.get(id).string();
       const p = JSON.parse(v || '{}');
@@ -46,19 +48,10 @@ class GIProjectService extends Service {
 
   // create project
   async createProject(params) {
-    const projectID = getUid();
-    const { engineContext, ...otherParams } = params;
-
-    const p = {
-      ...otherParams,
-      engineContext: engineContext || {},
-      id: projectID,
-      isProject: true,
-      gmtCreate: new Date(),
-    };
-
-    await etcd.put(projectID).value(JSON.stringify(p));
-    return projectID;
+    params.id = `${PROJECT_PREFIX}${params.id}`;
+    const { id } = params;
+    await etcd.put(id).value(JSON.stringify(params));
+    return id;
   }
 
   // get project by id

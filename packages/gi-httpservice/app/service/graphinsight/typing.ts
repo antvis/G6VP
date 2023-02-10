@@ -1,5 +1,4 @@
-import { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
-import { GraphinData } from '@antv/graphin';
+import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
 
 export interface IActiveAssetsKeys {
   components: string[];
@@ -8,18 +7,7 @@ export interface IActiveAssetsKeys {
 }
 
 export interface IProject {
-  /** 引擎ID */
-  engineId: string;
-  /** 引擎的上下文，用于服务接口的额外参数 */
-  engineContext: Record<string, any>;
-  /** 项目激活的资产ID */
   activeAssetsKeys: IActiveAssetsKeys;
-  /** 项目数据 */
-  data: {
-    transFunc?: string;
-    transData: GraphinData;
-    inputData: any[];
-  };
   /** 项目类型 */
   type?: 'case' | 'project' | 'save';
   id?: string;
@@ -32,7 +20,6 @@ export interface IProject {
   status?: number;
   tag?: string;
   gmtCreate?: any;
-  schemaData: GraphSchemaData;
   config?: GIConfig;
   themes?: any[];
 }
@@ -47,3 +34,15 @@ export interface ICase extends IProject {
   coverImg: string;
 }
 
+export interface IDataset {
+  id: string;
+  /** 引擎ID */
+  engineId: string;
+  /** 引擎的上下文，用于服务接口的额外参数 */
+  engineContext: Record<string, any>;
+  /** 图模型 */
+  schemaData: GraphSchemaData;
+  /** 初始化图数据 */
+  data?: any;
+  gmtCreate: any;
+}

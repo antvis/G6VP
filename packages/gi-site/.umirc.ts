@@ -96,9 +96,12 @@ const externalScripts = isDev
       return c.url;
     });
 
+//@ts-ignore
+const { BUILD_MODE } = process.env;
+console.log('BUILD_MODE', BUILD_MODE);
 export default {
   base: '/',
-  publicPath: '/',
+  publicPath: BUILD_MODE ? '/public/' : '/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
@@ -111,7 +114,7 @@ export default {
     type: 'none',
   },
   routes: [
-    { exact: true, path: '/', redirect: '/workspace' },
+    { exact: true, path: '/', redirect: '/home' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
@@ -121,22 +124,84 @@ export default {
       routes: [
         { exact: true, path: '/workspace', component: 'Workspace' },
         { exact: true, path: '/services', component: 'ServerCenter' },
-        { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
-        { exact: true, path: '/assets', component: 'Assets' },
-
+        { exact: true, path: '/home', component: 'Home' },
+        {
+          path: '/dataset',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'list',
+              component: 'Dataset/List',
+            },
+            {
+              exact: true,
+              path: 'list/:id',
+              component: 'Dataset/Detail',
+            },
+            {
+              exact: true,
+              path: 'create',
+              component: 'Dataset/Create',
+            },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Dataset/Case',
+            },
+            {
+              exact: true,
+              path: 'SYSTEM_DIRECT_CONNECT',
+              component: 'Dataset/SystemDirectConnect',
+            },
+          ],
+        },
+        {
+          path: '/workbook',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'project',
+              component: 'Workspace/Projects',
+            },
+            {
+              exact: true,
+              path: 'report',
+              component: 'Share',
+            },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Workspace/Case',
+            },
+          ],
+        },
+        {
+          path: '/open',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'assets',
+              component: 'Assets',
+            },
+            {
+              exact: true,
+              path: 'engines',
+              component: 'ServerCenter',
+            },
+            {
+              exact: true,
+              path: 'user',
+              component: 'Share',
+            },
+          ],
+        },
         { component: '404' },
       ],
     },
   ],
-  proxy: {
-    '/project': {
-      'target': 'http://127.0.0.1:7001',
-      'changeOrigin': true,
-    },
-  },
-  request: {
-    dataField: '',
-  },
 
   externals: {
     lodash: '_',

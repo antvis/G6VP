@@ -10,6 +10,9 @@
   "scripts": {
     "pro": "npm run tsc && egg-scripts start",
     "stop": "egg-scripts stop --title=egg-server-gi-standalone-service",
+    "start": "egg-scripts start --port=7001",
+    "build:docker": "npm run tsc && rm -rf ./node_modules && npm install --production",
+    "build": "npm run tsc && rm -rf ./node_modules && npm install --production && tar -zcvf ./gi-httpsever-release.tgz .",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",
@@ -22,8 +25,6 @@
     "clean": "ets clean"
   },
   "dependencies": {
-    "@antv/gi-sdk": "^1.1.0",
-    "@antv/graphin": "^2.7.13",
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
     "egg-scripts": "^2.6.0",
@@ -35,6 +36,8 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@antv/gi-sdk": "^1.1.0",
+    "@antv/graphin": "^2.7.13",
     "@eggjs/tsconfig": "^1.0.0",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",

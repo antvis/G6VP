@@ -4,7 +4,8 @@ import * as GraphScopeServices from './GraphScopeService';
 import * as GremlinQuery from './GremlinQuery';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
-import ServerComponent from './ServerComponent';
+// import ServerComponent from './ServerComponent';
+import ServerComponent from '../components/ServerComponent';
 
 export default {
   id: 'GS',

@@ -32,6 +32,16 @@ export const CypherQuery = {
         edges: [],
       };
     }
+    if (data.code === 401) {
+      notification.error({
+        message: '引擎认证失败：请检查数据集',
+        description: data.data.error_message,
+      });
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
 
     return data;
   },

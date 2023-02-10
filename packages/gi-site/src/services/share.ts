@@ -1,8 +1,8 @@
 import request from 'umi-request';
-import { SERVICE_URL_PREFIX } from './const';
+import { GI_SITE } from './const';
 
 export const querySharedAnalysisById = async (shareId: string) => {
-  const response = await request(`${SERVICE_URL_PREFIX}/share/list/${shareId}`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/share/list/${shareId}`, {
     method: 'get',
   });
 
@@ -14,7 +14,7 @@ export const querySharedAnalysisById = async (shareId: string) => {
 };
 
 export const queryShareList = async () => {
-  const response = await request(`${SERVICE_URL_PREFIX}/share/list`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/share/list`, {
     method: 'get',
   });
 
@@ -24,7 +24,7 @@ export const queryShareList = async () => {
 };
 
 export const deleteShareById = async (shareId: string) => {
-  const response = await request(`${SERVICE_URL_PREFIX}/share/list/${shareId}`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/share/list/${shareId}`, {
     method: 'delete',
   });
   if (response.success && response.data) {

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # etcd
 if [[ -z "${ETCD_HOSTS}" ]]; then
@@ -7,13 +7,6 @@ if [[ -z "${ETCD_HOSTS}" ]]; then
   etcd --data-dir /workspace/etcd &> /workspace/etcd/output.log &
 fi
 
-# gi httpservice
-# listen on 127.0.0.1:7001 default
-cd /workspace/G6VP/packages/gi-httpservice
-npm run dev &> /workspace/gihttpservice/output.log &
-
 # gi site
-# listen on 127.0.0.1:8000 default
-cd /workspace/G6VP/packages/gi-site
-npm run start
-
+# listen on 127.0.0.1:7001 default
+cd /workspace/graphinsight && npm run start
