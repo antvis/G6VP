@@ -9,5 +9,4 @@ fi
 
 # gi site
 # listen on 127.0.0.1:7001 default
-cd /workspace/graphinsight/
-npm run start 
+cd /workspace/graphinsight && npm run start

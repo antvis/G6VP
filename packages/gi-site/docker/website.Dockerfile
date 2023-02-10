@@ -1,6 +1,7 @@
 # Website for graphinsight
 
-from docker.io/library/node:16
+##################################### Builder ####################################
+from docker.io/library/node:16 AS builder
 
 COPY . /workspace/G6VP
 
@@ -19,31 +20,28 @@ RUN cd /tmp && \
   mv etcd-v3.4.13-linux-amd64/etcdctl /usr/bin/etcdctl && \
   rm -fr etcd-v3.4.13-linux-amd64.tar.gz etcd-v3.4.13-linux-amd64
 
-# install deps
-RUN  pnpm install
+# gi-site
+RUN cd /workspace/G6VP/packages/gi-site && pnpm install && npm run build:docker
 
 # gi-httpservice
-RUN cd /workspace/G6VP/packages/gi-httpservice && npm install
-# build dist files 
-RUN npm run docker 
+RUN cd /workspace/G6VP/packages/gi-httpservice && npm install && npm run build:docker
 
-# gi-site
-RUN cd /workspace/G6VP/packages/gi-site
-# build dist files 
-RUN npm run build:docker 
-
-## copy gi-site files to gi-httpservice
-RUN cp /workspace/G6VP/packages/gi-site/dist/index.html /workspace/G6VP/packages/gi-httpservice/app/view/index.html 
-RUN cp -r /workspace/G6VP/packages/gi-site/dist/* /workspace/G6VP/packages/gi-httpservice/app/public/
+# copy gi-site files to gi-httpservice
+RUN cp /workspace/G6VP/packages/gi-site/dist/index.html /workspace/G6VP/packages/gi-httpservice/app/view/ && \
+  cp -r /workspace/G6VP/packages/gi-site/dist/* /workspace/G6VP/packages/gi-httpservice/app/public/
 
 
-RUN mkdir -p /workspace/graphinsight 
-RUN cp -r /workspace/G6VP/packages/gi-httpservice/ /workspace/graphinsight/
+##################################### Runtime ####################################
+from docker.io/library/node:16-alpine
 
+COPY --from=builder /workspace/G6VP/packages/gi-httpservice /workspace/gi-httpservice
+COPY --from=builder /workspace/G6VP/packages/gi-site/docker/docker-entrypoint.sh /workspace/docker-entrypoint.sh
+COPY --from=builder /usr/bin/etcd /usr/bin/etcd
+COPY --from=builder /usr/bin/etcdctl /usr/bin/etcdctl
 
-# workspace
+RUN npm install -g npm@9.4.2
+
 RUN mkdir -p /workspace/etcd
 
 # entrypoint
-ENTRYPOINT ["/workspace/G6VP/packages/gi-site/docker/docker-entrypoint.sh"]
-
+ENTRYPOINT ["/workspace/docker-entrypoint.sh"]
