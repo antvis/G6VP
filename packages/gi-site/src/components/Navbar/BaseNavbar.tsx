@@ -44,7 +44,7 @@ const BaseNavbar = props => {
         <Link to="/market">云端研发资产</Link>
       </div> */}
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
-        <Link to="/open/assets">开放中心</Link>
+        <Link to="/open/assets">开放市场</Link>
       </div>
     </>
   );
