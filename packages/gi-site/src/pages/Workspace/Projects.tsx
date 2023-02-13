@@ -1,12 +1,20 @@
+import { EllipsisOutlined, MoreOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { Col, Menu, Popconfirm, Row, Skeleton } from 'antd';
+import { clone } from '@antv/util';
+import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import ExportConfig from '../../components/Navbar/ExportConfig';
 import ProjectCard from '../../components/ProjectCard';
+import { queryAssets } from '../../services/assets';
 import { GI_SITE } from '../../services/const';
+import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
+import { getServicesByConfig } from '../Analysis/getAssets';
+import getCombinedServiceConfig from '../Analysis/getAssets/getCombinedServiceConfig';
+import { queryActiveAssetsInformation } from '../Analysis/utils';
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -15,6 +23,7 @@ interface ProjectListProps {
 interface ProjectListState {
   lists: IProject[];
   isLoading: boolean;
+  exportProjectContext: any;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -23,6 +32,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
     isLoading: true,
+    exportProjectContext: undefined
   });
 
   const [member, setMember] = useImmer({
@@ -105,6 +115,70 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     );
   }
 
+  // TODO [WIP]
+  const handleExportSDK = async (projectItem) => {
+    const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
+    const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
+    queryAssets(activeAssetsKeys).then(activeAssets => {
+      const { transData, inputData } = data || {
+        transData: { nodes: [], edges: [] },
+        inputData: [{ nodes: [], edges: [] }],
+      };
+      const assetServices = utils.getCombineServices(activeAssets.services!);
+      const combinedServiceConfig = getCombinedServiceConfig([], assetServices);
+      const activeAssetsInformation = queryActiveAssetsInformation({
+        engineId,
+        assets: activeAssets,
+        data: transData,
+        config: projectConfig,
+        serviceConfig: [...assetServices, ...combinedServiceConfig],
+        schemaData,
+      });
+      const services = utils.uniqueElementsBy(
+        [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
+        (a, b) => {
+          return a.id === b.id;
+        },
+      );
+      // TODO: FilterPanel 的 filterKeys 默认无值？
+      const clonedConfig = clone(projectConfig);
+      const filterPanel = clonedConfig.components.find(component => component.id === 'FilterPanel');
+      if (filterPanel) filterPanel.props.filterKeys = filterPanel.props.filterKeys || [];
+      const projectContext = {
+        ...projectItem,
+        engineId, 
+        engineContext,
+        id,
+        name,
+        config: clonedConfig,
+        projectConfig: {},
+        schemaData,
+        data: transData,
+        inputData,
+        activeAssets,
+        theme,
+        activeAssetsInformation,
+        assets: {
+          components: {},
+          elements: {},
+          layouts: {}
+        },
+        assetsCenter: { visible: false, hash: 'components' },
+        services,
+        serviceConfig: []
+      }
+      updateState(draft => {
+        draft.exportProjectContext = projectContext;
+      });
+
+    });
+  }
+  const handleCancelExportSDK = () => {
+    updateState(draft => {
+      draft.exportProjectContext = undefined;
+    });
+  }
+
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
@@ -116,16 +190,33 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 onClick={() => {
                   history.push(`/workspace/${id}?nav=style`);
                 }}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
+                onExportSDK={() => handleExportSDK(item)}
+                cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
-                description=""
+                description="asdfalsdkjfaksjdfklasdfasdfasd"
+                extra={
+                  <Dropdown overlay={menu(id)} placement="bottomCenter">
+                    <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>
+                  </Dropdown>
+                }
               ></ProjectCard>
             </Col>
           );
         })}
       </Row>
       {/* <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} /> */}
+
+      <Drawer
+        title="导出SDK"
+        placement="right"
+        closable={false}
+        onClose={handleCancelExportSDK}
+        visible={Boolean(state.exportProjectContext)}
+        width="calc(100vw - 382px)"
+      >
+        {Boolean(state.exportProjectContext) && <ExportConfig context={state.exportProjectContext} />}
+      </Drawer>
     </>
   );
 };

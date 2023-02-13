@@ -108,7 +108,7 @@ export const getActivePackageName = (activeAssets: GIAssets): string[] => {
 };
 
 export const getConstantFiles = opts => {
-  const { config, id, engineId, activeAssets, theme, data, schemaData } = opts;
+  const { config, id, engineId, activeAssets, theme = 'light', data, schemaData } = opts;
   const GI_LOCAL_DATA = beautifyCode(JSON.stringify(data));
   // const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
   const GI_SCHEMA_DATA = beautifyCode(JSON.stringify(schemaData));

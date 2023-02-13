@@ -226,6 +226,7 @@ const baseComponentsConfig = [
       histogramColor: '#3056E3',
       isFilterIsolatedNodes: true,
       highlightMode: true,
+      filterKeys: [],
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,

@@ -1,56 +1,85 @@
-@height: 100px;
+@height: 160px;
+@footerHeight: 58px;
+@contentHeight: @height - @footerHeight;
 .project-card {
-  display: flex;
   justify-items: center;
+  height: @height;
+  border-radius: 8px;
+  padding: 8px 16px;
   // &:hover {
   //   box-shadow: 0 8px 17px 2px #3056e324, 0 3px 14px 2px #3057e31f, 0 5px 5px -3px #3056e333;
   //   transform: all 0.3;
   // }
   // color: #000000cc;
   background-color: var(--background-color-card);
-  box-shadow: 0 2px 2px 0 #00000024, 0 3px 1px -2px #0000001f, 0 1px 5px 0 #00000033;
+  box-shadow: 0 2px 5px 0 rgba(0, 10, 26, 0.1), 0 3px 5px -2px rgba(0, 10, 26, 0.1), 0 1px 5px 0 rgba(0, 10, 26, 0.1);
   cursor: pointer;
-
-  .cover {
+  
+  .content-wrapper {
     display: flex;
-    flex-basis: @height;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: @height;
-    height: @height;
-    padding: 8px;
-    overflow: hidden;
-  }
-  .content {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-around;
-
-    padding: 8px;
-
-    .title {
-      font-weight: 600;
-      font-size: 16px;
-    }
-    .desc {
+    .cover {
+      display: flex;
+      flex-basis: @contentHeight;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: @contentHeight;
+      height: @contentHeight;
       overflow: hidden;
-      color: #999;
-      font-size: 12px;
-      font-size: 12px;
-      text-overflow: ellipsis;
     }
-    .time {
-      font-size: 12px;
+    .content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: space-around;
+      height: @contentHeight;
+      margin-left: 8px;
+  
+  
+      .title {
+        font-weight: 600;
+        font-size: 16px;
+        color: rgba(0, 10, 26, 0.9);
+      }
+      .desc {
+        overflow: hidden;
+        color: rgba(0, 10, 26, 0.47);
+        font-size: 12px;
+        font-size: 12px;
+        text-overflow: ellipsis;
+      }
+      .time {
+        font-size: 12px;
+        color: rgba(0, 10, 26, 0.47);
+      }
     }
   }
-  .extra {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
+
+  .divider {
+    margin-top: 8px;
+    margin-bottom: 0;
   }
+
+  .footer {
+    padding: 8px 0;
+    justify-content: space-between;
+    display: flex;
+    .action {
+      color: rgba(0, 10, 26, 0.68);
+      height: 32px;
+      line-height: 32px;
+      margin-top: -4px;
+      margin-bottom: 0;
+      &:hover {
+        color: #1890FF;
+      }
+    }
+    .divider-vertical {
+      height: 26px;
+    }
+  }
+
   .extra-top-right {
     position: absolute;
     right: 12px;

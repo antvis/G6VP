@@ -10,7 +10,9 @@ import './index.less';
 const testImg = 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ';
 
 const ExportConfig = props => {
-  const { context: st } = useContext();
+  const { context: propsContext } = props;
+  const { context } = useContext();
+  const st = propsContext || context;
 
   const [state, updateState] = useImmer({
     visible: false,
@@ -48,7 +50,7 @@ const ExportConfig = props => {
       ></Alert>
       <br />
       <Row gutter={[20, 20]}>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={
@@ -64,23 +66,7 @@ const ExportConfig = props => {
             </div>
           </Card>
         </Col>
-        <Col span={12}>
-          <Card
-            hoverable
-            cover={
-              <img
-                src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*A9m5R7wxY54AAAAAAAAAAAAAARQnAQ'}
-                onClick={handleOpen}
-              />
-            }
-          >
-            <div className="card-meta">
-              <div className="title">云端部署</div>
-              <div>GraphScope 计算+ ODPS 存储部署，详情请咨询 @击铗</div>
-            </div>
-          </Card>
-        </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={
@@ -96,7 +82,7 @@ const ExportConfig = props => {
             </div>
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={
