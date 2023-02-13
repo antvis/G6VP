@@ -194,7 +194,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
-                description="asdfalsdkjfaksjdfklasdfasdfasd"
                 extra={
                   <Dropdown overlay={menu(id)} placement="bottomCenter">
                     <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>
