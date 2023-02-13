@@ -1,18 +1,17 @@
 import * as React from 'react';
-import AntGroupLogin from '../components/AntGroupLogin';
+// import AntGroupLogin from '../components/AntGroupLogin';
 import DataModeCard from '../components/DataModeCard';
 import BaseNavbar from '../components/Navbar/BaseNavbar';
-import Notification from '../components/Notification';
-import QRcode from '../components/QRcode';
+// import Notification from '../components/Notification';
+// import QRcode from '../components/QRcode';
 import useUpdate from '../hooks/useUpdate';
-import { GI_SITE } from '../services/const';
 import './index.less';
 interface ILayoutProps {}
 const rightContentExtra = (
   <>
-    {GI_SITE.IS_OFFLINE && <AntGroupLogin />}
+    {/* {GI_SITE.IS_OFFLINE && <AntGroupLogin />}
     <Notification />
-    <QRcode />
+    <QRcode /> */}
     <DataModeCard />
   </>
 );
