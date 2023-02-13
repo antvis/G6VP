@@ -1,20 +1,12 @@
 import * as React from 'react';
 // import AntGroupLogin from '../components/AntGroupLogin';
-import DataModeCard from '../components/DataModeCard';
-import BaseNavbar from '../components/Navbar/BaseNavbar';
+import BaseNavbar from '../components/Navbar/Basic';
 // import Notification from '../components/Notification';
 // import QRcode from '../components/QRcode';
 import useUpdate from '../hooks/useUpdate';
 import './index.less';
 interface ILayoutProps {}
-const rightContentExtra = (
-  <>
-    {/* {GI_SITE.IS_OFFLINE && <AntGroupLogin />}
-    <Notification />
-    <QRcode /> */}
-    <DataModeCard />
-  </>
-);
+
 const Layout: React.FunctionComponent<ILayoutProps> = props => {
   //@ts-ignore
   const { children, location } = props;
@@ -25,7 +17,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = props => {
 
   return (
     <>
-      <BaseNavbar rightContentExtra={rightContentExtra} active={active}></BaseNavbar>
+      <BaseNavbar active={active}></BaseNavbar>
       <div className="gi-layout-container">{children}</div>
     </>
   );
