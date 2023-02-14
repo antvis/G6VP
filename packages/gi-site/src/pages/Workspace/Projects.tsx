@@ -1,4 +1,4 @@
-import { EllipsisOutlined, MoreOutlined } from '@ant-design/icons';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
 import { clone } from '@antv/util';
 import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
@@ -115,7 +115,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     );
   }
 
-  // TODO [WIP]
   const handleExportSDK = async (projectItem) => {
     const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
     const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
@@ -124,36 +123,35 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         transData: { nodes: [], edges: [] },
         inputData: [{ nodes: [], edges: [] }],
       };
+      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+        data: transData,
+        schemaData,
+      };
       const assetServices = utils.getCombineServices(activeAssets.services!);
       const combinedServiceConfig = getCombinedServiceConfig([], assetServices);
+      const serviceConfig = utils.uniqueElementsBy(
+        [...assetServices, ...combinedServiceConfig],
+        (a, b) => a.id === b.id
+      );
       const activeAssetsInformation = queryActiveAssetsInformation({
         engineId,
         assets: activeAssets,
         data: transData,
         config: projectConfig,
-        serviceConfig: [...assetServices, ...combinedServiceConfig],
+        serviceConfig,
         schemaData,
       });
       const services = utils.uniqueElementsBy(
         [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
-        (a, b) => {
-          return a.id === b.id;
-        },
+        (a, b) => a.id === b.id,
       );
-      // TODO: FilterPanel 的 filterKeys 默认无值？
-      const clonedConfig = clone(projectConfig);
-      const filterPanel = clonedConfig.components.find(component => component.id === 'FilterPanel');
-      if (filterPanel) filterPanel.props.filterKeys = filterPanel.props.filterKeys || [];
       const projectContext = {
         ...projectItem,
         engineId, 
         engineContext,
         id,
         name,
-        config: clonedConfig,
-        projectConfig: {},
-        schemaData,
-        data: transData,
+        config: projectConfig,
         inputData,
         activeAssets,
         theme,
@@ -185,7 +183,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
-            <Col key={id} xs={24} sm={24} md={12} lg={8} xl={8}>
+            <Col key={id}>
               <ProjectCard
                 onClick={() => {
                   history.push(`/workspace/${id}?nav=style`);

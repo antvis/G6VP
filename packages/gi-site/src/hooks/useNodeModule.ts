@@ -2,7 +2,7 @@ import { version as GI_THEME_ANTD_VERSION } from '@antv/gi-theme-antd/package.js
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
 import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
-import { getActivePackage, getConstantFiles } from './common';
+import { beautifyCode, getActivePackage, getConstantFiles } from './common';
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';
 
@@ -29,9 +29,12 @@ function getCSBData(opts) {
     HTML_HEADER,
     THEME_STYLE,
     packages,
-    GI_LOCAL_DATA,
-    GI_SCHEMA_DATA,
   } = getConstantFiles(opts);
+  
+  /** G6VP 站点图数据和 Schema 信息 **/
+  const { data, schemaData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
+  const formatData = beautifyCode(JSON.stringify(data));
+  const formatSchemaData = beautifyCode(JSON.stringify(schemaData));
 
   const assets_packages_json = packages.reduce((acc, curr) => {
     const { name, version } = curr;
@@ -124,12 +127,10 @@ const SERVER = [
       /** G6VP 站点选择服务引擎的上下文配置信息 **/
       export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
 
-
-      /** G6VP 站点 本地上传的数据 **/
-      export const GI_LOCAL_DATA = ${GI_LOCAL_DATA};
-
-      /** G6VP 站点 本地上传的数据的 Schema 信息 **/
-      export const GI_SCHEMA_DATA = ${GI_SCHEMA_DATA};
+      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+        data: ${formatData},
+        schemaData: ${formatSchemaData},
+      };
       
       /** 导出的主题 **/
       export const THEME_VALUE = "${theme}";
@@ -145,7 +146,7 @@ import localforage from 'localforage';
 
 ${import_pakages}
 ${import_servers_package}
-import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,THEME_VALUE,GI_LOCAL_DATA,GI_SCHEMA_DATA } from "./GI_EXPORT_FILES";  
+import { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,THEME_VALUE } from "./GI_EXPORT_FILES";  
 import ThemeSwitch from '@antv/gi-theme-antd';
 /** 资产可按需引入 **/
 ${import_components}
