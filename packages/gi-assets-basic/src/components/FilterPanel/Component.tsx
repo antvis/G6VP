@@ -20,7 +20,7 @@ export interface FilterPanelProps {
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys, histogramOptions } = props;
+  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys = [], histogramOptions } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
 
