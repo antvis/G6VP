@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # etcd
 if [[ -z "${ETCD_HOSTS}" ]]; then

@@ -32,6 +32,6 @@ docker load < gi-site
 ## 启动 gi-site 服务
 
 ```bash
-docker run --name gi-site -d --rm -p 8000:8000 antvis/gi-site:latest
+docker run --name gi-site -d --rm -p 7001:7001 antvis/gi-site:latest
 ```
 

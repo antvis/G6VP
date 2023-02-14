@@ -41,6 +41,13 @@ const registerMeta = context => {
       ],
       default: 'left',
     },
+    defaultVisible: {
+      title: '默认展开',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     ...metas,
   };
 
