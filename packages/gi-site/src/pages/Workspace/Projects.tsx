@@ -176,6 +176,25 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       draft.exportProjectContext = undefined;
     });
   }
+  const handleDownloadProject = (projectItem) => {
+    const { projectConfig, name, engineId, ...others } = projectItem;
+    const params = {
+      ...others,
+      engineId: engineId || 'GI',
+      name,
+      projectConfig,
+      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
+    };
+
+    const elementA = document.createElement('a');
+    elementA.download = name as string;
+    elementA.style.display = 'none';
+    const blob = new Blob([JSON.stringify(params, null, 2)]);
+    elementA.href = URL.createObjectURL(blob);
+    document.body.appendChild(elementA);
+    elementA.click();
+    document.body.removeChild(elementA);
+  }
 
   return (
     <>
@@ -189,6 +208,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                   history.push(`/workspace/${id}?nav=style`);
                 }}
                 onExportSDK={() => handleExportSDK(item)}
+                onDownloadProject={() => handleDownloadProject(item)}
                 cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}

@@ -5,7 +5,8 @@ import './index.less';
 interface ProjectCardProps {
   title: string;
   onClick: () => void;
-  onExportSDK: (projectId) => void;
+  onExportSDK?: (projectItem) => void;
+  onDownloadProject?: (projectItem) => void;
   cover: React.ReactNode;
   description?: string;
   time?: any;
@@ -15,7 +16,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FunctionComponent<ProjectCardProps> = props => {
-  const { cover, title, description, time, onClick, onExportSDK, extra, style, extraTopRight } = props;
+  const { cover, title, description, time, onClick, onExportSDK, onDownloadProject, extra, style, extraTopRight } = props;
   return (
     <div className="project-card" style={style}>
       <div className="content-wrapper">
@@ -31,10 +32,14 @@ const ProjectCard: React.FunctionComponent<ProjectCardProps> = props => {
       <Divider className="divider" />
       <div className="footer">
         <p className="action" onClick={onClick}>进入</p>
-        <Divider type="vertical" className="divider-vertical" />
-        <p className="action">下载</p>
-        <Divider type="vertical" className="divider-vertical" />
-        <p className="action" onClick={onExportSDK}>导出 SDK</p>
+        {onDownloadProject && <>
+          <Divider type="vertical" className="divider-vertical" />
+          <p className="action" onClick={onDownloadProject}>下载</p>
+        </>}
+        {onExportSDK && <>
+          <Divider type="vertical" className="divider-vertical" />
+          <p className="action" onClick={onExportSDK}>导出 SDK</p>
+        </>}
         {extra && <div className="extra action"> {extra}</div>}
       </div>
       {extraTopRight && <div className="extra-top-right">{extraTopRight}</div>}
