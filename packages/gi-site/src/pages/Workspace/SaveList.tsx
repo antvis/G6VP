@@ -1,4 +1,4 @@
-import { MoreOutlined } from '@ant-design/icons';
+import { EllipsisOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import { Button, Col, Dropdown, Empty, Menu, message, Popconfirm, Row, Typography } from 'antd';
 import * as React from 'react';
@@ -115,7 +115,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
                 time={utils.time(gmtCreate)}
                 extra={
                   <Dropdown overlay={menu(id)} placement="bottomCenter">
-                    <Button type="text" icon={<MoreOutlined className="more icon-buuton" />}></Button>
+                    <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>
                   </Dropdown>
                 }
                 description={description}

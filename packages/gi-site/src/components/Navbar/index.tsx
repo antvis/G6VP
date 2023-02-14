@@ -60,12 +60,6 @@ const Navbar = ({
     });
   };
 
-  const handleOutOpen = () => {
-    updateState(draft => {
-      draft.exportVisible = true;
-    });
-  };
-
   const handleSave = async () => {
     const origin = (await ProjectServices.getById(projectId)) as IProject;
 
@@ -127,41 +121,12 @@ const Navbar = ({
       draft.enableAI = !enableAI;
     });
   };
-  const handleDownloadProject = async () => {
-    const project = (await ProjectServices.getById(projectId)) as IProject;
-    const { config, name, ...others } = project;
-    const params = {
-      ...others,
-      name,
-      projectConfig: config,
-      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-    };
-
-    const elementA = document.createElement('a');
-    elementA.download = name as string;
-    elementA.style.display = 'none';
-    const blob = new Blob([JSON.stringify(params, null, 2)]);
-    elementA.href = URL.createObjectURL(blob);
-    document.body.appendChild(elementA);
-    elementA.click();
-    document.body.removeChild(elementA);
-  };
 
   const rightContent = (
     <>
       <Tooltip title="保存">
         <Button icon={<SaveOutlined />} onClick={handleSave} size="small" className="gi-intro-save">
           保存
-        </Button>
-      </Tooltip>
-      <Tooltip title="下载项目">
-        <Button icon={<SaveOutlined />} onClick={handleDownloadProject} size="small" className="gi-intro-save">
-          下载项目
-        </Button>
-      </Tooltip>
-      <Tooltip title="导出 SDK">
-        <Button icon={<ExportOutlined />} onClick={handleOutOpen} size="small" className="gi-intro-export">
-          导出 SDK
         </Button>
       </Tooltip>
       {/* <Tooltip title="自动推荐样式">
