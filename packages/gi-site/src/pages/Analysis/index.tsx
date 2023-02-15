@@ -163,7 +163,8 @@ const Analysis = props => {
             return {
               // ...matchItem,
               id: matchItem.id,
-              name: matchItem.name,
+              type: matchItem.type || c.type,
+              name: matchItem.name || c.name,
               props: resProps,
             };
           });

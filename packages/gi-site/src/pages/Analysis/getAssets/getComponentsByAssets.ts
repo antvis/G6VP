@@ -2,7 +2,6 @@ import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSche
 import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import type { TypeAssetInfo } from './typing';
-
 const { getDefaultValues } = utils;
 
 const getAllkeysBySchema = (schema, shapeType): string[] => {
@@ -106,13 +105,14 @@ const getComponentsByAssets = (
 
       /** 默认的配置值 */
 
-      const { id, name, category } = info;
+      const { id, name, category, type } = info;
 
       return {
         ...component,
         id,
         name,
         category,
+        type: type,
         //@ts-ignore
         props: defaultProps,
         meta: {
