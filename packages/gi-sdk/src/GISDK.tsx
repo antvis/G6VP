@@ -13,6 +13,11 @@ import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
+const DEFAULT_GICC_LAYOUT = {
+  id: 'EmptyLayout',
+  props: {},
+  component: props => <>{props.children}</>,
+};
 /** export  */
 const GISDK = (props: Props) => {
   const { children, assets, id } = props;
@@ -51,6 +56,10 @@ const GISDK = (props: Props) => {
     layoutCache: false,
     largeGraphLimit: 600,
     largeGraphData: undefined,
+    GICC_LAYOUT: {
+      id: 'EmptyLayout',
+      props: {},
+    },
 
     /** graphin */
     //@ts-ignore
@@ -76,6 +85,19 @@ const GISDK = (props: Props) => {
 
   /** 节点和边的配置发生改变 */
   React.useEffect(() => {
+    let GICC_LAYOUT = { id: 'EmptyLayout', props: {} };
+    let INITIALIZER;
+    componentsCfg.forEach(item => {
+      if (item.type === 'GICC_LAYOUT') {
+        GICC_LAYOUT = item;
+        return;
+      }
+      if (item.type === 'INITIALIZER') {
+        INITIALIZER = item || defaultInitializerCfg;
+        return;
+      }
+    });
+
     const filteredComponents = componentsCfg.filter(c => {
       /** 过滤初始化组件 */
       return !(c.props && c.props.GI_INITIALIZER);
@@ -106,8 +128,10 @@ const GISDK = (props: Props) => {
       draft.config.components = componentsCfg;
       draft.components = finalComponents;
       //@ts-ignore
-      draft.initializer = initializerCfg;
+      draft.initializer = INITIALIZER;
       draft.layoutCache = true;
+      //@ts-ignore
+      draft.GICC_LAYOUT = GICC_LAYOUT;
     });
   }, [componentsCfg]);
 
@@ -186,7 +210,7 @@ const GISDK = (props: Props) => {
     });
   }, [nodesCfg, edgesCfg]);
 
-  const { data, layout, components, initializer, theme, transform } = state;
+  const { data, layout, components, initializer, theme, transform, GICC_LAYOUT } = state;
 
   // console.log('%c G6VP Render...', 'color:red', state.layout);
   const sourceDataMap = useMemo(() => {
@@ -252,6 +276,15 @@ const GISDK = (props: Props) => {
     props: defaultInitializerCfg.props,
   };
 
+  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[GICC_LAYOUT.id] || {
+    component: DEFAULT_GICC_LAYOUT.component,
+  };
+  const { props: GICC_LAYOUT_PROPS } = ComponentCfgMap[GICC_LAYOUT.id] || {
+    props: DEFAULT_GICC_LAYOUT.props,
+  };
+
+  console.log('ComponentCfgMap', GICC_LAYOUT_COMPONENT);
+
   const renderComponents = () => {
     if (!state.initialized || !state.isContextReady) {
       return null;
@@ -269,7 +302,12 @@ const GISDK = (props: Props) => {
       if (itemProps.GIAC_CONTENT || itemProps.GIAC_MENU || itemProps.GIAC) {
         return null;
       }
-      if (info.type === 'GIAC_CONTENT' || info.type === 'GIAC' || info.type === 'GIAC_MENU') {
+      if (
+        info.type === 'GICC_LAYOUT' ||
+        info.type === 'GIAC_CONTENT' ||
+        info.type === 'GIAC' ||
+        info.type === 'GIAC_MENU'
+      ) {
         return null;
       }
 
@@ -327,26 +365,31 @@ const GISDK = (props: Props) => {
 
   return (
     <GraphInsightContext.Provider value={ContextValue}>
-      <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
-        <Graphin
-          containerId={`${GISDK_ID}-graphin-container`}
-          containerStyle={{ transform: 'scale(1)' }}
-          data={graphData}
-          layout={layout}
-          enabledStack={true}
-          theme={theme}
-          layoutCache={state.layoutCache}
+      <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
+        <div
+          id={`${GISDK_ID}-container`}
+          style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
         >
-          <>
-            {isReady && <SizeSensor />}
-            {state.isContextReady && <InitializerComponent {...InitializerProps} />}
-            <SetupUseGraphinHook updateContext={updateState} />
-            {isReady && renderComponents()}
-            {isReady && children}
-            {isReady && <FitCenterAfterMount />}
-          </>
-        </Graphin>
-      </div>
+          <Graphin
+            containerId={`${GISDK_ID}-graphin-container`}
+            containerStyle={{ transform: 'scale(1)' }}
+            data={graphData}
+            layout={layout}
+            enabledStack={true}
+            theme={theme}
+            layoutCache={state.layoutCache}
+          >
+            <>
+              {isReady && <SizeSensor />}
+              {state.isContextReady && <InitializerComponent {...InitializerProps} />}
+              <SetupUseGraphinHook updateContext={updateState} />
+              {isReady && renderComponents()}
+              {isReady && children}
+              {isReady && <FitCenterAfterMount />}
+            </>
+          </Graphin>
+        </div>
+      </GICC_LAYOUT_COMPONENT>
     </GraphInsightContext.Provider>
   );
 };
