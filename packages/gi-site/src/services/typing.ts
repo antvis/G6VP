@@ -20,7 +20,21 @@ export interface IDataset {
   data?: GIGraphData;
 }
 
+export interface ITemplate {
+  /** 模版ID */
+  id: string;
+  /** 模版名称*/
+  name?: string;
+  /** 组件配置 */
+  components: GIConfig['components'];
+  /** 布局配置 */
+  layout: GIConfig['layout'];
+  /** 可用的激活资产ID */
+  activeAssetsKeys: IActiveAssetsKeys;
+}
+
 export interface IProject {
+  /** 数据集ID */
   datasetId: string;
   /** 项目激活的资产ID */
   activeAssetsKeys: IActiveAssetsKeys;

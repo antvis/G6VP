@@ -55,13 +55,12 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   });
   console.log(location.pathname, location);
   const onClick: MenuProps['onClick'] = e => {
-    console.log('click ', e);
     setState({ active: e.key });
     history.push(e.key);
   };
 
   const items = getItems(location);
-  console.log('items', items);
+
   const { active } = state;
   return (
     <div style={{ display: 'flex' }}>

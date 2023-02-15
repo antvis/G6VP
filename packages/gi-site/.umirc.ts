@@ -167,6 +167,16 @@ export default {
             },
             {
               exact: true,
+              path: 'template',
+              component: 'Template/List',
+            },
+            {
+              exact: true,
+              path: 'template/:id',
+              component: 'Template/Detail',
+            },
+            {
+              exact: true,
               path: 'report',
               component: 'Share',
             },
