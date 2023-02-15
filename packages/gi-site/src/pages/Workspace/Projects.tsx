@@ -1,12 +1,20 @@
+import { EllipsisOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { Col, Menu, Popconfirm, Row, Skeleton } from 'antd';
+import { clone } from '@antv/util';
+import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import ExportConfig from '../../components/Navbar/ExportConfig';
 import ProjectCard from '../../components/ProjectCard';
+import { queryAssets } from '../../services/assets';
 import { GI_SITE } from '../../services/const';
+import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
+import { getServicesByConfig } from '../Analysis/getAssets';
+import getCombinedServiceConfig from '../Analysis/getAssets/getCombinedServiceConfig';
+import { queryActiveAssetsInformation } from '../Analysis/utils';
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -15,6 +23,7 @@ interface ProjectListProps {
 interface ProjectListState {
   lists: IProject[];
   isLoading: boolean;
+  exportProjectContext: any;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -23,6 +32,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
     isLoading: true,
+    exportProjectContext: undefined
   });
 
   const [member, setMember] = useImmer({
@@ -105,27 +115,125 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     );
   }
 
+  const handleExportSDK = async (projectItem) => {
+    const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
+    const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
+    queryAssets(activeAssetsKeys).then(activeAssets => {
+      const { transData, inputData } = data || {
+        transData: { nodes: [], edges: [] },
+        inputData: [{ nodes: [], edges: [] }],
+      };
+      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+        data: transData,
+        schemaData,
+      };
+      const assetServices = utils.getCombineServices(activeAssets.services!);
+      const combinedServiceConfig = getCombinedServiceConfig([], assetServices);
+      const serviceConfig = utils.uniqueElementsBy(
+        [...assetServices, ...combinedServiceConfig],
+        (a, b) => a.id === b.id
+      );
+      const activeAssetsInformation = queryActiveAssetsInformation({
+        engineId,
+        assets: activeAssets,
+        data: transData,
+        config: projectConfig,
+        serviceConfig,
+        schemaData,
+      });
+      const services = utils.uniqueElementsBy(
+        [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
+        (a, b) => a.id === b.id,
+      );
+      const projectContext = {
+        ...projectItem,
+        engineId, 
+        engineContext,
+        id,
+        name,
+        config: projectConfig,
+        inputData,
+        activeAssets,
+        theme,
+        activeAssetsInformation,
+        assets: {
+          components: {},
+          elements: {},
+          layouts: {}
+        },
+        assetsCenter: { visible: false, hash: 'components' },
+        services,
+        serviceConfig: []
+      }
+      updateState(draft => {
+        draft.exportProjectContext = projectContext;
+      });
+
+    });
+  }
+  const handleCancelExportSDK = () => {
+    updateState(draft => {
+      draft.exportProjectContext = undefined;
+    });
+  }
+  const handleDownloadProject = (projectItem) => {
+    const { projectConfig, name, engineId, ...others } = projectItem;
+    const params = {
+      ...others,
+      engineId: engineId || 'GI',
+      name,
+      projectConfig,
+      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
+    };
+
+    const elementA = document.createElement('a');
+    elementA.download = name as string;
+    elementA.style.display = 'none';
+    const blob = new Blob([JSON.stringify(params, null, 2)]);
+    elementA.href = URL.createObjectURL(blob);
+    document.body.appendChild(elementA);
+    elementA.click();
+    document.body.removeChild(elementA);
+  }
+
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {lists.map(item => {
           const { id, name, gmtCreate } = item;
           return (
-            <Col key={id} xs={24} sm={24} md={12} lg={8} xl={8}>
+            <Col key={id}>
               <ProjectCard
                 onClick={() => {
                   history.push(`/workspace/${id}?nav=style`);
                 }}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '60px' }} />}
+                onExportSDK={() => handleExportSDK(item)}
+                onDownloadProject={() => handleDownloadProject(item)}
+                cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
-                description=""
+                extra={
+                  <Dropdown overlay={menu(id)} placement="bottomCenter">
+                    <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>
+                  </Dropdown>
+                }
               ></ProjectCard>
             </Col>
           );
         })}
       </Row>
       {/* <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} /> */}
+
+      <Drawer
+        title="导出SDK"
+        placement="right"
+        closable={false}
+        onClose={handleCancelExportSDK}
+        visible={Boolean(state.exportProjectContext)}
+        width="calc(100vw - 382px)"
+      >
+        {Boolean(state.exportProjectContext) && <ExportConfig context={state.exportProjectContext} />}
+      </Drawer>
     </>
   );
 };
