@@ -21,19 +21,6 @@ interface ICypherResponse {
   size: number;
 }
 
-export const wrapperResult = (ctx, success, result) => {
-  if (success) {
-    ctx.status = 200;
-  } else {
-    ctx.status = 500;
-  }
-
-  ctx.body = {
-    success,
-    data: result,
-  };
-};
-
 export const getNodeIdsByResponseBak = (
   params: ICypherResponse,
 ): { nodeIds: Array<number>; edgeIds: Array<string> } => {
@@ -112,7 +99,7 @@ export const getNodeIdsByResponseBak = (
 export const getNodeIdsByResponse = (params: any): { nodeIds: Array<number>; edgeIds: Array<string> } => {
   const nodeIds: Array<number> = [];
   const edgeIds: Array<string> = [];
-  console.log(params.data);
+  console.log('getNodeIdsByResponse', params.data);
   const result = params.data.result;
   const headers = params.data.header;
   const edgeIndexList: Array<number> = [];

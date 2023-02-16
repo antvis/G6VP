@@ -1,5 +1,6 @@
 import { Service } from 'egg';
-import { getNodeIdsByResponse, readTuGraphConfig } from '../util';
+import { getNodeIds, getNodeIdsByEids } from '../tugraph.utils';
+import { readTuGraphConfig } from '../util';
 import { ILanguageQueryParams, INeighborsParams } from './serviceInterface';
 const fs = require('fs');
 
@@ -62,18 +63,20 @@ class TuGraphService extends Service {
     });
 
     if (result.status !== 200) {
+      return result.data;
+    }
+
+    // 如果返回有Eid,就使用Eid组装nodeIds
+    const nodeIds = [...new Set([...getNodeIdsByEids(result).nodeIds, ...getNodeIds(result)])];
+
+    // 拿到节点 ID 后，查询子图
+
+    if (nodeIds.length === 0) {
       return {
-        success: false,
-        code: result.status,
-        data: result.data,
+        nodes: [],
+        edges: [],
       };
     }
-    console.log('result', result.data);
-
-    const elementIds = getNodeIdsByResponse(result);
-
-    const { nodeIds } = elementIds;
-    // 拿到节点 ID 后，查询子图
 
     const subGraphResult = await this.ctx
       .curl(`${engineServerURL}/cypher`, {
@@ -109,12 +112,19 @@ class TuGraphService extends Service {
       });
 
     if (subGraphResult.status !== 200) {
-      return {
-        success: false,
-        code: result.status,
-        data: subGraphResult.data,
-      };
+      return subGraphResult.data;
     }
+
+    // if (getNodeIdsByEids(result).edgeIds.length) {
+    //   let relationships: any[] = [];
+    //   getNodeIdsByEids(result).edgeIds.find(eid => {
+    //     let target = subGraphResult.data.relationships.find(item => item.uid === eid);
+    //     target && relationships.push(target);
+    //   });
+    //   subGraphResult.data.relationships = relationships;
+    // }
+    // const GRAPH_DATA = craeteGraphData(subGraphResult, 'GRAPH_DATA', 'queryByCypher');
+    // console.log('GRAPH_DATA', GRAPH_DATA);
 
     const { nodes, relationships } = subGraphResult.data;
     console.log('subGraphResult.data', subGraphResult.data);
