@@ -1,5 +1,6 @@
 import { Service } from 'egg';
-import { getNodeIdsByResponse, readTuGraphConfig } from '../util';
+import { getNodeIds, getNodeIdsByEids } from '../tugraph.utils';
+import { readTuGraphConfig } from '../util';
 import { ILanguageQueryParams, INeighborsParams } from './serviceInterface';
 const fs = require('fs');
 
@@ -62,39 +63,71 @@ class TuGraphService extends Service {
     });
 
     if (result.status !== 200) {
-      return {
-        success: false,
-        code: result.status,
-        data: result.data,
-      };
+      return result.data;
     }
 
-    const elementIds = getNodeIdsByResponse(result.data);
-    const { nodeIds } = elementIds;
+    // 如果返回有Eid,就使用Eid组装nodeIds
+    const nodeIds = [...new Set([...getNodeIdsByEids(result).nodeIds, ...getNodeIds(result)])];
+
     // 拿到节点 ID 后，查询子图
 
-    const subGraphResult = await this.ctx.curl(`${engineServerURL}/db/${graphName}/misc/sub_graph`, {
-      headers: {
-        'content-type': 'application/json',
-        Authorization: authorization,
-      },
-      method: 'POST',
-      data: {
-        vertex_ids: nodeIds,
-      },
-      timeout: [30000, 50000],
-      dataType: 'json',
-    });
-
-    if (subGraphResult.status !== 200) {
+    if (nodeIds.length === 0) {
       return {
-        success: false,
-        code: result.status,
-        data: subGraphResult.data,
+        nodes: [],
+        edges: [],
       };
     }
 
+    const subGraphResult = await this.ctx
+      .curl(`${engineServerURL}/cypher`, {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: authorization,
+        },
+        method: 'POST',
+        data: {
+          // vertex_ids: nodeIds,
+          graph: graphName,
+          script: `call db.subgraph([${nodeIds}])`,
+        },
+        timeout: [30000, 50000],
+        dataType: 'json',
+      })
+      .then(res => {
+        const graphData = JSON.parse(res.data.result[0]);
+
+        graphData.nodes.forEach(item => {
+          item.vid = item.identity;
+        });
+
+        graphData.relationships.forEach(item => {
+          item.source = item.src;
+          item.destination = item.dst;
+          item.uid = `${item.src}_${item.dst}_${item.label_id}_${item.temporal_id}_${item.identity}`;
+        });
+        return {
+          status: res.status,
+          data: graphData,
+        };
+      });
+
+    if (subGraphResult.status !== 200) {
+      return subGraphResult.data;
+    }
+
+    // if (getNodeIdsByEids(result).edgeIds.length) {
+    //   let relationships: any[] = [];
+    //   getNodeIdsByEids(result).edgeIds.find(eid => {
+    //     let target = subGraphResult.data.relationships.find(item => item.uid === eid);
+    //     target && relationships.push(target);
+    //   });
+    //   subGraphResult.data.relationships = relationships;
+    // }
+    // const GRAPH_DATA = craeteGraphData(subGraphResult, 'GRAPH_DATA', 'queryByCypher');
+    // console.log('GRAPH_DATA', GRAPH_DATA);
+
     const { nodes, relationships } = subGraphResult.data;
+    console.log('subGraphResult.data', subGraphResult.data);
 
     const graphData = {
       nodes: nodes.map(node => {
