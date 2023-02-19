@@ -1,6 +1,9 @@
 import { GIConfig } from '@antv/gi-sdk';
 import { produce } from 'immer';
+import localforage from 'localforage';
 import React from 'react';
+//@ts-ignore
+window.localforage = localforage;
 interface ThemeVars {
   id: string;
   name: string;
@@ -92,9 +95,8 @@ const useTheme = (context, updateState) => {
 
       const defaultThemes = [lightTheme, darkTheme];
 
-      //@ts-ignore
-      const { localforage } = window;
       localforage.getItem(projectId).then(project => {
+        //@ts-ignore
         localforage.setItem(projectId, { ...project, themes: defaultThemes });
         updateState(draft => {
           draft.themes = defaultThemes;
