@@ -67,6 +67,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
         engineContext,
         //@ts-ignore
         projectConfig: {
+          //@ts-ignore
           components,
         },
       });
