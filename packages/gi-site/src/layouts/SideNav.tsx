@@ -16,13 +16,18 @@ const OPEN_ITEMS = [
   { label: '资产管理', key: '/open/assets', icon: <PlusOutlined /> },
   { label: '引擎管理', key: '/open/engines', icon: <MenuUnfoldOutlined /> },
   { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
+  { label: '图应用', key: '/open/portal', icon: <AppstoreOutlined /> },
+  { label: '实验室', key: '/open/lab', icon: <AppstoreOutlined /> },
+  { label: '版本通知', key: '/open/version', icon: <AppstoreOutlined /> },
+  { label: '解决方案', key: '/open/solution', icon: <AppstoreOutlined /> },
 ];
 
 const WORKBOOK_ITEMS = [
-  { label: '我的画布', key: '/workbook/project', icon: <PlusOutlined /> },
+  { label: '新建画布', key: '/workbook/create', icon: <PlusOutlined /> },
+  { label: '我的画布', key: '/workbook/project', icon: <GlobalOutlined /> },
+  { label: '我的模版', key: '/workbook/template', icon: <AppstoreOutlined /> },
   { label: '我的报表', key: '/workbook/report', icon: <MenuUnfoldOutlined /> },
-  { label: '分享给我的', key: '/workbook/others', icon: <AppstoreOutlined /> },
-  { label: '案例画布', key: '/workbook/case', icon: <AppstoreOutlined /> },
+  { label: '行业案例', key: '/workbook/case', icon: <AppstoreOutlined /> },
 ];
 
 const getItems = location => {
@@ -50,13 +55,12 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   });
   console.log(location.pathname, location);
   const onClick: MenuProps['onClick'] = e => {
-    console.log('click ', e);
     setState({ active: e.key });
     history.push(e.key);
   };
 
   const items = getItems(location);
-  console.log('items', items);
+
   const { active } = state;
   return (
     <div style={{ display: 'flex' }}>

@@ -1,5 +1,5 @@
 import { utils } from '@antv/gi-sdk';
-import { message, notification } from 'antd';
+import { message } from 'antd';
 import request from 'umi-request';
 
 export const GI_SERVICE_INTIAL_GRAPH = {
@@ -17,12 +17,11 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
   service: async params => {
-    const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+    const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_TUGRAPH_SUBGRAPH } = utils.getServerEngineContext();
     let res = {
       nodes: [],
       edges: [],
     };
-    let { graphName } = (params as any) || {};
 
     if (!TUGRAPH_USER_TOKEN) {
       // 没有登录信息，需要先登录再查询 schema
@@ -32,65 +31,44 @@ export const GI_SERVICE_SCHEMA = {
       return;
     }
 
-    if (!graphName) {
-      // 不存在GraphName，则查询子图列表，默认取第一个
-      const subGraphResult = await request(`${HTTP_SERVICE_URL}/api/tugraph/list`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          Authorization: TUGRAPH_USER_TOKEN,
-        },
-      });
-
-      if (subGraphResult) {
-        if (!subGraphResult.success) {
-          message.error(`查询子图列表失败：${subGraphResult.message}`);
-          return;
-        }
-
-        const subGraphList = subGraphResult.data;
-        if (subGraphList && subGraphList.length > 0) {
-          graphName = subGraphList[0].value;
-          utils.setServerEngineContext({
-            CURRENT_TUGRAPH_SUBGRAPH: graphName,
-          });
-        }
-      }
-    }
-
-    if (!graphName) {
-      message.error(`连接的 TuGraph 图数据库中不存在子图，请先创建子图`);
-      return;
-    }
-
     try {
-      const { success, data, code } = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
+      const result = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
         method: 'get',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
           Authorization: TUGRAPH_USER_TOKEN,
         },
         params: {
-          graphName,
+          graphName: CURRENT_TUGRAPH_SUBGRAPH,
         },
       });
+      const { success, data } = result;
+      // if (success) {
+      //   res = data;
+      // }
+      // if (data.code === 401) {
+      //   notification.error({
+      //     message: '认证失败：Unauthorized',
+      //     description: data.data.error_message,
+      //   });
+      //   res = {
+      //     nodes: [],
+      //     edges: [],
+      //   };
+      // }
       if (success) {
-        res = data;
+        return res;
       }
-      if (data.code === 401) {
-        notification.error({
-          message: '认证失败：Unauthorized',
-          description: data.data.error_message,
-        });
-        res = {
-          nodes: [],
-          edges: [],
-        };
-      }
-      return res;
-    } catch (e) {
-      message.error(`图模型查询失败: ${e}`);
+      return {
+        nodes: [],
+        edges: [],
+      };
+    } catch (error) {
+      console.error('error', error);
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
-    return res;
   },
 };

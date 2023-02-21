@@ -7,6 +7,7 @@ import { Icon } from '@antv/gi-sdk';
 import ThemeSwitch from '@antv/gi-theme-antd';
 import { LOGO_URL } from '../../services/const';
 import ThemeVars from '../ThemeVars';
+
 import './index.less';
 
 const { Header } = Layout;
@@ -44,7 +45,7 @@ const BaseNavbar = props => {
         <Link to="/market">云端研发资产</Link>
       </div> */}
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
-        <Link to="/open/assets">开放中心</Link>
+        <Link to="/open/assets">开放市场</Link>
       </div>
     </>
   );
@@ -79,8 +80,8 @@ const BaseNavbar = props => {
             //@ts-ignore
             themeVars={ThemeVars}
             antdCssLinks={{
-              dark: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
-              light: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
+              dark: '/public/css/gi-theme-antd.dark.css', //'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
+              light: '/public/css/gi-theme-antd.light.css', //'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
             }}
             onChange={handleChangeTheme}
             options={[

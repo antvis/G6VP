@@ -1,6 +1,5 @@
 import { EllipsisOutlined } from '@ant-design/icons';
 import { Icon, utils } from '@antv/gi-sdk';
-import { clone } from '@antv/util';
 import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,7 +7,6 @@ import { useImmer } from 'use-immer';
 import ExportConfig from '../../components/Navbar/ExportConfig';
 import ProjectCard from '../../components/ProjectCard';
 import { queryAssets } from '../../services/assets';
-import { GI_SITE } from '../../services/const';
 import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
@@ -32,7 +30,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
     isLoading: true,
-    exportProjectContext: undefined
+    exportProjectContext: undefined,
   });
 
   const [member, setMember] = useImmer({
@@ -65,12 +63,14 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     </Col>
   );
 
-  const confirm = id => {
-    const items = lists.filter(d => d.id !== id);
-    updateState(draft => {
-      draft.lists = items;
-    });
-    ProjectService.removeById(id);
+  const confirm = async id => {
+    const isSuccess = await ProjectService.removeById(id);
+    if (isSuccess) {
+      const items = lists.filter(d => d.id !== id);
+      updateState(draft => {
+        draft.lists = items;
+      });
+    }
   };
 
   const handleShowMemberModal = item => {
@@ -87,14 +87,14 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     });
   };
 
-  const menu = item => (
+  const menu = id => (
     <Menu>
       <Menu.Item>
         <Popconfirm
           title="是否删除该项目?"
           onConfirm={e => {
             e!.preventDefault();
-            confirm(item.id);
+            confirm(id);
           }}
           okText="Yes"
           cancelText="No"
@@ -102,7 +102,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           删除项目
         </Popconfirm>
       </Menu.Item>
-      {!GI_SITE.IS_OFFLINE && <Menu.Item onClick={() => handleShowMemberModal(item)}>成员管理</Menu.Item>}
     </Menu>
   );
   if (state.isLoading) {
@@ -115,7 +114,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     );
   }
 
-  const handleExportSDK = async (projectItem) => {
+  const handleExportSDK = async projectItem => {
     const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
     const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
     queryAssets(activeAssetsKeys).then(activeAssets => {
@@ -131,7 +130,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       const combinedServiceConfig = getCombinedServiceConfig([], assetServices);
       const serviceConfig = utils.uniqueElementsBy(
         [...assetServices, ...combinedServiceConfig],
-        (a, b) => a.id === b.id
+        (a, b) => a.id === b.id,
       );
       const activeAssetsInformation = queryActiveAssetsInformation({
         engineId,
@@ -147,7 +146,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       );
       const projectContext = {
         ...projectItem,
-        engineId, 
+        engineId,
         engineContext,
         id,
         name,
@@ -159,24 +158,23 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         assets: {
           components: {},
           elements: {},
-          layouts: {}
+          layouts: {},
         },
         assetsCenter: { visible: false, hash: 'components' },
         services,
-        serviceConfig: []
-      }
+        serviceConfig: [],
+      };
       updateState(draft => {
         draft.exportProjectContext = projectContext;
       });
-
     });
-  }
+  };
   const handleCancelExportSDK = () => {
     updateState(draft => {
       draft.exportProjectContext = undefined;
     });
-  }
-  const handleDownloadProject = (projectItem) => {
+  };
+  const handleDownloadProject = projectItem => {
     const { projectConfig, name, engineId, ...others } = projectItem;
     const params = {
       ...others,
@@ -194,7 +192,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     document.body.appendChild(elementA);
     elementA.click();
     document.body.removeChild(elementA);
-  }
+  };
 
   return (
     <>

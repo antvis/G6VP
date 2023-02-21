@@ -122,6 +122,7 @@ export const updateById = async (id: string, params: { data?: string; [key: stri
 export const removeById = async (id: string) => {
   if (GI_SITE.IS_OFFLINE) {
     GI_PROJECT_DB.removeItem(id);
+    return true;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/project/delete`, {

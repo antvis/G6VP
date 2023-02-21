@@ -9,10 +9,15 @@ export const GI_PROJECT_DB = localforage.createInstance({
 export const GI_DATASET_DB = localforage.createInstance({
   name: 'gi-dataset',
 });
+export const GI_TEMPLATE_DB = localforage.createInstance({
+  name: 'gi-template',
+});
 //@ts-ignore
 window.GI_PROJECT_DB = GI_PROJECT_DB;
 //@ts-ignore
 window.GI_DATASET_DB = GI_DATASET_DB;
+//@ts-ignore
+window.GI_TEMPLATE_DB = GI_DATASET_DB;
 
 const useUpdate = async () => {
   //@ts-ignore

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, Radio } from 'antd';
 import { createFromIconfontCN } from '@ant-design/icons';
+import { Form, Input, Radio, Select } from 'antd';
+import React, { useState } from 'react';
 
 const { Search } = Input;
 
 const MyIcon = createFromIconfontCN({
-  scriptUrl: 'https://at.alicdn.com/t/font_3381398_5hpi569akv7.js', // 在 iconfont.cn 上生成
+  scriptUrl: 'public/lib/font.js', // 'https://at.alicdn.com/t/font_3381398_5hpi569akv7.js', // 在 iconfont.cn 上生成
 });
 
 const IconSet = {
