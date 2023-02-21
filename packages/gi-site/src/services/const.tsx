@@ -31,12 +31,12 @@ export const GI_SITE = {
 };
 
 export const GI_LOGO_URL = {
-  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*DsXhSJ1x8DUAAAAAAAAAAAAADmJ7AQ/original',
-  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*TawEQ6nGf-AAAAAAAAAAAAAADmJ7AQ/original',
+  light: '/public/image/graphinsight.light.svg',
+  dark: '/public/image/graphinsight.dark.svg',
 };
 export const G6VP_LOGO_URL = {
-  light: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*WDF_R6NLDHwAAAAAAAAAAAAADmJ7AQ/original',
-  dark: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*ckelSIEoPj4AAAAAAAAAAAAADmJ7AQ/original',
+  light: '/public/image/g6vp.light.svg',
+  dark: '/public/image/g6vp.dark.svg',
 };
 
 export const LOGO_URL = GI_SITE.IS_OFFLINE ? G6VP_LOGO_URL : GI_LOGO_URL;

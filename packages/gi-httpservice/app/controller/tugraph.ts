@@ -12,7 +12,7 @@ class TuGraphController extends Controller {
   async connect() {
     const { ctx } = this;
     const params = ctx.request.body;
-    console.log(params);
+
     const { username, password, serverUrl } = params;
     const result = await ctx.service.tugraph.connect(username, password, serverUrl);
     responseData(ctx, result);

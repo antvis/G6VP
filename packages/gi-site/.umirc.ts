@@ -99,6 +99,53 @@ const externalScripts = isDev
 //@ts-ignore
 const { BUILD_MODE } = process.env;
 console.log('BUILD_MODE', BUILD_MODE);
+const EXTRA_CONFIG = BUILD_MODE
+  ? {}
+  : {
+      externals: {
+        lodash: '_',
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        '@antv/graphin': 'Graphin',
+        '@antv/g6': 'G6',
+        antd: 'antd',
+        '@ant-design/charts': 'charts',
+        '@ant-design/icons': 'icons',
+        moment: 'moment',
+        xlsx: 'XLSX',
+        '@antv/g2plot': 'G2Plot',
+        localforage: 'localforage',
+        ...externals,
+      },
+      scripts: [
+        'https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js',
+        'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
+        'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+        'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
+        'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
+        `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
+
+        /** Graphin */
+        `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+        `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+
+        /**  G2Plot */
+        `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
+        'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
+
+        /** GI */
+        ...externalScripts,
+
+        /** editor */
+        'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
+      ],
+      styles: [
+        ...externalScripts.map(c => {
+          return c.replace('min.js', 'css');
+        }),
+        `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
+      ],
+    };
 export default {
   base: '/',
   publicPath: BUILD_MODE ? '/public/' : '/',
@@ -212,50 +259,10 @@ export default {
       ],
     },
   ],
-
-  externals: {
-    lodash: '_',
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    '@antv/graphin': 'Graphin',
-    '@antv/g6': 'G6',
-    antd: 'antd',
-    '@ant-design/charts': 'charts',
-    '@ant-design/icons': 'icons',
-    moment: 'moment',
-    xlsx: 'XLSX',
-    '@antv/g2plot': 'G2Plot',
-    localforage: 'localforage',
-    ...externals,
+  request: {
+    dataField: '',
   },
-  scripts: [
-    'https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js',
-    'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
-    'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-    'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
-    'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
-    `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
-
-    /** Graphin */
-    `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
-    `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
-
-    /**  G2Plot */
-    `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
-    'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
-
-    /** GI */
-    ...externalScripts,
-
-    /** editor */
-    'https://gw.alipayobjects.com/os/lib/xlsx/0.18.5/dist/xlsx.mini.min.js',
-  ],
-  styles: [
-    ...externalScripts.map(c => {
-      return c.replace('min.js', 'css');
-    }),
-    `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
-  ],
+  ...EXTRA_CONFIG,
   analyze: {
     analyzerMode: 'server',
     analyzerPort: 8888,
