@@ -1,6 +1,9 @@
 import { GIConfig } from '@antv/gi-sdk';
 import { produce } from 'immer';
+import localforage from 'localforage';
 import React from 'react';
+//@ts-ignore
+window.localforage = localforage;
 interface ThemeVars {
   id: string;
   name: string;

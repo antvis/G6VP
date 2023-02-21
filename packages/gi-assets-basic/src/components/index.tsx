@@ -33,6 +33,7 @@ import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import SideSelectTabs from './SideSelectTabs';
+import SimpleLayout from './SimpleLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
@@ -42,6 +43,7 @@ import ZoomStatus from './ZoomStatus';
 // import CreateCombo from './CreateCombo';
 
 export {
+  SimpleLayout,
   Initializer,
   Save,
   Placeholder,

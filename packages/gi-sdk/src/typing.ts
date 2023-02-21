@@ -41,6 +41,10 @@ export interface State {
       serviceId: 'GI_SERVICE_INTIAL_GRAPH' | string;
     };
   };
+  GICC_LAYOUT: {
+    id: string;
+    props: any;
+  };
   /** 画布的配置,等同props.config */
   config: GIConfig;
   /** 画布所有注册的服务 */
@@ -83,8 +87,10 @@ export interface Props {
 }
 
 export type AssetType =
-  | 'AUTO' // 自加载组件
-  | 'GICC' // 容器组件
+  | 'AUTO' // 自加载组件 initializer
+  | 'INITIALIZER' // 初始化组件
+  | 'GICC' // 容器组件，可以多选
+  | 'GICC_LAYOUT' // 布局容器组件,只能单选
   | 'GICC_MENU' // 容器组件（菜单）
   | 'GIAC' // 原子组件
   | 'GIAC_CONTENT' //原子组件（内容）
@@ -239,6 +245,8 @@ export interface GIMeta {
 export interface GIComponentConfig {
   id: string;
   name?: string;
+  // 资产类型
+  type: AssetType;
   props: {
     GI_CONTAINER?: string[];
     GI_CONTAINER_INDEX?: number;
