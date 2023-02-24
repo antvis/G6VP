@@ -23,7 +23,7 @@ export interface GIAComponentProps {
   className?: string;
 }
 const GIAComponent = (props: GIAComponentProps) => {
-  const { GIAC, onClick, iconFontUrl = '/public/lib/font.js', className, ...others } = props;
+  const { GIAC, onClick, iconFontUrl = '/public/libs/font.js', className, ...others } = props;
   const {
     tooltip,
     tooltipPlacement,
