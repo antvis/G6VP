@@ -2,5 +2,5 @@
 **/.svn
 **/.hg
 **/node_modules
-packages/gi-site/public/lib/*.min.js
+packages/gi-site/public/libs/*.min.js
  
