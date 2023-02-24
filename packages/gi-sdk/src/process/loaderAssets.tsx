@@ -96,10 +96,18 @@ export const loaderAssets = async (packages: AssetPackage[]) => {
  * 获取融合后的资产
  * @returns
  */
+
 export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: any) => {
   let assets;
   if (ASSETS) {
-    assets = ASSETS;
+    const defaultIds = ASSETS.map(item => item.global);
+    const others = packages.filter(pkg => {
+      return defaultIds.indexOf(pkg.global) == -1;
+    });
+    const othersAssets = await loader(others).then(res => {
+      return res;
+    });
+    assets = [...ASSETS, ...othersAssets];
   } else {
     assets = await loader(packages).then(res => {
       return res;
