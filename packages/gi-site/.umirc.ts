@@ -15,7 +15,7 @@ import * as antd from 'antd';
 export const G6_VERSION = '4.7.10';
 export const GRAPHIN_VERSION = '2.7.13';
 export const G2PLOT_VERSION = '2.4.16';
-export const ANTD_VERSION = antd.version;
+export const ANTD_VERSION = antd.version; //4.24.3
 export const GI_VERSION = GI_SDK.version;
 
 /** 是否为本地研发模式 */
@@ -100,7 +100,37 @@ const externalScripts = isDev
 const { BUILD_MODE } = process.env;
 console.log('BUILD_MODE', BUILD_MODE);
 const EXTRA_CONFIG = BUILD_MODE
-  ? {}
+  ? {
+      externals: {
+        lodash: '_',
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        '@antv/graphin': 'Graphin',
+        '@antv/g6': 'G6',
+        antd: 'antd',
+        '@antv/g2plot': 'G2Plot',
+        localforage: 'localforage',
+        '@antv/gi-sdk': 'GISDK',
+      },
+
+      scripts: [
+        { src: `/public/libs/localforage.min.js` },
+        { src: `/public/libs/react.production.min.js` },
+        { src: `/public/libs/react-dom.production.min.js` },
+        { src: `/public/libs/lodash.min.js` },
+        { src: `/public/libs/moment.js` },
+        /** antd */
+        { src: `/public/libs/antd.min.js` },
+        /** Graphin */
+        { src: `/public/libs/g6.min.js` },
+        { src: `/public/libs/graphin.min.js` },
+        /**  G2Plot */
+        { src: `/public/libs/g2plot.min.js` },
+        /**  GISDK */
+        { src: `/public/libs/gi-sdk.min.js` },
+      ],
+      styles: [{ link: `/public/libs/antv/graphin.css` }, { link: `/public/libs/gi-sdk.css` }],
+    }
   : {
       externals: {
         lodash: '_',
@@ -109,10 +139,6 @@ const EXTRA_CONFIG = BUILD_MODE
         '@antv/graphin': 'Graphin',
         '@antv/g6': 'G6',
         antd: 'antd',
-        '@ant-design/charts': 'charts',
-        '@ant-design/icons': 'icons',
-        moment: 'moment',
-        xlsx: 'XLSX',
         '@antv/g2plot': 'G2Plot',
         localforage: 'localforage',
         ...externals,
@@ -149,6 +175,7 @@ const EXTRA_CONFIG = BUILD_MODE
 export default {
   base: '/',
   publicPath: BUILD_MODE ? '/public/' : '/',
+  // publicPath: '/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
