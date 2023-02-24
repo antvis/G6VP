@@ -1,0 +1,74 @@
+.graphin-components-tooltip.top {
+  transform: translate(0, -100%);
+}
+.graphin-components-tooltip.bottom {
+  transform: translate(0, 0);
+}
+.graphin-components-tooltip.right {
+  transform: translate(0, 0);
+}
+.graphin-components-tooltip.left {
+  transform: translate(-100%, 0);
+}
+.graphin-components-tooltip .tooltip-arrow {
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: 0 0;
+  border-style: solid;
+  border-width: 4px;
+  color: #fff;
+}
+.graphin-components-tooltip .tooltip-arrow.top {
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.graphin-components-tooltip .tooltip-arrow.bottom {
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.graphin-components-tooltip .tooltip-arrow.left {
+  left: 100%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.graphin-components-tooltip .tooltip-arrow.right {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+div.graphin-components-tooltip-content {
+  width: 100%;
+  padding: 8px;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+ul.graphin-components-legend-content {
+  display: block;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+}
+ul.graphin-components-legend-content li.item {
+  display: inline-block;
+  vertical-align: top;
+  margin: 5px 10px;
+  cursor: pointer;
+}
+ul.graphin-components-legend-content li.item > .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+ul.graphin-components-legend-content li.item > .label {
+  padding: 0px 5px;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: baseline;
+}
