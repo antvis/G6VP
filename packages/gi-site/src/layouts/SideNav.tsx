@@ -70,8 +70,8 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
       <div
         style={{
           flex: 1,
-          background: 'var(--background-color)',
-          padding: '12px',
+          // background: 'var(--background-color)',
+          padding: '0px 12px',
         }}
       >
         {children}
