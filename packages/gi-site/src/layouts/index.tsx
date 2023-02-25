@@ -19,8 +19,10 @@ const Layout: React.FunctionComponent<ILayoutProps> = props => {
 
   return (
     <>
-      <BaseNavbar active={active}></BaseNavbar>
-      <div className="gi-layout-container">{children}</div>
+      <div className="gi-layout">
+        <BaseNavbar active={active}></BaseNavbar>
+        <div className="gi-layout__container">{children}</div>
+      </div>
     </>
   );
 };

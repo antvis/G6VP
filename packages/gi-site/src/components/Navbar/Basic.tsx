@@ -38,7 +38,7 @@ const BaseNavbar = props => {
       <div className="left">
         <img
           // src="https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg"
-          src={logo}
+          src="/public/image/logo.svg" //{logo}
           alt="logo"
           style={{
             height: '46px',

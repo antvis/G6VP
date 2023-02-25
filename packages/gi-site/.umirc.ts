@@ -174,8 +174,8 @@ const EXTRA_CONFIG = BUILD_MODE
     };
 export default {
   base: '/',
-  publicPath: BUILD_MODE ? '/public/' : '/',
-  // publicPath: '/',
+  // publicPath: BUILD_MODE ? '/public/' : '/',
+  publicPath: '/public/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {

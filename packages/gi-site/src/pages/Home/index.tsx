@@ -21,7 +21,7 @@ const Home = props => {
   };
   return (
     <div className="gi-site-home">
-      <section className="greeting"> 欢迎使用 GraphInsight 遨游关系数据世界～ </section>
+      <section className="greeting"> 让数据栩栩如生，欢迎使用 AntV Insight ～ </section>
       <div className="container">
         <section className="flex-left">
           <Card>

@@ -1,6 +1,7 @@
 import { Select, Typography } from 'antd';
 import React from 'react';
 import { GI_SITE } from '../../services/const';
+import './index.less';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -40,8 +41,9 @@ const DataModeCard = () => {
     // <Popover content={<EnvInfo IS_ONLINE_ENV={!GI_SITE.IS_OFFLINE} />} title="环境说明" trigger="hover">
     // {/* <Button icon={<DatabaseOutlined />}>{title}</Button> */}
     <Select
+      className="gi-select"
       defaultValue={defaultValue}
-      style={{ width: 120, marginRight: '5px' }}
+      style={{ width: 100, marginRight: '5px' }}
       onChange={handleChange}
       options={[
         {
