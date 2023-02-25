@@ -1,8 +1,8 @@
-import { FileAddOutlined, FundOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Space, Tabs } from 'antd';
+import { Card, Tabs } from 'antd';
 import * as React from 'react';
 import DatasetList from '../Dataset/List';
 import WorkbookList from '../Workspace/Projects';
+import GuideCards from './GuideCards';
 import './index.less';
 
 export interface HomeProps {}
@@ -21,10 +21,14 @@ const Home = props => {
   };
   return (
     <div className="gi-site-home">
-      <section className="greeting"> 让数据栩栩如生，欢迎使用 AntV Insight ～ </section>
+      <section className="greeting">
+        {' '}
+        让数据栩栩如生，欢迎使用 AntV Insight，仅需三步，即可完成「数据可视分析」到「数据产品构建」的工作 ～
+      </section>
       <div className="container">
         <section className="flex-left">
-          <Card>
+          <GuideCards history={history} />
+          {/* <Card>
             <Space>
               <div> 第一步:</div>
               <div>
@@ -44,7 +48,7 @@ const Home = props => {
               </div>
               <div> 让你的关系数据跃然纸上，可视化搭建分析画布，设置样式布局，组合分析资产</div>
             </Space>
-          </Card>
+          </Card> */}
           <Card style={{ marginTop: '12px' }}>
             <Tabs items={items}></Tabs>
           </Card>

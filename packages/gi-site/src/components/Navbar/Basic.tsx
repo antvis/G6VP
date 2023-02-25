@@ -47,7 +47,7 @@ const BaseNavbar = props => {
             cursor: 'pointer',
           }}
           onClick={() => {
-            history.push('/workbook/project');
+            history.push('/home');
           }}
         />
         <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>

@@ -34,16 +34,26 @@ const getItems = location => {
   try {
     const module = location.pathname.split('/')[1];
     if (module === 'dataset') {
-      return DATASET_ITEMS;
+      return {
+        name: '数据集',
+        items: DATASET_ITEMS,
+      };
     }
     if (module === 'open') {
-      return OPEN_ITEMS;
+      return {
+        name: '开放市场',
+        items: OPEN_ITEMS,
+      };
     }
     if (module === 'workbook') {
-      return WORKBOOK_ITEMS;
+      return {
+        name: '工作薄',
+        items: WORKBOOK_ITEMS,
+      };
     }
+    return { items: [], name: '未知页面' };
   } catch (error) {
-    return [];
+    return { items: [], name: '未知页面' };
   }
 };
 
@@ -59,13 +69,14 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
     history.push(e.key);
   };
 
-  const items = getItems(location);
+  const { items, name } = getItems(location);
 
   const { active } = state;
   return (
     <div style={{ display: 'flex' }}>
-      <div style={{ width: '240px', paddingRight: '12px' }}>
-        <Menu items={items} onClick={onClick} selectedKeys={[active]} />
+      <div style={{ width: '160px' }}>
+        {/* <h2>{name}</h2> */}
+        <Menu className="gi-layout__side" items={items} onClick={onClick} selectedKeys={[active]} />
       </div>
       <div
         style={{

@@ -1,0 +1,148 @@
+import {
+  AliyunOutlined,
+  BgColorsOutlined,
+  CodeOutlined,
+  DeploymentUnitOutlined,
+  EnvironmentOutlined,
+  FileExcelOutlined,
+  FolderViewOutlined,
+  FundProjectionScreenOutlined,
+  GiftOutlined,
+  LayoutOutlined,
+  MacCommandOutlined,
+  RobotOutlined,
+} from '@ant-design/icons';
+import { Col, Row } from 'antd';
+import * as React from 'react';
+import RadioNote from '../../components/RadioNote';
+interface IGuideCardsProps {
+  history: any;
+}
+const styles: Record<string, React.CSSProperties> = {
+  container: {
+    background: 'var(--background-color)',
+    borderRadius: '4px',
+    margin: '8px',
+    textAlign: 'center',
+    padding: '24px',
+  },
+  title: {
+    // lineHeight: '40px',
+    // height: '40px',
+    fontSize: '15px',
+    marginBottom: '20px',
+  },
+};
+
+const ITEMS = [
+  {
+    name: '第一步 选择数据源',
+    items: [
+      {
+        id: 'DEMO',
+        icon: <FolderViewOutlined />,
+        name: '样例数据',
+      },
+      {
+        id: 'FILE',
+        icon: <FileExcelOutlined />,
+        name: '本地文件',
+      },
+      {
+        id: 'GRAPH',
+        icon: <DeploymentUnitOutlined />,
+        name: '图数据库',
+      },
+      {
+        id: 'GEO',
+        icon: <EnvironmentOutlined />,
+        name: '地理数据库',
+      },
+    ],
+  },
+  {
+    name: '第二步 定制分析画布',
+    items: [
+      {
+        id: 'STYLE',
+        icon: <BgColorsOutlined />,
+        name: '视觉映射',
+      },
+      {
+        id: 'LAYOUT',
+        icon: <LayoutOutlined />,
+        name: '设置布局',
+      },
+      {
+        id: 'ASSETS',
+        icon: <MacCommandOutlined />,
+        name: '组合分析',
+      },
+      {
+        id: 'INSIGHT',
+        icon: <FundProjectionScreenOutlined />,
+        name: '发现洞察',
+      },
+    ],
+  },
+  {
+    name: '第三步 发现更多可能',
+    items: [
+      {
+        id: 'AVA',
+        icon: <RobotOutlined />,
+        name: '智能解读',
+      },
+      {
+        id: 'DEVELOPMENT',
+        icon: <CodeOutlined />,
+        name: '定制开发',
+      },
+      {
+        id: 'DEPLOY',
+        icon: <AliyunOutlined />,
+        name: '集成部署',
+      },
+      {
+        id: 'VIP_ASSETS',
+        icon: <GiftOutlined />,
+        name: 'VIP 资产',
+      },
+    ],
+  },
+];
+
+const GuideCards: React.FunctionComponent<IGuideCardsProps> = props => {
+  const { history } = props;
+  const onChange = item => {
+    const { id } = item;
+    if (id === 'DEMO') {
+      history.push('/dataset/case');
+    }
+    if (id === 'FILE') {
+      history.push('/dataset/create?type=FILE');
+    }
+    if (id === 'GRAPH') {
+      history.push('/dataset/create?type=GRAPH');
+    }
+  };
+  return (
+    <div>
+      <Row>
+        {ITEMS.map(c => {
+          const { name, items } = c;
+          return (
+            <Col span={8} key={name}>
+              <div style={styles.container}>
+                <div style={styles.title}> {name}</div>
+                <RadioNote items={items} onChange={onChange} />
+              </div>
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
+};
+
+export default GuideCards;
