@@ -95,6 +95,16 @@ const DatasetTable = ({ data }) => {
       title: '数据集名称',
       dataIndex: 'name',
       key: 'name',
+      render: (record, data) => {
+        const { type } = data;
+        let tag = type === 'case' ? <Tag color="#3056E3">官方案例</Tag> : '';
+        return (
+          <div>
+            {tag}
+            {record}
+          </div>
+        );
+      },
     },
     {
       title: '数据集ID',
@@ -149,12 +159,12 @@ const DatasetTable = ({ data }) => {
       render: record => {
         return (
           <span>
-            <Tooltip title="创建分析画布" color={'green'}>
+            <Tooltip title="创建分析画布" color={'#3056E3'}>
               <Button type="text" onClick={() => handleAnalysis(record)} style={styles.botton}>
                 <FundProjectionScreenOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="查看数据基详情" color={'blue'}>
+            <Tooltip title="查看数据基详情" color={'green'}>
               <Button type="text" onClick={() => handleView(record)} style={styles.botton}>
                 <TableOutlined />
               </Button>
