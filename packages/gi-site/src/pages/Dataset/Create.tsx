@@ -5,11 +5,12 @@ import {
   FileExcelOutlined,
   GlobalOutlined,
 } from '@ant-design/icons';
-import { EngineServer, Icon, utils } from '@antv/gi-sdk';
+import { utils } from '@antv/gi-sdk';
 import { Input, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
 import RadioNote from '../../components/RadioNote';
+import { getSearchParams } from '../../components/utils';
 import { queryAssets } from '../../services/assets';
 import { createDataset } from '../../services/dataset';
 import { getUid } from '../Workspace/utils';
@@ -67,6 +68,15 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { history } = props;
   //@ts-ignore
 
+  const [state, setState] = React.useState<{ active: string; engines: Record<string, EngineServer[]> }>(() => {
+    const { searchParams, path } = getSearchParams(window.location);
+    const active = searchParams.get('type') || 'FILE';
+    return {
+      active,
+      engines: [],
+    };
+  });
+
   const callback = async params => {
     //@ts-ignore
     const payload = {
@@ -76,30 +86,103 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       gmtCreate: new Date(),
       //@ts-ignore
       name: InputRef.current.input.value,
+      wbType: 'GI',
     };
     console.log('payload', payload);
     await createDataset(payload);
     history.push('/dataset/list');
   };
-  const [state, setState] = React.useState<{ engines: EngineServer[] }>({
-    engines: [],
-  });
 
   React.useEffect(() => {
     (async () => {
       const assets = await queryAssets();
       //@ts-ignore
-      const CustomServer = [...utils.getCombineServer([FileServerEngine, ...assets.services])];
-      setState({
-        engines: CustomServer,
+      const AllEngineServer = [...utils.getCombineServer([FileServerEngine, ...assets.services])];
+
+      const engines = {};
+      AllEngineServer.forEach(item => {
+        const { id, type } = item;
+
+        const FILE_TYPES = ['file', 'FILE', 'FILE_GRAPH', 'FILE_GEO', 'FILE_SQL'];
+        const GRAPH_TYPES = ['database', 'graph', 'GRAPH', 'DB_GRAPH'];
+        const GEO_TYPES = ['DB_GEO', 'GEO'];
+        const API_TYPES = ['API_GRAPH', 'API_GEO', 'API', 'api'];
+        if (FILE_TYPES.indexOf(type) !== -1) {
+          const pre = engines['FILE'];
+          engines['FILE'] = pre ? [...pre, item] : [item];
+        }
+        if (GRAPH_TYPES.indexOf(type) !== -1) {
+          const pre = engines['GRAPH'];
+          engines['GRAPH'] = pre ? [...pre, item] : [item];
+        }
+        if (GEO_TYPES.indexOf(type) !== -1) {
+          const pre = engines['GEO'];
+          engines['GEO'] = pre ? [...pre, item] : [item];
+        }
+        if (API_TYPES.indexOf(type) !== -1) {
+          const pre = engines['API'];
+          engines['API'] = pre ? [...pre, item] : [item];
+        }
+      });
+      setState(preState => {
+        return {
+          ...preState,
+          engines: engines,
+        };
       });
     })();
   }, []);
-  const { engines } = state;
+  const { engines, active } = state;
 
-  const handleChangeType = e => {
-    console.log('e', e);
+  const handleChangeType = value => {
+    const { searchParams, path } = getSearchParams(window.location);
+    searchParams.set('type', value);
+    window.location.hash = `${path}?${searchParams.toString()}`;
+    setState(preState => {
+      return {
+        ...preState,
+        active: value,
+      };
+    });
   };
+
+  const currentEngines = engines[state.active] || [];
+
+  console.log('active', currentEngines.length);
+  const content = currentEngines.map(server => {
+    const { component: ServerComponent, name } = server;
+    if (!ServerComponent) {
+      return null;
+    }
+    const { icon } = TYPE_ICONS[server.type || 'api'];
+
+    const TabTitle = (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {/* <Icon type={icon} style={{ fontSize: '26px' }} /> */}
+        {name}
+      </div>
+    );
+
+    return (
+      <TabPane tab={TabTitle} key={server.id}>
+        {/** @ts-ignore */}
+        <ServerComponent updateGISite={callback} />
+      </TabPane>
+    );
+  });
+  const emptyContent = (
+    <TabPane tab={'开发中'} key="develope">
+      <div style={{ padding: '8px 0px 0px 0px' }}>
+        该类型的数据源还在建设中，请关注我们 github 进展：https://github.com/antvis/G6VP
+      </div>
+    </TabPane>
+  );
 
   return (
     <>
@@ -110,39 +193,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         </div>
         <div>
           <label style={styles.label}>选择数据源类型</label>
-          <RadioNote items={ITEMS} defaultValue="FILE" onChange={handleChangeType} />
+          <RadioNote items={ITEMS} value={active} onChange={handleChangeType} />
         </div>
       </div>
 
       <div style={{ background: '#fff', padding: '24px 24px', borderRadius: '4px' }}>
-        <Tabs tabPosition="left">
-          {engines.map(server => {
-            const { component: ServerComponent, name } = server;
-            if (!ServerComponent) {
-              return null;
-            }
-            const { icon } = TYPE_ICONS[server.type || 'api'];
-
-            const TabTitle = (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Icon type={icon} style={{ fontSize: '26px' }} />
-                {name}
-              </div>
-            );
-            return (
-              <TabPane tab={TabTitle} key={server.id}>
-                {/** @ts-ignore */}
-                <ServerComponent updateGISite={callback} />
-              </TabPane>
-            );
-          })}
-        </Tabs>
+        <Tabs tabPosition="left">{currentEngines.length === 0 ? emptyContent : content}</Tabs>
       </div>
     </>
   );

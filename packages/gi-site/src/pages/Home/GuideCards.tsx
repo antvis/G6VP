@@ -114,8 +114,7 @@ const ITEMS = [
 
 const GuideCards: React.FunctionComponent<IGuideCardsProps> = props => {
   const { history } = props;
-  const onChange = item => {
-    const { id } = item;
+  const onChange = id => {
     if (id === 'DEMO') {
       history.push('/dataset/case');
     }

@@ -9,6 +9,16 @@ ul.gi-radio-note {
     width: 80px;
     display: inline-block;
     margin-right: 12px;
+    &.active {
+      background: rgba(222, 222, 222, 0.3);
+      color: var(--primary-color);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3 ease;
+      &:hover {
+        background: rgba(222, 222, 222, 0.3);
+      }
+    }
     &:hover {
       background: rgba(222, 222, 222, 0.3);
       cursor: pointer;

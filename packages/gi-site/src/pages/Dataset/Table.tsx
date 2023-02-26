@@ -160,7 +160,12 @@ const DatasetTable = ({ data }) => {
         return (
           <span>
             <Tooltip title="创建分析画布" color={'#3056E3'}>
-              <Button type="text" onClick={() => handleAnalysis(record)} style={styles.botton}>
+              <Button
+                type="text"
+                onClick={() => handleAnalysis(record)}
+                // 地图和关系图的分析画布不一样，分别为 gi-workbook 和 li-workbook
+                style={{ ...styles.botton, color: 'var(--primary-color)' }}
+              >
                 <FundProjectionScreenOutlined />
               </Button>
             </Tooltip>

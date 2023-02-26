@@ -9,22 +9,28 @@ interface RadioNoteProps {
   }[];
   defaultValue?: string;
   value?: string;
-  onChange?: (e: { name: string; id: string; icon: React.ReactNode }) => void;
+  onChange?: (id: string) => void;
 }
 
 const RadioNote: React.FunctionComponent<RadioNoteProps> = props => {
-  const { items, value, onChange, defaultValue } = props;
+  const { items, value, onChange } = props;
+  const hasActive = Boolean(value);
 
   return (
     <ul className="gi-radio-note">
       {items.map(item => {
         const { id, icon, name } = item;
+        let activeCls = '';
+        if (hasActive) {
+          activeCls = id === value ? 'active' : '';
+        }
         return (
           <li
             key={id}
             onClick={() => {
-              onChange && onChange(item);
+              onChange && onChange(id);
             }}
+            className={activeCls}
           >
             <div className="icon">{icon}</div>
             <div className="name">{name}</div>
