@@ -6,10 +6,12 @@ import './index.less';
 interface SegmentedTabsProps {
   items: { key: string; children: ReactNode; label?: string; icon?: ReactNode }[];
   queryKey?: string;
+  style?: React.CSSProperties;
+  extra?: ReactNode;
 }
 
 const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
-  const { items, queryKey = 'tab' } = props;
+  const { items, queryKey = 'tab', style = {}, extra = <></> } = props;
 
   const [state, setState] = React.useState<{ active: string }>(() => {
     const { searchParams, path } = getSearchParams(window.location);
@@ -48,6 +50,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
         height: 'calc(100vh - 180px)',
         overflow: 'auto',
         padding: '12px 12px',
+        ...style,
       }}
       title={
         <Segmented
@@ -58,6 +61,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
           onChange={onChange}
         />
       }
+      extra={extra}
     >
       <div className="gi-segmented-tabs">
         {items.map(item => {

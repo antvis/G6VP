@@ -24,7 +24,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: '4px',
     margin: '8px',
     textAlign: 'center',
-    padding: '24px',
+    padding: '24px 0px',
   },
   title: {
     // lineHeight: '40px',

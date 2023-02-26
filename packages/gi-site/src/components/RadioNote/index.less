@@ -3,12 +3,14 @@ ul.gi-radio-note {
   list-style: none;
   margin: 0px;
   padding: 0px;
+
   & > li {
     list-style: none;
     height: 80px;
     width: 80px;
     display: inline-block;
     margin-right: 12px;
+
     &.active {
       background: rgba(222, 222, 222, 0.3);
       color: var(--primary-color);
@@ -33,6 +35,24 @@ ul.gi-radio-note {
     .name {
       text-align: center;
       font-size: 12px;
+    }
+  }
+  @media screen and (max-width: 1530px) {
+    & > li {
+      height: 60px;
+      width: 60px;
+    }
+  }
+  @media screen and (max-width: 1290px) {
+    & > li {
+      height: 90px;
+      width: 90px;
+    }
+  }
+  @media screen and (max-width: 1250px) {
+    & > li {
+      height: 80px;
+      width: 80px;
     }
   }
 }

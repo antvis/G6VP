@@ -1,5 +1,6 @@
-import { Card, Tabs } from 'antd';
+import { Card } from 'antd';
 import * as React from 'react';
+import SegmentedTabs from '../../components/SegmentedTabs';
 import DatasetList from '../Dataset/List';
 import WorkbookList from '../Workspace/Projects';
 import { NOTIFICATION_ITEMS, STUDY_ITEMS } from './const';
@@ -23,15 +24,20 @@ const Home = props => {
   return (
     <div className="gi-site-home">
       <section className="greeting">
-        {' '}
         让数据栩栩如生，欢迎使用 AntV Insight，仅需三步，即可完成「数据可视分析」到「数据产品构建」的工作 ～
       </section>
       <div className="container">
         <section className="flex-left">
           <GuideCards history={history} />
-          <Card style={{ marginTop: '12px' }}>
-            <Tabs items={items}></Tabs>
-          </Card>
+          <div style={{ padding: '4px 8px' }}>
+            <SegmentedTabs
+              items={items}
+              style={{
+                height: 'unset',
+                width: '100%',
+              }}
+            />
+          </div>
         </section>
         <section className="flex-right">
           <Card title="公告通知" style={{ borderRadius: '4px', marginTop: '8px' }}>
