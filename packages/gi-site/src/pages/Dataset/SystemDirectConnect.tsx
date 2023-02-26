@@ -1,7 +1,7 @@
 import { BarsOutlined, CodeOutlined } from '@ant-design/icons';
-import { Segmented } from 'antd';
 import * as React from 'react';
 
+import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
 import * as DatasetServices from '../../services/dataset';
 import * as ProjectServices from '../../services/project';
@@ -39,7 +39,7 @@ const SystemDirectConnect: React.FunctionComponent = props => {
         });
         await DatasetServices.createDataset({
           id,
-
+          engineType: 'DB_GRAPH',
           type: 'system',
           from: 'GraphScope',
           name,
@@ -65,23 +65,26 @@ const SystemDirectConnect: React.FunctionComponent = props => {
   }, []);
   const { lists } = state;
   return (
-    <div style={{ height: 'calc(100vh - 100px)', background: 'var(--background-color)' }}>
-      <Segmented
-        options={[
-          {
-            value: 'list',
-            icon: <BarsOutlined />,
-          },
-          {
-            value: 'code',
-            icon: <CodeOutlined />,
-          },
-        ]}
-        onResize={undefined}
-        onResizeCapture={undefined}
-      />
-      <DatasetTable data={lists} />
-    </div>
+    <SegmentedTabs
+      items={[
+        {
+          key: 'list',
+          icon: <BarsOutlined />,
+          label: '数据列表',
+          children: <DatasetTable data={lists} />,
+        },
+        {
+          key: 'code',
+          icon: <CodeOutlined />,
+          label: '对接说明',
+          children: <>hello....</>,
+        },
+      ]}
+    ></SegmentedTabs>
+
+    // <div style={{ height: 'calc(100vh - 100px)', background: 'var(--background-color)' }}>
+
+    // </div>
   );
 };
 

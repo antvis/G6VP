@@ -242,7 +242,7 @@ export default {
             {
               exact: true,
               path: 'template',
-              component: 'Template/List',
+              component: 'Template/index',
             },
             {
               exact: true,
