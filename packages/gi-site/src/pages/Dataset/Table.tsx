@@ -1,11 +1,46 @@
+import {
+  DeleteOutlined,
+  DeploymentUnitOutlined,
+  EnvironmentOutlined,
+  FileExcelOutlined,
+  FundProjectionScreenOutlined,
+  SendOutlined,
+  TableOutlined,
+} from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Button, Space, Table } from 'antd';
+import { Button, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
 import * as ProjectServices from '../../services/project';
 import { getConfigByEngineId } from '../Workspace/utils';
+
+const styles = {
+  botton: {
+    padding: '4px 8px',
+  },
+};
+const TYPE_MAPPING = {
+  FILE: {
+    id: 'FILE',
+    icon: <FileExcelOutlined />,
+    name: '本地文件',
+    color: 'green',
+  },
+  GRAPH: {
+    id: 'GRAPH',
+    icon: <DeploymentUnitOutlined />,
+    name: '图数据',
+    color: 'blue',
+  },
+  GEO: {
+    id: 'GEO',
+    icon: <EnvironmentOutlined />,
+    name: '地理数据',
+    color: 'orange',
+  },
+};
 const DatasetTable = ({ data }) => {
   const history = useHistory();
 
@@ -67,39 +102,74 @@ const DatasetTable = ({ data }) => {
       key: 'id',
     },
     {
-      title: '所有者',
-      dataIndex: 'owner',
-      key: 'owner',
+      title: '数据源类型',
+      dataIndex: 'category',
+      key: 'category',
+      render: (record, data) => {
+        const { category = 'FILE', engineId } = data;
+        const { icon, name, color } = TYPE_MAPPING[category];
+        const extraInfo = engineId === 'GI' ? '图数据' : '';
+        return (
+          <div>
+            <Tag color={color}>
+              {icon} {name} / {extraInfo}
+            </Tag>
+            {record}
+          </div>
+        );
+      },
     },
     {
-      title: '引擎ID',
+      title: '引擎 ID',
       dataIndex: 'engineId',
       key: 'engineId',
+      render: (record, data) => {
+        let { engineId, category = 'GRAPH' } = data;
+        if (engineId === 'GI') {
+          category = 'GRAPH';
+        }
+        const { icon, color } = TYPE_MAPPING[category];
+
+        return (
+          <div>
+            <Tag color={color}>
+              {icon} {record}
+            </Tag>
+          </div>
+        );
+      },
     },
-    {
-      title: '数据集规模',
-      dataIndex: 'size',
-      key: 'size',
-    },
+    // {
+    //   title: '数据集规模',
+    //   dataIndex: 'size',
+    //   key: 'size',
+    // },
     {
       title: '操作',
       render: record => {
         return (
-          <Space>
-            <Button type="text" onClick={() => handleView(record)}>
-              详情
-            </Button>
-            <Button type="text" onClick={() => handleAnalysis(record)}>
-              分析
-            </Button>
-            <Button type="text" disabled>
-              分享
-            </Button>
-            <Button type="text">复制</Button>
-            <Button type="text" onClick={() => handleDelete(record)}>
-              删除
-            </Button>
-          </Space>
+          <span>
+            <Tooltip title="创建分析画布" color={'green'}>
+              <Button type="text" onClick={() => handleAnalysis(record)} style={styles.botton}>
+                <FundProjectionScreenOutlined />
+              </Button>
+            </Tooltip>
+            <Tooltip title="查看数据基详情" color={'blue'}>
+              <Button type="text" onClick={() => handleView(record)} style={styles.botton}>
+                <TableOutlined />
+              </Button>
+            </Tooltip>
+            <Tooltip title="分享数据集" color={'grey'}>
+              <Button type="text" style={styles.botton}>
+                <SendOutlined />
+              </Button>
+            </Tooltip>
+            <Tooltip title="删除数据集" color={'red'}>
+              <Button type="text" onClick={() => handleDelete(record)} style={{ padding: '4px 4px' }}>
+                <DeleteOutlined />
+              </Button>
+            </Tooltip>
+          </span>
         );
       },
     },

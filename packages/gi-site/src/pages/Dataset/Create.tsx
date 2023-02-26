@@ -72,6 +72,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
     const payload = {
       ...params,
       id: `ds_${getUid()}`,
+      type: 'user',
       gmtCreate: new Date(),
       //@ts-ignore
       name: InputRef.current.input.value,

@@ -39,6 +39,7 @@ const useUpdate = async () => {
       }
       GI_DATASET_DB.setItem(datasetId, {
         id: datasetId,
+        type: 'user',
         engineId,
         engineContext,
         data,

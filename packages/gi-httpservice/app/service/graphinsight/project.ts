@@ -4,12 +4,11 @@ import { IProject } from './typing';
 import { etcd, PROJECT_PREFIX } from './utils';
 
 import { project as BANK_CASE } from './case/bank';
-import { project as SECURITY_NETWORK_CASE } from './case/security-network';
 
 class GIProjectService extends Service {
   // find case
   async findCase() {
-    const cases = [BANK_CASE, SECURITY_NETWORK_CASE];
+    const cases = [BANK_CASE];
     console.log('case......');
     // set case in etcd if not exists
     for (const c of cases) {

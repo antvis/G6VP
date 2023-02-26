@@ -1,4 +1,7 @@
+import { BarsOutlined, CodeOutlined } from '@ant-design/icons';
+import { Segmented } from 'antd';
 import * as React from 'react';
+
 import { getSearchParams } from '../../components/utils';
 import * as DatasetServices from '../../services/dataset';
 import * as ProjectServices from '../../services/project';
@@ -62,7 +65,21 @@ const SystemDirectConnect: React.FunctionComponent = props => {
   }, []);
   const { lists } = state;
   return (
-    <div>
+    <div style={{ height: 'calc(100vh - 100px)', background: 'var(--background-color)' }}>
+      <Segmented
+        options={[
+          {
+            value: 'list',
+            icon: <BarsOutlined />,
+          },
+          {
+            value: 'code',
+            icon: <CodeOutlined />,
+          },
+        ]}
+        onResize={undefined}
+        onResizeCapture={undefined}
+      />
       <DatasetTable data={lists} />
     </div>
   );

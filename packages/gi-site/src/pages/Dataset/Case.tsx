@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as DatasetServices from '../../services/dataset';
 import { getUid } from '../Workspace/utils';
 import DatasetTable from './Table';
 interface CasesProps {}
@@ -183,9 +184,22 @@ const trans = lists => {
 const MOCK_GS_DATASET = trans(GS_GRAPH_LISTS);
 
 const Cases: React.FunctionComponent<CasesProps> = props => {
+  const [state, setState] = React.useState({
+    lists: [],
+  });
+  React.useEffect(() => {
+    (async () => {
+      const res = await DatasetServices.findCase();
+      console.log('res', res);
+      setState({
+        lists: res,
+      });
+    })();
+  }, []);
+  const { lists } = state;
   return (
     <div>
-      <DatasetTable data={MOCK_GS_DATASET} />
+      <DatasetTable data={lists} />
     </div>
   );
 };
