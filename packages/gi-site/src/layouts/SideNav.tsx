@@ -63,7 +63,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   const [state, setState] = React.useState({
     active: location.pathname.split('/').splice(0, 3).join('/'),
   });
-  console.log(location.pathname, location);
+
   const onClick: MenuProps['onClick'] = e => {
     setState({ active: e.key });
     history.push(e.key);
@@ -72,7 +72,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   const { items, name } = getItems(location);
 
   const { active } = state;
-  console.log('active', location, active);
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ width: '160px' }}>

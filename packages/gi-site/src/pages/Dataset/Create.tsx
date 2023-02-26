@@ -148,7 +148,6 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
 
   const currentEngines = engines[state.active] || [];
 
-  console.log('active', currentEngines.length);
   const content = currentEngines.map(server => {
     const { component: ServerComponent, name } = server;
     if (!ServerComponent) {
