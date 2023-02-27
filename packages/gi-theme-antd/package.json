@@ -22,7 +22,7 @@
     "start": "npm run clean && father build --watch",
     "build:es": "npm run clean && father build && npm run build:css",
     "demo": "dumi dev",
-    "build:css": "webpack --env theme=light --config ./webpack.js && webpack  --env theme=dark  --config ./webpack.js",
+    "build:css": "webpack --env theme=light --config ./webpack.js && webpack  --env theme=dark  --config ./webpack.js && webpack  --env theme=ali  --config ./webpack.js",
     "clean:css": "rimraf dist",
     "clean": "rimraf es esm lib",
     "test": "echo \"Error: no test specified\" && exit 1"

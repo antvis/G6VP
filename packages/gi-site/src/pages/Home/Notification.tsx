@@ -13,9 +13,10 @@ const styles: Record<string, React.CSSProperties> = {
     // listStyle: 'none',
   },
   a: {
-    fontSize: '10px',
+    fontSize: '14px',
     // transform: 'scale(0.6)',
     color: 'var(--text-color)',
+    lineHeight: 2,
   },
 };
 

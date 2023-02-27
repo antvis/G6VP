@@ -9,17 +9,16 @@
   a {
     // color: var(--text-color);
     // color: #fff;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 15px;
+    color: var(--text-color);
+    font-size: 14px;
   }
   a:hover {
     /* border: 1px solid red; */
     // padding: 8px 12px;
     // border-radius: 4px;
     // background: rgba(222, 222, 222, 0.5);
-    color: #fff;
     transition: all 0.3s ease;
-    color: rgba(255, 255, 255, 1);
+    color: var(--primary-color);
   }
   .active {
     // border-bottom: 2px solid var(--primary-color);
@@ -28,8 +27,9 @@
 
       padding: 8px 10px;
       border-radius: 4px;
-      background: rgba(222, 222, 222, 0.3);
-      color: rgba(255, 255, 255, 1);
+      background: var(--primary-color-opacity-1);
+      color: var(--primary-color);
+      font-size: 14px;
       transition: all 0.3s ease;
     }
   }
@@ -47,7 +47,7 @@
     }
   }
   .right span:hover {
-    color: #fff;
+    color: var(--primary-color);
   }
 }
 
@@ -60,6 +60,13 @@
       font-size: 16px;
     }
   }
+}
+
+.theme-color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 // // 主题切换隐藏

@@ -12,7 +12,7 @@ import {
   MacCommandOutlined,
   RobotOutlined,
 } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import * as React from 'react';
 import RadioNote from '../../components/RadioNote';
 interface IGuideCardsProps {
@@ -20,8 +20,8 @@ interface IGuideCardsProps {
 }
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    background: 'var(--background-color)',
-    borderRadius: '4px',
+    background: 'var(--background-color-transparent)',
+    borderRadius: '8px',
     margin: '8px',
     textAlign: 'center',
     padding: '24px 0px',
@@ -29,14 +29,17 @@ const styles: Record<string, React.CSSProperties> = {
   title: {
     // lineHeight: '40px',
     // height: '40px',
-    fontSize: '15px',
-    marginBottom: '20px',
+    fontSize: '16px',
+    marginBottom: '12px',
+  },
+  divider: {
+    margin: '8px 0',
   },
 };
 
 const ITEMS = [
   {
-    name: '第一步 选择数据源',
+    name: 'Step 1：选择数据源',
     items: [
       {
         id: 'DEMO',
@@ -61,7 +64,7 @@ const ITEMS = [
     ],
   },
   {
-    name: '第二步 定制分析画布',
+    name: 'Step 2：定制分析画布',
     items: [
       {
         id: 'STYLE',
@@ -86,7 +89,7 @@ const ITEMS = [
     ],
   },
   {
-    name: '第三步 发现更多可能',
+    name: 'Step 3：发现更多可能',
     items: [
       {
         id: 'AVA',
@@ -134,6 +137,7 @@ const GuideCards: React.FunctionComponent<IGuideCardsProps> = props => {
             <Col span={8} key={name}>
               <div style={styles.container}>
                 <div style={styles.title}> {name}</div>
+                <Divider style={styles.divider} />
                 <RadioNote items={items} onChange={onChange} />
               </div>
             </Col>

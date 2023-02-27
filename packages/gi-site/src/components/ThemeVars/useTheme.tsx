@@ -14,13 +14,19 @@ interface ThemeVars {
 const THEME_VARS = {
   light: {
     id: 'light',
-    name: '白天模式',
+    name: '科技蓝',
     textColor: '#000',
     backgroundColor: '#fff',
   },
+  ali: {
+    id: 'ali',
+    name: '阿里橙',
+    textColor: '#fff',
+    backgroundColor: '#1f1f1f',
+  },
   dark: {
     id: 'dark',
-    name: '黑夜模式',
+    name: '暗夜黑',
     textColor: '#fff',
     backgroundColor: '#1f1f1f',
   },
@@ -76,6 +82,7 @@ const useTheme = (context, updateState) => {
       if (!themes) {
         //如果初始化阶段 Themes，则默认提供黑白两套主题的配置
         const lightConfig = getConfigByTheme(config, 'light');
+        const aliConfig = getConfigByTheme(config, 'ali');
         const darkConfig = getConfigByTheme(config, 'dark');
 
         //需要和「ThemeSetting」资产做联动
@@ -83,18 +90,25 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(lightConfig),
           nodesConfig: lightConfig.nodes,
           edgesConfig: lightConfig.edges,
-          name: '白天模式',
+          name: '科技蓝',
           id: 'light',
+        };
+        const aliTheme = {
+          canvasConfig: getCanvasStyle(aliConfig),
+          nodesConfig: lightConfig.nodes,
+          edgesConfig: lightConfig.edges,
+          name: '阿里橙',
+          id: 'ali',
         };
         const darkTheme = {
           canvasConfig: getCanvasStyle(darkConfig),
           nodesConfig: darkConfig.nodes,
           edgesConfig: darkConfig.edges,
-          name: '黑夜模式',
+          name: '暗夜黑',
           id: 'dark',
         };
 
-        const defaultThemes = [lightTheme, darkTheme];
+        const defaultThemes = [lightTheme, aliTheme, darkTheme];
 
         //@ts-ignore
         const { GI_PROJECT_DB } = window;
@@ -106,7 +120,9 @@ const useTheme = (context, updateState) => {
         updateState(draft => {
           draft.themes = defaultThemes;
           draft.theme = themeValue;
-          draft.config = themeValue === 'light' ? lightConfig : darkConfig;
+          if (themeValue === 'light') draft.config = lightConfig;
+          else if (themeValue === 'ali') draft.config = aliConfig;
+          else draft.config = darkConfig;
         });
       }
     })();

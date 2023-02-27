@@ -32,10 +32,12 @@ export const GI_SITE = {
 
 export const GI_LOGO_URL = {
   light: '/public/image/graphinsight.light.svg',
+  ali: '/public/image/graphinsight.light.svg',
   dark: '/public/image/graphinsight.dark.svg',
 };
 export const G6VP_LOGO_URL = {
   light: '/public/image/g6vp.light.svg',
+  ali: '/public/image/g6vp.light.svg',
   dark: '/public/image/g6vp.dark.svg',
 };
 

@@ -30,8 +30,6 @@ const BaseNavbar = props => {
     onChangeTheme && onChangeTheme(val);
   };
 
-  const defaultLeft = <></>;
-
   const { children } = props;
   return (
     <Header className="gi-navbar-container">
@@ -71,18 +69,49 @@ const BaseNavbar = props => {
             //@ts-ignore
             themeVars={ThemeVars}
             antdCssLinks={{
-              dark: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
-              light: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
+              // dark: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
+              // light: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
+              dark: 'public/css/gi-theme-antd.dark.css',
+              light: 'public/css/gi-theme-antd.light.css',
+              ali: 'public/css/gi-theme-antd.ali.css',
             }}
             onChange={handleChangeTheme}
             options={[
               {
                 value: 'light',
-                icon: <Icon type="icon-taiyang" />,
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(48, 86, 227, 0.5)',
+                    }}
+                  />
+                ),
+                name: '科技蓝',
+              },
+              {
+                value: 'ali',
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(255, 106, 0, 0.5)',
+                    }}
+                  />
+                ),
+                name: '阿里橙',
               },
               {
                 value: 'dark',
-                icon: <Icon type="icon-moon_line" />,
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(31, 31, 31, 0.5)',
+                    }}
+                  />
+                ),
+                name: '暗夜黑',
               },
             ]}
           ></ThemeSwitch>

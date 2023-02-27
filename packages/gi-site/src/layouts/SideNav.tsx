@@ -74,7 +74,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
   const { active } = state;
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', height: '-webkit-fill-available' }}>
       <div style={{ width: '160px' }}>
         {/* <h2>{name}</h2> */}
         <Menu className="gi-layout__side" items={items} onClick={onClick} selectedKeys={[active]} />

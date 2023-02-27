@@ -12,29 +12,31 @@
 // }
 
 .gi-layout {
-  background-image: url(https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*kAOfT7XHbwEAAAAAAAAAAAAADmJ7AQ/original);
-  background-size: 100%;
+  background-color: var(--layout-background-color);
+  background-image: var(--layout-background);
   height: 100%;
-  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
   & > header {
     background: transparent !important;
   }
   &__container {
     background: transparent !important;
     padding: 12px 48px 0px 48px;
+    height: calc(100vh - 100px);
   }
   &__side {
     border: none !important;
     background: transparent !important;
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: var(--text-color) !important;
 
     .ant-menu-item:hover {
-      color: rgba(255, 255, 255, 1) !important;
+      color: var(--primary-color) !important;
     }
     .ant-menu-item-selected {
-      border-radius: 4px;
-      background: rgba(222, 222, 222, 0.3) !important;
-      color: #fff !important;
+      border-radius: 6px;
+      background: var(--primary-color-opacity-1) !important;
+      color: var(--primary-color) !important;
       transition: all 0.3 ease;
     }
   }

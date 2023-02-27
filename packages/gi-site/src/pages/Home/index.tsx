@@ -23,28 +23,27 @@ const Home = props => {
   };
   return (
     <div className="gi-site-home">
-      <section className="greeting">
-        让数据栩栩如生，欢迎使用 AntV Insight，仅需三步，即可完成「数据可视分析」到「数据产品构建」的工作 ～
-      </section>
+      <section className="greeting">让数据栩栩如生，三步完成从「数据可视分析」到「数据产品构建」～</section>
       <div className="container">
         <section className="flex-left">
           <GuideCards history={history} />
-          <div style={{ padding: '4px 8px' }}>
+          <div style={{ padding: '4px 8px', height: '-webkit-fill-available' }}>
             <SegmentedTabs
               items={items}
               style={{
                 height: 'unset',
                 width: '100%',
+                borderRadius: '6px',
               }}
             />
           </div>
         </section>
         <section className="flex-right">
-          <Card title="公告通知" style={{ borderRadius: '4px', marginTop: '8px' }}>
+          <Card title="公告通知" style={{ borderRadius: '8px', marginTop: '8px' }}>
             <Notification items={NOTIFICATION_ITEMS} />
             <img src="/public/image/QRCode.jpg" width={'100%'} />
           </Card>
-          <Card title="学习专区" style={{ marginTop: '12px', borderRadius: '4px' }}>
+          <Card title="学习专区" style={{ marginTop: '12px', borderRadius: '8px' }}>
             <Notification items={STUDY_ITEMS} />
           </Card>
         </section>
