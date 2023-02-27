@@ -1,7 +1,7 @@
 const info = {
-  id: 'SimpleLayout',
-  name: '简单布局',
-  desc: '支持左、右、下三个方向资产布局',
+  id: 'QueryLayout',
+  name: '查询布局',
+  desc: '重点支持语句查询的布局',
   icon: 'icon-layout',
   cover: 'http://xxxx.jpg',
   category: 'container-components',

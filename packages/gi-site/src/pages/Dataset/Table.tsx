@@ -156,6 +156,7 @@ const DatasetTable = ({ data }) => {
     // },
     {
       title: '操作',
+      width: '160px',
       render: record => {
         return (
           <span>
