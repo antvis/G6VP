@@ -1482,7 +1482,10 @@ export const project: ICase = {
   type: 'case',
   name: '银行案例',
   gmtCreate: '2022-11-22',
-  id: 'pj-case-bank',
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  datasetId: 'ds_case_bank_xxxx',
+  id: 'wb-case-bank',
   title: '在银行反洗钱分析场景的应用实践',
   tag: '金融风控',
   author: '山果',
@@ -1492,11 +1495,17 @@ export const project: ICase = {
 };
 
 export const dataset: IDataset = {
-  id: 'ds_case_bank',
+  id: 'ds_case_bank_xxxx',
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  name: '银行反洗钱案例数据',
   engineId: 'GI',
   engineContext: {},
   gmtCreate: '2022-11-22',
   schemaData: schema,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  engineType: 'FILE_GRAPH',
   data: {
     inputData: [
       {

@@ -36,12 +36,12 @@ export default (app: Application) => {
   // dataset 数据集
   router.get('/dataset/list', controller.dataset.list);
   router.post('/dataset/create', controller.dataset.create);
-  router.get('/dataset/:id', controller.dataset.getById);
+  router.get('/dataset/case', controller.dataset.findCase);
   router.post('/dataset/delete', controller.dataset.removeById);
+  router.get('/dataset/:id', controller.dataset.getById);
 
   // router.post('/dataset/delete', controller.graphinsight.removeProjectById);
   // router.post('/dataset/update', controller.graphinsight.updateProjectById);
-  // router.get('/dataset/case', controller.graphinsight.findCase);
 
   // project 工作薄
   router.post('/project/create', controller.graphinsight.createProject);

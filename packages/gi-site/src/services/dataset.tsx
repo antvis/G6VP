@@ -45,24 +45,31 @@ export const queryDatasetList = async () => {
     const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
       method: 'get',
     });
-    return response.data;
+
+    return response.data.filter(item => {
+      return item.type === 'user';
+    });
   }
 };
 export const systemDirectConnectList = async () => {
   if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
     await GI_DATASET_DB.iterate((item: IDataset) => {
-      if (item.from) {
+      if (item.type == 'system') {
         res.push(item);
       }
     });
     return res;
-  } else {
-    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
-      method: 'get',
-    });
-    return response.data;
   }
+
+  const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
+    method: 'get',
+  });
+  const systemDatasets = response.data.filter(item => {
+    return item.type === 'system';
+  });
+
+  return systemDatasets;
 };
 
 export const deleteDataset = async (id: string) => {
@@ -96,7 +103,6 @@ export const findCase = async () => {
     if (res.length !== DATASET_CASE.length) {
       //@ts-ignore
       res.push(...DATASET_CASE);
-
       for (const item of DATASET_CASE) {
         await GI_DATASET_DB.setItem(item.id, item);
       }
