@@ -2,10 +2,18 @@
   .greeting {
     display: block;
     padding: 12px;
-    color: #fff;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.7px;
+    margin-bottom: 0.5em;
+    height: 100%;
   }
   .container {
     display: flex;
+    /** 52px is the height of greeting line; 100px is the sum of header height and bottom margin */
+    height: calc(100vh - 52px - 100px);
   }
   .flex-left {
     display: flex;

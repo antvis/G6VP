@@ -185,7 +185,14 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
 
   return (
     <>
-      <div style={{ marginBottom: '12px', background: '#fff', padding: '24px 24px', borderRadius: '4px' }}>
+      <div
+        style={{
+          marginBottom: '12px',
+          background: 'var(--background-color)',
+          padding: '24px 24px',
+          borderRadius: '8px',
+        }}
+      >
         <div style={{ marginBottom: '12px' }}>
           <label style={styles.label}>填写数据集名称</label>
           <Input placeholder="请输入数据集名称" ref={InputRef} style={{ width: '400px' }}></Input>
@@ -196,7 +203,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         </div>
       </div>
 
-      <div style={{ background: '#fff', padding: '24px 24px', borderRadius: '4px' }}>
+      <div style={{ background: 'var(--background-color)', padding: '24px 24px', borderRadius: '8px' }}>
         <Tabs tabPosition="left">{currentEngines.length === 0 ? emptyContent : content}</Tabs>
       </div>
     </>

@@ -27,7 +27,7 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
 
   return (
     <Card
-      style={{ borderRadius: '4px' }}
+      style={{ borderRadius: '8px' }}
       // bodyStyle={{ padding: '24px 12px' }}
       title={
         <Breadcrumb>

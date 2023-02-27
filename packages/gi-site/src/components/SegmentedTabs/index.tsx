@@ -44,7 +44,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
 
   return (
     <Card
-      style={{ borderRadius: '4px' }}
+      style={{ borderRadius: '8px', height: '100%' }}
       bodyStyle={{
         width: 'calc(100vw - 300px)',
         height: 'calc(100vh - 180px)',

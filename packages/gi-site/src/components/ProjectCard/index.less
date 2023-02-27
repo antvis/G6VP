@@ -14,7 +14,7 @@
   background-color: var(--background-color-card);
   box-shadow: 0 2px 5px 0 rgba(0, 10, 26, 0.1), 0 3px 5px -2px rgba(0, 10, 26, 0.1), 0 1px 5px 0 rgba(0, 10, 26, 0.1);
   cursor: pointer;
-  
+
   .content-wrapper {
     display: flex;
     .cover {
@@ -35,23 +35,22 @@
       justify-content: space-around;
       height: @contentHeight;
       margin-left: 8px;
-  
-  
+
       .title {
         font-weight: 600;
         font-size: 16px;
-        color: rgba(0, 10, 26, 0.9);
+        color: var(--text-color);
       }
       .desc {
         overflow: hidden;
-        color: rgba(0, 10, 26, 0.47);
+        color: var(--text-color-2);
         font-size: 12px;
         font-size: 12px;
         text-overflow: ellipsis;
       }
       .time {
         font-size: 12px;
-        color: rgba(0, 10, 26, 0.47);
+        color: var(--text-color-2);
       }
     }
   }
@@ -66,13 +65,13 @@
     justify-content: space-between;
     display: flex;
     .action {
-      color: rgba(0, 10, 26, 0.68);
+      color: var(--text-color);
       height: 32px;
       line-height: 32px;
       margin-top: -4px;
       margin-bottom: 0;
       &:hover {
-        color: #1890FF;
+        color: var(--primary-color);
       }
     }
     .divider-vertical {

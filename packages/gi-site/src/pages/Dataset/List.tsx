@@ -18,7 +18,7 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
   }, []);
   const { lists } = state;
   return (
-    <div>
+    <div style={{ height: '-webkit-fill-available', backgroundColor: 'var(--background-color)', borderRadius: '8px' }}>
       <DatasetTable data={lists} />
     </div>
   );
