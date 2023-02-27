@@ -20,6 +20,8 @@ export interface IDataset {
   schemaData: GraphSchemaData;
   /** 初始化图数据 */
   data?: GIGraphData;
+  /** 进入回收站的时间(时间戳)，有值代表处于回收站中，数据集列表不应展示 */
+  recycleTime?: number;
 }
 
 export interface ITemplate {
