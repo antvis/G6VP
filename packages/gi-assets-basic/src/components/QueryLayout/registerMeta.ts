@@ -1,4 +1,6 @@
 const registerMeta = () => {
-  return {};
+  return {
+    queryItems: {},
+  };
 };
 export default registerMeta;
