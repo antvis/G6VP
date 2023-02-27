@@ -1,12 +1,41 @@
-.gi-layout-container {
-  height: calc(100% - 64px);
-  padding: 12px 48px 48px 48px;
-  overflow-y: scroll;
-  background: var(--background-color-2);
-  .ant-card-bordered .ant-card-cover {
-    margin-top: 0px;
-    margin-right: 0px;
-    margin-left: 0px;
-    border-bottom: 1px solid #f0f0f0;
+// .gi-layout-container {
+//   height: calc(100% - 64px);
+//   padding: 12px 48px 48px 48px;
+//   overflow-y: scroll;
+//   background: var(--background-color-2);
+//   .ant-card-bordered .ant-card-cover {
+//     margin-top: 0px;
+//     margin-right: 0px;
+//     margin-left: 0px;
+//     border-bottom: 1px solid #f0f0f0;
+//   }
+// }
+
+.gi-layout {
+  background-image: url(https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*kAOfT7XHbwEAAAAAAAAAAAAADmJ7AQ/original);
+  background-size: 100%;
+  height: 100%;
+  width: 100%;
+  & > header {
+    background: transparent !important;
+  }
+  &__container {
+    background: transparent !important;
+    padding: 12px 48px 0px 48px;
+  }
+  &__side {
+    border: none !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+
+    .ant-menu-item:hover {
+      color: rgba(255, 255, 255, 1) !important;
+    }
+    .ant-menu-item-selected {
+      border-radius: 4px;
+      background: rgba(222, 222, 222, 0.3) !important;
+      color: #fff !important;
+      transition: all 0.3 ease;
+    }
   }
 }

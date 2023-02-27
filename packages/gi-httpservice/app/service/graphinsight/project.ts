@@ -1,15 +1,14 @@
 import { Service } from 'egg';
 
 import { IProject } from './typing';
-import { etcd, PROJECT_PREFIX } from './utils';
+import { etcd, WORKBOOK_PREFIX } from './utils';
 
 import { project as BANK_CASE } from './case/bank';
-import { project as SECURITY_NETWORK_CASE } from './case/security-network';
 
 class GIProjectService extends Service {
   // find case
   async findCase() {
-    const cases = [BANK_CASE, SECURITY_NETWORK_CASE];
+    const cases = [BANK_CASE];
     console.log('case......');
     // set case in etcd if not exists
     for (const c of cases) {
@@ -29,7 +28,7 @@ class GIProjectService extends Service {
     const projects: IProject[] = [];
 
     // get projects from etcd
-    const projectIDs = await etcd.getAll().prefix(PROJECT_PREFIX).keys();
+    const projectIDs = await etcd.getAll().prefix(WORKBOOK_PREFIX).keys();
     for (const id of projectIDs) {
       const v = await etcd.get(id).string();
       const p = JSON.parse(v || '{}');
@@ -48,7 +47,7 @@ class GIProjectService extends Service {
 
   // create project
   async createProject(params) {
-    params.id = `${PROJECT_PREFIX}${params.id}`;
+    params.id = `${WORKBOOK_PREFIX}${params.id}`;
     const { id } = params;
     await etcd.put(id).value(JSON.stringify(params));
     return id;

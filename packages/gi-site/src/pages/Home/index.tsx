@@ -1,10 +1,12 @@
-import { FileAddOutlined, FundOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Space, Tabs } from 'antd';
+import { Card } from 'antd';
 import * as React from 'react';
+import SegmentedTabs from '../../components/SegmentedTabs';
 import DatasetList from '../Dataset/List';
 import WorkbookList from '../Workspace/Projects';
+import { NOTIFICATION_ITEMS, STUDY_ITEMS } from './const';
+import GuideCards from './GuideCards';
 import './index.less';
-
+import Notification from './Notification';
 export interface HomeProps {}
 
 const Home = props => {
@@ -21,37 +23,30 @@ const Home = props => {
   };
   return (
     <div className="gi-site-home">
-      <section className="greeting"> 欢迎使用 GraphInsight 遨游关系数据世界～ </section>
+      <section className="greeting">
+        让数据栩栩如生，欢迎使用 AntV Insight，仅需三步，即可完成「数据可视分析」到「数据产品构建」的工作 ～
+      </section>
       <div className="container">
         <section className="flex-left">
-          <Card>
-            <Space>
-              <div> 第一步:</div>
-              <div>
-                <Button type="text" icon={<FileAddOutlined style={{ fontSize: '18px' }} />} onClick={createDataset}>
-                  创建数据集
-                </Button>
-              </div>
-              <div> 巧妇难为无米之炊，支持本地文件，图数据库，图计算引擎，在线 API 等 10+ 数据源</div>
-            </Space>
-            <Divider />
-            <Space>
-              <div>第二步:</div>
-              <div>
-                <Button type="text" icon={<FundOutlined style={{ fontSize: '18px' }} />} onClick={createWookbook}>
-                  创建工作薄
-                </Button>
-              </div>
-              <div> 让你的关系数据跃然纸上，可视化搭建分析画布，设置样式布局，组合分析资产</div>
-            </Space>
-          </Card>
-          <Card style={{ marginTop: '12px' }}>
-            <Tabs items={items}></Tabs>
-          </Card>
+          <GuideCards history={history} />
+          <div style={{ padding: '4px 8px' }}>
+            <SegmentedTabs
+              items={items}
+              style={{
+                height: 'unset',
+                width: '100%',
+              }}
+            />
+          </div>
         </section>
         <section className="flex-right">
-          <Card title="公告通知"></Card>
-          <Card title="学习专区" style={{ marginTop: '12px' }}></Card>
+          <Card title="公告通知" style={{ borderRadius: '4px', marginTop: '8px' }}>
+            <Notification items={NOTIFICATION_ITEMS} />
+            <img src="/public/image/QRCode.jpg" width={'100%'} />
+          </Card>
+          <Card title="学习专区" style={{ marginTop: '12px', borderRadius: '4px' }}>
+            <Notification items={STUDY_ITEMS} />
+          </Card>
         </section>
       </div>
     </div>

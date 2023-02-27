@@ -886,6 +886,7 @@ const projectConfig: GIConfig = {
   components: [
     {
       id: 'ZoomIn',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -907,6 +908,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ZoomOut',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -928,6 +930,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'FitView',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -949,6 +952,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'FitCenter',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -970,6 +974,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'LassoSelect',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -991,6 +996,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'PropertiesPanel',
+      type: 'AUTO',
       props: {
         serviceId: 'GI/PropertiesPanel',
         title: '属性面板',
@@ -1004,6 +1010,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ActivateRelations',
+      type: 'AUTO',
       props: {
         enableNodeHover: true,
         enableEdgeHover: true,
@@ -1015,6 +1022,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'CanvasSetting',
+      type: 'GIAC_CONTENT',
       props: {
         styleCanvas: {
           backgroundColor: '#fff',
@@ -1036,6 +1044,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'NodeLegend',
+      type: 'AUTO',
       props: {
         sortKey: 'type',
         textColor: '#ddd',
@@ -1045,6 +1054,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'Placeholder',
+      type: 'AUTO',
       name: '画布占位符',
       props: {
         img: 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
@@ -1054,6 +1064,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'FilterPanel',
+      type: 'GIAC_CONTENT',
       name: '筛选面板',
       props: {
         filterKeys: ['edge-amount', 'node-icon'],
@@ -1091,6 +1102,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'LargeGraph',
+      type: 'GIAC',
       name: '3D大图',
       props: {
         visible: false,
@@ -1120,6 +1132,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'MapMode',
+      type: 'GIAC',
       name: '地图模式',
       props: {
         visible: false,
@@ -1151,6 +1164,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'SnapshotGallery',
+      type: 'GIAC',
       name: '快照画廊',
       props: {
         background: '#fff',
@@ -1177,6 +1191,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ContextMenu',
+      type: 'GICC_MENU',
       name: '右键菜单',
       props: {
         GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
@@ -1189,6 +1204,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ToggleClusterWithMenu',
+      type: 'GIAC',
       name: '展开/收起',
       props: {
         isReLayout: false,
@@ -1198,6 +1214,7 @@ const projectConfig: GIConfig = {
     {
       id: 'NeighborsQuery',
       name: '邻居查询',
+      type: 'GIAC_CONTENT',
       props: {
         serviceId: 'GI/NeighborsQuery',
         degree: '1',
@@ -1206,6 +1223,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'Copyright',
+      type: 'AUTO',
       name: '版权',
       props: {
         imageUrl: 'https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg',
@@ -1217,11 +1235,13 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'Loading',
+      type: 'AUTO',
       name: '加载动画',
       props: {},
     },
     {
       id: 'PinNodeWithMenu',
+      type: 'GIAC_MENU',
       name: '固定节点(MENU)',
       props: {
         color: '#fff',
@@ -1230,6 +1250,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ForceSimulation',
+      type: 'GIAC',
       name: '力导布局控制器',
       props: {
         autoPin: true,
@@ -1254,6 +1275,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'Initializer',
+      type: 'INITIALIZER',
       name: '初始化器',
       props: {
         serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
@@ -1265,6 +1287,7 @@ const projectConfig: GIConfig = {
     {
       id: 'LayoutSwitch',
       name: '布局切换',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -1287,6 +1310,7 @@ const projectConfig: GIConfig = {
     {
       id: 'GrailLayout',
       name: '圣杯布局',
+      type: 'GICC',
       props: {
         GI_CONTAINER_LEFT: [],
         leftDisplay: false,
@@ -1309,6 +1333,7 @@ const projectConfig: GIConfig = {
     {
       id: 'Toolbar',
       name: '工具栏',
+      type: 'GICC',
       props: {
         GI_CONTAINER: [
           'ZoomIn',
@@ -1329,6 +1354,7 @@ const projectConfig: GIConfig = {
     {
       id: 'Export',
       name: '导出',
+      type: 'GIAC',
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
@@ -1351,6 +1377,7 @@ const projectConfig: GIConfig = {
     {
       id: 'Overview',
       name: '大图概览',
+      type: 'GIAC_CONTENT',
       props: {
         limit: 600,
         filterLogic: 'and',
@@ -1381,6 +1408,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'SankeyAnalysis',
+      type: 'GIAC_CONTENT',
       name: '桑基图分析',
       props: {
         weightField: 'amount',
@@ -1411,6 +1439,7 @@ const projectConfig: GIConfig = {
     },
     {
       id: 'ChartAnalysis',
+      type: 'GIAC_CONTENT',
       name: '图表分析',
       props: {
         title: '未命名图表',
