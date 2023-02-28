@@ -18,7 +18,14 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
   React.useEffect(refreshDataset, []);
   const { lists } = state;
   return (
-    <div style={{ height: '-webkit-fill-available', backgroundColor: 'var(--background-color)', borderRadius: '8px' }}>
+    <div
+      style={{
+        height: '-webkit-fill-available',
+        backgroundColor: 'var(--background-color)',
+        borderRadius: '8px',
+        padding: '16px',
+      }}
+    >
       <DatasetTable data={lists} queryData={refreshDataset} />
     </div>
   );
