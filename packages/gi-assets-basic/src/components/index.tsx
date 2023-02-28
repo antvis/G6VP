@@ -31,9 +31,9 @@ import ForceSimulation from './ForceSimulation';
 import Initializer from './Initializer';
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
-import SimpleLayout from './QueryLayout';
 import SankeyAnalysis from './Sankey';
 import SideSelectTabs from './SideSelectTabs';
+import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
@@ -43,7 +43,7 @@ import ZoomStatus from './ZoomStatus';
 // import CreateCombo from './CreateCombo';
 
 export {
-  SimpleLayout,
+  UadLayout,
   Initializer,
   Save,
   Placeholder,
