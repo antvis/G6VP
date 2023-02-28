@@ -1,5 +1,6 @@
+import { IssuesCloseOutlined } from '@ant-design/icons';
+import { Button, Card } from 'antd';
 import * as React from 'react';
-import { Button } from 'antd';
 import { deleteDataset, queryRecycleDatasetList } from '../../services/dataset';
 import DatasetTable from './Table';
 interface DatasetsProps {}
@@ -25,23 +26,33 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
   };
   React.useEffect(refreshDataset, []);
   return (
-    <div
+    <Card
       style={{
         height: '-webkit-fill-available',
-        backgroundColor: 'var(--background-color)',
-        borderRadius: '8px',
-        padding: '16px',
       }}
+      bodyStyle={{
+        paddingTop: '8px',
+      }}
+      title={
+        <>
+          <IssuesCloseOutlined />
+          &nbsp;七天后将自动清空数据
+        </>
+      }
+      extra={lists?.length ? <Button onClick={handleClear}>清空回收站</Button> : ''}
     >
       <DatasetTable data={lists} queryData={refreshDataset} deletable={false} recoverable={true} />
-      {lists?.length ? (
-        <Button onClick={handleClear} style={{ position: 'absolute', marginTop: '-50px' }}>
-          清空回收站
-        </Button>
-      ) : (
-        ''
-      )}
-    </div>
+    </Card>
+    // <div
+    //   style={{
+    //
+    //     backgroundColor: 'var(--background-color)',
+    //     borderRadius: '8px',
+    //     padding: '16px',
+    //   }}
+    // >
+
+    // </div>
   );
 };
 
