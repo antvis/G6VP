@@ -32,11 +32,15 @@ export const createDataset = async (params: IDataset) => {
   }
 };
 
+/**
+ * 请求不在回收站中的可用数据集
+ * @returns
+ */
 export const queryDatasetList = async () => {
   if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
     await GI_DATASET_DB.iterate((item: IDataset) => {
-      if (item.type === 'user') {
+      if (item.type === 'user' && !item.recycleTime) {
         res.push(item);
       }
     });
@@ -46,11 +50,66 @@ export const queryDatasetList = async () => {
       method: 'get',
     });
 
-    return response.data.filter(item => {
-      return item.type === 'user';
-    });
+    return response.data.filter(item => item.type === 'user');
   }
 };
+/**
+ * 请求在回收站中的、未过期的数据集
+ * 该函数在寻找回收站数据集的同时，删除已过期的数据集及其相关项目
+ * @returns
+ */
+export const queryRecycleDatasetList = async () => {
+  if (GI_SITE.IS_OFFLINE) {
+    const res: IDataset[] = [];
+    await GI_DATASET_DB.iterate((item: IDataset) => {
+      const { id, type, recycleTime } = item;
+      if (type === 'user' && recycleTime) {
+        // delete the data set with over 7 days item.recycleTime
+        const expired = new Date().getTime() - recycleTime > 604800000;
+        if (expired) {
+          deleteDataset(id);
+        } else {
+          res.push(item);
+        }
+      }
+    });
+    return res;
+  } else {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/listRecycles`, {
+      method: 'get',
+    });
+    return response.data.filter(item => item.type === 'user');
+  }
+};
+
+/**
+ * 将数据集从回收站移除，即将 recycleTime 标记删除
+ * 同时，相关项目的标记也被删除
+ * @param record
+ */
+export const recoverDataset = async record => {
+  const { id } = record;
+  if (GI_SITE.IS_OFFLINE) {
+    const item = await GI_DATASET_DB.getItem(id);
+    if (item) GI_DATASET_DB.setItem(id, { ...item, recycleTime: undefined });
+    await GI_PROJECT_DB.iterate(project => {
+      //@ts-ignore
+      const { datasetId, id: PROJECT_ID } = project;
+      if (datasetId === id) {
+        //@ts-ignore
+        GI_PROJECT_DB.setItem(PROJECT_ID, { ...project, recycleTime: undefined });
+      }
+    });
+    return item;
+  } else {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/recover`, {
+      method: 'post',
+      data: { id },
+    });
+    return response.data;
+  }
+};
+
 export const systemDirectConnectList = async () => {
   if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
@@ -72,8 +131,14 @@ export const systemDirectConnectList = async () => {
   return systemDatasets;
 };
 
+/**
+ * 正式删除数据集，及其相关工作簿
+ * @param id
+ * @returns
+ */
 export const deleteDataset = async (id: string) => {
   if (GI_SITE.IS_OFFLINE) {
+    const res = await GI_DATASET_DB.getItem(id);
     GI_DATASET_DB.removeItem(id);
     /** 删除数据集的同时，删除对应的工作薄 */
     GI_PROJECT_DB.iterate(item => {
@@ -83,12 +148,41 @@ export const deleteDataset = async (id: string) => {
         GI_PROJECT_DB.removeItem(PROJECT_ID);
       }
     });
+    return res;
   } else {
     const response = await request(`${GI_SITE.SERVICE_URL}/dataset/delete`, {
       method: 'post',
       data: { id },
     });
     return response.data;
+  }
+};
+
+/**
+ * 将数据集放入回收站（即打 recycleTime 标记记录回收时间），
+ * 同时，相关项目也将打上该标记，未过期时，项目仍可用
+ * @param id
+ */
+export const recycleDataset = async (id: string) => {
+  if (GI_SITE.IS_OFFLINE) {
+    const recycleTime = new Date().getTime();
+    const dataset = await GI_DATASET_DB.getItem(id);
+    if (dataset) GI_DATASET_DB.setItem(id, { ...dataset, recycleTime });
+    /** 数据集进入回收站的同时，对应的工作薄打标 */
+    await GI_PROJECT_DB.iterate((item: IDataset) => {
+      //@ts-ignore
+      const { datasetId, id: PROJECT_ID, type } = item;
+      if (datasetId === id && type === 'user') {
+        GI_PROJECT_DB.setItem(PROJECT_ID, { ...item, recycleTime });
+      }
+    });
+    return dataset;
+  } else {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/recycle`, {
+      method: 'post',
+      data: { id },
+    });
+    return response.success;
   }
 };
 

@@ -4,6 +4,7 @@ import {
   EnvironmentOutlined,
   FileExcelOutlined,
   FundProjectionScreenOutlined,
+  RollbackOutlined,
   SendOutlined,
   TableOutlined,
 } from '@ant-design/icons';
@@ -11,7 +12,7 @@ import { utils } from '@antv/gi-sdk';
 import { Button, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { deleteDataset } from '../../services/dataset';
+import { recoverDataset, recycleDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
 import * as ProjectServices from '../../services/project';
 import { getConfigByEngineId } from '../Workspace/utils';
@@ -41,7 +42,7 @@ const TYPE_MAPPING = {
     color: 'orange',
   },
 };
-const DatasetTable = ({ data }) => {
+const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }) => {
   const history = useHistory();
 
   // const handleEncode = record => {
@@ -85,10 +86,18 @@ const DatasetTable = ({ data }) => {
     window.open(`${window.location.origin}/#/workspace/${projectId}`);
   };
   const handleDelete = async record => {
-    await deleteDataset(record.id);
+    const res = await recycleDataset(record.id);
+    if (res) queryData();
   };
   const handleView = record => {
     history.push(`/dataset/list/${record.id}`);
+  };
+
+  const handleRecover = record => {
+    (async () => {
+      const res = await recoverDataset(record);
+      if (res) queryData();
+    })();
   };
   const columns = [
     {
@@ -180,16 +189,37 @@ const DatasetTable = ({ data }) => {
                 <SendOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="删除数据集" color={'red'}>
-              <Button type="text" onClick={() => handleDelete(record)} style={{ padding: '4px 4px' }}>
-                <DeleteOutlined />
-              </Button>
-            </Tooltip>
+            {deletable && (
+              <Tooltip title="删除数据集" color={'red'}>
+                <Button type="text" onClick={() => handleDelete(record)} style={{ padding: '4px 4px' }}>
+                  <DeleteOutlined />
+                </Button>
+              </Tooltip>
+            )}
+            {recoverable && (
+              <Tooltip title="恢复数据集" color={'red'}>
+                <Button type="text" onClick={() => handleRecover(record)} style={{ padding: '4px 4px' }}>
+                  <RollbackOutlined />
+                </Button>
+              </Tooltip>
+            )}
           </span>
         );
       },
     },
   ];
+  if (recoverable) {
+    columns.splice(4, 0, {
+      title: '过期时间',
+      dataIndex: 'recycleTime',
+      key: 'expiredTime',
+      render: record => {
+        const expiredDate = new Date(record + 604800);
+        const expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
+        return <div>{expiredStr}</div>;
+      },
+    });
+  }
   return <Table dataSource={data} columns={columns}></Table>;
 };
 

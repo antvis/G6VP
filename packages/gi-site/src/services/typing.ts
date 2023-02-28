@@ -20,6 +20,8 @@ export interface IDataset {
   schemaData: GraphSchemaData;
   /** 初始化图数据 */
   data?: GIGraphData;
+  /** 进入回收站的时间(时间戳)，有值代表处于回收站中，数据集列表不应展示 */
+  recycleTime?: number;
 }
 
 export interface ITemplate {
@@ -54,6 +56,8 @@ export interface IProject {
   gmtCreate?: any;
   config?: GIConfig;
   themes?: any[];
+  /** 相关数据进入回收站的时间(时间戳)，有值代表该工作簿的数据处于回收站中，工作簿在过期(7天)之前仍可使用 */
+  recycleTime?: number;
 }
 
 export interface ICase extends IProject {

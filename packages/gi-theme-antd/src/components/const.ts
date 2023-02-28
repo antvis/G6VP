@@ -30,6 +30,7 @@ export const DEFAULT_THEME_VARS = {
 
     '--background-color-card': '#fff',
     '--text-color-2': 'rgba(0, 0, 0, 0.65)', // 主文本色
+    '--text-warning-color': '#ff7875', // 警告文本色
 
     // "--box-shadow-pannel":"-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%),
     //   2px 3px 8px 2px rgb(151 151 151 / 5%)",
@@ -76,6 +77,7 @@ export const DEFAULT_THEME_VARS = {
 
     '--background-color-card': '#fff',
     '--text-color-2': 'rgba(0, 0, 0, 0.65)', // 主文本色
+    '--text-warning-color': '#ff7875', // 警告文本色
 
     // "--box-shadow-pannel":"-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%),
     //   2px 3px 8px 2px rgb(151 151 151 / 5%)",
@@ -102,6 +104,7 @@ export const DEFAULT_THEME_VARS = {
     // 主文本色
     '--text-color': '#e2e2e2', // 主文本色
     '--text-color-2': 'rgba(255, 255, 255, 0.35)', // 主文本色
+    '--text-warning-color': '#ff7875', // 警告文本色
     // 阴影
     '--box-shadow-base':
       '0 3px 6px -4px rgba(0, 0, 0, 0.48), 0 6px 16px 0 rgba(0, 0, 0, 0.32),0 9px 28px 8px rgba(0, 0, 0, 0.2)',

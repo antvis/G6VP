@@ -35,9 +35,12 @@ export default (app: Application) => {
   // GraphInsight website service
   // dataset 数据集
   router.get('/dataset/list', controller.dataset.list);
+  router.get('/dataset/listRecycles', controller.dataset.listRecycles);
   router.post('/dataset/create', controller.dataset.create);
   router.get('/dataset/case', controller.dataset.findCase);
   router.post('/dataset/delete', controller.dataset.removeById);
+  router.post('/dataset/recycle', controller.dataset.recycleById);
+  router.post('/dataset/recover', controller.dataset.recoverById);
   router.get('/dataset/:id', controller.dataset.getById);
 
   // router.post('/dataset/delete', controller.graphinsight.removeProjectById);

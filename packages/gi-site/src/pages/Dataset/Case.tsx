@@ -199,7 +199,7 @@ const Cases: React.FunctionComponent<CasesProps> = props => {
   const { lists } = state;
   return (
     <div>
-      <DatasetTable data={lists} />
+      <DatasetTable data={lists} deletable={false} />
     </div>
   );
 };

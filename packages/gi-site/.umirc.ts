@@ -228,6 +228,11 @@ export default {
               path: 'SYSTEM_DIRECT_CONNECT',
               component: 'Dataset/SystemDirectConnect',
             },
+            {
+              exact: true,
+              path: 'delete',
+              component: 'Dataset/Delete',
+            },
           ],
         },
         {
