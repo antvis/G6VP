@@ -22,6 +22,17 @@ class DatasetController extends Controller {
     }
   }
 
+  // list the dataset in recycling status
+  async listRecycles() {
+    const { ctx } = this;
+    try {
+      const result = await ctx.service.graphinsight.dataset.listRecycles();
+      wrapperResult(ctx, true, result);
+    } catch (e) {
+      console.error('List recycling dataset failed: ', e);
+      wrapperResult(ctx, false, []);
+    }
+  }
   // create dataset
   async create() {
     const { ctx } = this;
@@ -57,6 +68,32 @@ class DatasetController extends Controller {
       wrapperResult(ctx, true, result);
     } catch (e) {
       console.error('Remove dataset by id failed: ', e);
+      wrapperResult(ctx, false, false);
+    }
+  }
+
+  // recycle a dataset
+  async recycleById() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+    try {
+      const result = await ctx.service.graphinsight.dataset.recycleById(params.id);
+      wrapperResult(ctx, true, result);
+    } catch (e) {
+      console.error('Recycle dataset by id failed: ', e);
+      wrapperResult(ctx, false, false);
+    }
+  }
+
+  // recover a dataset
+  async recoverById() {
+    const { ctx } = this;
+    const params = ctx.request.body;
+    try {
+      const result = await ctx.service.graphinsight.dataset.recoverById(params.id);
+      wrapperResult(ctx, true, result);
+    } catch (e) {
+      console.error('Recover dataset by id failed: ', e);
       wrapperResult(ctx, false, false);
     }
   }

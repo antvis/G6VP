@@ -23,7 +23,6 @@ export const list = async (type: 'project' | 'case' | 'save'): Promise<IProject[
     });
     return projects;
   }
-  console.log(GI_SITE, GI_SITE.IS_OFFLINE, GI_SITE.SERVICE_URL);
   const response = await request(`${GI_SITE.SERVICE_URL}/project/list`, {
     method: 'post',
   });

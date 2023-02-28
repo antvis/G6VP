@@ -198,7 +198,12 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {lists.map(item => {
-          const { id, name, gmtCreate } = item;
+          const { id, name, gmtCreate, recycleTime } = item;
+          let expiredStr;
+          if (recycleTime) {
+            const expiredDate = new Date(recycleTime + 604800);
+            expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
+          }
           return (
             <Col key={id}>
               <ProjectCard
@@ -210,6 +215,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
                 title={name || ''}
                 time={utils.time(gmtCreate)}
+                expiredStr={expiredStr}
                 extra={
                   <Dropdown overlay={menu(id)} placement="bottomCenter">
                     <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>

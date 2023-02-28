@@ -10,7 +10,6 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
   const refreshDataset = () => {
     (async () => {
       const res = await queryDatasetList();
-      console.log('res', res);
       setState({
         lists: res,
       });

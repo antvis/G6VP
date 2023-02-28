@@ -50,9 +50,7 @@ export const queryDatasetList = async () => {
       method: 'get',
     });
 
-    return response.data.filter(item => {
-      return item.type === 'user' && item.recycleTime;
-    });
+    return response.data.filter(item => item.type === 'user');
   }
 };
 /**
@@ -67,7 +65,7 @@ export const queryRecycleDatasetList = async () => {
       const { id, type, recycleTime } = item;
       if (type === 'user' && recycleTime) {
         // delete the data set with over 7 days item.recycleTime
-        const expired = recycleTime - new Date().getTime() > 604800;
+        const expired = new Date().getTime() - recycleTime > 604800000;
         if (expired) {
           deleteDataset(id);
         } else {
@@ -77,17 +75,10 @@ export const queryRecycleDatasetList = async () => {
     });
     return res;
   } else {
-    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/listRecycles`, {
       method: 'get',
     });
-
-    return response.data.filter(item => {
-      const { type, recycleTime, id } = item;
-      if (type !== 'user' || !recycleTime) return false;
-      const expired = recycleTime - new Date().getTime() > 604800;
-      if (expired) deleteDataset(id);
-      return !expired;
-    });
+    return response.data.filter(item => item.type === 'user');
   }
 };
 
@@ -111,7 +102,11 @@ export const recoverDataset = async record => {
     });
     return item;
   } else {
-    // TODO
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/recover`, {
+      method: 'post',
+      data: { id },
+    });
+    return response.data;
   }
 };
 
@@ -183,7 +178,11 @@ export const recycleDataset = async (id: string) => {
     });
     return dataset;
   } else {
-    // TODO
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/recycle`, {
+      method: 'post',
+      data: { id },
+    });
+    return response.success;
   }
 };
 

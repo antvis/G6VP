@@ -208,6 +208,18 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       },
     },
   ];
+  if (recoverable) {
+    columns.splice(4, 0, {
+      title: '过期时间',
+      dataIndex: 'recycleTime',
+      key: 'expiredTime',
+      render: record => {
+        const expiredDate = new Date(record + 604800);
+        const expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
+        return <div>{expiredStr}</div>;
+      },
+    });
+  }
   return <Table dataSource={data} columns={columns}></Table>;
 };
 
