@@ -70,4 +70,7 @@ export interface StateType {
   };
   schemaData: any;
   themes?: any[];
+  datasetId: string;
+  datasetName: string;
+  engineType: string;
 }

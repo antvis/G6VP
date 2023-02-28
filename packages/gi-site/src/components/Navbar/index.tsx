@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, SaveOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -10,7 +10,7 @@ import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
 
-import BaseNavbar from './BaseNavbar';
+import BaseNavbar from './Basic';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';

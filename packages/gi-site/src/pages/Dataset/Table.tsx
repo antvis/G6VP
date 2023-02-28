@@ -22,7 +22,7 @@ const styles = {
     padding: '4px 8px',
   },
 };
-const TYPE_MAPPING = {
+export const TYPE_MAPPING = {
   FILE: {
     id: 'FILE',
     icon: <FileExcelOutlined />,
