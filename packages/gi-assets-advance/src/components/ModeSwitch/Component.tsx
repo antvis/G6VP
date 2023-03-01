@@ -92,13 +92,8 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
           }}
         >
           <div>
-            <Segmented
-              value={state.mode}
-              options={options}
-              onChange={onChange}
-              onResize={undefined}
-              onResizeCapture={undefined}
-            ></Segmented>
+            {/** @ts-ignore */}
+            <Segmented value={state.mode} options={options} onChange={onChange}></Segmented>
           </div>
         </nav>,
         container,
