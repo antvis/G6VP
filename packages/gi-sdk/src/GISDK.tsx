@@ -283,8 +283,6 @@ const GISDK = (props: Props) => {
     props: DEFAULT_GICC_LAYOUT.props,
   };
 
-  console.log('ComponentCfgMap', GICC_LAYOUT_COMPONENT);
-
   const renderComponents = () => {
     if (!state.initialized || !state.isContextReady) {
       return null;

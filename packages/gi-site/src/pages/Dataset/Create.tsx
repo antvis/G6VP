@@ -1,10 +1,4 @@
-import {
-  ApiOutlined,
-  DatabaseOutlined,
-  DeploymentUnitOutlined,
-  FileExcelOutlined,
-  GlobalOutlined,
-} from '@ant-design/icons';
+import { ApiOutlined, DeploymentUnitOutlined, FileExcelOutlined, GlobalOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import { Input, Tabs } from 'antd';
 import * as React from 'react';
@@ -48,11 +42,11 @@ const ITEMS = [
     name: '地理数据库',
     icon: <GlobalOutlined />,
   },
-  {
-    id: 'DB',
-    name: '关系型数据库',
-    icon: <DatabaseOutlined />,
-  },
+  // {
+  //   id: 'DB',
+  //   name: '关系型数据库',
+  //   icon: <DatabaseOutlined />,
+  // },
   {
     id: 'API',
     name: '自定义服务',
@@ -147,6 +141,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const currentEngines = engines[state.active] || [];
+  console.log('currentEngines', engines, currentEngines);
 
   const content = currentEngines.map(server => {
     const { component: ServerComponent, name } = server;
@@ -182,6 +177,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       </div>
     </TabPane>
   );
+  console.log('content', content);
 
   return (
     <>

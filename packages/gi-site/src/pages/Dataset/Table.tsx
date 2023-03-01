@@ -22,7 +22,7 @@ const styles = {
     padding: '4px 8px',
   },
 };
-const TYPE_MAPPING = {
+export const TYPE_MAPPING = {
   FILE: {
     id: 'FILE',
     icon: <FileExcelOutlined />,
@@ -214,7 +214,7 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       dataIndex: 'recycleTime',
       key: 'expiredTime',
       render: record => {
-        const expiredDate = new Date(record + 604800);
+        const expiredDate = new Date(record + 604800000);
         const expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
         return <div>{expiredStr}</div>;
       },
