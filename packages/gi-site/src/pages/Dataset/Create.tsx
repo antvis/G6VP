@@ -141,6 +141,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const currentEngines = engines[state.active] || [];
+  console.log('currentEngines', engines, currentEngines);
 
   const content = currentEngines.map(server => {
     const { component: ServerComponent, name } = server;
@@ -176,6 +177,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       </div>
     </TabPane>
   );
+  console.log('content', content);
 
   return (
     <>
