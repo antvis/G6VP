@@ -12,7 +12,7 @@
   "scripts": {
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "create-offline-assets": "node scripts/pre-build.mjs && cd scripts && node create-offline-assets.mjs",
-    "build": "npm run create-offline-assets && ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build": "npm run create-offline-assets && NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build:docker": "npm run create-offline-assets  && BUILD_MODE=docker NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
     "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
