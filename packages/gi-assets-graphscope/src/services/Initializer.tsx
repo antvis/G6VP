@@ -31,14 +31,18 @@ export const GI_SERVICE_SCHEMA = {
   method: 'GET',
 
   service: async (): Promise<GraphSchemaData> => {
-    const graphName = localStorage.getItem('graphScopeGraphName') as string;
-    const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
-    const result = await request(`${httpServerURL}/graphcompute/schema`, {
-      method: 'GET',
-      params: {
-        graphName,
-      },
-    });
+    const searchParams = new URLSearchParams(location.href.split('?')[1]);
+    const datasetId = searchParams.get('datasetId');
+
+    // const graphName = localStorage.getItem('graphScopeGraphName') as string;
+    // const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
+    // const result = await request(`${httpServerURL}/graphcompute/schema`, {
+    //   method: 'GET',
+    //   params: {
+    //     graphName,
+    //   },
+    // });
+    const result = await request(`${location.hostname}:7001/project/${datasetId}`);
     if (result.success) {
       return result.data;
     }

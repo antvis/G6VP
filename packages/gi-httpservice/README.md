@@ -14,3 +14,17 @@ $ open http://localhost:7001/
 
 - Node.js 8.x
 - Typescript 2.8+
+
+## Running etcd
+
+- https://etcd.io/docs/v3.5/op-guide/container/
+
+## 安装 etcd docker 镜像
+
+参考官方文档：https://hub.docker.com/r/bitnami/etcd/
+
+docker pull bitnami/etcd
+
+## 启动 ETCD 服务
+
+docker run --rm -it -e ALLOW_NONE_AUTHENTICATION=yes -p 2379:2379 bitnami/etcd

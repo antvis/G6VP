@@ -226,6 +226,7 @@ const baseComponentsConfig = [
       histogramColor: '#3056E3',
       isFilterIsolatedNodes: true,
       highlightMode: true,
+      filterKeys: [],
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
@@ -549,6 +550,116 @@ export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+};
+
+const Cypher_Template = [
+  {
+    id: 'CypherQuery',
+    name: 'Cypher 语句查询',
+    props: {
+      serviceId: 'GI/CypherQuery',
+      isShowPublishButton: false,
+      saveCypherTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'MATCH n RETURN LIMIT 100',
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Cypher 语句查询',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
+const Gremlin_Template = [
+  {
+    id: 'GremlinQuery',
+    name: 'Gremlin 查询',
+    props: {
+      serviceId: 'GS/GremlinQuery',
+      isShowPublishButton: false,
+      saveTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'g.V().limit(10)',
+      height: 200,
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Gremlin',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
+export const getConfigByEngineId = engineId => {
+  let componentConfig = [...baseComponentsConfig];
+  if (engineId === 'TuGraph' || engineId === 'Neo4j') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Cypher_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
+      }
+    });
+  }
+  if (engineId === 'GraphScope' || engineId === 'GeaFlow') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Gremlin_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'GremlinQuery'];
+      }
+    });
+  }
+  const config = {
+    nodes: baseNodesConfig,
+    edges: baseEdgesConfig,
+    layout: baseLayoutConfig,
+    components: componentConfig,
+  };
+  const activeAssetsKeys = {
+    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
+    components: [...config.components.map(c => c.id)],
+    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  };
+  return {
+    config,
+    activeAssetsKeys,
+  };
 };
 
 export const serviceConfig = [];

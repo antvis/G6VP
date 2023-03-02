@@ -2,7 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  router.get('/', controller.home.index);
+  router.get('/', controller.graphinsight.index);
 
   router.post('/graphcompute/connect', controller.graphcompute.connectGraphScope);
   router.post('/graphcompute/createGSInstance', controller.graphcompute.createGraphScopeInstance);
@@ -31,4 +31,26 @@ export default (app: Application) => {
   router.get('/api/tugraph/schema', controller.tugraph.getSchema);
   router.get('/api/tugraph/list', controller.tugraph.getSubGraphList);
   router.get('/api/tugraph/count', controller.tugraph.getVertexEdgeCount);
+
+  // GraphInsight website service
+  // dataset 数据集
+  router.get('/dataset/list', controller.dataset.list);
+  router.get('/dataset/listRecycles', controller.dataset.listRecycles);
+  router.post('/dataset/create', controller.dataset.create);
+  router.get('/dataset/case', controller.dataset.findCase);
+  router.post('/dataset/delete', controller.dataset.removeById);
+  router.post('/dataset/recycle', controller.dataset.recycleById);
+  router.post('/dataset/recover', controller.dataset.recoverById);
+  router.get('/dataset/:id', controller.dataset.getById);
+
+  // router.post('/dataset/delete', controller.graphinsight.removeProjectById);
+  // router.post('/dataset/update', controller.graphinsight.updateProjectById);
+
+  // project 工作薄
+  router.post('/project/create', controller.graphinsight.createProject);
+  router.post('/project/list', controller.graphinsight.listProject);
+  router.post('/project/delete', controller.graphinsight.removeProjectById);
+  router.post('/project/update', controller.graphinsight.updateProjectById);
+  router.get('/project/case', controller.graphinsight.findCase);
+  router.get('/project/:id', controller.graphinsight.getProjectById);
 };

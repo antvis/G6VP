@@ -4,8 +4,8 @@ import { Service } from 'egg';
 
 import gremlin from 'gremlin_patch';
 // @ts-ignore
-import fs from 'fs';
 import FormStream from 'formstream';
+import fs from 'fs';
 import { readGraphScopeConfig } from '../util';
 
 interface ConnectProps {
@@ -56,6 +56,7 @@ class GremlinClass {
     }
     const traversal = gremlin.process.AnonymousTraversalSource.traversal;
     const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
+    console.log('graphURL', graphURL);
     const g = traversal().withRemote(new DriverRemoteConnection(graphURL));
     return g;
   }
@@ -218,8 +219,8 @@ class GraphComputeService extends Service {
     const obj = {};
 
     // 节点
-    obj['id'] = `${id}`;
-    obj['label'] = label;
+    obj.id = `${id}`;
+    obj.label = label;
 
     if (properties) {
       const elementProp = {};
@@ -229,7 +230,7 @@ class GraphComputeService extends Service {
           elementProp[`${key}`] = currentProp[0].value;
         }
       }
-      obj['data'] = elementProp;
+      obj.data = elementProp;
     }
 
     return obj;
@@ -240,7 +241,7 @@ class GraphComputeService extends Service {
    * @param gremlinSQL Gremlin 查询语句
    */
   async queryByGremlinLanguage(params) {
-    const { value, gremlinServer } = params;
+    const { value, gremlinServer = 'https://gi-api.graphscope.app/gremlin' } = params;
 
     const clientInstance = GremlinClass.getClientInstance(gremlinServer);
 
@@ -416,7 +417,7 @@ class GraphComputeService extends Service {
   async closeGraphInstance(params) {
     const { instanceId, graphName } = params;
 
-    //step1: unload graph data
+    // step1: unload graph data
     if (graphName) {
       const unloadDataResult = await this.unloadDataFromGraphScope(graphName);
       console.log('卸载数据', unloadDataResult);
@@ -428,7 +429,7 @@ class GraphComputeService extends Service {
       }
     }
 
-    //step2: close graphscope instance
+    // step2: close graphscope instance
     if (instanceId) {
       const closeResult = await this.closeGraphScopeInstance(instanceId);
       console.log('关闭实例', closeResult);
@@ -515,7 +516,7 @@ class GraphComputeService extends Service {
     } = params;
 
     // 根据不同算法类型，过滤不需要的参数
-    let algorithmParams = {
+    const algorithmParams = {
       name,
       limit,
       sortById,
@@ -524,24 +525,24 @@ class GraphComputeService extends Service {
       graph_name: graphName,
     };
     if (name === 'pagerank') {
-      algorithmParams['delta'] = delta;
+      algorithmParams.delta = delta;
     }
 
     if (name === 'pagerank' || name === 'lpa' || name === 'eigenvector_centrality') {
-      algorithmParams['max_round'] = maxRound;
+      algorithmParams.max_round = maxRound;
     }
 
     if (name === 'eigenvector_centrality') {
-      algorithmParams['tolerance'] = tolerance;
+      algorithmParams.tolerance = tolerance;
     }
 
     if (name === 'sssp') {
-      algorithmParams['weight'] = weight;
-      algorithmParams['src'] = src;
+      algorithmParams.weight = weight;
+      algorithmParams.src = src;
     }
 
     if (name === 'k_core') {
-      algorithmParams['k'] = k;
+      algorithmParams.k = k;
     }
 
     console.log('执行图算法参数', algorithmParams);

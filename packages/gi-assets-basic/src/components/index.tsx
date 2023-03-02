@@ -33,6 +33,7 @@ import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import SideSelectTabs from './SideSelectTabs';
+import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
@@ -43,6 +44,7 @@ import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 // import CreateCombo from './CreateCombo';
 
 export {
+  UadLayout,
   Initializer,
   Save,
   Placeholder,

@@ -21,6 +21,19 @@ interface ICypherResponse {
   size: number;
 }
 
+export const wrapperResult = (ctx, success, result) => {
+  if (success) {
+    ctx.status = 200;
+  } else {
+    ctx.status = 500;
+  }
+
+  ctx.body = {
+    success: success,
+    data: result,
+  }
+}
+
 export const getNodeIdsByResponseBak = (
   params: ICypherResponse,
 ): { nodeIds: Array<number>; edgeIds: Array<string> } => {

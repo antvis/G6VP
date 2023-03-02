@@ -1,6 +1,6 @@
 import { EditOutlined } from '@ant-design/icons';
 import React from 'react';
-import { updateProjectById } from '../../services';
+import * as ProjectServices from '../../services/project';
 import './index.less';
 
 export interface IProjectTitleProps {
@@ -15,7 +15,7 @@ const ProjectTitle: React.FC<IProjectTitleProps> = props => {
 
   const changeTitle = async () => {
     const newTitle = contentEditable.current!.innerText;
-    updateProjectById(projectId, {
+    ProjectServices.updateById(projectId, {
       name: newTitle,
     });
   };

@@ -32,17 +32,20 @@ const BaseNavbar = props => {
 
   const defaultLeft = (
     <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workspace' ? 'active' : ''}>
-        <Link to="/workspace?type=project">我的项目</Link>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
+        <Link to="/home">首页</Link>
+      </div>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'dataset' ? 'active' : ''}>
+        <Link to="/dataset/list">数据集</Link>
+      </div>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'workbook' ? 'active' : ''}>
+        <Link to="/workbook/project">工作薄</Link>
       </div>
       {/* <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'market' && styles.active}>
         <Link to="/market">云端研发资产</Link>
       </div> */}
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'assets' ? 'active' : ''}>
-        <Link to="/assets">资产中心</Link>
-      </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'services' ? 'active' : ''}>
-        <Link to="/services">服务中心</Link>
+      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
+        <Link to="/open/assets">开放市场</Link>
       </div>
     </>
   );
@@ -62,7 +65,7 @@ const BaseNavbar = props => {
             cursor: 'pointer',
           }}
           onClick={() => {
-            history.push('/workspace?type=project');
+            history.push('/workbook/project');
           }}
         />
         {leftContent}
@@ -79,16 +82,45 @@ const BaseNavbar = props => {
             antdCssLinks={{
               dark: '/public/css/gi-theme-antd.dark.css', //'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
               light: '/public/css/gi-theme-antd.light.css', //'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
+              ali: '/public/css/gi-theme-antd.ali.css',
             }}
             onChange={handleChangeTheme}
             options={[
               {
                 value: 'light',
-                icon: <Icon type="icon-taiyang" />,
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(48, 86, 227, 0.5)',
+                    }}
+                  />
+                ),
+                name: '科技蓝',
+              },
+              {
+                value: 'ali',
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(255, 106, 0, 0.5)',
+                    }}
+                  />
+                ),
+                name: '阿里橙',
               },
               {
                 value: 'dark',
-                icon: <Icon type="icon-moon_line" />,
+                icon: (
+                  <div
+                    className="theme-color-dot"
+                    style={{
+                      backgroundColor: 'rgba(31, 31, 31, 0.5)',
+                    }}
+                  />
+                ),
+                name: '暗夜黑',
               },
             ]}
           ></ThemeSwitch>

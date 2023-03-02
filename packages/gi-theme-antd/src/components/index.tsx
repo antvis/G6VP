@@ -1,4 +1,5 @@
-import { Segmented } from 'antd';
+import { BgColorsOutlined, DownOutlined } from '@ant-design/icons';
+import { Segmented, Dropdown, Button, MenuProps } from 'antd';
 import React from 'react';
 import { DEFAULT_ANTD_CSS_LINKS, DEFAULT_THEME_VARS } from './const';
 
@@ -7,23 +8,26 @@ export interface ThemeSwitchProps {
   themeVars?: {
     dark: any;
     light: any;
+    ali: any;
   };
   antdCssLinks?: {
     dark: string;
     light: string;
+    ali: string;
   };
   localStorageKey?: string;
   onChange?: (value: 'dark' | 'light') => void;
   options?: {
     value: string;
     icon: React.ReactNode;
+    name?: string;
   }[];
 }
 
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options, style } = props;
-  const { dark: darkVars, light: lightVars } = themeVars || DEFAULT_THEME_VARS;
-  const { dark: darkLink, light: lightLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
+  const { dark: darkVars, light: lightVars, ali: aliVars } = themeVars || DEFAULT_THEME_VARS;
+  const { dark: darkLink, light: lightLink, ali: aliLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
   if (localStorage.getItem(localStorageKey)) {
   }
   const [state, updateState] = React.useState({
@@ -32,18 +36,18 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   const { theme } = state;
   React.useEffect(() => {
     /** var css */
-    let themeObj: any = {};
-    if (theme === 'light') {
-      themeObj = lightVars;
-    } else {
+    let themeObj: any = lightVars;
+    let cssUrl = lightLink;
+    if (theme === 'dark') {
       themeObj = darkVars;
+      cssUrl = darkLink;
+    } else if (theme === 'ali') {
+      themeObj = aliVars;
+      cssUrl = aliLink;
     }
     /** antd theme */
 
     const dom = window.document.getElementById('theme-style') as HTMLLinkElement;
-
-    const isLightTheme = theme === 'light';
-    const cssUrl = isLightTheme ? lightLink : darkLink;
 
     if (dom) {
       dom.href = cssUrl;
@@ -76,10 +80,46 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
     });
     onChange && onChange(value);
   };
+  const handleDropDownChange = event => {
+    const value = event.key;
+    updateState(preState => {
+      return {
+        ...preState,
+        theme: value,
+      };
+    });
+    onChange && onChange(value);
+  };
+  const themeOptions = options || ['light', 'dark'];
+  const useDropDown = themeOptions.length > 2;
   return (
     <div className="theme-switch" style={style}>
-      {/** @ts-ignore */}
-      <Segmented onChange={handleChange} value={theme} options={options || ['light', 'dark']} />
+      {useDropDown ? (
+        <Dropdown
+          menu={{
+            activeKey: theme,
+            items: themeOptions.map((theme, i) => ({
+              key: theme.value || theme,
+              label: (
+                <a>
+                  {theme.icon}
+                  &nbsp; &nbsp;
+                  {theme.name || theme.value || theme}
+                </a>
+              ),
+            })) as MenuProps['items'],
+            onClick: handleDropDownChange,
+          }}
+          placement="bottomLeft"
+        >
+          <a style={{ margin: '0 8px 0 8px' }}>
+            <BgColorsOutlined />
+          </a>
+        </Dropdown>
+      ) : (
+        /** @ts-ignore */
+        <Segmented onChange={handleChange} value={theme} options={themeOptions} />
+      )}
     </div>
   );
 };

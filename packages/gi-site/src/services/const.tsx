@@ -1,45 +1,50 @@
-const GI_LOCAL_URL = [
-  'graphinsight.antv.vision', //外网地址
-  'graphinsight.antgroup.com', //外网地址
-  'localhost', //本地地址
-  '127.0.0.1', // 本地打包后启动server的地址
-  'gi-external-pre.alipay.com', //外网预发地址
+// GI 默认使用离线数据模式的站点
+const GI_DEPOLY_OFFLINE_SITE = [
+  'graphinsight.antv.vision',
+  'graphinsight.antgroup.com',
+  'localhost',
+  '127.0.0.1',
+  'gi-external-pre.alipay.com',
 ];
-
-/** 是否使用本地 IndexedDB 数据库 */
-export const IS_INDEXEDDB_MODE = true; // GI_LOCAL_URL.includes(window.location.hostname); //window.location.host === 'graphinsight.antgroup.com';
-
 /** 是否是开发环境 */
-export const IS_DEV_ENV = true; // process.env.NODE_ENV === 'development' || process.env.BUILD_MODE === 'docker';
-console.log('IS_DEV_ENV', IS_DEV_ENV, process.env.BUILD_MODE, process.env.NODE_ENV);
-const DEV_SERVICE_URL_PREFIX = 'https://graphinsight-pre.alipay.com';
-const ONELINE_SERVER_URL_PREFIX =
-  window.location.hostname === 'dev.alipay.net' ? DEV_SERVICE_URL_PREFIX : window.location.origin;
-export const SERVICE_URL_PREFIX = IS_INDEXEDDB_MODE ? 'https://graphinsight-pre.alipay.com' : ONELINE_SERVER_URL_PREFIX;
+//@ts-ignore
+export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
-export const ASSET_TYPE = {
-  COMPONENT: 1, // 1 表示组件
-  LAYOUT: 2, // 2 表示布局
-  SERVICE: 3, // 3 表示数据服务
-  NODE: 4, // 4 表示节点
-  EDGE: 5, // 5 表示边
-  PROJECT: 6, // 6 大分类 项目
-  ASSET: 7, // 7 大分类 分析资产
+export const GI_SITE = {
+  get IS_OFFLINE() {
+    const GI_SITE_ENV = localStorage.getItem('GI_SITE_ENV');
+    if (!GI_SITE_ENV) {
+      return GI_DEPOLY_OFFLINE_SITE.includes(window.location.hostname); //初始化的时候，根据部署白名单
+    }
+    return GI_SITE_ENV === 'ONLINE' ? false : true;
+  },
+  get SERVICE_URL() {
+    const { hostname, protocol } = window.location;
+    const port = 7001;
+    let online = `${protocol}//${hostname}:${port}`;
+    if (!IS_DEV_ENV) {
+      online = window.location.origin;
+    }
+
+    return GI_SITE.IS_OFFLINE ? 'https://graphinsight-pre.alipay.com' : `${protocol}//${hostname}:${port}`;
+  },
 };
 
 export const GI_LOGO_URL = {
   light: '/public/image/graphinsight.light.svg',
+  ali: '/public/image/graphinsight.light.svg',
   dark: '/public/image/graphinsight.dark.svg',
 };
 export const G6VP_LOGO_URL = {
   light: '/public/image/g6vp.light.svg',
+  ali: '/public/image/g6vp.light.svg',
   dark: '/public/image/g6vp.dark.svg',
 };
 
-export const LOGO_URL = IS_INDEXEDDB_MODE ? G6VP_LOGO_URL : GI_LOGO_URL;
+export const LOGO_URL = GI_SITE.IS_OFFLINE ? G6VP_LOGO_URL : GI_LOGO_URL;
 
 export const GI_QR_URL =
   'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*AC9gR462u1wAAAAAAAAAAAAADmJ7AQ/original';
 export const G6VP_QR_URL =
   'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*H5-ERLOWTqIAAAAAAAAAAAAADmJ7AQ/original';
-export const QR_URL = IS_INDEXEDDB_MODE ? G6VP_QR_URL : GI_QR_URL;
+export const QR_URL = GI_SITE.IS_OFFLINE ? G6VP_QR_URL : GI_QR_URL;

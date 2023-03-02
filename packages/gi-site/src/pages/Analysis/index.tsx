@@ -1,11 +1,14 @@
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
+import { message } from 'antd';
 import { original } from 'immer';
 import React, { useRef } from 'react';
-import { Navbar, Sidebar } from '../../components';
+import { Sidebar } from '../../components';
 import Loading from '../../components/Loading';
+import Navbar from '../../components/Navbar/WorkbookNav';
 import { getSearchParams } from '../../components/utils';
-import { getProjectById } from '../../services/';
 import { queryAssets } from '../../services/assets';
+import { queryDatasetInfo } from '../../services/dataset';
+import * as ProjectServices from '../../services/project';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
 import { getServicesByConfig } from './getAssets';
@@ -62,28 +65,38 @@ const Analysis = props => {
       });
       /** 从地址栏上选择默认展示的tab */
       const { searchParams } = getSearchParams(window.location);
-      const activeNavbar = searchParams.get('nav') || 'data';
+      const activeNavbar = searchParams.get('nav') || 'style';
+
       /** 根据 projectId 获取项目的信息  */
-      const { data, config, activeAssetsKeys, schemaData, engineId, engineContext, themes, name } =
-        (await getProjectById(projectId)) as IProject;
-
-      localStorage.setItem('GI_ACTIVE_PROJECT_ID', projectId);
-      const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
-      // const SERVER_ENGINE_CONTEXT_STRING = localStorage.getItem('SERVER_ENGINE_CONTEXT') || '{}';
-      // const SERVER_ENGINE_CONTEXT = JSON.parse(SERVER_ENGINE_CONTEXT_STRING);
-      // const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
-      if (GI_SITE_PROJECT_ID !== projectId) {
-        localStorage.setItem(
-          'SERVER_ENGINE_CONTEXT',
-          JSON.stringify({
-            engineId: engineId,
-            GI_SITE_PROJECT_ID: projectId,
-            ...engineContext,
-          }),
-        );
+      const { config, activeAssetsKeys, themes, name, datasetId } = (await ProjectServices.getById(
+        projectId,
+      )) as IProject;
+      const datasetInfo = await queryDatasetInfo(datasetId);
+      if (!datasetInfo) {
+        window.location.href = window.location.origin;
+        message.info('请先选择数据集...');
+        return;
       }
+      console.log('datasetInfo', datasetInfo);
+      let { engineId, engineContext, schemaData, data, name: DATASET_NAME } = datasetInfo;
 
-      const { transData, inputData } = data;
+      localStorage.setItem(
+        'SERVER_ENGINE_CONTEXT',
+        JSON.stringify({
+          GI_SITE_PROJECT_ID: projectId,
+          ...engineContext,
+        }),
+      );
+
+      const { transData, inputData } = data || {
+        transData: { nodes: [], edges: [] },
+        inputData: [{ nodes: [], edges: [] }],
+      };
+
+      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+        data: transData,
+        schemaData,
+      };
 
       updateState(draft => {
         draft.engineId = engineId; // 项目绑定的引擎ID
@@ -98,6 +111,9 @@ const Analysis = props => {
         draft.activeNavbar = activeNavbar; //当前激活的导航
         draft.activeAssetsKeys = activeAssetsKeys; //用户选择的资产ID
         draft.themes = themes; //主题
+        draft.datasetId = datasetInfo.id;
+        draft.datasetName = datasetInfo.name;
+        draft.engineType = datasetInfo.engineType;
       });
     })();
     // 当项目ID变化，或者强制重新刷新的时候运行
@@ -151,7 +167,8 @@ const Analysis = props => {
             return {
               // ...matchItem,
               id: matchItem.id,
-              name: matchItem.name,
+              type: matchItem.type || c.type,
+              name: matchItem.name || c.name,
               props: resProps,
             };
           });
@@ -209,7 +226,7 @@ const Analysis = props => {
     <AnalysisContext.Provider value={context}>
       <div className="gi">
         <div className="gi-navbar">
-          <Navbar projectId={projectId} enableAI={enableAI} graphRef={graphRef} />
+          <Navbar workbookId={projectId} />
         </div>
         <div className="gi-analysis">
           <div className="gi-analysis-sidebar">

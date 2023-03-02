@@ -1,7 +1,7 @@
-import { DatabaseOutlined } from '@ant-design/icons';
-import { Button, Popover, Typography } from 'antd';
+import { Select, Typography } from 'antd';
 import React from 'react';
-import { IS_INDEXEDDB_MODE } from '../../services/const';
+import { GI_SITE } from '../../services/const';
+import './index.less';
 
 const EnvInfo = ({ IS_ONLINE_ENV }) => {
   if (IS_ONLINE_ENV) {
@@ -30,12 +30,33 @@ const EnvInfo = ({ IS_ONLINE_ENV }) => {
 };
 
 const DataModeCard = () => {
-  const title = !IS_INDEXEDDB_MODE ? '线上环境' : '本地环境';
+  const defaultValue = GI_SITE.IS_OFFLINE ? 'OFFLINE' : 'ONLINE';
+  const handleChange = value => {
+    console.log(value);
+    localStorage.setItem('GI_SITE_ENV', value);
+    window.location.reload();
+  };
 
   return (
-    <Popover content={<EnvInfo IS_ONLINE_ENV={!IS_INDEXEDDB_MODE} />} title="环境说明" trigger="hover">
-      <Button icon={<DatabaseOutlined />}>{title}</Button>
-    </Popover>
+    // <Popover content={<EnvInfo IS_ONLINE_ENV={!GI_SITE.IS_OFFLINE} />} title="环境说明" trigger="hover">
+    // {/* <Button icon={<DatabaseOutlined />}>{title}</Button> */}
+    <Select
+      className="gi-select"
+      defaultValue={defaultValue}
+      style={{ width: 100, marginRight: '5px' }}
+      onChange={handleChange}
+      options={[
+        {
+          value: 'OFFLINE',
+          label: '本地存储',
+        },
+        {
+          value: 'ONLINE',
+          label: '云端存储',
+        },
+      ]}
+    />
+    // </Popover>
   );
 };
 export default DataModeCard;

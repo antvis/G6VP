@@ -1,4 +1,4 @@
-import { DeleteOutlined, FileTextOutlined } from '@ant-design/icons';
+import { FileTextOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
 import { Alert, Button, Col, Divider, message, Row, Space, Upload } from 'antd';
@@ -12,15 +12,13 @@ interface IProps {
   state: IState;
   updateState: Updater<IState>;
   updateGISite: (params: any) => void;
-  giSiteContext: any;
 }
 
 const { Dragger } = Upload;
 
 const UploadLocalFile: React.FC<IProps> = props => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const { state, updateState, updateGISite, giSiteContext } = props;
-  const { inputData = [] } = giSiteContext;
+  const { state, updateState, updateGISite } = props;
 
   const draggerProps = {
     name: 'file',
@@ -201,7 +199,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
         }
       />
       <h4 style={{ marginBottom: 0 }}>已解析到画布中的数据</h4>
-      {inputData.map((d, i) => {
+      {/* {inputData.map((d, i) => {
         return (
           <div key={d.uid || i}>
             {d.name}
@@ -214,7 +212,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
             />
           </div>
         );
-      })}
+      })} */}
       <h4 style={{ marginBottom: 0, marginTop: '10px' }}>已传数据</h4>
 
       <div className="upload-panel-section">

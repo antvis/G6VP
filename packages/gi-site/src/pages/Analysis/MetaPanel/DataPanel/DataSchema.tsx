@@ -4,7 +4,7 @@ import Graphin from '@antv/graphin';
 import { Button, Drawer } from 'antd';
 import * as React from 'react';
 import CollapseCard from '../../../../components/CollapseCard';
-import { updateProjectById } from '../../../../services';
+import * as ProjectServices from '../../../../services/project';
 import { useContext } from '../../hooks/useContext';
 import SchemaEditor from './SchemaEditor';
 interface DataServiceProps {}
@@ -75,7 +75,7 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
     const nodesConfig = getStyleConfig(styleConfig.nodes, config.nodes);
     const edgesConfig = getStyleConfig(styleConfig.edges, config.edges);
 
-    updateProjectById(id, {
+    ProjectServices.updateById(id, {
       projectConfig: {
         ...config,
         nodes: nodesConfig,

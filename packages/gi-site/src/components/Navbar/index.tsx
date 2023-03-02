@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { createFromIconfontCN, ExportOutlined, SaveOutlined } from '@ant-design/icons';
+import { createFromIconfontCN, SaveOutlined } from '@ant-design/icons';
 import { Button, Drawer, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import { addProject, getProjectById, updateProjectById } from '../../services';
+import * as ProjectServices from '../../services/project';
 import type { IProject } from '../../services/typing';
 import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
 
-import BaseNavbar from './BaseNavbar';
+import BaseNavbar from './Basic';
 import ExportConfig from './ExportConfig';
 import './index.less';
 import type { INavbarState } from './typing';
@@ -60,20 +60,14 @@ const Navbar = ({
     });
   };
 
-  const handleOutOpen = () => {
-    updateState(draft => {
-      draft.exportVisible = true;
-    });
-  };
-
   const handleSave = async () => {
-    const origin = (await getProjectById(projectId)) as IProject;
+    const origin = (await ProjectServices.getById(projectId)) as IProject;
 
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const { data = {}, schemaData = {} } = origin;
 
-      const projectId = await addProject({
+      const projectId = await ProjectServices.create({
         name: origin?.name + '_复制',
         type: 'project',
         data,
@@ -91,7 +85,7 @@ const Navbar = ({
     } else {
       // const data = graphRef.current && graphRef.current.save();
 
-      updateProjectById(projectId, {
+      ProjectServices.updateById(projectId, {
         // data: JSON.stringify({
         //   ...(origin && origin.data),
         //   transData: data,
@@ -127,41 +121,12 @@ const Navbar = ({
       draft.enableAI = !enableAI;
     });
   };
-  const handleDownloadProject = async () => {
-    const project = (await getProjectById(projectId)) as IProject;
-    const { config, name, ...others } = project;
-    const params = {
-      ...others,
-      name,
-      projectConfig: config,
-      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-    };
-
-    const elementA = document.createElement('a');
-    elementA.download = name as string;
-    elementA.style.display = 'none';
-    const blob = new Blob([JSON.stringify(params, null, 2)]);
-    elementA.href = URL.createObjectURL(blob);
-    document.body.appendChild(elementA);
-    elementA.click();
-    document.body.removeChild(elementA);
-  };
 
   const rightContent = (
     <>
       <Tooltip title="保存">
         <Button icon={<SaveOutlined />} onClick={handleSave} size="small" className="gi-intro-save">
           保存
-        </Button>
-      </Tooltip>
-      <Tooltip title="下载项目">
-        <Button icon={<SaveOutlined />} onClick={handleDownloadProject} size="small" className="gi-intro-save">
-          下载项目
-        </Button>
-      </Tooltip>
-      <Tooltip title="导出 SDK">
-        <Button icon={<ExportOutlined />} onClick={handleOutOpen} size="small" className="gi-intro-export">
-          导出 SDK
         </Button>
       </Tooltip>
       {/* <Tooltip title="自动推荐样式">

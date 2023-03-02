@@ -66,8 +66,16 @@ yarn.lock
 
 dist
 
+default.etcd
 
 
 # ignore *.d.ts
 packages/gi-site/**/*.d.ts
 packages/gi-httpservice/**/*.d.ts
+
+
+pnpm-lock.yaml
+
+## ignore offline assets
+packages/gi-site/public/@antv/*.min.js
+packages/gi-site/public/@antv/*.css

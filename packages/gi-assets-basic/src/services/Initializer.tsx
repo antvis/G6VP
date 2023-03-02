@@ -51,11 +51,11 @@ export const GI_SERVICE_INTIAL_GRAPH = {
   `,
   service: async (): Promise<GraphData> => {
     const context = getServerEngineContext();
-    const { GI_SITE_PROJECT_ID } = context;
+
     try {
       //@ts-ignore
-      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
-      return project.data.transData;
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.data;
     } catch (error) {
       return {
         nodes: [],
@@ -103,11 +103,10 @@ export const GI_SERVICE_SCHEMA = {
 }
 `,
   service: async (): Promise<GraphSchemaData> => {
-    const { GI_SITE_PROJECT_ID } = getServerEngineContext();
     try {
       //@ts-ignore
-      const project = await localforage.getItem(GI_SITE_PROJECT_ID);
-      return project.schemaData;
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.schemaData;
     } catch (error) {
       return {
         nodes: [],

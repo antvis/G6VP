@@ -11,7 +11,7 @@ import { loader } from '../../loader';
 import Case from './Case';
 import CreatePanel from './Create';
 import './index.less';
-import ProjectList from './projectList';
+import ProjectList from './Projects';
 import SaveList from './SaveList';
 
 interface WorkspaceProps {}
@@ -78,7 +78,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
 
   const rightContentExtra = (
     <>
-      {/* {IS_INDEXEDDB_MODE && <AlibabaLogin />} */}
+      {/* {GI_SITE.IS_OFFLINE && <AlibabaLogin />} */}
       <Notification />
       <QRcode />
       <DataModeCard />

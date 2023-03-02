@@ -1,8 +1,10 @@
 import type { GISiteParams } from '@antv/gi-sdk';
-
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
-import { updateProjectById } from '../../services/';
+import { getSearchParams } from '../../components/utils';
+import { queryDatasetInfo } from '../../services/dataset';
+
+import * as ProjectServices from '../../services/project';
 import { getComponentsByAssets, getElementsByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
@@ -72,7 +74,7 @@ export const getUpdateGISite =
       updateParams['data'] = data;
     }
 
-    updateProjectById(projectId, updateParams).then(res => {
+    ProjectServices.updateById(projectId, updateParams).then(res => {
       notification.success({
         message: '服务引擎启动成功',
         description: '服务引擎启动成功,正在重启窗口',
@@ -86,3 +88,43 @@ export const getUpdateGISite =
       }, 200);
     });
   };
+
+/**
+ * 判断是否是引擎系统间直连，直接在GI上展示
+ * @returns
+ */
+export const useEngineSystemDirectConnect = async (projectId: string) => {
+  const { searchParams } = getSearchParams(window.location);
+  const IS_ENGINE_SYSTEM_DIRECT_CONNECT = projectId === 'ENGINE_SYSTEM_DIRECT_CONNECT';
+  const datasetInfoString = searchParams.get('datasetInfo');
+  // 如果 URL中 直接带有这个参数，则直接解析使用
+  if (datasetInfoString && IS_ENGINE_SYSTEM_DIRECT_CONNECT) {
+    try {
+      const datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
+
+      return datasetInfo;
+    } catch (error) {
+      console.log('dataInfo parse error', error);
+      return false;
+    }
+  }
+  return false;
+};
+
+export const useDatasetInfo = async datasetId => {
+  const { searchParams } = getSearchParams(window.location);
+  const datasetInfoString = searchParams.get('datasetInfo');
+  let datasetInfo;
+  // 如果 URL中 直接带有这个参数，则直接解析使用
+  if (datasetInfoString) {
+    try {
+      datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
+    } catch (error) {
+      console.log('dataInfo parse error', datasetInfo);
+    }
+  } else {
+    // 正常情况，是根据datasetId查询需要的数据集信息
+    datasetInfo = await queryDatasetInfo(datasetId);
+  }
+  return datasetInfo;
+};

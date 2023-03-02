@@ -18,10 +18,20 @@ export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = antd.version; //4.24.3
 export const GI_VERSION = GI_SDK.version;
 
+// import { externals, externalScripts } from './scripts/pre-build.mjs';
+
 /** 是否为本地研发模式 */
 //@ts-ignore
 export const isDev = process.env.NODE_ENV === 'development';
+//@ts-ignore
+export const { BUILD_MODE } = process.env;
+
 const assets_npm = [
+  {
+    name: GI_SDK.name,
+    version: GI_SDK.version,
+    global: 'GISDK',
+  },
   {
     name: GI_ASSETS_BASIC.name,
     version: GI_ASSETS_BASIC.version,
@@ -51,35 +61,36 @@ const assets_npm = [
     version: GI_ASSETS_TUGRAPH.version,
   },
 ];
-const NPM_INFO = [
-  {
-    name: GI_SDK.name,
-    version: GI_SDK.version,
-    global: 'GISDK',
-  },
 
-  ...assets_npm,
-];
-
-const getCDN = (name: string, version: string, type?: any) => {
+const getCDN = (name: string, version: string, type = 'antgroup') => {
   if (type === 'antgroup') {
     return `https://gw.alipayobjects.com/os/lib/antv/${name}/${version}/dist/index.min.js`;
   }
   return `https://cdn.jsdelivr.net/npm/@antv/${name}/${version}/dist/index.min.js`;
 };
-export const getPackages = npm => {
+
+const getOffline = (name: string, version: string, type?: any) => {
+  return `/public/@antv/${name}.min.js`;
+};
+
+export const getPackages = (npm, IS_OFFLINE) => {
   return npm.map(c => {
     const name = c.name.replace('@antv/', '');
+    const assets_url = IS_OFFLINE ? getOffline(name, c.version) : getCDN(name, c.version, 'antgroup');
     return {
-      url: c.url || getCDN(name, c.version, 'antgroup'), //`https://gw.alipayobjects.com/os/lib/alipay/${name}/${c.version}/dist/index.min.js`,
-      global: name.split('-').join('_').toUpperCase(),
+      url: c.url || assets_url,
+      global: c.global || name.split('-').join('_').toUpperCase(),
       ...c,
     };
   });
 };
 
-export const PACKAGES = getPackages(NPM_INFO);
-export const OFFICIAL_PACKAGES = getPackages(assets_npm);
+const [_sdk, ...otherAssets] = assets_npm;
+export const PACKAGES = getPackages(assets_npm, true);
+export const OFFICIAL_PACKAGES = getPackages(otherAssets, true);
+
+// export const OFFLINE_PACKAGES = getPackages(assets_npm, true);
+// export const ONLINE_PACKAGES = getPackages(assets_npm, false);
 
 const externals = isDev
   ? {}
@@ -93,12 +104,9 @@ const externals = isDev
 const externalScripts = isDev
   ? []
   : PACKAGES.map(c => {
-      return c.url;
+      return { src: c.url };
     });
 
-//@ts-ignore
-const { BUILD_MODE } = process.env;
-console.log('BUILD_MODE', BUILD_MODE);
 const EXTRA_CONFIG = BUILD_MODE
   ? {
       externals: {
@@ -110,7 +118,8 @@ const EXTRA_CONFIG = BUILD_MODE
         antd: 'antd',
         '@antv/g2plot': 'G2Plot',
         localforage: 'localforage',
-        '@antv/gi-sdk': 'GISDK',
+        // '@antv/gi-sdk': 'GISDK',
+        ...externals,
       },
 
       scripts: [
@@ -127,9 +136,18 @@ const EXTRA_CONFIG = BUILD_MODE
         /**  G2Plot */
         { src: `/public/libs/g2plot.min.js` },
         /**  GISDK */
-        { src: `/public/libs/gi-sdk.min.js` },
+        // { src: `/public/libs/gi-sdk.min.js` },
+        ...externalScripts,
       ],
-      styles: [{ link: `/public/libs/antv/graphin.css` }, { link: `/public/libs/gi-sdk.css` }],
+      links: [
+        {
+          href: `/public/libs/antv/graphin.css`,
+          rel: 'stylesheet',
+        },
+        ...externalScripts.map(c => {
+          return { href: c.src.replace('min.js', 'css'), rel: 'stylesheet' };
+        }),
+      ],
     }
   : {
       externals: {
@@ -167,15 +185,15 @@ const EXTRA_CONFIG = BUILD_MODE
       ],
       styles: [
         ...externalScripts.map(c => {
-          return c.replace('min.js', 'css');
+          return c.src.replace('min.js', 'css');
         }),
         `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css`,
       ],
     };
 export default {
   base: '/',
-  publicPath: BUILD_MODE ? '/public/' : '/',
-  // publicPath: '/',
+  // publicPath: BUILD_MODE ? '/public/' : '/',
+  publicPath: '/public/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
@@ -188,7 +206,7 @@ export default {
     type: 'none',
   },
   routes: [
-    { exact: true, path: '/', redirect: '/workspace' },
+    { exact: true, path: '/', redirect: '/home' },
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
@@ -198,9 +216,95 @@ export default {
       routes: [
         { exact: true, path: '/workspace', component: 'Workspace' },
         { exact: true, path: '/services', component: 'ServerCenter' },
-        { exact: true, path: '/services/:projectId', component: 'Analysis/DataServices' },
-        { exact: true, path: '/assets', component: 'Assets' },
-
+        { exact: true, path: '/home', component: 'Home' },
+        {
+          path: '/dataset',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'list',
+              component: 'Dataset/List',
+            },
+            {
+              exact: true,
+              path: 'list/:id',
+              component: 'Dataset/Detail',
+            },
+            {
+              exact: true,
+              path: 'create',
+              component: 'Dataset/Create',
+            },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Dataset/Case',
+            },
+            {
+              exact: true,
+              path: 'SYSTEM_DIRECT_CONNECT',
+              component: 'Dataset/SystemDirectConnect',
+            },
+            {
+              exact: true,
+              path: 'delete',
+              component: 'Dataset/Delete',
+            },
+          ],
+        },
+        {
+          path: '/workbook',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'project',
+              component: 'Workspace/Projects',
+            },
+            {
+              exact: true,
+              path: 'template',
+              component: 'Template/index',
+            },
+            {
+              exact: true,
+              path: 'template/:id',
+              component: 'Template/Detail',
+            },
+            {
+              exact: true,
+              path: 'report',
+              component: 'Share',
+            },
+            {
+              exact: true,
+              path: 'case',
+              component: 'Workspace/Case',
+            },
+          ],
+        },
+        {
+          path: '/open',
+          component: '@/layouts/SideNav',
+          routes: [
+            {
+              exact: true,
+              path: 'assets',
+              component: 'Assets',
+            },
+            {
+              exact: true,
+              path: 'engines',
+              component: 'ServerCenter',
+            },
+            {
+              exact: true,
+              path: 'user',
+              component: 'Share',
+            },
+          ],
+        },
         { component: '404' },
       ],
     },
