@@ -8,7 +8,7 @@ const Links: React.FunctionComponent<LinksProps> = props => {
   const { active } = props;
   return (
     <>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
+      <div style={{ margin: '0px 36px', cursor: 'pointer' }} className={active === 'home' ? 'active' : ''}>
         <Link to="/home">首页</Link>
       </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'dataset' ? 'active' : ''}>

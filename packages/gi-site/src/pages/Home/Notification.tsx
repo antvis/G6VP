@@ -14,7 +14,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   a: {
     fontSize: '14px',
-    // transform: 'scale(0.6)',
+
     color: 'var(--text-color)',
     lineHeight: 2,
   },
