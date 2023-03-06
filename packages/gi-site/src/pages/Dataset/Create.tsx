@@ -49,7 +49,7 @@ const ITEMS = [
   // },
   {
     id: 'API',
-    name: '自定义服务',
+    name: 'API 服务',
     icon: <ApiOutlined />,
   },
 ];
@@ -159,7 +159,8 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         }}
       >
         {/* <Icon type={icon} style={{ fontSize: '26px' }} /> */}
-        {name}
+        {/** TODO 临时方案 */}
+        {name === 'G6VP 官方数据服务' ? 'GraphJSON' : name}
       </div>
     );
 

@@ -146,8 +146,8 @@ export const getPackages = (npm, IS_OFFLINE) => {
 };
 
 export const ONLINE_PACKAGES = getPackages([...depsPackage, ...assetPackage]);
-export const deps_externals = getPackages([...depsPackage, ...assetPackage], BUILD_MODE === 'docker' || isDev);
-export const deps_assets = getPackages([...assetPackage], BUILD_MODE === 'docker' || isDev);
+export const deps_externals = getPackages([...depsPackage, ...assetPackage], BUILD_MODE === 'docker' || !isDev);
+export const deps_assets = getPackages([...assetPackage], BUILD_MODE === 'docker' || !isDev);
 
 fs.writeFile(path.resolve(__dirname, './deps.json'), JSON.stringify(ONLINE_PACKAGES, null, 2), () => {});
 fs.writeFile(path.resolve(__dirname, './deps_externals.json'), JSON.stringify(deps_externals, null, 2), () => {});
