@@ -1,10 +1,6 @@
-import { createFromIconfontCN } from '@ant-design/icons';
-
 import { Input, Menu } from 'antd';
 import React from 'react';
-export const MyIcon = createFromIconfontCN({
-  scriptUrl: 'public/libs/font.js', // 'https://at.alicdn.com/t/font_3381398_5hpi569akv7.js', // 在 iconfont.cn 上生成
-});
+import MyIcon from '../../Icon';
 
 const { Search } = Input;
 interface IconContentProps {

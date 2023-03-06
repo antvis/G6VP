@@ -12,9 +12,9 @@ const Theme: React.FunctionComponent<ThemeProps> = props => {
         //@ts-ignore
         themeVars={ThemeVars}
         antdCssLinks={{
-          dark: 'public/css/gi-theme-antd.dark.css',
-          light: 'public/css/gi-theme-antd.light.css',
-          ali: 'public/css/gi-theme-antd.ali.css',
+          dark: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.dark.css`,
+          light: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.light.css`,
+          ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
         }}
         // onChange={val => changeTheme(val)}
         options={[

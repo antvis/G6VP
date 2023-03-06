@@ -1,0 +1,98 @@
+[
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js",
+    "version": "1.10.0",
+    "global": "localforage",
+    "name": "localforage"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js",
+    "version": "17.0.2",
+    "global": "React",
+    "name": "react"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js",
+    "name": "react-dom",
+    "version": "17.0.2",
+    "global": "ReactDOM"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js",
+    "name": "lodash",
+    "version": "4.17.21",
+    "global": "_"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/antd/4.24.3/dist/antd.min.js",
+    "name": "antd",
+    "version": "4.24.3",
+    "global": "antd"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/antv/g6/4.7.10/dist/g6.min.js",
+    "name": "@antv/g6",
+    "version": "4.7.10",
+    "global": "G6"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js",
+    "name": "@antv/graphin",
+    "version": "2.7.13",
+    "global": "Graphin"
+  },
+  {
+    "url": "https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js",
+    "name": "@antv/g2plot",
+    "version": "2.4.16",
+    "global": "G2Plot"
+  },
+  {
+    "name": "@antv/gi-sdk",
+    "version": "2.0.0",
+    "global": "GISDK",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-sdk@2.0.0/dist/index.min.js"
+  },
+  {
+    "name": "@antv/gi-assets-basic",
+    "version": "2.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-basic@2.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_BASIC"
+  },
+  {
+    "name": "@antv/gi-assets-advance",
+    "version": "1.1.1",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-advance@1.1.1/dist/index.min.js",
+    "global": "GI_ASSETS_ADVANCE"
+  },
+  {
+    "name": "@antv/gi-assets-scene",
+    "version": "1.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-scene@1.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_SCENE"
+  },
+  {
+    "name": "@antv/gi-assets-algorithm",
+    "version": "1.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-algorithm@1.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_ALGORITHM"
+  },
+  {
+    "name": "@antv/gi-assets-graphscope",
+    "version": "2.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-graphscope@2.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_GRAPHSCOPE"
+  },
+  {
+    "name": "@antv/gi-assets-neo4j",
+    "version": "2.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-neo4j@2.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_NEO4J"
+  },
+  {
+    "name": "@antv/gi-assets-tugraph",
+    "version": "2.0.0",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-tugraph@2.0.0/dist/index.min.js",
+    "global": "GI_ASSETS_TUGRAPH"
+  }
+]

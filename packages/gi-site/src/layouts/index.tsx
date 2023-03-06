@@ -1,8 +1,12 @@
 import * as React from 'react';
 import Navbar from '../components/Navbar/SiteNav';
+import { BUILD_MODE } from '../env';
 import useInitial from '../hooks/useInitial';
 import useUpdate from '../hooks/useUpdate';
 import './index.less';
+/** 挂载在浏览器全局下面，方便其他资产包需要 */
+window['GI_PUBLIC_PATH'] = BUILD_MODE === 'docker' ? '/public/' : '/';
+
 interface ILayoutProps {}
 
 const Layout: React.FunctionComponent<ILayoutProps> = props => {

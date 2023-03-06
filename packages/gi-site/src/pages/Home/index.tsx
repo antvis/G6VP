@@ -41,7 +41,7 @@ const Home = props => {
         <section className="flex-right">
           <Card title="公告通知" style={{ borderRadius: '8px', marginTop: '8px' }}>
             <Notification items={NOTIFICATION_ITEMS} />
-            <img src="/image/QRCode.jpg" width={'100%'} />
+            <img src={`${window['GI_PUBLIC_PATH']}image/QRCode.jpg`} width={'100%'} />
           </Card>
           <Card title="学习专区" style={{ marginTop: '12px', borderRadius: '8px' }}>
             <Notification items={STUDY_ITEMS} />

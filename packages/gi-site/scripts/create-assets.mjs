@@ -1,8 +1,12 @@
 import fs from 'fs';
 import fetch from 'node-fetch';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import assets from './deps.json' assert { type: 'json' };
 
-import assets from './assets_package.json' assert { type: 'json' };
+const __filename = fileURLToPath(import.meta.url);
 
+const __dirname = path.dirname(__filename);
 assets.forEach(item => {
   const { url, name } = item;
 
@@ -11,7 +15,7 @@ assets.forEach(item => {
       return res.text();
     })
     .then(res => {
-      fs.writeFile(`../public/${name}.min.js`, res, error => {
+      fs.writeFile(path.resolve(__dirname, '../public/libs/', `${name}.min.js`), res, error => {
         if (error) {
           console.log(`%c Error! JS : ${name} :${error} `, `color:red`);
         } else {
@@ -25,7 +29,7 @@ assets.forEach(item => {
       return res.text();
     })
     .then(res => {
-      fs.writeFile(`../public/${name}.css`, res, error => {
+      fs.writeFile(path.resolve(__dirname, '../public/libs/', `${name}.css`), res, error => {
         if (error) {
           console.log(`%c Error! CSS : ${name} :${error} `, `color:red`);
         } else {

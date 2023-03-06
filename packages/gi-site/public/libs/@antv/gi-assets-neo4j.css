@@ -1,0 +1,30 @@
+.logo-container {
+  background: #fff;
+}
+.neo4j-logo {
+  height: 200px;
+}
+.neo4j-form-container {
+  padding: 24px;
+}
+
+.gi-collapse-card {
+  margin: 8px;
+}
+.gi-collapse-card .ant-collapse {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--component-background);
+  border: none;
+  border-radius: 8px;
+  box-shadow: -1px -1px 4px 0 rgba(223, 223, 223, 0.5), -2px 2px 4px 0 rgba(244, 244, 244, 0.5), 2px 3px 8px 2px rgba(151, 151, 151, 0.05);
+}
+.gi-collapse-card .ant-collapse .ant-collapse-item {
+  padding: 4px;
+  border: none;
+}
+.gi-collapse-card .ant-collapse-content {
+  padding: 4px;
+  border: none;
+}
+
