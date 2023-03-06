@@ -1,0 +1,64 @@
+.gi-ui-panel{
+  position: absolute;
+  flex-direction: column;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px 0 #00000014,0 9px 28px 8px #0000000d;
+  background-color: #fff;
+  overflow: hidden;
+  z-index:2;
+  flex-shrink: 0;
+  flex-grow: 0;
+  animation-duration: .3s;
+  animation-timing-function: ease-in-out;
+  display:none;
+  &[data-open]{
+    display: flex;
+  }
+  @keyframes asf-panel-animation-L{
+    from{
+      transform: translate(-100%,0);
+    }
+    to{
+      transform: translate(0,0);
+    }
+  }
+  @keyframes asf-panel-animation-R{
+    from{
+      transform: translate(100%,0);
+    }
+    to{
+      transform: translate(0,0);
+    }
+  }
+
+  &[data-placement='LT'],&[data-placement='LB']{
+    animation-name: asf-panel-animation-L;
+  }
+  &[data-placement='RT'],&[data-placement='RB']{
+    animation-name: asf-panel-animation-R;
+  }
+  >header{
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    >div{
+      &:first-child{
+        flex: 1;
+        font-weight: bold;
+        padding: 0 6px;
+      }
+    }
+    .gi-asf-close{
+      width: 40px;
+      text-align: center;
+      font-size:16px;
+    }
+  }
+  >div{
+    flex: 1;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,31 @@
+.gi-assets-operation-item{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height:60px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  cursor:pointer;
+  box-sizing: border-box;
+  &:hover{
+    background-color: rgba(0,0,0,0.02);
+  }
+  .gi-assets-operation-item-loading{
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .gi-assets-operation-item-title{
+    font-size:12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

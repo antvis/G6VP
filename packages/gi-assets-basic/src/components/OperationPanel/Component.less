@@ -1,0 +1,26 @@
+.gi-operation-panel{
+  position:absolute;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border: 1px solid #eee;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  .gi-operation-panel-group{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    br{
+      display: none;
+      &+span{
+        display: block;
+        font-size: 12px !important;
+      }
+    }
+    .gi-operation-panel-group-driver{
+      position: absolute;
+      background-color: #ccc;
+    }
+  }
+}

@@ -38,6 +38,7 @@ import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
+import OperationPanel from './OperationPanel';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -87,4 +88,5 @@ export {
   ChartAnalysis,
   ZoomStatus,
   RemoveNodeWithMenu,
+  OperationPanel,
 };
