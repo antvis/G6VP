@@ -41,7 +41,7 @@ const Panel: React.FC<PropsWithChildren<Props>> = (props) => {
   return <div className='gi-ui-panel' {...otherProps} style={style}>
     <header>
       <div>{title}</div>
-      <div className='gi-asf-close'>
+      <div className='gi-ui-close'>
         <CloseOutlined onClick={() => {
           if(onClose){
             onClose();

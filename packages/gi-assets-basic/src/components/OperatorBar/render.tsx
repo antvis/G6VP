@@ -8,7 +8,8 @@ const Wrapper = (props: React.PropsWithChildren<any>) => {
 }
 // placement: 'LT' | 'RT' | 'LB' | 'RB';
 const DEFAULT_OFFSET = [0,60];
-export const wrapContentAsset = (Comp: React.FC, compProps: Record<string, any>) => {
+const ContentAsset = (props: Record<string, any> & {Comp: React.FC}) => {
+  const { Comp,...compProps } = props;
   const { GIAC_CONTENT } = compProps;
   const {
     title,
@@ -35,4 +36,7 @@ export const wrapContentAsset = (Comp: React.FC, compProps: Record<string, any>)
       </Panel>,element)
     }
   </Wrapper>
+}
+export const wrapContentAsset = (Comp: React.FC, compProps: Record<string, any>) => {
+  return <ContentAsset Comp={Comp} {...compProps}/> 
 } 
