@@ -11,7 +11,7 @@ interface Props{
   onContentClick?: React.MouseEventHandler<HTMLDivElement>;
   onTitleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
-const OperationItem: React.FC<Props> = (props) => {
+const OperatorItem: React.FC<Props> = (props) => {
   const { title,content,height,disabled,loading } = props;
   const style: React.CSSProperties = {};
   if(['string','number'].includes(typeof height)){
@@ -23,24 +23,24 @@ const OperationItem: React.FC<Props> = (props) => {
       cursor: 'not-allowed'
     });
   }
-  return <div className='gi-assets-operation-item' style={style} onClick={(e) => {
+  return <div className='gi-assets-operator-item' style={style} onClick={(e) => {
     if(!disabled && props.onClick){
       props.onClick(e);
     }
   }}>
-    <div className='gi-assets-operation-item-content' onClick={(e) =>{
+    <div className='gi-assets-operator-item-content' onClick={(e) =>{
       if(!disabled && props.onContentClick){
         props.onContentClick(e);
       }
     }}>{content}</div>
-    <div className='gi-assets-operation-item-title' onClick={(e) => {
+    <div className='gi-assets-operator-item-title' onClick={(e) => {
       if(!disabled && props.onTitleClick){
         props.onTitleClick(e);
       }
     }}>{title}</div>
     {
-      loading ? <Spin className='gi-assets-operation-item-loading' size='small' spinning={true}/> : null
+      loading ? <Spin className='gi-assets-operator-item-loading' size='small' spinning={true}/> : null
     }
   </div>
 }
-export default OperationItem;
+export default OperatorItem;

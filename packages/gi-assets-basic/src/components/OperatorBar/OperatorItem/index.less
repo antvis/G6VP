@@ -1,4 +1,4 @@
-.gi-assets-operation-item{
+.gi-assets-operator-item{
   position: relative;
   display: flex;
   flex-direction: column;
@@ -9,9 +9,9 @@
   cursor:pointer;
   box-sizing: border-box;
   &:hover{
-    background-color: rgba(0,0,0,0.02);
+    filter: grayscale(0.5);
   }
-  .gi-assets-operation-item-loading{
+  .gi-assets-operator-item-loading{
     position: absolute;
     top:0;
     left:0;
@@ -22,7 +22,7 @@
     justify-content: center;
     overflow: hidden;
   }
-  .gi-assets-operation-item-title{
+  .gi-assets-operator-item-title{
     font-size:12px;
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { Icon,useContext } from '@antv/gi-sdk';
-import OperationItem from './OperationItem';
+import OperatorItem from './OperatorItem';
 import Panel from '../UIComponents/Panel';
 const Wrapper = (props: React.PropsWithChildren<any>) => {
   return props.children;
@@ -24,7 +24,7 @@ export const wrapContentAsset = (Comp: React.FC, compProps: Record<string, any>)
   const containerId = `${GISDK_ID}-container`
   const element = document.getElementById(containerId) as HTMLDivElement;
   return <Wrapper key={compProps.key}>
-    <OperationItem disabled={disabled} title={title} content={<Icon type={icon} />} onClick={() => {
+    <OperatorItem disabled={disabled} title={title} content={<Icon type={icon} />} onClick={() => {
       setOpen(true);
     }} />
     {
