@@ -14,7 +14,7 @@
     "build": "node scripts/pre-build.mjs && node scripts/create-assets.mjs && NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build:docker": "BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/create-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
-    "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
+    "start": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",
