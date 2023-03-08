@@ -37,6 +37,7 @@ import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
+import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
@@ -86,5 +87,6 @@ export {
   // ContentContainer,
   ChartAnalysis,
   ZoomStatus,
+  RemoveNodeWithMenu,
   SelectExchangeMenuItem,
 };
