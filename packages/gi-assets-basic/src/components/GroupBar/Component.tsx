@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useContext as useGraphInsightContext } from '@antv/gi-sdk';
-import ReactDOM from 'react-dom';
 import './Component.less';
 import { wrapContentAsset } from './render';
 type Align = 'Left' | 'Center' | 'Right';
@@ -38,16 +37,11 @@ export interface Props {
   style?: React.CSSProperties;
   children?: React.ReactNode | React.ReactChildren;
 }
-let index = 1;
 const GroupBar: React.FC<Props> = (props) => {
   const { groups, size = 60, position = 'Top', left, right, top, bottom, className: propClassName, style: propStyle, suspend = false,children } = props;
   const context = useGraphInsightContext();
   const { config, assets } = context;
-  const { GISDK_ID } = context;
-  const containerId = `${GISDK_ID}-container`
-  const element = document.getElementById(containerId) as HTMLDivElement;
   const className = `gi-group-operator-bar ${propClassName || ''}`;
-  const cssRef = React.useRef<HTMLStyleElement>(null);
   const componentCfgMap = React.useMemo(() => {
     if (config?.components) {
       return config.components.reduce((map: any, current: any) => {
