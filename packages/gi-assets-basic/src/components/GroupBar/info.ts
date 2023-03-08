@@ -1,10 +1,10 @@
 const info = {
-  id: 'OperatorBar',
-  name: '操作栏',
-  desc: '业务操作栏，可集成众多分析组件',
+  id: 'GroupBar',
+  name: '分组操作栏',
+  desc: '分组操作栏,分组形式集成资产',
   icon: 'icon-tabs',
   cover: 'http://xxxx.jpg',
   category: 'container-components',
-  type: 'GICC',
+  type: 'GICC_LAYOUT',
 };
 export default info;
