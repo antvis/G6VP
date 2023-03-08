@@ -5,6 +5,8 @@ const GI_DEPOLY_OFFLINE_SITE = [
   'localhost',
   '127.0.0.1',
   'gi-external-pre.alipay.com',
+  'antv-insight-pre.alipay.com',
+  'insight.antv.antgroup.com',
 ];
 /** 是否是开发环境 */
 //@ts-ignore

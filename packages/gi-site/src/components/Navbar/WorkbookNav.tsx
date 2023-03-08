@@ -33,13 +33,13 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
   const { context, updateContext } = useContext();
   const history = useHistory();
   const { name } = context;
-  console.log('name', context);
+
   return (
     <header style={styles.container}>
       <div style={styles.left}>
         <Logo
           handleClick={() => {
-            history.push('/home');
+            history.push('/workbook/project');
           }}
           size={30}
           style={{ padding: '0px 8px', cursor: 'pointer' }}
