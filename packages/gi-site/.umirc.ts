@@ -86,8 +86,8 @@ export const getPackages = (npm, IS_OFFLINE) => {
 };
 
 const [_sdk, ...otherAssets] = assets_npm;
-export const PACKAGES = getPackages(assets_npm, true);
-export const OFFICIAL_PACKAGES = getPackages(otherAssets, true);
+export const PACKAGES = getPackages(assets_npm, isDev);
+export const OFFICIAL_PACKAGES = getPackages(otherAssets, isDev);
 
 // export const OFFLINE_PACKAGES = getPackages(assets_npm, true);
 // export const ONLINE_PACKAGES = getPackages(assets_npm, false);
@@ -192,8 +192,8 @@ const EXTRA_CONFIG = BUILD_MODE
     };
 export default {
   base: '/',
-  // publicPath: BUILD_MODE ? '/public/' : '/',
-  publicPath: '/public/',
+  publicPath: BUILD_MODE ? '/public/' : '/',
+  // publicPath: '/public/',
   hash: true,
   favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
   history: {
