@@ -9,6 +9,7 @@ export interface ConnectProps {
 
 export const connectHugeGraphService = async () => {
   const { uri, username, password, httpServerURL } = utils.getServerEngineContext();
+  console.log('httpServerURL', httpServerURL);
 
   try {
     const result = await request(`${httpServerURL}/api/neo4j/connect`, {
@@ -37,7 +38,7 @@ export const connectHugeGraphService = async () => {
 
 export const queryGraphSchema = async () => {
   const { httpServerURL } = utils.getServerEngineContext();
-  const result = await request(`${httpServerURL}/api/neo4j/schema`, {
+  const result = await request(`${httpServerURL}/graphs/hugegraph/schema`, {
     method: 'GET',
   });
 

@@ -33,7 +33,7 @@ export const GI_SERVICE_SCHEMA = {
 
     try {
       const httpServerURL = serverEngineContext.httpServerURL;
-      const result = await request(`${httpServerURL}/api/neo4j/schema`, {
+      const result = await request(`${httpServerURL}/graphs/hugegraph/schema`, {
         method: 'GET',
       });
 

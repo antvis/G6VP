@@ -1,8 +1,8 @@
 import ServerComponent from '../components';
-import * as CypherQuery from './CypherQuery';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
 import * as HugeGraphService from './HugeGraphService';
+import { GremlinQuery } from './GremlinQuery';
 
 export default {
   id: 'HugeGraph',
@@ -15,7 +15,7 @@ export default {
   component: ServerComponent,
   services: {
     ...Initializer,
-    ...CypherQuery,
+    ...GremlinQuery,
     ...NeighborsQuery,
     ...HugeGraphService,
   },
