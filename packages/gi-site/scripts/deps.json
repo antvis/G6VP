@@ -24,9 +24,9 @@
     "global": "_"
   },
   {
-    "url": "https://gw.alipayobjects.com/os/lib/antd/4.24.3/dist/antd.min.js",
+    "url": "https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js",
     "name": "antd",
-    "version": "4.24.3",
+    "version": "4.24.8",
     "global": "antd"
   },
   {

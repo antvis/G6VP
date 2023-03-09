@@ -25,6 +25,19 @@ export const externalScripts = deps_externals.map(c => {
   return { src: c.url };
 });
 console.log('externals', externals, BUILD_MODE);
+const EXTRA_CONFIG = isDev
+  ? { externals: {}, scripts: [], links: [] }
+  : {
+      externals: {
+        ...externals,
+      },
+      scripts: [...externalScripts],
+      links: [
+        ...externalScripts.map(c => {
+          return { href: c.src.replace('min.js', 'css'), rel: 'stylesheet' };
+        }),
+      ],
+    };
 
 export default {
   // base: '/',
@@ -145,15 +158,7 @@ export default {
       ],
     },
   ],
-  externals: {
-    ...externals,
-  },
-  scripts: [...externalScripts],
-  links: [
-    ...externalScripts.map(c => {
-      return { href: c.src.replace('min.js', 'css'), rel: 'stylesheet' };
-    }),
-  ],
+  ...EXTRA_CONFIG,
   request: {
     dataField: '',
   },

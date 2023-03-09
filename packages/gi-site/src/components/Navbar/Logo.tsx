@@ -28,7 +28,7 @@ const Logo: React.FunctionComponent<LogoProps> = props => {
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <g id="全部页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="全部页" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id='MacBook-Pro-14"' transform="translate(-352.000000, -500.000000)">
             <path
               fill={`var(--text-color)`}
