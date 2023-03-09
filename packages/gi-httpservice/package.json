@@ -53,10 +53,7 @@
   "ci": {
     "version": "14, 16, 18"
   },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
+  "repository": "https://github.com/antvis/G6VP.git",
   "eslintIgnore": [
     "coverage"
   ],
