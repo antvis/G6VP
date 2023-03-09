@@ -16,6 +16,14 @@ export default (app: Application) => {
   router.get('/graphcompute/instances', controller.graphcompute.getInstance);
   router.get('/graphcompute/execAlgorithm', controller.graphcompute.execAlgorithm);
 
+  // GraphScope
+  router.post('/graphscope/connect', controller.graphscope.connectGraphScope);
+  router.post('/graphscope/gremlinQuery', controller.graphscope.gremlinQuery);
+  router.get('/graphscope/listSubgraph', controller.graphscope.listSubgraph);
+  router.post('/graphscope/neighbors', controller.graphscope.queryNeighbors);
+  router.get('/graphscope/execAlgorithm', controller.graphscope.execAlgorithm);
+  router.post('/graphscope/properties', controller.graphscope.queryElementProperties);
+
   // Neo4j
   router.post('/api/neo4j/connect', controller.neo4j.connect);
   router.get('/api/neo4j/disconnect', controller.neo4j.disConnect);
