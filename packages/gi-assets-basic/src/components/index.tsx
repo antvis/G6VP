@@ -15,7 +15,6 @@ import Loading from './Loading';
 import MiniMap from './MiniMap';
 import NeighborsQuery from './NeighborsQuery';
 import NodeLegend from './NodeLegend';
-import OperatorBar from './OperatorBar';
 import PathAnalysis from './PathAnalysis';
 import Placeholder from './Placeholder';
 import PropertiesPanel from './PropertiesPanel';
@@ -38,6 +37,8 @@ import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
+import OperatorBar from './OperatorBar';
+import GroupBar from './GroupBar';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
@@ -52,6 +53,7 @@ export {
   FitCenter,
   FitView,
   OperatorBar,
+  GroupBar,
   NodeLegend,
   MiniMap,
   CanvasSetting,
