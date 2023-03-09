@@ -239,8 +239,9 @@ const GISDK = (props: Props) => {
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
-        draft.data = transform(res);
-        draft.source = transform(res);
+        const newData = transform(res);
+        draft.data = newData;
+        draft.source = newData;
         draft.layoutCache = false;
       });
     },
@@ -252,8 +253,9 @@ const GISDK = (props: Props) => {
     },
     updateDataAndLayout: (res, lay) => {
       updateState(draft => {
-        draft.data = transform(res);
-        draft.source = transform(res);
+        const newData = transform(res);
+        draft.data = newData;
+        draft.source = newData;
         draft.layout = lay;
         draft.layoutCache = false;
       });

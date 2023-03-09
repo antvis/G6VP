@@ -33,7 +33,7 @@ export default () => {
           //@ts-ignore
           window.Tracert.call('expoCheck');
         }
-        setAssetPackages(assets);
+        // setAssetPackages(assets); //暂时移除从user中获取资产信息
         setUserInfo(result);
         //@ts-ignore
         window.GI_USER_INFO = result;

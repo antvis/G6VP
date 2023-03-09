@@ -51,8 +51,6 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
               label: '模型',
             },
           ]}
-          onResize={undefined}
-          onResizeCapture={undefined}
         />
       }
       bodyStyle={{ width: 'calc(100vw - 300px)', height: 'calc(100vh - 160px)', overflow: 'auto' }}

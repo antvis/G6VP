@@ -1,0 +1,98 @@
+[
+  {
+    "url": "/libs/localforage.min.js",
+    "version": "1.10.0",
+    "global": "localforage",
+    "name": "localforage"
+  },
+  {
+    "url": "/libs/react.min.js",
+    "version": "17.0.2",
+    "global": "React",
+    "name": "react"
+  },
+  {
+    "url": "/libs/react-dom.min.js",
+    "name": "react-dom",
+    "version": "17.0.2",
+    "global": "ReactDOM"
+  },
+  {
+    "url": "/libs/lodash.min.js",
+    "name": "lodash",
+    "version": "4.17.21",
+    "global": "_"
+  },
+  {
+    "url": "/libs/antd.min.js",
+    "name": "antd",
+    "version": "4.24.8",
+    "global": "antd"
+  },
+  {
+    "url": "/libs/@antv/g6.min.js",
+    "name": "@antv/g6",
+    "version": "4.7.10",
+    "global": "G6"
+  },
+  {
+    "url": "/libs/@antv/graphin.min.js",
+    "name": "@antv/graphin",
+    "version": "2.7.13",
+    "global": "Graphin"
+  },
+  {
+    "url": "/libs/@antv/g2plot.min.js",
+    "name": "@antv/g2plot",
+    "version": "2.4.16",
+    "global": "G2Plot"
+  },
+  {
+    "name": "@antv/gi-sdk",
+    "version": "2.0.0",
+    "global": "GISDK",
+    "url": "/libs/@antv/gi-sdk.min.js"
+  },
+  {
+    "name": "@antv/gi-assets-basic",
+    "version": "2.0.0",
+    "url": "/libs/@antv/gi-assets-basic.min.js",
+    "global": "GI_ASSETS_BASIC"
+  },
+  {
+    "name": "@antv/gi-assets-advance",
+    "version": "1.1.1",
+    "url": "/libs/@antv/gi-assets-advance.min.js",
+    "global": "GI_ASSETS_ADVANCE"
+  },
+  {
+    "name": "@antv/gi-assets-scene",
+    "version": "1.0.0",
+    "url": "/libs/@antv/gi-assets-scene.min.js",
+    "global": "GI_ASSETS_SCENE"
+  },
+  {
+    "name": "@antv/gi-assets-algorithm",
+    "version": "1.0.0",
+    "url": "/libs/@antv/gi-assets-algorithm.min.js",
+    "global": "GI_ASSETS_ALGORITHM"
+  },
+  {
+    "name": "@antv/gi-assets-graphscope",
+    "version": "2.0.0",
+    "url": "/libs/@antv/gi-assets-graphscope.min.js",
+    "global": "GI_ASSETS_GRAPHSCOPE"
+  },
+  {
+    "name": "@antv/gi-assets-neo4j",
+    "version": "2.0.0",
+    "url": "/libs/@antv/gi-assets-neo4j.min.js",
+    "global": "GI_ASSETS_NEO4J"
+  },
+  {
+    "name": "@antv/gi-assets-tugraph",
+    "version": "2.0.0",
+    "url": "/libs/@antv/gi-assets-tugraph.min.js",
+    "global": "GI_ASSETS_TUGRAPH"
+  }
+]

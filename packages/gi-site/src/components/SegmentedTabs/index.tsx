@@ -52,15 +52,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
         padding: '12px 12px',
         ...style,
       }}
-      title={
-        <Segmented
-          options={options}
-          onResize={undefined}
-          onResizeCapture={undefined}
-          value={active}
-          onChange={onChange}
-        />
-      }
+      title={<Segmented options={options} value={active} onChange={onChange} />}
       extra={extra}
     >
       <div className="gi-segmented-tabs">
