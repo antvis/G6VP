@@ -8,7 +8,6 @@ export const PropertiesPanel = {
     const { GRAPHSCOPE_ACCOUNT } = utils.getServerEngineContext();
     const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
     const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
-    console.log('gsproperty', GRAPHSCOPE_ACCOUNT);
 
     const response = await request(`${httpServerURL}/graphscope/properties`, {
       method: 'post',
