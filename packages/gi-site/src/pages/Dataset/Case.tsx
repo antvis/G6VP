@@ -158,7 +158,7 @@ const trans = lists => {
   };
 
   const { hostname, protocol } = window.location;
-  const HTTP_SERVER_URL = `${protocol}//${hostname}:7001`;
+  const HTTP_SERVICE_URL = `${protocol}//${hostname}:7001`;
   return lists.map(item => {
     const { type: GSType, gremlin_interface, schema, creation_time, directed, name } = item;
     const schemaData = transSchemaDataFromGS(schema);
@@ -172,7 +172,7 @@ const trans = lists => {
         ...gremlin_interface,
         type: GSType, // 原先列表中的数据，都存在engineContext中
         directed,
-        HTTP_SERVER_URL: HTTP_SERVER_URL, //GIHttpServer 地址，这个可以根据部署环境确定
+        HTTP_SERVICE_URL: HTTP_SERVICE_URL, //GIHttpServer 地址，这个可以根据部署环境确定
       },
       gmtCreate: creation_time,
       onwer: '东泽', // 　如果GraphScope Console有用户权限体系的话，可以加上这个Owner

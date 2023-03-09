@@ -1,11 +1,9 @@
 import { EngineBanner, GISiteParams, utils } from '@antv/gi-sdk';
-import { Select } from 'antd';
 import React from 'react';
 import Connect from './Connect';
 import './index.less';
 import LoadGraph from './LoadGraph';
 
-const { Option } = Select;
 export interface GraphModelProps {
   onClose: () => void;
   updateGISite?: (params: GISiteParams) => void;
@@ -13,14 +11,14 @@ export interface GraphModelProps {
 }
 const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) => {
   const [state, updateState] = React.useState({
-    useToken: utils.getServerEngineContext()?.TUGRAPH_USER_TOKEN,
+    useToken: utils.getServerEngineContext()?.GRAPHSCOPE_USER_TOKEN,
   });
   const { useToken } = state;
-  const updateToken = () => {
+  const updateToken = token => {
     updateState(pre => {
       return {
         ...pre,
-        useToken: utils.getServerEngineContext()?.TUGRAPH_USER_TOKEN,
+        useToken: token,
       };
     });
   };
@@ -33,7 +31,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ onClose, updateGISite }) =>
         logo="https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*SRjBRZji8RsAAAAAAAAAAAAAARQnAQ"
       />
       <Connect updateToken={updateToken} token={useToken} />
-      {useToken && <LoadGraph updateGISite={updateGISite} />}
+      {useToken && <LoadGraph updateGISite={updateGISite} token={useToken} />}
     </div>
   );
 };

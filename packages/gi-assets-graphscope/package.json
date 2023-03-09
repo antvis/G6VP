@@ -28,9 +28,10 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish  && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
+    "@antv/gi-sdk": "workspace:*",
     "@antv/graphin": "2.x",
+    "gremlin_patch": "^3.5.1",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",
     "use-immer": "^0.7.0"

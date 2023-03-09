@@ -31,8 +31,8 @@ export const wrapperResult = (ctx, success, result) => {
   ctx.body = {
     success: success,
     data: result,
-  }
-}
+  };
+};
 
 export const getNodeIdsByResponseBak = (
   params: ICypherResponse,
@@ -112,7 +112,6 @@ export const getNodeIdsByResponseBak = (
 export const getNodeIdsByResponse = (params: any): { nodeIds: Array<number>; edgeIds: Array<string> } => {
   const nodeIds: Array<number> = [];
   const edgeIds: Array<string> = [];
-  console.log('getNodeIdsByResponse', params.data);
   const result = params.data.result;
   const headers = params.data.header;
   const edgeIndexList: Array<number> = [];

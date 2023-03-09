@@ -18,10 +18,10 @@ class GremlinClass {
   public instance = null;
   public clientInstance = null;
 
-  constructor(serverURL, isClient) {
+  constructor(serverURL, isClient, account) {
     if (isClient) {
       if (!this.clientInstance) {
-        this.clientInstance = this.initGremlinClient(serverURL);
+        this.clientInstance = this.initGremlinClient(serverURL, account);
       }
       return this.clientInstance;
     }
@@ -32,16 +32,9 @@ class GremlinClass {
     return this.instance;
   }
 
-  static getInstance(serverURL) {
-    if (!this.prototype.instance) {
-      this.prototype.instance = new GremlinClass(serverURL, false);
-    }
-    return this.prototype.instance;
-  }
-
-  static getClientInstance(serverURL) {
+  static getClientInstance(serverURL, account) {
     if (!this.prototype.clientInstance) {
-      this.prototype.clientInstance = new GremlinClass(serverURL, true);
+      this.prototype.clientInstance = new GremlinClass(serverURL, true, account);
     }
     return this.prototype.clientInstance;
   }
@@ -63,13 +56,15 @@ class GremlinClass {
   /**
    * 初始化 Gremlin 客户端，支持通过 Gremlin 语句查询
    */
-  initGremlinClient(gremlinServer) {
+  initGremlinClient(gremlinServer, account) {
     if (!gremlinServer) {
       throw new Error('请先载图，然后再初始化 Gremlin 客户端');
     }
 
+    const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
     const client = new gremlin.driver.Client(gremlinServer, {
       traversalSource: 'g',
+      authenticator,
     });
 
     return client;
@@ -96,121 +91,6 @@ class GraphComputeService extends Service {
       data: others,
       code: 200,
     };
-  }
-  /**
-   * 创建 GraphScope 实例
-   */
-  async createGraphScopeInstance() {
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/createInstance`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      data: {
-        num_workers: 2,
-        vineyard_shared_mem: '4Gi',
-      },
-      timeout: [15000, 300000],
-      dataType: 'json',
-    });
-
-    console.log('创建session成功', result);
-    if (!result || !result.data) {
-      return null;
-    }
-
-    const { instance_id, success, code, message } = result.data;
-
-    return {
-      success,
-      code,
-      message,
-      data: {
-        instanceId: instance_id,
-      },
-    };
-  }
-
-  /**
-   * 关闭创建的 GraphScope 实例
-   */
-  async closeGraphScopeInstance(instanceId) {
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/closeInstance`, {
-      method: 'GET',
-      data: {
-        instance_id: instanceId,
-      },
-      timeout: [30000, 50000],
-      dataType: 'json',
-    });
-    // 关闭 GS 引擎后，销毁 Gremlin 查询实例
-    GremlinClass.destoryInstance();
-    return result.data;
-  }
-
-  /**
-   * 将数据加载到 GraphScope 引擎中
-   * @param params
-   */
-  async loadDataToGraphScope(params) {
-    const { engineServerURL, oidType } = readGraphScopeConfig();
-
-    const loadParams = {
-      ...params,
-      oid_type: oidType,
-    };
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/loadData`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      data: loadParams,
-      timeout: [5000, 60000],
-      dataType: 'json',
-    });
-
-    console.log('载图完成', result);
-    if (!result || !result.data || !result.data.success) {
-      return result.data;
-    }
-
-    const { graph_name, graph_url, success, code, hostname, hostip, message } = result.data;
-    // 更新 Gremlin server，暂时固定写死
-    const graphURL = graph_url.replace(/(?<=\/\/)([0-9\.]*)(?=\:)/g, hostip || '47.242.172.5');
-
-    return {
-      success,
-      code,
-      message,
-      data: {
-        graphName: graph_name,
-        graphURL,
-        hostName: hostname,
-        hostIp: hostip,
-      },
-    };
-  }
-
-  /**
-   * 将加载到 GraphScope 中的数据卸载掉
-   */
-  async unloadDataFromGraphScope(graphName) {
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/unloadData`, {
-      method: 'GET',
-      data: {
-        graph_name: graphName,
-      },
-      dataType: 'json',
-    });
-
-    return result.data;
   }
 
   generatorGraphData(value) {
@@ -240,11 +120,11 @@ class GraphComputeService extends Service {
    * @param gremlinSQL Gremlin 查询语句
    */
   async queryByGremlinLanguage(params) {
-    const { value, gremlinServer } = params;
+    const { value: gremlinCode, gremlinServer, graphScopeAccount } = params;
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
 
-    const result = await clientInstance.submit(value);
+    const result = await clientInstance.submit(gremlinCode);
 
     let mode = 'graph';
     const propertyList: any[] = [];
@@ -413,86 +293,7 @@ class GraphComputeService extends Service {
     };
   }
 
-  async closeGraphInstance(params) {
-    const { instanceId, graphName } = params;
-
-    // step1: unload graph data
-    if (graphName) {
-      const unloadDataResult = await this.unloadDataFromGraphScope(graphName);
-      console.log('卸载数据', unloadDataResult);
-      if (!unloadDataResult || !unloadDataResult.success) {
-        return {
-          success: false,
-          errorMsg: 'unload graphData failed!',
-        };
-      }
-    }
-
-    // step2: close graphscope instance
-    if (instanceId) {
-      const closeResult = await this.closeGraphScopeInstance(instanceId);
-      console.log('关闭实例', closeResult);
-      if (!closeResult || !closeResult.success) {
-        return {
-          success: false,
-          errorMsg: 'close graphscope failed!',
-        };
-      }
-    }
-
-    return {
-      success: true,
-      message: 'unload graphData and close graphscope success!',
-    };
-  }
-
-  /**
-   * 上传文件到部署 GraphScope 的服务器上
-   * @param params
-   */
-  async uploadFileToService(params) {
-    const { file, instanceId } = params;
-
-    if (!file) {
-      return;
-    }
-
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const { filepath, filename } = file;
-    const fileContent = fs.readFileSync(filepath, {
-      encoding: 'utf8',
-    });
-
-    const form = new FormStream();
-    form.buffer('file', new Buffer(fileContent, 'utf8'), filename);
-    form.field('instance_id', instanceId);
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/uploadFile`, {
-      method: 'POST',
-      headers: form.headers(),
-      stream: form,
-      timeout: [10000, 30000],
-      dataType: 'json',
-    });
-
-    if (!result || !result.data) {
-      return result;
-    }
-
-    const { success, code, message, records } = result.data;
-    return {
-      success,
-      code,
-      message,
-      data: {
-        fileName: Object.keys(JSON.parse(records))[0],
-        // @ts-ignore
-        filePath: Object.values(JSON.parse(records))[0],
-      },
-    };
-  }
-
+  // 分布式暂时不支持，但保留
   /**
    * 执行 GraphScope 图算法
    * @param params 算法参数
@@ -584,7 +385,6 @@ class GraphComputeService extends Service {
       graphName,
     });
 
-    console.log('addColumnResult', addColumnResult);
     if (!addColumnResult || !addColumnResult.success) {
       return {};
     }
@@ -638,14 +438,14 @@ class GraphComputeService extends Service {
    * @param params
    */
   async queryNeighbors(params) {
-    const { id = [], sep, gremlinServer } = params;
+    const { id = [], sep, gremlinServer, graphScopeAccount } = params;
     let str = '';
 
     for (let i = 0; i < sep - 1; i++) {
       str += '.both()';
     }
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
 
     const gremlinSQL = `g.V(${id.join(',')})${str}.bothE().limit(100)`;
     const result = await clientInstance.submit(gremlinSQL);
@@ -725,14 +525,15 @@ class GraphComputeService extends Service {
     };
   }
 
+  // TODO：queryNodesProperties 统一
   /**
    * 查询节点属性详情
    * @param params 节点 ID
    */
   async queryElementProperties(params) {
-    const { id = [], gremlinServer } = params;
+    const { id = [], gremlinServer, graphScopeAccount } = params;
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
+    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
 
     // 查询属性的 Gremlin 已经
     const gremlinSQL = `g.V(${id.join(',')}).valueMap()`;
@@ -767,102 +568,6 @@ class GraphComputeService extends Service {
   }
 
   /**
-   * 统计元素数量
-   */
-  async statisticsElementCount(params) {
-    const { id, sep, rules, gremlinServer } = params;
-    console.log('rules', rules);
-    let str = '';
-
-    for (let i = 0; i < sep - 1; i++) {
-      str += '.both()';
-    }
-
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer);
-
-    // TODO 暂时还没有添加过滤规则
-    const gremlinSQL = `g.V(${id})${str}.bothE().count()`;
-    const result = await clientInstance.submit(gremlinSQL);
-    if (!result) {
-      return result;
-    }
-
-    return {
-      success: true,
-      code: 200,
-      data: result,
-    };
-  }
-
-  /**
-   * 根据 GraphName 查询 Schema 数据
-   */
-  async queryGraphSchema(graphName) {
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/graphSchema`, {
-      method: 'GET',
-      data: {
-        // @ts-ignore
-        graph_name: graphName,
-      },
-      dataType: 'json',
-    });
-
-    if (!result || !result.data) {
-      return result;
-    }
-
-    const { code, success, message, result: schemaResult } = result.data;
-    if (!success) {
-      return result.data;
-    }
-
-    const gsGchemaData = JSON.parse(schemaResult);
-    const { vertices, edges } = gsGchemaData;
-    const nodeData = vertices.map(v => {
-      const { label, properties } = v;
-      // 将 properties 转换为 key/value 的形式
-      const current = {};
-      for (const p of properties) {
-        current[p.name] = p.type;
-      }
-      return {
-        nodeType: label,
-        nodeTypeKeyFromProperties: 'nodeType',
-        properties: current,
-      };
-    });
-
-    const edgeData = edges.map(edge => {
-      const { label, properties, relations = [] } = edge;
-      const { src_label, dst_label } = relations[0] || ({} as any);
-      const current = {};
-      for (const p of properties) {
-        current[p.name] = p.type;
-      }
-
-      return {
-        edgeType: label,
-        sourceNodeType: src_label,
-        targetNodeType: dst_label,
-        nodeTypeKeyFromProperties: 'edgeType',
-        properties: current,
-      };
-    });
-
-    return {
-      code,
-      success,
-      message,
-      data: {
-        nodes: nodeData,
-        edges: edgeData,
-      },
-    };
-  }
-
-  /**
    * 执行算法成功后，将算法结果写到数据指定字段上
    * @param params
    */
@@ -890,18 +595,19 @@ class GraphComputeService extends Service {
   }
 
   /**
-   * 将 JSON 描述的 pattern 转换为 Gremlin 语句
-   * @param value JSON 值
+   * 获取指定引擎的子图列表
+   * @param params
+   * @returns
    */
-  async jsonToGremlin(value) {
+  async listSubgraph(params) {
     const { engineServerURL } = readGraphScopeConfig();
 
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/jsonToGremlin`, {
+    const result = await this.ctx.curl(`${engineServerURL}/api/v1/graph`, {
       method: 'GET',
       data: {
-        json_str: value,
+        // @ts-ignore
+        // graph_name: graphName,
       },
-      timeout: [10000, 30000],
       dataType: 'json',
     });
 
@@ -909,23 +615,12 @@ class GraphComputeService extends Service {
       return result;
     }
 
-    return result.data;
-  }
-
-  async getGraphScopeInstance() {
-    const { engineServerURL } = readGraphScopeConfig();
-
-    const result = await this.ctx.curl(`${engineServerURL}/api/graphservice/getInstance`, {
-      method: 'GET',
-      timeout: [10000, 30000],
-      dataType: 'json',
-    });
-
-    if (!result || !result.data) {
-      return result;
-    }
-
-    return result.data;
+    return {
+      success: true,
+      code: 200,
+      message: '子图列表查询成功',
+      data: result.data.data,
+    };
   }
 }
 
