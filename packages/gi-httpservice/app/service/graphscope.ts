@@ -52,7 +52,7 @@ class GremlinClass {
    */
   initGremlinInstance(graphURL) {
     if (!graphURL) {
-      throw new Error('graphURL 请先载图，然后再初始化 Gremlin 客户端');
+      throw new Error('Failed to init Gremlin Instance. 请先载图，然后再初始化 Gremlin 客户端');
     }
     const traversal = gremlin.process.AnonymousTraversalSource.traversal;
     const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
@@ -65,7 +65,7 @@ class GremlinClass {
    */
   initGremlinClient(gremlinServer, account) {
     if (!gremlinServer) {
-      throw new Error('initGremlinClient 请先载图，然后再初始化 Gremlin 客户端');
+      throw new Error('Failed to init gremlin cliend. 请先载图，然后再初始化 Gremlin 客户端');
     }
     const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
     const client = new gremlin.driver.Client(gremlinServer, {
