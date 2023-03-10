@@ -79,10 +79,9 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       type: 'user',
       gmtCreate: new Date(),
       //@ts-ignore
-      name: InputRef.current.input.value,
+      name: params.name || InputRef.current?.input.value,
       wbType: 'GI',
     };
-    console.log('payload', payload);
     await createDataset(payload);
     history.push('/dataset/list');
   };
@@ -141,7 +140,6 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   };
 
   const currentEngines = engines[state.active] || [];
-  console.log('currentEngines', engines, currentEngines);
 
   const content = currentEngines.map(server => {
     const { component: ServerComponent, name } = server;
@@ -178,7 +176,6 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       </div>
     </TabPane>
   );
-  console.log('content', content);
 
   return (
     <>
@@ -190,10 +187,15 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
           borderRadius: '8px',
         }}
       >
-        <div style={{ marginBottom: '12px' }}>
-          <label style={styles.label}>填写数据集名称</label>
-          <Input placeholder="请输入数据集名称" ref={InputRef} style={{ width: '400px' }}></Input>
-        </div>
+        {/* TODO: 名字在最上方填写很容易忽略，而且也不是必填项，因为提交逻辑在各个数据源类型的子组件里，到了数据集完全懵逼认不出来。 */}
+        {active !== 'GRAPH' ? (
+          <div style={{ marginBottom: '12px' }}>
+            <label style={styles.label}>填写数据集名称</label>
+            <Input placeholder="请输入数据集名称" ref={InputRef} style={{ width: '400px' }}></Input>
+          </div>
+        ) : (
+          ''
+        )}
         <div>
           <label style={styles.label}>选择数据源类型</label>
           <RadioNote items={ITEMS} value={active} onChange={handleChangeType} />

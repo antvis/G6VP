@@ -25,10 +25,10 @@ export const GI_SITE = {
     const port = 7001;
     let online = `${protocol}//${hostname}:${port}`;
     if (!IS_DEV_ENV) {
-      online = window.location.origin;
+      online = window.location.origin + window.location.pathname;
     }
 
-    return GI_SITE.IS_OFFLINE ? 'https://graphinsight-pre.alipay.com' : `${protocol}//${hostname}:${port}`;
+    return GI_SITE.IS_OFFLINE ? 'https://graphinsight-pre.alipay.com' : online;
   },
 };
 

@@ -15,7 +15,6 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
   React.useEffect(() => {
     (async () => {
       const info = await DatasetServices.queryDatasetInfo(id);
-      console.log('info', info);
       setState(preState => {
         return {
           ...preState,

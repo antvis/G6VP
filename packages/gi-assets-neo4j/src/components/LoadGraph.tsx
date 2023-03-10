@@ -1,6 +1,6 @@
 import { GISiteParams, GraphSchemaData, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
-import { Button, Col, Row, Statistic } from 'antd';
+import { Button, Col, Row, Statistic, Form, Input } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { queryGraphSchema } from '../services/Neo4jService';
@@ -12,6 +12,7 @@ interface SchemaGraphProps {
 }
 
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
+  const [form] = Form.useForm();
   const { updateGISite } = props;
 
   const [state, updateState] = useImmer<{
@@ -55,23 +56,27 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
         defaultLabelField: defaultLabelField,
       },
     };
-    utils.setServerEngineContext({
-      engineId,
-      schemaData: newSchemaData,
-    });
-    const engineContext = utils.getServerEngineContext();
-    if (updateGISite) {
-      updateGISite({
+    form.validateFields().then(values => {
+      const { datasetName } = values;
+      utils.setServerEngineContext({
         engineId,
         schemaData: newSchemaData,
-        engineContext,
-        //@ts-ignore
-        projectConfig: {
-          //@ts-ignore
-          components,
-        },
       });
-    }
+      const engineContext = utils.getServerEngineContext();
+      if (updateGISite) {
+        updateGISite({
+          engineId,
+          schemaData: newSchemaData,
+          engineContext,
+          //@ts-ignore
+          projectConfig: {
+            //@ts-ignore
+            components,
+          },
+          name: datasetName,
+        });
+      }
+    });
   };
 
   const defaultStyleConfig = utils.generatorStyleConfigBySchema(schemaData);
@@ -117,6 +122,23 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
               </Row>
             </div>
 
+            <Form name="subgraphForm" form={form} layout="vertical">
+              <Form.Item
+                label="数据名称"
+                name="datasetName"
+                rules={[
+                  {
+                    required: true,
+                    message: '请输入数据名称!',
+                  },
+                ]}
+                style={{
+                  marginTop: 16,
+                }}
+              >
+                <Input placeholder="请为该数据集命名" />
+              </Form.Item>
+            </Form>
             <Button type="primary" onClick={handleSubmit} style={{ width: '100%' }}>
               进入分析
             </Button>
