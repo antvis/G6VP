@@ -134,7 +134,7 @@ const getOffline = name => {
 export const getPackages = (npm, IS_OFFLINE) => {
   return npm.map(c => {
     const { name } = c;
-    const assets_url = c.url || getCDN(name, c.version, 'jsdelivr');
+    const assets_url = c.url || getCDN(name, c.version);
     const pkg = name.startsWith('@antv') ? name.split('@antv/')[1] : name;
 
     return {
@@ -146,8 +146,8 @@ export const getPackages = (npm, IS_OFFLINE) => {
 };
 
 export const ONLINE_PACKAGES = getPackages([...depsPackage, ...assetPackage]);
-export const deps_externals = getPackages([...depsPackage, ...assetPackage], BUILD_MODE === 'docker' || !isDev);
-export const deps_assets = getPackages([...assetPackage], BUILD_MODE === 'docker' || !isDev);
+export const deps_externals = getPackages([...depsPackage, ...assetPackage], BUILD_MODE === 'docker');
+export const deps_assets = getPackages([...assetPackage], BUILD_MODE === 'docker');
 
 fs.writeFile(path.resolve(__dirname, './deps.json'), JSON.stringify(ONLINE_PACKAGES, null, 2), () => {});
 fs.writeFile(path.resolve(__dirname, './deps_externals.json'), JSON.stringify(deps_externals, null, 2), () => {});
