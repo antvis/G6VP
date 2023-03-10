@@ -17,8 +17,14 @@ interface ConnectProps {
 class GremlinClass {
   public instance = null;
   public clientInstance = null;
+  public account;
 
-  constructor(serverURL, isClient, account) {
+  constructor(serverURL, isClient, account = {}) {
+    if (!this.account || account.password !== this.account.password || account.username !== this.account.username) {
+      this.account = account;
+      this.clientInstance = this.initGremlinClient(serverURL, account);
+      return this.clientInstance;
+    }
     if (isClient) {
       if (!this.clientInstance) {
         this.clientInstance = this.initGremlinClient(serverURL, account);
@@ -32,8 +38,9 @@ class GremlinClass {
     return this.instance;
   }
 
-  static getClientInstance(serverURL, account) {
-    if (!this.prototype.clientInstance) {
+  static getClientInstance(serverURL, account = {}) {
+    const accountChange = !this.prototype.account || JSON.stringify(this.prototype.account) !== JSON.stringify(account);
+    if (accountChange || !this.prototype.clientInstance) {
       this.prototype.clientInstance = new GremlinClass(serverURL, true, account);
     }
     return this.prototype.clientInstance;
@@ -60,7 +67,6 @@ class GremlinClass {
     if (!gremlinServer) {
       throw new Error('请先载图，然后再初始化 Gremlin 客户端');
     }
-
     const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
     const client = new gremlin.driver.Client(gremlinServer, {
       traversalSource: 'g',
@@ -71,7 +77,11 @@ class GremlinClass {
   }
 
   static destoryInstance() {
+    this.prototype.account = undefined;
     this.prototype.instance = null;
+    if (this.prototype.clientInstance) {
+      this.prototype.clientInstance.close();
+    }
     this.prototype.clientInstance = null;
   }
 }
