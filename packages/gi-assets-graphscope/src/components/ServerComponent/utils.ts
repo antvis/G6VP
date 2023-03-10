@@ -24,3 +24,25 @@ export const getConnectInfo = () => {
 export const setConnectInfo = (params: typeof DEFAULT_CONNECT_INFO) => {
   localStorage.setItem('TUGRAPH_CONNECT_INFO', JSON.stringify(params));
 };
+
+const formatProperties = items => {
+  return items.map(item => {
+    const { properties, ...others } = item;
+    const propertyMap = {};
+    properties.forEach(property => {
+      propertyMap[property.name] = property.type;
+    });
+    return {
+      ...others,
+      properties: propertyMap,
+    };
+  });
+};
+
+export const formatGSSchema = schema => {
+  const { nodes, edges } = schema;
+  return {
+    nodes: formatProperties(nodes),
+    edges: formatProperties(edges),
+  };
+};

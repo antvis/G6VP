@@ -22,6 +22,7 @@ import TableMode from './TableMode';
 import TemplateQuery from './TemplateQuery';
 import ThemeSetting from './ThemeSetting';
 import Undo from './Undo';
+import JSONMode from './JSONMode';
 export {
   StyleSetting,
   SnapshotGallery,
@@ -30,6 +31,7 @@ export {
   AddSheetbar,
   ThemeSetting,
   TableMode,
+  JSONMode,
   ModeSwitch,
   SubGraphLayout,
   StructAnalysis,

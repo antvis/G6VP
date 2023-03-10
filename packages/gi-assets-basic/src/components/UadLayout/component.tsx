@@ -16,6 +16,7 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const context = useContext();
   const { topItems, sideItems } = props;
   const { config, assets } = context;
+  const { data: graphData } = useContext();
   const ComponentCfgMap = config.components.reduce((acc, curr) => {
     return {
       ...acc,
@@ -34,6 +35,17 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
       };
     }),
   ];
+  const [state, setState] = React.useState({ activeKey: items?.[0]?.key });
+  React.useEffect(() => {
+    // @ts-ignore
+    const { nodes, edges, tableResult } = graphData;
+    if (!nodes.length && !edges.length && tableResult) {
+      const jsonTab = items?.find(item => item.key === 'JSONMode');
+      if (jsonTab) {
+        setState({ activeKey: jsonTab.key });
+      }
+    }
+  }, [graphData]);
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <div style={{ height: `${height}px`, borderBottom: 'var(--primary-border)' }}>
@@ -41,7 +53,14 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
         {QueryContent.map(item => item.children)}
       </div>
       <div style={{ width: '100%', height: `calc(100% - ${height}px` }}>
-        <Tabs items={items} tabPosition={tabPosition} style={{ height: '100%' }} className="gi-query-layout-tabs" />
+        <Tabs
+          activeKey={state.activeKey}
+          onTabClick={key => setState({ activeKey: key })}
+          items={items}
+          tabPosition={tabPosition}
+          style={{ height: '100%' }}
+          className="gi-query-layout-tabs"
+        />
       </div>
     </div>
   );

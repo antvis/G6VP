@@ -187,11 +187,12 @@ const GISDK = (props: Props) => {
     const transform = (data, reset?: boolean) => {
       const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
       const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
-      const { combos } = data;
+      const { combos, tableResult } = data;
       return {
         nodes,
         edges,
         combos,
+        tableResult,
       };
     };
 
