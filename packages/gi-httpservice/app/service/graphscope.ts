@@ -124,10 +124,23 @@ class GraphComputeService extends Service {
 
     const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
 
-    const result = await clientInstance.submit(gremlinCode);
+    let result = [];
+    try {
+      result = await clientInstance.submit(gremlinCode);
+    } catch (error) {
+      return {
+        success: false,
+        code: 200,
+        message: `Gremlin 查询失败。${error}`,
+        data: {
+          nodes: [],
+          edges: [],
+        },
+      };
+    }
 
     let mode = 'graph';
-    const propertyList: any[] = [];
+    const tableResult: any[] = [];
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -214,30 +227,7 @@ class GraphComputeService extends Service {
       } else {
         // 属性
         mode = 'table';
-        // count
-        if (typeof value === 'number') {
-          // 执行的是 count()
-          propertyList.push({
-            count: value,
-          });
-        } else if (typeof value === 'string') {
-          propertyList.push({
-            value,
-          });
-        } else {
-          // Properties
-          const entries = value.entries();
-          const currentObj = {} as any;
-          for (const current of entries) {
-            const [key, v] = current;
-            if (typeof v === 'number') {
-              currentObj[key] = v;
-            } else {
-              currentObj[key] = v.join(',');
-            }
-          }
-          propertyList.push(currentObj);
-        }
+        tableResult.push(value);
       }
     }
 
@@ -288,7 +278,7 @@ class GraphComputeService extends Service {
         nodes: [],
         edges: [],
         mode,
-        propertyList,
+        tableResult,
       },
     };
   }

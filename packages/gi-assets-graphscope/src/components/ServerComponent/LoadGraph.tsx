@@ -4,6 +4,7 @@ import { Button, Col, Input, notification, Row, Select, Form } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { querySubGraphList } from './services';
+import { formatGSSchema } from './utils';
 
 const { getSchemaGraph } = utils;
 
@@ -102,7 +103,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const handleSubmit = () => {
     const engineId = 'GraphScope';
     const newSchemaData = {
-      ...schemaData,
+      ...formatGSSchema(schemaData),
       meta: {
         defaultLabelField: defaultLabelField,
       },
