@@ -7,6 +7,7 @@ import ContextMenu from './Container';
 // const { ContextMenu } = Components;
 
 const defaultStyle = {
+  minWidth: '130px',
   boxShadow: '0 4px 12px rgb(0 0 0 / 15%)',
 };
 
