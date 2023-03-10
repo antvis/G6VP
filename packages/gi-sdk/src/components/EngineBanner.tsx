@@ -1,6 +1,6 @@
+import { Icon } from '@antv/gi-common-components';
 import { Button, Col, Row } from 'antd';
 import React from 'react';
-import Icon from './Icon';
 
 export interface EngineBannerProps {
   logo: string;

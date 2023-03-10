@@ -1,7 +1,8 @@
 import { Input, Popover } from 'antd';
 import React, { useRef } from 'react';
-import IconContent from './IconContent';
 import MyIcon from '../../Icon';
+import IconContent from './IconContent';
+
 import './index.less';
 
 export interface IColorInputProps {

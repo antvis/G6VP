@@ -38,3 +38,16 @@ assets.forEach(item => {
       });
     });
 });
+
+/** 生成 font 字体 */
+fetch('https://at.alicdn.com/t/a/font_3381398_egg222zbfuq.js')
+  .then(res => res.text())
+  .then(res => {
+    fs.writeFile(path.resolve(__dirname, '../public/libs/', `font.js`), res, error => {
+      if (error) {
+        console.log(`%c Error! Font  :${error} `, `color:red`);
+      } else {
+        console.log(`%c Success! Font `, `color:green`);
+      }
+    });
+  });
