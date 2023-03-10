@@ -20,7 +20,7 @@ class GremlinClass {
   public account;
 
   constructor(serverURL, isClient, account = {}) {
-    if (!this.account || account.password !== this.account.password || account.username !== this.account.username) {
+    if (!this.account || JSON.stringify(this.account) !== JSON.stringify(account)) {
       this.account = account;
       this.clientInstance = this.initGremlinClient(serverURL, account);
       return this.clientInstance;
@@ -52,7 +52,7 @@ class GremlinClass {
    */
   initGremlinInstance(graphURL) {
     if (!graphURL) {
-      throw new Error('请先载图，然后再初始化 Gremlin 客户端');
+      throw new Error('Failed to init Gremlin Instance. 请先载图，然后再初始化 Gremlin 客户端');
     }
     const traversal = gremlin.process.AnonymousTraversalSource.traversal;
     const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
@@ -65,7 +65,7 @@ class GremlinClass {
    */
   initGremlinClient(gremlinServer, account) {
     if (!gremlinServer) {
-      throw new Error('请先载图，然后再初始化 Gremlin 客户端');
+      throw new Error('Failed to init gremlin cliend. 请先载图，然后再初始化 Gremlin 客户端');
     }
     const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
     const client = new gremlin.driver.Client(gremlinServer, {

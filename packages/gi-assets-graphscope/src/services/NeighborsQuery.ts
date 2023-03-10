@@ -4,17 +4,14 @@ export const NeighborsQuery = {
   name: '邻居查询',
   service: async params => {
     const { ids, sep } = params;
-    const { GRAPHSCOPE_ACCOUNT } = utils.getServerEngineContext();
+    const { HTTP_SERVICE_URL, gremlin_endpoint, GRAPHSCOPE_ACCOUNT } = utils.getServerEngineContext();
 
-    const gremlinServer = localStorage.getItem('graphScopeGremlinServer');
-    const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
-
-    const response = await request(`${httpServerURL}/graphscope/neighbors`, {
+    const response = await request(`${HTTP_SERVICE_URL}/graphscope/neighbors`, {
       method: 'post',
       data: {
         id: ids,
         sep,
-        gremlinServer,
+        gremlinServer: gremlin_endpoint,
         graphScopeAccount: GRAPHSCOPE_ACCOUNT,
       },
     });
