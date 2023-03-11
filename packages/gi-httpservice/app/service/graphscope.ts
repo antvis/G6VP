@@ -86,6 +86,34 @@ class GremlinClass {
   }
 }
 
+
+/**
+ * 初始化 Gremlin 客户端，支持通过 Gremlin 语句查询
+ * @param gremlinServer Endpoint of gremlin server
+ * @param account Authenticator of gremlin server
+ */
+function initGremlinClient(gremlinServer: string, account = {"username": "", "password": ""}) {
+  if (!("username" in account) || (!"password" in account)) {
+    throw new Error('Authenticator failed: username or password not exists.');
+  }
+  const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
+    account.username, account.password
+  );
+  const client = new gremlin.driver.Client(gremlinServer, {
+    traversalSource: 'g',
+    authenticator,
+  });
+
+  console.log(`Gremlin client init on server ${gremlinServer}`);
+  return client;
+}
+
+function closeGremlinClient(client): void {
+ console.log("Gremlin client close");
+ try { client.close(); } catch (error) {}
+}
+
+
 class GraphComputeService extends Service {
   async connectGraphScope(params: ConnectProps) {
     const { isStringType, ...others } = params;
@@ -131,13 +159,15 @@ class GraphComputeService extends Service {
    */
   async queryByGremlinLanguage(params) {
     const { value: gremlinCode, gremlinServer, graphScopeAccount } = params;
+    console.log(`Execute query ${gremlinCode} on server ${gremlinServer}`)
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
+    const client = initGremlinClient(gremlinServer, graphScopeAccount);
 
     let result = [];
     try {
-      result = await clientInstance.submit(gremlinCode);
+      result = await client.submit(gremlinCode);
     } catch (error) {
+      closeGremlinClient(client);
       return {
         success: false,
         code: 200,
@@ -148,6 +178,8 @@ class GraphComputeService extends Service {
         },
       };
     }
+
+    console.log("Get gremlin result: ", result);
 
     let mode = 'graph';
     const tableResult: any[] = [];
@@ -244,7 +276,7 @@ class GraphComputeService extends Service {
     if (mode === 'graph') {
       // 查询点的详情
       const nodeIds = Object.keys(nodeItemsMapping);
-      const propertiesArr = await this.queryNodesProperties(clientInstance, nodeIds);
+      const propertiesArr = await this.queryNodesProperties(client, nodeIds);
 
       // 构造 { id: properties } 对象
       for (let i = 0; i < nodeIds.length; i++) {
@@ -266,6 +298,7 @@ class GraphComputeService extends Service {
         edges.push(edgeItemsMapping[edgeKey]);
       }
 
+      closeGremlinClient(client);
       return {
         success: true,
         code: 200,
@@ -279,6 +312,7 @@ class GraphComputeService extends Service {
       };
     }
 
+    closeGremlinClient(client);
     return {
       success: true,
       code: 200,
@@ -403,10 +437,10 @@ class GraphComputeService extends Service {
 
   /**
    * 批量查询节点的属性
-   * @param gremlinClientInsance Gremlin 客户端实例
+   * @param client Gremlin 客户端
    * @param nodeIds 节点ID数组
    */
-  async queryNodesProperties(gremlinClientInsance, nodeIds) {
+  async queryNodesProperties(client, nodeIds) {
     const propertiesArr = [];
     if (!nodeIds || nodeIds.length === 0) {
       return propertiesArr;
@@ -414,7 +448,7 @@ class GraphComputeService extends Service {
 
     for (const id of nodeIds) {
       const propertyGremlinSQL = `g.V(${id}).valueMap()`;
-      const propertiesResult = await gremlinClientInsance.submit(propertyGremlinSQL);
+      const propertiesResult = await client.submit(propertyGremlinSQL);
 
       if (propertiesResult && propertiesResult.length === 1) {
         for (const properties of propertiesResult) {
@@ -445,10 +479,10 @@ class GraphComputeService extends Service {
       str += '.both()';
     }
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
+    const client = initGremlinClient(gremlinServer, graphScopeAccount);
 
     const gremlinSQL = `g.V(${id.join(',')})${str}.bothE().limit(100)`;
-    const result = await clientInstance.submit(gremlinSQL);
+    const result = await client.submit(gremlinSQL);
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -491,7 +525,7 @@ class GraphComputeService extends Service {
     // 查询点的详情
     const nodeIds = Object.keys(nodeItemsMapping);
 
-    const propertiesArr = await this.queryNodesProperties(clientInstance, nodeIds);
+    const propertiesArr = await this.queryNodesProperties(client, nodeIds);
 
     // 构造 { id: properties } 对象
     for (let i = 0; i < nodeIds.length; i++) {
@@ -514,6 +548,8 @@ class GraphComputeService extends Service {
       edges.push(edgeItemsMapping[edgeKey]);
     }
 
+    closeGremlinClient(client);
+
     return {
       success: true,
       code: 200,
@@ -533,13 +569,13 @@ class GraphComputeService extends Service {
   async queryElementProperties(params) {
     const { id = [], gremlinServer, graphScopeAccount } = params;
 
-    const clientInstance = GremlinClass.getClientInstance(gremlinServer, graphScopeAccount);
+    const client = initGremlinClient(gremlinServer, graphScopeAccount);
 
     // 查询属性的 Gremlin 已经
     const gremlinSQL = `g.V(${id.join(',')}).valueMap()`;
 
     console.log('查询语句', gremlinSQL);
-    const result = await clientInstance.submit(gremlinSQL);
+    const result = await client.submit(gremlinSQL);
     const propertiesArr = [];
     console.log('查询属性值结果', result);
 
@@ -559,6 +595,7 @@ class GraphComputeService extends Service {
       resultObj[id[i]] = propertiesArr[i];
     }
 
+    closeGremlinClient(client);
     return {
       success: true,
       code: 200,
