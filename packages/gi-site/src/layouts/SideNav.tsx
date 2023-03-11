@@ -1,5 +1,4 @@
 import { AppstoreOutlined, DeleteOutlined, GlobalOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
-// import { AppstoreOutlined, DeleteOutlined, GlobalOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { Menu, MenuProps } from 'antd';
 import * as React from 'react';
@@ -15,7 +14,8 @@ const DATASET_ITEMS = [
 ];
 
 const OPEN_ITEMS = [
-  { label: '资产管理', key: '/open/assets', icon: <PlusOutlined /> },
+  { label: '资产管理', key: '/open/assets-manage', icon: <PlusOutlined /> },
+  { label: '资产列表', key: '/open/assets-list', icon: <PlusOutlined /> },
   { label: '引擎管理', key: '/open/engines', icon: <MenuUnfoldOutlined /> },
   // { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
   // { label: '图应用', key: '/open/portal', icon: <AppstoreOutlined /> },

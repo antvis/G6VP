@@ -139,8 +139,13 @@ export default {
           routes: [
             {
               exact: true,
-              path: 'assets',
+              path: 'assets-manage',
               component: 'Assets',
+            },
+            {
+              exact: true,
+              path: 'assets-list',
+              component: 'AssetsList',
             },
             {
               exact: true,

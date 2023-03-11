@@ -9,7 +9,7 @@ currently being supported with security updates.
 
 | dependence | Version                 |
 | ---------- | ----------------------- |
-| node       | 14.x <= version <= 16.x |
+| node       | 16.x |
 | pnpm       | 7.x                     |
 | antd       | 4.x                     |
 | react      | 17.x                    |
