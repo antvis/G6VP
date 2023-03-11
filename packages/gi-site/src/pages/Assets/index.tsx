@@ -1,6 +1,6 @@
-import { Card, Space } from 'antd';
+import { Space, Empty } from 'antd';
 import * as React from 'react';
-import AllAssets from '../../components/AssetsCenter/AllAssets';
+import SegmentedTabs from '../../components/SegmentedTabs';
 import { getAssetPackages, setDefaultAssetPackages } from '../../loader';
 import Cards from './Cards';
 import './index.less';
@@ -41,23 +41,31 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   if (!state.isReady) {
     return null;
   }
+  const renderMangeContainer = () => {
+    if (mode === 'table') {
+      return <PackageTable data={lists}></PackageTable>;
+    } else {
+      return <Cards data={lists}></Cards>;
+    }
+  };
   return (
     <>
-      <Card
-        title="资产管理"
+      <SegmentedTabs
+        items={[
+          { key: 'relation', label: '关系资产', children: renderMangeContainer() },
+          {
+            key: 'location',
+            label: '地理资产',
+            children: <Empty description="正在建设中" />,
+          },
+        ]}
         extra={
           <Space>
             <ViewMode value={mode} onChange={handleChangeMode} />
             <UploadAssets></UploadAssets>
           </Space>
         }
-      >
-        {mode === 'table' && <PackageTable data={lists}></PackageTable>}
-        {mode === 'card' && <Cards data={lists}></Cards>}
-      </Card>
-      <Card title="资产列表" style={{ margin: '12px 0px' }}>
-        <AllAssets assetsCenter={{ hash: 'components' }} activeAssetsKeys={[]} onChange={() => {}} />
-      </Card>
+      />
     </>
   );
 };
