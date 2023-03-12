@@ -35,6 +35,7 @@ import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
+import CommonNeighbor from './CommonNeighbor';
 import ZoomStatus from './ZoomStatus';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import OperatorBar from './OperatorBar';
@@ -91,4 +92,5 @@ export {
   ZoomStatus,
   RemoveNodeWithMenu,
   SelectExchangeMenuItem,
+  CommonNeighbor,
 };
