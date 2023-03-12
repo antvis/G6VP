@@ -79,7 +79,8 @@ pnpm-lock.yaml
 ## ignore offline assets
 packages/gi-site/public/libs/@antv/*.min.js
 packages/gi-site/public/libs/@antv/*.css
-packages/gi-site/public/libs/@antv/*.css
+packages/gi-site/public/libs/*.js
+packages/gi-site/public/libs/*.css
 packages/gi-site/src/env.ts
 packages/gi-site/scripts/*.json
 
