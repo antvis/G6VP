@@ -18,7 +18,7 @@ const Links: React.FunctionComponent<LinksProps> = props => {
         <Link to="/workbook/project">工作薄</Link>
       </div>
       <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
-        <Link to="/open/assets">开放市场</Link>
+        <Link to="/open/assets-manage">开放市场</Link>
       </div>
     </>
   );

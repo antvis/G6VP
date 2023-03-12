@@ -8,5 +8,6 @@ const info = {
   type: 'INITIALIZER',
   // 申明需要实现的服务名
   services: ['GI_SERVICE_INTIAL_GRAPH', 'GI_SERVICE_SCHEMA'],
+  docs: 'https://www.yuque.com/antv/gi/eedyuy',
 };
 export default info;
