@@ -28,7 +28,7 @@ jobs:
 
       # postInstall will build the product
       - name: Install dependencies and Build the product
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Workflow failed alert
         if: ${{ failure() }}
