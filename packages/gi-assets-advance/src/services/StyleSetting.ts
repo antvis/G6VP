@@ -17,7 +17,7 @@ export const StyleSetting: ServiceObject = {
       //@ts-ignore
       const { localforage } = window;
       //  debugger
-      const project = await localforage.getItem(projectId);
+      const project = await localforage?.getItem(projectId);
       project.projectConfig[elementType] = elementConfig;
 
       localforage.setItem(projectId, {

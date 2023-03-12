@@ -45,7 +45,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
     }
     return defaultVisibleValue === 'true' ? true : false;
   });
- 
+
   const sortedComponents = React.useMemo(() => {
     return (
       components
@@ -71,6 +71,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
       const { component: Component } = asset;
       return (
         <TabPane key={index} tab={<WrapTab {...itemProps} />}>
+          {/* @ts-ignore */}
           <Component {...itemProps} />
         </TabPane>
       );
@@ -79,7 +80,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
 
   const toggleVisible = () => {
     setVisible(preState => {
-      localStorage.setItem(defaultVisibleKey, String(!preState))
+      localStorage.setItem(defaultVisibleKey, String(!preState));
       return !preState;
     });
   };

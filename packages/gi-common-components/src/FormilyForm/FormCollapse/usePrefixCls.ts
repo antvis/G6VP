@@ -8,6 +8,7 @@ const usePrefixCls = (
   },
 ) => {
   if ('ConfigContext' in ConfigProvider) {
+    // @ts-ignore
     const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
     return getPrefixCls(tag, props?.prefixCls);
   } else {

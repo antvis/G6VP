@@ -25,7 +25,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
 
   const service = utils.getService(services, serviceId);
   const { item: targetNode } = contextmenu;
-  if (!service || targetNode.getType?.() !== 'node') {
+  if (!service || targetNode?.getType?.() !== 'node') {
     return null;
   }
 

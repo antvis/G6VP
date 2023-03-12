@@ -1,4 +1,4 @@
-import { FormItem, Input, NumberPicker, Radio, Select, Switch,ArrayCollapse,ArrayItems } from '@formily/antd';
+import { FormItem, Input, NumberPicker, Radio, Select, Switch, ArrayCollapse, ArrayItems } from '@formily/antd';
 import { createSchemaField } from '@formily/react';
 import React from 'react';
 import { SketchPicker } from 'react-color';
@@ -26,6 +26,6 @@ const SchemaField: React.ReactNode = createSchemaField({
     GroupSelect,
     ArrayCollapse,
     ArrayItems,
-  }
-});
+  },
+}) as any;
 export default SchemaField;
