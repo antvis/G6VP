@@ -14,91 +14,16 @@ interface ConnectProps {
   isStringType: boolean;
 }
 
-class GremlinClass {
-  public instance = null;
-  public clientInstance = null;
-  public account;
-
-  constructor(serverURL, isClient, account = {}) {
-    if (!this.account || JSON.stringify(this.account) !== JSON.stringify(account)) {
-      this.account = account;
-      this.clientInstance = this.initGremlinClient(serverURL, account);
-      return this.clientInstance;
-    }
-    if (isClient) {
-      if (!this.clientInstance) {
-        this.clientInstance = this.initGremlinClient(serverURL, account);
-      }
-      return this.clientInstance;
-    }
-
-    if (!this.instance) {
-      this.instance = this.initGremlinInstance(serverURL);
-    }
-    return this.instance;
-  }
-
-  static getClientInstance(serverURL, account = {}) {
-    const accountChange = !this.prototype.account || JSON.stringify(this.prototype.account) !== JSON.stringify(account);
-    if (accountChange || !this.prototype.clientInstance) {
-      this.prototype.clientInstance = new GremlinClass(serverURL, true, account);
-    }
-    return this.prototype.clientInstance;
-  }
-
-  /**
-   * 初始化 Gremlin 实例，支持通过 API 方式调用
-   * @param graphURL GraphScope 返回的 Gremlin 解析器的地址
-   */
-  initGremlinInstance(graphURL) {
-    if (!graphURL) {
-      throw new Error('Failed to init Gremlin Instance. 请先载图，然后再初始化 Gremlin 客户端');
-    }
-    const traversal = gremlin.process.AnonymousTraversalSource.traversal;
-    const DriverRemoteConnection = gremlin.driver.DriverRemoteConnection;
-    const g = traversal().withRemote(new DriverRemoteConnection(graphURL));
-    return g;
-  }
-
-  /**
-   * 初始化 Gremlin 客户端，支持通过 Gremlin 语句查询
-   */
-  initGremlinClient(gremlinServer, account) {
-    if (!gremlinServer) {
-      throw new Error('Failed to init gremlin cliend. 请先载图，然后再初始化 Gremlin 客户端');
-    }
-    const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
-    const client = new gremlin.driver.Client(gremlinServer, {
-      traversalSource: 'g',
-      authenticator,
-    });
-
-    return client;
-  }
-
-  static destoryInstance() {
-    this.prototype.account = undefined;
-    this.prototype.instance = null;
-    if (this.prototype.clientInstance) {
-      this.prototype.clientInstance.close();
-    }
-    this.prototype.clientInstance = null;
-  }
-}
-
-
 /**
  * 初始化 Gremlin 客户端，支持通过 Gremlin 语句查询
  * @param gremlinServer Endpoint of gremlin server
  * @param account Authenticator of gremlin server
  */
-function initGremlinClient(gremlinServer: string, account = {"username": "", "password": ""}) {
-  if (!("username" in account) || (!"password" in account)) {
+function initGremlinClient(gremlinServer: string, account = { username: '', password: '' }) {
+  if (!account.hasOwnProperty('username') || !account.hasOwnProperty('password')) {
     throw new Error('Authenticator failed: username or password not exists.');
   }
-  const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(
-    account.username, account.password
-  );
+  const authenticator = new gremlin.driver.auth.PlainTextSaslAuthenticator(account.username, account.password);
   const client = new gremlin.driver.Client(gremlinServer, {
     traversalSource: 'g',
     authenticator,
@@ -109,10 +34,11 @@ function initGremlinClient(gremlinServer: string, account = {"username": "", "pa
 }
 
 function closeGremlinClient(client): void {
- console.log("Gremlin client close");
- try { client.close(); } catch (error) {}
+  console.log('Gremlin client close');
+  try {
+    client.close();
+  } catch (error) {}
 }
-
 
 class GraphComputeService extends Service {
   async connectGraphScope(params: ConnectProps) {
@@ -159,7 +85,7 @@ class GraphComputeService extends Service {
    */
   async queryByGremlinLanguage(params) {
     const { value: gremlinCode, gremlinServer, graphScopeAccount } = params;
-    console.log(`Execute query ${gremlinCode} on server ${gremlinServer}`)
+    console.log(`Execute query ${gremlinCode} on server ${gremlinServer}`);
 
     const client = initGremlinClient(gremlinServer, graphScopeAccount);
 
@@ -179,7 +105,7 @@ class GraphComputeService extends Service {
       };
     }
 
-    console.log("Get gremlin result: ", result);
+    console.log('Get gremlin result: ', result);
 
     let mode = 'graph';
     const tableResult: any[] = [];
@@ -639,17 +565,30 @@ class GraphComputeService extends Service {
   async listSubgraph(params) {
     const { engineServerURL } = readGraphScopeConfig();
 
-    const result = await this.ctx.curl(`${engineServerURL}/api/v1/graph`, {
-      method: 'GET',
-      data: {
-        // @ts-ignore
-        // graph_name: graphName,
-      },
-      dataType: 'json',
-    });
+    let result;
+    try {
+      result = await this.ctx.curl(`${engineServerURL}/api/v1/graph`, {
+        method: 'GET',
+        data: {
+          // @ts-ignore
+          // graph_name: graphName,
+        },
+        dataType: 'json',
+      });
+    } catch (error) {
+      return {
+        success: false,
+        code: 200,
+        message: `子图列表查询失败：${error}`,
+      };
+    }
 
     if (!result || !result.data) {
-      return result;
+      return {
+        success: false,
+        code: 200,
+        message: `子图列表查询失败：${result}`,
+      };
     }
 
     return {
