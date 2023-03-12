@@ -26,7 +26,19 @@ export const externalScripts = deps_externals.map(c => {
 });
 console.log('externals', externals, BUILD_MODE);
 const EXTRA_CONFIG = isDev
-  ? { externals: {}, scripts: [], links: [] }
+  ? {
+      externals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        antd: 'antd',
+      },
+      scripts: [
+        'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
+        'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+        'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
+      ],
+      links: [],
+    }
   : {
       externals: {
         ...externals,
