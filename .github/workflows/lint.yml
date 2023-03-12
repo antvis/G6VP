@@ -25,10 +25,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          
+
       # postInstall will build the product
       - name: Install dependencies and Build the product
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Workflow failed alert
         if: ${{ failure() }}
