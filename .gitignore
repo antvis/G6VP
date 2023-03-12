@@ -80,5 +80,4 @@ packages/gi-site/public/libs/*.css
 packages/gi-site/src/env.ts
 packages/gi-site/scripts/*.json
 
-
-
+.turbo
