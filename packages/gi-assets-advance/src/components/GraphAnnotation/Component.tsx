@@ -41,12 +41,13 @@ const tagColors = [
     label: '黑色',
     hex: '#000',
   },
-  {
-    key: 'cancel',
-    label: '取消',
-    hex: '#ccc',
-  },
 ];
+
+const cancelColor = {
+  key: 'cancel',
+  label: '取消',
+  hex: '#ccc',
+};
 
 const BADGE_CLASSNAME = 'gi-graph-annotation';
 
@@ -204,12 +205,20 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     }
     return (
       <Menu.SubMenu key="tag" title={`标记${menuItemName[itemType]}`}>
-        {tagColors.map(color => (
-          <Menu.Item key={color.key} onClick={() => handleAnnotate(color)}>
-            <StarFilled style={{ color: color.hex, marginRight: '8px' }} />
-            {color.label}
-          </Menu.Item>
-        ))}
+        <div className="gi-annotation-tag-color-container">
+          {tagColors.map(color => (
+            <div
+              className="gi-annotation-tag-color"
+              style={{ border: `1px solid ${color.hex}` }}
+              onClick={() => handleAnnotate(color)}
+            >
+              <StarFilled style={{ color: color.hex, fontSize: 12, padding: '1px' }} />
+            </div>
+          ))}
+          <div style={{ marginLeft: '8px', lineHeight: '24px' }} onClick={() => handleAnnotate(cancelColor)}>
+            取消
+          </div>
+        </div>
       </Menu.SubMenu>
     );
   }, [annotationWay, menuTargetItem]);
