@@ -3,45 +3,10 @@
   flex-direction: row-reverse;
   border-bottom: 1px solid var(--border-color);
 }
-
-.gremlineQueryPanel {
+.gi-gremlin-query {
   z-index: 3;
-  padding: 16px 24px;
-  background-color: var(--background-color);
   border-radius: 6px;
+  background-color: var(--background-color);
   box-shadow: var(--box-shadow-pannel);
   transition: height 0.3s ease;
-  .header {
-    display: inline-flex;
-    width: 100%;
-    margin: 0;
-    cursor: grab;
-    .title {
-      font-weight: 500;
-      cursor: grab;
-    }
-    .collapseIcon {
-      right: 0;
-
-      cursor: pointer;
-    }
-  }
-  .contentContainer {
-    margin-top: 16px;
-    overflow-y: auto;
-  }
-  .buttonContainer {
-    position: relative;
-    height: 40px;
-    .queryButton {
-      position: absolute;
-      right: 12px;
-      bottom: -8px;
-    }
-    .publishButton {
-      position: absolute;
-      right: 118px;
-      bottom: -8px;
-    }
-  }
 }
