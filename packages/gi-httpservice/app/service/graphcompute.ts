@@ -334,7 +334,23 @@ class GraphComputeService extends Service {
       } else {
         // 属性
         mode = 'table';
-        tableResult.push(value);
+        if (typeof value === 'number' || typeof value === 'string') {
+          // e.g. count()
+          tableResult.push(value);
+        } else {
+          // e.g. valueMap()
+          const entries = value.entries();
+          const currentObj = {} as any;
+          for (const current of entries) {
+            const [key, v] = current;
+            if (typeof v === 'number') {
+              currentObj[key] = v;
+            } else {
+              currentObj[key] = v.join(',');
+            }
+          }
+          tableResult.push(currentObj);
+        }
       }
     }
 
