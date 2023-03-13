@@ -23,6 +23,7 @@ const JSONMode: React.FC<IProps> = props => {
 
   return (
     <div className="gi-json-mode" id="gi-json-mode" style={style}>
+      {/* @ts-ignore */}
       <ReactJson src={json} theme={theme} />
     </div>
   );
