@@ -1,7 +1,7 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
-import { Button, Divider } from 'antd';
+import { Button } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
@@ -65,10 +65,8 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
   return (
     <div className="cypher-query-container">
-      <h4>请输入 Cypher 语句进行查询</h4>
       <CyperEditor onValueChange={getCyperInputValue} />
-      <div style={{ textAlign: 'right' }}>
-        <Divider />
+      <div style={{ textAlign: 'right', padding: '12px 0px' }}>
         {isShowPublishButton && (
           <Button className="publishButton" disabled={!state.value} onClick={handleShowModal}>
             发布成模板

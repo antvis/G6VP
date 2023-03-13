@@ -9,12 +9,13 @@ export interface UadLayoutProps {
   sideItems: any[];
   tabPosition: 'left' | 'right' | 'top' | 'bottom';
   height: number;
+  padding: string;
 }
 
 const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children, tabPosition, height } = props;
   const context = useContext();
-  const { topItems, sideItems } = props;
+  const { topItems, sideItems, padding } = props;
   const { config, assets } = context;
   const { data: graphData } = useContext();
   const ComponentCfgMap = config.components.reduce((acc, curr) => {
@@ -26,10 +27,15 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const QueryContent = useComponents(topItems, ComponentCfgMap, assets.components);
   const SideContent = useComponents(sideItems, ComponentCfgMap, assets.components);
   const items = [
-    { label: <Icon type="icon-layout-concentric" />, key: 'sdk', children: children, forceRender: true }, // 务必填写 key
+    {
+      label: <Icon type="icon-layout-concentric" style={{ fontSize: '30px' }} />,
+      key: 'sdk',
+      children: children,
+      forceRender: true,
+    }, // 务必填写 key
     ...SideContent.map(item => {
       return {
-        label: <Icon type={item.icon} />,
+        label: <Icon type={item.icon} style={{ fontSize: '30px' }} />,
         key: item.id,
         children: item.children,
       };
@@ -48,18 +54,18 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   }, [graphData]);
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <div style={{ height: `${height}px`, borderBottom: 'var(--primary-border)' }}>
-        {' '}
+      <div style={{ height: `${height}px`, borderBottom: 'var(--primary-border)', padding }}>
         {QueryContent.map(item => item.children)}
       </div>
       <div style={{ width: '100%', height: `calc(100% - ${height}px` }}>
         <Tabs
+          tabBarStyle={{ marginRight: ' -12px' }}
           activeKey={state.activeKey}
           onTabClick={key => setState({ activeKey: key })}
           items={items}
           tabPosition={tabPosition}
           style={{ height: '100%' }}
-          className="gi-query-layout-tabs"
+          className="gi-uad-layout-tabs"
         />
       </div>
     </div>

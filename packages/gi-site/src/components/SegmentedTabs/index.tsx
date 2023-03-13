@@ -8,14 +8,15 @@ interface SegmentedTabsProps {
   queryKey?: string;
   style?: React.CSSProperties;
   extra?: ReactNode;
+  defaultActive?: string;
 }
 
 const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
-  const { items, queryKey = 'tab', style = {}, extra = <></> } = props;
+  const { items, queryKey = 'tab', style = {}, extra = <></>, defaultActive } = props;
 
   const [state, setState] = React.useState<{ active: string }>(() => {
     const { searchParams, path } = getSearchParams(window.location);
-    const active = searchParams.get(queryKey) || items[0].key;
+    const active = searchParams.get(queryKey) || defaultActive || items[0].key;
     return {
       active,
     };

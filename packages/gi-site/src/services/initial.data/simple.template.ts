@@ -1,59 +1,6 @@
-import type { GIConfig } from '@antv/gi-sdk';
-/**
- *
- * @param
- * @returns ( ) => uuid: string
- */
-export const getUid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+import { baseEdgesConfig, baseLayoutConfig, baseNodesConfig } from './default.template';
 
-export const getMockData = () => {
-  return {
-    nodes: [],
-    edges: [],
-  };
-};
-
-/**
- *
- * 默认config
- *
- */
-
-const baseNodesConfig: GIConfig['nodes'] = [
-  {
-    id: 'SimpleNode',
-    name: '官方节点',
-    expressions: [],
-    groupName: '默认样式',
-    props: {
-      size: 26,
-      color: '#ddd',
-      label: [],
-    },
-  },
-];
-
-const baseEdgesConfig: GIConfig['edges'] = [
-  {
-    id: 'SimpleEdge',
-    name: '官方边',
-    expressions: [],
-    groupName: '默认样式',
-    props: {
-      size: 1,
-      color: '#ddd',
-      label: ['source', 'target'],
-    },
-  },
-];
-
-const baseComponentsConfig = [
+const simpleComponents = [
   {
     id: 'ZoomIn',
     props: {
@@ -529,37 +476,28 @@ const baseComponentsConfig = [
     },
   },
 ];
-const baseLayoutConfig = {
-  id: 'GraphinForce',
-  props: {
-    type: 'graphin-force',
-    preset: {
-      type: 'concentric',
-    },
-  },
-};
 
 export const baseConfig = {
   nodes: baseNodesConfig,
   edges: baseEdgesConfig,
   layout: baseLayoutConfig,
-  components: baseComponentsConfig,
+  components: simpleComponents,
 };
 
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
-  components: [...baseComponentsConfig.map(c => c.id)],
+  components: [...simpleComponents.map(c => c.id)],
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
 
-const Cypher_Template = [
+const Cypher_Template = engineId => [
   {
     id: 'CypherQuery',
     name: 'Cypher 语句查询',
     props: {
-      serviceId: 'GI/CypherQuery',
+      serviceId: `${engineId}/CypherQuery`,
       isShowPublishButton: false,
-      saveCypherTemplateServceId: 'GI/PublishTemplate',
+      saveCypherTemplateServceId: `${engineId}/PublishTemplate`,
       initialValue: 'MATCH n RETURN LIMIT 100',
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
@@ -588,14 +526,14 @@ const Cypher_Template = [
   },
 ];
 
-const Gremlin_Template = [
+const Gremlin_Template = engineId => [
   {
     id: 'GremlinQuery',
     name: 'Gremlin 查询',
     props: {
-      serviceId: 'GraphScope/GremlinQuery',
+      serviceId: `${engineId}/GremlinQuery`,
       isShowPublishButton: false,
-      saveTemplateServceId: 'GI/PublishTemplate',
+      saveTemplateServceId: `${engineId}/PublishTemplate`,
       initialValue: 'g.V().limit(10)',
       height: 200,
       GI_CONTAINER_INDEX: 2,
@@ -626,10 +564,10 @@ const Gremlin_Template = [
 ];
 
 export const getConfigByEngineId = engineId => {
-  let componentConfig = [...baseComponentsConfig];
+  let componentConfig = [...simpleComponents];
   if (engineId === 'TuGraph' || engineId === 'Neo4j') {
     //@ts-ignore
-    componentConfig = [...componentConfig, ...Cypher_Template];
+    componentConfig = [...componentConfig, ...Cypher_Template(engineId)];
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
         item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
@@ -638,7 +576,7 @@ export const getConfigByEngineId = engineId => {
   }
   if (engineId === 'GraphScope' || engineId === 'GeaFlow') {
     //@ts-ignore
-    componentConfig = [...componentConfig, ...Gremlin_Template];
+    componentConfig = [...componentConfig, ...Gremlin_Template(engineId)];
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
         item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'GremlinQuery'];
@@ -657,14 +595,15 @@ export const getConfigByEngineId = engineId => {
     layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
   };
   return {
-    config,
+    id: `tp_simple_${engineId}`,
+    name: `${engineId} 默认模版`,
+    ...config,
     activeAssetsKeys,
   };
 };
 
-export const serviceConfig = [];
-
-export const schemaData = {
-  nodes: [],
-  edges: [],
-};
+export const TEMPALTE_SIMPLE_TUGRAPH = getConfigByEngineId('TuGraph');
+export const TEMPALTE_SIMPLE_GRAPHSCOPE = getConfigByEngineId('GraphScope');
+export const TEMPALTE_SIMPLE_NEO4J = getConfigByEngineId('Neo4j');
+export const TEMPALTE_SIMPLE_GEAFLOW = getConfigByEngineId('GeaFlow');
+export const TEMPALTE_SIMPLE_GI = getConfigByEngineId('GI');

@@ -1,5 +1,4 @@
 import { GraphSchemaData } from '@antv/gi-sdk';
-import request from 'umi-request';
 
 export interface GraphData {
   nodes: {
@@ -19,10 +18,16 @@ export interface GraphData {
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
   service: async (): Promise<GraphData> => {
-    return {
-      nodes: [],
-      edges: [],
-    };
+    try {
+      //@ts-ignore
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.data;
+    } catch (error) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
   },
 };
 
@@ -31,24 +36,15 @@ export const GI_SERVICE_SCHEMA = {
   method: 'GET',
 
   service: async (): Promise<GraphSchemaData> => {
-    const searchParams = new URLSearchParams(location.href.split('?')[1]);
-    const datasetId = searchParams.get('datasetId');
-
-    // const graphName = localStorage.getItem('graphScopeGraphName') as string;
-    // const httpServerURL = localStorage.getItem('GRAPHSCOPE_HTTP_SERVER');
-    // const result = await request(`${httpServerURL}/graphcompute/schema`, {
-    //   method: 'GET',
-    //   params: {
-    //     graphName,
-    //   },
-    // });
-    const result = await request(`${location.hostname}:7001/project/${datasetId}`);
-    if (result.success) {
-      return result.data;
+    try {
+      //@ts-ignore
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      return LOCAL_DATA_FOR_GI_ENGINE.schemaData;
+    } catch (error) {
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
-    return {
-      nodes: [],
-      edges: [],
-    };
   },
 };

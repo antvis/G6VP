@@ -14,8 +14,9 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { recoverDataset, recycleDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
+import { TEMPALTE_GREMLIN_QUERY } from '../../services/initial.data/query.template';
+import { getConfigByEngineId } from '../../services/initial.data/simple.template';
 import * as ProjectServices from '../../services/project';
-import { getConfigByEngineId } from '../Workspace/utils';
 
 const styles = {
   botton: {
@@ -63,7 +64,8 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     // handleEncode(record);
     // return;
     const style = utils.generatorStyleConfigBySchema(record.schemaData);
-    const { config, activeAssetsKeys } = getConfigByEngineId(record.engineId);
+    const { nodes, edges, layout, activeAssetsKeys, components } =
+      record.engineId === 'GraphScope' ? TEMPALTE_GREMLIN_QUERY : getConfigByEngineId(record.engineId);
     const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
     const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
     const projectId = await ProjectServices.create({
@@ -73,7 +75,10 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       tag: '',
       members: '',
       projectConfig: {
-        ...config,
+        nodes,
+        edges,
+        layout,
+        components,
         ...style,
       },
       activeAssetsKeys,

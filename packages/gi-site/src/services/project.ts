@@ -108,6 +108,7 @@ export const updateById = async (id: string, params: { data?: string; [key: stri
   if (GI_SITE.IS_OFFLINE) {
     const origin: any = await GI_PROJECT_DB.getItem(id);
     GI_PROJECT_DB.setItem(id, { ...origin, ...params });
+    return true;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/project/update`, {
