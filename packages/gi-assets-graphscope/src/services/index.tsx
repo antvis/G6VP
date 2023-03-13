@@ -1,12 +1,12 @@
+import ServerComponent from '../components/ServerComponent';
 import * as ElementProperties from './ElementProperties';
 import * as ExecAlgorithm from './ExecAlgorithm';
 import * as GremlinQuery from './GremlinQuery';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
-import ServerComponent from '../components/ServerComponent';
 
 export default {
-  id: 'GS',
+  id: 'GraphScope',
   name: 'GraphScope',
   title: 'GraphScope 单机版引擎服务',
   desc: 'GraphScope 团队推出的单机版计算引擎。包含运维管理，集群管理，数据管理，部署概览等资产模块',
