@@ -1,4 +1,4 @@
-import { CollapseCard, GISiteParams, utils } from '@antv/gi-sdk';
+import { CollapseCard, utils } from '@antv/gi-sdk';
 import { Alert, Button, Form, Input, notification } from 'antd';
 import React, { useState } from 'react';
 import { connectGraphScopeService } from './services';
@@ -39,9 +39,9 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token }) => {
       return;
     }
 
-    const result = await connectGraphScopeService();
-
     utils.setServerEngineContext(values);
+
+    const result = await connectGraphScopeService();
 
     setLoading(false);
 
