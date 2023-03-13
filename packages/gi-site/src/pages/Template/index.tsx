@@ -8,6 +8,7 @@ interface TemplatesProps {}
 const Templates: React.FunctionComponent<TemplatesProps> = props => {
   return (
     <SegmentedTabs
+      defaultActive="graph"
       items={[
         {
           key: 'my',

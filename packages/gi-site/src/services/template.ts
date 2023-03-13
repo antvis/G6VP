@@ -3,13 +3,14 @@ import { message } from 'antd';
 import { GI_TEMPLATE_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
 import { GI_SITE } from './const';
+import { TEMPALTE_CYPHER_QUERY, TEMPALTE_GREMLIN_QUERY } from './initial.data/query.template';
 import {
-  TEMPALTE_GEAFLOW,
-  TEMPALTE_GI,
-  TEMPALTE_GRAPHSCOPE,
-  TEMPALTE_NEO4J,
-  TEMPALTE_TUGRAPH,
-} from './initial.data/default.template';
+  TEMPALTE_SIMPLE_GEAFLOW,
+  TEMPALTE_SIMPLE_GI,
+  TEMPALTE_SIMPLE_GRAPHSCOPE,
+  TEMPALTE_SIMPLE_NEO4J,
+  TEMPALTE_SIMPLE_TUGRAPH,
+} from './initial.data/simple.template';
 import { ITemplate } from './typing';
 import { request } from './utils';
 
@@ -19,7 +20,15 @@ import { request } from './utils';
  */
 export const list = async (): Promise<ITemplate[]> => {
   if (GI_SITE.IS_OFFLINE) {
-    const tempaltes = [TEMPALTE_GEAFLOW, TEMPALTE_NEO4J, TEMPALTE_TUGRAPH, TEMPALTE_GRAPHSCOPE, TEMPALTE_GI];
+    const tempaltes = [
+      TEMPALTE_SIMPLE_GEAFLOW,
+      TEMPALTE_SIMPLE_NEO4J,
+      TEMPALTE_SIMPLE_TUGRAPH,
+      TEMPALTE_SIMPLE_GRAPHSCOPE,
+      TEMPALTE_SIMPLE_GI,
+      TEMPALTE_GREMLIN_QUERY,
+      TEMPALTE_CYPHER_QUERY,
+    ];
     for (const item of tempaltes) {
       await GI_TEMPLATE_DB.setItem(item.id, item);
     }

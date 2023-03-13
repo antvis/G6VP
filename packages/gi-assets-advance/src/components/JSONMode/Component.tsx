@@ -1,6 +1,6 @@
 import { useContext } from '@antv/gi-sdk';
-import ReactJson, { ThemeKeys } from 'react-json-view';
 import React, { useMemo } from 'react';
+import ReactJson, { ThemeKeys } from 'react-json-view';
 import './index.less';
 
 export interface IProps {
@@ -16,7 +16,7 @@ const JSONMode: React.FC<IProps> = props => {
     // @ts-ignore
     const { nodes, edges, combos, tableResult } = graphData;
     if (nodes.length || edges.length) {
-      return { nodes, edges, combos };
+      return { nodes: nodes.map(item => item.data), edges: edges.map(item => item.data), combos };
     }
     return tableResult;
   }, [graphData]);
