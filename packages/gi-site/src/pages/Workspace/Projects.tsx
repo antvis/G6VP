@@ -201,7 +201,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           const { id, name, gmtCreate, recycleTime } = item;
           let expiredStr;
           if (recycleTime) {
-            const expiredDate = new Date(recycleTime + 604800);
+            const expiredDate = new Date(recycleTime + 604800000);
             expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
           }
           return (

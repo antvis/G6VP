@@ -133,7 +133,9 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   const tag = color => {
     if (!menuTargetItem) return;
     const itemModel = menuTargetItem.getModel();
-    const badges = [...(itemModel.style?.badges || [])];
+    const { badges: styleBadges = [], keyshape } = itemModel.style || {};
+    const size = Math.max(Math.round(keyshape.size / 2) || 15, 15);
+    const badges = [...styleBadges];
     const currentTag = badges.find(badge => badge.classname === BADGE_CLASSNAME);
     if (currentTag) {
       const idx = badges.indexOf(currentTag);
@@ -145,7 +147,8 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
         fontFamily: 'graphin',
         type: 'font',
         value: icons['star-fill'],
-        size: [15, 15],
+        size,
+        fontSize: size - 2,
         color: color.hex,
         fill: '#fff',
         stroke: color.hex,
