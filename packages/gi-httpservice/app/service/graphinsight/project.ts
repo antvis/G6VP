@@ -32,8 +32,12 @@ class GIProjectService extends Service {
     for (const id of projectIDs) {
       const v = await etcd.get(id).string();
       const p = JSON.parse(v || '{}');
-      if (p.type === 'project') {
-        projects.push(p);
+      const { type, recycleTime } = p;
+      if (type === 'project') {
+        let isExpired = false;
+        if (recycleTime) isExpired = new Date(recycleTime + 604800000).getTime() < new Date().getTime();
+        if (isExpired) this.removeProjectById(String(id));
+        else projects.push(p);
       }
     }
 
