@@ -5,6 +5,7 @@ export interface TypeAssetInfo {
     | 'GI_CONTAINER' // 容器组件
     | 'GICC'
     | 'GICC_MENU'
+    | 'GICC_LAYOUT'
     | 'GIAC'
     | 'GIAC_CONTENT'
     | 'GIAC_MENU'

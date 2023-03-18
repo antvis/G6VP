@@ -388,20 +388,50 @@ const simpleComponents = [
     },
   },
   {
-    id: 'GrailLayout',
-    name: '圣杯布局',
+    id: 'UadLayout',
+    name: '上下布局',
     props: {
-      GI_CONTAINER_LEFT: [],
-      leftDisplay: false,
-      leftWidth: '400px',
-      GI_CONTAINER_RIGHT: ['FilterPanel', 'Overview'],
-      rightDisplay: true,
-      rightWidth: '350px',
-      GI_CONTAINER_BOTTOM: [],
-      bottomDisplay: false,
-      bottomHeight: '400px',
+      containers: [
+        {
+          id: 'GI_CONTAINER_TOP',
+          GI_CONTAINER: ['GremlinQuery'],
+          height: 251,
+          padding: '0px 0px',
+        },
+        {
+          id: 'GI_CONTAINER_SIDE',
+          GI_CONTAINER: ['JSONMode'],
+          tabPosition: 'right',
+        },
+      ],
     },
   },
+  // {
+  //   id: 'GrailLayout',
+  //   name: '圣杯布局',
+  //   props: {
+  //     containers: [
+  //       {
+  //         id: 'GI_CONTAINER_LEFT',
+  //         GI_CONTAINER: [],
+  //         display: false,
+  //         width: '400px',
+  //       },
+  //       {
+  //         id: 'GI_CONTAINER_RIGHT',
+  //         GI_CONTAINER: [],
+  //         display: true,
+  //         width: '350px',
+  //       },
+  //       {
+  //         id: 'GI_CONTAINER_BOTTOM',
+  //         GI_CONTAINER: [],
+  //         display: false,
+  //         height: '400px',
+  //       },
+  //     ],
+  //   },
+  // },
   {
     id: 'Toolbar',
     name: '工具栏',

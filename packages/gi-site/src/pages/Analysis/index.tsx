@@ -1,7 +1,7 @@
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { message } from 'antd';
 import { original } from 'immer';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar/WorkbookNav';
@@ -32,6 +32,7 @@ const Analysis = props => {
   const graphRef = useRef(null);
 
   const [state, updateState] = useModel();
+  const [isContainerMode, setIsContainerMode] = useState(false);
 
   const {
     config,
@@ -71,13 +72,13 @@ const Analysis = props => {
       const { config, activeAssetsKeys, themes, name, datasetId } = (await ProjectServices.getById(
         projectId,
       )) as IProject;
+
       const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;
         message.info('请先选择数据集...');
         return;
       }
-      console.log('datasetInfo', datasetInfo);
       let { engineId, engineContext, schemaData, data, name: DATASET_NAME } = datasetInfo;
 
       localStorage.setItem(
@@ -199,7 +200,7 @@ const Analysis = props => {
           draft.config.components = configComponents; //更新 config.components
           draft.config.layout = layoutConfig; //更新 config.layout
           draft.activeAssets = activeAssets; //更新活跃资产
-          draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
+          // draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
           draft.activeAssetsInformation = activeAssetsInformation;
         });
       },
@@ -221,6 +222,7 @@ const Analysis = props => {
   const context = { context: state, updateContext: updateState, updateGISite };
 
   console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
+  const siderWidth = isContainerMode ? '40%' : '345px';
 
   return (
     <AnalysisContext.Provider value={context}>
@@ -232,7 +234,10 @@ const Analysis = props => {
           <div className="gi-analysis-sidebar">
             <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
           </div>
-          <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
+          <div
+            className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}
+            style={{ width: siderWidth, flexBasis: siderWidth, minWidth: isContainerMode ? '500px' : 'unset' }}
+          >
             <MetaPanel
               value={activeNavbar}
               data={data}
@@ -243,9 +248,13 @@ const Analysis = props => {
               elements={activeAssetsInformation!.elements}
               services={state.services}
               layouts={activeAssetsInformation!.layouts}
+              setIsContainerMode={setIsContainerMode}
             />
           </div>
-          <div className="gi-analysis-workspace">
+          <div
+            className="gi-analysis-workspace"
+            style={{ width: `calc(100% - ${siderWidth} - 36px)`, flexBasis: `calc(100% - ${siderWidth} - 36px)` }}
+          >
             <div className="gi-analysis-canvas">
               <GISDK
                 id="gi-site"
