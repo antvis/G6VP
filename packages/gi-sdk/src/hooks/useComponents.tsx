@@ -65,8 +65,13 @@ const useComponents = (state, ComponentAssets) => {
       /** 这些都是不规范的，后面统一处理 */
       let GIProps = {};
       if (GI_CONTAINER) {
+        const componentKeys: string[] = [];
+        GI_CONTAINER.forEach(item => {
+          if (typeof item === 'string') componentKeys.push(item);
+          else componentKeys.push(item.value);
+        });
         GIProps = {
-          components: GI_CONTAINER.map(c => {
+          components: componentKeys.map(c => {
             return ComponentCfgMap[c];
           }),
           // assets: ComponentAssets,
@@ -90,7 +95,12 @@ const useComponents = (state, ComponentAssets) => {
     InitializerComponent,
     InitializerProps,
     GICC_LAYOUT_COMPONENT,
-    GICC_LAYOUT_PROPS,
+    // GICC_LAYOUT_PROPS,
+    GICC_LAYOUT_PROPS: {
+      ComponentCfgMap,
+      assets: ComponentAssets,
+      ...GICC_LAYOUT_PROPS,
+    },
   };
 };
 
