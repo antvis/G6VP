@@ -82,7 +82,7 @@
   "GrailLayout": {
     "id": "GrailLayout",
     "name": "圣杯布局",
-    "type": "GICC",
+    "type": "GICC_LAYOUT",
     "docs": "",
     "icon": "icon-layout",
     "category": "container-components"
@@ -304,7 +304,7 @@
   "GroupBar": {
     "id": "GroupBar",
     "name": "分组操作栏",
-    "type": "GICC_LAYOUT",
+    "type": "GICC",
     "docs": "",
     "icon": "icon-tabs",
     "category": "container-components"

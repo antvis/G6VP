@@ -77,6 +77,20 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
 
   console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
 
+  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
+  //   const assetKeys = activeAssetsKeys.components[containerId];
+  //   components[containerId] = assetKeys.reduce((acc, curr) => {
+  //     const asset = FinalAssets.components[curr];
+  //     if (asset) {
+  //       return {
+  //         ...acc,
+  //         [curr]: asset,
+  //       };
+  //     }
+  //     return acc;
+  //   }, {});
+  // });
+
   components = activeAssetsKeys.components.reduce((acc, curr) => {
     const asset = FinalAssets.components[curr];
     if (asset) {

@@ -7,21 +7,10 @@ import { BottomContainer, LeftContainer, RightContainer, TopContainer } from './
 import useComponents from './useComponents';
 
 export interface FreeLayoutProps extends IContainersVisible {
-  GI_CONTAINER_LEFT: string[];
-  GI_CONTAINER_RIGHT: string[];
-  GI_CONTAINER_BOTTOM: string[];
-  GI_CONTAINER_TOP: string[];
-  leftWidth: string;
-  rightWidth: string;
-  bottomHeight: string;
-  topHeight: string;
-  leftDisplay: boolean;
-  rightDisplay: boolean;
-  bottomDisplay: boolean;
-  topDisplay: boolean;
   ComponentCfgMap: object;
   assets: GIAssets;
   GISDK_ID: string;
+  containers: any[];
 }
 
 interface IContainersVisible {
@@ -34,27 +23,32 @@ interface IContainersVisible {
 const FreeLayout: React.FC<FreeLayoutProps> = props => {
   const { graph } = useContext();
 
+  const { ComponentCfgMap, assets, GISDK_ID, containers = [] } = props;
+
   const {
-    ComponentCfgMap,
-    assets,
-    GISDK_ID,
-    GI_CONTAINER_LEFT = [],
-    GI_CONTAINER_RIGHT = [],
-    GI_CONTAINER_BOTTOM = [],
-    GI_CONTAINER_TOP = [],
-    leftWidth,
-    rightWidth,
-    bottomHeight,
-    topHeight,
-    leftDisplay,
-    rightDisplay,
-    bottomDisplay,
-    topDisplay,
-    leftVisible,
-    rightVisible,
-    bottomVisible,
-    topVisible,
-  } = props;
+    GI_CONTAINER: GI_CONTAINER_LEFT,
+    display: leftDisplay,
+    visible: leftVisible,
+    width: leftWidth,
+  } = containers.find(container => container.id === 'GI_CONTAINER_LEFT') || {};
+  const {
+    GI_CONTAINER: GI_CONTAINER_RIGHT,
+    display: rightDisplay,
+    visible: rightVisible,
+    width: rightWidth,
+  } = containers.find(container => container.id === 'GI_CONTAINER_RIGHT') || {};
+  const {
+    GI_CONTAINER: GI_CONTAINER_BOTTOM,
+    display: bottomDisplay,
+    visible: bottomVisible,
+    height: bottomHeight,
+  } = containers.find(container => container.id === 'GI_CONTAINER_BOTTOM') || {};
+  const {
+    GI_CONTAINER: GI_CONTAINER_TOP,
+    display: topDisplay,
+    visible: topVisible,
+    height: topHeight,
+  } = containers.find(container => container.id === 'GI_CONTAINER_TOP') || {};
 
   const [state, updateState] = useImmer<IContainersVisible>({
     leftVisible,
@@ -102,27 +96,31 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
     const left = state.leftVisible && leftDisplay ? leftWidth : '0px';
     const right = state.rightVisible && rightDisplay ? rightWidth : '0px';
     const bottom = state.bottomVisible && bottomDisplay ? bottomHeight : '0px';
-    graphinContainer.style.position = 'absolute';
-    graphinContainer.style.left = left;
-    graphinContainer.style.right = right;
+    if (graphinContainer) {
+      graphinContainer.style.position = 'absolute';
+      graphinContainer.style.left = left;
+      graphinContainer.style.right = right;
 
-    graphinContainer.style.width = `calc(100% - ${left} - ${right})`;
-    graphinContainer.style.height = `calc(100% - ${bottom})`;
+      graphinContainer.style.width = `calc(100% - ${left} - ${right})`;
+      graphinContainer.style.height = `calc(100% - ${bottom})`;
+    }
 
     const container = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
 
-    const clientWidth = container.clientWidth;
-    const clientHeight = container.clientHeight;
-    try {
-      const width = clientWidth - (Number(left.split('px')[0]) + Number(right.split('px')[0]));
-      const height = clientHeight - Number(bottom.split('px')[0]);
-      const canvas = graph.get('canvas');
-      if (canvas) {
-        canvas.changeSize(width, height);
-        graph.autoPaint();
-        graph.fitView();
-      }
-    } catch (error) {}
+    if (container) {
+      const clientWidth = container.clientWidth;
+      const clientHeight = container.clientHeight;
+      try {
+        const width = clientWidth - (Number(left.split('px')[0]) + Number(right.split('px')[0]));
+        const height = clientHeight - Number(bottom.split('px')[0]);
+        const canvas = graph.get('canvas');
+        if (canvas) {
+          canvas.changeSize(width, height);
+          graph.autoPaint();
+          graph.fitView();
+        }
+      } catch (error) {}
+    }
   }, [
     leftDisplay,
     state.leftVisible,
@@ -136,77 +134,66 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   ]);
 
   React.useEffect(() => {
-    const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
-
     // 组件卸载时重置画布和 DOM 样式
     return () => {
-      graphinContainer.style.position = 'relative';
-      graphinContainer.style.left = '0';
-      graphinContainer.style.right = '0';
-      graphinContainer.style.width = '100%';
-      graphinContainer.style.height = '100%';
+      const graphinContainer = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLDivElement;
+      if (graphinContainer) {
+        graphinContainer.style.position = 'relative';
+        graphinContainer.style.left = '0';
+        graphinContainer.style.right = '0';
+        graphinContainer.style.width = '100%';
+        graphinContainer.style.height = '100%';
 
-      const clientWidth = graphinContainer.clientWidth;
-      const clientHeight = graphinContainer.clientHeight;
-      const canvas = graph.get('canvas');
+        const clientWidth = graphinContainer.clientWidth;
+        const clientHeight = graphinContainer.clientHeight;
+        const canvas = graph.get('canvas');
 
-      if (canvas) {
-        canvas.changeSize(clientWidth, clientHeight);
-        graph.autoPaint();
+        if (canvas) {
+          canvas.changeSize(clientWidth, clientHeight);
+          graph.autoPaint();
+        }
       }
     };
   }, []);
 
   return (
-    <div>
-      {ReactDOM.createPortal(
-        <LeftContainer
-          width={leftWidth}
-          isDisplay={leftDisplay}
-          toggleVisible={toggleLeftVisible}
-          visible={state.leftVisible}
-        >
-          {LeftContent}
-        </LeftContainer>,
-        container,
-      )}
-      {ReactDOM.createPortal(
-        <BottomContainer
-          height={bottomHeight}
-          isDisplay={bottomDisplay}
-          left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
-          right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
-          toggleVisible={toggleBottomVisible}
-          visible={state.bottomVisible}
-        >
-          {BottomContent}
-        </BottomContainer>,
-        container,
-      )}
-      {ReactDOM.createPortal(
-        <RightContainer
-          width={rightWidth}
-          isDisplay={rightDisplay}
-          visible={state.rightVisible}
-          toggleVisible={toggleRightVisible}
-        >
-          {RightContent}
-        </RightContainer>,
-        container,
-      )}
-      {ReactDOM.createPortal(
-        <TopContainer
-          height={topHeight}
-          isDisplay={topDisplay}
-          left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
-          right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
-          toggleVisible={toggleTopVisible}
-          visible={state.topVisible}
-        >
-          {TopContent}
-        </TopContainer>,
-        container,
-      )}
+    <div style={{ width: '100%', height: '100%' }}>
+      <LeftContainer
+        width={leftWidth}
+        isDisplay={leftDisplay}
+        toggleVisible={toggleLeftVisible}
+        visible={state.leftVisible}
+      >
+        {LeftContent}
+      </LeftContainer>
+      <BottomContainer
+        height={bottomHeight}
+        isDisplay={bottomDisplay}
+        left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
+        right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
+        toggleVisible={toggleBottomVisible}
+        visible={state.bottomVisible}
+      >
+        {BottomContent}
+      </BottomContainer>
+      <RightContainer
+        width={rightWidth}
+        isDisplay={rightDisplay}
+        visible={state.rightVisible}
+        toggleVisible={toggleRightVisible}
+      >
+        {RightContent}
+      </RightContainer>
+      <TopContainer
+        height={topHeight}
+        isDisplay={topDisplay}
+        left={state.leftVisible && leftDisplay ? leftWidth : '0px'}
+        right={state.rightVisible && rightDisplay ? rightWidth : '0px'}
+        toggleVisible={toggleTopVisible}
+        visible={state.topVisible}
+      >
+        {TopContent}
+      </TopContainer>
     </div>
   );
 };
