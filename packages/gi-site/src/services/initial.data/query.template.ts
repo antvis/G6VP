@@ -516,11 +516,19 @@ const components = [
     type: 'GICC_LAYOUT',
     name: '上下布局',
     props: {
-      topItems: ['GremlinQuery'],
-      height: 251,
-      padding: '0px 0px',
-      sideItems: ['JSONMode'],
-      tabPosition: 'right',
+      containers: [
+        {
+          id: 'GI_CONTAINER_TOP',
+          GI_CONTAINER: ['GremlinQuery'],
+          height: 251,
+          padding: '0px 0px',
+        },
+        {
+          id: 'GI_CONTAINER_SIDE',
+          GI_CONTAINER: ['JSONMode'],
+          tabPosition: 'right',
+        },
+      ],
     },
   },
   {
@@ -808,7 +816,8 @@ export const getConfigByEngineId = engineId => {
   const name = isGremlin ? 'Gremlin 查询模版' : 'Cypher 查询模版';
   componentConfig.forEach(item => {
     if (item.id === 'UadLayout') {
-      item.props.topItems = isGremlin ? ['GremlinQuery'] : ['CypherQuery'];
+      const topContainer = item.props.containers?.find(container => container.id === 'GI_CONTAINER_TOP');
+      topContainer.GI_CONTAINER = isGremlin ? ['GremlinQuery'] : ['CypherQuery'];
     }
   });
 

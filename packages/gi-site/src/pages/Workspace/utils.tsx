@@ -444,15 +444,26 @@ const baseComponentsConfig = [
     id: 'GrailLayout',
     name: '圣杯布局',
     props: {
-      GI_CONTAINER_LEFT: [],
-      leftDisplay: false,
-      leftWidth: '400px',
-      GI_CONTAINER_RIGHT: ['FilterPanel', 'Overview'],
-      rightDisplay: true,
-      rightWidth: '350px',
-      GI_CONTAINER_BOTTOM: [],
-      bottomDisplay: false,
-      bottomHeight: '400px',
+      containers: [
+        {
+          id: 'GI_CONTAINER_LEFT',
+          GI_CONTAINER: [],
+          display: false,
+          width: '400px',
+        },
+        {
+          id: 'GI_CONTAINER_RIGHT',
+          GI_CONTAINER: [],
+          display: true,
+          width: '350px',
+        },
+        {
+          id: 'GI_CONTAINER_BOTTOM',
+          GI_CONTAINER: [],
+          display: false,
+          height: '400px',
+        },
+      ],
     },
   },
   {
@@ -632,7 +643,8 @@ export const getConfigByEngineId = engineId => {
     componentConfig = [...componentConfig, ...Cypher_Template];
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
-        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
+        const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
+        rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
       }
     });
   }
@@ -641,7 +653,8 @@ export const getConfigByEngineId = engineId => {
     componentConfig = [...componentConfig, ...Gremlin_Template];
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
-        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'GremlinQuery'];
+        const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
+        rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
       }
     });
   }

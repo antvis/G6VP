@@ -16,52 +16,22 @@ interface ContextMenuState {
 }
 
 const ContextMenuContainer = props => {
-  const {
-    components,
-    assets,
-    bindTypes,
-    nodeMenuComponents = [],
-    edgeMenuComponents = [],
-    canvasMenuComponents = [],
-    comboMenuComponents = [],
-  } = props;
+  const { components, assets, nodeMenuComponents = [] } = props;
 
   const [state, setState] = React.useState<ContextMenuState>({
     item: undefined,
   });
 
   const sortedComponents = useMemo(() => {
-    let itemType = 'canvas';
-    try {
-      itemType = state.item?.getType?.() || 'canvas';
-    } catch (error) {
-      console.log(error, state.item);
-    }
-
-    let componentIds = [];
-    switch (itemType) {
-      case 'edge':
-        componentIds = edgeMenuComponents;
-        break;
-      case 'canvas':
-        componentIds = canvasMenuComponents;
-        break;
-      case 'combo':
-        componentIds = comboMenuComponents;
-        break;
-      default:
-        componentIds = nodeMenuComponents;
-    }
-
-    const useComponents = componentIds
+    const useComponents = nodeMenuComponents
       .map(name => components.find(component => component.id === name))
       .filter(component => !!component);
     return useComponents.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
-  }, [components, nodeMenuComponents, edgeMenuComponents, canvasMenuComponents, comboMenuComponents, state.item]);
+  }, [components, nodeMenuComponents, state.item]);
 
   return (
     //@ts-ignore
-    <ContextMenu bindTypes={bindTypes} style={defaultStyle} setItem={item => setState({ item })}>
+    <ContextMenu style={defaultStyle} setItem={item => setState({ item })}>
       {(menuProps: ContextMenuValue) => {
         return (
           <Menu mode="vertical">

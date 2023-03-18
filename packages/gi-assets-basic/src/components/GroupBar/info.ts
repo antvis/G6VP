@@ -5,6 +5,6 @@ const info = {
   icon: 'icon-tabs',
   cover: 'http://xxxx.jpg',
   category: 'container-components',
-  type: 'GICC_LAYOUT',
+  type: 'GICC',
 };
 export default info;

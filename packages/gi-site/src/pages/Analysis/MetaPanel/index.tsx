@@ -1,7 +1,8 @@
 import * as React from 'react';
-import AssetsCenter from '../../../components/AssetsCenter';
+import { useImmer } from 'use-immer';
 import { useContext } from '../hooks/useContext';
 import ComponentPanel from './ComponentPanel';
+import ContainerPanel from './ContainerPanel';
 import WrapDataPanel from './DataPanel';
 import './index.less';
 import LayoutPanel from './LayoutPanel';
@@ -25,6 +26,12 @@ const navbarOptions = [
     component: LayoutPanel,
   },
   {
+    id: 'containers',
+    name: '容器',
+    // component: ComponentPanel,
+    component: ContainerPanel,
+  },
+  {
     id: 'components',
     name: '组件',
     component: ComponentPanel,
@@ -38,32 +45,48 @@ const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
 }, {});
 
 const MetaPanel = props => {
-  const { value, onChange, data, config, meta, services } = props;
-  const { updateContext } = useContext();
+  const { value, config, setIsContainerMode } = props;
+  const { updateContext, context } = useContext();
 
-  const { components, layout, node, edge } = config;
+  const [state, setState] = useImmer({
+    panelHeight: '100%',
+  });
 
   if (Object.keys(config).length === 0) {
     return null;
   }
-  const Match = navbarOptionsMap[value];
 
-  const { component: Component } = Match;
+  React.useEffect(() => {
+    if (value === 'containers') {
+      setIsContainerMode(true);
+      setState(draft => {
+        draft.panelHeight = '100%';
+      });
+    } else {
+      setIsContainerMode(false);
+      setState(draft => {
+        draft.panelHeight = '100%';
+      });
+    }
+  }, [value]);
+
+  const { component: Component, id: sssdi } = navbarOptionsMap[value];
 
   return (
-    <div className="gi-config-pannel">
-      <Component {...props} updateContext={updateContext} />
-      <AssetsCenter />
+    <div className="gi-config-pannel" style={{ height: state.panelHeight || '100%' }}>
+      <Component
+        {...props}
+        updateContext={updateContext}
+        context={context}
+        setPanelHeight={height =>
+          setState(draft => {
+            draft.panelHeight = height;
+          })
+        }
+      />
+      {/* <AssetsCenter /> */}
     </div>
   );
 };
 
 export default MetaPanel;
-
-// export default React.memo(MetaPanel, (prevProps, nextProps) => {
-//   if (JSON.stringify(prevProps.activeAssetsKeys) !== JSON.stringify(nextProps.activeAssetsKeys)) {
-//     return false;
-//   }
-//   console.log('MetaPanel &&&&&&', prevProps, nextProps);
-//   return true;
-// });
