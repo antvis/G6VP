@@ -1,13 +1,11 @@
 import { CheckCard } from '@ant-design/pro-components';
-import { Col, Collapse, Row, Tag, Avatar } from 'antd';
 import { Icon } from '@antv/gi-sdk';
+import { ComponentAsset } from '@antv/gi-sdk/lib/typing';
+import { Avatar, Col, Collapse, Row, Tag } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import { queryAssetList } from '../../../../services/assets';
-import { useContext } from '../../hooks/useContext';
-import './index.less';
-import { ComponentAsset } from '@antv/gi-sdk/lib/typing';
 import { CategroyOptions, otherCategory } from './constants';
+import './index.less';
 
 const { Panel } = Collapse;
 
@@ -150,9 +148,14 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
           style={{ padding: '8px 0px' }}
         >
           {assets.map(item => {
-            const { id: assetId, info, name, icon = 'icon-robot' } = item;
+            const { id: assetId, info, name } = item;
+            const { icon = 'icon-robot', category } = info;
 
-            const tag = CategroyOptions[info.category];
+            const tag = CategroyOptions[category];
+            if (!tag) {
+              //第三方未分类的资产，直接先 return null
+              return null;
+            }
             const tagColor = colors[tag.order % colors.length];
             return (
               <Col key={assetId} onMouseEnter={() => handleTooltip(item)} onMouseLeave={() => handleTooltip()}>
