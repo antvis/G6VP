@@ -222,7 +222,7 @@ const Analysis = props => {
   const context = { context: state, updateContext: updateState, updateGISite };
 
   console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
-  const siderWidth = isContainerMode ? '40%' : '345px';
+  // const siderWidth = isContainerMode ? '40%' : '345px';
 
   return (
     <AnalysisContext.Provider value={context}>
@@ -236,7 +236,7 @@ const Analysis = props => {
           </div>
           <div
             className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}
-            style={{ width: siderWidth, flexBasis: siderWidth, minWidth: isContainerMode ? '500px' : 'unset' }}
+            // style={{ width: siderWidth, flexBasis: siderWidth, minWidth: isContainerMode ? '500px' : 'unset' }}
           >
             <MetaPanel
               value={activeNavbar}
@@ -253,7 +253,7 @@ const Analysis = props => {
           </div>
           <div
             className="gi-analysis-workspace"
-            style={{ width: `calc(100% - ${siderWidth} - 36px)`, flexBasis: `calc(100% - ${siderWidth} - 36px)` }}
+            // style={{ width: `calc(100% - ${siderWidth} - 36px)`, flexBasis: `calc(100% - ${siderWidth} - 36px)` }}
           >
             <div className="gi-analysis-canvas">
               <GISDK
