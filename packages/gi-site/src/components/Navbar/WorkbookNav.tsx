@@ -14,7 +14,7 @@ const styles = {
   container: {
     height: '100%',
     width: '100%',
-    boxShadow: `var(--box-shadow-bottom)`,
+    // boxShadow: `var(--box-shadow-bottom)`,
     display: 'flex',
     justifyContent: ' space-between',
   },
