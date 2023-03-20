@@ -1,6 +1,5 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { Checkbox, Col, Row, Select } from 'antd';
-import { GIAssets, GIComponentAssets } from '@antv/gi-sdk';
+import { Checkbox, Select } from 'antd';
+import { GIComponentAssets } from '@antv/gi-sdk';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import AssetsCenter from './AssetsCenter';
@@ -559,26 +558,12 @@ const ContainerPanel = props => {
       </div>
 
       {/* 资产选择器 */}
-      <div className="gi-assets-center-wrapper" style={focusingContainer ? { height: '50vh' } : { height: '0vh' }}>
-        <Row justify="space-between" align="middle" className="gi-container-config-header">
-          <Col className="gi-container-config-title">{`${focusingContainer?.name || ''} - 资产选择器`}</Col>
-          <Col>
-            <span onClick={() => handleFocusAssetsSelector()} style={{ float: 'right' }}>
-              <CloseOutlined />
-            </span>
-          </Col>
-        </Row>
-        {focusingContainer ? (
-          <AssetsCenter
-            containerId={focusingContainer.id}
-            value={focusingContainerAsset}
-            handleUpdate={updateContainerAssets}
-            candidateAssets={focusingContainer.candidateAssets}
-          />
-        ) : (
-          ''
-        )}
-      </div>
+      <AssetsCenter
+        containerComponent={focusingContainer}
+        value={focusingContainerAsset}
+        handleUpdate={updateContainerAssets}
+        handleClose={handleFocusAssetsSelector}
+      />
     </>
   );
 };
