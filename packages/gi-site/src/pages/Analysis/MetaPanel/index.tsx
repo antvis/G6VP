@@ -4,9 +4,9 @@ import { useContext } from '../hooks/useContext';
 import ComponentPanel from './ComponentPanel';
 import ContainerPanel from './ContainerPanel';
 import WrapDataPanel from './DataPanel';
-import './index.less';
 import LayoutPanel from './LayoutPanel';
 import StylesPanel from './StylesPanel';
+import './index.less';
 
 const navbarOptions = [
   {
@@ -28,7 +28,6 @@ const navbarOptions = [
   {
     id: 'containers',
     name: '容器',
-    // component: ComponentPanel,
     component: ContainerPanel,
   },
   {
@@ -70,7 +69,7 @@ const MetaPanel = props => {
     }
   }, [value]);
 
-  const { component: Component, id: sssdi } = navbarOptionsMap[value];
+  const { component: Component } = navbarOptionsMap[value];
 
   return (
     <div className="gi-config-pannel" style={{ height: state.panelHeight || '100%' }}>
@@ -84,7 +83,6 @@ const MetaPanel = props => {
           })
         }
       />
-      {/* <AssetsCenter /> */}
     </div>
   );
 };
