@@ -28,7 +28,6 @@ const navbarOptions = [
   {
     id: 'containers',
     name: '容器',
-    // component: ComponentPanel,
     component: ContainerPanel,
   },
   {
