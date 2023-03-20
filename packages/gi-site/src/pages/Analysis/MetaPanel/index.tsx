@@ -26,11 +26,6 @@ const navbarOptions = [
     component: LayoutPanel,
   },
   {
-    id: 'containers',
-    name: '容器',
-    component: ContainerPanel,
-  },
-  {
     id: 'components',
     name: '组件',
     component: ComponentPanel,
@@ -44,7 +39,7 @@ const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
 }, {});
 
 const MetaPanel = props => {
-  const { value, config, setIsContainerMode } = props;
+  const { value, config, setPanelWidth } = props;
   const { updateContext, context } = useContext();
 
   const [state, setState] = useImmer({
@@ -56,17 +51,9 @@ const MetaPanel = props => {
   }
 
   React.useEffect(() => {
-    if (value === 'containers') {
-      setIsContainerMode(true);
-      setState(draft => {
-        draft.panelHeight = '100%';
-      });
-    } else {
-      setIsContainerMode(false);
-      setState(draft => {
-        draft.panelHeight = '100%';
-      });
-    }
+    setState(draft => {
+      draft.panelHeight = '100%';
+    });
   }, [value]);
 
   const { component: Component } = navbarOptionsMap[value];
@@ -82,6 +69,7 @@ const MetaPanel = props => {
             draft.panelHeight = height;
           })
         }
+        setPanelWidth={setPanelWidth}
       />
     </div>
   );

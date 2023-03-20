@@ -18,11 +18,6 @@ export const navbarOptions = [
     icon: <BranchesOutlined />,
   },
   {
-    id: 'containers',
-    name: '容器',
-    icon: <AppstoreOutlined />,
-  },
-  {
     id: 'components',
     name: '组件',
     icon: <AppstoreOutlined />,

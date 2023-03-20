@@ -24,8 +24,8 @@ const ContextMenuContainer = props => {
 
   const sortedComponents = useMemo(() => {
     const useComponents = nodeMenuComponents
-      .map(name => components.find(component => component.id === name))
-      .filter(component => !!component);
+      .map(name => components.find(component => component?.id === name))
+      .filter(Boolean);
     return useComponents.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
   }, [components, nodeMenuComponents, state.item]);
 
