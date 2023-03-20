@@ -158,9 +158,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
             style={{ padding: '8px 0px' }}
           >
             {assets.map(item => {
-              const { id: assetId, info, name, icon = 'icon-robot' } = item;
-
-              const tag = CategroyOptions[info.category];
+              const { id: assetId, info, name } = item;
+              const { icon = 'icon-robot' } = info;
+              const tag = CategroyOptions[info.category] || otherCategory;
               const tagColor = colors[tag.order % colors.length];
               return (
                 <Col key={assetId} onMouseEnter={() => handleTooltip(item)} onMouseLeave={() => handleTooltip()}>
