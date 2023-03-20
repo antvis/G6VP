@@ -25,7 +25,7 @@ const OPEN_ITEMS = [
 ];
 
 const WORKBOOK_ITEMS = [
-  // { label: '新建画布', key: '/workbook/create', icon: <PlusOutlined /> },
+  { label: '新建画布', key: '/workbook/create', icon: <PlusOutlined /> },
   { label: '我的画布', key: '/workbook/project', icon: <GlobalOutlined /> },
   { label: '我的模版', key: '/workbook/template', icon: <AppstoreOutlined /> },
   // { label: '我的报表', key: '/workbook/report', icon: <MenuUnfoldOutlined /> },
