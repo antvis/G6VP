@@ -1,171 +1,331 @@
-import {
-  CaretRightFilled,
-  CaretRightOutlined,
-  CloseOutlined,
-  EditOutlined,
-  MoreOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
-import { Col, Collapse, Row } from 'antd';
 import React, { useEffect } from 'react';
-import { Icon } from '@antv/gi-sdk';
-import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
-import { CategroyOptions } from '../../../../components/AssetsCenter/constants';
-import './index.less';
-import RenderForm from './RenderForm';
-import { queryAssets } from '../../../../services/assets';
+import { GIComponentAssets } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
-import ConfigPanel from './ConfigPanel';
-const { Panel } = Collapse;
-const otherCategory = {
-  name: '未分类',
-  icon: <QuestionCircleOutlined />,
-  order: 12,
+import ContainerPanel from '../ContainerPanel';
+import ComponentPanel from './ComponentPanel';
+import { queryAssets } from '../../../../services/assets';
+import { getComponentsByAssets } from '../../getAssets';
+import { clone } from '@antv/util';
+import './index.less';
+
+/**
+ * 格式化普通的容器组件
+ * @param container 子容器
+ * @param componentsMap 当前所有资产（包括非活跃）的 map
+ * @param activeComponents 活跃的资产
+ * @returns
+ */
+const formatCommonContainer = (container, componentsMap, activeComponents) => {
+  const { id, meta, props: defaultProps } = container;
+  const configuredComponent = activeComponents.find(configuredCom => configuredCom.id === id);
+  const candidateAssets = meta.GI_CONTAINER?.enum?.map(item => {
+    const assetId = typeof item === 'string' ? item : item.value;
+    return componentsMap[assetId];
+  });
+  const props = {
+    ...defaultProps,
+    ...configuredComponent?.props,
+  };
+  props.GI_CONTAINER = props.GI_CONTAINER?.map(sid => {
+    const asset = componentsMap[sid];
+    if (!asset) return undefined;
+    return {
+      value: sid,
+      label: asset.name,
+    };
+  }).filter(Boolean);
+  return {
+    ...container,
+    props,
+    candidateAssets,
+  };
+};
+
+/**
+ * 格式化页面布局中的子容器
+ * @param pageLayout 页面布局
+ * @param container 子容器
+ * @param componentsMap 当前所有资产（包括非活跃）的 map
+ * @param activeComponents 活跃的资产
+ * @returns
+ */
+const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeComponents) => {
+  const { id, name, required, ...others } = container;
+  const props = {};
+  let candidateAssets = [];
+  const configuredPageLayout = activeComponents.find(com => com.id === pageLayout.id);
+  const configuredContainer = configuredPageLayout?.props.containers?.find(con => con.id === id);
+  Object.keys(others).forEach(key => {
+    if (key === 'GI_CONTAINER') {
+      candidateAssets = others[key].enum.map(item => {
+        const assetId = typeof item === 'string' ? item : item.value;
+        return componentsMap[assetId];
+      });
+      const selectedSubInfos = configuredContainer ? configuredContainer[key] : others[key].default;
+      props[key] = selectedSubInfos
+        ?.map(info => {
+          const sid = typeof info === 'string' ? info : info.value;
+          const asset = componentsMap[sid];
+          if (!asset) return undefined;
+          return {
+            value: sid,
+            label: asset.name,
+          };
+        })
+        .filter(Boolean);
+    } else {
+      props[key] = configuredContainer ? configuredContainer[key] : others[key].default;
+    }
+  });
+  pageLayout.props.containers.push({
+    id,
+    ...props,
+    display: required,
+  });
+  return {
+    id,
+    name,
+    required,
+    info: {
+      id,
+      name,
+      icon: 'icon-layout',
+      type: 'GICC',
+    },
+    meta: others,
+    props,
+    candidateAssets,
+  };
+};
+
+/**
+ * 生成一个自由容器，放置所有类型为 AUTO （即无需容器）的组件
+ * @param refComponentKeys 当前活跃的资产 id 列表
+ * @param autoComponents 所有无需父容器的组件
+ * @param componentsMap 全量资产的 map
+ * @returns
+ */
+const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
+  // 子组件为当前活跃的 AUTO 类型组件
+  const subAssets: AssetInfo[] = [];
+  refComponentKeys.forEach(id => {
+    if (componentsMap[id]?.type === 'AUTO')
+      subAssets.push({
+        value: id,
+        label: componentsMap[id].name,
+      });
+  });
+  return {
+    id: 'GI_FreeContainer',
+    name: '无容器组件',
+    required: true,
+    info: {
+      id: 'GI_FreeContainer',
+      name: '无容器组件',
+      icon: 'icon-layout',
+      type: 'GICC',
+    },
+    meta: {
+      GI_CONTAINER: {
+        'x-component-props': { mode: 'multiple' },
+      },
+      id: 'GI_FreeContainer',
+      name: '无容器组件',
+      required: true,
+    },
+    props: {
+      id: 'GI_FreeContainer',
+      GI_CONTAINER: subAssets,
+    },
+    candidateAssets: autoComponents,
+  };
 };
 
 /** 组件模块 配置面板 */
-const ComponentPanel = props => {
-  // const { updateContext } = useContext();
-  const { config, components, updateContext, setPanelHeight } = props;
+const Panel = props => {
+  const { config, updateContext, context, setPanelWidth, setPanelHeight } = props;
+  const { data, schemaData, services, engineId, activeAssetsKeys } = context;
+
+  const [assets, setAssets] = React.useState<GIComponentAssets>({});
   const [state, setState] = useImmer({
-    focusing: undefined,
+    mode: 'component',
+    pageLayout: undefined,
+    candidateContainers: [],
+    configuringContainerId: undefined,
   });
-  const { focusing } = state;
+  const { mode, pageLayout, candidateContainers, configuringContainerId } = state;
 
-  const usingContainers = React.useMemo(() => {
+  /**
+   * 获取全量的组件资产列表
+   */
+  React.useEffect(() => {
+    (async () => {
+      const ASSET_LIST = await queryAssets();
+      setAssets({ ...ASSET_LIST.components });
+    })();
+  }, []);
+
+  React.useEffect(() => {
+    setPanelHeight('100%');
+    if (mode === 'component') {
+      setPanelWidth({
+        width: '345px',
+        minWidth: 'unset',
+      });
+    } else {
+      setPanelWidth({
+        width: '40%',
+        minWidth: '500px',
+      });
+    }
+  }, [mode]);
+
+  /**
+   * 获取全量的组件资产列表后，生成可用的信息的 components map
+   */
+  const componentsMap: {
+    [componentId: string]: any;
+  } = React.useMemo(() => {
+    if (!assets) return [];
+    const usingComponents = { ...assets };
+    delete usingComponents.default;
+    const components = getComponentsByAssets(usingComponents, data, services, config, schemaData, engineId) || [];
+    const map = {};
+    components.forEach(com => (map[com.id] = com));
+    return map;
+  }, [assets]);
+
+  /** 所有可选的布局资产 */
+  const layoutComponents = React.useMemo(
+    () => Object.values(componentsMap).filter(com => com.type === 'GICC_LAYOUT'),
+    [componentsMap],
+  );
+
+  /** 所有可选的容器资产，不包括布局资产自带的容器 */
+  const containerComponents = React.useMemo(
+    () =>
+      Object.values(componentsMap)
+        .filter(com => com.type === 'GICC' || com.type === 'GICC_MENU')
+        .map(com => formatCommonContainer(com, componentsMap, config.components)),
+    [componentsMap],
+  );
+
+  /** 所有不需要父容器的资产，即 type 为 AUTO */
+  const autoComponents = React.useMemo(
+    () =>
+      Object.values(componentsMap)
+        .filter(com => com.type === 'AUTO')
+        .map(com => formatCommonContainer(com, componentsMap, config.components)),
+    [componentsMap],
+  );
+
+  /**
+   * 可选的布局容器列表发生变更时，使用第一个作为选中的布局容器。若当前已有选中的布局容器，则不设置
+   */
+  useEffect(() => {
+    const activeLayoutComponent = config.components.find(component => component.type === 'GICC_LAYOUT');
+    console.log('changepagelayout');
     debugger;
-    const commonContainers = components.filter(com => {
-      const { type } = com;
-      return type === 'GICC' || type === 'GICC_MENU';
-    });
-    let pageLayoutContainers = [];
-    const pageLayout = config.pageLayout;
-    if (pageLayout) {
-      const pageLayoutComponent = config.components.find(com => com.id === pageLayout.id);
-      pageLayout.meta.containers.map(container => {
-        const componentProps = pageLayoutComponent?.props.containers?.find(con => con.id === container.id);
-        const containerProps = pageLayout.props.containers?.find(con => con.id === container.id);
-        const mergedProps = {
-          ...containerProps,
-          ...componentProps,
-        };
-        if (mergedProps.display) {
-          pageLayoutContainers.push({
-            id: container.id,
-            name: container.name,
-            info: container,
-            props: mergedProps,
-            // props: pageLayout.props.containers.find(con => con.id === container.id),
-          });
-        }
-      });
+    if (config.pageLayout) {
+      // 已配置有页面布局，优先使用
+      handlePageLayoutChange(config.pageLayout.id);
+    } else if (activeLayoutComponent) {
+      // 若活跃的资产列表中有页面布局类型的资产，则使用
+      handlePageLayoutChange(activeLayoutComponent.id);
+    } else if (layoutComponents?.[0]) {
+      // 以上条件均不满足，默认使用全量资产列表中的第一个页面布局资产
+      handlePageLayoutChange((layoutComponents?.[0] as any).id);
     }
-    return [...pageLayoutContainers, ...commonContainers];
-  }, [components, config.pageLayout]);
+  }, [containerComponents, layoutComponents]);
 
-  const handleConfigAsset = (container, asset) => {
-    if (!container) {
-      setState(draft => {
-        draft.focusing = undefined;
-      });
-      setPanelHeight('100%');
-      return;
-    }
-    setState(draft => {
-      draft.focusing = {
-        container,
-        asset,
-      };
-    });
-    setPanelHeight('calc(50vh - 64px)');
-  };
-
-  const handleChange = (assetId, values) => {
+  useEffect(() => {
+    // 将布局容器缓存到全局
     updateContext(draft => {
-      draft.config.components.forEach(item => {
-        if (item.id === assetId) {
-          item.props = values;
+      draft.config.pageLayout = pageLayout;
+    });
+  }, [pageLayout]);
+
+  /**
+   * 页面布局（唯一）切换时的响应函数。将根据一个自由容器(放置无需父容器资产的虚拟容器) + 该页面布局的自带容器 + 其他容器资产
+   * 重新生成可选的容器列表(candidateContainers)
+   * @param pageLayoutId 页面布局资产 id
+   */
+  const handlePageLayoutChange = (pageLayoutId: string) => {
+    if (!layoutComponents?.length) return;
+
+    const pageLayoutComponent = clone(layoutComponents.find(com => com.id === pageLayoutId));
+    pageLayoutComponent.props.containers = pageLayoutComponent.props.containers || [];
+
+    // 该页面布局的子容器，格式化
+    const pageLayoutContainers = pageLayoutComponent.meta.containers.map(com =>
+      formatPageLayoutContainer(pageLayoutComponent, com, componentsMap, config.components),
+    );
+
+    // 自由容器（放置所有无需容器的资产），必选 refComponentKeys
+    const freeContainer = getFreeContainer(activeAssetsKeys.components, autoComponents, componentsMap);
+    // 将自由容器作为页面布局的一个必选子容器，放在最前面
+    pageLayoutComponent.props.containers.unshift(freeContainer.props);
+    pageLayoutComponent.meta.containers.unshift(freeContainer.meta);
+
+    if (config.pageLayout?.id === pageLayoutId) {
+      // 若当前缓存有同样的 pageLayout ，则恢复缓存中页面布局子容器的 display
+      const cachePageLayout = config.components.find(component => component.id === pageLayoutId);
+      pageLayoutComponent.props.containers.forEach(container => {
+        const cacheContainer = cachePageLayout.props.containers?.find(con => con.id === container.id);
+        if (cacheContainer) {
+          container.display = cacheContainer.display;
+          const pageLayoutContainer = pageLayoutContainers.find(pcontainer => pcontainer.id === container.id);
+          if (pageLayoutContainer) pageLayoutContainer.display = cacheContainer.display;
         }
       });
+    }
+
+    const candidates = [freeContainer, ...pageLayoutContainers, ...containerComponents];
+
+    setState(draft => {
+      // 重置 { [容器]: 子资产[] } 的映射列表
+      if (config.pageLayout?.id !== pageLayoutId) draft.containerAssetsMap = {};
+      // 记录布局容器
+      draft.pageLayout = pageLayoutComponent;
+      // 候选容器有：页面布局的子容器组件 + 资产中所有容器类型的组件 + 一个自由容器（放置所有无需父容器的资产）
+      draft.candidateContainers = candidates;
     });
   };
 
-  return (
-    <div>
-      <div className="gi-container-config-header">组件</div>
-      {config.pageLayout ? (
-        <Collapse
-          ghost
-          style={{ padding: '4px 0px' }}
-          className={`gi-site-collapse`}
-          expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-        >
-          {usingContainers.map(item => {
-            const { info = {}, id } = item;
-            let matchContainer = config.components?.find(c => c.id === id);
-            if (!matchContainer) {
-              // 组件库中找不到，可能是页面布局中的子容器
-              matchContainer = item;
-            }
-            const subAssetIds = matchContainer.props?.GI_CONTAINER || [];
-            const subAssets = subAssetIds
-              .map(assetId =>
-                components.find(com => {
-                  if (typeof assetId === 'string') return com.id === assetId;
-                  else return com.id === assetId.value;
-                }),
-              )
-              .filter(Boolean);
+  const handleUpdatePageLayout = updateFunc => {
+    setState(draft => {
+      updateFunc(draft.pageLayout);
+    });
+  };
 
-            return (
-              <Panel
-                header={
-                  <div>
-                    <Icon type={info.icon || 'icon-layout'} style={{ marginRight: '8px' }} />
-                    {info.name}
-                  </div>
-                }
-                key={id}
-                className="gi-container-asset-panel"
-              >
-                {subAssets?.map((asset, i) => (
-                  <div key={`c${i}`} className="gi-sub-asset-item">
-                    {asset.info.name}
-                    <EditOutlined onClick={() => handleConfigAsset?.(item, asset)} />
-                  </div>
-                ))}
-              </Panel>
-            );
-          })}
-        </Collapse>
-      ) : (
-        <div className="gi-component-panel-tip">请先前往容器面板，进行容器配置及资产集成</div>
-      )}
-      {/* 单个资产的配置面板 */}
-      <div className="gi-asset-config-panel" style={focusing ? { height: '50vh' } : { height: '0vh' }}>
-        <Row justify="space-between" align="middle" className="gi-container-config-header">
-          <Col className="gi-container-config-title">{`${focusing?.container.name || ''} - ${
-            focusing?.asset.name || ''
-          } - 配置`}</Col>
-          <Col>
-            <span onClick={() => handleConfigAsset()} style={{ float: 'right' }}>
-              <CloseOutlined />
-            </span>
-          </Col>
-        </Row>
-        {focusing ? (
-          <ConfigPanel
-            container={focusing.container}
-            item={focusing.asset}
-            config={config}
-            handleChange={handleChange}
-          />
-        ) : (
-          ''
-        )}
-      </div>
-    </div>
+  return mode === 'component' ? (
+    <ComponentPanel
+      {...props}
+      pageLayout={pageLayout}
+      handleEditContainer={containerId => {
+        setState(draft => {
+          draft.mode = 'container';
+          draft.configuringContainerId = containerId;
+        });
+      }}
+    />
+  ) : (
+    <ContainerPanel
+      {...props}
+      pageLayout={pageLayout}
+      componentsMap={componentsMap}
+      layoutComponents={layoutComponents}
+      candidateContainers={candidateContainers}
+      updatePageLayout={handleUpdatePageLayout}
+      handlePageLayoutChange={handlePageLayoutChange}
+      defaultExpandId={configuringContainerId}
+      handleComplete={() => {
+        setState(draft => {
+          draft.mode = 'component';
+        });
+      }}
+    />
   );
 };
 
-export default ComponentPanel;
+export default Panel;

@@ -24,6 +24,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     handleRemoveContainerAsset,
     selecting,
     pageLayoutId,
+    defaultActiveContainerId,
   } = props;
   let matchComponentProps = config.components?.find(c => c.id === id)?.props;
   if (!matchComponentProps && pageLayoutId) {
@@ -61,6 +62,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
         style={{ padding: '4px 0px' }}
         className={`gi-site-collapse gi-tour-components-${info.id} gi-container-panel-render-collapse`}
         expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        defaultActiveKey={defaultActiveContainerId}
       >
         <Panel
           header={
