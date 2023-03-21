@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Empty from '../../components/Empty';
 import { queryDatasetList } from '../../services/dataset';
 import DatasetTable from './Table';
 interface DatasetsProps {}
@@ -26,7 +27,11 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
         padding: '16px',
       }}
     >
-      <DatasetTable data={lists} queryData={refreshDataset} />
+      {lists.length === 0 ? (
+        <Empty title="暂无数据，先去创建一个数据集吧" url="/dataset/create" />
+      ) : (
+        <DatasetTable data={lists} queryData={refreshDataset} />
+      )}
     </div>
   );
 };
