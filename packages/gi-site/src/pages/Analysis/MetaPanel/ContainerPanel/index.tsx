@@ -4,12 +4,8 @@ import { useImmer } from 'use-immer';
 import AssetsCenter from './AssetsCenter';
 import RenderForm from './RenderForm';
 import { isArray } from '@antv/util';
+import { AssetInfo } from '../../typing';
 import './index.less';
-
-type AssetInfo = {
-  label: string;
-  value: string;
-};
 
 let refComponentKeys: string[] = [];
 
@@ -28,10 +24,9 @@ const ContainerPanel = props => {
     componentsMap,
     handleComplete,
     defaultExpandId,
+    updateContainerSubAssets,
   } = props;
   const [state, setState] = useImmer<{
-    // pageLayout: any;
-    // candidateContainers: any[];
     selectedContainers: any[];
     focusingContainer: any;
     containerAssetsMap: {
@@ -87,8 +82,9 @@ const ContainerPanel = props => {
     // 获取容器（配置在模版中的）默认资产
     const containerSubAssetsMap = {};
     containers.forEach(container => {
-      if (containerAssetsMap[container.id]) containerSubAssetsMap[container.id] = containerAssetsMap[container.id];
-      else {
+      if (containerAssetsMap[container.id]) {
+        containerSubAssetsMap[container.id] = containerAssetsMap[container.id];
+      } else {
         const defaultAssets = container.props.GI_CONTAINER;
         if (defaultAssets) {
           updateContainerAssets(container.id, defaultAssets);
@@ -119,7 +115,10 @@ const ContainerPanel = props => {
     Object.values(componentsMap).forEach(con => {
       if (!activeAssetsIds.includes(con.id)) inactivAssetsIds.push(con.id);
     });
-    const activeComponentKeys = new Set<string>(activeAssetsIds.filter(Boolean));
+    const activeComponentKeys = new Set<string>();
+    activeAssetsIds.forEach(assetId => {
+      if (assetId && componentsMap[assetId]) activeComponentKeys.add(assetId);
+    });
     activeComponentKeys.add('Initializer');
     if (pageLayout) activeComponentKeys.add(pageLayout.id);
     refComponentKeys = Array.from(activeComponentKeys);
@@ -241,7 +240,9 @@ const ContainerPanel = props => {
         });
         const activeComponentKeys = new Set<string>(refComponentKeys);
         if (action === 'add') {
-          assetList.forEach(asset => activeComponentKeys.add(asset.value));
+          assetList.forEach(asset => {
+            if (componentsMap[asset.value]) activeComponentKeys.add(asset.value);
+          });
         } else {
           assetList.forEach(asset => activeComponentKeys.delete(asset.value));
         }
@@ -254,6 +255,8 @@ const ContainerPanel = props => {
         draft.containerAssetsMap[containerId] = containerAssets;
         draft.focusingContainerAsset = containerAssets;
       });
+      // 更新容器的子资产配置，方便下次进入时读取
+      updateContainerSubAssets(containerId, containerAssets);
       return containerAssets;
     }
     return undefined;
@@ -323,7 +326,7 @@ const ContainerPanel = props => {
                   handleRemoveContainerAsset={(id, asset) => updateContainerAssets(id, asset, 'remove')}
                   defaultActiveContainerId={defaultExpandId}
                   handleCollapseChange={value => {
-                    if (!value?.length && item.id === focusingContainer.id) handleFocusAssetsSelector();
+                    if (!value?.length && item.id === focusingContainer?.id) handleFocusAssetsSelector();
                   }}
                 />
               ))}
@@ -338,6 +341,7 @@ const ContainerPanel = props => {
       <AssetsCenter
         containerComponent={focusingContainer}
         value={focusingContainerAsset}
+        componentsMap={componentsMap}
         handleUpdate={updateContainerAssets}
         handleClose={handleFocusAssetsSelector}
       />

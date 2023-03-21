@@ -32,16 +32,17 @@ const colors = [
 interface AssetsCenterProps {
   containerComponent: ComponentAsset; // 资产中心内容对应的父容器资产
   value: ComponentAsset[]; // 当前容器已集成的子资产，用于在资产中心列表中默认选中
+  componentsMap: { [id: string]: ComponentAsset }; // 全量资产的 map
   handleUpdate: (containerId: string, asset: ComponentAsset, action?: 'add' | 'remove') => void;
   handleClose: () => void; // 关闭资产中心
 }
 
 const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
-  const { containerComponent, value = [], handleUpdate, handleClose } = props;
+  const { containerComponent, value = [], componentsMap, handleUpdate, handleClose } = props;
   const { id: containerId, name: containerName, candidateAssets = [] } = containerComponent || {};
 
   const [state, setState] = useImmer({
-    assets: candidateAssets,
+    assets: candidateAssets, // AssetInfo[]
     checkedCategories: Object.keys(CategroyOptions),
     candidateCategories: Object.keys(CategroyOptions),
     tooltip: {
@@ -53,9 +54,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   React.useEffect(() => {
     setState(draft => {
       draft.candidateCategories = Object.keys(CategroyOptions).filter(key =>
-        candidateAssets.find(asset => asset.info.category === key),
+        candidateAssets.find(asset => componentsMap[asset.value].info.category === key),
       );
-      if (candidateAssets.find(asset => !asset.info.category)) draft.candidateCategories.push('otherCategory');
+      if (candidateAssets.find(asset => !componentsMap[asset.value].info.category))
+        draft.candidateCategories.push('otherCategory');
       draft.checkedCategories = draft.candidateCategories;
       draft.assets = candidateAssets;
     });
@@ -64,9 +66,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const checkedList = value.map(item => item.value);
 
   const handleClick = assetId => {
-    const clickAsset = candidateAssets.find(asset => asset.id === assetId);
+    const clickAsset = candidateAssets.find(asset => asset.value === assetId);
     const checked = checkedList.includes(assetId);
-    if (clickAsset) handleUpdate(containerId, { value: assetId, label: clickAsset.name }, checked ? 'remove' : 'add');
+    if (clickAsset) handleUpdate(containerId, { value: assetId, label: clickAsset.label }, checked ? 'remove' : 'add');
   };
 
   const handleFilterByTag = value => {
@@ -82,8 +84,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         // 非全选状态下，若被点击的 tag 类别未选中，则选中
         draft.checkedCategories.push(value);
       }
-      draft.assets = candidateAssets.filter(casset => {
-        const { info } = casset;
+      draft.assets = candidateAssets.filter(assetInfo => {
+        const asset = componentsMap[assetInfo.value];
+        const { info } = asset;
         if (draft.checkedCategories.includes(info.category)) return true;
         if (!info.category && draft.checkedCategories.includes('otherCategory')) return true;
         return false;
@@ -157,7 +160,8 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
             ]}
             style={{ padding: '8px 0px' }}
           >
-            {assets.map(item => {
+            {assets.map(assetInfo => {
+              const item = componentsMap[assetInfo.value];
               const { id: assetId, info, name } = item;
               const { icon = 'icon-robot' } = info;
               const tag = CategroyOptions[info.category] || otherCategory;

@@ -19,6 +19,8 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
   const handleSave = async () => {
     const origin = (await ProjectServices.getById(workbookId)) as IProject;
 
+    const { pageLayout, ...otherConfig } = config;
+
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const workbookId = await ProjectServices.create({
@@ -28,18 +30,41 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
         projectConfig: config,
       });
       history.push(`/workspace/${workbookId}?nav=data`);
+      if (workbookId) {
+        updateContext(draft => {
+          draft.isSave = true;
+        });
+        notification.success({
+          message: '保存成功',
+        });
+        return;
+      }
     } else {
       // const data = graphRef.current && graphRef.current.save();
-      ProjectServices.updateById(workbookId, {
+      const result = await ProjectServices.updateById(workbookId, {
         activeAssetsKeys,
-        projectConfig: config,
+        projectConfig: {
+          ...otherConfig,
+          pageLayout: pageLayout
+            ? {
+                id: pageLayout.id,
+                info: pageLayout.info,
+              }
+            : undefined,
+        },
       });
+      if (result) {
+        updateContext(draft => {
+          draft.isSave = true;
+        });
+        notification.success({
+          message: '保存成功',
+        });
+        return;
+      }
     }
-    updateContext(draft => {
-      draft.isSave = true;
-    });
-    notification.success({
-      message: '保存成功',
+    notification.error({
+      message: '保存失败',
     });
   };
 
