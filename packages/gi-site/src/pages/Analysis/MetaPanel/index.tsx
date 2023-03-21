@@ -54,6 +54,12 @@ const MetaPanel = props => {
     setState(draft => {
       draft.panelHeight = '100%';
     });
+    if (value !== 'components') {
+      setPanelWidth({
+        width: '345px',
+        minWidth: 'unset',
+      });
+    }
   }, [value]);
 
   const { component: Component } = navbarOptionsMap[value];

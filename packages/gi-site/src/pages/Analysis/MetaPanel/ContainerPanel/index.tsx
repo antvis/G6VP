@@ -60,13 +60,7 @@ const ContainerPanel = props => {
    * 选中的页面布局（唯一）变更时，为已选定的容器（包括页面布局必选的子容器），集成当前配置中的子资产，加入活跃资产
    */
   useEffect(() => {
-    console.log('useeffectpageLayoutchange', pageLayout);
     if (pageLayout) {
-      selectedContainers.forEach(container => {
-        const defaultAssets = container.props.GI_CONTAINER;
-        if (defaultAssets) updateContainerAssets(container.id, defaultAssets);
-      });
-
       // 该页面布局必选的子容器 id 列表
       const requiredIds: string[] = candidateContainers.filter(con => con.required || con.display).map(con => con.id);
       // 当前活跃的非页面布局类子资产 id 列表
@@ -76,6 +70,7 @@ const ContainerPanel = props => {
         if (component || !componentsMap[key]) return false;
         return true;
       });
+
       // 选中：必选的子容器 + 当前活跃的所有容器 + 页面布局
       handleContainerChange([...requiredIds, ...currentActiveAssetKeys, pageLayout.id]);
     }
@@ -86,8 +81,17 @@ const ContainerPanel = props => {
    * @param selectedList 需要选中的所有容器 id 列表
    * @canditates 候选的容器，可传入以防止调用该函数时 state 中的候选容器更新尚未生效
    */
-  const handleContainerChange = (selectedList: string[], canditates = candidateContainers) => {
-    const selectedContainers = canditates.filter(container => selectedList.includes(container.id));
+  const handleContainerChange = (selectedList: string[]) => {
+    const containers = candidateContainers.filter(container => selectedList.includes(container.id));
+
+    // 获取容器（配置在模版中的）默认资产
+    const containerSubAssetsMap = {};
+    containers.forEach(container => {
+      const defaultAssets = container.props.GI_CONTAINER;
+      if (defaultAssets) updateContainerAssets(container.id, defaultAssets);
+      containerSubAssetsMap[container.id] = defaultAssets || containerAssetsMap[container.id];
+    });
+
     // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
     updatePageLayout(propsPageLayout => {
       propsPageLayout.props.containers.forEach(container => {
@@ -95,13 +99,14 @@ const ContainerPanel = props => {
       });
     });
     setState(draft => {
-      draft.selectedContainers = selectedContainers;
+      draft.selectedContainers = containers;
+      draft.containerAssetsMap = containerSubAssetsMap;
     });
 
     // 计算当前所有需要激活的资产
     let activeAssetsIds = selectedList;
-    Object.keys(containerAssetsMap).forEach(contaienrId => {
-      const assetInfos = containerAssetsMap[contaienrId];
+    Object.keys(containerSubAssetsMap).forEach(contaienrId => {
+      const assetInfos = containerSubAssetsMap[contaienrId];
       activeAssetsIds = activeAssetsIds.concat(assetInfos?.map(info => info.value));
     });
     // 无需激活的资产 = 全量资产列表 - 需要激活的资产
@@ -243,7 +248,9 @@ const ContainerPanel = props => {
         draft.containerAssetsMap[containerId] = containerAssets;
         draft.focusingContainerAsset = containerAssets;
       });
+      return containerAssets;
     }
+    return undefined;
   };
 
   return (

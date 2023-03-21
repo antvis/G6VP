@@ -224,8 +224,6 @@ const Panel = props => {
    */
   useEffect(() => {
     const activeLayoutComponent = config.components.find(component => component.type === 'GICC_LAYOUT');
-    console.log('changepagelayout');
-    debugger;
     if (config.pageLayout) {
       // 已配置有页面布局，优先使用
       handlePageLayoutChange(config.pageLayout.id);
