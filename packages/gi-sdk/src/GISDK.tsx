@@ -16,7 +16,7 @@ import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets, id, services } = props;
+  const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -243,7 +243,7 @@ const GISDK = (props: Props) => {
 
   const isReady = state.isContextReady && state.initialized;
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents(state, ComponentAssets);
+    getComponents(state, config.components, ComponentAssets);
 
   const graphData = useMemo(() => {
     const nodeMap = {};

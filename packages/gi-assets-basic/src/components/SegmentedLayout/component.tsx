@@ -17,7 +17,7 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
   const context = useContext();
 
-  const { containers = [] } = props; // 按理说这里一定是有props值的，需要处理下
+  const { containers } = props;
   const { config, assets } = context;
 
   const ComponentCfgMap = config.components.reduce((acc, curr) => {
