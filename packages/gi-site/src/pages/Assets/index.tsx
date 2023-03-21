@@ -1,4 +1,5 @@
-import { Space, Empty } from 'antd';
+import { DeploymentUnitOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import { Empty, Space } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import { getAssetPackages, setDefaultAssetPackages } from '../../loader';
@@ -15,7 +16,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const [state, setState] = React.useState({
     isReady: false,
     lists: [],
-    mode: 'card' as 'card' | 'table',
+    mode: 'table' as 'card' | 'table',
   });
   React.useEffect(() => {
     const packages = getAssetPackages();
@@ -52,10 +53,11 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     <>
       <SegmentedTabs
         items={[
-          { key: 'relation', label: '关系资产', children: renderMangeContainer() },
+          { key: 'relation', label: '关系图资产', children: renderMangeContainer(), icon: <DeploymentUnitOutlined /> },
           {
             key: 'location',
-            label: '地理资产',
+            icon: <EnvironmentOutlined />,
+            label: '地图资产',
             children: <Empty description="正在建设中" />,
           },
         ]}
