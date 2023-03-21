@@ -12,6 +12,7 @@ const info: AssetInfo = {
   category: 'system-interaction',
   icon: 'icon-plus',
   type: 'GIAC',
+  docs: 'https://www.yuque.com/antv/gi/wwzhrmtem0m2g09p',
 };
 
 export default {

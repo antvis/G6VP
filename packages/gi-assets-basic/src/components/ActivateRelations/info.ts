@@ -7,6 +7,7 @@ const info: AssetInfo = {
   cover: 'http://xxxx.jpg',
   category: 'elements-interaction',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/rqq14h0071psf9ks',
 };
 
 export default info;

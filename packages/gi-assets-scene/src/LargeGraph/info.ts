@@ -6,5 +6,6 @@ const info = {
   icon: 'icon-3d',
   cover: 'http://xxxx.jpg',
   type: 'GIAC',
+  docs: 'https://www.yuque.com/antv/gi/bhyhin',
 };
 export default info;

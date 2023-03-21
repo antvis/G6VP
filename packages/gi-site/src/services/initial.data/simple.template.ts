@@ -490,120 +490,28 @@ export const activeAssetsKeys = {
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
 
-const Cypher_Template = engineId => [
-  {
-    id: 'CypherQuery',
-    name: 'Cypher 语句查询',
-    props: {
-      serviceId: `${engineId}/CypherQuery`,
-      isShowPublishButton: false,
-      saveCypherTemplateServceId: `${engineId}/PublishTemplate`,
-      initialValue: 'MATCH n RETURN LIMIT 100',
-      GI_CONTAINER_INDEX: 2,
-      GIAC_CONTENT: {
-        visible: false,
-        disabled: false,
-        isShowTitle: true,
-        title: 'Cypher 语句查询',
-        isShowIcon: true,
-        icon: 'icon-query',
-        isShowTooltip: true,
-        tooltip: '',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'right',
-        hasDivider: false,
-        height: '60px',
-        isVertical: true,
-        containerType: 'div',
-        containerAnimate: false,
-        containerPlacement: 'RT',
-        offset: [0, 0],
-        containerWidth: '350px',
-        containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
-      },
-    },
+const container = {
+  id: 'GrailLayout',
+  name: '圣杯布局',
+  props: {
+    GI_CONTAINER_LEFT: [],
+    leftDisplay: false,
+    leftWidth: '400px',
+    GI_CONTAINER_RIGHT: ['FilterPanel', 'Overview'],
+    rightDisplay: true,
+    rightWidth: '350px',
+    GI_CONTAINER_BOTTOM: [],
+    bottomDisplay: false,
+    bottomHeight: '400px',
   },
-];
-
-const Gremlin_Template = engineId => [
-  {
-    id: 'GremlinQuery',
-    name: 'Gremlin 查询',
-    props: {
-      serviceId: `${engineId}/GremlinQuery`,
-      isShowPublishButton: false,
-      saveTemplateServceId: `${engineId}/PublishTemplate`,
-      initialValue: 'g.V().limit(10)',
-      height: 200,
-      GI_CONTAINER_INDEX: 2,
-      GIAC_CONTENT: {
-        visible: false,
-        disabled: false,
-        isShowTitle: true,
-        title: 'Gremlin',
-        isShowIcon: true,
-        icon: 'icon-query',
-        isShowTooltip: true,
-        tooltip: '',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'right',
-        hasDivider: false,
-        height: '60px',
-        isVertical: true,
-        containerType: 'div',
-        containerAnimate: false,
-        containerPlacement: 'RT',
-        offset: [0, 0],
-        containerWidth: '350px',
-        containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
-      },
-    },
-  },
-];
-
-export const getConfigByEngineId = engineId => {
-  let componentConfig = [...simpleComponents];
-  if (engineId === 'TuGraph' || engineId === 'Neo4j') {
-    //@ts-ignore
-    componentConfig = [...componentConfig, ...Cypher_Template(engineId)];
-    componentConfig.forEach(item => {
-      if (item.id === 'GrailLayout') {
-        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'CypherQuery'];
-      }
-    });
-  }
-  if (engineId === 'GraphScope' || engineId === 'GeaFlow') {
-    //@ts-ignore
-    componentConfig = [...componentConfig, ...Gremlin_Template(engineId)];
-    componentConfig.forEach(item => {
-      if (item.id === 'GrailLayout') {
-        item.props.GI_CONTAINER_RIGHT = ['FilterPanel', 'GremlinQuery'];
-      }
-    });
-  }
-  const config = {
-    nodes: baseNodesConfig,
-    edges: baseEdgesConfig,
-    layout: baseLayoutConfig,
-    components: componentConfig,
-  };
-  const activeAssetsKeys = {
-    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
-    components: [...config.components.map(c => c.id)],
-    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
-  };
-  return {
-    id: `tp_simple_${engineId}`,
-    name: `${engineId} 默认模版`,
-    ...config,
-    activeAssetsKeys,
-  };
 };
 
-export const TEMPALTE_SIMPLE_TUGRAPH = getConfigByEngineId('TuGraph');
-export const TEMPALTE_SIMPLE_GRAPHSCOPE = getConfigByEngineId('GraphScope');
-export const TEMPALTE_SIMPLE_NEO4J = getConfigByEngineId('Neo4j');
-export const TEMPALTE_SIMPLE_GEAFLOW = getConfigByEngineId('GeaFlow');
-export const TEMPALTE_SIMPLE_GI = getConfigByEngineId('GI');
+export const TEMPLATE_SIMPLE = {
+  name: '极简模版',
+  id: 'TP_SIMPLE',
+  desc: `该模版是官方提供的极简模版，包含 ${activeAssetsKeys.components.length} 个分析资产，提供常见的「交互分析」「筛选看数」等功能，页面布局上，画布展示空间较大，提供沉浸式分析体验`,
+  image: `${window['GI_PUBLIC_PATH']}image/tp_simple.png`,
+  container,
+  activeAssetsKeys,
+  ...baseConfig,
+};

@@ -1,6 +1,6 @@
 import { ApiOutlined, DeploymentUnitOutlined, FileExcelOutlined, GlobalOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Input, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
 import RadioNote from '../../components/RadioNote';
@@ -188,14 +188,14 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         }}
       >
         {/* TODO: 名字在最上方填写很容易忽略，而且也不是必填项，因为提交逻辑在各个数据源类型的子组件里，到了数据集完全懵逼认不出来。 */}
-        {active !== 'GRAPH' ? (
+        {/* {active !== 'GRAPH' ? (
           <div style={{ marginBottom: '12px' }}>
             <label style={styles.label}>填写数据集名称</label>
             <Input placeholder="请输入数据集名称" ref={InputRef} style={{ width: '400px' }}></Input>
           </div>
         ) : (
           ''
-        )}
+        )} */}
         <div>
           <label style={styles.label}>选择数据源类型</label>
           <RadioNote items={ITEMS} value={active} onChange={handleChangeType} />

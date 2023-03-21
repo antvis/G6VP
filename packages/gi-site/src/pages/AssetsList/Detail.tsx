@@ -1,4 +1,6 @@
-import { Tree, Spin } from 'antd';
+import { YuqueOutlined } from '@ant-design/icons';
+import { Icon } from '@antv/gi-sdk';
+import { Button, Divider, Space, Spin, Tag, Tree } from 'antd';
 import * as React from 'react';
 
 import { CategroyOptions, otherCategory } from '../../components/AssetsCenter/constants';
@@ -83,6 +85,9 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
     buildData();
   }, [data]);
 
+  //@ts-ignore
+  const currentDoc = state.docsMap[state.selectedKeys[0]];
+  console.log(currentDoc);
   return (
     <div className="assets-list-container">
       {state.isReady ? (
@@ -103,19 +108,49 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
             }}
           />
           <div className="assets-list-container-iframe">
-            <iframe
-              src={`${
-                state.docsMap[state.selectedKeys[0]]?.docs || 'https://www.yuque.com/antv/gi/reg9gvnw3ybhzeay'
-              }?view=doc_embed&from=asite`}
-              style={{
-                border: 'none',
-                background: 'rgba(255, 255, 255, 0)',
-                position: 'absolute',
-                zIndex: 1,
-                width: '100%',
-                height: '100%',
-              }}
-            ></iframe>
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontSize: '18px',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Space>
+                  <Icon type={currentDoc.icon}></Icon>
+                  {currentDoc.name}
+                </Space>
+                <Space>
+                  <Tag color="green">
+                    {currentDoc.pkg}@{currentDoc.version}
+                  </Tag>
+                  <Button
+                    type="link"
+                    icon={<YuqueOutlined />}
+                    onClick={() => {
+                      window.open(currentDoc.docs);
+                    }}
+                  >
+                    评论
+                  </Button>
+                </Space>
+              </div>
+              <Divider />
+              <iframe
+                src={`${
+                  currentDoc?.docs || 'https://www.yuque.com/antv/gi/reg9gvnw3ybhzeay'
+                }?view=doc_embed&from=asite`}
+                style={{
+                  border: 'none',
+                  // background: 'rgba(255, 255, 255, 0)',
+                  position: 'absolute',
+                  zIndex: 1,
+                  width: 'calc(100% - 50px)',
+                  height: 'calc(100% - 120px)',
+                }}
+              ></iframe>
+            </div>
           </div>
         </>
       ) : (

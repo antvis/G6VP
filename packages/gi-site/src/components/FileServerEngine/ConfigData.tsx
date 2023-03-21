@@ -1,6 +1,6 @@
 import { EditableProTable } from '@ant-design/pro-table';
 import { utils } from '@antv/gi-sdk';
-import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
+import { Alert, Button, Form, Input, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import { edgeColumns, nodeColumns, translist } from './const';
@@ -60,9 +60,10 @@ const ConfigData: React.FC<IProps> = props => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const { transData, inputData, transfunc } = state;
-    console.log('transData', transData);
+
+    const values = await form.validateFields();
 
     try {
       if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
@@ -92,6 +93,7 @@ const ConfigData: React.FC<IProps> = props => {
 
       updateGISite({
         engineId: 'GI',
+        name: values.name,
         engineContext: {
           // data: mergeData,
           // schemaData,
@@ -146,7 +148,15 @@ const ConfigData: React.FC<IProps> = props => {
           <Radio.Button value="edges">Edge</Radio.Button>
         </Radio.Group>
       </div>
+
       <Table dataSource={state.tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
+      <div>
+        <Form layout="vertical" form={form}>
+          <Form.Item label="数据集名称" name="name" rules={[{ required: true, message: '请填写数据名称!' }]}>
+            <Input placeholder="请填写数据名称" />
+          </Form.Item>
+        </Form>
+      </div>
       <Row style={{ justifyContent: 'center' }}>
         <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
           上一步

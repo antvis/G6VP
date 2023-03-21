@@ -35,6 +35,10 @@ export interface ITemplate {
   layout: GIConfig['layout'];
   /** 可用的激活资产ID */
   activeAssetsKeys: IActiveAssetsKeys;
+  /** 模版描述 */
+  desc: string;
+  /** 模版图片 */
+  image: string;
 }
 
 export interface IProject {

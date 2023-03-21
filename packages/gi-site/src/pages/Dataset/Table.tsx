@@ -8,15 +8,11 @@ import {
   SendOutlined,
   TableOutlined,
 } from '@ant-design/icons';
-import { utils } from '@antv/gi-sdk';
 import { Button, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { recoverDataset, recycleDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
-import { TEMPALTE_GREMLIN_QUERY } from '../../services/initial.data/query.template';
-import { getConfigByEngineId } from '../../services/initial.data/simple.template';
-import * as ProjectServices from '../../services/project';
 
 const styles = {
   botton: {
@@ -63,29 +59,32 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
   const handleAnalysis = async record => {
     // handleEncode(record);
     // return;
-    const style = utils.generatorStyleConfigBySchema(record.schemaData);
-    const { nodes, edges, layout, activeAssetsKeys, components } =
-      record.engineId === 'GraphScope' ? TEMPALTE_GREMLIN_QUERY : getConfigByEngineId(record.engineId);
-    const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
-    const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
-    const projectId = await ProjectServices.create({
-      datasetId: record.id,
-      name,
-      status: 1, // 1 正常项目， 0 删除项目
-      tag: '',
-      members: '',
-      projectConfig: {
-        nodes,
-        edges,
-        layout,
-        components,
-        ...style,
-      },
-      activeAssetsKeys,
-      type: 'project',
-    });
-    localStorage.setItem('GI_SITE_CREATE_PROJECT_INDEX', String(Number(GI_SITE_CREATE_PROJECT_INDEX) + 1));
-    window.open(`${window.location.origin}/#/workspace/${projectId}`);
+    // const style = utils.generatorStyleConfigBySchema(record.schemaData);
+    // const { nodes, edges, layout, activeAssetsKeys, components } = getConfigByEngineId(
+    //   record.engineId,
+    //   TEMPLATE_SIMPLE,
+    // );
+    // const GI_SITE_CREATE_PROJECT_INDEX = localStorage.getItem('GI_SITE_CREATE_PROJECT_INDEX') || 1;
+    // const name = `未命名画布_${GI_SITE_CREATE_PROJECT_INDEX}_数据集_${record.name}`;
+    // const projectId = await ProjectServices.create({
+    //   datasetId: record.id,
+    //   name,
+    //   status: 1, // 1 正常项目， 0 删除项目
+    //   tag: '',
+    //   members: '',
+    //   projectConfig: {
+    //     nodes,
+    //     edges,
+    //     layout,
+    //     components,
+    //     ...style,
+    //   },
+    //   activeAssetsKeys,
+    //   type: 'project',
+    // });
+    // localStorage.setItem('GI_SITE_CREATE_PROJECT_INDEX', String(Number(GI_SITE_CREATE_PROJECT_INDEX) + 1));
+    // window.open(`${window.location.origin}/#/workspace/${projectId}`);
+    history.push(`/workbook/create?datasetId=${record.id}&templateId=TP_SIMPLE`);
   };
   const handleDelete = async record => {
     const res = await recycleDataset(record.id);

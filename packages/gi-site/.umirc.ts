@@ -125,6 +125,11 @@ export default {
             },
             {
               exact: true,
+              path: 'create',
+              component: 'Workbook/Create',
+            },
+            {
+              exact: true,
               path: 'template',
               component: 'Template/index',
             },

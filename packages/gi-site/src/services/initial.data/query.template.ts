@@ -793,6 +793,19 @@ export const baseConfig = {
   layout: baseLayoutConfig,
   components: components,
 };
+// 页面布局容器
+const container = {
+  id: 'UadLayout',
+  type: 'GICC_LAYOUT',
+  name: '上下布局',
+  props: {
+    topItems: ['GremlinQuery'],
+    height: 251,
+    padding: '0px 0px',
+    sideItems: ['JSONMode'],
+    tabPosition: 'right',
+  },
+};
 
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
@@ -800,36 +813,12 @@ export const activeAssetsKeys = {
   layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
 };
 
-export const getConfigByEngineId = engineId => {
-  let componentConfig = [...components];
-  const isGremlin = engineId === 'GraphScope' || engineId === 'GeaFlow';
-  const isCypher = engineId === 'TuGraph' || engineId === 'Neo4j';
-  const id = isGremlin ? 'tp_query_gremlin' : 'tp_query_cypher';
-  const name = isGremlin ? 'Gremlin 查询模版' : 'Cypher 查询模版';
-  componentConfig.forEach(item => {
-    if (item.id === 'UadLayout') {
-      item.props.topItems = isGremlin ? ['GremlinQuery'] : ['CypherQuery'];
-    }
-  });
-
-  const config = {
-    nodes: baseNodesConfig,
-    edges: baseEdgesConfig,
-    layout: baseLayoutConfig,
-    components: componentConfig,
-  };
-  const activeAssetsKeys = {
-    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
-    components: [...config.components.map(c => c.id)],
-    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
-  };
-  return {
-    id,
-    name,
-    ...config,
-    activeAssetsKeys,
-  };
+export const TEMPLATE_QUERY = {
+  name: '查询模版',
+  id: 'TP_QUERY',
+  image: `${window['GI_PUBLIC_PATH']}image/tp_query.png`,
+  desc: `以查询语句为主体的模版，包含 ${activeAssetsKeys.components.length} 个分析资产，页面布局呈上下分布，最上方集成「Gremlin」或者「Cypher」查询语句，常用于数据库查询场景。`,
+  container,
+  activeAssetsKeys,
+  ...baseConfig,
 };
-
-export const TEMPALTE_GREMLIN_QUERY = getConfigByEngineId('TuGraph');
-export const TEMPALTE_CYPHER_QUERY = getConfigByEngineId('GraphScope');

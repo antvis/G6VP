@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as TempalteServices from '../../services/template';
 import { ITemplate } from '../../services/typing';
-import TempalteList from './Table';
+// import TempalteList from './Table';
+import Cards from './Cards';
 interface DatasetsProps {}
 
 const List: React.FunctionComponent<DatasetsProps> = props => {
@@ -20,7 +21,8 @@ const List: React.FunctionComponent<DatasetsProps> = props => {
   const { lists } = state;
   return (
     <div>
-      <TempalteList data={lists} />
+      {/* <TempalteList data={lists} /> */}
+      <Cards data={lists} />
     </div>
   );
 };

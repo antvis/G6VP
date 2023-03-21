@@ -1,11 +1,11 @@
-import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined } from '@ant-design/icons';
-import { Empty, Tabs } from 'antd';
+import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, GiftOutlined } from '@ant-design/icons';
+import { Empty } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
-import Detail from './Detail';
+import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { queryAssetList } from '../../services/assets';
-import { getSearchParams } from '../../components/utils';
+import Detail from './Detail';
 
 setDefaultAssetPackages();
 
@@ -78,41 +78,30 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
       <SegmentedTabs
         items={[
           {
-            key: 'relation',
-            label: '关系资产列表',
-            children: (
-              <div style={{ height: 'calc(100% - 62px)' }}>
-                <Tabs
-                  defaultActiveKey={searchParams.get(ASSETS_QUERY_KEY) || options[0].key}
-                  items={options.map(x => {
-                    return {
-                      label: (
-                        <span>
-                          {x.icon} {x.name}
-                        </span>
-                      ),
-                      key: x.key,
-                    };
-                  })}
-                  onChange={(activeKey: string) => {
-                    setState(preState => {
-                      return {
-                        ...preState,
-                        activeKey,
-                      };
-                    });
-                    searchParams.set(ASSETS_QUERY_KEY, activeKey);
-                    searchParams.set(ASSETS_KEY, '');
-                    window.location.hash = `${path}?${searchParams.toString()}`;
-                  }}
-                />
-                <Detail data={state.assets[state.activeKey]} />
-              </div>
-            ),
+            key: 'graph-components',
+            label: '图分析资产',
+            children: <Detail data={state.assets['components']} />,
           },
+          {
+            key: 'graph-elements',
+            label: '图元素资产',
+            children: <Detail data={state.assets['elements']} />,
+          },
+          {
+            key: 'graph-layouts',
+            label: '图布局资产',
+            children: <Detail data={state.assets['layouts']} />,
+          },
+
           {
             key: 'location',
             label: '地理资产列表',
+            children: <Empty description="正在建设中" />,
+          },
+          {
+            key: 'VIP',
+            label: 'VIP资产',
+            icon: <GiftOutlined />,
             children: <Empty description="正在建设中" />,
           },
         ]}

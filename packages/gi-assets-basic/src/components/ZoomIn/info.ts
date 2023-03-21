@@ -6,5 +6,6 @@ const info = {
   icon: 'icon-zoomin',
   category: 'canvas-interaction',
   type: 'GIAC',
+  docs: 'https://www.yuque.com/antv/gi/mw2wxx9h6kz1lp0z',
 };
 export default info;

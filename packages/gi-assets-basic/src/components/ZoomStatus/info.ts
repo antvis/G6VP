@@ -5,5 +5,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/egs4rz70pc1anpsq',
 };
 export default info;

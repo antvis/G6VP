@@ -4,6 +4,7 @@ import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from '
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
+import Empty from '../../components/Empty';
 import ExportConfig from '../../components/Navbar/ExportConfig';
 import ProjectCard from '../../components/ProjectCard';
 import { queryAssets } from '../../services/assets';
@@ -17,6 +18,14 @@ interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
 }
+
+const styles = {
+  container: {
+    borderRadius: '8px',
+    background: 'var(--background-color-transparent)',
+    padding: '24px',
+  },
+};
 
 interface ProjectListState {
   lists: IProject[];
@@ -183,7 +192,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       projectConfig,
       GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
     };
-
     const elementA = document.createElement('a');
     elementA.download = name as string;
     elementA.style.display = 'none';
@@ -193,7 +201,13 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     elementA.click();
     document.body.removeChild(elementA);
   };
-
+  if (lists.length === 0) {
+    return (
+      <div style={styles.container}>
+        <Empty title="暂无数据，先去创建一个工作薄吧" url="/workbook/create" />
+      </div>
+    );
+  }
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
