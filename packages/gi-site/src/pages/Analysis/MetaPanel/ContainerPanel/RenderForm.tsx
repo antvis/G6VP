@@ -20,7 +20,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     onChange,
     config,
     handleFocusAssetsSelector,
-    assets = [],
+    assets = defaultProps.GI_CONTAINER || [],
     handleRemoveContainerAsset,
     selecting,
     pageLayoutId,
