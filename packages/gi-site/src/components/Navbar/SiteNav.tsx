@@ -38,7 +38,7 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
         <Logo
           title="AntV Insight"
           handleClick={() => {
-            history.push('/workbook/project');
+            history.push('/home');
           }}
           size={30}
           style={{ padding: '0px 8px', cursor: 'pointer' }}

@@ -121,11 +121,11 @@ const Create: React.FunctionComponent<CreateProps> = props => {
           rules={[
             {
               required: true,
-              message: '请输入数据名称!',
+              message: '请输入画布名称!',
             },
           ]}
         >
-          <Input placeholder="请输入数据名称" />
+          <Input placeholder="请填写画布名称" />
         </Form.Item>
         <Form.Item
           label="选择数据集"

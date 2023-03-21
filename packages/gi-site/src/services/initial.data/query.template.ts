@@ -814,10 +814,10 @@ export const activeAssetsKeys = {
 };
 
 export const TEMPLATE_QUERY = {
-  name: '以语句查询为主的模版',
+  name: '查询模版',
   id: 'TP_QUERY',
-  image: `${window['GI_PUBLIC_PATH']}image/tp_simple.png`,
-  desc: `该模版以查询语句为主体，包含 ${activeAssetsKeys.components.length} 个分析资产，页面布局呈上下分布，最上方集成「Gremlin」或者「Cypher」查询语句，支持图数据和表数据的展示，常用于数据库查询场景。`,
+  image: `${window['GI_PUBLIC_PATH']}image/tp_query.png`,
+  desc: `以查询语句为主体的模版，包含 ${activeAssetsKeys.components.length} 个分析资产，页面布局呈上下分布，最上方集成「Gremlin」或者「Cypher」查询语句，常用于数据库查询场景。`,
   container,
   activeAssetsKeys,
   ...baseConfig,
