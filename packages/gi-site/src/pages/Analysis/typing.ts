@@ -74,3 +74,8 @@ export interface StateType {
   datasetName: string;
   engineType: string;
 }
+
+export type AssetInfo = {
+  label: string;
+  value: string;
+};

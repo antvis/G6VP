@@ -6,6 +6,7 @@ import ComponentPanel from './ComponentPanel';
 import { queryAssets } from '../../../../services/assets';
 import { getComponentsByAssets } from '../../getAssets';
 import { clone } from '@antv/util';
+import { AssetInfo } from '../../typing';
 import './index.less';
 
 /**
@@ -18,9 +19,14 @@ import './index.less';
 const formatCommonContainer = (container, componentsMap, activeComponents) => {
   const { id, meta, props: defaultProps } = container;
   const configuredComponent = activeComponents.find(configuredCom => configuredCom.id === id);
-  const candidateAssets = meta.GI_CONTAINER?.enum?.map(item => {
-    const assetId = typeof item === 'string' ? item : item.value;
-    return componentsMap[assetId];
+  const candidateAssets = meta.GI_CONTAINER?.enum.map(value => {
+    if (typeof value === 'string') {
+      return {
+        label: componentsMap[value].id,
+        value,
+      };
+    }
+    return value;
   });
   const props = {
     ...defaultProps,
@@ -52,14 +58,19 @@ const formatCommonContainer = (container, componentsMap, activeComponents) => {
 const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeComponents) => {
   const { id, name, required, ...others } = container;
   const props = {};
-  let candidateAssets = [];
+  let candidateAssets: AssetInfo[] = [];
   const configuredPageLayout = activeComponents.find(com => com.id === pageLayout.id);
   const configuredContainer = configuredPageLayout?.props.containers?.find(con => con.id === id);
   Object.keys(others).forEach(key => {
     if (key === 'GI_CONTAINER') {
-      candidateAssets = others[key].enum.map(item => {
-        const assetId = typeof item === 'string' ? item : item.value;
-        return componentsMap[assetId];
+      candidateAssets = others[key].enum.map(value => {
+        if (typeof value === 'string') {
+          return {
+            value,
+            label: componentsMap[value].id,
+          };
+        }
+        return value;
       });
       const selectedSubInfos = configuredContainer ? configuredContainer[key] : others[key].default;
       props[key] = selectedSubInfos
@@ -137,7 +148,10 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
       id: 'GI_FreeContainer',
       GI_CONTAINER: subAssets,
     },
-    candidateAssets: autoComponents,
+    candidateAssets: autoComponents.map(component => ({
+      label: component.name,
+      value: component.id,
+    })),
   };
 };
 
@@ -296,6 +310,20 @@ const Panel = props => {
     });
   };
 
+  /**
+   * 容器面板中更新了容器的子资产，更新到容器配置中
+   * @param updateFunc
+   */
+  const updateContainerSubAssets = (containerId, assetInfos) => {
+    setState(draft => {
+      draft.candidateContainers.forEach(container => {
+        if (container.id === containerId) {
+          container.props.GI_CONTAINER = assetInfos;
+        }
+      });
+    });
+  };
+
   return mode === 'component' ? (
     <ComponentPanel
       {...props}
@@ -317,6 +345,7 @@ const Panel = props => {
       updatePageLayout={handleUpdatePageLayout}
       handlePageLayoutChange={handlePageLayoutChange}
       defaultExpandId={configuringContainerId}
+      updateContainerSubAssets={updateContainerSubAssets}
       handleComplete={() => {
         setState(draft => {
           draft.mode = 'component';
