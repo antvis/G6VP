@@ -195,4 +195,12 @@ export default {
     logLevel: 'info',
     defaultSizes: 'parsed', // stat  // gzip
   },
+  chainWebpack(memo, { type }) {
+    memo.module
+      .rule('mjs$')
+      .test(/\.mjs$/)
+      .include.add(/node_modules/)
+      .end()
+      .type('javascript/auto');
+  },
 };
