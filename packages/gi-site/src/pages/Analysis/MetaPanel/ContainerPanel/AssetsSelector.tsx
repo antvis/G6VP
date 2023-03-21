@@ -12,7 +12,6 @@ interface AssetsSelectorProps {}
  */
 const AssetsSelector: React.FunctionComponent<AssetsSelectorProps> = props => {
   const { handleFocus, id, assets, selecting, handleRemoveAsset } = props as any;
-  console.log('assetsselector', assets);
   return (
     <div className="gi-render-form-assets-wrapper">
       <Row justify="space-between" className="gi-render-form-assets-input-label">

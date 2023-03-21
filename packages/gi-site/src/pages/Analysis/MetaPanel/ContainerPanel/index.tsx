@@ -87,9 +87,14 @@ const ContainerPanel = props => {
     // 获取容器（配置在模版中的）默认资产
     const containerSubAssetsMap = {};
     containers.forEach(container => {
-      const defaultAssets = container.props.GI_CONTAINER;
-      if (defaultAssets) updateContainerAssets(container.id, defaultAssets);
-      containerSubAssetsMap[container.id] = defaultAssets || containerAssetsMap[container.id];
+      if (containerAssetsMap[container.id]) containerSubAssetsMap[container.id] = containerAssetsMap[container.id];
+      else {
+        const defaultAssets = container.props.GI_CONTAINER;
+        if (defaultAssets) {
+          updateContainerAssets(container.id, defaultAssets);
+          containerSubAssetsMap[container.id] = defaultAssets;
+        }
+      }
     });
 
     // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
@@ -207,7 +212,8 @@ const ContainerPanel = props => {
       }
 
       // 新的子资产 id 列表 (activeAssetsKeys)
-      const containerAssetsIds = containerAssets.map(casset => casset.value);
+      const containerAssetsIdsSet = new Set(containerAssets.map(casset => casset.value));
+      const containerAssetsIds = Array.from(containerAssetsIdsSet);
 
       // 更新全局活跃资产列表
       updateContext(draft => {
@@ -316,6 +322,9 @@ const ContainerPanel = props => {
                   assets={containerAssetsMap[item.id]}
                   handleRemoveContainerAsset={(id, asset) => updateContainerAssets(id, asset, 'remove')}
                   defaultActiveContainerId={defaultExpandId}
+                  handleCollapseChange={value => {
+                    if (!value?.length && item.id === focusingContainer.id) handleFocusAssetsSelector();
+                  }}
                 />
               ))}
             </div>
