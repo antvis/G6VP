@@ -6,6 +6,7 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/acvogadnu8fzinkv',
 };
 
 export default info;

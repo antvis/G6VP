@@ -1,4 +1,4 @@
-const ASSET_ID = 'StyleSetting'
+const ASSET_ID = 'StyleSetting';
 const info = {
   id: ASSET_ID,
   name: '样式设置',
@@ -8,5 +8,6 @@ const info = {
   category: 'elements-interaction',
   services: [ASSET_ID],
   type: 'GIAC_CONTENT',
+  docs: 'https://www.yuque.com/antv/gi/kf54p9k1ffxpcm18',
 };
 export default info;

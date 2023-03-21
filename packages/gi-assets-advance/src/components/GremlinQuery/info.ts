@@ -8,5 +8,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
   services: [ASSET_ID, 'PublishTemplate'],
+  docs: 'https://www.yuque.com/antv/gi/nfkf0ku3rgvnican',
 };
 export default info;

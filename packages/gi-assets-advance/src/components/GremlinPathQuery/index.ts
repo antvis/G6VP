@@ -8,7 +8,8 @@ const info = {
   category: 'components',
   desc: '通过 Gremlin 模板语句快速查询图数据',
   cover: 'http://xxxx.jpg',
-  type: 'GI_CONTAINER_INDEX',
+  type: 'GIAC_CONTENT',
+  docs: 'https://www.yuque.com/antv/gi/yz0xsyvg7kcgkt6g',
 };
 
 export default {

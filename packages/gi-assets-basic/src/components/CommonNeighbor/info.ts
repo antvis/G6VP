@@ -6,5 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'elements-interaction',
   type: 'GIAC_MENU',
+  docs: 'https://www.yuque.com/antv/gi/aomt7zl66pkxoz2g',
 };
 export default info;

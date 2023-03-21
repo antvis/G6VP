@@ -6,5 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'container-components',
   type: 'GICC',
+  docs: 'https://www.yuque.com/antv/gi/gw3nz0u0zikn08uh',
 };
 export default info;

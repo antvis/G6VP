@@ -6,6 +6,7 @@ const info = {
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
   icon: 'icon-branches',
+  docs: 'https://www.yuque.com/antv/gi/yfg1clqzztqvcnt2',
 };
 
 export default info;
