@@ -176,12 +176,12 @@ class TuGraphService extends Service {
    * @param params
    */
   async queryNeighbors(params: INeighborsParams) {
-    const { ids, graphName = '', sep = 1, authorization = '' } = params;
-    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT 100`;
+    const { ids, graphName = '', sep = 1, authorization = '', limit = 100 } = params;
+    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT ${limit}`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
-      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m LIMIT 200`;
+      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m LIMIT ${limit}`;
     }
 
     const responseData = await this.querySubGraphByCypher(cypher, graphName, authorization);
