@@ -91,7 +91,10 @@ const Create: React.FunctionComponent<CreateProps> = props => {
     const values = await form.validateFields();
 
     const style = utils.generatorStyleConfigBySchema(dataset.schemaData);
-    const { nodes, edges, layout, activeAssetsKeys, components } = getConfigByEngineId(dataset.engineId, template);
+    const { nodes, edges, layout, activeAssetsKeys, components } = getConfigByEngineId(
+      dataset.engineId,
+      JSON.parse(JSON.stringify(template)),
+    );
 
     const projectId = await ProjectServices.create({
       datasetId: dataset.id,
