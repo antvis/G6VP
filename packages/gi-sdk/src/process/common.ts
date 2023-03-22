@@ -157,8 +157,13 @@ export const getDefaultValues = (s, componentType = undefined) => {
     if (componentType === 'GICC_LAYOUT' && k === 'containers') {
       obj[k] = [];
       schema.forEach((container, i) => {
-        obj[k].push({});
+        obj[k].push({
+          id: container.id,
+          name: container.name,
+          required: container.required,
+        });
         Object.keys(container).forEach(key => {
+          if (key === 'name' || key === 'id' || key === 'required') return;
           walk(container[key], obj[k][i], key);
         });
       });

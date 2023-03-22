@@ -1,10 +1,11 @@
-import { CaretRightOutlined, CloseOutlined, SettingOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, CloseOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons';
 import { Col, Collapse, Row } from 'antd';
 import React from 'react';
 import { Icon } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
 import ConfigPanel from './ConfigPanel';
 import './index.less';
+
 const { Panel } = Collapse;
 
 /** 组件模块 配置面板 */
@@ -21,7 +22,6 @@ const ComponentPanel = props => {
       return type === 'GICC' || type === 'GICC_MENU';
     });
     let pageLayoutContainers = [];
-    // const pageLayout = config.pageLayout;
     if (pageLayout) {
       const pageLayoutComponent = config.components.find(com => com.id === pageLayout.id);
       pageLayout.meta.containers.map(container => {
@@ -41,7 +41,27 @@ const ComponentPanel = props => {
         }
       });
     }
-    return [...pageLayoutContainers, ...commonContainers];
+    const autoComponentInfos = components
+      .filter(component => component.type === 'AUTO')
+      .map(component => ({
+        label: component.name,
+        value: component.id,
+      }));
+    const freeContainer = {
+      id: 'GI_FreeContainer',
+      name: '无容器组件',
+      info: {
+        id: 'GI_FreeContainer',
+        name: '无容器组件',
+        icon: 'icon-layout',
+        type: 'GICC',
+      },
+      props: {
+        id: 'GI_FreeContainer',
+        GI_CONTAINER: autoComponentInfos,
+      },
+    };
+    return [freeContainer, ...pageLayoutContainers, ...commonContainers];
   }, [components, pageLayout]);
 
   const handleConfigAsset = (container, asset) => {
@@ -115,7 +135,7 @@ const ComponentPanel = props => {
               }
               key={id}
               className="gi-container-asset-panel"
-              extra={<SettingOutlined onClick={() => handleEditContainer(id)} />}
+              extra={<EditOutlined onClick={() => handleEditContainer(id)} />}
             >
               {subAssets?.map((asset, i) => (
                 <div

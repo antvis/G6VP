@@ -13,7 +13,7 @@ export interface UadLayoutProps {
   containers: any[];
 }
 
-const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
+const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
   const context = useContext();
 
@@ -56,4 +56,4 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   );
 };
 
-export default UadLayout;
+export default SegmentedLayout;

@@ -16,18 +16,16 @@ interface ContextMenuState {
 }
 
 const ContextMenuContainer = props => {
-  const { components, assets, nodeMenuComponents = [] } = props;
+  const { components = [], assets } = props;
 
   const [state, setState] = React.useState<ContextMenuState>({
     item: undefined,
   });
 
-  const sortedComponents = useMemo(() => {
-    const useComponents = nodeMenuComponents
-      .map(name => components.find(component => component?.id === name))
-      .filter(Boolean);
-    return useComponents.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
-  }, [components, nodeMenuComponents, state.item]);
+  const sortedComponents = useMemo(
+    () => components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX),
+    [components, state.item],
+  );
 
   return (
     //@ts-ignore
