@@ -275,9 +275,6 @@ const Panel = props => {
 
     // 自由容器（放置所有无需容器的资产），必选 refComponentKeys
     const freeContainer = getFreeContainer(activeAssetsKeys.components, autoComponents, componentsMap);
-    // 将自由容器作为页面布局的一个必选子容器，放在最前面
-    pageLayoutComponent.props.containers.unshift(freeContainer.props);
-    pageLayoutComponent.meta.containers.unshift(freeContainer.meta);
 
     if (config.pageLayout?.id === pageLayoutId) {
       // 若当前缓存有同样的 pageLayout ，则恢复缓存中页面布局子容器的 display
