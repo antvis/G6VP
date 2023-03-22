@@ -28,7 +28,9 @@ export const GI_SITE = {
       online = window.location.origin + window.location.pathname;
     }
 
-    return GI_SITE.IS_OFFLINE ? 'https://graphinsight-pre.alipay.com' : online;
+    return GI_SITE.IS_OFFLINE
+      ? 'https://geaflow-pre.alipay.com' //  'https://graphinsight-pre.alipay.com'
+      : online;
   },
 };
 
