@@ -14,12 +14,14 @@ export interface CyperQueryProps {
   serviceId: string;
   saveCypherTemplateServceId?: string;
   isShowPublishButton?: boolean;
+  limit: number;
 }
 
 const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   serviceId,
   isShowPublishButton,
   saveCypherTemplateServceId = 'GI/PublishTemplate',
+  limit,
 }) => {
   const { updateContext, transform, services } = useContext();
   const service = utils.getService(services, serviceId);
@@ -41,6 +43,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
     const resultData = await service({
       value: state.value,
+      limit,
     });
 
     updateContext(draft => {

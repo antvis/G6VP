@@ -9,13 +9,14 @@ export interface QueryNeighborsProps {
   contextmenu: any;
   degree: number;
   isFocus: boolean;
+  limit: number;
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
-  const { contextmenu, serviceId, degree, isFocus } = props;
+  const { contextmenu, serviceId, degree, isFocus, limit } = props;
   const currentRef = useRef({
     expandIds: [],
     expandStartId: '',
@@ -55,6 +56,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       ids,
       nodes,
       sep,
+      limit,
     });
     const newData = utils.handleExpand(data, result);
     const expandIds = result.nodes?.map(n => n.id) || [];
