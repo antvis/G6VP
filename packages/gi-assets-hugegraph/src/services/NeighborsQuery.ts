@@ -5,7 +5,7 @@ export const NeighborsQuery = {
   service: async params => {
     const { ids, sep } = params;
     const { httpServerURL } = utils.getServerEngineContext();
-    const response = await request(`${httpServerURL}/api/neo4j/neighbors`, {
+    const response = await request(`${httpServerURL}/api/hugegraph/neighbors`, {
       method: 'post',
       data: {
         ids,

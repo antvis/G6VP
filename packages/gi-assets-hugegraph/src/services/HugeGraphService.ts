@@ -12,7 +12,7 @@ export const connectHugeGraphService = async () => {
   console.log('httpServerURL', httpServerURL);
 
   try {
-    const result = await request(`${httpServerURL}/api/neo4j/connect`, {
+    const result = await request(`${httpServerURL}/api/hugegraph/connect`, {
       method: 'POST',
       data: {
         uri,
