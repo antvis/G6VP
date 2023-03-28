@@ -7,39 +7,32 @@ export interface ConnectProps {
   password: boolean;
 }
 
-export const connectHugeGraphService = async () => {
-  const { uri, username, password, httpServerURL } = utils.getServerEngineContext();
-  console.log('httpServerURL', httpServerURL);
+export const queryGraphSchema = async () => {
+  const { httpServerURL, uri, graphId } = utils.getServerEngineContext();
+  const result = await request(`${httpServerURL}/api/hugegraph/schema`, {
+    method: 'POST',
+    data: {
+      uri,
+      graphId,
+    },
+  });
 
-  try {
-    const result = await request(`${httpServerURL}/api/hugegraph/connect`, {
-      method: 'POST',
-      data: {
-        uri,
-        username,
-        password,
-        httpServerURL,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (result.success) {
-      utils.setServerEngineContext({
-        HAS_CONNECT_SUCCESS: true,
-      });
-    }
-
-    return result;
-  } catch (error) {
-    return null;
-  }
+  return result.data;
 };
 
-export const queryGraphSchema = async () => {
-  const { httpServerURL } = utils.getServerEngineContext();
-  const result = await request(`${httpServerURL}/graphs/hugegraph/schema`, {
-    method: 'GET',
+export const listGraphs = async () => {
+  const { uri, httpServerURL, username, password } = utils.getServerEngineContext();
+  const result = await request(`${httpServerURL}/api/hugegraph/graphs`, {
+    method: 'POST',
+    data: {
+      uri,
+      httpServerURL,
+      username,
+      password,
+    },
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
   });
 
   return result.data;

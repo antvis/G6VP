@@ -40,12 +40,12 @@ export default (app: Application) => {
   router.get('/api/tugraph/list', controller.tugraph.getSubGraphList);
   router.get('/api/tugraph/count', controller.tugraph.getVertexEdgeCount);
 
-  // TuGraph
-  router.post('/api/hugegraph/connect', controller.hugegraph.connect);
-  router.get('/api/hugegraph/disconnect', controller.hugegraph.disConnect);
-  router.get('/api/hugegraph/schema', controller.hugegraph.getSchema);
-  router.post('/api/hugegraph/languagequery', controller.hugegraph.queryByGraphLanguage);
+  // HugeGraph
+  router.post('/api/hugegraph/gremlin', controller.hugegraph.gremlin);
   router.post('/api/hugegraph/neighbors', controller.hugegraph.queryNeighbors);
+  router.post('/api/hugegraph/properties', controller.hugegraph.queryElementProperties);
+  router.post('/api/hugegraph/graphs', controller.hugegraph.listGraphs);
+  router.post('/api/hugegraph/schema', controller.hugegraph.getSchema);
 
   // GraphInsight website service
   // dataset 数据集

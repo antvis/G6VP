@@ -107,7 +107,7 @@ export const components = [
   {
     id: 'PropertiesPanel',
     props: {
-      serviceId: 'GI/PropertiesPanel',
+      serviceId: 'HugeGraph/PropertiesPanel',
       title: '属性面板',
       placement: 'RT',
       width: '356px',

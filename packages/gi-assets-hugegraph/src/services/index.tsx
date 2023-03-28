@@ -2,7 +2,8 @@ import ServerComponent from '../components';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
 import * as HugeGraphService from './HugeGraphService';
-import { GremlinQuery } from './GremlinQuery';
+import * as GremlinQuery from './GremlinQuery';
+import * as ElementProperties from './ElementProperties';
 
 export default {
   id: 'HugeGraph',
@@ -18,5 +19,6 @@ export default {
     ...GremlinQuery,
     ...NeighborsQuery,
     ...HugeGraphService,
+    ...ElementProperties,
   },
 };

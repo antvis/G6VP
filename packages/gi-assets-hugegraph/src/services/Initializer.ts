@@ -20,10 +20,9 @@ export const GI_SERVICE_SCHEMA = {
       nodes: [],
       edges: [],
     };
-    const serverEngineContext = utils.getServerEngineContext();
+    const { uri, graphId, httpServerURL } = utils.getServerEngineContext();
 
-    const token = serverEngineContext.uri;
-    if (!token) {
+    if (!uri) {
       // 没有登录信息，需要先登录再查询 schema
       message.error(
         `HugeGraph 数据源连接失败: 没有获取到连接 HugeGraph 数据库的连接信息，请先连接 HugeGraph 数据库再进行尝试！`,
@@ -32,9 +31,9 @@ export const GI_SERVICE_SCHEMA = {
     }
 
     try {
-      const httpServerURL = serverEngineContext.httpServerURL;
-      const result = await request(`${httpServerURL}/graphs/hugegraph/schema`, {
-        method: 'GET',
+      const result = await request(`${httpServerURL}/api/hugegraph/schema`, {
+        method: 'POST',
+        data: { graphId, uri },
       });
 
       if (result.success) {

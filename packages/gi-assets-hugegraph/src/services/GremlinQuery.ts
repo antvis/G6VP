@@ -3,21 +3,26 @@ import request from 'umi-request';
 export const GremlinQuery = {
   name: 'Gremlin 查询',
   service: async (params = {}) => {
-    const { value } = params as any;
-    const { GI_SITE_PROJECT_ID, HTTP_SERVER_URL, gremlin_endpoint } = utils.getServerEngineContext();
-    const gremlin = value.replace('g.', 'hugegraph.traversal().');
-    const response = await request(`${HTTP_SERVER_URL}/gremlin`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      data: {
-        gremlin,
-        // value,
-        // gremlinServer: gremlin_endpoint,
-        // projectId: GI_SITE_PROJECT_ID,
-      },
-    });
-    return response;
+    try {
+      const { value } = params as any;
+      const { httpServerURL, graphId, uri } = utils.getServerEngineContext();
+      console.log('hugegraphgremlin', httpServerURL, value, graphId, uri);
+      const gremlin = value.replace('g.', `${graphId}.traversal().`);
+      console.log('formatted', gremlin);
+      const response = await request(`${httpServerURL}/api/hugegraph/gremlin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        data: {
+          gremlin,
+          uri,
+        },
+      });
+      console.log('response', response);
+      return response;
+    } catch (error) {
+      return null;
+    }
   },
 };

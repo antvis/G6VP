@@ -1,11 +1,13 @@
 import { GISiteParams, GraphSchemaData, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
-import { Button, Col, Row, Statistic } from 'antd';
+import { Button, Col, Row, Form, Select, Input } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { queryGraphSchema } from '../services/HugeGraphService';
 import CollapseCard from './CollapseCard';
 import { components } from './template';
+
+const { Option } = Select;
 
 interface SchemaGraphProps {
   updateGISite?: (params: GISiteParams) => void;
@@ -13,116 +15,151 @@ interface SchemaGraphProps {
 
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const { updateGISite } = props;
+  const [form] = Form.useForm();
 
   const [state, updateState] = useImmer<{
-    schemaData: GraphSchemaData;
-
-    count: {
-      nodes: number;
-      edges: number;
+    subgraphs: {
+      [graphId: string]: any;
     };
-    defaultLabelField: string;
+    selectedSchema: any;
   }>({
-    schemaData: { nodes: [], edges: [] },
-
-    count: {
-      nodes: 0,
-      edges: 0,
+    subgraphs: {},
+    selectedSchema: {
+      nodes: [],
+      edges: [],
     },
-    defaultLabelField: 'name',
   });
-  const { schemaData, count, defaultLabelField } = state;
+  const { subgraphs = {}, selectedSchema } = state;
 
-  const queryCurrentSchema = async () => {
-    const schemaData = (await queryGraphSchema()) as GraphSchemaData;
-
+  React.useEffect(() => {
+    const context = utils.getServerEngineContext();
+    const subgraphs = context.graphs;
     updateState(draft => {
-      if (schemaData.nodes && schemaData.edges) {
-        draft.schemaData = schemaData;
+      draft.subgraphs = subgraphs;
+    });
+  }, []);
+
+  const handleSubgraphChange = graphId => {
+    updateState(draft => {
+      draft.selectedSchema = subgraphs[graphId];
+    });
+  };
+
+  const handleSubmit = () => {
+    const engineId = 'HugeGraph';
+
+    form.validateFields().then(values => {
+      const { subgraph: subgraphId, datasetName } = values;
+      const newSchemaData = {
+        ...subgraphs[subgraphId],
+        meta: {
+          defaultLabelField: 'dataType',
+        },
+      };
+      utils.setServerEngineContext({
+        graphId: subgraphId,
+        engineId,
+        schemaData: newSchemaData,
+      });
+      const engineContext = utils.getServerEngineContext();
+      if (updateGISite) {
+        updateGISite({
+          engineId,
+          schemaData: newSchemaData,
+          engineContext,
+          //@ts-ignore
+          projectConfig: {
+            //@ts-ignore
+            components,
+          },
+          name: datasetName,
+        });
       }
     });
   };
 
-  React.useEffect(() => {
-    queryCurrentSchema();
-  }, []);
-
-  const handleSubmit = () => {
-    const engineId = 'HugeGraph';
-    const newSchemaData = {
-      ...schemaData,
-      meta: {
-        defaultLabelField: defaultLabelField,
-      },
-    };
-    utils.setServerEngineContext({
-      engineId,
-      schemaData: newSchemaData,
-    });
-    const engineContext = utils.getServerEngineContext();
-    if (updateGISite) {
-      updateGISite({
-        engineId,
-        schemaData: newSchemaData,
-        engineContext,
-        //@ts-ignore
-        projectConfig: {
-          //@ts-ignore
-          components,
-        },
-      });
-    }
-  };
-
-  const defaultStyleConfig = utils.generatorStyleConfigBySchema(schemaData);
-  const schemaGraph = utils.getSchemaGraph(schemaData, defaultStyleConfig);
-  console.log('state', state, defaultStyleConfig, schemaGraph);
-  const isEmpty = schemaData.nodes.length === 0;
+  const defaultStyleConfig = utils.generatorStyleConfigBySchema(selectedSchema);
+  const schemaGraph = utils.getSchemaGraph(selectedSchema, defaultStyleConfig);
+  const isEmpty = !selectedSchema || selectedSchema.nodes.length === 0;
 
   return (
-    <CollapseCard title="图规模预览">
-      <Row>
-        <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{ border: '2px dashed rgb(22, 101, 255)' }}>
-          {isEmpty ? (
-            <div
-              style={{
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-                height: '100%',
-                alignItems: 'center',
-              }}
-            >
-              暂无图模型
+    <CollapseCard title="选择子图">
+      <Form name="subgraphForm" form={form} layout="vertical">
+        <Row>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{ border: '2px dashed rgb(22, 101, 255)' }}>
+            {isEmpty ? (
+              <div
+                style={{
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  height: '100%',
+                  alignItems: 'center',
+                }}
+              >
+                请选择子图
+              </div>
+            ) : (
+              <Graphin
+                style={{ minHeight: '300px' }}
+                data={schemaGraph}
+                fitView
+                layout={{ type: 'graphin-force', animation: false }}
+              ></Graphin>
+            )}
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+            <div style={{ padding: '24px' }}>
+              <Form.Item
+                label="选择子图"
+                name="subgraph"
+                rules={[
+                  {
+                    required: true,
+                    message: '请选择子图!',
+                  },
+                ]}
+                style={{
+                  marginTop: 16,
+                }}
+              >
+                <Select
+                  showSearch
+                  placeholder="请选择要查询的子图"
+                  onChange={handleSubgraphChange}
+                  style={{ width: '100%' }}
+                >
+                  {Object.keys(subgraphs).map((graphId: string) => {
+                    return <Option value={graphId}>{graphId}</Option>;
+                  })}
+                </Select>
+              </Form.Item>
+              {selectedSchema ? (
+                <Form.Item
+                  label="数据名称"
+                  name="datasetName"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入数据名称!',
+                    },
+                  ]}
+                  style={{
+                    marginTop: 16,
+                  }}
+                >
+                  <Input placeholder="请为该数据集命名" />
+                </Form.Item>
+              ) : (
+                ''
+              )}
+              <Button type="primary" onClick={handleSubmit} style={{ width: '100%', marginTop: '16px' }}>
+                进入分析
+              </Button>
             </div>
-          ) : (
-            <Graphin
-              style={{ minHeight: '300px' }}
-              data={schemaGraph}
-              fitView
-              layout={{ type: 'graphin-force', animation: false }}
-            ></Graphin>
-          )}
-        </Col>
-        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-          <div style={{ padding: '24px' }}>
-            <div style={{ margin: '20px 0px' }}>
-              <Row gutter={[12, 12]}>
-                <Col span={12}>
-                  <Statistic title="节点规模" value={count.nodes} />
-                </Col>
-                <Col span={12}>
-                  <Statistic title="边规模" value={count.edges} />
-                </Col>
-              </Row>
-            </div>
-
-            <Button type="primary" onClick={handleSubmit} style={{ width: '100%' }}>
-              进入分析
-            </Button>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Form>
     </CollapseCard>
   );
 };

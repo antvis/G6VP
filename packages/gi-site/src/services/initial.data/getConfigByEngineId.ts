@@ -73,11 +73,11 @@ const Gremlin_Template = engineId => [
   },
 ];
 
-const getConfigByEngineId = (engineId, tempalte) => {
-  const { components, nodes, edges, layout, id, name } = tempalte;
+const getConfigByEngineId = (engineId, template) => {
+  const { components, nodes, edges, layout, id, name } = template;
 
   if (engineId === 'GI') {
-    return tempalte;
+    return template;
   }
   const isCypher = SUPPORT_CYPHER_ENGINE.indexOf(engineId) !== -1;
   const addComponent = isCypher ? Cypher_Template(engineId) : Gremlin_Template(engineId);
