@@ -318,7 +318,7 @@ export const components = [
     name: '邻居查询',
     props: {
       serviceId: 'HugeGraph/NeighborsQuery',
-      degree: '1',
+      degree: '3',
       isFocus: true,
     },
   },

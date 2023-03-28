@@ -86,10 +86,10 @@ const ConnectHugeGraph: React.FC<ConnectProps> = ({ updateToken, token }) => {
         <Form.Item label="URI" name="uri" rules={[{ required: true, message: '部署 HugeGraph 的服务器地址必填!' }]}>
           <Input placeholder="请输入 HugeGraph URI 服务地址" />
         </Form.Item>
-        <Form.Item label="账名" name="username" rules={[{ required: true, message: '数据库用户名必填!' }]}>
+        <Form.Item label="账名" name="username">
           <Input />
         </Form.Item>
-        <Form.Item label="密码" name="password" rules={[{ required: true, message: '数据库登录密码必填!' }]}>
+        <Form.Item label="密码" name="password">
           <Input.Password />
         </Form.Item>
         <Form.Item>
