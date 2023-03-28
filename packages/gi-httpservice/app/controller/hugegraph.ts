@@ -92,11 +92,11 @@ class HugeGraphController extends Controller {
   /**
    * 元素详情查询
    */
-  async queryElementProperties() {
+  async queryOneElementProperties() {
     const { ctx } = this;
     const params = ctx.request.body;
 
-    const result = await ctx.service.hugegraph.queryElementProperties(params);
+    const result = await ctx.service.hugegraph.queryOneElementProperties(params);
     responseData(ctx, result);
 
     if (!result || !result.data) {

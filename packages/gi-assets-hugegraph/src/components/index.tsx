@@ -12,7 +12,7 @@ export interface GraphModelProps {
 }
 const GraphScopeMode: React.FC<GraphModelProps> = ({ updateGISite }) => {
   const [state, updateState] = React.useState({
-    HAS_CONNECT_SUCCESS: utils.getServerEngineContext()?.HAS_CONNECT_SUCCESS,
+    HAS_CONNECT_SUCCESS: false,
   });
   const { HAS_CONNECT_SUCCESS } = state;
   const updateToken = () => {

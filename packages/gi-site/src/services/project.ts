@@ -50,7 +50,7 @@ export const create = async (param: any): Promise<string | undefined> => {
     gmtCreate: new Date(),
   };
   if (GI_SITE.IS_OFFLINE) {
-    GI_PROJECT_DB.setItem(projectId, payload);
+    await GI_PROJECT_DB.setItem(projectId, payload);
     return new Promise(resolve => {
       resolve(projectId);
     });

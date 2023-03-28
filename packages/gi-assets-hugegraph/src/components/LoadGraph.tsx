@@ -30,9 +30,9 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     },
   });
   const { subgraphs = {}, selectedSchema } = state;
+  const context = utils.getServerEngineContext();
 
   React.useEffect(() => {
-    const context = utils.getServerEngineContext();
     const subgraphs = context.graphs;
     updateState(draft => {
       draft.subgraphs = subgraphs;

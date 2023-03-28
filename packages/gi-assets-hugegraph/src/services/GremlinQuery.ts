@@ -6,9 +6,7 @@ export const GremlinQuery = {
     try {
       const { value } = params as any;
       const { httpServerURL, graphId, uri } = utils.getServerEngineContext();
-      console.log('hugegraphgremlin', httpServerURL, value, graphId, uri);
       const gremlin = value.replace('g.', `${graphId}.traversal().`);
-      console.log('formatted', gremlin);
       const response = await request(`${httpServerURL}/api/hugegraph/gremlin`, {
         method: 'POST',
         headers: {
@@ -17,9 +15,9 @@ export const GremlinQuery = {
         data: {
           gremlin,
           uri,
+          graphId,
         },
       });
-      console.log('response', response);
       return response;
     } catch (error) {
       return null;

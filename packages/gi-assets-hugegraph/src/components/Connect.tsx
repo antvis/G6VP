@@ -9,7 +9,7 @@ import './index.less';
 
 export interface ConnectProps {
   updateToken: () => void;
-  token: string | null;
+  token: boolean;
   updateGISite?: (params: GISiteParams) => void;
 }
 

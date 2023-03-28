@@ -5,9 +5,8 @@ import request from 'umi-request';
 export const PropertiesPanel = {
   name: '查询元素属性',
   service: async params => {
-    const { id } = params as any;
+    const { id, source, target } = params as any;
     const { httpServerURL, graphId, uri } = utils.getServerEngineContext();
-    const idArr = isString(id) ? [id] : id;
 
     try {
       const response = await request(`${httpServerURL}/api/hugegraph/properties`, {
@@ -18,7 +17,8 @@ export const PropertiesPanel = {
         data: {
           graphId,
           uri,
-          ids: idArr,
+          id,
+          itemType: source && target ? 'edge' : 'node',
         },
       });
       return response;
