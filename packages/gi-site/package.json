@@ -11,11 +11,10 @@
   "main": "dist/app.js",
   "scripts": {
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "create-offline-assets": "node scripts/pre-build.mjs && cd scripts && node create-offline-assets.mjs",
-    "build": "npm run create-offline-assets && NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "build:docker": "npm run create-offline-assets  && BUILD_MODE=docker NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build:docker": "BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/create-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
-    "start": "NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
+    "start": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",
@@ -37,6 +36,7 @@
     "@faker-js/faker": "latest",
     "@fast-csv/format": "latest",
     "@types/classnames": "^2.2.9",
+    "@types/node": "^7.0.12",
     "@types/systemjs": "latest",
     "@umijs/preset-react": "^1.8.12",
     "ahooks": "^2.10.9",

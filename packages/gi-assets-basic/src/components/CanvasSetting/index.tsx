@@ -11,6 +11,7 @@ const info: AssetInfo = {
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/aa34nmszaivikxi1',
 };
 
 export default {

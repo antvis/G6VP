@@ -10,7 +10,7 @@ import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 
-import { OFFICIAL_PACKAGES } from '../../.umirc';
+import OFFICIAL_PACKAGES from '../../scripts/deps_assets.json';
 import { IS_DEV_ENV } from './const';
 
 const { loaderCombinedAssets, getAssetPackages } = utils;

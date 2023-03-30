@@ -19,7 +19,6 @@ const ProjectTitle: React.FC<IProjectTitleProps> = props => {
       name: newTitle,
     });
   };
-  console.log('name', name);
 
   const handleKeyDown = e => {
     //禁用回车的默认事件

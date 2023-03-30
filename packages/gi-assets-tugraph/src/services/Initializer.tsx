@@ -57,7 +57,7 @@ export const GI_SERVICE_SCHEMA = {
       //   };
       // }
       if (success) {
-        return res;
+        return data;
       }
       return {
         nodes: [],

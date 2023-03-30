@@ -408,4 +408,6 @@ export type GISiteParams = Partial<{
     components: GIComponentConfig[];
     layout?: GILayoutConfig;
   };
+  /** 数据集名称 */
+  name: string;
 }>;

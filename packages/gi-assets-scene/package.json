@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-scene",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "G6VP 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -31,14 +31,14 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish  && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "3d-force-graph": "^1.70.10",
+    "3d-force-graph": "1.70.10",
     "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",
     "@turf/turf": "^6.5.0",
-    "react-spring": "^9.4.4",
-    "three": "^0.139.2"
+    "react-spring": "9.4.4",
+    "three": "0.139.2"
   },
   "devDependencies": {
     "mini-css-extract-plugin": "^2.3.0",

@@ -14,8 +14,12 @@ export const list = async (type: 'project' | 'case' | 'save'): Promise<IProject[
   if (GI_SITE.IS_OFFLINE) {
     const projects: IProject[] = [];
     await GI_PROJECT_DB.iterate((value: IProject) => {
-      if (value.type === 'project') {
-        projects.push(value);
+      const { recycleTime, type, id } = value;
+      if (type === 'project') {
+        let isExpired = false;
+        if (recycleTime) isExpired = new Date(recycleTime + 604800000).getTime() < new Date().getTime();
+        if (isExpired) removeById(String(id));
+        else projects.push(value);
       }
     });
     projects.sort((a, b) => {
@@ -108,6 +112,7 @@ export const updateById = async (id: string, params: { data?: string; [key: stri
   if (GI_SITE.IS_OFFLINE) {
     const origin: any = await GI_PROJECT_DB.getItem(id);
     GI_PROJECT_DB.setItem(id, { ...origin, ...params });
+    return true;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/project/update`, {

@@ -1,6 +1,8 @@
+import { DeploymentUnitOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Card } from 'antd';
+import { Card, Empty } from 'antd';
 import * as React from 'react';
+import SegmentedTabs from '../../components/SegmentedTabs';
 import { queryAssets } from '../../services/assets';
 import Cards from './Cards';
 import './index.less';
@@ -12,7 +14,6 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     isReady: false,
     lists: [] as any[],
     serverId: 'GI',
-
     tables: [] as { id: string; name: string; table: any[] }[],
   });
   const changeServerId = val => {
@@ -27,15 +28,12 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   React.useEffect(() => {
     queryAssets().then(res => {
       const servers = utils.getCombineServer(res.services);
-
       const tables = servers.map(server => {
-        const { id, services } = server;
+        const { id, services, name } = server;
+        console.log(server);
         const matchTableData = Object.keys(services).map(s => {
           const val = services[s];
           const { req, res, method, name } = val;
-
-          // const args = getFuncArgs(val.service);
-          // const detail = stringify(val.service);
           return {
             id: `${id}/${s}`,
             name,
@@ -76,12 +74,29 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
   return (
     <>
-      <Card title="引擎管理">
-        <Cards data={lists} changeServerId={changeServerId}></Cards>
-      </Card>
-      <Card title={`${matchServer.name}`} style={{ margin: '12px 0px' }}>
-        <ServiceTable data={matchServer.table} />
-      </Card>
+      <SegmentedTabs
+        items={[
+          {
+            key: 'relation',
+            label: '图引擎',
+            children: (
+              <>
+                <Cards data={lists} changeServerId={changeServerId}></Cards>
+                <Card title={`${matchServer.name}`} style={{ margin: '12px 0px' }}>
+                  <ServiceTable data={matchServer.table} />
+                </Card>
+              </>
+            ),
+            icon: <DeploymentUnitOutlined />,
+          },
+          {
+            key: 'location',
+            icon: <EnvironmentOutlined />,
+            label: '地理引擎',
+            children: <Empty description="正在建设中" />,
+          },
+        ]}
+      />
     </>
   );
 };

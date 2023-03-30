@@ -7,5 +7,6 @@ const info = {
   desc: '选定图模式，找到相似结构的子图',
   cover: 'http://xxxx.jpg',
   icon: 'icon-query-path',
+  docs: 'https://www.yuque.com/antv/gi/lggt0bz6w48zsd48',
 };
 export default info;

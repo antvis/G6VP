@@ -26,7 +26,7 @@ const SystemDirectConnect: React.FunctionComponent = props => {
       console.log('datasetInfoString', datasetInfoString);
       if (datasetInfoString) {
         const datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
-        const { id, name, schemaData, engineId, engineContext, owner } = datasetInfo;
+        const { id, name, schemaData, engineId, engineContext } = datasetInfo;
         const style = utils.generatorStyleConfigBySchema(schemaData);
         const { config, activeAssetsKeys } = getConfigByEngineId(engineId);
         const projectId = await ProjectServices.create({
@@ -46,7 +46,6 @@ const SystemDirectConnect: React.FunctionComponent = props => {
           id,
           engineType: 'DB_GRAPH',
           type: 'system',
-          from: 'GraphScope',
           name,
           schemaData,
           engineId,
@@ -62,7 +61,6 @@ const SystemDirectConnect: React.FunctionComponent = props => {
     (async () => {
       await autoConnect();
       const res = await DatasetServices.systemDirectConnectList();
-      console.log('res', res);
       setState({
         lists: res,
       });

@@ -6,5 +6,6 @@ const info = {
   category: 'canvas-interaction',
   type: 'GIAC',
   icon: 'icon-undo',
+  docs: 'https://www.yuque.com/antv/gi/qe8vp7n9snmv54qn',
 };
 export default info;

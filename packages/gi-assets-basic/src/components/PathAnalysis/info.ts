@@ -6,5 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',
   type: 'GIAC_CONTENT',
+  docs: 'https://www.yuque.com/antv/gi/memi2i8r5go0w9cp',
 };
 export default info;

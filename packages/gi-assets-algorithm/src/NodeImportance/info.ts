@@ -7,5 +7,6 @@ const info = {
   desc: '通过 PageRank、度中心性、属性等',
   cover: 'http://xxxx.jpg',
   icon: 'icon-rules',
+  docs: 'https://www.yuque.com/antv/gi/synavummamac5yya',
 };
 export default info;

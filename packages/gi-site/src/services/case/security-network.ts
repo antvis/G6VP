@@ -5395,7 +5395,7 @@ const project: ICase = {
   author: '刘宏达',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
-  coverImg: '/public/image/security.demo.png',
+  coverImg: `${window['GI_PUBLIC_PATH']}image/security.demo.png`,
 };
 
 export default project;

@@ -2,7 +2,7 @@ import { MoreOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Collapse } from 'antd';
 import React from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
-import { CategroyOptions } from '../../../../components/AssetsCenter/Components';
+import { CategroyOptions } from '../../../../components/AssetsCenter/constants';
 import './index.less';
 import RenderForm from './RenderForm';
 const { Panel } = Collapse;

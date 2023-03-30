@@ -34,6 +34,7 @@ const ContentContainer: React.FunctionComponent<SideTabsProps> = props => {
         const { component: Component, info } = item;
         const { id } = info;
         const itemProps = configMap[id];
+        // @ts-ignore
         return <Component key={id} {...itemProps} />;
       })}
     </>

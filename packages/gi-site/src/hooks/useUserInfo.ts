@@ -22,8 +22,12 @@ export default () => {
     // 仅针对内网用户进行用户访问记录
     try {
       const result = await getUser();
+      const VIP_ASSETS = await fetch('https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/json/assets.json').then(
+        res => res.json(),
+      );
       if (result) {
         const { assets, outUserNo } = result;
+
         //@ts-ignore
         window.Tracert.call('set', { roleId: outUserNo });
         //@ts-ignore
@@ -33,7 +37,7 @@ export default () => {
           //@ts-ignore
           window.Tracert.call('expoCheck');
         }
-        setAssetPackages(assets);
+        setAssetPackages(VIP_ASSETS); //暂时移除从user中获取资产信息
         setUserInfo(result);
         //@ts-ignore
         window.GI_USER_INFO = result;

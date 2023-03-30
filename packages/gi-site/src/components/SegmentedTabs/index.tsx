@@ -8,14 +8,15 @@ interface SegmentedTabsProps {
   queryKey?: string;
   style?: React.CSSProperties;
   extra?: ReactNode;
+  defaultActive?: string;
 }
 
 const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
-  const { items, queryKey = 'tab', style = {}, extra = <></> } = props;
+  const { items, queryKey = 'tab', style = {}, extra = <></>, defaultActive } = props;
 
   const [state, setState] = React.useState<{ active: string }>(() => {
     const { searchParams, path } = getSearchParams(window.location);
-    const active = searchParams.get(queryKey) || items[0].key;
+    const active = searchParams.get(queryKey) || defaultActive || items[0].key;
     return {
       active,
     };
@@ -44,7 +45,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
 
   return (
     <Card
-      style={{ borderRadius: '8px', height: '100%' }}
+      style={{ borderRadius: '8px', height: '100%', background: 'var(--background-color-transparent)' }}
       bodyStyle={{
         width: 'calc(100vw - 300px)',
         height: 'calc(100vh - 180px)',
@@ -52,15 +53,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
         padding: '12px 12px',
         ...style,
       }}
-      title={
-        <Segmented
-          options={options}
-          onResize={undefined}
-          onResizeCapture={undefined}
-          value={active}
-          onChange={onChange}
-        />
-      }
+      title={<Segmented options={options} value={active} onChange={onChange} />}
       extra={extra}
     >
       <div className="gi-segmented-tabs">

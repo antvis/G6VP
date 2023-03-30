@@ -6,5 +6,6 @@ const info = {
   category: 'system-interaction',
   icon: 'icon-copyright',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/rs9d20mrqor8ultw',
 };
 export default info;

@@ -8,5 +8,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   type: 'AUTO',
   services: [ASSET_ID],
+  docs: 'https://www.yuque.com/antv/gi/iv9m1b0zq76fa1sg',
 };
 export default info;

@@ -17,7 +17,14 @@ const registerMeta = context => {
       title: '顶部高度',
       'x-component': 'NumberPicker',
       'x-decorator': 'FormItem',
-      default: 300,
+      default: 251,
+    },
+    padding: {
+      type: 'string',
+      title: '内部间距',
+      'x-component': 'Input',
+      'x-decorator': 'FormItem',
+      default: '0px 0px',
     },
     sideItems: {
       title: '侧边组件',

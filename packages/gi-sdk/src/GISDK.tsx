@@ -4,8 +4,9 @@ import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
+import getComponents from './hooks/useComponents';
 import './index.less';
-import DefaultInitializer, { defaultInitializerCfg } from './Initializer';
+import { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
 import SetupUseGraphinHook from './SetupUseGraphinHook';
@@ -13,15 +14,9 @@ import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
-const DEFAULT_GICC_LAYOUT = {
-  id: 'EmptyLayout',
-  props: {},
-  component: props => <>{props.children}</>,
-};
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets, id } = props;
-  let { services: Services } = props;
+  const { children, assets, id, services } = props;
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -32,10 +27,10 @@ const GISDK = (props: Props) => {
     return id;
   }, []);
 
-  const { components: ComponentAssets, elements: ElementAssets, layouts: Layouts } = assets;
+  const { components: ComponentAssets, elements: ElementAssets, layouts: LayoutAssets } = assets;
 
   registerShapes(ElementAssets);
-  registerLayouts(Layouts);
+  registerLayouts(LayoutAssets);
 
   const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
@@ -60,7 +55,6 @@ const GISDK = (props: Props) => {
       id: 'EmptyLayout',
       props: {},
     },
-
     /** graphin */
     //@ts-ignore
     graph: null,
@@ -72,6 +66,7 @@ const GISDK = (props: Props) => {
     layoutInstance: null,
     stopForceSimulation: () => {},
     restartForceSimulation: () => {},
+    GISDK_ID,
   });
 
   React.useEffect(() => {
@@ -83,7 +78,6 @@ const GISDK = (props: Props) => {
   const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
-  /** 节点和边的配置发生改变 */
   React.useEffect(() => {
     let GICC_LAYOUT = { id: 'EmptyLayout', props: {} };
     let INITIALIZER;
@@ -92,41 +86,15 @@ const GISDK = (props: Props) => {
         GICC_LAYOUT = item;
         return;
       }
-      if (item.type === 'INITIALIZER') {
-        INITIALIZER = item || defaultInitializerCfg;
+      if (item.type === 'INITIALIZER' || item.props.GI_INITIALIZER) {
+        INITIALIZER = item;
         return;
       }
     });
 
-    const filteredComponents = componentsCfg.filter(c => {
-      /** 过滤初始化组件 */
-      return !(c.props && c.props.GI_INITIALIZER);
-    });
-
-    /** 容器组件 */
-    const containerComponents = filteredComponents.filter(c => {
-      return c.props && c.props.GI_CONTAINER;
-    });
-
-    /** 集成到容器组件中的原子组件 */
-    const needContainerComponentIds = containerComponents.reduce((acc: string[], curr) => {
-      const { GI_CONTAINER } = curr.props;
-      return [...acc, ...(GI_CONTAINER as string[])];
-    }, []);
-    /** 最终需要渲染的组件 */
-    const finalComponents = filteredComponents.filter(c => {
-      const { id } = c;
-      return needContainerComponentIds.indexOf(id) === -1;
-    });
-    /** 初始化组件 */
-    const initializerCfg =
-      componentsCfg.find(c => {
-        return c.props && c.props.GI_INITIALIZER;
-      }) || defaultInitializerCfg;
-
     updateState(draft => {
       draft.config.components = componentsCfg;
-      draft.components = finalComponents;
+      draft.components = componentsCfg;
       //@ts-ignore
       draft.initializer = INITIALIZER;
       draft.layoutCache = true;
@@ -139,11 +107,8 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
-    // const layout = assets.layouts[layoutCfg.id] || assets.layouts['GraphinForce'];
-
     // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
-
     //@ts-ignore
     let otherOptions = {};
     if (options && options.defSpringLenCfg) {
@@ -152,7 +117,6 @@ const GISDK = (props: Props) => {
         defSpringLen: utils.getDefSpringLenFunction(options.defSpringLenCfg),
       };
     }
-
     // 资金力导布局定制
     if (layoutCfg.id === 'FundForce') {
       otherOptions = {
@@ -162,7 +126,6 @@ const GISDK = (props: Props) => {
 
     updateState(draft => {
       draft.layout = {
-        // type: type === 'graphin-force' ? 'force2' : type,
         type,
         ...options,
         ...otherOptions,
@@ -187,11 +150,12 @@ const GISDK = (props: Props) => {
     const transform = (data, reset?: boolean) => {
       const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
       const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
-      const { combos } = data;
+      const { combos, tableResult } = data;
       return {
         nodes,
         edges,
         combos,
+        tableResult,
       };
     };
 
@@ -233,14 +197,15 @@ const GISDK = (props: Props) => {
   const ContextValue = {
     ...state,
     GISDK_ID,
-    services: Services,
+    services,
     assets,
     sourceDataMap,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
-        draft.data = transform(res);
-        draft.source = transform(res);
+        const newData = transform(res);
+        draft.data = newData;
+        draft.source = newData;
         draft.layoutCache = false;
       });
     },
@@ -252,89 +217,23 @@ const GISDK = (props: Props) => {
     },
     updateDataAndLayout: (res, lay) => {
       updateState(draft => {
-        draft.data = transform(res);
-        draft.source = transform(res);
+        const newData = transform(res);
+        draft.data = newData;
+        draft.source = newData;
         draft.layout = lay;
         draft.layoutCache = false;
       });
     },
   };
-
-  const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
-    return {
-      ...acc,
-      [curr.id]: curr,
-    };
-  }, {});
   if (!ComponentAssets) {
     return null;
   }
-  const { component: InitializerComponent } = ComponentAssets[initializer.id] || {
-    component: DefaultInitializer,
-  };
-  const { props: InitializerProps } = ComponentCfgMap[initializer.id] || {
-    props: defaultInitializerCfg.props,
-  };
 
-  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[GICC_LAYOUT.id] || {
-    component: DEFAULT_GICC_LAYOUT.component,
-  };
-  const { props: GICC_LAYOUT_PROPS } = ComponentCfgMap[GICC_LAYOUT.id] || {
-    props: DEFAULT_GICC_LAYOUT.props,
-  };
-
-  const renderComponents = () => {
-    if (!state.initialized || !state.isContextReady) {
-      return null;
-    }
-
-    return components.map(c => {
-      const { id, props: itemProps = {} } = c;
-      const matchComponent = ComponentAssets[id]; //具体组件的实现
-      if (!matchComponent) {
-        return null;
-      }
-      const { component: Component, info } = matchComponent;
-
-      /** 三类原子组件，必须在容器组件中才能渲染，因此不单独渲染 */
-      if (itemProps.GIAC_CONTENT || itemProps.GIAC_MENU || itemProps.GIAC) {
-        return null;
-      }
-      if (
-        info.type === 'GICC_LAYOUT' ||
-        info.type === 'GIAC_CONTENT' ||
-        info.type === 'GIAC' ||
-        info.type === 'GIAC_MENU'
-      ) {
-        return null;
-      }
-
-      const { GI_CONTAINER } = itemProps;
-
-      let GIProps = {};
-      if (GI_CONTAINER) {
-        GIProps = {
-          components: GI_CONTAINER.map(c => {
-            return ComponentCfgMap[c];
-          }),
-          // assets: ComponentAssets,
-        };
-      }
-
-      return (
-        <Component
-          key={id}
-          GISDK_ID={GISDK_ID}
-          assets={ComponentAssets}
-          ComponentCfgMap={ComponentCfgMap}
-          {...itemProps}
-          {...GIProps}
-        />
-      );
-    });
-  };
   const isReady = state.isContextReady && state.initialized;
+  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
+    getComponents(state, ComponentAssets);
 
+  console.log('render....', 'render....', isReady);
   const graphData = useMemo(() => {
     const nodeMap = {};
     const edgeMap = {};

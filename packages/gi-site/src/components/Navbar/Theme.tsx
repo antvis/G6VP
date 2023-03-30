@@ -6,20 +6,15 @@ import './index.less';
 interface ThemeProps {}
 
 const Theme: React.FunctionComponent<ThemeProps> = props => {
-  // const { context, updateContext } = useContext();
-  // const { changeTheme } = useTheme(context, updateContext);
-
   return (
     <Tooltip title="切换主题">
       <ThemeSwitch
         //@ts-ignore
         themeVars={ThemeVars}
         antdCssLinks={{
-          // dark: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/dark.css', //本地调试的时候：'http://127.0.0.1:5500/dark.css',
-          // light: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/light.css', //</Tooltip> 'http://127.0.0.1:5500/light.css',
-          dark: 'public/css/gi-theme-antd.dark.css',
-          light: 'public/css/gi-theme-antd.light.css',
-          ali: 'public/css/gi-theme-antd.ali.css',
+          dark: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.dark.css`,
+          light: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.light.css`,
+          ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
         }}
         // onChange={val => changeTheme(val)}
         options={[

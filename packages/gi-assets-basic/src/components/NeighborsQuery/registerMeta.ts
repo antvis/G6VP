@@ -50,5 +50,12 @@ export default context => {
       'x-component': 'Switch',
       default: true,
     },
+    limit: {
+      title: '限制数量',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      default: 100,
+    },
   };
 };

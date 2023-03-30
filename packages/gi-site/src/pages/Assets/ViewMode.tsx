@@ -19,12 +19,12 @@ const ViewMode: React.FunctionComponent<ViewModeProps> = props => {
         }}
         options={[
           {
-            value: 'card',
-            icon: <AppstoreOutlined />,
-          },
-          {
             value: 'table',
             icon: <BarsOutlined />,
+          },
+          {
+            value: 'card',
+            icon: <AppstoreOutlined />,
           },
         ]}
       />

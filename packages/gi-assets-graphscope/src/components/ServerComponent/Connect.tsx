@@ -1,13 +1,12 @@
-import { CollapseCard, GISiteParams, utils } from '@antv/gi-sdk';
+import { CollapseCard, utils } from '@antv/gi-sdk';
 import { Alert, Button, Form, Input, notification } from 'antd';
 import React, { useState } from 'react';
-import {connectGraphScopeService} from './services'
+import { connectGraphScopeService } from './services';
 
 import './index.less';
 
 export interface ConnectProps {
-  updateGISite?: (params: GISiteParams) => void;
-  updateToken: () => void;
+  updateToken: (token: string) => void;
   giSiteContext?: any;
   token: string | null;
 }
@@ -19,10 +18,10 @@ const DEFAULT_VALUE = {
   password: '',
   HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL,
   engineServerURL: '',
-  CURRENT_TUGRAPH_SUBGRAPH: 'MovieDemo1',
+  CURRENT_GRAPHSCOPE_SUBGRAPH: '',
 };
 
-const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) => {
+const Connect: React.FC<ConnectProps> = ({ updateToken, token }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +40,9 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
     }
 
     utils.setServerEngineContext(values);
+
     const result = await connectGraphScopeService();
+
     setLoading(false);
 
     if (result) {
@@ -49,7 +50,7 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
         message: '连接 GraphScope 数据源成功',
         description: '请继续选择子图，进入分析',
       });
-      updateToken();
+      updateToken(`${Math.random()}`);
     } else {
       notification.error({
         message: '连接 GraphScope 数据库失败',
@@ -87,12 +88,6 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
           </Form.Item>
           <Form.Item label="引擎地址" name="engineServerURL" rules={[{ required: true, message: '数据库地址必填!' }]}>
             <Input placeholder="请输入数据库地址，格式为 ip:port" />
-          </Form.Item>
-          <Form.Item label="账名" name="username" rules={[{ required: true, message: '数据库用户名必填!' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item label="密码" name="password" rules={[{ required: true, message: '数据库登录密码必填!' }]}>
-            <Input.Password />
           </Form.Item>
           <Form.Item>
             <Button type="primary" onClick={handleSubmitForm} loading={loading} style={{ width: '100%' }}>

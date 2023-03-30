@@ -3,6 +3,7 @@ export interface ILanguageQueryParams {
   graphName?: string;
   gremlinServer?: string;
   authorization?: string;
+  limit: number;
 }
 
 export interface INeighborsParams {
@@ -11,4 +12,5 @@ export interface INeighborsParams {
   graphName?: string;
   gremlinServer?: string;
   authorization?: string;
+  limit: number;
 }

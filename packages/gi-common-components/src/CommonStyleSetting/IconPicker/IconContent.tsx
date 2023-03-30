@@ -1,10 +1,6 @@
-import { createFromIconfontCN } from '@ant-design/icons';
-
 import { Input, Menu } from 'antd';
 import React from 'react';
-export const MyIcon = createFromIconfontCN({
-  scriptUrl: 'public/libs/font.js', // 'https://at.alicdn.com/t/font_3381398_5hpi569akv7.js', // 在 iconfont.cn 上生成
-});
+import MyIcon from '../../Icon';
 
 const { Search } = Input;
 interface IconContentProps {
@@ -133,6 +129,7 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
     <div>
       <Search placeholder="search some icons" onSearch={onSearch} style={{ width: '100%', margin: '12px 0px' }} />
       <div className="gi-icon-picker">
+        {/* @ts-ignore */}
         <Menu
           className="gi-icon-picker-menu"
           defaultSelectedKeys={['basic']}
@@ -141,6 +138,7 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
           onClick={onChangeCategory}
         >
           {category.map(c => {
+            // @ts-ignore
             return <Menu.Item key={c.id}>{c.name}</Menu.Item>;
           })}
         </Menu>

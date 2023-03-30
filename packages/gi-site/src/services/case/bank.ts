@@ -1470,7 +1470,7 @@ const project: ICase = {
   author: '山果',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
-  coverImg: '/public/image/bank.demo.png',
+  coverImg: `${window['GI_PUBLIC_PATH']}image/bank.demo.png`,
 };
 
 export default project;

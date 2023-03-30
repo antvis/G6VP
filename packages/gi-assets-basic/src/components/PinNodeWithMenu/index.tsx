@@ -11,6 +11,7 @@ const info = {
   cover: 'http://xxxx.jpg',
   icon: 'icon-pushpin',
   type: 'GIAC_MENU',
+  docs: 'https://www.yuque.com/antv/gi/qpuxagq0v56gng23',
 };
 
 export default {

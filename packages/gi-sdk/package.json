@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "G6VP 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -30,6 +30,7 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
+    "@antv/gi-common-components": "workspace:*",
     "@ant-design/icons": "^4.7.0",
     "immer": "^9.0.7",
     "size-sensor": "^1.0.1",
