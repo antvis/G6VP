@@ -13,7 +13,6 @@ export interface ConnectProps {
 }
 
 const DEFAULT_VALUE = {
-  httpServerURL: 'http://127.0.0.1:7001',
   uri: '',
   username: '',
   password: '',
@@ -34,7 +33,6 @@ const ConnectHugeGraph: React.FC<ConnectProps> = ({ updateToken, token }) => {
       setLoading(false);
     });
     if (!values) return;
-    console.log('values', values);
     utils.setServerEngineContext(values);
     const result = await listGraphs();
     setLoading(false);
@@ -80,13 +78,15 @@ const ConnectHugeGraph: React.FC<ConnectProps> = ({ updateToken, token }) => {
             message="正在连接 HugeGraph 数据库，请耐心等待……"
           />
         )}
-        <Form.Item label="服务" name="httpServerURL" rules={[{ required: true, message: '平台服务http地址必填!' }]}>
-          <Input placeholder="请输入平台http服务地址" />
-        </Form.Item>
         <Form.Item label="URI" name="uri" rules={[{ required: true, message: '部署 HugeGraph 的服务器地址必填!' }]}>
           <Input placeholder="请输入 HugeGraph URI 服务地址" />
         </Form.Item>
-
+        <Form.Item label="用户名" name="username">
+          <Input placeholder="请输入用户名（若有）" />
+        </Form.Item>
+        <Form.Item label="密码" name="password">
+          <Input placeholder="请输入密码（若有）" />
+        </Form.Item>
         <Form.Item>
           <Button type="primary" onClick={handleSubmitForm} loading={loading} style={{ width: '100%' }}>
             {submitMessage}

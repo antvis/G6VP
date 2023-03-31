@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-import { isString } from 'util';
+import { isArray, isString } from 'util';
 
 class HugeGraphService extends Service {
   /**
@@ -239,7 +239,8 @@ class HugeGraphService extends Service {
       result.data.result.data?.forEach((item, i) => {
         const properties = {};
         Object.keys(item).forEach(propertyName => {
-          properties[propertyName] = item[propertyName];
+          const value = item[propertyName];
+          properties[propertyName] = isArray(value) ? value[0] : value;
         });
         itemProperties[ids[i]] = properties;
       });

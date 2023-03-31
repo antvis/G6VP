@@ -20,7 +20,10 @@ export const GremlinQuery = {
       });
       return response;
     } catch (error) {
-      return null;
+      return {
+        success: false,
+        message: JSON.stringify(error),
+      };
     }
   },
 };
