@@ -61,6 +61,26 @@ const registerMeta = context => {
         disable: true,
       },
     },
+    multiSelectEnabled: {
+      title: '允许多选',
+      type: 'string',
+      'x-component': 'Switch',
+      'x-decorator': 'FormItem',
+      default: false,
+      'x-component-props': {
+        disable: true,
+      },
+    },
+    modifierKey: {
+      title: '多选组合键, 按下键盘输入组合键，支持Alt, Control, Shift, Meta',
+      type: 'string',
+      'x-component': 'ModifierPicker',
+      'x-decorator': 'FormItem',
+      default: 'alt',
+      'x-component-props': {
+        disable: true,
+      },
+    },
   };
 };
 
