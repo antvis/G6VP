@@ -1,7 +1,5 @@
 import { Service } from 'egg';
-import fs from 'fs';
 import { isString } from 'util';
-import { readHugeGraphConfig } from '../util';
 
 class HugeGraphService extends Service {
   /**
@@ -9,11 +7,9 @@ class HugeGraphService extends Service {
    */
   async listGraphs(params) {
     // TODO: username password 暂时没用到？
-    let { uri, httpServerURL, username, password } = params;
+    const { uri } = params;
     let result;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
       result = await this.ctx.curl(`${uri}/graphs`, {
         method: 'GET',
         data: {},
@@ -50,15 +46,6 @@ class HugeGraphService extends Service {
         };
       }
 
-      const config = {
-        uri,
-        graphId: result.data.graphs?.[0],
-        username,
-        password,
-        httpServerURL,
-      };
-      fs.writeFileSync(`${__dirname}/HUGEGRAPH_CONFIG.json`, JSON.stringify(config, null, 2), 'utf-8');
-
       return {
         success: true,
         code: 200,
@@ -78,12 +65,10 @@ class HugeGraphService extends Service {
    * 查询 HugeGraph 数据库中指定 graph 的 Schema
    */
   async getGraphSchema(params) {
-    let { graphId, uri } = params;
+    const { graphId, uri } = params;
     let result;
     let schema;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
       result = await this.ctx.curl(`${uri}/graphs/${graphId}/schema`, {
         method: 'GET',
         data: {},
@@ -116,12 +101,9 @@ class HugeGraphService extends Service {
    * 使用 gremlin 查询指定 graph 的数据
    */
   async queryByGremlin(params) {
-    let { gremlin, uri, graphId } = params;
+    const { gremlin, uri, graphId } = params;
     let result;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
-      if (!graphId) graphId = cachedConfig.graphId;
       result = await this.ctx.curl(`${uri}/gremlin?gremlin=${gremlin}`, {
         method: 'GET',
         data: {},
@@ -157,14 +139,11 @@ class HugeGraphService extends Service {
    * @param params
    */
   async queryNeighbors(params, propsResultData: any = undefined) {
-    let { ids, sep, uri, graphId } = params;
+    const { ids, sep, uri, graphId } = params;
     let success = false;
     let result;
     let resultData = propsResultData || { nodes: [], edges: [] };
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
-      if (!graphId) graphId = cachedConfig.graphId;
       const otherEnds = new Set();
       const nodePromises = ids.map(async id => {
         const res = await this.queryByGremlin({
@@ -238,13 +217,11 @@ class HugeGraphService extends Service {
    * @param params
    */
   async queryElementProperties(params) {
-    let { ids, graphId, uri, itemType = 'node' } = params;
+    const { ids, graphId, uri, itemType = 'node' } = params;
     const command = itemType === 'node' ? 'V' : 'E';
     const gremlin = `${graphId}.traversal().${command}("${ids.join('","')}").valueMap()`;
     let result;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
       result = await this.ctx.curl(`${uri}/gremlin?gremlin=${gremlin}`, {
         method: 'GET',
         data: {},
@@ -296,11 +273,8 @@ class HugeGraphService extends Service {
   }
 
   async queryNodes(params) {
-    let { ids, uri, graphId } = params;
+    const { ids, uri, graphId } = params;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
-      if (!graphId) graphId = cachedConfig.graphId;
       const nodes: any = [];
       let success = false;
       const promises = ids.map(async id => {
@@ -337,11 +311,8 @@ class HugeGraphService extends Service {
     }
   }
   async queryEdges(params) {
-    let { ids, uri, graphId } = params;
+    const { ids, uri, graphId } = params;
     try {
-      const cachedConfig = readHugeGraphConfig();
-      if (!uri) uri = cachedConfig.uri;
-      if (!graphId) graphId = cachedConfig.graphId;
       const edges: any = [];
       let success = false;
       const promises = ids.map(async id => {
@@ -475,7 +446,7 @@ class HugeGraphService extends Service {
 
       nodes = vertices
         ?.map(vertex => {
-          let node = vertex;
+          const node = vertex;
           if (isString(vertex)) return queryNodes.find((n: any) => n.id === vertex);
           return this.formatNode(node);
         })
@@ -495,7 +466,7 @@ class HugeGraphService extends Service {
       edges =
         propEdges
           ?.map(e => {
-            let edge = e;
+            const edge = e;
             if (isString(edge)) return queryEdges.find((e: any) => e.id === edge);
             return this.formatEdge(edge);
           })
