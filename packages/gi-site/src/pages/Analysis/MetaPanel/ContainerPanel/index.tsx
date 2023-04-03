@@ -25,6 +25,7 @@ const ContainerPanel = props => {
     handleComplete,
     defaultExpandId,
     updateContainerSubAssets,
+    collapse,
   } = props;
   const [state, setState] = useImmer<{
     selectedContainers: any[];
@@ -41,6 +42,10 @@ const ContainerPanel = props => {
   });
   const { activeAssetsKeys } = context;
   const { selectedContainers, focusingContainer, containerAssetsMap, focusingContainerAsset } = state;
+
+  React.useEffect(() => {
+    if (collapse) handleFocusAssetsSelector();
+  }, [collapse]);
 
   /**
    * 当活跃的资产变更时，缓存到 ref
