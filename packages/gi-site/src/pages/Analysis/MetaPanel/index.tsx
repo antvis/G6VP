@@ -39,7 +39,7 @@ const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
 }, {});
 
 const MetaPanel = props => {
-  const { value, config, setPanelWidth } = props;
+  const { value, config, setPanelWidth, collapse } = props;
   const { updateContext, context } = useContext();
 
   const [state, setState] = useImmer({
@@ -76,6 +76,7 @@ const MetaPanel = props => {
           })
         }
         setPanelWidth={setPanelWidth}
+        collapse={collapse}
       />
     </div>
   );

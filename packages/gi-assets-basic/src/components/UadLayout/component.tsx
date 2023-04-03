@@ -68,7 +68,7 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
       <div style={{ height: `${height}px`, borderBottom: 'var(--primary-border)', padding }}>
         {QueryContent.map(item => item.children)}
       </div>
-      <div style={{ width: '100%', height: `calc(100% - ${height}px` }}>
+      <div className="gi-uad-layout-canvas-wrapper" style={{ height: `calc(100% - ${height + 16}px` }}>
         <Tabs
           tabBarStyle={{ marginRight: ' -12px' }}
           activeKey={state.activeKey}
