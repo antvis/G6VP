@@ -250,6 +250,7 @@ const Analysis = props => {
               services={state.services}
               layouts={activeAssetsInformation!.layouts}
               setPanelWidth={setPanelWidth}
+              collapse={collapse}
             />
           </div>
           <div
