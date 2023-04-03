@@ -8,7 +8,7 @@ import { ILayoutOption } from './typing';
  * @param targetNodes 目标节点
  * @returns 生成的子图
  */
-export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string }[]) => {
+export const cropGraphByNodes: any = (graphData: GraphData, targetNodes: { id: string }[]) => {
   const { edges, nodes } = graphData;
   const ids = targetNodes.map(node => node.id);
   const newEdges = edges!.filter(edge => {

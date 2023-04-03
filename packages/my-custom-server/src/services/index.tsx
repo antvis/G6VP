@@ -10,4 +10,4 @@ export default {
   services: {
     ...Initializer,
   },
-};
+} as any;

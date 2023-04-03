@@ -8,4 +8,4 @@ export default {
   registerMeta,
   mockServices,
   info,
-}
+} as any

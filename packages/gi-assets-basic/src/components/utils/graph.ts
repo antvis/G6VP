@@ -48,4 +48,4 @@ const scaleNodes = (graphData: GraphinData, value: number = 600) => {
 
 export default {
   scaleNodes,
-};
+} as any;                                                                                                                      

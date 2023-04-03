@@ -6,4 +6,4 @@ export default {
     ...csvUtils,
     ...hullUtils,
     ...graphUtils,
-}
+} as any

@@ -19,4 +19,4 @@ export default {
     ...NeighborsQuery,
     ...Neo4jService,
   },
-};
+} as any;

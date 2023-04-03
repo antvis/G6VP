@@ -5,7 +5,7 @@ import NodesClustering from './NodesClustering';
 import NodesSimilarity from './NodesSimilarity';
 import PatternMatch from './PatternMatch';
 
-const components = {
+const components:any = {
   NodesClustering,
   NodesSimilarity,
   CommunityDetection,

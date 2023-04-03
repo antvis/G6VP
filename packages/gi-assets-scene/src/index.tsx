@@ -1,6 +1,6 @@
 import LargeGraph from './LargeGraph';
 import MapMode from './MapMode';
-const components = {
+const components:any = {
   MapMode,
   LargeGraph,
 };
