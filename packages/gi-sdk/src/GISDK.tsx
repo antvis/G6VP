@@ -286,7 +286,7 @@ const GISDK = (props: Props) => {
             enabledStack={true}
             theme={theme}
             layoutCache={state.layoutCache}
-            style={{ borderRadius: '8px' }}
+            style={{ borderRadius: '8px', overflow: 'hidden' }}
           >
             <>
               {isReady && <SizeSensor />}
