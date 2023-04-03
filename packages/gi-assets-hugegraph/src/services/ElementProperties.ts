@@ -1,5 +1,4 @@
 import { utils } from '@antv/gi-sdk';
-import { isString } from '@antv/util';
 import request from 'umi-request';
 
 export const PropertiesPanel = {
@@ -21,7 +20,7 @@ export const PropertiesPanel = {
           itemType: source && target ? 'edge' : 'node',
         },
       });
-      return response;
+      return response.data;
     } catch (error) {
       return null;
     }
