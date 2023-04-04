@@ -1,0 +1,56 @@
+{
+  "name": "@antv/gi-assets-galaxybase",
+  "version": "1.0.0",
+  "description": "Galaxybase 团队的图分析资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist",
+    "es"
+  ],
+  "scripts": {
+    "build": "npm run clean && father build & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-galaxybase",
+    "build:umd:watch": "node ./node_modules/webpack/bin/webpack.js  --mode production  -c ./webpack.config.js --env watch=true",
+    "clean": "rimraf es esm lib dist",
+    "dev": "umi dev",
+    "docs": "dumi dev",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "remove:antd": "rm -rf ./node_modules/antd",
+    "start": "npm run clean && father build --watch",
+    "test": "jest",
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
+  },
+  "resolutions": {
+    "antd": "4.x"
+  },
+  "dependencies": {
+    "@antv/gi-sdk": "workspace:*",
+    "@ant-design/icons": "^4.6.2",
+    "@antv/graphin": "2.x",
+    "@antv/graphin-icons": "^1.0.0",
+    "antd": "4.x",
+    "codemirror": "^5.25.0",
+    "monaco-editor": "^0.34.0",
+    "react": "17.x",
+    "react-monaco-editor": "^0.48.0",
+    "umi-request": "^1.4.0",
+    "use-immer": "^0.7.0"
+  },
+  "devDependencies": {
+    "dumi": "^1.1.38",
+    "father": "^2.30.6",
+    "mini-css-extract-plugin": "^2.3.0",
+    "rimraf": "^3.0.2",
+    "umi": "^3.5.20",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "peerDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

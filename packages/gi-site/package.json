@@ -30,6 +30,7 @@
     "@antv/gi-assets-neo4j": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-assets-tugraph": "workspace:*",
+    "@antv/gi-assets-galaxybase": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
     "@antv/gi-theme-antd": "workspace:*",
@@ -65,7 +66,8 @@
   "devDependencies": {
     "fs-extra": "^10.1.0",
     "gh-pages": "latest",
-    "perf_hooks": "^0.0.1"
+    "perf_hooks": "^0.0.1",
+    "cross-env": "7.0.3"
   },
   "peerDependencies": {
     "@antv/graphin": "2.x",

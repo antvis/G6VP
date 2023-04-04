@@ -16,6 +16,7 @@
     "gi-assets-graphscope": "cd packages/gi-assets-graphscope && npm run build:es",
     "gi-assets-neo4j": "cd packages/gi-assets-neo4j && npm run build:es",
     "gi-assets-tugraph": "cd packages/gi-assets-tugraph && npm run build:es",
+    "gi-assets-galaxybase": "cd packages/gi-assets-galaxybase && npm run build:es",
     "gi-theme-antd": "cd packages/gi-theme-antd && npm run build:es",
     "build": "npm run build:site && npm run move:dist",
     "build:assets": "cd packages/gi-assets-basic && NODE_OPTIONS=--max_old_space_size=2048 npm run build",

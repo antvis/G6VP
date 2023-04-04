@@ -9,6 +9,7 @@ import fs from 'fs';
 import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json' assert { type: 'json' };
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
+import GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase/package.json' assert { type: 'json' };
 
 import * as antd from 'antd';
 import path from 'path';
@@ -114,6 +115,10 @@ const assetPackage = [
   {
     name: GI_ASSETS_TUGRAPH.name,
     version: GI_ASSETS_TUGRAPH.version,
+  },
+  {
+    name: GI_ASSETS_GALAXYBASE.name,
+    version: GI_ASSETS_GALAXYBASE.version,
   },
 ];
 
