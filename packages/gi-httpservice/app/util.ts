@@ -175,3 +175,11 @@ export const readNeo4jConfig = () => {
   const data = fs.readFileSync(`${__dirname}/service/Neo4j_CONFIG.json`);
   return JSON.parse(data.toString());
 };
+
+/**
+ * 读取 HugeGraph 配置文件
+ */
+export const readHugeGraphConfig = () => {
+  const data = fs.readFileSync(`${__dirname}/service/HUGEGRAPH_CONFIG.json`);
+  return JSON.parse(data.toString());
+};

@@ -14,13 +14,13 @@ interface ThemeVars {
 const THEME_VARS = {
   light: {
     id: 'light',
-    name: '科技蓝',
+    name: '清新蓝',
     textColor: '#000',
     backgroundColor: '#fff',
   },
   ali: {
     id: 'ali',
-    name: '阿里橙',
+    name: '暖阳橙',
     textColor: '#fff',
     backgroundColor: '#1f1f1f',
   },
@@ -90,14 +90,14 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(lightConfig),
           nodesConfig: lightConfig.nodes,
           edgesConfig: lightConfig.edges,
-          name: '科技蓝',
+          name: '清新蓝',
           id: 'light',
         };
         const aliTheme = {
           canvasConfig: getCanvasStyle(aliConfig),
           nodesConfig: lightConfig.nodes,
           edgesConfig: lightConfig.edges,
-          name: '阿里橙',
+          name: '暖阳橙',
           id: 'ali',
         };
         const darkTheme = {
