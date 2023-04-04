@@ -31,7 +31,7 @@ const GraphScopeMode: React.FC<GraphModelProps> = ({ updateGISite }) => {
         title="HUGEGRAPH DATABASE"
         desc="
          HugeGraph 是一款易用、高效、通用的图数据库。实现了 Apache TinkerPop3 框架、兼容 Gremlin 查询语言。"
-        docs="https://www.yuque.com/antv/gi/otnlbq2dc9q1f8gt"
+        docs="https://www.yuque.com/antv/gi/diprhupwqwtcno8u"
       />
       <Connect updateToken={updateToken} token={HAS_CONNECT_SUCCESS} />
       {HAS_CONNECT_SUCCESS && <LoadGraph updateGISite={updateGISite} />}
