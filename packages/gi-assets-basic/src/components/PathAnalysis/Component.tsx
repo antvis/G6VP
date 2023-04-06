@@ -9,8 +9,7 @@ import './index.less';
 import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
-
-const { findAllPath } = utils;
+import { findShortestPath } from '@antv/algorithm';
 
 const { Panel } = Collapse;
 
@@ -23,7 +22,6 @@ enableMapSet();
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel } = props;
   const { data: graphData, graph, sourceDataMap } = useContext();
-  //console.log(graphData, '@graphData')
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -67,8 +65,8 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     form.validateFields().then(values => {
       cancelHighlight();
       const { source, target, direction = true } = values;
-      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, direction);
-      const highlightPath = new Set(allNodePath.map((_, index) => index));
+      const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
+      const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;

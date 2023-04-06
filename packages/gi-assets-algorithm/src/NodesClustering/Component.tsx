@@ -2,14 +2,13 @@ import { ReloadOutlined } from '@ant-design/icons';
 import { kMeans } from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
-import { Button, Empty, InputNumber, Radio, Select, Spin } from 'antd';
+import { Button, Empty, InputNumber, Row, Col, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClustersTable from '../ClusterTable';
-import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
 
-const { Option } = Select;
+import './index.less';
 
 export enum NodesClusteringAlgorithm {
   KMeans = 'k-means',
@@ -43,12 +42,21 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     options: { preset: 'concentric' },
   });
 
-  const getInitData = () => ({
-    nodes: cloneDeep(graph.getNodes()).map(node => node.getModel()),
-    edges: cloneDeep(graph.getEdges()).map(edge => edge.getModel()),
-  });
+  const getInitData = () => {
+    if (!graph || graph.destroyed) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+    return {
+      nodes: cloneDeep(graph.getNodes()).map(node => node.getModel()),
+      edges: cloneDeep(graph.getEdges()).map(edge => edge.getModel()),
+    };
+  };
 
   useEffect(() => {
+    if (!graph || graph.destroyed) return;
     setInitData({
       //@ts-ignore
       nodes: cloneDeep(graph.getNodes()).map(node => node.getModel()),
@@ -62,44 +70,19 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
         };
       }),
     });
-  }, [data]);
-
-  const nodesClusteringAlgoSelections = [
-    {
-      name: NodesClusteringAlgorithm.KMeans,
-      content: (
-        <div className="nodes-clustering-algo-body">
-          <span>
-            <FormattedMessage id="itelligent-analysis.nodes-clustering.k-means.set-k" />
-          </span>
-          <InputNumber
-            min={1}
-            value={clusterK}
-            style={{ margin: '10px 20px' }}
-            onChange={value => setClusterK(value)}
-          />
-          <div>
-            <span>
-              <FormattedMessage id="itelligent-analysis.nodes-clustering.k-means.set-distance-type" />
-            </span>
-            <Select defaultValue={distanceType} style={{ width: 180 }} onChange={value => setDistanceType(value)}>
-              <Option value={DistanceType.EuclideanDistance}>
-                <FormattedMessage id="itelligent-analysis.nodes-clustering.k-means.distance-type.euclideanDistance" />
-              </Option>
-            </Select>
-          </div>
-        </div>
-      ),
-    },
-  ];
+  }, [data, graph]);
 
   const formatOriginData = ({ nodes = [], edges = [] }: GraphinData) => {
     return {
-      nodes: nodes.map(node => ({
-        id: node.id,
-        label: node.label || node.data.label || node.data.name,
-        properties: node.data.properties,
-      })),
+      nodes: nodes.map(node => {
+        const properties = Object.assign({}, node.data, node.data.properties);
+        delete properties.id;
+        return {
+          id: node.id,
+          label: node.label || node.data.label || node.data.name,
+          properties,
+        };
+      }),
       edges: edges.map(edge => ({
         ...edge,
         id: edge.id || edge.data.id,
@@ -107,17 +90,23 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     };
   };
 
-  const transDataWithCombo = (graphData, formatData, clusters) => {
+  const transDataWithCombo = (graphData, clusters) => {
+    const comboNodeMap = {};
+    clusters.forEach((cluster, index) => {
+      cluster.forEach(node => {
+        comboNodeMap[node.id] = `gi-kmeans-combo-${String(index)}`;
+      });
+    });
     return {
       nodes: graphData?.nodes.map(node => ({
         ...node,
-        comboId: formatData.nodes.find(item => item.id === node.id)?.clusterId,
+        comboId: comboNodeMap[node.id],
         x: undefined,
         y: undefined,
       })),
       edges: graphData?.edges,
       combos: clusters.map((cluster, index) => ({
-        id: String(index),
+        id: `gi-kmeans-combo-${String(index)}`,
         label: `${formatMessage({ id: 'category' })}${index}`,
       })),
     };
@@ -145,7 +134,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
             distanceType,
           );
           setResData(formatData);
-          const newData = transDataWithCombo(data, formatData, clusters);
+          const newData = transDataWithCombo(data, clusters);
           setPrevData(newData);
           updateContext(draft => {
             draft.data = newData;
@@ -219,13 +208,6 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     setFocusNodeId(nodeId);
   };
 
-  const changeAlgo = e => {
-    setResData(null);
-    setNodeClusteringAlgo(e.target.value);
-    setLoading(false);
-    setHasAnalysis(false);
-  };
-
   const reset = () => {
     setResData({ nodes: [], edges: [] });
     setNodeClusteringAlgo(NodesClusteringAlgorithm.KMeans);
@@ -250,7 +232,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     }
     // @ts-ignore
     setPrevData(cloneDeep(data));
-  }, [data]);
+  }, [data, graph]);
 
   useEffect(() => {
     //@ts-ignore
@@ -262,30 +244,33 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   return (
     <div>
       <div className="nodes-clustering-wrapper">
-        <div className="top-info">
-          <p className="nodes-clustering-title">
-            <FormattedMessage id={`itelligent-analysis.select-algo`} />
-          </p>
-          <ReloadOutlined onClick={reset} />
-        </div>
-
-        <Radio.Group onChange={changeAlgo} value={nodeClusteringAlgo}>
-          {nodesClusteringAlgoSelections.map(selection => (
-            <div key={selection.name}>
-              <Radio value={selection.name} className="nodes-clustering-algo-radio">
-                <div className="nodes-clustering-algo-title">
-                  <span className="nodes-clustering-algo-title-name">
-                    <FormattedMessage id={`itelligent-analysis.nodes-clustering.${selection.name}`} />
-                  </span>
-                  <span className="nodes-clustering-algo-title-tip">
-                    <FormattedMessage id={`itelligent-analysis.nodes-clustering.${selection.name}-tip`} />
-                  </span>
-                </div>
-              </Radio>
-              {selection.content}
+        <Row justify="space-between">
+          <Col span={21}>
+            <div className="nodes-clustering-algo-title">
+              <h4 className="nodes-clustering-algo-title-name">
+                <FormattedMessage id={`itelligent-analysis.nodes-clustering.${NodesClusteringAlgorithm.KMeans}`} />
+              </h4>
+              <div className="nodes-clustering-algo-title-tip">
+                <FormattedMessage id={`itelligent-analysis.nodes-clustering.${NodesClusteringAlgorithm.KMeans}-tip`} />
+              </div>
             </div>
-          ))}
-        </Radio.Group>
+          </Col>
+          <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
+            <ReloadOutlined onClick={reset} />
+          </Col>
+        </Row>
+
+        <div className="nodes-clustering-algo-body">
+          <span>
+            <FormattedMessage id="itelligent-analysis.nodes-clustering.k-means.set-k" />
+          </span>
+          <InputNumber
+            min={1}
+            value={clusterK}
+            style={{ margin: '10px 20px' }}
+            onChange={value => setClusterK(value)}
+          />
+        </div>
 
         <Button type="primary" style={{ width: '100%', marginTop: '12px' }} loading={loading} onClick={onAnalyse}>
           <FormattedMessage id="analyse" />
