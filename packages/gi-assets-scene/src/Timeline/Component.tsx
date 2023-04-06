@@ -47,7 +47,6 @@ const Timeline: React.FunctionComponent<Props> = props => {
   const { nodes, links } = React.useMemo(() => {
     return transformer(source.edges, dateKey);
   }, [dateKey]);
-  console.log(nodes, links, dateKey, source);
 
   return (
     <div>
