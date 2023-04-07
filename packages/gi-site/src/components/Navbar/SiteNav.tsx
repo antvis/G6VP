@@ -74,7 +74,9 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
         <Popover
           title="给个鼓励，加个⭐️吧！"
           open={githubPopVisible}
-          placement="bottomLeft"
+          placement="bottomRight"
+          getPopupContainer={node => node}
+          overlayStyle={{ marginLeft: '20px' }}
           content={
             <div style={{ textAlign: 'center' }}>
               <Button size="small" onClick={handleCloseGithubPopover}>
@@ -86,7 +88,7 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
             </div>
           }
         >
-          <span className="gi-header-github-icon" style={{ marginLeft: '4px' }}>
+          <span className="gi-header-github-icon" style={{ marginLeft: '4px', width: '32px' }}>
             <a href="http://github.com/antvis/g6vp" target="_blank" rel="noreferrer">
               <GithubOutlined />
             </a>
