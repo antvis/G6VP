@@ -107,8 +107,10 @@ const GISDK = (props: Props) => {
     updateState(draft => {
       draft.config.components = componentsCfg;
       draft.components = componentsCfg;
-      //@ts-ignore
-      draft.initializer = INITIALIZER;
+      if (INITIALIZER.id !== draft.initializer?.id) {
+        //@ts-ignore
+        draft.initializer = INITIALIZER;
+      }
       draft.layoutCache = true;
       //@ts-ignore
       draft.GICC_LAYOUT = GICC_LAYOUT;

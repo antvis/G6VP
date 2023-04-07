@@ -200,7 +200,6 @@ const Analysis = props => {
           draft.config.components = configComponents; //更新 config.components
           draft.config.layout = layoutConfig; //更新 config.layout
           draft.activeAssets = activeAssets; //更新活跃资产
-          // draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
           draft.activeAssetsInformation = activeAssetsInformation;
         });
       },

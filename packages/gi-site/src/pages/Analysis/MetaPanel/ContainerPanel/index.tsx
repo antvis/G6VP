@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import AssetsCenter from './AssetsCenter';
 import RenderForm from './RenderForm';
-import { isArray } from '@antv/util';
+import { clone, isArray } from '@antv/util';
 import { AssetInfo } from '../../typing';
 import './index.less';
 
@@ -101,7 +101,7 @@ const ContainerPanel = props => {
     // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
     updatePageLayout(propsPageLayout => {
       propsPageLayout.props.containers.forEach(container => {
-        if (selectedList.includes(container.id)) container.display = true;
+        container.display = selectedList.includes(container.id);
       });
     });
     setState(draft => {
@@ -127,10 +127,12 @@ const ContainerPanel = props => {
     activeComponentKeys.add('Initializer');
     if (pageLayout) activeComponentKeys.add(pageLayout.id);
     refComponentKeys = Array.from(activeComponentKeys);
-    // 设置激活资产列表
-    updateContext(draft => {
-      draft.activeAssetsKeys.components = refComponentKeys;
-    });
+    if (JSON.stringify(refComponentKeys.sort()) !== JSON.stringify(clone(context.activeAssetsKeys.components).sort())) {
+      // 设置激活资产列表
+      updateContext(draft => {
+        draft.activeAssetsKeys.components = refComponentKeys;
+      });
+    }
     handleFocusAssetsSelector();
   };
 

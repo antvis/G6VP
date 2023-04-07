@@ -88,11 +88,21 @@ const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeC
       props[key] = configuredContainer ? configuredContainer[key] : others[key].default;
     }
   });
-  pageLayout.props.containers.push({
+  const containerProps = {
     id,
     ...props,
     display: required,
+  };
+  let foundInPageLayoutProps = false;
+  pageLayout.props.containers.forEach((con, i) => {
+    if (con.id === id) {
+      pageLayout.props.containers[i] = containerProps;
+      foundInPageLayoutProps = true;
+    }
   });
+  if (!foundInPageLayoutProps) {
+    pageLayout.props.containers.push(containerProps);
+  }
   return {
     id,
     name,
@@ -251,9 +261,21 @@ const Panel = props => {
   }, [containerComponents, layoutComponents]);
 
   useEffect(() => {
+    if (!pageLayout) return;
     // 将布局容器缓存到全局
     updateContext(draft => {
       draft.config.pageLayout = pageLayout;
+      const pageLayoutContainers = pageLayout.props.containers;
+      draft.config.components.forEach(item => {
+        if (item.id === pageLayout.id) {
+          item.props.containers.forEach((contextLayoutContainer, i) => {
+            const container = pageLayoutContainers.find(con => con.id === contextLayoutContainer.id);
+            if (container) {
+              item.props.containers[i] = container;
+            }
+          });
+        }
+      });
     });
   }, [pageLayout]);
 
