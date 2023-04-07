@@ -77,7 +77,23 @@ const getConfigByEngineId = (engineId, template) => {
   const { components, nodes, edges, layout, id, name } = template;
 
   if (engineId === 'GI') {
-    return template;
+    // 从页面布局的子容器中解构出默认的填充原子资产，放入 activeAssetsKeys
+    const { activeAssetsKeys = {} } = template;
+    const activeAssetsComponentKeySet = new Set<string>(activeAssetsKeys.components || []);
+    components.forEach(component => {
+      if (component.props?.containers) {
+        component.props?.containers.forEach(container => {
+          container.GI_CONTAINER?.forEach(assetId => activeAssetsComponentKeySet.add(assetId));
+        });
+      }
+    });
+    return {
+      ...template,
+      activeAssetsKeys: {
+        ...activeAssetsKeys,
+        components: Array.from(activeAssetsComponentKeySet),
+      },
+    };
   }
   const isCypher = SUPPORT_CYPHER_ENGINE.indexOf(engineId) !== -1;
   const addComponent = isCypher ? Cypher_Template(engineId) : Gremlin_Template(engineId);
@@ -86,11 +102,24 @@ const getConfigByEngineId = (engineId, template) => {
   //@TODO: 之后增加container，统一处理这段逻辑
   componentConfig.forEach(item => {
     if (item.id === 'GrailLayout') {
-      item.props.GI_CONTAINER_RIGHT = ['FilterPanel', ...addComponentId];
+      item.props.containers = [
+        {
+          id: 'GI_CONTAINER_RIGHT',
+          GI_CONTAINER: ['FilterPanel', ...addComponentId],
+        },
+      ];
     }
     if (item.id === 'UadLayout') {
-      item.props.topItems = isCypher ? ['CypherQuery'] : ['GremlinQuery'];
-      item.props.sideItems = ['JSONMode'];
+      item.props.containers = [
+        {
+          id: 'GI_CONTAINER_TOP',
+          GI_CONTAINER: isCypher ? ['CypherQuery'] : ['GremlinQuery'],
+        },
+        {
+          id: 'GI_CONTAINER_SIDE',
+          GI_CONTAINER: ['JSONMode'],
+        },
+      ];
     }
   });
 

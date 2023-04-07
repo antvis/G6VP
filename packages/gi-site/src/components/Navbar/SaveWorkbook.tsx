@@ -41,16 +41,12 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       }
     } else {
       // const data = graphRef.current && graphRef.current.save();
+      const { id, name, type, props } = pageLayout;
       const result = await ProjectServices.updateById(workbookId, {
         activeAssetsKeys,
         projectConfig: {
           ...otherConfig,
-          pageLayout: pageLayout
-            ? {
-                id: pageLayout.id,
-                info: pageLayout.info,
-              }
-            : undefined,
+          pageLayout: { id, name, type, props },
         },
       });
       if (result) {

@@ -9,6 +9,9 @@ import './index.less';
 
 let refComponentKeys: string[] = [];
 
+const getOriginContainerId = (prefixedId, pageLayout) => prefixedId.replace(`_${pageLayout.id}-`, '');
+const getPrefixedContainerId = (id, pageLayout) => `_${pageLayout.id}-${id}`;
+
 /** 容器配置面板 */
 const ContainerPanel = props => {
   const {
@@ -72,7 +75,7 @@ const ContainerPanel = props => {
       });
 
       // 选中：必选的子容器 + 当前活跃的所有容器 + 页面布局
-      handleContainerChange([...requiredIds, ...currentActiveAssetKeys, pageLayout.id]);
+      handleContainerChange([...requiredIds, ...currentActiveAssetKeys, pageLayout.id], requiredIds);
     }
   }, [pageLayout?.id]);
 
@@ -81,29 +84,22 @@ const ContainerPanel = props => {
    * @param selectedList 需要选中的所有容器 id 列表
    * @canditates 候选的容器，可传入以防止调用该函数时 state 中的候选容器更新尚未生效
    */
-  const handleContainerChange = (selectedList: string[]) => {
+  const handleContainerChange = (selectedList: string[], pageLayoutSubContainerIds: string[] = []) => {
     const containers = candidateContainers.filter(container => selectedList.includes(container.id));
 
     // 获取容器（配置在模版中的）默认资产
-    const containerSubAssetsMap = {};
+    const containerSubAssetsMap = { ...containerAssetsMap };
     containers.forEach(container => {
-      if (containerAssetsMap[container.id]) {
-        containerSubAssetsMap[container.id] = containerAssetsMap[container.id];
-      } else {
+      const { id } = container;
+      if (!containerAssetsMap[id]) {
         const defaultAssets = container.props.GI_CONTAINER;
         if (defaultAssets) {
-          updateContainerAssets(container.id, defaultAssets);
-          containerSubAssetsMap[container.id] = defaultAssets;
+          containerSubAssetsMap[id] = defaultAssets;
         }
       }
+      updateContainerAssets(id, containerSubAssetsMap[id], 'add', containers);
     });
 
-    // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
-    updatePageLayout(propsPageLayout => {
-      propsPageLayout.props.containers.forEach(container => {
-        container.display = selectedList.includes(container.id);
-      });
-    });
     setState(draft => {
       draft.selectedContainers = containers;
       draft.containerAssetsMap = containerSubAssetsMap;
@@ -133,6 +129,18 @@ const ContainerPanel = props => {
         draft.activeAssetsKeys.components = refComponentKeys;
       });
     }
+
+    // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
+    updatePageLayout(propsPageLayout => {
+      propsPageLayout.props.containers.forEach(container => {
+        container.display = selectedList.map(id => getOriginContainerId(id, propsPageLayout)).includes(container.id);
+        const containerAssets = containerSubAssetsMap[getPrefixedContainerId(container.id, propsPageLayout)];
+        if (containerAssets) {
+          container.GI_CONTAINER = containerAssets;
+        }
+      });
+    });
+
     handleFocusAssetsSelector();
   };
 
@@ -142,16 +150,18 @@ const ContainerPanel = props => {
    * @param values 表单值
    */
   const handleFormChange = (containerId: string, values) => {
+    updatePageLayout(draft => {
+      const originId = getOriginContainerId(containerId, draft);
+      const container = draft.props.containers.find(con => con.id === originId);
+      if (container) {
+        Object.keys(values).forEach(key => {
+          container[key] = values[key];
+        });
+      }
+    });
     updateContext(draft => {
       draft.config.components.forEach(item => {
-        if (item.id === pageLayout?.id) {
-          const container = item.props.containers.find(con => con.id === containerId);
-          if (container) {
-            Object.keys(values).forEach(key => {
-              container[key] = values[key];
-            });
-          }
-        } else if (item.id === containerId) {
+        if (item.id === containerId) {
           item.props = {
             ...item.props,
             ...values,
@@ -192,8 +202,9 @@ const ContainerPanel = props => {
     containerId: string,
     propsAsset: AssetInfo[] | AssetInfo,
     action: 'add' | 'remove' = 'add',
+    containers = undefined,
   ) => {
-    const container = selectedContainers.find(container => container.id === containerId);
+    const container = (containers || selectedContainers).find(container => container.id === containerId);
     if (container) {
       const assetList = isArray(propsAsset) ? propsAsset : [propsAsset];
       // 获取缓存的容器子资产列表
@@ -224,23 +235,7 @@ const ContainerPanel = props => {
       // 更新全局活跃资产列表
       updateContext(draft => {
         draft.config.components.forEach(item => {
-          if (pageLayout && item.id === pageLayout.id) {
-            // 页面布局存在，则找到对应项，更新其对应子容器的子资产列表，并设置该子容器可见
-            item.props.containers = item.props.containers || [];
-            const propContainer = item.props.containers.find(con => con.id === containerId);
-            if (propContainer) {
-              // 该子容器已存在页面布局的子容器列表中，更新
-              propContainer.GI_CONTAINER = containerAssetsIds;
-              propContainer.display = true;
-            } else if (!componentsMap[containerId]) {
-              // 该子容器不存在页面布局的子容器列表中，加入
-              item.props.containers.push({
-                ...container,
-                GI_CONTAINER: containerAssetsIds,
-                display: true,
-              });
-            }
-          } else if (item.id === containerId) {
+          if (item.id === containerId) {
             // 找到普通的容器资产，更新其子资产列表
             item.props.GI_CONTAINER = containerAssetsIds;
           }
@@ -257,6 +252,24 @@ const ContainerPanel = props => {
 
         draft.activeAssetsKeys.components = refComponentKeys;
       });
+
+      // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
+      updatePageLayout(propsPageLayout => {
+        const originContainerId = getOriginContainerId(containerId, propsPageLayout);
+        const propContainer = propsPageLayout.props.containers.find(con => con.id === originContainerId);
+        if (propContainer) {
+          propContainer.display = true;
+          propContainer.GI_CONTAINER = containerAssetsIds;
+        } else if (!componentsMap[containerId]) {
+          // 该子容器不存在页面布局的子容器列表中，加入
+          propsPageLayout.props.containers.push({
+            ...container,
+            GI_CONTAINER: containerAssetsIds,
+            display: true,
+          });
+        }
+      });
+
       // 更新 { [容器]: 子资产[] } 缓存(containerAssetsMap)，并记录当前正在操作的容器 (focusingContainerAsset)
       setState(draft => {
         draft.containerAssetsMap[containerId] = containerAssets;

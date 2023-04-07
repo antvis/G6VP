@@ -55,12 +55,12 @@ const formatCommonContainer = (container, componentsMap, activeComponents) => {
  * @param activeComponents 活跃的资产
  * @returns
  */
-const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeComponents) => {
-  const { id, name, required, ...others } = container;
+const formatPageLayoutContainer = (pageLayout, container, componentsMap, configuredPageLayout) => {
+  const { id: oid, name, required, ...others } = container;
+  const id = `_${pageLayout.id}-${oid}`;
   const props = {};
   let candidateAssets: AssetInfo[] = [];
-  const configuredPageLayout = activeComponents.find(com => com.id === pageLayout.id);
-  const configuredContainer = configuredPageLayout?.props.containers?.find(con => con.id === id);
+  const configuredContainer = configuredPageLayout?.props.containers?.find(con => con.id === oid);
   Object.keys(others).forEach(key => {
     if (key === 'GI_CONTAINER') {
       candidateAssets = others[key].enum.map(value => {
@@ -89,13 +89,13 @@ const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeC
     }
   });
   const containerProps = {
-    id,
+    id: oid,
     ...props,
     display: required,
   };
   let foundInPageLayoutProps = false;
   pageLayout.props.containers.forEach((con, i) => {
-    if (con.id === id) {
+    if (con.id === oid) {
       pageLayout.props.containers[i] = containerProps;
       foundInPageLayoutProps = true;
     }
@@ -108,7 +108,7 @@ const formatPageLayoutContainer = (pageLayout, container, componentsMap, activeC
     name,
     required,
     info: {
-      id,
+      id: oid,
       name,
       icon: 'icon-layout',
       type: 'GICC',
@@ -173,11 +173,10 @@ const Panel = props => {
   const [assets, setAssets] = React.useState<GIComponentAssets>({});
   const [state, setState] = useImmer({
     mode: 'component',
-    pageLayout: undefined,
     candidateContainers: [],
     configuringContainerId: undefined,
   });
-  const { mode, pageLayout, candidateContainers, configuringContainerId } = state;
+  const { mode, candidateContainers, configuringContainerId } = state; // pageLayout,
 
   /**
    * 获取全量的组件资产列表
@@ -260,25 +259,6 @@ const Panel = props => {
     }
   }, [containerComponents, layoutComponents]);
 
-  useEffect(() => {
-    if (!pageLayout) return;
-    // 将布局容器缓存到全局
-    updateContext(draft => {
-      draft.config.pageLayout = pageLayout;
-      const pageLayoutContainers = pageLayout.props.containers;
-      draft.config.components.forEach(item => {
-        if (item.id === pageLayout.id) {
-          item.props.containers.forEach((contextLayoutContainer, i) => {
-            const container = pageLayoutContainers.find(con => con.id === contextLayoutContainer.id);
-            if (container) {
-              item.props.containers[i] = container;
-            }
-          });
-        }
-      });
-    });
-  }, [pageLayout]);
-
   /**
    * 页面布局（唯一）切换时的响应函数。将根据一个自由容器(放置无需父容器资产的虚拟容器) + 该页面布局的自带容器 + 其他容器资产
    * 重新生成可选的容器列表(candidateContainers)
@@ -292,21 +272,19 @@ const Panel = props => {
 
     // 该页面布局的子容器，格式化
     const pageLayoutContainers = pageLayoutComponent.meta.containers.map(com =>
-      formatPageLayoutContainer(pageLayoutComponent, com, componentsMap, config.components),
+      formatPageLayoutContainer(pageLayoutComponent, com, componentsMap, config.pageLayout),
     );
 
     // 自由容器（放置所有无需容器的资产），必选 refComponentKeys
     const freeContainer = getFreeContainer(activeAssetsKeys.components, autoComponents, componentsMap);
 
     if (config.pageLayout?.id === pageLayoutId) {
-      // 若当前缓存有同样的 pageLayout ，则恢复缓存中页面布局子容器的 display
-      const cachePageLayout = config.components.find(component => component.id === pageLayoutId);
+      // 若当前缓存有同样的 pageLayout ，则恢复缓存中的资产
       pageLayoutComponent.props.containers.forEach(container => {
-        const cacheContainer = cachePageLayout.props.containers?.find(con => con.id === container.id);
+        const cacheContainer = config.pageLayout.props.containers?.find(con => con.id === container.id);
         if (cacheContainer) {
+          container.GI_CONTAINER = cacheContainer.GI_CONTAINER;
           container.display = cacheContainer.display;
-          const pageLayoutContainer = pageLayoutContainers.find(pcontainer => pcontainer.id === container.id);
-          if (pageLayoutContainer) pageLayoutContainer.display = cacheContainer.display;
         }
       });
     }
@@ -314,19 +292,17 @@ const Panel = props => {
     const candidates = [freeContainer, ...pageLayoutContainers, ...containerComponents];
 
     setState(draft => {
-      // 重置 { [容器]: 子资产[] } 的映射列表
-      if (config.pageLayout?.id !== pageLayoutId) draft.containerAssetsMap = {};
-      // 记录布局容器
-      draft.pageLayout = pageLayoutComponent;
       // 候选容器有：页面布局的子容器组件 + 资产中所有容器类型的组件 + 一个自由容器（放置所有无需父容器的资产）
       draft.candidateContainers = candidates;
+    });
+
+    updateContext(draft => {
+      draft.config.pageLayout = pageLayoutComponent;
     });
   };
 
   const handleUpdatePageLayout = updateFunc => {
-    setState(draft => {
-      updateFunc(draft.pageLayout);
-    });
+    updateContext(draft => updateFunc(draft.config.pageLayout));
   };
 
   /**
@@ -346,7 +322,7 @@ const Panel = props => {
   return mode === 'component' ? (
     <ComponentPanel
       {...props}
-      pageLayout={pageLayout}
+      pageLayout={context.config.pageLayout}
       handleEditContainer={containerId => {
         setState(draft => {
           draft.mode = 'container';
@@ -357,7 +333,7 @@ const Panel = props => {
   ) : (
     <ContainerPanel
       {...props}
-      pageLayout={pageLayout}
+      pageLayout={context.config.pageLayout}
       componentsMap={componentsMap}
       layoutComponents={layoutComponents}
       candidateContainers={candidateContainers}

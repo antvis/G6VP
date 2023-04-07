@@ -22,21 +22,15 @@ const ComponentPanel = props => {
       return type === 'GICC' || type === 'GICC_MENU';
     });
     let pageLayoutContainers = [];
-    if (pageLayout) {
-      const pageLayoutComponent = config.components.find(com => com.id === pageLayout.id);
+    if (pageLayout?.meta) {
       pageLayout.meta.containers.map(container => {
-        const componentProps = pageLayoutComponent?.props.containers?.find(con => con.id === container.id);
         const containerProps = pageLayout.props.containers?.find(con => con.id === container.id);
-        const mergedProps = {
-          ...containerProps,
-          ...componentProps,
-        };
-        if (mergedProps.display) {
+        if (containerProps.display) {
           pageLayoutContainers.push({
             id: container.id,
             name: container.name,
             info: container,
-            props: mergedProps,
+            props: containerProps,
           });
         }
       });
