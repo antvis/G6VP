@@ -56,7 +56,8 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
         info.type === 'GICC_LAYOUT' ||
         info.type === 'GIAC_CONTENT' ||
         info.type === 'GIAC' ||
-        info.type === 'GIAC_MENU'
+        info.type === 'GIAC_MENU' ||
+        id === initializer.id
       ) {
         return null;
       }
@@ -99,6 +100,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
     GICC_LAYOUT_PROPS: {
       ComponentCfgMap,
       assets: ComponentAssets,
+      GISDK_ID,
       ...GICC_LAYOUT_PROPS,
     },
   };

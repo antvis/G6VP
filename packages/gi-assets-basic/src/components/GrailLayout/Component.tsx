@@ -20,10 +20,10 @@ interface IContainersVisible {
   topVisible: boolean;
 }
 
-const FreeLayout: React.FC<FreeLayoutProps> = props => {
+const GrailLayout: React.FC<FreeLayoutProps> = props => {
   const { graph } = useContext();
 
-  const { ComponentCfgMap, assets, GISDK_ID, containers = [] } = props;
+  const { ComponentCfgMap, assets, GISDK_ID, containers = [], children } = props;
 
   const {
     GI_CONTAINER: GI_CONTAINER_LEFT,
@@ -157,7 +157,10 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   }, []);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex' }}>
+      {children}
+      {/* <div style={{ flex: 1 }}>
+      </div> */}
       <LeftContainer
         width={leftWidth}
         isDisplay={leftDisplay}
@@ -198,4 +201,4 @@ const FreeLayout: React.FC<FreeLayoutProps> = props => {
   );
 };
 
-export default FreeLayout;
+export default GrailLayout;
