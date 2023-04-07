@@ -3,9 +3,10 @@ import Graphin from '@antv/graphin';
 import { Button, Col, notification, Row, Select, Statistic, Form, Input } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
+import { formatterSchemaData } from './utils'
 import { CollapseCard } from '../../components-ui';
 
-import { queryGraphSchema, querySubGraphList, queryVertexLabelCount } from '../../services/TuGraphService';
+import { queryGraphSchema, querySubGraphList } from '../GraphService';
 
 const { getSchemaGraph } = utils;
 
@@ -16,7 +17,7 @@ const { Option } = Select;
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const [form] = Form.useForm();
   const { updateGISite } = props;
-  const { TUGRAPH_USER_TOKEN: useToken, CURRENT_TUGRAPH_SUBGRAPH } = utils.getServerEngineContext();
+  const { GALAXYBASE_USER_TOKEN: useToken, CURRENT_GALAXYBASE_SUBGRAPH } = utils.getServerEngineContext();
 
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
@@ -38,24 +39,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     },
     defaultLabelField: 'name',
     subGraphList: [],
-    defaultGraphName: CURRENT_TUGRAPH_SUBGRAPH,
+    defaultGraphName: CURRENT_GALAXYBASE_SUBGRAPH,
     selectedSubgraph: undefined,
   });
   const { schemaData, count, subGraphList, defaultGraphName, defaultLabelField } = state;
-
-  const getVertexLabelCount = async () => {
-    const result = await queryVertexLabelCount(defaultGraphName);
-    if (!result.success) {
-      return;
-    }
-    const { data } = result;
-    updateState(draft => {
-      draft.count = {
-        nodes: data.nodeCount,
-        edges: data.edgeCount,
-      };
-    });
-  };
 
   const getSubGraphList = async () => {
     const result = await querySubGraphList();
@@ -67,42 +54,45 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
       return;
     }
     updateState(draft => {
-      draft.subGraphList = result.data;
+      draft.subGraphList = result.data.dataList;
+      if (draft.defaultGraphName) {
+        handleChange(defaultGraphName)
+      }
     });
   };
 
   const handleChange = async value => {
     utils.setServerEngineContext({
-      CURRENT_TUGRAPH_SUBGRAPH: value,
+      CURRENT_GALAXYBASE_SUBGRAPH: value,
     });
 
     // 切换子图后，同步查询 Schema
-    const schemaData = (await queryGraphSchema({
+    const schemaData:any = (await queryGraphSchema({
       graphName: value,
-    })) as GraphSchemaData;
+    }));
 
     updateState(draft => {
+      let data:any = draft.subGraphList.filter((item:any) => item.graphName === value)[0]
       draft.defaultGraphName = value;
-      if (schemaData.nodes && schemaData.edges) {
-        draft.schemaData = schemaData;
+      let { nodes, edges } = formatterSchemaData(schemaData)
+      draft.schemaData = {
+        nodes,
+        edges
       }
+      draft.count = {
+        nodes: data.vertexSize,
+        edges: data.edgeSize,
+      };
     });
   };
 
   React.useEffect(() => {
     if (useToken) {
-      getVertexLabelCount();
-    }
-  }, [defaultGraphName]);
-
-  React.useEffect(() => {
-    if (useToken) {
       getSubGraphList();
-      handleChange(defaultGraphName);
     }
   }, []);
   const handleSubmit = () => {
-    const engineId = 'TuGraph';
+    const engineId = 'Galaxybase';
     const newSchemaData = {
       ...schemaData,
       meta: {
@@ -154,7 +144,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
               >
                 <Select showSearch placeholder="请选择要查询的子图" onChange={handleChange} style={{ width: '100%' }}>
                   {subGraphList.map((d: any) => {
-                    return <Option value={d.value}>{!d.description ? d.label : `${d.label}(${d.description})`}</Option>;
+                    return <Option value={d.graphName}>{!d.graphDesc ? d.graphName : `${d.graphName}(${d.graphDesc})`}</Option>;
                   })}
                 </Select>
               </Form.Item>

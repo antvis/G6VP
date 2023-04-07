@@ -1,42 +1,47 @@
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
+import { formatterCypherResult } from './ServerComponent/utils'
 import request from 'umi-request';
 
 export const CypherQuery = {
   name: '图语句查询',
   service: async (params = {}) => {
-    const { value, limit } = params as any;
-    const { TUGRAPH_USER_TOKEN, CURRENT_TUGRAPH_SUBGRAPH, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+    const { value } = params as any;
+    const { GALAXYBASE_USER_TOKEN, CURRENT_GALAXYBASE_SUBGRAPH, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
-    // const graphName = localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH') || 'default';
+    // const graphName = localStorage.getItem('CURRENT_GALAXYBASE_SUBGRAPH') || 'default';
 
-    const response = await request(`${HTTP_SERVICE_URL}/api/tugraph/languagequery`, {
+    const response = await request(`${HTTP_SERVICE_URL}/api/cypher/commit`, {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: TUGRAPH_USER_TOKEN,
+        'Content-Type': 'application/json',
+        Authorization: GALAXYBASE_USER_TOKEN,
       },
-      data: {
-        value,
-        graphName: CURRENT_TUGRAPH_SUBGRAPH,
-        limit,
-      },
+      data: JSON.stringify({
+        statements: [
+          {
+            statement: value,
+            resultDataContents: ['graph'],
+          },
+        ],
+        graphName: CURRENT_GALAXYBASE_SUBGRAPH,
+      }),
     });
-    const { data, success, message } = response;
+    const { status, success, errors, results } = response;
     if (!success) {
       notification.error({
         message: '执行 Cypher 查询失败',
-        description: `查询失败：${message}`,
+        description: `查询失败：${errors[0].message}`,
       });
       return {
         nodes: [],
         edges: [],
       };
     }
-    if (data.code === 401) {
+    if (status === 412) {
       notification.error({
         message: '引擎认证失败：请检查数据集',
-        description: data.data.error_message,
+        description: errors[0].message,
       });
       return {
         nodes: [],
@@ -44,6 +49,10 @@ export const CypherQuery = {
       };
     }
 
-    return data;
+    let { nodes, edges } = formatterCypherResult(results)
+    return {
+      nodes,
+      edges,
+    };
   },
 };

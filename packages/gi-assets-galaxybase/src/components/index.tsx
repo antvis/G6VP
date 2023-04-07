@@ -1,2 +1,2 @@
-import TuGraphDataSource from './DataManage';
-export { TuGraphDataSource };
+import GalaxybaseDataSource from './DataManage';
+export { GalaxybaseDataSource };

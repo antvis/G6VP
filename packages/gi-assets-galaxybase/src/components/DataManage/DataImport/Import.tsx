@@ -1,12 +1,12 @@
 import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
 import { Button, Drawer, message } from "antd";
 import * as React from "react";
-import TuGraphDataLoadPanel from "../../../services/ServerComponent";
+import GalaxybaseDataLoadPanel from "../../../services/ServerComponent";
 
 interface DataImportProps {}
 
 const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
-  const useToken = localStorage.getItem("TUGRAPH_USER_TOKEN");
+  const useToken = localStorage.getItem("GALAXYBASE_USER_TOKEN");
 
   const [state, stateState] = React.useState({
     visible: true,
@@ -31,9 +31,9 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
   };
 
   const closeConnect = () => {
-    localStorage.removeItem("TUGRAPH_USER_TOKEN");
-    localStorage.removeItem("CURRENT_TUGRAPH_SUBGRAPH");
-    message.success("已断开与 TuGraph 的连接");
+    localStorage.removeItem("GALAXYBASE_USER_TOKEN");
+    localStorage.removeItem("CURRENT_GALAXYBASE_SUBGRAPH");
+    message.success("已断开与 Galaxybase 的连接");
 
     stateState((preState) => {
       return {
@@ -47,10 +47,10 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
     stateState((preState) => {
       return {
         ...preState,
-        connectStatus: localStorage.getItem("TUGRAPH_USER_TOKEN"),
+        connectStatus: localStorage.getItem("GALAXYBASE_USER_TOKEN"),
       };
     });
-  }, [localStorage.getItem("TUGRAPH_USER_TOKEN")]);
+  }, [localStorage.getItem("GALAXYBASE_USER_TOKEN")]);
   return (
     <div>
       {state.connectStatus ? (
@@ -77,7 +77,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
           transform: "none",
         }}
       >
-        <TuGraphDataLoadPanel onClose={handleClose} />
+        <GalaxybaseDataLoadPanel onClose={handleClose} />
       </Drawer>
     </div>
   );

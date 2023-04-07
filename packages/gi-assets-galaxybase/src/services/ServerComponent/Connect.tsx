@@ -2,7 +2,7 @@ import { GISiteParams, utils } from '@antv/gi-sdk';
 import { Alert, Button, Form, Input, notification } from 'antd';
 import React, { useState } from 'react';
 import { CollapseCard } from '../../components-ui';
-import { connectTuGraphDataSource } from '../TuGraphService';
+import { connectGalaxybaseDataSource } from '../GraphService';
 import './index.less';
 
 export interface ConnectProps {
@@ -13,13 +13,13 @@ export interface ConnectProps {
 }
 
 const { protocol, hostname } = location;
-const DEFAULT_HTTP_SERVICE_URL = `${protocol}//${hostname}:7001`;
+const DEFAULT_HTTP_SERVICE_URL = `${protocol}//${hostname}:18088`;
 const DEFAULT_VALUE = {
   username: '',
   password: '',
   HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL, //'http://127.0.0.1:7001',
   engineServerURL: '',
-  CURRENT_TUGRAPH_SUBGRAPH: 'MovieDemo1',
+  CURRENT_GALAXYBASE_SUBGRAPH: '',
 };
 
 const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) => {
@@ -41,24 +41,24 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
     }
 
     utils.setServerEngineContext(values);
-    const result = await connectTuGraphDataSource();
+    const result = await connectGalaxybaseDataSource();
     setLoading(false);
 
     if (result) {
       notification.success({
-        message: '连接 TuGraph 数据源成功',
+        message: '连接 Galaxybase 数据库成功',
         description: '请继续选择子图，进入分析',
       });
       updateToken();
     } else {
       notification.error({
-        message: '连接 TuGraph 数据库失败',
+        message: '连接 Galaxybase 数据库失败',
         style: {
           width: 500,
         },
         description: (
           <>
-            ✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 TuGraph 数据库地址，账户，密码是否填写正确
+            ✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 Galaxybase 数据库地址，账户，密码是否填写正确
           </>
         ),
       });
@@ -75,7 +75,7 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
               type="info"
               showIcon
               style={{ marginTop: 16, marginBottom: 16 }}
-              message="正在连接 TuGraph 数据库，请耐心等待……"
+              message="正在连接 Galaxybase 数据库，请耐心等待……"
             />
           )}
           <Form.Item
@@ -84,9 +84,6 @@ const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) =
             rules={[{ required: true, message: '平台服务地址必填!' }]}
           >
             <Input placeholder="请输入 gi-httpservice 地址" />
-          </Form.Item>
-          <Form.Item label="引擎地址" name="engineServerURL" rules={[{ required: true, message: '数据库地址必填!' }]}>
-            <Input placeholder="请输入数据库地址，格式为 ip:port" />
           </Form.Item>
           <Form.Item label="账名" name="username" rules={[{ required: true, message: '数据库用户名必填!' }]}>
             <Input />

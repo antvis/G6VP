@@ -1,5 +1,5 @@
 const info = {
-  id: "TuGraphDataSource",
+  id: "GalaxybaseDataSource",
   name: "数据管理",
   category: "engine-manage", //新增的引擎管理模块
   desc: "数据管理模块，用于GS引擎",

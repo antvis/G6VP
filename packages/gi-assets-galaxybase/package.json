@@ -38,7 +38,9 @@
     "react": "17.x",
     "react-monaco-editor": "^0.48.0",
     "umi-request": "^1.4.0",
-    "use-immer": "^0.7.0"
+    "use-immer": "^0.7.0",
+    "node-rsa": "^1.1.1",
+    "qs": "^6.5.3"
   },
   "devDependencies": {
     "dumi": "^1.1.38",

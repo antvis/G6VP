@@ -5,14 +5,14 @@ import { Col, notification, Row, Select, Statistic, Tag } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { CollapseCard } from '../../../components-ui';
-import { queryGraphSchema, querySubGraphList, queryVertexLabelCount } from '../../../services/TuGraphService';
+import { queryGraphSchema, querySubGraphList, queryVertexLabelCount } from '../../../services/GraphService';
 import Import from './Import';
 
 const { Option } = Select;
 export interface DataImportProps {}
 
 const DataImport: React.FunctionComponent<DataImportProps> = props => {
-  const useToken = localStorage.getItem('TUGRAPH_USER_TOKEN');
+  const useToken = localStorage.getItem('Galaxybase_USER_TOKEN');
 
   const { graph, updateContext } = useContext();
   const [state, setState] = useImmer({
@@ -25,7 +25,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
       edge: 0,
     },
     subGraphList: [],
-    defaultGraphName: localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH'),
+    defaultGraphName: localStorage.getItem('CURRENT_GALAXYBASE_SUBGRAPH'),
   });
 
   const getVertexLabelCount = async () => {
@@ -61,7 +61,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     setState(draft => {
       draft.defaultGraphName = value;
     });
-    localStorage.setItem('CURRENT_TUGRAPH_SUBGRAPH', value);
+    localStorage.setItem('CURRENT_GALAXYBASE_SUBGRAPH', value);
 
     // 切换子图后，同步查询 Schema
     const schemaData = await queryGraphSchema({
@@ -109,12 +109,12 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
           {useToken ? (
             <>
               <Tag color="green">已连接</Tag>
-              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>TuGraph 数据源已连接, 开始分析</span>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>Galaxybase 数据源已连接, 开始分析</span>
             </>
           ) : (
             <>
               <Tag color="red">未连接</Tag>
-              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>TuGraph 数据源未连接, 请先连接</span>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>Galaxybase 数据源未连接, 请先连接</span>
             </>
           )}
         </div>

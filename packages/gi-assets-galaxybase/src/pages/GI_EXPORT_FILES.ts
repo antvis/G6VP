@@ -348,7 +348,7 @@ export const GI_PROJECT_CONFIG = {
       id: 'NeighborsQuery',
       name: '邻居查询',
       props: {
-        serviceId: 'TuGraph/NeighborsQuery',
+        serviceId: 'Galaxybase/NeighborsQuery',
         degree: '1',
         isFocus: true,
       },
@@ -405,8 +405,8 @@ export const GI_PROJECT_CONFIG = {
       id: 'Initializer',
       name: '初始化器',
       props: {
-        serviceId: 'TuGraph/GI_SERVICE_INTIAL_GRAPH',
-        schemaServiceId: 'TuGraph/GI_SERVICE_SCHEMA',
+        serviceId: 'Galaxybase/GI_SERVICE_INTIAL_GRAPH',
+        schemaServiceId: 'Galaxybase/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
       },
     },
@@ -509,7 +509,7 @@ export const GI_PROJECT_CONFIG = {
       id: 'CypherEditor',
       name: 'Cypher 编辑器',
       props: {
-        serviceId: 'TuGraph/LanguageQuery',
+        serviceId: 'Galaxybase/LanguageQuery',
         initialValue: 'MATCH n RETURN LIMIT 100',
         GI_CONTAINER_INDEX: 2,
         GIAC_CONTENT: {
@@ -537,7 +537,7 @@ export const GI_PROJECT_CONFIG = {
       },
     },
     {
-      id: 'TuGraphDataSource',
+      id: 'GalaxybaseDataSource',
       name: '数据管理',
       props: {
         GI_CONTAINER_INDEX: 2,
@@ -628,7 +628,7 @@ export const GI_PROJECT_CONFIG = {
       id: 'SideTabs',
       name: '侧边栏',
       props: {
-        GI_CONTAINER: ['TuGraphDataSource', 'CypherEditor', 'StyleSetting', 'FilterPanel'],
+        GI_CONTAINER: ['GalaxybaseDataSource', 'CypherEditor', 'StyleSetting', 'FilterPanel'],
         outSideFromCanvas: true,
         tabPosition: 'left',
         placement: 'LB',
@@ -684,5 +684,5 @@ export const GI_PROJECT_CONFIG = {
 /** G6VP 站点选择服务引擎的上下文配置信息 **/
 export const SERVER_ENGINE_CONTEXT = {
   GI_SITE_PROJECT_ID: '28c24593-7377-49da-9858-8365f22ce491',
-  engineId: 'TuGraph',
+  engineId: 'Galaxybase',
 };

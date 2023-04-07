@@ -2,7 +2,6 @@ import * as CypherQuery from './CypherQuery';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
 import ServerComponent from './ServerComponent';
-
 export default {
   id: 'Galaxybase',
   type: 'database',

@@ -1,4 +1,4 @@
-const SUPPORT_CYPHER_ENGINE = ['TuGraph', 'Neo4j'];
+const SUPPORT_CYPHER_ENGINE = ['TuGraph', 'Neo4j', 'Galaxybase'];
 
 const Cypher_Template = engineId => [
   {
