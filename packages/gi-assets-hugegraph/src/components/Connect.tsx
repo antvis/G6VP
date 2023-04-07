@@ -78,6 +78,13 @@ const ConnectHugeGraph: React.FC<ConnectProps> = ({ updateToken, token }) => {
             message="正在连接 HugeGraph 数据库，请耐心等待……"
           />
         )}
+        <Form.Item
+          label="G6VP 服务"
+          name="httpServerURL"
+          rules={[{ required: true, message: 'G6VP HTTP 服务地址必填!' }]}
+        >
+          <Input placeholder="请输入 G6VP HTTP 服务地址" />
+        </Form.Item>
         <Form.Item label="URI" name="uri" rules={[{ required: true, message: '部署 HugeGraph 的服务器地址必填!' }]}>
           <Input placeholder="请输入 HugeGraph URI 服务地址" />
         </Form.Item>
