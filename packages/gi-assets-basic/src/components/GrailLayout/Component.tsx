@@ -159,8 +159,6 @@ const GrailLayout: React.FC<FreeLayoutProps> = props => {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex' }}>
       {children}
-      {/* <div style={{ flex: 1 }}>
-      </div> */}
       <LeftContainer
         width={leftWidth}
         isDisplay={leftDisplay}
