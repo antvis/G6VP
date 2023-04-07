@@ -33,41 +33,18 @@ const registerMeta = ({ schemaData }) => {
     return { label: key, value: key };
   });
   return {
-    title: {
-      title: '图表标题',
-      'x-decorator': 'FormItem',
-      'x-component': 'Input',
-      type: 'string',
-      default: '未命名图表',
-    },
-    chartType: {
-      title: '图表类型',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      enum: [
-        { value: 'columnChart', label: '柱状图' },
-        { value: 'lineChart', label: '折线图' },
-      ],
-      default: 'columnChart',
-    },
-    brushMode: {
-      title: '交互模式',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Select',
-      enum: [
-        { value: 'highlight', label: '高亮' },
-        { value: 'filter', label: '过滤' },
-      ],
-      default: 'highlight',
-    },
     height: {
-      title: '图表高度',
+      title: '画布高度',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       type: 'number',
-      default: undefined,
+      default: 400,
+    },
+    dateKey: {
+      title: '时间字段',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [...edgeOptions],
     },
 
     dataType: {

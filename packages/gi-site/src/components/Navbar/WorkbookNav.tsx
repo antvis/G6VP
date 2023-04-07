@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import ProjectTitle from '../ProjectTitle';
 import DatasetInfo from './DatasetInfo';
+import Github from './Github';
 import Logo from './Logo';
 import SaveWorkbook from './SaveWorkbook';
 import Theme from './Theme';
@@ -51,6 +52,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
       </div>
       <div style={styles.right}>
         <SaveWorkbook workbookId={workbookId} />
+        <Github />
         <Theme />
       </div>
     </header>
