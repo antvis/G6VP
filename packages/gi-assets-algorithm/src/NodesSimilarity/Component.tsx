@@ -2,7 +2,7 @@ import { FormOutlined, ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
-import { Button, Col, Empty, Input, message, Radio, Row } from 'antd';
+import { Button, Col, Empty, Input, message, Row } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import './index.less';
@@ -53,13 +53,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     });
   }, [data]);
 
-  const similarityAlgoSelections = [
-    {
-      name: NodesSimilarityAlgorithm.nodesConsineSimilarity,
-      content: <></>,
-    },
-  ];
-
   const resetMapping = (mappedNodeIds: string[], mappedEdgeIds: string[]) => {
     graph.getNodes().forEach(node => {
       const id = node.get('id');
@@ -81,11 +74,15 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
 
   const formatOriginData = ({ nodes = [], edges = [] }: GraphinData) => {
     return {
-      nodes: nodes.map(node => ({
-        id: node.id,
-        label: node.label || node.data.label,
-        properties: node.data.properties,
-      })),
+      nodes: nodes.map(node => {
+        const properties = Object.assign({}, node.data, node.data.properties);
+        delete properties.id;
+        return {
+          id: node.id,
+          label: node.label || node.data.label,
+          properties,
+        };
+      }),
       edges: edges.map(edge => ({
         ...edge,
         id: edge.id || edge.data.id,
@@ -128,7 +125,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           similarityRes: allCosineSimilarity,
           similarNodes: [seedNode, ...similarNodes],
         });
-        console.log('set node style', similarNodes);
         setNodeStyle(similarNodes, 'cosineSimilarity');
         break;
       default:
@@ -157,12 +153,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         </div>
       );
     }
-  };
-
-  const changeAlgo = e => {
-    resetMapping([], []);
-    setResData({ similarityRes: [], similarNodes: [] });
-    setCommunityAlgo(e.target.value);
   };
 
   const reset = () => {
@@ -213,11 +203,18 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     >
       <div className="nodes-similarity-wrapper">
         <div>
-          <p className="nodes-similarity-title">
-            <FormattedMessage id="itelligent-analysis.nodes-similarity.select-seed-node" />
-          </p>
           <Row justify="space-between">
-            <Col span={22}>
+            <Col span={21}>
+              <p className="nodes-similarity-title">
+                <FormattedMessage id="itelligent-analysis.nodes-similarity.select-seed-node" />
+              </p>
+            </Col>
+            <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
+              <ReloadOutlined onClick={reset} />
+            </Col>
+          </Row>
+          <Row justify="space-between">
+            <Col span={21}>
               <Input
                 placeholder={formatMessage({
                   id: 'itelligent-analysis.nodes-similarity.select-seed-node',
@@ -228,7 +225,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
                 value={seedNodeId}
               />
             </Col>
-            <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
+            <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
               <FormOutlined
                 style={{ cursor: 'pointer', color: selecting ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
                 onClick={beginSelect}
@@ -236,31 +233,6 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
             </Col>
           </Row>
         </div>
-
-        <div className="top-info">
-          <p className="nodes-similarity-title">
-            <FormattedMessage id="itelligent-analysis.select-algo" />
-          </p>
-          <ReloadOutlined onClick={reset} />
-        </div>
-
-        <Radio.Group onChange={changeAlgo} value={communityAlgo}>
-          {similarityAlgoSelections.map(selection => (
-            <div key={selection.name}>
-              <Radio value={selection.name} className="nodes-similarity-algo-radio">
-                <div className="nodes-similarity-algo-title">
-                  <span className="nodes-similarity-algo-title-name">
-                    <FormattedMessage id={`itelligent-analysis.nodes-similarity.${selection.name}`} />
-                  </span>
-                  <span className="nodes-similarity-algo-title-tip">
-                    <FormattedMessage id={`itelligent-analysis.nodes-similarity.${selection.name}-tip`} />
-                  </span>
-                </div>
-              </Radio>
-              {selection.content}
-            </div>
-          ))}
-        </Radio.Group>
 
         <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={onAnalyse}>
           <FormattedMessage id="analyse" />

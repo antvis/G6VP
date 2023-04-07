@@ -19,7 +19,7 @@ const options = [
   },
   {
     value: 'Shortest-Path',
-    label: '最短路径',
+    label: '加权最短路径',
   },
   {
     value: 'Edge-Type-Filter',
