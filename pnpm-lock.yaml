@@ -12562,7 +12562,8 @@ packages:
       axe-core: 3.5.6
       core-js: 3.30.0
       global: 4.4.0
-      memoizerific: 1.11.3
+      polished: 3.7.2
+      prop-types: 15.8.1
       react: 16.14.0
       react-redux: 7.2.9_zkbncb2mrwigeq3keybbaytzya
       react-sizeme: 2.6.12_zkbncb2mrwigeq3keybbaytzya
@@ -12572,7 +12573,6 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
       - react-dom
-      - react-native
       - regenerator-runtime
     dev: true
 
@@ -13206,6 +13206,21 @@ packages:
       '@storybook/channels': 5.3.21
       '@storybook/client-logger': 5.3.21
       '@storybook/core-events': 5.3.21
+      core-js: 3.30.0
+      global: 4.4.0
+      util-deprecate: 1.0.2
+    transitivePeerDependencies:
+      - react-dom
+      - regenerator-runtime
+    dev: true
+
+  /@storybook/addons/5.3.22_gyvc7xfhwic4jpc4icj44bd6hq:
+    resolution: {integrity: sha512-GiQD1r4UQxzjrDMdVwBCxgJ5DdmtD0PAwX1ZIxqJYLLh+NnMIIh2gGSsXJDxMrN0FfLGYhRfgXjRChn1Cuaf8A==}
+    dependencies:
+      '@storybook/api': 5.3.22_gyvc7xfhwic4jpc4icj44bd6hq
+      '@storybook/channels': 5.3.22
+      '@storybook/client-logger': 5.3.22
+      '@storybook/core-events': 5.3.22
       core-js: 3.30.0
       global: 4.4.0
       util-deprecate: 1.0.2
@@ -27756,10 +27771,10 @@ packages:
       react: ^16.8.0 || 17
       react-dom: ^16.8.0
     dependencies:
-      '@reach/router': 1.3.4_prpqlkd37azqwypxturxi7uyci
+      '@reach/router': 1.3.4_sfoxds7t5ydpegc3knd667wn6m
       '@rehooks/local-storage': 1.7.0_react@17.0.2
-      '@tippy.js/react': 2.2.3_prpqlkd37azqwypxturxi7uyci
-      antd: 4.24.8_prpqlkd37azqwypxturxi7uyci
+      '@tippy.js/react': 2.2.3_sfoxds7t5ydpegc3knd667wn6m
+      antd: 4.24.8_sfoxds7t5ydpegc3knd667wn6m
       codemirror: 5.65.12
       copy-text-to-clipboard: 2.2.0
       docz: 1.2.0_s5ek3j3vcccgfsz6mqjh4ycxfu
@@ -27772,12 +27787,12 @@ packages:
       re-resizable: 4.11.0
       react: 17.0.2
       react-codemirror2: 5.1.0_yuzl7vjj4ruvp2kfit5zprfpde
-      react-dom: 16.14.0_react@17.0.2
+      react-dom: 17.0.2_react@17.0.2
       react-feather: 1.1.6_mv67koxdvxhyejehvpcoenu3ai
-      react-live: 1.12.0_prpqlkd37azqwypxturxi7uyci
-      react-perfect-scrollbar: 1.5.8_prpqlkd37azqwypxturxi7uyci
+      react-live: 1.12.0_sfoxds7t5ydpegc3knd667wn6m
+      react-perfect-scrollbar: 1.5.8_sfoxds7t5ydpegc3knd667wn6m
       scrollama: 2.2.3
-      styled-components: 4.4.1_prpqlkd37azqwypxturxi7uyci
+      styled-components: 4.4.1_sfoxds7t5ydpegc3knd667wn6m
     transitivePeerDependencies:
       - '@types/react'
       - bufferutil
@@ -27804,7 +27819,7 @@ packages:
       copy-text-to-clipboard: 2.2.0
       docz: 1.2.0_tcskhtqtylaygxwuqvqotemc7e
       facepaint: 1.2.1
-      hotkeys-js: 3.10.2
+      hotkeys-js: 3.10.1
       intersection-observer: 0.7.0
       lodash: 4.17.21
       polished: 3.7.2
@@ -36763,7 +36778,6 @@ packages:
       webpack: 5.78.0_webpack-cli@4.10.0
     dev: true
 
-<<<<<<< HEAD
   /less-loader/10.2.0_less@4.1.3+webpack@5.78.0:
     resolution: {integrity: sha512-AV5KHWvCezW27GT90WATaDnfXBv99llDbtaj4bshq6DvAihMdNjaPDcUMa6EXKLRF+P2opFenJp89BXg91XLYg==}
     engines: {node: '>= 12.13.0'}
@@ -36780,6 +36794,9 @@ packages:
 =======
   /less-loader/11.1.0_less@3.13.1+webpack@5.78.0:
 >>>>>>> 72a34faf (fix: reduce the duplicated rendering of the analyse page; fix: grail layout with wrong rendering)
+=======
+  /less-loader/11.1.0_less@3.13.1+webpack@5.78.0:
+>>>>>>> 83dff4ec (fix: reduce the duplicated rendering of the analyse page; fix: grail layout with wrong rendering)
     resolution: {integrity: sha512-C+uDBV7kS7W5fJlUjq5mPBeBVhYpTIm5gB09APT9o3n/ILeaXVsiSFTbZpTJCJwQ/Crczfn3DmfQFwxYusWFug==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -36847,7 +36864,6 @@ packages:
       source-map: 0.6.1
     dev: true
 
-<<<<<<< HEAD
   /less/4.1.3:
     resolution: {integrity: sha512-w16Xk/Ta9Hhyei0Gpz9m7VS8F28nieJaL/VyShID7cYvP6IL5oHeL6p4TXSDJqZE/lNv0oJ2pGVjJsRkfwm5FA==}
     engines: {node: '>=6'}
@@ -36867,8 +36883,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-=======
->>>>>>> 72a34faf (fix: reduce the duplicated rendering of the analyse page; fix: grail layout with wrong rendering)
   /leven/3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
@@ -39122,7 +39136,6 @@ packages:
       randexp: 0.4.6
     dev: true
 
-<<<<<<< HEAD
   /needle/3.2.0:
     resolution: {integrity: sha512-oUvzXnyLiVyVGoianLijF9O/RecZUf7TkBfimjGrLM4eQhXyeJwM6GeAWccwfQ9aa4gMCZKqhAOuLaMIcQxajQ==}
     engines: {node: '>= 4.4.x'}
@@ -39136,8 +39149,6 @@ packages:
       - supports-color
     optional: true
 
-=======
->>>>>>> 72a34faf (fix: reduce the duplicated rendering of the analyse page; fix: grail layout with wrong rendering)
   /negotiator/0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
