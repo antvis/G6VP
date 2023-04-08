@@ -9,24 +9,21 @@ import { CloseOutlined } from '@ant-design/icons';
 import './index.less';
 
 const COLOR_MAP = {
-  basic: 'green',
-  advance: 'volcano',
-  scene: 'purple',
+  basic: 'rgb(56, 158, 13)',
+  advance: 'rgb(19, 194, 194)',
+  scene: 'rgb(83, 29, 171)',
   undefined: '#f50',
 };
 
 const colors = [
-  'green',
-  'volcano',
-  'purple',
-  '#f50',
-  '#faad14',
-  '#13c2c2',
-  '#1677ff',
-  '#722ed1',
-  '#eb2f96',
-  '#d4b106',
-  '#10239e',
+  { stroke: 'rgb(135, 56, 0, 1)', fill: 'rgb(135, 56, 0, 0.2)' },
+  { stroke: 'rgb(173, 139, 0, 1)', fill: 'rgb(173, 139, 0, 0.2)' },
+  { stroke: 'rgb(91, 140, 0, 1)', fill: 'rgb(91, 140, 0, 0.2)' },
+  { stroke: 'rgb(8, 151, 156, 1)', fill: 'rgb(8, 151, 156, 0.2)' },
+  { stroke: 'rgb(9, 88, 217, 1)', fill: 'rgb(9, 88, 217, 0.2)' },
+  { stroke: 'rgb(83, 29, 171, 1)', fill: 'rgb(83, 29, 171, 0.2)' },
+  { stroke: 'rgb(158, 16, 104, 1)', fill: 'rgb(158, 16, 104, 0.2)' },
+  { stroke: 'rgb(37, 64, 0, 1)', fill: 'rgb(37, 64, 0, 0.2)' },
 ];
 
 interface AssetsCenterProps {
@@ -56,10 +53,14 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       draft.candidateCategories = Object.keys(CategroyOptions).filter(key =>
         candidateAssets.find(asset => componentsMap[asset.value].info.category === key),
       );
-      if (candidateAssets.find(asset => !componentsMap[asset.value].info.category))
+      if (candidateAssets.find(asset => !componentsMap[asset.value].info.category)) {
         draft.candidateCategories.push('otherCategory');
+      }
+      draft.candidateCategories.sort((a, b) => (a > b ? 1 : -1));
       draft.checkedCategories = draft.candidateCategories;
-      draft.assets = candidateAssets;
+      draft.assets = []
+        .concat(candidateAssets)
+        .sort((a, b) => (componentsMap[a.value].info.category > componentsMap[b.value].info.category ? 1 : -1));
     });
   }, [candidateAssets]);
 
@@ -84,13 +85,15 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         // 非全选状态下，若被点击的 tag 类别未选中，则选中
         draft.checkedCategories.push(value);
       }
-      draft.assets = candidateAssets.filter(assetInfo => {
-        const asset = componentsMap[assetInfo.value];
-        const { info } = asset;
-        if (draft.checkedCategories.includes(info.category)) return true;
-        if (!info.category && draft.checkedCategories.includes('otherCategory')) return true;
-        return false;
-      });
+      draft.assets = candidateAssets
+        .filter(assetInfo => {
+          const asset = componentsMap[assetInfo.value];
+          const { info } = asset;
+          if (draft.checkedCategories.includes(info.category)) return true;
+          if (!info.category && draft.checkedCategories.includes('otherCategory')) return true;
+          return false;
+        })
+        .sort((a, b) => (componentsMap[a.value].info.category > componentsMap[b.value].info.category ? 1 : -1));
     });
   };
 
@@ -131,8 +134,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
 
       <div className="gi-assets-center">
         {/* 筛选 */}
-        <div className="gi-assets-center-filter-wrapper">
-          <p>分类筛选</p>
+        <Row className="gi-assets-center-filter-wrapper">
+          <Col key="title" span={4} style={{ fontSize: '8px', textAlign: 'right' }}>
+            分类筛选：
+          </Col>
           {candidateCategories.map(key => {
             let option = CategroyOptions[key];
             if (!option) option = otherCategory;
@@ -140,19 +145,21 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
             const tagColor = colors[order % colors.length];
             const active = checkedCategories.includes(key);
             return (
-              <Tag
-                key={key}
-                color={tagColor}
-                className="gi-asset-center-tag gi-asset-center-tag-filter"
-                onClick={() => handleFilterByTag(key)}
-                style={{ opacity: active ? 1 : 0.2 }}
-              >
-                {name}
-              </Tag>
+              <Col key={key} span={3}>
+                <Tag
+                  key={key}
+                  color={tagColor.fill}
+                  className="gi-asset-center-tag gi-asset-center-tag-filter"
+                  onClick={() => handleFilterByTag(key)}
+                  style={{ opacity: active ? 1 : 0.2 }}
+                >
+                  <span style={{ color: tagColor.stroke }}>{name}</span>
+                </Tag>
+              </Col>
             );
           })}
-        </div>
-        <CheckCard.Group multiple value={checkedList}>
+        </Row>
+        <CheckCard.Group className="gi-assets-center-assets-cardgroup" multiple value={checkedList}>
           <Row
             gutter={[
               { xs: 4, sm: 6, md: 6, lg: 6 },
@@ -173,32 +180,28 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                     onChange={() => handleClick(assetId)}
                     bordered={false}
                     className="assetsCardStyle"
+                    style={{
+                      backgroundColor: tagColor.fill,
+                      background: tagColor.fill,
+                      borderColor: tagColor.stroke,
+                    }}
                     title={
                       <div
                         style={{
                           width: '100%',
-                          color: 'var(--text-color)',
+                          color: tagColor.stroke,
                           display: 'block',
                         }}
                       >
                         {name}
-                        <Tag color={tagColor} className="gi-asset-center-tag">
-                          {tag.name}
-                        </Tag>
                       </div>
                     }
                     avatar={
                       <Avatar
                         style={{
-                          background: 'var(--primary-color-opacity-1)',
-                          color: '#3056E3',
-                          fontSize: '28px',
-                          width: '40px',
-                          height: '40px',
-                          lineHeight: '40px',
+                          color: tagColor.stroke,
                         }}
                         icon={<Icon type={icon} />}
-                        size={50}
                       ></Avatar>
                     }
                     value={assetId}

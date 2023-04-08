@@ -1,5 +1,5 @@
 import { CaretRightOutlined, CloseOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons';
-import { Col, Collapse, Row } from 'antd';
+import { Button, Col, Collapse, Popover, Row, Tooltip } from 'antd';
 import React from 'react';
 import { Icon } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
@@ -8,11 +8,15 @@ import './index.less';
 
 const { Panel } = Collapse;
 
+const GUIDE_LOCALSTORAGE_KEY = 'GI_COMPONENT_CONFIG_GUIDE_CLOSED';
+
 /** 组件模块 配置面板 */
 const ComponentPanel = props => {
-  const { config, components, updateContext, setPanelHeight, pageLayout, handleEditContainer } = props;
+  const { config, components, updateContext, setPanelHeight, pageLayout, handleEditContainer, componentsMap } = props;
   const [state, setState] = useImmer({
     focusing: undefined,
+    guideVisible:
+      !localStorage.getItem(GUIDE_LOCALSTORAGE_KEY) || localStorage.getItem(GUIDE_LOCALSTORAGE_KEY) === 'false',
   });
   const { focusing } = state;
 
@@ -22,15 +26,16 @@ const ComponentPanel = props => {
       return type === 'GICC' || type === 'GICC_MENU';
     });
     let pageLayoutContainers = [];
-    if (pageLayout?.meta) {
-      pageLayout.meta.containers.map(container => {
-        const containerProps = pageLayout.props.containers?.find(con => con.id === container.id);
-        if (containerProps.display) {
+    const meta = componentsMap[pageLayout.id]?.meta;
+    if (pageLayout?.props && meta) {
+      pageLayout.props.containers.forEach(container => {
+        const containerMeta = meta.containers.find(item => item.id === container.id);
+        if (container.display && containerMeta) {
           pageLayoutContainers.push({
-            id: container.id,
-            name: container.name,
-            info: container,
-            props: containerProps,
+            id: containerMeta.id,
+            name: containerMeta.name,
+            info: containerMeta,
+            props: container,
           });
         }
       });
@@ -85,14 +90,48 @@ const ComponentPanel = props => {
     });
   };
 
+  /** 关闭容器设置指引 Popover */
+  const handleCloseGuide = () => {
+    localStorage.setItem(GUIDE_LOCALSTORAGE_KEY, 'true');
+    setState(draft => {
+      draft.guideVisible = false;
+    });
+  };
+
+  const handleGoToContainerPanel = id => {
+    handleCloseGuide();
+    handleEditContainer(id);
+  };
+
   return (
     <div>
       <Row justify="space-between" align="middle" className="gi-container-config-header">
         <Col className="gi-container-config-title">{pageLayout?.name}</Col>
         <Col>
-          <span onClick={handleEditContainer} style={{ float: 'right' }}>
-            <SettingOutlined />
-          </span>
+          {state.guideVisible ? (
+            <Popover
+              title="由此进入页面布局和容器配置"
+              open={state.guideVisible}
+              placement="right"
+              content={
+                <div style={{ textAlign: 'right' }}>
+                  <Button size="small" onClick={handleCloseGuide}>
+                    知道了
+                  </Button>
+                </div>
+              }
+            >
+              <span onClick={handleGoToContainerPanel} style={{ float: 'right' }}>
+                <SettingOutlined />
+              </span>
+            </Popover>
+          ) : (
+            <Tooltip title="配置页面布局和容器">
+              <span onClick={handleGoToContainerPanel} style={{ float: 'right' }}>
+                <SettingOutlined />
+              </span>
+            </Tooltip>
+          )}
         </Col>
       </Row>
 
@@ -129,7 +168,11 @@ const ComponentPanel = props => {
               }
               key={id}
               className="gi-container-asset-panel"
-              extra={<EditOutlined onClick={() => handleEditContainer(id)} />}
+              extra={
+                <Tooltip title="配置容器" placement="right">
+                  <EditOutlined onClick={() => handleGoToContainerPanel(id)} />
+                </Tooltip>
+              }
             >
               {subAssets?.map((asset, i) => (
                 <div

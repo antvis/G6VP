@@ -170,7 +170,7 @@ const Panel = props => {
   const { config, updateContext, context, setPanelWidth, setPanelHeight } = props;
   const { data, schemaData, services, engineId, activeAssetsKeys } = context;
 
-  const [assets, setAssets] = React.useState<GIComponentAssets>({});
+  const [assets, setAssets] = React.useState<GIComponentAssets>();
   const [state, setState] = useImmer({
     mode: 'component',
     candidateContainers: [],
@@ -209,7 +209,7 @@ const Panel = props => {
   const componentsMap: {
     [componentId: string]: any;
   } = React.useMemo(() => {
-    if (!assets) return [];
+    if (!assets) return {};
     const usingComponents = { ...assets };
     delete usingComponents.default;
     const components = getComponentsByAssets(usingComponents, data, services, config, schemaData, engineId) || [];
@@ -284,7 +284,7 @@ const Panel = props => {
         const cacheContainer = config.pageLayout.props.containers?.find(con => con.id === container.id);
         if (cacheContainer) {
           container.GI_CONTAINER = cacheContainer.GI_CONTAINER;
-          container.display = cacheContainer.display;
+          container.display = container.display || cacheContainer.display;
         }
       });
     }
@@ -296,9 +296,11 @@ const Panel = props => {
       draft.candidateContainers = candidates;
     });
 
-    updateContext(draft => {
-      draft.config.pageLayout = pageLayoutComponent;
-    });
+    if (config.pageLayout.id !== pageLayoutComponent.id) {
+      updateContext(draft => {
+        draft.config.pageLayout = pageLayoutComponent;
+      });
+    }
   };
 
   const handleUpdatePageLayout = updateFunc => {
@@ -319,10 +321,11 @@ const Panel = props => {
     });
   };
 
-  return mode === 'component' ? (
+  const ComponentPanelElement = assets ? (
     <ComponentPanel
       {...props}
       pageLayout={context.config.pageLayout}
+      componentsMap={componentsMap}
       handleEditContainer={containerId => {
         setState(draft => {
           draft.mode = 'container';
@@ -330,6 +333,12 @@ const Panel = props => {
         });
       }}
     />
+  ) : (
+    ''
+  );
+
+  return mode === 'component' ? (
+    ComponentPanelElement
   ) : (
     <ContainerPanel
       {...props}

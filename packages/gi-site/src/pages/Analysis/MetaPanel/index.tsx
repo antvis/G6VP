@@ -65,7 +65,7 @@ const MetaPanel = props => {
   const { component: Component } = navbarOptionsMap[value];
 
   return (
-    <div className="gi-config-pannel" style={{ height: state.panelHeight || '100%' }}>
+    <div className="gi-config-panel" style={{ height: state.panelHeight || '100%' }}>
       <Component
         {...props}
         updateContext={updateContext}

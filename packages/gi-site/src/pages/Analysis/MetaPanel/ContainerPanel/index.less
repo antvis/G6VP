@@ -104,29 +104,67 @@
   overflow-y: scroll;
   height: calc(100% - 42px);
   padding: 16px;
+  .gi-assets-center-assets-cardgroup {
+    overflow-y: scroll;
+    height: 90%;
+    padding: 0px 4px;
+  }
   .assetsCardStyle {
-    width: 100px;
-    height: 100px;
+    width: fit-content;
+    height: 30px;
+    border-radius: 2150px !important;
+    margin-bottom: 4px;
+    border-width: 0px !important;
     .ant-pro-checkcard-avatar {
       padding-right: 0;
+      width: 40px !important;
+      height: 40px !important;
+      line-height: 36px !important;
+      font-size: 20px;
+      .ant-avatar-circle {
+        background: unset !important;
+      }
+    }
+    .ant-pro-checkcard-detail {
+      height: 40px;
+      line-height: 40px;
     }
     .ant-pro-checkcard-header {
       display: block;
+      .ant-pro-checkcard-title {
+        font-size: 12px;
+      }
     }
     .ant-pro-checkcard-avatar-header {
-      display: block;
+      display: inline-flex;
       text-align: center;
     }
+  }
+  .ant-pro-checkcard-multiple.ant-pro-checkcard-checked {
+    border-width: 2px !important;
+    border-style: solid !important;
+    box-shadow: unset !important;
+  }
+  .ant-pro-checkcard-multiple.ant-pro-checkcard-checked::after {
+    position: absolute;
+    top: 9px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background: #3056e3;
+    border: unset;
+    border-radius: 50%;
+    content: '';
   }
 
   .gi-asset-center-tag {
     font-size: 12px;
-    transform: scale(0.8) translate(13px);
+    transform: scale(0.8);
     display: block;
     width: fit-content;
   }
   .gi-assets-center-filter-wrapper {
-    display: inline-flex;
+    margin-bottom: 12px;
     .gi-asset-center-tag-filter {
       display: inline-flex;
       cursor: pointer;
@@ -135,8 +173,9 @@
   }
   .gi-assets-center-tooltip {
     position: absolute;
-    bottom: calc(50vh - 340px);
-    margin-left: 88%;
+    bottom: calc(50vh - 126px);
+    transform: translateY(100%);
+    margin-left: calc(100% - 28px);
     background: var(--background-color);
     width: 150px;
     height: 200px;
