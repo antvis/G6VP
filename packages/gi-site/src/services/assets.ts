@@ -47,7 +47,7 @@ const LOCAL_ASSETS: any[] = [
   },
   // 内置 HugeGraph
   {
-    ...OFFICIAL_PACKAGES['GI_ASSETS_HUGEGRAPH'],
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
     ...GI_ASSETS_HUGEGRAPH,
   },
   // 内置 GraphScope 单机版
