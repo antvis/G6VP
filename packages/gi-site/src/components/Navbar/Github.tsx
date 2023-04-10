@@ -29,12 +29,6 @@ const Github: React.FunctionComponent<GithubProps> = props => {
     handleCloseGithubPopover();
   };
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      handleCloseGithubPopover();
-    }, 10000);
-  }, []);
-
   return (
     <Popover
       title="给个鼓励，加个⭐️吧！"
