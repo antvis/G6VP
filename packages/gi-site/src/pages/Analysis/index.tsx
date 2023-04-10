@@ -131,7 +131,6 @@ const Analysis = props => {
       activeAssets => {
         const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
         const assetServices = utils.getCombineServices(activeAssets.services!);
-
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));

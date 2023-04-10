@@ -1,5 +1,5 @@
 import { GithubOutlined } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { Button, Popover } from 'antd';
 import * as React from 'react';
 interface GithubProps {}
 
@@ -11,24 +11,49 @@ const Github: React.FunctionComponent<GithubProps> = props => {
         return res.json();
       })
       .then(res => {
-        setCount(res.stargazers_count);
+        if (res.stargazers_count) setCount(res.stargazers_count);
       });
   }, []);
-  const handleClick = () => {
-    window.open('https://github.com/antvis/G6VP', '_target');
+
+  const [githubPopVisible, setGithubPopVisible] = React.useState(
+    !localStorage.getItem('GITHUB_POP_CLOSED') || localStorage.getItem('GITHUB_POP_CLOSED') === 'false',
+  );
+
+  const handleCloseGithubPopover = () => {
+    setGithubPopVisible(false);
+    localStorage.setItem('GITHUB_POP_CLOSED', 'true');
   };
+
+  const handleJumpToGithub = () => {
+    window.open('https://github.com/antvis/G6VP', '_blank');
+    handleCloseGithubPopover();
+  };
+
   return (
-    <div>
-      <Tooltip
-        placement="bottomLeft"
-        title={'项目已开源，如果有帮助，还请帮忙点个小🌟🌟 让更多用户看见～'}
-        color={'var(--primary-color)'}
-      >
-        <Button type="text" icon={<GithubOutlined />} onClick={handleClick}>
-          {` ${count}`}
-        </Button>
-      </Tooltip>
-    </div>
+    <Popover
+      title="给个鼓励，加个⭐️吧！"
+      open={githubPopVisible}
+      placement="bottomRight"
+      getPopupContainer={node => node}
+      overlayStyle={{ marginLeft: '20px' }}
+      content={
+        <div style={{ textAlign: 'center' }}>
+          <Button size="small" onClick={handleCloseGithubPopover}>
+            别烦我
+          </Button>
+          <Button size="small" type="primary" style={{ marginLeft: '4px' }} onClick={handleJumpToGithub}>
+            这就去
+          </Button>
+        </div>
+      }
+    >
+      <span className="gi-header-github-icon">
+        <a href="http://github.com/antvis/g6vp" target="_blank" rel="noreferrer" style={{ marginRight: '4px' }}>
+          <GithubOutlined />
+        </a>
+        {count ? ` ${count}` : ''}
+      </span>
+    </Popover>
   );
 };
 
