@@ -60,7 +60,7 @@ const formatPageLayoutContainer = (pageLayout, container, componentsMap, configu
   const id = `_${pageLayout.id}-${oid}`;
   const props = {};
   let candidateAssets: AssetInfo[] = [];
-  const configuredContainer = configuredPageLayout?.props.containers?.find(con => con.id === oid);
+  const configuredContainer = configuredPageLayout?.props?.containers?.find(con => con.id === oid);
   Object.keys(others).forEach(key => {
     if (key === 'GI_CONTAINER') {
       candidateAssets = others[key].enum.map(value => {
@@ -281,7 +281,7 @@ const Panel = props => {
     if (config.pageLayout?.id === pageLayoutId) {
       // 若当前缓存有同样的 pageLayout ，则恢复缓存中的资产
       pageLayoutComponent.props.containers.forEach(container => {
-        const cacheContainer = config.pageLayout.props.containers?.find(con => con.id === container.id);
+        const cacheContainer = config.pageLayout.props?.containers?.find(con => con.id === container.id);
         if (cacheContainer) {
           container.GI_CONTAINER = cacheContainer.GI_CONTAINER;
           container.display = container.display || cacheContainer.display;

@@ -4,7 +4,13 @@ import React from 'react';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
-    const components = GI_CONTAINER?.map(id => ComponentCfgMap?.[id])
+    const assetKeys = [] as any[];
+    GI_CONTAINER.forEach(item => {
+      if (typeof item === 'string') assetKeys.push(item);
+      else assetKeys.push(item.value);
+    });
+    const components = assetKeys
+      .map(id => ComponentCfgMap?.[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
 
