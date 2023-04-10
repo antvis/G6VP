@@ -52,8 +52,8 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
       </div>
       <div style={styles.right}>
         <SaveWorkbook workbookId={workbookId} />
-        <Github />
         <Theme />
+        <Github />
       </div>
     </header>
   );
