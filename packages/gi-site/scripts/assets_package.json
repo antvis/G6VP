@@ -48,9 +48,9 @@
     "version": "2.0.0"
   },
   {
-    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-hugegraph@2.0.0/dist/index.min.js",
+    "url": "https://cdn.jsdelivr.net/npm/@antv/gi-assets-hugegraph@1.0.0/dist/index.min.js",
     "global": "GI_ASSETS_HUGEGRAPH",
     "name": "@antv/gi-assets-hugegraph",
-    "version": "2.0.0"
+    "version": "1.0.0"
   }
 ]
