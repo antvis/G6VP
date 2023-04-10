@@ -73,9 +73,13 @@ const ContainerPanel = props => {
         if (component || !componentsMap[key]) return false;
         return true;
       });
+      // 当前页面布局正在使用的自带容器
+      const pageLayoutContainerIds = pageLayout.props.containers
+        .filter(container => container.display)
+        .map(container => getPrefixedContainerId(container.id, pageLayout));
 
       // 选中：必选的子容器 + 当前活跃的所有容器 + 页面布局
-      handleContainerChange([...requiredIds, ...currentActiveAssetKeys, pageLayout.id], requiredIds);
+      handleContainerChange([...requiredIds, ...currentActiveAssetKeys, ...pageLayoutContainerIds, pageLayout.id]);
     }
   }, [pageLayout?.id]);
 
@@ -84,7 +88,7 @@ const ContainerPanel = props => {
    * @param selectedList 需要选中的所有容器 id 列表
    * @canditates 候选的容器，可传入以防止调用该函数时 state 中的候选容器更新尚未生效
    */
-  const handleContainerChange = (selectedList: string[], pageLayoutSubContainerIds: string[] = []) => {
+  const handleContainerChange = (selectedList: string[]) => {
     const containers = candidateContainers.filter(container => selectedList.includes(container.id));
 
     // 获取容器（配置在模版中的）默认资产
@@ -141,6 +145,7 @@ const ContainerPanel = props => {
       });
     });
 
+    // 关闭资产中心
     handleFocusAssetsSelector();
   };
 
@@ -256,11 +261,14 @@ const ContainerPanel = props => {
       // 页面布局的子容器不在资产列表中，因此生效逻辑不通。若被选中，则设置其 display 为 true
       updatePageLayout(propsPageLayout => {
         const originContainerId = getOriginContainerId(containerId, propsPageLayout);
-        const propContainer = propsPageLayout.props.containers.find(con => con.id === originContainerId);
+        const propContainer = propsPageLayout.props?.containers.find(con => con.id === originContainerId);
         if (propContainer) {
           propContainer.display = true;
           propContainer.GI_CONTAINER = containerAssetsIds;
         } else if (!componentsMap[containerId]) {
+          propsPageLayout.props = propsPageLayout.props || {
+            containers: [],
+          };
           // 该子容器不存在页面布局的子容器列表中，加入
           propsPageLayout.props.containers.push({
             ...container,

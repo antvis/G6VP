@@ -1,5 +1,5 @@
 import { utils } from '@antv/gi-sdk';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Tabs } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { getSearchParams } from '../../components/utils';
@@ -9,6 +9,8 @@ import * as ProjectServices from '../../services/project';
 import * as TemplateService from '../../services/template';
 import { IDataset, ITemplate } from '../../services/typing';
 import TemplateDesc from './TemplateDesc';
+import TabPane from 'antd/lib/tabs/TabPane';
+import Recover from '../Workspace/Recover';
 
 interface CreateProps {}
 const styles = {
@@ -115,53 +117,81 @@ const Create: React.FunctionComponent<CreateProps> = props => {
     history.push(`/workspace/${projectId}`);
   };
 
+  const handleRecover = async params => {
+    debugger;
+    const { GI_ASSETS_PACKAGES, name, datasetId, projectConfig, activeAssetsKeys, members } = params;
+    const projectId = await ProjectServices.create({
+      datasetId,
+      name,
+      status: 0, // 0 正常项目， 1删除项目
+      members,
+      projectConfig,
+      activeAssetsKeys,
+      type: 'project',
+    });
+    try {
+      const PRE_GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+      localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify({ ...PRE_GI_ASSETS_PACKAGES, ...GI_ASSETS_PACKAGES }));
+      history.push(`/workspace/${projectId}?nav=data`);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <div style={styles.container}>
-      <Form form={form} layout="vertical">
-        <Form.Item
-          label="工作薄名称"
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: '请输入画布名称!',
-            },
-          ]}
-        >
-          <Input placeholder="请填写画布名称" />
-        </Form.Item>
-        <Form.Item
-          label="选择数据集"
-          name="datasetId"
-          rules={[
-            {
-              required: true,
-              message: '请选择数据集!',
-            },
-          ]}
-        >
-          <Select placeholder="请选择数据集" options={datasetOptions} onChange={handleChangeDataset}></Select>
-        </Form.Item>
-        <Form.Item
-          label="选择模版"
-          name="templateId"
-          rules={[
-            {
-              required: true,
-              message: '请选择模版!',
-            },
-          ]}
-        >
-          <Select placeholder="请选择模版" options={templateOptions} onChange={handleChangeTemplate}></Select>
-        </Form.Item>
-        <TemplateDesc {...template} />
+      <Tabs>
+        <TabPane tab="新建工作簿" key="new">
+          <Form form={form} layout="vertical">
+            <Form.Item
+              label="工作薄名称"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入画布名称!',
+                },
+              ]}
+            >
+              <Input placeholder="请填写画布名称" />
+            </Form.Item>
+            <Form.Item
+              label="选择数据集"
+              name="datasetId"
+              rules={[
+                {
+                  required: true,
+                  message: '请选择数据集!',
+                },
+              ]}
+            >
+              <Select placeholder="请选择数据集" options={datasetOptions} onChange={handleChangeDataset}></Select>
+            </Form.Item>
+            <Form.Item
+              label="选择模版"
+              name="templateId"
+              rules={[
+                {
+                  required: true,
+                  message: '请选择模版!',
+                },
+              ]}
+            >
+              <Select placeholder="请选择模版" options={templateOptions} onChange={handleChangeTemplate}></Select>
+            </Form.Item>
+            <TemplateDesc {...template} />
 
-        <Form.Item>
-          <Button type="primary" onClick={handleSubmit}>
-            创建画布
-          </Button>
-        </Form.Item>
-      </Form>
+            <Form.Item>
+              <Button type="primary" onClick={handleSubmit}>
+                创建
+              </Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+        <TabPane tab="恢复工作簿" key="recover">
+          <Recover onRecover={handleRecover} />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
