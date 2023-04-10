@@ -11,13 +11,14 @@ import { IDataset, ITemplate } from '../../services/typing';
 import TemplateDesc from './TemplateDesc';
 import TabPane from 'antd/lib/tabs/TabPane';
 import Recover from '../Workspace/Recover';
+import SegmentedTabs from '../../components/SegmentedTabs';
 
 interface CreateProps {}
 const styles = {
   container: {
     borderRadius: '8px',
-    background: 'var(--background-color-transparent)',
     padding: '24px',
+    background: 'unset',
   },
 };
 
@@ -118,7 +119,6 @@ const Create: React.FunctionComponent<CreateProps> = props => {
   };
 
   const handleRecover = async params => {
-    debugger;
     const { GI_ASSETS_PACKAGES, name, datasetId, projectConfig, activeAssetsKeys, members } = params;
     const projectId = await ProjectServices.create({
       datasetId,
@@ -139,59 +139,69 @@ const Create: React.FunctionComponent<CreateProps> = props => {
   };
 
   return (
-    <div style={styles.container}>
-      <Tabs>
-        <TabPane tab="新建工作簿" key="new">
-          <Form form={form} layout="vertical">
-            <Form.Item
-              label="工作薄名称"
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: '请输入画布名称!',
-                },
-              ]}
-            >
-              <Input placeholder="请填写画布名称" />
-            </Form.Item>
-            <Form.Item
-              label="选择数据集"
-              name="datasetId"
-              rules={[
-                {
-                  required: true,
-                  message: '请选择数据集!',
-                },
-              ]}
-            >
-              <Select placeholder="请选择数据集" options={datasetOptions} onChange={handleChangeDataset}></Select>
-            </Form.Item>
-            <Form.Item
-              label="选择模版"
-              name="templateId"
-              rules={[
-                {
-                  required: true,
-                  message: '请选择模版!',
-                },
-              ]}
-            >
-              <Select placeholder="请选择模版" options={templateOptions} onChange={handleChangeTemplate}></Select>
-            </Form.Item>
-            <TemplateDesc {...template} />
+    <div>
+      <SegmentedTabs
+        style={styles.container}
+        defaultActive="new"
+        items={[
+          {
+            key: 'new',
+            label: '新建数据',
+            children: (
+              <Form form={form} layout="vertical">
+                <Form.Item
+                  label="工作薄名称"
+                  name="name"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入画布名称!',
+                    },
+                  ]}
+                >
+                  <Input placeholder="请填写画布名称" />
+                </Form.Item>
+                <Form.Item
+                  label="选择数据集"
+                  name="datasetId"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请选择数据集!',
+                    },
+                  ]}
+                >
+                  <Select placeholder="请选择数据集" options={datasetOptions} onChange={handleChangeDataset}></Select>
+                </Form.Item>
+                <Form.Item
+                  label="选择模版"
+                  name="templateId"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请选择模版!',
+                    },
+                  ]}
+                >
+                  <Select placeholder="请选择模版" options={templateOptions} onChange={handleChangeTemplate}></Select>
+                </Form.Item>
+                <TemplateDesc {...template} />
 
-            <Form.Item>
-              <Button type="primary" onClick={handleSubmit}>
-                创建
-              </Button>
-            </Form.Item>
-          </Form>
-        </TabPane>
-        <TabPane tab="恢复工作簿" key="recover">
-          <Recover onRecover={handleRecover} />
-        </TabPane>
-      </Tabs>
+                <Form.Item>
+                  <Button type="primary" onClick={handleSubmit}>
+                    创建
+                  </Button>
+                </Form.Item>
+              </Form>
+            ),
+          },
+          {
+            key: 'recover',
+            label: '恢复工作簿',
+            children: <Recover onRecover={handleRecover} />,
+          },
+        ]}
+      />
     </div>
   );
 };
