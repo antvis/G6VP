@@ -30,7 +30,7 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { GI_CONTAINER: sideItems = [] } = containers[0] || {};
 
   const SideContent = useComponents(sideItems, ComponentCfgMap, assets.components);
-  const items = SideContent.map(item => {
+  const items = SideContent.map((item: any) => {
     return {
       icon: <Icon type={item.icon} />,
       key: item.id,

@@ -15,17 +15,17 @@ export const CategroyOptions = {
   'container-components': {
     name: '容器组件',
     icon: <InsertRowBelowOutlined />,
-    order: 1,
+    order: 0,
   },
   'canvas-interaction': {
     name: '画布交互',
     icon: <SelectOutlined />,
-    order: 2,
+    order: 1,
   },
   'elements-interaction': {
     name: '元素交互',
     icon: <PieChartOutlined />,
-    order: 3,
+    order: 2,
   },
   'node-interaction': {
     name: '节点交互',

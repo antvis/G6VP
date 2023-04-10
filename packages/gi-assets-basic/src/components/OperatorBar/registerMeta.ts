@@ -1,6 +1,12 @@
 import { extra } from '@antv/gi-sdk';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
+
+metas.height.default = 'fit-content';
+metas.width.default = '100%';
+metas.offset.default = [0, 0];
+metas.placement.default = 'LT';
+
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [], GIAC_ITEMS = [] } = context;
   const GIAC_TRANS = GIAC_ITEMS.map(c => {

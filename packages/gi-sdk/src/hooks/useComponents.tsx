@@ -36,9 +36,11 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[GICC_LAYOUT.id] || {
     component: DEFAULT_GICC_LAYOUT.component,
   };
-  const { props: GICC_LAYOUT_PROPS } = ComponentCfgMap[GICC_LAYOUT.id] || {
-    props: DEFAULT_GICC_LAYOUT.props,
-  };
+  // 页面布局组件的 props 从 context.config.pageLayout 中读取，统一 pageLayout 读写方式
+  const { props: GICC_LAYOUT_PROPS } = config.pageLayout ||
+    ComponentCfgMap[GICC_LAYOUT.id] || {
+      props: DEFAULT_GICC_LAYOUT.props,
+    };
 
   const renderComponents = () => {
     return components.map(c => {
@@ -91,6 +93,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
       );
     });
   };
+
   return {
     renderComponents,
     InitializerComponent,

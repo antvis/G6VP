@@ -193,6 +193,12 @@ const Analysis = props => {
               return a.id === b.id;
             },
           );
+
+          const pageLayoutComponent = configComponents.find(component => component.type === 'GICC_LAYOUT');
+          if (config && !config.pageLayout && pageLayoutComponent) {
+            draft.config.pageLayout = pageLayoutComponent;
+          }
+
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务

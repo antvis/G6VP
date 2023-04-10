@@ -17,7 +17,7 @@ interface IState {
 }
 
 const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
-  const { components, assets, GISDK_ID } = props;
+  const { components, assets, GISDK_ID, placement, offset } = props;
   const [state, updateState] = useImmer<IState>({
     mode: 'CanvasMode',
   });
@@ -79,19 +79,31 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
     }
   }, [state.mode, GISDK_ID]);
 
+  const isLeft = placement === 'LT' || placement === 'LB';
+  const isTop = placement === 'LT' || placement === 'RT';
+
   return (
     <>
       {ReactDOM.createPortal(
         <nav
           style={{
-            top: '0px',
+            top: isTop ? '0px' : 'unset',
+            bottom: !isTop ? '0px' : 'unset',
             left: '0px',
             right: '0px',
             zIndex: 300,
             position: 'fixed',
           }}
         >
-          <div>
+          <div
+            style={{
+              textAlign: isLeft ? 'left' : 'right',
+              marginLeft: isLeft ? offset[0] : 'unset',
+              marginRight: !isLeft ? offset[0] : 'unset',
+              marginTop: isTop ? offset[1] : 'unset',
+              marginBottom: !isTop ? offset[1] : 'unset',
+            }}
+          >
             {/** @ts-ignore */}
             <Segmented value={state.mode} options={options} onChange={onChange}></Segmented>
           </div>
