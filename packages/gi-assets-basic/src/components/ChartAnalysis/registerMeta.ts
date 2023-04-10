@@ -51,6 +51,17 @@ const registerMeta = ({ schemaData }) => {
       ],
       default: 'columnChart',
     },
+    brushMode: {
+      title: '交互模式',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [
+        { value: 'highlight', label: '高亮' },
+        { value: 'filter', label: '过滤' },
+      ],
+      default: 'highlight',
+    },
     height: {
       title: '图表高度',
       'x-decorator': 'FormItem',

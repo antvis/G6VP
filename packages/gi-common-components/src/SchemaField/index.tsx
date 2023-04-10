@@ -7,6 +7,7 @@ import GroupSelect from '../CommonStyleSetting/GroupSelect';
 import { AssetCollapse, FormCollapse, Offset } from '../FormilyForm';
 import IconPicker from '../CommonStyleSetting/IconPicker';
 import IconSelector from '../CommonStyleSetting/IconSelector';
+import ModifierPicker from './ModifierPicker';
 
 const SchemaField: React.ReactNode = createSchemaField({
   components: {
@@ -26,6 +27,7 @@ const SchemaField: React.ReactNode = createSchemaField({
     GroupSelect,
     ArrayCollapse,
     ArrayItems,
+    ModifierPicker,
   },
 }) as any;
 export default SchemaField;

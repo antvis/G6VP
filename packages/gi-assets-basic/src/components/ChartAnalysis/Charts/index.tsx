@@ -13,6 +13,7 @@ const iconMap = {
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
+let timer;
 const chartOptions = [
   {
     value: 'lineChart',
@@ -33,6 +34,7 @@ interface ChartCardProps {
   xField: string;
   yField: string;
   chartType: string;
+  brushMode: 'filter' | 'highlight' | undefined;
 }
 
 interface IState {
@@ -40,19 +42,21 @@ interface IState {
   xField: string;
   yField: string;
   chartType: string;
+  brushMode: 'filter' | 'highlight' | undefined;
 }
 
 const ChartCard: React.FC<ChartCardProps> = props => {
-  const { schemaData, source, graph } = useContext();
+  const { schemaData, source, graph, updateContext, sourceDataMap, transform } = useContext();
 
   const [state, updateState] = useImmer<IState>({
     dataType: props.dataType || 'edges',
     xField: props.xField,
     yField: props.yField,
     chartType: props.chartType,
+    brushMode: props.brushMode,
   });
 
-  const { chartType, dataType, xField, yField } = state;
+  const { chartType, dataType, xField, yField, brushMode } = state;
 
   const properties = useMemo(() => {
     //@ts-ignore
@@ -111,12 +115,51 @@ const ChartCard: React.FC<ChartCardProps> = props => {
 
   const highlight = ids => {
     if (dataType === 'edges') {
-      highlightEdgeIds(graph, ids);
+      if (brushMode === 'highlight') {
+        highlightEdgeIds(graph, ids || []);
+      } else {
+        const nodes: any[] = [];
+        const edges: any[] = [];
+        source.edges.forEach(item => {
+          const { source, target, id } = item;
+          if (ids && ids.includes(id)) {
+            edges.push(item);
+            nodes.push(sourceDataMap.nodes[source]);
+            nodes.push(sourceDataMap.nodes[target]);
+          }
+        });
+
+        updateContext(draft => {
+          draft.data = transform({ nodes, edges });
+        });
+      }
     }
   };
+  // const handlePlay = () => {
+  //   clearInterval(timer);
+  //   if (dataType === 'edges') {
+  //     let index = 0;
+
+  //     timer = setInterval(() => {
+  //       index = index + 10;
+  //       if (index > data.length) {
+  //         clearInterval(timer);
+  //       }
+  //       const ids = data.slice(0, index).map(item => {
+  //         return item.id;
+  //       });
+  //       console.log(ids, index);
+  //       highlight(ids);
+  //     }, 600);
+  //   }
+  // };
   const extra = (
     <>
-      X轴：
+      {/* <Button type="text" onClick={handlePlay}>
+        <PlayCircleOutlined />
+        自动播放
+      </Button> */}
+      &nbsp; X轴：
       <Select
         placeholder="X轴字段"
         onChange={updateXField}

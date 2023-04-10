@@ -1,0 +1,45 @@
+{
+  "name": "@antv/gi-assets-hugegraph",
+  "version": "2.0.0",
+  "description": "HugeGraph 资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-hugegraph",
+    "clean": "rimraf es esm lib dist",
+    "demo": "umi dev",
+    "docs": "dumi dev",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "remove:antd": "rm -rf ./node_modules/antd",
+    "start": "father build --watch",
+    "test": "jest",
+    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish  && node ../../scripts/publish_recover.js"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "@antv/gi-sdk": "workspace:*",
+    "json2csv": "^5.0.7",
+    "umi-request": "^1.4.0",
+    "use-immer": "^0.7.0"
+  },
+  "peerDependencies": {
+    "@antv/graphin": "2.x",
+    "antd": "4.x",
+    "react": "17.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

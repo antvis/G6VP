@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import DataModeCard from '../DataModeCard';
+import Github from './Github';
 import Links from './Links';
 import Logo from './Logo';
 
@@ -48,6 +49,7 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
       <div style={styles.right}>
         <DataModeCard />
         <Theme />
+        <Github />
         <UserInfo />
       </div>
     </header>
