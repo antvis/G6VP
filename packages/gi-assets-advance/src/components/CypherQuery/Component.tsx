@@ -23,7 +23,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   saveCypherTemplateServceId = 'GI/PublishTemplate',
   limit,
 }) => {
-  const { updateContext, transform, services } = useContext();
+  const { updateContext, transform, services, largeGraphLimit } = useContext();
   const service = utils.getService(services, serviceId);
 
   const [state, setState] = useImmer({
@@ -48,6 +48,19 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
     updateContext(draft => {
       const res = transform(resultData);
+
+      if (res.nodes.length > largeGraphLimit) {
+        draft.largeGraphMode = true;
+        draft.largeGraphData = res;
+        draft.source = res;
+        draft.data = {
+          nodes: [],
+          edges: [],
+        };
+        draft.isLoading = false;
+        return;
+      }
+
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
