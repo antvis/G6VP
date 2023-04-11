@@ -1,7 +1,6 @@
 import { FileTextOutlined } from '@ant-design/icons';
-import { utils } from '@antv/gi-sdk';
-import { GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
-import { Alert, Button, Col, Divider, message, Row, Space, Upload } from 'antd';
+import { IUserEdge, IUserNode } from '@antv/graphin';
+import { Alert, Button, Col, Divider, message, notification, Row, Space, Upload } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import xlsx2js from 'xlsx2js';
@@ -43,17 +42,28 @@ const UploadLocalFile: React.FC<IProps> = props => {
         return false;
       } else if (/\.(xls|xlsx|csv)$/.test(file.name.toLowerCase())) {
         const data = await xlsx2js(file);
+        const isNodeFile = (file.name as string).includes('nodes');
+        const isEdgeFile = (file.name as string).includes('edges');
+        if (!isNodeFile && !isEdgeFile) {
+          notification.error({
+            message: '文件名不规范',
+            description: `按照规范，CSV 或者 Excel 文件，文件名中需要包含 nodes 或者 edges 以此区分是点表还是边表。规范命名示例如下:
+             交易表.edges.csv 用户表.nodes.csv`,
+            duration: 0,
+          });
+          return;
+        }
 
-        const firstData = data[0];
-        const isEdge = firstData.source && firstData.target;
-        fileData = isEdge
+        fileData = isEdgeFile
           ? {
               nodes: [],
               edges: data,
+              combos: [],
             }
           : {
               nodes: data,
               edges: [],
+              combos: [],
             };
 
         const renderData: IInputData[] = [
@@ -112,7 +122,8 @@ const UploadLocalFile: React.FC<IProps> = props => {
       let nodes: IUserNode[] = [];
       let edges: IUserEdge[] = [];
       let combos: any[] = [];
-      renderData.map(d => {
+
+      renderData.forEach(d => {
         nodes = [...nodes, ...d.data.nodes];
         edges = [...edges, ...d.data.edges];
         combos = [...combos, ...(d.data.combos ? d.data.combos : [])];
@@ -139,49 +150,6 @@ const UploadLocalFile: React.FC<IProps> = props => {
     });
   };
 
-  const deleteData = (uid: string) => {
-    if (uid === undefined) return;
-    let mergeData: GraphinData = {
-      nodes: [],
-      edges: [],
-      combos: [],
-    };
-    const filterInputData = inputData.filter(d => d.uid !== uid);
-    filterInputData.map(d => {
-      if (d.enable) {
-        const nodesData = eval(d.transfunc)(d.data)?.nodes.map((d, i) => {
-          return {
-            ...d,
-            key: i,
-          };
-        });
-        const edgesData = eval(d.transfunc)(d.data)?.edges.map((d, i) => {
-          return {
-            ...d,
-            key: i,
-          };
-        });
-        mergeData = {
-          nodes: [...mergeData.nodes, ...nodesData],
-          edges: [...mergeData.edges, ...edgesData],
-          combos: [...(mergeData.combos ? mergeData.combos : []), ...(d.data.combos ? d.data.combos : [])],
-        };
-      }
-    });
-
-    const schemaData = utils.generatorSchemaByGraphData(mergeData);
-
-    updateGISite({
-      engineId: 'GI',
-      engineContext: {},
-      data: {
-        transData: mergeData,
-        inputData: filterInputData,
-      },
-      schemaData: schemaData,
-    });
-  };
-
   return (
     <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
       <Alert
@@ -198,21 +166,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
           </Space>
         }
       />
-      <h4 style={{ marginBottom: 0 }}>已解析到画布中的数据</h4>
-      {/* {inputData.map((d, i) => {
-        return (
-          <div key={d.uid || i}>
-            {d.name}
-            <DeleteOutlined
-              onClick={() => deleteData(d.uid)}
-              style={{
-                marginLeft: '5px',
-                cursor: 'pointer',
-              }}
-            />
-          </div>
-        );
-      })} */}
+
       <h4 style={{ marginBottom: 0, marginTop: '10px' }}>已传数据</h4>
 
       <div className="upload-panel-section">

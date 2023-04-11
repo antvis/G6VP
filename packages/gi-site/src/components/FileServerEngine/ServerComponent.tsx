@@ -17,6 +17,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
     data: {
       nodes: [],
       edges: [],
+      combos: [],
     },
     transfunc: GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'),
     transData: eval(GIDefaultTrans('id', 'source', 'target', 'nodeType', 'edgeType'))({ nodes: [], edges: [] }),
@@ -27,7 +28,14 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
   const steps = [
     {
       title: '上传数据',
-      content: <UploadLocalFile state={state} updateState={updateState} updateGISite={updateGISite} giSiteContext={giSiteContext}/>,
+      content: (
+        <UploadLocalFile
+          state={state}
+          updateState={updateState}
+          updateGISite={updateGISite}
+          giSiteContext={giSiteContext}
+        />
+      ),
     },
     {
       title: '配置字段',

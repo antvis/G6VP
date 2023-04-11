@@ -1,17 +1,16 @@
 import { utils } from '@antv/gi-sdk';
-import { Button, Form, Input, Select, Tabs } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
 import * as DatasetService from '../../services/dataset';
 import getConfigByEngineId from '../../services/initial.data/getConfigByEngineId';
 import * as ProjectServices from '../../services/project';
 import * as TemplateService from '../../services/template';
 import { IDataset, ITemplate } from '../../services/typing';
-import TemplateDesc from './TemplateDesc';
-import TabPane from 'antd/lib/tabs/TabPane';
 import Recover from '../Workspace/Recover';
-import SegmentedTabs from '../../components/SegmentedTabs';
+import TemplateDesc from './TemplateDesc';
 
 interface CreateProps {}
 const styles = {
@@ -146,7 +145,7 @@ const Create: React.FunctionComponent<CreateProps> = props => {
         items={[
           {
             key: 'new',
-            label: '新建数据',
+            label: '新建画布',
             children: (
               <Form form={form} layout="vertical">
                 <Form.Item

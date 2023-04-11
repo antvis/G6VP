@@ -1,8 +1,5 @@
-import { GithubOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useContext } from '../../pages/Analysis/hooks/useContext';
 import DataModeCard from '../DataModeCard';
 import Github from './Github';
 import Links from './Links';
@@ -33,26 +30,6 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   const { active } = props;
   const history = useHistory();
 
-  const [githubPopVisible, setGithubPopVisible] = React.useState(
-    !localStorage.getItem('GITHUB_POP_CLOSED') || localStorage.getItem('GITHUB_POP_CLOSED') === 'false',
-  );
-
-  const handleCloseGithubPopover = () => {
-    setGithubPopVisible(false);
-    localStorage.setItem('GITHUB_POP_CLOSED', 'true');
-  };
-
-  const handleJumpToGithub = () => {
-    window.open('https://github.com/antvis/G6VP', '_blank');
-    handleCloseGithubPopover();
-  };
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      handleCloseGithubPopover();
-    }, 10000);
-  }, []);
-
   return (
     <header style={styles.container} className="gi-navbar-container">
       <div style={styles.left}>
@@ -71,27 +48,6 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
         <Theme />
         <Github />
         <UserInfo />
-        <Popover
-          title="给个鼓励，加个⭐️吧！"
-          open={githubPopVisible}
-          placement="bottomLeft"
-          content={
-            <div style={{ textAlign: 'center' }}>
-              <Button size="small" onClick={handleCloseGithubPopover}>
-                别烦我
-              </Button>
-              <Button size="small" type="primary" style={{ marginLeft: '4px' }} onClick={handleJumpToGithub}>
-                这就去
-              </Button>
-            </div>
-          }
-        >
-          <span className="gi-header-github-icon" style={{ marginLeft: '4px' }}>
-            <a href="http://github.com/antvis/g6vp" target="_blank" rel="noreferrer">
-              <GithubOutlined />
-            </a>
-          </span>
-        </Popover>
       </div>
     </header>
   );
