@@ -299,6 +299,7 @@ export interface GIConfig {
   /** 支持多元素组合 */
   nodes: GINodeConfig[];
   edges: GIEdgeConfig[];
+  pageLayout: GIComponentConfig;
 }
 
 interface GINodeData {

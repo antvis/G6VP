@@ -92,7 +92,16 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   );
 
   const Content = (
-    <div className="gi-side-tabs">
+    <div
+      className="gi-side-tabs"
+      style={{
+        // LB 左，RT 右，LT 上，RB 下
+        borderRight: placement === 'LB' ? '1px solid var(--border-color)' : 'unset',
+        borderLeft: placement === 'RT' ? '1px solid var(--border-color)' : 'unset',
+        borderBottom: placement === 'LT' ? '1px solid var(--border-color)' : 'unset',
+        borderTop: placement === 'RB' ? '1px solid var(--border-color)' : 'unset',
+      }}
+    >
       <Tabs tabPosition={tabPosition} tabBarExtraContent={outSideFromCanvas ? tabBarExtraContent : null}>
         {panes}
       </Tabs>

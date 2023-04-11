@@ -36,7 +36,7 @@ const getComponents = (components, assets, GISDK_ID) => {
 
 const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
   //@ts-ignore
-  const { assets, GISDK_ID, ...otherProps } = props;
+  const { assets, GISDK_ID, placement, offset, height, width, ...otherProps } = props;
   const deps = JSON.stringify(otherProps);
   const COMPOENTS = React.useMemo(() => {
     //@ts-ignore
@@ -45,8 +45,26 @@ const OperatorBar: React.FunctionComponent<OperatorBarProps> = props => {
     return COMPOENTS;
   }, [deps]);
 
+  const isLeft = placement === 'LT' || placement === 'LB';
+  const isTop = placement === 'LT' || placement === 'RT';
+
   return (
-    <div className="gi-operator-bar" style={{ padding: '8px' }}>
+    <div
+      className="gi-operator-bar"
+      style={{
+        top: isTop ? '0px' : 'unset',
+        bottom: !isTop ? '0px' : 'unset',
+        right: !isLeft ? '0px' : 'unset',
+        left: isLeft ? '0px' : 'unset',
+        textAlign: isLeft ? 'left' : 'right',
+        marginLeft: isLeft ? offset[0] : 'unset',
+        marginRight: !isLeft ? offset[0] : 'unset',
+        marginTop: isTop ? offset[1] : 'unset',
+        marginBottom: !isTop ? offset[1] : 'unset',
+        width: width || '100%',
+        height: height || 'fit-content',
+      }}
+    >
       <Space>{COMPOENTS}</Space>
     </div>
   );

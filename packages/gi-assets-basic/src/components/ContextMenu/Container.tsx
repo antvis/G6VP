@@ -18,15 +18,13 @@ export interface ContextMenuProps {
   children: (content: ContextMenuValue) => React.ReactNode;
   setItem: (item: any) => void;
   style?: React.CSSProperties;
-  bindTypes?: ('node' | 'edge' | 'canvas' | 'combo')[];
 }
 
 const container = React.createRef() as React.RefObject<HTMLDivElement>;
 
 const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
-  const { bindTypes, children, style, setItem } = props;
+  const { children, style, setItem } = props;
   const contextmenu = useContextMenu({
-    bindTypes,
     container,
   });
   const { visible, x, y, item } = contextmenu;

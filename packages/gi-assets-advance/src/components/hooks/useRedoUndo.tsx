@@ -194,7 +194,6 @@ const useRedoUndo = (): {
       graph.off('stackchange', handleStackChanage);
     };
   }, [graph]);
-  //@ts-ignore
   return {
     redo,
     undo,

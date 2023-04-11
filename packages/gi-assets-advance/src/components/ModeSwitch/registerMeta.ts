@@ -1,12 +1,3 @@
-import { extra } from '@antv/gi-sdk';
-const { deepClone, GI_CONTAINER_METAS } = extra;
-const metas = deepClone(GI_CONTAINER_METAS);
-
-metas.height.default = 'calc(100vh - 120px)';
-metas.width.default = '450px';
-metas.offset.default = [120, 70];
-metas.placement.default = 'LT';
-
 const modes = ['TableMode', 'MapMode'];
 
 const registerMeta = context => {
@@ -25,7 +16,41 @@ const registerMeta = context => {
       enum: modeItems,
       default: [],
     },
-    ...metas,
+    // ...metas,
+    placement: {
+      title: '放置方位',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: 'LT',
+            label: '左上 / top',
+          },
+          {
+            value: 'RT',
+            label: '右上 / right',
+          },
+          {
+            value: 'LB',
+            label: '左下 / left',
+          },
+          {
+            value: 'RB',
+            label: '右下 / bottom',
+          },
+        ],
+      },
+      default: 'LT',
+    },
+    offset: {
+      title: '偏移距离',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      default: [16, 8],
+    },
   };
 
   return schema;
