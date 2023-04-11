@@ -197,6 +197,27 @@ const Analysis = props => {
           const pageLayoutComponent = configComponents.find(component => component.type === 'GICC_LAYOUT');
           if (config && !config.pageLayout && pageLayoutComponent) {
             draft.config.pageLayout = pageLayoutComponent;
+          } else if (pageLayoutComponent && config.pageLayout?.id === pageLayoutComponent.id) {
+            // 旧版工作簿中未记录 pageLayout，从 components 中恢复信息
+            const { name, type } = pageLayoutComponent;
+            draft.config.pageLayout = {
+              ...draft.config.pageLayout,
+              name,
+              type,
+            };
+            draft.config.pageLayout.props = draft.config.pageLayout.props || { containers: [] };
+            pageLayoutComponent.props?.containers.forEach(container => {
+              const cacheContainer = draft.config.pageLayout?.props.containers?.find(con => con.id === container.id);
+              if (cacheContainer) {
+                const idx = draft.config.pageLayout?.props.containers.indexOf(cacheContainer);
+                draft.config.pageLayout.props.containers[idx] = {
+                  ...container,
+                  ...cacheContainer,
+                };
+              } else {
+                draft.config.pageLayout.props.containers.push(container);
+              }
+            });
           }
 
           draft.isReady = true; //项目加载完毕

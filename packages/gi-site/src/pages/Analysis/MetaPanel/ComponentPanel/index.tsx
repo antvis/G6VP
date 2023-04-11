@@ -296,7 +296,7 @@ const Panel = props => {
       draft.candidateContainers = candidates;
     });
 
-    if (config.pageLayout.id !== pageLayoutComponent.id) {
+    if (config.pageLayout?.id !== pageLayoutComponent.id) {
       updateContext(draft => {
         draft.config.pageLayout = pageLayoutComponent;
       });
