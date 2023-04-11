@@ -74,9 +74,10 @@ const ContainerPanel = props => {
         return true;
       });
       // 当前页面布局正在使用的自带容器
-      const pageLayoutContainerIds = pageLayout.props.containers
-        .filter(container => container.display)
-        .map(container => getPrefixedContainerId(container.id, pageLayout));
+      const pageLayoutContainerIds =
+        pageLayout.props?.containers
+          .filter(container => container.display)
+          .map(container => getPrefixedContainerId(container.id, pageLayout)) || [];
 
       // 选中：必选的子容器 + 当前活跃的所有容器 + 页面布局
       handleContainerChange([...requiredIds, ...currentActiveAssetKeys, ...pageLayoutContainerIds, pageLayout.id]);

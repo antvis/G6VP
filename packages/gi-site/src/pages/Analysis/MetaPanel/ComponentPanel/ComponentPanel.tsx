@@ -26,19 +26,21 @@ const ComponentPanel = props => {
       return type === 'GICC' || type === 'GICC_MENU';
     });
     let pageLayoutContainers = [];
-    const meta = componentsMap[pageLayout.id]?.meta;
-    if (pageLayout?.props && meta) {
-      pageLayout.props.containers.forEach(container => {
-        const containerMeta = meta.containers.find(item => item.id === container.id);
-        if (container.display && containerMeta) {
-          pageLayoutContainers.push({
-            id: containerMeta.id,
-            name: containerMeta.name,
-            info: containerMeta,
-            props: container,
-          });
-        }
-      });
+    if (pageLayout) {
+      const meta = componentsMap[pageLayout.id]?.meta;
+      if (pageLayout.props && meta) {
+        pageLayout.props.containers.forEach(container => {
+          const containerMeta = meta.containers.find(item => item.id === container.id);
+          if (container.display && containerMeta) {
+            pageLayoutContainers.push({
+              id: containerMeta.id,
+              name: containerMeta.name,
+              info: containerMeta,
+              props: container,
+            });
+          }
+        });
+      }
     }
     const autoComponentInfos = components
       .filter(component => component.type === 'AUTO')
@@ -106,7 +108,7 @@ const ComponentPanel = props => {
   return (
     <div>
       <Row justify="space-between" align="middle" className="gi-container-config-header">
-        <Col className="gi-container-config-title">{pageLayout?.name}</Col>
+        <Col className="gi-container-config-title">{pageLayout?.name || pageLayout?.info?.name}</Col>
         <Col>
           {state.guideVisible ? (
             <Popover
