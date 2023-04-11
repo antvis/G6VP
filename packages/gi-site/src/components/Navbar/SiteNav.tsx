@@ -30,26 +30,6 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   const { active } = props;
   const history = useHistory();
 
-  const [githubPopVisible, setGithubPopVisible] = React.useState(
-    !localStorage.getItem('GITHUB_POP_CLOSED') || localStorage.getItem('GITHUB_POP_CLOSED') === 'false',
-  );
-
-  const handleCloseGithubPopover = () => {
-    setGithubPopVisible(false);
-    localStorage.setItem('GITHUB_POP_CLOSED', 'true');
-  };
-
-  const handleJumpToGithub = () => {
-    window.open('https://github.com/antvis/G6VP', '_blank');
-    handleCloseGithubPopover();
-  };
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      handleCloseGithubPopover();
-    }, 10000);
-  }, []);
-
   return (
     <header style={styles.container} className="gi-navbar-container">
       <div style={styles.left}>
