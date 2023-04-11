@@ -41,6 +41,7 @@ import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import OperatorBar from './OperatorBar';
 import GroupBar from './GroupBar';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
+import ClassicLayout from './ClassicLayout';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -93,4 +94,5 @@ export {
   RemoveNodeWithMenu,
   SelectExchangeMenuItem,
   CommonNeighbor,
+  ClassicLayout,
 };

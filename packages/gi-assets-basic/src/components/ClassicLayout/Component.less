@@ -1,0 +1,24 @@
+@sideWidth: 50px;
+@toolbarHeight: 50px;
+.gi-classic-layout{
+  display: flex;
+  height:100%;
+  flex-shrink: 0;
+  flex-direction: row;
+  .gi-classic-side{
+    width: @sideWidth;
+  }
+  .gi-classic-v{
+    flex: 1;
+    display: flex;
+    height: 100%;
+    flex-shrink: 0;
+    flex-direction: column;
+    .gi-classic-toolbar{
+      width: @toolbarHeight;
+    }
+    .gi-classic-canvas{
+      flex: 1;
+    }
+  }
+}
