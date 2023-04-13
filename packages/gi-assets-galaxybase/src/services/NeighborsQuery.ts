@@ -17,7 +17,7 @@ export const NeighborsQuery = {
       data: JSON.stringify({
         statements: [
           {
-            statement: `cypher runtime = high_performance match p=(a)-[*1..${sep}]-() where id(a) in [${ids}] return p`,
+            statement: `cypher match p=(a)-[*1..${sep}]-() where id(a) in [${ids}] return p`,
             resultDataContents: ['graph'],
           },
         ],
@@ -25,7 +25,7 @@ export const NeighborsQuery = {
       }),
     });
     const { status, success, errors, results } = response;
-    if (!success) {
+    if (!success && errors && errors.length > 0) {
       notification.error({
         message: '执行 Cypher 查询失败',
         description: `查询失败：${errors[0].message}`,
