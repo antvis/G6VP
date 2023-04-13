@@ -69,7 +69,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             description: `建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染`,
           });
         }
-
         updateContext(draft => {
           /** 判断是否保存样式和位置 */
           const position = isPosition(nodes);

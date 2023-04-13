@@ -1,7 +1,7 @@
 const info = {
-  id: 'SideBarLayout',
-  name: '经典布局',
-  desc: '经典布局，左侧栏布局，右侧支持顶部工具栏',
+  id: 'SideLayout',
+  name: '侧边栏布局',
+  desc: '侧边栏布局',
   icon: 'icon-tabs',
   cover: 'http://xxxx.jpg',
   category: 'container-components',

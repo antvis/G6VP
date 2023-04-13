@@ -10,7 +10,7 @@ const info = {
   icon: 'icon-layout',
   cover: 'http://xxxx.jpg',
   category: 'container-components',
-  type: 'GICC',
+  type: 'GICC_LAYOUT',
   docs: 'https://www.yuque.com/antv/gi/nn4q8z3wc8b844gm',
 };
 

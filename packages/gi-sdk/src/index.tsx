@@ -30,6 +30,7 @@ export { Icon } from '@antv/gi-common-components';
 export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
+export { default as EngineServer } from './components/EngineServer';
 // export { default as Icon } from './components/Icon';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
@@ -37,7 +38,6 @@ export type {
   AssetCategory,
   AssetInfo,
   AssetType,
-  EngineServer,
   GIAC_ITEMS_TYPE,
   GIAssets,
   GIComponentAssets,

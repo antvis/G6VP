@@ -1,7 +1,7 @@
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { message } from 'antd';
 import { original } from 'immer';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar/WorkbookNav';
@@ -32,6 +32,7 @@ const Analysis = props => {
   const graphRef = useRef(null);
 
   const [state, updateState] = useModel();
+  const [panelWidth, setPanelWidth] = useState(false);
 
   const {
     config,
@@ -71,13 +72,13 @@ const Analysis = props => {
       const { config, activeAssetsKeys, themes, name, datasetId } = (await ProjectServices.getById(
         projectId,
       )) as IProject;
+
       const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;
         message.info('请先选择数据集...');
         return;
       }
-      console.log('datasetInfo', datasetInfo);
       let { engineId, engineContext, schemaData, data, name: DATASET_NAME } = datasetInfo;
 
       localStorage.setItem(
@@ -130,7 +131,6 @@ const Analysis = props => {
       activeAssets => {
         const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
         const assetServices = utils.getCombineServices(activeAssets.services!);
-
         updateState(draft => {
           /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
@@ -193,13 +193,39 @@ const Analysis = props => {
               return a.id === b.id;
             },
           );
+
+          const pageLayoutComponent = configComponents.find(component => component.type === 'GICC_LAYOUT');
+          if (config && !config.pageLayout && pageLayoutComponent) {
+            draft.config.pageLayout = pageLayoutComponent;
+          } else if (pageLayoutComponent && config.pageLayout?.id === pageLayoutComponent.id) {
+            // 旧版工作簿中未记录 pageLayout，从 components 中恢复信息
+            const { name, type } = pageLayoutComponent;
+            draft.config.pageLayout = {
+              ...draft.config.pageLayout,
+              name,
+              type,
+            };
+            draft.config.pageLayout.props = draft.config.pageLayout.props || { containers: [] };
+            pageLayoutComponent.props?.containers.forEach(container => {
+              const cacheContainer = draft.config.pageLayout?.props.containers?.find(con => con.id === container.id);
+              if (cacheContainer) {
+                const idx = draft.config.pageLayout?.props.containers.indexOf(cacheContainer);
+                draft.config.pageLayout.props.containers[idx] = {
+                  ...container,
+                  ...cacheContainer,
+                };
+              } else {
+                draft.config.pageLayout.props.containers.push(container);
+              }
+            });
+          }
+
           draft.isReady = true; //项目加载完毕
           draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
           draft.services = services; //更新服务
           draft.config.components = configComponents; //更新 config.components
           draft.config.layout = layoutConfig; //更新 config.layout
           draft.activeAssets = activeAssets; //更新活跃资产
-          draft.activeAssetsKeys = activeAssetsKeys; //更新活跃资产ID
           draft.activeAssetsInformation = activeAssetsInformation;
         });
       },
@@ -232,7 +258,12 @@ const Analysis = props => {
           <div className="gi-analysis-sidebar">
             <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
           </div>
-          <div className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}>
+          <div
+            className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}
+            style={
+              !collapse ? { width: panelWidth.width, flexBasis: panelWidth.width, minWidth: panelWidth.minWidth } : {}
+            }
+          >
             <MetaPanel
               value={activeNavbar}
               data={data}
@@ -243,9 +274,21 @@ const Analysis = props => {
               elements={activeAssetsInformation!.elements}
               services={state.services}
               layouts={activeAssetsInformation!.layouts}
+              setPanelWidth={setPanelWidth}
+              collapse={collapse}
             />
           </div>
-          <div className="gi-analysis-workspace">
+          <div
+            className="gi-analysis-workspace"
+            style={
+              !collapse
+                ? {
+                    width: `calc(100% - ${panelWidth.width} - 36px)`,
+                    flexBasis: `calc(100% - ${panelWidth.width} - 36px)`,
+                  }
+                : {}
+            }
+          >
             <div className="gi-analysis-canvas">
               <GISDK
                 id="gi-site"

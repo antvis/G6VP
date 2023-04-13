@@ -1,6 +1,6 @@
 import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useImmer } from 'use-immer';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
@@ -16,7 +16,7 @@ import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets, id, services } = props;
+  const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -75,14 +75,26 @@ const GISDK = (props: Props) => {
     });
   }, [props.config]);
 
-  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
+  const {
+    layout: layoutCfg,
+    components: componentsCfg = [],
+    nodes: nodesCfg,
+    edges: edgesCfg,
+    pageLayout,
+  } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
   React.useEffect(() => {
     let GICC_LAYOUT = { id: 'EmptyLayout', props: {} };
     let INITIALIZER;
+    if (pageLayout) GICC_LAYOUT = pageLayout;
     componentsCfg.forEach(item => {
-      if (item.type === 'GICC_LAYOUT') {
+      if (pageLayout) {
+        if (item.id === pageLayout.id) {
+          GICC_LAYOUT = item;
+          return;
+        }
+      } else if (item.type === 'GICC_LAYOUT') {
         GICC_LAYOUT = item;
         return;
       }
@@ -95,13 +107,15 @@ const GISDK = (props: Props) => {
     updateState(draft => {
       draft.config.components = componentsCfg;
       draft.components = componentsCfg;
-      //@ts-ignore
-      draft.initializer = INITIALIZER;
+      if (INITIALIZER.id !== draft.initializer?.id) {
+        //@ts-ignore
+        draft.initializer = INITIALIZER;
+      }
       draft.layoutCache = true;
       //@ts-ignore
       draft.GICC_LAYOUT = GICC_LAYOUT;
     });
-  }, [componentsCfg]);
+  }, [componentsCfg, pageLayout]);
 
   React.useEffect(() => {
     if (!layoutCfg) {
@@ -231,9 +245,8 @@ const GISDK = (props: Props) => {
 
   const isReady = state.isContextReady && state.initialized;
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents(state, ComponentAssets);
+    getComponents(state, config.components, ComponentAssets);
 
-  console.log('render....', 'render....', isReady);
   const graphData = useMemo(() => {
     const nodeMap = {};
     const edgeMap = {};
@@ -275,6 +288,7 @@ const GISDK = (props: Props) => {
             enabledStack={true}
             theme={theme}
             layoutCache={state.layoutCache}
+            style={{ borderRadius: '8px', overflow: 'hidden' }}
           >
             <>
               {isReady && <SizeSensor />}

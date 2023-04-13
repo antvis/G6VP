@@ -1,4 +1,4 @@
-## ClassicLaout 经典布局
+## SideLaout 侧边栏布局
 
 ```jsx
 import TestSDK, { Mock } from '@antv/gi-assets-testing';

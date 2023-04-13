@@ -47,7 +47,7 @@ const LOCAL_ASSETS: any[] = [
   },
   // 内置 HugeGraph
   {
-    ...OFFICIAL_PACKAGES['GI_ASSETS_HUGEGRAPH'],
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
     ...GI_ASSETS_HUGEGRAPH,
   },
   // 内置 GraphScope 单机版
@@ -82,6 +82,20 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   }
 
   console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
+
+  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
+  //   const assetKeys = activeAssetsKeys.components[containerId];
+  //   components[containerId] = assetKeys.reduce((acc, curr) => {
+  //     const asset = FinalAssets.components[curr];
+  //     if (asset) {
+  //       return {
+  //         ...acc,
+  //         [curr]: asset,
+  //       };
+  //     }
+  //     return acc;
+  //   }, {});
+  // });
 
   components = activeAssetsKeys.components.reduce((acc, curr) => {
     const asset = FinalAssets.components[curr];

@@ -20,23 +20,23 @@ const fixNodePosition = (graph: Graph, graphData: GraphData): GraphData => {
         return {
           ...n,
           x: node.x,
-          y: node.y
-        }
-      }else{
+          y: node.y,
+        };
+      } else {
         return {
           ...n,
           x: 0,
-          y: 0
-        }
+          y: 0,
+        };
       }
     }
     return n;
   });
   return {
     ...graphData,
-    nodes
+    nodes,
   };
-}
+};
 const useRedoUndo = (): {
   redo: () => void;
   undo: () => void;
@@ -47,8 +47,8 @@ const useRedoUndo = (): {
   const [stackInfo, setStackInfo] = React.useState(() => {
     return {
       undoStack: graph.getUndoStack(),
-      redoStack: graph.getRedoStack()
-    }
+      redoStack: graph.getRedoStack(),
+    };
   });
   const redo = () => {
     const redoStack = graph.getRedoStack();
@@ -64,7 +64,7 @@ const useRedoUndo = (): {
       graph.pushStack(action, {
         ...currentData.data,
         after: fixNodePosition(graph, currentData.data.after),
-        before: fixNodePosition(graph, currentData.data.before)
+        before: fixNodePosition(graph, currentData.data.before),
       });
       if (action === 'delete') {
         data = currentData.data.before;
@@ -82,11 +82,15 @@ const useRedoUndo = (): {
     const currentData = undoStack.pop();
     if (currentData) {
       const { action } = currentData;
-      graph.pushStack(action, {
-        ...currentData.data,
-        after: fixNodePosition(graph, currentData.data.after),
-        before: fixNodePosition(graph, currentData.data.before)
-      }, 'redo');
+      graph.pushStack(
+        action,
+        {
+          ...currentData.data,
+          after: fixNodePosition(graph, currentData.data.after),
+          before: fixNodePosition(graph, currentData.data.before),
+        },
+        'redo',
+      );
       let data = currentData.data.before;
 
       if (action === 'add') {
@@ -159,7 +163,7 @@ const useRedoUndo = (): {
         break;
       case 'updateComboTree':
         const comboMap: any = {};
-        graph.getCombos().forEach((combo) => {
+        graph.getCombos().forEach(combo => {
           comboMap[combo.getID()] = combo;
         });
         Object.keys(data).forEach(key => {
@@ -182,7 +186,7 @@ const useRedoUndo = (): {
       const { undoStack, redoStack } = evt as any;
       setStackInfo({
         undoStack,
-        redoStack
+        redoStack,
       });
     };
     graph.on('stackchange', handleStackChanage);
@@ -193,8 +197,8 @@ const useRedoUndo = (): {
   return {
     redo,
     undo,
-    ...stackInfo
-  };
+    ...stackInfo,
+  } as any;
 };
 
 export default useRedoUndo;

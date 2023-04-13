@@ -100,12 +100,11 @@ const getComponentsByAssets = (
         schemaData,
         engineId,
       });
-      //@ts-ignore
-      const defaultProps = getDefaultValues({ type: 'object', properties: configObj });
-
-      /** 默认的配置值 */
 
       const { id, name, category, type } = info;
+
+      /** 默认的配置值 */
+      const defaultProps = getDefaultValues({ type: 'object', properties: configObj }, type);
 
       return {
         ...component,

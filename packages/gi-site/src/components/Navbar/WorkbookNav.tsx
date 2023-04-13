@@ -15,7 +15,7 @@ const styles = {
   container: {
     height: '100%',
     width: '100%',
-    boxShadow: `var(--box-shadow-bottom)`,
+    // boxShadow: `var(--box-shadow-bottom)`,
     display: 'flex',
     justifyContent: ' space-between',
   },
@@ -52,8 +52,8 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
       </div>
       <div style={styles.right}>
         <SaveWorkbook workbookId={workbookId} />
-        <Github />
         <Theme />
+        <Github />
       </div>
     </header>
   );
