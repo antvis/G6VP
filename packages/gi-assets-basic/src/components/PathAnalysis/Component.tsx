@@ -236,7 +236,15 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       <Form form={form}>
         <Row justify="space-between">
           <Col span={22}>
-            <Form.Item label="起始节点" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
+            <Form.Item
+              label="起始节点"
+              name="source"
+              rules={[{ required: true, message: '请填写起点节点ID' }]}
+              tooltip={{
+                open: state.selecting === 'source',
+                title: '可点选画布节点，快速选择起始节点',
+              }}
+            >
               <Select
                 showSearch
                 optionFilterProp="children"
@@ -245,6 +253,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                     draft.selecting = '';
                   });
                 }}
+                onFocus={() => beginSelect('source')}
               >
                 {graphData.nodes.map(node => (
                   <Select.Option key={node.id} value={node.id}>
@@ -263,7 +272,15 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         </Row>
         <Row justify="space-between">
           <Col span={22}>
-            <Form.Item label="目标节点" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
+            <Form.Item
+              label="目标节点"
+              name="target"
+              rules={[{ required: true, message: '请填写终点节点ID' }]}
+              tooltip={{
+                open: state.selecting === 'target',
+                title: '可点选画布节点，快速选择目标节点',
+              }}
+            >
               <Select
                 showSearch
                 optionFilterProp="children"
@@ -272,6 +289,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                     draft.selecting = '';
                   });
                 }}
+                onFocus={() => beginSelect('target')}
               >
                 {graphData.nodes.map(node => (
                   <Select.Option key={node.id} value={node.id}>
