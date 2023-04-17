@@ -1,11 +1,12 @@
-import Graphin, { GraphinContext } from '@antv/graphin';
+import { useContext } from '@antv/gi-sdk';
+import Graphin from '@antv/graphin';
 import * as React from 'react';
 import FilterPanel from '../Component';
 import { data, schemaData } from './const';
 interface DemoProps {}
 
 const Filter = () => {
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
   /** 只有 highlightMode=true 的时候，才会有回调函数 */
   const handleChange = val => {
     console.log('val', val);
