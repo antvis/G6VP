@@ -3,7 +3,7 @@ import GI_SDK from '@antv/gi-sdk/package.json';
 import * as antd from 'antd';
 import deps_externals from './scripts/deps_externals.json';
 export const G6_VERSION = '4.8.8';
-export const GRAPHIN_VERSION = '2.7.14';
+export const GRAPHIN_VERSION = '2.7.15';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = antd.version; //4.24.3
 export const GI_VERSION = GI_SDK.version;
