@@ -54,7 +54,7 @@
     "@ant-design/icons": "4.7.0",
     "@antv/algorithm": "^0.1.24",
     "@antv/g6": "^4.8.8",
-    "@antv/graphin": "^2.7.14",
+    "@antv/graphin": "^2.7.15",
     "@antv/layout": "^0.2.5",
     "@antv/s2": "^1.29.0",
     "@antv/s2-react": "^1.26.0",
