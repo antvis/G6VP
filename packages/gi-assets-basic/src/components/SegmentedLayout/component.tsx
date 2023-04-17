@@ -19,7 +19,6 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { graph } = context;
   // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
   const HAS_GRAPH = graph && !graph.destroyed;
-  console.log('SegmentedLayout Render...', HAS_GRAPH);
 
   const { containers } = props;
   const { config, assets } = context;
@@ -31,7 +30,7 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
     };
   }, {});
 
-  const { GI_CONTAINER: sideItems = [] } = containers[0] || {};
+  const { GI_CONTAINER: sideItems = [], width = 360, padding = 12 } = containers[0] || {};
 
   const SideContent = useComponents(sideItems, ComponentCfgMap, assets.components);
   const items = SideContent.map((item: any) => {
@@ -46,16 +45,15 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
     <div style={{ width: '100%', height: '100%', display: 'flex' }}>
       <div
         style={{
-          width: '360px',
-          flexBasis: '360px',
-          marginRight: '12px',
+          width: `${width}px`,
+          marginRight: `${padding}px`,
           background: 'var(--background-color-transparent)',
           borderRadius: '8px',
         }}
       >
         <SegmentedTabs items={items} />
       </div>
-      <div style={{ flex: 1 }}>{children}</div>
+      <div style={{ width: `calc(100% - ${width + padding * 2}px)` }}>{children}</div>
     </div>
   );
 };

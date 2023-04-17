@@ -807,11 +807,19 @@ const container = {
   type: 'GICC_LAYOUT',
   name: '上下布局',
   props: {
-    topItems: ['GremlinQuery'],
-    height: 251,
-    padding: '0px 0px',
-    sideItems: ['JSONMode'],
-    tabPosition: 'right',
+    containers: [
+      {
+        id: 'GI_CONTAINER_TOP',
+        GI_CONTAINER: ['GremlinQuery'],
+        height: 251,
+        padding: '0px 0px',
+      },
+      {
+        id: 'GI_CONTAINER_SIDE',
+        GI_CONTAINER: ['JSONMode'],
+        tabPosition: 'right',
+      },
+    ],
   },
 };
 
