@@ -22,7 +22,7 @@ const initialState: StateType = {
   /** 当前 Sidebar 的值 */
   activeNavbar: '',
   /** 当前 Sidebar 是否折叠 */
-  collapse: false,
+  collapse: true,
 
   data: {
     nodes: [],
@@ -63,16 +63,7 @@ const initialState: StateType = {
 };
 
 const useModel: () => [StateType, Updater<StateType>] = () => {
-  const GI_TOUR_STYLE = JSON.parse(localStorage.getItem('GI_TOUR_STYLE') || 'false');
-  const GI_TOUR_DATA = JSON.parse(localStorage.getItem('GI_TOUR_DATA') || 'false');
-  const GI_TOUR_COMPONENTS = JSON.parse(localStorage.getItem('GI_TOUR_COMPONENTS') || 'false');
-  const GI_TOUR_LAYOUT = JSON.parse(localStorage.getItem('GI_TOUR_LAYOUT') || 'false');
-  const collapse = GI_TOUR_STYLE && GI_TOUR_DATA && GI_TOUR_COMPONENTS && GI_TOUR_LAYOUT;
-
-  const [state, updateState] = useImmer<StateType>({
-    ...initialState,
-    collapse,
-  });
+  const [state, updateState] = useImmer<StateType>(initialState);
   return [state, updateState];
 };
 
