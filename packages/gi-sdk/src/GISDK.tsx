@@ -55,17 +55,6 @@ const GISDK = (props: Props) => {
       id: 'EmptyLayout',
       props: {},
     },
-    // /** graphin */
-    // //@ts-ignore
-    // graph: null,
-    // //@ts-ignore
-    // apis: null,
-    // //@ts-ignore
-    // theme: null,
-    // //@ts-ignore
-    // layoutInstance: null,
-    stopForceSimulation: () => {},
-    restartForceSimulation: () => {},
     //@ts-ignore
     GISDK_ID,
   });
@@ -75,21 +64,6 @@ const GISDK = (props: Props) => {
       draft.config = props.config;
     });
   }, [props.config]);
-
-  // React.useEffect(() => {
-  //   if (graphinRef.current) {
-  //     console.log('graphinRef.current', graphinRef.current);
-  //     const { graph, theme, apis, layout } = graphinRef.current;
-  //     updateState(draft => {
-  //       draft.graph = graph;
-  //       draft.theme = theme;
-  //       draft.apis = apis;
-  //       //@ts-ignore
-  //       draft.layoutInstance = layout;
-  //       draft.isContextReady = true;
-  //     });
-  //   }
-  // }, []);
 
   const {
     layout: layoutCfg,
@@ -224,6 +198,30 @@ const GISDK = (props: Props) => {
     };
   }, [state.source]);
 
+  const stopForceSimulation = () => {
+    if (graphinRef.current) {
+      const { layout } = graphinRef.current;
+      const { instance } = layout;
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.stop();
+        }
+      }
+    }
+  };
+  const restartForceSimulation = (nodes = []) => {
+    if (graphinRef.current) {
+      const { layout, graph } = graphinRef.current;
+      const { instance } = layout;
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.restart(nodes, graph);
+        }
+      }
+    }
+  };
   const ContextValue = {
     ...state,
     GISDK_ID,
@@ -258,6 +256,8 @@ const GISDK = (props: Props) => {
         draft.layoutCache = false;
       });
     },
+    stopForceSimulation: stopForceSimulation,
+    restartForceSimulation: restartForceSimulation,
   };
   if (!ComponentAssets) {
     return null;
@@ -299,7 +299,6 @@ const GISDK = (props: Props) => {
     graphinRef.current.graph.destroyed
   );
 
-  console.log('HAS_GRAPH', HAS_GRAPH);
   return (
     //@ts-ignore
     <GraphInsightContext.Provider value={ContextValue}>
