@@ -5,7 +5,7 @@ import React from 'react';
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
     const assetKeys = [] as any[];
-    GI_CONTAINER.forEach(item => {
+    (GI_CONTAINER || []).forEach(item => {
       if (typeof item === 'string') assetKeys.push(item);
       else assetKeys.push(item.value);
     });

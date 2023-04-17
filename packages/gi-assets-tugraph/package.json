@@ -30,7 +30,7 @@
   "dependencies": {
     "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.14",
     "@antv/graphin-icons": "^1.0.0",
     "antd": "4.x",
     "codemirror": "^5.25.0",

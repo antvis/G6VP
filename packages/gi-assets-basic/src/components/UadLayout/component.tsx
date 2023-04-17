@@ -17,6 +17,11 @@ export interface UadLayoutProps {
 
 const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children, containers = [] } = props;
+  const { config, assets, data: graphData, graph } = useContext();
+
+  // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
+  const HAS_GRAPH = graph && !graph.destroyed;
+
   const { GI_CONTAINER: topItems = [], height = 251 } =
     containers.find(container => container.id === 'GI_CONTAINER_TOP') || {};
   const {
@@ -25,7 +30,6 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
     padding = '0px 0px',
   } = containers.find(container => container.id === 'GI_CONTAINER_SIDE') || {};
 
-  const { config, assets, data: graphData } = useContext();
   const ComponentCfgMap = config.components.reduce((acc, curr) => {
     return {
       ...acc,
@@ -47,7 +51,7 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
         ? {
             label: <Icon type={item.icon} style={{ fontSize: '30px' }} />,
             key: item.id,
-            children: item.children,
+            children: HAS_GRAPH && item.children, //保证有 graph 实例
           }
         : false;
     }),

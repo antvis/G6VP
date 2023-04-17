@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
 import { GIComponentAssets } from '@antv/gi-sdk';
+import { clone } from '@antv/util';
+import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import ContainerPanel from '../ContainerPanel';
-import ComponentPanel from './ComponentPanel';
 import { queryAssets } from '../../../../services/assets';
 import { getComponentsByAssets } from '../../getAssets';
-import { clone } from '@antv/util';
 import { AssetInfo } from '../../typing';
+import ContainerPanel from '../ContainerPanel';
+import ComponentPanel from './ComponentPanel';
 import './index.less';
 
 /**
@@ -138,11 +138,11 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
   });
   return {
     id: 'GI_FreeContainer',
-    name: '无容器组件',
+    name: '自运行组件',
     required: true,
     info: {
       id: 'GI_FreeContainer',
-      name: '无容器组件',
+      name: '自运行组件',
       icon: 'icon-layout',
       type: 'GICC',
     },
@@ -151,7 +151,7 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
         'x-component-props': { mode: 'multiple' },
       },
       id: 'GI_FreeContainer',
-      name: '无容器组件',
+      name: '自运行组件',
       required: true,
     },
     props: {

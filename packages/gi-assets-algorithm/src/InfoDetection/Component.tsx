@@ -18,6 +18,7 @@ interface IState {
 
 const InfoDetection = () => {
   const { data, graph } = useContext();
+  console.log('InfoDetection HAS GRAPH', graph && !graph.destroyed);
 
   const [state, updateState] = useImmer<IState>({
     isolateNodes: [],
