@@ -24,6 +24,7 @@ const SetupUseGraphinHook = props => {
         }
       }
     };
+    console.log('SetupUseGraphinHook', graph && graph.destroyed);
     updateContext(draft => {
       draft.graph = graph;
       draft.theme = theme;
@@ -34,7 +35,10 @@ const SetupUseGraphinHook = props => {
       draft.stopForceSimulation = stopForceSimulation;
       draft.restartForceSimulation = restartForceSimulation;
     });
-  }, [layout]);
+    return () => {
+      console.warn('卸载组件....', graph && graph.destroyed);
+    };
+  }, [layout, graph]);
 
   return null;
 };

@@ -1,6 +1,6 @@
 import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
@@ -9,13 +9,13 @@ import './index.less';
 import { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
-import SetupUseGraphinHook from './SetupUseGraphinHook';
 import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
+  const graphinRef = React.useRef<null | Graphin>(null);
   const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
@@ -55,17 +55,18 @@ const GISDK = (props: Props) => {
       id: 'EmptyLayout',
       props: {},
     },
-    /** graphin */
-    //@ts-ignore
-    graph: null,
-    //@ts-ignore
-    apis: null,
-    //@ts-ignore
-    theme: null,
-    //@ts-ignore
-    layoutInstance: null,
+    // /** graphin */
+    // //@ts-ignore
+    // graph: null,
+    // //@ts-ignore
+    // apis: null,
+    // //@ts-ignore
+    // theme: null,
+    // //@ts-ignore
+    // layoutInstance: null,
     stopForceSimulation: () => {},
     restartForceSimulation: () => {},
+    //@ts-ignore
     GISDK_ID,
   });
 
@@ -74,6 +75,21 @@ const GISDK = (props: Props) => {
       draft.config = props.config;
     });
   }, [props.config]);
+
+  // React.useEffect(() => {
+  //   if (graphinRef.current) {
+  //     console.log('graphinRef.current', graphinRef.current);
+  //     const { graph, theme, apis, layout } = graphinRef.current;
+  //     updateState(draft => {
+  //       draft.graph = graph;
+  //       draft.theme = theme;
+  //       draft.apis = apis;
+  //       //@ts-ignore
+  //       draft.layoutInstance = layout;
+  //       draft.isContextReady = true;
+  //     });
+  //   }
+  // }, []);
 
   const {
     layout: layoutCfg,
@@ -214,6 +230,10 @@ const GISDK = (props: Props) => {
     services,
     assets,
     sourceDataMap,
+    graph: graphinRef.current?.graph,
+    theme: graphinRef.current?.theme,
+    apis: graphinRef.current?.apis,
+    layoutInstance: graphinRef.current?.layout,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
@@ -243,7 +263,6 @@ const GISDK = (props: Props) => {
     return null;
   }
 
-  const isReady = state.isContextReady && state.initialized;
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
     getComponents(state, config.components, ComponentAssets);
 
@@ -273,7 +292,16 @@ const GISDK = (props: Props) => {
     };
   }, [data]);
 
+  const HAS_GRAPH = !(
+    graphinRef &&
+    graphinRef.current &&
+    graphinRef.current.graph &&
+    graphinRef.current.graph.destroyed
+  );
+
+  console.log('HAS_GRAPH', HAS_GRAPH);
   return (
+    //@ts-ignore
     <GraphInsightContext.Provider value={ContextValue}>
       <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
         <div
@@ -281,6 +309,7 @@ const GISDK = (props: Props) => {
           style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
         >
           <Graphin
+            ref={graphinRef}
             containerId={`${GISDK_ID}-graphin-container`}
             containerStyle={{ transform: 'scale(1)' }}
             data={graphData}
@@ -289,14 +318,17 @@ const GISDK = (props: Props) => {
             theme={theme}
             layoutCache={state.layoutCache}
             style={{ borderRadius: '8px', overflow: 'hidden' }}
+            willUnmount={() => {
+              console.log('un mount....');
+            }}
           >
             <>
-              {isReady && <SizeSensor />}
-              {state.isContextReady && <InitializerComponent {...InitializerProps} />}
-              <SetupUseGraphinHook updateContext={updateState} />
-              {isReady && renderComponents()}
-              {isReady && children}
-              {isReady && <FitCenterAfterMount />}
+              {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
+              {HAS_GRAPH && state.initialized && <SizeSensor />}
+              {/* <SetupUseGraphinHook updateContext={updateState} /> */}
+              {HAS_GRAPH && state.initialized && renderComponents()}
+              {HAS_GRAPH && state.initialized && <FitCenterAfterMount />}
+              {HAS_GRAPH && state.initialized && children}
             </>
           </Graphin>
         </div>
