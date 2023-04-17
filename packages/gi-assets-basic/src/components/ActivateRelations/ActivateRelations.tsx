@@ -1,7 +1,44 @@
+import { useContext } from '@antv/gi-sdk';
+import Graphin from '@antv/graphin';
 import * as React from 'react';
-import useBehaviorHook from '@antv/graphin/es/behaviors/useBehaviorHook';
-import { registerBehavior } from '@antv/g6';
+
 import ActivateRelationsBehavior from './activate-relations-v2';
+
+interface Props {
+  type: string;
+  defaultConfig: Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  userProps: any;
+  mode?: string;
+}
+/** TODO 沉淀到 Graphin 中 */
+const useBehaviorHook = (params: Props) => {
+  const { type, defaultConfig, userProps, mode = 'default' } = params;
+  const { graph } = useContext();
+  const { disabled, ...otherConfig } = userProps;
+
+  React.useEffect(() => {
+    /** 保持单例 */
+    graph.removeBehaviors(type, mode);
+
+    if (disabled) {
+      return;
+    }
+    graph.addBehaviors(
+      {
+        type,
+        ...defaultConfig,
+        ...otherConfig,
+      },
+      mode,
+    );
+    return () => {
+      if (!graph.destroyed) {
+        graph.removeBehaviors(type, mode);
+      }
+    };
+  }, []);
+};
 
 const defaultConfig = {
   /**
@@ -29,9 +66,9 @@ const defaultConfig = {
    * @default false
    */
   resetSelected: false,
-  // 上游扩展的度数 
+  // 上游扩展的度数
   upstreamDegree: 1,
-  // 下游扩展的度数 
+  // 下游扩展的度数
   downstreamDegree: 1,
   // 多选组合键
   modifierKey: 'alt',
@@ -41,7 +78,7 @@ const defaultConfig = {
 
 export type ActivateRelationsProps = Partial<typeof defaultConfig>;
 
-registerBehavior('activate-relations-v2', ActivateRelationsBehavior);
+Graphin.registerBehavior('activate-relations-v2', ActivateRelationsBehavior);
 
 const ActivateRelations: React.FunctionComponent<ActivateRelationsProps> = props => {
   useBehaviorHook({
