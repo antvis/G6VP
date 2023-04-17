@@ -109,6 +109,14 @@ const getConfigByEngineId = (engineId, template) => {
         },
       ];
     }
+    if (item.id === 'SegmentedLayout') {
+      item.props.containers = [
+        {
+          id: 'GI_CONTAINER_SIDE',
+          GI_CONTAINER: [...addComponentId, 'FilterPanel'],
+        },
+      ];
+    }
     if (item.id === 'UadLayout') {
       item.props.containers = [
         {
