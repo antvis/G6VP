@@ -13,6 +13,10 @@ import zhCN from './locale/zh-CN';
 
 const { isStyles } = utils;
 
+export interface FilterPanelLocale {
+  addfilter?: string;
+}
+
 export interface FilterPanelProps extends LocaleWrapperProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;

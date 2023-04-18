@@ -1,4 +1,5 @@
-const locale = {
-  addfilter: '增加筛选器',
+import type { FilterPanelLocale } from '../Component';
+const locale:FilterPanelLocale = {
+  addfilter: 'Add filter',
 };
 export default locale;

@@ -84,6 +84,7 @@ export interface Props {
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
+  locale?: any;
 }
 
 export type AssetType =

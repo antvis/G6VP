@@ -24,8 +24,8 @@ export default ({ componentName, defaultLocale }: LocaleWrapperInput) =>
 
       render() {
         const { locale: customLocale, forwardedRef, ...restProps } = this.props;
-        const { locale: asfLocale } = this.context as ConfigConsumerProps;
-        const localeFromContext = asfLocale?.[componentName] || {};
+        const { locale: giLocale } = this.context as ConfigConsumerProps;
+        const localeFromContext = giLocale?.[componentName] || {};
         const localeData = {
           ...defaultLocale,
           ...localeFromContext,
