@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useContext } from '../../pages/Analysis/hooks/useContext';
 import DataModeCard from '../DataModeCard';
+import Github from './Github';
 import Links from './Links';
 import Logo from './Logo';
 
@@ -28,9 +28,7 @@ const styles = {
 
 const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   const { active } = props;
-  const { context, updateContext } = useContext();
   const history = useHistory();
-  const { name } = context;
 
   return (
     <header style={styles.container} className="gi-navbar-container">
@@ -48,6 +46,7 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
       <div style={styles.right}>
         <DataModeCard />
         <Theme />
+        <Github />
         <UserInfo />
       </div>
     </header>

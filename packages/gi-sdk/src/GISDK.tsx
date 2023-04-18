@@ -9,14 +9,14 @@ import './index.less';
 import { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
-import SetupUseGraphinHook from './SetupUseGraphinHook';
 import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
-  const { children, assets, id, services } = props;
+  const graphinRef = React.useRef<null | Graphin>(null);
+  const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -55,17 +55,7 @@ const GISDK = (props: Props) => {
       id: 'EmptyLayout',
       props: {},
     },
-    /** graphin */
     //@ts-ignore
-    graph: null,
-    //@ts-ignore
-    apis: null,
-    //@ts-ignore
-    theme: null,
-    //@ts-ignore
-    layoutInstance: null,
-    stopForceSimulation: () => {},
-    restartForceSimulation: () => {},
     GISDK_ID,
   });
 
@@ -75,14 +65,26 @@ const GISDK = (props: Props) => {
     });
   }, [props.config]);
 
-  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg } = state.config;
+  const {
+    layout: layoutCfg,
+    components: componentsCfg = [],
+    nodes: nodesCfg,
+    edges: edgesCfg,
+    pageLayout,
+  } = state.config;
   /** 根据注册的图元素，生成Transform函数 */
 
   React.useEffect(() => {
     let GICC_LAYOUT = { id: 'EmptyLayout', props: {} };
     let INITIALIZER;
+    if (pageLayout) GICC_LAYOUT = pageLayout;
     componentsCfg.forEach(item => {
-      if (item.type === 'GICC_LAYOUT') {
+      if (pageLayout) {
+        if (item.id === pageLayout.id) {
+          GICC_LAYOUT = item;
+          return;
+        }
+      } else if (item.type === 'GICC_LAYOUT') {
         GICC_LAYOUT = item;
         return;
       }
@@ -95,13 +97,15 @@ const GISDK = (props: Props) => {
     updateState(draft => {
       draft.config.components = componentsCfg;
       draft.components = componentsCfg;
-      //@ts-ignore
-      draft.initializer = INITIALIZER;
+      if (INITIALIZER.id !== draft.initializer?.id) {
+        //@ts-ignore
+        draft.initializer = INITIALIZER;
+      }
       draft.layoutCache = true;
       //@ts-ignore
       draft.GICC_LAYOUT = GICC_LAYOUT;
     });
-  }, [componentsCfg]);
+  }, [componentsCfg, pageLayout]);
 
   React.useEffect(() => {
     if (!layoutCfg) {
@@ -194,12 +198,40 @@ const GISDK = (props: Props) => {
     };
   }, [state.source]);
 
+  const stopForceSimulation = () => {
+    if (graphinRef.current) {
+      const { layout } = graphinRef.current;
+      const { instance } = layout;
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.stop();
+        }
+      }
+    }
+  };
+  const restartForceSimulation = (nodes = []) => {
+    if (graphinRef.current) {
+      const { layout, graph } = graphinRef.current;
+      const { instance } = layout;
+      if (instance) {
+        const { type, simulation } = instance;
+        if (type === 'graphin-force') {
+          simulation.restart(nodes, graph);
+        }
+      }
+    }
+  };
   const ContextValue = {
     ...state,
     GISDK_ID,
     services,
     assets,
     sourceDataMap,
+    graph: graphinRef.current?.graph,
+    theme: graphinRef.current?.theme,
+    apis: graphinRef.current?.apis,
+    layoutInstance: graphinRef.current?.layout,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
@@ -224,16 +256,16 @@ const GISDK = (props: Props) => {
         draft.layoutCache = false;
       });
     },
+    stopForceSimulation: stopForceSimulation,
+    restartForceSimulation: restartForceSimulation,
   };
   if (!ComponentAssets) {
     return null;
   }
 
-  const isReady = state.isContextReady && state.initialized;
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents(state, ComponentAssets);
+    getComponents(state, config.components, ComponentAssets);
 
-  console.log('render....', 'render....', isReady);
   const graphData = useMemo(() => {
     const nodeMap = {};
     const edgeMap = {};
@@ -260,7 +292,15 @@ const GISDK = (props: Props) => {
     };
   }, [data]);
 
+  const HAS_GRAPH = !(
+    graphinRef &&
+    graphinRef.current &&
+    graphinRef.current.graph &&
+    graphinRef.current.graph.destroyed
+  );
+
   return (
+    //@ts-ignore
     <GraphInsightContext.Provider value={ContextValue}>
       <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
         <div
@@ -268,6 +308,7 @@ const GISDK = (props: Props) => {
           style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
         >
           <Graphin
+            ref={graphinRef}
             containerId={`${GISDK_ID}-graphin-container`}
             containerStyle={{ transform: 'scale(1)' }}
             data={graphData}
@@ -275,14 +316,18 @@ const GISDK = (props: Props) => {
             enabledStack={true}
             theme={theme}
             layoutCache={state.layoutCache}
+            style={{ borderRadius: '8px', overflow: 'hidden' }}
+            willUnmount={() => {
+              console.log('un mount....');
+            }}
           >
             <>
-              {isReady && <SizeSensor />}
-              {state.isContextReady && <InitializerComponent {...InitializerProps} />}
-              <SetupUseGraphinHook updateContext={updateState} />
-              {isReady && renderComponents()}
-              {isReady && children}
-              {isReady && <FitCenterAfterMount />}
+              {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
+              {HAS_GRAPH && state.initialized && <SizeSensor />}
+              {/* <SetupUseGraphinHook updateContext={updateState} /> */}
+              {HAS_GRAPH && state.initialized && renderComponents()}
+              {HAS_GRAPH && state.initialized && <FitCenterAfterMount />}
+              {HAS_GRAPH && state.initialized && children}
             </>
           </Graphin>
         </div>

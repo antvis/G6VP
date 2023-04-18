@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "G6VP 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@antv/algorithm": "^0.1.17",
+    "@antv/algorithm": "^0.1.26-beta.0",
     "@antv/g2plot": "^2.4.4",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
@@ -52,7 +52,7 @@
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

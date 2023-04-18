@@ -5,6 +5,7 @@ import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
 import RadioNote from '../../components/RadioNote';
 import { getSearchParams } from '../../components/utils';
+import { getLoginUserInfo } from '../../hooks/useUserInfo';
 import { queryAssets } from '../../services/assets';
 import { createDataset } from '../../services/dataset';
 import { getUid } from '../Workspace/utils';
@@ -88,6 +89,10 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
 
   React.useEffect(() => {
     (async () => {
+      if (!window['GI_USER_INFO']) {
+        console.warn('not login');
+        await getLoginUserInfo();
+      }
       const assets = await queryAssets();
       //@ts-ignore
       const AllEngineServer = [...utils.getCombineServer([FileServerEngine, ...assets.services])];

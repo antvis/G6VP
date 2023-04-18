@@ -15,7 +15,7 @@ const SideContainer: React.FC<SideContainerProps> = props => {
   const { children, width, visible, GISDK_ID, outSideFromCanvas, placement, height } = props;
   const { graph } = useContext();
   const divRef = React.useRef<HTMLDivElement>(null);
-    React.useEffect(() => {
+  React.useEffect(() => {
     if (!outSideFromCanvas) return;
     const canvasContainer = document.getElementById(''.concat(GISDK_ID, '-graphin-container')) as HTMLElement;
     if (!canvasContainer) return;
@@ -32,7 +32,7 @@ const SideContainer: React.FC<SideContainerProps> = props => {
     canvasContainer.addEventListener('transitionend', ontransitionend);
     return () => {
       canvasContainer.removeEventListener('transitionend', ontransitionend);
-    }
+    };
   }, [outSideFromCanvas]);
 
   React.useEffect(() => {
@@ -71,12 +71,12 @@ const SideContainer: React.FC<SideContainerProps> = props => {
         canvasContainer.style.position = `absolute`;
         canvasContainer.style.transition = 'all 0.3s ease';
         tabsContainer.style.transition = 'all 0.3s ease';
+        // 左，右
         if (placement === 'LB' || placement === 'RT') {
           //CanvasContainer
           canvasContainer.style.top = '0px';
           canvasContainer.style.bottom = '0px';
           canvasContainer.style.width = 'unset';
-          canvasContainer.style.height = 'unset';
           //tabsContainer
           tabsContainer.style.position = 'absolute';
           tabsContainer.style.top = '0px';
@@ -98,11 +98,11 @@ const SideContainer: React.FC<SideContainerProps> = props => {
             canvasContainer.style.right = TabsWidth;
           }
         }
+        // 下，上
         if (placement === 'RB' || placement === 'LT') {
           //CanvasContainer
           canvasContainer.style.right = '0px';
           canvasContainer.style.left = '0px';
-          canvasContainer.style.width = 'unset';
           canvasContainer.style.height = 'unset';
 
           //tabsContainer
@@ -126,7 +126,6 @@ const SideContainer: React.FC<SideContainerProps> = props => {
             canvasContainer.style.bottom = TabsHeight;
           }
         }
-
       } else {
         container.className = '';
         tabsContainer.className = '';
@@ -152,7 +151,9 @@ const SideContainer: React.FC<SideContainerProps> = props => {
       canvasContainer.style.left = 'unset';
       canvasContainer.style.right = 'unset';
       canvasContainer.style.top = 'unset';
-      canvasContainer.style.right = 'unset';
+      canvasContainer.style.width = '100%';
+      canvasContainer.style.height = '100%';
+
       tabsContainer.style.top = 'unset';
       tabsContainer.style.bottom = 'unset';
       tabsContainer.style.right = 'unset';

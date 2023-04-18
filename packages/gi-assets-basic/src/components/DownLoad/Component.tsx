@@ -1,6 +1,5 @@
 import type { IGIAC } from '@antv/gi-sdk';
-import { extra } from '@antv/gi-sdk';
-import { GraphinContext } from '@antv/graphin';
+import { extra, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 const { GIAComponent } = extra;
 export interface DownLoad {
@@ -9,7 +8,7 @@ export interface DownLoad {
 
 const DownLoad: React.FunctionComponent<DownLoad> = props => {
   const { GIAC } = props;
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
   return <GIAComponent GIAC={GIAC} onClick={() => graph.downloadImage()} />;
 };
 

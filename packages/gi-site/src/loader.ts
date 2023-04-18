@@ -23,7 +23,6 @@ const DEFAULT_PACKAGES_MAP: Record<string, Package> = OFFICIAL_PACKAGES.reduce((
 }, {});
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-  console.log('packages', packages);
   [...OFFICIAL_PACKAGES].forEach(pkg => {
     const { global } = pkg;
     const curr = packages[global];

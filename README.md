@@ -75,6 +75,7 @@ npm run start // 启动 G6VP 站点
 | packages/gi-assets-neo4j      | `@antv/gi-assets-neo4j`      | Neo4j 引擎服务                |
 | packages/gi-assets-tugraph    | `@antv/gi-assets-tugraph`    | TuGraph 引擎服务              |
 | packages/gi-assets-galaxybase | `@antv/gi-assets-galaxybase` | Galaxybase 引擎服务           |
+| packages/gi-assets-hugegraph  | `@antv/gi-assets-hugegraph`  | HugeGraph 引擎服务            |
 | packages/gi-cli               | `@antv/gi-cli`               | G6VP 资产 CLI                 |
 | packages/gi-common-components | `@antv/gi-common-components` | 通用组件包                    |
 | packages/gi-sdk               | `@antv/gi-sdk`               | G6VP SDK                      |

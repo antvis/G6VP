@@ -1310,7 +1310,7 @@ const projectConfig: GIConfig = {
     {
       id: 'GrailLayout',
       name: '圣杯布局',
-      type: 'GICC',
+      type: 'GICC_LAYOUT',
       props: {
         GI_CONTAINER_LEFT: [],
         leftDisplay: false,

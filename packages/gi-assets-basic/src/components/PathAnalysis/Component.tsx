@@ -9,8 +9,7 @@ import './index.less';
 import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
-
-const { findAllPath } = utils;
+import { findShortestPath } from '@antv/algorithm';
 
 const { Panel } = Collapse;
 
@@ -23,7 +22,6 @@ enableMapSet();
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel } = props;
   const { data: graphData, graph, sourceDataMap } = useContext();
-  //console.log(graphData, '@graphData')
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -67,8 +65,8 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     form.validateFields().then(values => {
       cancelHighlight();
       const { source, target, direction = true } = values;
-      const { allNodePath, allEdgePath } = findAllPath(graphData, source, target, direction);
-      const highlightPath = new Set(allNodePath.map((_, index) => index));
+      const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
+      const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;
@@ -238,7 +236,15 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       <Form form={form}>
         <Row justify="space-between">
           <Col span={22}>
-            <Form.Item label="起始节点" name="source" rules={[{ required: true, message: '请填写起点节点ID' }]}>
+            <Form.Item
+              label="起始节点"
+              name="source"
+              rules={[{ required: true, message: '请填写起点节点ID' }]}
+              tooltip={{
+                open: state.selecting === 'source',
+                title: '可点选画布节点，快速选择起始节点',
+              }}
+            >
               <Select
                 showSearch
                 optionFilterProp="children"
@@ -247,6 +253,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                     draft.selecting = '';
                   });
                 }}
+                onFocus={() => beginSelect('source')}
               >
                 {graphData.nodes.map(node => (
                   <Select.Option key={node.id} value={node.id}>
@@ -265,7 +272,15 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         </Row>
         <Row justify="space-between">
           <Col span={22}>
-            <Form.Item label="目标节点" name="target" rules={[{ required: true, message: '请填写终点节点ID' }]}>
+            <Form.Item
+              label="目标节点"
+              name="target"
+              rules={[{ required: true, message: '请填写终点节点ID' }]}
+              tooltip={{
+                open: state.selecting === 'target',
+                title: '可点选画布节点，快速选择目标节点',
+              }}
+            >
               <Select
                 showSearch
                 optionFilterProp="children"
@@ -274,6 +289,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                     draft.selecting = '';
                   });
                 }}
+                onFocus={() => beginSelect('target')}
               >
                 {graphData.nodes.map(node => (
                   <Select.Option key={node.id} value={node.id}>

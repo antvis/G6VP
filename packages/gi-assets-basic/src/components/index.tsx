@@ -26,21 +26,23 @@ import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
 // import ContentContainer from './ContentContainer';
 import ChartAnalysis from './ChartAnalysis';
+import CommonNeighbor from './CommonNeighbor';
 import ForceSimulation from './ForceSimulation';
+import GroupBar from './GroupBar';
 import Initializer from './Initializer';
+import OperatorBar from './OperatorBar';
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
+import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import SankeyAnalysis from './Sankey';
+import SegmentedLayout from './SegmentedLayout';
+import SelectExchangeMenuItem from './SelectExchangeMenuItem';
 import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
-import CommonNeighbor from './CommonNeighbor';
 import ZoomStatus from './ZoomStatus';
-import RemoveNodeWithMenu from './RemoveNodeWithMenu';
-import OperatorBar from './OperatorBar';
-import GroupBar from './GroupBar';
-import SelectExchangeMenuItem from './SelectExchangeMenuItem';
+import SideLayout from './SideLayout';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -93,4 +95,6 @@ export {
   RemoveNodeWithMenu,
   SelectExchangeMenuItem,
   CommonNeighbor,
+  SideLayout,
+  SegmentedLayout,
 };

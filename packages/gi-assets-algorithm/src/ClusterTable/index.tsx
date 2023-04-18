@@ -17,14 +17,14 @@ const getConfig = (data: GraphinData, clusterTitle, properties) => {
     resData.push({
       ...(node.properties || {}),
       propertyId: node.properties?.id,
-      ...node
+      ...node,
     });
   });
   resData.sort((a, b) => Number(a.clusterId) - Number(b.clusterId));
   const dataCfg = {
     fields: {
       rows: ['clusterId', 'id'],
-      values: properties,
+      values: properties || ['nodeType', 'label'],
     },
     meta: [
       {
@@ -62,9 +62,9 @@ export default class ClustersTable extends Component<Props, State> {
     style: {
       layoutWidthType: 'colAdaptive',
       colCfg: {
-        width: 20
-      }
-    }
+        width: 20,
+      },
+    },
   };
 
   state = {

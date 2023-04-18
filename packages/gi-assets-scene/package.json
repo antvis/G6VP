@@ -32,11 +32,12 @@
   },
   "dependencies": {
     "3d-force-graph": "1.70.10",
-    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
+    "@antv/gi-sdk": "workspace:*",
     "@antv/l7-draw": "^2.4.24",
     "@antv/l7plot": "^0.0.11",
     "@turf/turf": "^6.5.0",
+    "graph-timeline": "^1.1.7",
     "react-spring": "9.4.4",
     "three": "0.139.2"
   },
@@ -47,7 +48,7 @@
     "webpack-cli": "^4.8.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

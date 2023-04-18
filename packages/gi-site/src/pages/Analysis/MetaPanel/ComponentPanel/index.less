@@ -6,3 +6,63 @@
     padding: 0px;
   }
 }
+
+.gi-config-panel {
+  .gi-site-collapse {
+    .gi-container-asset-panel {
+      margin: 8px 8px !important;
+      .gi-sub-asset-item {
+        display: inline-block;
+        height: 30px;
+        width: fit-content;
+        line-height: 23px;
+        border-radius: 15px;
+        background-color: var(--background-color);
+        margin: 6px 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.2);
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+      .gi-sub-asset-item-focusing {
+        box-shadow: 0px 0px 8px var(--primary-color);
+        color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.gi-asset-config-panel {
+  position: fixed;
+  width: 345px;
+  flex-basis: 345px;
+  height: 50vh;
+  background-color: var(--background-color-transparent);
+  bottom: 0;
+  left: 50px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  padding: 12px;
+
+  .gi-container-config-title {
+    font-size: 15px;
+  }
+
+  .gi-asset-config-panel-content {
+    overflow-y: scroll;
+    height: inherit;
+    padding: 16px;
+  }
+}
+
+.gi-component-panel-tip {
+  padding: 12px;
+}
+.gi-container-config-header {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin: 12px;
+  font-size: 18px;
+}

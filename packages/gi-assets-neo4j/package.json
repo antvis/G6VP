@@ -35,7 +35,7 @@
     "use-immer": "^0.7.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x"
   },

@@ -2,8 +2,8 @@ import GI_SDK from '@antv/gi-sdk/package.json';
 
 import * as antd from 'antd';
 import deps_externals from './scripts/deps_externals.json';
-export const G6_VERSION = '4.7.10';
-export const GRAPHIN_VERSION = '2.7.13';
+export const G6_VERSION = '4.8.8';
+export const GRAPHIN_VERSION = '2.7.15';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = antd.version; //4.24.3
 export const GI_VERSION = GI_SDK.version;
@@ -31,11 +31,16 @@ const EXTRA_CONFIG = isDev
         react: 'React',
         'react-dom': 'ReactDOM',
         antd: 'antd',
+        // '@antv/g6': 'G6',
+        // '@antv/graphin': 'Graphin',
       },
       scripts: [
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
+        // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
+        // // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js',
+        // 'http://localhost:5501/graphin.min.js',
       ],
       links: [],
     }

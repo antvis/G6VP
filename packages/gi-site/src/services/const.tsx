@@ -29,7 +29,7 @@ export const GI_SITE = {
     }
 
     return GI_SITE.IS_OFFLINE
-      ? 'https://geaflow-pre.alipay.com' //  'https://graphinsight-pre.alipay.com'
+      ? 'https://graphinsight.antgroup-inc.cn' //  'https://graphinsight-pre.alipay.com'
       : online;
   },
 };

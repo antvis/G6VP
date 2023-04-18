@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import ProjectTitle from '../ProjectTitle';
 import DatasetInfo from './DatasetInfo';
+import Github from './Github';
 import Logo from './Logo';
 import SaveWorkbook from './SaveWorkbook';
 import Theme from './Theme';
@@ -14,7 +15,7 @@ const styles = {
   container: {
     height: '100%',
     width: '100%',
-    boxShadow: `var(--box-shadow-bottom)`,
+    // boxShadow: `var(--box-shadow-bottom)`,
     display: 'flex',
     justifyContent: ' space-between',
   },
@@ -52,6 +53,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
       <div style={styles.right}>
         <SaveWorkbook workbookId={workbookId} />
         <Theme />
+        <Github />
       </div>
     </header>
   );
