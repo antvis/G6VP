@@ -1,5 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext, utils, LocaleWrapper } from '@antv/gi-sdk';
+import type { LocaleWrapperProps } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
@@ -8,10 +9,11 @@ import FilterSelection from './FilterSelection';
 import './index.less';
 import { HistogramOpt, IFilterCriteria } from './type';
 import { filterGraphData, highlightSubGraph } from './utils';
+import zhCN from './locale/zh-CN';
 
 const { isStyles } = utils;
 
-export interface FilterPanelProps {
+export interface FilterPanelProps extends LocaleWrapperProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
   filterLogic: 'and' | 'or';
@@ -20,7 +22,7 @@ export interface FilterPanelProps {
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
-  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys = [], histogramOptions } = props;
+  const { isFilterIsolatedNodes, highlightMode, filterLogic, filterKeys = [], histogramOptions, locale } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const { source, updateContext, transform, schemaData, graph } = useContext();
 
@@ -158,7 +160,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        增加筛选器
+        {locale.addfilter}
       </Button>
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriteria => {
@@ -178,4 +180,4 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   );
 };
 
-export default FilterPanel;
+export default LocaleWrapper({ componentName: 'FilterPanel', defaultLocale: zhCN })(FilterPanel);
