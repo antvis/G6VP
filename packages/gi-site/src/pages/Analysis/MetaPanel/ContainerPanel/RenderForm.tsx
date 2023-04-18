@@ -67,13 +67,15 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     },
   };
 
-  const form = createForm({
-    initialValues: defaultValue,
-    effects() {
-      onFormInputChange(({ values }) => {
-        onChange(id, JSON.parse(JSON.stringify(values)));
-      });
-    },
+  const [form] = React.useState(() => {
+    return createForm({
+      initialValues: defaultValue,
+      effects() {
+        onFormInputChange(({ values }) => {
+          onChange(id, JSON.parse(JSON.stringify(values)));
+        });
+      },
+    });
   });
 
   const colSpan = configSchema && GI_CONTAINER && id !== 'GI_FreeContainer' ? 12 : 24;

@@ -199,7 +199,8 @@ const useRedoUndo = (): {
     ...stackInfo,
     redo,
     undo,
-  };
+    ...stackInfo,
+  } as any;
 };
 
 export default useRedoUndo;
