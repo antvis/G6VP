@@ -58,5 +58,7 @@ export type {
 } from './typing';
 export { useContext, utils, version };
 export { extra };
+export { default as LocaleWrapper } from './locale/LocaleWrapper';
+export type { LocaleWrapperProps } from './locale/LocaleWrapper';
 
 export default GISDK;
