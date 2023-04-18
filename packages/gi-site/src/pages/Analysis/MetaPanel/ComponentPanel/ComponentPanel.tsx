@@ -1,7 +1,7 @@
 import { CaretRightOutlined, CloseOutlined, EditOutlined, SettingOutlined } from '@ant-design/icons';
+import { Icon } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Popover, Row, Tooltip } from 'antd';
 import React from 'react';
-import { Icon } from '@antv/gi-sdk';
 import { useImmer } from 'use-immer';
 import ConfigPanel from './ConfigPanel';
 import './index.less';
@@ -50,10 +50,10 @@ const ComponentPanel = props => {
       }));
     const freeContainer = {
       id: 'GI_FreeContainer',
-      name: '无容器组件',
+      name: '自运行组件',
       info: {
         id: 'GI_FreeContainer',
-        name: '无容器组件',
+        name: '自运行组件',
         icon: 'icon-layout',
         type: 'GICC',
       },

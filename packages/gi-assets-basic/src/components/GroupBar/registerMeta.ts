@@ -187,12 +187,12 @@ export const createGroupsMeta = ({ GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] }) =
   }
 }
 export default (context) => {
-  const { GIAC_ITEMS } = context;
+  const { GIAC_ITEMS = [],GIAC_CONTENT_ITEMS = [] } = context;
   return {
     GI_CONTAINER: {
       title: '集成组件',
       type: 'array',
-      enum: GIAC_ITEMS,
+      enum: [...GIAC_ITEMS,...GIAC_CONTENT_ITEMS],
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {

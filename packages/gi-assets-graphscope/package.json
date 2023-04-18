@@ -30,7 +30,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@antv/gi-sdk": "workspace:*",
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.14",
     "gremlin_patch": "^3.5.1",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",

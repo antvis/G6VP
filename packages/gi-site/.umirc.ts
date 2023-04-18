@@ -31,11 +31,16 @@ const EXTRA_CONFIG = isDev
         react: 'React',
         'react-dom': 'ReactDOM',
         antd: 'antd',
+        // '@antv/g6': 'G6',
+        // '@antv/graphin': 'Graphin',
       },
       scripts: [
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
+        // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
+        // // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js',
+        // 'http://localhost:5501/graphin.min.js',
       ],
       links: [],
     }

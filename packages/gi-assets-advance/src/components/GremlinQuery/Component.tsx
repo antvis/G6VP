@@ -89,8 +89,6 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     setEditorValue(editorValue);
   }, []);
 
-  console.log('editorValue', editorValue);
-
   return (
     <div className="gi-gremlin-query " style={{ ...style }}>
       <div style={{ border: '1px solid #f6f6f6' }}>

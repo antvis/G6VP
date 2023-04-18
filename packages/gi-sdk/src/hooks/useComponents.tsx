@@ -5,7 +5,9 @@ const DEFAULT_GICC_LAYOUT = {
   props: {
     value: 'EmptyLayout',
   },
-  component: props => <>{props.children}</>,
+  component: props => {
+    return <>{props.children}</>;
+  },
 };
 
 const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
@@ -21,19 +23,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   const { component: InitializerComponent } = ComponentAssets[initializer.id];
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 
-  if (!isContextReady || !initialized) {
-    return {
-      renderComponents: () => {
-        return null;
-      },
-      InitializerComponent,
-      InitializerProps,
-      GICC_LAYOUT_COMPONENT: DEFAULT_GICC_LAYOUT.component,
-      GICC_LAYOUT_PROPS: { ...DEFAULT_GICC_LAYOUT.props, value: 'render....' },
-    };
-  }
-
-  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[GICC_LAYOUT.id] || {
+  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id] || {
     component: DEFAULT_GICC_LAYOUT.component,
   };
   // 页面布局组件的 props 从 context.config.pageLayout 中读取，统一 pageLayout 读写方式
@@ -106,6 +96,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
       GISDK_ID,
       ...GICC_LAYOUT_PROPS,
     },
+    isPageLayoutReady: true,
   };
 };
 

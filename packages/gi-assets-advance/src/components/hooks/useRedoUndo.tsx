@@ -1,6 +1,6 @@
-import { GraphinContext, Graph, GraphData, IG6GraphEvent } from '@antv/graphin';
-import React from 'react';
 import { Stack } from '@antv/algorithm';
+import { Graph, GraphData, GraphinContext, IG6GraphEvent } from '@antv/graphin';
+import React from 'react';
 export interface Redo {
   visible: boolean;
   color: string;
@@ -194,7 +194,9 @@ const useRedoUndo = (): {
       graph.off('stackchange', handleStackChanage);
     };
   }, [graph]);
+  //@ts-ignore
   return {
+    ...stackInfo,
     redo,
     undo,
     ...stackInfo,

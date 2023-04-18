@@ -18,13 +18,14 @@ const ContentAsset = (props: Record<string, any> & { Comp: React.FC }) => {
     disabled,
     containerWidth = 450,
     isShowTitle = true,
-    isFloat = false,
   } = GIAC_CONTENT;
   const [open, setOpen] = React.useState(false);
+  const {isSideContent} = groupContainerContext || {};
   const renderContent = () => {
-    if (!isFloat) {
+    const {contentContainer,activeItem  = '',isSideContent} = groupContainerContext || {};
+    if (!isSideContent) {
       return <Drawer open={open} title={title} placement={'right'} width={containerWidth} onClose={() => {
-        if(isFloat){
+        if(isSideContent){
           groupContainerContext?.closeItem($id);
         }else{
           setOpen(false);
@@ -33,7 +34,6 @@ const ContentAsset = (props: Record<string, any> & { Comp: React.FC }) => {
         <Comp {...compProps} />
       </Drawer>
     }
-    const {contentContainer,activeItem  = ''} = groupContainerContext || {};
     if (!contentContainer) {
       return null;
     }
@@ -42,10 +42,10 @@ const ContentAsset = (props: Record<string, any> & { Comp: React.FC }) => {
     </div> : null;
     return ReactDOM.createPortal(element, contentContainer)
   }
-  const active = isFloat ? groupContainerContext.activeItem === $id : false;
+  const active = isSideContent ? groupContainerContext.activeItem === $id : false;
   return <Wrapper key={compProps.key}>
     <OperatorItem disabled={disabled} showTitle={isShowTitle} active={active} title={title} content={<Icon type={icon} />} onClick={() => {
-       if(isFloat){
+       if(isSideContent){
         if(groupContainerContext?.activeItem === $id){
           groupContainerContext?.closeItem($id); 
         }else{

@@ -16,7 +16,6 @@ const Logo: React.FunctionComponent<LogoProps> = props => {
   const height = Math.round(size * ratio);
   const viewBox = `0 0 ${width + 3} ${height + 3}`;
   const fontSize = `${Math.round(18 * ratio)}px`;
-  console.log(ratio, height, width, fontSize);
 
   return (
     <div onClick={handleClick} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', ...style }}>

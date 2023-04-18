@@ -8,7 +8,7 @@ module.exports = (env, argv) => {
   const DIST_PATH = path.join(__dirname, 'dist/');
   let ASSETS_UMD = name.split('-').join('_').toUpperCase();
 
-  console.log(ASSETS_UMD);
+  console.log(`UMD Package name: \x1b[32m${ASSETS_UMD}\x1b[0m`);
 
   const plugins = env.analysis
     ? [

@@ -20,7 +20,6 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
     const origin = (await ProjectServices.getById(workbookId)) as IProject;
 
     const { pageLayout, ...otherConfig } = config;
-
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const workbookId = await ProjectServices.create({

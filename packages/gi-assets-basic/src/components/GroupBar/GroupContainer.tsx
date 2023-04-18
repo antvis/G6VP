@@ -27,6 +27,7 @@ interface BaseProps {
   className?: string;
   style?: React.CSSProperties;
   wrapperStyle?: React.CSSProperties;
+  isSideContent?: boolean;
 }
 export interface HorProps extends BaseProps {
   vertical?: false;
@@ -44,8 +45,10 @@ interface GroupContainerContextType {
   activeItem?: string;
   closePending?: boolean;
   contentContainer?: HTMLElement;
+  isSideContent: boolean;
 }
 const defaultContextValue = {
+  isSideContent: false;
   openItem() { },
   closeItem() { }
 }
@@ -57,7 +60,7 @@ export const useGroupContainerContext = () => {
  * 分组容器，水平或垂直按分组展示
  */
 export default (props: Props) => {
-  const { vertical, items = [], className, style, wrapperStyle } = props;
+  const { vertical, items = [], className, style, wrapperStyle,isSideContent = false } = props;
   const context = useGraphInsightContext();
   const { config, assets } = context;
   const closeAnimate = React.useRef<any>()
@@ -76,6 +79,11 @@ export default (props: Props) => {
 
   React.useLayoutEffect(() => {
     updateContextValue((draft) => {
+      draft.isSideContent = isSideContent;
+    });
+  },[isSideContent]);
+  React.useLayoutEffect(() => {
+    updateContextValue((draft) => {
       draft.openItem = (id: string) => {
         clearTimeout(closeAnimate.current);
         updateContextValue((draft) => {
@@ -90,6 +98,7 @@ export default (props: Props) => {
         clearTimeout(closeAnimate.current);
         closeAnimate.current = setTimeout(() => {
           updateContextValue((draft) => {
+            draft.closePending = true;
             if(!id || draft.activeItem === id){
               draft.activeItem = '';
             }
@@ -107,14 +116,19 @@ export default (props: Props) => {
     display: 'flex',
     flexDirection: vertical ? 'column' : 'row'
   };
+  const contentVisible = !contextValue.closePending && contextValue.activeItem;
   const sidePanelStyle: React.CSSProperties = {
     float: 'left',
-    maxWidth: contextValue.closePending ?  0 : (contextValue.activeItem ? '100vw' : 0)
+    maxWidth: contentVisible ? '100vw' : 0,
+    borderWidth: contentVisible ? 1 : 0,
   };
+  const finalContentStyle: React.CSSProperties = {};
   if (vertical) {
+    finalContentStyle.height = '100%';
     sidePanelStyle.height = '100%';
   } else {
     sidePanelStyle.width = '100%';
+    finalContentStyle.width = '100%';
   }
   return <GroupContainerContext.Provider value={contextValue}>
     <div className='gi-group-container-wrapper' style={wrapperStyle}>
@@ -220,7 +234,9 @@ export default (props: Props) => {
           })
         }
       </div>
-      <div className='gi-group-container-side-content' style={sidePanelStyle} ref={ref}/>
+      <div className='gi-group-container-side-content' style={sidePanelStyle}>
+        <div style={finalContentStyle} ref={ref}></div>
+      </div>
     </div>
   </GroupContainerContext.Provider>
 }
