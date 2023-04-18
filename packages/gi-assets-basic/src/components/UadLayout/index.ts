@@ -6,4 +6,4 @@ export default {
   info,
   component,
   registerMeta,
-} as any;
+};

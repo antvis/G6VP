@@ -1,4 +1,4 @@
-export const getStyles: any = (height: number, placement: 'top' | 'bottom'): { [key: string]: React.CSSProperties } => {
+export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: string]: React.CSSProperties } => {
   if (placement === 'top') {
     return {
       container: {

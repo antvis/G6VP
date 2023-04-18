@@ -158,4 +158,4 @@ export default {
   exportGraphData,
   clearItemsStates,
   clearItemStates,
-} as any;
+};

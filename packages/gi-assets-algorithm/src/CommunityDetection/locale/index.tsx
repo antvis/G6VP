@@ -31,7 +31,7 @@ interface FormattedMessageProps {
 }
 
 export default class FormattedMessage extends React.Component<Readonly<FormattedMessageProps>> {
-  static contextType:any = GraphinContext;
+  static contextType = GraphinContext;
 
   render() {
     //@ts-ignore

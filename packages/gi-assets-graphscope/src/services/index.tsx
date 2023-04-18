@@ -21,4 +21,4 @@ export default {
     ...ElementProperties,
     ...ExecAlgorithm,
   },
-} as any;
+};

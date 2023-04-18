@@ -1,5 +1,5 @@
 import { Utils } from '@antv/graphin';
-const getSchemaGraph:any = (schemaData, config) => {
+const getSchemaGraph = (schemaData, config) => {
   const colorMap = new Map();
   const nodesConfigMap = new Map();
   const edgesConfigMap = new Map();
