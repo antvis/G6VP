@@ -14,7 +14,7 @@
     "build": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build:docker": "BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/create-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
-    "start": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 PORT=8000 umi dev"
+    "start": "node scripts/pre-build.mjs && cross-env NODE_OPTIONS=--max_old_space_size=4096 cross-env PORT=8000 umi dev"
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",
@@ -30,6 +30,7 @@
     "@antv/gi-assets-neo4j": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-assets-tugraph": "workspace:*",
+    "@antv/gi-assets-galaxybase": "workspace:*",
     "@antv/gi-assets-hugegraph": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
@@ -66,7 +67,8 @@
   "devDependencies": {
     "fs-extra": "^10.1.0",
     "gh-pages": "latest",
-    "perf_hooks": "^0.0.1"
+    "perf_hooks": "^0.0.1",
+    "cross-env": "7.0.3"
   },
   "peerDependencies": {
     "@antv/graphin": "^2.7.15",
