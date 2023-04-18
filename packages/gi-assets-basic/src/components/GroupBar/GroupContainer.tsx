@@ -1,8 +1,8 @@
-import React from "react";
-import { wrapContentAsset } from './render';
 import { useContext as useGraphInsightContext } from '@antv/gi-sdk';
+import React from 'react';
+import { useImmer } from 'use-immer';
 import './GroupContainer.less';
-import { useImmer } from "use-immer";
+import { wrapContentAsset } from './render';
 
 interface BaseGroup {
   background?: string;
@@ -36,7 +36,7 @@ export interface HorProps extends BaseProps {
 export type Group = HorGroup | VerGroup;
 export interface VerProps extends BaseProps {
   vertical: true;
-  items?: VerGroup[]
+  items?: VerGroup[];
 }
 export type Props = HorProps | VerProps;
 interface GroupContainerContextType {
@@ -48,22 +48,22 @@ interface GroupContainerContextType {
   isSideContent: boolean;
 }
 const defaultContextValue = {
-  isSideContent: false;
-  openItem() { },
-  closeItem() { }
-}
+  isSideContent: false,
+  openItem() {},
+  closeItem() {},
+};
 const GroupContainerContext = React.createContext<GroupContainerContextType>(defaultContextValue);
 export const useGroupContainerContext = () => {
   return React.useContext(GroupContainerContext);
-}
+};
 /**
  * 分组容器，水平或垂直按分组展示
  */
 export default (props: Props) => {
-  const { vertical, items = [], className, style, wrapperStyle,isSideContent = false } = props;
+  const { vertical, items = [], className, style, wrapperStyle, isSideContent = false } = props;
   const context = useGraphInsightContext();
   const { config, assets } = context;
-  const closeAnimate = React.useRef<any>()
+  const closeAnimate = React.useRef<any>();
   const componentCfgMap = React.useMemo(() => {
     if (config?.components) {
       return config.components.reduce((map: any, current: any) => {
@@ -74,47 +74,46 @@ export default (props: Props) => {
     return {} as Record<string, any>;
   }, [config?.components]);
   const componentMap = assets.components || {};
-  const [contextValue,updateContextValue] = useImmer<GroupContainerContextType>({...defaultContextValue});
+  const [contextValue, updateContextValue] = useImmer<GroupContainerContextType>({ ...defaultContextValue });
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
-    updateContextValue((draft) => {
+    updateContextValue(draft => {
       draft.isSideContent = isSideContent;
     });
-  },[isSideContent]);
+  }, [isSideContent]);
   React.useLayoutEffect(() => {
-    updateContextValue((draft) => {
+    updateContextValue(draft => {
       draft.openItem = (id: string) => {
         clearTimeout(closeAnimate.current);
-        updateContextValue((draft) => {
+        updateContextValue(draft => {
           draft.closePending = false;
           draft.activeItem = id;
         });
       };
       draft.closeItem = (id?: string) => {
-        updateContextValue((draft) => {
+        updateContextValue(draft => {
           draft.closePending = true;
         });
         clearTimeout(closeAnimate.current);
         closeAnimate.current = setTimeout(() => {
-          updateContextValue((draft) => {
+          updateContextValue(draft => {
             draft.closePending = true;
-            if(!id || draft.activeItem === id){
+            if (!id || draft.activeItem === id) {
               draft.activeItem = '';
             }
           });
-        },400);
-        
+        }, 400);
       };
-      draft.contentContainer = ref.current as  any;
+      draft.contentContainer = ref.current as any;
     });
-  },[ref]);
+  }, [ref]);
   const finalStyle: React.CSSProperties = {
     width: '100%',
     height: '100%',
     ...style,
     display: 'flex',
-    flexDirection: vertical ? 'column' : 'row'
+    flexDirection: vertical ? 'column' : 'row',
   };
   const contentVisible = !contextValue.closePending && contextValue.activeItem;
   const sidePanelStyle: React.CSSProperties = {
@@ -130,16 +129,16 @@ export default (props: Props) => {
     sidePanelStyle.width = '100%';
     finalContentStyle.width = '100%';
   }
-  return <GroupContainerContext.Provider value={contextValue}>
-    <div className='gi-group-container-wrapper' style={wrapperStyle}>
-      <div className={`gi-group-container ${className || ''}`} style={finalStyle} data-vertical={String(!!vertical)}>
-        {
-          items.map((group: HorGroup | VerGroup, index: number) => {
+  return (
+    <GroupContainerContext.Provider value={contextValue}>
+      <div className="gi-group-container-wrapper" style={wrapperStyle}>
+        <div className={`gi-group-container ${className || ''}`} style={finalStyle} data-vertical={String(!!vertical)}>
+          {items.map((group: HorGroup | VerGroup, index: number) => {
             const style: React.CSSProperties = {
               flex: 1,
               background: group.background,
               color: group.color,
-              flexDirection: vertical ? 'column' : 'row'
+              flexDirection: vertical ? 'column' : 'row',
             };
             if (vertical) {
               const verGroup = group as VerGroup;
@@ -181,14 +180,14 @@ export default (props: Props) => {
               let driverStyle: React.CSSProperties = {
                 width: driverSize,
                 top: driver.start || 0,
-                bottom: driver.end || 0
+                bottom: driver.end || 0,
               };
               if (vertical) {
                 driverStyle = {
                   height: driverSize,
                   left: driver.start || 0,
-                  right: driver.end || 0
-                }
+                  right: driver.end || 0,
+                };
               }
               driverStyle.backgroundColor = driver.color;
               if (vertical) {
@@ -204,12 +203,12 @@ export default (props: Props) => {
                   driverStyle.right = 0;
                 }
               }
-              return <i key={`driver_${index}`} className='gi-group-container-driver' style={driverStyle} />
+              return <i key={`driver_${index}`} className="gi-group-container-driver" style={driverStyle} />;
             });
 
-            return <div className={'gi-group-container-item'} key={index} style={style}>
-              {
-                group.components?.map((componentId, index) => {
+            return (
+              <div className={'gi-group-container-item'} key={index} style={style}>
+                {group.components?.map((componentId, index) => {
                   const componentMeta = componentMap[componentId];
                   if (!componentMeta) {
                     console.warn(`asset: ${componentId} not found`);
@@ -221,22 +220,20 @@ export default (props: Props) => {
                     return wrapContentAsset(Comp, {
                       key: index,
                       $id: componentId,
-                      ...itemProps
-                    })
+                      ...itemProps,
+                    });
                   }
-                  return <Comp key={index} {...itemProps} />
-                })
-              }
-              {
-                driverElements
-              }
-            </div>
-          })
-        }
+                  return <Comp key={index} {...itemProps} />;
+                })}
+                {driverElements}
+              </div>
+            );
+          })}
+        </div>
+        <div className="gi-group-container-side-content" style={sidePanelStyle}>
+          <div style={finalContentStyle} ref={ref}></div>
+        </div>
       </div>
-      <div className='gi-group-container-side-content' style={sidePanelStyle}>
-        <div style={finalContentStyle} ref={ref}></div>
-      </div>
-    </div>
-  </GroupContainerContext.Provider>
-}
+    </GroupContainerContext.Provider>
+  );
+};
