@@ -1,6 +1,6 @@
-import { GraphinContext } from '@antv/graphin';
-import { Table, Select } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext } from '@antv/gi-sdk';
+import { Select, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { ITEM_STATE, MappingWay } from './registerMeta';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, nodeProperties }) => {
-  const { graph } = useContext(GraphinContext);
+  const { graph } = useContext();
 
   const formValues = form.getFieldsValue();
   const edgeType = formValues['edge-property.edgeType'];
@@ -33,17 +33,21 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
         width: 60,
       },
       {
-        title: nodeProperties?.length ? (<>
-          节点
-          <Select
-            className="result-table-property-select"
-            size="small"
-            defaultValue="id"
-            options={nodeProperties.map(key => ({ label: key, value: key }))}
-            dropdownMatchSelectWidth={false}
-            onChange={setPropertyKey}
-          />
-        </>) : '节点',
+        title: nodeProperties?.length ? (
+          <>
+            节点
+            <Select
+              className="result-table-property-select"
+              size="small"
+              defaultValue="id"
+              options={nodeProperties.map(key => ({ label: key, value: key }))}
+              dropdownMatchSelectWidth={false}
+              onChange={setPropertyKey}
+            />
+          </>
+        ) : (
+          '节点'
+        ),
         dataIndex: 'name',
         key: 'name',
         textWrap: 'word-break',
@@ -77,16 +81,15 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
       nodes.reverse();
     }
     return nodes.map((node, index) => {
-      return ({
+      return {
         key: node.id,
         index: index + 1,
         name: node.originProperties[propertyKey] || node.id,
         value: node.value,
         values: node.values?.join('; '),
-      })
+      };
     });
   };
-
 
   const clearActiveItems = () => {
     const activateItems = graph

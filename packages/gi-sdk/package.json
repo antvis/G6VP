@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk",
-  "version": "2.0.2",
+  "version": "2.1.1",
   "description": "G6VP 核心画布渲染",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -37,7 +37,7 @@
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.14",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

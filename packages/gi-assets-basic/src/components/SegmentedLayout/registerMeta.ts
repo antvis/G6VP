@@ -17,6 +17,20 @@ const registerMeta = context => {
           enum: GIAC_CONTENT_ITEMS,
           default: [],
         },
+        width: {
+          type: 'number',
+          title: '容器宽度',
+          'x-component': 'NumberPicker',
+          'x-decorator': 'FormItem',
+          default: 360,
+        },
+        padding: {
+          type: 'number',
+          title: 'Padding',
+          'x-component': 'NumberPicker',
+          'x-decorator': 'FormItem',
+          default: 12,
+        },
       },
     ],
   };

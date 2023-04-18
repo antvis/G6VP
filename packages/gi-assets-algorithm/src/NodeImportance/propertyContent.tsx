@@ -1,9 +1,9 @@
 /**
  * author:shiwu.wyy@antgroup.com
  */
-import { GraphinContext } from '@antv/graphin';
+import { useContext } from '@antv/gi-sdk';
 import { Form, Select, Spin } from 'antd';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { locale, MappingWay, PropertyContentProps } from './registerMeta';
 
 const { Option } = Select;
@@ -19,7 +19,7 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
     // schemaEdgeLocale,
     // dataTypeMap: { edgeTypeMap = {} },
     // schemaData
-  } = useContext(GraphinContext);
+  } = useContext();
 
   const [loading, setLoading] = useState(false);
 
@@ -60,7 +60,7 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
             rules={[{ required: visible, message: '不可为空' }]}
             name={`${type}-property.calcway`}
             key={`${type}-property.calcway`}
-            label={"计算方式"}
+            label={'计算方式'}
           >
             <Select
               placeholder={'请选择'}
