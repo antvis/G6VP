@@ -61,8 +61,11 @@
     "@antv/s2-react": "^1.26.0",
     "@antv/util": "^3.2.5",
     "antd": "4.x",
+    "buffer": "^6.0.3",
+    "buffer-browserify": "^0.2.5",
     "react": "17",
     "react-dom": "17.x",
+    "stream-browserify": "^3.0.0",
     "umi": "3.x"
   },
   "devDependencies": {
