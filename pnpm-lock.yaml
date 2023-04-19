@@ -34,15 +34,24 @@ importers:
       antd:
         specifier: 4.x
         version: 4.24.8(react-dom@17.0.2)(react@17.0.2)
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
+      buffer-browserify:
+        specifier: ^0.2.5
+        version: 0.2.5
       react:
         specifier: '17'
         version: 17.0.2
       react-dom:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
+      stream-browserify:
+        specifier: ^3.0.0
+        version: 3.0.0
       umi:
         specifier: 3.x
-        version: 3.5.20(react-router@6.10.0)
+        version: 3.5.20(react-router@5.2.0)
     devDependencies:
       '@types/react':
         specifier: 17.x
@@ -11977,7 +11986,7 @@ packages:
     peerDependencies:
       '@storybook/addon-actions': '*'
     dependencies:
-      '@storybook/addon-actions': 5.3.21(@types/react@17.0.56)(react-dom@16.14.0)(regenerator-runtime@0.13.11)
+      '@storybook/addon-actions': 5.3.21(@types/react@17.0.56)(react-dom@17.0.2)(regenerator-runtime@0.13.11)
       global: 4.4.0
     dev: true
 
@@ -13414,7 +13423,7 @@ packages:
       memoizerific: 1.11.3
       qs: 6.11.1
       react: 16.14.0
-      react-dom: 16.14.0(react@17.0.2)
+      react-dom: 16.14.0(react@16.14.0)
       util-deprecate: 1.0.2
     dev: true
 
@@ -13560,7 +13569,7 @@ packages:
       polished: 3.7.2
       prop-types: 15.8.1
       react: 16.14.0
-      react-dom: 16.14.0(react@17.0.2)
+      react-dom: 16.14.0(react@16.14.0)
       resolve-from: 5.0.0
       ts-dedent: 1.2.0
     dev: true
@@ -17328,6 +17337,7 @@ packages:
       - react
       - react-dom
       - react-router
+    dev: true
 
   /@umijs/bundler-utils@3.5.39(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0):
     resolution: {integrity: sha512-TEFl1Qxjrs5lansEhRhTnmIVl9AnSE0x9o+JT9h0cHuTFvdta/56XIoaAKnWu2mZ+T8BoSQknjPVG9o1wyYrBg==}
@@ -17420,6 +17430,7 @@ packages:
       - react
       - react-dom
       - react-router
+    dev: true
 
   /@umijs/bundler-webpack@3.5.39(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0):
     resolution: {integrity: sha512-VO3a+alsSYcHuXZ1iw2krN+Qf+68eg/78y4AtUY9hUKIA9B2KoBc2Hw9ux2axubxp82guYmxWO5r61aR0V9xVQ==}
@@ -17835,7 +17846,7 @@ packages:
       mime: 1.3.6
       react: 16.14.0
       react-refresh: 0.10.0
-      react-router: 5.2.0(react@16.14.0)
+      react-router: 5.2.0(react@17.0.2)
       react-router-config: 5.1.1(react-router@5.2.0)(react@16.14.0)
       react-router-dom: 5.2.0(react@16.14.0)
       regenerator-runtime: 0.13.5
@@ -18156,6 +18167,7 @@ packages:
       react-router-config: 5.1.1(react-router@6.10.0)(react@16.14.0)
     transitivePeerDependencies:
       - react-router
+    dev: true
 
   /@umijs/renderer-react@3.5.39(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0):
     resolution: {integrity: sha512-5oos9ObzrNfFEYXXDDv2fpTyjy80MX47XuVMxlgdMML6N4E3/Bfo3pCpxoR2WAON72MVbXLToxDNjqjo0n+icw==}
@@ -18377,6 +18389,7 @@ packages:
       - react
       - react-dom
       - react-router
+    dev: true
 
   /@umijs/types@3.5.39(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0):
     resolution: {integrity: sha512-WM1owzssg0iFHhHJfy8ke4e9dj/+cfnhdDOQPb20skPZKM8k1wq3NIrZ6updQ4Au/GOfrLNa1uDTPe3ifF8Hfw==}
@@ -20812,7 +20825,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 4.4.1(react-dom@16.14.0)(react@17.0.2)
+      styled-components: 4.4.1(react-dom@17.0.2)(react@17.0.2)
     dev: true
 
   /babel-plugin-styled-components@2.1.1(styled-components@5.3.9):
@@ -21695,6 +21708,11 @@ packages:
     resolution: {integrity: sha512-pNdYkNPiJUnEhnfXV56+sQy8+AaPcG3POZAUnwr4EeqCUZFz4u2PePbo3e5Gj4ziYPCWGUZT9RHisvJKnwFuBQ==}
     dev: false
 
+  /base64-js@0.0.8:
+    resolution: {integrity: sha512-3XSA2cR/h/73EzlXXdU6YNycmYI7+kicTxks4eJg2g39biHR84slg2+des+p7iHYhbRg/udIS4TD53WabcOUkw==}
+    engines: {node: '>= 0.4'}
+    dev: false
+
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
@@ -22047,6 +22065,13 @@ packages:
     dependencies:
       buffer-alloc-unsafe: 1.1.0
       buffer-fill: 1.0.0
+
+  /buffer-browserify@0.2.5:
+    resolution: {integrity: sha512-3ko6TTBwXb15w2OgZuyAzLJwUFClBMvcKcmhF+iQ79G71K8Fc3RqKzroCN0a0DbZw2GM3q9lNoqfYYCTq6w7QA==}
+    deprecated: Package not maintained. Recent browserify uses https://github.com/feross/buffer
+    dependencies:
+      base64-js: 0.0.8
+    dev: false
 
   /buffer-equal@1.0.1:
     resolution: {integrity: sha512-QoV3ptgEaQpvVwbXdSO39iqPQTCxSF7A5U99AxbHYqUdCizL/lH2Z0A2y6nbZucxMEOtNyZfG2s6gsVugGpKkg==}
@@ -42624,7 +42649,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       react: 16.14.0
-      react-router: 5.2.0(react@16.14.0)
+      react-router: 5.2.0(react@17.0.2)
 
   /react-router-config@5.1.1(react-router@5.2.0)(react@17.0.2):
     resolution: {integrity: sha512-DuanZjaD8mQp1ppHjgnnUnyOlqYXZVjnov/JzFhjLEwd3Z4dYjMSnqrEzzGThH47vpCOqPPwJM2FtthLeJ8Pbg==}
@@ -45769,6 +45794,13 @@ packages:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
+  /stream-browserify@3.0.0:
+    resolution: {integrity: sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA==}
+    dependencies:
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+    dev: false
+
   /stream-combiner@0.0.4:
     resolution: {integrity: sha512-rT00SPnTVyRsaSz5zgSPma/aHSOic5U1prhYdRy5HS2kTZviFpmDgzilbtsJsxiroqACmayynDN/9VzIbX5DOw==}
     dependencies:
@@ -47650,6 +47682,24 @@ packages:
       slash2: 2.0.0
     dev: true
 
+  /umi@3.5.20(react-router@5.2.0):
+    resolution: {integrity: sha512-rliZTS2LoudsIelaSipZrPUEjPOi2HDlj1VCNXt63YFxeqSXQkijKmM1+hSVEDDRwPLq4L+RZhuVnCasZA9Nng==}
+    hasBin: true
+    dependencies:
+      '@umijs/bundler-webpack': 3.5.20(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0)
+      '@umijs/core': 3.5.20
+      '@umijs/deps': 3.5.20
+      '@umijs/preset-built-in': 3.5.20(react-dom@16.14.0)(react@16.14.0)
+      '@umijs/runtime': 3.5.20(react@16.14.0)
+      '@umijs/types': 3.5.20(react-dom@16.14.0)(react-router@5.2.0)(react@16.14.0)
+      '@umijs/utils': 3.5.20
+      react: 16.14.0
+      react-dom: 16.14.0(react@16.14.0)
+      v8-compile-cache: 2.3.0
+    transitivePeerDependencies:
+      - react-router
+    dev: false
+
   /umi@3.5.20(react-router@6.10.0):
     resolution: {integrity: sha512-rliZTS2LoudsIelaSipZrPUEjPOi2HDlj1VCNXt63YFxeqSXQkijKmM1+hSVEDDRwPLq4L+RZhuVnCasZA9Nng==}
     hasBin: true
@@ -47666,6 +47716,7 @@ packages:
       v8-compile-cache: 2.3.0
     transitivePeerDependencies:
       - react-router
+    dev: true
 
   /umi@3.5.39(react-router@5.2.0):
     resolution: {integrity: sha512-CvNV3Nsac/lL2d3H4rjeF4yjqqjdm5Ai1LRlcSrvh0ubns8EKoT4V5hZu7TsAFmZ6eH7niuXIgkOmsJH6u+uEg==}
