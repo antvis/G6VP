@@ -115,6 +115,7 @@ export const components = [
       offset: [10, 10],
       animate: false,
       defaultiStatistic: false,
+      enableInfoDetect: true,
     },
   },
   {

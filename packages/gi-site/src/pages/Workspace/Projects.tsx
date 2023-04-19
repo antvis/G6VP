@@ -127,13 +127,15 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
     const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
     queryAssets(activeAssetsKeys).then(activeAssets => {
-      const { transData, inputData } = data || {
+      const { transData, inputData, propertyGraphData } = data || {
         transData: { nodes: [], edges: [] },
         inputData: [{ nodes: [], edges: [] }],
+        propertyGraphData: { nodes: [], edges: [] },
       };
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
         data: transData,
         schemaData,
+        propertyGraphData,
       };
       const assetServices = utils.getCombineServices(activeAssets.services!);
       const combinedServiceConfig = getCombinedServiceConfig([], assetServices);

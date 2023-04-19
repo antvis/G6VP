@@ -7,12 +7,13 @@ export type GIService = any;
 export interface IProps {
   serviceId: string;
   schemaServiceId: string;
+  propertyGraphServiceId: string;
   aggregate: boolean;
 }
 
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
-  const { serviceId, schemaServiceId, aggregate } = props;
+  const { serviceId, schemaServiceId, propertyGraphServiceId, aggregate } = props;
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
@@ -23,6 +24,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
 
     let initialService = services.find(s => s.id === serviceId) as GIService;
     let schemaService = services.find(s => s.id === schemaServiceId) as GIService;
+    let initialPropertyGraphService = services.find(s => s.id === propertyGraphServiceId) as GIService;
 
     if (!initialService) {
       notification.error({
@@ -56,11 +58,23 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         },
       };
     }
+    if (!initialPropertyGraphService) {
+      initialPropertyGraphService = {
+        service: () => {
+          return new Promise(resolve => {
+            resolve({
+              nodes: [],
+              edges: [],
+            });
+          });
+        },
+      };
+    }
     updateContext(draft => {
       draft.isLoading = true;
     });
-    Promise.all([schemaService.service(), initialService.service()]).then(
-      ([schema, data = { nodes: [], edges: [] }]) => {
+    Promise.all([schemaService.service(), initialService.service(), initialPropertyGraphService.service()]).then(
+      ([schema, data = { nodes: [], edges: [] }, propertyGraphData]) => {
         const { nodes } = data;
 
         if (nodes.length > largeGraphLimit) {
@@ -95,6 +109,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           /** 如果有样式数据 */
           if (style) {
             draft.data = data;
+            draft.propertyGraphData = propertyGraphData;
             draft.source = data;
             draft.isLoading = false;
             return;
@@ -109,6 +124,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
               nodes: [],
               edges: [],
             };
+            draft.propertyGraphData = propertyGraphData;
             draft.isLoading = false;
             return;
           }
@@ -120,6 +136,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             draft.largeGraphMode = false;
             draft.largeGraphData = undefined;
             draft.data = transform(utils.aggregateEdges(data), true);
+            draft.propertyGraphData = propertyGraphData;
             draft.isLoading = false;
             return;
           }
@@ -127,6 +144,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           const newData = transform(data, true);
           draft.rawData = { ...data };
           draft.data = newData;
+          draft.propertyGraphData = propertyGraphData;
           draft.source = newData;
           draft.largeGraphMode = false;
           draft.largeGraphData = undefined;

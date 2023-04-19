@@ -414,6 +414,7 @@ const baseComponentsConfig = [
     name: '初始化器',
     props: {
       serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
+      propertyGraphServiceId: 'GI/GI_SERVICE_INTIAL_PROPERTY_GRAPH',
       schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
       GI_INITIALIZER: true,
     },

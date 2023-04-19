@@ -12,14 +12,15 @@ export interface PropertiesPanelProps {
   title: string;
   offset: number[];
   defaultiStatistic: boolean;
+  enableInfoDetect: boolean;
 }
 
 /**
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
-  const { serviceId, hasService, placement, width, title, height, offset, defaultiStatistic } = props;
-  const { graph, services, GISDK_ID } = useContext();
+  const { serviceId, hasService, placement, width, title, height, offset, defaultiStatistic, enableInfoDetect } = props;
+  const { graph, services, GISDK_ID, propertyGraphData, data } = useContext();
   const service = utils.getService(services, serviceId);
   if (!service) {
     return null;
@@ -29,6 +30,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
     visible: false,
     detail: null,
     isLoading: false,
+    propertyInfos: [] as { propertyName: string; ratio: number }[],
   });
 
   const handleClose = () => {
@@ -38,6 +40,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
           visible: false,
           isLoading: false,
           detail: null,
+          propertyInfos: [],
         };
       }
       return preState;
@@ -58,10 +61,16 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service(model);
 
+      let propertyInfos: { propertyName: string; ratio: number }[] = [];
+      if (enableInfoDetect) {
+        propertyInfos = utils.getNodePropertyImportance(propertyGraphData, 'node', detail.id, 3, true);
+      }
+
       setState(preState => {
         return {
           ...preState,
           detail,
+          propertyInfos,
           isLoading: false,
         };
       });
@@ -79,10 +88,16 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service(model);
 
+      let propertyInfos: { propertyName: string; ratio: number; rank: number; isOuterlier?: boolean }[] = [];
+      if (enableInfoDetect) {
+        propertyInfos = utils.getNodePropertyImportance(propertyGraphData, 'edge', detail.id, 3, true);
+      }
+
       setState(preState => {
         return {
           ...preState,
           detail,
+          propertyInfos,
           isLoading: false,
         };
       });
@@ -97,10 +112,14 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       graph.off('edge:click', handleEdgeClick);
     };
   }, [graph, setState, service]);
-  const { isLoading, detail, visible } = state;
+  const { isLoading, detail, propertyInfos, visible } = state;
 
   const content =
-    !isLoading && detail ? <Properties data={detail} defaultiStatistic={defaultiStatistic} /> : <Skeleton active />;
+    !isLoading && detail ? (
+      <Properties data={detail} defaultiStatistic={defaultiStatistic} propertyInfos={propertyInfos} />
+    ) : (
+      <Skeleton active />
+    );
 
   return (
     <DivContainer

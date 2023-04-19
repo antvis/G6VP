@@ -89,13 +89,15 @@ const Analysis = props => {
         }),
       );
 
-      const { transData, inputData } = data || {
+      const { transData, inputData, propertyGraphData } = data || {
         transData: { nodes: [], edges: [] },
         inputData: [{ nodes: [], edges: [] }],
+        propertyGraphData: { nodes: [], edges: [] },
       };
 
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
         data: transData,
+        propertyGraphData,
         schemaData,
       };
 

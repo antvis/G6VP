@@ -16,6 +16,7 @@ import { GIComponentConfig } from './typing';
 /** export  */
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
+  // @ts-ignore
   const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
@@ -34,6 +35,7 @@ const GISDK = (props: Props) => {
 
   const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
+    propertyGraphData: { nodes: [], edges: [] } as GraphinData,
     schemaData: {
       //会在初始化时候更新
       nodes: [],

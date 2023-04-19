@@ -10,6 +10,8 @@ export default context => {
     info.services[1],
     engineId,
   );
+  const { options: propertyGraphServiceOptions, defaultValue: defaultPropertyGraphService } =
+    utils.getServiceOptionsByEngineId(services, info.services[2], engineId);
 
   return {
     serviceId: {
@@ -31,6 +33,16 @@ export default context => {
         options: schemaServiceOptions,
       },
       default: defaultschemaService,
+    },
+    propertyGraphServiceId: {
+      title: '初始化属性图查询',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: propertyGraphServiceOptions,
+      },
+      default: defaultPropertyGraphService,
     },
 
     // 注意⚠️：GI_INITIALIZER 是必须的属性字段，千万不要漏掉

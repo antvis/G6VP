@@ -7,7 +7,7 @@ const info = {
   category: 'system-interaction',
   type: 'INITIALIZER',
   // 申明需要实现的服务名
-  services: ['GI_SERVICE_INTIAL_GRAPH', 'GI_SERVICE_SCHEMA'],
+  services: ['GI_SERVICE_INTIAL_GRAPH', 'GI_SERVICE_SCHEMA', 'GI_SERVICE_INTIAL_PROPERTY_GRAPH'],
   docs: 'https://www.yuque.com/antv/gi/eedyuy',
 };
 export default info;

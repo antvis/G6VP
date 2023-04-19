@@ -14,9 +14,6 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
 
     if (!components || components.length === 0) {
-      // return (
-
-      // );
       return [
         {
           id: 'empty',

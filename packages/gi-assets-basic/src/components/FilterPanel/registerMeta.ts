@@ -45,6 +45,13 @@ const registerMeta = ({ schemaData }) => {
       enum: [...nodeOptions, ...edgeOptions],
       default: [],
     },
+    enableInfoDetect: {
+      title: '智能推荐',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     isFilterIsolatedNodes: {
       title: '过滤孤立节点',
       type: 'boolean',

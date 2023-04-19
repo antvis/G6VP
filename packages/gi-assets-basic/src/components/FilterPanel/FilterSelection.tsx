@@ -6,9 +6,11 @@ import {
   NumberOutlined,
   PieChartOutlined,
   SelectOutlined,
+  FireTwoTone,
 } from '@ant-design/icons';
 import { GraphinData } from '@antv/graphin';
-import { Button, Dropdown, Menu, Select } from 'antd';
+import { useContext, utils } from '@antv/gi-sdk';
+import { Button, Dropdown, Menu, Select, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
 import HistogramOptions from './Charts/HistogramOptions';
@@ -37,11 +39,26 @@ interface FilterSelectionProps {
   nodeProperties: Object;
   edgeProperties: Object;
   source: GraphinData;
+  sorttedProperties?: {
+    node: { propertyName: string; entropy: number }[];
+    edge: { propertyName: string; entropy: number }[];
+  };
   defaultKey?: string;
+  enableInfoDetect?: boolean;
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriteria, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, source } = props;
+  const { propertyGraphData } = useContext();
+  const {
+    filterCriteria,
+    nodeProperties,
+    edgeProperties,
+    updateFilterCriteria,
+    removeFilterCriteria,
+    source,
+    enableInfoDetect,
+    sorttedProperties = { node: [], edge: [] },
+  } = props;
 
   // 对于离散类型的数据支持切换图表类型
   const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);
@@ -76,7 +93,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
       setEnableChangeChartType(false);
     } else if (elementProps[prop] === 'string') {
       const chartData = getChartData(source, prop, elementType);
-      const selectOptions = [...chartData.keys()].map(key => ({
+      let selectOptions = [...chartData.keys()].map(key => ({
         value: key,
         label: key,
       }));
@@ -88,6 +105,17 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         //setChartData(valueMap);
       } else {
         analyzerType = 'SELECT';
+
+        const sorttedValues = utils.getPropertyValueRanks(propertyGraphData, elementType, prop);
+        selectOptions = selectOptions.map(option => {
+          const { value } = option;
+          const { rank, isOutlier } = sorttedValues.find(item => item.propertyValue === value) || {};
+          return {
+            ...option,
+            rank,
+            isOutlier,
+          };
+        });
       }
       updateFilterCriteria(id, {
         ...filterCriteria,
@@ -190,8 +218,43 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     />
   );
 
+  const getPropertyOptions = (itemType, top = 3) => {
+    const elementProps = itemType === 'node' ? nodeProperties : edgeProperties;
+    return Object.entries(elementProps).map(e => {
+      const [key, value] = e;
+      const icon = iconMap[value];
+
+      let isImportant = false;
+      if (enableInfoDetect) {
+        const entropyIdx = sorttedProperties[itemType].findIndex(property => property.propertyName === key);
+        if (entropyIdx > -1 && entropyIdx < top) isImportant = true;
+      }
+
+      return (
+        <Select.Option value={`${itemType}-${key}`}>
+          {isImportant ? (
+            <Row>
+              <Col span={22}>
+                {icon}
+                {key}
+              </Col>
+              <Col span={2}>
+                <FireTwoTone twoToneColor="#eb2f96" />
+              </Col>
+            </Row>
+          ) : (
+            <>
+              {icon}
+              {key}
+            </>
+          )}
+        </Select.Option>
+      );
+    });
+  };
+
   return (
-    <div key={filterCriteria.id} className="gi-filter-panel-group">
+    <div key={filterCriteria.id} id={`panel-${filterCriteria.id}`} className="gi-filter-panel-group">
       <div className="gi-filter-panel-prop">
         <Select
           style={{ width: '80%' }}
@@ -209,28 +272,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           }
         >
           <Select.OptGroup key="node" label="节点">
-            {Object.entries(nodeProperties).map(e => {
-              const [key, value] = e;
-              const icon = iconMap[value];
-              return (
-                <Select.Option value={`node-${key}`}>
-                  {icon}
-                  {key}
-                </Select.Option>
-              );
-            })}
+            {getPropertyOptions('node')}
           </Select.OptGroup>
           <Select.OptGroup key="edge" label="边">
-            {Object.entries(edgeProperties).map(e => {
-              const [key, value] = e;
-              const icon = iconMap[value];
-              return (
-                <Select.Option value={`edge-${key}`}>
-                  {icon}
-                  {key}
-                </Select.Option>
-              );
-            })}
+            {getPropertyOptions('edge')}
           </Select.OptGroup>
         </Select>
         {enableChangeChartType && (
@@ -250,9 +295,24 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             onChange={onValueSelectChange}
             mode="tags"
             placeholder="选择筛选值"
-            options={filterCriteria.selectOptions}
             value={filterCriteria.selectValue}
-          />
+          >
+            {filterCriteria.selectOptions?.map(option => {
+              const { rank, label, value } = option;
+              return (
+                <Select.Option value={value}>
+                  {rank !== undefined && rank < 3 ? (
+                    <Row style={{ width: '100%' }}>
+                      <Col span={20}>{label}</Col>
+                      <Col span={4}>{new Array(3 - rank).fill(<FireTwoTone twoToneColor="#eb2f96" />)}</Col>
+                    </Row>
+                  ) : (
+                    label
+                  )}
+                </Select.Option>
+              );
+            })}
+          </Select>
         )}
 
         {filterCriteria.analyzerType === 'PIE' && (
@@ -272,7 +332,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
         )}
 
         {filterCriteria.analyzerType === 'COLUMN' && (
-          <ColumnChart filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} />
+          <ColumnChart filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} highlightRank={5} />
         )}
 
         {filterCriteria.analyzerType === 'HISTOGRAM' && (

@@ -17,7 +17,13 @@ const registerMeta = context => {
       },
       default: defaultValue,
     },
-
+    enableInfoDetect: {
+      title: '重要属性推荐',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     defaultiStatistic: {
       title: '默认展示统计信息',
       type: 'string',

@@ -115,3 +115,44 @@ export const GI_SERVICE_SCHEMA = {
     }
   },
 };
+
+export const GI_SERVICE_INTIAL_PROPERTY_GRAPH = {
+  name: '初始化属性图查询',
+  method: 'GET',
+  req: ``,
+  res: `
+  export interface GIPropertyGraphData {
+    nodes: {
+      // 属性图节点ID
+      id: string;
+      // 属性名
+      propertyName: string;
+      // 属性值
+      propertyValue: unknown;
+      // 重要性，数字越小越重要
+      ratio: number
+    }[];
+    edges: {
+      // 边ID
+      id: string;
+      // 边关联的 source 节点ID
+      source: string;
+      // 边关联的 target 节点ID
+      target: string;
+    }[];
+  }
+  `,
+  service: async (): Promise<GraphData> => {
+    try {
+      //@ts-ignore
+      const { LOCAL_DATA_FOR_GI_ENGINE } = window;
+      console.log('initialiserbasic', LOCAL_DATA_FOR_GI_ENGINE);
+      return LOCAL_DATA_FOR_GI_ENGINE.propertyGraphData;
+    } catch (error) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+  },
+};

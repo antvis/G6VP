@@ -129,6 +129,7 @@ export const GI_PROJECT_CONFIG = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {

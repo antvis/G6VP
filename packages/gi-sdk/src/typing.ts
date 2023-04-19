@@ -12,10 +12,12 @@ export interface State {
 
   /** graphinsight */
 
-  /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射*/
+  /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射 */
   rawData: GraphinData;
-  /** 当前画布渲染的数据，经过视觉映射*/
+  /** 当前画布渲染的数据，经过视觉映射 */
   data: GraphinData;
+  /** 由 data 生成的属性图数据 */
+  propertyGraphData: GraphinData;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
   /** 大图数据 */

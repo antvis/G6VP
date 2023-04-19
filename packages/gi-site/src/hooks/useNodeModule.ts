@@ -22,19 +22,14 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const {
-    GI_PROJECT_CONFIG,
-    SERVER_ENGINE_CONTEXT,
-    GI_ASSETS_PACKAGE,
-    HTML_HEADER,
-    THEME_STYLE,
-    packages,
-  } = getConstantFiles(opts);
-  
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, HTML_HEADER, THEME_STYLE, packages } =
+    getConstantFiles(opts);
+
   /** G6VP 站点图数据和 Schema 信息 **/
-  const { data, schemaData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
+  const { data, schemaData, propertyGraphData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
   const formatData = beautifyCode(JSON.stringify(data));
   const formatSchemaData = beautifyCode(JSON.stringify(schemaData));
+  const formatPropertyGraphData = beautifyCode(JSON.stringify(propertyGraphData));
 
   const assets_packages_json = packages.reduce((acc, curr) => {
     const { name, version } = curr;
@@ -130,6 +125,7 @@ const SERVER = [
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
         data: ${formatData},
         schemaData: ${formatSchemaData},
+        propertyGraphData: ${formatPropertyGraphData}
       };
       
       /** 导出的主题 **/
