@@ -120,7 +120,7 @@ export default (props: Props) => {
   const sidePanelStyle: React.CSSProperties = {
     float: 'left',
     maxWidth: contentVisible ? '100vw' : 0,
-    borderWidth: contentVisible ? 1 : 0,
+    borderWidth: contextValue.activeItem ? 1 : 0,
   };
   const finalContentStyle: React.CSSProperties = {};
   if (vertical) {

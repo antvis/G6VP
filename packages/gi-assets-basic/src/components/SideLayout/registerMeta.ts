@@ -7,6 +7,13 @@ export default (context) => {
         id: 'GI_SIDE_CONTAINER',
         name: '侧边栏',
         required: true,
+        sideMenuWidth: {
+          title: '菜单宽度',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 80
+        },
         background: {
           title: '背景色',
           type: 'string',
