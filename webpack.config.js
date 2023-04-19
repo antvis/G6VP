@@ -103,6 +103,8 @@ module.exports = (env, argv) => {
       extensions: ['*', '.ts', '.tsx', '.js', '.jsx'],
       fallback: {
         fs: false, //https://webpack.js.org/migrate/5/#clean-up-configuration
+        crypto: false,
+        constants: false,
       },
     },
     // devtool: 'cheap-module-source-map',
