@@ -92,7 +92,7 @@ const Analysis = props => {
       const { transData, inputData, propertyGraphData } = data || {
         transData: { nodes: [], edges: [] },
         inputData: [{ nodes: [], edges: [] }],
-        propertyGraphData: { nodes: [], edges: [] },
+        propertyGraphData: undefined,
       };
 
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
@@ -138,6 +138,8 @@ const Analysis = props => {
           const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
           const schemaData = original(draft.schemaData);
 
+          const { propertyGraphData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
+
           const activeAssetsInformation = queryActiveAssetsInformation({
             engineId,
             assets: activeAssets,
@@ -145,6 +147,7 @@ const Analysis = props => {
             config,
             serviceConfig: [...assetServices, ...combinedServiceConfig],
             schemaData,
+            propertyGraphData,
           });
 
           const configComponents = activeAssetsInformation.components.map(c => {

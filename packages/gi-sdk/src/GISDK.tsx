@@ -35,7 +35,7 @@ const GISDK = (props: Props) => {
 
   const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
-    propertyGraphData: { nodes: [], edges: [] } as GraphinData,
+    propertyGraphData: undefined,
     schemaData: {
       //会在初始化时候更新
       nodes: [],

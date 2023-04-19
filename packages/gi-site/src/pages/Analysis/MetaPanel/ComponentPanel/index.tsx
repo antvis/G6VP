@@ -168,7 +168,7 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
 /** 组件模块 配置面板 */
 const Panel = props => {
   const { config, updateContext, context, setPanelWidth, setPanelHeight } = props;
-  const { data, schemaData, services, engineId, activeAssetsKeys } = context;
+  const { data, schemaData, services, engineId, activeAssetsKeys, propertyGraphData } = context;
 
   const [assets, setAssets] = React.useState<GIComponentAssets>();
   const [state, setState] = useImmer({
@@ -212,7 +212,8 @@ const Panel = props => {
     if (!assets) return {};
     const usingComponents = { ...assets };
     delete usingComponents.default;
-    const components = getComponentsByAssets(usingComponents, data, services, config, schemaData, engineId) || [];
+    const components =
+      getComponentsByAssets(usingComponents, data, services, config, schemaData, engineId, propertyGraphData) || [];
     const map = {};
     components.forEach(com => (map[com.id] = com));
     return map;

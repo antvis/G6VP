@@ -130,7 +130,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       const { transData, inputData, propertyGraphData } = data || {
         transData: { nodes: [], edges: [] },
         inputData: [{ nodes: [], edges: [] }],
-        propertyGraphData: { nodes: [], edges: [] },
+        propertyGraphData: undefined,
       };
       window['LOCAL_DATA_FOR_GI_ENGINE'] = {
         data: transData,
@@ -150,6 +150,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         config: projectConfig,
         serviceConfig,
         schemaData,
+        propertyGraphData,
       });
       const services = utils.uniqueElementsBy(
         [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],

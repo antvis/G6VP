@@ -216,7 +216,7 @@ export const getNodePropertyImportance = (
  * @returns
  */
 export const getPropertyRanks = (
-  propertyGraphData: IGraphData,
+  propertyGraphData: IGraphData | undefined,
   itemType: 'node' | 'edge',
 ): {
   propertyName: string;
@@ -248,7 +248,7 @@ export const getPropertyRanks = (
  * @returns
  */
 export const getPropertyValueRanks = (
-  propertyGraphData: IGraphData,
+  propertyGraphData: IGraphData | undefined,
   itemType: 'node' | 'edge',
   propertyName: string,
 ): {

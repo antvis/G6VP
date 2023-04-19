@@ -5,6 +5,7 @@ import '@antv/s2-react/dist/style.min.css';
 import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import getData from './utils';
+import { IGraphData } from '@antv/gi-sdk/src/process/schema';
 
 const { TabPane } = Tabs;
 interface TableModeProps {}
@@ -14,7 +15,7 @@ const TableMode: React.FunctionComponent<TableModeProps> = props => {
     edgeTable: null | SpreadSheet;
     nodeTable: null | SpreadSheet;
     options: any;
-    largeGraphData: GraphinData | undefined;
+    largeGraphData: IGraphData | undefined;
     graphData: GraphinData;
     selectItems: GraphinData;
     NODES_FIELDS_COLUMNS: string[];

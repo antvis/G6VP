@@ -13,8 +13,24 @@ export { generatorSchemaByGraphData, generatorStyleConfigBySchema };
 export const isObjectEmpty = obj => {
   return Object.keys(obj).length === 0;
 };
-export const queryActiveAssetsInformation = ({ assets, data, config, serviceConfig, schemaData, engineId }) => {
-  const components = getComponentsByAssets(assets.components, data, serviceConfig, config, schemaData, engineId);
+export const queryActiveAssetsInformation = ({
+  assets,
+  data,
+  config,
+  serviceConfig,
+  schemaData,
+  engineId,
+  propertyGraphData,
+}) => {
+  const components = getComponentsByAssets(
+    assets.components,
+    data,
+    serviceConfig,
+    config,
+    schemaData,
+    engineId,
+    propertyGraphData,
+  );
   const elements = getElementsByAssets(assets.elements, data, schemaData);
   const layouts = getLayoutsByAssets(assets.layouts, data, schemaData);
   return {

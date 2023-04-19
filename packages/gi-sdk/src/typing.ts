@@ -1,5 +1,5 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-import type { GraphSchemaData } from './process/schema';
+import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
 export interface State {
   /** graphin */
@@ -17,7 +17,7 @@ export interface State {
   /** 当前画布渲染的数据，经过视觉映射 */
   data: GraphinData;
   /** 由 data 生成的属性图数据 */
-  propertyGraphData: GraphinData;
+  propertyGraphData: IGraphData | undefined;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
   /** 大图数据 */
@@ -134,6 +134,7 @@ export interface ComponentAsset {
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
     engineId: string;
+    propertyGraphData?: GraphinData;
   }) => any;
   mockServices?: () => any[];
   info: {

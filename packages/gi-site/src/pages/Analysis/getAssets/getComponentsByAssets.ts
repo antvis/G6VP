@@ -40,6 +40,7 @@ const getComponentsByAssets = (
   config: GIConfig,
   schemaData: GraphSchemaData,
   engineId: string,
+  propertyGraphData?: GraphinData,
 ) => {
   const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
@@ -99,6 +100,7 @@ const getComponentsByAssets = (
         GIAC_CONTENT_ITEMS,
         schemaData,
         engineId,
+        propertyGraphData,
       });
 
       const { id, name, category, type } = info;

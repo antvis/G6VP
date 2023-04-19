@@ -2,11 +2,11 @@ import { utils } from '@antv/gi-sdk';
 import info from './info';
 
 const registerMeta = context => {
-  const { services, engineId } = context;
+  const { services, engineId, propertyGraphData } = context;
 
   const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
 
-  return {
+  const schema = {
     serviceId: {
       title: '数据服务',
       type: 'string',
@@ -17,13 +17,17 @@ const registerMeta = context => {
       },
       default: defaultValue,
     },
-    enableInfoDetect: {
-      title: '重要属性推荐',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: true,
-    },
+
+    enableInfoDetect: propertyGraphData
+      ? {
+          title: '属性推荐',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: true,
+        }
+      : undefined,
+
     defaultiStatistic: {
       title: '默认展示统计信息',
       type: 'string',
@@ -94,6 +98,10 @@ const registerMeta = context => {
       default: false,
     },
   };
+
+  if (!propertyGraphData) delete schema.enableInfoDetect;
+
+  return schema;
 };
 
 export default registerMeta;
