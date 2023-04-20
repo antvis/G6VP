@@ -1,6 +1,6 @@
 import { FileTextOutlined } from '@ant-design/icons';
 import { IUserEdge, IUserNode } from '@antv/graphin';
-import { Alert, Button, Col, Divider, message, notification, Row, Space, Upload } from 'antd';
+import { Alert, Button, Row, Space, Upload, message, notification } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import xlsx2js from 'xlsx2js';
@@ -152,20 +152,37 @@ const UploadLocalFile: React.FC<IProps> = props => {
 
   return (
     <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
-      <Alert
-        message="如果暂时没有数据，可以点击下载「示例数据」进行体验，EXCEL格式，JSON格式"
-        type="info"
-        showIcon
-        closable
-        style={{ marginBottom: '12px' }}
-        action={
-          <Space direction="vertical">
-            <Button size="small" type="primary" onClick={downloadMockFiles}>
-              下载示例数据
-            </Button>
-          </Space>
-        }
-      />
+      <div style={{ textAlign: 'left' }}>
+        <Alert
+          message="JSON 文件规范：点边数据必须放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合"
+          type="info"
+          showIcon
+          closable
+          style={{ marginBottom: '12px' }}
+          action={
+            <Space direction="vertical">
+              <Button size="small" type="primary" onClick={downloadMockFiles}>
+                下载示例数据
+              </Button>
+            </Space>
+          }
+        />
+
+        <Alert
+          message="CSV/XLS/XLSX文件规范： 分别上传点表和边表，按照约定，点表文件名必须包含 nodes ,例如 acount.nodes.csv，边表文件名必须包含 edges ，例如 transfer.edges.csv"
+          type="info"
+          showIcon
+          closable
+          style={{ marginBottom: '12px' }}
+          action={
+            <Space direction="vertical">
+              <Button size="small" type="primary" onClick={downloadMockFiles}>
+                下载示例数据
+              </Button>
+            </Space>
+          }
+        />
+      </div>
 
       <h4 style={{ marginBottom: 0, marginTop: '10px' }}>已传数据</h4>
 
@@ -175,29 +192,10 @@ const UploadLocalFile: React.FC<IProps> = props => {
             <FileTextOutlined />
           </p>
           <p>点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式</p>
-          <Divider />
-          <Row>
-            <Col
-              span={12}
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}
-            >
-              <div style={{ width: '90%' }}>
-                <p>CSV/XLS/XLSX文件规范：</p>
-                <p>分别上传点表和边表，点表：必须要有 id 字段，边表：必须要有 source 和 target 字段</p>
-              </div>
-            </Col>
-            <Col
-              span={12}
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}
-            >
-              <div style={{ width: '90%' }}>
-                <p>JSON 文件规范：</p>
-                <p>点表和边表放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合</p>
-              </div>
-            </Col>
-          </Row>
+          {/* <Divider /> */}
         </Dragger>
       </div>
+
       <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
         <Button type="primary" disabled={buttonDisabled} shape="round" onClick={checkData}>
           进入下一步
