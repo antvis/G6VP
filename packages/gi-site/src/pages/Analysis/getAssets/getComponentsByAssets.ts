@@ -40,15 +40,15 @@ const getComponentsByAssets = (
   config: GIConfig,
   schemaData: GraphSchemaData,
   engineId: string,
-  propertyGraphData?: GraphinData,
 ) => {
   const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
   const GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的内容组件
 
+  let hasPropertyGraph: boolean = false;
   Object.values(assets).forEach((item: any) => {
     const info = ((item && item.info) || {}) as TypeAssetInfo;
-    const { type } = info;
+    const { type, id } = info;
     if (type === 'GIAC') {
       GIAC_ITEMS.push({
         label: info.name,
@@ -66,6 +66,9 @@ const getComponentsByAssets = (
         label: info.name,
         value: info.id,
       });
+    }
+    if (id === 'PropertyGraphInitializer') {
+      hasPropertyGraph = true;
     }
   });
   const GI_CONTAINER_INDEXS = [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS];
@@ -100,7 +103,7 @@ const getComponentsByAssets = (
         GIAC_CONTENT_ITEMS,
         schemaData,
         engineId,
-        propertyGraphData,
+        hasPropertyGraph,
       });
 
       const { id, name, category, type } = info;

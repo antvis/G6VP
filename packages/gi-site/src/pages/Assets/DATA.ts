@@ -145,6 +145,11 @@ const assets = [
     useProbability: 1,
   },
   {
+    id: 'PropertyGraphInitializer',
+    devCost: 5,
+    useProbability: 1,
+  },
+  {
     id: 'ViewMode',
     devCost: 8,
     useProbability: 0.4,

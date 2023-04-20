@@ -379,6 +379,12 @@ const components = [
     },
   },
   {
+    id: 'PropertyGraphInitializer',
+    type: 'INITIALIZER_ASSET',
+    name: '属性图初始化器',
+    props: {},
+  },
+  {
     id: 'LayoutSwitch',
     type: 'GIAC',
     name: '布局切换',

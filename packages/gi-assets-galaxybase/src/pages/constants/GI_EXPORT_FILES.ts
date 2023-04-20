@@ -708,6 +708,12 @@ export const GI_PROJECT_CONFIG = {
         GI_INITIALIZER: true,
       },
     },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'INITIALIZER_ASSET',
+      name: '属性图初始化器',
+      props: {},
+    },
   ],
 };
 export const GI_LOCAL_DATA = {

@@ -14,7 +14,6 @@ export const defaultInitializerCfg = {
   props: {
     GI_INITIALIZER: true,
     serviceId: 'GI_SERVICE_INTIAL_GRAPH',
-    propertyGraphServiceId: 'GI_SERVICE_INTIAL_PROPERTY_GRAPH',
     schemaServiceId: 'GI_SERVICE_SCHEMA',
   },
 };

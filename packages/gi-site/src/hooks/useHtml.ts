@@ -5,10 +5,9 @@ const getHtmlAppCode = opts => {
     getConstantFiles(opts);
 
   /** G6VP 站点图数据和 Schema 信息 **/
-  const { data, schemaData, propertyGraphData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
+  const { data, schemaData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
   const formatData = beautifyCode(JSON.stringify(data));
   const formatSchemaData = beautifyCode(JSON.stringify(schemaData));
-  const formatPropertyGraphData = beautifyCode(JSON.stringify(propertyGraphData));
 
   return `
   <!DOCTYPE html>
@@ -30,7 +29,6 @@ const getHtmlAppCode = opts => {
     window['LOCAL_DATA_FOR_GI_ENGINE'] = {
       data: ${formatData},
       schemaData: ${formatSchemaData},
-      propertyGarphData: ${formatPropertyGraphData}
     };
     
     /**  由GI平台自动生成的，请勿修改 end **/

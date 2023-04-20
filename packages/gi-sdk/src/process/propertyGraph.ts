@@ -1,4 +1,4 @@
-import { IGraphData } from './schema';
+import { GraphSchemaData, IGraphData } from './schema';
 
 const SPLITTER = '|PGSPLIPTER|';
 
@@ -8,7 +8,24 @@ const SPLITTER = '|PGSPLIPTER|';
  * @param graphData
  * @returns
  */
-export const graphData2PropertyGraph = (graphData: IGraphData) => {
+export const graphData2PropertyGraph = (graphData: IGraphData, schemaData: GraphSchemaData) => {
+  const typeKeyMap = {
+    node: schemaData.nodes[0]?.nodeTypeKeyFromProperties,
+    edge: schemaData.edges[0]?.edgeTypeKeyFromProperties,
+  };
+  const schemaTypePropertiesMap = {
+    node: {},
+    edge: {},
+  };
+  schemaData.nodes.forEach(node => {
+    const { nodeType, properties } = node;
+    schemaTypePropertiesMap.node[nodeType] = properties;
+  });
+  schemaData.edges.forEach(edge => {
+    const { edgeType, properties } = edge;
+    schemaTypePropertiesMap.edge[edgeType] = properties;
+  });
+
   const splitData = (itemType, data) => {
     if (itemType === 'edge') {
       const { id, source, target, ...others } = data;
@@ -26,9 +43,13 @@ export const graphData2PropertyGraph = (graphData: IGraphData) => {
 
   ['node', 'edge'].forEach(itemType => {
     const items = graphData[`${itemType}s`];
+    const dataTypeKey = typeKeyMap[itemType];
     items.forEach(item => {
       const { data } = item;
       const { id, others } = splitData(itemType, data);
+
+      const dataType = data[dataTypeKey];
+      const schemaProperties = schemaTypePropertiesMap[itemType][dataType];
 
       const idKey = `${itemType}${SPLITTER}id${SPLITTER}${id}`;
       propertyValueMap[idKey] = {
@@ -38,6 +59,7 @@ export const graphData2PropertyGraph = (graphData: IGraphData) => {
       };
 
       Object.keys(others).forEach(pname => {
+        if (schemaProperties && !schemaProperties.hasOwnProperty(pname)) return;
         const pvalue = others[pname];
         const key = `${itemType}${SPLITTER}${pname}${SPLITTER}${pvalue}`;
         if (propertyValueMap.hasOwnProperty(key)) {
@@ -173,6 +195,7 @@ export const getNodePropertyImportance = (
   findTop = 5,
   findOutlier = true,
 ): { propertyName: string; ratio: number; rank: number; isOuterlier?: boolean }[] => {
+  if (!propertyGraphData) return [];
   const propertyNodeMap = {};
   propertyGraphData.nodes?.forEach(pnode => (propertyNodeMap[pnode.id] = pnode));
   const idPropertyNode = propertyNodeMap[`${itemType}${SPLITTER}id${SPLITTER}${itemId}`];

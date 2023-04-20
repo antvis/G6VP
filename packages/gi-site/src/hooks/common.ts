@@ -132,7 +132,7 @@ export const getConstantFiles = opts => {
 
 </head>
 `;
-  const engineContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!)
+  const engineContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!);
   const SERVER_ENGINE_CONTEXT = beautifyCode(
     JSON.stringify({
       GI_SITE_PROJECT_ID: id,
@@ -203,7 +203,7 @@ export const MY_GRAPH_SDK = `
 
 //@ts-ignore
 const {  getCombineServices,loaderCombinedAssets } = window.GISDK.utils;
-const { GI_SITE_PROJECT_ID } =SERVER_ENGINE_CONTEXT;
+const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
 // 设置引擎上下文
 window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
 

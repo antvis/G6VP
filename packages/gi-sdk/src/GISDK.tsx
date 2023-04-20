@@ -265,8 +265,14 @@ const GISDK = (props: Props) => {
     return null;
   }
 
-  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents(state, config.components, ComponentAssets);
+  const {
+    renderComponents,
+    InitializerComponent,
+    PropertyGraphInitializerComponent,
+    InitializerProps,
+    GICC_LAYOUT_COMPONENT,
+    GICC_LAYOUT_PROPS,
+  } = getComponents(state, config.components, ComponentAssets);
 
   const graphData = useMemo(() => {
     const nodeMap = {};
@@ -325,6 +331,7 @@ const GISDK = (props: Props) => {
           >
             <>
               {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
+              {HAS_GRAPH && state.initialized && <PropertyGraphInitializerComponent />}
               {HAS_GRAPH && state.initialized && <SizeSensor />}
               {/* <SetupUseGraphinHook updateContext={updateState} /> */}
               {HAS_GRAPH && state.initialized && renderComponents()}

@@ -21,7 +21,8 @@ const RecommendFilter: React.FC<RecommendFilterProps> = props => {
       <div className="gi-filter-panel-prop">
         <h3>
           <FireTwoTone twoToneColor="#eb2f96" />
-          <span style={{ marginLeft: '4px' }}>{filterCriteria.prop}</span>
+          <span style={{ marginLeft: '4px' }}>{filterCriteria.elementType === 'node' ? '节点' : '边'}属性：</span>
+          <span>{filterCriteria.prop}</span>
         </h3>
         <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{ padding: '4px' }}>
           <DeleteOutlined className="gi-filter-panel-delete" />

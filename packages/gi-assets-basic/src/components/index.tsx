@@ -30,6 +30,7 @@ import CommonNeighbor from './CommonNeighbor';
 import ForceSimulation from './ForceSimulation';
 import GroupBar from './GroupBar';
 import Initializer from './Initializer';
+import PropertyGraphInitializer from './PropertyGraphInitializer';
 import OperatorBar from './OperatorBar';
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
@@ -51,6 +52,7 @@ import SideLayout from './SideLayout';
 export {
   UadLayout,
   Initializer,
+  PropertyGraphInitializer,
   Save,
   Placeholder,
   FitCenter,

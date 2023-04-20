@@ -43,7 +43,7 @@ const ContainerPanel = props => {
     containerAssetsMap: {},
     focusingContainerAsset: [],
   });
-  const { activeAssetsKeys } = context;
+  const { activeAssetsKeys, activeAssets } = context;
   const { selectedContainers, focusingContainer, containerAssetsMap, focusingContainerAsset } = state;
 
   React.useEffect(() => {
@@ -125,7 +125,10 @@ const ContainerPanel = props => {
     activeAssetsIds.forEach(assetId => {
       if (assetId && componentsMap[assetId]) activeComponentKeys.add(assetId);
     });
-    activeComponentKeys.add('Initializer');
+    const initializerIds = Object.values(activeAssets.components)
+      .filter((com: any) => com.info?.type === 'INITIALIZER_ASSET' || com.info?.type === 'INITIALIZER')
+      .map((com: any) => com.info.id);
+    initializerIds.forEach(initializerId => activeComponentKeys.add(initializerId));
     if (pageLayout) activeComponentKeys.add(pageLayout.id);
     refComponentKeys = Array.from(activeComponentKeys);
     if (JSON.stringify(refComponentKeys.sort()) !== JSON.stringify(clone(context.activeAssetsKeys.components).sort())) {

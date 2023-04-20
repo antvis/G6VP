@@ -382,6 +382,12 @@ export const components = [
     },
   },
   {
+    id: 'PropertyGraphInitializer',
+    type: 'INITIALIZER_ASSET',
+    name: '属性图初始化器',
+    props: {},
+  },
+  {
     id: 'LayoutSwitch',
     name: '布局切换',
     props: {

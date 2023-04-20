@@ -8,7 +8,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
-const registerMeta = ({ schemaData, propertyGraphData }) => {
+const registerMeta = ({ schemaData, hasPropertyGraph }) => {
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
     return {
       ...acc,
@@ -45,7 +45,7 @@ const registerMeta = ({ schemaData, propertyGraphData }) => {
       enum: [...nodeOptions, ...edgeOptions],
       default: [],
     },
-    enableInfoDetect: propertyGraphData
+    enableInfoDetect: hasPropertyGraph
       ? {
           title: '智能推荐',
           type: 'string',
@@ -146,7 +146,7 @@ const registerMeta = ({ schemaData, propertyGraphData }) => {
     ...metas,
   };
 
-  if (!propertyGraphData) delete schema.enableInfoDetect;
+  if (!hasPropertyGraph) delete schema.enableInfoDetect;
 
   return schema;
 };

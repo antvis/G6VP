@@ -91,6 +91,7 @@ export interface Props {
 export type AssetType =
   | 'AUTO' // 自加载组件 initializer
   | 'INITIALIZER' // 初始化组件
+  | 'INITIALIZER_ASSET' // 需要在初始化时执行的组件
   | 'GICC' // 容器组件，可以多选
   | 'GICC_LAYOUT' // 布局容器组件,只能单选
   | 'GICC_MENU' // 容器组件（菜单）
@@ -134,7 +135,7 @@ export interface ComponentAsset {
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
     engineId: string;
-    propertyGraphData?: GraphinData;
+    hasPropertyGraph?: boolean;
   }) => any;
   mockServices?: () => any[];
   info: {

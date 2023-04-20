@@ -21,6 +21,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   }, {});
 
   const { component: InitializerComponent } = ComponentAssets[initializer.id];
+  const { component: PropertyGraphInitializerComponent } = ComponentAssets['PropertyGraphInitializer'];
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 
   const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id] || {
@@ -49,7 +50,8 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
         info.type === 'GIAC_CONTENT' ||
         info.type === 'GIAC' ||
         info.type === 'GIAC_MENU' ||
-        id === initializer.id
+        id === initializer.id ||
+        info.type === 'INITIALIZER_ASSET'
       ) {
         return null;
       }
@@ -87,6 +89,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   return {
     renderComponents,
     InitializerComponent,
+    PropertyGraphInitializerComponent,
     InitializerProps,
     GICC_LAYOUT_COMPONENT,
     // GICC_LAYOUT_PROPS,

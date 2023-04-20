@@ -2,7 +2,7 @@ import { utils } from '@antv/gi-sdk';
 import info from './info';
 
 const registerMeta = context => {
-  const { services, engineId, propertyGraphData } = context;
+  const { services, engineId, hasPropertyGraph } = context;
 
   const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
 
@@ -18,7 +18,7 @@ const registerMeta = context => {
       default: defaultValue,
     },
 
-    enableInfoDetect: propertyGraphData
+    enableInfoDetect: hasPropertyGraph
       ? {
           title: '属性推荐',
           type: 'string',
@@ -99,7 +99,7 @@ const registerMeta = context => {
     },
   };
 
-  if (!propertyGraphData) delete schema.enableInfoDetect;
+  if (!hasPropertyGraph) delete schema.enableInfoDetect;
 
   return schema;
 };

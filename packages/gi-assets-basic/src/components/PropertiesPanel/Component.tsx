@@ -111,7 +111,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       graph.off('canvas:click', handleClose);
       graph.off('edge:click', handleEdgeClick);
     };
-  }, [graph, setState, service]);
+  }, [graph, setState, service, propertyGraphData]);
   const { isLoading, detail, propertyInfos, visible } = state;
 
   const content =

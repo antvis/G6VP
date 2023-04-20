@@ -91,8 +91,6 @@ const ConfigData: React.FC<IProps> = props => {
         };
       });
 
-      const propertyGraphData = utils.graphData2PropertyGraph(mergeData);
-
       updateGISite({
         engineId: 'GI',
         name: values.name,
@@ -103,7 +101,6 @@ const ConfigData: React.FC<IProps> = props => {
         data: {
           transData: mergeData,
           inputData: [...renderData],
-          propertyGraphData,
         },
         schemaData: schemaData,
       });
