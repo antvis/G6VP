@@ -127,6 +127,9 @@ const GuideCards: React.FunctionComponent<IGuideCardsProps> = props => {
     if (id === 'GRAPH') {
       history.push('/dataset/create?type=GRAPH');
     }
+    if (id === 'VIP_ASSETS') {
+      history.push('/open/assets-list');
+    }
   };
   return (
     <div>

@@ -24,6 +24,7 @@ const ConfigData: React.FC<IProps> = props => {
   const [tableType, setTableType] = useState<ITableType>('nodes');
   const [columns, setColumns] = useState<IColumns[]>(nodeColumns);
   const [form] = Form.useForm();
+  const [dataSource, setDataSource] = useState(translist);
 
   const onChange = value => {
     setTableType(value);
@@ -121,23 +122,18 @@ const ConfigData: React.FC<IProps> = props => {
 
   return (
     <div className="dataCheck-panel">
-      <Alert
-        message="请从数据中选择合适的字段：NodeID,Source,Target 为图数据结构的必填字段。NodeType,EdgeType 为可选字段，用于生成图的 Schema"
-        type="info"
-        showIcon
-        style={{ margin: '12px 0px' }}
-      />
+      <Alert message="请从下表中选择合适的字段，用于系统自动构图" type="info" showIcon style={{ margin: '12px 0px' }} />
       <EditableProTable
         columns={state.transColumns}
         rowKey="key"
         recordCreatorProps={false}
-        value={translist}
+        value={dataSource}
         editable={{
-          form,
           type: 'multiple',
           editableKeys: ['edit'],
           onValuesChange: (record, recordList) => {
-            transform(recordList);
+            transform(recordList.concat([]));
+            setDataSource(recordList);
           },
         }}
       />
