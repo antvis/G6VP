@@ -40,19 +40,19 @@ export const getOptions = (data: GraphinData) => {
   let edgesOptions = {};
   if (nodes.length !== 0) {
     Object.keys(nodes[0]).forEach(key => {
-      nodesOptions[key] = { text: `${key}` };
+      nodesOptions[key] = { text: `${key}`, value: key };
     });
   }
 
   if (edges.length !== 0) {
     Object.keys(edges[0]).forEach(key => {
-      edgesOptions[key] = { text: `${key}` };
+      edgesOptions[key] = { text: `${key}`, value: key };
     });
   }
 
   return [
     {
-      title: 'Node ID',
+      title: 'NodeID (节点唯一标识)',
       key: 'id',
       dataIndex: 'id',
       valueType: 'select',
@@ -70,7 +70,7 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'Node Type',
+      title: 'NodeType (节点分类)',
       key: 'nodeType',
       dataIndex: 'nodeType',
       valueType: 'select',
@@ -79,16 +79,7 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'Edge Type',
-      key: 'edgeType',
-      dataIndex: 'edgeType',
-      valueType: 'select',
-      valueEnum: {
-        ...edgesOptions,
-      },
-    },
-    {
-      title: 'Source',
+      title: 'Source (边的起点)',
       key: 'source',
       dataIndex: 'source',
       valueType: 'select',
@@ -97,9 +88,18 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'Target',
+      title: 'Target (边的终点)',
       key: 'target',
       dataIndex: 'target',
+      valueType: 'select',
+      valueEnum: {
+        ...edgesOptions,
+      },
+    },
+    {
+      title: 'EdgeType (边的类型)',
+      key: 'edgeType',
+      dataIndex: 'edgeType',
       valueType: 'select',
       valueEnum: {
         ...edgesOptions,
@@ -110,7 +110,7 @@ export const getOptions = (data: GraphinData) => {
 
 export const downloadFile = async (mockUrls: string[]) => {
   mockUrls.forEach(item => {
-    const url = item
+    const url = item;
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.style.height = '0';
@@ -119,6 +119,5 @@ export const downloadFile = async (mockUrls: string[]) => {
     setTimeout(() => {
       iframe.remove();
     }, 1000);
-  })
-
-}
+  });
+};
