@@ -167,7 +167,7 @@ const ConfigData: React.FC<IProps> = props => {
           // onClick={() => updateData(state.transData, state.inputData, state.transfunc)}
           onClick={handleSave}
         >
-          进入分析
+          创建数据集
         </Button>
       </Row>
     </div>
