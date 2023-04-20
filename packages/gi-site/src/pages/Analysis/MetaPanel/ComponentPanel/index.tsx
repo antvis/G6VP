@@ -238,7 +238,7 @@ const Panel = props => {
   const autoComponents = React.useMemo(
     () =>
       Object.values(componentsMap)
-        .filter(com => com.type === 'AUTO')
+        .filter(com => com.type === 'AUTO' || com.type === 'INITIALIZER')
         .map(com => formatCommonContainer(com, componentsMap, config.components)),
     [componentsMap],
   );
