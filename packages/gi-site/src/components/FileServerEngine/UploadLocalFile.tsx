@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import xlsx2js from 'xlsx2js';
 import { IInputData, IState } from './typing';
-import { downloadFile, getOptions } from './utils';
+import { getOptions } from './utils';
 
 interface IProps {
   state: IState;
@@ -110,11 +110,11 @@ const UploadLocalFile: React.FC<IProps> = props => {
   };
 
   const downloadMockFiles = async () => {
-    const mockFileUrls = [
-      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/pjilTbaCECgAAAAAAAAAABAADnV5AQBr/bank.nodes.xlsx',
-      'https://mass-office.alipay.com/huamei_koqzbu/afts/file/UOj4R7u2sRoAAAAAAAAAABAADnV5AQBr/bank.edges.xlsx',
-    ];
-    await downloadFile(mockFileUrls);
+    window.open('https://github.com/antvis/G6VP/blob/master/packages/gi-site/src/mock/excel');
+  };
+
+  const downloadJSON = async () => {
+    window.open('https://github.com/antvis/G6VP/blob/master/packages/gi-site/src/mock/fund-force.json');
   };
 
   const mergeData = (renderData: IInputData[] = state.inputData) => {
@@ -161,7 +161,7 @@ const UploadLocalFile: React.FC<IProps> = props => {
           style={{ marginBottom: '12px' }}
           action={
             <Space direction="vertical">
-              <Button size="small" type="primary" onClick={downloadMockFiles}>
+              <Button size="small" type="primary" onClick={downloadJSON}>
                 下载示例数据
               </Button>
             </Space>
