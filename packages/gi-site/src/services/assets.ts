@@ -114,7 +114,8 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
     return acc;
   }, {});
 
-  elements = activeAssetsKeys.elements.reduce((acc, curr) => {
+  // Get all elements in FinalAssets
+  elements = Object.keys(FinalAssets.elements).reduce((acc, curr) => {
     const asset = FinalAssets.elements[curr];
     if (asset) {
       return {

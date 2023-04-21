@@ -7,7 +7,7 @@
     "postinstall": "npm run build:all:es",
     "build:all:es": "turbo run build:es",
     "start": "cd packages/gi-site && npm run start",
-    "gi-common-component": "cd packages/gi-common-components && npm run build:es",
+    "gi-common-components": "cd packages/gi-common-components && npm run build:es",
     "gi-sdk": "cd packages/gi-sdk && npm run build:es",
     "gi-assets-basic": "cd packages/gi-assets-basic && npm run build:es",
     "gi-assets-advance": "cd packages/gi-assets-advance && npm run build:es",
