@@ -367,8 +367,8 @@ const simpleComponents = [
   },
   {
     id: 'PropertyGraphInitializer',
-    type: 'INITIALIZER_ASSET',
-    name: '属性图初始化器',
+    type: 'AUTO',
+    name: '属性图计算',
     props: {},
   },
   {

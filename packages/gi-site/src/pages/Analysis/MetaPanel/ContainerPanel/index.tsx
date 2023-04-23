@@ -1,10 +1,10 @@
+import { clone, isArray } from '@antv/util';
 import { Button, Checkbox, Col, Row, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import { AssetInfo } from '../../typing';
 import AssetsCenter from './AssetsCenter';
 import RenderForm from './RenderForm';
-import { clone, isArray } from '@antv/util';
-import { AssetInfo } from '../../typing';
 import './index.less';
 
 let refComponentKeys: string[] = [];
@@ -126,7 +126,7 @@ const ContainerPanel = props => {
       if (assetId && componentsMap[assetId]) activeComponentKeys.add(assetId);
     });
     const initializerIds = Object.values(activeAssets.components)
-      .filter((com: any) => com.info?.type === 'INITIALIZER_ASSET' || com.info?.type === 'INITIALIZER')
+      .filter((com: any) => com.info?.type === 'AUTO' || com.info?.type === 'INITIALIZER')
       .map((com: any) => com.info.id);
     initializerIds.forEach(initializerId => activeComponentKeys.add(initializerId));
     if (pageLayout) activeComponentKeys.add(pageLayout.id);
