@@ -1,5 +1,4 @@
-import { extra, GIConfig } from '@antv/gi-sdk';
-import { IGIAC } from '@antv/gi-sdk/lib/components/const';
+import { extra, GIConfig, IGIAC } from '@antv/gi-sdk';
 import * as React from 'react';
 import Toolbar from '../../CommonCmponents/Toolbar/index';
 import { getToolbarStyleByConfig } from '../../utils';

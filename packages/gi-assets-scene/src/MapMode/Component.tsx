@@ -1,10 +1,10 @@
+import type { IGIAC } from '@antv/gi-sdk';
 import { extra } from '@antv/gi-sdk';
-import type { GIAComponentProps } from '@antv/gi-sdk/lib/components/GIAC';
 import * as React from 'react';
 import L7Map from './L7Map';
 const { GIAComponent } = extra;
 export interface MapModeProps {
-  GIAC: GIAComponentProps['GIAC'];
+  GIAC: IGIAC;
   visible?: boolean;
   /** 主题  */
   theme: string;

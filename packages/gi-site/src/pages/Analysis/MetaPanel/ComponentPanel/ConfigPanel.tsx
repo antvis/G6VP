@@ -1,13 +1,7 @@
-import { CheckCard } from '@ant-design/pro-components';
-import { Col, Collapse, Row, Tag, Avatar } from 'antd';
-import { Icon } from '@antv/gi-sdk';
+import { Collapse } from 'antd';
 import * as React from 'react';
-import { useImmer } from 'use-immer';
-import { queryAssetList } from '../../../../services/assets';
-import { useContext } from '../../hooks/useContext';
 import './index.less';
-import { ComponentAsset } from '@antv/gi-sdk/lib/typing';
-import RenderForm from './RenderForm';
+
 import { createForm, FormProvider, onFormInputChange, SchemaField } from '@antv/gi-common-components';
 
 const { Panel } = Collapse;
