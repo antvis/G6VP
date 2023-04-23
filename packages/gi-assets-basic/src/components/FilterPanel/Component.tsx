@@ -1,14 +1,14 @@
-import { PlusOutlined, FireTwoTone } from '@ant-design/icons';
+import { FireTwoTone, PlusOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
 import FilterSelection from './FilterSelection';
-import { HistogramOpt, IFilterCriteria } from './type';
-import { filterGraphData, getChartData, highlightSubGraph } from './utils';
 import RecommendFilter from './RecommendFilter';
 import './index.less';
+import { HistogramOpt, IFilterCriteria } from './type';
+import { filterGraphData, getChartData, highlightSubGraph } from './utils';
 
 const { isStyles } = utils;
 
@@ -84,7 +84,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     setTimeout(() => {
       const dom = document.getElementById(`panel-${filterCriteria.id}`);
       if (dom) dom.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }, 500);
+    }, 100);
     return filterCriteria;
   };
 
@@ -239,7 +239,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       const id = Object.keys(newRecommendOptions)[0];
       const dom = document.getElementById(`panel-${id}`);
       if (dom) dom.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }, 500);
+    }, 100);
   };
 
   return (
