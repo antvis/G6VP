@@ -33,7 +33,7 @@ const activeAssetsKeys = {
     'Toolbar',
     'Export',
   ],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 const projectConfig: GIConfig = {
   nodes: [

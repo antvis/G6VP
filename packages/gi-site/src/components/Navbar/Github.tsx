@@ -1,6 +1,7 @@
 import { GithubOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
 import * as React from 'react';
+import { fetch } from 'umi-request';
 interface GithubProps {}
 
 const Github: React.FunctionComponent<GithubProps> = props => {

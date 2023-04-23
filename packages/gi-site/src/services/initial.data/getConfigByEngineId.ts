@@ -140,7 +140,7 @@ const getConfigByEngineId = (engineId, template) => {
   const activeAssetsKeys = {
     elements: [...nodes.map(n => n.id), ...edges.map(e => e.id)],
     components: [...config.components.map(c => c.id)],
-    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+    layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
   };
   return {
     id,

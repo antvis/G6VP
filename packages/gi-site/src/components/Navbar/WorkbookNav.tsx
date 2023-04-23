@@ -7,6 +7,7 @@ import Github from './Github';
 import Logo from './Logo';
 import SaveWorkbook from './SaveWorkbook';
 import Theme from './Theme';
+import UserInfo from './UserInfo';
 interface WorkbookBarProps {
   workbookId: string;
 }
@@ -18,6 +19,7 @@ const styles = {
     // boxShadow: `var(--box-shadow-bottom)`,
     display: 'flex',
     justifyContent: ' space-between',
+    paddingRight: '12px',
   },
   left: {
     display: 'flex',
@@ -54,6 +56,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <SaveWorkbook workbookId={workbookId} />
         <Theme />
         <Github />
+        <UserInfo />
       </div>
     </header>
   );

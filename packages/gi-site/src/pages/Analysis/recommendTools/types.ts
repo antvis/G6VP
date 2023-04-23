@@ -1,6 +1,14 @@
 import { FieldInfo } from '@antv/dw-analyzer';
 export type FieldTypes = 'null' | 'boolean' | 'integer' | 'float' | 'date' | 'string';
-export type EncodingType = 'quantitative' | 'temporal' | 'ordinal' | 'nominal' |'continuous' | 'discrete' | 'interval' | 'const'; 
+export type EncodingType =
+  | 'quantitative'
+  | 'temporal'
+  | 'ordinal'
+  | 'nominal'
+  | 'continuous'
+  | 'discrete'
+  | 'interval'
+  | 'const';
 // export type ScaleType = 'ordinal' | ''
 
 export interface IExtendFieldInfo extends FieldInfo {
@@ -8,7 +16,15 @@ export interface IExtendFieldInfo extends FieldInfo {
   [key: string]: any;
 }
 
-export type LayoutTypes = 'graphin-force' | 'force' | 'grid' | 'dagre' | 'circular' | 'concentric' | 'radial';
+export type LayoutTypes =
+  | 'graphin-force'
+  | 'force2'
+  | 'force'
+  | 'grid'
+  | 'dagre'
+  | 'circular'
+  | 'concentric'
+  | 'radial';
 export interface ILayoutConfig {
   // 支持的布局类型，默认为 force
   type?: LayoutTypes;
@@ -21,7 +37,7 @@ export interface ILayoutConfig {
     // 是否防止重叠，必须配合属性 nodeSize
     preventOverlap?: boolean;
     // 节点大小（直径）。用于碰撞检测。
-    nodeSize?: number[] | number | ((d:any) => number);
+    nodeSize?: number[] | number | ((d: any) => number);
     // preventOverlap 为 true 时生效，防止重叠时节点边缘间距的最小值。为不同节点设置不同的最小间距
     nodeSpacing?: number;
     // 指定排序的依据字段
@@ -47,7 +63,7 @@ export interface ILayoutConfig {
     radius?: number;
     divisions?: number; // 分段数
     ordering?: null | 'topology' | 'degree';
-    // radial 
+    // radial
     unitRadius?: number; // 层级距离
     focusNode?: string;
     // graphin-force
@@ -60,11 +76,11 @@ export interface ILayoutConfig {
 export interface NumMappingCfg {
   key: string; // 用作映射的字段名
   scale: {
-    type: string;  // TODO 改成 antv/scale 支持的scale类型
+    type: string; // TODO 改成 antv/scale 支持的scale类型
     range: number[];
     domain: number[];
   };
-  [key:string]: any;
+  [key: string]: any;
 }
 
 export interface CategoryMappingCfg {
@@ -72,9 +88,9 @@ export interface CategoryMappingCfg {
   scale: {
     type: string; // ordinal, ..
     range: string[] | number[];
-    domain: string[]| number[];
+    domain: string[] | number[];
   };
-  [key:string]: any;
+  [key: string]: any;
 }
 
 export type NodeTypes = 'circle' | 'rect' | 'donut';
@@ -83,26 +99,26 @@ export interface INodeCfg {
   size: NumMappingCfg;
   color: CategoryMappingCfg;
   label: {
-    key: string; 
+    key: string;
     showlabel?: Boolean;
   };
   [key: string]: any;
-};
+}
 
 export interface INodeTypeCfg {
   type: NodeTypes;
   customCfg?: {
     [key: string]: any;
-  }
+  };
 }
 
 export interface INodeData {
-  id: string,
+  id: string;
   name?: string;
   data?: {
     [key: string]: any;
   };
-  cfg?: INodeCfg
+  cfg?: INodeCfg;
 }
 
 export interface IEdgeCfg {
@@ -116,7 +132,7 @@ export interface IEdgeData {
   target: string;
   data?: {
     [key: string]: any;
-  },
+  };
   cfgs?: IEdgeCfg;
 }
 
@@ -135,7 +151,7 @@ export interface INodeStructFeat {
   degree: number; // 节点度数
   inDegree: number; // 入度
   outDegree: number; // 出度
-  pageRank: number; 
+  pageRank: number;
   closeness: number;
   kCore: number;
   cycleCount: number;
@@ -153,7 +169,7 @@ export interface IEdgeStructFeat {
   starCount: number;
   cliqueCount: number;
 }
-// 图统计特征 
+// 图统计特征
 export interface IGraphFeat {
   nodeCount: number;
   edgeCount: number;

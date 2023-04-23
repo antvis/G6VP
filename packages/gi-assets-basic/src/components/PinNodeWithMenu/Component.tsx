@@ -20,7 +20,7 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   const model = target.getModel();
 
   const { pinned } = model;
-  const isForce = layout.type === 'graphin-force';
+  const isForce = layout.type === 'graphin-force' || layout.type === 'force2';
 
   const handleLockNode = () => {
     contextmenu.onClose();
