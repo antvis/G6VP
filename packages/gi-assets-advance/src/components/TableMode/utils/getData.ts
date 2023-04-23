@@ -1,4 +1,4 @@
-import { IGraphData } from '@antv/gi-sdk/lib/process/schema';
+import { IGraphData } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 const process = item => {};
 

@@ -1,7 +1,6 @@
-import { GIConfig, utils } from '@antv/gi-sdk';
-import { GraphSchemaData } from '@antv/gi-sdk/lib/process/schema';
+import { GIConfig, GraphSchemaData, utils } from '@antv/gi-sdk';
 import Graphin, { GraphinData } from '@antv/graphin';
-import { Alert, Button, Card, Col, notification, Row } from 'antd';
+import { Alert, Button, Card, Col, Row, notification } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 interface SchemaEditorProps {

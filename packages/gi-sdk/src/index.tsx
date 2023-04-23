@@ -3,11 +3,11 @@ const version = '2.0.2';
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 import {
   deepClone,
+  GI_CONTAINER_METAS,
   GIAC_CONTENT_METAS,
   GIAC_CONTENT_PROPS,
   GIAC_METAS,
   GIAC_PROPS,
-  GI_CONTAINER_METAS,
 } from './components/const';
 import GIAComponent from './components/GIAC';
 import { useContext } from './context';
@@ -34,10 +34,12 @@ export { default as EngineServer } from './components/EngineServer';
 // export { default as Icon } from './components/Icon';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
+export type { IGraphData } from './process/schema';
 export type {
   AssetCategory,
   AssetInfo,
   AssetType,
+  ComponentAsset,
   GIAC_ITEMS_TYPE,
   GIAssets,
   GIComponentAssets,

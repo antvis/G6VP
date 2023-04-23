@@ -1,4 +1,4 @@
-import type { GIEdgeConfig } from '@antv/gi-sdk/lib/typing';
+import type { GIEdgeConfig } from '@antv/gi-sdk';
 import { Utils } from '@antv/graphin';
 import merge from 'deepmerge';
 
