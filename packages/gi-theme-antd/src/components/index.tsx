@@ -35,6 +35,9 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   });
   const { theme } = state;
   React.useEffect(() => {
+    /** data-theme */
+    document.documentElement.setAttribute('data-theme', theme);
+
     /** var css */
     let themeObj: any = lightVars;
     let cssUrl = lightLink;
@@ -46,7 +49,6 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
       cssUrl = aliLink;
     }
     /** antd theme */
-
     const dom = window.document.getElementById('theme-style') as HTMLLinkElement;
 
     if (dom) {
