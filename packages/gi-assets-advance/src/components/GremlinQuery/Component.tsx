@@ -3,6 +3,7 @@ import GremlinEditor from 'ace-gremlin-editor';
 import { Button, notification, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
+import { nanoid } from 'nanoid';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -77,6 +78,16 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
+      // @ts-ignore
+      draft.history = (draft.history || []).concat([
+        {
+          id: nanoid(),
+          type: 'query',
+          language: 'gremlin',
+          statement: editorValue,
+          timestamp: new Date().getTime(),
+        },
+      ]);
     });
   };
 
