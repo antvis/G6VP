@@ -114,27 +114,11 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
     return acc;
   }, {});
 
-  elements = activeAssetsKeys.elements.reduce((acc, curr) => {
-    const asset = FinalAssets.elements[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  // Get all elements from FinalAssets
+  elements = { ...FinalAssets.elements };
 
-  layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
-    const asset = FinalAssets.layouts[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  // Get all layouts from FinalAssets
+  layouts = { ...FinalAssets.layouts };
 
   return await new Promise(resolve => {
     resolve({
