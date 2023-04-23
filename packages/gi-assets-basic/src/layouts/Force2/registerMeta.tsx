@@ -53,7 +53,7 @@ const registerMeta = context => {
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: true,
+      default: context.data?.nodes?.length > 800 ? false : true,
     },
     preset: {
       type: 'object',

@@ -49,7 +49,7 @@ const GISDK = (props: Props) => {
     initializer: defaultInitializerCfg,
     transform: (data, reset?: boolean) => data,
     layoutCache: false,
-    largeGraphLimit: 600,
+    largeGraphLimit: 2000,
     largeGraphData: undefined,
     GICC_LAYOUT: {
       id: 'EmptyLayout',
@@ -179,6 +179,7 @@ const GISDK = (props: Props) => {
     });
   }, [nodesCfg, edgesCfg]);
 
+  // @ts-ignore
   const { data, layout, components, initializer, theme, transform, GICC_LAYOUT } = state;
 
   // console.log('%c G6VP Render...', 'color:red', state.layout);
@@ -219,8 +220,8 @@ const GISDK = (props: Props) => {
   };
   const restartForceSimulation = (nodes = []) => {
     if (graphinRef.current) {
-      const { layout, graph } = graphinRef.current;
-      const { instance } = layout;
+      const { layout: graphLayout, graph } = graphinRef.current;
+      const { instance } = graphLayout;
       if (instance) {
         const { type, simulation } = instance;
         if (type === 'graphin-force') {
@@ -237,10 +238,14 @@ const GISDK = (props: Props) => {
             mass,
           });
         });
-        layoutMethod.execute();
+        updateState(draft => {
+          draft.layout.animate = true;
+        });
+        graph.updateLayout({ animate: true });
       }
     }
   };
+
   const ContextValue = {
     ...state,
     GISDK_ID,
