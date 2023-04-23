@@ -37,10 +37,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   const [loading, setLoading] = useState(false);
   const [focusNodeId, setFocusNodeId] = useState(null);
   const [prevData, setPrevData] = useState({ nodes: [], edges: [] });
-  const [prevLayout, setPrevLayout] = useState({
-    type: 'graphin-force',
-    options: { preset: 'concentric' },
-  });
+  const [prevLayout, setPrevLayout] = useState(layout);
 
   const getInitData = () => {
     if (!graph || graph.destroyed) {

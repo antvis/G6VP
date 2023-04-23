@@ -175,13 +175,16 @@ const Analysis = props => {
 
           const { id: layoutId, props: layoutProps } = draft.config.layout!;
           // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
-          const defaultLayout =
-            activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['GraphinForce'];
+          const defaultLayout = activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['Force2'];
           const layoutConfig = {
             id: layoutId,
             props: {
               ...defaultLayout.props,
               ...layoutProps,
+              preset: {
+                ...(defaultLayout.props.preset || {}),
+                ...(layoutProps.preset || {}),
+              },
             },
           };
 

@@ -826,7 +826,7 @@ const container = {
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...components.map(c => c.id)],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 
 export const TEMPLATE_QUERY = {

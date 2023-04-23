@@ -35,6 +35,10 @@ const getLayoutsByAssets = (assets: GILayoutAssets, data: GraphinData, schemaDat
         props: {
           ...info.options,
           ...defaultProps,
+          preset: {
+            ...(info.options.preset || {}),
+            ...(defaultProps.preset || {}),
+          },
         },
         meta: {
           ...configObj,

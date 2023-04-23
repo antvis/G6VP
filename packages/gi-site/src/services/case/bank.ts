@@ -665,7 +665,7 @@ const activeAssetsKeys = {
     'SankeyAnalysis',
     'ChartAnalysis',
   ],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 
 const projectConfig = {

@@ -111,6 +111,7 @@ const GISDK = (props: Props) => {
     if (!layoutCfg) {
       return;
     }
+    stopForceSimulation();
     // @ts-ignore
     const { type, ...options } = layoutCfg.props || {};
     //@ts-ignore
@@ -200,13 +201,19 @@ const GISDK = (props: Props) => {
 
   const stopForceSimulation = () => {
     if (graphinRef.current) {
-      const { layout } = graphinRef.current;
+      const { layout, graph } = graphinRef.current;
       const { instance } = layout;
       if (instance) {
         const { type, simulation } = instance;
         if (type === 'graphin-force') {
           simulation.stop();
+          return;
         }
+      }
+      const layoutController = graph.get('layoutController');
+      const layoutMethod = layoutController.layoutMethods?.[0];
+      if (layoutMethod?.type === 'force2') {
+        layoutMethod.stop();
       }
     }
   };
@@ -218,7 +225,19 @@ const GISDK = (props: Props) => {
         const { type, simulation } = instance;
         if (type === 'graphin-force') {
           simulation.restart(nodes, graph);
+          return;
         }
+      }
+      const layoutController = graph.get('layoutController');
+      const layoutMethod = layoutController.layoutMethods?.[0];
+      if (layoutMethod?.type === 'force2') {
+        nodes.forEach(node => {
+          const { id, mass } = node;
+          graph.updateItem(id, {
+            mass,
+          });
+        });
+        layoutMethod.execute();
       }
     }
   };

@@ -541,9 +541,9 @@ const baseComponentsConfig = [
   },
 ];
 const baseLayoutConfig = {
-  id: 'GraphinForce',
+  id: 'Force2',
   props: {
-    type: 'graphin-force',
+    type: 'force2',
     preset: {
       type: 'concentric',
     },
@@ -560,7 +560,7 @@ export const baseConfig = {
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 
 const Cypher_Template = [
@@ -667,7 +667,7 @@ export const getConfigByEngineId = engineId => {
   const activeAssetsKeys = {
     elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
     components: [...config.components.map(c => c.id)],
-    layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+    layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
   };
   return {
     config,

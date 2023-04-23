@@ -29,9 +29,9 @@ export const baseEdgesConfig: GIConfig['edges'] = [
   },
 ];
 export const baseLayoutConfig = {
-  id: 'GraphinForce',
+  id: 'Force2',
   props: {
-    type: 'graphin-force',
+    type: 'force2',
     preset: {
       type: 'concentric',
     },

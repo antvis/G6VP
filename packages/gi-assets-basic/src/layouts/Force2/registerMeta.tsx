@@ -19,8 +19,8 @@ const registerMeta = context => {
   ];
   return {
     stiffness: {
-      type: 'number',
-      title: '弹簧劲度系数',
+      type: 'edgeStrength',
+      title: '边引力系数',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {
@@ -28,8 +28,8 @@ const registerMeta = context => {
       },
       default: 200,
     },
-    repulsion: {
-      title: '库伦常量Ke（斥力）',
+    nodeStrength: {
+      title: '节点间斥力系数',
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -46,9 +46,9 @@ const registerMeta = context => {
         min: 0,
         max: 1,
       },
-      default: 0.9,
+      default: 0.8,
     },
-    animation: {
+    animate: {
       title: '启用动画',
       type: 'boolean',
       'x-decorator': 'FormItem',
@@ -67,6 +67,20 @@ const registerMeta = context => {
             options: presetOptions,
           },
           default: 'concentric',
+        },
+        width: {
+          title: '预设布局宽度',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 800,
+        },
+        height: {
+          title: '预设布局高度',
+          type: 'number',
+          'x-decorator': 'FormItem',
+          'x-component': 'NumberPicker',
+          default: 800,
         },
       },
     },
@@ -95,6 +109,53 @@ const registerMeta = context => {
           default: 100,
         },
       },
+    },
+    clusterNodeStrength: {
+      title: '节点聚类力强度',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {},
+      default: 35,
+    },
+    minMovement: {
+      title: '迭代停止最小距离',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {},
+      default: 10,
+    },
+    distanceThresholdMode: {
+      title: '迭代停止判断依据',
+      type: 'string',
+      'x-component': 'Select',
+      'x-decorator': 'FormItem',
+      'x-component-props': {
+        options: [
+          {
+            label: '平均值',
+            value: 'mean',
+          },
+          {
+            label: '最小值',
+            value: 'min',
+          },
+          {
+            label: '最大值',
+            value: 'max',
+          },
+        ],
+      },
+      default: 'max',
+    },
+    maxSpeed: {
+      title: '初始速度',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      'x-component-props': {},
+      default: 1000,
     },
     centripetalOptions: {
       type: 'object',
