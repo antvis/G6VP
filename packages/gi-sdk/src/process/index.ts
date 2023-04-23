@@ -31,3 +31,9 @@ export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleCon
 export { getServerEngineContext, setServerEngineContext } from './serverEngineContext';
 export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 export { transDataByConfig } from './transDataByConfig';
+export {
+  graphData2PropertyGraph,
+  getNodePropertyImportance,
+  getPropertyRanks,
+  getPropertyValueRanks,
+} from './propertyGraph';

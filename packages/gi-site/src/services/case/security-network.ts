@@ -577,6 +577,7 @@ const projectConfig: GIConfig = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -826,6 +827,12 @@ const projectConfig: GIConfig = {
         schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',

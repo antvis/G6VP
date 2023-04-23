@@ -366,6 +366,12 @@ const simpleComponents = [
     },
   },
   {
+    id: 'PropertyGraphInitializer',
+    type: 'AUTO',
+    name: '属性图计算',
+    props: {},
+  },
+  {
     id: 'LayoutSwitch',
     name: '布局切换',
     props: {

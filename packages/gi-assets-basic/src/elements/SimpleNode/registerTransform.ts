@@ -1,4 +1,4 @@
-import type { GINodeConfig } from '@antv/gi-sdk/lib/typing';
+import type { GINodeConfig } from '@antv/gi-sdk';
 import Graphin, { Utils } from '@antv/graphin';
 // 引入资源文件
 import iconLoader from '@antv/graphin-icons';

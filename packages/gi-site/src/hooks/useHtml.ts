@@ -1,13 +1,8 @@
 import { beautifyCode, getConstantFiles, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
 
 const getHtmlAppCode = opts => {
-  const {
-    GI_PROJECT_CONFIG,
-    SERVER_ENGINE_CONTEXT,
-    GI_ASSETS_PACKAGE,
-    THEME_STYLE,
-    HTML_HEADER,
-  } = getConstantFiles(opts);
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, THEME_STYLE, HTML_HEADER } =
+    getConstantFiles(opts);
 
   /** G6VP 站点图数据和 Schema 信息 **/
   const { data, schemaData } = window['LOCAL_DATA_FOR_GI_ENGINE'];

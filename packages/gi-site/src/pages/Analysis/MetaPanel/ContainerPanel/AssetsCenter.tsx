@@ -1,11 +1,10 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { CheckCard } from '@ant-design/pro-components';
-import { Icon } from '@antv/gi-sdk';
-import { ComponentAsset } from '@antv/gi-sdk/lib/typing';
+import { ComponentAsset, Icon } from '@antv/gi-sdk';
 import { Avatar, Col, Row, Tag } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { CategroyOptions, otherCategory } from './constants';
-import { CloseOutlined } from '@ant-design/icons';
 import './index.less';
 
 const COLOR_MAP = {

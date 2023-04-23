@@ -222,6 +222,13 @@
     "docs": "",
     "category": "system-interaction"
   },
+  "PropertyGraphInitializer": {
+    "id": "PropertyGraphInitializer",
+    "type": "AUTO",
+    "name": "属性图计算",
+    "docs": "",
+    "category": "system-interaction"
+  },
   "Overview": {
     "id": "Overview",
     "name": "大图概览",

@@ -10,7 +10,6 @@ export default context => {
     info.services[1],
     engineId,
   );
-
   return {
     serviceId: {
       title: '初始化查询',

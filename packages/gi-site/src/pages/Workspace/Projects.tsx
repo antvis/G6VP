@@ -124,7 +124,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   }
 
   const handleExportSDK = async projectItem => {
-    const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId } = projectItem;
+    const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId, propertyGraphData } = projectItem;
     const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
     queryAssets(activeAssetsKeys).then(activeAssets => {
       const { transData, inputData } = data || {
@@ -148,6 +148,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         config: projectConfig,
         serviceConfig,
         schemaData,
+        propertyGraphData,
       });
       const services = utils.uniqueElementsBy(
         [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],

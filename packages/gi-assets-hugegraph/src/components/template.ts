@@ -115,6 +115,7 @@ export const components = [
       offset: [10, 10],
       animate: false,
       defaultiStatistic: false,
+      enableInfoDetect: true,
     },
   },
   {
@@ -379,6 +380,12 @@ export const components = [
       GI_INITIALIZER: true,
       aggregate: false,
     },
+  },
+  {
+    id: 'PropertyGraphInitializer',
+    type: 'AUTO',
+    name: '属性图计算',
+    props: {},
   },
   {
     id: 'LayoutSwitch',

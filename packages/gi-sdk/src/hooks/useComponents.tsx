@@ -11,7 +11,7 @@ const DEFAULT_GICC_LAYOUT = {
 };
 
 const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
-  const { config, initializer, GICC_LAYOUT, components, GISDK_ID, isContextReady, initialized } = state;
+  const { config, initializer, GICC_LAYOUT, components, GISDK_ID } = state;
   const { components: stateComponentsCfg } = config;
   const ComponentCfgMap = propsComponentsCfg.concat(stateComponentsCfg).reduce((acc, curr) => {
     return {
@@ -21,6 +21,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   }, {});
 
   const { component: InitializerComponent } = ComponentAssets[initializer.id];
+
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 
   const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id] || {

@@ -659,6 +659,7 @@ const activeAssetsKeys = {
     'PinNodeWithMenu',
     'ForceSimulation',
     'Initializer',
+    'PropertyGraphInitializer',
     'LayoutSwitch',
     'GrailLayout',
     'TableMode',
@@ -1006,6 +1007,7 @@ const projectConfig: GIConfig = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -1283,6 +1285,12 @@ const projectConfig: GIConfig = {
         GI_INITIALIZER: true,
         aggregate: false,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',

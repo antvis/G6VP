@@ -163,6 +163,7 @@ export const GI_PROJECT_CONFIG = {
         offset: [0, 0],
         animate: true,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -404,6 +405,12 @@ export const GI_PROJECT_CONFIG = {
         schemaServiceId: 'TuGraph/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',

@@ -43,7 +43,7 @@ const ComponentPanel = props => {
       }
     }
     const autoComponentInfos = components
-      .filter(component => component.type === 'AUTO')
+      .filter(component => ['AUTO', 'INITIALIZER'].includes(component.type))
       .map(component => ({
         label: component.name,
         value: component.id,

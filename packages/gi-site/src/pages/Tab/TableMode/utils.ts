@@ -1,3 +1,4 @@
+import { IGraphData } from '@antv/gi-sdk/src/process/schema';
 import { GraphinData } from '@antv/graphin';
 
 const getData = (
@@ -7,7 +8,7 @@ const getData = (
     selectItems,
     graphData,
   }: {
-    largeGraphData: GraphinData | undefined;
+    largeGraphData: IGraphData | undefined;
     selectItems: GraphinData;
     graphData: GraphinData;
   },

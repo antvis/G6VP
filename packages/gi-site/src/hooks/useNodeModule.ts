@@ -22,15 +22,9 @@ function getCSBData(opts) {
 
   const entryFileName = `src/index${ext}`;
 
-  const {
-    GI_PROJECT_CONFIG,
-    SERVER_ENGINE_CONTEXT,
-    GI_ASSETS_PACKAGE,
-    HTML_HEADER,
-    THEME_STYLE,
-    packages,
-  } = getConstantFiles(opts);
-  
+  const { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, GI_ASSETS_PACKAGE, HTML_HEADER, THEME_STYLE, packages } =
+    getConstantFiles(opts);
+
   /** G6VP 站点图数据和 Schema 信息 **/
   const { data, schemaData } = window['LOCAL_DATA_FOR_GI_ENGINE'];
   const formatData = beautifyCode(JSON.stringify(data));

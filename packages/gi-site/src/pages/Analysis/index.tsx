@@ -73,6 +73,9 @@ const Analysis = props => {
         projectId,
       )) as IProject;
 
+      if (!activeAssetsKeys.components.includes('PropertyGraphInitializer'))
+        activeAssetsKeys.components.push('PropertyGraphInitializer');
+
       const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;

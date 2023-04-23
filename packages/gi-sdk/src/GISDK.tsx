@@ -2,20 +2,21 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
+import { defaultInitializerCfg } from './Initializer';
+import SizeSensor from './SizeSensor';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
 import getComponents from './hooks/useComponents';
 import './index.less';
-import { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
-import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
 /** export  */
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
+  // @ts-ignore
   const { children, assets, id, services, config } = props;
 
   const GISDK_ID = React.useMemo(() => {
@@ -34,6 +35,7 @@ const GISDK = (props: Props) => {
 
   const [state, updateState] = useImmer<State>({
     data: { nodes: [], edges: [] } as GraphinData,
+    propertyGraphData: undefined,
     schemaData: {
       //会在初始化时候更新
       nodes: [],

@@ -8,7 +8,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.containerWidth.default = '400px';
 
-const registerMeta = ({ schemaData }) => {
+const registerMeta = ({ schemaData, hasPropertyGraph }) => {
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
     return {
       ...acc,
@@ -45,6 +45,15 @@ const registerMeta = ({ schemaData }) => {
       enum: [...nodeOptions, ...edgeOptions],
       default: [],
     },
+    enableInfoDetect: hasPropertyGraph
+      ? {
+          title: '智能推荐',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: true,
+        }
+      : undefined,
     isFilterIsolatedNodes: {
       title: '过滤孤立节点',
       type: 'boolean',
@@ -136,6 +145,8 @@ const registerMeta = ({ schemaData }) => {
     },
     ...metas,
   };
+
+  if (!hasPropertyGraph) delete schema.enableInfoDetect;
 
   return schema;
 };

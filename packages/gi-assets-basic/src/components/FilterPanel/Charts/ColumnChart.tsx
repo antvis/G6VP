@@ -5,11 +5,12 @@ import { IFilterCriteria } from '../type';
 export interface IColumnChartProps {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
+  highlightRank?: number;
 }
 
 const ColumnChart: React.FC<IColumnChartProps> = props => {
-  const { filterCriteria, updateFilterCriteria } = props;
-  const { chartData = new Map() } = filterCriteria;
+  const { filterCriteria, updateFilterCriteria, highlightRank } = props;
+  const { chartData = new Map(), selectOptions = [] } = filterCriteria;
 
   useEffect(() => {
     G2.registerInteraction('element-highlight', {
@@ -18,11 +19,16 @@ const ColumnChart: React.FC<IColumnChartProps> = props => {
   }, []);
 
   useEffect(() => {
-    const data = [...chartData.entries()].map(e => {
+    const dataLength = chartData.size;
+    const highlightThreshold = highlightRank && highlightRank > dataLength ? dataLength - 1 : highlightRank;
+    const data = [...chartData.entries()].map((e, i) => {
       const [key, value] = e;
+      const { rank = Infinity, isOutlier = false } = selectOptions[i] || {};
       return {
         x: key,
         y: value,
+        highlight: highlightThreshold && rank < highlightThreshold ? true : false,
+        isOutlier,
       };
     });
 
@@ -31,18 +37,39 @@ const ColumnChart: React.FC<IColumnChartProps> = props => {
       xField: 'x',
       yField: 'y',
       height: 200,
-      color: 'rgba(111, 147, 222, 1)',
-      tooltip: {},
+      seriesField: 'highlight',
+      color: ({ highlight }) => {
+        if (highlight) return '#eb2f96';
+        return 'rgba(111, 147, 222, 1)';
+      },
+      label: {
+        // @ts-ignore
+        content: ({ highlight, isOutlier, y }) => {
+          if (highlight && !isOutlier) return y;
+        },
+        style: {
+          fill: '#eb2f96',
+          fontSize: 10,
+        },
+        offset: 4,
+        position: 'top',
+      },
+      tooltip: {
+        fields: ['x', 'y'],
+        formatter: (datum: Datum) => {
+          return { name: datum.x, value: datum.y };
+        },
+      },
       interactions: [{ type: 'element-highlight' }],
       state: {
         // 设置 active 激活状态的样式
         active: {
           style: {
-            fill: 'rgba(56, 83, 215, 1)',
             lineWidth: 0,
           },
         },
       },
+      legend: false,
     });
 
     columnPlot.on('element:click', ({ view }) => {
@@ -74,7 +101,7 @@ const ColumnChart: React.FC<IColumnChartProps> = props => {
     return () => {
       columnPlot.destroy();
     };
-  }, [chartData]);
+  }, [chartData, selectOptions, highlightRank]);
 
   return <div id={`${filterCriteria.id}-chart-container`} />;
 };
