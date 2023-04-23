@@ -51,6 +51,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
         ...position,
         pinned: true,
         forceMass: dragNodeMass,
+        mass: dragNodeMass,
         layout: {
           force: {
             ...model.force,

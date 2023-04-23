@@ -74,7 +74,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
   const { layoutId } = state;
 
   /*** 当前元素物料 */
-  const layout = layouts[layoutId] || layouts['GraphinForce'];
+  const layout = layouts[layoutId] || layouts['Force2'];
 
   const schema = {
     type: 'object',
@@ -101,7 +101,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     },
   });
 
-  const handleChangeShape = value => {
+  const handleChangeLayout = value => {
     const values = getCacheValues(layouts, value);
     setState(preState => {
       return {
@@ -109,6 +109,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
         layoutId: value,
       };
     });
+
     updateContext(draft => {
       draft.config.layout = {
         id: value,
@@ -122,7 +123,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
     <div>
       <AssetsCenterHandler title="布局" id="layouts" />
       <AssetsSelect
-        onChange={handleChangeShape}
+        onChange={handleChangeLayout}
         value={layoutId}
         options={layoutItems}
         className="gi-tour-layout-switch"

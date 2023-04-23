@@ -27,7 +27,7 @@ const Share = props => {
         const activeAssetsKeys = {
           components: components.map(c => c.id),
           elements: ['SimpleEdge', 'SimpleNode', 'DountNode'],
-          layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+          layouts: ['Force2', 'Concentric', 'Dagre'],
         };
         const services = getServicesByConfig(ServicesConfig, data, schema);
         queryAssets(activeAssetsKeys).then(res_assets => {
@@ -57,7 +57,7 @@ const Share = props => {
       const activeAssetsKeys = {
         components: config?.components?.map(c => c.id),
         elements: ['SimpleEdge', 'SimpleNode', 'DountNode'],
-        layouts: ['GraphinForce', 'Concentric', 'Dagre'],
+        layouts: ['Force2', 'Concentric', 'Dagre'],
       };
 
       queryAssets(activeAssetsKeys).then(res_assets => {
