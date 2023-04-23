@@ -2,14 +2,14 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
+import { defaultInitializerCfg } from './Initializer';
+import SizeSensor from './SizeSensor';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
 import { GraphInsightContext } from './context';
 import getComponents from './hooks/useComponents';
 import './index.less';
-import { defaultInitializerCfg } from './Initializer';
 import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
-import SizeSensor from './SizeSensor';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 
@@ -265,14 +265,8 @@ const GISDK = (props: Props) => {
     return null;
   }
 
-  const {
-    renderComponents,
-    InitializerComponent,
-    PropertyGraphInitializerComponent,
-    InitializerProps,
-    GICC_LAYOUT_COMPONENT,
-    GICC_LAYOUT_PROPS,
-  } = getComponents(state, config.components, ComponentAssets);
+  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
+    getComponents(state, config.components, ComponentAssets);
 
   const graphData = useMemo(() => {
     const nodeMap = {};
@@ -331,7 +325,6 @@ const GISDK = (props: Props) => {
           >
             <>
               {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
-              {HAS_GRAPH && state.initialized && <PropertyGraphInitializerComponent />}
               {HAS_GRAPH && state.initialized && <SizeSensor />}
               {/* <SetupUseGraphinHook updateContext={updateState} /> */}
               {HAS_GRAPH && state.initialized && renderComponents()}
