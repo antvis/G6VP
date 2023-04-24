@@ -4,8 +4,8 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { ConfigProvider } from 'antd';
 import type { ConfigConsumerProps } from 'antd/lib/config-provider';
 
-export interface LocaleWrapperProps {
-  locale?: any;
+export interface LocaleWrapperProps<T = any> {
+  locale?: T;
 }
 
 export interface LocaleWrapperInput {

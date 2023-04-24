@@ -10,12 +10,16 @@ import {
 import { GraphinData } from '@antv/graphin';
 import { Button, Dropdown, Menu, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { LocaleWrapper } from '@antv/gi-sdk';
+import type { LocaleWrapperProps } from '@antv/gi-sdk';
+import type { FilterPanelLocale } from './Component';
 import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
 import HistogramOptions from './Charts/HistogramOptions';
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
 import { getChartData, getHistogramData } from './utils';
+import zhCN from './locale/zh-CN';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -30,7 +34,7 @@ const analyzerType2Icon = {
   SELECT: <SelectOutlined />,
 };
 
-interface FilterSelectionProps {
+interface FilterSelectionProps extends LocaleWrapperProps<FilterPanelLocale> {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
   removeFilterCriteria: (id: string) => void;
@@ -41,7 +45,7 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { filterCriteria, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, source } = props;
+  const { filterCriteria, nodeProperties, edgeProperties, updateFilterCriteria, removeFilterCriteria, source, locale } = props;
 
   // 对于离散类型的数据支持切换图表类型
   const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);
@@ -197,7 +201,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           style={{ width: '80%' }}
           onChange={onSelectChange}
           className="gi-filter-panel-prop-select"
-          placeholder="选择元素属性"
+          placeholder={locale?.selectElementAttr}
           showSearch
           filterOption={(input, option) => {
             return (option?.value as string)?.toLowerCase().includes(input.toLowerCase());
@@ -208,7 +212,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               : undefined
           }
         >
-          <Select.OptGroup key="node" label="节点">
+          <Select.OptGroup key="node" label={locale?.node}>
             {Object.entries(nodeProperties).map(e => {
               const [key, value] = e;
               const icon = iconMap[value];
@@ -220,7 +224,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               );
             })}
           </Select.OptGroup>
-          <Select.OptGroup key="edge" label="边">
+          <Select.OptGroup key="edge" label={locale?.edge}>
             {Object.entries(edgeProperties).map(e => {
               const [key, value] = e;
               const icon = iconMap[value];
@@ -249,7 +253,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             style={{ width: '100%' }}
             onChange={onValueSelectChange}
             mode="tags"
-            placeholder="选择筛选值"
+            placeholder={locale?.selectFilterValue}
             options={filterCriteria.selectOptions}
             value={filterCriteria.selectValue}
           />
@@ -289,10 +293,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           />
         )}
 
-        {filterCriteria.analyzerType === 'NONE' && <span>请选择合法字段</span>}
+        {filterCriteria.analyzerType === 'NONE' && <span>{locale?.selectValidField}</span>}
       </div>
     </div>
   );
 };
 
-export default FilterSelection;
+export default LocaleWrapper({ componentName: 'FilterPanel', defaultLocale: zhCN })(FilterSelection);

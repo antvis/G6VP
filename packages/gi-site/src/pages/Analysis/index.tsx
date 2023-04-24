@@ -16,6 +16,8 @@ import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import { AnalysisContext } from './hooks/useContext';
 import './index.less';
 import MetaPanel from './MetaPanel';
+import giBasicZhCN from '@antv/gi-assets-basic/es/locale/zh-CN';
+// import giBasicEnUS from '@antv/gi-assets-basic/es/locale/en-US';
 
 import useModel from './useModel';
 import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
@@ -245,69 +247,69 @@ const Analysis = props => {
     );
   }
   const context = { context: state, updateContext: updateState, updateGISite };
-
   console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
 
   return (
-    <AnalysisContext.Provider value={context}>
-      <div className="gi">
-        <div className="gi-navbar">
-          <Navbar workbookId={projectId} />
-        </div>
-        <div className="gi-analysis">
-          <div className="gi-analysis-sidebar">
-            <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+      <AnalysisContext.Provider value={context}>
+        <div className="gi">
+          <div className="gi-navbar">
+            <Navbar workbookId={projectId} />
           </div>
-          <div
-            className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}
-            style={
-              !collapse ? { width: panelWidth.width, flexBasis: panelWidth.width, minWidth: panelWidth.minWidth } : {}
-            }
-          >
-            <MetaPanel
-              value={activeNavbar}
-              data={data}
-              activeAssetsKeys={activeAssetsKeys}
-              /** 配置文件 */
-              config={config}
-              components={activeAssetsInformation!.components}
-              elements={activeAssetsInformation!.elements}
-              services={state.services}
-              layouts={activeAssetsInformation!.layouts}
-              setPanelWidth={setPanelWidth}
-              collapse={collapse}
-            />
-          </div>
-          <div
-            className="gi-analysis-workspace"
-            style={
-              !collapse
-                ? {
-                    width: `calc(100% - ${panelWidth.width} - 36px)`,
-                    flexBasis: `calc(100% - ${panelWidth.width} - 36px)`,
-                  }
-                : {}
-            }
-          >
-            <div className="gi-analysis-canvas">
-              <GISDK
-                id="gi-site"
+          <div className="gi-analysis">
+            <div className="gi-analysis-sidebar">
+              <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+            </div>
+            <div
+              className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}
+              style={
+                !collapse ? { width: panelWidth.width, flexBasis: panelWidth.width, minWidth: panelWidth.minWidth } : {}
+              }
+            >
+              <MetaPanel
+                value={activeNavbar}
+                data={data}
+                activeAssetsKeys={activeAssetsKeys}
+                /** 配置文件 */
                 config={config}
-                /** 资产以Props的方式按需引入 */
-                assets={{
-                  components: activeAssets!.components,
-                  elements: activeAssets!.elements,
-                  layouts: activeAssets!.layouts,
-                }}
+                components={activeAssetsInformation!.components}
+                elements={activeAssetsInformation!.elements}
                 services={state.services}
-              >
-                <GraphRef graphRef={graphRef} />
-              </GISDK>
+                layouts={activeAssetsInformation!.layouts}
+                setPanelWidth={setPanelWidth}
+                collapse={collapse}
+              />
+            </div>
+            <div
+              className="gi-analysis-workspace"
+              style={
+                !collapse
+                  ? {
+                      width: `calc(100% - ${panelWidth.width} - 36px)`,
+                      flexBasis: `calc(100% - ${panelWidth.width} - 36px)`,
+                    }
+                  : {}
+              }
+            >
+              <div className="gi-analysis-canvas">
+                <GISDK
+                  id="gi-site"
+                  config={config}
+                  /** 资产以Props的方式按需引入 */
+                  assets={{
+                    components: activeAssets!.components,
+                    elements: activeAssets!.elements,
+                    layouts: activeAssets!.layouts,
+                  }}
+                  services={state.services}
+                  locale={{...giBasicZhCN }}
+                >
+                  <GraphRef graphRef={graphRef} />
+                </GISDK>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </AnalysisContext.Provider>
+      </AnalysisContext.Provider>
   );
 };
 

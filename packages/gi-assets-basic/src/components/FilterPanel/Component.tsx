@@ -15,9 +15,14 @@ const { isStyles } = utils;
 
 export interface FilterPanelLocale {
   addfilter?: string;
+  selectElementAttr?: string;
+  node?: string;
+  edge?: string;
+  selectFilterValue?: string;
+  selectValidField?: string;
 }
 
-export interface FilterPanelProps extends LocaleWrapperProps {
+export interface FilterPanelProps extends LocaleWrapperProps<FilterPanelLocale> {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
   filterLogic: 'and' | 'or';
@@ -164,7 +169,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        {locale.addfilter}
+        {locale?.addfilter}
       </Button>
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriteria => {
