@@ -1,0 +1,57 @@
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+
+  .dialog-header-button-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    
+    .dialog-header-cancel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background-color: var(--warning-color);
+      border-radius: 50%;
+      cursor: pointer;
+
+      .cancel-button {
+        width: 10px;
+        height: 10px;
+        background-color: white;
+      }
+    }
+    
+    .dialog-header-close {
+      .close-button {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .close-button-bar {
+        position: absolute;
+        top: 8px;
+        left: 2px;
+        width: 14px;
+        height: 2px;
+        background-color: #fff;
+      }
+
+      .close-button-bar:first-child {
+        transform: rotate(45deg);
+      }
+
+      .close-button-bar:last-child {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
