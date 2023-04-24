@@ -23,7 +23,9 @@ import TemplateQuery from './TemplateQuery';
 import ThemeSetting from './ThemeSetting';
 import Undo from './Undo';
 import JSONMode from './JSONMode';
+import Assistant from './Assistant';
 export {
+  Assistant,
   StyleSetting,
   SnapshotGallery,
   GremlinQuery,

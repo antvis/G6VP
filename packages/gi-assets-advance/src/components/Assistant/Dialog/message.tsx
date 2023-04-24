@@ -6,7 +6,6 @@ import { Message as CMessage } from '../utils/message';
 
 export const Message: React.FC<CMessage> = (props) => {
   const { role, content, timestamp } = props;
-  const { theme } = useContext();
   const disablePreview = role === 'user' && !content.includes('`');
 
   const time = new Date(timestamp).toLocaleString();
@@ -31,7 +30,10 @@ export const Message: React.FC<CMessage> = (props) => {
         ) : (
           <MarkdownPreview
             wrapperElement={{
-              'data-color-mode': theme.mode,
+              'data-color-mode':
+                document.documentElement.getAttribute('data-theme') === 'dark'
+                  ? 'dark'
+                  : 'light',
             }}
             className="message-content"
             source={getLegalContent(content)}
