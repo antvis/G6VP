@@ -124,7 +124,7 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {},
-      default: 10,
+      default: context.data?.nodes?.length > 200 ? 10 : 2,
     },
     distanceThresholdMode: {
       title: '迭代停止判断依据',

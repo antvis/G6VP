@@ -234,16 +234,10 @@ const GISDK = (props: Props) => {
       const layoutController = graph.get('layoutController');
       const layoutMethod = layoutController.layoutMethods?.[0];
       if (layoutMethod?.type === 'force2') {
-        nodes.forEach(node => {
-          const { id, mass } = node;
-          graph.updateItem(id, {
-            mass,
-          });
-        });
+        graph.updateLayout({ animate: true, disableTriggerLayout: false });
         updateState(draft => {
           draft.layout.animate = true;
         });
-        graph.updateLayout({ animate: true });
       }
     }
   };

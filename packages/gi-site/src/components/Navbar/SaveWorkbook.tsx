@@ -19,7 +19,7 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
   const handleSave = async () => {
     const origin = (await ProjectServices.getById(workbookId)) as IProject;
 
-    const { pageLayout, ...otherConfig } = config;
+    const { pageLayout, layout, ...otherConfig } = config;
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const workbookId = await ProjectServices.create({
@@ -41,10 +41,12 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
     } else {
       // const data = graphRef.current && graphRef.current.save();
       const { id, name, type, props } = pageLayout;
+      const clonedLayout = JSON.parse(JSON.stringify(layout));
       const result = await ProjectServices.updateById(workbookId, {
         activeAssetsKeys,
         projectConfig: {
           ...otherConfig,
+          layout: clonedLayout,
           pageLayout: { id, name, type, props },
         },
       });
