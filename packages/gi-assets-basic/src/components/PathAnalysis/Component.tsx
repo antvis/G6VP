@@ -1,6 +1,6 @@
 import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
-import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline } from 'antd';
+import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
@@ -66,6 +66,17 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       cancelHighlight();
       const { source, target, direction = true } = values;
       const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
+      // 处理未找到路径时的提示
+      if (!allNodePath?.length) {
+        let info = '未找到符合条件的路径';
+        if (direction) {
+          info = `${info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点`;
+        } else {
+          info = `${info}，可尝试改变起点与终点`;
+        }
+        message.info(info);
+        return;
+      }
       const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
       updateState(draft => {
         draft.allNodePath = allNodePath;
