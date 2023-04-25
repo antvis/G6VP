@@ -41,6 +41,7 @@ const getIconStyleByConfig = (style, data) => {
       return {
         fill: 'transparent',
         size: [keyshape.size, keyshape.size],
+        type: 'image',
         clip: { r: keyshape.size / 2 },
         value: value,
       };
