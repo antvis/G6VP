@@ -141,9 +141,11 @@ const Assistant: React.FC<AssistantProps> = ({
       }),
     );
 
-    const codeBlocks = extractCodeBlocks(response.message.content).filter(({ language }) =>
-      SUPPORT_LANGUAGES.includes(language.toLowerCase()),
-    );
+    const codeBlocks = extractCodeBlocks(response.message.content)
+    // 由于目前返回代码格式不是特别稳定，暂不做语言过滤
+    // .filter(({ language }) =>
+    //   SUPPORT_LANGUAGES.includes(language.toLowerCase()),
+    // );
 
     if (codeBlocks.length) {
       amessage.success('开始查询图数据...');

@@ -124,6 +124,7 @@ const registerMeta = (context) => {
         'LIMIT1\n' +
         'RETURN q, answer_count\n' +
         '```\n' +
+        '注意只需要返回查询节点即可，不需要查询属性\n'+ 
         '当前用户查看的图的数据信息如下：\n' +
         '${graphSchema}' +
         '\n请不要回答与 GraphInsight 无关的问题。\n' +
