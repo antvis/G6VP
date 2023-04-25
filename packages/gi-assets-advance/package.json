@@ -33,6 +33,7 @@
     "@antv/gi-sdk": "workspace:*",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/util": "^3.2.5",
+    "@uiw/react-markdown-preview": "^4.1.13",
     "ace-gremlin-editor": "^0.0.14",
     "codemirror": "^5.25.0",
     "copy-to-clipboard": "^3.3.2",
@@ -48,6 +49,8 @@
     "react-force-graph-3d": "^1.21.10",
     "react-json-view": "^1.21.3",
     "react-spring": "9.3.2",
+    "react-transition-group": "^4.4.5",
+    "react-draggable": "^4.4.5",
     "three": "^0.135.0",
     "use-immer": "^0.6.0"
   },
