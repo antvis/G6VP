@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html data-theme="">
+  <head>
+    <meta charset="utf-8" />
+    <title>AntV Insight 让数据栩栩如生</title>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="keywords"
+      content="AntV Insight 数据可视化平台 图可视化 地理可视化 分析应用低代码构建"
+    />
+    <meta
+      name="description"
+      content="AntV Insight 是蚂蚁集团 AntV 团队推出的一款数据分析产品，用户可以在线完成视觉映射，分析洞察工作，也可以一键导出SDK，二次开发，集成部署"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*7svFR6wkPMoAAAAAAAAAAAAADmJ7AQ/original"
+    />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async=""
+      src="https://www.googletagmanager.com/gtag/js?id=G-9Z6Z0NTLFB"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9Z6Z0NTLFB");
+    </script>
+    <script>
+      window.TracertCmdCache = window.TracertCmdCache || [];
+      var t = window.Tracert || {
+          _isRenderInit: !0,
+          call: function () {
+            window.TracertCmdCache.push(arguments);
+          },
+        },
+        f = [
+          "call",
+          "start",
+          "config",
+          "logPv",
+          "info",
+          "err",
+          "click",
+          "expo",
+          "pageName",
+          "pageState",
+          "time",
+          "timeEnd",
+          "parse",
+          "checkExpo",
+          "stringify",
+          "report",
+          "set",
+          "before",
+        ];
+      for (let i = 0; i < f.length; i++) {
+        (function (fn) {
+          t[fn] = function () {
+            var a = [],
+              l = arguments.length;
+            for (var j = 0; j < l; j++) {
+              a.push(arguments[j]);
+            }
+            a.unshift(fn);
+            window.TracertCmdCache.push(a);
+          };
+        })(f[i]);
+      }
+      window.Tracert = t;
+      window._to = window._to || {};
+      // 针对内网用户，追加的埋点，社区用户不会追踪
+      function filterLog(logType) {
+        return function (opts) {
+          return !!window.GI_USER_INFO?.outUserNo;
+        };
+      }
+      window.Tracert.call("before", "logPv", filterLog("PageMonitor"));
+      window.Tracert.call("before", "expo", filterLog("expo"));
+      window.Tracert.call("before", "click", filterLog("click"));
+    </script>
+    <script async="" src="https://ur.alipay.com/tracert_a3220.js"></script>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antd/4.24.9/dist/antd.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/g6/4.8.10/dist/g6.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.15/dist/graphin.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/2.2.1/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-basic/2.2.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-advance/2.2.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-scene/2.0.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-algorithm/2.0.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-tugraph/2.0.1/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-graphscope/2.0.4/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-neo4j/2.0.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-galaxybase/1.1.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://gw.alipayobjects.com/os/lib/antv/gi-assets-hugegraph/1.0.0/dist/index.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/umi.dba549ab.css" />
+    <script>
+      window.routerBase = "/";
+    </script>
+    <script>
+      //! umi version: 3.5.40
+    </script>
+  </head>
+
+  <body style="background: var(--background-color); color: var(--text-color)">
+    <div id="root"></div>
+
+    <script src="https://gw.alipayobjects.com/os/lib/localforage/1.10.0/dist/localforage.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antd/4.24.9/dist/antd.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.8.10/dist/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.15/dist/graphin.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/2.2.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-basic/2.2.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-advance/2.2.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-scene/2.0.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-algorithm/2.0.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-tugraph/2.0.1/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-graphscope/2.0.4/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-neo4j/2.0.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-galaxybase/1.1.0/dist/index.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/gi-assets-hugegraph/1.0.0/dist/index.min.js"></script>
+    <script src="/umi.f2fe6e59.js"></script>
+  </body>
+</html>
