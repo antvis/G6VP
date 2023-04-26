@@ -2,6 +2,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
   const ASSETS_PATH = path.join(__dirname, env.path);
@@ -22,7 +23,13 @@ module.exports = (env, argv) => {
           analyzerPort: Math.round(Math.random() * 100 + 8000),
         }),
       ]
-    : [new MiniCssExtractPlugin()];
+    : [
+        new MiniCssExtractPlugin(),
+        new webpack.ProvidePlugin({
+          process: 'process/browser',
+          Buffer: ['buffer', 'Buffer'],
+        }),
+      ];
   return {
     entry: {
       index: ENTRY_PATH,
@@ -103,6 +110,13 @@ module.exports = (env, argv) => {
       extensions: ['*', '.ts', '.tsx', '.js', '.jsx'],
       fallback: {
         fs: false, //https://webpack.js.org/migrate/5/#clean-up-configuration
+        crypto: require.resolve('crypto-browserify'),
+        constants: require.resolve('constants-browserify'),
+        // // crypto: false,
+        // // constants: false,
+        stream: require.resolve('stream-browserify'),
+        buffer: require.resolve('buffer'),
+        // buffer: require.resolve('buffer-browserify'),
       },
     },
     // devtool: 'cheap-module-source-map',

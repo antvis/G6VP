@@ -42,13 +42,33 @@ export const GI_SERVICE_SCHEMA = {
           graphName: CURRENT_TUGRAPH_SUBGRAPH,
         },
       });
-      if (result.success) {
-        res = result.data;
+      const { success, data } = result;
+      // if (success) {
+      //   res = data;
+      // }
+      // if (data.code === 401) {
+      //   notification.error({
+      //     message: '认证失败：Unauthorized',
+      //     description: data.data.error_message,
+      //   });
+      //   res = {
+      //     nodes: [],
+      //     edges: [],
+      //   };
+      // }
+      if (success) {
+        return data;
       }
-      return res;
-    } catch (e) {
-      message.error(`图模型查询失败: ${e}`);
+      return {
+        nodes: [],
+        edges: [],
+      };
+    } catch (error) {
+      console.error('error', error);
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
-    return res;
   },
 };

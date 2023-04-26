@@ -8,5 +8,6 @@ const info = {
   type: 'GIAC_CONTENT',
   icon: 'icon-query',
   services: [ASSET_ID, 'PublishTemplate'],
+  docs: 'https://www.yuque.com/antv/gi/tt351vzs0agex3un',
 };
 export default info;

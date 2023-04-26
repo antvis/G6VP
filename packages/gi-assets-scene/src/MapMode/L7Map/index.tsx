@@ -1,5 +1,5 @@
+import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
-import type { GIAComponentProps } from '@antv/gi-sdk/lib/components/GIAC';
 import { DrawBoxSelect } from '@antv/l7-draw';
 import { L7Plot, L7PlotOptions } from '@antv/l7plot';
 import * as turf from '@turf/turf';
@@ -12,7 +12,7 @@ import './index.less';
 const { deepClone } = extra;
 
 export interface MapModeProps {
-  GIAC: GIAComponentProps['GIAC'];
+  GIAC: IGIAC;
   visible?: boolean;
   handleClick: () => any;
   theme: string;

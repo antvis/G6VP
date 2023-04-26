@@ -10,7 +10,9 @@ import './index.less';
 const testImg = 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*FZLuRI0h-HMAAAAAAAAAAAAAARQnAQ';
 
 const ExportConfig = props => {
-  const { context: st } = useContext();
+  const { context: propsContext } = props;
+  const { context } = useContext();
+  const st = propsContext || context;
 
   const [state, updateState] = useImmer({
     visible: false,
@@ -43,12 +45,12 @@ const ExportConfig = props => {
     <div className="export-panel">
       <Alert
         type="info"
-        message="G6VP 提供了 3 种导出SDK的方式，用户可以根据自己需要选择。其中「云端部署」仅限阿里集团使用 ODPS 数据源的用户使用"
+        message="G6VP 提供了 3 种导出SDK的方式，用户可以根据自己需要选择"
         showIcon
       ></Alert>
       <br />
       <Row gutter={[20, 20]}>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={
@@ -64,23 +66,7 @@ const ExportConfig = props => {
             </div>
           </Card>
         </Col>
-        <Col span={12}>
-          <Card
-            hoverable
-            cover={
-              <img
-                src={'https://gw.alipayobjects.com/mdn/rms_3e4ddf/afts/img/A*A9m5R7wxY54AAAAAAAAAAAAAARQnAQ'}
-                onClick={handleOpen}
-              />
-            }
-          >
-            <div className="card-meta">
-              <div className="title">云端部署</div>
-              <div>GraphScope 计算+ ODPS 存储部署，详情请咨询 @击铗</div>
-            </div>
-          </Card>
-        </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={
@@ -96,7 +82,7 @@ const ExportConfig = props => {
             </div>
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Card
             hoverable
             cover={

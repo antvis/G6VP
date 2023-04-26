@@ -6,5 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'workbook',
   type: 'GIAC',
+  docs: 'https://www.yuque.com/antv/gi/vgsvy7op54os371m',
 };
 export default info;

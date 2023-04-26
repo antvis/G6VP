@@ -1,0 +1,627 @@
+{
+  "ActivateRelations": {
+    "id": "ActivateRelations",
+    "name": "元素高亮",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-canvas-setting",
+    "category": "elements-interaction"
+  },
+  "CanvasSetting": {
+    "id": "CanvasSetting",
+    "name": "画布设置",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-canvas-setting",
+    "category": "canvas-interaction"
+  },
+  "ClearCanvas": {
+    "id": "ClearCanvas",
+    "name": "清空画布",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-clear",
+    "category": "canvas-interaction"
+  },
+  "ContextMenu": {
+    "id": "ContextMenu",
+    "name": "右键菜单",
+    "type": "GICC_MENU",
+    "docs": "",
+    "icon": "icon-mouse",
+    "category": "container-components"
+  },
+  "Copyright": {
+    "id": "Copyright",
+    "name": "版权",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-copyright",
+    "category": "system-interaction"
+  },
+  "DownLoad": {
+    "id": "DownLoad",
+    "name": "下载",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-download",
+    "category": "canvas-interaction"
+  },
+  "Export": {
+    "id": "Export",
+    "name": "导出",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-export",
+    "category": "workbook"
+  },
+  "FilterPanel": {
+    "id": "FilterPanel",
+    "name": "筛选面板",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-filter",
+    "category": "data-analysis"
+  },
+  "FitCenter": {
+    "id": "FitCenter",
+    "name": "视图居中",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-fit-center",
+    "category": "canvas-interaction"
+  },
+  "FitView": {
+    "id": "FitView",
+    "name": "自适应",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-fit-view",
+    "category": "canvas-interaction"
+  },
+  "GrailLayout": {
+    "id": "GrailLayout",
+    "name": "圣杯布局",
+    "type": "GICC_LAYOUT",
+    "docs": "",
+    "icon": "icon-layout",
+    "category": "container-components"
+  },
+  "LassoSelect": {
+    "id": "LassoSelect",
+    "name": "自由圈选",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-lasso",
+    "category": "canvas-interaction"
+  },
+  "LayoutSwitch": {
+    "id": "LayoutSwitch",
+    "name": "布局切换",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-layout",
+    "category": "canvas-interaction"
+  },
+  "Loading": {
+    "id": "Loading",
+    "name": "加载动画",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-loading",
+    "category": "system-interaction"
+  },
+  "MiniMap": {
+    "id": "MiniMap",
+    "name": "小地图",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-minimap",
+    "category": "system-interaction"
+  },
+  "NeighborsQuery": {
+    "id": "NeighborsQuery",
+    "name": "邻居查询",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-kinship",
+    "category": "data-query"
+  },
+  "NodeLegend": {
+    "id": "NodeLegend",
+    "name": "节点图例",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-legend",
+    "category": "data-analysis"
+  },
+  "PathAnalysis": {
+    "id": "PathAnalysis",
+    "name": "路径分析",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-path-analysis",
+    "category": "data-analysis"
+  },
+  "Placeholder": {
+    "id": "Placeholder",
+    "name": "画布占位符",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-placeholder",
+    "category": "system-interaction"
+  },
+  "PropertiesPanel": {
+    "id": "PropertiesPanel",
+    "name": "属性面板",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-reconciliation",
+    "category": "elements-interaction"
+  },
+  "Save": {
+    "id": "Save",
+    "name": "保存分享",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-save",
+    "category": "workbook"
+  },
+  "SideTabs": {
+    "id": "SideTabs",
+    "name": "侧边栏",
+    "type": "GICC",
+    "docs": "https://www.yuque.com/antv/gi/to65w8",
+    "icon": "icon-sidebar",
+    "category": "container-components"
+  },
+  "ToggleClusterWithMenu": {
+    "id": "ToggleClusterWithMenu",
+    "name": "展开/收起",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-toggle",
+    "category": "elements-interaction"
+  },
+  "Toolbar": {
+    "id": "Toolbar",
+    "name": "工具栏",
+    "type": "GICC",
+    "docs": "",
+    "icon": "icon-tools",
+    "category": "container-components"
+  },
+  "Tooltip": {
+    "id": "Tooltip",
+    "name": "节点提示框",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-tooltip",
+    "category": "elements-interaction"
+  },
+  "ChartAnalysis": {
+    "id": "ChartAnalysis",
+    "name": "图表分析",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-barchart",
+    "category": "data-analysis"
+  },
+  "ForceSimulation": {
+    "id": "ForceSimulation",
+    "name": "力导控制器",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-play-circle",
+    "category": "system-interaction"
+  },
+  "Initializer": {
+    "id": "Initializer",
+    "name": "初始化器",
+    "type": "INITIALIZER",
+    "docs": "",
+    "category": "system-interaction"
+  },
+  "PropertyGraphInitializer": {
+    "id": "PropertyGraphInitializer",
+    "type": "AUTO",
+    "name": "属性图计算",
+    "docs": "",
+    "category": "system-interaction"
+  },
+  "Overview": {
+    "id": "Overview",
+    "name": "大图概览",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-dashboard",
+    "category": "system-interaction"
+  },
+  "PinNodeWithMenu": {
+    "id": "PinNodeWithMenu",
+    "name": "固定节点(MENU)",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-pushpin",
+    "category": "elements-interaction"
+  },
+  "SankeyAnalysis": {
+    "id": "SankeyAnalysis",
+    "name": "桑基图分析",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-sankey",
+    "category": "data-analysis"
+  },
+  "SideSelectTabs": {
+    "id": "SideSelectTabs",
+    "name": "下拉导航栏",
+    "type": "GICC",
+    "docs": "",
+    "icon": "icon-sidebar",
+    "category": "container-components"
+  },
+  "UadLayout": {
+    "id": "UadLayout",
+    "name": "上下布局",
+    "type": "GICC_LAYOUT",
+    "docs": "",
+    "icon": "icon-pic-center",
+    "category": "container-components"
+  },
+  "ZoomIn": {
+    "id": "ZoomIn",
+    "name": "放大",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-zoomin",
+    "category": "canvas-interaction"
+  },
+  "ZoomOut": {
+    "id": "ZoomOut",
+    "name": "缩小",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-zoomout",
+    "category": "canvas-interaction"
+  },
+  "ZoomStatus": {
+    "id": "ZoomStatus",
+    "name": "缩放状态",
+    "type": "AUTO",
+    "docs": "",
+    "category": "canvas-interaction"
+  },
+  "RemoveNodeWithMenu": {
+    "id": "RemoveNodeWithMenu",
+    "name": "节点删除",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-minus-circle",
+    "category": "elements-interaction"
+  },
+  "OperatorBar": {
+    "id": "OperatorBar",
+    "name": "操作栏",
+    "type": "GICC",
+    "docs": "",
+    "icon": "icon-tabs",
+    "category": "container-components"
+  },
+  "GroupBar": {
+    "id": "GroupBar",
+    "name": "分组操作栏",
+    "type": "GICC",
+    "docs": "",
+    "icon": "icon-tabs",
+    "category": "container-components"
+  },
+  "SelectExchangeMenuItem": {
+    "id": "SelectExchangeMenuItem",
+    "name": "反选",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-revert-select",
+    "category": "canvas-interaction"
+  },
+  "AddSheetbar": {
+    "id": "AddSheetbar",
+    "name": "新增页签",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-plus",
+    "category": "system-interaction"
+  },
+  "CypherQuery": {
+    "id": "CypherQuery",
+    "name": "Cypher 语句查询",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-query",
+    "category": "data-query"
+  },
+  "GraphAnnotation": {
+    "id": "GraphAnnotation",
+    "name": "图标注(MENU)",
+    "type": "GIAC_MENU",
+    "docs": "",
+    "icon": "icon-pushpin",
+    "category": "elements-interaction"
+  },
+  "GremlinQuery": {
+    "id": "GremlinQuery",
+    "name": "Gremlin 查询",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-query",
+    "category": "data-query"
+  },
+  "ModeSwitch": {
+    "id": "ModeSwitch",
+    "name": "模式切换",
+    "type": "GICC",
+    "docs": "",
+    "icon": "icon-sidebar",
+    "category": "container-components"
+  },
+  "Redo": {
+    "id": "Redo",
+    "name": "重做",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-redo",
+    "category": "canvas-interaction"
+  },
+  "Sheetbar": {
+    "id": "Sheetbar",
+    "name": "多画布页签",
+    "type": "AUTO",
+    "docs": "",
+    "icon": "icon-diff",
+    "category": "system-interaction"
+  },
+  "SnapshotGallery": {
+    "id": "SnapshotGallery",
+    "name": "快照画廊",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-camera",
+    "category": "system-interaction"
+  },
+  "StructAnalysis": {
+    "id": "StructAnalysis",
+    "name": "路径结构分析",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-layout-tree",
+    "category": "data-analysis"
+  },
+  "StyleSetting": {
+    "id": "StyleSetting",
+    "name": "样式设置",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-bg-colors",
+    "category": "elements-interaction"
+  },
+  "SubGraphLayout": {
+    "id": "SubGraphLayout",
+    "name": "子图布局",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-branches",
+    "category": "data-analysis"
+  },
+  "TableMode": {
+    "id": "TableMode",
+    "name": "表格模式",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-table",
+    "category": "data-analysis"
+  },
+  "TemplateQuery": {
+    "id": "TemplateQuery",
+    "name": "语句模版查询",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-query",
+    "category": "data-query"
+  },
+  "ThemeSetting": {
+    "id": "ThemeSetting",
+    "name": "主题设置",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-theme",
+    "category": "system-interaction"
+  },
+  "Undo": {
+    "id": "Undo",
+    "name": "撤销",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-undo",
+    "category": "canvas-interaction"
+  },
+  "JSONMode": {
+    "id": "JSONMode",
+    "name": "代码模式",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-table",
+    "category": "data-analysis"
+  },
+  "NodesClustering": {
+    "id": "NodesClustering",
+    "name": "节点聚类",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-Kjunzhijulei",
+    "category": "algorithm-analysis"
+  },
+  "NodesSimilarity": {
+    "id": "NodesSimilarity",
+    "name": "节点相似性",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-one-degree",
+    "category": "algorithm-analysis"
+  },
+  "CommunityDetection": {
+    "id": "CommunityDetection",
+    "name": "社区发现",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-associate",
+    "category": "algorithm-analysis"
+  },
+  "NodeImportance": {
+    "id": "NodeImportance",
+    "name": "节点重要性",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-rules",
+    "category": "algorithm-analysis"
+  },
+  "PatternMatch": {
+    "id": "PatternMatch",
+    "name": "模式匹配",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-query-path",
+    "category": "algorithm-analysis"
+  },
+  "InfoDetection": {
+    "id": "InfoDetection",
+    "name": "信息检测",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-infomation",
+    "category": "data-analysis"
+  },
+  "MapMode": {
+    "id": "MapMode",
+    "name": "地图模式",
+    "type": "GIAC",
+    "docs": "",
+    "icon": "icon-global",
+    "category": "scene-analysis"
+  },
+  "default": {
+    "id": "default",
+    "type": 1,
+    "docs": ""
+  },
+  "AlgorithmAnalysis": {
+    "id": "AlgorithmAnalysis",
+    "name": "算法分析面板",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-query",
+    "category": "algorithm-analysis"
+  },
+  "TuGraphDataSource": {
+    "id": "TuGraphDataSource",
+    "name": "数据管理",
+    "type": "GIAC_CONTENT",
+    "docs": "",
+    "icon": "icon-database",
+    "category": "engine-manage"
+  },
+  "DonutNode": {
+    "id": "DonutNode",
+    "name": "甜甜圈",
+    "type": "NODE",
+    "docs": "",
+    "icon": "icon-piechart",
+    "category": "node"
+  },
+  "SimpleEdge": {
+    "id": "SimpleEdge",
+    "name": "官方边",
+    "type": "EDGE",
+    "docs": "",
+    "category": "edge"
+  },
+  "SimpleNode": {
+    "id": "SimpleNode",
+    "name": "官方节点",
+    "type": "NODE",
+    "docs": "",
+    "icon": "icon-smile",
+    "category": "node"
+  },
+  "Circular": {
+    "id": "Circular",
+    "name": "圆形布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-circular",
+    "category": "basic"
+  },
+  "Concentric": {
+    "id": "Concentric",
+    "name": "同心圆布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-concentric",
+    "category": "basic"
+  },
+  "ClusteringDagre": {
+    "id": "ClusteringDagre",
+    "name": "聚类分层布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-tree",
+    "category": "basic"
+  },
+  "Dagre": {
+    "id": "Dagre",
+    "name": "有向分层",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-tree",
+    "category": "basic"
+  },
+  "Force2": {
+    "id": "Force2",
+    "name": "渐进力导(force2)",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-force",
+    "category": "basic"
+  },
+  "FundForce": {
+    "id": "FundForce",
+    "name": "资金力导",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-force",
+    "category": "basic"
+  },
+  "GraphinForce": {
+    "id": "GraphinForce",
+    "name": "力导布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-force",
+    "category": "basic"
+  },
+  "Grid": {
+    "id": "Grid",
+    "name": "网格布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-grid-fill",
+    "category": "basic"
+  },
+  "Radial": {
+    "id": "Radial",
+    "name": "径向布局",
+    "type": "LAYOUT",
+    "docs": "",
+    "icon": "icon-layout-radial",
+    "category": "basic"
+  }
+}

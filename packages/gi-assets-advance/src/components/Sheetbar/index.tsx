@@ -12,6 +12,7 @@ const info: AssetInfo = {
   category: 'system-interaction',
   type: 'AUTO',
   icon: 'icon-diff',
+  docs: 'https://www.yuque.com/antv/gi/vb6ysnnf1db2pdlf',
 };
 
 export default {

@@ -33,7 +33,7 @@ const activeAssetsKeys = {
     'Toolbar',
     'Export',
   ],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 const projectConfig: GIConfig = {
   nodes: [
@@ -577,6 +577,7 @@ const projectConfig: GIConfig = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -826,6 +827,12 @@ const projectConfig: GIConfig = {
         schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',
@@ -5395,7 +5402,7 @@ const project: ICase = {
   author: '刘宏达',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1TF411V7wM?share_source=copy_web',
-  coverImg: '/public/image/security.demo.png',
+  coverImg: `${window['GI_PUBLIC_PATH']}image/security.demo.png`,
 };
 
 export default project;

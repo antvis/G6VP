@@ -6,11 +6,13 @@ import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 /** 引擎包 */
+import * as GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase';
 import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
+import * as GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 
-import { OFFICIAL_PACKAGES } from '../../.umirc';
+import OFFICIAL_PACKAGES from '../../scripts/deps_assets.json';
 import { IS_DEV_ENV } from './const';
 
 const { loaderCombinedAssets, getAssetPackages } = utils;
@@ -44,6 +46,11 @@ const LOCAL_ASSETS: any[] = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_NEO4J'],
     ...GI_ASSETS_NEO4J,
   },
+  // 内置 HugeGraph
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
+    ...GI_ASSETS_HUGEGRAPH,
+  },
   // 内置 GraphScope 单机版
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
@@ -52,6 +59,11 @@ const LOCAL_ASSETS: any[] = [
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
     ...GI_ASSETS_TUGRAPH,
+  },
+  // 内置 Galaxybase
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GALAXYBASE'],
+    ...GI_ASSETS_GALAXYBASE,
   },
 ];
 
@@ -77,6 +89,20 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
 
   console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
 
+  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
+  //   const assetKeys = activeAssetsKeys.components[containerId];
+  //   components[containerId] = assetKeys.reduce((acc, curr) => {
+  //     const asset = FinalAssets.components[curr];
+  //     if (asset) {
+  //       return {
+  //         ...acc,
+  //         [curr]: asset,
+  //       };
+  //     }
+  //     return acc;
+  //   }, {});
+  // });
+
   components = activeAssetsKeys.components.reduce((acc, curr) => {
     const asset = FinalAssets.components[curr];
     if (asset) {
@@ -88,27 +114,11 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
     return acc;
   }, {});
 
-  elements = activeAssetsKeys.elements.reduce((acc, curr) => {
-    const asset = FinalAssets.elements[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  // Get all elements from FinalAssets
+  elements = { ...FinalAssets.elements };
 
-  layouts = activeAssetsKeys.layouts.reduce((acc, curr) => {
-    const asset = FinalAssets.layouts[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  // Get all layouts from FinalAssets
+  layouts = { ...FinalAssets.layouts };
 
   return await new Promise(resolve => {
     resolve({

@@ -1,22 +1,53 @@
-import type { GIConfig, GraphSchemaData } from '@antv/gi-sdk';
-import { GraphinData } from '@antv/graphin';
+import type { GIConfig, GIGraphData, GraphSchemaData } from '@antv/gi-sdk';
 import { IActiveAssetsKeys } from '../pages/Analysis/typing';
 
-export interface IProject {
+export interface IDataset {
+  /** 数据集ID */
+  id: string;
+  /** 数据集类型:用户/案例/系统直连 */
+  type: 'user' | 'case' | 'system';
+  /** 数据集名称*/
+  name?: string;
+  /** 数据集的来源，用户「系统直连」展示 */
+  from?: string;
+  /** 引擎类型 */
+  engineType: 'DB_GRAPH' | 'DB_GEO' | 'FILE_GRAPH' | 'FILE_GEO' | 'API_GRAPH' | 'API_GEO';
   /** 引擎ID */
   engineId: string;
   /** 引擎的上下文，用于服务接口的额外参数 */
   engineContext: Record<string, any>;
+  /** 图模型 */
+  schemaData: GraphSchemaData;
+  /** 初始化图数据 */
+  data?: GIGraphData;
+  /** 进入回收站的时间(时间戳)，有值代表处于回收站中，数据集列表不应展示 */
+  recycleTime?: number;
+}
+
+export interface ITemplate {
+  /** 模版ID */
+  id: string;
+  /** 模版名称*/
+  name?: string;
+  /** 组件配置 */
+  components: GIConfig['components'];
+  /** 布局配置 */
+  layout: GIConfig['layout'];
+  /** 可用的激活资产ID */
+  activeAssetsKeys: IActiveAssetsKeys;
+  /** 模版描述 */
+  desc: string;
+  /** 模版图片 */
+  image: string;
+}
+
+export interface IProject {
+  /** 数据集ID */
+  datasetId: string;
   /** 项目激活的资产ID */
   activeAssetsKeys: IActiveAssetsKeys;
-  /** 项目数据 */
-  data: {
-    transFunc?: string;
-    transData: GraphinData;
-    inputData: any[];
-  };
   /** 项目类型 */
-  type?: 'case' | 'project' | 'save';
+  type?: 'case' | 'project' | 'save' | 'template';
   id?: string;
   /** 项目名称 */
   name?: string;
@@ -27,9 +58,10 @@ export interface IProject {
   status?: number;
   tag?: string;
   gmtCreate?: any;
-  schemaData: GraphSchemaData;
   config?: GIConfig;
   themes?: any[];
+  /** 相关数据进入回收站的时间(时间戳)，有值代表该工作簿的数据处于回收站中，工作簿在过期(7天)之前仍可使用 */
+  recycleTime?: number;
 }
 
 export interface ICase extends IProject {

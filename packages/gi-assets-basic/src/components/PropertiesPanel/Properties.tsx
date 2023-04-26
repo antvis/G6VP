@@ -7,10 +7,11 @@ import Statistic from './Statistic';
 interface PropertiesProps {
   data: any;
   defaultiStatistic: boolean;
+  propertyInfos: { propertyName: string; ratio: number }[];
 }
 
 const Properties: React.FunctionComponent<PropertiesProps> = props => {
-  const { data, defaultiStatistic } = props;
+  const { data, defaultiStatistic, propertyInfos } = props;
   const [state, updateState] = useImmer({
     isStatistic: defaultiStatistic,
   });
@@ -30,7 +31,7 @@ const Properties: React.FunctionComponent<PropertiesProps> = props => {
           <Switch checked={state.isStatistic} onChange={onChange} />
         </div> */}
       </header>
-      {state.isStatistic ? <Statistic data={data} /> : <PropertiesDetail data={data} />}
+      {state.isStatistic ? <Statistic data={data} /> : <PropertiesDetail data={data} propertyInfos={propertyInfos} />}
     </div>
   );
 };

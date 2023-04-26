@@ -5,7 +5,7 @@ import request from 'umi-request';
 export const CypherQuery = {
   name: '图语句查询',
   service: async (params = {}) => {
-    const { value } = params as any;
+    const { value, limit } = params as any;
     const { TUGRAPH_USER_TOKEN, CURRENT_TUGRAPH_SUBGRAPH, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
     // const graphName = localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH') || 'default';
@@ -19,6 +19,7 @@ export const CypherQuery = {
       data: {
         value,
         graphName: CURRENT_TUGRAPH_SUBGRAPH,
+        limit,
       },
     });
     const { data, success, message } = response;
@@ -26,6 +27,16 @@ export const CypherQuery = {
       notification.error({
         message: '执行 Cypher 查询失败',
         description: `查询失败：${message}`,
+      });
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+    if (data.error_message) {
+      notification.error({
+        message: '引擎认证失败：请检查数据集',
+        description: data.error_message,
       });
       return {
         nodes: [],

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "1.1.1",
+  "version": "2.2.0",
   "description": "G6VP 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -27,12 +27,13 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@antv/algorithm": "^0.1.17",
+    "@antv/algorithm": "^0.1.26-beta.0",
     "@antv/g2plot": "^2.4.4",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/util": "^3.2.5",
+    "@uiw/react-markdown-preview": "^4.1.13",
     "ace-gremlin-editor": "^0.0.14",
     "codemirror": "^5.25.0",
     "copy-to-clipboard": "^3.3.2",
@@ -46,12 +47,15 @@
     "nanoid": "^4.0.0",
     "query-string": "^7.1.1",
     "react-force-graph-3d": "^1.21.10",
-    "react-spring": "^9.3.2",
+    "react-json-view": "^1.21.3",
+    "react-spring": "9.3.2",
+    "react-transition-group": "^4.4.5",
+    "react-draggable": "^4.4.5",
     "three": "^0.135.0",
     "use-immer": "^0.6.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

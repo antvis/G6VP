@@ -1,6 +1,5 @@
 import type { IGIAC } from '@antv/gi-sdk';
-import { extra } from '@antv/gi-sdk';
-import { GraphinContext } from '@antv/graphin';
+import { extra, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 const { GIAComponent } = extra;
 
@@ -13,7 +12,7 @@ export interface ClearCanvasProps {
 
 const Export: React.FunctionComponent<ClearCanvasProps> = props => {
   const { GIAC } = props;
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
 
   const onExport = () => {
     const { nodes, edges } = graph.save() as {

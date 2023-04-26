@@ -1,11 +1,10 @@
 import * as GremlinQueryServices from './GremlinQuery';
-import * as ThemeSetting from './ThemeSetting';
+import * as LanguageQueryService from './LanguageQueryService';
 import * as StyleSetting from './StyleSetting';
 import * as TemplateService from './TemplateService';
-import * as LanguageQueryService from './LanguageQueryService';
+import * as ThemeSetting from './ThemeSetting';
 export default {
   id: 'GI',
-  name: 'G6VP 官方数据服务',
   services: {
     ...GremlinQueryServices,
     ...ThemeSetting,

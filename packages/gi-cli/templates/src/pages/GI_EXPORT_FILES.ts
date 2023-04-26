@@ -129,6 +129,7 @@ export const GI_PROJECT_CONFIG = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -390,6 +391,12 @@ export const GI_PROJECT_CONFIG = {
         GI_INITIALIZER: true,
         aggregate: false,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',

@@ -4,6 +4,7 @@ const ENGINE_ID = Server.id;
 const update = (GI_PROJECT_CONFIG: GIConfig) => {
   GI_PROJECT_CONFIG.components.push({
     id: 'Counter',
+    type: 'AUTO',
     props: {},
   });
   GI_PROJECT_CONFIG.components.forEach(item => {

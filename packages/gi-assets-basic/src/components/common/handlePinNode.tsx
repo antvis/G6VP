@@ -34,6 +34,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
     // update style
     graph.updateItem(target, {
       pinned: true,
+      mass: dragNodeMass,
       style: {
         badges,
       },
@@ -51,6 +52,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
         ...position,
         pinned: true,
         forceMass: dragNodeMass,
+        mass: dragNodeMass,
         layout: {
           force: {
             ...model.force,
@@ -85,6 +87,7 @@ export const handleUnPinNode = (target, graph, restartForceSimulation, isForce) 
         ...model.layout,
         force: { mass: null },
       },
+      mass: 1,
       pinned: false,
       style: {
         badges,

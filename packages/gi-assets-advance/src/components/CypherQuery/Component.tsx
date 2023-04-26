@@ -1,7 +1,7 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import iconLoader from '@antv/graphin-icons';
-import { Button, Divider } from 'antd';
+import { Button } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
@@ -14,14 +14,16 @@ export interface CyperQueryProps {
   serviceId: string;
   saveCypherTemplateServceId?: string;
   isShowPublishButton?: boolean;
+  limit: number;
 }
 
 const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   serviceId,
   isShowPublishButton,
   saveCypherTemplateServceId = 'GI/PublishTemplate',
+  limit,
 }) => {
-  const { updateContext, transform, services } = useContext();
+  const { updateContext, transform, services, largeGraphLimit } = useContext();
   const service = utils.getService(services, serviceId);
 
   const [state, setState] = useImmer({
@@ -41,10 +43,24 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
     const resultData = await service({
       value: state.value,
+      limit,
     });
 
     updateContext(draft => {
       const res = transform(resultData);
+
+      if (res.nodes.length > largeGraphLimit) {
+        draft.largeGraphMode = true;
+        draft.largeGraphData = res;
+        draft.source = res;
+        draft.data = {
+          nodes: [],
+          edges: [],
+        };
+        draft.isLoading = false;
+        return;
+      }
+
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
@@ -65,10 +81,8 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
   return (
     <div className="cypher-query-container">
-      <h4>请输入 Cypher 语句进行查询</h4>
       <CyperEditor onValueChange={getCyperInputValue} />
-      <div style={{ textAlign: 'right' }}>
-        <Divider />
+      <div style={{ textAlign: 'right', padding: '12px 0px' }}>
         {isShowPublishButton && (
           <Button className="publishButton" disabled={!state.value} onClick={handleShowModal}>
             发布成模板

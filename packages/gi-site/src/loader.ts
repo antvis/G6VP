@@ -1,9 +1,4 @@
-import { IS_INDEXEDDB_MODE } from './services/const';
-
-import { getPackages, OFFICIAL_PACKAGES } from '../.umirc';
-
-// 业务包
-export const BIZ_PACKAGES = !IS_INDEXEDDB_MODE ? getPackages([]) : [];
+import OFFICIAL_PACKAGES from '../scripts/deps_assets.json';
 
 // setTimeout(() => {
 //   // !isDev && window.console.clear();
@@ -28,8 +23,7 @@ const DEFAULT_PACKAGES_MAP: Record<string, Package> = OFFICIAL_PACKAGES.reduce((
 }, {});
 export const setDefaultAssetPackages = () => {
   const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
-  console.log('packages', packages);
-  [...OFFICIAL_PACKAGES, ...BIZ_PACKAGES].forEach(pkg => {
+  [...OFFICIAL_PACKAGES].forEach(pkg => {
     const { global } = pkg;
     const curr = packages[global];
     const defs = DEFAULT_PACKAGES_MAP[global];

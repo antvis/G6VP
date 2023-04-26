@@ -11,6 +11,7 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/wzzgehef2k3nfm9c',
 };
 
 export default {

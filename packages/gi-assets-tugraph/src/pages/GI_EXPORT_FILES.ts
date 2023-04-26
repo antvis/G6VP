@@ -49,26 +49,21 @@ export const GI_PROJECT_CONFIG = {
     },
   ],
   layout: {
-    id: 'GraphinForce',
+    id: 'Force2',
     props: {
-      type: 'graphin-force',
-      animation: true,
+      type: 'force2',
+      animate: true,
       preset: {
-        type: 'concentric',
+        width: 800,
+        height: 800,
+        minNodeSpacing: 10,
+        nodeSize: 10,
       },
-      stiffness: 200,
-      repulsion: 1000,
-      damping: 0.9,
-      defSpringLenCfg: {
-        minLimitDegree: 5,
-        maxLimitLength: 500,
-        defaultSpring: 100,
-      },
-      centripetalOptions: {
-        leaf: 2,
-        single: 2,
-        others: 1,
-      },
+      clusterNodeStrength: 35,
+      minMovement: 10,
+      damping: 0.8,
+      maxSpeed: 1000,
+      distanceThresholdMode: 'max',
     },
   },
   components: [
@@ -168,6 +163,7 @@ export const GI_PROJECT_CONFIG = {
         offset: [0, 0],
         animate: true,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -409,6 +405,12 @@ export const GI_PROJECT_CONFIG = {
         schemaServiceId: 'TuGraph/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
       },
+    },
+    {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
     },
     {
       id: 'LayoutSwitch',

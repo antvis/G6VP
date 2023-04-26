@@ -1,6 +1,7 @@
 import { useContext } from '@antv/gi-sdk';
 import React from 'react';
 const Counter = props => {
+  console.log('tugraphcounter', useContext);
   const { graph, data } = useContext();
 
   const nodes = data.nodes.length;

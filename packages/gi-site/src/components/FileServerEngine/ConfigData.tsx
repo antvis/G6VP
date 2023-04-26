@@ -1,7 +1,6 @@
 import { EditableProTable } from '@ant-design/pro-table';
 import { utils } from '@antv/gi-sdk';
-import { GraphinData } from '@antv/graphin';
-import { Alert, Button, Form, notification, Radio, Row, Table } from 'antd';
+import { Alert, Button, Form, Input, notification, Radio, Row, Table } from 'antd';
 import React, { useState } from 'react';
 import { Updater } from 'use-immer';
 import { edgeColumns, nodeColumns, translist } from './const';
@@ -11,7 +10,7 @@ import { GIDefaultTrans } from './utils';
 interface IProps {
   state: IState;
   updateState: Updater<IState>;
-  giSiteContext: any;
+
   updateGISite: (params: any) => void;
 }
 
@@ -21,10 +20,11 @@ const columnsData = {
 };
 
 const ConfigData: React.FC<IProps> = props => {
-  const { state, updateState, updateGISite, giSiteContext } = props;
+  const { state, updateState, updateGISite } = props;
   const [tableType, setTableType] = useState<ITableType>('nodes');
   const [columns, setColumns] = useState<IColumns[]>(nodeColumns);
   const [form] = Form.useForm();
+  const [dataSource, setDataSource] = useState(translist);
 
   const onChange = value => {
     setTableType(value);
@@ -61,9 +61,10 @@ const ConfigData: React.FC<IProps> = props => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const { transData, inputData, transfunc } = state;
-    console.log('transData', transData);
+
+    const values = await form.validateFields();
 
     try {
       if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
@@ -73,11 +74,10 @@ const ConfigData: React.FC<IProps> = props => {
         throw 'edges缺少对应字段';
       }
 
-      const beforData = giSiteContext.data as GraphinData;
       const mergeData = {
-        nodes: [...beforData.nodes, ...transData.nodes],
-        edges: [...beforData.edges, ...transData.edges],
-        combos: [...(beforData.combos ? beforData.combos : []), ...(transData.combos ? transData.combos : [])],
+        nodes: [...transData.nodes],
+        edges: [...transData.edges],
+        combos: [...(transData.combos ? transData.combos : [])],
       };
 
       // 进入分析之前，根据数据，生成 schema
@@ -94,13 +94,14 @@ const ConfigData: React.FC<IProps> = props => {
 
       updateGISite({
         engineId: 'GI',
+        name: values.name,
         engineContext: {
           // data: mergeData,
           // schemaData,
         },
         data: {
           transData: mergeData,
-          inputData: [...giSiteContext.inputData, ...renderData],
+          inputData: [...renderData],
         },
         schemaData: schemaData,
       });
@@ -121,23 +122,18 @@ const ConfigData: React.FC<IProps> = props => {
 
   return (
     <div className="dataCheck-panel">
-      <Alert
-        message="请从数据中选择合适的字段：NodeID,Source,Target 为图数据结构的必填字段。NodeType,EdgeType 为可选字段，用于生成图的 Schema"
-        type="info"
-        showIcon
-        style={{ margin: '12px 0px' }}
-      />
+      <Alert message="请从下表中选择合适的字段，用于系统自动构图" type="info" showIcon style={{ margin: '12px 0px' }} />
       <EditableProTable
         columns={state.transColumns}
         rowKey="key"
         recordCreatorProps={false}
-        value={translist}
+        value={dataSource}
         editable={{
-          form,
           type: 'multiple',
           editableKeys: ['edit'],
           onValuesChange: (record, recordList) => {
-            transform(recordList);
+            transform(recordList.concat([]));
+            setDataSource(recordList);
           },
         }}
       />
@@ -148,7 +144,15 @@ const ConfigData: React.FC<IProps> = props => {
           <Radio.Button value="edges">Edge</Radio.Button>
         </Radio.Group>
       </div>
+
       <Table dataSource={state.tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
+      <div>
+        <Form layout="vertical" form={form}>
+          <Form.Item label="数据集名称" name="name" rules={[{ required: true, message: '请填写数据名称!' }]}>
+            <Input placeholder="请填写数据名称" />
+          </Form.Item>
+        </Form>
+      </div>
       <Row style={{ justifyContent: 'center' }}>
         <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
           上一步
@@ -159,7 +163,7 @@ const ConfigData: React.FC<IProps> = props => {
           // onClick={() => updateData(state.transData, state.inputData, state.transfunc)}
           onClick={handleSave}
         >
-          进入分析
+          创建数据集
         </Button>
       </Row>
     </div>

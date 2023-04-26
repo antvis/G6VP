@@ -6,7 +6,7 @@ import type { TypeAssetInfo } from './typing';
 const { getDefaultValues, getKeysByData } = utils;
 
 /**
- *
+ * 获取图布局资产
  * @param assets 服务端拿到的资产: Components
  * @param data 图数据
  * @returns
@@ -35,6 +35,10 @@ const getLayoutsByAssets = (assets: GILayoutAssets, data: GraphinData, schemaDat
         props: {
           ...info.options,
           ...defaultProps,
+          preset: {
+            ...(info.options.preset || {}),
+            ...(defaultProps.preset || {}),
+          },
         },
         meta: {
           ...configObj,

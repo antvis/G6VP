@@ -11,10 +11,13 @@ export interface ConnectProps {
   giSiteContext?: any;
   token: string | null;
 }
+
+const { protocol, hostname } = location;
+const DEFAULT_HTTP_SERVICE_URL = `${protocol}//${hostname}:7001`;
 const DEFAULT_VALUE = {
   username: '',
   password: '',
-  HTTP_SERVICE_URL: 'http://127.0.0.1:7001',
+  HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL, //'http://127.0.0.1:7001',
   engineServerURL: '',
   CURRENT_TUGRAPH_SUBGRAPH: 'MovieDemo1',
 };

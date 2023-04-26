@@ -4,8 +4,8 @@ import { Service } from 'egg';
 
 import gremlin from 'gremlin_patch';
 // @ts-ignore
-import fs from 'fs';
 import FormStream from 'formstream';
+import fs from 'fs';
 import { readGraphScopeConfig } from '../util';
 
 interface ConnectProps {
@@ -218,8 +218,8 @@ class GraphComputeService extends Service {
     const obj = {};
 
     // 节点
-    obj['id'] = `${id}`;
-    obj['label'] = label;
+    obj.id = `${id}`;
+    obj.label = label;
 
     if (properties) {
       const elementProp = {};
@@ -229,7 +229,7 @@ class GraphComputeService extends Service {
           elementProp[`${key}`] = currentProp[0].value;
         }
       }
-      obj['data'] = elementProp;
+      obj.data = elementProp;
     }
 
     return obj;
@@ -247,7 +247,7 @@ class GraphComputeService extends Service {
     const result = await clientInstance.submit(value);
 
     let mode = 'graph';
-    const propertyList: any[] = [];
+    const tableResult: any[] = [];
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -334,18 +334,11 @@ class GraphComputeService extends Service {
       } else {
         // 属性
         mode = 'table';
-        // count
-        if (typeof value === 'number') {
-          // 执行的是 count()
-          propertyList.push({
-            count: value,
-          });
-        } else if (typeof value === 'string') {
-          propertyList.push({
-            value,
-          });
+        if (typeof value === 'number' || typeof value === 'string') {
+          // e.g. count()
+          tableResult.push(value);
         } else {
-          // Properties
+          // e.g. valueMap()
           const entries = value.entries();
           const currentObj = {} as any;
           for (const current of entries) {
@@ -356,7 +349,7 @@ class GraphComputeService extends Service {
               currentObj[key] = v.join(',');
             }
           }
-          propertyList.push(currentObj);
+          tableResult.push(currentObj);
         }
       }
     }
@@ -408,7 +401,7 @@ class GraphComputeService extends Service {
         nodes: [],
         edges: [],
         mode,
-        propertyList,
+        tableResult,
       },
     };
   }
@@ -416,7 +409,7 @@ class GraphComputeService extends Service {
   async closeGraphInstance(params) {
     const { instanceId, graphName } = params;
 
-    //step1: unload graph data
+    // step1: unload graph data
     if (graphName) {
       const unloadDataResult = await this.unloadDataFromGraphScope(graphName);
       console.log('卸载数据', unloadDataResult);
@@ -428,7 +421,7 @@ class GraphComputeService extends Service {
       }
     }
 
-    //step2: close graphscope instance
+    // step2: close graphscope instance
     if (instanceId) {
       const closeResult = await this.closeGraphScopeInstance(instanceId);
       console.log('关闭实例', closeResult);
@@ -515,7 +508,7 @@ class GraphComputeService extends Service {
     } = params;
 
     // 根据不同算法类型，过滤不需要的参数
-    let algorithmParams = {
+    const algorithmParams = {
       name,
       limit,
       sortById,
@@ -524,24 +517,24 @@ class GraphComputeService extends Service {
       graph_name: graphName,
     };
     if (name === 'pagerank') {
-      algorithmParams['delta'] = delta;
+      algorithmParams.delta = delta;
     }
 
     if (name === 'pagerank' || name === 'lpa' || name === 'eigenvector_centrality') {
-      algorithmParams['max_round'] = maxRound;
+      algorithmParams.max_round = maxRound;
     }
 
     if (name === 'eigenvector_centrality') {
-      algorithmParams['tolerance'] = tolerance;
+      algorithmParams.tolerance = tolerance;
     }
 
     if (name === 'sssp') {
-      algorithmParams['weight'] = weight;
-      algorithmParams['src'] = src;
+      algorithmParams.weight = weight;
+      algorithmParams.src = src;
     }
 
     if (name === 'k_core') {
-      algorithmParams['k'] = k;
+      algorithmParams.k = k;
     }
 
     console.log('执行图算法参数', algorithmParams);

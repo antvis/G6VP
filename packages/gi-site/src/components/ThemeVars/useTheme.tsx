@@ -14,13 +14,19 @@ interface ThemeVars {
 const THEME_VARS = {
   light: {
     id: 'light',
-    name: '白天模式',
+    name: '清新蓝',
     textColor: '#000',
     backgroundColor: '#fff',
   },
+  ali: {
+    id: 'ali',
+    name: '暖阳橙',
+    textColor: '#fff',
+    backgroundColor: '#1f1f1f',
+  },
   dark: {
     id: 'dark',
-    name: '黑夜模式',
+    name: '暗夜黑',
     textColor: '#fff',
     backgroundColor: '#1f1f1f',
   },
@@ -69,42 +75,57 @@ const useTheme = (context, updateState) => {
   const { config, themes } = context;
 
   React.useEffect(() => {
-    const { config, themes, id: projectId } = context;
-    const themeValue = localStorage.getItem('@theme') || 'light';
+    (async () => {
+      const { config, themes, id: projectId } = context;
+      const themeValue = localStorage.getItem('@theme') || 'light';
 
-    if (!themes) {
-      //如果初始化阶段 Themes，则默认提供黑白两套主题的配置
-      const lightConfig = getConfigByTheme(config, 'light');
-      const darkConfig = getConfigByTheme(config, 'dark');
+      if (!themes) {
+        //如果初始化阶段 Themes，则默认提供黑白两套主题的配置
+        const lightConfig = getConfigByTheme(config, 'light');
+        const aliConfig = getConfigByTheme(config, 'ali');
+        const darkConfig = getConfigByTheme(config, 'dark');
 
-      //需要和「ThemeSetting」资产做联动
-      const lightTheme = {
-        canvasConfig: getCanvasStyle(lightConfig),
-        nodesConfig: lightConfig.nodes,
-        edgesConfig: lightConfig.edges,
-        name: '白天模式',
-        id: 'light',
-      };
-      const darkTheme = {
-        canvasConfig: getCanvasStyle(darkConfig),
-        nodesConfig: darkConfig.nodes,
-        edgesConfig: darkConfig.edges,
-        name: '黑夜模式',
-        id: 'dark',
-      };
+        //需要和「ThemeSetting」资产做联动
+        const lightTheme = {
+          canvasConfig: getCanvasStyle(lightConfig),
+          nodesConfig: lightConfig.nodes,
+          edgesConfig: lightConfig.edges,
+          name: '清新蓝',
+          id: 'light',
+        };
+        const aliTheme = {
+          canvasConfig: getCanvasStyle(aliConfig),
+          nodesConfig: lightConfig.nodes,
+          edgesConfig: lightConfig.edges,
+          name: '暖阳橙',
+          id: 'ali',
+        };
+        const darkTheme = {
+          canvasConfig: getCanvasStyle(darkConfig),
+          nodesConfig: darkConfig.nodes,
+          edgesConfig: darkConfig.edges,
+          name: '暗夜黑',
+          id: 'dark',
+        };
 
-      const defaultThemes = [lightTheme, darkTheme];
+        const defaultThemes = [lightTheme, aliTheme, darkTheme];
 
-      localforage.getItem(projectId).then(project => {
         //@ts-ignore
-        localforage.setItem(projectId, { ...project, themes: defaultThemes });
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(projectId);
+        if (!project) {
+          return;
+        }
+        GI_PROJECT_DB.setItem(projectId, { ...project, themes: defaultThemes });
         updateState(draft => {
           draft.themes = defaultThemes;
           draft.theme = themeValue;
-          draft.config = themeValue === 'light' ? lightConfig : darkConfig;
+          if (themeValue === 'light') draft.config = lightConfig;
+          else if (themeValue === 'ali') draft.config = aliConfig;
+          else draft.config = darkConfig;
         });
-      });
-    }
+      }
+    })();
   }, []);
   const changeTheme = themeValue => {
     const theme = themes.find(item => item.id === themeValue);

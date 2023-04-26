@@ -53,7 +53,7 @@ const ColumnChart: React.FC<ColumnChartProps> = props => {
     // 监听状态变化
     const handleHighlight = evt => {
       const { highlightElements = [] } = evt.data;
-      const ids = highlightElements.map(ele => ele.getData().id);
+      const ids = highlightElements && highlightElements.map(ele => ele.getData().id);
 
       highlight(ids);
     };

@@ -1,6 +1,6 @@
 import type { IGIAC } from '@antv/gi-sdk';
-import { extra } from '@antv/gi-sdk';
-import { GraphinContext } from '@antv/graphin';
+import { extra, useContext } from '@antv/gi-sdk';
+
 import * as React from 'react';
 const { GIAComponent } = extra;
 export interface IProps {
@@ -9,7 +9,7 @@ export interface IProps {
 
 const FitView: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
-  const { graph } = React.useContext(GraphinContext);
+  const { graph } = useContext();
   return <GIAComponent GIAC={GIAC} onClick={() => graph.fitView()} />;
 };
 

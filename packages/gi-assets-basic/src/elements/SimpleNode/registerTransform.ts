@@ -1,4 +1,4 @@
-import type { GINodeConfig } from '@antv/gi-sdk/lib/typing';
+import type { GINodeConfig } from '@antv/gi-sdk';
 import Graphin, { Utils } from '@antv/graphin';
 // 引入资源文件
 import iconLoader from '@antv/graphin-icons';
@@ -41,6 +41,7 @@ const getIconStyleByConfig = (style, data) => {
       return {
         fill: 'transparent',
         size: [keyshape.size, keyshape.size],
+        type: 'image',
         clip: { r: keyshape.size / 2 },
         value: value,
       };
@@ -81,13 +82,13 @@ const getBadgesStyleByConfig = (style, data) => {
     return [];
   }
 
-  const { visible, value } = badge;
+  const { visible, value, color } = badge;
 
   if (visible) {
     const size = Math.round(keyshape.size / 3);
     const fontSize = size / 2;
     badge.size = size;
-    badge.stroke = keyshape.stroke;
+    badge.stroke = color || keyshape.stroke;
 
     if (badge.type === 'mapping') {
       const b = {
@@ -109,7 +110,7 @@ const getBadgesStyleByConfig = (style, data) => {
     }
     if (badge.type === 'text') {
       badge.fill = '#fff';
-      badge.color = keyshape.fill;
+      badge.color = color || keyshape.fill;
       badge.value = value;
       badge.fontSize = fontSize;
     }
@@ -163,18 +164,18 @@ export const defaultConfig = {
     },
   },
   status: {
-    minZoom:{
+    minZoom: {
       label: {
-        opacity: 0
+        opacity: 0,
       },
       icon: {
-        opacity: 0
+        opacity: 0,
       },
       badges: {
-        opacity: 0
-      }
+        opacity: 0,
+      },
     },
-  }
+  },
 };
 export type NodeConfig = typeof defaultConfig;
 
@@ -183,7 +184,13 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 
-    const { color, size, label: LABEL_KEYS, advanced,status: userStatus } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
+    const {
+      color,
+      size,
+      label: LABEL_KEYS,
+      advanced,
+      status: userStatus,
+    } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
     let isBug = false;
     //@ts-ignore

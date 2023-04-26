@@ -26,6 +26,13 @@ const registerMeta = context => {
       },
       default: defaultValue,
     },
+    limit: {
+      title: '查询限制',
+      type: 'number',
+      'x-decorator': 'FormItem',
+      'x-component': 'NumberPicker',
+      default: 100,
+    },
     isShowPublishButton: {
       title: '发布成模板',
       type: 'string',

@@ -1,4 +1,5 @@
-import { G6, GraphinContext } from '@antv/graphin';
+import { useContext } from '@antv/gi-sdk';
+import { G6 } from '@antv/graphin';
 import * as React from 'react';
 
 export interface EdgeBunding {
@@ -8,7 +9,7 @@ export interface EdgeBunding {
 }
 
 const EdgeBunding: React.FunctionComponent<EdgeBunding> = props => {
-  const { apis, graph } = React.useContext(GraphinContext);
+  const { apis, graph } = useContext();
   const { handleZoomIn, handleZoomOut } = apis;
   React.useEffect(() => {
     const edgeBundling = new G6.Bundling({

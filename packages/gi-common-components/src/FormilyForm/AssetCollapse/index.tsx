@@ -4,6 +4,7 @@ import React from 'react';
 
 interface IAssetCollapseProps {
   defaultActiveKey;
+  children?: any;
 }
 
 const { Panel } = Collapse;

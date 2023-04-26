@@ -6,8 +6,8 @@ import * as Save from './Save';
 export default {
   id: 'GI',
   type: 'file',
-  name: 'Files',
-  desc: 'G6VP 提供的文件数据服务，数据存储在浏览器IndexDB，目前已经支持10个接口服务',
+  name: 'GraphJSON',
+  desc: 'G6VP 官方提供的本地文件导入服务，根据部署环境的不同，可以将数据存储在浏览器 IndexDB 或者 云端服务器中',
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*3YEZS6qSRgAAAAAAAAAAAAAAARQnAQ',
   services: {
     ...PropertiesPanel,

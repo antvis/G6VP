@@ -2,7 +2,6 @@ import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSche
 import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import type { TypeAssetInfo } from './typing';
-
 const { getDefaultValues } = utils;
 
 const getAllkeysBySchema = (schema, shapeType): string[] => {
@@ -46,9 +45,10 @@ const getComponentsByAssets = (
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
   const GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的内容组件
 
+  let hasPropertyGraph: boolean = false;
   Object.values(assets).forEach((item: any) => {
     const info = ((item && item.info) || {}) as TypeAssetInfo;
-    const { type } = info;
+    const { type, id } = info;
     if (type === 'GIAC') {
       GIAC_ITEMS.push({
         label: info.name,
@@ -66,6 +66,9 @@ const getComponentsByAssets = (
         label: info.name,
         value: info.id,
       });
+    }
+    if (id === 'PropertyGraphInitializer') {
+      hasPropertyGraph = true;
     }
   });
   const GI_CONTAINER_INDEXS = [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS];
@@ -100,19 +103,20 @@ const getComponentsByAssets = (
         GIAC_CONTENT_ITEMS,
         schemaData,
         engineId,
+        hasPropertyGraph,
       });
-      //@ts-ignore
-      const defaultProps = getDefaultValues({ type: 'object', properties: configObj });
+
+      const { id, name, category, type } = info;
 
       /** 默认的配置值 */
-
-      const { id, name, category } = info;
+      const defaultProps = getDefaultValues({ type: 'object', properties: configObj }, type);
 
       return {
         ...component,
         id,
         name,
         category,
+        type: type,
         //@ts-ignore
         props: defaultProps,
         meta: {

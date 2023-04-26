@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-graphscope",
-  "version": "1.0.2",
+  "version": "2.0.4",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -28,9 +28,10 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish  && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
-    "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
-    "@antv/graphin": "2.x",
+    "@antv/gi-sdk": "workspace:*",
+    "@antv/graphin": "^2.7.15",
+    "gremlin_patch": "^3.5.1",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",
     "use-immer": "^0.7.0"

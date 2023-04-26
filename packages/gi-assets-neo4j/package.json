@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-neo4j",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "Neo4j 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
     "use-immer": "^0.7.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
     "antd": "4.x",
     "react": "17.x"
   },

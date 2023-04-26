@@ -22,3 +22,7 @@ config/**/*.map
 GRAPHSCOPE_CONFIG.json
 TUGRAPH_CONFIG.json
 Neo4j_CONFIG.json
+HUGEGRAPH_CONFIG.json
+
+
+default.etcd

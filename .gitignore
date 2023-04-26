@@ -51,10 +51,6 @@ packages/gi-common-components/dist
  
 build
 
-# lock
-package-lock.json
-
-
 # yarn-lock
 yarn.lock
 
@@ -66,8 +62,22 @@ yarn.lock
 
 dist
 
+default.etcd
 
 
 # ignore *.d.ts
 packages/gi-site/**/*.d.ts
 packages/gi-httpservice/**/*.d.ts
+
+# https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#pnpm
+# pnpm-lock.yaml 
+
+## ignore offline assets
+packages/gi-site/public/libs/@antv/*.min.js
+packages/gi-site/public/libs/@antv/*.css
+packages/gi-site/public/libs/*.js
+packages/gi-site/public/libs/*.css
+packages/gi-site/src/env.ts
+packages/gi-site/scripts/*.json
+
+.turbo

@@ -1,0 +1,58 @@
+ul.gi-radio-note {
+  display: block;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+
+  & > li {
+    list-style: none;
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    margin-right: 12px;
+    color: var(--text-color);
+    transition: all 0.3 ease;
+
+    &.active {
+      background: var(--primary-color-opacity-1);
+      color: var(--primary-color);
+      cursor: pointer;
+      border-radius: 6px;
+      &:hover {
+        background: var(--primary-color-opacity-1);
+      }
+    }
+    &:hover {
+      background: var(--primary-color-opacity-1);
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .icon {
+      text-align: center;
+      font-size: 36px;
+    }
+    .name {
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+  @media screen and (max-width: 1530px) {
+    & > li {
+      height: 60px;
+      width: 60px;
+      .icon {
+        font-size: 24px;
+      }
+    }
+  }
+  @media screen and (max-width: 1250px) {
+    & > li {
+      height: 80px;
+      width: 80px;
+      .icon {
+        font-size: 36px;
+      }
+    }
+  }
+}

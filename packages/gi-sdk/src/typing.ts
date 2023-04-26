@@ -1,5 +1,5 @@
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-import type { GraphSchemaData } from './process/schema';
+import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
 export interface State {
   /** graphin */
@@ -12,10 +12,12 @@ export interface State {
 
   /** graphinsight */
 
-  /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射*/
+  /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射 */
   rawData: GraphinData;
-  /** 当前画布渲染的数据，经过视觉映射*/
+  /** 当前画布渲染的数据，经过视觉映射 */
   data: GraphinData;
+  /** 由 data 生成的属性图数据 */
+  propertyGraphData: IGraphData | undefined;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
   source: GraphinData;
   /** 大图数据 */
@@ -40,6 +42,10 @@ export interface State {
       GI_INITIALIZER: boolean;
       serviceId: 'GI_SERVICE_INTIAL_GRAPH' | string;
     };
+  };
+  GICC_LAYOUT: {
+    id: string;
+    props: any;
   };
   /** 画布的配置,等同props.config */
   config: GIConfig;
@@ -83,8 +89,10 @@ export interface Props {
 }
 
 export type AssetType =
-  | 'AUTO' // 自加载组件
-  | 'GICC' // 容器组件
+  | 'AUTO' // 自加载组件 initializer
+  | 'INITIALIZER' // 初始化组件
+  | 'GICC' // 容器组件，可以多选
+  | 'GICC_LAYOUT' // 布局容器组件,只能单选
   | 'GICC_MENU' // 容器组件（菜单）
   | 'GIAC' // 原子组件
   | 'GIAC_CONTENT' //原子组件（内容）
@@ -126,6 +134,7 @@ export interface ComponentAsset {
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
     engineId: string;
+    hasPropertyGraph?: boolean;
   }) => any;
   mockServices?: () => any[];
   info: {
@@ -239,6 +248,8 @@ export interface GIMeta {
 export interface GIComponentConfig {
   id: string;
   name?: string;
+  // 资产类型
+  type: AssetType;
   props: {
     GI_CONTAINER?: string[];
     GI_CONTAINER_INDEX?: number;
@@ -291,6 +302,7 @@ export interface GIConfig {
   /** 支持多元素组合 */
   nodes: GINodeConfig[];
   edges: GIEdgeConfig[];
+  pageLayout: GIComponentConfig;
 }
 
 interface GINodeData {
@@ -400,4 +412,6 @@ export type GISiteParams = Partial<{
     components: GIComponentConfig[];
     layout?: GILayoutConfig;
   };
+  /** 数据集名称 */
+  name: string;
 }>;

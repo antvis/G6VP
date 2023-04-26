@@ -45,7 +45,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
     }
     return defaultVisibleValue === 'true' ? true : false;
   });
- 
+
   const sortedComponents = React.useMemo(() => {
     return (
       components
@@ -71,6 +71,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
       const { component: Component } = asset;
       return (
         <TabPane key={index} tab={<WrapTab {...itemProps} />}>
+          {/* @ts-ignore */}
           <Component {...itemProps} />
         </TabPane>
       );
@@ -79,7 +80,7 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
 
   const toggleVisible = () => {
     setVisible(preState => {
-      localStorage.setItem(defaultVisibleKey, String(!preState))
+      localStorage.setItem(defaultVisibleKey, String(!preState));
       return !preState;
     });
   };
@@ -91,7 +92,16 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   );
 
   const Content = (
-    <div className="gi-side-tabs">
+    <div
+      className="gi-side-tabs"
+      style={{
+        // LB 左，RT 右，LT 上，RB 下
+        borderRight: placement === 'LB' ? '1px solid var(--border-color)' : 'unset',
+        borderLeft: placement === 'RT' ? '1px solid var(--border-color)' : 'unset',
+        borderBottom: placement === 'LT' ? '1px solid var(--border-color)' : 'unset',
+        borderTop: placement === 'RB' ? '1px solid var(--border-color)' : 'unset',
+      }}
+    >
       <Tabs tabPosition={tabPosition} tabBarExtraContent={outSideFromCanvas ? tabBarExtraContent : null}>
         {panes}
       </Tabs>

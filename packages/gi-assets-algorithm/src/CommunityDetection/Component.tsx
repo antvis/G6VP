@@ -206,7 +206,11 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           const coreNodeIds = coreData.nodes.map(node => node.id);
           const coreEdgeIds = coreData.edges.map(edge => edge.id);
           const nodes = initData?.nodes.filter(node => coreNodeIds.includes(node.id));
-          const edges = initData?.edges.filter(edge => coreEdgeIds.includes(edge.data?.id)) || [];
+          const edges =
+            initData?.edges.filter(edge => {
+              const id = edge.data?.id || edge.id;
+              return coreEdgeIds.includes(id);
+            }) || [];
           let scaleData = { nodes, edges };
           // 如果相隔较远，x、y等比缩放
           if (nodes.length !== initData?.nodes?.length) {

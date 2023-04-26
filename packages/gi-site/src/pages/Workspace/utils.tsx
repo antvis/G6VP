@@ -226,6 +226,7 @@ const baseComponentsConfig = [
       histogramColor: '#3056E3',
       isFilterIsolatedNodes: true,
       highlightMode: true,
+      filterKeys: [],
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
@@ -418,6 +419,12 @@ const baseComponentsConfig = [
     },
   },
   {
+    id: 'PropertyGraphInitializer',
+    type: 'AUTO',
+    name: '属性图计算',
+    props: {},
+  },
+  {
     id: 'LayoutSwitch',
     name: '布局切换',
     props: {
@@ -443,15 +450,26 @@ const baseComponentsConfig = [
     id: 'GrailLayout',
     name: '圣杯布局',
     props: {
-      GI_CONTAINER_LEFT: [],
-      leftDisplay: false,
-      leftWidth: '400px',
-      GI_CONTAINER_RIGHT: ['FilterPanel', 'Overview'],
-      rightDisplay: true,
-      rightWidth: '350px',
-      GI_CONTAINER_BOTTOM: [],
-      bottomDisplay: false,
-      bottomHeight: '400px',
+      containers: [
+        {
+          id: 'GI_CONTAINER_LEFT',
+          GI_CONTAINER: [],
+          display: false,
+          width: '400px',
+        },
+        {
+          id: 'GI_CONTAINER_RIGHT',
+          GI_CONTAINER: [],
+          display: true,
+          width: '350px',
+        },
+        {
+          id: 'GI_CONTAINER_BOTTOM',
+          GI_CONTAINER: [],
+          display: false,
+          height: '400px',
+        },
+      ],
     },
   },
   {
@@ -529,9 +547,9 @@ const baseComponentsConfig = [
   },
 ];
 const baseLayoutConfig = {
-  id: 'GraphinForce',
+  id: 'Force2',
   props: {
-    type: 'graphin-force',
+    type: 'force2',
     preset: {
       type: 'concentric',
     },
@@ -548,7 +566,119 @@ export const baseConfig = {
 export const activeAssetsKeys = {
   elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
   components: [...baseComponentsConfig.map(c => c.id)],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
+};
+
+const Cypher_Template = [
+  {
+    id: 'CypherQuery',
+    name: 'Cypher 语句查询',
+    props: {
+      serviceId: 'GI/CypherQuery',
+      isShowPublishButton: false,
+      saveCypherTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'MATCH n RETURN LIMIT 100',
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Cypher 语句查询',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
+const Gremlin_Template = [
+  {
+    id: 'GremlinQuery',
+    name: 'Gremlin 查询',
+    props: {
+      serviceId: 'GraphScope/GremlinQuery',
+      isShowPublishButton: false,
+      saveTemplateServceId: 'GI/PublishTemplate',
+      initialValue: 'g.V().limit(10)',
+      height: 200,
+      GI_CONTAINER_INDEX: 2,
+      GIAC_CONTENT: {
+        visible: false,
+        disabled: false,
+        isShowTitle: true,
+        title: 'Gremlin',
+        isShowIcon: true,
+        icon: 'icon-query',
+        isShowTooltip: true,
+        tooltip: '',
+        tooltipColor: '#3056e3',
+        tooltipPlacement: 'right',
+        hasDivider: false,
+        height: '60px',
+        isVertical: true,
+        containerType: 'div',
+        containerAnimate: false,
+        containerPlacement: 'RT',
+        offset: [0, 0],
+        containerWidth: '350px',
+        containerHeight: 'calc(100% - 100px)',
+        contaienrMask: false,
+      },
+    },
+  },
+];
+
+export const getConfigByEngineId = engineId => {
+  let componentConfig = [...baseComponentsConfig];
+  if (engineId === 'TuGraph' || engineId === 'Neo4j') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Cypher_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
+        rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
+      }
+    });
+  }
+  if (engineId === 'GraphScope' || engineId === 'GeaFlow') {
+    //@ts-ignore
+    componentConfig = [...componentConfig, ...Gremlin_Template];
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
+        rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
+      }
+    });
+  }
+  const config = {
+    nodes: baseNodesConfig,
+    edges: baseEdgesConfig,
+    layout: baseLayoutConfig,
+    components: componentConfig,
+  };
+  const activeAssetsKeys = {
+    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
+    components: [...config.components.map(c => c.id)],
+    layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
+  };
+  return {
+    config,
+    activeAssetsKeys,
+  };
 };
 
 export const serviceConfig = [];

@@ -1,4 +1,4 @@
-import { createFromIconfontCN } from '@ant-design/icons';
+import { Icon } from '@antv/gi-common-components';
 import { Button, Divider, Tooltip } from 'antd';
 import React from 'react';
 import { GIAC_PROPS, IGIAC } from './const';
@@ -19,11 +19,11 @@ const WrapTooltip = props => {
 export interface GIAComponentProps {
   GIAC: IGIAC;
   onClick?: () => void;
-  iconFontUrl?: string;
+
   className?: string;
 }
 const GIAComponent = (props: GIAComponentProps) => {
-  const { GIAC, onClick, iconFontUrl = '/public/libs/font.js', className, ...others } = props;
+  const { GIAC, onClick, className, ...others } = props;
   const {
     tooltip,
     tooltipPlacement,
@@ -38,12 +38,6 @@ const GIAComponent = (props: GIAComponentProps) => {
     disabled,
     isShowTooltip,
   } = GIAC || GIAC_PROPS.GIAC;
-
-  const MyIcon = React.useMemo(() => {
-    return createFromIconfontCN({
-      scriptUrl: iconFontUrl, // 在 iconfont.cn 上生成
-    });
-  }, [iconFontUrl]);
 
   return (
     <div {...others}>
@@ -61,7 +55,7 @@ const GIAComponent = (props: GIAComponentProps) => {
           onClick={onClick}
           className={className}
         >
-          {isShowIcon && <MyIcon type={icon} />}
+          {isShowIcon && <Icon type={icon} />}
           {isVertical && <br />}
           {isShowTitle && title}
         </Button>

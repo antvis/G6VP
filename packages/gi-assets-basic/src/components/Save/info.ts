@@ -8,5 +8,6 @@ const info = {
   category: 'workbook',
   type: 'GIAC_CONTENT',
   services: [ASSET_ID],
+  docs: 'https://www.yuque.com/antv/gi/kaz51vpwg3oa0i0b',
 };
 export default info;

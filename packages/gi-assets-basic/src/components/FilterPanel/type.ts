@@ -7,7 +7,11 @@ export interface HistogramOpt {
 }
 
 export interface IFilterCriteria {
-  id?: string;
+  id: string;
+  // 是否是智能推荐的
+  isRecommend?: boolean;
+  // 是否带有异常值，与智能推荐相关
+  hasOutlier?: boolean;
   // 筛选属性值
   prop?: string;
   elementType?: 'node' | 'edge';
@@ -28,6 +32,8 @@ export interface IFilterCriteria {
 interface IOption {
   value: string | boolean;
   label: string;
+  rank?: number;
+  isOutlier?: boolean;
 }
 
 export interface IChartData {

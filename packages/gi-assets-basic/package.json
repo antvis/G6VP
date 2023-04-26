@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-basic",
-  "version": "1.4.2",
+  "version": "2.2.0",
   "description": "G6VP 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -32,24 +32,26 @@
     "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
   },
   "dependencies": {
+    "@ant-design/icons": "latest",
+    "@antv/algorithm": "^0.1.26-beta.0",
+    "@antv/g2plot": "^2.4.20",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
-    "@ant-design/icons": "latest",
-    "@antv/g2plot": "^2.4.20",
     "@antv/graphin-icons": "^1.0.0",
     "@antv/util": "^3.2.5",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
     "immer": "^9.0.15",
     "json2csv": "^5.0.7",
+    "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "use-immer": "^0.7.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.15",
+    "antd": "4.x",
     "react": "17.x",
-    "react-dom": "17.x",
-    "antd": "4.x"
+    "react-dom": "17.x"
   },
   "publishConfig": {
     "access": "public"

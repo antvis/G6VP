@@ -1,6 +1,6 @@
 import type { IGIAC } from '@antv/gi-sdk';
-import { extra } from '@antv/gi-sdk';
-import { GraphinContext } from '@antv/graphin';
+import { extra, useContext } from '@antv/gi-sdk';
+
 import * as React from 'react';
 const { GIAComponent } = extra;
 export interface IProps {
@@ -9,7 +9,7 @@ export interface IProps {
 
 const ZoomOut: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
-  const { apis } = React.useContext(GraphinContext);
+  const { apis } = useContext();
   return <GIAComponent GIAC={GIAC} onClick={() => apis.handleZoomIn()} />;
 };
 

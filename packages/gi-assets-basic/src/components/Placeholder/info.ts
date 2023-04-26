@@ -6,5 +6,6 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/rcurl13mcgszu6g4',
 };
 export default info;

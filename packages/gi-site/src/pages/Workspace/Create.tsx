@@ -2,7 +2,7 @@ import { EditableProTable } from '@ant-design/pro-table';
 import { Alert, Button, Form, Input, Modal, Radio, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { addProject } from '../../services';
+import * as ProjectServices from '../../services/project';
 
 import './index.less';
 import Recover from './Recover';
@@ -115,7 +115,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     console.log(value, dataSource);
 
     const transData = getMockData();
-    const projectId = await addProject({
+    const projectId = await ProjectServices.create({
       name: value.title,
       status: 1, // 1 正常项目， 0 删除项目
       tag: value.tag,
@@ -134,6 +134,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
     return projectId;
   };
+
   const handleRecover = async params => {
     const {
       GI_ASSETS_PACKAGES,
@@ -162,7 +163,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
     try {
       const PRE_GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
       localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify({ ...PRE_GI_ASSETS_PACKAGES, ...GI_ASSETS_PACKAGES }));
-      history.push(`/workspace/${projectId}?nav=data`);
+      history.push(`/workspace/${projectId}`);
     } catch (error) {
       console.log('error', error);
     }
@@ -170,7 +171,7 @@ const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
 
   const goAnalysis = async () => {
     const projectId = await onFinish();
-    history.push(`/workspace/${projectId}?nav=data`);
+    history.push(`/workspace/${projectId}`);
   };
 
   const goWorkspace = async () => {

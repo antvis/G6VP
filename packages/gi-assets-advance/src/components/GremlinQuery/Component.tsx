@@ -1,10 +1,8 @@
-import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
-import { Button, Divider, notification } from 'antd';
+import GremlinEditor from 'ace-gremlin-editor';
+import { Button, notification, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
-import PublishTemplate from '../PublishTemplate';
-import GremlinEditor from 'ace-gremlin-editor';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -81,68 +79,48 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       draft.isLoading = false;
     });
   };
-  const toggleFullScreen = () => {
-    setState(draft => {
-      draft.isFullScreen = !state.isFullScreen;
-    });
-  };
-
-  const handleShowModal = () => {
-    setState(draft => {
-      draft.modalVisible = true;
-    });
-  };
 
   useEffect(() => {
     setBtnLoading(false);
   }, [visible]);
 
-  const containerStyle: React.CSSProperties = isFullScreen
-    ? {
-        position: 'fixed',
-        left: '0px',
-        right: '0px',
-        top: '0px',
-        zIndex: 9999,
-      }
-    : {};
+  useEffect(() => {
+    console.log('editorValue..........', editorValue);
+    setEditorValue(editorValue);
+  }, []);
 
   return (
-    <div className={'gremlineQueryPanel'} style={{ ...style, ...containerStyle }}>
-      <div style={{ height: '32px', lineHeight: '32px' }}>
-        请输入 Gremlin 语句进行查询
-        <Button
-          style={{ float: 'right' }}
-          type="text"
-          onClick={toggleFullScreen}
-          icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-        ></Button>
+    <div className="gi-gremlin-query " style={{ ...style }}>
+      <div style={{ border: '1px solid #f6f6f6' }}>
+        <GremlinEditor
+          initialValue={editorValue}
+          height={height}
+          gremlinId="gi-assets-gremlin"
+          onValueChange={value => handleChangeEditorValue(value)}
+        />
       </div>
-      <div className={'contentContainer'}>
-        <div className={'blockContainer'}>
-          <div style={{ border: '1px solid #bfbfbf', borderRadius: '2px' }}>
-            <GremlinEditor
-              initialValue={editorValue}
-              height={height}
-              gremlinId="gi-assets-gremlin"
-              onValueChange={value => handleChangeEditorValue(value)}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={'buttonContainer'}>
-        <Divider />
-        {isShowPublishButton && (
-          <Button className={'publishButton'} disabled={!editorValue} onClick={handleShowModal}>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'end',
+          padding: '8px 8px',
+        }}
+      >
+        <Space>
+          {/* {isShowPublishButton && ( */}
+
+          <Button className={'publishButton'} disabled>
             发布成模板
           </Button>
-        )}
 
-        <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
-          执行查询
-        </Button>
+          {/* )} */}
+          <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
+            执行查询
+          </Button>
+        </Space>
       </div>
-      {state.modalVisible && (
+      {/* {state.modalVisible && (
         <PublishTemplate
           saveTemplateServceId={saveTemplateServceId}
           visible={state.modalVisible}
@@ -154,7 +132,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           }}
           fileType={'GREMLIN'}
         />
-      )}
+      )} */}
     </div>
   );
 };

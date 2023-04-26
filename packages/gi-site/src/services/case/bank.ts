@@ -665,7 +665,7 @@ const activeAssetsKeys = {
     'SankeyAnalysis',
     'ChartAnalysis',
   ],
-  layouts: ['GraphinForce', 'Concentric', 'Dagre', 'FundForce'],
+  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 
 const projectConfig = {
@@ -999,6 +999,7 @@ const projectConfig = {
         offset: [10, 10],
         animate: false,
         defaultiStatistic: false,
+        enableInfoDetect: true,
       },
     },
     {
@@ -1262,6 +1263,12 @@ const projectConfig = {
       },
     },
     {
+      id: 'PropertyGraphInitializer',
+      type: 'AUTO',
+      name: '属性图计算',
+      props: {},
+    },
+    {
       id: 'LayoutSwitch',
       name: '布局切换',
       props: {
@@ -1470,7 +1477,7 @@ const project: ICase = {
   author: '山果',
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
-  coverImg: '/public/image/bank.demo.png',
+  coverImg: `${window['GI_PUBLIC_PATH']}image/bank.demo.png`,
 };
 
 export default project;

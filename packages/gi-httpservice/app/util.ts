@@ -21,6 +21,19 @@ interface ICypherResponse {
   size: number;
 }
 
+export const wrapperResult = (ctx, success, result) => {
+  if (success) {
+    ctx.status = 200;
+  } else {
+    ctx.status = 500;
+  }
+
+  ctx.body = {
+    success: success,
+    data: result,
+  };
+};
+
 export const getNodeIdsByResponseBak = (
   params: ICypherResponse,
 ): { nodeIds: Array<number>; edgeIds: Array<string> } => {
@@ -99,7 +112,6 @@ export const getNodeIdsByResponseBak = (
 export const getNodeIdsByResponse = (params: any): { nodeIds: Array<number>; edgeIds: Array<string> } => {
   const nodeIds: Array<number> = [];
   const edgeIds: Array<string> = [];
-  console.log('getNodeIdsByResponse', params.data);
   const result = params.data.result;
   const headers = params.data.header;
   const edgeIndexList: Array<number> = [];
@@ -161,5 +173,13 @@ export const readTuGraphConfig = () => {
  */
 export const readNeo4jConfig = () => {
   const data = fs.readFileSync(`${__dirname}/service/Neo4j_CONFIG.json`);
+  return JSON.parse(data.toString());
+};
+
+/**
+ * 读取 HugeGraph 配置文件
+ */
+export const readHugeGraphConfig = () => {
+  const data = fs.readFileSync(`${__dirname}/service/HUGEGRAPH_CONFIG.json`);
   return JSON.parse(data.toString());
 };
