@@ -14,13 +14,13 @@ const Templates: React.FunctionComponent<TemplatesProps> = props => {
           key: 'my',
           icon: <BarsOutlined />,
           label: '我的模版',
-          children: <></>,
+          children: <List type="my" />,
         },
         {
           key: 'graph',
           icon: <DeploymentUnitOutlined />,
           label: '关系图模版',
-          children: <List />,
+          children: <List type="graph" />,
         },
         {
           key: 'geo',

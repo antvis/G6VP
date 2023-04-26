@@ -12,18 +12,20 @@ import { request } from './utils';
  * 获取所有项目
  * @returns
  */
-export const list = async (): Promise<ITemplate[]> => {
+export const list = async (type: 'my' | 'graph'): Promise<ITemplate[]> => {
   if (GI_SITE.IS_OFFLINE) {
-    const tempaltes = [TEMPLATE_SIMPLE, TEMPLATE_QUERY];
-    for (const item of tempaltes) {
-      await GI_TEMPLATE_DB.setItem(item.id, item);
+    if (type === 'graph') {
+      //@ts-ignore
+      return [TEMPLATE_SIMPLE, TEMPLATE_QUERY];
+    } else {
+      const res: ITemplate[] = [];
+      await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
+        res.push(item);
+      });
+      console.log('RES', res);
+
+      return res;
     }
-    const res: ITemplate[] = [];
-    await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
-      res.push(item);
-    });
-    console.log('RES', res);
-    return res;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/template/list`, {
