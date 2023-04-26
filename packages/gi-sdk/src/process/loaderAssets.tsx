@@ -115,10 +115,12 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services } = curr;
+      const { components, version, name, elements, layouts, services, templates } = curr;
+
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
+      const temps = appendInfo(templates, version, name);
 
       return {
         components: {
@@ -132,6 +134,10 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
         layouts: {
           ...acc.layouts,
           ...lays,
+        },
+        templates: {
+          ...acc.templates,
+          ...temps,
         },
         services: services
           ? [
@@ -149,6 +155,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
       components: {},
       elements: {},
       layouts: {},
+      templates: {},
       services: [],
     },
   );

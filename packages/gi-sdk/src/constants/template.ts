@@ -1,6 +1,44 @@
-import { baseEdgesConfig, baseLayoutConfig, baseNodesConfig } from './default.template';
+import { GIConfig } from '../typing';
+export const nodes: GIConfig['nodes'] = [
+  {
+    id: 'SimpleNode',
+    name: '官方节点',
+    expressions: [],
+    groupName: '默认样式',
+    logic: true,
+    props: {
+      size: 26,
+      color: '#ddd',
+      label: [],
+    },
+  },
+];
 
-const simpleComponents = [
+export const edges: GIConfig['edges'] = [
+  {
+    id: 'SimpleEdge',
+    name: '官方边',
+    expressions: [],
+    groupName: '默认样式',
+    logic: true,
+    props: {
+      size: 1,
+      color: '#ddd',
+      label: ['source', 'target'],
+    },
+  },
+];
+export const layout = {
+  id: 'Force2',
+  props: {
+    type: 'force2',
+    preset: {
+      type: 'concentric',
+    },
+  },
+};
+
+export const components = [
   {
     id: 'ZoomIn',
     props: {
@@ -165,7 +203,6 @@ const simpleComponents = [
       width: 380,
     },
   },
-
   {
     id: 'FilterPanel',
     name: '筛选面板',
@@ -257,32 +294,7 @@ const simpleComponents = [
       },
     },
   },
-  {
-    id: 'SnapshotGallery',
-    name: '快照画廊',
-    props: {
-      background: '#fff',
-      direction: 'horizontal',
-      placement: 'LT',
-      offset: [20, 20],
-      GI_CONTAINER_INDEX: 2,
-      GIAC: {
-        visible: false,
-        disabled: false,
-        isShowTitle: false,
-        title: '快照画廊',
-        isShowIcon: true,
-        icon: 'icon-camera',
-        isShowTooltip: true,
-        tooltip: '快照画廊(快捷键ctrl+x)',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'right',
-        hasDivider: false,
-        height: '46px',
-        isVertical: true,
-      },
-    },
-  },
+
   {
     id: 'ContextMenu',
     name: '右键菜单',
@@ -393,66 +405,6 @@ const simpleComponents = [
       },
     },
   },
-  // {
-  //   id: 'UadLayout',
-  //   name: '上下布局',
-  //   props: {
-  //     containers: [
-  //       {
-  //         id: 'GI_CONTAINER_TOP',
-  //         GI_CONTAINER: ['GremlinQuery'],
-  //         height: 251,
-  //         padding: '0px 0px',
-  //       },
-  //       {
-  //         id: 'GI_CONTAINER_SIDE',
-  //         GI_CONTAINER: ['JSONMode'],
-  //         tabPosition: 'right',
-  //       },
-  //     ],
-  //   },
-  // },
-  {
-    id: 'SegmentedLayout',
-    name: '分段布局',
-    props: {
-      containers: [
-        {
-          id: 'GI_CONTAINER_SIDE',
-          name: '侧边容器',
-          required: true,
-          GI_CONTAINER: ['FilterPanel'],
-          display: true,
-        },
-      ],
-    },
-  },
-  // {
-  //   id: 'GrailLayout',
-  //   name: '圣杯布局',
-  //   props: {
-  //     containers: [
-  //       {
-  //         id: 'GI_CONTAINER_LEFT',
-  //         GI_CONTAINER: [],
-  //         display: false,
-  //         width: '400px',
-  //       },
-  //       {
-  //         id: 'GI_CONTAINER_RIGHT',
-  //         GI_CONTAINER: [],
-  //         display: true,
-  //         width: '350px',
-  //       },
-  //       {
-  //         id: 'GI_CONTAINER_BOTTOM',
-  //         GI_CONTAINER: [],
-  //         display: false,
-  //         height: '400px',
-  //       },
-  //     ],
-  //   },
-  // },
   {
     id: 'Toolbar',
     name: '工具栏',
@@ -495,74 +447,11 @@ const simpleComponents = [
       },
     },
   },
-  {
-    id: 'Overview',
-    name: '大图概览',
-    props: {
-      limit: 600,
-      filterLogic: 'and',
-      GI_CONTAINER_INDEX: 2,
-      GIAC_CONTENT: {
-        visible: false,
-        disabled: false,
-        isShowTitle: true,
-        title: '大图概览',
-        isShowIcon: true,
-        icon: 'icon-dashboard',
-        isShowTooltip: true,
-        tooltip: '',
-        tooltipColor: '#3056e3',
-        tooltipPlacement: 'right',
-        hasDivider: false,
-        height: '46px',
-        isVertical: true,
-        containerType: 'div',
-        containerAnimate: false,
-        containerPlacement: 'RT',
-        offset: [0, 0],
-        containerWidth: '400px',
-        containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
-      },
-    },
-  },
 ];
 
-export const baseConfig = {
-  nodes: baseNodesConfig,
-  edges: baseEdgesConfig,
-  layout: baseLayoutConfig,
-  components: simpleComponents,
-};
-
-export const activeAssetsKeys = {
-  elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
-  components: [...simpleComponents.map(c => c.id)],
-  layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
-};
-
-const container = {
-  id: 'SegmentedLayout',
-  name: '分段布局',
-  props: {
-    containers: [
-      {
-        id: 'GI_CONTAINER_SIDE',
-        name: '侧边容器',
-        required: true,
-        GI_CONTAINER: ['FilterPanel'],
-        display: true,
-      },
-    ],
-  },
-};
-
-export const TEMPLATE_SIMPLE = {
-  name: '极简模版',
-  id: 'TP_SIMPLE',
-  desc: `该模版是官方提供的极简模版，包含 ${activeAssetsKeys.components.length} 个分析资产，提供常见的「交互分析」「筛选看数」等功能，页面布局上，画布展示空间较大，提供沉浸式分析体验`,
-  image: `${window['GI_PUBLIC_PATH']}image/tp_simple.png`,
-  container,
-  activeAssetsKeys,
-  ...baseConfig,
+export default {
+  nodes,
+  edges,
+  layout,
+  components,
 };
