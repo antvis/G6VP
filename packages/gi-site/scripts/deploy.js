@@ -2,7 +2,7 @@ var ghpages = require('gh-pages');
 const fs = require('fs');
 const path = require('path');
 
-const siteUrl = 'graphinsight.antv.vision';
+const siteUrl = 'insight.antv.vision';
 /** 修改CNAME  */
 fs.writeFile(path.resolve(__dirname, '../dist', 'CNAME'), siteUrl, err => {
   if (err) {
@@ -20,6 +20,6 @@ ghpages.publish(
     message: 'Auto-generated commit',
   },
   error => {
-    console.log('success', error);
+    console.log('deploy success', error);
   },
 );
