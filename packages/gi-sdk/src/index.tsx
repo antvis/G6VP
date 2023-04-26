@@ -1,5 +1,5 @@
 /** export  */
-const version = '2.0.2';
+const version = '2.2.1';
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 import {
   deepClone,

@@ -12,12 +12,11 @@ import GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph/package.json' assert 
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
 
-import * as antd from 'antd';
 import path from 'path';
-export const G6_VERSION = '4.8.8';
+export const G6_VERSION = '4.8.10';
 export const GRAPHIN_VERSION = '2.7.15';
 export const G2PLOT_VERSION = '2.4.16';
-export const ANTD_VERSION = antd.version; //4.24.3
+export const ANTD_VERSION = '4.24.9';
 export const GI_VERSION = GI_SDK.version;
 
 import { fileURLToPath } from 'url';
@@ -120,7 +119,8 @@ const assetPackage = [
   {
     name: GI_ASSETS_GALAXYBASE.name,
     version: GI_ASSETS_GALAXYBASE.version,
-  },{
+  },
+  {
     name: GI_ASSETS_HUGEGRAPH.name,
     version: GI_ASSETS_HUGEGRAPH.version,
   },
