@@ -7,6 +7,7 @@ import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
 import FitCenter from './FitCenter';
+import FitCenterView from './FitCenterView';
 import FitView from './FitView';
 import GrailLayout from './GrailLayout';
 import LassoSelect from './LassoSelect';
@@ -30,20 +31,20 @@ import CommonNeighbor from './CommonNeighbor';
 import ForceSimulation from './ForceSimulation';
 import GroupBar from './GroupBar';
 import Initializer from './Initializer';
-import PropertyGraphInitializer from './PropertyGraphInitializer';
 import OperatorBar from './OperatorBar';
 import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
+import PropertyGraphInitializer from './PropertyGraphInitializer';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import SegmentedLayout from './SegmentedLayout';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
+import SideLayout from './SideLayout';
 import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
-import SideLayout from './SideLayout';
 
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
@@ -57,6 +58,7 @@ export {
   Placeholder,
   FitCenter,
   FitView,
+  FitCenterView,
   OperatorBar,
   GroupBar,
   NodeLegend,
