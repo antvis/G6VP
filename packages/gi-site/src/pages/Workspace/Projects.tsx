@@ -1,19 +1,14 @@
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Icon, utils } from '@antv/gi-sdk';
-import { Button, Col, Drawer, Dropdown, Menu, Popconfirm, Row, Skeleton } from 'antd';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { utils } from '@antv/gi-sdk';
+import { Button, Card, Col, Menu, Popconfirm, Row, Skeleton, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import Empty from '../../components/Empty';
-import ExportConfig from '../../components/Navbar/ExportConfig';
-import ProjectCard from '../../components/ProjectCard';
-import { queryAssets } from '../../services/assets';
-import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
-import { getServicesByConfig } from '../Analysis/getAssets';
-import getCombinedServiceConfig from '../Analysis/getAssets/getCombinedServiceConfig';
-import { queryActiveAssetsInformation } from '../Analysis/utils';
+const { Meta } = Card;
+
 interface ProjectListProps {
   onCreate: () => void;
   type: 'project' | 'case' | 'save';
@@ -30,7 +25,6 @@ const styles = {
 interface ProjectListState {
   lists: IProject[];
   isLoading: boolean;
-  exportProjectContext: any;
 }
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
@@ -39,12 +33,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
     isLoading: true,
-    exportProjectContext: undefined,
-  });
-
-  const [member, setMember] = useImmer({
-    currentProject: null,
-    visible: false,
   });
 
   React.useEffect(() => {
@@ -59,19 +47,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
   const { lists } = state;
 
-  const addButton = (
-    <Col key={'new'} xs={24} sm={24} md={12} lg={8} xl={8}>
-      <ProjectCard
-        style={{ color: 'var(--primary-color)', border: '2px dashed var(--primary-color)' }}
-        onClick={onCreate}
-        cover={<Icon type="icon-plus" style={{ fontSize: '60px' }} />}
-        title={'创建项目'}
-        time={''}
-        description=""
-      ></ProjectCard>
-    </Col>
-  );
-
   const confirm = async id => {
     const isSuccess = await ProjectService.removeById(id);
     if (isSuccess) {
@@ -80,20 +55,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
         draft.lists = items;
       });
     }
-  };
-
-  const handleShowMemberModal = item => {
-    setMember({
-      visible: true,
-      currentProject: item,
-    });
-  };
-
-  const closeMemberPanen = () => {
-    setMember({
-      visible: false,
-      currentProject: null,
-    });
   };
 
   const menu = id => (
@@ -123,85 +84,6 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     );
   }
 
-  const handleExportSDK = async projectItem => {
-    const { id, projectConfig, activeAssetsKeys, theme = 'light', name, datasetId, propertyGraphData } = projectItem;
-    const { engineId, engineContext, schemaData, data } = await queryDatasetInfo(datasetId);
-    queryAssets(activeAssetsKeys).then(activeAssets => {
-      const { transData, inputData } = data || {
-        transData: { nodes: [], edges: [] },
-        inputData: [{ nodes: [], edges: [] }],
-      };
-      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
-        data: transData,
-        schemaData,
-      };
-      const assetServices = utils.getCombineServices(activeAssets.services!);
-      const combinedServiceConfig = getCombinedServiceConfig([], assetServices);
-      const serviceConfig = utils.uniqueElementsBy(
-        [...assetServices, ...combinedServiceConfig],
-        (a, b) => a.id === b.id,
-      );
-      const activeAssetsInformation = queryActiveAssetsInformation({
-        engineId,
-        assets: activeAssets,
-        data: transData,
-        config: projectConfig,
-        serviceConfig,
-        schemaData,
-        propertyGraphData,
-      });
-      const services = utils.uniqueElementsBy(
-        [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
-        (a, b) => a.id === b.id,
-      );
-      const projectContext = {
-        ...projectItem,
-        engineId,
-        engineContext,
-        id,
-        name,
-        config: projectConfig,
-        inputData,
-        activeAssets,
-        theme,
-        activeAssetsInformation,
-        assets: {
-          components: {},
-          elements: {},
-          layouts: {},
-        },
-        assetsCenter: { visible: false, hash: 'components' },
-        services,
-        serviceConfig: [],
-      };
-      updateState(draft => {
-        draft.exportProjectContext = projectContext;
-      });
-    });
-  };
-  const handleCancelExportSDK = () => {
-    updateState(draft => {
-      draft.exportProjectContext = undefined;
-    });
-  };
-  const handleDownloadProject = projectItem => {
-    const { projectConfig, name, engineId, ...others } = projectItem;
-    const params = {
-      ...others,
-      engineId: engineId || 'GI',
-      name,
-      projectConfig,
-      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-    };
-    const elementA = document.createElement('a');
-    elementA.download = name as string;
-    elementA.style.display = 'none';
-    const blob = new Blob([JSON.stringify(params, null, 2)]);
-    elementA.href = URL.createObjectURL(blob);
-    document.body.appendChild(elementA);
-    elementA.click();
-    document.body.removeChild(elementA);
-  };
   if (lists.length === 0) {
     return (
       <div style={styles.container}>
@@ -213,46 +95,56 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {lists.map(item => {
-          const { id, name, gmtCreate, recycleTime } = item;
+          const { id, name, gmtCreate, recycleTime, cover } = item;
           let expiredStr;
           if (recycleTime) {
             const expiredDate = new Date(recycleTime + 604800000);
             expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
           }
+          const time = utils.time(gmtCreate);
+          const Cover = (
+            <img
+              src={cover || `${window['GI_PUBLIC_PATH']}image/empty_workbook.png`}
+              style={{ cursor: 'pointer', width: '100%' }}
+              onClick={() => {
+                history.push(`/workspace/${id}?nav=style`);
+              }}
+            />
+          );
+
           return (
-            <Col key={id}>
-              <ProjectCard
-                onClick={() => {
-                  history.push(`/workspace/${id}?nav=style`);
-                }}
-                onExportSDK={() => handleExportSDK(item)}
-                onDownloadProject={() => handleDownloadProject(item)}
-                cover={<Icon type="icon-analysis" style={{ fontSize: '87px' }} />}
-                title={name || ''}
-                time={utils.time(gmtCreate)}
-                expiredStr={expiredStr}
-                extra={
-                  <Dropdown overlay={menu(id)} placement="bottomCenter">
-                    <Button type="text" icon={<EllipsisOutlined className="more icon-buuton" />}></Button>
-                  </Dropdown>
-                }
-              ></ProjectCard>
+            <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+              <Card cover={Cover}>
+                <div style={{ position: 'relative' }}>
+                  <Meta title={name} description={time} />
+                  {expiredStr && (
+                    <div className="expired">
+                      将于{expiredStr}过期&nbsp;
+                      <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
+                        <QuestionCircleOutlined />
+                      </Tooltip>
+                    </div>
+                  )}
+                  <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
+                    <Popconfirm
+                      title="是否删除该项目?"
+                      onConfirm={e => {
+                        e!.preventDefault();
+                        confirm(id);
+                      }}
+                      placement="rightBottom"
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button type="text" size="small" icon={<DeleteOutlined className="more icon-buuton" />}></Button>
+                    </Popconfirm>
+                  </div>
+                </div>
+              </Card>
             </Col>
           );
         })}
       </Row>
-      {/* <MembersPanel visible={member.visible} handleClose={closeMemberPanen} values={member.currentProject} /> */}
-
-      <Drawer
-        title="导出SDK"
-        placement="right"
-        closable={false}
-        onClose={handleCancelExportSDK}
-        visible={Boolean(state.exportProjectContext)}
-        width="calc(100vw - 382px)"
-      >
-        {Boolean(state.exportProjectContext) && <ExportConfig context={state.exportProjectContext} />}
-      </Drawer>
     </>
   );
 };
