@@ -48,12 +48,16 @@ const Github: React.FunctionComponent<GithubProps> = props => {
         </div>
       }
     >
-      <span className="gi-header-github-icon">
-        <a href="http://github.com/antvis/g6vp" target="_blank" rel="noreferrer" style={{ marginRight: '4px' }}>
-          <GithubOutlined />
-        </a>
+      <Button
+        type="text"
+        size="small"
+        icon={<GithubOutlined />}
+        onClick={() => {
+          window.open('http://github.com/antvis/g6vp');
+        }}
+      >
         {count ? ` ${count}` : ''}
-      </span>
+      </Button>
     </Popover>
   );
 };

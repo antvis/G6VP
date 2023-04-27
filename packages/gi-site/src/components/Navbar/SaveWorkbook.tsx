@@ -1,4 +1,5 @@
 import { SaveOutlined } from '@ant-design/icons';
+import { Graph } from '@antv/graphin';
 import { Button, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -11,11 +12,20 @@ interface SaveWorkbookProps {
   workbookId: string;
 }
 
+const getCover = async (graph: Graph) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const cover = graph.toDataURL('image/png');
+      resolve(cover);
+    }, 30);
+  });
+};
+
 const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
   const { workbookId } = props;
   const history = useHistory();
   const { context, updateContext } = useContext();
-  const { config, activeAssetsKeys, name } = context;
+  const { config, activeAssetsKeys, name, graphRef } = context;
   const handleSave = async () => {
     const origin = (await ProjectServices.getById(workbookId)) as IProject;
 
@@ -39,10 +49,23 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
         return;
       }
     } else {
-      // const data = graphRef.current && graphRef.current.save();
+      const graph = graphRef.current as Graph;
+      if (!graph) {
+        return;
+      }
+      const width = graph.getWidth();
+      const height = graph.getHeight();
+      graph.changeSize(400, 300);
+      graphRef.current.fitView(10);
+      const cover = await getCover(graph);
+      graph.changeSize(width, height);
+      graph.fitView(20);
+
       const { id, name, type, props } = pageLayout;
+
       const clonedLayout = JSON.parse(JSON.stringify(layout));
       const result = await ProjectServices.updateById(workbookId, {
+        cover,
         activeAssetsKeys,
         projectConfig: {
           ...otherConfig,
@@ -67,7 +90,7 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
 
   return (
     <Tooltip title="保存画布">
-      <Button icon={<SaveOutlined />} onClick={handleSave} size="small" className="gi-intro-save">
+      <Button icon={<SaveOutlined />} onClick={handleSave} size="small" type="text">
         保存
       </Button>
     </Tooltip>
