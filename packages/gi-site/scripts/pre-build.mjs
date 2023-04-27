@@ -14,7 +14,7 @@ import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { ty
 
 import path from 'path';
 export const G6_VERSION = '4.8.10';
-export const GRAPHIN_VERSION = '2.7.15';
+export const GRAPHIN_VERSION = '2.7.16';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.9';
 export const GI_VERSION = GI_SDK.version;
