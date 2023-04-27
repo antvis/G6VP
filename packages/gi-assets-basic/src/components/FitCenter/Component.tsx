@@ -9,7 +9,14 @@ export interface IProps {
 const FitCenter: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
   const { graph } = useContext();
-  return <GIAComponent GIAC={GIAC} onClick={() => graph.fitCenter()} />;
+  return (
+    <GIAComponent
+      GIAC={GIAC}
+      onClick={() => {
+        graph.fitCenter(true);
+      }}
+    />
+  );
 };
 
 export default FitCenter;
