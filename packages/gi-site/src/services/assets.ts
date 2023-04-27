@@ -75,9 +75,11 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   let components = {};
   let elements;
   let layouts;
+  let templates;
   let FinalAssets;
 
   const packages = getAssetPackages();
+
   if (IS_DEV_ENV) {
     FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
   } else {
@@ -86,9 +88,6 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
-
-  console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
-
   // Object.keys(activeAssetsKeys.components).forEach(containerId => {
   //   const assetKeys = activeAssetsKeys.components[containerId];
   //   components[containerId] = assetKeys.reduce((acc, curr) => {
@@ -120,11 +119,14 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   // Get all layouts from FinalAssets
   layouts = { ...FinalAssets.layouts };
 
+  templates = { ...FinalAssets.templates };
+
   return await new Promise(resolve => {
     resolve({
       components,
       elements,
       layouts,
+      templates,
       services: FinalAssets.services,
     } as GIAssets);
   });

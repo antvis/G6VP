@@ -37,6 +37,7 @@ const Cards: React.FunctionComponent<ICardsProps> = props => {
     <Row gutter={16}>
       {data.map(item => {
         const { image, desc, name, id } = item;
+
         const title = (
           <>
             {name}
@@ -49,7 +50,16 @@ const Cards: React.FunctionComponent<ICardsProps> = props => {
         );
         return (
           <Col span={8} key={item.id}>
-            <Card hoverable cover={<img alt="cover" src={image} onClick={() => handleClick(id)} />}>
+            <Card
+              hoverable
+              cover={
+                <img
+                  alt="cover"
+                  src={image || `${window['GI_PUBLIC_PATH']}image/tp_unkown.png`}
+                  onClick={() => handleClick(id)}
+                />
+              }
+            >
               <Meta title={title} description={desc} />
             </Card>
           </Col>

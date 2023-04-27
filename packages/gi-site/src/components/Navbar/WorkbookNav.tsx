@@ -5,6 +5,7 @@ import ProjectTitle from '../ProjectTitle';
 import DatasetInfo from './DatasetInfo';
 import Github from './Github';
 import Logo from './Logo';
+import SaveTemplate from './SaveTemplate';
 import SaveWorkbook from './SaveWorkbook';
 import Theme from './Theme';
 import UserInfo from './UserInfo';
@@ -53,6 +54,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <ProjectTitle name={name} projectId={workbookId} />
       </div>
       <div style={styles.right}>
+        <SaveTemplate workbookId={workbookId} />
         <SaveWorkbook workbookId={workbookId} />
         <Theme />
         <Github />

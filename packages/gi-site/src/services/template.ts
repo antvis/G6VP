@@ -1,29 +1,28 @@
 import { message } from 'antd';
-
 import { GI_TEMPLATE_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
+import { queryAssets } from './assets';
 import { GI_SITE } from './const';
-import { TEMPLATE_QUERY } from './initial.data/query.template';
-import { TEMPLATE_SIMPLE } from './initial.data/simple.template';
 import { ITemplate } from './typing';
 import { request } from './utils';
-
 /**
  * 获取所有项目
  * @returns
  */
-export const list = async (): Promise<ITemplate[]> => {
+export const list = async (type: 'my' | 'graph'): Promise<ITemplate[]> => {
   if (GI_SITE.IS_OFFLINE) {
-    const tempaltes = [TEMPLATE_SIMPLE, TEMPLATE_QUERY];
-    for (const item of tempaltes) {
-      await GI_TEMPLATE_DB.setItem(item.id, item);
+    if (type === 'graph') {
+      //@ts-ignore
+      const { templates } = await queryAssets();
+      return Object.values(templates);
+    } else {
+      const res: ITemplate[] = [];
+      await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
+        res.push(item);
+      });
+
+      return res;
     }
-    const res: ITemplate[] = [];
-    await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
-      res.push(item);
-    });
-    console.log('RES', res);
-    return res;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/template/list`, {

@@ -66,7 +66,7 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
   };
 
   return (
-    <Tooltip title="保存">
+    <Tooltip title="保存画布">
       <Button icon={<SaveOutlined />} onClick={handleSave} size="small" className="gi-intro-save">
         保存
       </Button>

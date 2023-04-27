@@ -10,10 +10,10 @@ import {
   GIAC_PROPS,
 } from './components/const';
 import GIAComponent from './components/GIAC';
+import template from './constants/template';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
-
 const extra = {
   /** 原子组件 META */
   GIAC_CONTENT_METAS,
@@ -59,6 +59,6 @@ export type {
   ServiceObject,
 } from './typing';
 export { useContext, utils, version };
-export { extra };
+export { extra, template };
 
 export default GISDK;
