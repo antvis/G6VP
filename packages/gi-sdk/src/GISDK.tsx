@@ -328,6 +328,7 @@ const GISDK = (props: Props) => {
           style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
         >
           <Graphin
+            animate={true}
             ref={graphinRef}
             containerId={`${GISDK_ID}-graphin-container`}
             containerStyle={{ transform: 'scale(1)' }}
