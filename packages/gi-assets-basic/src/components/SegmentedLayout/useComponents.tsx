@@ -9,10 +9,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
       else assetKeys.push(item.value);
     });
 
-    const components = assetKeys
-      .map(id => ComponentCfgMap[id])
-      .filter(item => item && item.props && item.props.GIAC_CONTENT)
-      .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
+    const components = assetKeys.map(id => ComponentCfgMap[id]).filter(item => item.type === 'GIAC_CONTENT');
 
     if (!components || components.length === 0) {
       return [
