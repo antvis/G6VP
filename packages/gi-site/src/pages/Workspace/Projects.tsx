@@ -94,56 +94,62 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
-        {lists.map(item => {
-          const { id, name, gmtCreate, recycleTime, cover } = item;
-          let expiredStr;
-          if (recycleTime) {
-            const expiredDate = new Date(recycleTime + 604800000);
-            expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
-          }
-          const time = utils.time(gmtCreate);
-          const Cover = (
-            <img
-              src={cover || `${window['GI_PUBLIC_PATH']}image/empty_workbook.png`}
-              style={{ cursor: 'pointer', width: '100%' }}
-              onClick={() => {
-                history.push(`/workspace/${id}?nav=style`);
-              }}
-            />
-          );
+        {[...lists]
+          .sort((p1, p2) => p2.gmtCreate - p1.gmtCreate)
+          .map(item => {
+            const { id, name, gmtCreate, recycleTime, cover } = item;
+            let expiredStr;
+            if (recycleTime) {
+              const expiredDate = new Date(recycleTime + 604800000);
+              expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
+            }
+            const time = utils.time(gmtCreate);
+            const Cover = (
+              <img
+                src={cover || `${window['GI_PUBLIC_PATH']}image/empty_workbook.png`}
+                style={{ cursor: 'pointer', width: '100%' }}
+                onClick={() => {
+                  history.push(`/workspace/${id}?nav=style`);
+                }}
+              />
+            );
 
-          return (
-            <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
-              <Card cover={Cover}>
-                <div style={{ position: 'relative' }}>
-                  <Meta title={name} description={time} />
-                  {expiredStr && (
-                    <div className="expired">
-                      将于{expiredStr}过期&nbsp;
-                      <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
-                        <QuestionCircleOutlined />
-                      </Tooltip>
+            return (
+              <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                <Card cover={Cover}>
+                  <div style={{ position: 'relative' }}>
+                    <Meta title={name} description={time} />
+                    {expiredStr && (
+                      <div className="expired">
+                        将于{expiredStr}过期&nbsp;
+                        <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
+                          <QuestionCircleOutlined />
+                        </Tooltip>
+                      </div>
+                    )}
+                    <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
+                      <Popconfirm
+                        title="是否删除该项目?"
+                        onConfirm={e => {
+                          e!.preventDefault();
+                          confirm(id);
+                        }}
+                        placement="rightBottom"
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <Button
+                          type="text"
+                          size="small"
+                          icon={<DeleteOutlined className="more icon-buuton" />}
+                        ></Button>
+                      </Popconfirm>
                     </div>
-                  )}
-                  <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
-                    <Popconfirm
-                      title="是否删除该项目?"
-                      onConfirm={e => {
-                        e!.preventDefault();
-                        confirm(id);
-                      }}
-                      placement="rightBottom"
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Button type="text" size="small" icon={<DeleteOutlined className="more icon-buuton" />}></Button>
-                    </Popconfirm>
                   </div>
-                </div>
-              </Card>
-            </Col>
-          );
-        })}
+                </Card>
+              </Col>
+            );
+          })}
       </Row>
     </>
   );
