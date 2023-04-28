@@ -5,9 +5,10 @@ import useRedoUndo from '../hooks/useRedoUndo';
 import { getStyles } from '../Sheetbar/utils';
 import { useImmer } from 'use-immer';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { Col, Modal, Row } from 'antd';
 import { getRecordContent, getRecordsFromHistory } from './util';
 import './index.less';
+import TemplateModal from './TemplateModal';
 
 export interface AnalysisHistoryProps {
   height: number;
@@ -21,11 +22,11 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
 
   const [state, updateState] = useImmer({
     collapsed: true,
-    records: '',
     urlMap: {},
+    modalOpened: false,
   });
 
-  const { collapsed, urlMap } = state;
+  const { collapsed, urlMap, modalOpened } = state;
 
   const GISDK_DOM = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
   const GISDK_PARENT_DOM = GISDK_DOM.parentElement as HTMLDivElement;
@@ -38,6 +39,19 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
 
   const handleTemplatefy = () => {
     // open modal
+    updateState(draft => {
+      draft.modalOpened = true;
+    });
+  };
+
+  const handleCloseModal = () => {
+    updateState(draft => {
+      draft.modalOpened = false;
+    });
+  };
+
+  const handleSaveTemplate = () => {
+    handleCloseModal();
   };
 
   React.useEffect(() => {
@@ -87,6 +101,12 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
           <div className="gi-history-footer-item-container">{getRecordsFromHistory(history, urlMap)}</div>
         </>
       )}
+      <TemplateModal
+        open={modalOpened}
+        urlMap={urlMap}
+        handleSave={handleSaveTemplate}
+        handleClose={handleCloseModal}
+      />
     </div>
   );
 

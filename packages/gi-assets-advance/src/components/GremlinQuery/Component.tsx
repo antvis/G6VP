@@ -26,7 +26,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   visible,
   isShowPublishButton,
 }) => {
-  const { updateContext, transform, services } = useContext();
+  const { updateContext, transform, services, updateHistory } = useContext();
 
   const service = utils.getService(services, serviceId);
 
@@ -72,22 +72,18 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       return;
     }
 
+    updateHistory({
+      type: 'query',
+      subType: 'Gremlin',
+      statement: editorValue,
+    });
+
     updateContext(draft => {
       // @ts-ignore
       const res = transform(result.data);
       draft.data = res;
       draft.source = res;
       draft.isLoading = false;
-      // @ts-ignore
-      draft.history = (draft.history || []).concat([
-        {
-          id: nanoid(),
-          type: 'query',
-          language: 'gremlin',
-          statement: editorValue,
-          timestamp: new Date().getTime(),
-        },
-      ]);
     });
   };
 

@@ -12,6 +12,7 @@ import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
+import { createUuid } from './process/common';
 
 /** export  */
 const GISDK = (props: Props) => {
@@ -274,6 +275,18 @@ const GISDK = (props: Props) => {
         draft.source = newData;
         draft.layout = lay;
         draft.layoutCache = false;
+      });
+    },
+    updateHistory: param => {
+      updateState(draft => {
+        // @ts-ignore
+        draft.history = (draft.history || []).concat([
+          {
+            id: createUuid(),
+            timestamp: new Date().getTime(),
+            ...param,
+          },
+        ]);
       });
     },
     stopForceSimulation: stopForceSimulation,

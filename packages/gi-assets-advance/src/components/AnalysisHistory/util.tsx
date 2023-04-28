@@ -2,35 +2,35 @@ import * as React from 'react';
 import { Col, Popover, Row, Tooltip } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 
-const ColorTag = {
+export const ColorMap = {
   query: '#096dd9',
   analyse: '#faad14',
 };
 
-const Label = {
+export const LabelMap = {
   query: '查询',
   analyse: '分析',
 };
 
-export const getRecordsFromHistory = (history, urlMap = {}) => {
+export const getRecordsFromHistory = (history, urlMap = {}, style = {}) => {
   if (!history) return [];
   const items: React.ReactElement[] = [];
   for (let i = history.length - 1; i >= 0; i--) {
     const { id } = history[i];
-    items.push(getRecordContent(history[i], urlMap[id]));
+    items.push(getRecordContent(history[i], urlMap[id], style));
   }
   return items;
 };
 
-export const getRecordContent = (item, url): React.ReactElement => {
-  const { type, language, statement, timestamp } = item;
+export const getRecordContent = (item, url, style = {}): React.ReactElement => {
+  const { type, subType, statement, timestamp } = item;
   const date = new Date(timestamp);
   return (
-    <div style={{ width: '100%', display: 'inline-flex' }}>
-      <div className="gi-analysis-history-tag" style={{ background: ColorTag[type] }} />
-      <div style={{ color: ColorTag[type] }}>{Label[type]}</div>
+    <div style={{ width: '100%', display: 'inline-flex', ...style }}>
+      <div className="gi-analysis-history-tag" style={{ background: ColorMap[type] }} />
+      <div style={{ color: ColorMap[type] }}>{LabelMap[type]}</div>
       <span className="gi-analysis-history-statement">
-        {Label[type]} ({language}): {statement}
+        {LabelMap[type]} ({subType}): {statement}
       </span>
       <span className="gi-analysis-history-time">
         {date.toLocaleDateString()} {date.toLocaleTimeString()}

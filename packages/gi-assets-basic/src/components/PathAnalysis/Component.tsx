@@ -21,7 +21,7 @@ enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { pathNodeLabel } = props;
-  const { data: graphData, graph, sourceDataMap } = useContext();
+  const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -78,6 +78,13 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         return;
       }
       const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
+
+      updateHistory({
+        type: 'analyse',
+        subType: 'path',
+        statement: `起点: ${source}, 终点: ${target}`,
+      });
+
       updateState(draft => {
         draft.allNodePath = allNodePath;
         draft.allEdgePath = allEdgePath;
