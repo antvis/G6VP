@@ -154,37 +154,42 @@ export const getDefaultValues = (s, componentType = undefined) => {
   const ROOT = 'props';
   const result = {};
   const walk = (schema, obj, k) => {
-    if (componentType === 'GICC_LAYOUT' && k === 'containers') {
-      obj[k] = [];
-      schema.forEach((container, i) => {
-        obj[k].push({
-          id: container.id,
-          name: container.name,
-          required: container.required,
+    try {
+      if (componentType === 'GICC_LAYOUT' && k === 'containers') {
+        obj[k] = [];
+        schema.forEach((container, i) => {
+          obj[k].push({
+            id: container.id,
+            name: container.name,
+            required: container.required,
+          });
+          Object.keys(container).forEach(key => {
+            if (key === 'name' || key === 'id' || key === 'required') return;
+            walk(container[key], obj[k][i], key);
+          });
         });
-        Object.keys(container).forEach(key => {
-          if (key === 'name' || key === 'id' || key === 'required') return;
-          walk(container[key], obj[k][i], key);
+        return;
+      }
+      const { type, properties } = schema;
+      if (type === 'void') {
+        Object.keys(properties).forEach(key => {
+          walk(properties[key], obj, key);
         });
-      });
+        return;
+      }
+      if (type === 'object') {
+        obj[k] = {};
+        const val = obj[k];
+        Object.keys(properties).forEach(key => {
+          walk(properties[key], val, key);
+        });
+        return;
+      }
+      obj[k] = schema.default;
+    } catch (error) {
+      console.log('error', schema, obj, k);
       return;
     }
-    const { type, properties } = schema;
-    if (type === 'void') {
-      Object.keys(properties).forEach(key => {
-        walk(properties[key], obj, key);
-      });
-      return;
-    }
-    if (type === 'object') {
-      obj[k] = {};
-      const val = obj[k];
-      Object.keys(properties).forEach(key => {
-        walk(properties[key], val, key);
-      });
-      return;
-    }
-    obj[k] = schema.default;
   };
   walk(s, result, ROOT);
   return result[ROOT];

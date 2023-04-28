@@ -69,7 +69,7 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
     <>
       <div style={{ margin: '0px 8px' }}>
         <Dropdown menu={menuProps}>
-          <Button size="small" icon={<GiftOutlined />}>
+          <Button size="small" icon={<GiftOutlined />} type="text">
             模版
           </Button>
         </Dropdown>

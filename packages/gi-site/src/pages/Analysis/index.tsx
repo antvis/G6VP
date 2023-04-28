@@ -11,11 +11,11 @@ import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectServices from '../../services/project';
 import { IProject } from '../../services/typing';
 import { navbarOptions } from './Constants';
+import MetaPanel from './MetaPanel';
 import { getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import { AnalysisContext } from './hooks/useContext';
 import './index.less';
-import MetaPanel from './MetaPanel';
 
 import useModel from './useModel';
 import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
@@ -250,7 +250,7 @@ const Analysis = props => {
       </div>
     );
   }
-  const context = { context: state, updateContext: updateState, updateGISite };
+  const context = { context: { ...state, graphRef }, updateContext: updateState, updateGISite };
 
   console.log('%c GRAPHINSIGHT SITE', 'color:lightgreen', state, context);
 
