@@ -2,7 +2,7 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { createForm, FormProvider, onFormInputChange, SchemaField } from '@antv/gi-common-components';
 import { Icon } from '@antv/gi-sdk';
 import AssetsSelector from './AssetsSelector';
-import { Col, Collapse, Row } from 'antd';
+import { Col, Collapse, Row, Divider } from 'antd';
 import * as React from 'react';
 
 const { Panel } = Collapse;
@@ -78,7 +78,9 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     });
   });
 
-  const colSpan = configSchema && GI_CONTAINER && id !== 'GI_FreeContainer' ? 12 : 24;
+  const isSegment = configSchema && GI_CONTAINER && id !== 'GI_FreeContainer';
+
+  const colSpan = isSegment ? 12 : 24;
 
   return (
     <div>
@@ -103,16 +105,18 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
         >
           <FormProvider form={form}>
             <Row className="gi-render-form">
-              {configSchema ? (
+              {!!configSchema && (
                 <Col span={colSpan} className="gi-render-form-config">
                   {/** @ts-ignore */}
                   <SchemaField schema={JSON.parse(JSON.stringify(configSchema))} />
                 </Col>
-              ) : (
-                ''
               )}
-              {GI_CONTAINER ? (
-                <Col span={colSpan} className="gi-render-form-container">
+              {GI_CONTAINER && (
+                <Col
+                  span={colSpan}
+                  className="gi-render-form-container"
+                  style={isSegment ? { borderLeft: '1px solid #eee', paddingLeft: 6 } : {}}
+                >
                   <AssetsSelector
                     id={id}
                     assets={assets}
@@ -121,8 +125,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
                     handleRemoveAsset={handleRemoveContainerAsset}
                   />
                 </Col>
-              ) : (
-                ''
               )}
             </Row>
           </FormProvider>

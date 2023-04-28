@@ -54,8 +54,6 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
         const { icon, id, name } = opt;
         const isActive = id === nav;
         const className = isActive ? 'sidebar-item active' : 'sidebar-item';
-        const buttonType = isActive ? 'primary' : 'default';
-
         return (
           <li
             key={id}

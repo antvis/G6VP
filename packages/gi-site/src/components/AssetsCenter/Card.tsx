@@ -27,7 +27,7 @@ const AssetCard: React.FunctionComponent<AssetCardProps> = props => {
     <div>
       <CheckCard
         bordered={false}
-        className="assetsCardStyle"
+        className="assets-card"
         title={
           <div
             style={{

@@ -36,8 +36,6 @@
     }
     .gi-render-form-container {
       display: block;
-      border-left: 1px solid #eee;
-      padding-left: 6px;
       .ant-formily-item {
         display: block;
       }
@@ -59,7 +57,7 @@
           border: 1px solid #ccc;
           cursor: text;
           padding: 4px 0;
-          overflow-y: scroll;
+          overflow-y: none;
           .gi-render-form-asset-item {
             display: inline-block;
             height: 30px;
@@ -100,21 +98,34 @@
   font-size: 18px;
 }
 
+.gi-assets-center::-webkit-scrollbar {
+  display: none;
+}
+
 .gi-assets-center {
   overflow-y: scroll;
   height: calc(100% - 42px);
   padding: 16px;
+
+  .gi-assets-center-assets-cardgroup::-webkit-scrollbar {
+    display: none;
+  }
+
   .gi-assets-center-assets-cardgroup {
     overflow-y: scroll;
     height: 90%;
     padding: 0px 4px;
   }
-  .assetsCardStyle {
+
+  .assets-card {
+    -webkit-user-select: none;
+    user-select: none;
+    width: -moz-fit-content;
     width: fit-content;
     height: 30px;
     border-radius: 2150px !important;
     margin-bottom: 4px;
-    border-width: 0px !important;
+    border-width: 2px !important;
     .ant-pro-checkcard-avatar {
       padding-right: 0;
       width: 40px !important;

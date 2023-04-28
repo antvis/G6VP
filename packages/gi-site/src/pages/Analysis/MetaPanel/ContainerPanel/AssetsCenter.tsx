@@ -2,7 +2,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { CheckCard } from '@ant-design/pro-components';
 import { ComponentAsset, Icon } from '@antv/gi-sdk';
 import { Avatar, Col, Row, Tag } from 'antd';
-import * as React from 'react';
+import React from 'react';
 import { useImmer } from 'use-immer';
 import { CategroyOptions, otherCategory } from './constants';
 import './index.less';
@@ -76,6 +76,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       if (checkedCategories.length === candidateCategories.length) {
         // 全选状态下，点击一个 = 仅选中一个
         draft.checkedCategories = [value];
+      } else if (checkedCategories.length === 1 && checkedCategories.includes(value)) {
+        // 若将处于全不选状态下，则全部选中
+        draft.checkedCategories = candidateCategories;
       } else if (checkedCategories.includes(value)) {
         // 非全选状态下，若被点击的 tag 类别已是选中状态，则取消其选中
         const idx = checkedCategories.indexOf(value);
@@ -168,6 +171,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
           >
             {assets.map(assetInfo => {
               const item = componentsMap[assetInfo.value];
+              const checked = checkedList.includes(assetInfo.value);
               const { id: assetId, info, name } = item;
               const { icon = 'icon-robot' } = info;
               const tag = CategroyOptions[info.category] || otherCategory;
@@ -178,11 +182,11 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                     key={assetId}
                     onChange={() => handleClick(assetId)}
                     bordered={false}
-                    className="assetsCardStyle"
+                    className="assets-card"
                     style={{
                       backgroundColor: tagColor.fill,
                       background: tagColor.fill,
-                      borderColor: tagColor.stroke,
+                      borderColor: checked ? tagColor.stroke : '#fff0',
                     }}
                     title={
                       <div
