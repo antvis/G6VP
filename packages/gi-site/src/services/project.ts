@@ -42,10 +42,11 @@ export const list = async (type: 'project' | 'case' | 'save'): Promise<IProject[
  */
 export const create = async (param: any): Promise<string | undefined> => {
   const projectId = getUid();
-  const { ...otherParams } = param;
+  const { config, projectConfig, ...otherParams } = param;
   const payload = {
     ...otherParams,
     id: projectId,
+    projectConfig: projectConfig || config, //别名
     isProject: true,
     gmtCreate: new Date(),
   };

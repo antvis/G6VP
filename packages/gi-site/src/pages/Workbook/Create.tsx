@@ -118,19 +118,30 @@ const Create: React.FunctionComponent<CreateProps> = props => {
   };
 
   const handleRecover = async params => {
-    const { GI_ASSETS_PACKAGES, name, datasetId, projectConfig, activeAssetsKeys, members } = params;
-    const projectId = await ProjectServices.create({
-      datasetId,
-      name,
-      status: 0, // 0 正常项目， 1删除项目
-      members,
-      projectConfig,
-      activeAssetsKeys,
-      type: 'project',
-    });
     try {
+      const { dataset, workbook, GI_ASSETS_PACKAGES } = params;
+      const IS_V2_VERSION = dataset && workbook && GI_ASSETS_PACKAGES; //只要有这三个字段，就判定是V2版本
+
       const PRE_GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
       localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify({ ...PRE_GI_ASSETS_PACKAGES, ...GI_ASSETS_PACKAGES }));
+
+      if (IS_V2_VERSION) {
+        await DatasetService.createDataset(dataset);
+        await ProjectServices.create(workbook);
+        history.push(`/workspace/${workbook.id}`);
+        return;
+      }
+      //剩下的都是V1版本的
+      const { name, datasetId, projectConfig, activeAssetsKeys, members } = params;
+      const projectId = await ProjectServices.create({
+        datasetId,
+        name,
+        status: 0, // 0 正常项目， 1删除项目
+        members,
+        projectConfig,
+        activeAssetsKeys,
+        type: 'project',
+      });
       history.push(`/workspace/${projectId}?nav=data`);
     } catch (error) {
       console.log('error', error);
