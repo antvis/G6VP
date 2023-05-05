@@ -3,23 +3,20 @@ import { Service } from 'egg';
 import { IProject } from './typing';
 import { etcd, WORKBOOK_PREFIX } from './utils';
 
-import { project as BANK_CASE } from './case/bank';
-
 class GIProjectService extends Service {
   // find case
   async findCase() {
-    const cases = [BANK_CASE];
-    console.log('case......');
+    const cases = [];
     // set case in etcd if not exists
-    for (const c of cases) {
-      const id = c.id;
-      console.log('v', id);
-      const v = await etcd.get(id).string();
+    // for (const c of cases) {
+    //   const id = c.id;
+    //   console.log('v', id);
+    //   const v = await etcd.get(id).string();
 
-      if (v === null) {
-        await etcd.put(id).value(JSON.stringify(c));
-      }
-    }
+    //   if (v === null) {
+    //     await etcd.put(id).value(JSON.stringify(c));
+    //   }
+    // }
     return cases;
   }
 
