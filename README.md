@@ -23,7 +23,7 @@ G6VP 取名意为 AntV G6 Visualization Platform, 它是一款在线图可视分
 
 ## 1min：让枯燥的关联表格，变成形象易理解的关系图
 
-打开 G6VP 官方站点：[https://graphinsight.antgroup.com/#/workspace](https://graphinsight.antgroup.com/#/workspace) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 G6VP 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
+打开 G6VP 官方站点：[https://insight.antv.antgroup.com](https://insight.antv.antgroup.com) ，点击创建项目，我们将案例数据的两份 Excel 表格导入 G6VP 数据源，通过配置节点和边的类型映射，便能得到一张关系网络图
 ![导入数据.gif](https://cdn.nlark.com/yuque/0/2022/gif/160133/1668414976266-f337c2d4-c030-4baa-b463-a208ee75d2a7.gif#averageHue=%23fefefe&clientId=u6b1ca0e1-8d53-4&crop=0&crop=0&crop=1&crop=1&from=ui&id=ud83f3609&margin=%5Bobject%20Object%5D&name=%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE.gif&originHeight=537&originWidth=960&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1607226&status=done&style=shadow&taskId=u6bf0ed57-aaee-4db0-a554-88d9d7a7995&title=)
 
 ## 3min：自定义样式，交互，布局，让关系图栩栩如生
@@ -228,13 +228,33 @@ nvm alias default v16.17.0
 
 ## 如何发布版本
 
-因为我们组件间的依赖关系用 pnpm 管理的，即`workspace:*`，因此发布到 npm 仓库，可以使用`pnpm publish`，该命令会自动将`workspace:*`转化为对应的版本。如果我们是私有仓库，比如阿里内部的 tnpm 仓库，
-便可以使用下述 script 命令，将代码发布到 tnpm 仓库中
+因为我们组件间的依赖关系用 pnpm 管理的，即`workspace:*`，因此发布到 npm 仓库，可以使用`pnpm publish`，该命令会自动将`workspace:*`转化为对应的版本。
+
+- 1. 进入每个子包中，执行发布命令
 
 ```
 npm run npm:publish
 ```
 
-## 如何将资产发布到 CDN 上
+- 2. 子包发布后，需要同步到 CDN 上
 
-资产包发布后，如果是公开的，国内用：https://www.jsdelivr.com/ ，国外可用：https://unpkg.com/
+如果是公开的，国内用：https://www.jsdelivr.com/ ，国外可用：https://unpkg.com/
+如果是非公开的，则使用给自公司的 CDN 平台进行同步
+
+- 3. 发布主站点
+
+```
+cd pacakges/gi-site
+npm run build
+```
+
+- 4. 本地验证
+
+执行 `code dist` ,使用 vscode 打开站点的产物，使用 live-server 等工具，将站点产物托管起来。访问 web 地址，验证站点是否正常运行，主要需要验证的点是，各个子包的产物是否正确发布到 CDN 上
+
+- 5. 发布到 github pages 上
+
+```
+cd packages/gi-site
+npm run deploy
+```
