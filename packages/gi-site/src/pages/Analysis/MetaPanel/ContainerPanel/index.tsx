@@ -1,4 +1,4 @@
-import { clone, isArray } from '@antv/util';
+import { clone, isArray, difference } from '@antv/util';
 import { Button, Checkbox, Col, Row, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
@@ -104,6 +104,17 @@ const ContainerPanel = props => {
       }
       updateContainerAssets(id, containerSubAssetsMap[id], 'add', containers);
     });
+
+    // 比较出被取消勾选的容器
+    const lastSelectedList = selectedContainers.map(container => container.id);
+    const removedContainerIds = difference(lastSelectedList, selectedList);
+    
+    // 若被取消则清空缓存的子资产
+    removedContainerIds.forEach(id => {
+      if (containerSubAssetsMap[id]) {
+        containerSubAssetsMap[id] = [];
+      }
+    })
 
     setState(draft => {
       draft.selectedContainers = containers;
