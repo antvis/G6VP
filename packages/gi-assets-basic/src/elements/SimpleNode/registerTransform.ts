@@ -1,11 +1,8 @@
 import type { GINodeConfig } from '@antv/gi-sdk';
-import Graphin, { Utils } from '@antv/graphin';
-// 引入资源文件
-import iconLoader from '@antv/graphin-icons';
-import '@antv/graphin-icons/dist/index.css';
-import merge from 'deepmerge';
+import { icons } from '@antv/gi-sdk';
+import { Utils } from '@antv/graphin';
 
-const icons = Graphin.registerFontFamily(iconLoader);
+import merge from 'deepmerge';
 
 const defaultNodeTheme = {
   primaryColor: '#FF6A00',
@@ -52,7 +49,7 @@ const getIconStyleByConfig = (style, data) => {
         ...icon,
         size: keyshape.size / 2,
         type: 'font',
-        fontFamily: 'graphin',
+        fontFamily: 'iconfont',
         value: icons[value] || '',
         fill: icon.fill || keyshape.fill,
       };

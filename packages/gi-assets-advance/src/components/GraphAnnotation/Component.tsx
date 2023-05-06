@@ -1,14 +1,11 @@
 import { StarFilled } from '@ant-design/icons';
 import G6, { Item } from '@antv/g6';
-import { useContext } from '@antv/gi-sdk';
-import Graphin from '@antv/graphin';
-import iconLoader from '@antv/graphin-icons';
+import { icons, useContext } from '@antv/gi-sdk';
+
 import { Menu } from 'antd';
 import insertCss from 'insert-css';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import './index.less';
-
-const icons = Graphin.registerFontFamily(iconLoader);
 
 export interface GraphAnnotationProps {
   contextmenu: any;
