@@ -1,13 +1,13 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Schema, SchemaKey } from '@formily/json-schema';
-import { observer, RecursionField, useField, useFieldSchema } from '@formily/react';
+import { RecursionField, observer, useField, useFieldSchema } from '@formily/react';
 import { markRaw, model } from '@formily/reactive';
 import { toArr } from '@formily/shared';
 import { Badge, Collapse } from 'antd';
 import { CollapsePanelProps, CollapseProps } from 'antd/lib/collapse';
 import cls from 'classnames';
 import React, { Fragment, useMemo } from 'react';
-import Icon from '../../Icon';
+import { Icon } from '../../Icon';
 import usePrefixCls from './usePrefixCls';
 
 type ActiveKeys = string | number | Array<string | number>;

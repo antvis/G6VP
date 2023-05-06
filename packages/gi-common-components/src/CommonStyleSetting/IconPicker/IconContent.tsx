@@ -1,7 +1,7 @@
-import { Input, Menu } from 'antd';
+import { Button, Input, Menu, Modal } from 'antd';
 import React from 'react';
-import MyIcon from '../../Icon';
-
+import { Icon as MyIcon } from '../../Icon';
+import font from '../../Icon/font.json';
 const { Search } = Input;
 interface IconContentProps {
   activeCategory: string;
@@ -99,9 +99,17 @@ const category = [
   },
 ];
 
+const allIconOptions = font.glyphs.map(item => {
+  return {
+    key: item.font_class,
+    value: `icon-${item.font_class}`,
+  };
+});
+
 const IconContent: React.FunctionComponent<IconContentProps> = props => {
   const { onChange, updateState, activeCategory, activeIcon } = props;
   const onSearch = value => console.log(value);
+  const [open, setOpen] = React.useState(false);
 
   const onChangeCategory = ({ key }) => {
     updateState(preState => {
@@ -124,10 +132,17 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
   };
 
   const options = category.find(item => item.id === activeCategory)?.options;
-
+  const handleClick = () => {
+    setOpen(true);
+  };
   return (
     <div>
-      <Search placeholder="search some icons" onSearch={onSearch} style={{ width: '100%', margin: '12px 0px' }} />
+      <>
+        <Button size="small" onClick={handleClick} type="primary" style={{ width: '100%', marginBottom: '8px' }}>
+          查看全部图标
+        </Button>
+      </>
+      {/* <Divider /> */}
       <div className="gi-icon-picker">
         {/* @ts-ignore */}
         <Menu
@@ -159,6 +174,37 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
           })}
         </div>
       </div>
+      <Modal
+        width={'100%'}
+        title="全部图标"
+        open={open}
+        onCancel={() => {
+          setOpen(false);
+        }}
+        onOk={() => {
+          setOpen(false);
+        }}
+      >
+        <div>
+          {allIconOptions?.map(item => {
+            return (
+              <MyIcon
+                type={item.value}
+                onClick={() => {
+                  handleChangeIcon({ key: item.key });
+                  setOpen(false);
+                }}
+                style={{
+                  margin: '6px',
+                  fontSize: '22px',
+                  cursor: 'pointer',
+                  color: activeIcon === item.key ? '#2f54e0' : '#000',
+                }}
+              />
+            );
+          })}
+        </div>
+      </Modal>
     </div>
   );
 };
