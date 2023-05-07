@@ -41,12 +41,14 @@ const Create: React.FunctionComponent<CreateProps> = props => {
       const datasetId = searchParams.get('datasetId');
       const templateId = searchParams.get('templateId');
       const datasets = await DatasetService.allLists();
-      const templates = [...(await TemplateService.list('graph')), ...(await TemplateService.list('my'))];
+
+      const templates = [...(await TemplateService.listInner()), ...(await TemplateService.list())];
       form.setFieldsValue({
         datasetId: datasetId || '',
         templateId: templateId || '',
       });
       updateState(draft => {
+        //@ts-ignore
         draft.templates = templates;
         draft.datasets = datasets;
         draft.templateId = templateId || '';

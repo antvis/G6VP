@@ -96,12 +96,23 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
       <Row gutter={[16, 16]} style={{ paddingRight: '24px' }}>
         {lists.map(item => {
           const { id, name, gmtCreate, recycleTime, cover } = item;
-          let expiredStr;
+          let expiredStr, expiredDateStr;
           if (recycleTime) {
             const expiredDate = new Date(recycleTime + 604800000);
             expiredStr = `${expiredDate.toLocaleDateString()} ${expiredDate.toLocaleTimeString()}`;
+            expiredDateStr = expiredDate.toLocaleDateString();
           }
           const time = utils.time(gmtCreate);
+
+          const expiredInfo = expiredStr && (
+            <div style={{ color: 'red' }}>
+              画布将于 {expiredDateStr} 自动销毁&nbsp;
+              <Tooltip title="关联的数据集已删除，该工作簿即将过期自动销毁。若需恢复，请在「数据集-回收站」恢复相关数据">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </div>
+          );
+
           const Cover = (
             <img
               src={cover || `${window['GI_PUBLIC_PATH']}image/empty_workbook.png`}
@@ -116,15 +127,16 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
             <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
               <Card cover={Cover}>
                 <div style={{ position: 'relative' }}>
-                  <Meta title={name} description={time} />
-                  {expiredStr && (
-                    <div className="expired">
-                      将于{expiredStr}过期&nbsp;
-                      <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
-                        <QuestionCircleOutlined />
-                      </Tooltip>
-                    </div>
-                  )}
+                  <Meta
+                    title={name}
+                    description={
+                      <>
+                        {time}
+                        {expiredInfo}
+                      </>
+                    }
+                  />
+                  {}
                   <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
                     <Popconfirm
                       title="是否删除该项目?"

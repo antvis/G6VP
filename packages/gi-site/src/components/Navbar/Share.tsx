@@ -33,14 +33,14 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
       elementA.click();
       document.body.removeChild(elementA);
       notification.success({
-        message: '分享项目成功！',
+        message: '备份项目成功！',
         description:
           '当前环境为「本地存储」，所有的操作数据均在您的浏览器本地 IndexedDB 中，因此您可下载项目文件进行分享，然后在「新建画布/恢复工作薄」中进行文件恢复',
       });
     } catch (error) {
       console.log(error);
       notification.error({
-        message: '分享项目失败！',
+        message: '备份项目失败！',
         description: `失败原因：${error}`,
       });
     }
@@ -49,7 +49,7 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
   return (
     <div>
       <Button size="small" onClick={handleClick} icon={<ShareAltOutlined />} type="text">
-        分享
+        备份
       </Button>
     </div>
   );

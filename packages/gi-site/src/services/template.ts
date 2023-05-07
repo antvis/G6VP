@@ -1,32 +1,37 @@
-import { message } from 'antd';
 import { GI_TEMPLATE_DB } from '../hooks/useUpdate';
 import { getUid } from '../pages/Workspace/utils';
 import { queryAssets } from './assets';
 import { GI_SITE } from './const';
 import { ITemplate } from './typing';
 import { request } from './utils';
+
 /**
- * 获取所有项目
+ * 获取内置模版
  * @returns
  */
-export const list = async (type: 'my' | 'graph'): Promise<ITemplate[]> => {
-  if (GI_SITE.IS_OFFLINE) {
-    if (type === 'graph') {
-      //@ts-ignore
-      const { templates } = await queryAssets();
-      return Object.values(templates);
-    } else {
-      const res: ITemplate[] = [];
-      await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
-        res.push(item);
-      });
+export const listInner = async () => {
+  const { templates } = await queryAssets();
+  return Object.values(templates || {});
+};
 
-      return res;
-    }
+/**
+ * 获取用户自己创建的模版
+ * @returns
+ */
+export const list = async (): Promise<ITemplate[]> => {
+  if (GI_SITE.IS_OFFLINE) {
+    const res: ITemplate[] = [];
+    await GI_TEMPLATE_DB.iterate((item: ITemplate) => {
+      res.push(item);
+    });
+    return res;
   }
 
   const response = await request(`${GI_SITE.SERVICE_URL}/template/list`, {
-    method: 'post',
+    method: 'get',
+  }).catch(res => {
+    console.log('res', res);
+    return [];
   });
 
   if (response.success) {
@@ -36,7 +41,9 @@ export const list = async (type: 'my' | 'graph'): Promise<ITemplate[]> => {
 };
 
 /**
- * 增加项目
+ * 创建模版
+ * @param param
+ * @returns
  */
 export const create = async (param: any): Promise<string | undefined> => {
   const templateId = `tp_${getUid()}`;
@@ -51,29 +58,29 @@ export const create = async (param: any): Promise<string | undefined> => {
       resolve(templateId);
     });
   }
-  const response = await request(`${GI_SITE.SERVICE_URL}/tempalte/create`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/template/create`, {
     method: 'post',
     data: payload,
   }).catch(error => {
-    message.error(error);
+    return false;
   });
 
-  if (response.success) {
+  if (response && response.success) {
     return response.data;
   }
 };
 
 /**
- * 获取指定项目
- * @param id 项目id
+ * 根据模版ID获取详情
+ * @param id 模版ID
  * @returns
  */
 export const getById = async (id: string): Promise<ITemplate | undefined> => {
   if (GI_SITE.IS_OFFLINE) {
-    const tempalte: any = await GI_TEMPLATE_DB.getItem(id);
-    return tempalte;
+    const template: any = await GI_TEMPLATE_DB.getItem(id);
+    return template;
   }
-  const response = await request(`${GI_SITE.SERVICE_URL}/tempalte/${id}`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/template/${id}`, {
     method: 'get',
   });
   if (response.success) {
@@ -82,9 +89,9 @@ export const getById = async (id: string): Promise<ITemplate | undefined> => {
 };
 
 /**
- * 更新或保存指定项目
- * @param id 项目id
- * @param p 项目配置
+ * 更新模版
+ * @param id
+ * @param params
  * @returns
  */
 export const updateById = async (id: string, params: { data?: string; [key: string]: any }) => {
@@ -95,21 +102,25 @@ export const updateById = async (id: string, params: { data?: string; [key: stri
     GI_TEMPLATE_DB.setItem(id, { ...origin, ...params });
   }
 
-  const response = await request(`${GI_SITE.SERVICE_URL}/tempalte/update`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/template/update`, {
     method: 'post',
     data: params,
   });
   return response.success;
 };
 
-// 软删除项目
+/**
+ * 删除模版
+ * @param id
+ * @returns
+ */
 export const removeById = async (id: string) => {
   if (GI_SITE.IS_OFFLINE) {
     GI_TEMPLATE_DB.removeItem(id);
     return true;
   }
 
-  const response = await request(`${GI_SITE.SERVICE_URL}/tempalte/delete`, {
+  const response = await request(`${GI_SITE.SERVICE_URL}/template/delete`, {
     method: 'post',
     data: {
       id,
