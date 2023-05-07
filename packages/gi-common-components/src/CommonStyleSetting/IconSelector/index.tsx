@@ -1,6 +1,6 @@
 import { Form, Input, Radio, Select } from 'antd';
 import React, { useState } from 'react';
-import MyIcon from '../../Icon';
+import { Icon } from '../../Icon';
 const { Search } = Input;
 
 const IconSet = {
@@ -113,7 +113,7 @@ const IconSelector = props => {
               padding: '0 4px',
             }}
           >
-            <MyIcon
+            <Icon
               type={icon.value}
               style={{
                 fontSize: 23,

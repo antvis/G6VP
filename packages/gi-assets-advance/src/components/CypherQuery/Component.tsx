@@ -1,14 +1,11 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import Graphin from '@antv/graphin';
-import iconLoader from '@antv/graphin-icons';
+
 import { Button } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
 import CyperEditor from './CyperEditor';
 import './index.less';
-
-const icons = Graphin.registerFontFamily(iconLoader);
 
 export interface CyperQueryProps {
   serviceId: string;

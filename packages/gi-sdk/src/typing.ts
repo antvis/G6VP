@@ -223,11 +223,29 @@ export interface GILayoutAssets {
   [key: string]: LayoutAsset;
 }
 
+export interface ITemplate {
+  /** 模版ID */
+  id: string;
+  /** 模版名称*/
+  name?: string;
+  /** 组件配置 */
+  components: GIConfig['components'];
+  /** 布局配置 */
+  layout: GIConfig['layout'];
+  /** 可用的激活资产ID */
+  activeAssetsKeys: string[];
+  /** 模版描述 */
+  desc: string;
+  /** 模版图片 */
+  image: string;
+}
+
 export type GIAssets = Partial<{
   components: GIComponentAssets;
   elements: GIElementsAssets;
   layouts: GILayoutAssets;
   services: EngineServer[];
+  templates: ITemplate[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force

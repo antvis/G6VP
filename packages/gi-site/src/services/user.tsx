@@ -44,14 +44,21 @@ export const getUser = async () => {
     },
     credentials: 'include',
     withCredentials: true, // 携带cookie
-    timeout: 8000,
+    timeout: 4000,
   }).catch(error => {
     const errorMessage = String(error);
-    const timeoutMessage = 'RequestError: timeout of 8000ms exceeded';
-    if (timeoutMessage === errorMessage) {
-      console.log('登陆超时：网络问题，无法下发私域的 VIP 资产');
-    } else {
-      console.log('正在尝试访问 VIP 资产服务');
+    if (errorMessage === 'RequestError: timeout of 4000ms exceeded') {
+      // 互联网公网环境
+      console.log('登陆超时：RequestError: timeout of 4000ms exceeded');
+      return {};
+    }
+    if (errorMessage === 'ResponseError: http error') {
+      // 独立部署，或者云端模式
+      console.log('请求出错：ResponseError: http error');
+      return {};
+    }
+    if (errorMessage === 'TypeError: Failed to fetch') {
+      console.log('尝试访问 VIP 资产服务 TypeError: Failed to fetch');
       createSuperLabel(`${GI_SITE.SERVICE_URL}/user/info`, 'gi-login');
       notification.info({
         placement: 'top',
@@ -61,6 +68,7 @@ export const getUser = async () => {
         btn,
         key,
       });
+      return {};
     }
     return {};
   });

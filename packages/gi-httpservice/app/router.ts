@@ -68,4 +68,7 @@ export default (app: Application) => {
   router.post('/project/update', controller.graphinsight.updateProjectById);
   router.get('/project/case', controller.graphinsight.findCase);
   router.get('/project/:id', controller.graphinsight.getProjectById);
+  /** templates 模版 */
+  router.get('/template/list', controller.template.list);
+  router.post('/template/create', controller.template.create);
 };

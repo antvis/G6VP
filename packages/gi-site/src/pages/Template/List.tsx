@@ -11,10 +11,11 @@ const List: React.FunctionComponent<DatasetsProps> = props => {
   const [state, setState] = React.useState<{ lists: ITemplate[] }>({
     lists: [],
   });
+  const { type } = props;
   React.useEffect(() => {
     (async () => {
-      const res = await TempalteServices.list(props.type);
-      console.log('ITemplate res', res);
+      const server = type === 'my' ? TempalteServices.list : TempalteServices.listInner;
+      const res = await server();
       setState({
         lists: res,
       });

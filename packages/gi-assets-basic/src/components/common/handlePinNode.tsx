@@ -1,7 +1,4 @@
-import Graphin from '@antv/graphin';
-import iconLoader from '@antv/graphin-icons';
-// @ts-ignore
-const icons = Graphin.registerFontFamily(iconLoader);
+import { icons } from '@antv/gi-sdk';
 
 export const handlePinNode = (target, graph, restartForceSimulation, params) => {
   const { x, y, dragNodeMass, isForce } = params || {};
@@ -22,7 +19,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
 
     badges.push({
       position: 'LB',
-      fontFamily: 'graphin',
+      fontFamily: 'iconfont',
       type: 'font',
       value: icons.pushpin,
       size: [15, 15],

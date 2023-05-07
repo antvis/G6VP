@@ -1,6 +1,6 @@
 import { Input, Popover } from 'antd';
 import React, { useRef } from 'react';
-import MyIcon from '../../Icon';
+import { Icon } from '../../Icon';
 import IconContent from './IconContent';
 
 import './index.less';
@@ -66,10 +66,10 @@ const IconPicker: React.FC<IColorInputProps> = props => {
                 border: `1px solid #ddd`,
               }}
             >
-              <MyIcon
+              <Icon
                 type={`icon-${activeIcon}`}
                 style={{ color: '#2f54e0', fontSize: '18px', cursor: 'pointer' }}
-              ></MyIcon>
+              ></Icon>
             </div>
           </Popover>
         }

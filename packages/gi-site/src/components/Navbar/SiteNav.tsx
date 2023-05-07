@@ -45,8 +45,8 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
       </div>
       <div style={styles.right}>
         <DataModeCard />
-        <Theme />
         <Github />
+        <Theme />
         <UserInfo />
       </div>
     </header>

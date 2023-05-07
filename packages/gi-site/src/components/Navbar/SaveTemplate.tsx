@@ -1,5 +1,5 @@
 import { GiftOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Form, Input, MenuProps, Modal, message } from 'antd';
+import { Button, Dropdown, Form, Input, MenuProps, Modal, message, notification } from 'antd';
 import * as React from 'react';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import * as TemplateServices from '../../services/template';
@@ -37,13 +37,18 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
     const clonedLayout = JSON.parse(JSON.stringify(layout));
     const values = form.getFieldsValue();
     const { id, name, type, props } = pageLayout;
-    TemplateServices.create({
+    const isSuccess = await TemplateServices.create({
       ...values,
       ...otherConfig,
       activeAssetsKeys,
       layout: clonedLayout,
       pageLayout: { id, name, type, props },
     });
+    if (isSuccess) {
+      notification.success({ message: '模版保存成功！' });
+    } else {
+      notification.success({ message: '模版保存失败！', description: '请打开浏览器控制台，查看接口请求是否正确' });
+    }
     updateState(draft => {
       draft.save.visible = false;
     });
@@ -67,7 +72,7 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
 
   return (
     <>
-      <div style={{ margin: '0px 8px' }}>
+      <div>
         <Dropdown menu={menuProps}>
           <Button size="small" icon={<GiftOutlined />} type="text">
             模版

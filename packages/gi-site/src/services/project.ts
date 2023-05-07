@@ -76,7 +76,7 @@ export const create = async (param: any): Promise<string | undefined> => {
 export const getById = async (id: string): Promise<IProject | undefined> => {
   if (GI_SITE.IS_OFFLINE) {
     const project: any = await GI_PROJECT_DB.getItem(id);
-    const { projectConfig, engineId, ...others } = project;
+    const { config, projectConfig, engineId, ...others } = project;
     if (!project) {
       message.info('请先在「工作台」页面选择环境...');
       //可能是用户第一进来的时候，没有选择环境
@@ -84,7 +84,7 @@ export const getById = async (id: string): Promise<IProject | undefined> => {
     }
     return {
       ...others,
-      config: projectConfig,
+      config: projectConfig || config,
       engineId: engineId || 'GI',
     };
   }
