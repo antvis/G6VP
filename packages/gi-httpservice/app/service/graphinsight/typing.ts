@@ -46,3 +46,19 @@ export interface IDataset {
   data?: any;
   gmtCreate: any;
 }
+export interface ITemplate {
+  /** 模版ID */
+  id: string;
+  /** 模版名称*/
+  name?: string;
+  /** 组件配置 */
+  components: GIConfig['components'];
+  /** 布局配置 */
+  layout: GIConfig['layout'];
+  /** 可用的激活资产ID */
+  activeAssetsKeys: IActiveAssetsKeys;
+  /** 模版描述 */
+  desc: string;
+  /** 模版图片 */
+  image: string;
+}

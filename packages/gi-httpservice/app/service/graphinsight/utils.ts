@@ -2,6 +2,7 @@ import { Etcd3 } from 'etcd3';
 
 export const DATASET_PREFIX = 'ds_';
 export const WORKBOOK_PREFIX = 'wb_';
+export const TEMPLATE_PREFIX = 'tp_';
 
 const ETCD_HOSTS = process.env.ETCD_HOSTS ? process.env.ETCD_HOSTS : '127.0.0.1:2379';
 console.log('ETCD_HOSTS', ETCD_HOSTS);
