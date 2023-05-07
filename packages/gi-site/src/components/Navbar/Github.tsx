@@ -29,20 +29,31 @@ const Github: React.FunctionComponent<GithubProps> = props => {
     window.open('https://github.com/antvis/G6VP', '_blank');
     handleCloseGithubPopover();
   };
+  const otherProps = githubPopVisible
+    ? {
+        open: githubPopVisible,
+      }
+    : {};
 
   return (
     <Popover
-      title="给个鼓励，加个⭐️吧！"
-      open={githubPopVisible}
+      style={{ width: '400px' }}
+      trigger="hover"
+      title="开源不易，给个鼓励，加个 ⭐️ 吧！"
+      {...otherProps}
       placement="bottomRight"
       getPopupContainer={node => node}
       overlayStyle={{ marginLeft: '20px' }}
       content={
-        <div style={{ textAlign: 'center' }}>
+        <div
+          style={{
+            textAlign: 'center',
+          }}
+        >
           <Button size="small" onClick={handleCloseGithubPopover}>
             别烦我
           </Button>
-          <Button size="small" type="primary" style={{ marginLeft: '4px' }} onClick={handleJumpToGithub}>
+          <Button size="small" type="primary" style={{ marginLeft: '8px' }} onClick={handleJumpToGithub}>
             这就去
           </Button>
         </div>
