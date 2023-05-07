@@ -147,11 +147,6 @@ export default {
               path: 'report',
               component: 'Share',
             },
-            {
-              exact: true,
-              path: 'case',
-              component: 'Workspace/Case',
-            },
           ],
         },
         {

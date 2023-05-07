@@ -37,7 +37,7 @@ const WORKBOOK_ITEMS = [
   { label: '新建画布', key: '/workbook/create', icon: <PlusOutlined /> },
   { label: '我的模版', key: '/workbook/template', icon: <AppstoreOutlined /> },
   // { label: '我的报表', key: '/workbook/report', icon: <MenuUnfoldOutlined /> },
-  { label: '行业案例', key: '/workbook/case', icon: <AppstoreOutlined /> },
+  // { label: '行业案例', key: '/workbook/case', icon: <AppstoreOutlined /> },
 ];
 
 const getItems = location => {
