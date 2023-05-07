@@ -114,19 +114,27 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
               />
             );
 
+            const expiredInfo = expiredStr && (
+              <span style={{ color: 'red' }}>
+                数据源已删除&nbsp;
+                <Tooltip
+                  title={`相关数据集已删除，该工作簿将于 ${expiredStr} 过期自动销毁。若需恢复，请在「数据集-回收站」恢复相关数据`}
+                >
+                  <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
+                </Tooltip>
+              </span>
+            );
+            const description = (
+              <>
+                {time} {expiredInfo}
+              </>
+            );
             return (
               <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                 <Card cover={Cover}>
                   <div style={{ position: 'relative' }}>
-                    <Meta title={name} description={time} />
-                    {expiredStr && (
-                      <div className="expired">
-                        将于{expiredStr}过期&nbsp;
-                        <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
-                          <QuestionCircleOutlined />
-                        </Tooltip>
-                      </div>
-                    )}
+                    <Meta title={name} description={description} />
+
                     <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
                       <Popconfirm
                         title="是否删除该项目?"
