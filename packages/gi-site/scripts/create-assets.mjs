@@ -40,7 +40,7 @@ assets.forEach(item => {
 });
 
 /** 生成 font 字体 */
-fetch('https://at.alicdn.com/t/a/font_3381398_s877qsmwf1.js')
+fetch('https://at.alicdn.com/t/a/font_3381398_hecr296g6n8.js')
   .then(res => res.text())
   .then(res => {
     fs.writeFile(path.resolve(__dirname, '../public/libs/', `font.js`), res, error => {
