@@ -48,6 +48,7 @@ export const allLists = async () => {
     const response = await request(`${GI_SITE.SERVICE_URL}/dataset/list`, {
       method: 'get',
     });
+
     return response.data.filter(item => !item.recycleTime);
   }
 };
@@ -111,6 +112,7 @@ export const recoverDataset = async record => {
   const { id } = record;
   if (GI_SITE.IS_OFFLINE) {
     const item = await GI_DATASET_DB.getItem(id);
+
     if (item) GI_DATASET_DB.setItem(id, { ...item, recycleTime: undefined });
     await GI_PROJECT_DB.iterate(project => {
       //@ts-ignore
@@ -192,7 +194,7 @@ export const recycleDataset = async (id: string) => {
     await GI_PROJECT_DB.iterate((item: IDataset) => {
       //@ts-ignore
       const { datasetId, id: PROJECT_ID, type } = item;
-      if (datasetId === id && type === 'user') {
+      if (datasetId === id) {
         GI_PROJECT_DB.setItem(PROJECT_ID, { ...item, recycleTime });
       }
     });
