@@ -27,7 +27,9 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm publish",
+    "prepublishOnly": "npm run build && node ../../scripts/publish_backup.js",
+    "postpublish": "node ../../scripts/publish_recover.js"
   },
   "dependencies": {
     "@antv/gi-common-components": "workspace:*",

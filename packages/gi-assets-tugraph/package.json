@@ -22,7 +22,9 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "npm:publish": "npm run build && node ../../scripts/publish_backup.js && npm publish && node ../../scripts/publish_recover.js"
+    "npm:publish": "npm publish",
+    "prepublishOnly": "npm run build && node ../../scripts/publish_backup.js",
+    "postpublish": "node ../../scripts/publish_recover.js"
   },
   "resolutions": {
     "antd": "4.x"
