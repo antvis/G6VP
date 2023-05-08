@@ -31,5 +31,6 @@
   },
   "devDependencies": {
     "react-spring": "^9.5.4"
-  }
+  },
+  "private": true
 }
