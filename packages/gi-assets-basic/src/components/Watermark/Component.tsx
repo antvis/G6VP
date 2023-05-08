@@ -241,6 +241,18 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
     }
   };
 
+  const fetchWatermarkData = async () => {
+    if (watermarkService) {
+      const res = await watermarkService();
+      setContent(res?.data?.content);
+      setImage(res?.data?.image);
+    }
+  };
+
+  useEffect(() => {
+    fetchWatermarkData();
+  }, [watermarkServiceId]);
+
   useEffect(() => {
     renderWatermark();
     return () => {

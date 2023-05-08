@@ -1,3 +1,5 @@
+import { utils } from "@antv/gi-sdk";
+
 const registerMeta = ({ services }) => {
   const schema = {
     renderMode: {
@@ -12,6 +14,16 @@ const registerMeta = ({ services }) => {
         ],
       },
       default: 'page',
+    },
+    watermarkServiceId: {
+      title: '水印服务',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: utils.getServiceOptions(services, 'WatermarkService'),
+      },
+      default: 'GI/WatermarkService',
     },
     width: {
       title: '宽度',
