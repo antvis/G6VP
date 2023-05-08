@@ -42,6 +42,7 @@ import SelectExchangeMenuItem from './SelectExchangeMenuItem';
 import SideLayout from './SideLayout';
 import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
+import Watermark from './Watermark';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
@@ -101,4 +102,5 @@ export {
   CommonNeighbor,
   SideLayout,
   SegmentedLayout,
+  Watermark,
 };
