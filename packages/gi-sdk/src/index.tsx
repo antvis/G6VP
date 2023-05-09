@@ -1,6 +1,5 @@
 /** export  */
-const version = '2.2.3';
-console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
+import { version } from '../package.json';
 import {
   deepClone,
   GI_CONTAINER_METAS,
@@ -14,6 +13,7 @@ import template from './constants/template';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
+console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 const extra = {
   /** 原子组件 META */
   GIAC_CONTENT_METAS,
