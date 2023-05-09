@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 
 const BaseSize = 2;
 const FontGap = 3;
+const WATERMARK_ID = 'gi-watermark';
 
 /** 渲染模式，控制组件在整个页面还是仅在画布上渲染 */
 enum RenderMode {
@@ -26,25 +27,13 @@ export interface WatermarkProps {
 }
 
 const Watermark: React.FunctionComponent<WatermarkProps> = props => {
-  const {
-    watermarkServiceId,
-    renderMode,
-    zIndex,
-    rotate,
-    width,
-    height,
-    fontColor,
-    fontSize,
-    gap,
-    offset,
-  } = props;
+  const { watermarkServiceId, renderMode, zIndex, rotate, width, height, fontColor, fontSize, gap, offset } = props;
   const { GISDK_ID, services } = useContext();
 
   /** 水印文字内容 */
   const [content, setContent] = useState('');
   /** 水印图片源 */
   const [image, setImage] = useState('');
-
   const watermarkService = utils.getService(services, watermarkServiceId);
 
   /** 获取渲染区域 */
@@ -92,6 +81,7 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
   };
 
   const watermarkRef = useRef<HTMLDivElement | null>(null);
+  const stopObservation = useRef(false);
 
   const destroyWatermark = () => {
     if (watermarkRef.current) {
@@ -101,6 +91,7 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
 
   const appendWatermark = (base64Url: string, markWidth: number) => {
     if (watermarkRef.current) {
+      stopObservation.current = true;
       watermarkRef.current.setAttribute(
         'style',
         getStyleStr({
@@ -109,6 +100,10 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
           backgroundSize: `${(gapX + markWidth) * BaseSize}px`,
         }),
       );
+      // Delayed execution
+      setTimeout(() => {
+        stopObservation.current = false;
+      });
     }
   };
 
@@ -170,7 +165,13 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
     const ctx = canvas.getContext('2d');
 
     if (!watermarkRef.current) {
-      watermarkRef.current = document.getElementById('gi-watermark') as HTMLDivElement;
+      let watermarkDom = document.getElementById(WATERMARK_ID) as HTMLDivElement;
+      if (!watermarkDom) {
+        watermarkDom = document.createElement('div');
+        watermarkDom.id = WATERMARK_ID;
+        RenderDomMap[renderMode].append(watermarkDom);
+      }
+      watermarkRef.current = watermarkDom;
     }
 
     if (ctx) {
@@ -241,6 +242,39 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
     }
   };
 
+  useEffect(() => {
+    /** 防止用户通过控制台修改样式去除水印效果 */
+    const callback = (mutations: MutationRecord[]) => {
+      if (stopObservation.current) {
+        return;
+      }
+
+      mutations.forEach(mutation => {
+        if (mutation.removedNodes.length) {
+          Array.from(mutation.removedNodes).some(node => {
+            if (node === watermarkRef.current) {
+              destroyWatermark();
+              renderWatermark();
+              // @ts-ignore
+              watermarkRef.current.setAttribute('style', node.attributes.style.value);
+            }
+          });
+        }
+        if (mutation.type === 'attributes' && mutation.target === watermarkRef.current) {
+          destroyWatermark();
+          renderWatermark();
+          watermarkRef.current.setAttribute('style', mutation.oldValue!);
+        }
+      });
+    };
+    const observer = new MutationObserver(callback);
+    const options = { attributes: true, childList: true, subtree: true, attributeOldValue: true };
+    observer.observe(document.body, options);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const fetchWatermarkData = async () => {
     if (watermarkService) {
       const res = await watermarkService();
@@ -275,7 +309,7 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
     offsetTop,
   ]);
 
-  return ReactDOM.createPortal(<div id="gi-watermark" ref={watermarkRef}></div>, RenderDomMap[renderMode]);
+  return ReactDOM.createPortal(<div id={WATERMARK_ID} ref={watermarkRef}></div>, RenderDomMap[renderMode]);
 };
 
 export default Watermark;
