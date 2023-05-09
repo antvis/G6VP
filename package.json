@@ -28,7 +28,8 @@
     "clean:all": "pnpm run -r clean",
     "core": "cd packages/gi && npm run start",
     "move:dist": "node ./scripts/deploy.js",
-    "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start"
+    "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
+    "publish": "pnpm publish -r --registry=https://registry.npmjs.org"
   },
   "pnpm": {
     "peerDependencyRules": {

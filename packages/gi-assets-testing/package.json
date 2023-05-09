@@ -21,7 +21,7 @@
     "test": "jest",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "clean": "rimraf es esm lib dist",
-    "tnpm:publish": "node ../../scripts/publish_backup.js && npm publish --tag beta && node ../../scripts/publish_recover.js"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@antv/gi-sdk": "workspace:*",
