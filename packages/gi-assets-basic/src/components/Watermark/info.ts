@@ -7,6 +7,6 @@ const info = {
   icon: 'icon-placeholder',
   type: 'AUTO',
   services: ['WatermarkService'],
-  docs: 'https://www.yuque.com/antv/gi/mw2wxx9h6kz1lp0z',
+  docs: 'https://www.yuque.com/antv/gi/atogtq0417351bpq',
 };
 export default info;
