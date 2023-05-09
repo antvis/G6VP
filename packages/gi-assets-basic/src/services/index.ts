@@ -2,6 +2,7 @@ import * as Initializer from './Initializer';
 import * as NeighborsQueryServices from './NeighborsQuery';
 import * as PropertiesPanel from './PropertiesPanel';
 import * as Save from './Save';
+import * as WatermarkService from './WatermarkService';
 
 export default {
   id: 'GI',
@@ -14,5 +15,6 @@ export default {
     ...NeighborsQueryServices,
     ...Initializer,
     ...Save,
+    ...WatermarkService,
   },
 };
