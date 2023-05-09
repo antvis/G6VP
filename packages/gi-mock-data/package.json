@@ -17,5 +17,6 @@
     "url": "https://github.com/antvis/G6VP.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "private": true
 }

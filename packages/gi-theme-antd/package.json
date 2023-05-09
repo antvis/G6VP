@@ -25,7 +25,8 @@
     "build:css": "webpack --env theme=light --config ./webpack.js && webpack  --env theme=dark  --config ./webpack.js && webpack  --env theme=ali  --config ./webpack.js",
     "clean:css": "rimraf dist",
     "clean": "rimraf es esm lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build:es"
   },
   "publishConfig": {
     "access": "public"

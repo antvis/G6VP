@@ -228,33 +228,49 @@ nvm alias default v16.17.0
 
 ## 如何发布版本
 
-因为我们组件间的依赖关系用 pnpm 管理的，即`workspace:*`，因此发布到 npm 仓库，可以使用`pnpm publish`，该命令会自动将`workspace:*`转化为对应的版本。
+G6VP 采用 [changesets](https://pnpm.io/using-changesets) 来进行包版本管理和发布，因此不需要手动维护版本号，只需要在提交代码时，使用`pnpm run changeset`来生成对应的版本号即可。
 
-- 1. 进入每个子包中，执行发布命令
+- 1. 发布前准备
 
+按照下列步骤选择要发布的子包并更新版本号
+
+```bash
+# 添加需要发布的子包
+pnpm changeset
+
+# 更新子包版本号，并生成 changeset 文件
+pnpm changeset version
 ```
-npm run npm:publish
+
+> 发布完成后再将生成的 changeset 文件添加变更并提交到主分支仓库
+
+- 2. 发布子包
+
+> 需要提前登录
+
+```bash
+pnpm publish -r
 ```
 
-- 2. 子包发布后，需要同步到 CDN 上
+- 3. 子包发布后，需要同步到 CDN 上
 
 如果是公开的，国内用：https://www.jsdelivr.com/ ，国外可用：https://unpkg.com/
 如果是非公开的，则使用给自公司的 CDN 平台进行同步
 
-- 3. 发布主站点
+- 4. 发布主站点
 
-```
+```bash
 cd pacakges/gi-site
 npm run build
 ```
 
-- 4. 本地验证
+- 5. 本地验证
 
 执行 `code dist` ,使用 vscode 打开站点的产物，使用 live-server 等工具，将站点产物托管起来。访问 web 地址，验证站点是否正常运行，主要需要验证的点是，各个子包的产物是否正确发布到 CDN 上
 
-- 5. 发布到 github pages 上
+- 6. 发布到 github pages 上
 
-```
+```bash
 cd packages/gi-site
 npm run deploy
 ```
