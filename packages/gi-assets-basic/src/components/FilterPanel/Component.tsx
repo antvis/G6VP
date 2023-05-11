@@ -12,6 +12,8 @@ import { filterGraphData, getChartData, highlightSubGraph } from './utils';
 
 const { isStyles } = utils;
 
+let updateTimer: NodeJS.Timer;
+
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
@@ -19,6 +21,10 @@ export interface FilterPanelProps {
   filterKeys: string[];
   histogramOptions?: HistogramOpt;
   enableInfoDetect?: boolean;
+  controlledValues?: {
+    options: { [id: string]: IFilterCriteria };
+  };
+  onOpen?: () => void;
 }
 
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
@@ -29,13 +35,15 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     filterKeys = [],
     histogramOptions,
     enableInfoDetect,
+    controlledValues,
+    onOpen,
   } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
   const [sorttedProperties, setSorttedProperties] = useState<{
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
   }>({ node: [], edge: [] });
-  const { source, updateContext, transform, schemaData, graph, propertyGraphData } = useContext();
+  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData } = useContext();
 
   useEffect(() => {
     if (!enableInfoDetect) return;
@@ -90,10 +98,13 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
 
   const updateFilterCriteria = (id: string, filterCriteria: IFilterCriteria) => {
     setFilterOptions(preState => {
-      return {
+      const newFilterOptions = {
         ...preState,
         [id]: filterCriteria,
       };
+      console.log('updateFilterCriteria', id, filterCriteria);
+      handleUpateHistory(newFilterOptions);
+      return newFilterOptions;
     });
   };
 
@@ -108,11 +119,15 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         }
       }
 
+      console.log('remove', id);
+      handleUpateHistory(newFilterOptions);
+
       return newFilterOptions;
     });
   };
 
   useEffect(() => {
+    console.log('filterKeys', filterKeys);
     // 初始化时需要展示的筛选器
     const initialFilterOptions = filterKeys
       .map(defaultKey => {
@@ -131,6 +146,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       }, {});
 
     setFilterOptions(initialFilterOptions);
+    if (filterKeys.length) handleUpateHistory(initialFilterOptions);
   }, [filterKeys]);
 
   const handleFilterOptionsChange = (options: { [id: string]: IFilterCriteria }) => {
@@ -241,6 +257,62 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
       if (dom) dom.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }, 100);
   };
+
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory: Function = (
+    options: {
+      [id: string]: IFilterCriteria;
+    },
+    success: boolean = true,
+    errorMsg?: string,
+  ) => {
+    const fn = () => {
+      const stashOptions = {};
+      Object.keys(options).forEach(key => {
+        const { analyzerType, defaultKey, elementType, id, prop, selectOptions, histogramOptions } = options[key];
+        stashOptions[key] = {
+          analyzerType,
+          defaultKey,
+          elementType,
+          id,
+          prop,
+          selectOptions,
+          histogramOptions,
+        };
+      });
+
+      updateHistory({
+        componentId: 'FilterPanel',
+        type: 'analyse',
+        subType: '筛选',
+        statement: '筛选',
+        success,
+        errorMsg,
+        params: {
+          options: stashOptions,
+        },
+      });
+    };
+    // 防止 filterOptions 被频繁更新导致的重复 updateHistory
+    if (updateTimer) clearTimeout(updateTimer);
+    updateTimer = setTimeout(fn, 500);
+  };
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { options } = controlledValues;
+      onOpen?.();
+      setFilterOptions(options);
+    }
+  }, [controlledValues]);
 
   return (
     <div className="gi-filter-panel">

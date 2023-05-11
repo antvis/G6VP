@@ -37,6 +37,7 @@
     "@antv/util": "^3.2.5",
     "@uiw/react-markdown-preview": "^4.1.13",
     "ace-gremlin-editor": "^0.0.14",
+    "ahooks": "^3.7.6",
     "codemirror": "^5.25.0",
     "copy-to-clipboard": "^3.3.2",
     "cypher-editor-support": "^1.1.10",

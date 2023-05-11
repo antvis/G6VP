@@ -23,12 +23,16 @@ enum CommunityDetectionAlgorithm {
 export interface CommunityDetectionProps {
   serviceId: string;
   style?: React.CSSProperties;
+  controlledValues?: {
+    algorithm: string;
+    coreDegreeK: number;
+  };
 }
 
 const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = props => {
-  const context = useContext();
-  const { data, graph } = context;
-  const [communityAlgo, setCommunityAlgo] = useState(CommunityDetectionAlgorithm.KCore);
+  const { controlledValues } = props;
+  const { data, graph, updateHistory } = useContext();
+  const [communityAlgo, setCommunityAlgo] = useState<CommunityDetectionAlgorithm>(CommunityDetectionAlgorithm.KCore);
   const [resData, setResData] = useState<any>(null);
   const [initData, setInitData] = useState<GraphinData>({
     nodes: [],
@@ -47,6 +51,18 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     CommunityDetectionAlgorithm.iLouvain,
     CommunityDetectionAlgorithm.ConnectedComponent,
   ];
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { algorithm, coreDegreeK: controlledCoreK } = controlledValues;
+      setCommunityAlgo(algorithm as CommunityDetectionAlgorithm);
+      if (controlledCoreK) setCoreDegreeK(controlledCoreK);
+    }
+  }, [controlledValues]);
 
   useEffect(() => {
     setInitData({
@@ -192,12 +208,13 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     setHasAnalysis(true);
     setLoading(true);
     setTimeout(() => {
+      if (!graph || graph.destroyed) {
+        handleUpateHistory(false, '图实例不存在');
+        return;
+      }
       const formatData = formatOriginData(data);
       switch (communityAlgo) {
         case CommunityDetectionAlgorithm.KCore:
-          if (!graph || graph.destroyed) {
-            return;
-          }
           //@ts-ignore
           const coreData = (kCore(formatData, coreDegreeK) || {
             nodes: [],
@@ -278,8 +295,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           const components = connectedComponent(formatData);
           if (components.length <= 1) {
             message.info(formatMessage({ id: 'connected-component.all-connected' }));
-            setLoading(false);
-            return;
+            break;
           }
           const clustersComponent: { id: string; nodes: any[] }[] = [];
           let existSingleNode = false;
@@ -304,8 +320,30 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
         default:
           break;
       }
+      handleUpateHistory(true);
       setLoading(false);
     }, 100);
+  };
+
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (success: boolean, errorMsg?: string) => {
+    updateHistory({
+      componentId: 'CommunityDiscovery',
+      type: 'analyse',
+      subType: '社区发现',
+      statement: communityAlgo,
+      success,
+      errorMsg,
+      params: {
+        algorithm: communityAlgo,
+        coreDegreeK,
+      },
+    });
   };
 
   const cleatActiveState = () => {

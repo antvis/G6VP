@@ -7,5 +7,6 @@ const info = {
   type: 'AUTO',
   icon: 'icon-time',
   docs: 'https://www.yuque.com/antv/gi/qe8vp7n9snmv54qn',
+  services: ['SaveHistoryTemplateService', 'ListHistoryTemplateService', 'RemoveHistoryTemplateService'],
 };
 export default info;

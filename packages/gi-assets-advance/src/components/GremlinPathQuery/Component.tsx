@@ -1,4 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
+import { useContext } from '@antv/gi-sdk';
 import { GraphinContext } from '@antv/graphin';
 import { Button, Col, Divider, Form, Input, Row, Select, Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -89,13 +90,23 @@ export interface IGremlinTemplateQueryProps {
   onClose: () => void;
   serviceId: string;
   style?: React.CSSProperties;
+  controlledValues?: {
+    value: string;
+  };
 }
 
-const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, onClose, serviceId, style }) => {
+const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
+  visible,
+  onClose,
+  serviceId,
+  style,
+  controlledValues,
+}) => {
   const [form] = Form.useForm();
   const [paramInput, setParamInput] = useState(undefined);
   const [currentTemplate, setCurrentTemplate] = useState({} as any);
   const [templateData, setTemplateData] = useState([] as PathParam[]);
+  const { updateHistory } = useContext();
 
   const { services, dispatch } = GraphinContext as any;
 
@@ -149,6 +160,23 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, o
     queryPathTemplateList();
   }, []);
 
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    const { value } = controlledValues || {};
+    if (value) {
+      const template = templateData.find(d => d.queryTemplate === value);
+      if (!template) {
+        handleUpateHistory(false, '本项目不存在该查询模版', value);
+        return;
+      }
+      templateChange(template.pathId);
+      handleExecTemplate();
+    }
+  }, [controlledValues]);
+
   const [showTemplate, setShowTemplate] = useState('');
   const [btnLoading, setBtnLoading] = useState(false);
 
@@ -156,16 +184,16 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, o
    * 填写参数以后执行算法模板
    */
   const handleExecTemplate = async () => {
+    const { service } = services.find(sr => sr.id === serviceId);
+    if (!service) {
+      return;
+    }
+
     setBtnLoading(true);
     const gremlin = currentTemplate.queryTemplate
       .trim()
       .replace(/(\{\{)\w+(\}\})/g, replaceValueFun)
       .replace(/\\n/g, '');
-
-    const { service } = services.find(sr => sr.id === serviceId);
-    if (!service) {
-      return;
-    }
 
     const result = await service({
       value: gremlin,
@@ -173,9 +201,31 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({ visible, o
 
     setBtnLoading(false);
     if (!result) {
+      handleUpateHistory(false, 'Gremlin 模版查询失败', gremlin);
       return;
     }
+    handleUpateHistory(result?.success, '', gremlin);
     dispatch.changeData(result);
+  };
+
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (success, errorMsg, value) => {
+    updateHistory({
+      componentId: 'GremlinPathQuery',
+      type: 'query',
+      subType: 'Gremlin 模版查询',
+      statement: value,
+      success,
+      errorMsg,
+      params: {
+        value: value,
+      },
+    });
   };
 
   const handleUpdateTempalte = () => {

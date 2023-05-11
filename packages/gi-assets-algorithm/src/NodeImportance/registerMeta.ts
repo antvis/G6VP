@@ -49,6 +49,11 @@ export interface NodeImportanceProps {
   onVisibleChange?: (visible: boolean) => void;
   hasDivider: boolean;
   color: string;
+  controlledValues?: {
+    algorithm: string;
+    [formField: string]: unknown;
+  };
+  onOpen?: () => void;
 }
 
 const { GIAC_CONTENT_METAS, deepClone } = extra;

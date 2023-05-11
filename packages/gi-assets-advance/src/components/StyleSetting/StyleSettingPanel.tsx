@@ -1,15 +1,24 @@
 import { CommonStyleSetting } from '@antv/gi-common-components';
 import { GIConfig, useContext, utils } from '@antv/gi-sdk';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export interface StyleSettingProps {
   elementType: 'nodes' | 'edges';
   service?: any;
+  controlledValues?: {
+    elementType: string;
+    styleGroups: any;
+  };
 }
 
-const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ elementType = 'nodes', service }) => {
+const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
+  elementType = 'nodes',
+  service,
+  controlledValues,
+}) => {
   const {
     updateContext,
+    updateHistory,
     data,
     config,
     assets,
@@ -36,16 +45,40 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({ element
       };
     });
 
+    const clonedConfig = JSON.parse(JSON.stringify(elementConfig));
+
     updateContext(draft => {
-      draft.config[elementType] = JSON.parse(JSON.stringify(elementConfig));
+      draft.config[elementType] = clonedConfig;
       draft.layoutCache = true;
     });
 
+    updateHistory({
+      componentId: 'StyleSettingPanel',
+      type: 'configure',
+      subType: '样式设置',
+      statement: '样式设置',
+      success: true,
+      params: {
+        elementType,
+        styleGroups: JSON.parse(JSON.stringify(styleGroups)),
+      },
+    });
+
     if (service) {
-      // debugger
-      service(JSON.parse(JSON.stringify(elementConfig)), elementType);
+      service(clonedConfig, elementType);
     }
   };
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    const { elementType: controlledType, styleGroups } = controlledValues || {};
+    if (controlledValues && controlledType === elementType) {
+      handleChange(styleGroups);
+    }
+  }, [controlledValues]);
 
   return (
     <CommonStyleSetting

@@ -1,5 +1,5 @@
 import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
@@ -15,12 +15,18 @@ const { Panel } = Collapse;
 
 export interface IPathAnalysisProps {
   pathNodeLabel: string;
+  controlledValues?: {
+    source: string;
+    target: string;
+    direction: string;
+  };
+  onOpen: () => void;
 }
 
 enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
-  const { pathNodeLabel } = props;
+  const { pathNodeLabel, controlledValues, onOpen = () => {} } = props;
   const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
@@ -65,38 +71,56 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     form.validateFields().then(values => {
       cancelHighlight();
       const { source, target, direction = true } = values;
-      const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
-      // 处理未找到路径时的提示
-      if (!allNodePath?.length) {
-        let info = '未找到符合条件的路径';
-        if (direction) {
-          info = `${info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点`;
-        } else {
-          info = `${info}，可尝试改变起点与终点`;
-        }
-        message.info(info);
-        return;
-      }
-      const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
-
-      updateHistory({
+      const history = {
+        componentId: 'PathAnalysis',
         type: 'analyse',
-        subType: 'path',
+        subType: '路径',
         statement: `起点: ${source}, 终点: ${target}`,
-      });
+        params: {
+          source,
+          target,
+          direction,
+        },
+      };
+      try {
+        const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
+        if (!allNodePath?.length) {
+          let info = '无符合条件的路径';
+          if (direction) {
+            info = `${info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点`;
+          } else {
+            info = `${info}，可尝试改变起点与终点`;
+          }
+          message.info(info);
+          updateHistory({
+            ...history,
+            success: false,
+            errorMsg: info,
+          });
+          return;
+        }
+        const highlightPath = new Set<number>(allNodePath.map((_, index) => index));
 
-      updateState(draft => {
-        draft.allNodePath = allNodePath;
-        draft.allEdgePath = allEdgePath;
-        draft.nodePath = allNodePath;
-        draft.edgePath = allEdgePath;
-        draft.isAnalysis = true;
-        draft.highlightPath = highlightPath;
-        draft.filterRule = {
-          type: 'All-Path',
-        };
-        draft.selecting = '';
-      });
+        updateState(draft => {
+          draft.allNodePath = allNodePath;
+          draft.allEdgePath = allEdgePath;
+          draft.nodePath = allNodePath;
+          draft.edgePath = allEdgePath;
+          draft.isAnalysis = true;
+          draft.highlightPath = highlightPath;
+          draft.filterRule = {
+            type: 'All-Path',
+          };
+          draft.selecting = '';
+        });
+        // 更新到历史记录
+        updateHistory({
+          ...history,
+          success: true,
+        });
+      } catch (error) {
+        updateHistory({ ...history, success: false, errorMsg: error });
+      }
     });
   };
 
@@ -247,6 +271,23 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   useEffect(() => {
     handleResetForm();
   }, [graphData]);
+
+  /**
+   * 外部控制参数变化，进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { source, target, direction } = controlledValues;
+      onOpen();
+      form.setFieldsValue({
+        source,
+        target,
+        direction: direction !== 'false',
+      });
+      handleSearch();
+    }
+  }, [controlledValues]);
 
   return (
     <div className="gi-path-analysis">

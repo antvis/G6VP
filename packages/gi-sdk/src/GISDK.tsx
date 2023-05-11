@@ -277,17 +277,22 @@ const GISDK = (props: Props) => {
         draft.layoutCache = false;
       });
     },
+    // 更新历史记录
     updateHistory: param => {
-      updateState(draft => {
-        // @ts-ignore
-        draft.history = (draft.history || []).concat([
-          {
-            id: createUuid(),
-            timestamp: new Date().getTime(),
-            ...param,
-          },
-        ]);
-      });
+      const time = new Date().getTime();
+      // 间隔一定时间再更新到历史栈中，保证画布数据已经更新完成
+      setTimeout(() => {
+        updateState(draft => {
+          // @ts-ignore
+          draft.history = (draft.history || []).concat([
+            {
+              id: createUuid(),
+              timestamp: time,
+              ...param,
+            },
+          ]);
+        });
+      }, 500);
     },
     stopForceSimulation: stopForceSimulation,
     restartForceSimulation: restartForceSimulation,
