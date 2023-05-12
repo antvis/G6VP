@@ -213,6 +213,7 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
     updateState(draft => {
       draft.runningId = node.id;
     });
+    debugger;
     updateContext(draft => {
       draft.config.components.forEach(item => {
         if (lastComponentId && item.id === lastComponentId) {

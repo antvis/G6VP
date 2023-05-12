@@ -79,7 +79,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         params: {
           source,
           target,
-          direction,
+          direction: String(direction),
         },
       };
       try {

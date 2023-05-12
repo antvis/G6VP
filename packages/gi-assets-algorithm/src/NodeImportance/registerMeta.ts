@@ -51,6 +51,8 @@ export interface NodeImportanceProps {
   color: string;
   controlledValues?: {
     algorithm: string;
+    degreeIn: string;
+    degreeOut: string;
     [formField: string]: unknown;
   };
   onOpen?: () => void;

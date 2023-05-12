@@ -81,10 +81,17 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
    */
   useEffect(() => {
     if (controlledValues) {
-      const { algorithm, ...formValues } = controlledValues;
-      console.log('onOpen', onOpen);
+      const { algorithm, degreeIn: controlledIn, degreeOut: controlledOut, ...formValues } = controlledValues;
       onOpen?.();
       setCurrentAlgo(algorithm);
+      const degreeIn = controlledIn === 'true';
+      const degreeOut = controlledOut === 'true';
+      if (degreeIn || degreeOut) {
+        const controlledDegreeType = [];
+        if (degreeIn) controlledDegreeType.push('in');
+        if (degreeOut) controlledDegreeType.push('out');
+        setDegreeType(controlledDegreeType);
+      }
       setReAnalyse(Math.random());
       form.setFieldsValue(formValues);
       onAnalyse();
@@ -93,10 +100,6 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const onRadioChange = e => {
     setCurrentAlgo(e.target.value);
-  };
-
-  const onDegreeCheckChange = checkedValues => {
-    setDegreeType(checkedValues);
   };
 
   const reset = () => {
@@ -478,6 +481,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
       errorMsg: msg,
       params: {
         algorithm,
+        degreeIn: String(degreeType?.includes('in')),
+        degreeOut: String(degreeType?.includes('out')),
         ...formValues,
       },
     });
@@ -598,7 +603,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             },
           ]}
           defaultValue={['in', 'out']}
-          onChange={onDegreeCheckChange}
+          onChange={setDegreeType}
+          value={degreeType}
           style={{ display: currentAlgo === 'degree' ? 'inline-flex' : 'none' }}
         />
       ),

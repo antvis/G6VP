@@ -102,7 +102,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         ...preState,
         [id]: filterCriteria,
       };
-      console.log('updateFilterCriteria', id, filterCriteria);
       handleUpateHistory(newFilterOptions);
       return newFilterOptions;
     });
@@ -119,7 +118,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         }
       }
 
-      console.log('remove', id);
       handleUpateHistory(newFilterOptions);
 
       return newFilterOptions;
@@ -127,7 +125,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   };
 
   useEffect(() => {
-    console.log('filterKeys', filterKeys);
     // 初始化时需要展示的筛选器
     const initialFilterOptions = filterKeys
       .map(defaultKey => {

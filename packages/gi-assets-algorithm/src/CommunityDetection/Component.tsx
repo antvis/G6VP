@@ -8,8 +8,8 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClusterTable from '../ClusterTable';
 import Utils from '../utils/index';
-import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
+import './index.less';
 
 const { ClickSelect } = Behaviors;
 
@@ -20,17 +20,20 @@ enum CommunityDetectionAlgorithm {
   ConnectedComponent = 'connected-component',
 }
 
+export type ControlledValues = {
+  algorithm: string;
+  coreDegreeK: number;
+};
+
 export interface CommunityDetectionProps {
   serviceId: string;
   style?: React.CSSProperties;
-  controlledValues?: {
-    algorithm: string;
-    coreDegreeK: number;
-  };
+  controlledValues?: ControlledValues;
+  onOpen?: () => void;
 }
 
 const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = props => {
-  const { controlledValues } = props;
+  const { controlledValues, onOpen } = props;
   const { data, graph, updateHistory } = useContext();
   const [communityAlgo, setCommunityAlgo] = useState<CommunityDetectionAlgorithm>(CommunityDetectionAlgorithm.KCore);
   const [resData, setResData] = useState<any>(null);
@@ -61,6 +64,8 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       const { algorithm, coreDegreeK: controlledCoreK } = controlledValues;
       setCommunityAlgo(algorithm as CommunityDetectionAlgorithm);
       if (controlledCoreK) setCoreDegreeK(controlledCoreK);
+      onCommunityAnalyse(controlledValues);
+      onOpen?.();
     }
   }, [controlledValues]);
 
@@ -204,7 +209,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     };
   };
 
-  const onCommunityAnalyse = () => {
+  const onCommunityAnalyse = (values = {} as ControlledValues) => {
     setHasAnalysis(true);
     setLoading(true);
     setTimeout(() => {
@@ -213,10 +218,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
         return;
       }
       const formatData = formatOriginData(data);
-      switch (communityAlgo) {
+      switch (values.algorithm || communityAlgo) {
         case CommunityDetectionAlgorithm.KCore:
           //@ts-ignore
-          const coreData = (kCore(formatData, coreDegreeK) || {
+          const coreData = (kCore(formatData, values.coreDegreeK || coreDegreeK) || {
             nodes: [],
             edges: [],
           }) as GraphinData;
@@ -332,17 +337,18 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
    * @param value 查询语句
    */
   const handleUpateHistory = (success: boolean, errorMsg?: string) => {
+    const params = { communityAlgo } as any;
+    if (communityAlgo === CommunityDetectionAlgorithm.KCore) {
+      params.coreDegreeK = coreDegreeK;
+    }
     updateHistory({
-      componentId: 'CommunityDiscovery',
+      componentId: 'CommunityDetection',
       type: 'analyse',
       subType: '社区发现',
       statement: communityAlgo,
       success,
       errorMsg,
-      params: {
-        algorithm: communityAlgo,
-        coreDegreeK,
-      },
+      params,
     });
   };
 
@@ -471,7 +477,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           type="primary"
           style={{ width: '100%', marginTop: '12px' }}
           loading={loading}
-          onClick={onCommunityAnalyse}
+          onClick={() => onCommunityAnalyse()}
         >
           <FormattedMessage id="analyse" />
         </Button>
