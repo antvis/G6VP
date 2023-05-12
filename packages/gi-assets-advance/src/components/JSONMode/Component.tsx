@@ -13,7 +13,7 @@ const JSONMode: React.FC<IProps> = props => {
   const { data: graphData } = useContext();
 
   const json = useMemo(() => {
-		const { nodes = [], edges = [], combos = [], ...others } = graphData;
+    const { nodes = [], edges = [], combos = [], ...others } = graphData;
     return {
       nodes: nodes.map(node => {
         const { type, style, nodeType, nodeTypeKeyFromProperties, ...nodeData } = node;
