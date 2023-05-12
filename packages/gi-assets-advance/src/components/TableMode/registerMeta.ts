@@ -17,6 +17,13 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Switch',
       default: true,
     },
+    exportable: {
+      title: '支持导出数据',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     isSelectedActive: {
       title: '元素选中高亮',
       type: 'boolean',

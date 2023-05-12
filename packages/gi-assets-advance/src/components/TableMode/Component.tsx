@@ -1,11 +1,11 @@
-import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined, ExportOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import { generatePalette, getPalette, S2DataConfig } from '@antv/s2';
+import { generatePalette, getPalette, S2DataConfig, copyData, download } from '@antv/s2';
 
 import { SheetComponent, Switcher } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Button, Tabs, Tooltip } from 'antd';
+import { Button, Tabs, Tooltip, message } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { useFullScreen } from './hooks';
@@ -18,6 +18,7 @@ import getData from './utils/getData';
 export interface IProps {
   isSelectedActive: boolean;
   enableCopy: boolean;
+  exportable: boolean;
   containerHeight?: string;
   style?: React.CSSProperties;
 }
@@ -30,7 +31,7 @@ const preS2Container = {
 const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, enableCopy, style = {} } = props;
+  const { isSelectedActive, enableCopy, exportable, style = {} } = props;
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
@@ -234,6 +235,20 @@ const TableMode: React.FC<IProps> = props => {
     };
     setState({ isPostStart: true, postParmas: params });
   };
+
+  const handleExport = () => {
+    try {
+      Object.keys(s2Instance).forEach(instanceName => {
+        const data = copyData(s2Instance[instanceName], ',', true);
+        download(data, instanceName);
+      })
+      message.success('导出成功');
+    } catch (error) {
+      console.log(error);
+      message.error('导出失败');
+    }
+  };
+
   React.useEffect(() => {
     if (!isPostStart) {
       return;
@@ -268,6 +283,9 @@ const TableMode: React.FC<IProps> = props => {
       <Tooltip title="使用浏览器新页签打开，分屏操作更高效">
         <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
       </Tooltip>
+      {exportable && <Tooltip title="导出点边数据">
+        <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
+      </Tooltip>}
     </>
   );
 
@@ -322,14 +340,14 @@ const TableMode: React.FC<IProps> = props => {
   //   };
   // }, []);
   const SwitcherTitle = (
-    <Button size="small" style={{ position: 'absolute', right: '77px', top: '-51px' }}>
+    <Button size="small" style={{ position: 'absolute', right: `${exportable ? 109 : 77}px`, top: '-51px' }}>
       自定义列
     </Button>
   );
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={style}>
       <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane centered>
-        <TabPane tab="点表" key="node">
+        <TabPane tab="点表" key="node" forceRender>
           <Switcher
             sheetType="table"
             {...switcherFields_NODES}
@@ -353,7 +371,7 @@ const TableMode: React.FC<IProps> = props => {
             themeCfg={themeCfg}
           />
         </TabPane>
-        <TabPane tab="边表" key="edge">
+        <TabPane tab="边表" key="edge" forceRender>
           <Switcher
             sheetType="table"
             {...switcherFields_EDGES}
