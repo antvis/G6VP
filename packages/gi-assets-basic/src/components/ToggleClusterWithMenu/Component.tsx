@@ -1,9 +1,9 @@
+import { INode } from '@antv/g6';
 import { useContext } from '@antv/gi-sdk';
 import type { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import * as React from 'react';
 import { filterGraphDataByNodes, getLeafNodes } from '../utils';
-import { INode } from '@antv/g6';
 
 type ControlledValues = {
   startId: string;
@@ -27,7 +27,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { graph, updateContext, source, updateHistory } = useContext();
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
 
-  const handleUnfold = (node, leafNodeIds) => {
+  const handleUnfold = (node, leafNodeIds: string[] = []) => {
     //@ts-ignore
     graph.updateItem(node, {
       folded: false,
@@ -37,7 +37,7 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
     });
   };
 
-  const handleFold = (node, leafNodeIds) => {
+  const handleFold = (node, leafNodeIds: string[] = []) => {
     leafNodeIds.forEach(id => {
       graph.hideItem(id);
     });
@@ -66,44 +66,44 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
     }
   };
 
-  const handleUnfold = leafNodeIds => {
-    //@ts-ignore
-    graph.updateItem(targetNode, {
-      folded: false,
-    });
-    leafNodeIds.forEach(id => {
-      graph.showItem(id);
-    });
-  };
+  // const handleUnfold = leafNodeIds => {
+  //   //@ts-ignore
+  //   graph.updateItem(targetNode, {
+  //     folded: false,
+  //   });
+  //   leafNodeIds.forEach(id => {
+  //     graph.showItem(id);
+  //   });
+  // };
 
-  const handleFold = leafNodeIds => {
-    leafNodeIds.forEach(id => {
-      graph.hideItem(id);
-    });
-    nodeIdsCache.add(nodeId);
-    leafNodeIdsCache[nodeId] = leafNodeIds;
-    //@ts-ignore
-    graph.updateItem(targetNode, {
-      folded: true,
-    });
-  };
+  // const handleFold = leafNodeIds => {
+  //   leafNodeIds.forEach(id => {
+  //     graph.hideItem(id);
+  //   });
+  //   nodeIdsCache.add(nodeId);
+  //   leafNodeIdsCache[nodeId] = leafNodeIds;
+  //   //@ts-ignore
+  //   graph.updateItem(targetNode, {
+  //     folded: true,
+  //   });
+  // };
 
-  const handleRelayout = () => {
-    if (isReLayout) {
-      let hiddenNodeIds: string[] = [];
-      Array.from(nodeIdsCache).forEach(id => {
-        const node = graph.findById(id);
-        if (node && node.getModel().folded) {
-          const id = node.getModel().id as string;
-          hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
-        }
-      });
-      const newData = filterGraphDataByNodes(source, hiddenNodeIds);
-      updateContext(draft => {
-        draft.data = newData;
-      });
-    }
-  };
+  // const handleRelayout = () => {
+  //   if (isReLayout) {
+  //     let hiddenNodeIds: string[] = [];
+  //     Array.from(nodeIdsCache).forEach(id => {
+  //       const node = graph.findById(id);
+  //       if (node && node.getModel().folded) {
+  //         const id = node.getModel().id as string;
+  //         hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
+  //       }
+  //     });
+  //     const newData = filterGraphDataByNodes(source, hiddenNodeIds);
+  //     updateContext(draft => {
+  //       draft.data = newData;
+  //     });
+  //   }
+  // };
 
   const handleToggleCluster = () => {
     onClose();

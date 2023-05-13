@@ -253,7 +253,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     }, 100);
   };
 
-   * 更新到历史记录
+  /* 更新到历史记录
    * @param success 是否成功
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
