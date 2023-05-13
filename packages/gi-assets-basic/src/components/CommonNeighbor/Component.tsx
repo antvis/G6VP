@@ -138,7 +138,7 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
       statement: `${ids.join(', ')} 的共同邻居`,
       success,
       errorMsg,
-      params: props,
+      params: { startIds: ids },
     });
   };
 

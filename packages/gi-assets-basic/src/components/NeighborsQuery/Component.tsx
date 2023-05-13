@@ -32,7 +32,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
 
   const service = utils.getService(services, serviceId);
   const { item: targetNode } = contextmenu;
-  if (!service || targetNode?.getType?.() !== 'node') {
+  if (!service || targetNode?.destroyed || targetNode?.getType?.() !== 'node') {
     return null;
   }
 
@@ -110,15 +110,15 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (props: ControlledValues, success: boolean = true, errorMsg?: string) => {
+  const handleUpateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
     updateHistory({
       componentId: 'NeighborsQuery',
       type: 'analyse',
       subType: '邻居查询',
-      statement: `查询 ${props.startIds.join(', ')} 的邻居`,
+      statement: `查询 ${params.startIds.join(', ')} 的邻居`,
       success,
       errorMsg,
-      params: props,
+      params,
     });
   };
 

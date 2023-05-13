@@ -9,12 +9,14 @@ export interface StyleSettingProps {
     elementType: string;
     styleGroups: any;
   };
+  onOpen?: () => void;
 }
 
 const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
   elementType = 'nodes',
   service,
   controlledValues,
+  onOpen,
 }) => {
   const {
     updateContext,
@@ -77,6 +79,7 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
     const { elementType: controlledType, styleGroups } = controlledValues || {};
     if (controlledValues && controlledType === elementType) {
       handleChange(styleGroups);
+      onOpen?.();
     }
   }, [controlledValues]);
 

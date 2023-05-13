@@ -260,7 +260,14 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
         </Form.Item>
         {Object.keys(params).map(fieldName => {
           const value = params[fieldName];
-          const isPart = (content.type === 'query' && fieldName === 'value') || typeof value === 'object';
+          const isJSON = typeof value === 'object';
+          const isPart = (content.type === 'query' && fieldName === 'value') || isJSON;
+          let brushTooltip = '';
+          if (isJSON) {
+            brushTooltip = '点选对象中的值，进行参数化';
+          } else if (isPart) {
+            brushTooltip = '刷选部分文字进行参数化';
+          }
           const hasParameterized = !isPart && parameterized?.[fieldName];
           return (
             <div style={{ marginTop: '12px' }}>
@@ -335,7 +342,7 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
                   </Button>
                 </Popover>
               </div>
-              <Tooltip title={isPart ? '刷选部分文字进行参数化' : ''} placement="leftTop">
+              <Tooltip title={brushTooltip} placement="leftTop">
                 {getValueDOM(configuring, fieldName, {
                   className: 'gi-history-modal-configure-value',
                   onMouseDown: evt => handleMouseDownValue(fieldName, isPart, evt),

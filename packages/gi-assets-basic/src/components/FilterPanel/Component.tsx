@@ -12,8 +12,6 @@ import { filterGraphData, getChartData, highlightSubGraph } from './utils';
 
 const { isStyles } = utils;
 
-let updateTimer: NodeJS.Timer;
-
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
@@ -267,36 +265,31 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     success: boolean = true,
     errorMsg?: string,
   ) => {
-    const fn = () => {
-      const stashOptions = {};
-      Object.keys(options).forEach(key => {
-        const { analyzerType, defaultKey, elementType, id, prop, selectOptions, histogramOptions } = options[key];
-        stashOptions[key] = {
-          analyzerType,
-          defaultKey,
-          elementType,
-          id,
-          prop,
-          selectOptions,
-          histogramOptions,
-        };
-      });
+    const stashOptions = {};
+    Object.keys(options).forEach(key => {
+      const { analyzerType, defaultKey, elementType, id, prop, selectOptions, histogramOptions } = options[key];
+      stashOptions[key] = {
+        analyzerType,
+        defaultKey,
+        elementType,
+        id,
+        prop,
+        selectOptions,
+        histogramOptions,
+      };
+    });
 
-      updateHistory({
-        componentId: 'FilterPanel',
-        type: 'analyse',
-        subType: '筛选',
-        statement: '筛选',
-        success,
-        errorMsg,
-        params: {
-          options: stashOptions,
-        },
-      });
-    };
-    // 防止 filterOptions 被频繁更新导致的重复 updateHistory
-    if (updateTimer) clearTimeout(updateTimer);
-    updateTimer = setTimeout(fn, 500);
+    updateHistory({
+      componentId: 'FilterPanel',
+      type: 'analyse',
+      subType: '筛选',
+      statement: '筛选',
+      success,
+      errorMsg,
+      params: {
+        options: stashOptions,
+      },
+    });
   };
 
   /**

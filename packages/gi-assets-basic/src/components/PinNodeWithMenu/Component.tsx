@@ -3,6 +3,7 @@ import { Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
+import { INode } from '@antv/g6';
 
 export interface PinNodeMenuItemProps {
   contextmenu: any;
@@ -18,37 +19,42 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   const isForce = layout.type === 'graphin-force';
 
   const [pinned, setPinned] = useState(false);
+  const [targetNode, setTargetNode] = useState<INode>();
 
-  const handleLockNode = (id?: string, action?: 'pin' | 'unpin') => {
+  const handleLockNode = (propId?: string, action?: 'pin' | 'unpin') => {
     const target = contextmenu.item;
     // 仅支持对节点的操作
     const invalidFromContextMenu = !target || target.destroyed || target.getType?.() !== 'node';
-    if (invalidFromContextMenu || !id) {
+    if (invalidFromContextMenu && !propId) {
       handleUpateHistory(undefined, undefined, false, '节点不存在');
       return null;
     }
-    const model = target.getModel();
-    const { pinned: nodePinned } = model;
-    setPinned(nodePinned);
-
     contextmenu.onClose();
 
-    let item = target;
-    let pinAction = nodePinned ? 'unpin' : 'pin';
-    if (id) {
-      if (graph.findById(id)) {
+    let item;
+    let pinAction;
+    let id;
+    if (propId) {
+      if (!graph.findById(propId)) {
         handleUpateHistory(undefined, undefined, false, '节点不存在');
-      } else {
-        item = graph.findById(id);
+        return;
       }
+      id = propId;
+      item = graph.findById(propId);
       pinAction = action || 'pin';
+    } else {
+      item = target;
+      const model = target.getModel();
+      id = model.id;
+      pinAction = model.pinned ? 'unpin' : 'pin';
+      setPinned(model.pinned);
     }
     if (pinAction === 'unpin') {
       handleUnPinNode(item, graph, restartForceSimulation, isForce);
     } else {
       handlePinNode(item, graph, restartForceSimulation, { dragNodeMass: 100000, isForce });
     }
-    handleUpateHistory(id || model.id, nodePinned ? 'unpin' : 'pin', true);
+    handleUpateHistory(id, pinAction, true);
   };
   /**
    * 更新到历史记录
@@ -68,6 +74,12 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     });
   };
 
+  useEffect(() => {
+    if (contextmenu.item && !contextmenu.item.destroyed) {
+      setTargetNode(contextmenu.item);
+    }
+  }, [contextmenu.item]);
+
   /**
    * 受控参数变化，自动进行分析
    * e.g. ChatGPT，历史记录模版等
@@ -75,13 +87,16 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   useEffect(() => {
     if (controlledValues) {
       const { id, action } = controlledValues;
+      setTargetNode(graph.findById(id) as INode);
       handleLockNode(id, action);
     }
   }, [controlledValues]);
 
+  if (!targetNode || targetNode.destroyed) return null;
+
   return (
     <Menu.Item key="lock-node" eventKey="lock-node" onClick={() => handleLockNode()}>
-      {pinned ? '解除固定' : '固定节点'}
+      {targetNode.getModel().pinned ? '解除固定' : '固定节点'}
     </Menu.Item>
   );
 };

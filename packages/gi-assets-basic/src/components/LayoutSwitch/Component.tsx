@@ -31,15 +31,15 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
    * @param value 查询语句
    */
   const handleUpateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
-    const { props } = layoutConfig;
+    const { props: layoutProps } = layoutConfig;
     updateHistory({
       componentId: 'LayoutSwitch',
       type: 'configure',
       subType: '布局切换',
-      statement: `布局 ${props.type}`,
+      statement: `布局 ${layoutProps.type}`,
       success,
       errorMsg,
-      params: props,
+      params: layoutProps,
     });
   };
 

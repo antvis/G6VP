@@ -15,7 +15,7 @@ import { TypeInfo } from './editDrawer';
 import FormattedMessage, { formatMessage } from './locale';
 import PatternEditor, { TypeProperties } from './patternEditor';
 import PatternPane from './patternPane';
-import { ITEM_STATE, PatternMatchProps, SPLITOR } from './registerMeta';
+import { ControlledValues, ITEM_STATE, PatternMatchProps, SPLITOR } from './registerMeta';
 import ResultTable from './resultTable';
 import { filterByPatternRules } from './util';
 
@@ -34,9 +34,9 @@ let newTabIndex = 1;
 let previousSize = { width: 500, height: 500 };
 let keydown = false;
 
-const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, options = {} }) => {
+const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, onClose, onOpen, options = {} }) => {
   const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
-  const { graph, data, schemaData } = useContext();
+  const { graph, data, schemaData, updateHistory } = useContext();
 
   const [activeKey, setActiveKey] = useState('1');
   const [editorVisible, setEditorVisible] = useState(false);
@@ -162,6 +162,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     }));
     setPanes(newPanes);
   }, [patternInfoMap]);
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const key = `${newTabIndex + 1}`;
+      addTab({ key });
+      savePattern(key, controlledValues.pattern);
+      onMatch(controlledValues.pattern);
+      onOpen?.();
+    }
+  }, [controlledValues]);
 
   const enableExtractingMode = patternId => {
     if (!graph || graph.destroyed) return;
@@ -443,7 +457,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     }
   };
 
-  const addTab = copyItem => {
+  const addTab = (copyItem: any = undefined) => {
     if (panes.length > MAX_PATTERN_NUM - 1) {
       message.info(formatMessage({ id: 'pattern-num-limit' }));
       return;
@@ -521,32 +535,39 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     setHullIds(ids);
   };
 
-  const onMatch = async () => {
-    if (!graph || graph.destroyed) return;
-    if (!activeKey || !patternInfoMap[+activeKey]?.data) {
+  const onMatch = async (patternProp?: GraphinData) => {
+    if (!graph || graph.destroyed) {
+      handleUpateHistory({}, false, '图实例不存在');
+      return;
+    }
+    if (!patternProp && (!activeKey || !patternInfoMap[+activeKey]?.data)) {
       message.info(formatMessage({ id: 'cannot-match-empty-pattern' }));
+      handleUpateHistory({}, false, formatMessage({ id: 'cannot-match-empty-pattern' }));
       return;
     }
     const res = patternInfoMap[+activeKey].data;
-    const pattern = {
-      nodes: res.nodes.map(node => {
-        return {
-          id: node.id,
-          label: node.nodeType,
-          name: node.nodeType,
-          rules: node.rules,
-        };
-      }),
-      edges: res.edges.map(edge => {
-        return {
-          id: edge.id,
-          label: edge.edgeType,
-          source: edge.source,
-          target: edge.target,
-          rules: edge.rules,
-        };
-      }),
-    };
+    const pattern =
+      patternProp ||
+      ({
+        nodes: res.nodes.map(node => {
+          return {
+            id: node.id,
+            label: node.nodeType,
+            name: node.nodeType,
+            rules: node.rules,
+          };
+        }),
+        edges: res.edges.map(edge => {
+          return {
+            id: edge.id,
+            label: edge.edgeType,
+            source: edge.source,
+            target: edge.target,
+            rules: edge.rules,
+          };
+        }),
+      } as GraphinData);
+
     const graphData: GraphinData = {
       nodes: [],
       edges: [],
@@ -592,6 +613,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
       setLoading(false);
       drawHulls([]);
       setResult([]);
+      handleUpateHistory({ pattern }, false, formatMessage({ id: 'no-result' }));
       return;
     }
 
@@ -605,6 +627,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     setLoading(false);
     drawHulls(matches);
     setResult(matches);
+
+    handleUpateHistory({ pattern });
   };
 
   const onExport = () => {
@@ -646,6 +670,37 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
     clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
     removeHulls();
     setResult([]);
+  };
+
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
+    const { pattern } = params;
+    if (!pattern) return;
+    updateHistory({
+      componentId: 'PatternMatch',
+      type: 'analyse',
+      subType: '模式匹配',
+      statement: `子图 ${pattern.nodes?.length} 个节点，${pattern.edges?.length} 条边`,
+      success,
+      errorMsg,
+      params: {
+        pattern: {
+          nodes: pattern.nodes.map(node => ({
+            nodeType: node.label || node.name,
+            ...node,
+          })),
+          edges: pattern.edges.map(edge => ({
+            edgeType: edge.label,
+            ...edge,
+          })),
+        },
+      },
+    });
   };
 
   const patternTabsMenu = (
@@ -729,7 +784,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, onClose, onOpen, opt
             style={{ display: extracting ? 'none' : 'inline-block' }}
             type="primary"
             loading={loading}
-            onClick={onMatch}
+            onClick={() => onMatch()}
           >
             <FormattedMessage id="match" />
           </Button>
