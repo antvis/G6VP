@@ -81,3 +81,5 @@ packages/gi-site/src/env.ts
 packages/gi-site/scripts/*.json
 
 .turbo
+
+scripts/publish_yuyan.mjs
