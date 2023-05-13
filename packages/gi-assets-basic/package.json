@@ -29,7 +29,8 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-basic analysis=true",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-assets-basic"
   },
   "dependencies": {
     "@ant-design/icons": "latest",

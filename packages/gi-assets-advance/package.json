@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "2.2.2",
+  "version": "2.2.4",
   "description": "G6VP 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -23,7 +23,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-assets-advance"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",

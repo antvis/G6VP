@@ -25,7 +25,8 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-assets-neo4j"
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",

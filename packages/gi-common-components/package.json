@@ -24,7 +24,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build:es"
+    "prepublishOnly": "npm run build:es",
+    "postpublish": "tnpm sync @antv/gi-common-components"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.20",

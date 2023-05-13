@@ -26,7 +26,8 @@
     "clean:css": "rimraf dist",
     "clean": "rimraf es esm lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build:es"
+    "prepublishOnly": "npm run build:es",
+    "postpublish": "tnpm sync @antv/gi-theme-antd"
   },
   "publishConfig": {
     "access": "public"

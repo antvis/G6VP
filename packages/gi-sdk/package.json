@@ -27,7 +27,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-sdk"
   },
   "dependencies": {
     "@antv/gi-common-components": "workspace:*",

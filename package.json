@@ -29,7 +29,8 @@
     "core": "cd packages/gi && npm run start",
     "move:dist": "node ./scripts/deploy.js",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
-    "publish": "pnpm publish -r --registry=https://registry.npmjs.org"
+    "publish": "pnpm publish -r --registry=https://registry.npmjs.org",
+    "cdn": "node ./scripts/publish_yuyan.mjs"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -64,6 +65,7 @@
     "antd": "4.x",
     "buffer": "^6.0.3",
     "buffer-browserify": "^0.2.5",
+    "node-fetch": "^3.3.0",
     "react": "17",
     "react-dom": "17.x",
     "stream-browserify": "^3.0.0",
