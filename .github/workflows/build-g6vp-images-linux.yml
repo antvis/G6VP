@@ -1,0 +1,50 @@
+name: Build G6VP Images on Linux
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - 'LICENSE'
+      - '**.md' 
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - 'LICENSE'
+      - '**.md'
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build-image:
+    runs-on: ubuntu-20.04
+
+  steps:
+  - name: Add envs to GITHUB_ENV
+    run: |
+      short_sha=$(git rev-parse --short HEAD)
+      echo "SHORT_SHA=${short_sha}" >> $GITHUB_ENV
+
+  - name: Build G6VP Image
+    run: |
+      cd ${GITHUB_WORKSPACE}
+      sudo docker build -t antvis/gi-site:${SHORT_SHA} -f packages/gi-site/docker/website.Dockerfile .
+
+  - name: Test Image
+    run: |
+      sudo docker run --name gi-site -d --rm -p 7001:7001 antvis/gi-site:${SHORT_SHA}
+      # any test cases here
+  
+  - name: Release Image
+    if: false
+    env:
+      docker_username: ${{ secrets.DOCKER_USER }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
+    run: |
+      echo "${docker_password}" | sudo docker login --username="${docker_username}" --password-stdin
+      # sudo docker push xxxx
