@@ -3,7 +3,9 @@ import { Form, Input, Popover, Tooltip } from 'antd';
 import { PictureOutlined } from '@ant-design/icons';
 import G6 from '@antv/g6';
 import { TemplateNode } from './type';
-import ReactJson from 'react-json-view';
+import RJV from 'react-json-view';
+
+const ReactJson: any = RJV;
 
 /**
  * 历史记录根据类型不同，映射不同颜色，在此增加组件历史记录的分类颜色
