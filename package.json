@@ -30,7 +30,8 @@
     "move:dist": "node ./scripts/deploy.js",
     "site": "cd packages/gi-site && NODE_OPTIONS=--max_old_space_size=2048 npm run start",
     "publish": "pnpm publish -r --registry=https://registry.npmjs.org",
-    "cdn": "node ./scripts/publish_yuyan.mjs"
+    "cdn": "node ./scripts/publish_yuyan.mjs",
+    "tar:gi-httpservice": "node scripts/tar_httpservice.mjs && cd packages/gi-httpservice-xxx  && npm install && npm run build:docker && npm run tar && cd ../../ && node scripts/rm_httpservice.mjs"
   },
   "pnpm": {
     "peerDependencyRules": {
