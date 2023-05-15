@@ -296,7 +296,7 @@ const GISDK = (props: Props) => {
         });
       };
       // 防止频繁更新导致的重复 updateHistory
-      // 同时，间隔一定时间再更新到历史栈中，保证画布数据已经更新完成]
+      // 同时，间隔一定时间再更新到历史栈中，保证画布数据已经更新完成
       if (updateHistoryTimer) clearTimeout(updateHistoryTimer);
       updateHistoryTimer = setTimeout(fn, 500);
     },
