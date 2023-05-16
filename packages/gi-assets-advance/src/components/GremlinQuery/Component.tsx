@@ -33,13 +33,15 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   const { updateContext, transform, services, updateHistory } = useContext();
 
   const service = utils.getService(services, serviceId);
+  const gremlinFromUrl = utils.searchParamOf('gremlin');
 
   const [state, setState] = useImmer<{
     editorValue: string;
     isFullScreen: boolean;
     modalVisible: boolean;
   }>({
-    editorValue: initialValue || '',
+    // 优先级: url 参数 > props 参数
+    editorValue: gremlinFromUrl || initialValue || '',
     isFullScreen: false,
     modalVisible: false,
   });
@@ -121,7 +123,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     <div className="gi-gremlin-query " style={{ ...style }}>
       <div style={{ border: '1px solid #f6f6f6' }}>
         <GremlinEditor
-          initialValue={editorValue}
+          initValue={editorValue}
           height={height}
           gremlinId="gi-assets-gremlin"
           onValueChange={value => handleChangeEditorValue(value)}
