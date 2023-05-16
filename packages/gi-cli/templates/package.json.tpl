@@ -22,6 +22,9 @@
       "@antv/gi-sdk": "latest"
     }
   },
+  "overrides": {
+    "@antv/gi-sdk": "latest"
+  },
   "dependencies": {
     "@antv/g6": "4.x",
     "@antv/gi-assets-basic": "latest",
