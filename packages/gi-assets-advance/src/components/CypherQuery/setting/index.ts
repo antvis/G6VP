@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { utils } from '@antv/gi-sdk';
 import functions from './functions.json';
 import procedures from './procedures.json';
@@ -114,20 +113,25 @@ export const defaultCypherSchema = {
     'rank',
     'washpostID',
   ],
-  functions: functions.data.map(data => ({
-    name: data.row[0],
-    signature: data.row[1].replace(data.row[0], ''),
-  })),
+  functions: functions.data.map(data => {
+    const name = data.row[0] as string;
+    const row1 = data.row[1] as string;
+    return {
+      name: data.row[0],
+      signature: row1.replace(name, ''),
+    };
+  }),
   procedures: procedures.data.map(data => {
-    const name = data.row[0];
-    const signature = data.row[1].replace(data.row[0], '');
+    const name = data.row[0] as string;
+    const row1 = data.row[1] as string;
+    const signature = row1.replace(name, '');
 
-    let returnItems = [];
+    let returnItems: { name: string; signature: string }[] = [];
     const matches = signature.match(/\([^)]*\) :: \((.*)\)/i);
 
     if (matches) {
       returnItems = matches[1].split(', ').map(returnItem => {
-        const returnItemMatches = returnItem.match(/(.*) :: (.*)/);
+        const returnItemMatches = returnItem.match(/(.*) :: (.*)/)!;
         return {
           name: returnItemMatches[1],
           signature: returnItemMatches[2],
