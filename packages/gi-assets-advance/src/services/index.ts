@@ -3,6 +3,7 @@ import * as LanguageQueryService from './LanguageQueryService';
 import * as StyleSetting from './StyleSetting';
 import * as TemplateService from './TemplateService';
 import * as ThemeSetting from './ThemeSetting';
+import * as HistoryAnalyseService from './HistoryAnalyseService';
 export default {
   id: 'GI',
   services: {
@@ -11,5 +12,6 @@ export default {
     ...StyleSetting,
     ...TemplateService,
     ...LanguageQueryService,
+    ...HistoryAnalyseService,
   },
 };

@@ -1,0 +1,147 @@
+.gi-history-footer {
+  padding: 0 8px;
+  transition: all 0.3s ease;
+}
+
+.gi-history-modal-wrapper {
+  display: inline-flex;
+  width: 100%;
+  max-height: 70vh;
+  .gi-history-modal-title {
+    margin-bottom: 12px;
+    width: 100%;
+    text-align: center;
+  }
+  .gi-history-modal-timeline-wrapper {
+    width: 50%;
+    padding: 0 8px;
+    border-right: 1px solid #f0f0f0;
+    overflow-y: scroll;
+    .gi-history-modal-timeline-dot-uncheck {
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      display: block;
+    }
+  }
+  .gi-history-modal-graph-wrapper {
+    width: 50%;
+    padding: 0 8px;
+    max-height: 70vh;
+    .gi-history-modal-graph-area {
+      display: inline-flex;
+      width: 100%;
+      border-top: 1px solid #f0f0f0;
+      max-height: 65vh;
+      .gi-history-modal-graph {
+        width: 50%;
+        height: 55vh;
+      }
+    }
+  }
+}
+
+.gi-history-footer-item-container {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.gi-analysis-record-wrapper {
+  width: 100%;
+  display: -webkit-inline-box;
+  word-break: break-all;
+  .gi-analysis-history-tag {
+    width: 10px;
+    height: 10px;
+    margin-top: 16px;
+    margin-right: 4px;
+    border-radius: 50%;
+  }
+}
+
+.gi-analysis-history-statement {
+  margin-left: 8px;
+}
+.gi-analysis-history-time {
+  margin-left: 8px;
+  color: var(--text-color-secondary);
+  margin-right: 4px;
+}
+.gi-analysis-history-screenshot-icon {
+  margin-left: 8px;
+  margin-top: 14px;
+  color: var(--primary-color);
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+  border-radius: 8px;
+}
+
+.gi-history-drawer-graph-wrapper {
+  display: inline-flex;
+  height: calc(100% - 120px);
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+.gi-history-modal-configure-panel {
+  width: 50%;
+  padding: 16px;
+  border-left: 1px solid #f0f0f0;
+  overflow-y: scroll;
+  background: var(--background-color);
+  .gi-history-modal-configure-field {
+    display: inline-flex;
+    width: 100%;
+    .gi-history-modal-configure-parameterize-fieldname {
+      width: calc(75% - 4px);
+      user-select: none;
+    }
+    .gi-history-modal-configure-parameterize-btn {
+      margin-left: 4px;
+      width: 25%;
+      font-size: 10px;
+      text-align: right;
+    }
+  }
+  .gi-history-modal-configure-value {
+    display: inlne-flex;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    line-height: 24px;
+    padding: 4px;
+  }
+  .gi-analysis-history-value-json {
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+  }
+}
+
+.gi-history-drawer-select {
+  .ant-form-item-label {
+    background-color: #eee;
+    padding: 0 8px;
+    border: 1px solid #f0f0f0;
+    border-right: 0px;
+    height: 32px;
+    border-radius: 8px 0 0 8px;
+    label {
+      color: var(--text-color-secondary);
+      margin-top: -1px;
+      ::after {
+        content: '';
+      }
+    }
+  }
+  .ant-select-selector {
+    border-radius: 0 8px 8px 0 !important;
+  }
+}
+.gi-history-drawer-select-apply {
+  .ant-select-selector {
+    border-radius: 0 !important;
+  }
+}

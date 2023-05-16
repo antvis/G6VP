@@ -20,19 +20,27 @@ export enum DistanceType {
 
 export interface NodesClusteringProps {
   style?: React.CSSProperties;
+  controlledValues?: {
+    algorithm: string;
+    clusterK: number | null;
+    distanceType: string;
+    focusNodeId: string;
+  };
+  onOpen?: () => void;
 }
 
 const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => {
+  const { controlledValues, onOpen } = props;
   const context = useContext();
-  const { data, graph, layout, updateContext } = context;
-  const [nodeClusteringAlgo, setNodeClusteringAlgo] = useState(NodesClusteringAlgorithm.KMeans);
+  const { data, graph, layout, updateContext, updateHistory } = context;
+  const [nodeClusteringAlgo, setNodeClusteringAlgo] = useState<string>(NodesClusteringAlgorithm.KMeans);
   const [resData, setResData] = useState<any>(null);
   const [initData, setInitData] = useState<GraphinData>({
     nodes: [],
     edges: [],
   });
   const [clusterK, setClusterK] = useState<number | null>(2);
-  const [distanceType, setDistanceType] = useState(DistanceType.EuclideanDistance);
+  const [distanceType, setDistanceType] = useState<string>(DistanceType.EuclideanDistance);
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [loading, setLoading] = useState(false);
   const [focusNodeId, setFocusNodeId] = useState(null);
@@ -68,6 +76,29 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
       }),
     });
   }, [data, graph]);
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const {
+        algorithm,
+        clusterK: controlledClusterK,
+        distanceType: controlledDistanceType,
+        focusNodeId: controlledFocusNodeId,
+      } = controlledValues;
+      setNodeClusteringAlgo(algorithm);
+      setClusterK(controlledClusterK);
+      setDistanceType(controlledDistanceType);
+      onOpen?.();
+      onAnalyse();
+      if (controlledFocusNodeId) {
+        focusNodeAndHighlightHull(controlledFocusNodeId);
+      }
+    }
+  }, [controlledValues]);
 
   const formatOriginData = ({ nodes = [], edges = [] }: GraphinData) => {
     return {
@@ -157,6 +188,20 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
           break;
       }
       setLoading(false);
+
+      updateHistory({
+        componentId: 'NodesClustering',
+        type: 'analyse',
+        subType: '节点聚类',
+        statement: `算法 ${nodeClusteringAlgo}`,
+        success: true,
+        params: {
+          algorithm: nodeClusteringAlgo,
+          clusterK,
+          distanceType,
+          focusNodeId,
+        },
+      });
     }, 100);
   };
 
@@ -190,7 +235,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     );
   };
 
-  const cleatActiveState = () => {
+  const clearActiveState = () => {
     if (focusNodeId) {
       const focusNode = graph.findById(focusNodeId);
       if (focusNode.hasState('active')) {
@@ -199,17 +244,20 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     }
   };
 
-  const focusNodeAndHighlightHull = (nodeId, focusClusterId) => {
-    cleatActiveState();
-    graph.setItemState(nodeId, 'active', true);
-    setFocusNodeId(nodeId);
+  const focusNodeAndHighlightHull = (nodeId, focusClusterId = '') => {
+    clearActiveState();
+    const node = graph.findById(nodeId);
+    if (node) {
+      graph.setItemState(node, 'active', true);
+      setFocusNodeId(nodeId);
+    }
   };
 
   const reset = () => {
     setResData({ nodes: [], edges: [] });
     setNodeClusteringAlgo(NodesClusteringAlgorithm.KMeans);
     setClusterK(2);
-    cleatActiveState();
+    clearActiveState();
     updateContext(draft => {
       draft.data = initData;
       draft.layout = prevLayout;
@@ -222,7 +270,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
       setInitData(getInitData());
       // 源数据变化，清空当前结果
       setResData({ nodes: [], edges: [] });
-      cleatActiveState();
+      clearActiveState();
       updateContext(draft => {
         draft.layout = prevLayout;
       });

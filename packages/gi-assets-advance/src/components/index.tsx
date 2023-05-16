@@ -24,6 +24,7 @@ import ThemeSetting from './ThemeSetting';
 import Undo from './Undo';
 import JSONMode from './JSONMode';
 import Assistant from './Assistant';
+import AnalysisHistory from './AnalysisHistory';
 export {
   Assistant,
   StyleSetting,
@@ -42,4 +43,5 @@ export {
   GraphAnnotation,
   Undo,
   Redo,
+  AnalysisHistory,
 };

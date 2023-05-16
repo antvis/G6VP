@@ -1,7 +1,7 @@
 import { useContext, utils } from '@antv/gi-sdk';
 
 import { Button } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
 import CyperEditor from './CyperEditor';
@@ -12,6 +12,9 @@ export interface CyperQueryProps {
   saveCypherTemplateServceId?: string;
   isShowPublishButton?: boolean;
   limit: number;
+  controlledValues?: {
+    value: string;
+  };
 }
 
 const CypherEditorPanel: React.FC<CyperQueryProps> = ({
@@ -19,8 +22,9 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   isShowPublishButton,
   saveCypherTemplateServceId = 'GI/PublishTemplate',
   limit,
+  controlledValues,
 }) => {
-  const { updateContext, transform, services, largeGraphLimit } = useContext();
+  const { updateContext, updateHistory, transform, services, largeGraphLimit } = useContext();
   const service = utils.getService(services, serviceId);
 
   const [state, setState] = useImmer({
@@ -29,38 +33,68 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     modalVisible: false,
   });
 
-  const handleQuery = async () => {
-    setState(draft => {
-      draft.loading = true;
-    });
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { value } = controlledValues;
+      getCyperInputValue(value);
+      handleQuery();
+    }
+  }, [controlledValues]);
 
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (success, errorMsg, value) => {
+    updateHistory({
+      componentId: 'CypherQuery',
+      type: 'query',
+      subType: 'Cypher',
+      statement: value,
+      success,
+      errorMsg,
+      params: {
+        value: value,
+      },
+    });
+  };
+
+  const handleQuery = async () => {
     if (!service) {
       return;
     }
 
+    setState(draft => {
+      draft.loading = true;
+    });
     const resultData = await service({
       value: state.value,
       limit,
     });
 
+    handleUpateHistory(resultData?.success, resultData?.message, state.value);
+
     updateContext(draft => {
       const res = transform(resultData);
+      draft.source = res;
+      draft.isLoading = false;
 
       if (res.nodes.length > largeGraphLimit) {
         draft.largeGraphMode = true;
         draft.largeGraphData = res;
-        draft.source = res;
         draft.data = {
           nodes: [],
           edges: [],
         };
-        draft.isLoading = false;
         return;
       }
-
       draft.data = res;
-      draft.source = res;
-      draft.isLoading = false;
     });
   };
 

@@ -1,6 +1,7 @@
 import { extra } from '@antv/gi-sdk';
 import { CSSProperties } from 'react';
 import info from './info';
+import { GraphinData } from '@antv/graphin';
 
 export const SPLITOR = '|SPLITOR|';
 
@@ -19,11 +20,16 @@ export interface PropertyContentProps {
   properties: string[];
 }
 
+export type ControlledValues = {
+  pattern?: GraphinData;
+};
+
 export interface PatternMatchProps {
   IconWrapper: React.FC;
   visible: boolean;
   disabled?: boolean;
   style?: CSSProperties;
+  controlledValues?: ControlledValues;
   setDisabledTools?: (toolKeys: string[]) => void;
   onClose?: () => void;
   onOpen?: () => void;

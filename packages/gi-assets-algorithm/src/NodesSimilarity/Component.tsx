@@ -5,12 +5,17 @@ import type { GraphinData } from '@antv/graphin';
 import { Button, Col, Empty, Input, message, Row } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import './index.less';
 import FormattedMessage, { formatMessage } from './locale';
 import SimilarityResultTable from './resultTable';
+import './index.less';
 
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
+  controlledValues?: {
+    algorithm: string;
+    seedNodeId: string | null;
+  };
+  onOpen?: () => void;
 }
 
 export enum NodesSimilarityAlgorithm {
@@ -22,16 +27,15 @@ interface ResData {
   similarNodes: any[] | undefined;
 }
 const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
-  const { style = {} } = props;
-  const context = useContext();
-  const { data, graph } = context;
+  const { controlledValues, style = {}, onOpen } = props;
+  const { data, graph, updateHistory } = useContext();
   const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
 
-  const [similarityAlgo, setSimilarityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
+  const [similarityAlgo, setSimilarityAlgo] = useState<string>(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [resData, setResData] = useState<ResData>({ similarityRes: [], similarNodes: [] });
   const [hasAnalysis, setHasAnalysis] = useState(false);
-  const [seedNodeId, setSeedNodeId] = useState(null);
+  const [seedNodeId, setSeedNodeId] = useState<string | null>(null);
   const [topReset, setTopReset] = useState(false);
   const [selecting, setSelecting] = useState(false);
 
@@ -52,6 +56,41 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       }),
     });
   }, [data]);
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { seedNodeId: controlledSeed, algorithm } = controlledValues;
+      onOpen?.();
+      setSeedNodeId(controlledSeed);
+      setSimilarityAlgo(algorithm);
+      onAnalyse(algorithm, controlledSeed);
+    }
+  }, [controlledValues]);
+
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (success: boolean, errorMsg?: string) => {
+    updateHistory({
+      componentId: 'NodesSimilarity',
+      type: 'analyse',
+      subType: '节点相似性',
+      statement: `算法 ${similarityAlgo}`,
+      success,
+      errorMsg,
+      params: {
+        algorithm: similarityAlgo,
+        seedNodeId,
+      },
+    });
+  };
 
   const resetMapping = (mappedNodeIds: string[], mappedEdgeIds: string[]) => {
     graph.getNodes().forEach(node => {
@@ -105,19 +144,22 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     });
   };
 
-  const onAnalyse = () => {
+  const onAnalyse = (algorithm?: string, seed?: string | null) => {
     setSelecting(false);
     setHasAnalysis(true);
     const formatData = formatOriginData(data);
-    switch (similarityAlgo) {
+    switch (algorithm || similarityAlgo) {
       case NodesSimilarityAlgorithm.nodesConsineSimilarity:
         if (!graph || graph.destroyed) {
+          handleUpateHistory(false, '图实例不存在');
           return;
         }
         const nodes = formatData?.nodes || [];
-        const seedNode = nodes?.find(node => node.id === seedNodeId);
+        const seedNode = nodes?.find(node => node.id === seed || seedNodeId);
         if (!seedNode) {
           message.info(formatMessage({ id: 'seed-node-not-found' }));
+          handleUpateHistory(false, `种子节点${seedNodeId}不存在`);
+          return;
         }
         // @ts-ignore
         const { allCosineSimilarity, similarNodes } = nodesCosineSimilarity(nodes, seedNode, 'properties');
@@ -126,6 +168,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           similarNodes: [seedNode, ...similarNodes],
         });
         setNodeStyle(similarNodes, 'cosineSimilarity');
+        handleUpateHistory(true);
         break;
       default:
         break;
@@ -234,7 +277,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           </Row>
         </div>
 
-        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={onAnalyse}>
+        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={() => onAnalyse()}>
           <FormattedMessage id="analyse" />
         </Button>
 

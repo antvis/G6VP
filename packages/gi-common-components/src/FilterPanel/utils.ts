@@ -148,6 +148,7 @@ export const getHistogramData = (graphData, prop: string, elementType: 'node' | 
  * @returns
  */
 export const highlightSubGraph = (graph, data: GraphinData) => {
+  if (!graph || graph.destroyed) return {};
   const source = graph.save() as GraphinData;
 
   const nodeIds = data.nodes.map(node => node.id);

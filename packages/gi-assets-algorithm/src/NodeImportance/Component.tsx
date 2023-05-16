@@ -41,9 +41,9 @@ const EDGE_VISUAL_RANGE = [1, 8];
 let degreeMap = undefined;
 
 const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
-  const { visible: controlledVisible = true, onVisibleChange = () => {} } = props;
+  const { controlledValues, visible: controlledVisible = true, onOpen, onVisibleChange = () => {} } = props;
 
-  const { graph, data } = useContext();
+  const { graph, data, updateHistory } = useContext();
 
   const [visible, setVisible] = useState(false);
   const [currentAlgo, setCurrentAlgo] = useState('page-rank');
@@ -75,12 +75,31 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     setEdgeProperties(Object.keys(edgePropertyMap));
   }, [data]);
 
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { algorithm, degreeIn: controlledIn, degreeOut: controlledOut, ...formValues } = controlledValues;
+      onOpen?.();
+      setCurrentAlgo(algorithm);
+      const degreeIn = controlledIn === 'true';
+      const degreeOut = controlledOut === 'true';
+      if (degreeIn || degreeOut) {
+        const controlledDegreeType = [];
+        if (degreeIn) controlledDegreeType.push('in');
+        if (degreeOut) controlledDegreeType.push('out');
+        setDegreeType(controlledDegreeType);
+      }
+      setReAnalyse(Math.random());
+      form.setFieldsValue(formValues);
+      onAnalyse();
+    }
+  }, [controlledValues]);
+
   const onRadioChange = e => {
     setCurrentAlgo(e.target.value);
-  };
-
-  const onDegreeCheckChange = checkedValues => {
-    setDegreeType(checkedValues);
   };
 
   const reset = () => {
@@ -306,6 +325,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const onAnalyse = () => {
     if (!graph || graph.destroyed) {
+      handleUpdateHistory(currentAlgo, {}, false, '图实例不存在');
       return;
     }
     validateFields().then(values => {
@@ -445,8 +465,27 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         }
       }
       showResult(res);
+
+      handleUpdateHistory(currentAlgo, values, true, '');
     });
     setResultPaneKey('table');
+  };
+
+  const handleUpdateHistory = (algorithm, formValues, success, msg) => {
+    updateHistory({
+      componentId: 'NodeImportance',
+      type: 'analyse',
+      subType: '节点重要性',
+      statement: `算法 ${algorithm}`,
+      success,
+      errorMsg: msg,
+      params: {
+        algorithm,
+        degreeIn: String(degreeType?.includes('in')),
+        degreeOut: String(degreeType?.includes('out')),
+        ...formValues,
+      },
+    });
   };
 
   const getResultTitle = () => {
@@ -564,7 +603,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             },
           ]}
           defaultValue={['in', 'out']}
-          onChange={onDegreeCheckChange}
+          onChange={setDegreeType}
+          value={degreeType}
           style={{ display: currentAlgo === 'degree' ? 'inline-flex' : 'none' }}
         />
       ),

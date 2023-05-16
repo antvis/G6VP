@@ -12,6 +12,9 @@ import * as utils from './process';
 import { registerLayouts, registerShapes } from './register';
 import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
+import { createUuid } from './process/common';
+
+let updateHistoryTimer: NodeJS.Timer;
 
 /** export  */
 const GISDK = (props: Props) => {
@@ -275,6 +278,27 @@ const GISDK = (props: Props) => {
         draft.layout = lay;
         draft.layoutCache = false;
       });
+    },
+    // 更新历史记录
+    updateHistory: param => {
+      const time = new Date().getTime();
+
+      const fn = () => {
+        updateState(draft => {
+          // @ts-ignore
+          draft.history = (draft.history || []).concat([
+            {
+              id: createUuid(),
+              timestamp: time,
+              ...param,
+            },
+          ]);
+        });
+      };
+      // 防止频繁更新导致的重复 updateHistory
+      // 同时，间隔一定时间再更新到历史栈中，保证画布数据已经更新完成
+      if (updateHistoryTimer) clearTimeout(updateHistoryTimer);
+      updateHistoryTimer = setTimeout(fn, 500);
     },
     stopForceSimulation: stopForceSimulation,
     restartForceSimulation: restartForceSimulation,

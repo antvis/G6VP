@@ -1,25 +1,61 @@
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { extra, Icon, useContext, utils } from '@antv/gi-sdk';
+import { LayoutConfig } from '@antv/gi-sdk/lib/typing';
 import { Card, Popover, Radio, Space } from 'antd';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 const { GIAComponent } = extra;
 
 export interface LayoutSwitchProps {
   GIAC: IGIAC;
+  controlledValues?: LayoutConfig;
 }
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
-  const { GIAC } = props;
-  const { assets, config, data, schemaData, updateContext } = useContext();
+  const { GIAC, controlledValues } = props;
+  const { assets, config, data, schemaData, updateContext, updateHistory } = useContext();
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
+    handleUpateHistory(layoutConfig, true, '');
     updateContext(draft => {
       draft.layout = layoutConfig.props;
       draft.config.layout = layoutConfig;
       draft.layoutCache = false;
     });
   };
+
+  /**
+   * 更新到历史记录
+   * @param success 是否成功
+   * @param errorMsg 若失败，填写失败信息
+   * @param value 查询语句
+   */
+  const handleUpateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
+    const { props: layoutProps } = layoutConfig;
+    updateHistory({
+      componentId: 'LayoutSwitch',
+      type: 'configure',
+      subType: '布局切换',
+      statement: `布局 ${layoutProps.type}`,
+      success,
+      errorMsg,
+      params: layoutProps,
+    });
+  };
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    if (controlledValues) {
+      const { type } = controlledValues;
+      handleClick({
+        id: type as string,
+        props: controlledValues,
+      });
+    }
+  }, [controlledValues]);
 
   const Radios = useMemo(() => {
     return (

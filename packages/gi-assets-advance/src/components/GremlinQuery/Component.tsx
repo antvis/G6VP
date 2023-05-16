@@ -3,6 +3,7 @@ import GremlinEditor from 'ace-gremlin-editor';
 import { Button, notification, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
+import { nanoid } from 'nanoid';
 import './index.less';
 
 export interface IGremlinQueryProps {
@@ -14,6 +15,9 @@ export interface IGremlinQueryProps {
   style?: React.CSSProperties | undefined;
   visible?: boolean;
   isShowPublishButton?: boolean;
+  controlledValues?: {
+    value: string;
+  };
 }
 
 const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
@@ -24,8 +28,9 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   style,
   visible,
   isShowPublishButton,
+  controlledValues,
 }) => {
-  const { updateContext, transform, services } = useContext();
+  const { updateContext, transform, services, updateHistory } = useContext();
 
   const service = utils.getService(services, serviceId);
 
@@ -62,6 +67,17 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       value: editorValue,
     });
 
+    updateHistory({
+      componentId: 'GremlinQuery',
+      type: 'query',
+      subType: 'Gremlin',
+      statement: editorValue,
+      success: result && result.success,
+      params: {
+        value: editorValue,
+      },
+    });
+
     setBtnLoading(false);
     if (!result || !result.success) {
       notification.error({
@@ -88,6 +104,18 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     console.log('editorValue..........', editorValue);
     setEditorValue(editorValue);
   }, []);
+
+  /**
+   * 受控参数变化，自动进行分析
+   * e.g. ChatGPT，历史记录模版等
+   */
+  useEffect(() => {
+    const { value } = controlledValues || {};
+    if (value) {
+      setEditorValue(value);
+      handleClickQuery();
+    }
+  }, [controlledValues]);
 
   return (
     <div className="gi-gremlin-query " style={{ ...style }}>

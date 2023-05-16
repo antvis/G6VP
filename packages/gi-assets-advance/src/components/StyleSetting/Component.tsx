@@ -8,10 +8,14 @@ const { TabPane } = Tabs;
 
 export interface StyleSettingProps {
   serviceId: string;
+  controlledValues?: {
+    elementType: string;
+    styleGroups: any;
+  };
 }
 
 const StyleSetting: React.FC<StyleSettingProps> = props => {
-  const { serviceId } = props;
+  const { serviceId, controlledValues } = props;
   const { services } = useContext();
   const service = utils.getService(services, serviceId);
 
@@ -19,10 +23,10 @@ const StyleSetting: React.FC<StyleSettingProps> = props => {
     <div className="gi-style-setting">
       <Tabs>
         <TabPane key="nodes" tab="节点">
-          <StyleSettingPanel elementType="nodes" service={service} />
+          <StyleSettingPanel elementType="nodes" service={service} controlledValues={controlledValues} />
         </TabPane>
         <TabPane key="edges" tab="边">
-          <StyleSettingPanel elementType="edges" service={service} />
+          <StyleSettingPanel elementType="edges" service={service} controlledValues={controlledValues} />
         </TabPane>
       </Tabs>
     </div>
