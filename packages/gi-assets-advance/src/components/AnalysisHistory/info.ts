@@ -5,7 +5,7 @@ const info = {
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',
-  icon: 'icon-time',
+  icon: 'icon-time-circle',
   docs: 'https://www.yuque.com/antv/gi/qe8vp7n9snmv54qn',
   services: ['SaveHistoryTemplateService', 'ListHistoryTemplateService', 'RemoveHistoryTemplateService'],
 };
