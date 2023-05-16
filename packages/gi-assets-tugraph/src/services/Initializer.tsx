@@ -17,13 +17,13 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
   service: async params => {
-    const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_TUGRAPH_SUBGRAPH } = utils.getServerEngineContext();
+    const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
     let res = {
       nodes: [],
       edges: [],
     };
 
-    if (!TUGRAPH_USER_TOKEN) {
+    if (!ENGINE_USER_TOKEN) {
       // 没有登录信息，需要先登录再查询 schema
       message.error(
         `TuGraph 数据源连接失败: 没有获取到连接 TuGraph 数据库的 Token 信息，请先连接 TuGraph 数据库再进行尝试！`,
@@ -36,10 +36,10 @@ export const GI_SERVICE_SCHEMA = {
         method: 'get',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          Authorization: TUGRAPH_USER_TOKEN,
+          Authorization: ENGINE_USER_TOKEN,
         },
         params: {
-          graphName: CURRENT_TUGRAPH_SUBGRAPH,
+          graphName: CURRENT_SUBGRAPH,
         },
       });
       const { success, data } = result;

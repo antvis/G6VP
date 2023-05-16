@@ -1,12 +1,12 @@
-import { DisconnectOutlined, LinkOutlined } from "@ant-design/icons";
-import { Button, Drawer, message } from "antd";
-import * as React from "react";
-import TuGraphDataLoadPanel from "../../../services/ServerComponent";
+import { DisconnectOutlined, LinkOutlined } from '@ant-design/icons';
+import { Button, Drawer, message } from 'antd';
+import * as React from 'react';
+import TuGraphDataLoadPanel from '../../../services/ServerComponent';
 
 interface DataImportProps {}
 
-const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
-  const useToken = localStorage.getItem("TUGRAPH_USER_TOKEN");
+const DataImport: React.FunctionComponent<DataImportProps> = props => {
+  const useToken = localStorage.getItem('ENGINE_USER_TOKEN');
 
   const [state, stateState] = React.useState({
     visible: true,
@@ -14,7 +14,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
   });
   const { visible } = state;
   const handleImport = () => {
-    stateState((preState) => {
+    stateState(preState => {
       return {
         ...preState,
         visible: true,
@@ -22,7 +22,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
     });
   };
   const handleClose = () => {
-    stateState((preState) => {
+    stateState(preState => {
       return {
         ...preState,
         visible: false,
@@ -31,11 +31,11 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
   };
 
   const closeConnect = () => {
-    localStorage.removeItem("TUGRAPH_USER_TOKEN");
-    localStorage.removeItem("CURRENT_TUGRAPH_SUBGRAPH");
-    message.success("已断开与 TuGraph 的连接");
+    localStorage.removeItem('ENGINE_USER_TOKEN');
+    localStorage.removeItem('CURRENT_SUBGRAPH');
+    message.success('已断开与 TuGraph 的连接');
 
-    stateState((preState) => {
+    stateState(preState => {
       return {
         ...preState,
         connectStatus: null,
@@ -44,23 +44,17 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
   };
 
   React.useEffect(() => {
-    stateState((preState) => {
+    stateState(preState => {
       return {
         ...preState,
-        connectStatus: localStorage.getItem("TUGRAPH_USER_TOKEN"),
+        connectStatus: localStorage.getItem('ENGINE_USER_TOKEN'),
       };
     });
-  }, [localStorage.getItem("TUGRAPH_USER_TOKEN")]);
+  }, [localStorage.getItem('ENGINE_USER_TOKEN')]);
   return (
     <div>
       {state.connectStatus ? (
-        <Button
-          danger
-          onClick={closeConnect}
-          size="small"
-          style={{ marginRight: 8 }}
-          icon={<DisconnectOutlined />}
-        >
+        <Button danger onClick={closeConnect} size="small" style={{ marginRight: 8 }} icon={<DisconnectOutlined />}>
           断开连接
         </Button>
       ) : (
@@ -74,7 +68,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = (props) => {
         onClose={handleClose}
         width="1000"
         contentWrapperStyle={{
-          transform: "none",
+          transform: 'none',
         }}
       >
         <TuGraphDataLoadPanel onClose={handleClose} />

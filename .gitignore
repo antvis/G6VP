@@ -84,3 +84,4 @@ packages/gi-site/scripts/*.json
 
 scripts/publish_yuyan.mjs
 packages/gi-httpservice-xxx
+release/gi-httpservice

@@ -1,6 +1,6 @@
 import { GISiteParams, GraphSchemaData, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
-import { Button, Col, notification, Row, Select, Statistic, Form, Input } from 'antd';
+import { Button, Col, Form, Input, Row, Select, Statistic, notification } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { CollapseCard } from '../../components-ui';
@@ -16,7 +16,7 @@ const { Option } = Select;
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const [form] = Form.useForm();
   const { updateGISite } = props;
-  const { TUGRAPH_USER_TOKEN: useToken, CURRENT_TUGRAPH_SUBGRAPH } = utils.getServerEngineContext();
+  const { ENGINE_USER_TOKEN: useToken, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
 
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
@@ -38,7 +38,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     },
     defaultLabelField: 'name',
     subGraphList: [],
-    defaultGraphName: CURRENT_TUGRAPH_SUBGRAPH,
+    defaultGraphName: CURRENT_SUBGRAPH,
     selectedSubgraph: undefined,
   });
   const { schemaData, count, subGraphList, defaultGraphName, defaultLabelField } = state;
@@ -73,7 +73,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
   const handleChange = async value => {
     utils.setServerEngineContext({
-      CURRENT_TUGRAPH_SUBGRAPH: value,
+      CURRENT_SUBGRAPH: value,
     });
 
     // 切换子图后，同步查询 Schema
