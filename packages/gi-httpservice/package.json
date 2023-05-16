@@ -13,6 +13,7 @@
     "start": "egg-scripts start --port=7001",
     "build:docker": "npm run tsc && rm -rf ./node_modules && npm install --production",
     "build": "npm run tsc && rm -rf ./node_modules && npm install --production && tar -zcvf ./gi-httpsever-release.tgz .",
+    "tar": "tar -zcvf ./gi-httpservice.tgz .",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test-local": "egg-bin test",

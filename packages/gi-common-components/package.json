@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-common-components",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "G6VP 通用UI组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -24,9 +24,8 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "npm:publish": "npm publish",
-    "prepublishOnly": "npm run build:es && node ../../scripts/publish_backup.js",
-    "postpublish": "node ../../scripts/publish_recover.js"
+    "prepublishOnly": "npm run build:es",
+    "postpublish": "tnpm sync @antv/gi-common-components"
   },
   "dependencies": {
     "@antv/g2plot": "^2.4.20",

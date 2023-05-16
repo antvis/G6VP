@@ -3,14 +3,10 @@ import { services as GI_ASSETS_BASIC_SERVER } from '@antv/gi-assets-basic';
 import GISDK, { utils } from '@antv/gi-sdk';
 import ThemeSwitch from '@antv/gi-theme-antd';
 import React from 'react';
-import { Counter } from '../components';
 import { GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT, THEME_VALUE } from './GI_EXPORT_FILES';
 import ServerView from './ServerView';
-
-/** 自定义数据服务 */
-import MyServer from '../services/index';
-
 import update from './update';
+
 /** 资产可按需引入 **/
 const {
   ZoomIn,
@@ -26,7 +22,6 @@ const {
   Copyright,
   PinNodeWithMenu,
   Initializer,
-  PropertyGraphInitializer,
   LayoutSwitch,
   SideTabs,
   Toolbar,
@@ -50,26 +45,19 @@ const ASSETS = {
     Copyright,
     PinNodeWithMenu,
     Initializer,
-    PropertyGraphInitializer,
     LayoutSwitch,
     SideTabs,
     Toolbar,
     Placeholder,
-    //自定义组件
-    Counter,
   },
   elements: { SimpleNode, SimpleEdge },
   layouts: { GraphinForce, Concentric, Dagre, FundForce },
 };
-
-const SERVER = [GI_ASSETS_BASIC_SERVER, MyServer];
-
 //@ts-ignore
-const config = update(GI_PROJECT_CONFIG);
-
+const { config, assets, engine } = update(ASSETS, GI_PROJECT_CONFIG, [GI_ASSETS_BASIC_SERVER]);
 const { getCombineServices } = utils;
 //@ts-ignores
-const services = getCombineServices(SERVER);
+const services = getCombineServices(engine);
 /** 设置服务引擎 Context **/
 utils.setServerEngineContext(SERVER_ENGINE_CONTEXT);
 /** 设置主题 **/
@@ -81,7 +69,7 @@ const MyGraphApp = () => {
       <ThemeSwitch style={{ visibility: 'hidden' }} />
       <ServerView />
       {/** @ts-ignore */}
-      <GISDK config={config} assets={ASSETS} services={services} />
+      <GISDK config={config} assets={assets} services={services} />
     </div>
   );
 };

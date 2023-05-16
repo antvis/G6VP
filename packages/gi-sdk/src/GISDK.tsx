@@ -307,8 +307,10 @@ const GISDK = (props: Props) => {
     return null;
   }
 
+  const HAS_GRAPH = graphinRef.current?.graph && !graphinRef.current.graph.destroyed;
+
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents(state, config.components, ComponentAssets);
+    getComponents({ ...state, HAS_GRAPH }, config.components, ComponentAssets);
 
   const graphData = useMemo(() => {
     const nodeMap = {};
@@ -335,13 +337,6 @@ const GISDK = (props: Props) => {
       combos,
     };
   }, [data]);
-
-  const HAS_GRAPH = !(
-    graphinRef &&
-    graphinRef.current &&
-    graphinRef.current.graph &&
-    graphinRef.current.graph.destroyed
-  );
 
   return (
     //@ts-ignore

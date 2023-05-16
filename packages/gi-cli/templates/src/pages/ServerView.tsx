@@ -18,6 +18,7 @@ const ServerView: React.FunctionComponent<ServerViewProps> = props => {
       <Drawer
         title="模拟 G6VP 平台的导入数据"
         open={open}
+        visible={open}
         width={'80%'}
         onClose={() => {
           setOpen(false);

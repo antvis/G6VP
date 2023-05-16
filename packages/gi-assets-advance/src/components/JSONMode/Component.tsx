@@ -13,12 +13,25 @@ const JSONMode: React.FC<IProps> = props => {
   const { data: graphData } = useContext();
 
   const json = useMemo(() => {
-    // @ts-ignore
-    const { nodes, edges, combos, tableResult } = graphData;
-    if (nodes.length || edges.length) {
-      return { nodes: nodes.map(item => item.data), edges: edges.map(item => item.data), combos };
-    }
-    return tableResult;
+    const { nodes = [], edges = [], combos = [], ...others } = graphData;
+    return {
+      nodes: nodes.map(node => {
+        const { type, style, nodeType, nodeTypeKeyFromProperties, ...nodeData } = node;
+        return {
+          ...nodeData,
+          [nodeTypeKeyFromProperties]: nodeType,
+        };
+      }),
+      edges: edges.map(edge => {
+        const { type, style, edgeType, edgeTypeKeyFromProperties, ...edgeData } = edge;
+        return { ...edgeData, [edgeTypeKeyFromProperties]: edgeType };
+      }),
+      combos: combos?.map(combo => {
+        const { style, type, ...comboData } = combo as any;
+        return comboData;
+      }),
+      ...others,
+    };
   }, [graphData]);
 
   return (

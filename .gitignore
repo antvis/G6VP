@@ -27,7 +27,7 @@ jspm_packages/
 .eslintcache
 
 # Output of 'npm pack'
-*.tgz
+# *.tgz
 
 
 # dotenv environment variables file
@@ -81,3 +81,6 @@ packages/gi-site/src/env.ts
 packages/gi-site/scripts/*.json
 
 .turbo
+
+scripts/publish_yuyan.mjs
+packages/gi-httpservice-xxx
