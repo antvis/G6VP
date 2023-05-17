@@ -111,7 +111,7 @@ class GraphComputeService extends Service {
       // TODO: edge properties, waiting for GIE engine
       if (value instanceof gremlin.structure.Vertex) {
         const propertiesArr = await this.queryNodesProperties(client, [id]);
-        obj.data = propertiesArr[0];
+        obj.data = propertiesArr[id];
       }
     }
     // edge also need src/dst information
@@ -129,9 +129,10 @@ class GraphComputeService extends Service {
    * @param nodeIds: List of node's id
    */
   async queryNodesProperties(client, nodeIds) {
-    const propertiesArr = [];
+    // { id: properties }
+    const propertiesMap = {};
     if (!nodeIds || nodeIds.length === 0) {
-      return propertiesArr;
+      return propertiesMap;
     }
 
     for (const id of nodeIds) {
@@ -146,13 +147,13 @@ class GraphComputeService extends Service {
             const [key, value] = current;
             currentObj[key] = value.join(',');
           }
-          propertiesArr.push(currentObj);
+          propertiesMap[id] = currentObj;
         }
       } else {
-        propertiesArr.push({});
+        propertiesMap[id] = {};
       }
     }
-    return propertiesArr;
+    return propertiesMap;
   }
 
   /**
@@ -163,18 +164,14 @@ class GraphComputeService extends Service {
   async queryEdgesProperties(client, edgeIds) {
     // TODO: Query edge properties isn't support in GraphScope yet.
     // Need to consider the dummy edge of PathExpand operator.
-    const propertiesArr = [];
-    return {
-      success: true,
-      code: 200,
-      message: '属性查询成功',
-      data: propertiesArr,
-    };
+    console.log('queryEdgesProperties here');
+    const propertiesMap= {};
+    return propertiesMap;
   }
 
   /**
-   * 通过 Gremlin 语句查询
-   * @param gremlinSQL Gremlin 查询语句
+   * Query with gremlin statement
+   * @param params: gremlin code, server info, and account info for authentication.
    */
   async queryByGremlinLanguage(params) {
     const { value: gremlinCode, gremlinServer, graphScopeAccount } = params;
@@ -199,8 +196,6 @@ class GraphComputeService extends Service {
         },
       };
     }
-
-    // console.log('[DEBUG] Fetch gremlin result: ', result);
 
     let mode = 'graph';
     const tableResult: any[] = [];
@@ -309,8 +304,8 @@ class GraphComputeService extends Service {
   }
 
   /**
-   * 邻居查询
-   * @param params
+   * query neighbors of vertex.
+   * @param params: list of vertex's id, hop info, gremlin server info.
    */
   async queryNeighbors(params) {
     const { id = [], sep, gremlinServer, graphScopeAccount } = params;
@@ -324,8 +319,6 @@ class GraphComputeService extends Service {
     // gremlin query with limits 600
     const gremlinSQL = `g.V(${id.join(',')})${hops}.bothE().limit(600)`;
     const result = await client.submit(gremlinSQL);
-
-    // console.log('[DEBUG] Fetch gremlin result: ', result);
 
     const edgeItemsMapping = {};
     const nodeItemsMapping = {};
@@ -376,48 +369,29 @@ class GraphComputeService extends Service {
     };
   }
 
-  // TODO：queryNodesProperties 统一
   /**
-   * 查询节点属性详情
-   * @param params 节点 ID
+   * Query properties of vertex/edge.
+   * @param params list of id to be queried.
    */
   async queryElementProperties(params) {
     const { id = [], type, gremlinServer, graphScopeAccount } = params;
 
     const client = initGremlinClient(gremlinServer, graphScopeAccount);
-
-    if (type === 'edge') return await this.queryEdgesProperties(client, id);
-
-    // 查询属性的 Gremlin 已经
-    const gremlinSQL = `g.V(${id.join(',')}).valueMap()`;
-
-    console.log('查询语句', gremlinSQL);
-    const result = await client.submit(gremlinSQL);
-    const propertiesArr = [];
-    console.log('查询属性值结果', result);
-
-    for (const properties of result) {
-      const entries = properties.entries();
-      const currentObj = {};
-      for (const current of entries) {
-        const [key, value] = current;
-        currentObj[key] = value.join(',');
-      }
-      propertiesArr.push(currentObj);
+    // 'edge' or 'vertex'
+    let properties = null;
+    if (type === 'edge') {
+      properties = await this.queryEdgesProperties(client, id);
+    } else {
+      // vertex
+      properties = await this.queryNodesProperties(client, id);
     }
-
-    // 构造 { id: properties } 对象
-    const resultObj = {};
-    for (let i = 0; i < id.length; i++) {
-      resultObj[id[i]] = propertiesArr[i];
-    }
-
     closeGremlinClient(client);
+
     return {
       success: true,
       code: 200,
       message: '属性查询成功',
-      data: resultObj,
+      data: properties,
     };
   }
 
