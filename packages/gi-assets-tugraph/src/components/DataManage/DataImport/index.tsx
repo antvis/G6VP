@@ -12,7 +12,7 @@ const { Option } = Select;
 export interface DataImportProps {}
 
 const DataImport: React.FunctionComponent<DataImportProps> = props => {
-  const useToken = localStorage.getItem('TUGRAPH_USER_TOKEN');
+  const useToken = localStorage.getItem('ENGINE_USER_TOKEN');
 
   const { graph, updateContext } = useContext();
   const [state, setState] = useImmer({
@@ -25,7 +25,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
       edge: 0,
     },
     subGraphList: [],
-    defaultGraphName: localStorage.getItem('CURRENT_TUGRAPH_SUBGRAPH'),
+    defaultGraphName: localStorage.getItem('CURRENT_SUBGRAPH'),
   });
 
   const getVertexLabelCount = async () => {
@@ -61,7 +61,7 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     setState(draft => {
       draft.defaultGraphName = value;
     });
-    localStorage.setItem('CURRENT_TUGRAPH_SUBGRAPH', value);
+    localStorage.setItem('CURRENT_SUBGRAPH', value);
 
     // 切换子图后，同步查询 Schema
     const schemaData = await queryGraphSchema({

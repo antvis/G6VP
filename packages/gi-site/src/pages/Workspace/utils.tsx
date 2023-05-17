@@ -642,8 +642,18 @@ const Gremlin_Template = [
   },
 ];
 
-export const getConfigByEngineId = engineId => {
+export const getConfigByEngineId = (engineId, template = undefined) => {
   let componentConfig = [...baseComponentsConfig];
+  let layout = baseLayoutConfig;
+  let nodes = baseNodesConfig;
+  let edges = baseEdgesConfig;
+  if (template) {
+    const { components, layout: templateLayout, nodes: templateNodesConfig, edges: templateEdgesConfig } = template;
+    componentConfig = [...components];
+    layout = templateLayout;
+    nodes = templateNodesConfig;
+    edges = templateEdgesConfig;
+  }
   if (engineId === 'TuGraph' || engineId === 'Neo4j') {
     //@ts-ignore
     componentConfig = [...componentConfig, ...Cypher_Template];
@@ -651,6 +661,9 @@ export const getConfigByEngineId = engineId => {
       if (item.id === 'GrailLayout') {
         const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
         rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
+      } else if (item.id === 'SegmentedLayout') {
+        const sideContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_SIDE');
+        sideContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
       }
     });
   }
@@ -660,18 +673,21 @@ export const getConfigByEngineId = engineId => {
     componentConfig.forEach(item => {
       if (item.id === 'GrailLayout') {
         const rightContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_RIGHT');
-        rightContainer.GI_CONTAINER = ['FilterPanel', 'CypherQuery'];
+        rightContainer.GI_CONTAINER = ['FilterPanel', 'GremlinQuery'];
+      } else if (item.id === 'SegmentedLayout') {
+        const sideContainer = item.props.containers.find(container => container.id === 'GI_CONTAINER_SIDE');
+        sideContainer.GI_CONTAINER = ['FilterPanel', 'GremlinQuery'];
       }
     });
   }
   const config = {
-    nodes: baseNodesConfig,
-    edges: baseEdgesConfig,
-    layout: baseLayoutConfig,
+    nodes,
+    edges,
+    layout,
     components: componentConfig,
   };
   const activeAssetsKeys = {
-    elements: [...baseNodesConfig.map(n => n.id), ...baseEdgesConfig.map(e => e.id)],
+    elements: [...nodes.map(n => n.id), ...edges.map(e => e.id)],
     components: [...config.components.map(c => c.id)],
     layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
   };

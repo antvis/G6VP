@@ -19,7 +19,7 @@ const DEFAULT_VALUE = {
   password: '',
   HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL, //'http://127.0.0.1:7001',
   engineServerURL: '',
-  CURRENT_TUGRAPH_SUBGRAPH: 'MovieDemo1',
+  CURRENT_SUBGRAPH: 'MovieDemo1',
 };
 
 const Connect: React.FC<ConnectProps> = ({ updateGISite, updateToken, token }) => {

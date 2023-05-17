@@ -70,15 +70,13 @@ class GraphComputeService extends Service {
       const entries = value.entries();
       for (const current of entries) {
         // the result of PathExpand operator is a path consisting of a set of vertex and edge
-        isGSPath &&= (
-          current instanceof gremlin.structure.Vertex || current instanceof gremlin.structure.Edge
-        );
+        isGSPath &&= current instanceof gremlin.structure.Vertex || current instanceof gremlin.structure.Edge;
         // edgeInfo is needed for graph visualization
         if (current instanceof gremlin.structure.Edge) {
           hasEdge = true;
         }
       }
-      return (isGSPath && hasEdge);
+      return isGSPath && hasEdge;
     } catch (error) {
       return false;
     }
@@ -166,7 +164,12 @@ class GraphComputeService extends Service {
     // TODO: Query edge properties isn't support in GraphScope yet.
     // Need to consider the dummy edge of PathExpand operator.
     const propertiesArr = [];
-    return propertiesArr;
+    return {
+      success: true,
+      code: 200,
+      message: '属性查询成功',
+      data: propertiesArr,
+    };
   }
 
   /**
@@ -232,7 +235,7 @@ class GraphComputeService extends Service {
         nodeItemsMapping[dstVertexInfo.id] = {
           ...dstVertexInfo,
           nodeType: dstVertexInfo.label,
-        }
+        };
       } else if (value instanceof gremlin.structure.Path) {
         // path isn't supported in graphscope yet.
         // https://graphscope.io/docs/latest/interactive_engine/supported_gremlin_steps.html#path
@@ -348,7 +351,7 @@ class GraphComputeService extends Service {
         nodeItemsMapping[dstVertexInfo.id] = {
           ...dstVertexInfo,
           nodeType: dstVertexInfo.label,
-        }
+        };
       }
     }
     // close gremlin client
@@ -379,9 +382,11 @@ class GraphComputeService extends Service {
    * @param params 节点 ID
    */
   async queryElementProperties(params) {
-    const { id = [], gremlinServer, graphScopeAccount } = params;
+    const { id = [], type, gremlinServer, graphScopeAccount } = params;
 
     const client = initGremlinClient(gremlinServer, graphScopeAccount);
+
+    if (type === 'edge') return await this.queryEdgesProperties(client, id);
 
     // 查询属性的 Gremlin 已经
     const gremlinSQL = `g.V(${id.join(',')}).valueMap()`;

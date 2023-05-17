@@ -2,8 +2,8 @@ import { Select } from 'antd';
 import React from 'react';
 import { EngineBanner, GISiteParams, GraphSchemaData, utils } from '../../index';
 import Connect from './Connect';
-import './index.less';
 import LoadGraph from './LoadGraph';
+import './index.less';
 
 const { Option } = Select;
 
@@ -18,14 +18,15 @@ export interface GraphDBConfig {
   logo: string;
   /** 引擎ID，例如 TuGraph */
   engineId: string;
+  /** 连接数据库 */
+  connectDatabase?: (params?: any) => Promise<boolean>;
   /** 查询子图列表 */
-  querySubGraphList: () => any[] | undefined;
+  querySubGraphList: () => Promise<any[]> | undefined;
   /** 查询图模型 Schema */
-  queryGraphSchema: (params?: any) => GraphSchemaData;
+  queryGraphSchema: (params?: any) => Promise<GraphSchemaData>;
   /** 查询图规模 */
   queryVertexLabelCount?: (params?: any) => any;
-  /** 连接数据库 */
-  connectDatabase?: (params?: any) => boolean;
+
   updateGISite?: (params: GISiteParams) => void;
   giSiteContext?: any;
 }
@@ -44,20 +45,20 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     docs,
   } = props;
   const [state, updateState] = React.useState({
-    useToken: utils.getServerEngineContext()?.TUGRAPH_USER_TOKEN,
+    useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
   });
   const { useToken } = state;
   const updateToken = () => {
     updateState(pre => {
       return {
         ...pre,
-        useToken: utils.getServerEngineContext()?.TUGRAPH_USER_TOKEN,
+        useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
       };
     });
   };
   return (
     <div>
-      <EngineBanner docs={docs} title={title} desc={title} logo={logo} />
+      <EngineBanner docs={docs} title={title} desc={desc} logo={logo} />
       <Connect engineId={engineId} connectDatabase={connectDatabase} updateToken={updateToken} token={useToken} />
       {useToken && (
         <LoadGraph

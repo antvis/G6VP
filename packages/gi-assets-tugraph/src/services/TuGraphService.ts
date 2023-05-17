@@ -22,33 +22,36 @@ export const connectTuGraphDataSource = async () => {
 
   const { data } = result;
   utils.setServerEngineContext({
-    TUGRAPH_USER_TOKEN: `Bearer ${data.jwt}`,
+    ENGINE_USER_TOKEN: `Bearer ${data.jwt}`,
   });
   return result;
 };
 
 export const querySubGraphList = async () => {
-  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/list`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      Authorization: TUGRAPH_USER_TOKEN,
+      Authorization: ENGINE_USER_TOKEN,
     },
   });
-
-  return result;
+  if (result && result.success) {
+    return result.data;
+  } else {
+    return [];
+  }
 };
 
 export const queryVertexLabelCount = async (graphName: string) => {
-  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/count`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
-      Authorization: TUGRAPH_USER_TOKEN,
+      Authorization: ENGINE_USER_TOKEN,
     },
     params: {
       graphName,
@@ -59,7 +62,7 @@ export const queryVertexLabelCount = async (graphName: string) => {
 };
 
 export const queryGraphSchema = async params => {
-  const { TUGRAPH_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
 
   let res = {
     nodes: [],
@@ -67,7 +70,7 @@ export const queryGraphSchema = async params => {
   };
   const { graphName } = (params as any) || {};
 
-  if (!TUGRAPH_USER_TOKEN) {
+  if (!ENGINE_USER_TOKEN) {
     // 没有登录信息，需要先登录再查询 schema
     return {
       success: false,
@@ -83,7 +86,7 @@ export const queryGraphSchema = async params => {
       method: 'get',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        Authorization: TUGRAPH_USER_TOKEN,
+        Authorization: ENGINE_USER_TOKEN,
       },
       params: {
         graphName,

@@ -59,7 +59,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
-      const detail = await service(model);
+      const detail = await service({ ...model, type: 'node' });
 
       let propertyInfos: { propertyName: string; ratio: number }[] = [];
       if (enableInfoDetect) {
@@ -86,7 +86,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
-      const detail = await service(model);
+      const detail = await service({ ...model, type: 'edge' });
 
       let propertyInfos: { propertyName: string; ratio: number; rank: number; isOuterlier?: boolean }[] = [];
       if (enableInfoDetect) {
