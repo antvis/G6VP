@@ -2,7 +2,6 @@ import { CollapseCard, GISiteParams, GraphSchemaData, utils } from '@antv/gi-sdk
 import Graphin from '@antv/graphin';
 import { Button, Col, Input, notification, Row, Select, Form } from 'antd';
 import * as React from 'react';
-import { useImmer } from 'use-immer';
 import { querySubGraphList } from './services';
 import { formatGSSchema } from './utils';
 
@@ -16,39 +15,27 @@ const { Option } = Select;
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const { updateGISite, token } = props;
 
-  const [state, updateState] = useImmer<{
-    schemaData: GraphSchemaData;
-    subGraphList: [];
-    defaultLabelField: string;
-    loading: boolean;
-    selectedSubgraph: any;
-  }>({
-    schemaData: { nodes: [], edges: [] },
-    defaultLabelField: 'name',
-    subGraphList: [],
-    loading: false,
-    selectedSubgraph: undefined,
-  });
-  const { schemaData, subGraphList, loading, defaultLabelField, selectedSubgraph } = state;
+  const [schemaData, setSchemaData] = React.useState<GraphSchemaData>({ nodes: [], edges: [] });
+  const [selectedSubgraph, setSelectedSubgraph] = React.useState<any>(undefined);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [subGraphList, setSubGraphList] = React.useState<[]>([]);
+  const [defaultLabelField, setDefaultLabelField] = React.useState<string>('name');
   const [form] = Form.useForm();
 
   React.useEffect(() => {
     // token 发生变化时，清空已选择的 subgraph 内容，并重新请求 subgraph 列表
     form.resetFields();
-    updateState(draft => {
-      draft.schemaData = { nodes: [], edges: [] };
-      draft.selectedSubgraph = undefined;
-    });
+    setSchemaData({ nodes: [], edges: [] });
+    setSelectedSubgraph(undefined);
     if (token) {
       getSubGraphList();
     }
   }, [token]);
 
   const getSubGraphList = async () => {
-    updateState(draft => {
-      draft.loading = true;
-    });
+    setLoading(true);
     const result = await querySubGraphList();
+    setLoading(false);
     if (!result.success) {
       notification.error({
         message: '查询子图列表失败',
@@ -56,10 +43,15 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
       });
       return;
     }
-    updateState(draft => {
-      draft.subGraphList = JSON.parse(result.data);
-      draft.loading = false;
-    });
+    if (!result.data?.length) {
+      notification.warn({
+        message: '查询成功，子图列表为空',
+        description: `查询成功：${result.message}`,
+      });
+      setSubGraphList([]);
+      return;
+    }
+    setSubGraphList(JSON.parse(result.data));
   };
 
   const handleSubgraphChange = async value => {
@@ -69,35 +61,33 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
     // 子图列表中的每一项，带有该子图的 schema、账密、ws查询地址
     const subgraph = subGraphList.find((sub: any) => sub.name === value) as any;
-    updateState(draft => {
-      draft.selectedSubgraph = subgraph;
-      if (!subgraph?.schema) return;
-      const { vertices, edges } = subgraph.schema;
-      if (vertices && edges) {
-        const formattedNodes = vertices.map(vertice => ({
-          ...vertice,
-          nodeType: vertice.label,
-          nodeTypeKeyFromProperties: 'nodeType',
-        }));
-        const formattedEdges = edges
-          .map(edge => {
-            const relation = edge.relations?.[0];
-            if (!relation) return false;
-            return {
-              ...edge,
-              edgeType: edge.label,
-              sourceNodeType: relation.src_label,
-              targetNodeType: relation.dst_label,
-              edgeTypeKeyFromProperties: 'edgeType',
-            };
-          })
-          .filter(Boolean);
-        draft.schemaData = {
-          nodes: formattedNodes,
-          edges: formattedEdges,
-        };
-      }
-    });
+    setSelectedSubgraph(subgraph);
+    if (!subgraph?.schema) return;
+    const { vertices, edges } = subgraph.schema;
+    if (vertices && edges) {
+      const formattedNodes = vertices.map(vertice => ({
+        ...vertice,
+        nodeType: vertice.label,
+        nodeTypeKeyFromProperties: 'nodeType',
+      }));
+      const formattedEdges = edges
+        .map(edge => {
+          const relation = edge.relations?.[0];
+          if (!relation) return false;
+          return {
+            ...edge,
+            edgeType: edge.label,
+            sourceNodeType: relation.src_label,
+            targetNodeType: relation.dst_label,
+            edgeTypeKeyFromProperties: 'edgeType',
+          };
+        })
+        .filter(Boolean);
+      setSchemaData({
+        nodes: formattedNodes,
+        edges: formattedEdges,
+      });
+    }
   };
 
   const handleSubmit = () => {

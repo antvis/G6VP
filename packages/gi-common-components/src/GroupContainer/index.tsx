@@ -1,7 +1,6 @@
 import { CaretRightOutlined, DeleteOutlined, FilterOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Collapse, Form, Input, Row, Switch } from 'antd';
-import React, { useCallback } from 'react';
-import { useImmer } from 'use-immer';
+import React, { useCallback, useState } from 'react';
 import type { ItemConfig } from '../CommonStyleSetting/typing';
 import { getAllkeysBySchema } from '../Utils/getAllkeysBySchema';
 import ExpressionGroup, { Expression } from './ExpressionGroup';
@@ -48,15 +47,10 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
   const { children, valuesChange, initValues, defaultGroupOption, schemaData, elementType } = props;
   const [form] = Form.useForm();
 
-  const [state, setState] = useImmer<State>({
-    activeKeys: ['0'],
-  });
-  const { activeKeys } = state;
+  const [activeKeys, setActiveKeys] = useState<string[]>(['0']);
 
   const onPanelChange = (keys: string | string[]) => {
-    setState(state => {
-      state.activeKeys = typeof keys === 'string' ? [keys] : keys;
-    });
+    setActiveKeys(typeof keys === 'string' ? [keys] : keys);
   };
 
   const onValuesChange = useCallback((changedValue: any, allValues: { groups: ItemConfig[] }) => {
@@ -126,9 +120,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         groupName: `自定义样式 ${idx}`,
                       };
                       add(options);
-                      setState(state => {
-                        state.activeKeys = [...activeKeys, `${fields.length}`];
-                      });
+                      setActiveKeys([...activeKeys, `${fields.length}`]);
                     }}
                     icon={<PlusOutlined />}
                   >

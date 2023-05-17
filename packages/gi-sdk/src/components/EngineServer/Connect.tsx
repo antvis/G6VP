@@ -9,7 +9,7 @@ export interface ConnectProps {
   engineId: string;
   updateToken: () => void;
   token: string | null;
-  connectDatabase: (params?: any) => boolean;
+  connectDatabase: (params?: any) => Promise<boolean> | boolean;
 }
 
 const { protocol, hostname } = location;

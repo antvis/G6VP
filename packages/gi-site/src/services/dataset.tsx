@@ -57,11 +57,11 @@ export const allLists = async () => {
  * 请求不在回收站中的可用数据集
  * @returns
  */
-export const queryDatasetList = async () => {
+export const queryDatasetList = async (type = 'user') => {
   if (GI_SITE.IS_OFFLINE) {
     const res: IDataset[] = [];
     await GI_DATASET_DB.iterate((item: IDataset) => {
-      if (item.type === 'user' && !item.recycleTime) {
+      if (item.type === type && !item.recycleTime) {
         res.push(item);
       }
     });

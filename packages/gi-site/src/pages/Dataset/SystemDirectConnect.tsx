@@ -5,6 +5,8 @@ import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
 import * as DatasetServices from '../../services/dataset';
 import * as ProjectServices from '../../services/project';
+import * as TemplateService from '../../services/template';
+import { queryDatasetList } from '../../services/dataset';
 import DatasetTable from './Table';
 
 import { utils } from '@antv/gi-sdk';
@@ -23,12 +25,13 @@ const SystemDirectConnect: React.FunctionComponent = props => {
     try {
       const { searchParams } = getSearchParams(window.location);
       const datasetInfoString = searchParams.get('datasetInfo');
-      console.log('datasetInfoString', datasetInfoString);
       if (datasetInfoString) {
         const datasetInfo = JSON.parse(decodeURIComponent(datasetInfoString));
-        const { id, name, schemaData, engineId, engineContext } = datasetInfo;
+        const { id, name, schemaData, engineId, engineContext, templateId } = datasetInfo;
+        const templates = [...(await TemplateService.listInner()), ...(await TemplateService.list())];
+        const template = templates.find(item => item.id === templateId) || {};
         const style = utils.generatorStyleConfigBySchema(schemaData);
-        const { config, activeAssetsKeys } = getConfigByEngineId(engineId);
+        const { config, activeAssetsKeys } = getConfigByEngineId(engineId, JSON.parse(JSON.stringify(template)));
         const projectId = await ProjectServices.create({
           datasetId: id,
           name,
@@ -92,6 +95,16 @@ const SystemDirectConnect: React.FunctionComponent = props => {
       `}</pre>
     </div>
   );
+
+  const refreshDataset = () => {
+    (async () => {
+      const res = await queryDatasetList('system');
+      setState({
+        lists: res,
+      });
+    })();
+  };
+
   return (
     <SegmentedTabs
       items={[
@@ -99,7 +112,7 @@ const SystemDirectConnect: React.FunctionComponent = props => {
           key: 'list',
           icon: <BarsOutlined />,
           label: '数据列表',
-          children: <DatasetTable data={lists} />,
+          children: <DatasetTable data={lists} queryData={refreshDataset} />,
         },
         {
           key: 'code',
