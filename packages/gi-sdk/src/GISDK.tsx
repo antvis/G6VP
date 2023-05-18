@@ -134,11 +134,59 @@ const GISDK = (props: Props) => {
       };
     }
 
+    if (layoutCfg.id === 'Force2') {
+      const {
+        advanceWeight,
+        edgeWeightField,
+        nodeWeightField,
+        nodeWeightFieldFromEdge,
+        nodeWeightFromType,
+        directed,
+        directedFromType,
+        directedInWeightField,
+        directedOutWeightField,
+        directedIsLog,
+        directedMultiple,
+        directedAmountFromEdge,
+      } = options;
+      if (advanceWeight) {
+        if (edgeWeightField) {
+          (otherOptions as any).edgeStrength = utils.getEdgeWeightedStrength(options);
+        }
+        if (
+          (nodeWeightFromType === 'node' && nodeWeightField) ||
+          (nodeWeightFromType === 'edge' && nodeWeightFieldFromEdge)
+        ) {
+          (otherOptions as any).nodeStrength = utils.getNodeWeightedStrength(options);
+        }
+        debugger;
+        (otherOptions as any).defSideCoe = 'unset';
+        if (directed) {
+          if (directedFromType === 'node') {
+            (otherOptions as any).defSideCoe = utils.getDefSideCoeFunction(
+              directedInWeightField,
+              directedOutWeightField,
+              directedIsLog,
+              directedMultiple,
+            );
+          } else if (directedAmountFromEdge) {
+            (otherOptions as any).defSideCoe = utils.getDefSideCoeFromEdgeFunction(
+              directedAmountFromEdge,
+              directedIsLog,
+              directedMultiple,
+            );
+          }
+        }
+      }
+    }
+
     updateState(draft => {
       draft.layout = {
         type,
         ...options,
         ...otherOptions,
+        // 保证更新布局，因为有些函数映射的参数在 Graphin 内部被 JSON.stringify 后无法对比出区别
+        seed: Math.random(),
       };
       draft.config.layout = layoutCfg;
       draft.layoutCache = false;

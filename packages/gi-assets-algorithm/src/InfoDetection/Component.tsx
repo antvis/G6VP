@@ -3,40 +3,21 @@ import { INode } from '@antv/g6';
 import { useContext } from '@antv/gi-sdk';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
-import React from 'react';
-import { useImmer } from 'use-immer';
+import React, { useState } from 'react';
 import DegreeScatter from './DegreeScatter';
 import './index.less';
-import { IDegreeState } from './type';
-
-interface IState {
-  isolateNodes: NodeConfig[];
-  circles: object[];
-  //   avgPageRank: number;
-  //   avgDegree: number;
-}
 
 const InfoDetection = () => {
   const { data, graph } = useContext();
   console.log('InfoDetection HAS GRAPH', graph && !graph.destroyed);
 
-  const [state, updateState] = useImmer<IState>({
-    isolateNodes: [],
-    circles: [],
-    // avgPageRank: 0,
-    // avgDegree: 0,
-  });
-
-  const [selectedItems, setSelectedItems] = useImmer({
-    isolate: false,
-    circle: false,
-  });
-
-  const [degree, updateDegree] = useImmer<IDegreeState>({
-    inDegree: new Map(),
-    outDegree: new Map(),
-    totalDegree: new Map(),
-  });
+  const [isolateNodes, setIsolateNodes] = useState<NodeConfig[]>([]);
+  const [circles, setCircles] = useState<object[]>([]);
+  const [selectedIsolate, setSelectedIsolate] = useState(false);
+  const [selectedCircle, setSelectedCircle] = useState(false);
+  const [inDegree, setInDegree] = useState<Map<number, number>>(new Map());
+  const [outDegree, setOutDegree] = useState<Map<number, number>>(new Map());
+  const [totalDegree, setTotalDegree] = useState<Map<number, number>>(new Map());
 
   React.useEffect(() => {
     const isolateNodes = data.nodes.filter(item => {
@@ -54,9 +35,9 @@ const InfoDetection = () => {
 
     // const avgDegree = data.edges.length * 2 / data.nodes.length;
 
-    const inDegree = new Map();
-    const outDegree = new Map();
-    const totalDegree = new Map();
+    const inDegreeCalc = new Map();
+    const outDegreeCalc = new Map();
+    const totalDegreeCalc = new Map();
     data.nodes.forEach(node => {
       const nodeItem = graph.findById(node.id) as INode;
       const edges = nodeItem.getEdges();
@@ -72,23 +53,16 @@ const InfoDetection = () => {
           inD++;
         }
       });
-      inDegree.set(inD, inDegree.has(inD) ? inDegree.get(inD) + 1 : 1);
-      outDegree.set(outD, outDegree.has(outD) ? outDegree.get(outD) + 1 : 1);
-      totalDegree.set(total, totalDegree.has(total) ? totalDegree.get(total) + 1 : 1);
+      inDegreeCalc.set(inD, inDegreeCalc.has(inD) ? inDegreeCalc.get(inD) + 1 : 1);
+      outDegreeCalc.set(outD, outDegreeCalc.has(outD) ? outDegreeCalc.get(outD) + 1 : 1);
+      totalDegreeCalc.set(total, totalDegreeCalc.has(total) ? totalDegreeCalc.get(total) + 1 : 1);
     });
 
-    updateState(draft => {
-      draft.isolateNodes = isolateNodes;
-      draft.circles = circles;
-      // draft.avgPageRank = avgPageRank;
-      // draft.avgDegree = avgDegree;
-    });
-
-    updateDegree(draft => {
-      draft.inDegree = inDegree;
-      draft.outDegree = outDegree;
-      draft.totalDegree = totalDegree;
-    });
+    setIsolateNodes(isolateNodes);
+    setCircles(circles);
+    setInDegree(inDegreeCalc);
+    setOutDegree(outDegreeCalc);
+    setTotalDegree(totalDegreeCalc);
   }, [data]);
 
   React.useEffect(() => {
@@ -100,14 +74,14 @@ const InfoDetection = () => {
       graph.findById(item.id) && graph.setItemState(item.id, 'active', false);
     });
 
-    if (selectedItems.isolate) {
-      state.isolateNodes.forEach(node => {
+    if (selectedIsolate) {
+      isolateNodes.forEach(node => {
         graph.findById(node.id) && graph.setItemState(node.id, 'active', true);
       });
     }
 
-    if (selectedItems.circle) {
-      state.circles.forEach(circle => {
+    if (selectedCircle) {
+      circles.forEach(circle => {
         const start = Object.keys(circle)[0];
         // 遍历环 高亮环上所有的节点和边
         let cur = start;
@@ -126,41 +100,33 @@ const InfoDetection = () => {
         } while (cur !== start);
       });
     }
-  }, [selectedItems]);
+  }, [selectedIsolate, selectedCircle]);
 
   return (
     <div className="gi-info-detection">
       <List>
         <List.Item
           key="isolate"
-          extra={<div>{state.isolateNodes.length}</div>}
-          onClick={() =>
-            setSelectedItems(draft => {
-              draft.isolate = !draft.isolate;
-            })
-          }
+          extra={<div>{isolateNodes.length}</div>}
+          onClick={() => setSelectedIsolate(old => !old)}
           style={{
-            border: selectedItems.isolate ? 'solid blue 1px' : 'none',
+            border: selectedIsolate ? 'solid blue 1px' : 'none',
           }}
         >
           孤立点
         </List.Item>
         <List.Item
           key="circle"
-          extra={<div>{state.circles.length}</div>}
-          onClick={() =>
-            setSelectedItems(draft => {
-              draft.circle = !draft.circle;
-            })
-          }
+          extra={<div>{circles.length}</div>}
+          onClick={() => setSelectedCircle(old => !old)}
           style={{
-            border: selectedItems.circle ? 'solid blue 1px' : 'none',
+            border: selectedCircle ? 'solid blue 1px' : 'none',
           }}
         >
           环
         </List.Item>
       </List>
-      <DegreeScatter degree={degree}></DegreeScatter>
+      <DegreeScatter degree={{ inDegree, outDegree, totalDegree }}></DegreeScatter>
     </div>
   );
 };

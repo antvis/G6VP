@@ -1,4 +1,11 @@
 const registerMeta = context => {
+  const { schemaData, keys } = context;
+  const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
+    return {
+      ...acc,
+      ...cur.properties,
+    };
+  }, {});
   const presetOptions = [
     {
       label: '网格布局',
@@ -17,9 +24,37 @@ const registerMeta = context => {
       value: 'dagre',
     },
   ];
+  const weightScaleOptions = [
+    {
+      label: '原始值',
+      value: 1,
+    },
+    {
+      label: '开平方',
+      value: 'sqrt',
+    },
+    {
+      label: '平方',
+      value: 'sqr',
+    },
+    {
+      label: '倒数',
+      value: 'reciprocal',
+    },
+    {
+      label: 'log2',
+      value: 'log2',
+    },
+    {
+      label: 'log10',
+      value: 'log10',
+    },
+  ];
+  const directedWeightOptions = keys.filter(k => nodeProperties[k] === 'number').map(k => ({ label: k, value: k }));
+
   return {
-    stiffness: {
-      type: 'edgeStrength',
+    edgeStrength: {
+      type: 'number',
       title: '边引力系数',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -194,6 +229,253 @@ const registerMeta = context => {
         //   }`,
         // },
       },
+    },
+
+    advanceWeight: {
+      title: '权重高级配置',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+      'x-reactions': [
+        'edgeWeightField',
+        'edgeWeightFieldScale',
+        'nodeWeightFromType',
+        'nodeWeightField',
+        'nodeWeightFieldFromEdge',
+        'nodeWeightFieldScale',
+        'directed',
+        'directedFromType',
+        'directedInWeightField',
+        'directedOutWeightField',
+        'directedAmountFromEdge',
+        'directedIsLog',
+        'directedMultiple',
+      ].map(target => ({
+        target,
+        fulfill: {
+          state: {
+            visible: '{{$self.value}}',
+          },
+        },
+      })),
+    },
+    edgeWeightField: {
+      type: 'string',
+      title: '引力权重关联',
+      'x-decorator': 'FormItem',
+      'x-component': 'GroupSelect',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.edges,
+      },
+    },
+    edgeWeightFieldScale: {
+      type: 'string',
+      title: '引力权重关联归一',
+      'x-component': 'Select',
+      'x-decorator': 'FormItem',
+      'x-component-props': {
+        options: weightScaleOptions,
+      },
+      default: 1,
+    },
+    nodeWeightFromType: {
+      title: '斥力关联类型',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component-props': {},
+      'x-component': 'Radio.Group',
+      enum: [
+        {
+          label: '节点属性',
+          value: 'node',
+        },
+        {
+          label: '相关边属性加和',
+          value: 'edge',
+        },
+      ],
+      default: 'node',
+      'x-reactions': [
+        {
+          target: 'nodeWeightField',
+          fulfill: {
+            state: {
+              visible: '{{$self.value === "node"}}',
+            },
+          },
+        },
+        {
+          target: 'nodeWeightFieldFromEdge',
+          fulfill: {
+            state: {
+              visible: '{{$self.value === "edge"}}',
+            },
+          },
+        },
+      ],
+    },
+    nodeWeightField: {
+      type: 'string',
+      title: '斥力权重关联',
+      'x-decorator': 'FormItem',
+      'x-component': 'GroupSelect',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.nodes,
+      },
+      showInPanel: {
+        conditions: [['.nodeWeightFromType', '$eq', 'node']],
+      },
+    },
+    nodeWeightFieldFromEdge: {
+      type: 'string',
+      title: '斥力权重关联',
+      'x-decorator': 'FormItem',
+      'x-component': 'GroupSelect',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.edges,
+      },
+      showInPanel: {
+        conditions: [['.nodeWeightFromType', '$eq', 'edge']],
+      },
+    },
+    nodeWeightFieldScale: {
+      type: 'string',
+      title: '斥力权重关联归一',
+      'x-component': 'Select',
+      'x-decorator': 'FormItem',
+      'x-component-props': {
+        options: weightScaleOptions,
+      },
+      default: 1,
+    },
+    directed: {
+      title: '启用有向力',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+      'x-reactions': [
+        {
+          target: 'directedFromType',
+          fulfill: {
+            state: {
+              visible: '{{$self.value}}',
+            },
+          },
+        },
+        {
+          target: 'directedIsLog',
+          fulfill: {
+            state: {
+              visible: '{{$self.value}}',
+            },
+          },
+        },
+        {
+          target: 'directedMultiple',
+          fulfill: {
+            state: {
+              visible: '{{$self.value}}',
+            },
+          },
+        },
+      ],
+    },
+
+    directedFromType: {
+      title: '资金关联元素',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component-props': {},
+      'x-component': 'Radio.Group',
+      enum: [
+        {
+          label: '节点属性',
+          value: 'node',
+        },
+        {
+          label: '相关边属性加和',
+          value: 'edge',
+        },
+      ],
+      default: 'node',
+      'x-reactions': [
+        {
+          dependencies: ['directed'],
+          target: 'directedInWeightField',
+          fulfill: {
+            state: {
+              visible: '{{$deps[0] && $self.value === "node"}}',
+            },
+          },
+        },
+        {
+          dependencies: ['directed'],
+          target: 'directedOutWeightField',
+          fulfill: {
+            state: {
+              visible: '{{$deps[0] && $self.value === "node"}}',
+            },
+          },
+        },
+        {
+          dependencies: ['directed'],
+          target: 'directedAmountFromEdge',
+          fulfill: {
+            state: {
+              visible: '{{$deps[0] && $self.value === "edge"}}',
+            },
+          },
+        },
+      ],
+    },
+    directedInWeightField: {
+      title: '入权重字段',
+      'x-component': 'Select',
+      'x-decorator': 'FormItem',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.edges,
+      },
+      default: directedWeightOptions[0]?.value,
+    },
+    directedOutWeightField: {
+      title: '出权重字段',
+      'x-component': 'Select',
+      'x-decorator': 'FormItem',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.edges,
+      },
+      default: directedWeightOptions[0]?.value,
+    },
+    directedAmountFromEdge: {
+      type: 'string',
+      title: '相关边属性',
+      'x-decorator': 'FormItem',
+      'x-component': 'GroupSelect',
+      'x-component-props': {
+        mode: 'multiple',
+        schemaData: schemaData.edges,
+      },
+    },
+    directedIsLog: {
+      title: 'log 映射',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
+    directedMultiple: {
+      title: '倍数映射',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Input',
+      default: '0.1',
     },
   };
 };
