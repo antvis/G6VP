@@ -75,12 +75,16 @@ const TableMode: React.FC<IProps> = props => {
 
   const { isPostStart, postParmas } = state;
 
-  const NODES_FIELDS_COLUMNS = React.useMemo(() => {
-    return getColumns(schemaData, 'nodes');
+  const NODES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
+    return {
+      columns: getColumns(schemaData, 'nodes')
+    };
   }, [schemaData]);
 
-  const EDGES_FIELDS_COLUMNS = React.useMemo(() => {
-    return getColumns(schemaData, 'edges');
+  const EDGES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
+    return {
+      columns: getColumns(schemaData, 'edges')
+    };
   }, [schemaData]);
 
   const NODES_DATA = getData('nodes', { selectItems, largeGraphData, graphData });
@@ -91,17 +95,13 @@ const TableMode: React.FC<IProps> = props => {
     switcherFields: switcherFields_NODES,
 
     onSwitch: onSwitch_NODES,
-  } = useSwitcher({
-    columns: NODES_FIELDS_COLUMNS,
-  });
+  } = useSwitcher(NODES_FIELDS_COLUMNS_CONFIG);
   const {
     fields: fields_EDGES,
     switcherFields: switcherFields_EDGES,
 
     onSwitch: onSwitch_EDGES,
-  } = useSwitcher({
-    columns: EDGES_FIELDS_COLUMNS,
-  });
+  } = useSwitcher(EDGES_FIELDS_COLUMNS_CONFIG);
 
   const nodeDataCfg: S2DataConfig = {
     fields: fields_NODES,
@@ -230,8 +230,8 @@ const TableMode: React.FC<IProps> = props => {
       },
       largeGraphData,
       graphData,
-      NODES_FIELDS_COLUMNS,
-      EDGES_FIELDS_COLUMNS,
+      NODES_FIELDS_COLUMNS: EDGES_FIELDS_COLUMNS_CONFIG.columns,
+      EDGES_FIELDS_COLUMNS: EDGES_FIELDS_COLUMNS_CONFIG.columns,
     };
     setState({ isPostStart: true, postParmas: params });
   };
