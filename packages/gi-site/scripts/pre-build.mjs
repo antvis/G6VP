@@ -16,7 +16,7 @@ import path from 'path';
 export const G6_VERSION = '4.8.10';
 export const GRAPHIN_VERSION = '2.7.16';
 export const G2PLOT_VERSION = '2.4.16';
-export const ANTD_VERSION = '4.24.9';
+export const ANTD_VERSION = '4.24.8';
 export const GI_VERSION = GI_SDK.version;
 
 import { fileURLToPath } from 'url';

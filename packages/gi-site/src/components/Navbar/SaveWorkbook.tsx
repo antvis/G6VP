@@ -60,8 +60,38 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       const cover = await getCover(graph);
       graph.changeSize(width, height);
       graph.fitView(20);
-
-      const { id, name, type, props } = pageLayout;
+      /** 临时的兼容处理，需要重新设计 */
+      const {
+        id = 'SegmentedLayout',
+        name = '分段布局',
+        type = 'GICC_LAYOUT',
+        props = {
+          containers: [
+            {
+              id: 'GI_CONTAINER_SIDE',
+              name: '侧边容器',
+              required: true,
+              GI_CONTAINER: ['FilterPanel'],
+              display: true,
+            },
+          ],
+        },
+      } = pageLayout || {
+        id: 'SegmentedLayout',
+        name: '分段布局',
+        type: 'GICC_LAYOUT',
+        props: {
+          containers: [
+            {
+              id: 'GI_CONTAINER_SIDE',
+              name: '侧边容器',
+              required: true,
+              GI_CONTAINER: ['FilterPanel'],
+              display: true,
+            },
+          ],
+        },
+      };
 
       const clonedLayout = JSON.parse(JSON.stringify(layout));
       const result = await ProjectServices.updateById(workbookId, {

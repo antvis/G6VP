@@ -124,118 +124,123 @@ const Analysis = props => {
   }, [projectId, key]);
 
   React.useEffect(() => {
-    if (!activeAssetsKeys) {
-      //初始化阶段
-      return;
-    }
-    /** 根据活跃资产Key值，动态加载资产实例 */
-    queryAssets(activeAssetsKeys).then(
-      //@ts-ignore
-      activeAssets => {
-        const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
-        const assetServices = utils.getCombineServices(activeAssets.services!);
-        updateState(draft => {
-          /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
-          const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
-          const schemaData = original(draft.schemaData);
+    try {
+      if (!activeAssetsKeys) {
+        //初始化阶段
+        return;
+      }
+      /** 根据活跃资产Key值，动态加载资产实例 */
+      queryAssets(activeAssetsKeys).then(
+        //@ts-ignore
+        activeAssets => {
+          const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
+          const assetServices = utils.getCombineServices(activeAssets.services!);
+          updateState(draft => {
+            /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
+            const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
+            const schemaData = original(draft.schemaData);
 
-          const activeAssetsInformation = queryActiveAssetsInformation({
-            engineId,
-            assets: activeAssets,
-            data,
-            config,
-            serviceConfig: [...assetServices, ...combinedServiceConfig],
-            schemaData,
-          });
+            const activeAssetsInformation = queryActiveAssetsInformation({
+              engineId,
+              assets: activeAssets,
+              data,
+              config,
+              serviceConfig: [...assetServices, ...combinedServiceConfig],
+              schemaData,
+            });
 
-          const configComponents = activeAssetsInformation.components.map(c => {
-            //@ts-ignore
-            const defaultValues = c.props;
-            //@ts-ignore
-            const cfgComponents = draft.config.components.find(d => d.id === c.id);
-            let matchItem = c as any;
-            if (cfgComponents) {
-              matchItem = original(cfgComponents);
-            }
+            const configComponents = activeAssetsInformation.components.map(c => {
+              //@ts-ignore
+              const defaultValues = c.props;
+              //@ts-ignore
+              const cfgComponents = draft.config.components.find(d => d.id === c.id);
+              let matchItem = c as any;
+              if (cfgComponents) {
+                matchItem = original(cfgComponents);
+              }
 
-            /** 将config.components 中的值与 assets.components 中的值进行合并 */
-            const resProps = utils.mergeObjectByRule(
-              (_acc, curr) => {
-                return typeof curr === 'string' && curr.startsWith(engineId);
+              /** 将config.components 中的值与 assets.components 中的值进行合并 */
+              const resProps = utils.mergeObjectByRule(
+                (_acc, curr) => {
+                  return typeof curr === 'string' && curr.startsWith(engineId);
+                },
+                defaultValues,
+                matchItem.props,
+              );
+
+              return {
+                // ...matchItem,
+                id: matchItem.id,
+                type: matchItem.type || c.type,
+                name: matchItem.name || c.name,
+                props: resProps,
+              };
+            });
+
+            const { id: layoutId, props: layoutProps } = draft.config.layout!;
+            // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
+            const defaultLayout =
+              activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['Force2'];
+            const layoutConfig = {
+              id: layoutId,
+              props: {
+                ...defaultLayout.props,
+                ...layoutProps,
+                preset: {
+                  ...(defaultLayout.props.preset || {}),
+                  ...(layoutProps.preset || {}),
+                },
               },
-              defaultValues,
-              matchItem.props,
+            };
+
+            /** 根据服务配置列表，得到真正运行的Service实例 */
+
+            const services = utils.uniqueElementsBy(
+              [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
+              (a, b) => {
+                return a.id === b.id;
+              },
             );
 
-            return {
-              // ...matchItem,
-              id: matchItem.id,
-              type: matchItem.type || c.type,
-              name: matchItem.name || c.name,
-              props: resProps,
-            };
+            const pageLayoutComponent = configComponents.find(component => component.type === 'GICC_LAYOUT');
+            if (config && !config.pageLayout && pageLayoutComponent) {
+              draft.config.pageLayout = pageLayoutComponent;
+            } else if (pageLayoutComponent && config.pageLayout?.id === pageLayoutComponent.id) {
+              // 旧版工作簿中未记录 pageLayout，从 components 中恢复信息
+              const { name, type } = pageLayoutComponent;
+              draft.config.pageLayout = {
+                ...draft.config.pageLayout,
+                name,
+                type,
+              };
+              draft.config.pageLayout.props = draft.config.pageLayout.props || { containers: [] };
+              pageLayoutComponent.props?.containers.forEach(container => {
+                const cacheContainer = draft.config.pageLayout?.props.containers?.find(con => con.id === container.id);
+                if (cacheContainer) {
+                  const idx = draft.config.pageLayout?.props.containers.indexOf(cacheContainer);
+                  draft.config.pageLayout.props.containers[idx] = {
+                    ...container,
+                    ...cacheContainer,
+                  };
+                } else {
+                  draft.config.pageLayout.props.containers.push(container);
+                }
+              });
+            }
+
+            draft.isReady = true; //项目加载完毕
+            draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
+            draft.services = services; //更新服务
+            draft.config.components = configComponents; //更新 config.components
+            draft.config.layout = layoutConfig; //更新 config.layout
+            draft.activeAssets = activeAssets; //更新活跃资产
+            draft.activeAssetsInformation = activeAssetsInformation;
           });
-
-          const { id: layoutId, props: layoutProps } = draft.config.layout!;
-          // FIXBUG: 数据中layout为 ClusteringDagre，但资产没有保存成功
-          const defaultLayout = activeAssetsInformation.layouts[layoutId] || activeAssetsInformation.layouts['Force2'];
-          const layoutConfig = {
-            id: layoutId,
-            props: {
-              ...defaultLayout.props,
-              ...layoutProps,
-              preset: {
-                ...(defaultLayout.props.preset || {}),
-                ...(layoutProps.preset || {}),
-              },
-            },
-          };
-
-          /** 根据服务配置列表，得到真正运行的Service实例 */
-
-          const services = utils.uniqueElementsBy(
-            [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
-            (a, b) => {
-              return a.id === b.id;
-            },
-          );
-
-          const pageLayoutComponent = configComponents.find(component => component.type === 'GICC_LAYOUT');
-          if (config && !config.pageLayout && pageLayoutComponent) {
-            draft.config.pageLayout = pageLayoutComponent;
-          } else if (pageLayoutComponent && config.pageLayout?.id === pageLayoutComponent.id) {
-            // 旧版工作簿中未记录 pageLayout，从 components 中恢复信息
-            const { name, type } = pageLayoutComponent;
-            draft.config.pageLayout = {
-              ...draft.config.pageLayout,
-              name,
-              type,
-            };
-            draft.config.pageLayout.props = draft.config.pageLayout.props || { containers: [] };
-            pageLayoutComponent.props?.containers.forEach(container => {
-              const cacheContainer = draft.config.pageLayout?.props.containers?.find(con => con.id === container.id);
-              if (cacheContainer) {
-                const idx = draft.config.pageLayout?.props.containers.indexOf(cacheContainer);
-                draft.config.pageLayout.props.containers[idx] = {
-                  ...container,
-                  ...cacheContainer,
-                };
-              } else {
-                draft.config.pageLayout.props.containers.push(container);
-              }
-            });
-          }
-
-          draft.isReady = true; //项目加载完毕
-          draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
-          draft.services = services; //更新服务
-          draft.config.components = configComponents; //更新 config.components
-          draft.config.layout = layoutConfig; //更新 config.layout
-          draft.activeAssets = activeAssets; //更新活跃资产
-          draft.activeAssetsInformation = activeAssetsInformation;
-        });
-      },
-    );
+        },
+      );
+    } catch (error) {
+      console.log('error', error);
+    }
   }, [activeAssetsKeys]);
 
   /** 更新站点的 SCHEMA 和 DATA */
