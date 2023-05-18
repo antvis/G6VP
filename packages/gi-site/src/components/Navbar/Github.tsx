@@ -2,6 +2,7 @@ import { GithubOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
 import * as React from 'react';
 import { fetch } from 'umi-request';
+import './github.less';
 interface GithubProps {}
 
 const Github: React.FunctionComponent<GithubProps> = props => {
@@ -42,7 +43,6 @@ const Github: React.FunctionComponent<GithubProps> = props => {
       title="开源不易，给个鼓励，加个 ⭐️ 吧！"
       {...otherProps}
       placement="bottomRight"
-      getPopupContainer={node => node}
       overlayStyle={{ marginLeft: '20px' }}
       content={
         <div
