@@ -6,6 +6,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npm run build:all:es",
     "build:all:es": "turbo run build:es",
+    "build:all:umd": "turbo run build:umd",
     "start": "cd packages/gi-site && npm run start",
     "gi-common-components": "cd packages/gi-common-components && npm run build:es",
     "gi-sdk": "cd packages/gi-sdk && npm run build:es",
