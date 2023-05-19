@@ -21,6 +21,7 @@ export interface IProps {
   exportable: boolean;
   containerHeight?: string;
   style?: React.CSSProperties;
+  enableTabSplitScreen: boolean;
 }
 
 const { TabPane } = Tabs;
@@ -31,7 +32,7 @@ const preS2Container = {
 const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, enableCopy, exportable, style = {} } = props;
+  const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, style = {} } = props;
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
@@ -75,12 +76,16 @@ const TableMode: React.FC<IProps> = props => {
 
   const { isPostStart, postParmas } = state;
 
-  const NODES_FIELDS_COLUMNS = React.useMemo(() => {
-    return getColumns(schemaData, 'nodes');
+  const NODES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
+    return {
+      columns: getColumns(schemaData, 'nodes')
+    };
   }, [schemaData]);
 
-  const EDGES_FIELDS_COLUMNS = React.useMemo(() => {
-    return getColumns(schemaData, 'edges');
+  const EDGES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
+    return {
+      columns: getColumns(schemaData, 'edges')
+    };
   }, [schemaData]);
 
   const NODES_DATA = getData('nodes', { selectItems, largeGraphData, graphData });
@@ -91,17 +96,13 @@ const TableMode: React.FC<IProps> = props => {
     switcherFields: switcherFields_NODES,
 
     onSwitch: onSwitch_NODES,
-  } = useSwitcher({
-    columns: NODES_FIELDS_COLUMNS,
-  });
+  } = useSwitcher(NODES_FIELDS_COLUMNS_CONFIG);
   const {
     fields: fields_EDGES,
     switcherFields: switcherFields_EDGES,
 
     onSwitch: onSwitch_EDGES,
-  } = useSwitcher({
-    columns: EDGES_FIELDS_COLUMNS,
-  });
+  } = useSwitcher(EDGES_FIELDS_COLUMNS_CONFIG);
 
   const nodeDataCfg: S2DataConfig = {
     fields: fields_NODES,
@@ -230,8 +231,8 @@ const TableMode: React.FC<IProps> = props => {
       },
       largeGraphData,
       graphData,
-      NODES_FIELDS_COLUMNS,
-      EDGES_FIELDS_COLUMNS,
+      NODES_FIELDS_COLUMNS: NODES_FIELDS_COLUMNS_CONFIG.columns,
+      EDGES_FIELDS_COLUMNS: EDGES_FIELDS_COLUMNS_CONFIG.columns,
     };
     setState({ isPostStart: true, postParmas: params });
   };
@@ -273,21 +274,28 @@ const TableMode: React.FC<IProps> = props => {
       window.removeEventListener('message', handleMessage);
     };
   }, [isPostStart, postParmas]);
-  const extra = (
-    <>
+  const extra = React.useMemo(() => {
+    return [
       <Button
+        key="fullScreen"
         type="text"
         icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
         onClick={toggleFullScreen}
-      />
-      <Tooltip title="使用浏览器新页签打开，分屏操作更高效">
-        <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
-      </Tooltip>
-      {exportable && <Tooltip title="导出点边数据">
-        <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
-      </Tooltip>}
-    </>
-  );
+      />,
+      enableTabSplitScreen && (
+        <Tooltip title="使用浏览器新页签打开，分屏操作更高效" key="tabSplitScreen">
+          <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
+        </Tooltip>
+      ),
+      exportable && (
+        <Tooltip title="导出点边数据" key="export">
+          <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
+        </Tooltip>
+      ),
+    ].filter(Boolean);
+  }, [enableTabSplitScreen, exportable]);
+
+  const extraContent = (<>{extra}</>)
 
   useEffect(() => {
     updateOptions(draft => {
@@ -340,13 +348,13 @@ const TableMode: React.FC<IProps> = props => {
   //   };
   // }, []);
   const SwitcherTitle = (
-    <Button size="small" style={{ position: 'absolute', right: `${exportable ? 109 : 77}px`, top: '-51px' }}>
+    <Button size="small" style={{ position: 'absolute', right: `${extra.length * 30 + 10}px`, top: '-51px' }}>
       自定义列
     </Button>
   );
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={style}>
-      <Tabs tabPosition="top" tabBarExtraContent={extra} destroyInactiveTabPane centered>
+      <Tabs tabPosition="top" tabBarExtraContent={extraContent} destroyInactiveTabPane centered>
         <TabPane tab="点表" key="node" forceRender>
           <Switcher
             sheetType="table"
@@ -362,8 +370,7 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
-            adaptive={false}
-            // adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
+            adaptive={true}
             options={options}
             dataCfg={nodeDataCfg}
             sheetType="table"
@@ -386,8 +393,7 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
-            // adaptive={{ width: true, height: true, getContainer: () => document.getElementById('gi-table-mode')! }}
-            adaptive={false}
+            adaptive={true}
             options={options}
             dataCfg={edgeDataCfg}
             sheetType="table"

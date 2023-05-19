@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { isEqual } from 'lodash';
 
 // 生成 switcher 所需要的 fields 结构
 function generateSwitcherFields(updatedResult) {
@@ -36,6 +37,19 @@ const useSwitcher = defaultFields => {
     fields: defaultFields,
     switcherFields: defaultSwitcherFields,
   });
+
+  useEffect(() => {
+    if (!isEqual(state.fields, defaultFields)) {
+      setState(preState => {
+        return {
+          ...preState,
+          fields: defaultFields,
+          switcherFields: defaultSwitcherFields,
+        };
+      });
+    }
+  }, [defaultFields]);
+
   const { fields, switcherFields } = state;
 
   const onSwitch = result => {

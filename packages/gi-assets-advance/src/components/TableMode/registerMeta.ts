@@ -24,6 +24,13 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Switch',
       default: true,
     },
+    enableTabSplitScreen: {
+      title: '支持页签分屏',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     isSelectedActive: {
       title: '元素选中高亮',
       type: 'boolean',
