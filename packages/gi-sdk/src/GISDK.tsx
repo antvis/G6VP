@@ -149,6 +149,7 @@ const GISDK = (props: Props) => {
         directedMultiple,
         directedAmountFromEdge,
       } = options;
+      (otherOptions as any).defSideCoe = 'unset';
       if (advanceWeight) {
         if (edgeWeightField) {
           (otherOptions as any).edgeStrength = utils.getEdgeWeightedStrength(options);
@@ -159,8 +160,6 @@ const GISDK = (props: Props) => {
         ) {
           (otherOptions as any).nodeStrength = utils.getNodeWeightedStrength(options);
         }
-        debugger;
-        (otherOptions as any).defSideCoe = 'unset';
         if (directed) {
           if (directedFromType === 'node') {
             (otherOptions as any).defSideCoe = utils.getDefSideCoeFunction(
