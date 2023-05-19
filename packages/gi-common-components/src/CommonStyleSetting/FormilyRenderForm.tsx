@@ -1,11 +1,11 @@
 import { BgColorsOutlined } from '@ant-design/icons';
-import { FormItem, Input, NumberPicker, Select, Switch,ArrayCollapse,ArrayItems } from '@formily/antd';
+import { ArrayCollapse, ArrayItems, DatePicker, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
-import { createSchemaField, FormProvider } from '@formily/react';
+import { FormProvider, createSchemaField } from '@formily/react';
 import { Button, Radio } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
-import { FormCollapse, Offset, AssetCollapse } from '../FormilyForm';
+import { AssetCollapse, FormCollapse, Offset } from '../FormilyForm';
 import PopoverContainer from '../GroupContainer/PopoverContainer';
 import ColorInput from './ColorInput';
 import GroupSelect from './GroupSelect';
@@ -31,22 +31,23 @@ interface RenderFormProps {
 
 const SchemaField = createSchemaField({
   components: {
-    Radio,
-    FormItem,
-    Input,
-    FormCollapse,
-    Select,
-    NumberPicker,
-    Switch,
-    SketchPicker,
-    ColorInput,
-    Offset,
-    AssetCollapse,
-    IconPicker,
-    IconSelector,
-    GroupSelect,
     ArrayCollapse,
     ArrayItems,
+    AssetCollapse,
+    ColorInput,
+    DatePicker,
+    FormCollapse,
+    FormItem,
+    GroupSelect,
+    IconPicker,
+    IconSelector,
+    Input,
+    NumberPicker,
+    Offset,
+    Radio,
+    Select,
+    SketchPicker,
+    Switch,
   },
 });
 const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
