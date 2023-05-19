@@ -2,16 +2,13 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build:es": {
-      "dependsOn": [
-        "^build:es"
-      ],
-      "outputs": [
-        "es/**",
-        "lib/**"
-      ]
+      "dependsOn": ["^build:es"],
+      "outputs": ["es/**", "lib/**"]
+    },
+    "build:umd": {
+      "dependsOn": ["^build:umd"],
+      "outputs": ["dist/**"]
     }
   },
-  "globalDependencies": [
-    ".prettierrc.js"
-  ]
+  "globalDependencies": [".prettierrc.js"]
 }
