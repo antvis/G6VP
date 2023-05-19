@@ -2,6 +2,7 @@
  * author:shiwu.wyy@antgroup.com
  */
 
+import { useMemoizedFn } from 'ahooks';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
@@ -177,29 +178,57 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     }
   }, [controlledValues]);
 
-  const enableExtractingMode = patternId => {
+  useEffect(() => {
+    const handleClick = e => {
+      const { item } = e;
+      graph.setItemState(item, ITEM_STATE.Active, !item.hasState(ITEM_STATE.Active));
+    };
+    if (extracting) {
+      graph.on('edge:click', handleClick);
+      graph.on('node:click', handleClick);
+    } else {
+      graph.off('edge:click', handleClick);
+      graph.off('node:click', handleClick);
+    }
+    return () => {
+      graph.off('edge:click', handleClick);
+      graph.off('node:click', handleClick);
+    };
+  }, [extracting]);
+
+  const enableExtractingMode = useMemoizedFn(patternId => {
     if (!graph || graph.destroyed) return;
     previousSize = { width: graph.getWidth(), height: graph.getHeight() };
     message.info({
       key: EXTRACT_MESSAGE_KEY,
       className: 'kg-pattern-match-extract-tip-long',
       duration: 0,
-      content: formatMessage({ id: 'extract-pattern-tip-long' }),
+      content: (
+        <>
+          {formatMessage({ id: 'extract-pattern-tip-long' })}
+          <Button onClick={cancelExtracting} style={{ marginLeft: 8 }} size="small">
+            <FormattedMessage id="cancel" />
+          </Button>
+          <Button type="primary" onClick={extractPattern} style={{ marginLeft: 8 }} size="small">
+            <FormattedMessage id="confirm" />
+          </Button>
+        </>
+      ),
       style: {
         marginTop: '20px',
       },
     });
     graph.setMode('pattern-match-lasso'); // 切换为 lasso 交互模式，该模式下没有其他 behavior
     // 恢复图上的选中状态，为拉索框选做准备
-    clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
-    clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
+    clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
+    clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
     setExtracting(patternId);
 
     onClose?.(); // 隐藏抽屉;
     onExtractModeChange?.(true);
     // 设置 canvas dom 描边样式
     setCanvasDomStyle(true);
-  };
+  });
 
   const quitExtractMode = () => {
     graph.setMode('default'); // 恢复默认交互模式
@@ -212,7 +241,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     setCanvasDomStyle(false);
   };
 
-  const extractPattern = () => {
+  const extractPattern = useMemoizedFn(() => {
     if (!graph || graph.destroyed) {
       quitExtractMode();
       return;
@@ -221,8 +250,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     if (!extracting) return;
 
     const patternId = extracting;
-    const selectedNodeIds = (graph.findAllByState('node', ITEM_STATE.Selected) || []).map(node => node.getID());
-    const selectedEdgeIds = (graph.findAllByState('edge', ITEM_STATE.Selected) || []).map(node => node.getID());
+    const selectedNodeIds = (graph.findAllByState('node', ITEM_STATE.Active) || []).map(node => node.getID());
+    const selectedEdgeIds = (graph.findAllByState('edge', ITEM_STATE.Active) || []).map(node => node.getID());
+
     if (!selectedNodeIds.length) return;
 
     // 验证当前模式图是连通的
@@ -316,22 +346,22 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     setPatternInfoMap(newPatternInfoMap); // 放入模式编辑器中
 
     quitExtractMode();
-  };
+  });
 
   const cancelExtracting = () => {
     setExtracting(false);
     if (!graph || graph.destroyed) return;
     // 如果有选中的内容，退出需要二次提示
-    const selectedNodes = graph.findAllByState('node', ITEM_STATE.Selected);
-    const selectedEdges = graph.findAllByState('node', ITEM_STATE.Selected);
+    const selectedNodes = graph.findAllByState('node', ITEM_STATE.Active);
+    const selectedEdges = graph.findAllByState('node', ITEM_STATE.Active);
     if (selectedNodes?.length || selectedEdges?.length) {
       confirm({
         title: formatMessage({ id: 'extract-confirm-cancel' }),
         icon: <ExclamationCircleOutlined />,
         content: formatMessage({ id: 'extract-confirm-cancel-content' }),
         onOk() {
-          clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
-          clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
+          clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
+          clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
           graph.setMode('default');
           message.destroy(EXTRACT_MESSAGE_KEY);
           onOpen?.(); // 显示抽屉
@@ -385,8 +415,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   // tab 切换，取消图上的选中状态
   useEffect(() => {
     if (graph && !graph.destroyed) {
-      clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
-      clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
+      clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
+      clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
     }
   }, [activeKey]);
 
@@ -398,9 +428,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         {
           type: 'lasso-select',
           trigger: 'drag',
+          selectedState: ITEM_STATE.Active,
           shouldDeselect: () => false,
         } as any,
-        'click-select',
         'zoom-canvas',
         {
           type: 'drag-canvas',
@@ -666,8 +696,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   };
 
   const reset = () => {
-    clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Selected]);
-    clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Selected]);
+    clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
+    clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
     removeHulls();
     setResult([]);
   };
@@ -728,21 +758,6 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       container.parentNode?.removeChild(container);
     };
   }, []);
-
-  const buttonsPortal =
-    extracting &&
-    extraButtonsContainer &&
-    ReactDOM.createPortal(
-      <div className="kg-pattern-match-extract-buttons">
-        <Button onClick={cancelExtracting}>
-          <FormattedMessage id="cancel" />
-        </Button>
-        <Button type="primary" onClick={extractPattern}>
-          <FormattedMessage id="confirm" />
-        </Button>
-      </div>,
-      extraButtonsContainer,
-    );
 
   return (
     <div style={style}>
@@ -825,7 +840,6 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         schemaNodeMap={schemaNodeMap}
         schemaEdgeMap={schemaEdgeMap}
       />
-      {buttonsPortal}
     </div>
   );
 };

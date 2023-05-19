@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 overrides:
   antd: 4.x
-  '@antv/layout': 0.3.22-beta.8
 
 importers:
 
@@ -155,6 +154,7 @@ importers:
       '@antv/matrix-util': ^3.0.4
       '@antv/s2': ^1.3.0
       '@antv/s2-react': ^1.3.0
+      ahooks: ^3.7.7
       deepmerge: ^4.2.2
       lodash: ^4.17.21
       react: 17.x || 17
@@ -169,6 +169,7 @@ importers:
       '@antv/matrix-util': 3.0.4
       '@antv/s2': 1.45.1_@antv+g-base@0.4.7
       '@antv/s2-react': 1.39.0_4ceizbcr3drjzzrzoatdcpkvsm
+      ahooks: 3.7.7_react@17.0.2
       deepmerge: 4.3.1
       lodash: 4.17.21
       react: 17.0.2
