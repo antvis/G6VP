@@ -218,37 +218,39 @@ const setState = (name, value, item, shapeType) => {
   }
 };
 
-/**
- * 历史记录节点的自定义节点
- */
-G6.registerNode(
-  'crect',
-  {
-    afterDraw(model, group) {
-      if (model?.isConfigure && hasUnconfiguredParam(model)) addUnconfiguredTag(model, group);
+export const registerNodes = () => {
+  /**
+   * 历史记录节点的自定义节点
+   */
+  G6.registerNode(
+    'gi-history-rect',
+    {
+      afterDraw(model, group) {
+        if (model?.isConfigure && hasUnconfiguredParam(model)) addUnconfiguredTag(model, group);
+      },
+      afterUpdate(model, item) {
+        if (!model || !item) return;
+        const group = item.getContainer();
+        const tag = group.find(ele => ele.get('name') === 'unconfigure-tag');
+        if (model.isConfigure && hasUnconfiguredParam(model)) {
+          if (!tag) addUnconfiguredTag(model, group);
+        } else {
+          if (tag) tag.remove();
+        }
+      },
+      setState: (name, value, item) => setState(name, value, item, 'rect'),
     },
-    afterUpdate(model, item) {
-      if (!model || !item) return;
-      const group = item.getContainer();
-      const tag = group.find(ele => ele.get('name') === 'unconfigure-tag');
-      if (model.isConfigure && hasUnconfiguredParam(model)) {
-        if (!tag) addUnconfiguredTag(model, group);
-      } else {
-        if (tag) tag.remove();
-      }
-    },
-    setState: (name, value, item) => setState(name, value, item, 'rect'),
-  },
-  'rect',
-);
+    'rect',
+  );
 
-/**
- * 起点和终点的自定义节点
- */
-G6.registerNode(
-  'ccircle',
-  {
-    setState: (name, value, item) => setState(name, value, item, 'circle'),
-  },
-  'circle',
-);
+  /**
+   * 起点和终点的自定义节点
+   */
+  G6.registerNode(
+    'gi-history-circle',
+    {
+      setState: (name, value, item) => setState(name, value, item, 'circle'),
+    },
+    'circle',
+  );
+};

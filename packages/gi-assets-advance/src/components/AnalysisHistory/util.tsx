@@ -368,7 +368,7 @@ export const ellipsisString = (str: string = '', maxLength: number = 5) => {
  * 起点/终点的样式
  */
 export const circleNodeStyle = {
-  type: 'ccircle',
+  type: 'gi-history-circle',
   style: {
     fill: ColorMap.default,
     r: 20,
@@ -392,7 +392,7 @@ export const getHistoryNode = (history: any, urlMap: { [historyId: string]: stri
   const { id, type, subType, statement, timestamp, componentId, params } = history;
   return {
     id,
-    type: 'crect',
+    type: 'gi-history-rect',
     label: `${LabelMap[type]}(${subType})`,
     color: ColorMap[type],
     componentId,
@@ -481,7 +481,7 @@ export const createFlowGraph = (container, tooltip, isConfigure) => {
       begin: [width / 2, 70],
     },
     defaultNode: {
-      type: 'crect',
+      type: 'gi-history-rect',
       isConfigure,
       anchorPoints: [
         [0.5, 0],

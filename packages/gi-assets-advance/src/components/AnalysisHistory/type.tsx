@@ -1,6 +1,6 @@
 export type TemplateNode = {
   id: string;
-  type: 'ccircle' | 'crect';
+  type: 'gi-history-circle' | 'gi-history-rect';
   label: string;
   color?: string;
   componentId: string;
