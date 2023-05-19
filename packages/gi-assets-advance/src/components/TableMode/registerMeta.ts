@@ -29,7 +29,7 @@ const registerMeta = ({ schemaData }) => {
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: false,
+      default: true,
     },
     isSelectedActive: {
       title: '元素选中高亮',
