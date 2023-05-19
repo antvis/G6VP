@@ -293,7 +293,7 @@ const TableMode: React.FC<IProps> = props => {
         </Tooltip>
       ),
     ].filter(Boolean);
-  }, [enableTabSplitScreen, exportable]);
+  }, [enableTabSplitScreen, exportable, s2Instance]);
 
   const extraContent = (<>{extra}</>)
 
