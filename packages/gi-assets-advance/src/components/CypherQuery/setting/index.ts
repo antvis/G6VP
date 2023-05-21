@@ -3,11 +3,7 @@ import functions from './functions.json';
 import procedures from './procedures.json';
 
 export const defaultCodeMirrorSettings = {
-  value:
-    utils.searchParamOf('cypher') ||
-    `MATCH (n:Domain) 
-  WHERE n.id in ['Domain_c58c149eec59bb14b0c102a0f303d4c20366926b5c3206555d2937474124beb9','Domain_f3554b666038baffa5814c319d3053ee2c2eb30d31d0ef509a1a463386b69845'] 
-  RETURN n`,
+  value: utils.searchParamOf('cypher') || `MATCH (n) RETURN n limit 10`,
   mode: 'application/x-cypher-query',
   indentWithTabs: true,
   smartIndent: false,
