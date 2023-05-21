@@ -3,7 +3,10 @@ import { Button } from 'antd';
 import React from 'react';
 import ThemeVars from '../ThemeVars';
 import './index.less';
-interface ThemeProps {}
+
+interface ThemeProps {
+  changeTheme: (val: string) => void;
+}
 const options = [
   {
     value: 'light',
@@ -55,6 +58,7 @@ const options = [
   },
 ];
 const Theme: React.FunctionComponent<ThemeProps> = props => {
+  const { changeTheme } = props;
   return (
     <Button type="text" style={{ padding: '0px' }}>
       <ThemeSwitch
@@ -66,7 +70,7 @@ const Theme: React.FunctionComponent<ThemeProps> = props => {
           ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
           green: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.green.css`,
         }}
-        // onChange={val => changeTheme(val)}
+        onChange={val => changeTheme(val)}
         // options={[
         //   {
         //     value: 'light',
