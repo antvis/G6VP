@@ -35,8 +35,8 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
     count: {
-      nodes: number;
-      edges: number;
+      nodes: number | string;
+      edges: number | string;
     };
     subGraphList: any[];
     defaultGraphName: string;
@@ -46,8 +46,8 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     schemaData: { nodes: [], edges: [] },
 
     count: {
-      nodes: 0,
-      edges: 0,
+      nodes: '-',
+      edges: '-',
     },
     defaultLabelField: 'name',
     subGraphList: [],

@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import neo4j, { Driver, Node, Path, QueryResult, Relationship } from 'neo4j-driver';
+import neo4j, { Driver, Node, Path, Relationship } from 'neo4j-driver';
 export interface GraphNode {
   id: string; // 节点id
   label: string; // 节点标签
@@ -127,9 +127,13 @@ class Neo4JDriver {
    * @param result 查询结果
    * @returns 如果能够转化为图结构，返回图结构，否则返回table结构
    */
-  private processResult(result: QueryResult): Graph | Table {
+  private processResult(result) {
     const nodes: GraphNode[] = [];
     const edges: GraphEdge[] = [];
+    const table: Table = {
+      headers: [],
+      rows: [],
+    };
 
     result.records.forEach(record => {
       //@ts-ignore
@@ -137,6 +141,7 @@ class Neo4JDriver {
         const isNode = item.__isNode__;
         const isEdge = item.__isRelationship__;
         const isPath = item.__isPath__;
+        const isInteger = item.__isInteger__;
 
         if (isNode) {
           const { labels, properties, identity } = item as Node;
@@ -233,12 +238,15 @@ class Neo4JDriver {
             }
           });
         }
+        if (isInteger) {
+          table.headers.push(...(record.keys as string[]));
+          table.rows.push(item.low);
+        }
       });
     });
 
-    console.log({ nodes, edges });
-
-    return { nodes, edges };
+    console.log({ nodes, edges, table });
+    return { nodes, edges, table };
   }
 
   /**
