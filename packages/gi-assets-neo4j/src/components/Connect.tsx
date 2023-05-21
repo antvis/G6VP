@@ -5,6 +5,7 @@ import { connectNeo4jService } from '../services/Neo4jService';
 import CollapseCard from './CollapseCard';
 
 import './index.less';
+import LoadGraph from "./LoadGraph";
 
 export interface ConnectProps {
   updateToken: () => void;
@@ -46,6 +47,7 @@ const ConnectNeo4j: React.FC<ConnectProps> = ({ updateToken, token }) => {
         description: '请继续进入分析',
       });
       updateToken();
+
     } else {
       notification.error({
         message: '连接 Neo4j 数据库失败',

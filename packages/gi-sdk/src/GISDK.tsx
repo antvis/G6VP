@@ -14,6 +14,7 @@ import type { Props, State } from './typing';
 import { GIComponentConfig } from './typing';
 import { createUuid } from './process/common';
 
+// @ts-ignore
 let updateHistoryTimer: NodeJS.Timer;
 
 /** export  */
