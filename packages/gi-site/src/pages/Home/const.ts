@@ -1,12 +1,12 @@
 export const NOTIFICATION_ITEMS = [
   {
     url: 'https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6',
-    name: '关系数据分析利器：G6VP 开源啦！',
+    name: '关系数据分析利器 G6VP 开源啦！',
     type: 'GRAPH',
   },
 
   {
-    name: 'LocationInsight 我们开放使用啦！',
+    name: '地理数据分析利器 L7VP 开放啦！',
     url: 'https://www.yuque.com/antv/htpfbw/gp1cyxq3ckm4xany',
     type: 'GEO',
   },

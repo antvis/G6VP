@@ -7,14 +7,13 @@ const styles: Record<string, React.CSSProperties> = {
   ul: {
     // listStyle: 'none',
     margin: '0px',
-    padding: '0px 0px 0px 8px',
+    padding: '0px 0px 0px 6px',
   },
   li: {
     // listStyle: 'none',
   },
   a: {
     fontSize: '14px',
-
     color: 'var(--text-color)',
     lineHeight: 2,
   },
