@@ -22,9 +22,16 @@ const dark = {
   // 'component-background': '#1f1f1f', //'#171819',
   // white: '#fff',
 };
+const green = {
+  'primary-color': 'rgb(39,118,88)', // 全局主色
+  'border-radius-base': '8px',
+  // 'component-background': '#1f1f1f', //'#171819',
+  // white: '#fff',
+};
 
 module.exports = {
   light,
   dark,
   ali,
+  green,
 };

@@ -1,5 +1,5 @@
-import { BgColorsOutlined, DownOutlined } from '@ant-design/icons';
-import { Segmented, Dropdown, Button, MenuProps } from 'antd';
+import { BgColorsOutlined } from '@ant-design/icons';
+import { Dropdown, MenuProps, Segmented } from 'antd';
 import React from 'react';
 import { DEFAULT_ANTD_CSS_LINKS, DEFAULT_THEME_VARS } from './const';
 
@@ -9,11 +9,13 @@ export interface ThemeSwitchProps {
     dark: any;
     light: any;
     ali: any;
+    green: any;
   };
   antdCssLinks?: {
     dark: string;
     light: string;
     ali: string;
+    green: string;
   };
   localStorageKey?: string;
   onChange?: (value: 'dark' | 'light') => void;
@@ -26,8 +28,8 @@ export interface ThemeSwitchProps {
 
 const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
   const { themeVars, antdCssLinks, localStorageKey = '@theme', onChange, options, style } = props;
-  const { dark: darkVars, light: lightVars, ali: aliVars } = themeVars || DEFAULT_THEME_VARS;
-  const { dark: darkLink, light: lightLink, ali: aliLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
+  const { dark: darkVars, light: lightVars, ali: aliVars, green: greenVars } = themeVars || DEFAULT_THEME_VARS;
+  const { dark: darkLink, light: lightLink, ali: aliLink, green: greenLink } = antdCssLinks || DEFAULT_ANTD_CSS_LINKS;
   if (localStorage.getItem(localStorageKey)) {
   }
   const [state, updateState] = React.useState({
@@ -47,6 +49,9 @@ const ThemeSwitch: React.FunctionComponent<ThemeSwitchProps> = props => {
     } else if (theme === 'ali') {
       themeObj = aliVars;
       cssUrl = aliLink;
+    } else if (theme === 'green') {
+      themeObj = greenVars;
+      cssUrl = greenLink;
     }
     /** antd theme */
     const dom = window.document.getElementById('theme-style') as HTMLLinkElement;

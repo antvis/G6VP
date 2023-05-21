@@ -41,6 +41,18 @@ const options = [
     ),
     name: '暗夜黑',
   },
+  {
+    value: 'green',
+    icon: (
+      <div
+        className="theme-color-dot"
+        style={{
+          backgroundColor: 'rgb(39,118,88)',
+        }}
+      />
+    ),
+    name: '芒种绿',
+  },
 ];
 const Theme: React.FunctionComponent<ThemeProps> = props => {
   return (
@@ -52,6 +64,7 @@ const Theme: React.FunctionComponent<ThemeProps> = props => {
           dark: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.dark.css`,
           light: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.light.css`,
           ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
+          green: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.green.css`,
         }}
         // onChange={val => changeTheme(val)}
         // options={[
