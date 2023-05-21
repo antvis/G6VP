@@ -70,7 +70,7 @@ const Theme: React.FunctionComponent<ThemeProps> = props => {
           ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
           green: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.green.css`,
         }}
-        onChange={val => changeTheme(val)}
+        onChange={val => changeTheme && changeTheme(val)}
         // options={[
         //   {
         //     value: 'light',
