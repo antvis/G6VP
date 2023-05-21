@@ -6,6 +6,7 @@ import CollapseCard from '../CollapseCard';
 import './index.less';
 
 export interface ConnectProps {
+  isSocketConnect?: boolean;
   engineId: string;
   updateToken: () => void;
   token: string | null;
@@ -22,7 +23,7 @@ const DEFAULT_VALUE = {
   CURRENT_SUBGRAPH: 'MovieDemo1',
 };
 
-const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connectDatabase }) => {
+const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connectDatabase, isSocketConnect }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -78,13 +79,15 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
               message={`正在连接 ${engineId} 数据库，请耐心等待……`}
             />
           )}
-          <Form.Item
-            label="平台地址"
-            name="HTTP_SERVICE_URL"
-            rules={[{ required: true, message: '平台服务地址必填!' }]}
-          >
-            <Input placeholder="请输入 gi-httpservice 地址" />
-          </Form.Item>
+          {!isSocketConnect && (
+            <Form.Item
+              label="平台地址"
+              name="HTTP_SERVICE_URL"
+              rules={[{ required: true, message: '平台服务地址必填!' }]}
+            >
+              <Input placeholder="请输入 gi-httpservice 地址" />
+            </Form.Item>
+          )}
           <Form.Item label="引擎地址" name="engineServerURL" rules={[{ required: true, message: '数据库地址必填!' }]}>
             <Input placeholder="请输入数据库地址，格式为 ip:port" />
           </Form.Item>
