@@ -1,18 +1,12 @@
-import { utils } from '@antv/gi-sdk';
-import request from 'umi-request';
+import { getDriver } from './Neo4jService';
 export const NeighborsQuery = {
   name: '邻居查询',
   service: async params => {
     const { ids, sep } = params;
-    const { httpServerURL } = utils.getServerEngineContext();
-    const response = await request(`${httpServerURL}/api/neo4j/neighbors`, {
-      method: 'post',
-      data: {
-        ids,
-        sep,
-      },
-    });
-
-    return response.data;
+    const driver = await getDriver();
+    if (driver) {
+      const res = await driver.getKDegreeRelationships(ids, sep);
+      return res;
+    }
   },
 };
