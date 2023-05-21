@@ -139,7 +139,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
   const defaultStyleConfig = utils.generatorStyleConfigBySchema(schemaData);
   const schemaGraph = getSchemaGraph(schemaData, defaultStyleConfig);
-  console.log('state', state, defaultStyleConfig, schemaGraph);
+
   const isEmpty = schemaData.nodes.length === 0;
 
   return (
