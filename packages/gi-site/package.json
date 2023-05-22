@@ -14,7 +14,7 @@
     "build": "node scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build:docker": "cd ../../ && npm run build:all:umd && cd packages/gi-site/ &&  BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/copy-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
-    "start": "node scripts/pre-build.mjs && cross-env NODE_OPTIONS=--max_old_space_size=4096 cross-env PORT=8000 umi dev"
+    "start": "node --experimental-json-modules scripts/pre-build.mjs && cross-env NODE_OPTIONS=--max_old_space_size=4096 cross-env PORT=8000 umi dev"
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",
