@@ -127,7 +127,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
         engineId,
         schemaData: newSchemaData,
       });
-      const engineContext = getEngineForm(engineId);
+      const engineContext = utils.getServerEngineContext();
       if (updateGISite) {
         updateGISite({
           engineId,
