@@ -2,6 +2,7 @@ import { YuqueOutlined } from '@ant-design/icons';
 import { Icon } from '@antv/gi-sdk';
 import { Button, Divider, Space, Spin, Tag, Tree } from 'antd';
 import * as React from 'react';
+import CartButton from './CartButton';
 
 import { CategroyOptions, otherCategory } from '../../components/AssetsCenter/constants';
 import { getSearchParams } from '../../components/utils';
@@ -87,7 +88,7 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
 
   //@ts-ignore
   const currentDoc = state.docsMap[state.selectedKeys[0]];
-  console.log(currentDoc);
+
   return (
     <div className="assets-list-container">
       {state.isReady ? (
@@ -120,11 +121,11 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
                 <Space>
                   <Icon type={currentDoc.icon}></Icon>
                   {currentDoc.name}
-                </Space>
-                <Space>
-                  <Tag color="green">
+                  <Tag style={{ marginTop: '-3px', display: 'block' }}>
                     {currentDoc.pkg}@{currentDoc.version}
                   </Tag>
+                </Space>
+                <Space>
                   <Button
                     type="link"
                     icon={<YuqueOutlined />}
@@ -134,6 +135,7 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
                   >
                     评论
                   </Button>
+                  <CartButton data={currentDoc} />
                 </Space>
               </div>
               <Divider />

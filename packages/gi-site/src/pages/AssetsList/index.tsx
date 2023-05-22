@@ -1,10 +1,17 @@
-import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, GiftOutlined } from '@ant-design/icons';
-import { Empty } from 'antd';
+import {
+  AppstoreOutlined,
+  BgColorsOutlined,
+  BranchesOutlined,
+  GiftOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons';
+import { Button, Empty, Modal } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { queryAssetList } from '../../services/assets';
+import CartContent from './CartContent';
 import Detail from './Detail';
 
 setDefaultAssetPackages();
@@ -37,6 +44,7 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
     assets: { components: [], elements: [], layouts: [] },
     activeKey: searchParams.get(ASSETS_QUERY_KEY) || options[0].key,
     isReady: false,
+    modalVisible: false,
   });
 
   React.useEffect(() => {
@@ -70,12 +78,27 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
     })();
   }, []);
 
+  const handleClick = () => {
+    setState(preState => {
+      return {
+        ...preState,
+        modalVisible: true,
+      };
+    });
+  };
+
   if (!state.isReady) {
     return null;
   }
+
   return (
     <>
       <SegmentedTabs
+        extra={
+          <Button type="primary" onClick={handleClick} icon={<ShoppingCartOutlined />}>
+            选购清单
+          </Button>
+        }
         items={[
           {
             key: 'graph-components',
@@ -106,6 +129,24 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
           },
         ]}
       />
+
+      <Modal
+        title="选购清单"
+        width={'600px'}
+        visible={state.modalVisible}
+        open={state.modalVisible}
+        onCancel={() => {
+          setState(preState => {
+            return {
+              ...preState,
+              modalVisible: false,
+            };
+          });
+        }}
+        closable
+      >
+        <CartContent />
+      </Modal>
     </>
   );
 };
