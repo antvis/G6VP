@@ -146,6 +146,53 @@ export const DEFAULT_THEME_VARS = {
     '--box-shadow-top': '-1px 0px 8px 0px rgba(0, 0, 0, 1)',
     '--box-shadow-bottom': '1px 0px 8px 0px rgba(0, 0, 0, 1)',
   },
+  green: {
+    // 主题色
+    '--primary-color': 'rgb(39,118,88)',
+    '--primary-color-opacity-1': 'rgba(39,118,88,0.1)',
+
+    // 背景色
+    '--layout-background-color': 'hsla(290, 0%, 93%, 1)',
+    '--layout-background':
+      'radial-gradient(at 32% 3%, hsla(24, 100%, 50%, 0.15) 0px, transparent 50%), radial-gradient(at 99% 73%, hsla(24, 100%, 50%, 0.1) 0px, transparent 50%), radial-gradient(at 0% 96%, hsla(22, 100%, 77%, 0.3) 0px, transparent 50%)',
+    '--background-color': 'rgba(255,255,255,1)',
+    '--background-color-2': 'rgba(245,245,245,1)',
+    '--background-color-3': 'rgba(235,235,235,1)',
+    '--background-color-transparent': 'rgba(255, 255, 255, 0.6)',
+
+    // 主文本色
+    '--text-color': '#000a1aad',
+    // 阴影
+
+    '--box-shadow-base':
+      '0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),0 9px 28px 8px rgba(0, 0, 0, 0.05)',
+    '--box-shadow-light': '0 0 4px #ddd',
+
+    // 边框颜色
+    '--border-color': '#ddd',
+    '--primary-border': '1px solid #ddd',
+
+    //主要文本颜色
+    '--hr-color': '#ddd',
+    '--primary-text-color': 'rgba(0, 0, 0, 0.85)',
+
+    '--header-bg-color': 'rgb(255,255,255)',
+
+    '--background-color-card': '#fff',
+    '--text-color-2': 'rgba(0, 0, 0, 0.65)', // 主文本色
+    '--text-warning-color': '#ff7875', // 警告文本色
+
+    // "--box-shadow-pannel":"-1px -1px 4px 0 rgb(223 223 223 / 50%), -2px 2px 4px 0 rgb(244 244 244 / 50%),
+    //   2px 3px 8px 2px rgb(151 151 151 / 5%)",
+
+    '--box-shadow-pannel':
+      '-1px -1px 4px 0 hsla(0, 0%, 87.5%, 0.5), -2px 2px 4px 0 hsla(0, 0%, 95.7%, 0.5), 2px 3px 8px 2px hsla(0, 0%, 59.2%, 0.05)',
+
+    '--box-shadow-right': '1px 0px 8px 0px #ddd',
+    '--box-shadow-left': '-1px 0px 8px 0px #ddd',
+    '--box-shadow-top': '-1px 0px 8px 0px #ddd',
+    '--box-shadow-bottom': '1px 0px 8px 0px #ddd',
+  },
 };
 
 const { version } = pkg;
@@ -155,4 +202,5 @@ export const DEFAULT_ANTD_CSS_LINKS = {
   dark: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/dark.css`,
   light: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
   ali: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
+  green: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
 };
