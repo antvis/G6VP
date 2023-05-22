@@ -33,8 +33,12 @@ class Neo4JDriver {
   private database: string;
 
   constructor(uri: string, username: string, password: string) {
-    this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password));
-    this.database = '';
+    try {
+      this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password));
+      this.database = '';
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
@@ -51,11 +55,15 @@ class Neo4JDriver {
   }
 
   async getDatabase(): Promise<any> {
-    const session = this.driver.session();
-    const result = await session.run('SHOW DATABASES');
-    return result.records.map(record => {
-      return record.toObject();
-    });
+    try {
+      const session = this.driver.session();
+      const result = await session.run('SHOW DATABASES');
+      return result.records.map(record => {
+        return record.toObject();
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**

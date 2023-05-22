@@ -79,7 +79,9 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     });
 
     handleUpateHistory(resultData?.success, resultData?.message, state.value);
-
+    setState(draft => {
+      draft.loading = false;
+    });
     updateContext(draft => {
       const res = transform(resultData);
       draft.source = res;
@@ -119,7 +121,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
             发布成模板
           </Button>
         )}
-        <Button onClick={handleQuery} type="primary">
+        <Button onClick={handleQuery} type="primary" loading={state.loading}>
           执行查询
         </Button>
       </div>
