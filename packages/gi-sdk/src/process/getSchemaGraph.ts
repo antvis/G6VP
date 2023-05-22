@@ -13,7 +13,7 @@ const getSchemaGraph = (schemaData, config) => {
     edgesConfigMap.set(key, c);
   });
   const nodes = schemaData.nodes.map((n, index) => {
-    const { nodeType, nodeTypeKeyFromProperties } = n;
+    const { nodeType, nodeTypeKeyFromProperties, id } = n;
     const expressions = [
       {
         name: nodeTypeKeyFromProperties,
@@ -26,7 +26,7 @@ const getSchemaGraph = (schemaData, config) => {
     const color = (prev && prev.props && prev.props.color) || '#ddd';
 
     return {
-      id: nodeType,
+      id: id,
       style: {
         keyshape: {
           size: 20,
@@ -53,8 +53,8 @@ const getSchemaGraph = (schemaData, config) => {
     const color = (prev && prev.props && prev.props.color) || '#ddd';
 
     return {
-      source: e.sourceNodeType,
-      target: e.targetNodeType,
+      source: e.source,
+      target: e.target,
       style: {
         keyshape: {
           stroke: color,

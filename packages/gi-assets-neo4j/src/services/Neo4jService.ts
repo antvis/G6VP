@@ -1,45 +1,69 @@
 import { utils } from '@antv/gi-sdk';
-import request from 'umi-request';
-export interface ConnectProps {
-  httpServerURL: string;
-  uri: string;
-  username: string;
-  password: boolean;
-}
+import Neo4JDriver from './Driver';
 
-export const connectNeo4jService = async () => {
-  const { uri, username, password, httpServerURL } = utils.getServerEngineContext();
+export let Driver: Neo4JDriver | undefined;
 
-  try {
-    const result = await request(`${httpServerURL}/api/neo4j/connect`, {
-      method: 'POST',
-      data: {
-        uri,
-        username,
-        password,
-        httpServerURL,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
+export const connect = async () => {
+  if (Driver) Driver.close();
+  const { username, password, engineServerURL } = utils.getServerEngineContext();
+  Driver = new Neo4JDriver(engineServerURL, username, password);
+  const isConnect = await Driver.connect();
+  console.log('isConnect', isConnect);
+  if (isConnect) {
+    utils.setServerEngineContext({
+      ENGINE_USER_TOKEN: `Bearer ${Math.random()}`,
     });
-    if (result.success) {
-      utils.setServerEngineContext({
-        HAS_CONNECT_SUCCESS: true,
-      });
-    }
-
-    return result;
-  } catch (error) {
-    return null;
   }
+  return isConnect;
 };
 
-export const queryGraphSchema = async () => {
-  const { httpServerURL } = utils.getServerEngineContext();
-  const result = await request(`${httpServerURL}/api/neo4j/schema`, {
-    method: 'GET',
-  });
+export const getDriver = async () => {
+  if (Driver) {
+    return Driver;
+  }
+  await connect();
+  return Driver;
+};
 
-  return result.data;
+export const querySubGraphList = async () => {
+  console.log('dbs', Driver);
+  const driver = await getDriver();
+  if (driver) {
+    const dbs = await driver.getDatabase();
+    if (dbs && dbs.length > 0) {
+      return dbs.map(item => {
+        return {
+          value: item.name,
+          label: item.name,
+        };
+      });
+    }
+  }
+
+  return [];
+};
+
+export const queryVertexLabelCount = async (graphName: string) => {
+  const driver = await getDriver();
+  if (driver) {
+    //@ts-ignore
+    const { table: nodeTable } = await driver.queryCypher(`MATCH (n)
+RETURN count(n) as node_count`);
+    //@ts-ignore
+    const { table: edgeTable } = await driver.queryCypher(`MATCH ()-[r]->()
+RETURN count(r) as relationship_count`);
+
+    if (nodeTable && edgeTable) {
+      return {
+        success: true,
+        data: {
+          //@ts-ignore
+          nodeCount: nodeTable.rows[0],
+          //@ts-ignore
+          edgeCount: edgeTable.rows[0],
+        },
+      };
+    }
+  }
+  return {};
 };

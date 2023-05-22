@@ -8,6 +8,8 @@ import './index.less';
 const { Option } = Select;
 
 export interface GraphDBConfig {
+  /** 是否通过 Socket 服务链接，从而不需要 Node 转发服务 */
+  isSocketConnect?: boolean;
   /** 操作文档 */
   docs: string;
   /** 数据库名称 */
@@ -43,6 +45,7 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     title,
     desc,
     docs,
+    isSocketConnect,
   } = props;
   const [state, updateState] = React.useState({
     useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
@@ -59,7 +62,13 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
   return (
     <div>
       <EngineBanner docs={docs} title={title} desc={desc} logo={logo} />
-      <Connect engineId={engineId} connectDatabase={connectDatabase} updateToken={updateToken} token={useToken} />
+      <Connect
+        isSocketConnect={isSocketConnect}
+        engineId={engineId}
+        connectDatabase={connectDatabase}
+        updateToken={updateToken}
+        token={useToken}
+      />
       {useToken && (
         <LoadGraph
           engineId={engineId}

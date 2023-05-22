@@ -1,4 +1,4 @@
-import Graphin from '@antv/graphin';
+import Graphin, { GraphinContext } from '@antv/graphin';
 import { Button, Col, Form, Input, Row, Select, Statistic } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
@@ -14,6 +14,17 @@ type SchemaGraphProps = Pick<
 >;
 
 const { Option } = Select;
+
+const FitView = () => {
+  const { graph } = React.useContext(GraphinContext);
+  React.useEffect(() => {
+    setTimeout(() => {
+      graph.fitView(20);
+    }, 200);
+  }, []);
+  return null;
+};
+
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const { queryGraphSchema, querySubGraphList, queryVertexLabelCount = () => undefined, engineId } = props;
 
@@ -24,8 +35,8 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
     count: {
-      nodes: number;
-      edges: number;
+      nodes: number | string;
+      edges: number | string;
     };
     subGraphList: any[];
     defaultGraphName: string;
@@ -35,8 +46,8 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     schemaData: { nodes: [], edges: [] },
 
     count: {
-      nodes: 0,
-      edges: 0,
+      nodes: '-',
+      edges: '-',
     },
     defaultLabelField: 'name',
     subGraphList: [],
@@ -128,7 +139,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
 
   const defaultStyleConfig = utils.generatorStyleConfigBySchema(schemaData);
   const schemaGraph = getSchemaGraph(schemaData, defaultStyleConfig);
-  console.log('state', state, defaultStyleConfig, schemaGraph);
+
   const isEmpty = schemaData.nodes.length === 0;
 
   return (
@@ -209,8 +220,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                 style={{ minHeight: '300px' }}
                 data={schemaGraph}
                 fitView
-                layout={{ type: 'graphin-force', animation: false }}
-              ></Graphin>
+                layout={{ type: 'force2', animation: false }}
+              >
+                <FitView></FitView>
+              </Graphin>
             )}
           </Col>
         </Row>
