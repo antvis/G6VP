@@ -68,18 +68,17 @@ RETURN count(n) as node_count`);
     //@ts-ignore
     const { table: edgeTable } = await driver.queryCypher(`MATCH ()-[r]->()
 RETURN count(r) as relationship_count`);
-
     if (nodeTable && edgeTable) {
       return {
-        success: true,
-        data: {
-          //@ts-ignore
-          nodeCount: nodeTable.rows[0],
-          //@ts-ignore
-          edgeCount: edgeTable.rows[0],
-        },
+        //@ts-ignore
+        nodeCount: nodeTable.rows[0],
+        //@ts-ignore
+        edgeCount: edgeTable.rows[0],
       };
     }
   }
-  return {};
+  return {
+    nodeCount: '-',
+    edgeCount: '-',
+  };
 };

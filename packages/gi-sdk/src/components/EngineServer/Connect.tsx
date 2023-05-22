@@ -1,9 +1,9 @@
-import { Alert, Button, Form, Input, notification } from 'antd';
+import { Alert, Button, Form, Input } from 'antd';
 import React, { useState } from 'react';
 import { utils } from '../../index';
 import CollapseCard from '../CollapseCard';
-
 import './index.less';
+import { getEngineForm, setEngineForm } from './utils';
 
 export interface ConnectProps {
   isSocketConnect?: boolean;
@@ -20,7 +20,7 @@ const DEFAULT_VALUE = {
   password: '',
   HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL, //'http://127.0.0.1:7001',
   engineServerURL: '',
-  CURRENT_SUBGRAPH: 'MovieDemo1',
+  CURRENT_SUBGRAPH: '',
 };
 
 const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connectDatabase, isSocketConnect }) => {
@@ -28,7 +28,7 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
   const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
-    form.setFieldsValue(utils.getServerEngineContext(DEFAULT_VALUE));
+    form.setFieldsValue(getEngineForm(engineId, DEFAULT_VALUE));
   }, []);
 
   const handleSubmitForm = async () => {
@@ -42,27 +42,11 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
     }
 
     utils.setServerEngineContext(values);
+    setEngineForm(engineId, values);
     const result = await connectDatabase();
     setLoading(false);
-
     if (result) {
-      notification.success({
-        message: `连接 ${engineId} 数据源成功`,
-        description: '请继续选择子图，进入分析',
-      });
       updateToken();
-    } else {
-      notification.error({
-        message: `连接 ${engineId} 数据库失败`,
-        style: {
-          width: 500,
-        },
-        description: (
-          <>
-            ✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 {engineId} 数据库地址，账户，密码是否填写正确
-          </>
-        ),
-      });
     }
   };
   const submitMessage = token ? '重新连接' : '开始连接';
@@ -81,9 +65,9 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
           )}
           {!isSocketConnect && (
             <Form.Item
-              label="平台地址"
+              label="G6VP 服务"
               name="HTTP_SERVICE_URL"
-              rules={[{ required: true, message: '平台服务地址必填!' }]}
+              rules={[{ required: true, message: 'G6VP 平台服务地址必填!' }]}
             >
               <Input placeholder="请输入 gi-httpservice 地址" />
             </Form.Item>
