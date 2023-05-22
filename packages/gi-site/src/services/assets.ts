@@ -41,6 +41,15 @@ const LOCAL_ASSETS: any[] = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
     ...GI_ASSETS_SCENE,
   },
+  /** 引擎资产: TuGraph*/
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
+    ...GI_ASSETS_TUGRAPH,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
+    ...GI_ASSETS_GRAPHSCOPE,
+  },
   // 内置 Neo4j
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_NEO4J'],
@@ -51,15 +60,7 @@ const LOCAL_ASSETS: any[] = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
     ...GI_ASSETS_HUGEGRAPH,
   },
-  // 内置 GraphScope 单机版
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
-    ...GI_ASSETS_GRAPHSCOPE,
-  },
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
-    ...GI_ASSETS_TUGRAPH,
-  },
+
   // 内置 Galaxybase
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GALAXYBASE'],

@@ -29,6 +29,10 @@ export const GI_SERVICE_SCHEMA = {
         const schema = await driver.getSchema(CURRENT_SUBGRAPH);
         return schema;
       }
+      return {
+        nodes: [],
+        edges: [],
+      };
     } catch (error) {
       console.log('error', error);
       return {

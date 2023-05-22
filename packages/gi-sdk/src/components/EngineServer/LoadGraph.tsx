@@ -1,10 +1,11 @@
-import Graphin, { GraphinContext } from '@antv/graphin';
+import Graphin from '@antv/graphin';
 import { Button, Col, Form, Input, Row, Select, Statistic } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { GraphSchemaData, utils } from '../../index';
 import CollapseCard from '../CollapseCard';
 import type { GraphDBConfig } from './index';
+import { getEngineForm, setEngineForm } from './utils';
 
 const { getSchemaGraph } = utils;
 
@@ -15,22 +16,25 @@ type SchemaGraphProps = Pick<
 
 const { Option } = Select;
 
-const FitView = () => {
-  const { graph } = React.useContext(GraphinContext);
-  React.useEffect(() => {
-    setTimeout(() => {
-      graph.fitView(20);
-    }, 200);
-  }, []);
-  return null;
-};
-
 const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
-  const { queryGraphSchema, querySubGraphList, queryVertexLabelCount = () => undefined, engineId } = props;
+  const {
+    queryGraphSchema,
+    querySubGraphList,
+    queryVertexLabelCount = () => {
+      return {
+        nodeCount: '-',
+        edgeCount: '-',
+      };
+    },
+    engineId,
+    updateGISite,
+    //@ts-ignore
+    token,
+  } = props;
 
   const [form] = Form.useForm();
-  const { updateGISite } = props;
-  const { ENGINE_USER_TOKEN: useToken, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
+
+  const { CURRENT_SUBGRAPH } = getEngineForm(engineId);
 
   const [state, updateState] = useImmer<{
     schemaData: GraphSchemaData;
@@ -39,7 +43,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
       edges: number | string;
     };
     subGraphList: any[];
-    defaultGraphName: string;
+    subGraphName: string;
     defaultLabelField: string;
     selectedSubgraph: any;
   }>({
@@ -51,67 +55,61 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     },
     defaultLabelField: 'name',
     subGraphList: [],
-    defaultGraphName: CURRENT_SUBGRAPH,
+    subGraphName: CURRENT_SUBGRAPH,
     selectedSubgraph: undefined,
   });
-  const { schemaData, count, subGraphList, defaultGraphName, defaultLabelField } = state;
-
-  const getVertexLabelCount = async () => {
-    const result = await queryVertexLabelCount(defaultGraphName);
-    if (!(result && result.success)) {
-      return;
-    }
-    const { data } = result;
-    updateState(draft => {
-      draft.count = {
-        nodes: data.nodeCount,
-        edges: data.edgeCount,
-      };
-    });
-  };
+  const { schemaData, count, subGraphList, subGraphName, defaultLabelField } = state;
 
   const getSubGraphList = async () => {
     const result = await querySubGraphList();
     if (!result) {
-      // notification.error({
-      //   message: '查询子图列表失败',
-      //   description: `查询失败：${result.message}`,
-      // });
       return;
     }
+    const Match = result.find(item => item.value === subGraphName) || result[0];
+    const SUB_GRAPH_NAME = Match.value;
+
     updateState(draft => {
       draft.subGraphList = result;
+      draft.subGraphName = SUB_GRAPH_NAME;
     });
   };
 
   const handleChange = async value => {
-    utils.setServerEngineContext({
-      CURRENT_SUBGRAPH: value,
+    updateState(draft => {
+      draft.subGraphName = value;
     });
+  };
 
+  const handleChangeSubGraph = async () => {
     // 切换子图后，同步查询 Schema
+    utils.setServerEngineContext({
+      CURRENT_SUBGRAPH: subGraphName,
+    });
+    setEngineForm(engineId, {
+      CURRENT_SUBGRAPH: subGraphName,
+    });
     const schemaData = (await queryGraphSchema()) as GraphSchemaData;
+    const counts = await queryVertexLabelCount();
 
     updateState(draft => {
-      draft.defaultGraphName = value;
       if (schemaData.nodes && schemaData.edges) {
         draft.schemaData = schemaData;
       }
+      draft.count = {
+        nodes: counts.nodeCount,
+        edges: counts.edgeCount,
+      };
     });
   };
 
   React.useEffect(() => {
-    if (useToken) {
-      getVertexLabelCount();
-    }
-  }, [defaultGraphName]);
+    getSubGraphList();
+  }, [token]);
 
   React.useEffect(() => {
-    if (useToken) {
-      getSubGraphList();
-      handleChange(defaultGraphName);
-    }
-  }, []);
+    handleChangeSubGraph();
+  }, [subGraphName]);
+
   const handleSubmit = () => {
     const newSchemaData = {
       ...schemaData,
@@ -125,7 +123,11 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
         engineId,
         schemaData: newSchemaData,
       });
-      const engineContext = utils.getServerEngineContext();
+      setEngineForm(engineId, {
+        engineId,
+        schemaData: newSchemaData,
+      });
+      const engineContext = getEngineForm(engineId);
       if (updateGISite) {
         updateGISite({
           engineId,
@@ -160,9 +162,15 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                 style={{
                   marginTop: 16,
                 }}
-                initialValue={defaultGraphName}
+                initialValue={subGraphName}
               >
-                <Select showSearch placeholder="请选择要查询的子图" onChange={handleChange} style={{ width: '100%' }}>
+                <Select
+                  showSearch
+                  placeholder="请选择要查询的子图"
+                  onChange={handleChange}
+                  style={{ width: '100%' }}
+                  value={subGraphName}
+                >
                   {subGraphList.map((d: any) => {
                     return <Option value={d.value}>{!d.description ? d.label : `${d.label}(${d.description})`}</Option>;
                   })}
@@ -221,9 +229,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                 data={schemaGraph}
                 fitView
                 layout={{ type: 'force2', animation: false }}
-              >
-                <FitView></FitView>
-              </Graphin>
+              ></Graphin>
             )}
           </Col>
         </Row>

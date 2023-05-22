@@ -1,4 +1,5 @@
 import { utils } from '@antv/gi-sdk';
+import { notification } from 'antd';
 import request from 'umi-request';
 
 export const connectTuGraphDataSource = async () => {
@@ -17,8 +18,20 @@ export const connectTuGraphDataSource = async () => {
   }).catch(error => {});
 
   if (!result || !result.success) {
+    notification.error({
+      message: `连接 TuGraph 数据库失败`,
+      style: {
+        width: 500,
+      },
+      description: `✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 {engineId} 数据库地址，账户，密码是否填写正确`,
+    });
     return result;
   }
+
+  notification.success({
+    message: `连接 TuGraph 数据库成功`,
+    description: '请继续选择子图，进入分析',
+  });
 
   const { data } = result;
   utils.setServerEngineContext({
@@ -44,8 +57,8 @@ export const querySubGraphList = async () => {
   }
 };
 
-export const queryVertexLabelCount = async (graphName: string) => {
-  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
+export const queryVertexLabelCount = async () => {
+  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
 
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/count`, {
     method: 'GET',
@@ -54,55 +67,15 @@ export const queryVertexLabelCount = async (graphName: string) => {
       Authorization: ENGINE_USER_TOKEN,
     },
     params: {
-      graphName,
+      graphName: CURRENT_SUBGRAPH,
     },
   });
+  if (result.success) {
+    return result.data;
+  }
 
-  return result;
-};
-
-export const queryGraphSchema = async params => {
-  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL } = utils.getServerEngineContext();
-
-  let res = {
-    nodes: [],
-    edges: [],
+  return {
+    nodeCount: '-',
+    edgeCount: '-',
   };
-  const { graphName } = (params as any) || {};
-
-  if (!ENGINE_USER_TOKEN) {
-    // 没有登录信息，需要先登录再查询 schema
-    return {
-      success: false,
-      nodes: [],
-      edges: [],
-      code: 500,
-      message: `图模型查询失败: 没有获取到连接 TuGraph 数据库的 Token 信息，请先连接 TuGraph 数据库再进行尝试！`,
-    };
-  }
-
-  try {
-    const result = await request(HTTP_SERVICE_URL + '/api/tugraph/schema', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        Authorization: ENGINE_USER_TOKEN,
-      },
-      params: {
-        graphName,
-      },
-    });
-    if (result.success) {
-      res = result.data;
-    }
-    return res;
-  } catch (e) {
-    return {
-      success: false,
-      code: 500,
-      message: `图模型查询失败: ${e}`,
-      nodes: [],
-      edges: [],
-    };
-  }
 };

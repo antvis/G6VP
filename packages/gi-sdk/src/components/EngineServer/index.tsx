@@ -1,10 +1,9 @@
 import { Select } from 'antd';
 import React from 'react';
-import { EngineBanner, GISiteParams, GraphSchemaData, utils } from '../../index';
+import { EngineBanner, GISiteParams, GraphSchemaData } from '../../index';
 import Connect from './Connect';
 import LoadGraph from './LoadGraph';
 import './index.less';
-
 const { Option } = Select;
 
 export interface GraphDBConfig {
@@ -48,14 +47,14 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     isSocketConnect,
   } = props;
   const [state, updateState] = React.useState({
-    useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
+    useToken: undefined,
   });
   const { useToken } = state;
   const updateToken = () => {
     updateState(pre => {
       return {
         ...pre,
-        useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
+        useToken: Math.random(),
       };
     });
   };
@@ -67,10 +66,13 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
         engineId={engineId}
         connectDatabase={connectDatabase}
         updateToken={updateToken}
+        //@ts-ignore
         token={useToken}
       />
       {useToken && (
         <LoadGraph
+          //@ts-ignore
+          token={useToken}
           engineId={engineId}
           queryGraphSchema={queryGraphSchema}
           querySubGraphList={querySubGraphList}

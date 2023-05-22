@@ -29,7 +29,7 @@ export interface Table {
 }
 
 class Neo4JDriver {
-  private driver: Driver;
+  private driver: Driver | undefined;
   private database: string;
 
   constructor(uri: string, username: string, password: string) {
@@ -37,6 +37,7 @@ class Neo4JDriver {
       this.driver = neo4j.driver(uri, neo4j.auth.basic(username, password));
       this.database = '';
     } catch (error) {
+      this.database = '';
       console.log(error);
     }
   }
@@ -46,21 +47,22 @@ class Neo4JDriver {
    * @returns 数据库名称
    */
   async connect() {
-    try {
+    if (this.driver) {
       await this.driver.verifyConnectivity();
       return true;
-    } catch (error) {
-      return false;
     }
+    return false;
   }
 
   async getDatabase(): Promise<any> {
     try {
-      const session = this.driver.session();
-      const result = await session.run('SHOW DATABASES');
-      return result.records.map(record => {
-        return record.toObject();
-      });
+      if (this.driver) {
+        const session = this.driver.session();
+        const result = await session.run('SHOW DATABASES');
+        return result.records.map(record => {
+          return record.toObject();
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,17 +74,20 @@ class Neo4JDriver {
    * @returns 如果能够转化为图结构，返回图结构，否则返回table结构
    */
   async getSchema(databaseName: string): Promise<Graph | Table> {
-    this.database = databaseName;
-    const session = this.driver.session({
-      database: databaseName,
-    });
+    if (!this.driver) {
+      return { nodes: [], edges: [] };
+    }
+
     try {
+      this.database = databaseName;
+      const session = this.driver.session({
+        database: databaseName,
+      });
       const result = await session.run(`
       CALL db.schema.visualization
     `);
       session.close();
       const record = result.records[0];
-
       const nodes = record.get('nodes').map((node: Node) => {
         const label = node.labels[0];
         const properties = node.properties;
@@ -265,6 +270,8 @@ class Neo4JDriver {
    */
   async getKDegreeRelationships(nodeIds: string[], degree: number): Promise<Graph | Table> {
     try {
+      if (!this.driver) return { nodes: [], edges: [] };
+
       const session = this.driver.session({ database: this.database });
 
       const value = `
@@ -298,6 +305,7 @@ class Neo4JDriver {
    */
   async queryCypher(cypher: string): Promise<Graph | Table> {
     try {
+      if (!this.driver) return { nodes: [], edges: [] };
       const session = this.driver.session({
         database: this.database,
       });
@@ -323,6 +331,7 @@ class Neo4JDriver {
    * 关闭数据库连接
    */
   async close(): Promise<void> {
+    if (!this.driver) return;
     await this.driver.close();
   }
 }

@@ -1,4 +1,5 @@
 import { utils } from '@antv/gi-sdk';
+import { notification } from 'antd';
 import Neo4JDriver from './Driver';
 
 export let Driver: Neo4JDriver | undefined;
@@ -6,15 +7,31 @@ export let Driver: Neo4JDriver | undefined;
 export const connect = async () => {
   if (Driver) Driver.close();
   const { username, password, engineServerURL } = utils.getServerEngineContext();
-  Driver = new Neo4JDriver(engineServerURL, username, password);
-  const isConnect = await Driver.connect();
-  console.log('isConnect', isConnect);
-  if (isConnect) {
-    utils.setServerEngineContext({
-      ENGINE_USER_TOKEN: `Bearer ${Math.random()}`,
+  if (engineServerURL.startsWith('neo4j+s:')) {
+    Driver = new Neo4JDriver(engineServerURL, username, password);
+    const isConnect = await Driver.connect();
+    console.log('isConnect', isConnect);
+    if (isConnect) {
+      utils.setServerEngineContext({
+        ENGINE_USER_TOKEN: `Bearer ${Math.random()}`,
+      });
+      notification.success({
+        message: 'Neo4j 数据库链接成功',
+      });
+      return true;
+    }
+    notification.error({
+      message: 'Neo4j 数据库链接失败',
+      description: '请检查数据库地址，用户名，密码是否填写正确',
     });
+    return false;
+  } else {
+    notification.error({
+      message: 'Neo4j 数据库链接失败',
+      description: '数据库地址仅支持 neo4j+s: 协议',
+    });
+    return false;
   }
-  return isConnect;
 };
 
 export const getDriver = async () => {
@@ -26,7 +43,6 @@ export const getDriver = async () => {
 };
 
 export const querySubGraphList = async () => {
-  console.log('dbs', Driver);
   const driver = await getDriver();
   if (driver) {
     const dbs = await driver.getDatabase();
@@ -52,18 +68,17 @@ RETURN count(n) as node_count`);
     //@ts-ignore
     const { table: edgeTable } = await driver.queryCypher(`MATCH ()-[r]->()
 RETURN count(r) as relationship_count`);
-
     if (nodeTable && edgeTable) {
       return {
-        success: true,
-        data: {
-          //@ts-ignore
-          nodeCount: nodeTable.rows[0],
-          //@ts-ignore
-          edgeCount: edgeTable.rows[0],
-        },
+        //@ts-ignore
+        nodeCount: nodeTable.rows[0],
+        //@ts-ignore
+        edgeCount: edgeTable.rows[0],
       };
     }
   }
-  return {};
+  return {
+    nodeCount: '-',
+    edgeCount: '-',
+  };
 };
