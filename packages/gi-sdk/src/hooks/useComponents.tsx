@@ -11,7 +11,7 @@ const DEFAULT_GICC_LAYOUT = {
 };
 
 const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
-  const { config, initializer, GICC_LAYOUT, components, GISDK_ID, HAS_GRAPH } = state;
+  const { config, initializer, GICC_LAYOUT, components, GISDK_ID } = state;
   const { components: stateComponentsCfg } = config;
   const ComponentCfgMap = propsComponentsCfg.concat(stateComponentsCfg).reduce((acc, curr) => {
     return {
@@ -23,10 +23,11 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
   const { component: InitializerComponent } = ComponentAssets[initializer.id];
 
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
-  
+
   // 默认使用空布局，graph ready 了才使用 config.pageLayout，避免 pageLayout 中的资产在 graph 实例之前调用 graph
-  const layout = (HAS_GRAPH && ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id]) || DEFAULT_GICC_LAYOUT;
-  const { component: GICC_LAYOUT_COMPONENT } = layout;
+  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id] || {
+    component: DEFAULT_GICC_LAYOUT.component,
+  };
 
   // 页面布局组件的 props 从 context.config.pageLayout 中读取，统一 pageLayout 读写方式
   const { props: GICC_LAYOUT_PROPS } = config.pageLayout ||
