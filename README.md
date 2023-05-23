@@ -235,6 +235,12 @@ G6VP 采用 [changesets](https://pnpm.io/using-changesets) 来进行包版本管
 按照下列步骤选择要发布的子包并更新版本号
 
 ```bash
+# 本地全部重新安装依赖，并且执行通过 build:all:es 和 build:all:umd
+
+pnpm install --force
+
+npm run build:all:umd
+
 # 添加需要发布的子包
 pnpm changeset
 
@@ -249,7 +255,7 @@ pnpm changeset version
 > 需要提前登录
 
 ```bash
-pnpm publish -r
+npm run publish
 ```
 
 - 3. 子包发布后，需要同步到 CDN 上

@@ -1,5 +1,14 @@
 # @antv/gi-assets-advance
 
+## 2.4.1
+
+### Patch Changes
+
+- update site 2023-05-23
+- Updated dependencies
+  - @antv/gi-common-components@1.2.2
+  - @antv/gi-sdk@2.3.2
+
 ## 2.4.0
 
 ### Minor Changes
