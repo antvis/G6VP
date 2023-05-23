@@ -17,33 +17,39 @@ G6VP 取名意为 AntV G6 Visualization Platform, 它是一款在线图可视分
 ![demo2](https://github.com/antvis/G6VP/assets/10703060/40560cd2-3fea-41f8-888b-5abc1eb09b66)
 
 
-## 01.快速体验
+## 01 快速体验
 
 - 站点地址：https://insight.antv.antgroup.com
 - 文档地址：https://www.yuque.com/antv/gi
 
-### 创建数据集
+### 1.1 创建数据集
 
 巧妇难为无米之炊，在分析数据之前，我们需要创建一个数据集，数据集可以来自本地的 JSON，CSV，XLSX 文件，也可以来自图数据库：TuGraph，GraphScope，HugeGraph，Galaxybase，Neo4j 等数据库，也可以是用户自定义的服务，如下图所示，我们选择 Neo4j 某个 database 作为数据集。
+
 ![image](https://github.com/antvis/G6VP/assets/10703060/85667759-70b2-4166-8181-47cb9e9fa3a3)
 
-### 创建工作薄
+### 1.2 创建工作薄
 
 有了数据，我们便可以创建一个分析画布，创建画布的时候，我们可以选择不同的模版，模版来自资产包，也可以来自用户手动保存或者从资产清单选购的模版。
+
 ![image](https://github.com/antvis/G6VP/assets/10703060/91d44a3e-873c-48e6-9a82-3576677d73a8)
 
-### 配置画布
+### 1.3 配置画布
 
 进入画布后，我们便可以通过侧边栏的「样式」「布局」对画布进行视觉映射，同时也可以在「组件」导航栏中，配置整个画布应用，整个图分析能力，在这里可以像搭建积木一样组装起来。
+
 ![image](https://github.com/antvis/G6VP/assets/10703060/a1069da9-3034-4580-a3fc-c3d824445d4a)
 
-### 记得按时保存
+### 1.4 记得按时保存
 
 就得记得按时点击右上角的「保存」按钮，这样画布的配置信息都会保存下来，下次进入直接分析
+
 ![image](https://github.com/antvis/G6VP/assets/10703060/11779885-5e43-4c37-81c4-54f152d9ebbe)
 
-### 导出 SDK
-点击画布的右上角「开放」按钮，即可进行画布的源码到处，目前支持 HTML，CDN，NPM 三种源码导出方式，方便开发者进行二次开发和独立部署
+### 1.5 导出 SDK
+
+对于有研发需要的朋友，可以点击画布的右上角「开放」按钮，即可进行画布的源码导出，目前支持 HTML，CDN，NPM 三种源码导出方式，方便开发者进行二次开发和独立部署
+
 ![image](https://github.com/antvis/G6VP/assets/10703060/557a3555-60f6-432f-a898-073bfe478983)
 
 ### 探索更多惊喜
@@ -55,20 +61,20 @@ G6VP 产品中包含了很多的惊喜功能，大家可以前往「开放市场
 
 G6VP 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
 
-### 安装依赖
+### 2.1 安装依赖
 
 ```bash
 pnpm install // 会安装全部的依赖，且将子包的产物一次性运行出来
 ```
 
-### 启动站点
+### 2.2 启动站点
 
 ```bash
 cd packages/gi-site
 npm run start 
 ```
 
-### 项目结构
+## 03 项目结构
 
 项目中 packages 包含以下 9 个 package：
 
@@ -93,7 +99,7 @@ npm run start
 | packages/gi-httpservice       | `@antv/gi-httpservices`      | G6VP BFF 服务                 |
 
 
-## 扩展阅读
+## 04 扩展阅读
 - [关系数据分析利器：G6VP 开源啦！](https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6)
 - [TuGraph + G6VP让关系数据跃然纸上](https://www.bilibili.com/video/BV1Vv4y1V7tH)
 - [藏不住了!一线大厂内部图可视分析的需求清单](https://www.yuque.com/antv/gi/hzbk0g)
@@ -101,9 +107,9 @@ npm run start
 - [G6VP 能处理多大规模的关系数据？](https://www.yuque.com/antv/gi/geyqyr)
 
 
-## FAQ
+## 05 FAQ
 
-### 进入到每个子包中启动，遇到依赖找不到的问题
+### 5.1 进入到每个子包中启动，遇到依赖找不到的问题
 
 注意 ⚠️： cd 到每个子包的目录时候，一定要注意查看 node 的版本，比如我的默认 node 版本是 12， 切换到 16 装完所有依赖，此时进入到每个子包中， node 的版本自动切换到 12，执行命令是找不到安装的依赖的，所以得重新 `nvm use 16`，这样就可以了,如果想一劳永逸，可以在 zsh terminal 中设置
 
@@ -111,7 +117,7 @@ npm run start
 nvm alias default v16.17.0
 ```
 
-### 如何发布版本
+### 5.2 如何发布版本
 
 G6VP 采用 [changesets](https://pnpm.io/using-changesets) 来进行包版本管理和发布，因此不需要手动维护版本号，只需要在提交代码时，使用`pnpm run changeset`来生成对应的版本号即可。
 
@@ -166,6 +172,6 @@ cd packages/gi-site
 npm run deploy
 ```
 
-### 如何打包 gi-httpservice
+### 5.3 如何打包 gi-httpservice
 
 - 在根目录下执行 `npm run tar:gi-httpservice`
