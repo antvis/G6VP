@@ -6,6 +6,6 @@ const info = {
   icon: 'icon-time',
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
-  docs: 'https://www.yuque.com/antv/gi/bhyhin',
+  docs: 'https://www.yuque.com/antv/gi/onwrsl20a54toams',
 };
 export default info;

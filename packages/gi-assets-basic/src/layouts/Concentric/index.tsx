@@ -13,6 +13,7 @@ const info = {
   desc: '根据节点度数，可按照同心圆排布',
   icon: 'icon-layout-concentric',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/gpr0ca0pa26img2x',
 };
 
 export default {

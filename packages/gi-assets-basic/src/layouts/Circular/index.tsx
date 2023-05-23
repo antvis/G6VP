@@ -13,6 +13,7 @@ const info = {
   desc: '圆形布局',
   icon: 'icon-layout-circular',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/tervm8tc2nf2z3ok',
 };
 
 export default {

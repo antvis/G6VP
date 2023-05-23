@@ -11,6 +11,7 @@ const info = {
   icon: 'icon-piechart',
   desc: '甜甜圈组件，用于数据有分布的情况',
   cover: 'https://gw.alipayobjects.com/mdn/rms_0d75e8/afts/img/A*dqQ0RrldWTAAAAAAAAAAAAAAARQnAQ',
+  docs: 'https://www.yuque.com/antv/gi/dps9iq11zye8o35b',
 };
 
 export default {

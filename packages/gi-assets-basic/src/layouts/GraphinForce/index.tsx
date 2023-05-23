@@ -11,12 +11,13 @@ const info = {
       type: 'concentric',
     },
   },
-  name: '力导布局',
+  name: '渐进力导',
   category: 'basic',
   type: 'LAYOUT',
   desc: '渐进式力导布局，可用于动态布局',
   icon: 'icon-layout-force',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/tr6ibufmbiggp5s8',
 };
 
 export default {
