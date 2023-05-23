@@ -24,6 +24,7 @@ const getElementsByAssets = (assets: GIElementsAssets, data: GraphinData, schema
     const elementType = category === 'node' || type === 'NODE' ? 'nodes' : 'edges';
     const propertiesKey = schemaData[elementType].reduce((acc, curr) => {
       const { properties } = curr;
+      if (!properties) return [...acc];
       const item = Object.keys(properties).map(c => {
         return {
           id: c,

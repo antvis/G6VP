@@ -67,7 +67,8 @@ class TuGraphService extends Service {
     }
 
     // 如果返回有Eid,就使用Eid组装nodeIds
-    const nodeIds = [...new Set([...getNodeIdsByEids(result).nodeIds, ...getNodeIds(result)])];
+    const { nodeIds: nodeIdsFromEdges, edgeIds } = getNodeIdsByEids(result);
+    const nodeIds = [...new Set([...nodeIdsFromEdges, ...getNodeIds(result)])];
 
     // 拿到节点 ID 后，查询子图
 
@@ -96,18 +97,22 @@ class TuGraphService extends Service {
       .then(res => {
         const graphData = JSON.parse(res.data.result[0]);
 
-        graphData.nodes.forEach(item => {
-          item.vid = item.identity;
-        });
-
+        const edges: any = [];
         graphData.relationships.forEach(item => {
-          item.source = item.src;
-          item.destination = item.dst;
-          item.uid = `${item.src}_${item.dst}_${item.label_id}_${item.temporal_id}_${item.identity}`;
+          const id = `${item.src}_${item.dst}_${item.label_id}_${item.temporal_id}_${item.identity}`;
+          if (edgeIds.includes(id)) {
+            edges.push({
+              id,
+              ...item,
+            });
+          }
         });
         return {
           status: res.status,
-          data: graphData,
+          data: {
+            nodes: graphData.nodes,
+            edges,
+          },
         };
       });
 
@@ -115,41 +120,28 @@ class TuGraphService extends Service {
       return subGraphResult.data;
     }
 
-    // if (getNodeIdsByEids(result).edgeIds.length) {
-    //   let relationships: any[] = [];
-    //   getNodeIdsByEids(result).edgeIds.find(eid => {
-    //     let target = subGraphResult.data.relationships.find(item => item.uid === eid);
-    //     target && relationships.push(target);
-    //   });
-    //   subGraphResult.data.relationships = relationships;
-    // }
-    // const GRAPH_DATA = craeteGraphData(subGraphResult, 'GRAPH_DATA', 'queryByCypher');
-    // console.log('GRAPH_DATA', GRAPH_DATA);
-
-    const { nodes, relationships } = subGraphResult.data;
-    console.log('subGraphResult.data', subGraphResult.data);
-
+    const { nodes, edges } = subGraphResult.data;
     const graphData = {
       nodes: nodes.map(node => {
-        const { vid, label, ...others } = node;
+        const { identity, label, ...others } = node;
         return {
           ...others.properties,
           ...others,
           label,
           nodeType: label,
-          id: `${vid}`,
+          id: String(identity),
         };
       }),
-      edges: relationships.map(r => {
-        const { uid, label, destination, source, ...others } = r;
+      edges: edges.map(r => {
+        const { id, label, dst, src, ...others } = r;
         return {
           ...others.properties,
           ...others,
-          id: `${uid}`,
+          id,
           label,
           edgeType: label,
-          target: `${destination}`,
-          source: `${source}`,
+          target: String(dst),
+          source: String(src),
         };
       }),
     };

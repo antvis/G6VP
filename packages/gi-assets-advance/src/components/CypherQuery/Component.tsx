@@ -15,6 +15,7 @@ export interface CyperQueryProps {
   controlledValues?: {
     value: string;
   };
+  onOpen?: () => void;
 }
 
 const CypherEditorPanel: React.FC<CyperQueryProps> = ({
@@ -23,6 +24,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   saveCypherTemplateServceId = 'GI/PublishTemplate',
   limit,
   controlledValues,
+  onOpen,
 }) => {
   const { updateContext, updateHistory, transform, services, largeGraphLimit } = useContext();
   const service = utils.getService(services, serviceId);
@@ -31,6 +33,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     value: '',
     loading: false,
     modalVisible: false,
+    inputValue: '',
   });
 
   /**
@@ -39,9 +42,13 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
    */
   useEffect(() => {
     if (controlledValues) {
+      onOpen?.();
       const { value } = controlledValues;
       getCyperInputValue(value);
-      handleQuery();
+      handleQuery(value);
+      setState(draft => {
+        draft.inputValue = value;
+      });
     }
   }, [controlledValues]);
 
@@ -65,7 +72,7 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     });
   };
 
-  const handleQuery = async () => {
+  const handleQuery = async (value?: string) => {
     if (!service) {
       return;
     }
@@ -73,12 +80,16 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     setState(draft => {
       draft.loading = true;
     });
+
+    let statement = value || state.value;
     const resultData = await service({
-      value: state.value,
+      value: statement,
       limit,
     });
 
-    handleUpateHistory(resultData?.success, resultData?.message, state.value);
+    const success = !!resultData.nodes;
+    const message = success ? undefined : '查询失败';
+    handleUpateHistory(success, message, statement);
     setState(draft => {
       draft.loading = false;
     });
@@ -114,14 +125,22 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
 
   return (
     <div className="cypher-query-container">
-      <CyperEditor onValueChange={getCyperInputValue} />
+      <CyperEditor
+        onValueChange={getCyperInputValue}
+        inputValue={state.inputValue}
+        cancelInputValue={() =>
+          setState(draft => {
+            draft.inputValue = '';
+          })
+        }
+      />
       <div style={{ textAlign: 'right', padding: '12px 0px' }}>
         {isShowPublishButton && (
           <Button className="publishButton" disabled={!state.value} onClick={handleShowModal}>
             发布成模板
           </Button>
         )}
-        <Button onClick={handleQuery} type="primary" loading={state.loading}>
+        <Button onClick={() => handleQuery()} type="primary" loading={state.loading}>
           执行查询
         </Button>
       </div>
