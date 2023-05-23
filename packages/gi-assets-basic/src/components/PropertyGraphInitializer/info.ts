@@ -8,6 +8,6 @@ const info = {
   type: 'AUTO',
   // 申明需要实现的服务名
   services: [],
-  docs: 'https://www.yuque.com/antv/gi/eedyuy',
+  docs: 'https://yuque.antfin.com/graphinsight/az1phr/akhf327gwqrlv9hh',
 };
 export default info;

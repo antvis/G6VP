@@ -171,6 +171,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         handleUpateHistory(true);
         break;
       default:
+        handleUpateHistory(false, `算法${algorithm || similarityAlgo}不存在`);
         break;
     }
   };
