@@ -137,7 +137,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       <div className="gi-assets-center">
         {/* 筛选 */}
         <Row className="gi-assets-center-filter-wrapper">
-          <Col key="title" span={4} style={{ fontSize: '128px', textAlign: 'right' }}>
+          <Col key="title" span={4} style={{ fontSize: '12px', textAlign: 'right' }}>
             分类筛选：
           </Col>
           {candidateCategories.map(key => {
