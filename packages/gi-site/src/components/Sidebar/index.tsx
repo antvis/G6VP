@@ -15,36 +15,12 @@ interface Option {
 interface SidebarProps {
   options: Option[];
   value: Option['id'];
+  collapse?: boolean;
   onChange: (option: Option) => void;
 }
 
-const Extra = () => {
-  const { handleOpenAssetsCenter } = useAssetsCenter('components');
-
-  const options = [
-    {
-      id: 'assets',
-      name: '资产',
-      icon: <AppstoreOutlined />,
-      action: handleOpenAssetsCenter,
-    },
-  ];
-  return (
-    <>
-      {options.map(c => {
-        return (
-          <li className="sidebar-item assets-center" key={c.id} onClick={c.action}>
-            <span className="icon">{c.icon}</span>
-            <span className="name"> {c.name}</span>
-          </li>
-        );
-      })}
-    </>
-  );
-};
-
 const Sidebar: React.FunctionComponent<SidebarProps> = props => {
-  const { options, onChange } = props;
+  const { options, collapse, onChange } = props;
   const { searchParams, path } = getSearchParams(window.location);
   const nav = searchParams.get('nav') || 'style';
 
@@ -53,7 +29,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
       {options.map(opt => {
         const { icon, id, name } = opt;
         const isActive = id === nav;
-        const className = isActive ? 'sidebar-item active' : 'sidebar-item';
+        const className = isActive && !collapse ? 'sidebar-item active' : 'sidebar-item';
         return (
           <li
             key={id}
@@ -69,7 +45,6 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
           </li>
         );
       })}
-      <Extra />
     </ul>
   );
 };

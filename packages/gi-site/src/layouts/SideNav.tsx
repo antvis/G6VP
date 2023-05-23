@@ -94,6 +94,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
           flex: 1,
           // background: 'var(--background-color)',
           padding: '0px 12px',
+          width: 'calc(100% - 160px)',
         }}
       >
         {children}
