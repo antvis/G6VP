@@ -2,8 +2,8 @@ import { EngineBanner, GISiteParams, utils } from '@antv/gi-sdk';
 import { Select } from 'antd';
 import React from 'react';
 import Connect from './Connect';
-import './index.less';
 import LoadGraph from './LoadGraph';
+import './index.less';
 
 const { Option } = Select;
 export interface GraphModelProps {

@@ -9,5 +9,6 @@ const info = {
   services: ['CypherQuery', 'GremlinQuery'],
   icon: 'icon-robot',
   type: 'AUTO',
+  docs: 'https://www.yuque.com/antv/gi/zepk11ds9vrt4gcs',
 };
 export default info;

@@ -13,6 +13,7 @@ const info = {
   desc: '节点按照网格排布',
   icon: 'icon-layout-grid-fill',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/aaoz8n0lmvxxevml',
 };
 
 export default {

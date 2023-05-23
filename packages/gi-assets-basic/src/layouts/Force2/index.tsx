@@ -20,12 +20,13 @@ const info = {
     maxSpeed: 1000,
     distanceThresholdMode: 'max',
   },
-  name: '渐进力导(force2)',
+  name: '快速力导',
   category: 'basic',
   type: 'LAYOUT',
   desc: '渐进式力导布局，可用于动态布局',
   icon: 'icon-layout-force',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/rloo8d2l7qbsuyg8',
 };
 
 export default {
