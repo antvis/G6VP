@@ -267,7 +267,8 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   ) => {
     const stashOptions = {};
     Object.keys(options).forEach(key => {
-      const { analyzerType, defaultKey, elementType, id, prop, selectOptions, histogramOptions } = options[key];
+      const { analyzerType, defaultKey, elementType, id, prop, selectOptions, histogramOptions, selectValue } =
+        options[key];
       stashOptions[key] = {
         analyzerType,
         defaultKey,
@@ -276,6 +277,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         prop,
         selectOptions,
         histogramOptions,
+        selectValue,
       };
     });
 
@@ -300,7 +302,31 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     if (controlledValues) {
       const { options } = controlledValues;
       onOpen?.();
-      setFilterOptions(options);
+      const formatOptions = {};
+      Object.keys(options).forEach(key => {
+        const { elementType, prop, selectValue, analyzerType } = options[key];
+        if (prop && elementType) {
+          formatOptions[key] = {
+            ...options[key],
+            chartData: getChartData(source, prop, elementType),
+          };
+        } else {
+          formatOptions[key] = options[key];
+        }
+      });
+      setFilterOptions(formatOptions);
+      handleUpateHistory(formatOptions);
+      Object.keys(formatOptions).forEach(key => {
+        const { selectValue, analyzerType } = formatOptions[key];
+        if (selectValue?.length) {
+          updateFilterCriteria(key, {
+            ...formatOptions[key],
+            id: key,
+            analyzerType,
+            isFilterReady: true,
+          });
+        }
+      });
     }
   }, [controlledValues]);
 

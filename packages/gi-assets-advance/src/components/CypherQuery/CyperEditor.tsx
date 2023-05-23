@@ -1,17 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import { createCypherEditor } from './CypherCodeMirror';
 import { defaultCodeMirrorSettings, defaultCypherSchema } from './setting';
 
 interface CyperEditorProps {
   onValueChange: (value) => void;
+  inputValue?: string;
+  cancelInputValue?: () => void;
 }
 
-const CypherEditor: React.FC<CyperEditorProps> = ({ onValueChange }) => {
+const CypherEditor: React.FC<CyperEditorProps> = ({ onValueChange, inputValue, cancelInputValue }) => {
   const contianer = useRef(null);
 
   const triggerAutocompletion = (cm, changed) => {
-    if (changed.text.length !== 1) {
+    if (changed.text.length === 0) {
       return;
     }
 
@@ -35,17 +37,28 @@ const CypherEditor: React.FC<CyperEditorProps> = ({ onValueChange }) => {
     }
   };
 
-  useEffect(() => {
-    const { editor, editorSupport } = createCypherEditor(contianer.current, defaultCodeMirrorSettings);
+  const editor = useMemo(() => {
+    const { editor: cypherEditor, editorSupport: cypherEditorSupport } = createCypherEditor(
+      contianer.current,
+      defaultCodeMirrorSettings,
+    );
     if (onValueChange) {
-      onValueChange(editor.getValue());
+      onValueChange(cypherEditor.getValue());
     }
 
-    editor.on('change', triggerAutocompletion);
+    cypherEditor.on('change', triggerAutocompletion);
 
     // @ts-ignore
-    editorSupport.setSchema(defaultCypherSchema);
-  }, []);
+    cypherEditorSupport.setSchema(defaultCypherSchema);
+    return cypherEditor;
+  }, [contianer.current]);
+
+  useEffect(() => {
+    if (inputValue) {
+      editor?.setValue(inputValue);
+      cancelInputValue?.();
+    }
+  }, [inputValue]);
 
   return <div className="Codemirror-Container" ref={contianer} />;
 };
