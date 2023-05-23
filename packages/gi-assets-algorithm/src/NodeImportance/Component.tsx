@@ -83,6 +83,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     if (controlledValues) {
       const { algorithm, degreeIn: controlledIn, degreeOut: controlledOut, ...formValues } = controlledValues;
       onOpen?.();
+      const params = {};
       setCurrentAlgo(algorithm);
       const degreeIn = controlledIn === 'true';
       const degreeOut = controlledOut === 'true';
@@ -91,10 +92,11 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         if (degreeIn) controlledDegreeType.push('in');
         if (degreeOut) controlledDegreeType.push('out');
         setDegreeType(controlledDegreeType);
+        params.degreeType = controlledDegreeType;
       }
       setReAnalyse(Math.random());
       form.setFieldsValue(formValues);
-      onAnalyse();
+      onAnalyse(algorithm, params);
     }
   }, [controlledValues]);
 
@@ -323,7 +325,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     });
   };
 
-  const onAnalyse = () => {
+  const onAnalyse = (algo, params = {}) => {
     if (!graph || graph.destroyed) {
       handleUpdateHistory(currentAlgo, {}, false, '图实例不存在');
       return;
@@ -336,7 +338,8 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         nodes: [],
         edges: [],
       };
-      switch (currentAlgo) {
+      const usingAlgo = algo || currentAlgo;
+      switch (usingAlgo) {
         case 'page-rank': {
           const pageRankRes = pageRank(data);
           Object.keys(pageRankRes).map(key => {
@@ -354,7 +357,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           break;
         }
         case 'degree': {
-          const degree = degreeType.length === 2 ? 'total' : degreeType[0] || 'in';
+          const { degreeType: propsDegreeType } = params;
+          const usingDegreeType = propsDegreeType || degreeType;
+          const degree = usingDegreeType.length === 2 ? 'total' : usingDegreeType[0] || 'in';
           degreeMap = getDegreeMap(data, degreeMap);
           graph.getNodes().forEach(node => {
             const model = node.getModel();

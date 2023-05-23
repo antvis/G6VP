@@ -20,6 +20,7 @@ export interface CanvasSettingProps {
   zoomCanvas: {
     disabled: boolean;
     enableOptimize: boolean;
+    sensitivity: number;
   };
   clearStatus: boolean;
   doubleClick: boolean;
@@ -45,7 +46,7 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
         direction={dragCanvas.direction}
         enableOptimize={dragCanvas.enableOptimize}
       />
-      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
+      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} sensitivity={0.2} />
       <BrushSelect />
       {clearStatus !== false && <CanvasClick />}
       {doubleClick !== false && <CanvasDoubleClick />}
