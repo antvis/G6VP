@@ -5,7 +5,7 @@ import {
   GiftOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Modal } from 'antd';
+import { Button, Empty, Tooltip } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
@@ -44,8 +44,9 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
     assets: { components: [], elements: [], layouts: [] },
     activeKey: searchParams.get(ASSETS_QUERY_KEY) || options[0].key,
     isReady: false,
-    modalVisible: false,
   });
+
+  const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
@@ -79,41 +80,39 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
   }, []);
 
   const handleClick = () => {
-    setState(preState => {
-      return {
-        ...preState,
-        modalVisible: true,
-      };
-    });
+    setVisible(true);
   };
 
   if (!state.isReady) {
     return null;
   }
-
+  console.log(state.assets, 'ddd');
+  const { components, elements, layouts } = state.assets;
   return (
     <>
       <SegmentedTabs
         extra={
-          <Button type="primary" onClick={handleClick} icon={<ShoppingCartOutlined />}>
-            选购清单
-          </Button>
+          <Tooltip title="根据选购的资产清单，可以快速生成画布应用模版">
+            <Button type="primary" onClick={handleClick} icon={<ShoppingCartOutlined />}>
+              选购清单
+            </Button>
+          </Tooltip>
         }
         items={[
           {
             key: 'graph-components',
-            label: '图分析资产',
-            children: <Detail data={state.assets['components']} />,
+            label: `图分析资产 ${components.length}`,
+            children: <Detail data={components} />,
           },
           {
             key: 'graph-elements',
-            label: '图元素资产',
-            children: <Detail data={state.assets['elements']} />,
+            label: `图元素资产 ${elements.length}`,
+            children: <Detail data={elements} />,
           },
           {
             key: 'graph-layouts',
-            label: '图布局资产',
-            children: <Detail data={state.assets['layouts']} />,
+            label: `图布局资产 ${layouts.length}`,
+            children: <Detail data={layouts} />,
           },
 
           {
@@ -130,23 +129,7 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
         ]}
       />
 
-      <Modal
-        title="选购清单"
-        width={'600px'}
-        visible={state.modalVisible}
-        open={state.modalVisible}
-        onCancel={() => {
-          setState(preState => {
-            return {
-              ...preState,
-              modalVisible: false,
-            };
-          });
-        }}
-        closable
-      >
-        <CartContent />
-      </Modal>
+      <CartContent visible={visible} setVisible={setVisible} />
     </>
   );
 };

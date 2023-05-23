@@ -88,6 +88,9 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
 
   //@ts-ignore
   const currentDoc = state.docsMap[state.selectedKeys[0]];
+  if (!currentDoc) {
+    return null;
+  }
 
   return (
     <div className="assets-list-container">
@@ -121,11 +124,12 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
                 <Space>
                   <Icon type={currentDoc.icon}></Icon>
                   {currentDoc.name}
+                  <CartButton data={currentDoc} />
+                </Space>
+                <Space>
                   <Tag style={{ marginTop: '-3px', display: 'block' }}>
                     {currentDoc.pkg}@{currentDoc.version}
                   </Tag>
-                </Space>
-                <Space>
                   <Button
                     type="link"
                     icon={<YuqueOutlined />}
@@ -135,7 +139,6 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
                   >
                     评论
                   </Button>
-                  <CartButton data={currentDoc} />
                 </Space>
               </div>
               <Divider />
