@@ -12,6 +12,12 @@ const info: AssetInfo = {
   category: 'canvas-interaction',
   type: 'AUTO',
   docs: 'https://www.yuque.com/antv/gi/aa34nmszaivikxi1',
+  features: [
+    '支持框选「画布」节点或者边',
+    '支持双击「画布」自动自适应居中',
+    '支持配置「画布」的背景色',
+    '支持配置「画布」的缩放，平移交互',
+  ],
 };
 
 export default {
