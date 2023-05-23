@@ -5,9 +5,11 @@
 </p>
 
 <div align="center">
+  
 [![Version](https://badgen.net/npm/v/@antv/gi-sdk)](https://www.npmjs.com/@antv/gi-sdk)
 [![NPM downloads](http://img.shields.io/npm/dm/@antv/gi-sdk.svg)](http://npmjs.com/@antv/gi-sdk)
 ![Latest commit](https://badgen.net/github/last-commit/antvis/graphinsight)
+  
 </div>
 
 G6VP 取名意为 AntV G6 Visualization Platform, 它是一款在线图可视分析产品，也是一款基于 G6/Graphin 的低代码图应用搭建工具。
