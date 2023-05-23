@@ -99,6 +99,7 @@ export type AssetType =
   | 'GIAC_MENU' // 原子组件（菜单）
   | 'NODE' // 节点
   | 'EDGE' // 边
+  | 'LAYOUT' //布局算法
   // 兼容旧版本
   | 'GI_CONTAINER'
   | 'GI_CONTAINER_INDEX';

@@ -5,8 +5,8 @@ import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import { queryAssets } from '../../services/assets';
 import Cards from './Cards';
-import './index.less';
 import ServiceTable from './Table';
+import './index.less';
 interface AssetsCenterProps {}
 
 const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
@@ -31,17 +31,20 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       const tables = servers.map(server => {
         const { id, services, name } = server;
         console.log(server);
-        const matchTableData = Object.keys(services).map(s => {
-          const val = services[s];
-          const { req, res, method, name } = val;
-          return {
-            id: `${id}/${s}`,
-            name,
-            req,
-            res,
-            method,
-          };
-        });
+        const matchTableData = Object.keys(services)
+          .map(s => {
+            const val = services[s];
+            if (!val) return undefined;
+            const { req, res, method, name } = val;
+            return {
+              id: `${id}/${s}`,
+              name,
+              req,
+              res,
+              method,
+            };
+          })
+          .filter(c => c);
         return {
           id,
           name,

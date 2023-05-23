@@ -77,10 +77,8 @@ const getComponentsByAssets = (
     .map(key => {
       const component = assets[key];
       if (!component) {
-        return {
-          id: 'NOT_FOUND',
-          name: key,
-        };
+        console.log('%c !!! 未找到资产包 !!! ', 'color:red', key);
+        return;
       }
       const {
         registerMeta = () => {
@@ -88,6 +86,9 @@ const getComponentsByAssets = (
         },
         info,
       } = component;
+      if (!info) {
+        return;
+      }
       const keys = getAllkeysBySchema(schemaData, 'node');
       const edgeKeys = getAllkeysBySchema(schemaData, 'edge');
 
@@ -124,12 +125,7 @@ const getComponentsByAssets = (
         },
       };
     })
-    .filter(c => {
-      if (c.id === 'NOT_FOUND') {
-        console.log('%c !!! 未找到资产包 !!! ', 'color:red', c.name);
-      }
-      return c.id !== 'NOT_FOUND';
-    });
+    .filter(c => c);
 
   return components;
 };

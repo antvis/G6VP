@@ -1,10 +1,17 @@
-import { AppstoreOutlined, BgColorsOutlined, BranchesOutlined, GiftOutlined } from '@ant-design/icons';
-import { Empty } from 'antd';
+import {
+  AppstoreOutlined,
+  BgColorsOutlined,
+  BranchesOutlined,
+  GiftOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons';
+import { Button, Empty, Tooltip } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import { getSearchParams } from '../../components/utils';
 import { setDefaultAssetPackages } from '../../loader';
 import { queryAssetList } from '../../services/assets';
+import CartContent from './CartContent';
 import Detail from './Detail';
 
 setDefaultAssetPackages();
@@ -39,6 +46,8 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
     isReady: false,
   });
 
+  const [visible, setVisible] = React.useState(false);
+
   React.useEffect(() => {
     (async () => {
       const ASSET_LIST = await queryAssetList();
@@ -70,27 +79,40 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
     })();
   }, []);
 
+  const handleClick = () => {
+    setVisible(true);
+  };
+
   if (!state.isReady) {
     return null;
   }
+  console.log(state.assets, 'ddd');
+  const { components, elements, layouts } = state.assets;
   return (
     <>
       <SegmentedTabs
+        extra={
+          <Tooltip title="根据选购的资产清单，可以快速生成画布应用模版">
+            <Button type="primary" onClick={handleClick} icon={<ShoppingCartOutlined />}>
+              选购清单
+            </Button>
+          </Tooltip>
+        }
         items={[
           {
             key: 'graph-components',
-            label: '图分析资产',
-            children: <Detail data={state.assets['components']} />,
+            label: `图分析资产 ${components.length}`,
+            children: <Detail data={components} />,
           },
           {
             key: 'graph-elements',
-            label: '图元素资产',
-            children: <Detail data={state.assets['elements']} />,
+            label: `图元素资产 ${elements.length}`,
+            children: <Detail data={elements} />,
           },
           {
             key: 'graph-layouts',
-            label: '图布局资产',
-            children: <Detail data={state.assets['layouts']} />,
+            label: `图布局资产 ${layouts.length}`,
+            children: <Detail data={layouts} />,
           },
 
           {
@@ -106,6 +128,8 @@ const AssetsList: React.FunctionComponent<AssetsListProps> = () => {
           },
         ]}
       />
+
+      <CartContent visible={visible} setVisible={setVisible} />
     </>
   );
 };
