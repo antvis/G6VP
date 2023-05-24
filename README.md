@@ -12,7 +12,7 @@
   
 </div>
 
-<img src="https://gw.alipayobjects.com/zos/antfincdn/R8sN%24GNdh6/language.svg" width="18"> 简体中文 | [English](./README.en-US.md)
+<img src="https://gw.alipayobjects.com/zos/antfincdn/R8sN%24GNdh6/language.svg" width="18"> 简体中文 | [English](/docs/README.en-US.md)
 
 G6VP 取名意为 AntV G6 Visualization Platform，曾用名 `AntV/GraphInsight`，它是一款在线图可视分析产品，也是一款图应用的低代码搭建工具。
 
