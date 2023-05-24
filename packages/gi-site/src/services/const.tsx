@@ -26,6 +26,9 @@ export const GI_SITE = {
     let online = `${protocol}//${hostname}:${port}`;
     if (!IS_DEV_ENV) {
       online = window.location.origin + window.location.pathname;
+      if (online.endsWith('/')) {
+        online = online.slice(0, -1);
+      }
     }
 
     return GI_SITE.IS_OFFLINE
