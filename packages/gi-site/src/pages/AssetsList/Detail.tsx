@@ -101,6 +101,7 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
             defaultExpandAll
             selectedKeys={state.selectedKeys || []}
             onSelect={keys => {
+              if (!keys.length) return;
               setState(preState => {
                 return {
                   ...preState,
