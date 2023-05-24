@@ -57,7 +57,7 @@ For friends in need of development, you can click the "Export" button in the upp
 
 G6VP contains many amazing functions. You can go to "Open Market/Asset List" to see what other interesting analysis functions are available. For assets that interest you, you can also add them to the shopping cart. The selected asset list can also quickly generate an application template. The G6VP open source version currently contains 79 graph analysis assets, 3 graph element assets, and 9 graph layout assets. Welcome to provide valuable feedback
 
-## 02. 开发 G6VP
+## 02. Develop G6VP
 
 G6VP uses pnpm to manage the repository. According to pnpm's official [compatibility statement](https://pnpm.io/installation#compatibility), please use nvm to switch the Node.js version to 14 and above.
 
@@ -74,9 +74,9 @@ cd packages/gi-site
 npm run start
 ```
 
-For more development and build issues, please refer to[《CONTRIBUTING》](/docs/CONTRIBUTING.en-US.md.md)
+For more development and build issues, please refer to[《CONTRIBUTING》](/docs/CONTRIBUTING.en-US.md)
 
-## 03 扩展阅读
+## 03 More Reading
 
 - [G6VP, the ultimate weapon for relationship data analysis, is open-source now!](https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6)
 - [The demand list for internal graph visual analysis from a first-tier company is revealed](https://www.yuque.com/antv/gi/hzbk0g)
