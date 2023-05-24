@@ -13,7 +13,7 @@ import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
 
 import path from 'path';
-export const G6_VERSION = '4.8.13';
+export const G6_VERSION = '4.8.14';
 export const GRAPHIN_VERSION = '2.7.16';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.8';
