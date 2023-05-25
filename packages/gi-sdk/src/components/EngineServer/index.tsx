@@ -46,8 +46,8 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     docs,
     isSocketConnect,
   } = props;
-  const [state, updateState] = React.useState({
-    useToken: 0,
+  const [state, updateState] = React.useState<{ useToken: undefined | number }>({
+    useToken: undefined,
   });
   const { useToken } = state;
   const updateToken = () => {
