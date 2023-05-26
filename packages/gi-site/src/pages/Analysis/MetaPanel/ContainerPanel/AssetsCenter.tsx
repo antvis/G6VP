@@ -35,7 +35,11 @@ interface AssetsCenterProps {
 
 const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const { containerComponent, value = [], componentsMap, handleUpdate, handleClose } = props;
-  const { id: containerId, name: containerName, candidateAssets = [] } = containerComponent || {};
+  const { id: containerId, name: containerName } = containerComponent || {};
+
+  const candidateAssets = React.useMemo(() => {
+    return containerComponent && containerComponent.candidateAssets || [];
+  }, [containerComponent])
 
   const [state, setState] = useImmer({
     assets: candidateAssets, // AssetInfo[]
