@@ -6,6 +6,8 @@
   "scripts": {
     "build": "father build && npm run build:umd",
     "build:umd": "webpack  --mode production  -c ./webpack.config.js",
+    "build:umd": "jest && webpack -c ./webpack.config.js --mode=development",
+    "build:umd:watch": "jest && webpack -c ./webpack.config.js --mode=development --watch",
     "start": "umi dev",
     "serve": "http-server dist -p 9527",
     "test": "jest"
