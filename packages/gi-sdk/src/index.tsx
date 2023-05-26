@@ -9,6 +9,7 @@ import {
   GIAC_PROPS,
 } from './components/const';
 import GIAComponent from './components/GIAC';
+import { COMPONENT_TYPE, CATEGORY, ELEMENT_TYPE } from './constants/info';
 import template from './constants/template';
 import { useContext } from './context';
 import GISDK from './GISDK';
@@ -24,6 +25,10 @@ const extra = {
   GI_CONTAINER_METAS,
   deepClone,
   GIAComponent,
+  /** 组件信息 */
+  COMPONENT_TYPE,
+  ELEMENT_TYPE,
+  CATEGORY,
 };
 export { Icon, icons } from '@antv/gi-common-components';
 export { default as CollapseCard } from './components/CollapseCard';
