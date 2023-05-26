@@ -11,19 +11,20 @@ export interface ConnectProps {
   updateToken: () => void;
   token: string | null;
   connectDatabase: (params?: any) => Promise<boolean> | boolean;
+  docs: string;
 }
 
 const { protocol, hostname } = location;
-const DEFAULT_HTTP_SERVICE_URL = `${protocol}//${hostname}:7001`;
+
 const DEFAULT_VALUE = {
   username: '',
   password: '',
-  HTTP_SERVICE_URL: DEFAULT_HTTP_SERVICE_URL, //'http://127.0.0.1:7001',
+  HTTP_SERVICE_URL: 'http://127.0.0.1:7001',
   engineServerURL: '',
   CURRENT_SUBGRAPH: '',
 };
 
-const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connectDatabase, isSocketConnect }) => {
+const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connectDatabase, isSocketConnect, docs }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -65,20 +66,34 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
           )}
           {!isSocketConnect && (
             <Form.Item
-              label="G6VP 服务"
+              label="代理地址"
               name="HTTP_SERVICE_URL"
-              rules={[{ required: true, message: 'G6VP 平台服务地址必填!' }]}
+              tooltip="平台提供 packages/gi-httpservices 来代理连接，请依照文档启动：https://www.yuque.com/antv/gi/fyc33eg85bwnlqxa"
+              // rules={[{ required: true, message: 'G6VP 平台服务地址必填!' }]}
             >
-              <Input placeholder="请输入 gi-httpservice 地址" />
+              <Input placeholder="请输入代理地址，默认 http://127.0.0.1:7001" />
             </Form.Item>
           )}
-          <Form.Item label="引擎地址" name="engineServerURL" rules={[{ required: true, message: '数据库地址必填!' }]}>
-            <Input placeholder="请输入数据库地址，格式为 ip:port" />
+          <Form.Item
+            label="引擎地址"
+            name="engineServerURL"
+            tooltip={`图数据库地址，请提前准备好数据`}
+            // rules={[{ required: true, message: '数据库地址必填!' }]}
+          >
+            <Input placeholder="请输入图引擎地址" />
           </Form.Item>
-          <Form.Item label="账名" name="username" rules={[{ required: true, message: '数据库用户名必填!' }]}>
+          <Form.Item
+            label="账名"
+            name="username"
+            //  rules={[{ required: true, message: '数据库用户名必填!' }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="密码" name="password" rules={[{ required: true, message: '数据库登录密码必填!' }]}>
+          <Form.Item
+            label="密码"
+            name="password"
+            // rules={[{ required: true, message: '数据库登录密码必填!' }]}
+          >
             <Input.Password />
           </Form.Item>
           <Form.Item>
