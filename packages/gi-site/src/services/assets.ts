@@ -9,6 +9,7 @@ import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 import * as GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase';
 import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
 import * as GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph';
+import * as GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 
@@ -65,6 +66,10 @@ const LOCAL_ASSETS: any[] = [
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GALAXYBASE'],
     ...GI_ASSETS_GALAXYBASE,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_JANUSGRAPH'],
+    ...GI_ASSETS_JANUSGRAPH,
   },
 ];
 

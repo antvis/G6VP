@@ -32,6 +32,7 @@
     "@antv/gi-assets-tugraph": "workspace:*",
     "@antv/gi-assets-galaxybase": "workspace:*",
     "@antv/gi-assets-hugegraph": "workspace:*",
+    "@antv/gi-assets-janusgraph": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
     "@antv/gi-theme-antd": "workspace:*",

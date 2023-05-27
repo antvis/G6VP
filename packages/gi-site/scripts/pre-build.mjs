@@ -9,6 +9,7 @@ import fs from 'fs';
 import GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase/package.json' assert { type: 'json' };
 import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json' assert { type: 'json' };
 import GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph/package.json' assert { type: 'json' };
+import GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph/package.json' assert { type: 'json' };
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
 
@@ -123,6 +124,10 @@ const assetPackage = [
   {
     name: GI_ASSETS_HUGEGRAPH.name,
     version: GI_ASSETS_HUGEGRAPH.version,
+  },
+  {
+    name: GI_ASSETS_JANUSGRAPH.name,
+    version: GI_ASSETS_JANUSGRAPH.version,
   },
 ];
 
