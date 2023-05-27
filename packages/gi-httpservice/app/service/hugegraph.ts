@@ -16,6 +16,8 @@ class HugeGraphService extends Service {
         dataType: 'json',
       });
 
+      console.log(result);
+
       if (result.status !== 200 || !result.data?.graphs) {
         return {
           success: false,
@@ -24,39 +26,16 @@ class HugeGraphService extends Service {
         };
       }
 
-      const subGraphSchemas = {};
-      let success = false;
-      const promises = result.data.graphs.map(async graphId => {
-        const res = await this.getGraphSchema({ uri, graphId });
-        if (res.success) {
-          subGraphSchemas[graphId] = res.data;
-          success = true;
-        }
-        result = res;
-        return res;
-      });
-
-      await Promise.all(promises);
-
-      if (!success) {
-        return {
-          success: false,
-          code: 200,
-          message: '图列表查询失败',
-        };
-      }
-
       return {
-        success: true,
-        code: 200,
-        message: '图列表查询成功',
-        data: subGraphSchemas,
+        code: result.status,
+        ...result,
       };
     } catch (error) {
       return {
         success: false,
         code: 200,
         message: error,
+        data: [],
       };
     }
   }
