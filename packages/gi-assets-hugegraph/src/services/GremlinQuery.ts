@@ -5,7 +5,11 @@ export const GremlinQuery = {
   service: async (params = {}) => {
     try {
       const { value } = params as any;
-      const { httpServerURL, graphId, uri } = utils.getServerEngineContext();
+      const {
+        HTTP_SERVICE_URL: httpServerURL,
+        CURRENT_SUBGRAPH: graphId,
+        engineServerURL: uri,
+      } = utils.getServerEngineContext();
       const gremlin = value.replace('g.', `${graphId}.traversal().`);
       const response = await request(`${httpServerURL}/api/hugegraph/gremlin`, {
         method: 'POST',

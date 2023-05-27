@@ -4,7 +4,11 @@ export const NeighborsQuery = {
   name: '邻居查询',
   service: async params => {
     const { nodes, sep, ids } = params;
-    const { httpServerURL, uri, graphId } = utils.getServerEngineContext();
+    const {
+      HTTP_SERVICE_URL: httpServerURL,
+      engineServerURL: uri,
+      CURRENT_SUBGRAPH: graphId,
+    } = utils.getServerEngineContext();
     const response = await request(`${httpServerURL}/api/hugegraph/neighbors`, {
       method: 'post',
       data: {
