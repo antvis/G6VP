@@ -19,7 +19,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
           id: 'empty',
           icon: 'icon-empty',
           props: {},
-          children: <Empty description="当前容器中没用原子组件，请在左侧配置面板中添加"></Empty>,
+          children: <Empty description="当前容器中无可用资产，请在配置面板中集成"></Empty>,
         },
       ];
     }

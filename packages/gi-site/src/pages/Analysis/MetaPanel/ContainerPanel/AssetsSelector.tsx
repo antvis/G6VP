@@ -1,6 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { Col, Row, Tooltip } from 'antd';
 import * as React from 'react';
+import { REQUIRED_ASSET_IDS } from './constants';
 import './index.less';
 
 interface AssetsSelectorProps {}
@@ -22,12 +23,22 @@ const AssetsSelector: React.FunctionComponent<AssetsSelectorProps> = props => {
         className={`gi-render-form-assets-input ${selecting ? 'gi-render-form-assets-input-selecting ' : ''}`}
         onClick={() => handleFocus?.(id)}
       >
-        {assets?.map((asset, i) => (
-          <div key={`c${i}`} className="gi-render-form-asset-item">
-            {asset.label}
-            <CloseOutlined onClick={() => handleRemoveAsset?.(id, asset)} />
-          </div>
-        ))}
+        {assets?.map((asset, i) =>
+          REQUIRED_ASSET_IDS.includes(asset.value) ? (
+            <Tooltip
+              key={`c${i}`}
+              title={REQUIRED_ASSET_IDS.includes(asset.value) ? '必须的资产不可删除' : ''}
+              placement="top"
+            >
+              <div className="gi-render-form-asset-item">{asset.label}</div>
+            </Tooltip>
+          ) : (
+            <div key={`c${i}`} className="gi-render-form-asset-item">
+              {asset.label}
+              <CloseOutlined onClick={() => handleRemoveAsset?.(id, asset)} />
+            </div>
+          ),
+        )}
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
             transform: 'translate(-50%, -50%)',
             left: '50%',
           }}
-          description="当前容器中没用原子组件，请在左侧配置面板中添加"
+          description="当前容器中无可用资产，请在配置面板中集成"
         ></Empty>
       );
     }

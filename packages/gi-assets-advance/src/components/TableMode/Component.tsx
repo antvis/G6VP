@@ -78,13 +78,13 @@ const TableMode: React.FC<IProps> = props => {
 
   const NODES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
     return {
-      columns: getColumns(schemaData, 'nodes')
+      columns: getColumns(schemaData, 'nodes'),
     };
   }, [schemaData]);
 
   const EDGES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
     return {
-      columns: getColumns(schemaData, 'edges')
+      columns: getColumns(schemaData, 'edges'),
     };
   }, [schemaData]);
 
@@ -242,7 +242,7 @@ const TableMode: React.FC<IProps> = props => {
       Object.keys(s2Instance).forEach(instanceName => {
         const data = copyData(s2Instance[instanceName], ',', true);
         download(data, instanceName);
-      })
+      });
       message.success('导出成功');
     } catch (error) {
       console.log(error);
@@ -295,7 +295,7 @@ const TableMode: React.FC<IProps> = props => {
     ].filter(Boolean);
   }, [enableTabSplitScreen, exportable, s2Instance]);
 
-  const extraContent = (<>{extra}</>)
+  const extraContent = <>{extra}</>;
 
   useEffect(() => {
     updateOptions(draft => {
@@ -309,9 +309,10 @@ const TableMode: React.FC<IProps> = props => {
     // 避免全屏状态下 tooltip 不显示
     const tooltipContainer = document.getElementById('gi-table-mode') as HTMLDivElement;
     const width = tooltipContainer.clientWidth;
-    const height = tooltipContainer.clientHeight;
+    const height = tooltipContainer.clientHeight || 500;
 
-    if (options.refreshIndex === INTIAL_NUMBER) {
+    const hasNoSize = !preS2Container.width || !preS2Container.height;
+    if (options.refreshIndex === INTIAL_NUMBER || hasNoSize) {
       updateOptions(draft => {
         draft.tooltip!.getContainer = () => tooltipContainer;
         if (width === 0 || height === 0) {
@@ -353,7 +354,7 @@ const TableMode: React.FC<IProps> = props => {
     </Button>
   );
   return (
-    <div className="gi-table-mode" id="gi-table-mode" style={style}>
+    <div className="gi-table-mode" id="gi-table-mode" style={{ width: '100%', height: '100%', ...style }}>
       <Tabs tabPosition="top" tabBarExtraContent={extraContent} destroyInactiveTabPane centered>
         <TabPane tab="点表" key="node" forceRender>
           <Switcher

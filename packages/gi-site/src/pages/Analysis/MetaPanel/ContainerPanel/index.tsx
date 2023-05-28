@@ -106,7 +106,7 @@ const ContainerPanel = props => {
   }, [defaultExpandId]);
 
   /**
-   * 选择容器时的响应函数，选中制指定的容器
+   * 选择容器时的响应函数，选中指定的容器
    * @param selectedList 需要选中的所有容器 id 列表
    * @canditates 候选的容器，可传入以防止调用该函数时 state 中的候选容器更新尚未生效
    */

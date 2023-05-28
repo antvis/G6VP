@@ -6,6 +6,7 @@ import { useImmer } from 'use-immer';
 import ColumnChart from './ColumnChart';
 import LineChart from './LineChart';
 const { highlightEdgeIds } = utils;
+import '../index.less';
 
 const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -154,49 +155,61 @@ const ChartCard: React.FC<ChartCardProps> = props => {
   //   }
   // };
   const extra = (
-    <>
+    <div className="gi-chart-analysis-form-container">
       {/* <Button type="text" onClick={handlePlay}>
         <PlayCircleOutlined />
         自动播放
       </Button> */}
-      &nbsp; X轴：
-      <Select
-        placeholder="X轴字段"
-        onChange={updateXField}
-        size="small"
-        style={{ width: '120px', marginRight: '12px' }}
-        value={xField}
-      >
-        {Object.keys(properties).map(k => (
-          <Select.Option value={k}>
-            {iconMap[properties[k]]}
-            {k}
-          </Select.Option>
-        ))}
-      </Select>
-      Y轴：
-      <Select placeholder="Y轴字段" onChange={updateYField} size="small" style={{ width: '120px' }} value={yField}>
-        {Object.keys(properties).map(k => (
-          <Select.Option value={k}>
-            {iconMap[properties[k]]}
-            {k}
-          </Select.Option>
-        ))}
-      </Select>
-      <Select size="small" value={chartType} style={{ width: '120px', marginLeft: '10px' }} onChange={updateChartType}>
-        {chartOptions.map(option => (
-          <Select.Option value={option.value}>
-            {option.title}
-            {option.label}
-          </Select.Option>
-        ))}
-      </Select>
-    </>
+      <div className="gi-chart-analysis-form-item">
+        X轴：
+        <Select
+          placeholder="X轴字段"
+          onChange={updateXField}
+          size="small"
+          style={{ width: '100px', marginRight: '12px' }}
+          value={xField}
+        >
+          {Object.keys(properties).map(k => (
+            <Select.Option value={k}>
+              {iconMap[properties[k]]}
+              {k}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
+      <div className="gi-chart-analysis-form-item">
+        Y轴：
+        <Select placeholder="Y轴字段" onChange={updateYField} size="small" style={{ width: '100px' }} value={yField}>
+          {Object.keys(properties).map(k => (
+            <Select.Option value={k}>
+              {iconMap[properties[k]]}
+              {k}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
+      <div className="gi-chart-analysis-form-item">
+        <Select
+          size="small"
+          value={chartType}
+          style={{ width: '120px', marginLeft: '10px' }}
+          onChange={updateChartType}
+        >
+          {chartOptions.map(option => (
+            <Select.Option value={option.value}>
+              {option.title}
+              {option.label}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
+    </div>
   );
 
   return (
     <div>
-      <Card title={props.title} extra={extra} bodyStyle={{ padding: '12px 24px 0px 24px' }}>
+      <Card title={props.title} bodyStyle={{ padding: '12px 24px 0px 24px' }}>
+        {extra}
         {chartType === 'lineChart' && (
           <LineChart xField={xField} yField={yField} data={data} highlight={highlight} height={props.height} />
         )}

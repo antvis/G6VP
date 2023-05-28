@@ -99,6 +99,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: lightConfig.edges,
           name: '清新蓝',
           id: 'light',
+          primaryColor: 'rgb(48, 86, 227)',
         };
         const aliTheme = {
           canvasConfig: getCanvasStyle(aliConfig),
@@ -106,6 +107,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: lightConfig.edges,
           name: '暖阳橙',
           id: 'ali',
+          primaryColor: 'rgb(255, 106, 0)',
         };
         const darkTheme = {
           canvasConfig: getCanvasStyle(darkConfig),
@@ -113,6 +115,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: darkConfig.edges,
           name: '暗夜黑',
           id: 'dark',
+          primaryColor: 'rgb(31, 31, 31)',
         };
         const greenTheme = {
           canvasConfig: getCanvasStyle(greenConfig),
@@ -120,6 +123,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: greenConfig.edges,
           name: '芒种绿',
           id: 'green',
+          primaryColor: 'rgb(39,118,88)',
         };
 
         const defaultThemes = [lightTheme, aliTheme, darkTheme, greenTheme];

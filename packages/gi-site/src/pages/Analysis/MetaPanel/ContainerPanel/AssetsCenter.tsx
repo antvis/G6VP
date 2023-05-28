@@ -1,10 +1,10 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { CheckCard } from '@ant-design/pro-components';
 import { ComponentAsset, Icon } from '@antv/gi-sdk';
-import { Avatar, Col, Row, Tag } from 'antd';
+import { Avatar, Col, Row, Tag, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { CategroyOptions, otherCategory } from './constants';
+import { CategroyOptions, REQUIRED_ASSET_IDS, otherCategory } from './constants';
 import './index.less';
 
 const COLOR_MAP = {
@@ -38,8 +38,8 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const { id: containerId, name: containerName } = containerComponent || {};
 
   const candidateAssets = React.useMemo(() => {
-    return containerComponent && containerComponent.candidateAssets || [];
-  }, [containerComponent])
+    return (containerComponent && containerComponent.candidateAssets) || [];
+  }, [containerComponent]);
 
   const [state, setState] = useImmer({
     assets: candidateAssets, // AssetInfo[]
@@ -180,17 +180,19 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
               const { icon = 'icon-robot' } = info;
               const tag = CategroyOptions[info.category] || otherCategory;
               const tagColor = colors[tag.order % colors.length];
+              const isRequired = REQUIRED_ASSET_IDS.includes(assetId);
               return (
                 <Col key={assetId} onMouseEnter={() => handleTooltip(item)} onMouseLeave={() => handleTooltip()}>
                   <CheckCard
                     key={assetId}
-                    onChange={() => handleClick(assetId)}
+                    onChange={isRequired ? () => {} : () => handleClick(assetId)}
                     bordered={false}
                     className="assets-card"
                     style={{
                       backgroundColor: tagColor.fill,
                       background: tagColor.fill,
                       borderColor: checked ? tagColor.stroke : '#fff0',
+                      cursor: isRequired ? 'not-allowed' : 'pointer',
                     }}
                     title={
                       <div
@@ -200,7 +202,9 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                           display: 'block',
                         }}
                       >
-                        {name}
+                        <Tooltip title={isRequired ? '必要的资产不可删除' : ''} placement="top">
+                          {name}
+                        </Tooltip>
                       </div>
                     }
                     avatar={

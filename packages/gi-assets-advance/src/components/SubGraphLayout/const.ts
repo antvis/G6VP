@@ -1,6 +1,6 @@
 import { CircularLayout, DagreLayout, GridLayout, ConcentricLayout, RadialLayout } from '@antv/layout';
 
-export const NODE_SPACING = 10;
+export const NODE_SPACING = 20;
 
 export const LAYOUTS = [
   {

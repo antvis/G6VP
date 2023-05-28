@@ -60,10 +60,7 @@ export default class ClustersTable extends Component<Props, State> {
     hierarchyType: 'grid',
     showDefaultHeaderActionIcon: false,
     style: {
-      layoutWidthType: 'colAdaptive',
-      colCfg: {
-        width: 20,
-      },
+      layoutWidthType: 'compact',
     },
   };
 

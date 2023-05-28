@@ -28,11 +28,19 @@ const ColumnChart: React.FC<ColumnChartProps> = props => {
       data,
       xField,
       yField,
-      height,
+      height: height || 200,
       brush: {
         enabled: true,
         type: 'x-rect',
         action: 'highlight',
+      },
+      yAxis: {
+        label: {
+          formatter: d => {
+            if (d.length > 8) return `${d.substring(0, 10)}…`;
+            return d;
+          },
+        },
       },
       xAxis: {
         label: {
