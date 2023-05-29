@@ -1,10 +1,13 @@
 import { DeleteOutlined, EllipsisOutlined, ExportOutlined } from '@ant-design/icons';
-import { Card, Col, Dropdown, Row } from 'antd';
+import { Card, Col, Dropdown, Row, Typography } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 import { ITemplate } from '../../services/typing';
+
 const { Meta } = Card;
+const { Paragraph } = Typography;
+
 interface ICardsProps {
   data: ITemplate[];
 }
@@ -60,7 +63,14 @@ const Cards: React.FunctionComponent<ICardsProps> = props => {
                 />
               }
             >
-              <Meta title={title} description={desc} />
+              <Meta
+                title={title}
+                description={
+                  <Paragraph style={{ margin: 0, height: 65 }} ellipsis={{ rows: 3, expandable: false, tooltip: desc }}>
+                    {desc}
+                  </Paragraph>
+                }
+              />
             </Card>
           </Col>
         );

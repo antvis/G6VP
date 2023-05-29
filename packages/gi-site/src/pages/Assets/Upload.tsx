@@ -1,8 +1,8 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Tabs } from 'antd';
+import { Button, Form, Modal } from 'antd';
 import * as React from 'react';
-const { TabPane } = Tabs;
-const { TextArea } = Input;
+import PackageForm from './Form';
+
 const UploadAssets = () => {
   const [form] = Form.useForm();
 
@@ -40,28 +40,7 @@ const UploadAssets = () => {
       </Button>
 
       <Modal title="上传配置" visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <Form form={form} name="basic" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-          <Form.Item
-            label="Tnpm包名"
-            name="name"
-            rules={[{ required: true, message: 'Please input your package name!' }]}
-          >
-            <Input placeholder="@antv/gi-assets-basic" />
-          </Form.Item>
-          <Form.Item
-            label="版本号"
-            name="version"
-            rules={[{ required: true, message: 'Please input your package version!' }]}
-          >
-            <Input placeholder="0.12.0" />
-          </Form.Item>
-          <Form.Item label="UMD名" name="global" rules={[{ required: true, message: 'Please input your password!' }]}>
-            <Input placeholder="GI_ASSETS_BASIC" />
-          </Form.Item>
-          <Form.Item label="CDN地址" name="url" rules={[{ required: true, message: 'Please input your password!' }]}>
-            <TextArea placeholder="https://gw.alipayobjects.com/os/lib/alipay/gi-assets-basic/0.12.0/dist/index.min.js" />
-          </Form.Item>
-        </Form>
+        <PackageForm form={form} />
       </Modal>
     </div>
   );
