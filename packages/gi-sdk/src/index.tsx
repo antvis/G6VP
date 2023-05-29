@@ -25,6 +25,7 @@ const extra = {
   deepClone,
   GIAComponent,
 };
+export { Info } from './constants/info';
 export { Icon, icons } from '@antv/gi-common-components';
 export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
