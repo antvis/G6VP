@@ -1,0 +1,53 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  color: var(--text-color-2);
+  background-color: var(--background-color);
+  border-radius: 8px;
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    padding: 0 10px;
+    font-weight: 500;
+    font-size: 14px;
+
+    & > div {
+      flex: 1;
+    }
+
+    .content-header-field {
+      font-size: 11px;
+      text-align: left;
+      span {
+        margin-right: 6px;
+      }
+    }
+
+    .content-header-time {
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 14px;
+      user-select: none;
+    }
+  }
+
+  .chart {
+    height: calc(100% - 80px);
+  }
+
+  .content-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+
+    > div {
+      margin: 0 5px;
+    }
+  }
+}
