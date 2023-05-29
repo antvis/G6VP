@@ -3,7 +3,7 @@ const info = {
   name: '时间线控制器',
   desc: '时间线控制器',
   cover: 'http://xxx.jpg',
-  category: 'data-analysis',
+  category: 'scene-analysis',
   icon: 'icon-signal-fill',
   type: 'GIAC_CONTENT',
 };
