@@ -8,10 +8,12 @@ import {
   SendOutlined,
   TableOutlined,
 } from '@ant-design/icons';
-import { Button, Table, Tag, Tooltip } from 'antd';
+import { utils } from '@antv/gi-sdk';
+import { Button, Input, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { recoverDataset, recycleDataset } from '../../services/dataset';
+import { recoverDataset, recycleDataset, updateDataset } from '../../services/dataset';
+import { isNil } from '@antv/util';
 // import { getUid } from '../Workspace/utils';
 
 const styles = {
@@ -86,10 +88,17 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     // window.open(`${window.location.origin}/#/workspace/${projectId}`);
     history.push(`/workbook/create?datasetId=${record.id}&templateId=TP_SIMPLE`);
   };
+
+  const handleRename = async (id: string, name: string) => {
+    const res = await updateDataset({ id, name });
+    if (res) queryData();
+  };
+
   const handleDelete = async record => {
     const res = await recycleDataset(record.id);
     if (res) queryData();
   };
+
   const handleView = record => {
     history.push(`/dataset/list/${record.id}`);
   };
@@ -109,9 +118,18 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
         const { type } = data;
         let tag = type === 'case' ? <Tag color="var(--primary-color)">官方案例</Tag> : '';
         return (
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             {tag}
-            {record}
+            <Input
+              defaultValue={record}
+              onBlur={e => {
+                const value = e.target.value;
+                if (!isNil(value) && value !== record) {
+                  handleRename(data.id, value);
+                }
+              }}
+              bordered={false}
+            />
           </div>
         );
       },
@@ -119,6 +137,7 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     {
       title: '数据集ID',
       dataIndex: 'id',
+      width: 400,
       key: 'id',
     },
 
@@ -148,8 +167,19 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     //   key: 'size',
     // },
     {
+      title: '创建时间',
+      dataIndex: 'gmtCreate',
+      key: 'gmtCreate',
+      width: 180,
+      render: (record, data) => {
+        if (record) return utils.time(record);
+        else return '-';
+      },
+      sorter: (a, b) => a.gmtCreate - b.gmtCreate,
+    },
+    {
       title: '操作',
-      width: '160px',
+      width: 160,
       render: record => {
         return (
           <span>

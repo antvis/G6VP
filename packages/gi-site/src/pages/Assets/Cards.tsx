@@ -1,6 +1,8 @@
-import { Card, Col, Row, Tag } from 'antd';
+import { Card, Col, Row, Tag, Typography } from 'antd';
 import * as React from 'react';
+
 const { Meta } = Card;
+const { Paragraph } = Typography;
 
 interface CardsProps {
   data: any;
@@ -114,9 +116,22 @@ const Cards: React.FunctionComponent<CardsProps> = props => {
 
           return (
             <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={global}>
-              <Card hoverable cover={<img alt="example" src={cover} />}>
+              <Card
+                hoverable
+                cover={<img alt="example" src={cover} style={{ objectFit: 'cover', aspectRatio: '16/9' }} />}
+              >
                 <div style={{ position: 'relative' }}>
-                  <Meta title={title} description={desc}></Meta>
+                  <Meta
+                    title={title}
+                    description={
+                      <Paragraph
+                        style={{ height: 45, margin: 0 }}
+                        ellipsis={{ rows: 2, expandable: false, tooltip: desc }}
+                      >
+                        {desc}
+                      </Paragraph>
+                    }
+                  ></Meta>
                   <Tag color={color} style={{ position: 'absolute', right: '0px', top: '2px' }}>
                     {`${group}@${version}`}
                   </Tag>
