@@ -1,14 +1,11 @@
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
 import React, { useMemo, useState } from 'react';
-import TimeLineAnimation from '../animation';
-import type { Speed } from '../animation/type';
-import { TimeLineChart } from '../chart';
-import type { Aggregation } from '../chart/types';
-import type { TimeGranularity } from '../types';
+import type { Aggregation, Selection, Speed, TimeGranularity } from '../../types';
+import TimebarAnimation from '../animation';
+import { TimebarChart } from '../chart';
 import { getFormatData, getInitTimeRange, getTimeFormat } from './helper';
 import './index.less';
-import type { Selection } from './types';
 
 type Props = {
   aggregation: Aggregation;
@@ -23,7 +20,7 @@ type Props = {
   yField?: string;
 };
 
-const TimeLinePanel: React.FC<Props> = props => {
+const TimebarPanel: React.FC<Props> = props => {
   const {
     aggregation,
     data: orignalData,
@@ -107,7 +104,7 @@ const TimeLinePanel: React.FC<Props> = props => {
         </div>
       </div>
 
-      <TimeLineChart
+      <TimebarChart
         className="chart"
         data={dataTimes.data}
         xField={field}
@@ -120,9 +117,9 @@ const TimeLinePanel: React.FC<Props> = props => {
         onReset={onChartReset}
       />
 
-      <TimeLineAnimation
+      <TimebarAnimation
         className="content-btn"
-        timeLine={dataTimes.times}
+        timebar={dataTimes.times}
         selection={currentSelectedRange}
         initialSelection={initSelection}
         setSelection={onSelectionAnimation}
@@ -133,4 +130,4 @@ const TimeLinePanel: React.FC<Props> = props => {
   );
 };
 
-export default TimeLinePanel;
+export default TimebarPanel;

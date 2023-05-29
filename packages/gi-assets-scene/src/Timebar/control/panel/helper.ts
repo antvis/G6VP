@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { maxBy, minBy } from 'lodash-es';
-import type { TimeGranularity } from '../types';
-import type { Selection } from './types';
+import type { Selection, TimeGranularity } from '../../types';
 
 export const formatXAxis = (data: string | number, isTimeField: boolean, format: string) => {
   if (isTimeField) {

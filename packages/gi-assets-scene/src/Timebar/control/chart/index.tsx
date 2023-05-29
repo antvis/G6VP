@@ -1,10 +1,8 @@
 import { Chart } from '@antv/g2';
 import { useDebounceFn } from 'ahooks';
 import React, { useEffect, useRef } from 'react';
+import type { Aggregation, Selection, TimeGranularity } from '../../types';
 import { getTimeFormat } from '../panel/helper';
-import type { Aggregation } from './types';
-import type { Selection } from '../panel/types';
-import { TimeGranularity } from '../types';
 
 const createPathRender = (compute: any) => {
   return (group: any, options: any, document: any) => {
@@ -35,7 +33,7 @@ const handleE = (x: number, y: number, r: number): string => {
   return path;
 };
 
-export type TimeLineChartProps = {
+export type TimebarChartProps = {
   className?: string;
   data: Record<string, any>[];
   xField: string;
@@ -52,7 +50,7 @@ export type TimeLineChartProps = {
   onReset: () => void;
 };
 
-export const TimeLineChart = (props: TimeLineChartProps) => {
+export const TimebarChart = (props: TimebarChartProps) => {
   const {
     className,
     data = [],
@@ -71,10 +69,13 @@ export const TimeLineChart = (props: TimeLineChartProps) => {
 
   const getAggregation = (type: Aggregation) => {
     switch (type) {
+      case 'max':
       case 'mean':
+      case 'min':
+      case 'median':
         // yField 求均值统计
         return {
-          transform: [{ type: 'groupX', y: 'mean' }],
+          transform: [{ type: 'groupX', y: type }],
           encode: { x: xField, y: yField },
         };
       // 分箱求和统计
@@ -83,7 +84,6 @@ export const TimeLineChart = (props: TimeLineChartProps) => {
           transform: [{ type: 'groupX', y: 'count' }],
           encode: { x: xField },
         };
-      case 'value':
       default:
         return { encode: { x: xField, y: yField } };
     }
@@ -143,10 +143,10 @@ export const TimeLineChart = (props: TimeLineChartProps) => {
       chartRef.current.render().then(() => (chartRenderingRef.current = false));
     } else {
       const update = () => {
-        chartRef.current.options({
+        chartRef.current?.options({
           children: [{ ...commConfig, ...getAggregation(aggregation) }],
         });
-        chartRef.current.render().then(() => (chartRenderingRef.current = false));
+        chartRef.current?.render().then(() => (chartRenderingRef.current = false));
       };
 
       if (chartRenderingRef.current) {
@@ -159,6 +159,8 @@ export const TimeLineChart = (props: TimeLineChartProps) => {
         update();
       }
     }
+
+    console.log(chartRef.current.options());
   }, [data, xField, yField, aggregation, granularity]);
 
   // 同步更新高丽亮滑块

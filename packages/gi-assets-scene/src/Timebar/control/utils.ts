@@ -1,17 +1,11 @@
 import dayjs from 'dayjs';
 import type { GIGraphData } from '@antv/gi-sdk';
-import type { Selection, TimeGranularity } from './types';
+import type { Selection, TimeGranularity } from '../types';
 import { getTimeFormat } from './panel/helper';
 
 export function timeParser(time: number): number;
-export function timeParser(
-  time: string,
-  timeGranularity?: TimeGranularity
-): number;
-export function timeParser(
-  time: number | string,
-  timeGranularity?: TimeGranularity
-) {
+export function timeParser(time: string, timeGranularity?: TimeGranularity): number;
+export function timeParser(time: number | string, timeGranularity?: TimeGranularity) {
   if (typeof time === 'number') {
     if (time.toString().length === 10) return time * 1000;
     return time;
@@ -32,13 +26,13 @@ export function dataFilter(
   range: Selection,
   timeGranularity: TimeGranularity,
   timeFieldEdge: string,
-  timeFieldNode: string = timeFieldEdge
+  timeFieldNode: string = timeFieldEdge,
 ): GIGraphData {
   const { nodes = [], edges = [] } = data;
 
-  const parser = (t) => timeParser(t, timeGranularity);
+  const parser = t => timeParser(t, timeGranularity);
 
-  const edgesFiltered = edges.filter((edge) => {
+  const edgesFiltered = edges.filter(edge => {
     const time = parser(edge.data[timeFieldEdge]);
     return time >= parser(range[0]) && time <= parser(range[1]);
   });
@@ -46,7 +40,7 @@ export function dataFilter(
   let nodesFiltered: GIGraphData['nodes'] = [];
   if (nodes.length > 0) {
     if (nodes[0].data[timeFieldNode]) {
-      nodesFiltered = nodes.filter((node) => {
+      nodesFiltered = nodes.filter(node => {
         const time = parser(node.data[timeFieldNode]);
         return time >= parser(range[0]) && time <= parser(range[1]);
       });
@@ -58,7 +52,7 @@ export function dataFilter(
         acc.add(cur.target);
         return acc;
       }, new Set<string>([]));
-      nodesFiltered = nodes.filter((node) => allNodesFromEdges.has(node.id));
+      nodesFiltered = nodes.filter(node => allNodesFromEdges.has(node.id));
     }
   }
 
@@ -75,15 +69,15 @@ export function getTimeRange(
   data: GIGraphData,
   timeGranularity: TimeGranularity,
   timeFieldEdge: string,
-  timeFieldNode: string = timeFieldEdge
+  timeFieldNode: string = timeFieldEdge,
 ) {
   const { nodes, edges } = data;
-  const parser = (t) => timeParser(t, timeGranularity);
+  const parser = t => timeParser(t, timeGranularity);
   const nodesTime = nodes
-    .map((node) => node.data[timeFieldNode])
+    .map(node => node.data[timeFieldNode])
     .filter(Boolean)
     .map(parser);
-  const edgesTime = edges.map((edge) => edge.data[timeFieldEdge]).map(parser);
+  const edgesTime = edges.map(edge => edge.data[timeFieldEdge]).map(parser);
   const times = [...nodesTime, ...edgesTime];
   const timeRange: Selection = [Math.min(...times), Math.max(...times)];
   return timeRange;
@@ -93,6 +87,6 @@ export function getTimeRange(
  * 转换图数据为 G2 渲染数据
  * @param data 图数据
  */
-export function dataTransform(data: GIGraphData) {
-  return data.edges.map((edge) => edge.data);
+export function dataTransform(data: GIGraphData, type: 'nodes' | 'edges') {
+  return data[type].map(node => node.data);
 }

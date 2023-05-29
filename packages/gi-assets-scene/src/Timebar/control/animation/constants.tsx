@@ -1,4 +1,4 @@
-import type { Speed, TimeWindowType } from './type';
+import type { Speed, TimeWindowType } from '../../types';
 
 export const timeWindowList: { label: string; value: TimeWindowType }[] = [
   { label: '移动时间窗口', value: 'moveTime' },

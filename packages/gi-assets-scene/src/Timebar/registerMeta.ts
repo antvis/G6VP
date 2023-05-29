@@ -1,7 +1,7 @@
 import { extra } from '@antv/gi-sdk';
 import { playbackSpeedList } from './control/animation/constants';
 import { TIME_GRANULARITY_LIST } from './constant';
-// import { getTimeRange } from './TimelineControl/utils';
+// import { getTimeRange } from './TimebarControl/utils';
 import info from './info';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
@@ -17,7 +17,7 @@ const registerMeta = ({ schemaData }) => {
           ...acc,
           ...cur.properties,
         };
-      }, {})
+      }, {}),
     )
       .filter(([, v]) => (dataType ? [dataType].includes(v) : true))
       .map(([k]) => ({ label: k, value: `${type}:${k}` }));
@@ -40,11 +40,11 @@ const registerMeta = ({ schemaData }) => {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { label: '节点', options: getProperties('nodes', 'number') },
-        { label: '边', options: getProperties('edges', 'number') },
+        { label: '节点', options: getProperties('nodes') },
+        { label: '边', options: getProperties('edges') },
       ],
       'x-decorator-props': {
-        tooltip: '数值类型，且与时间字段同属于节点或边',
+        tooltip: '非数值类型仅支持聚合计数',
       },
     },
     aggregation: {
@@ -53,30 +53,34 @@ const registerMeta = ({ schemaData }) => {
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { label: '数值', value: 'value' },
         { label: '计数', value: 'count' },
+        { label: '最大值', value: 'max' },
         { label: '均值', value: 'mean' },
+        { label: '最小值', value: 'min' },
+        { label: '中位数', value: 'median' },
+        { label: '求和', value: 'sum' },
       ],
-      'x-decorator-props': {
-        tooltip: '选择数值或类型时需指定指标字段',
-      },
-      default: 'value',
+      default: 'count',
     },
-    timeRange: {
-      title: '时间范围',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'DatePicker.RangePicker',
-      'x-component-props': {
-        showTime: true,
-      },
-    },
-    defaultTimeRange: {
-      title: '默认时间范围',
-      type: 'string',
-      'x-decorator': 'FormItem',
-      'x-component': 'DatePicker.RangePicker',
-    },
+    // datepicker 有问题
+    // timeRange: {
+    //   title: '时间范围',
+    //   type: 'string',
+    //   'x-decorator': 'FormItem',
+    //   'x-component': 'DatePicker.RangePicker',
+    //   'x-component-props': {
+    //     showTime: true,
+    //   },
+    // },
+    // defaultTimeRange: {
+    //   title: '默认时间范围',
+    //   type: 'string',
+    //   'x-decorator': 'FormItem',
+    //   'x-component': 'DatePicker.RangePicker',
+    //   'x-component-props': {
+    //     showTime: true,
+    //   },
+    // },
     timeGranularity: {
       title: '时间粒度',
       type: 'string',
@@ -134,13 +138,6 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Select',
       enum: playbackSpeedList,
       default: 1,
-    },
-    defaultPlay: {
-      title: '默认播放',
-      type: 'boolean',
-      'x-decorator': 'FormItem',
-      'x-component': 'Switch',
-      default: false,
     },
     ...metas,
   };

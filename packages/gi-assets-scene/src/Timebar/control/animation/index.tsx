@@ -8,42 +8,32 @@ import {
 } from '@ant-design/icons';
 import { Button, Popover, Radio, Space, Tooltip } from 'antd';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type { Selection } from '../panel/types';
+import type { Selection, Speed, TimeWindowType } from '../../types';
 import { playbackSpeedList, timeWindowList } from './constants';
 import { getKeySteps, getTimeInterval } from './helper';
-import type { Speed, TimeWindowType } from './type';
 import './index.less';
 
 type Props = {
   className?: string;
   defaultSpeed?: Speed;
-  timeLine: string[];
+  timebar: string[];
   initialSelection: Selection;
   selection?: Selection; // 选择时间区间
   setSelection: (val: Selection) => void; // 设置选中区间值
   onReset?: () => void;
 };
 
-const TimeLineAnimation: React.FC<Props> = (props) => {
-  const {
-    className,
-    setSelection,
-    selection,
-    timeLine,
-    defaultSpeed = 1,
-    initialSelection,
-    onReset,
-  } = props;
-  const [timeWindowType, setTimeWindowType] =
-    useState<TimeWindowType>('moveTime');
+const TimebarAnimation: React.FC<Props> = props => {
+  const { className, setSelection, selection, timebar, defaultSpeed = 1, initialSelection, onReset } = props;
+  const [timeWindowType, setTimeWindowType] = useState<TimeWindowType>('moveTime');
   const [speed, setSpeed] = useState<Speed>(1);
   const [isAnimation, setIsAnimation] = useState(false);
   const timer = useRef<number | null>(null);
 
   const steps = useMemo(() => {
-    const { steps } = getKeySteps(timeLine, initialSelection);
+    const { steps } = getKeySteps(timebar, initialSelection);
     return steps;
-  }, [initialSelection, timeLine]);
+  }, [initialSelection, timebar]);
 
   // 动画播放操作
   const timerAnimation = (val: {
@@ -69,12 +59,7 @@ const TimeLineAnimation: React.FC<Props> = (props) => {
 
         if (delta >= delay) {
           _startTime = new Date().getTime();
-          const timeIntervals = getTimeInterval(
-            timeLine,
-            selection,
-            timeWindowType,
-            playback
-          );
+          const timeIntervals = getTimeInterval(timebar, selection, timeWindowType, playback);
           if (timeIntervals) {
             setSelection(timeIntervals);
           }
@@ -145,12 +130,9 @@ const TimeLineAnimation: React.FC<Props> = (props) => {
   }, [selection]);
 
   const TimeWindow = (
-    <Radio.Group
-      onChange={(e) => onTimeWindowChange(e.target.value)}
-      value={timeWindowType}
-    >
+    <Radio.Group onChange={e => onTimeWindowChange(e.target.value)} value={timeWindowType}>
       <Space direction="vertical">
-        {timeWindowList.map((item) => {
+        {timeWindowList.map(item => {
           return (
             <Radio key={item.value} value={item.value}>
               {item.label}
@@ -162,12 +144,9 @@ const TimeLineAnimation: React.FC<Props> = (props) => {
   );
 
   const PlaybackSpeed = (
-    <Radio.Group
-      onChange={(e) => onplaybackSpeedChange(e.target.value)}
-      value={speed}
-    >
+    <Radio.Group onChange={e => onplaybackSpeedChange(e.target.value)} value={speed}>
       <Space direction="vertical">
-        {playbackSpeedList.map((item) => {
+        {playbackSpeedList.map(item => {
           return (
             <Radio key={item.value} value={item.value}>
               {item.label}
@@ -211,4 +190,4 @@ const TimeLineAnimation: React.FC<Props> = (props) => {
   );
 };
 
-export default TimeLineAnimation;
+export default TimebarAnimation;

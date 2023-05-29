@@ -1,20 +1,18 @@
 import { useContext, type GIGraphData } from '@antv/gi-sdk';
+import { Empty } from 'antd';
 import React from 'react';
-import TimeLineControl from './control';
-import type { Speed } from './control/animation/type';
-import type { TimeGranularity } from './control/types';
+import TimebarControl from './control';
+import type { Aggregation, Speed, TimeFiled, TimeGranularity } from './types';
 
-type TimelineProps = {
+type TimebarProps = {
   /** 时间范围(时间戳) */
   timeRange: [number, number];
   /** 默认范围 */
   defaultTimeRange?: [number, number];
   /** 时间字段 */
-  timeField: string;
+  timeField: TimeFiled;
   /** 指标字段 */
   yField?: string;
-  /** 默认播放 */
-  defaultPlay?: boolean;
   /**
    * 时间粒度
    *
@@ -24,30 +22,35 @@ type TimelineProps = {
   timeGranularity: TimeGranularity;
   /** 倍速(每 1/speed 秒播放 timeGranularity 个) */
   speed: Speed;
-  aggregation: 'mean' | 'count' | 'value';
+  aggregation: Aggregation;
 };
 
-export const Timebar: React.FC<TimelineProps> = ({
+export const Timebar: React.FC<TimebarProps> = ({
   aggregation,
-  timeField = 'edge:GI_TIME_STAMP',
+  timeField,
   yField,
   timeRange,
-  defaultPlay,
   defaultTimeRange,
   timeGranularity,
   speed,
 }) => {
   const { data } = useContext();
 
-  const [type, field] = timeField.split(':');
+  if (!timeField)
+    return (
+      <Empty
+        description="请配置时间字段"
+        style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      />
+    );
 
   // 过滤出时间范围内的数据
   return (
-    <TimeLineControl
+    <TimebarControl
       aggregation={aggregation}
       data={data as GIGraphData}
       timeGranularity={timeGranularity}
-      timeField={field}
+      timeField={timeField}
       yField={yField}
       speed={speed}
     />
