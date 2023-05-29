@@ -166,22 +166,6 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
           setPrevData(newData);
           updateContext(draft => {
             draft.data = newData;
-            draft.layout = {
-              type: 'comboForce',
-              preventOverlap: true,
-              preventNodeOverlap: true,
-              nodeSize: 40,
-              nodeSpacing: 40,
-              comboPadding: 5,
-              linkDistance: 150,
-              nodeStrength: 300,
-              comboCollideStrength: 1,
-              nodeCollideStrength: 1,
-              gravity: 1,
-              comboGravity: 100,
-              maxIteration: 200,
-              clustering: false,
-            };
           });
           break;
         default:

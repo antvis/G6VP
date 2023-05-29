@@ -4,10 +4,10 @@ import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, message, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { LAYOUTS, NODE_SPACING } from './const';
-import './index.less';
+import { LAYOUTS } from './const';
 import { ILayoutOption } from './typing';
-import { updateLayout } from './utils';
+import { updateLayout, getLayoutOptions } from './utils';
+import './index.less';
 
 const { Panel } = Collapse;
 
@@ -56,9 +56,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         draft.layouts.push({
           type: 'circular',
           nodes: selectedNodes,
-          options: {
-            nodeSpacing: NODE_SPACING,
-          },
+          options: getLayoutOptions('circular', graph, data, selectedNodes),
         });
 
         // 新添加的 panel 默认展开
@@ -89,12 +87,14 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
       }
     });
     const layouts = Object.keys(subGraph).map(key => {
+      let radius: number | undefined = undefined;
+      if (subGraph[key].length === data.nodes.length) {
+        radius = Math.min(graph.getWidth(), graph.getHeight()) / 2;
+      }
       return {
         type: 'circular',
         nodes: subGraph[key],
-        options: {
-          nodeSpacing: NODE_SPACING,
-        },
+        options: getLayoutOptions('circular', graph, data, subGraph[key]),
       };
     });
 
@@ -191,7 +191,7 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
                     onChange={val => {
                       updateState(draft => {
                         draft.layouts[index].type = val;
-                        draft.layouts[index].options = LAYOUTS.find(lay => lay.value === val)?.options || {};
+                        draft.layouts[index].options = getLayoutOptions(val, graph, data, state.layouts[index].nodes);
                       });
                     }}
                   >

@@ -54,7 +54,7 @@ const ComponentPanel = props => {
       info: {
         id: 'GI_FreeContainer',
         name: '自运行组件',
-        icon: 'icon-layout',
+        icon: 'icon-rocket',
         type: 'GICC',
       },
       props: {

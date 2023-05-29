@@ -12,7 +12,7 @@ interface LineChartProps {
 }
 
 const LineChart: React.FC<LineChartProps> = props => {
-  const { data, xField, yField, highlight } = props;
+  const { data, xField, yField, height, highlight } = props;
   const chartRef = React.useRef<null | HTMLDivElement>(null);
   if (!data) {
     return null;
@@ -26,7 +26,7 @@ const LineChart: React.FC<LineChartProps> = props => {
       data,
       xField,
       yField,
-      height: 200,
+      height: height || 200,
       interactions: [
         {
           type: 'brush-x',

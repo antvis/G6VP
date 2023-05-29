@@ -172,13 +172,18 @@ const StructAnalysis = () => {
   }, [data, sourceDataMap]);
 
   return (
-    <Graphin
-      data={state.graphStruct}
-      style={{ background: 'var(--background-color)' }}
-      layout={{
-        type: 'dagre',
-      }}
-    ></Graphin>
+    <>
+      <div style={{ margin: '8px 0', textAlign: 'center' }}>
+        分析当前画布中所有路径的 Schema 抽象结构，即路径中节点与边的类型组合
+      </div>
+      <Graphin
+        data={state.graphStruct}
+        style={{ background: 'var(--background-color)' }}
+        layout={{
+          type: 'dagre',
+        }}
+      ></Graphin>
+    </>
   );
 };
 

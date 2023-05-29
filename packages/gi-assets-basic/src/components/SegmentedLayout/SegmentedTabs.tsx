@@ -60,7 +60,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
   };
 
   return (
-    <div style={{ padding: '12px 12px' }}>
+    <div style={{ padding: '12px', width: '100%', height: '100%' }}>
       <div style={{ borderRadius: '8px', textAlign: 'center', paddingBottom: '12px' }}>
         <Segmented options={options} value={active} onChange={onChange} />
       </div>

@@ -86,3 +86,5 @@ export const COLOR_MAP = {
   scene: 'purple',
   undefined: '#f50',
 };
+
+export const REQUIRED_ASSET_IDS = ['Initializer', 'CanvasSetting'];
