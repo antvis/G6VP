@@ -36,6 +36,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   useEffect(() => {
     if (!rawDataRef.current && !isEmptyGraphData(data)) {
       rawDataRef.current = data;
+      setRenderData(dataTransform(data, type as any));
     }
   }, [data]);
 
@@ -43,7 +44,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   useEffect(() => {
     if (!rawDataRef.current || !timeGranularity) return;
     setRenderData(dataTransform(rawDataRef.current, type as any));
-  }, [data, field]);
+  }, [timeGranularity]);
 
   useEffect(() => {
     if (!timeRange || !rawDataRef.current) return;
