@@ -45,7 +45,7 @@ G6VP 中内置了基础样式，交互，布局设置，所有的配置都可自
 
 # 02. 开发 G6VP
 
-G6VP 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 nvm 切换 Node.js 版本到 14 及其以上。
+G6VP 采用 pnpm 管理仓库，根据 pnpm 的官方[兼容性说明](https://pnpm.io/installation#compatibility)，请提前使用 [nvm](https://github.com/nvm-sh/nvm) 切换 Node.js 版本到 14 及其以上，建议使用 16 版本，过高版本在安装依赖和运行 NPM 脚本时可能存在问题。
 
 ## 安装依赖
 
