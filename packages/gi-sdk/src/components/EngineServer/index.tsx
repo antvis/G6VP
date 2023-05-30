@@ -62,6 +62,7 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     <div>
       <EngineBanner docs={docs} title={title} desc={desc} logo={logo} />
       <Connect
+        docs={docs}
         isSocketConnect={isSocketConnect}
         engineId={engineId}
         connectDatabase={connectDatabase}

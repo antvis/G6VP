@@ -20,7 +20,11 @@ export const GI_SERVICE_SCHEMA = {
       nodes: [],
       edges: [],
     };
-    const { uri, graphId, httpServerURL } = utils.getServerEngineContext();
+    const {
+      engineServerURL: uri,
+      CURRENT_SUBGRAPH: graphId,
+      HTTP_SERVICE_URL: httpServerURL,
+    } = utils.getServerEngineContext();
 
     if (!uri) {
       // 没有登录信息，需要先登录再查询 schema

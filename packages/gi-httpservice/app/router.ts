@@ -47,6 +47,12 @@ export default (app: Application) => {
   router.post('/api/hugegraph/graphs', controller.hugegraph.listGraphs);
   router.post('/api/hugegraph/schema', controller.hugegraph.getSchema);
 
+  //  gremlin database
+
+  router.post('/gremlin/connect', controller.gremlin.connect);
+  router.post('/gremlin/query', controller.gremlin.query);
+  router.get('/gremlin/schema', controller.gremlin.schema);
+
   // GraphInsight website service
   // dataset 数据集
   router.get('/dataset/list', controller.dataset.list);

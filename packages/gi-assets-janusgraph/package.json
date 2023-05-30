@@ -1,0 +1,42 @@
+{
+  "name": "@antv/gi-assets-janusgraph",
+  "version": "1.0.0",
+  "description": "JanusGraph 资产包",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-neo4j",
+    "clean": "rimraf es esm lib dist",
+    "demo": "umi dev",
+    "demo:build": "umi build",
+    "docs": "dumi dev",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "remove:antd": "rm -rf ./node_modules/antd",
+    "start": "father build --watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-assets-neo4j"
+  },
+  "dependencies": {
+    "@antv/gi-sdk": "workspace:*",
+    "umi-request": "^1.4.0"
+  },
+  "peerDependencies": {
+    "react": "17.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

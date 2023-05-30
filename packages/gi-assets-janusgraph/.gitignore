@@ -1,0 +1,5 @@
+node_modules
+src/.umi
+dist
+lib
+es

@@ -44,6 +44,9 @@ const packages = [
   {
     name: '@antv/gi-assets-hugegraph',
   },
+  {
+    name: '@antv/gi-assets-janusgraph',
+  },
 ];
 
 const assets = packages.map(item => {
