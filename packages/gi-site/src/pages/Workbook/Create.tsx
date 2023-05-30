@@ -129,8 +129,8 @@ const Create: React.FunctionComponent<CreateProps> = props => {
 
       if (IS_V2_VERSION) {
         await DatasetService.createDataset(dataset);
-        await ProjectServices.create(workbook);
-        history.push(`/workspace/${workbook.id}`);
+        const projectId = await ProjectServices.create(workbook);
+        history.push(`/workspace/${projectId}`);
         return;
       }
       //剩下的都是V1版本的
