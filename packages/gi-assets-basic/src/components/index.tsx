@@ -6,9 +6,9 @@ import Copyright from './Copyright';
 import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
-import FitCenter from './FitCenter';
+// import FitCenter from './FitCenter';
 import FitCenterView from './FitCenterView';
-import FitView from './FitView';
+// import FitView from './FitView';
 import GrailLayout from './GrailLayout';
 import LassoSelect from './LassoSelect';
 import LayoutSwitch from './LayoutSwitch';
@@ -56,8 +56,8 @@ export {
   PropertyGraphInitializer,
   Save,
   Placeholder,
-  FitCenter,
-  FitView,
+  // FitCenter,
+  // FitView,
   FitCenterView,
   OperatorBar,
   GroupBar,
