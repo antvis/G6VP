@@ -292,12 +292,15 @@ const GISDK = (props: Props) => {
     }
   };
 
+  const HAS_GRAPH = graphinRef.current?.graph && !graphinRef.current.graph.destroyed;
+
   const ContextValue = {
     ...state,
     GISDK_ID,
     services,
     assets,
     sourceDataMap,
+    HAS_GRAPH,
     graph: graphinRef.current?.graph,
     theme: graphinRef.current?.theme,
     apis: graphinRef.current?.apis,
@@ -353,8 +356,6 @@ const GISDK = (props: Props) => {
   if (!ComponentAssets) {
     return null;
   }
-
-  const HAS_GRAPH = graphinRef.current?.graph && !graphinRef.current.graph.destroyed;
 
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
     getComponents({ ...state, HAS_GRAPH }, config.components, ComponentAssets);

@@ -33,6 +33,7 @@ export interface State {
   layout: Layout;
   /** 组件 */
   components: GIComponentConfig[];
+  HAS_GRAPH: boolean;
   /** 画布是否初始化完成 */
   initialized: boolean;
   /** 图初始化组件  */
