@@ -39,7 +39,6 @@ import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import SegmentedLayout from './SegmentedLayout';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
-import SideLayout from './SideLayout';
 import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
 import Watermark from './Watermark';
@@ -100,7 +99,6 @@ export {
   RemoveNodeWithMenu,
   SelectExchangeMenuItem,
   CommonNeighbor,
-  SideLayout,
   SegmentedLayout,
   Watermark,
 };
