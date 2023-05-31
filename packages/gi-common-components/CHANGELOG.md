@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.2.3
+
+### Patch Changes
+
+- update assets
+
 ## 1.2.2
 
 ### Patch Changes
