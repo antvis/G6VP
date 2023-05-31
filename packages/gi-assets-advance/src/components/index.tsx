@@ -22,7 +22,7 @@ import StructAnalysis from './StructAnalysis';
 import StyleSetting from './StyleSetting';
 import SubGraphLayout from './SubGraphLayout';
 import TableMode from './TableMode';
-import TemplateQuery from './TemplateQuery';
+// import TemplateQuery from './TemplateQuery';
 import ThemeSetting from './ThemeSetting';
 import Undo from './Undo';
 export {
@@ -38,7 +38,7 @@ export {
   ModeSwitch,
   SubGraphLayout,
   StructAnalysis,
-  TemplateQuery,
+  // TemplateQuery,
   CypherQuery,
   GraphAnnotation,
   Undo,
