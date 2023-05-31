@@ -101,7 +101,7 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     if (!annotationPlugin) return;
     const container = document.getElementById(`${GISDK_ID}-graphin-container`);
     const unbind = bind(container, element => {
-      const annotationCanvas = annotationPlugin.get('linkCanvas');
+      const annotationCanvas = annotationPlugin.get('canvas');
       if (!annotationCanvas) return;
       if (element) {
         const { clientHeight, clientWidth } = element;
