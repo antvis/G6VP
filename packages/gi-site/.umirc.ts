@@ -170,6 +170,11 @@ export default {
             },
             {
               exact: true,
+              path: 'g6v5demo',
+              component: 'G6V5Demo',
+            },
+            {
+              exact: true,
               path: 'user',
               component: 'Share',
             },
