@@ -17,10 +17,7 @@ export interface UadLayoutProps {
 
 const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children, containers = [] } = props;
-  const { config, assets, data: graphData, graph } = useContext();
-
-  // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
-  const HAS_GRAPH = graph && !graph.destroyed;
+  const { config, assets, data: graphData, HAS_GRAPH } = useContext();
 
   const { GI_CONTAINER: topItems = [], height = 251 } =
     containers.find(container => container.id === 'GI_CONTAINER_TOP') || {};

@@ -15,13 +15,10 @@ export interface UadLayoutProps {
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
-  const context = useContext();
-  const { graph } = context;
+  const { config, assets, HAS_GRAPH } = useContext();
   // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
-  const HAS_GRAPH = graph && !graph.destroyed;
 
   const { containers } = props;
-  const { config, assets } = context;
 
   const ComponentCfgMap = config.components.reduce((acc, curr) => {
     return {
