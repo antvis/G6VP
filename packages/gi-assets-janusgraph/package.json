@@ -16,8 +16,8 @@
   ],
   "scripts": {
     "build": "npm run clean && npm run build:es & npm run build:umd",
-    
-    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-neo4j",
+    "build:es": "father build",
+    "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-janusgraph",
     "clean": "rimraf es esm lib dist",
     "demo": "umi dev",
     "demo:build": "umi build",
@@ -27,7 +27,7 @@
     "start": "father build --watch",
     "test": "jest",
     "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-neo4j"
+    "postpublish": "tnpm sync @antv/gi-assets-janusgraph"
   },
   "dependencies": {
     "@antv/gi-sdk": "workspace:*",
