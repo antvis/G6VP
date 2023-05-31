@@ -47,6 +47,7 @@ const cancelColor = {
 };
 
 const BADGE_CLASSNAME = 'gi-graph-annotation';
+let unbindSizeSensor;
 
 const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => {
   const { contextmenu, annotationWay } = props;
@@ -98,19 +99,21 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   }, []);
 
   useEffect(() => {
-    if (!annotationPlugin) return;
+    if (!annotationPlugin) {
+      unbindSizeSensor?.();
+      unbindSizeSensor = undefined;
+      return;
+    }
     const container = document.getElementById(`${GISDK_ID}-graphin-container`);
-    const unbind = bind(container, element => {
+    unbindSizeSensor = bind(container, element => {
       const annotationCanvas = annotationPlugin.get('canvas');
-      if (!annotationCanvas) return;
+      const annotationLinkCanvas = annotationPlugin.get('linkCanvas');
       if (element) {
         const { clientHeight, clientWidth } = element;
-        annotationCanvas.changeSize(clientWidth, clientHeight);
+        if (annotationCanvas) annotationCanvas.changeSize(clientWidth, clientHeight);
+        if (annotationLinkCanvas) annotationLinkCanvas.changeSize(clientWidth, clientHeight);
       }
     });
-    return () => {
-      unbind();
-    };
   }, [annotationPlugin]);
 
   const handleAnnotate = color => {
@@ -189,7 +192,11 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   };
 
   useEffect(() => {
-    if (!annotationPlugin || annotationPlugin.destroyed) return;
+    if (!annotationPlugin || annotationPlugin.destroyed) {
+      unbindSizeSensor?.();
+      unbindSizeSensor = undefined;
+      return;
+    }
     insertCss(`
       .g6-annotation-wrapper {
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
