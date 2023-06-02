@@ -45,6 +45,7 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
       />
       {visible && (
         <L7Map
+          setVisible={setVisible}
           latitudeKey={latitudeKey}
           longitudeKey={longitudeKey}
           minSize={minSize}
