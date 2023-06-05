@@ -1,8 +1,8 @@
 import { extra } from '@antv/gi-sdk';
-import { playbackSpeedList } from './control/animation/constants';
 import { TIME_GRANULARITY_LIST } from './constant';
-// import { getTimeRange } from './TimebarControl/utils';
+import { playbackSpeedList } from './control/animation/constants';
 import info from './info';
+import type { FieldType } from './types';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -10,7 +10,7 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 
 const registerMeta = ({ schemaData }) => {
-  const getProperties = (type: 'nodes' | 'edges', dataType?: string) => {
+  const getProperties = (type: FieldType, dataType?: string) => {
     return Object.entries<string>(
       schemaData[type].reduce((acc, cur) => {
         return {
@@ -44,7 +44,7 @@ const registerMeta = ({ schemaData }) => {
         { label: '边', options: getProperties('edges') },
       ],
       'x-decorator-props': {
-        tooltip: '非数值类型仅支持聚合计数',
+        tooltip: '非数值类型仅支持聚合计数\n确保和时间字段同属于节点或边',
       },
     },
     aggregation: {

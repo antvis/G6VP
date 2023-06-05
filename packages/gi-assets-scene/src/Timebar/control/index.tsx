@@ -2,58 +2,62 @@ import { useContext, type GIGraphData } from '@antv/gi-sdk';
 import { useThrottleFn } from 'ahooks';
 import { Empty } from 'antd';
 import { isEmpty } from 'lodash-es';
-import React, { useEffect, useRef, useState } from 'react';
-import type { Aggregation, Selection, Speed, TimeGranularity, TimeFiled } from '../types';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import type { Aggregation, DataType, FieldType, Selection, Speed, TimeGranularity } from '../types';
 import TimebarPanel from './panel';
 import { dataFilter, dataTransform, getTimeRange, timeParser } from './utils';
 
 export interface TimebarControlType {
   aggregation: Aggregation;
-  data: GIGraphData;
+  graphData: GIGraphData;
   speed: Speed;
-  timeField: TimeFiled;
-  timeFieldNode?: string;
+  timeField: string;
   timeGranularity: TimeGranularity;
+  type: FieldType;
   yField?: string;
 }
 
 const isEmptyGraphData = (data: GIGraphData) => !data.edges.length && !data.nodes.length;
 
 const TimebarControl: React.FC<TimebarControlType> = props => {
-  const { aggregation, data, speed, timeField, timeFieldNode = timeField, timeGranularity, yField } = props;
+  const { aggregation, speed, timeField, timeGranularity, yField, graphData, type } = props;
   const { updateContext, transform } = useContext();
   const [timeRange, setTimeRange] = useState<Selection>();
   const [renderData, setRenderData] = useState<any[]>([]);
-  const rawDataRef = useRef<GIGraphData>();
+  const graphDataRef = useRef<GIGraphData>();
+
+  const data = useMemo<DataType>(() => {
+    return graphData[type].map(datum => datum.data);
+  }, [graphData, type]);
 
   const selectFullTimeRange = () => {
-    setTimeRange(getTimeRange(data, timeGranularity, timeField, timeFieldNode));
+    setTimeRange(getTimeRange(data, timeGranularity, timeField));
   };
-
-  const [type, field] = timeField.split(':');
 
   // 缓存图数据、设置 G2 渲染数据
   useEffect(() => {
-    if (!rawDataRef.current && !isEmptyGraphData(data)) {
-      rawDataRef.current = data;
-      setRenderData(dataTransform(data, type as any));
+    if (!graphDataRef.current && !isEmptyGraphData(graphData)) {
+      graphDataRef.current = graphData;
+      setRenderData(dataTransform(graphData, type as any));
     }
-  }, [data]);
+  }, [graphData]);
+
+  // 缓存图数据
 
   // 更新 G2 渲染数据
   useEffect(() => {
-    if (!rawDataRef.current || !timeGranularity) return;
-    setRenderData(dataTransform(rawDataRef.current, type as any));
+    if (!graphDataRef.current || !timeGranularity) return;
+    setRenderData(dataTransform(graphDataRef.current, type));
   }, [timeGranularity]);
 
   useEffect(() => {
-    if (!timeRange || !rawDataRef.current) return;
+    if (!timeRange || !graphDataRef.current) return;
 
-    const newData = transform(dataFilter(rawDataRef.current, timeRange, timeGranularity, field, yField));
+    const newData = transform(dataFilter(graphDataRef.current, timeRange, timeGranularity, timeField, type));
     updateContext(draft => {
       draft.data = newData;
     });
-  }, [timeRange, rawDataRef.current]);
+  }, [timeRange, graphDataRef.current]);
 
   const { run: onFilterChange } = useThrottleFn(
     (range: Selection) => {
@@ -62,7 +66,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
     { wait: 500 },
   );
 
-  if (!field || isEmpty(renderData)) {
+  if (isEmpty(renderData)) {
     return <Empty description="请先进行图查询" />;
   }
 
@@ -76,11 +80,10 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
       aggregation={aggregation}
       data={renderData}
       defaultSelection={timeRange}
-      field={field}
-      isTimeXField={true}
       onChangeTimeRange={onFilterChange}
       onClear={disableFilter}
       speed={speed}
+      timeField={timeField}
       timeGranularity={timeGranularity}
       yField={yField}
     />
