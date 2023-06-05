@@ -103,14 +103,14 @@ export const components = [
     },
   },
   {
-    id: 'FitCenter',
+    id: 'FitCenterView',
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '视图居中',
+        title: '视图自适应居中',
         isShowIcon: true,
         icon: 'icon-fit-center',
         isShowTooltip: true,
@@ -412,8 +412,7 @@ export const components = [
       GI_CONTAINER: [
         'ZoomIn',
         'ZoomOut',
-        'FitView',
-        'FitCenter',
+        'FitCenterView',
         'LargeGraph',
         'MapMode',
         'ForceSimulation',
