@@ -1,5 +1,11 @@
 # @antv/gi-sdk
 
+## 2.3.4
+
+### Patch Changes
+
+- update assets
+
 ## 2.3.3
 
 ### Patch Changes
