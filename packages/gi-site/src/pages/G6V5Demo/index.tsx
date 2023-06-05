@@ -5,7 +5,7 @@ interface AssetsCenterProps {}
 const G6V5Demo: React.FunctionComponent<AssetsCenterProps> = props => {
   return (
     <iframe
-      src="https://g6-site-pre.alipay.com/g6v5" // TODO: 待上线后换成线上地址
+      src="https://g6.antv.antgroup.com/g6v5"
       title={'G6v5 DEMO'}
       frameBorder={0}
       width="100%"

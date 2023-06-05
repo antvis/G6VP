@@ -80,5 +80,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "private": true
+  "private": true,
+  "repository": "https://github.com/antvis/G6VP.git"
 }

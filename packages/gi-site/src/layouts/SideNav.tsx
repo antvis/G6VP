@@ -6,6 +6,7 @@ import {
   OrderedListOutlined,
   PlusOutlined,
   RocketOutlined,
+  DeploymentUnitOutlined,
 } from '@ant-design/icons';
 
 import { Menu, MenuProps } from 'antd';
@@ -25,7 +26,7 @@ const OPEN_ITEMS = [
   { label: '资产管理', key: '/open/assets-manage', icon: <AppstoreOutlined /> },
   { label: '资产列表', key: '/open/assets-list', icon: <OrderedListOutlined /> },
   { label: '引擎管理', key: '/open/engines', icon: <RocketOutlined /> },
-  { label: 'V5 DEMO', key: '/open/g6v5demo', icon: <RocketOutlined /> },
+  { label: 'V5 DEMO', key: '/open/g6v5demo', icon: <DeploymentUnitOutlined /> },
   // { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
   // { label: '图应用', key: '/open/portal', icon: <AppstoreOutlined /> },
   // { label: '实验室', key: '/open/lab', icon: <AppstoreOutlined /> },
