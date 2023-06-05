@@ -4,6 +4,7 @@ export default (app: Application) => {
   const { controller, router } = app;
   router.get('/', controller.graphinsight.index);
 
+  // will be deprecated and unified in GraphScope
   router.post('/graphcompute/connect', controller.graphcompute.connectGraphScope);
   router.post('/graphcompute/createGSInstance', controller.graphcompute.createGraphScopeInstance);
   router.get('/graphcompute/closeGSInstance', controller.graphcompute.closeGraphScopeInstance);
