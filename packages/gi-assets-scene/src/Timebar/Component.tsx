@@ -1,8 +1,8 @@
 import { useContext, type GIGraphData } from '@antv/gi-sdk';
-import { Empty, message } from 'antd';
+import { Empty } from 'antd';
 import React from 'react';
 import TimebarControl from './control';
-import type { Aggregation, Speed, TimeGranularity } from './types';
+import type { Aggregation, Speed, TimeFiled, TimeGranularity } from './types';
 
 type TimebarProps = {
   /** 时间范围(时间戳) */
@@ -10,9 +10,9 @@ type TimebarProps = {
   /** 默认范围 */
   defaultTimeRange?: [number, number];
   /** 时间字段 */
-  timeField: string;
+  timeField: TimeFiled;
   /** 指标字段 */
-  yField: string;
+  yField?: string;
   /**
    * 时间粒度
    *
@@ -34,7 +34,7 @@ export const Timebar: React.FC<TimebarProps> = ({
   timeGranularity,
   speed,
 }) => {
-  const { data: graphData } = useContext();
+  const { data } = useContext();
 
   if (!timeField)
     return (
@@ -44,24 +44,15 @@ export const Timebar: React.FC<TimebarProps> = ({
       />
     );
 
-  const [xType, _timeField] = timeField.split(':');
-  const [yType, _yField] = yField.split(':');
-
-  if (xType !== yType) {
-    message.warning('请确保时间字段和指标字段同属于节点或边！');
-    return null;
-  }
-
   // 过滤出时间范围内的数据
   return (
     <TimebarControl
       aggregation={aggregation}
-      graphData={graphData as GIGraphData}
-      speed={speed}
-      timeField={_timeField}
+      data={data as GIGraphData}
       timeGranularity={timeGranularity}
-      type={xType as any}
-      yField={_yField}
+      timeField={timeField}
+      yField={yField}
+      speed={speed}
     />
   );
 };

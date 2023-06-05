@@ -51,7 +51,18 @@ export type TimebarChartProps = {
 };
 
 export const TimebarChart = (props: TimebarChartProps) => {
-  const { className, data = [], xField, yField, selection, onSelection, onReset, aggregation, granularity } = props;
+  const {
+    className,
+    data = [],
+    xField,
+    yField,
+    isTimeXField = true,
+    selection,
+    onSelection,
+    onReset,
+    aggregation,
+    granularity,
+  } = props;
   const chartRef = useRef<Chart>();
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRenderingRef = useRef(true);
@@ -62,11 +73,12 @@ export const TimebarChart = (props: TimebarChartProps) => {
       case 'mean':
       case 'min':
       case 'median':
-      case 'sum':
+        // yField 求均值统计
         return {
           transform: [{ type: 'groupX', y: type }],
           encode: { x: xField, y: yField },
         };
+      // 分箱求和统计
       case 'count':
         return {
           transform: [{ type: 'groupX', y: 'count' }],
@@ -88,6 +100,7 @@ export const TimebarChart = (props: TimebarChartProps) => {
       state: { inactive: { fill: 'rgb(105 116 131)' } },
       animate: false,
       interaction: {
+        tooltip: false,
         brushXHighlight: {
           series: true,
           maskOpacity: 0.3,
@@ -150,7 +163,7 @@ export const TimebarChart = (props: TimebarChartProps) => {
     console.log(chartRef.current.options());
   }, [data, xField, yField, aggregation, granularity]);
 
-  // 同步更新高亮滑块
+  // 同步更新高丽亮滑块
   useEffect(() => {
     if (!chartRef.current || !selection || !selection[0] || !selection[1]) return;
 

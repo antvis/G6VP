@@ -2,20 +2,24 @@ import dayjs from 'dayjs';
 import { maxBy, minBy } from 'lodash-es';
 import type { Selection, TimeGranularity } from '../../types';
 
-export const formatXAxis = (data: string | number, format: string) => {
-  if (dayjs(data, format).isValid()) {
+export const formatXAxis = (data: string | number, isTimeField: boolean, format: string) => {
+  if (isTimeField) {
+    if (dayjs(data, format).isValid()) {
+      return dayjs(data).format(format);
+    }
     return dayjs(data).format(format);
   }
-  return dayjs(data).format(format);
+
+  return data;
 };
 
-export const getFormatData = (data: Record<string, any>[], field: string, format: string) => {
+export const getFormatData = (data: Record<string, any>[], field: string, isTimeField: boolean, format: string) => {
   const newData = data
     .filter(item => !!item[field])
     .map(item => {
       return {
         ...item,
-        [field]: formatXAxis(item[field], format),
+        [field]: formatXAxis(item[field], isTimeField, format),
       };
     })
     .sort(function (a, b) {

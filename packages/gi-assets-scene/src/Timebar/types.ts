@@ -8,6 +8,4 @@ export type Selection = [string, string] | [number, number];
 
 export type TimeGranularity = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | number;
 
-export type DataType = Record<string, any>[];
-
-export type FieldType = 'nodes' | 'edges';
+export type TimeFiled = `${'nodes' | 'edges'}:${string}`;
