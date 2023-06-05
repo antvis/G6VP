@@ -1,5 +1,11 @@
 # @antv/gi-assets-algorithm
 
+## 2.2.3
+
+### Patch Changes
+
+- update assets
+
 ## 2.2.2
 
 ### Patch Changes
