@@ -11,8 +11,7 @@ type Props = {
   aggregation: Aggregation;
   data: Record<string, any>[];
   defaultSelection?: Selection;
-  field: string;
-  isTimeXField: boolean;
+  timeField: string;
   onChangeTimeRange: (val: Selection) => void;
   onClear: () => void;
   speed?: Speed;
@@ -25,8 +24,7 @@ const TimebarPanel: React.FC<Props> = props => {
     aggregation,
     data: orignalData,
     defaultSelection,
-    field,
-    isTimeXField,
+    timeField,
     onChangeTimeRange,
     onClear,
     speed,
@@ -35,12 +33,12 @@ const TimebarPanel: React.FC<Props> = props => {
   } = props;
 
   const dataTimes = useMemo(() => {
-    const data = getFormatData(orignalData, field, isTimeXField, getTimeFormat(timeGranularity));
-    const line: string[] = data.map(item => item[field]);
+    const data = getFormatData(orignalData, timeField, getTimeFormat(timeGranularity));
+    const line: string[] = data.map(item => item[timeField]);
     const times = [...new Set(line)];
 
     return { data, times };
-  }, [orignalData, field, isTimeXField]);
+  }, [orignalData, timeField]);
 
   const [initSelection, setInitSelection] = useState<Selection>(getInitTimeRange(dataTimes.times));
   // 当前选中区间
@@ -97,7 +95,7 @@ const TimebarPanel: React.FC<Props> = props => {
       <div className="content-header">
         <div className="content-header-field">
           <ClockCircleOutlined />
-          {field}
+          {timeField}
         </div>
         <div className="content-header-time">
           <span>{selectionTime}</span>
@@ -107,9 +105,8 @@ const TimebarPanel: React.FC<Props> = props => {
       <TimebarChart
         className="chart"
         data={dataTimes.data}
-        xField={field}
+        xField={timeField}
         yField={yField}
-        isTimeXField={isTimeXField}
         selection={chartSelectedRange}
         aggregation={aggregation}
         granularity={timeGranularity}
