@@ -366,7 +366,7 @@ export default memo(({ url }: Props) => {
               items: [
                 { key: 'addNodes', label: '添加点' },
                 { key: 'addEdges', label: '添加边' },
-                // geaflow 方暂时未实现重置操作
+                // tugraph 方暂时未实现重置操作
                 // { key: 'reset', label: '重置操作' },
               ],
               onClick: ({ key }) => {
