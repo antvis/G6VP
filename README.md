@@ -25,7 +25,7 @@ G6VP 取名意为 AntV G6 Visualization Platform，曾用名 `AntV/GraphInsight`
 
 ### 1.1 创建数据集
 
-巧妇难为无米之炊，在分析数据之前，我们需要创建一个数据集，数据集可以来自本地的 JSON，CSV，XLSX 文件，可以来自图数据库：TuGraph，GraphScope，HugeGraph，Galaxybase，Neo4j，也可以是用户自定义的服务，如下图所示，我们选择 Neo4j 某个 database 作为数据集。
+巧妇难为无米之炊，在分析数据之前，我们需要创建一个数据集，数据集可以来自本地的 JSON，CSV，XLSX 文件，可以来自图数据库：TuGraph，GraphScope，HugeGraph，Galaxybase，Neo4j，JanusGraph,也可以是用户自定义的服务，如下图所示，我们选择 Neo4j 某个 database 作为数据集。
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/85667759-70b2-4166-8181-47cb9e9fa3a3)
 

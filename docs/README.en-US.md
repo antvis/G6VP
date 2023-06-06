@@ -25,7 +25,7 @@ G6VP takes its name from AntV G6 Visualization Platform and was formerly known a
 
 ### 1.1 Create a Dataset
 
-Before analyzing data, we need to create a dataset. The dataset can be a local JSON, CSV, XLSX file, or a graph database, such as TuGraph, GraphScope, HugeGraph, Galaxybase, and Neo4j. It may also be a user-defined service, as shown below, where we choose a Neo4j database as the dataset.
+Before analyzing data, we need to create a dataset. The dataset can be a local JSON, CSV, XLSX file, or a graph database, such as TuGraph, GraphScope, HugeGraph, Galaxybase,JanusGraph and Neo4j. It may also be a user-defined service, as shown below, where we choose a Neo4j database as the dataset.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/85667759-70b2-4166-8181-47cb9e9fa3a3)
 
