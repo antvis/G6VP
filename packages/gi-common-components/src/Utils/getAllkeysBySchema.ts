@@ -1,27 +1,14 @@
 export const getAllkeysBySchema = (schema, shapeType: 'nodes' | 'edges') => {
   try {
-    if (shapeType === 'nodes') {
-      const nodeKeySet = new Set();
-      // 默认要把 nodeType 加进来
-      nodeKeySet.add('nodeType');
-      schema.nodes.forEach(node => {
-        Object.keys(node.properties).forEach(k => {
-          nodeKeySet.add(k);
-        });
+    const keySet = new Set<[string, string]>();
+    // 默认要把 nodeType/edgeType 加进来
+    keySet.add([shapeType === 'nodes' ? 'nodeType' : 'edgeType', 'string']);
+    schema[shapeType].forEach(item => {
+      Object.entries(item.properties as Record<string, string>).forEach(k => {
+        keySet.add(k);
       });
-      return [...nodeKeySet];
-    }
-    if (shapeType === 'edges') {
-      const edgeKeySet = new Set();
-      // 默认要把 edgeType 加进来
-      edgeKeySet.add('edgeType');
-      schema.edges.forEach(edge => {
-        Object.keys(edge.properties).forEach(k => {
-          edgeKeySet.add(k);
-        });
-      });
-      return [...edgeKeySet];
-    }
+    });
+    return [...keySet];
   } catch (error) {
     return [];
   }

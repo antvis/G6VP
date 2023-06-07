@@ -13,68 +13,6 @@ export interface Condition {
   groupIndex: number | string;
   checked?: boolean;
 }
-export const getOperatorList = (type: 'long' | 'string' | 'double') => {
-  if (type === 'string') {
-    return [
-      {
-        label: '包含',
-        value: 'contain',
-      },
-      {
-        label: '不包含',
-        value: 'not-contain',
-      },
-      {
-        label: '等于',
-        value: 'eql',
-      },
-      {
-        label: '不等于',
-        value: 'not-eql',
-      },
-    ];
-  } else if (type === 'long' || type === 'double') {
-    return [
-      {
-        label: '等于',
-        value: 'eql',
-      },
-      {
-        label: '不等于',
-        value: 'not-eql',
-      },
-      {
-        label: '大于',
-        value: 'gt',
-      },
-      {
-        label: '大于等于',
-        value: 'gte',
-      },
-      {
-        label: '小于',
-        value: 'lt',
-      },
-      {
-        label: '小于等于',
-        value: 'lte',
-      },
-    ];
-  } else if (type === 'boolean') {
-    return [
-      {
-        label: '等于',
-        value: 'eql',
-      },
-      {
-        label: '不等于',
-        value: 'not-eql',
-      },
-    ];
-  }
-
-  return [];
-};
 
 export const formatProperties = (node: {
   id: string;
@@ -83,44 +21,65 @@ export const formatProperties = (node: {
   if (node.data && Object.keys(node.data)?.length) {
     // 如果有 data 属性，则取 data 属性和 nodeType
     const { nodeType, edgeType } = node as any;
-    return nodeType ? {
-      ...node.data,
-      nodeType,
-    } : {
-      ...node.data,
-      edgeType,
-    };
+    return nodeType
+      ? {
+          ...node.data,
+          nodeType,
+        }
+      : {
+          ...node.data,
+          edgeType,
+        };
   }
   //@ts-ignore
   return node || {};
   // return node.data || {};
 };
 
+// lite version of lodash.get
+function get<T = any>(obj: any, path: string): T | undefined {
+  const pathArray = path.split('.');
+  let result = obj;
+
+  for (const key of pathArray) {
+    if (result && key in result) {
+      result = result[key];
+    } else {
+      return undefined;
+    }
+  }
+
+  return result;
+}
+
 const filterByExpression = (data: Record<string, string | number>, expression: Expression): boolean => {
   if (!expression) {
     return false;
   }
 
-  const { name: propertyName = '', operator, value } = expression;
-  const name = propertyName.split('-')[0];
-  let formatted: string | number = value;
+  const { name = '', operator, value } = expression;
+  const formatted: string | number = value;
+
+  const propertyValue = get(data, name);
+
+  if (propertyValue === undefined) return false;
 
   if (operator === 'eql') {
-    return data[name] === formatted;
+    return propertyValue === formatted;
   } else if (operator === 'not-eql') {
-    return data[name] !== formatted;
+    return propertyValue !== formatted;
   } else if (operator === 'contain') {
-    return `${data[name]}`.indexOf(`${formatted}`) > -1;
+    return propertyValue.indexOf(`${formatted}`) > -1;
   } else if (operator === 'not-contain') {
-    return `${data[name]}`.indexOf(`${formatted}`) === -1;
+    return propertyValue.indexOf(`${formatted}`) === -1;
   } else if (operator === 'gt') {
-    return Number(data[name]) > Number(formatted);
+    return Number(propertyValue) > Number(formatted);
   } else if (operator === 'gte') {
-    return Number(data[name]) >= Number(formatted);
+    return Number(propertyValue) >= Number(formatted);
   } else if (operator === 'lt') {
-    return Number(data[name]) < Number(formatted);
+    return Number(propertyValue) < Number(formatted);
   } else if (operator === 'lte') {
-    return Number(data[name]) <= Number(formatted);
+    return Number(propertyValue) <= Number(formatted);
   }
 
   return false;
