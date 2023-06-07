@@ -38,6 +38,13 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Switch',
       default: true,
     },
+    targetWindowPath:{
+      title: '分屏页签路由',
+      type: 'string',
+      'x-component': 'Input',
+      'x-decorator': 'FormItem',
+      default: '/#/tabs/table',
+    },
     ...metas,
   };
 

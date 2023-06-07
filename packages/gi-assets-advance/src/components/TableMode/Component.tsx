@@ -22,6 +22,7 @@ export interface IProps {
   containerHeight?: string;
   style?: React.CSSProperties;
   enableTabSplitScreen: boolean;
+  targetWindowPath?: string;
 }
 
 const { TabPane } = Tabs;
@@ -32,7 +33,7 @@ const preS2Container = {
 const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
-  const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, style = {} } = props;
+  const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, targetWindowPath, style = {} } = props;
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
@@ -205,7 +206,7 @@ const TableMode: React.FC<IProps> = props => {
         },
       });
     });
-  }, [setSelectItems]);
+  }, [setSelectItems, graph]);
 
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
@@ -254,9 +255,9 @@ const TableMode: React.FC<IProps> = props => {
     if (!isPostStart) {
       return;
     }
-    const targetOrigin = window.location.origin + '/#/tabs/table';
+    const targetOrigin = window.location.origin + targetWindowPath;
 
-    const targetWindow = window.open(window.location.origin + '/#/tabs/table', '_black');
+    const targetWindow = window.open(targetOrigin, '_black');
     targetWindowRef.current = targetWindow;
     const handleMessage = e => {
       if (e.data.type === 'GI_TABLEMODE_READY' && e.data.payload.isReady) {
@@ -274,26 +275,25 @@ const TableMode: React.FC<IProps> = props => {
       window.removeEventListener('message', handleMessage);
     };
   }, [isPostStart, postParmas]);
-  const extra = React.useMemo(() => {
-    return [
-      <Button
-        key="fullScreen"
-        type="text"
-        icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-        onClick={toggleFullScreen}
-      />,
-      enableTabSplitScreen && (
-        <Tooltip title="使用浏览器新页签打开，分屏操作更高效" key="tabSplitScreen">
-          <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
-        </Tooltip>
-      ),
-      exportable && (
-        <Tooltip title="导出点边数据" key="export">
-          <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
-        </Tooltip>
-      ),
-    ].filter(Boolean);
-  }, [enableTabSplitScreen, exportable, s2Instance]);
+
+  const extra = [
+    <Button
+      key="fullScreen"
+      type="text"
+      icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
+      onClick={toggleFullScreen}
+    />,
+    enableTabSplitScreen && (
+      <Tooltip title="使用浏览器新页签打开，分屏操作更高效" key="tabSplitScreen">
+        <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
+      </Tooltip>
+    ),
+    exportable && (
+      <Tooltip title="导出点边数据" key="export">
+        <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
+      </Tooltip>
+    ),
+  ].filter(Boolean);
 
   const extraContent = <>{extra}</>;
 
