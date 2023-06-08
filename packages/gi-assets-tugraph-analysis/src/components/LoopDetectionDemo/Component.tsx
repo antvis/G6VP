@@ -1,35 +1,14 @@
 import { UserOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { useCounter, useThrottleFn, useToggle } from 'ahooks';
-import {
-  Avatar as AntdAvatar,
-  Button,
-  Dropdown,
-  Input,
-  List,
-  Steps,
-  Typography,
-  message,
-} from 'antd';
-import React, {
-  memo,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { Avatar as AntdAvatar, Button, Dropdown, Input, List, Steps, Typography, message } from 'antd';
+import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useInterval } from 'ahooks';
 import { Status, type IStatus } from './components/Status';
 import { Edges } from './components/Edges';
 import { Loop } from './components/Loop';
 import { Nodes } from './components/Nodes';
-import {
-  BASE_EDGES_DATA,
-  BASE_NODES_DATA,
-  ENTER_LOOP_EDGE_STYLE,
-  LOOP_EDGE_STYLE,
-} from './constants';
+import { BASE_EDGES_DATA, BASE_NODES_DATA, ENTER_LOOP_EDGE_STYLE, LOOP_EDGE_STYLE } from './constants';
 import './styles.less';
 import {
   diffLoop,
@@ -59,29 +38,20 @@ const CLS_PREFIX = 'loop-detection-demo';
 
 const Avatar = memo(({ role }: Pick<Message, 'role'>) => {
   if (role === 'send') {
-    return (
-      <AntdAvatar
-        style={{ backgroundColor: '#87d068' }}
-        icon={<UserOutlined />}
-      />
-    );
+    return <AntdAvatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />;
   }
 
-  return (
-    <AntdAvatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-      Server
-    </AntdAvatar>
-  );
+  return <AntdAvatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>Server</AntdAvatar>;
 });
 
 const Msg = memo(({ role, value }: Message) => {
   const { nodes, edges, loops } = parseGraphData(value);
   const content = (
     <span className={`${CLS_PREFIX}-list-item-message-content`}>
-      <Nodes nodes={nodes.map((node) => node)} />
+      <Nodes nodes={nodes.map(node => node)} />
       <Edges edges={edges} />
-      {loops.map((loop) => (
-        <Loop key={loop.join()} nodes={loop.map((id) => ({ id }))} />
+      {loops.map(loop => (
+        <Loop key={loop.join()} nodes={loop.map(id => ({ id }))} />
       ))}
     </span>
   );
@@ -97,8 +67,7 @@ const Msg = memo(({ role, value }: Message) => {
 
 export default memo(({ url }: Props) => {
   const { updateContext, transform } = useContext();
-  const [socketStatus, setSocketStatus] =
-    useState<IStatus['status']>('waiting');
+  const [socketStatus, setSocketStatus] = useState<IStatus['status']>('waiting');
   const socketRef = useRef<WebSocket>();
   const [inputValue, setInputValue] = useState<string>('');
   const [data, setData] = useState<Message[]>([]);
@@ -117,11 +86,7 @@ export default memo(({ url }: Props) => {
     () => {
       if (!isUrlLegal) return;
       if (socketRef.current) {
-        if (
-          socketRef.current.url === url &&
-          socketRef.current.readyState === WebSocket.CONNECTING
-        )
-          return;
+        if (socketRef.current.url === url && socketRef.current.readyState === WebSocket.CONNECTING) return;
         socketRef.current.close();
       }
       setSocketStatus('connecting');
@@ -139,9 +104,9 @@ export default memo(({ url }: Props) => {
         setSocketStatus('open');
         setConnected(true);
       };
-      socketRef.current.onmessage = (event) => {
+      socketRef.current.onmessage = event => {
         const value = event.data;
-        setData((prev) => [...prev, { role: 'receive', value }]);
+        setData(prev => [...prev, { role: 'receive', value }]);
         addLoop(value);
       };
       socketRef.current.onerror = (event: Event) => {
@@ -156,20 +121,18 @@ export default memo(({ url }: Props) => {
     {
       wait: 2000,
       leading: false,
-    }
+    },
   );
 
   const updateGraph = (graphStr: string) => {
     const graph = parseGraphData(graphStr);
     const { nodes, edges } = graph;
-    updateContext((draft) => {
+    updateContext(draft => {
       draft.data = transform({
         ...draft.data,
         nodes: [
           //  @ts-ignore
-          ...draft.data.nodes.filter(
-            (node) => !nodes.some((n) => n.id === node.id)
-          ),
+          ...draft.data.nodes.filter(node => !nodes.some(n => n.id === node.id)),
           ...nodes.map(({ id, name }) => {
             const color = getColor(mapNodeToColorIndex(id), 'candies');
             return {
@@ -187,11 +150,9 @@ export default memo(({ url }: Props) => {
         ],
         edges: [
           //  @ts-ignore
-          ...draft.data.edges.filter((edge) => {
+          ...draft.data.edges.filter(edge => {
             const { source, target } = edge;
-            return !edges.some(
-              (e) => e.source === source && e.target === target
-            );
+            return !edges.some(e => e.source === source && e.target === target);
           }),
           ...edges.map(({ source, target, weight }) => ({
             source,
@@ -220,14 +181,12 @@ export default memo(({ url }: Props) => {
       const isIn = (edge, lps: LoopMsg[]) => {
         const { source, target } = edge;
         const loopEdges = loopsToEdges(lps);
-        return loopEdges.some(
-          (loopEdge) => loopEdge[0] === source && loopEdge[1] === target
-        );
+        return loopEdges.some(loopEdge => loopEdge[0] === source && loopEdge[1] === target);
       };
-      updateContext((draft) => {
+      updateContext(draft => {
         draft.data = transform({
           ...draft.data,
-          edges: draft.data.edges.map((edge) => {
+          edges: draft.data.edges.map(edge => {
             let newEdgeData = {};
             let style = {};
             // 更新属性
@@ -263,7 +222,7 @@ export default memo(({ url }: Props) => {
       loopsRecord.current = new Set([...loopsCache.current]);
     },
     1000,
-    { immediate: true }
+    { immediate: true },
   );
 
   const send = (value: string) => {
@@ -272,24 +231,23 @@ export default memo(({ url }: Props) => {
       return;
     }
     if (!testMode) {
-      // 分行发送
-      const lines = value.split('\n');
-      lines.forEach((line) => socketRef.current?.send(line));
+      // 批量发送
+      socketRef.current?.send(value);
     }
     if (value !== 'WEB_DISPLAY_DATA') {
-      setData((prev) => [...prev, { role: 'send', value }]);
+      setData(prev => [...prev, { role: 'send', value }]);
       updateGraph(value);
     }
   };
 
-  const runTest = (fn) => {
+  const runTest = fn => {
     fn();
     nextTestStep();
   };
 
   const reset = () => {
     setData([]);
-    updateContext((draft) => {
+    updateContext(draft => {
       draft.data = transform({
         ...draft.data,
         nodes: [],
@@ -309,7 +267,7 @@ export default memo(({ url }: Props) => {
   useEffect(() => {
     if (testMode === false) {
       // 清空测试数据
-      updateContext((draft) => {
+      updateContext(draft => {
         draft.data = transform({
           ...draft.data,
           nodes: [],
@@ -328,9 +286,7 @@ export default memo(({ url }: Props) => {
         dataSource={data}
         renderItem={({ role, value }) => {
           return (
-            <List.Item
-              className={`${CLS_PREFIX}-list-item ${CLS_PREFIX}-list-item-${role}`}
-            >
+            <List.Item className={`${CLS_PREFIX}-list-item ${CLS_PREFIX}-list-item-${role}`}>
               <Msg role={role} value={value} />
             </List.Item>
           );
@@ -341,7 +297,7 @@ export default memo(({ url }: Props) => {
           value={inputValue}
           rows={4}
           placeholder="点示例: . 1,name&#10;边示例: - 1,2,0.5 "
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={e => setInputValue(e.target.value)}
         />
         <div className={`${CLS_PREFIX}-controller-btn-group`}>
           <Button
@@ -388,9 +344,7 @@ export default memo(({ url }: Props) => {
           >
             <Button>选项</Button>
           </Dropdown>
-          {socketRef.current && !connected && (
-            <Button onClick={connect}>重连</Button>
-          )}
+          {socketRef.current && !connected && <Button onClick={connect}>重连</Button>}
           <Button disabled={!connected} onClick={toggleTest}>
             {testMode ? '退出' : '演示'}
           </Button>
@@ -437,10 +391,7 @@ export default memo(({ url }: Props) => {
               },
             ].map(({ title, description, cb }, index) => ({
               title: (
-                <Button
-                  disabled={testStep !== index}
-                  onClick={() => runTest(cb)}
-                >
+                <Button disabled={testStep !== index} onClick={() => runTest(cb)}>
                   {title}
                 </Button>
               ),
