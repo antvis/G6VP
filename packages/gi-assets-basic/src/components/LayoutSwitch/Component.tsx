@@ -89,7 +89,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
             },
           };
           return (
-            <Radio value={id} onClick={() => handleClick(layoutConfig)}>
+            <Radio value={id} onClick={() => handleClick(layoutConfig)} key={id}>
               <Icon type={icon} />
               &nbsp;{name}
             </Radio>
