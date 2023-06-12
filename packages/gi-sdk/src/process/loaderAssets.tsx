@@ -74,10 +74,11 @@ const appendInfo = (itemAssets, version: string, name: string) => {
     return {};
   }
   const coms = Object.keys(itemAssets).reduce((a, c) => {
+    let item = itemAssets[c];
     return {
       ...a,
       [c]: {
-        ...itemAssets[c],
+        ...item,
         version,
         pkg: name,
       },
@@ -115,12 +116,13 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services, templates } = curr;
+      const { components, version, name, elements, layouts, services, templates, deploys } = curr;
 
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
       const temps = appendInfo(templates, version, name);
+      const dpy = appendInfo(deploys, version, name);
 
       return {
         components: {
@@ -138,6 +140,10 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
         templates: {
           ...acc.templates,
           ...temps,
+        },
+        deploys: {
+          ...acc.deploys,
+          ...dpy,
         },
         services: services
           ? [
@@ -157,6 +163,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
       layouts: {},
       templates: {},
       services: [],
+      deploys: {},
     },
   );
 };

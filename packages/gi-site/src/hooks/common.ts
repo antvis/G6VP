@@ -156,7 +156,6 @@ export const getConstantFiles = opts => {
       return k == c.name;
     });
   }) as Package[];
-  console.log(packages);
 
   const GI_ASSETS_PACKAGE = beautifyCode(JSON.stringify(Object.values(packages)));
 
