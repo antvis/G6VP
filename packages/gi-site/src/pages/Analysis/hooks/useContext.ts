@@ -1,16 +1,16 @@
 import React from 'react';
 import type { Updater } from 'use-immer';
-
+import { StateType } from '../typing';
 export interface ContextType {
   updateContext: Updater<any>;
-  context: any;
+  context: StateType;
   updateGISite: (params: any) => void;
 }
 
 //@ts-ignore
 const defaultContext = {
   updateContext: () => {},
-  context: {},
+  context: {} as StateType,
   updateGISite: () => {},
 } as ContextType;
 

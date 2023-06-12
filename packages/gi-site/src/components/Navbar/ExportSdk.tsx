@@ -1,61 +1,86 @@
 import { CodeOutlined } from '@ant-design/icons';
-import { Alert, Button, Card, Col, Modal, Row } from 'antd';
+import { Alert, Button, Col, Modal, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
+import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-
 import { saveAs } from '../utils';
 import './index.less';
 
 const SdkContent = () => {
   const { context: st } = useContext();
+
   const htmlCode = useHtml(st);
   const openCSB = useCodeSandbox(st);
   const openNodeModule = useNodeModule(st);
-
   /** 下载 */
-  const handleExport = () => {
+  const openHtml = () => {
     let [code, ext] = [htmlCode, '.html'];
     //@ts-ignore
     saveAs(code, `gi-export-project-id-${st.id}${ext}`);
   };
 
+  const THIRD_PARTY_DEPLOYS = Object.values((st.activeAssets && st.activeAssets.deploys) || {});
+
+  const {
+    activeAssetsKeys,
+    datasetId,
+    datasetName,
+    config,
+    themes,
+    engineContext,
+    engineId,
+    id,
+    schemaData,
+    data,
+    name,
+  } = st;
+
+  const deployContext = {
+    workbook: {
+      id,
+      name,
+      activeAssetsKeys,
+      projectConfig: config,
+      themes,
+    },
+    dataset: {
+      id: datasetId,
+      engineContext,
+      engineId,
+      name: datasetName,
+      schemaData,
+      data: { transData: data },
+    },
+    deps: {
+      react: '17.x',
+      'react-dom': '17.x',
+      localforage: '1.10.0',
+      antd: ANTD_VERSION,
+      // '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
+      '@antv/g6': G6_VERSION,
+      '@antv/graphin': GRAPHIN_VERSION,
+      '@antv/gi-sdk': GI_VERSION,
+    },
+    GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
+  };
+  const counts = THIRD_PARTY_DEPLOYS.length;
   return (
     <>
-      <Alert type="info" message="G6VP 支持 3 种导出模式，点击即可体验，建议 UMD 模式" showIcon></Alert>
+      <Alert type="info" message={`G6VP 支持 ${counts} 种导出模式，点击即可体验，建议 UMD 模式`} showIcon></Alert>
       <br />
       <Row gutter={[20, 20]}>
-        <Col span={8}>
-          <Card
-            hoverable
-            cover={<img src={`${window['GI_PUBLIC_PATH']}image/export_html.png`} onClick={handleExport} />}
-          >
-            <div className="card-meta">
-              <div className="title">HTML 模式</div>
-              <div>导出 HTML 适合快速本地查看</div>
-            </div>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card hoverable cover={<img src={`${window['GI_PUBLIC_PATH']}image/export_cdn.png`} onClick={openCSB} />}>
-            <div className="card-meta">
-              <div className="title">UMD 模式</div>
-              <div>提供 UMD 包，可 CDN 加载，快速集成到 React 项目中</div>
-            </div>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card
-            hoverable
-            cover={<img src={`${window['GI_PUBLIC_PATH']}image/export_cdn.png`} onClick={openNodeModule} />}
-          >
-            <div className="card-meta">
-              <div className="title">ESM 模式</div>
-              <div>提供 NPM 包，支持 Tree Shaking，原生集成到 React 项目中 </div>
-            </div>
-          </Card>
-        </Col>
+        {THIRD_PARTY_DEPLOYS.map((item, index) => {
+          //@ts-ignore
+          const { component: Component } = item;
+          return (
+            <Col span={8} key={index}>
+              {/** @ts-ignore */}
+              {<Component context={deployContext} utils={{ openCSB, openNodeModule, openHtml }} />}
+            </Col>
+          );
+        })}
       </Row>
     </>
   );
