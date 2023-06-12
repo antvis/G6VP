@@ -38,6 +38,7 @@ const Analysis = props => {
     config,
     key,
     isReady,
+    isAssetsLoaded,
     isSave,
     activeNavbar,
     collapse,
@@ -132,9 +133,11 @@ const Analysis = props => {
       /** 根据活跃资产Key值，动态加载资产实例 */
       queryAssets(activeAssetsKeys).then(
         //@ts-ignore
-        activeAssets => {
+        async activeAssets => {
           const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
           const assetServices = utils.getCombineServices(activeAssets.services!);
+          // @ts-ignore
+          await Promise.all(activeAssets.beforeload!.map(cb => cb(activeAssets)));
           updateState(draft => {
             /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
             const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
@@ -171,8 +174,8 @@ const Analysis = props => {
               return {
                 // ...matchItem,
                 id: matchItem.id,
-                type: matchItem.type || c.type,
-                name: matchItem.name || c.name,
+                type: matchItem.type || c!.type,
+                name: matchItem.name || c!.name,
                 props: resProps,
               };
             });
@@ -228,7 +231,8 @@ const Analysis = props => {
               });
             }
 
-            draft.isReady = true; //项目加载完毕
+            // draft.isReady = true; //项目加载完毕
+            draft.isAssetsLoaded = true; // 资产加载完成
             draft.serviceConfig = combinedServiceConfig; //更新项目服务配置
             draft.services = services; //更新服务
             draft.config.components = configComponents; //更新 config.components
@@ -242,6 +246,17 @@ const Analysis = props => {
       console.log('error', error);
     }
   }, [activeAssetsKeys]);
+
+  React.useEffect(() => {
+    if (isAssetsLoaded && activeAssets) {
+      // @ts-ignore
+      Promise.all(activeAssets.afterload!.map(cb => cb(activeAssets))).then(() => {
+        updateState(draft => {
+          draft.isReady = true;
+        });
+      });
+    }
+  }, [isAssetsLoaded]);
 
   /** 更新站点的 SCHEMA 和 DATA */
   const updateGISite = getUpdateGISite({ config, projectId, activeAssetsKeys });

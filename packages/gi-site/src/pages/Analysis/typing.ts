@@ -51,6 +51,8 @@ export interface StateType {
     elements: { nodes: {}; edges: {} };
     layouts: any;
   } | null;
+  /** 资产加载完成 */
+  isAssetsLoaded: boolean;
   /** 是否准备完毕 */
   isReady: boolean;
   /** 是否保存 */

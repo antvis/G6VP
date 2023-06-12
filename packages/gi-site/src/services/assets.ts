@@ -83,10 +83,6 @@ const LOCAL_ASSETS: any[] = [
  * @returns
  */
 export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => {
-  let components = {};
-  let elements;
-  let layouts;
-  let templates;
   let FinalAssets;
 
   const packages = getAssetPackages();
@@ -99,21 +95,8 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
-  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
-  //   const assetKeys = activeAssetsKeys.components[containerId];
-  //   components[containerId] = assetKeys.reduce((acc, curr) => {
-  //     const asset = FinalAssets.components[curr];
-  //     if (asset) {
-  //       return {
-  //         ...acc,
-  //         [curr]: asset,
-  //       };
-  //     }
-  //     return acc;
-  //   }, {});
-  // });
 
-  components = activeAssetsKeys.components.reduce((acc, curr) => {
+  const components = activeAssetsKeys.components.reduce((acc, curr) => {
     const asset = FinalAssets.components[curr];
     if (asset) {
       return {
@@ -125,22 +108,26 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   }, {});
 
   // Get all elements from FinalAssets
-  elements = { ...FinalAssets.elements };
+  const elements = { ...FinalAssets.elements };
 
   // Get all layouts from FinalAssets
-  layouts = { ...FinalAssets.layouts };
+  const layouts = { ...FinalAssets.layouts };
 
-  templates = { ...FinalAssets.templates };
+  const templates = { ...FinalAssets.templates };
 
-  return await new Promise(resolve => {
-    resolve({
-      components,
-      elements,
-      layouts,
-      templates,
-      services: FinalAssets.services,
-    } as GIAssets);
-  });
+  const beforeload = [...FinalAssets.beforeload];
+
+  const afterload = [...FinalAssets.afterload];
+
+  return {
+    components,
+    elements,
+    layouts,
+    templates,
+    services: FinalAssets.services,
+    beforeload,
+    afterload,
+  };
 };
 
 /**

@@ -170,6 +170,9 @@ export interface LayoutAsset {
 }
 
 export interface ElementAsset {
+  beforeload?: (assets: GIAssets[]) => Promise<void>;
+  afterload?: (assets: GIAssets[]) => Promise<void>;
+
   registerMeta: (context: {
     data: any;
     services?: any[];
@@ -248,6 +251,8 @@ export type GIAssets = Partial<{
   layouts: GILayoutAssets;
   services: EngineServer[];
   templates: ITemplate[];
+  beforeload: ((assets: GIAssets[]) => void)[];
+  afterload: ((assets: GIAssets[]) => void)[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
