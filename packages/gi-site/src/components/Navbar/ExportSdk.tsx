@@ -2,7 +2,7 @@ import { CodeOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Modal, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
+import { ANTD_VERSION, G6_VERSION, GI_THEME_ANTD_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
@@ -58,7 +58,7 @@ const SdkContent = () => {
       'react-dom': '17.x',
       localforage: '1.10.0',
       antd: ANTD_VERSION,
-      // '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
+      '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
       '@antv/g6': G6_VERSION,
       '@antv/graphin': GRAPHIN_VERSION,
       '@antv/gi-sdk': GI_VERSION,
