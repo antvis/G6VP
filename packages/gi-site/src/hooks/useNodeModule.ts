@@ -14,7 +14,14 @@ function serialize(data: Record<string, any>) {
 }
 
 function getCSBData(opts) {
-  const { activeAssets, activeAssetsKeys, theme } = opts;
+  const { activeAssetsKeys, theme, engineId } = opts;
+  const activeAssets = {
+    ...opts.activeAssets,
+    services: opts.activeAssets.services.filter(item => {
+      return item.id === 'GI' || item.id === engineId;
+    }),
+  };
+
   const nodemodules = getActivePackage(activeAssets);
 
   const ext = '.tsx';
@@ -55,7 +62,7 @@ function getCSBData(opts) {
           return itemComponent.info.id;
         })
         .join(',');
-      console.log('umd', UMD);
+
       return `const { ${componentIds} } = ${UMD}.components;`;
     })
     .join('\n');
@@ -70,7 +77,7 @@ function getCSBData(opts) {
           return itemComponent.info.id;
         })
         .join(',');
-      console.log('umd', UMD);
+
       return `const { ${componentIds} } = ${UMD}.elements;`;
     })
     .join('\n');
@@ -84,7 +91,7 @@ function getCSBData(opts) {
           return itemComponent.info.id;
         })
         .join(',');
-      console.log('umd', UMD);
+
       return `const { ${componentIds} } = ${UMD}.layouts;`;
     })
     .join('\n');
