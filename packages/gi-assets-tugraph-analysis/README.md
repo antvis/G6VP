@@ -1,3 +1,0 @@
-## GI-ASSETS-TUGRAPH-ANALYSIS
-
-Tugraph 分析资产包

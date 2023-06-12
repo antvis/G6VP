@@ -6,23 +6,24 @@
 
 他们依次对应的包名与解释如下：
 
-| 文件路径                      | 包名                         | 说明                          |
-| ----------------------------- | ---------------------------- | ----------------------------- |
-| packages/gi-assets-advance    | `@antv/gi-assets-advance`    | 高级资产包                    |
-| packages/gi-assets-algorithm  | `@antv/gi-assets-algorithm`  | 算法资产包                    |
-| packages/gi-assets-basic      | `@antv/gi-assets-basic`      | 基础资产包                    |
-| packages/gi-assets-scene      | `@antv/gi-assets-scene`      | 场景资产包                    |
-| packages/gi-assets-graphscope | `@antv/gi-assets-graphscope` | GraphScope 引擎服务（单机版） |
-| packages/gi-assets-neo4j      | `@antv/gi-assets-neo4j`      | Neo4j 引擎服务                |
-| packages/gi-assets-tugraph    | `@antv/gi-assets-tugraph`    | TuGraph 引擎服务              |
-| packages/gi-assets-galaxybase | `@antv/gi-assets-galaxybase` | Galaxybase 引擎服务           |
-| packages/gi-assets-hugegraph  | `@antv/gi-assets-hugegraph`  | HugeGraph 引擎服务            |
-| packages/gi-cli               | `@antv/gi-cli`               | G6VP 资产 CLI                 |
-| packages/gi-common-components | `@antv/gi-common-components` | 通用组件包                    |
-| packages/gi-sdk               | `@antv/gi-sdk`               | G6VP SDK                      |
-| packages/gi-site              | `-`                          | G6VP 站点                     |
-| packages/gi-portal            | `-`                          | G6VP 首页                     |
-| packages/gi-httpservice       | `@antv/gi-httpservices`      | G6VP BFF 服务                 |
+| 文件路径                            | 包名                               | 说明                          |
+| ----------------------------------- | ---------------------------------- | ----------------------------- |
+| packages/gi-assets-advance          | `@antv/gi-assets-advance`          | 高级资产包                    |
+| packages/gi-assets-algorithm        | `@antv/gi-assets-algorithm`        | 算法资产包                    |
+| packages/gi-assets-basic            | `@antv/gi-assets-basic`            | 基础资产包                    |
+| packages/gi-assets-scene            | `@antv/gi-assets-scene`            | 场景资产包                    |
+| packages/gi-assets-graphscope       | `@antv/gi-assets-graphscope`       | GraphScope 引擎服务（单机版） |
+| packages/gi-assets-neo4j            | `@antv/gi-assets-neo4j`            | Neo4j 引擎服务                |
+| packages/gi-assets-tugraph          | `@antv/gi-assets-tugraph`          | TuGraph 引擎服务              |
+| packages/gi-assets-tugraph-analytics | `@antv/gi-assets-tugraph-analytics` | TuGraph Analytics 服务         |
+| packages/gi-assets-galaxybase       | `@antv/gi-assets-galaxybase`       | Galaxybase 引擎服务           |
+| packages/gi-assets-hugegraph        | `@antv/gi-assets-hugegraph`        | HugeGraph 引擎服务            |
+| packages/gi-cli                     | `@antv/gi-cli`                     | G6VP 资产 CLI                 |
+| packages/gi-common-components       | `@antv/gi-common-components`       | 通用组件包                    |
+| packages/gi-sdk                     | `@antv/gi-sdk`                     | G6VP SDK                      |
+| packages/gi-site                    | `-`                                | G6VP 站点                     |
+| packages/gi-portal                  | `-`                                | G6VP 首页                     |
+| packages/gi-httpservice             | `@antv/gi-httpservices`            | G6VP BFF 服务                 |
 
 ### 02 进入到每个子包中启动，遇到依赖找不到的问题
 
