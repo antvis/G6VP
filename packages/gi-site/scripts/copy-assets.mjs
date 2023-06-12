@@ -33,6 +33,9 @@ const packages = [
     name: '@antv/gi-assets-tugraph',
   },
   {
+    name: '@antv/gi-assets-tugraph-analytics',
+  },
+  {
     name: '@antv/gi-assets-graphscope',
   },
   {

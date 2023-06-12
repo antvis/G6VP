@@ -12,6 +12,7 @@ import GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph/package.json' assert 
 import GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph/package.json' assert { type: 'json' };
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
+import GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics/package.json' assert { type: 'json' };
 
 import path from 'path';
 export const G6_VERSION = '4.8.14';
@@ -108,6 +109,10 @@ const assetPackage = [
   {
     name: GI_ASSETS_TUGRAPH.name,
     version: GI_ASSETS_TUGRAPH.version,
+  },
+  {
+    name: GI_ASSETS_TUGRAPH_ANALYTICS.name,
+    version: GI_ASSETS_TUGRAPH_ANALYTICS.version,
   },
   {
     name: GI_ASSETS_GTAPHSCOPE.name,
