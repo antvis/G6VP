@@ -71,8 +71,8 @@ function unlink() {
   initInject(true);
   removeDep();
 
-  // 遍历 targetPath 下的文件，将其移动到 sourcePath 下
-  copyDir(targetPath, sourcePath);
+  // 回写数据 (不回写 git 信息)
+  copyDir(targetPath, sourcePath, [...baseSkipDirs, '.git']);
 
   // 回写 package.json 版本号
   modifyPkgJson(path.resolve(sourcePath, 'package.json'), pkgJson => {
@@ -95,7 +95,7 @@ function unlink() {
 function link() {
   // 将 sourcePath 链接到 packages/ 以及 gi-site/node_modules 下
   if (!fs.existsSync(targetPath)) {
-    copyDir(sourcePath, targetPath);
+    copyDir(sourcePath, targetPath, [...baseSkipDirs]);
     // 修改 package.json 中的 gi-sdk 依赖为 'workspace:*'
     modifyPkgJson(path.resolve(targetPath, 'package.json'), targetPkgJson => {
       if (targetPkgJson.dependencies['@antv/gi-sdk']) {
@@ -164,14 +164,12 @@ function writeBack() {
   });
 }
 
+const baseSkipDirs = ['node_modules', 'dist', 'lib', 'es', '.DS_Store', '.umi', 'pages', '.turbo'];
+
 /**
  * 复制目录
  */
-function copyDir(
-  sourceDir,
-  targetDir,
-  skipDirs = ['node_modules', 'dist', 'lib', 'es', '.DS_Store', '.umi', 'pages', '.turbo', '.git'],
-) {
+function copyDir(sourceDir, targetDir, skipDirs = baseSkipDirs) {
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir);
   }
