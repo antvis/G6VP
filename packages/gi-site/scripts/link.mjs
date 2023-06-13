@@ -63,6 +63,12 @@ function removeDep() {
   execSync(`npx prettier --write ${sitePkgPath}`);
 }
 
+function execGitCommand(command) {
+  return execSync(command)
+    .toString('utf8')
+    .replace(/[\n\r\s]+$/, '');
+}
+
 /**
  * 断开链接
  */
@@ -93,6 +99,14 @@ function unlink() {
 }
 
 function link() {
+  let branch;
+
+  try {
+    branch = execGitCommand(`cd ${sourcePath} && git rev-parse --abbrev-ref HEAD`);
+  } catch {
+    // 如果不存在 git 仓库，则不进行 git 操作
+  }
+
   // 将 sourcePath 链接到 packages/ 以及 gi-site/node_modules 下
   if (!fs.existsSync(targetPath)) {
     copyDir(sourcePath, targetPath, [...baseSkipDirs]);
@@ -128,6 +142,9 @@ function link() {
   const dep = { name: srcPkg.name, version: srcPkg.version, global: glb };
   fs.writeFileSync(injectPreBuildPath, JSON.stringify([dep], null, 2));
   fs.writeFileSync(injectAssetsPath, `import * as ${glb} from '${srcPkg.name}';\nexport default { ${glb} };`);
+
+  // 切换分支
+  branch && execGitCommand(`cd ${targetPath} && git checkout ${branch}`);
 
   addDep();
 
