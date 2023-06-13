@@ -16,12 +16,8 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
-  service: async params => {
+  service: async () => {
     const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
-    let res = {
-      nodes: [],
-      edges: [],
-    };
 
     if (!ENGINE_USER_TOKEN) {
       // 没有登录信息，需要先登录再查询 schema

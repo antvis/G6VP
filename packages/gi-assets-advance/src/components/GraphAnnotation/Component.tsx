@@ -1,7 +1,7 @@
 import { StarFilled } from '@ant-design/icons';
 import G6, { Item } from '@antv/g6';
 import { icons, useContext } from '@antv/gi-sdk';
-
+import { bind } from 'size-sensor';
 import { Menu } from 'antd';
 import insertCss from 'insert-css';
 import React, { useEffect, useMemo } from 'react';
@@ -47,10 +47,11 @@ const cancelColor = {
 };
 
 const BADGE_CLASSNAME = 'gi-graph-annotation';
+let unbindSizeSensor;
 
 const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => {
   const { contextmenu, annotationWay } = props;
-  const { graph } = useContext();
+  const { graph, GISDK_ID } = useContext();
   const { item: menuTargetItem, x, y } = contextmenu; // target 为 null 可能是 canvas
   if (menuTargetItem && menuTargetItem.destroyed) {
     return null;
@@ -97,6 +98,24 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     return newAnnotation;
   }, []);
 
+  useEffect(() => {
+    if (!annotationPlugin) {
+      unbindSizeSensor?.();
+      unbindSizeSensor = undefined;
+      return;
+    }
+    const container = document.getElementById(`${GISDK_ID}-graphin-container`);
+    unbindSizeSensor = bind(container, element => {
+      const annotationCanvas = annotationPlugin.get('canvas');
+      const annotationLinkCanvas = annotationPlugin.get('linkCanvas');
+      if (element) {
+        const { clientHeight, clientWidth } = element;
+        if (annotationCanvas) annotationCanvas.changeSize(clientWidth, clientHeight);
+        if (annotationLinkCanvas) annotationLinkCanvas.changeSize(clientWidth, clientHeight);
+      }
+    });
+  }, [annotationPlugin]);
+
   const handleAnnotate = color => {
     switch (annotationWay) {
       case 'tag':
@@ -141,7 +160,7 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     if (color.key !== 'cancel') {
       badges.push({
         position: 'RB',
-        fontFamily: 'graphin',
+        fontFamily: 'iconfont',
         type: 'font',
         value: icons['star-fill'],
         size,
@@ -173,7 +192,11 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   };
 
   useEffect(() => {
-    if (!annotationPlugin || annotationPlugin.destroyed) return;
+    if (!annotationPlugin || annotationPlugin.destroyed) {
+      unbindSizeSensor?.();
+      unbindSizeSensor = undefined;
+      return;
+    }
     insertCss(`
       .g6-annotation-wrapper {
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);

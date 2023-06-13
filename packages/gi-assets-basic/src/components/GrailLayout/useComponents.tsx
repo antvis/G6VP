@@ -1,9 +1,10 @@
-import { Icon } from '@antv/gi-sdk';
+import { Icon, useContext } from '@antv/gi-sdk';
 import { Empty } from 'antd';
 import React from 'react';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
+    const { HAS_GRAPH } = useContext();
     const assetKeys = [] as any[];
     (GI_CONTAINER || []).forEach(item => {
       if (typeof item === 'string') assetKeys.push(item);
@@ -13,6 +14,9 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
       .map(id => ComponentCfgMap?.[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
+
+    // 等待 graph 初始化完成
+    if (!HAS_GRAPH) return null;
 
     if ((!components || components.length === 0) && visible) {
       return (
@@ -24,7 +28,7 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
             transform: 'translate(-50%, -50%)',
             left: '50%',
           }}
-          description="当前容器中没用原子组件，请在左侧配置面板中添加"
+          description="当前容器中无可用资产，请在配置面板中集成"
         ></Empty>
       );
     }

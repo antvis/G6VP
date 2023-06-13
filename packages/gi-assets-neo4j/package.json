@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-neo4j",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "description": "Neo4j 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -20,6 +20,7 @@
     "build:umd": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-neo4j",
     "clean": "rimraf es esm lib dist",
     "demo": "umi dev",
+    "demo:build": "umi build",
     "docs": "dumi dev",
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "remove:antd": "rm -rf ./node_modules/antd",
@@ -29,6 +30,7 @@
     "postpublish": "tnpm sync @antv/gi-assets-neo4j"
   },
   "dependencies": {
+    "neo4j-driver": "^5.8.0",
     "@ant-design/icons": "^4.6.2",
     "@antv/gi-sdk": "workspace:*",
     "json2csv": "^5.0.7",

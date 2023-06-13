@@ -1,6 +1,8 @@
 import { utils } from '@antv/gi-sdk';
 import { message } from 'antd';
-import request from 'umi-request';
+
+import { getDriver } from './Neo4jService';
+
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
   service: async () => {
@@ -16,32 +18,27 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 export const GI_SERVICE_SCHEMA = {
   name: '查询图模型',
   service: async () => {
-    let res = {
-      nodes: [],
-      edges: [],
-    };
-    const serverEngineContext = utils.getServerEngineContext();
-
-    const token = serverEngineContext.uri;
-    if (!token) {
-      // 没有登录信息，需要先登录再查询 schema
+    const { CURRENT_SUBGRAPH, ENGINE_USER_TOKEN } = utils.getServerEngineContext();
+    if (!ENGINE_USER_TOKEN) {
       message.error(`Neo4j 数据源连接失败: 没有获取到连接 Neo4j 数据库的连接信息，请先连接 Neo4j 数据库再进行尝试！`);
       return;
     }
-
     try {
-      const httpServerURL = serverEngineContext.httpServerURL;
-      const result = await request(`${httpServerURL}/api/neo4j/schema`, {
-        method: 'GET',
-      });
-
-      if (result.success) {
-        res = result.data;
+      const driver = await getDriver();
+      if (driver) {
+        const schema = await driver.getSchema(CURRENT_SUBGRAPH);
+        return schema;
       }
-      return res;
-    } catch (e) {
-      message.error(`图模型查询失败: ${e}`);
+      return {
+        nodes: [],
+        edges: [],
+      };
+    } catch (error) {
+      console.log('error', error);
+      return {
+        nodes: [],
+        edges: [],
+      };
     }
-    return res;
   },
 };

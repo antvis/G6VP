@@ -21,8 +21,14 @@ const THEME_VARS = {
   ali: {
     id: 'ali',
     name: '暖阳橙',
-    textColor: '#fff',
-    backgroundColor: '#1f1f1f',
+    textColor: '#000',
+    backgroundColor: '#fff',
+  },
+  green: {
+    id: 'ali',
+    name: '芒种绿',
+    textColor: '#000',
+    backgroundColor: '#fff',
   },
   dark: {
     id: 'dark',
@@ -84,6 +90,7 @@ const useTheme = (context, updateState) => {
         const lightConfig = getConfigByTheme(config, 'light');
         const aliConfig = getConfigByTheme(config, 'ali');
         const darkConfig = getConfigByTheme(config, 'dark');
+        const greenConfig = getConfigByTheme(config, 'green');
 
         //需要和「ThemeSetting」资产做联动
         const lightTheme = {
@@ -92,6 +99,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: lightConfig.edges,
           name: '清新蓝',
           id: 'light',
+          primaryColor: 'rgb(48, 86, 227)',
         };
         const aliTheme = {
           canvasConfig: getCanvasStyle(aliConfig),
@@ -99,6 +107,7 @@ const useTheme = (context, updateState) => {
           edgesConfig: lightConfig.edges,
           name: '暖阳橙',
           id: 'ali',
+          primaryColor: 'rgb(255, 106, 0)',
         };
         const darkTheme = {
           canvasConfig: getCanvasStyle(darkConfig),
@@ -106,13 +115,23 @@ const useTheme = (context, updateState) => {
           edgesConfig: darkConfig.edges,
           name: '暗夜黑',
           id: 'dark',
+          primaryColor: 'rgb(31, 31, 31)',
+        };
+        const greenTheme = {
+          canvasConfig: getCanvasStyle(greenConfig),
+          nodesConfig: greenConfig.nodes,
+          edgesConfig: greenConfig.edges,
+          name: '芒种绿',
+          id: 'green',
+          primaryColor: 'rgb(39,118,88)',
         };
 
-        const defaultThemes = [lightTheme, aliTheme, darkTheme];
+        const defaultThemes = [lightTheme, aliTheme, darkTheme, greenTheme];
 
         //@ts-ignore
         const { GI_PROJECT_DB } = window;
         const project = await GI_PROJECT_DB.getItem(projectId);
+
         if (!project) {
           return;
         }
@@ -121,14 +140,16 @@ const useTheme = (context, updateState) => {
           draft.themes = defaultThemes;
           draft.theme = themeValue;
           if (themeValue === 'light') draft.config = lightConfig;
-          else if (themeValue === 'ali') draft.config = aliConfig;
-          else draft.config = darkConfig;
+          if (themeValue === 'ali') draft.config = aliConfig;
+          if (themeValue === 'green') draft.config = greenConfig;
+          if (themeValue === 'dark') draft.config = darkConfig;
         });
       }
     })();
   }, []);
   const changeTheme = themeValue => {
     const theme = themes.find(item => item.id === themeValue);
+
     const newConfig = produce(config, draft => {
       draft.components.forEach(itemCfg => {
         if (itemCfg.id === 'CanvasSetting') {

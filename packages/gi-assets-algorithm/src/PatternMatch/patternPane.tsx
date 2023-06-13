@@ -28,6 +28,9 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
   useEffect(() => {
     const graph = (graphRef?.current as any)?.graph;
     if (graph && !graph.destroyed) {
+      graph.once('afterlayout', e => {
+        graph.fitView();
+      });
       graph.fitView();
       graph.get('canvas').set('localRefresh', false);
     }

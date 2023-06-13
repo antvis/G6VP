@@ -4,6 +4,7 @@ export default (app: Application) => {
   const { controller, router } = app;
   router.get('/', controller.graphinsight.index);
 
+  // will be deprecated and unified in GraphScope
   router.post('/graphcompute/connect', controller.graphcompute.connectGraphScope);
   router.post('/graphcompute/createGSInstance', controller.graphcompute.createGraphScopeInstance);
   router.get('/graphcompute/closeGSInstance', controller.graphcompute.closeGraphScopeInstance);
@@ -46,6 +47,12 @@ export default (app: Application) => {
   router.post('/api/hugegraph/properties', controller.hugegraph.queryOneElementProperties);
   router.post('/api/hugegraph/graphs', controller.hugegraph.listGraphs);
   router.post('/api/hugegraph/schema', controller.hugegraph.getSchema);
+
+  //  gremlin database
+
+  router.post('/gremlin/connect', controller.gremlin.connect);
+  router.post('/gremlin/query', controller.gremlin.query);
+  router.get('/gremlin/schema', controller.gremlin.schema);
 
   // GraphInsight website service
   // dataset 数据集

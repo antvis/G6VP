@@ -3,7 +3,8 @@ import G6, { IGraph } from '@antv/g6';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import { TemplateData, TemplateNode } from './type';
-import { ColorMap, createFlowGraph, createTooltip } from './util';
+import { createFlowGraph, createTooltip } from './util';
+import { registerNodes } from './flowNodeRegistry';
 import './flowNodeRegistry';
 import './index.less';
 
@@ -56,6 +57,10 @@ const FlowGraph: React.FC<FlowGraphProps> = props => {
   });
 
   const { tooltip, graph } = state;
+
+  useEffect(() => {
+    registerNodes();
+  }, []);
 
   /**
    * 数据变化时，初始化图实例，或更换图数据

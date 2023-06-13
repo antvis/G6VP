@@ -82,6 +82,7 @@ const Handler: React.FC<HandlerProps> = props => {
     cursor: 'pointer',
     borderStyle: 'solid',
     borderWidth: '20px',
+    userSelect: 'none',
     ...handlerStyleMap[type],
   };
   const handlerTextStyles = {

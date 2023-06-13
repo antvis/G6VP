@@ -267,7 +267,7 @@ const Analysis = props => {
         </div>
         <div className="gi-analysis">
           <div className="gi-analysis-sidebar">
-            <Sidebar options={navbarOptions} value={activeNavbar} onChange={handleChangeNavbar} />
+            <Sidebar options={navbarOptions} value={activeNavbar} collapse={collapse} onChange={handleChangeNavbar} />
           </div>
           <div
             className={`gi-analysis-conf ${collapse ? 'collapse' : ''}`}

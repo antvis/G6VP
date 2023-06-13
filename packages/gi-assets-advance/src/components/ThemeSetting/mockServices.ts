@@ -1,3 +1,4 @@
+import { utils } from '@antv/gi-sdk';
 import { ADD_THEME, GET_THEMES, REMOVE_THEME, UPDATE_THEME } from './const';
 import { ITheme } from './typing';
 
@@ -6,11 +7,10 @@ const mockServices = () => {
     {
       id: GET_THEMES,
       service: async () => {
-        const hash = window.location.hash;
-        const projectId = hash.split('/')[2].split('?')[0];
+        const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
         //@ts-ignore
-        const { localforage } = window;
-        const project = await localforage.getItem(projectId);
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
 
         const themes = project.themes || [];
         return {
@@ -22,15 +22,15 @@ const mockServices = () => {
     {
       id: ADD_THEME,
       service: async (theme: ITheme) => {
-        const hash = window.location.hash;
-        const projectId = hash.split('/')[2].split('?')[0];
+        const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
         //@ts-ignore
-        const { localforage } = window;
-        const project = await localforage.getItem(projectId);
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
+
         const themes = project.themes || [];
         //project.themes = [...themes, theme];
         const newThemes = [...themes, theme];
-        localforage.setItem(projectId, { ...project, themes: newThemes });
+        GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes: newThemes });
         return {
           success: true,
           msg: '主题创建成功！',
@@ -41,16 +41,16 @@ const mockServices = () => {
     {
       id: UPDATE_THEME,
       service: async (id: string, theme: ITheme) => {
-        const hash = window.location.hash;
-        const projectId = hash.split('/')[2].split('?')[0];
+        const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
         //@ts-ignore
-        const { localforage } = window;
-        const project = await localforage.getItem(projectId);
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
+
         const themes = project.themes || [];
         const index = themes.findIndex(item => item.id === id);
         if (index !== -1) {
           themes[index] = theme;
-          localforage.setItem(projectId, { ...project, themes });
+          GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes });
           return {
             success: true,
             msg: '主题更新成功',
@@ -67,14 +67,14 @@ const mockServices = () => {
     {
       id: REMOVE_THEME,
       service: async (id: string) => {
-        const hash = window.location.hash;
-        const projectId = hash.split('/')[2].split('?')[0];
+        const { GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
         //@ts-ignore
-        const { localforage } = window;
-        const project = await localforage.getItem(projectId);
+        const { GI_PROJECT_DB } = window;
+        const project = await GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
+
         const themes = project.themes;
         const filterThemes = themes.filter(item => item.id !== id);
-        localforage.setItem(projectId, { ...project, themes: filterThemes });
+        GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes: filterThemes });
         return {
           success: true,
           msg: '删除成功',

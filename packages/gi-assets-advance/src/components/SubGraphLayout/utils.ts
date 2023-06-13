@@ -1,4 +1,4 @@
-import { LayoutMap } from './const';
+import { LAYOUTS, LayoutMap } from './const';
 import { Graph, GraphData } from '@antv/g6';
 import { ILayoutOption } from './typing';
 
@@ -18,17 +18,19 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
     }
     return false;
   });
-  const newNodes = nodes!.filter(node => {
-    return ids.indexOf(node.id) !== -1;
-  }).map(node => {
-    // 映射节点大小，用于圆形布局防重叠：https://github.com/antvis/layout/blob/master/src/layout/circular.ts#L213
-    node.size = node.style?.keyshape.size || 26;
-    /* 
+  const newNodes = nodes!
+    .filter(node => {
+      return ids.indexOf(node.id) !== -1;
+    })
+    .map(node => {
+      // 映射节点大小，用于圆形布局防重叠：https://github.com/antvis/layout/blob/master/src/layout/circular.ts#L213
+      node.size = node.style?.keyshape.size || 26;
+      /* 
         注意：这里不能使用 return {...node, size: node.style?.keyshape.size || 26}，
         因为我们需要将原来的那批节点返回，进行布局转化
     */
-    return node;
-  });
+      return node;
+    });
   return {
     nodes: newNodes,
     edges: newEdges,
@@ -40,7 +42,7 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
  * @param layouts 布局信息
  * @param graph G6 graph 实例
  * @param gap 子图之间的间隙
- * @returns 
+ * @returns
  */
 export const updateLayout = (
   layouts: ILayoutOption[],
@@ -79,6 +81,27 @@ export const updateLayout = (
       const newGraphData = cropGraphByNodes(source, nodes);
       instance.layout(newGraphData);
     });
-
+  graph.once('afteranimate', () => {
+    graph.fitView();
+  });
   graph.positionsAnimate();
+};
+
+export const getLayoutOptions = (id, graph, data, subGraphNodes) => {
+  const wholeGraph = subGraphNodes.length === data.nodes.length;
+  const layoutOptions: any = LAYOUTS.find(layout => layout.value === id.options)?.options || {};
+  const graphWidth = graph.getWidth();
+  const graphHeight = graph.getHeight();
+  if (id === 'circular') {
+    let radius: number = (subGraphNodes.length * 60) / (2 * Math.PI);
+    if (wholeGraph) {
+      radius = Math.min(graphWidth, graphHeight) / 2;
+    }
+    layoutOptions.radius = radius;
+  }
+  if (wholeGraph) {
+    layoutOptions.width = graphWidth;
+    layoutOptions.height = graphHeight;
+  }
+  return layoutOptions;
 };

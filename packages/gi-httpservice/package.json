@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-httpservice",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "G6VP 对接社区引擎的 HTTPServer，基于 Egg 框架",
   "private": true,
   "egg": {
@@ -31,15 +31,17 @@
     "egg-scripts": "^2.6.0",
     "egg-view-nunjucks": "^2.3.0",
     "etcd3": "^1.1.0",
+    "gremlin": "^3.6.4",
     "gremlin_patch": "^3.5.2",
-    "neo4j-driver": "^4.4.6",
+    "neo4j-driver": "^5.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@antv/gi-sdk": "^2.0.0",
+    "@antv/gi-sdk": "^2.3.3",
     "@antv/graphin": "^2.7.13",
     "@eggjs/tsconfig": "^1.0.0",
+    "@types/gremlin": "^3.6.1",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "@types/supertest": "^2.0.0",

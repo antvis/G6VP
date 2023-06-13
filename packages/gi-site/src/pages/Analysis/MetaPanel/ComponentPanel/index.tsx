@@ -7,6 +7,7 @@ import { getComponentsByAssets } from '../../getAssets';
 import { AssetInfo } from '../../typing';
 import ContainerPanel from '../ContainerPanel';
 import ComponentPanel from './ComponentPanel';
+import { REQUIRED_ASSET_IDS } from '../ContainerPanel/constants';
 import './index.less';
 
 /**
@@ -129,8 +130,17 @@ const formatPageLayoutContainer = (pageLayout, container, componentsMap, configu
 const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
   // 子组件为当前活跃的 AUTO 类型组件
   const subAssets: AssetInfo[] = [];
+  autoComponents.forEach(autoComponent => {
+    const { id, name } = autoComponent;
+    if (REQUIRED_ASSET_IDS.includes(id)) {
+      subAssets.push({
+        value: id,
+        label: name,
+      });
+    }
+  });
   refComponentKeys.forEach(id => {
-    if (componentsMap[id]?.type === 'AUTO')
+    if (componentsMap[id]?.type === 'AUTO' && !REQUIRED_ASSET_IDS.includes(id))
       subAssets.push({
         value: id,
         label: componentsMap[id].name,

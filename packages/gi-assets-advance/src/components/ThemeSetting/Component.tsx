@@ -127,28 +127,41 @@ const ThemeSetting: React.FC<Props> = props => {
                 <span className="name">创建主题</span>
               </Card>
             </Col>
-            {state.themes.map((item, index) => (
-              <Col span={12}>
-                <Card
-                  hoverable
-                  /* cover={<img src={item.cover} style={{ height: '70px' }} />} */
-                  onClick={() => setTheme(item)}
-                  style={{ position: 'relative', border: state.currentThemeId === item.id ? '#3056e3 1px solid' : '' }}
-                >
-                  <span className="name">{item.name || '自定义主题'}</span>
-                  <Dropdown overlay={menu(item)}>
-                    <Button
-                      type="text"
-                      icon={<MoreOutlined />}
-                      style={{ position: 'absolute', right: '-1px' }}
-                      onClick={e => {
-                        e.stopPropagation();
-                      }}
-                    ></Button>
-                  </Dropdown>
-                </Card>
-              </Col>
-            ))}
+            {state.themes.map((item, index) => {
+              const primaryColor = item.primaryColor || '#fff';
+              const rgbaColor = primaryColor.replace('rgb', 'rgba');
+              const cardBgColor =
+                primaryColor.includes('#') || primaryColor.includes('rgba')
+                  ? primaryColor
+                  : `${rgbaColor.substring(0, rgbaColor.length - 1)}, 0.1)`;
+              return (
+                <Col span={12}>
+                  <Card
+                    hoverable
+                    /* cover={<img src={item.cover} style={{ height: '70px' }} />} */
+                    onClick={() => setTheme(item)}
+                    style={{
+                      position: 'relative',
+                      border: state.currentThemeId === item.id ? '#3056e3 1px solid' : '',
+                      background: cardBgColor,
+                      color: primaryColor === cardBgColor ? 'rgba(0, 0, 0, 0.85)' : primaryColor,
+                    }}
+                  >
+                    <span className="name">{item.name || '自定义主题'}</span>
+                    <Dropdown overlay={menu(item)}>
+                      <Button
+                        type="text"
+                        icon={<MoreOutlined />}
+                        style={{ position: 'absolute', right: '-1px' }}
+                        onClick={e => {
+                          e.stopPropagation();
+                        }}
+                      ></Button>
+                    </Dropdown>
+                  </Card>
+                </Col>
+              );
+            })}
           </Row>
         </div>
       )}

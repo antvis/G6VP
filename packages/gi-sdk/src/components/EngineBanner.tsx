@@ -16,7 +16,6 @@ const EngineBanner: React.FC<EngineBannerProps> = props => {
   return (
     <Row
       style={{
-        background: 'rgb(245, 248, 255)',
         transition: 'all 0.3s ease 0s',
         padding: '24px 0px',
         ...style,

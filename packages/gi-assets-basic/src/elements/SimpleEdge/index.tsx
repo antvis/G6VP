@@ -12,6 +12,7 @@ const info = {
   desc: 'SimpleEdge',
   cover: 'http://xxxx.jpg',
   type: 'EDGE',
+  docs: 'https://www.yuque.com/antv/gi/ce260nnvfvagqszi',
 };
 
 export default {

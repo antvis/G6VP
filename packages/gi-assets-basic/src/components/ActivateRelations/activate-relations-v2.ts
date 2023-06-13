@@ -27,7 +27,6 @@ export default {
     if ((this as any).get('trigger') === 'mouseenter') {
       return {
         'node:mouseenter': 'setAllItemStates',
-        'combo:mouseenter': 'setAllItemStates',
         'node:mouseleave': 'clearActiveState',
         'combo:mouseleave': 'clearActiveState',
         'canvas:click': 'clearActiveState',
@@ -37,7 +36,6 @@ export default {
     }
     return {
       'node:click': 'setAllItemStates',
-      'combo:click': 'setAllItemStates',
       'canvas:click': 'clearActiveState',
       'node:touchstart': 'setOnTouchStart',
       'combo:touchstart': 'setOnTouchStart',

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "2.3.0",
+  "version": "2.4.5",
   "description": "G6VP 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -54,7 +54,8 @@
     "react-transition-group": "^4.4.5",
     "react-draggable": "^4.4.5",
     "three": "^0.135.0",
-    "use-immer": "^0.6.0"
+    "use-immer": "^0.6.0",
+    "size-sensor": "^1.0.1"
   },
   "peerDependencies": {
     "@antv/graphin": "^2.7.15",

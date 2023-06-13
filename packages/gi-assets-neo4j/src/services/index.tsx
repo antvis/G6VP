@@ -1,5 +1,5 @@
-import ServerComponent from '../components';
 import * as CypherQuery from './CypherQuery';
+import Engine from './Engine';
 import * as Initializer from './Initializer';
 import * as NeighborsQuery from './NeighborsQuery';
 import * as Neo4jService from './Neo4jService';
@@ -12,7 +12,7 @@ export default {
   type: 'database',
   cover: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*6NRERpsvzMcAAAAAAAAAAAAADmJ7AQ/original',
   group: 'G6VP 团队',
-  component: ServerComponent,
+  component: Engine,
   services: {
     ...Initializer,
     ...CypherQuery,

@@ -15,7 +15,7 @@ export interface INodeSchema {
   nodeTypeKeyFromProperties: string;
   /** 业务数据（data）中的字段类型，目前不支持嵌套 */
   properties: {
-    [key: string]: 'string' | 'number' | 'date';
+    [key: string]: 'string' | 'number' | 'boolean';
   };
 }
 
@@ -30,7 +30,7 @@ export interface IEdgeSchema {
   targetNodeType?: string;
   /** 业务数据（data）中的字段类型，目前不支持嵌套 */
   properties: {
-    [key: string]: 'string' | 'number' | 'date';
+    [key: string]: 'string' | 'number' | 'boolean';
   };
 }
 

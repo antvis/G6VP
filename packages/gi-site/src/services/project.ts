@@ -76,12 +76,14 @@ export const create = async (param: any): Promise<string | undefined> => {
 export const getById = async (id: string): Promise<IProject | undefined> => {
   if (GI_SITE.IS_OFFLINE) {
     const project: any = await GI_PROJECT_DB.getItem(id);
-    const { config, projectConfig, engineId, ...others } = project;
     if (!project) {
-      message.info('请先在「工作台」页面选择环境...');
+      message.info('该画布不存在，请重新创建...');
       //可能是用户第一进来的时候，没有选择环境
       window.location.href = window.location.origin;
+      return;
     }
+    const { config, projectConfig, engineId, ...others } = project;
+
     return {
       ...others,
       config: projectConfig || config,

@@ -9,11 +9,13 @@ import fs from 'fs';
 import GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase/package.json' assert { type: 'json' };
 import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json' assert { type: 'json' };
 import GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph/package.json' assert { type: 'json' };
+import GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph/package.json' assert { type: 'json' };
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
+import GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics/package.json' assert { type: 'json' };
 
 import path from 'path';
-export const G6_VERSION = '4.8.10';
+export const G6_VERSION = '4.8.14';
 export const GRAPHIN_VERSION = '2.7.16';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.8';
@@ -109,6 +111,10 @@ const assetPackage = [
     version: GI_ASSETS_TUGRAPH.version,
   },
   {
+    name: GI_ASSETS_TUGRAPH_ANALYTICS.name,
+    version: GI_ASSETS_TUGRAPH_ANALYTICS.version,
+  },
+  {
     name: GI_ASSETS_GTAPHSCOPE.name,
     version: GI_ASSETS_GTAPHSCOPE.version,
   },
@@ -123,6 +129,10 @@ const assetPackage = [
   {
     name: GI_ASSETS_HUGEGRAPH.name,
     version: GI_ASSETS_HUGEGRAPH.version,
+  },
+  {
+    name: GI_ASSETS_JANUSGRAPH.name,
+    version: GI_ASSETS_JANUSGRAPH.version,
   },
 ];
 

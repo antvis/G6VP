@@ -213,6 +213,7 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
     updateState(draft => {
       draft.runningId = node.id;
     });
+    let foundComponent = false;
     updateContext(draft => {
       draft.config.components.forEach(item => {
         if (lastComponentId && item.id === lastComponentId) {
@@ -252,7 +253,22 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
           }
         });
         item.props.controlledValues = controlledValues;
+        foundComponent = true;
       });
+      if (!foundComponent) {
+        // 未找到对应组件，运行失败
+        updateState(draft => {
+          draft.errorInfos = [
+            ...errorInfos,
+            {
+              id: node.id,
+              msg: `未找到资产 ${componentId}，请先将它配置到画布中`,
+            },
+          ];
+          draft.runningId = undefined;
+          draft.runningStatus = 'failed';
+        });
+      }
     });
   };
 

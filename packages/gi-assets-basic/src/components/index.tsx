@@ -6,9 +6,9 @@ import Copyright from './Copyright';
 import DownLoad from './DownLoad';
 import Export from './Export';
 import FilterPanel from './FilterPanel';
-import FitCenter from './FitCenter';
+// import FitCenter from './FitCenter';
 import FitCenterView from './FitCenterView';
-import FitView from './FitView';
+// import FitView from './FitView';
 import GrailLayout from './GrailLayout';
 import LassoSelect from './LassoSelect';
 import LayoutSwitch from './LayoutSwitch';
@@ -39,7 +39,6 @@ import RemoveNodeWithMenu from './RemoveNodeWithMenu';
 import SankeyAnalysis from './Sankey';
 import SegmentedLayout from './SegmentedLayout';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
-import SideLayout from './SideLayout';
 import SideSelectTabs from './SideSelectTabs';
 import UadLayout from './UadLayout';
 import Watermark from './Watermark';
@@ -57,8 +56,8 @@ export {
   PropertyGraphInitializer,
   Save,
   Placeholder,
-  FitCenter,
-  FitView,
+  // FitCenter,
+  // FitView,
   FitCenterView,
   OperatorBar,
   GroupBar,
@@ -100,7 +99,6 @@ export {
   RemoveNodeWithMenu,
   SelectExchangeMenuItem,
   CommonNeighbor,
-  SideLayout,
   SegmentedLayout,
   Watermark,
 };

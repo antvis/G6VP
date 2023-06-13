@@ -3,6 +3,8 @@ import { GI_SITE } from './const';
 import DATASET_CASE from './initial.data/default.case';
 import { IDataset } from './typing';
 import { request } from './utils';
+import { deepMix } from '@antv/util';
+
 /**
  * 更新或保存指定项目
  * @param id 项目id
@@ -100,6 +102,27 @@ export const queryRecycleDatasetList = async () => {
       method: 'get',
     });
     return response.data.filter(item => item.type === 'user');
+  }
+};
+
+/**
+ * 更新数据集元信息
+ * @param record
+ */
+export const updateDataset = async record => {
+  const { id } = record;
+
+  if (GI_SITE.IS_OFFLINE) {
+    const item = await GI_DATASET_DB.getItem(id);
+    const newItem = deepMix({}, item, record);
+    if (item) GI_DATASET_DB.setItem(id, newItem);
+    return newItem;
+  } else {
+    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/update`, {
+      method: 'post',
+      data: record,
+    });
+    return response.data;
   }
 };
 

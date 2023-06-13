@@ -54,7 +54,7 @@ const ComponentPanel = props => {
       info: {
         id: 'GI_FreeContainer',
         name: '自运行组件',
-        icon: 'icon-layout',
+        icon: 'icon-rocket',
         type: 'GICC',
       },
       props: {
@@ -108,7 +108,9 @@ const ComponentPanel = props => {
   return (
     <div>
       <Row justify="space-between" align="middle" className="gi-container-config-header">
-        <Col className="gi-container-config-title">{pageLayout?.name || pageLayout?.info?.name}</Col>
+        <Col className="gi-container-config-title" style={{ color: 'var(--primary-color)' }}>
+          {pageLayout?.name || pageLayout?.info?.name}
+        </Col>
         <Col>
           {state.guideVisible ? (
             <Popover
@@ -124,13 +126,13 @@ const ComponentPanel = props => {
               }
             >
               <span onClick={handleGoToContainerPanel} style={{ float: 'right' }}>
-                <SettingOutlined />
+                <SettingOutlined style={{ color: 'var(--primary-color)' }} />
               </span>
             </Popover>
           ) : (
             <Tooltip title="配置页面布局和容器">
               <span onClick={handleGoToContainerPanel} style={{ float: 'right' }}>
-                <SettingOutlined />
+                <SettingOutlined style={{ color: 'var(--primary-color)' }} />
               </span>
             </Tooltip>
           )}

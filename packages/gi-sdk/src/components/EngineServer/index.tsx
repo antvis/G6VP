@@ -1,13 +1,14 @@
 import { Select } from 'antd';
 import React from 'react';
-import { EngineBanner, GISiteParams, GraphSchemaData, utils } from '../../index';
+import { EngineBanner, GISiteParams, GraphSchemaData } from '../../index';
 import Connect from './Connect';
 import LoadGraph from './LoadGraph';
 import './index.less';
-
 const { Option } = Select;
 
 export interface GraphDBConfig {
+  /** 是否通过 Socket 服务链接，从而不需要 Node 转发服务 */
+  isSocketConnect?: boolean;
   /** 操作文档 */
   docs: string;
   /** 数据库名称 */
@@ -43,25 +44,36 @@ const GraphDB: React.FC<GraphDBConfig> = props => {
     title,
     desc,
     docs,
+    isSocketConnect,
   } = props;
-  const [state, updateState] = React.useState({
-    useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
+  const [state, updateState] = React.useState<{ useToken: undefined | number }>({
+    useToken: undefined,
   });
   const { useToken } = state;
   const updateToken = () => {
     updateState(pre => {
       return {
         ...pre,
-        useToken: utils.getServerEngineContext()?.ENGINE_USER_TOKEN,
+        useToken: Math.random(),
       };
     });
   };
   return (
     <div>
       <EngineBanner docs={docs} title={title} desc={desc} logo={logo} />
-      <Connect engineId={engineId} connectDatabase={connectDatabase} updateToken={updateToken} token={useToken} />
+      <Connect
+        docs={docs}
+        isSocketConnect={isSocketConnect}
+        engineId={engineId}
+        connectDatabase={connectDatabase}
+        updateToken={updateToken}
+        //@ts-ignore
+        token={useToken}
+      />
       {useToken && (
         <LoadGraph
+          //@ts-ignore
+          token={useToken}
           engineId={engineId}
           queryGraphSchema={queryGraphSchema}
           querySubGraphList={querySubGraphList}

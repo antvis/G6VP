@@ -84,8 +84,29 @@ const ContainerPanel = props => {
     }
   }, [pageLayout?.id]);
 
+  useEffect(() => {
+    if (defaultExpandId) {
+      let id = defaultExpandId;
+      const focusContainer = candidateContainers.find(container => {
+        if (container.id === defaultExpandId || container.id === `_${pageLayout?.id}-${defaultExpandId}`) {
+          id = container.id;
+          return true;
+        }
+      });
+      if (focusContainer) {
+        setState(draft => {
+          draft.focusingContainer = focusContainer;
+          draft.focusingContainerAsset = draft.containerAssetsMap[id];
+        });
+        setTimeout(() => {
+          setPanelHeight('calc(50vh - 64px)');
+        }, 16);
+      }
+    }
+  }, [defaultExpandId]);
+
   /**
-   * 选择容器时的响应函数，选中制指定的容器
+   * 选择容器时的响应函数，选中指定的容器
    * @param selectedList 需要选中的所有容器 id 列表
    * @canditates 候选的容器，可传入以防止调用该函数时 state 中的候选容器更新尚未生效
    */
@@ -108,13 +129,13 @@ const ContainerPanel = props => {
     // 比较出被取消勾选的容器
     const lastSelectedList = selectedContainers.map(container => container.id);
     const removedContainerIds = difference(lastSelectedList, selectedList);
-    
+
     // 若被取消则清空缓存的子资产
     removedContainerIds.forEach(id => {
       if (containerSubAssetsMap[id]) {
         containerSubAssetsMap[id] = [];
       }
-    })
+    });
 
     setState(draft => {
       draft.selectedContainers = containers;

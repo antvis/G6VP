@@ -3,7 +3,10 @@ import { Button } from 'antd';
 import React from 'react';
 import ThemeVars from '../ThemeVars';
 import './index.less';
-interface ThemeProps {}
+
+interface ThemeProps {
+  changeTheme: (val: string) => void;
+}
 const options = [
   {
     value: 'light',
@@ -41,8 +44,21 @@ const options = [
     ),
     name: '暗夜黑',
   },
+  {
+    value: 'green',
+    icon: (
+      <div
+        className="theme-color-dot"
+        style={{
+          backgroundColor: 'rgb(39,118,88)',
+        }}
+      />
+    ),
+    name: '芒种绿',
+  },
 ];
 const Theme: React.FunctionComponent<ThemeProps> = props => {
+  const { changeTheme } = props;
   return (
     <Button type="text" style={{ padding: '0px' }}>
       <ThemeSwitch
@@ -52,8 +68,9 @@ const Theme: React.FunctionComponent<ThemeProps> = props => {
           dark: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.dark.css`,
           light: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.light.css`,
           ali: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.ali.css`,
+          green: `${window['GI_PUBLIC_PATH']}css/gi-theme-antd.green.css`,
         }}
-        // onChange={val => changeTheme(val)}
+        onChange={val => changeTheme && changeTheme(val)}
         // options={[
         //   {
         //     value: 'light',

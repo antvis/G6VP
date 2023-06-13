@@ -6,7 +6,7 @@ const info = {
   category: 'canvas-interaction',
   type: 'AUTO',
   icon: 'icon-time-circle',
-  docs: 'https://www.yuque.com/antv/gi/qe8vp7n9snmv54qn',
+  docs: 'https://yuque.antfin.com/graphinsight/az1phr/gw5nwttkqc4h3ayg',
   services: ['SaveHistoryTemplateService', 'ListHistoryTemplateService', 'RemoveHistoryTemplateService'],
 };
 export default info;

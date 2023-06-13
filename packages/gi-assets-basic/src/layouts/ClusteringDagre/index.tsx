@@ -13,6 +13,7 @@ const info = {
   desc: '可聚类的有向分层布局',
   icon: 'icon-layout-tree',
   cover: 'http://xxxx.jpg',
+  docs: 'https://www.yuque.com/antv/gi/bpvfi1rtglkhz4wc',
 };
 
 export default {

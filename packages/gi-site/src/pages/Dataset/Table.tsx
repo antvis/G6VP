@@ -8,10 +8,12 @@ import {
   SendOutlined,
   TableOutlined,
 } from '@ant-design/icons';
-import { Button, Table, Tag, Tooltip } from 'antd';
+import { utils } from '@antv/gi-sdk';
+import { Button, Input, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { recoverDataset, recycleDataset } from '../../services/dataset';
+import { recoverDataset, recycleDataset, updateDataset } from '../../services/dataset';
+import { isNil } from '@antv/util';
 // import { getUid } from '../Workspace/utils';
 
 const styles = {
@@ -86,10 +88,17 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     // window.open(`${window.location.origin}/#/workspace/${projectId}`);
     history.push(`/workbook/create?datasetId=${record.id}&templateId=TP_SIMPLE`);
   };
+
+  const handleRename = async (id: string, name: string) => {
+    const res = await updateDataset({ id, name });
+    if (res) queryData();
+  };
+
   const handleDelete = async record => {
     const res = await recycleDataset(record.id);
     if (res) queryData();
   };
+
   const handleView = record => {
     history.push(`/dataset/list/${record.id}`);
   };
@@ -107,11 +116,20 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       key: 'name',
       render: (record, data) => {
         const { type } = data;
-        let tag = type === 'case' ? <Tag color="#3056E3">官方案例</Tag> : '';
+        let tag = type === 'case' ? <Tag color="var(--primary-color)">官方案例</Tag> : '';
         return (
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             {tag}
-            {record}
+            <Input
+              defaultValue={record}
+              onBlur={e => {
+                const value = e.target.value;
+                if (!isNil(value) && value !== record) {
+                  handleRename(data.id, value);
+                }
+              }}
+              bordered={false}
+            />
           </div>
         );
       },
@@ -119,26 +137,10 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     {
       title: '数据集ID',
       dataIndex: 'id',
+      width: 400,
       key: 'id',
     },
-    {
-      title: '数据源类型',
-      dataIndex: 'category',
-      key: 'category',
-      render: (record, data) => {
-        const { category = 'FILE', engineId } = data;
-        const { icon, name, color } = TYPE_MAPPING[category];
-        const extraInfo = engineId === 'GI' ? '图数据' : '';
-        return (
-          <div>
-            <Tag color={color}>
-              {icon} {name} / {extraInfo}
-            </Tag>
-            {record}
-          </div>
-        );
-      },
-    },
+
     {
       title: '引擎 ID',
       dataIndex: 'engineId',
@@ -152,7 +154,7 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
 
         return (
           <div>
-            <Tag color={color}>
+            <Tag color="var(--primary-color)">
               {icon} {record}
             </Tag>
           </div>
@@ -165,12 +167,23 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     //   key: 'size',
     // },
     {
+      title: '创建时间',
+      dataIndex: 'gmtCreate',
+      key: 'gmtCreate',
+      width: 180,
+      render: (record, data) => {
+        if (record) return utils.time(record);
+        else return '-';
+      },
+      sorter: (a, b) => a.gmtCreate - b.gmtCreate,
+    },
+    {
       title: '操作',
-      width: '160px',
+      width: 160,
       render: record => {
         return (
           <span>
-            <Tooltip title="创建分析画布" color={'#3056E3'}>
+            <Tooltip title="创建分析画布" color={'var(--primary-color)'}>
               <Button
                 type="text"
                 onClick={() => handleAnalysis(record)}
@@ -180,12 +193,12 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
                 <FundProjectionScreenOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="查看数据基本信息" color={'green'}>
+            <Tooltip title="查看数据基本信息">
               <Button type="text" onClick={() => handleView(record)} style={styles.botton}>
                 <TableOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="分享数据集" color={'grey'}>
+            <Tooltip title="分享数据集">
               <Button type="text" style={styles.botton}>
                 <SendOutlined />
               </Button>

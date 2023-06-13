@@ -1,45 +1,84 @@
 import { utils } from '@antv/gi-sdk';
-import request from 'umi-request';
-export interface ConnectProps {
-  httpServerURL: string;
-  uri: string;
-  username: string;
-  password: boolean;
-}
+import { notification } from 'antd';
+import Neo4JDriver from './Driver';
 
-export const connectNeo4jService = async () => {
-  const { uri, username, password, httpServerURL } = utils.getServerEngineContext();
+export let Driver: Neo4JDriver | undefined;
 
-  try {
-    const result = await request(`${httpServerURL}/api/neo4j/connect`, {
-      method: 'POST',
-      data: {
-        uri,
-        username,
-        password,
-        httpServerURL,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (result.success) {
+export const connect = async () => {
+  if (Driver) Driver.close();
+  const { username, password, engineServerURL } = utils.getServerEngineContext();
+  if (engineServerURL.startsWith('neo4j+s:')) {
+    Driver = new Neo4JDriver(engineServerURL, username, password);
+    const isConnect = await Driver.connect();
+    console.log('isConnect', isConnect);
+    if (isConnect) {
       utils.setServerEngineContext({
-        HAS_CONNECT_SUCCESS: true,
+        ENGINE_USER_TOKEN: `Bearer ${Math.random()}`,
       });
+      notification.success({
+        message: 'Neo4j 数据库链接成功',
+      });
+      return true;
     }
-
-    return result;
-  } catch (error) {
-    return null;
+    notification.error({
+      message: 'Neo4j 数据库链接失败',
+      description: '请检查数据库地址，用户名，密码是否填写正确',
+    });
+    return false;
+  } else {
+    notification.error({
+      message: 'Neo4j 数据库链接失败',
+      description: '数据库地址仅支持 neo4j+s: 协议',
+    });
+    return false;
   }
 };
 
-export const queryGraphSchema = async () => {
-  const { httpServerURL } = utils.getServerEngineContext();
-  const result = await request(`${httpServerURL}/api/neo4j/schema`, {
-    method: 'GET',
-  });
+export const getDriver = async () => {
+  if (Driver) {
+    return Driver;
+  }
+  await connect();
+  return Driver;
+};
 
-  return result.data;
+export const querySubGraphList = async () => {
+  const driver = await getDriver();
+  if (driver) {
+    const dbs = await driver.getDatabase();
+    if (dbs && dbs.length > 0) {
+      return dbs.map(item => {
+        return {
+          value: item.name,
+          label: item.name,
+        };
+      });
+    }
+  }
+
+  return [];
+};
+
+export const queryVertexLabelCount = async (graphName: string) => {
+  const driver = await getDriver();
+  if (driver) {
+    //@ts-ignore
+    const { table: nodeTable } = await driver.queryCypher(`MATCH (n)
+RETURN count(n) as node_count`);
+    //@ts-ignore
+    const { table: edgeTable } = await driver.queryCypher(`MATCH ()-[r]->()
+RETURN count(r) as relationship_count`);
+    if (nodeTable && edgeTable) {
+      return {
+        //@ts-ignore
+        nodeCount: nodeTable.rows[0],
+        //@ts-ignore
+        edgeCount: edgeTable.rows[0],
+      };
+    }
+  }
+  return {
+    nodeCount: '-',
+    edgeCount: '-',
+  };
 };

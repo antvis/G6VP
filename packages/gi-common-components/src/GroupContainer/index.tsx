@@ -61,10 +61,11 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
 
   // 构建属性列表
 
-  const propertyList = getAllkeysBySchema(schemaData, elementType)?.map(c => {
+  const propertyList = getAllkeysBySchema(schemaData, elementType)?.map(([c, t]) => {
     return {
       value: c,
       key: c,
+      type: t,
     };
   });
 

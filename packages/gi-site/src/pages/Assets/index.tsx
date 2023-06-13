@@ -2,7 +2,7 @@ import { DeploymentUnitOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { Empty, Space } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
-import { getAssetPackages, setDefaultAssetPackages } from '../../loader';
+import { getAssetPackages, setDefaultAssetPackages, type Package } from '../../loader';
 import Cards from './Cards';
 import './index.less';
 import PackageTable from './Table';
@@ -13,14 +13,13 @@ setDefaultAssetPackages();
 interface AssetsCenterProps {}
 
 const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
-  const [state, setState] = React.useState({
+  const [state, setState] = React.useState<{ isReady: boolean; lists: Package[]; mode: 'card' | 'table' }>({
     isReady: false,
     lists: [],
-    mode: 'table' as 'card' | 'table',
+    mode: 'table',
   });
   React.useEffect(() => {
     const packages = getAssetPackages();
-    //@ts-ignore
     setState(preState => {
       return {
         ...preState,
@@ -29,11 +28,26 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
       };
     });
   }, []);
+
   const handleChangeMode = val => {
     setState(preState => {
       return {
         ...preState,
         mode: val,
+      };
+    });
+  };
+
+  const handleEdit = (umd: string, val: Package) => {
+    const packages = getAssetPackages();
+    const packageIndex = packages.findIndex(item => item.global === umd);
+    packages[packageIndex] = val;
+
+    localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
+    setState(preState => {
+      return {
+        ...preState,
+        lists: [...packages],
       };
     });
   };
@@ -44,7 +58,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   }
   const renderMangeContainer = () => {
     if (mode === 'table') {
-      return <PackageTable data={lists}></PackageTable>;
+      return <PackageTable data={lists} onEdit={handleEdit}></PackageTable>;
     } else {
       return <Cards data={lists}></Cards>;
     }

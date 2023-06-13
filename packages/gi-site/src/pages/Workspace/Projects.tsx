@@ -1,6 +1,7 @@
 import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Button, Card, Col, Menu, Popconfirm, Row, Skeleton, Tooltip } from 'antd';
+import { isNil } from '@antv/util';
+import { Button, Card, Col, Input, Menu, Popconfirm, Row, Skeleton, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
@@ -133,7 +134,21 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
               <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                 <Card cover={Cover}>
                   <div style={{ position: 'relative' }}>
-                    <Meta title={name} description={description} />
+                    <Meta
+                      title={
+                        <Input
+                          defaultValue={name}
+                          bordered={false}
+                          onBlur={e => {
+                            const value = e.target.value;
+                            if (id && !isNil(value) && value !== name) {
+                              ProjectService.updateById(id, { name: value });
+                            }
+                          }}
+                        />
+                      }
+                      description={description}
+                    />
 
                     <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
                       <Popconfirm

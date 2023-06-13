@@ -1,5 +1,46 @@
 # @antv/gi-assets-basic
 
+## 2.3.5
+
+### Patch Changes
+
+- update assets
+- Updated dependencies
+  - @antv/gi-sdk@2.3.4
+
+## 2.3.4
+
+### Patch Changes
+
+- update assets
+
+## 2.3.3
+
+### Patch Changes
+
+- update assets
+- Updated dependencies
+  - @antv/gi-common-components@1.2.3
+  - @antv/gi-sdk@2.3.3
+
+## 2.3.2
+
+### Patch Changes
+
+- update site 2023-05-23
+- Updated dependencies
+  - @antv/gi-common-components@1.2.2
+  - @antv/gi-sdk@2.3.2
+
+## 2.3.1
+
+### Patch Changes
+
+- update version
+- Updated dependencies
+  - @antv/gi-common-components@1.2.1
+  - @antv/gi-sdk@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes

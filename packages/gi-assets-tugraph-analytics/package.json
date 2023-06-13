@@ -1,0 +1,43 @@
+{
+  "name": "@antv/gi-assets-tugraph-analytics",
+  "version": "0.1.0",
+  "description": "Tugraph Analytics Assets",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "files": [
+    "es",
+    "lib",
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
+    "build:es": "father build",
+    "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-tugraph-analytics",
+    "build:umd:analytics": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-tugraph-analytics analytics=true",
+    "clean": "rimraf es esm lib dist",
+    "prettier": "prettier --write ./src/**/**/**/*.js",
+    "start": "npm run clean && father build --watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build",
+    "postpublish": "tnpm sync @antv/gi-assets-tugraph-analytics"
+  },
+  "dependencies": {
+    "@antv/gi-common-components": "workspace:*",
+    "@antv/gi-sdk": "workspace:*",
+    "ahooks": "^3.7.7"
+  },
+  "peerDependencies": {
+    "@antv/graphin": "^2.7.15",
+    "antd": "4.x",
+    "react": "17.x",
+    "react-dom": "17.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import ProjectTitle from '../ProjectTitle';
+import useTheme from '../ThemeVars/useTheme';
 import DatasetInfo from './DatasetInfo';
 import ExportSdk from './ExportSdk';
 import Github from './Github';
@@ -36,6 +37,7 @@ const styles = {
 const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
   const { workbookId } = props;
   const { context, updateContext } = useContext();
+  const { changeTheme } = useTheme(context, updateContext);
   const history = useHistory();
   const { name } = context;
 
@@ -60,7 +62,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <ExportSdk />
         <SaveWorkbook workbookId={workbookId} />
         <Github />
-        <Theme />
+        <Theme changeTheme={changeTheme} />
       </div>
     </header>
   );
