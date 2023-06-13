@@ -71,8 +71,9 @@ function execGitCommand(command) {
 
 /**
  * 断开链接
+ * @param clear 是否移除 G6VP 内的链接内容
  */
-function unlink() {
+function unlink(clear = false) {
   // 重置注入
   initInject(true);
   removeDep();
@@ -91,6 +92,8 @@ function unlink() {
       pkgJson['dependencies']['@antv/gi-common-components'] = `^${giCommonComponentsPkgJson.version}`;
     }
   });
+
+  if (!clear) return;
 
   // 删除 packages/ 下的 source 链接
   execSync(`rm -rf ${targetPath}`);
@@ -164,14 +167,10 @@ function writeBack() {
   });
   rl.question(`按[回车]执行回写操作，该操作会覆盖源码 \x1b[31m${source}\x1b[0m`, answer => {
     if (answer === '') {
-      rl.question('确定回写? (y/n): ', answer => {
-        if (answer === 'y') {
-          console.log('执行回写...');
-          unlink();
-          console.log('回写成功!');
-        } else {
-          console.log('取消回写');
-        }
+      rl.question('回写后是否断开链接? (y/n): ', answer => {
+        if (answer === 'y') unlink(true);
+        else unlink();
+        console.log('回写成功!');
         rl.close();
       });
     } else {
@@ -181,7 +180,7 @@ function writeBack() {
   });
 }
 
-const baseSkipDirs = ['node_modules', 'dist', 'lib', 'es', '.DS_Store', '.umi', 'pages', '.turbo'];
+const baseSkipDirs = ['node_modules', 'dist', 'lib', 'es', '.DS_Store', '.umi', '.turbo'];
 
 /**
  * 复制目录
@@ -211,7 +210,7 @@ function copyDir(sourceDir, targetDir, skipDirs = baseSkipDirs) {
 if (!source) {
   console.log('使用示例: pnpm run link <source> [global name]');
 } else if (process.env.UNLINK === 'true') {
-  unlink();
+  unlink(true);
   console.log(`\x1b[1m${source}\x1b[0m`, '\x1b[31m\x1b[1m-/->\x1b[0m', `\x1b[1m${targetPath}\x1b[0m`);
 } else {
   link();
