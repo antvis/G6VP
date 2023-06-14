@@ -1394,6 +1394,18 @@ const DATASET_CASE = [
           },
         },
       ],
+      meta: {
+        nodeFieldMapping: {
+          create_date: {
+            name: '创建时间'
+          },
+        },
+        edgeFieldMapping: {
+          source: {name: '起始节点'},
+          target: {name: '目标节点'},
+          amount: {name: '金额'}
+        }
+      }
     },
     gmtCreate: '2022-06-06',
     name: '金融风控：银行反洗钱案例',
