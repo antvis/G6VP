@@ -25,7 +25,7 @@ export function beautifyCode(code: string) {
 }
 
 export const getActivePackage = (activeAssets: GIAssets) => {
-  const { services, components, elements, layouts } = activeAssets;
+  const { components, elements, layouts } = activeAssets;
 
   const componentsMap = new Map<string, any>();
   const elementsMap = new Map<string, any>();
@@ -108,7 +108,15 @@ export const getActivePackageName = (activeAssets: GIAssets): string[] => {
 };
 
 export const getConstantFiles = opts => {
-  const { config, id, engineId, activeAssets, theme = 'light', data, schemaData } = opts;
+  const { config, id, engineId, theme = 'light', data, schemaData } = opts;
+
+  const activeAssets = {
+    ...opts.activeAssets,
+    services: opts.activeAssets.services.filter(item => {
+      return item.id === 'GI' || item.id === engineId;
+    }),
+  };
+
   // const GI_SERVICES_OPTIONS = beautifyCode(JSON.stringify(serviceConfig));
   const THEME_STYLE = Object.entries(ThemeVars[theme])
     //@ts-ignore
@@ -148,7 +156,6 @@ export const getConstantFiles = opts => {
       return k == c.name;
     });
   }) as Package[];
-  console.log(packages);
 
   const GI_ASSETS_PACKAGE = beautifyCode(JSON.stringify(Object.values(packages)));
 

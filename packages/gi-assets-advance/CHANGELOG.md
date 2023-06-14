@@ -1,5 +1,28 @@
 # @antv/gi-assets-advance
 
+## 2.4.4
+
+### Patch Changes
+
+- update assets
+- Updated dependencies
+  - @antv/gi-sdk@2.3.4
+
+## 2.4.3
+
+### Patch Changes
+
+- update assets
+
+## 2.4.2
+
+### Patch Changes
+
+- update assets
+- Updated dependencies
+  - @antv/gi-common-components@1.2.3
+  - @antv/gi-sdk@2.3.3
+
 ## 2.4.1
 
 ### Patch Changes

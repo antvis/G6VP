@@ -6,33 +6,26 @@
 
 他们依次对应的包名与解释如下：
 
-| 文件路径                      | 包名                         | 说明                          |
-| ----------------------------- | ---------------------------- | ----------------------------- |
-| packages/gi-assets-advance    | `@antv/gi-assets-advance`    | 高级资产包                    |
-| packages/gi-assets-algorithm  | `@antv/gi-assets-algorithm`  | 算法资产包                    |
-| packages/gi-assets-basic      | `@antv/gi-assets-basic`      | 基础资产包                    |
-| packages/gi-assets-scene      | `@antv/gi-assets-scene`      | 场景资产包                    |
-| packages/gi-assets-graphscope | `@antv/gi-assets-graphscope` | GraphScope 引擎服务（单机版） |
-| packages/gi-assets-neo4j      | `@antv/gi-assets-neo4j`      | Neo4j 引擎服务                |
-| packages/gi-assets-tugraph    | `@antv/gi-assets-tugraph`    | TuGraph 引擎服务              |
-| packages/gi-assets-galaxybase | `@antv/gi-assets-galaxybase` | Galaxybase 引擎服务           |
-| packages/gi-assets-hugegraph  | `@antv/gi-assets-hugegraph`  | HugeGraph 引擎服务            |
-| packages/gi-cli               | `@antv/gi-cli`               | G6VP 资产 CLI                 |
-| packages/gi-common-components | `@antv/gi-common-components` | 通用组件包                    |
-| packages/gi-sdk               | `@antv/gi-sdk`               | G6VP SDK                      |
-| packages/gi-site              | `-`                          | G6VP 站点                     |
-| packages/gi-portal            | `-`                          | G6VP 首页                     |
-| packages/gi-httpservice       | `@antv/gi-httpservices`      | G6VP BFF 服务                 |
+| 文件路径                            | 包名                               | 说明                          |
+| ----------------------------------- | ---------------------------------- | ----------------------------- |
+| packages/gi-assets-advance          | `@antv/gi-assets-advance`          | 高级资产包                    |
+| packages/gi-assets-algorithm        | `@antv/gi-assets-algorithm`        | 算法资产包                    |
+| packages/gi-assets-basic            | `@antv/gi-assets-basic`            | 基础资产包                    |
+| packages/gi-assets-scene            | `@antv/gi-assets-scene`            | 场景资产包                    |
+| packages/gi-assets-graphscope       | `@antv/gi-assets-graphscope`       | GraphScope 引擎服务（单机版） |
+| packages/gi-assets-neo4j            | `@antv/gi-assets-neo4j`            | Neo4j 引擎服务                |
+| packages/gi-assets-tugraph          | `@antv/gi-assets-tugraph`          | TuGraph 引擎服务              |
+| packages/gi-assets-tugraph-analytics | `@antv/gi-assets-tugraph-analytics` | TuGraph Analytics 服务         |
+| packages/gi-assets-galaxybase       | `@antv/gi-assets-galaxybase`       | Galaxybase 引擎服务           |
+| packages/gi-assets-hugegraph        | `@antv/gi-assets-hugegraph`        | HugeGraph 引擎服务            |
+| packages/gi-cli                     | `@antv/gi-cli`                     | G6VP 资产 CLI                 |
+| packages/gi-common-components       | `@antv/gi-common-components`       | 通用组件包                    |
+| packages/gi-sdk                     | `@antv/gi-sdk`                     | G6VP SDK                      |
+| packages/gi-site                    | `-`                                | G6VP 站点                     |
+| packages/gi-portal                  | `-`                                | G6VP 首页                     |
+| packages/gi-httpservice             | `@antv/gi-httpservices`            | G6VP BFF 服务                 |
 
-### 02 进入到每个子包中启动，遇到依赖找不到的问题
-
-注意 ⚠️： cd 到每个子包的目录时候，一定要注意查看 node 的版本，比如我的默认 node 版本是 12， 切换到 16 装完所有依赖，此时进入到每个子包中， node 的版本自动切换到 12，执行命令是找不到安装的依赖的，所以得重新 `nvm use 16`，这样就可以了,如果想一劳永逸，可以在 zsh terminal 中设置
-
-```bash
-nvm alias default v16.17.0
-```
-
-### 03 如何发布版本
+### 02 如何发布版本
 
 G6VP 采用 [changesets](https://pnpm.io/using-changesets) 来进行包版本管理和发布，因此不需要手动维护版本号，只需要在提交代码时，使用`pnpm run changeset`来生成对应的版本号即可。
 
@@ -87,6 +80,6 @@ cd packages/gi-site
 npm run deploy
 ```
 
-### 04 如何打包 gi-httpservice
+### 03 如何打包 gi-httpservice
 
 - 在根目录下执行 `npm run tar:gi-httpservice`

@@ -2,7 +2,7 @@ const info = {
   id: 'FitCenterView',
   name: '自适应居中',
   desc: '调整画布，使其自适应居中展示',
-  icon: 'icon-fit-view',
+  icon: 'icon-fit-center',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'GIAC',

@@ -1,5 +1,5 @@
 /** export  */
-import { version } from '../package.json';
+import pkg from '../package.json';
 import {
   deepClone,
   GI_CONTAINER_METAS,
@@ -13,6 +13,7 @@ import template from './constants/template';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
+const { version } = pkg;
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 const extra = {
   /** 原子组件 META */
@@ -25,12 +26,12 @@ const extra = {
   deepClone,
   GIAComponent,
 };
-export { Info } from './constants/info';
 export { Icon, icons } from '@antv/gi-common-components';
 export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
 export { default as EngineServer } from './components/EngineServer';
+export { Info } from './constants/info';
 // export { default as Icon } from './components/Icon';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
@@ -58,7 +59,6 @@ export type {
   ISourceDataMap,
   ServiceObject,
 } from './typing';
-export { useContext, utils, version };
-export { extra, template };
+export { extra, template, useContext, utils, version };
 
 export default GISDK;

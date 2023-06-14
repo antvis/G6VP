@@ -3,6 +3,7 @@ import { extra, useContext } from '@antv/gi-sdk';
 import { DrawBoxSelect } from '@antv/l7-draw';
 import { L7Plot, L7PlotOptions } from '@antv/l7plot';
 import * as turf from '@turf/turf';
+import { notification } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import AnimateContainer from '../../CommonCmponents/AnimateContainer';
@@ -24,10 +25,11 @@ export interface MapModeProps {
 
   latitudeKey: string;
   longitudeKey: string;
+  setVisible: (visible: boolean) => void;
 }
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
-  const { theme, type, maxSize, minSize, placement, offset, longitudeKey, latitudeKey } = props;
+  const { theme, type, maxSize, minSize, placement, offset, longitudeKey, latitudeKey, setVisible } = props;
   const context = useContext();
   const { data, graph, config, GISDK_ID, apis } = context;
 
@@ -126,7 +128,12 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
       });
   }, [data]);
   if (geoNodesData.length === 0) {
-    console.warn('%c invalid data', 'color:red', 'nodes has no longitude or latitude field');
+    notification.warn({
+      message: '数据格式不合要求',
+      description: '请检查源数据是否有经纬度字段,或者检查「配置面板」，是否指定了经纬度坐标',
+    });
+    console.info('%c invalid data', 'color:red', 'nodes has no longitude or latitude field');
+    setVisible(false);
     return null;
   }
   console.log(geoNodesData, geoEdgesData);

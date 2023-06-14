@@ -12,6 +12,7 @@ import * as GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph';
 import * as GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
+import * as GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics';
 
 import OFFICIAL_PACKAGES from '../../scripts/deps_assets.json';
 import { IS_DEV_ENV } from './const';
@@ -48,6 +49,10 @@ const LOCAL_ASSETS: any[] = [
     ...GI_ASSETS_TUGRAPH,
   },
   {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH_ANALYTICS'],
+    ...GI_ASSETS_TUGRAPH_ANALYTICS,
+  },
+  {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
     ...GI_ASSETS_GRAPHSCOPE,
   },
@@ -82,6 +87,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   let elements;
   let layouts;
   let templates;
+  let deploys;
   let FinalAssets;
 
   const packages = getAssetPackages();
@@ -94,6 +100,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
+  console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
   // Object.keys(activeAssetsKeys.components).forEach(containerId => {
   //   const assetKeys = activeAssetsKeys.components[containerId];
   //   components[containerId] = assetKeys.reduce((acc, curr) => {
@@ -119,13 +126,10 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
     return acc;
   }, {});
 
-  // Get all elements from FinalAssets
   elements = { ...FinalAssets.elements };
-
-  // Get all layouts from FinalAssets
   layouts = { ...FinalAssets.layouts };
-
   templates = { ...FinalAssets.templates };
+  deploys = { ...FinalAssets.deploys };
 
   return await new Promise(resolve => {
     resolve({
@@ -133,6 +137,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
       elements,
       layouts,
       templates,
+      deploys,
       services: FinalAssets.services,
     } as GIAssets);
   });

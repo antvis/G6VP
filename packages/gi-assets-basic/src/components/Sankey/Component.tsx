@@ -1,5 +1,6 @@
 import { Sankey } from '@antv/g2plot';
 import { useContext } from '@antv/gi-sdk';
+import { Empty } from 'antd';
 import * as React from 'react';
 
 export interface IProps {
@@ -38,6 +39,9 @@ const SankeyAnalysis: React.FunctionComponent<IProps> = props => {
       sankey.destroy();
     };
   }, [weightField, data]);
+  if (!weightField) {
+    return <Empty description="请先设置「桑基图」的「权重映射」"></Empty>;
+  }
 
   return (
     <div>

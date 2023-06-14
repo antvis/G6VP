@@ -42,9 +42,10 @@ lib
 packages/gi-assets-advance/dist
 packages/gi-assets-basic/dist
 packages/gi-assets-scene/dist
-packages/gi-assets-analysis/dist
+packages/gi-assets-analytics/dist
 packages/gi-assets-testing/dist
 packages/gi-site/dist
+packages/gi-assets-tugraph-analytics/dist
 # do not ignore gi-portal dist
 packages/gi/dist
 packages/gi-common-components/dist

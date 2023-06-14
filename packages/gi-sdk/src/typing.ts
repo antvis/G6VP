@@ -33,6 +33,7 @@ export interface State {
   layout: Layout;
   /** 组件 */
   components: GIComponentConfig[];
+  HAS_GRAPH: boolean;
   /** 画布是否初始化完成 */
   initialized: boolean;
   /** 图初始化组件  */
@@ -242,11 +243,23 @@ export interface ITemplate {
 }
 
 export type GIAssets = Partial<{
+  /** 分析资产 */
   components: GIComponentAssets;
+  /** 元素资产 */
   elements: GIElementsAssets;
+  /** 布局资产 */
   layouts: GILayoutAssets;
+  /** 引擎资产 */
   services: EngineServer[];
-  templates: ITemplate[];
+  /** 模版资产 */
+  templates: { [key: string]: ITemplate };
+  /** 部署资产 */
+  deploys: {
+    [key: string]: {
+      component: React.ReactNode;
+      [key: string]: any;
+    };
+  };
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force

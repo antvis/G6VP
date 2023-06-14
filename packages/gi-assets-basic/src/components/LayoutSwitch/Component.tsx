@@ -1,18 +1,20 @@
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
-import { extra, Icon, useContext, utils } from '@antv/gi-sdk';
+import { Icon, extra, useContext, utils } from '@antv/gi-sdk';
 import { LayoutConfig } from '@antv/gi-sdk/lib/typing';
 import { Card, Popover, Radio, Space } from 'antd';
 import React, { useEffect, useMemo } from 'react';
+
 const { GIAComponent } = extra;
 
 export interface LayoutSwitchProps {
   GIAC: IGIAC;
   controlledValues?: LayoutConfig;
 }
+let timer: NodeJS.Timer;
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   const { GIAC, controlledValues } = props;
-  const { assets, config, data, schemaData, updateContext, updateHistory } = useContext();
+  const { assets, config, data, schemaData, updateContext, updateHistory, graph } = useContext();
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
@@ -22,6 +24,10 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
       draft.config.layout = layoutConfig;
       draft.layoutCache = false;
     });
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      graph.fitCenter(true);
+    }, 60);
   };
 
   /**
@@ -83,9 +89,9 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
             },
           };
           return (
-            <Radio value={id} onClick={() => handleClick(layoutConfig)}>
+            <Radio value={id} onClick={() => handleClick(layoutConfig)} key={id}>
               <Icon type={icon} />
-              {name}
+              &nbsp;{name}
             </Radio>
           );
         })}

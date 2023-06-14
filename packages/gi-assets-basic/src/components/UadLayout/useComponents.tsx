@@ -1,8 +1,11 @@
 import { Empty } from 'antd';
 import React from 'react';
+import { useContext } from '@antv/gi-sdk';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
   return React.useMemo(() => {
+    const { HAS_GRAPH } = useContext();
+
     const assetKeys = [] as any[];
     GI_CONTAINER.forEach(item => {
       if (typeof item === 'string') assetKeys.push(item);
@@ -12,6 +15,8 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
       .map(id => ComponentCfgMap[id])
       .filter(item => item && item.props && item.props.GIAC_CONTENT)
       .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX);
+
+    if (!HAS_GRAPH) return [];
 
     if (!components || components.length === 0) {
       return [

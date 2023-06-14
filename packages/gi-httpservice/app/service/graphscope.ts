@@ -12,7 +12,6 @@ import { readGraphScopeConfig } from '../util';
 interface ConnectProps {
   engineServerURL: string;
   httpServerURL: string;
-  isStringType: boolean;
 }
 
 /**
@@ -43,17 +42,10 @@ function closeGremlinClient(client): void {
 
 class GraphComputeService extends Service {
   async connectGraphScope(params: ConnectProps) {
-    const { isStringType, ...others } = params;
-    const oidType = isStringType ? 'string' : 'int64_t';
-    const config = {
-      ...others,
-      oidType,
-    };
-
-    fs.writeFileSync(`${__dirname}/GRAPHSCOPE_CONFIG.json`, JSON.stringify(config, null, 2), 'utf-8');
+    fs.writeFileSync(`${__dirname}/GRAPHSCOPE_CONFIG.json`, JSON.stringify(params, null, 2), 'utf-8');
     return {
       success: true,
-      data: others,
+      data: params,
       code: 200,
     };
   }
@@ -537,9 +529,12 @@ class GraphComputeService extends Service {
    */
   async listSubgraph(params) {
     const { engineServerURL } = readGraphScopeConfig();
+    let engineServerHostName = ""
 
     let result;
     try {
+      // replace the 127.0.0.1 of gremlin endpoint with engine server host
+      engineServerHostName = new URL(engineServerURL).hostname;
       result = await this.ctx.curl(`${engineServerURL}/api/v1/graph`, {
         method: 'GET',
         data: {
@@ -564,11 +559,18 @@ class GraphComputeService extends Service {
       };
     }
 
+    // replace the 127.0.0.1 of gremlin endpoint with engine server host
+    let graphList = JSON.parse(result.data.data);
+    for (let g of graphList) {
+      g.gremlin_interface.gremlin_endpoint =
+        g.gremlin_interface.gremlin_endpoint.replace("127.0.0.1", engineServerHostName);
+    }
+
     return {
       success: true,
       code: 200,
       message: '子图列表查询成功',
-      data: result.data.data,
+      data: JSON.stringify(graphList),
     };
   }
 }
