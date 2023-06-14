@@ -2,7 +2,7 @@ import { useContext } from '../context';
 import { GraphSchemaData, IGraphData } from '../index';
 
 // 转换 单个点边
-export const transByFieldMapping= (data: Record<string, any>, fieldMapping) => {
+export const transByFieldMapping= (data: Record<string, any>, fieldMapping = {}) => {
   const transformedData = {} as Record<string, any>;
   for (const key in data) {
     const mapping = fieldMapping[key];
@@ -15,7 +15,7 @@ export const transByFieldMapping= (data: Record<string, any>, fieldMapping) => {
   return transformedData;
 }
 // 转换 edges or nodes
-export const transDataByFieldMapping  = (data: IGraphData['edges'] | IGraphData['nodes'], fieldMapping) => {
+export const transDataByFieldMapping  = (data: IGraphData['edges'] | IGraphData['nodes'], fieldMapping = {}) => {
   if (Object.keys(fieldMapping).length === 0) return data;
 
   return data.map(datum => {
