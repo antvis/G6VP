@@ -40,7 +40,16 @@ export interface GraphSchemaData {
   /** Schema 额外配置信息 */
   meta?: {
     /** 默认的标签映射字段 */
-    defaultLabelField: string;
+    defaultLabelField?: string;
+    /** 点边信息映射配置 */
+    nodeFieldMapping?: Record<string, {
+      name: string;
+      [k: string]: any
+    }>;
+    edgeFieldMapping?: Record<string, {
+      name: string;
+      [k: string]: any
+    }>;
   };
 }
 
