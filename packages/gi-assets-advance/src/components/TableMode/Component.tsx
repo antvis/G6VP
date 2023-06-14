@@ -1,5 +1,5 @@
 import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined, ExportOutlined } from '@ant-design/icons';
-import { useContext } from '@antv/gi-sdk';
+import { useContext, utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { generatePalette, getPalette, S2DataConfig, copyData, download } from '@antv/s2';
 
@@ -33,7 +33,8 @@ const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, style = {} } = props;
-  const { graph, schemaData, largeGraphData, data: graphData } = useContext();
+  const { graph, largeGraphData } = useContext();
+  const { schemaData, data: graphData } = utils.useGraphDataBySchemaMeta();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
 

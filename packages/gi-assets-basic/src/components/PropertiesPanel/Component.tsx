@@ -20,7 +20,7 @@ export interface PropertiesPanelProps {
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
   const { serviceId, hasService, placement, width, title, height, offset, defaultiStatistic, enableInfoDetect } = props;
-  const { graph, services, GISDK_ID, propertyGraphData, data } = useContext();
+  const { graph, services, GISDK_ID, propertyGraphData, schemaData, data } = useContext();
   const service = utils.getService(services, serviceId);
   if (!service) {
     return null;
@@ -60,6 +60,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service({ ...model, type: 'node' });
+      const finalDetail = utils.transByFieldMapping(detail, schemaData.meta?.nodeFieldMapping);
 
       let propertyInfos: { propertyName: string; ratio: number }[] = [];
       if (enableInfoDetect) {
@@ -69,7 +70,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       setState(preState => {
         return {
           ...preState,
-          detail,
+          detail: finalDetail as any,
           propertyInfos,
           isLoading: false,
         };
