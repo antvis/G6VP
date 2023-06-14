@@ -70,16 +70,10 @@ function execGitCommand(command) {
 }
 
 /**
- * 断开链接
- * @param clear 是否移除 G6VP 内的链接内容
+ * 回写数据
  */
-function unlink(clear = false) {
-  // 重置注入
-  initInject(true);
-  removeDep();
-
-  // 回写数据 (不回写 git 信息)
-  copyDir(targetPath, sourcePath, [...baseSkipDirs, '.git']);
+function eject() {
+  copyDir(targetPath, sourcePath);
 
   // 回写 package.json 版本号
   modifyPkgJson(path.resolve(sourcePath, 'package.json'), pkgJson => {
@@ -92,8 +86,18 @@ function unlink(clear = false) {
       pkgJson['dependencies']['@antv/gi-common-components'] = `^${giCommonComponentsPkgJson.version}`;
     }
   });
+}
 
-  if (!clear) return;
+/**
+ * 断开链接，回写内容并移除链接内容
+ * @param clear 是否移除 G6VP 内的链接内容
+ */
+function unlink() {
+  initInject(true);
+
+  eject();
+
+  removeDep();
 
   // 删除 packages/ 下的 source 链接
   execSync(`rm -rf ${targetPath}`);
@@ -112,7 +116,7 @@ function link() {
 
   // 将 sourcePath 链接到 packages/ 以及 gi-site/node_modules 下
   if (!fs.existsSync(targetPath)) {
-    copyDir(sourcePath, targetPath, [...baseSkipDirs]);
+    copyDir(sourcePath, targetPath);
     // 修改 package.json 中的 gi-sdk 依赖为 'workspace:*'
     modifyPkgJson(path.resolve(targetPath, 'package.json'), targetPkgJson => {
       if (targetPkgJson.dependencies['@antv/gi-sdk']) {
@@ -151,16 +155,18 @@ function link() {
 
   addDep();
 
-  console.log('安装依赖...');
-  execSync(`cd ${targetPath} && pnpm i`);
-  console.log('执行构建...');
-  execSync(`cd ${targetPath} && pnpm run build:es`);
+  console.log('安装依赖、执行构建...');
+  try {
+    execSync(`cd ${targetPath} && pnpm i`);
+  } catch (e) {
+    console.log('\x1b[31m$操作失败，手动执行 \x1b[1m pnpm i \x1b[0m\x1b[31m以查看异常信息...\x1b[0m');
+  }
 }
 
 /**
- * 等待回写操作
+ * 等待操作
  */
-function writeBack() {
+function waitingForUnlink() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -168,8 +174,8 @@ function writeBack() {
   rl.question(`按[回车]执行回写操作，该操作会覆盖源码 \x1b[31m${source}\x1b[0m`, answer => {
     if (answer === '') {
       rl.question('回写后是否断开链接? (y/n): ', answer => {
-        if (answer === 'y') unlink(true);
-        else unlink();
+        if (answer === 'y') unlink();
+        else eject();
         console.log('回写成功!');
         rl.close();
       });
@@ -180,12 +186,27 @@ function writeBack() {
   });
 }
 
+/** 下列文件夹不同步 */
 const baseSkipDirs = ['node_modules', 'dist', 'lib', 'es', '.DS_Store', '.umi', '.turbo'];
+/** 下列文件夹不进行遍历复制，而是直接重建 */
+const baseOverwriteDirs = ['.git'];
+
+function copyFileSyncWithSudo(src, tgt) {
+  try {
+    fs.copyFileSync(src, tgt);
+  } catch (error) {
+    // 没有权限时，申请 sudo 权限
+    if (error.code === 'EACCES') {
+      console.log('\x1b[31m以管理员权限写入文件：\x1b[0m', tgt);
+      execSync(`sudo cp -r ${src} ${tgt}`);
+    }
+  }
+}
 
 /**
  * 复制目录
  */
-function copyDir(sourceDir, targetDir, skipDirs = baseSkipDirs) {
+function copyDir(sourceDir, targetDir, options = { skipDirs: baseSkipDirs, overwriteDirs: baseOverwriteDirs }) {
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(targetDir);
   }
@@ -195,27 +216,33 @@ function copyDir(sourceDir, targetDir, skipDirs = baseSkipDirs) {
     const sourcePath = path.join(sourceDir, file);
     const targetPath = path.join(targetDir, file);
 
-    if (skipDirs && skipDirs.includes(file)) {
+    if (options?.skipDirs?.includes(file)) {
       return;
     }
 
+    if (options?.overwriteDirs?.includes(file)) {
+      fs.rmdirSync(targetPath, { recursive: true });
+    }
     if (fs.statSync(sourcePath).isDirectory()) {
-      copyDir(sourcePath, targetPath, skipDirs);
+      copyDir(sourcePath, targetPath, options);
     } else {
-      fs.copyFileSync(sourcePath, targetPath);
+      copyFileSyncWithSudo(sourcePath, targetPath);
     }
   });
 }
 
 if (!source) {
   console.log('使用示例: pnpm run link <source> [global name]');
-} else if (process.env.UNLINK === 'true') {
-  unlink(true);
+} else if (process.env.UNLINK === 'true' || args[1] === 'unlink') {
   console.log(`\x1b[1m${source}\x1b[0m`, '\x1b[31m\x1b[1m-/->\x1b[0m', `\x1b[1m${targetPath}\x1b[0m`);
+  unlink();
+} else if (process.env.EJECT === 'true' || args[1] === 'eject') {
+  console.log('\x1b[1m🖍 ->\x1b[0m', `\x1b[1m${source}\x1b[0m`);
+  eject();
 } else {
   link();
   console.log(`\x1b[42m 链接成功，该阶段请勿编辑源码 ${source} \x1b[0m`);
   console.log(`\x1b[1m${source}\x1b[0m`, '\x1b[31m\x1b[1m-->\x1b[0m', `\x1b[1m${targetPath}\x1b[0m`);
   // 等待回写命令
-  writeBack();
+  waitingForUnlink();
 }
