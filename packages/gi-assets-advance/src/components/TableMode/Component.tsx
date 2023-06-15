@@ -35,7 +35,7 @@ const INTIAL_NUMBER = 9527;
 const TableMode: React.FC<IProps> = props => {
   const { schemaData, data: graphData } = utils.useGraphDataBySchemaMeta();
   const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, targetWindowPath, style = {} } = props;
-  const { graph, largeGraphData } = useContext();
+  const { graph, largeGraphData, schemaData: originalSchemaData } = useContext();
   const isFullScreen = useFullScreen();
   const targetWindowRef = React.useRef<null | Window>(null);
 
@@ -170,7 +170,7 @@ const TableMode: React.FC<IProps> = props => {
         return [...acc, model];
       }, []);
       const res = {
-        nodes: nodes.map(c => c.getModel()),
+        nodes: utils.transDataByFieldMapping(nodes.map(c => c.getModel()), originalSchemaData.meta?.nodeFieldMapping),
         edges: resEdges,
       };
 
@@ -188,11 +188,14 @@ const TableMode: React.FC<IProps> = props => {
         return;
       }
       const model = e.item.getModel();
+      const edges = model.aggregate ? model.aggregate : [model];
+      // @ts-ignore
+      const finalEdges = utils.transDataByFieldMapping(edges, originalSchemaData.meta?.edgeFieldMapping)
       //@ts-ignore
       setSelectItems(preState => {
         return {
           ...preState,
-          edges: model.aggregate ? model.aggregate : [model],
+          edges: finalEdges,
         };
       });
 
@@ -202,12 +205,12 @@ const TableMode: React.FC<IProps> = props => {
         payload: {
           selectItems: {
             nodes: [],
-            edges: model.aggregate ? model.aggregate : [model],
+            edges: finalEdges,
           },
         },
       });
     });
-  }, [setSelectItems, graph]);
+  }, [setSelectItems, graph, originalSchemaData]);
 
   const toggleFullScreen = () => {
     const container = document.getElementById('gi-table-mode') as HTMLDivElement;
