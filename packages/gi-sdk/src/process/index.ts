@@ -38,3 +38,10 @@ export {
   getPropertyRanks,
   getPropertyValueRanks,
 } from './propertyGraph';
+
+export {
+  transNodeOrEdgeByFieldMapping,
+  transNodesOrEdgesByFieldMapping,
+  transDataBySchemaMeta,
+  transSchemaByMeta,
+} from './transGraphDataBySchemaMate';

@@ -50,5 +50,12 @@ export default context => {
       'x-component': 'Switch',
       default: false,
     },
+    transByFieldMapping: {
+      title: '开启字段映射',
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
   };
 };
