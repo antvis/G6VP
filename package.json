@@ -1,6 +1,7 @@
 {
   "engines": {
-    "node": ">=14.0.0"
+    "node": "^16",
+    "pnpm": "^8"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
