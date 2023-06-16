@@ -14,6 +14,8 @@ import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 import * as GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics';
 
+import INJECT from './inject';
+
 import OFFICIAL_PACKAGES from '../../scripts/deps_assets.json';
 import { IS_DEV_ENV } from './const';
 
@@ -76,6 +78,12 @@ const LOCAL_ASSETS: any[] = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_JANUSGRAPH'],
     ...GI_ASSETS_JANUSGRAPH,
   },
+
+  // 本地开发资产
+  ...Object.entries(INJECT).map(([key, value]) => ({
+    ...OFFICIAL_PACKAGES_MAP[key],
+    ...(value as any),
+  })),
 ];
 
 /**
