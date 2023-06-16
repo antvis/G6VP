@@ -18,7 +18,6 @@
     "link": "node scripts/link.mjs",
     "unlink": "cross-env UNLINK=true node scripts/link.mjs",
     "eject": "cross-env EJECT=true node scripts/link.mjs"
-
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",

@@ -221,7 +221,11 @@ function copyDir(sourceDir, targetDir, options = { skipDirs: baseSkipDirs, overw
     }
 
     if (options?.overwriteDirs?.includes(file)) {
-      fs.rmdirSync(targetPath, { recursive: true });
+      try {
+        fs.rmdirSync(targetPath, { recursive: true });
+      } catch (err) {
+        console.error(err);
+      }
     }
     if (fs.statSync(sourcePath).isDirectory()) {
       copyDir(sourcePath, targetPath, options);
