@@ -57,7 +57,7 @@ importers:
         version: 3.5.41(react-router@6.12.1)
     devDependencies:
       '@babel/plugin-proposal-private-property-in-object':
-        specifier: 7.21.11
+        specifier: ^7.21.11
         version: 7.21.11(@babel/core@7.22.5)
       '@changesets/cli':
         specifier: ^2.26.1
@@ -923,7 +923,7 @@ importers:
         version: 2.7.16(react-dom@17.0.2)(react@17.0.2)
       '@faker-js/faker':
         specifier: latest
-        version: 8.0.2
+        version: 7.6.0
       '@fast-csv/format':
         specifier: latest
         version: 4.3.5
@@ -9968,9 +9968,9 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@faker-js/faker@8.0.2:
-    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+  /@faker-js/faker@7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: false
 
   /@fast-csv/format@4.3.5:
