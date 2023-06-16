@@ -8,11 +8,12 @@ export interface IProps {
   serviceId: string;
   schemaServiceId: string;
   aggregate: boolean;
+  transByFieldMapping: boolean;
 }
 
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
-  const { serviceId, schemaServiceId, aggregate } = props;
+  const { serviceId, schemaServiceId, aggregate, transByFieldMapping } = props;
   const { services, updateContext, transform, largeGraphLimit } = context;
 
   React.useEffect(() => {
@@ -60,7 +61,14 @@ const Initializer: React.FunctionComponent<IProps> = props => {
       draft.isLoading = true;
     });
     Promise.all([schemaService.service(), initialService.service()]).then(
-      ([schema, data = { nodes: [], edges: [] }]) => {
+      ([schemaData, graphData = { nodes: [], edges: [] }]) => {
+        let schema = schemaData;
+        let data = graphData;
+        if (transByFieldMapping) {
+          const { schemaData: _schemaData, data: _data } = utils.transDataBySchemaMeta(graphData, schemaData);
+          schema = _schemaData;
+          data = _data;
+        }
         const { nodes } = data;
 
         if (nodes.length > largeGraphLimit) {
@@ -134,7 +142,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         });
       },
     );
-  }, [largeGraphLimit, aggregate]);
+  }, [largeGraphLimit, aggregate, transByFieldMapping]);
 
   return null;
 };
