@@ -2,8 +2,16 @@ import React from 'react';
 import type { DraftFunction } from 'use-immer';
 import { GIAssets, GIService, ISourceDataMap, State } from './typing';
 
-interface ContextType extends State {
-  updateContext: (fn: DraftFunction<State>)=> any;
+interface ContextType<
+  G extends {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  } = {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  },
+> extends State<G> {
+  updateContext: (fn: DraftFunction<State>) => any;
   updateData: (data: any) => any;
   assets: GIAssets;
   services: GIService[];
@@ -29,8 +37,16 @@ const defaultContext = {
 
 export const GraphInsightContext = React.createContext(defaultContext);
 
-export const useContext = () => {
-  const context = React.useContext(GraphInsightContext);
+export const useContext = <
+  G extends {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  } = {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  },
+>() => {
+  const context = React.useContext(GraphInsightContext) as ContextType<G>;
   if (context === undefined || Object.keys(context).length === 0) {
     throw new Error(`useContext must be used within a GraphInsightProvider`);
   }

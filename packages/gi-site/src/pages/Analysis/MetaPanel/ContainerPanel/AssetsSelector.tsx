@@ -35,7 +35,13 @@ const AssetsSelector: React.FunctionComponent<AssetsSelectorProps> = props => {
           ) : (
             <div key={`c${i}`} className="gi-render-form-asset-item">
               {asset.label}
-              <CloseOutlined onClick={() => handleRemoveAsset?.(id, asset)} />
+              <CloseOutlined
+                onClick={e => {
+                  // avoid click close to open asset selector
+                  e.stopPropagation();
+                  handleRemoveAsset?.(id, asset);
+                }}
+              />
             </div>
           ),
         )}
