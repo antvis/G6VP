@@ -1,7 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { message } from 'antd';
 import request from 'umi-request';
-
+import { refreshToken } from './TuGraphService';
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: '初始化查询',
   service: async () => {
@@ -39,26 +39,20 @@ export const GI_SERVICE_SCHEMA = {
         },
       });
       const { success, data } = result;
-      // if (success) {
-      //   res = data;
-      // }
-      // if (data.code === 401) {
-      //   notification.error({
-      //     message: '认证失败：Unauthorized',
-      //     description: data.data.error_message,
-      //   });
-      //   res = {
-      //     nodes: [],
-      //     edges: [],
-      //   };
-      // }
-      if (success) {
-        return data;
+      if (!success) {
+        return {
+          nodes: [],
+          edges: [],
+        };
       }
-      return {
-        nodes: [],
-        edges: [],
-      };
+      if (data.error_message) {
+        refreshToken();
+        return {
+          nodes: [],
+          edges: [],
+        };
+      }
+      return data;
     } catch (error) {
       console.error('error', error);
       return {
