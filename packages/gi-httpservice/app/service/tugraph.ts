@@ -169,11 +169,11 @@ class TuGraphService extends Service {
    */
   async queryNeighbors(params: INeighborsParams) {
     const { ids, graphName = '', sep = 1, authorization = '', limit = 100 } = params;
-    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT ${limit}`;
+    let cypher = `match p=(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN p LIMIT ${limit}`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
-      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m LIMIT ${limit}`;
+      cypher = `match p=(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN p LIMIT ${limit}`;
     }
 
     const responseData = await this.querySubGraphByCypher(cypher, graphName, authorization);
