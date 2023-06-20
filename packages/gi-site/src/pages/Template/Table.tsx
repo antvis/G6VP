@@ -1,10 +1,9 @@
 import { Button, Space, Table } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { deleteDataset } from '../../services/dataset';
 // import { getUid } from '../Workspace/utils';
 const DatasetTable = ({ data }) => {
-  const history = useHistory();
 
   const handleDelete = async record => {
     await deleteDataset(record.id);

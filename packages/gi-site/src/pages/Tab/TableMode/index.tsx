@@ -5,7 +5,7 @@ import '@antv/s2-react/dist/style.min.css';
 import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import getData from './utils';
-import { IGraphData } from '@antv/gi-sdk/src/process/schema';
+import { IGraphData } from '@antv/gi-sdk';
 
 const { TabPane } = Tabs;
 interface TableModeProps {}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { getSearchParams } from '../../components/utils';
+import { getSearchParams } from '../utils';
 import Detail from './Detail';
 import './index.less';
 import SideList from './List';

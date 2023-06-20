@@ -2,7 +2,7 @@ import { Icon, utils } from '@antv/gi-sdk';
 import { Drawer, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../../components/FileServerEngine';
-import { useContext } from '../../Analysis/hooks/useContext';
+import { useContext } from '../hooks/useContext';
 
 interface uploadPanel {
   visible: boolean;
