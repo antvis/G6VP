@@ -8,8 +8,7 @@ import {
   SelectOutlined,
   FireTwoTone,
 } from '@ant-design/icons';
-import { GraphinData } from '@antv/graphin';
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext, utils, type GIGraphData } from '@antv/gi-sdk';
 import { Button, Dropdown, Menu, Select, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
@@ -38,7 +37,7 @@ interface FilterSelectionProps {
   removeFilterCriteria: (id: string) => void;
   nodeProperties: Object;
   edgeProperties: Object;
-  source: GraphinData;
+  source: GIGraphData;
   sorttedProperties?: {
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
