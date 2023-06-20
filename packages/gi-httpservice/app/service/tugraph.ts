@@ -40,16 +40,15 @@ class TuGraphService extends Service {
   }
   async refresh(params) {
     const { authorization } = params;
+
     const { engineServerURL } = readTuGraphConfig();
 
     const result = await this.ctx.curl(`${engineServerURL}/refresh`, {
       headers: {
         'content-type': 'application/json',
-      },
-      method: 'POST',
-      data: {
         Authorization: authorization,
       },
+      method: 'POST',
       timeout: [30000, 50000],
       dataType: 'json',
     });

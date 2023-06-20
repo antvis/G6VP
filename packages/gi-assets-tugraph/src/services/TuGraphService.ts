@@ -81,15 +81,14 @@ export const queryVertexLabelCount = async () => {
 };
 
 export const refreshToken = async () => {
-  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, GI_SITE_PROJECT_ID } = utils.getServerEngineContext();
+  const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, GI_SITE_PROJECT_ID, username, password, engineServerURL } =
+    utils.getServerEngineContext();
   const result = await request(`${HTTP_SERVICE_URL}/api/tugraph/refresh`, {
     method: 'POST',
-    data: {
-      Authorization: ENGINE_USER_TOKEN,
-    },
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       Accept: 'application/json; charset=UTF-8',
+      Authorization: ENGINE_USER_TOKEN,
     },
   }).catch(error => {});
 
@@ -100,6 +99,7 @@ export const refreshToken = async () => {
     return result;
   }
   const { data } = result;
+
   utils.setServerEngineContext({
     ENGINE_USER_TOKEN: `Bearer ${data.jwt}`,
   });
@@ -107,14 +107,14 @@ export const refreshToken = async () => {
   try {
     //@ts-ignore
     const { datasetId } = await window.GI_PROJECT_DB.getItem(GI_SITE_PROJECT_ID);
-    // 找到 数据集 ds_18410c71-3450-4abc-a2db-0ab41d800980
+    // 找到 数据集
     //@ts-ignore
     const ctx = await window.GI_DATASET_DB.getItem(datasetId);
     // 变量a就是该数据集的全部信息，修改它的 ENGINE_USER_TOKEN
     ctx.engineContext.ENGINE_USER_TOKEN = `Bearer ${data.jwt}`;
     //重新设置回数据集中
     //@ts-ignore
-    window.GI_DATASET_DB.setItem(datasetId, ctx);
+    await window.GI_DATASET_DB.setItem(datasetId, ctx);
     notification.error({
       message: '重新认证成功，请刷新页面',
     });

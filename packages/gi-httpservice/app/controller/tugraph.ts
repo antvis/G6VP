@@ -20,13 +20,8 @@ class TuGraphController extends Controller {
 
   async refresh() {
     const { ctx } = this;
-    const params = ctx.request.body;
-
-    const queryParams = {
-      ...params,
-      authorization: ctx.request.header.authorization,
-    };
-    const result = await ctx.service.tugraph.refresh(queryParams);
+    const { header } = ctx.request;
+    const result = await ctx.service.tugraph.refresh(header);
     responseData(ctx, result);
   }
 
