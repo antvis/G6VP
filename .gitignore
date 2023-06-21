@@ -81,6 +81,9 @@ packages/gi-site/public/libs/*.css
 packages/gi-site/src/env.ts
 packages/gi-site/scripts/*.json
 
+# ignore inject
+packages/gi-site/src/services/inject.ts
+
 .turbo
 
 scripts/publish_yuyan.mjs

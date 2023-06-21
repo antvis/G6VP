@@ -1,6 +1,6 @@
 import { FieldStringOutlined, NumberOutlined } from '@ant-design/icons';
 import { Select } from 'antd';
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import './index.less';
 
 const { Option, OptGroup } = Select;
@@ -18,10 +18,32 @@ const iconMap = {
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
+const match = (a: string, b: string) => a.toLocaleLowerCase().includes(b.toLocaleLowerCase());
+
 const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData, onChange }) => {
+  const [searchValue, setSearchValue] = useState('');
+  const options = useMemo(() => {
+    return schemaData
+      .map(d => {
+        if (match(d.nodeType || d.edgeType, searchValue)) return d;
+        const properties = Object.entries(d.properties).filter(([key]) => match(key, searchValue));
+        return {
+          ...d,
+          properties: Object.fromEntries(properties),
+        };
+      })
+      .filter(d => Object.keys(d.properties).length > 0);
+  }, [schemaData, searchValue]);
+
   return (
     <div className="group-select-container">
-      <Select defaultValue={Array.from(value) as any} style={{ width: 200 }} onChange={onChange} mode={mode}>
+      <Select
+        defaultValue={Array.from(value) as any}
+        style={{ width: 200 }}
+        onChange={onChange}
+        mode={mode}
+        onSearch={setSearchValue}
+      >
         {schemaData.map(d => {
           const properties = d.properties;
           const current: any = [];
