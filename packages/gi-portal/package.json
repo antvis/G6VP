@@ -22,15 +22,14 @@
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
-    "@aligov/global-string-format": "^1.0.7"
+    "@aligov/global-string-format": "^1.0.7",
+    "@react-spring/types": "9.6.0",
+    "react-spring": "9.6.0"
   },
   "author": "AntV",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
-  },
-  "devDependencies": {
-    "react-spring": "^9.5.4"
   },
   "private": true
 }

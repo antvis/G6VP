@@ -87,8 +87,8 @@ const Analysis = props => {
       localStorage.setItem(
         'SERVER_ENGINE_CONTEXT',
         JSON.stringify({
-          GI_SITE_PROJECT_ID: projectId,
           ...engineContext,
+          GI_SITE_PROJECT_ID: projectId,
         }),
       );
 

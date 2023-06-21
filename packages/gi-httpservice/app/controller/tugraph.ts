@@ -18,6 +18,13 @@ class TuGraphController extends Controller {
     responseData(ctx, result);
   }
 
+  async refresh() {
+    const { ctx } = this;
+    const { header } = ctx.request;
+    const result = await ctx.service.tugraph.refresh(header);
+    responseData(ctx, result);
+  }
+
   async queryByGraphLanguage() {
     const { ctx } = this;
     const params = ctx.request.body;

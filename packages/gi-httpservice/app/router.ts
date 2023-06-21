@@ -40,6 +40,7 @@ export default (app: Application) => {
   router.get('/api/tugraph/schema', controller.tugraph.getSchema);
   router.get('/api/tugraph/list', controller.tugraph.getSubGraphList);
   router.get('/api/tugraph/count', controller.tugraph.getVertexEdgeCount);
+  router.post('/api/tugraph/refresh', controller.tugraph.refresh);
 
   // HugeGraph
   router.post('/api/hugegraph/gremlin', controller.hugegraph.gremlin);

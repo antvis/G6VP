@@ -1,7 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import request from 'umi-request';
-
+import { refreshToken } from './TuGraphService';
 export const CypherQuery = {
   name: '图语句查询',
   service: async (params = {}) => {
@@ -34,10 +34,7 @@ export const CypherQuery = {
       };
     }
     if (data.error_message) {
-      notification.error({
-        message: '引擎认证失败：请检查数据集',
-        description: data.error_message,
-      });
+      refreshToken();
       return {
         nodes: [],
         edges: [],
