@@ -41,11 +41,7 @@ const EXTRA_CONFIG = isDev
         'react-dom': 'ReactDOM',
         antd: 'antd',
       },
-      scripts: [
-        'https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js',
-        'https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js',
-        'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
-      ],
+      scripts: ['https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js'],
       links: [],
     }
   : {
@@ -83,6 +79,8 @@ export default {
     "window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-9Z6Z0NTLFB');",
     "window.TracertCmdCache = window.TracertCmdCache || [];var t = window.Tracert || {_isRenderInit: !0,call: function () {window.TracertCmdCache.push(arguments);},},f = ['call','start','config','logPv','info','err','click','expo','pageName','pageState','time','timeEnd','parse','checkExpo','stringify','report','set','before'];for (let i = 0; i < f.length; i++) {(function (fn) {t[fn] = function () {var a = [],l = arguments.length;for (var j = 0; j < l; j++) {a.push(arguments[j]);}a.unshift(fn);window.TracertCmdCache.push(a);};})(f[i]);}window.Tracert = t;window._to = window._to || {};function filterLog(logType) {return function (opts) {return !!window.GI_USER_INFO?.outUserNo;};}window.Tracert.call('before', 'logPv', filterLog('PageMonitor'));window.Tracert.call('before', 'expo', filterLog('expo'));window.Tracert.call('before', 'click', filterLog('click'));",
     'https://ur.alipay.com/tracert_a3220.js',
+    'https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js',
+    'https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js',
   ],
   publicPath: BUILD_MODE === 'docker' ? '/public/' : '/',
   hash: true,
@@ -92,7 +90,6 @@ export default {
   },
   alias: {
     '@': './src',
-    // '@antv/gi-sdk': '../gi-sdk/src',
   },
   routes: [
     { exact: true, path: '', redirect: '/home' },
@@ -212,13 +209,10 @@ export default {
   request: {
     dataField: '',
   },
-  fastRefresh: true,
-  mfsu: {
-    // exclude: ['@antv/*', '@alipay/*'],
-    // strategy: 'eager',
-  },
+  mfsu: false,
   // monorepoRedirect: {
-  //   srcDir: ['src'],
+  //   srcDir: ['.', 'src'],
+  //   exclude: [/^(?!@alipay|@antv).*/],
   // },
   // analyze: {
   // analyzerMode: 'server',

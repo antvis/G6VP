@@ -54,8 +54,8 @@ const SdkContent = () => {
       data: { transData: data },
     },
     deps: {
-      react: '17.x',
-      'react-dom': '17.x',
+      react: '18.x',
+      'react-dom': '18.x',
       localforage: '1.10.0',
       antd: ANTD_VERSION,
       '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,

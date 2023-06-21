@@ -43,18 +43,6 @@ const depsPackage = [
     name: 'localforage',
   },
   {
-    url: 'https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js',
-    version: '18.2.0',
-    global: 'React',
-    name: 'react',
-  },
-  {
-    url: 'https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js',
-    name: 'react-dom',
-    version: '18.2.0',
-    global: 'ReactDOM',
-  },
-  {
     url: 'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     name: 'lodash',
     version: '4.17.21',

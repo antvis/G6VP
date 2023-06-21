@@ -48,6 +48,7 @@
     "@types/classnames": "^2.2.9",
     "@types/node": "^7.0.12",
     "@types/systemjs": "latest",
+    "@umijs/max": "^4.0.0",
     "ahooks": "^2.10.9",
     "classnames": "^2.2.6",
     "d3-scale": "^4.0.0",
@@ -65,7 +66,6 @@
     "react-monaco-editor": "^0.48.0",
     "swr": "^1.2.2",
     "systemjs": "^6.11.0",
-    "@umijs/max": "^4.0.0",
     "umi": "^4.0.0",
     "umi-request": "^1.3.9",
     "use-immer": "^0.7.0",
@@ -80,8 +80,8 @@
   "peerDependencies": {
     "@antv/graphin": "^2.7.15",
     "antd": "4.x",
-    "react": "17.x",
-    "react-dom": "17.x"
+    "react": "18.x",
+    "react-dom": "18.x"
   },
   "publishConfig": {
     "access": "public"
