@@ -355,6 +355,7 @@ const GISDK = (props: Props) => {
     restartForceSimulation: restartForceSimulation,
     locales,
     useIntl,
+    language,
   };
   if (!ComponentAssets) {
     return null;
