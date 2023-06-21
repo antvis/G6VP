@@ -311,6 +311,8 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
+                // 测试 暂写死
+                locales={utils.getCurrentLocales(activeAssets!.locales, 'zh-CN')}
               >
                 <GraphRef graphRef={graphRef} />
               </GISDK>
