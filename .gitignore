@@ -89,3 +89,5 @@ packages/gi-site/src/services/inject.ts
 scripts/publish_yuyan.mjs
 packages/gi-httpservice-xxx
 release/gi-httpservice
+
+pnpm-lock.yaml
