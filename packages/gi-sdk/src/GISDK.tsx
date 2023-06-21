@@ -1,4 +1,4 @@
-import Graphin from '@antv/graphin';
+import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
@@ -10,9 +10,10 @@ import { GraphInsightContext } from './context';
 import getComponents from './hooks/useComponents';
 import './index.less';
 import * as utils from './process';
-import { createUuid } from './process/common';
 import { registerLayouts, registerShapes } from './register';
-import type { GIComponentConfig, GIGraphData, Props, State } from './typing';
+import type { Props, State } from './typing';
+import { GIComponentConfig } from './typing';
+import { createUuid } from './process/common';
 
 let updateHistoryTimer: number;
 
@@ -38,14 +39,14 @@ const GISDK = (props: Props) => {
   registerLayouts(LayoutAssets);
 
   const [state, updateState] = useImmer<State>({
-    data: { nodes: [], edges: [] } as GIGraphData,
+    data: { nodes: [], edges: [] } as GraphinData,
     propertyGraphData: undefined,
     schemaData: {
       //会在初始化时候更新
       nodes: [],
       edges: [],
     },
-    source: { nodes: [], edges: [] } as GIGraphData,
+    source: { nodes: [], edges: [] } as GraphinData,
     layout: {},
     components: [] as GIComponentConfig[],
     config: props.config,

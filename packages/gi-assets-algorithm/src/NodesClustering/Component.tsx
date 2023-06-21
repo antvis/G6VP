@@ -1,6 +1,7 @@
 import { ReloadOutlined } from '@ant-design/icons';
 import { kMeans } from '@antv/algorithm';
-import { useContext, type GIGraphData } from '@antv/gi-sdk';
+import { useContext } from '@antv/gi-sdk';
+import type { GraphinData } from '@antv/graphin';
 import { Button, Empty, InputNumber, Row, Col, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +35,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   const { data, graph, layout, updateContext, updateHistory } = context;
   const [nodeClusteringAlgo, setNodeClusteringAlgo] = useState<string>(NodesClusteringAlgorithm.KMeans);
   const [resData, setResData] = useState<any>(null);
-  const [initData, setInitData] = useState<GIGraphData>({
+  const [initData, setInitData] = useState<GraphinData>({
     nodes: [],
     edges: [],
   });
@@ -99,7 +100,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     }
   }, [controlledValues]);
 
-  const formatOriginData = ({ nodes = [], edges = [] }: GIGraphData) => {
+  const formatOriginData = ({ nodes = [], edges = [] }: GraphinData) => {
     return {
       nodes: nodes.map(node => {
         const properties = Object.assign({}, node.data, node.data.properties);

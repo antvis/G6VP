@@ -1,5 +1,6 @@
 import { FireTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useContext, utils, GIGraphData } from '@antv/gi-sdk';
+import { useContext, utils } from '@antv/gi-sdk';
+import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -145,7 +146,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   }, [filterKeys]);
 
   const handleFilterOptionsChange = (options: { [id: string]: IFilterCriteria }) => {
-    let data: GIGraphData = source;
+    let data: GraphinData = source;
     // 多个筛选器的筛选逻辑为 ”与“
     if (filterLogic === 'and') {
       Object.values(options).map(filterCriteria => {

@@ -80,7 +80,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     if (!largeGraphData) {
       return;
     }
-    let data = largeGraphData;
+    let data: GraphinData = largeGraphData as GraphinData;
 
     let canvasData;
 
@@ -155,7 +155,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
           return (
             <div>
               <FilterSelection
-                source={largeGraphData!}
+                source={largeGraphData as GraphinData}
                 filterCriteria={filterCriter}
                 nodeProperties={nodeProperties}
                 edgeProperties={edgeProperties}

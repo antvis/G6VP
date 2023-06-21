@@ -46,7 +46,7 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
           marginRight: `${padding}px`,
           background: 'var(--background-color-transparent)',
           borderRadius: '8px',
-          overflow: 'auto',
+          overflowY: 'scroll',
         }}
       >
         <SegmentedTabs items={items} />

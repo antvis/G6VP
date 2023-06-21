@@ -12,13 +12,9 @@
   "scripts": {
     "analyse": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build": "node --experimental-json-modules scripts/pre-build.mjs && NODE_OPTIONS=--max_old_space_size=4096 umi build",
-    "build:docker": "node scripts/link.mjs && cd ../../ && npm run build:all:umd && cd packages/gi-site/ &&  BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/copy-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
+    "build:docker": "cd ../../ && npm run build:all:umd && cd packages/gi-site/ &&  BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/copy-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",
-    "start": "node --experimental-json-modules scripts/link.mjs && node scripts/pre-build.mjs && cross-env NODE_OPTIONS=--max_old_space_size=4096 cross-env PORT=8000 umi dev",
-    "link": "node scripts/link.mjs",
-    "unlink": "cross-env UNLINK=true node scripts/link.mjs",
-    "eject": "cross-env EJECT=true node scripts/link.mjs"
-
+    "start": "node --experimental-json-modules scripts/pre-build.mjs && cross-env NODE_OPTIONS=--max_old_space_size=4096 cross-env PORT=8000 umi dev"
   },
   "dependencies": {
     "@ant-design/charts": "^1.0.21",
@@ -30,14 +26,14 @@
     "@antv/gi-assets-advance": "workspace:*",
     "@antv/gi-assets-algorithm": "workspace:*",
     "@antv/gi-assets-basic": "workspace:*",
-    "@antv/gi-assets-galaxybase": "workspace:*",
     "@antv/gi-assets-graphscope": "workspace:*",
-    "@antv/gi-assets-hugegraph": "workspace:*",
-    "@antv/gi-assets-janusgraph": "workspace:*",
     "@antv/gi-assets-neo4j": "workspace:*",
     "@antv/gi-assets-scene": "workspace:*",
     "@antv/gi-assets-tugraph": "workspace:*",
     "@antv/gi-assets-tugraph-analytics": "workspace:*",
+    "@antv/gi-assets-galaxybase": "workspace:*",
+    "@antv/gi-assets-hugegraph": "workspace:*",
+    "@antv/gi-assets-janusgraph": "workspace:*",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
     "@antv/gi-theme-antd": "workspace:*",
@@ -71,10 +67,10 @@
     "xlsx2js": "^1.3.8"
   },
   "devDependencies": {
-    "cross-env": "7.0.3",
     "fs-extra": "^10.1.0",
     "gh-pages": "latest",
-    "perf_hooks": "^0.0.1"
+    "perf_hooks": "^0.0.1",
+    "cross-env": "7.0.3"
   },
   "peerDependencies": {
     "@antv/graphin": "^2.7.15",

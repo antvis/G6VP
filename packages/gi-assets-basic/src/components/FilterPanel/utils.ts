@@ -1,4 +1,4 @@
-import type { GIGraphData } from '@antv/gi-sdk';
+import type { GraphinData } from '@antv/graphin';
 import { IFilterCriteria } from './type';
 
 /**
@@ -9,16 +9,16 @@ import { IFilterCriteria } from './type';
  * @returns
  */
 export const filterGraphData = (
-  source: GIGraphData,
+  source: GraphinData,
   filterCriteria: IFilterCriteria,
   isFilterIsolatedNodes: boolean,
-): GIGraphData => {
+): GraphinData => {
   const { analyzerType, isFilterReady, elementType, prop, selectValue, range } = filterCriteria;
   if (!isFilterReady || analyzerType === 'NONE') {
     return source;
   }
 
-  const newData: GIGraphData = {
+  const newData: GraphinData = {
     nodes: [],
     edges: [],
   };
@@ -113,7 +113,7 @@ export const filterGraphData = (
  * @param elementType 元素类型
  * @returns 图表数据
  */
-export const getChartData = (graphData: GIGraphData, prop: string, elementType: 'node' | 'edge') => {
+export const getChartData = (graphData: GraphinData, prop: string, elementType: 'node' | 'edge') => {
   const elements = elementType === 'node' ? graphData.nodes : graphData.edges;
   const chartData = new Map<string, number>();
   elements?.forEach(e => {
@@ -147,9 +147,9 @@ export const getHistogramData = (graphData, prop: string, elementType: 'node' | 
  * @param data 子图数据
  * @returns
  */
-export const highlightSubGraph = (graph, data: GIGraphData) => {
+export const highlightSubGraph = (graph, data: GraphinData) => {
   if (!graph || graph.destroyed) return {};
-  const source = graph.save() as GIGraphData;
+  const source = graph.save() as GraphinData;
 
   const nodeIds = data.nodes.map(node => node.id);
   const edgeIds: string[] = [];
