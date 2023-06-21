@@ -34,6 +34,8 @@
     "@antv/gi-common-components": "workspace:*",
     "@ant-design/icons": "^4.7.0",
     "immer": "^9.0.7",
+    "lodash-es": "^4.17.21",
+    "react-intl": "^6.4.4",
     "size-sensor": "^1.0.1",
     "use-immer": "^0.6.0"
   },

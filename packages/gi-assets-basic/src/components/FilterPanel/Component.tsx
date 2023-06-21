@@ -41,7 +41,8 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
   }>({ node: [], edge: [] });
-  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData } = useContext();
+  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData, useIntl } = useContext();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (!enableInfoDetect) return;
@@ -338,12 +339,12 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        增加筛选器
+        {formatMessage({id: 'FilterPanel.addfilter'})}
       </Button>
       {enableInfoDetect ? (
         <Button style={{ width: '100px', marginLeft: '4px' }} onClick={handleClickRecommend}>
           <FireTwoTone twoToneColor="#eb2f96" />
-          智能推荐
+          {formatMessage({ id: 'FilterPanel.recommend' })}
         </Button>
       ) : (
         ''

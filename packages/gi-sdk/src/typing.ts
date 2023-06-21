@@ -80,6 +80,11 @@ export interface Props {
   assets: GIAssets;
   /** 注册的全局数据服务 */
   services: GIService[];
+  /** 国际化语言配置 */
+  locales: {
+    language: string;
+    [k: string]: string;
+  }
   /**
    * style
    */
@@ -188,6 +193,10 @@ export interface ElementAsset {
   };
   registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
 }
+export interface LocaleAsset {
+  language: string;
+  [key: string]: string;
+}
 
 /**
  * 服务实例: GISDK.services
@@ -225,6 +234,10 @@ export interface GILayoutAssets {
   [key: string]: LayoutAsset;
 }
 
+export interface GILocaleAssets {
+  [key: string]: LocaleAsset;
+}
+
 export interface ITemplate {
   /** 模版ID */
   id: string;
@@ -253,7 +266,8 @@ export type GIAssets = Partial<{
   services: EngineServer[];
   /** 模版资产 */
   templates: { [key: string]: ITemplate };
-  /** 部署资产 */
+  /** 国际化资产 */
+  locales: GILocaleAssets;
   deploys: {
     [key: string]: {
       component: React.ReactNode;

@@ -1,3 +1,4 @@
+import { merge } from 'lodash-es';
 export interface AssetPackage {
   name: string;
   url: string;
@@ -116,7 +117,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services, templates, deploys } = curr;
+      const { components, version, name, elements, layouts, services, templates, deploys, locale } = curr;
 
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
@@ -155,6 +156,9 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
               },
             ]
           : acc.services,
+        locales: {
+          ...merge(acc.locales, locale)
+        }
       };
     },
     {
@@ -164,6 +168,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
       templates: {},
       services: [],
       deploys: {},
+      locales: {}
     },
   );
 };

@@ -48,7 +48,7 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { propertyGraphData } = useContext();
+  const { propertyGraphData, useIntl } = useContext();
   const {
     filterCriteria,
     nodeProperties,
@@ -59,6 +59,8 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     enableInfoDetect,
     sorttedProperties = { node: [], edge: [] },
   } = props;
+
+  const { formatMessage } = useIntl();
 
   // 对于离散类型的数据支持切换图表类型
   const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);
@@ -260,7 +262,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           style={{ width: '80%' }}
           onChange={onSelectChange}
           className="gi-filter-panel-prop-select"
-          placeholder="选择元素属性"
+          placeholder={formatMessage({ id: 'FilterPanel.selectElementAttr' })}
           showSearch
           filterOption={(input, option) => {
             return (option?.value as string)?.toLowerCase().includes(input.toLowerCase());
@@ -271,10 +273,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               : undefined
           }
         >
-          <Select.OptGroup key="node" label="节点">
+          <Select.OptGroup key="node" label={formatMessage({ id: 'FilterPanel.node' })}>
             {getPropertyOptions('node')}
           </Select.OptGroup>
-          <Select.OptGroup key="edge" label="边">
+          <Select.OptGroup key="edge" label={formatMessage({ id: 'FilterPanel.edge' })}>
             {getPropertyOptions('edge')}
           </Select.OptGroup>
         </Select>
@@ -294,7 +296,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             style={{ width: '100%' }}
             onChange={onValueSelectChange}
             mode="tags"
-            placeholder="选择筛选值"
+            placeholder={formatMessage({id: 'FilterPanel.selectFilterValue'})}
             value={filterCriteria.selectValue}
           >
             {filterCriteria.selectOptions?.map(option => {
@@ -349,7 +351,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           />
         )}
 
-        {filterCriteria.analyzerType === 'NONE' && <span>请选择合法字段</span>}
+        {filterCriteria.analyzerType === 'NONE' && <span>{formatMessage({id: 'FilterPanel.selectValidField'})}</span>}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
+import { IntlProvider, useIntl } from 'react-intl';
 import { defaultInitializerCfg } from './Initializer';
 import SizeSensor from './SizeSensor';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
@@ -20,7 +21,8 @@ let updateHistoryTimer: number;
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
-  const { children, assets, id, services, config } = props;
+  const { children, assets, id, services, config, locales } = props;
+  const { language, ...localeMessages } = locales || {};
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -352,6 +354,8 @@ const GISDK = (props: Props) => {
     },
     stopForceSimulation: stopForceSimulation,
     restartForceSimulation: restartForceSimulation,
+    locales,
+    useIntl,
   };
   if (!ComponentAssets) {
     return null;
@@ -387,40 +391,42 @@ const GISDK = (props: Props) => {
   }, [data]);
 
   return (
-    //@ts-ignore
-    <GraphInsightContext.Provider value={ContextValue}>
-      <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
-        <div
-          id={`${GISDK_ID}-container`}
-          style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
-        >
-          <Graphin
-            animate={true}
-            ref={graphinRef}
-            containerId={`${GISDK_ID}-graphin-container`}
-            containerStyle={{ transform: 'scale(1)' }}
-            data={graphData}
-            layout={layout}
-            enabledStack={true}
-            theme={theme}
-            layoutCache={state.layoutCache}
-            style={{ borderRadius: '8px', overflow: 'hidden' }}
-            willUnmount={() => {
-              console.log('un mount....');
-            }}
+    <IntlProvider locale={language} messages={localeMessages}>
+      {/* @ts-ignore */}
+      <GraphInsightContext.Provider value={ContextValue}>
+        <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
+          <div
+            id={`${GISDK_ID}-container`}
+            style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
           >
-            <>
-              {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
-              {HAS_GRAPH && state.initialized && <SizeSensor />}
-              {/* <SetupUseGraphinHook updateContext={updateState} /> */}
-              {HAS_GRAPH && state.initialized && renderComponents()}
-              {HAS_GRAPH && state.initialized && <FitCenterAfterMount />}
-              {HAS_GRAPH && state.initialized && children}
-            </>
-          </Graphin>
-        </div>
-      </GICC_LAYOUT_COMPONENT>
-    </GraphInsightContext.Provider>
+            <Graphin
+              animate={true}
+              ref={graphinRef}
+              containerId={`${GISDK_ID}-graphin-container`}
+              containerStyle={{ transform: 'scale(1)' }}
+              data={graphData}
+              layout={layout}
+              enabledStack={true}
+              theme={theme}
+              layoutCache={state.layoutCache}
+              style={{ borderRadius: '8px', overflow: 'hidden' }}
+              willUnmount={() => {
+                console.log('un mount....');
+              }}
+            >
+              <>
+                {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
+                {HAS_GRAPH && state.initialized && <SizeSensor />}
+                {/* <SetupUseGraphinHook updateContext={updateState} /> */}
+                {HAS_GRAPH && state.initialized && renderComponents()}
+                {HAS_GRAPH && state.initialized && <FitCenterAfterMount />}
+                {HAS_GRAPH && state.initialized && children}
+              </>
+            </Graphin>
+          </div>
+        </GICC_LAYOUT_COMPONENT>
+      </GraphInsightContext.Provider>
+    </IntlProvider>
   );
 };
 export default React.memo(GISDK);
