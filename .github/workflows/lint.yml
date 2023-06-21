@@ -16,18 +16,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.0
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+
+      - name: installl pnpm
+        run: npm i pnpm@latest -g
 
       # postInstall will build the product
-      - name: Install dependencies and Build the product
+      - name: setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
+      - name: install dependencies
         run: pnpm install
 
       - name: Workflow failed alert
