@@ -35,6 +35,9 @@
       "git add"
     ]
   },
+  "resolutions": {
+    "antd": "4.x"
+  },
   "dependencies": {
     "@ant-design/icons": "4.7.0",
     "@antv/algorithm": "^0.1.26-beta.0",

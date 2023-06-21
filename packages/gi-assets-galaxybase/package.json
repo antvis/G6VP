@@ -25,9 +25,6 @@
     "prepublishOnly": "npm run build",
     "postpublish": "tnpm sync @antv/gi-assets-galaxybase"
   },
-  "resolutions": {
-    "antd": "4.x"
-  },
   "dependencies": {
     "@antv/gi-sdk": "workspace:*",
     "@ant-design/icons": "^4.6.2",
