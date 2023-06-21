@@ -1,7 +1,51 @@
 .gi-group-contaner {
-  .gi-sidebar-collapse {
-    background-color: rgba(0, 0, 0, 0);
+  .gi-style-form {
+    height: 100%;
+
+    .gi-style-form-list {
+      height: 100%;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+
+      .gi-sidebar-collapse {
+        height: calc(100% - 40px);
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0);
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .gi-style-form-btn-group {
+        padding: 0 8px;
+        display: flex;
+        gap: 8px;
+
+        > :first-child {
+          flex-grow: 1;
+        }
+      }
+    }
+
+    .ant-form-item {
+      height: 100%;
+      & > .ant-form-item-row {
+        height: 100%;
+        & > .ant-form-item-control {
+          height: 100%;
+          & > .ant-form-item-control-input {
+            height: 100%;
+            & > .ant-form-item-control-input-content {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
   }
+
   .ant-formily-item {
     margin-bottom: 12px;
   }

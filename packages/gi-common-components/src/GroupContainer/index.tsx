@@ -83,15 +83,23 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
     };
   });
 
+  /** 清除样式分组 */
+  const clear = () => {
+    form.setFieldsValue({
+      groups: [form.getFieldValue('groups')[0]],
+    });
+    onValuesChange({}, form.getFieldsValue());
+  };
+
   return (
     /** 让fixed定位从该容器开始 */
     <div className="gi-group-contaner" style={{ transform: 'scale(1)', height: '100%' }}>
       <Form
-        style={{ overflow: 'scroll', height: 'calc(100% - 30px)' }}
         initialValues={initValues}
         layout="vertical"
         form={form}
         onValuesChange={onValuesChange}
+        className="gi-style-form"
       >
         <Form.Item
           name="groups"
@@ -101,35 +109,28 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           <Form.List name="groups">
             {(fields, { add, remove }) => {
               return (
-                <>
-                  <Button
-                    type="primary"
-                    style={{
-                      width: '100%',
-                      borderRadius: '4px',
-                      position: 'fixed',
-                      zIndex: 999,
-                      left: '0px',
-                      bottom: '12px',
-                    }}
-                    className="gi-tour-style-add-group"
-                    onClick={() => {
-                      const idx = fields.length + 1;
-                      const options = {
-                        ...defaultGroupOption,
-                        groupId: Math.random().toString(36).slice(-8),
-                        groupName: `自定义样式 ${idx}`,
-                      };
-                      add(options);
-                      setActiveKeys([...activeKeys, `${fields.length}`]);
-                    }}
-                    icon={<PlusOutlined />}
-                  >
-                    新增样式分组
-                  </Button>
-
+                <div className="gi-style-form-list">
+                  <div className="gi-style-form-btn-group">
+                    <Button
+                      type="primary"
+                      className="gi-tour-style-add-group"
+                      onClick={() => {
+                        const idx = fields.length + 1;
+                        const options = {
+                          ...defaultGroupOption,
+                          groupId: Math.random().toString(36).slice(-8),
+                          groupName: `自定义样式 ${idx}`,
+                        };
+                        add(options);
+                        setActiveKeys([...activeKeys, `${fields.length}`]);
+                      }}
+                      icon={<PlusOutlined />}
+                    >
+                      新增样式分组
+                    </Button>
+                    <Button onClick={clear}>重置</Button>
+                  </div>
                   <Collapse
-                    // collapsible="header"
                     className="gi-sidebar-collapse"
                     bordered={false}
                     onChange={onPanelChange}
@@ -235,7 +236,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       );
                     })}
                   </Collapse>
-                </>
+                </div>
               );
             }}
           </Form.List>
