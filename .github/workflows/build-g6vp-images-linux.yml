@@ -8,7 +8,7 @@ on:
       - master
     paths-ignore:
       - 'LICENSE'
-      - '**.md' 
+      - '**.md'
   pull_request:
     branches:
       - master
@@ -25,28 +25,28 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Add envs to GITHUB_ENV
-      run: |
-        short_sha=$(git rev-parse --short HEAD)
-        echo "SHORT_SHA=${short_sha}" >> $GITHUB_ENV
+      - name: Add envs to GITHUB_ENV
+        run: |
+          short_sha=$(git rev-parse --short HEAD)
+          echo "SHORT_SHA=${short_sha}" >> $GITHUB_ENV
 
-    - name: Build G6VP Image
-      run: |
-        cd ${GITHUB_WORKSPACE}
-        sudo docker build -t antvis/gi-site:${SHORT_SHA} -f packages/gi-site/docker/website.Dockerfile .
+      - name: Build G6VP Image
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          sudo docker build -t antvis/gi-site:${SHORT_SHA} -f packages/gi-site/docker/website.Dockerfile .
 
-    - name: Test Image
-      run: |
-        sudo docker run --name gi-site -d --rm -p 7001:7001 antvis/gi-site:${SHORT_SHA}
-        # any test cases here
-    
-    - name: Release Image
-      if: false
-      env:
-        docker_username: ${{ secrets.DOCKER_USER }}
-        docker_password: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        echo "${docker_password}" | sudo docker login --username="${docker_username}" --password-stdin
-        # sudo docker push xxxx
+      - name: Test Image
+        run: |
+          sudo docker run --name gi-site -d --rm -p 7001:7001 antvis/gi-site:${SHORT_SHA}
+          # any test cases here
+
+      - name: Release Image
+        if: false
+        env:
+          docker_username: ${{ secrets.DOCKER_USER }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "${docker_password}" | sudo docker login --username="${docker_username}" --password-stdin
+          # sudo docker push xxxx

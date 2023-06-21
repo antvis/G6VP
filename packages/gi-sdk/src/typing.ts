@@ -1,7 +1,16 @@
+import type { Combo } from '@antv/g6';
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
-export interface State {
+export interface State<
+  G extends {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  } = {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  },
+> {
   /** graphin */
   graph: GraphinContextType['graph'];
   layoutInstance: GraphinContextType['layout'];
@@ -13,15 +22,15 @@ export interface State {
   /** graphinsight */
 
   /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射 */
-  rawData: GraphinData;
+  rawData: G;
   /** 当前画布渲染的数据，经过视觉映射 */
-  data: GraphinData;
+  data: GIGraphData<G>;
   /** 由 data 生成的属性图数据 */
   propertyGraphData: IGraphData | undefined;
   /** 仅原始数据变化的时候才保存的数据，通常用于画布数据重置 */
-  source: GraphinData;
+  source: GIGraphData<G>;
   /** 大图数据 */
-  largeGraphData?: GraphinData;
+  largeGraphData?: GIGraphData<G>;
   /** 大图展示限制 */
   largeGraphLimit: number;
   /** 大图模式 */
@@ -408,16 +417,25 @@ export type AssetInfo = {
   [key: string]: any;
 };
 
-export interface GIGraphData {
+export interface GIGraphData<
+  G extends {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  } = {
+    nodes: Record<string, any>[];
+    edges: Record<string, any>[];
+  },
+> {
   nodes: {
     // 节点ID
     id: string;
     // 节点类型的枚举值。Property Graph 也称之为 node.label
     nodeType: string;
     // 业务数据,注意需要打平,暂不支持嵌套
-    data: {};
+    data: G['nodes'][number];
     // 业务数据（data）中的哪个字段，用来映射节点类型
-    nodeTypeKeyFromProperties?: string;
+    nodeTypeKeyFromProperties: string;
+    [key: string]: any;
   }[];
   edges: {
     // 边ID,默认构造为`${edge.source}-${edge.target}-{index}`
@@ -429,10 +447,12 @@ export interface GIGraphData {
     // 边类型的枚举值。Property Graph 也称之为 edge.label
     edgeType: string;
     // 业务数据,注意需要打平,暂不支持嵌套
-    data: {};
+    data: G['edges'][number];
     // 业务数据（data）中的哪个字段，用来映射边类型
-    edgeTypeKeyFromProperties?: string;
+    edgeTypeKeyFromProperties: string;
+    [key: string]: any;
   }[];
+  combos?: Combo[];
 }
 
 export type GIGraphSchema = GraphSchemaData;

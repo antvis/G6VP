@@ -40,3 +40,9 @@ export {
 } from './propertyGraph';
 export { default as getCurrentLocales } from './getCurrentLocales';
 
+export {
+  transNodeOrEdgeByFieldMapping,
+  transNodesOrEdgesByFieldMapping,
+  transDataBySchemaMeta,
+  transSchemaByMeta,
+} from './transGraphDataBySchemaMate';
