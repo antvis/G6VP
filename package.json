@@ -21,7 +21,7 @@
       }
     },
     "overrides": {
-      "antd": "4.x"
+      "antd": "^4.24.10"
     }
   },
   "husky": {
@@ -36,13 +36,13 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "4.7.0",
+    "@ant-design/icons": "^4.7.0",
     "@antv/algorithm": "^0.1.26-beta.0",
-    "@antv/g6": "^4.8.8",
+    "@antv/g6": "^4.8.19",
     "@antv/graphin": "^2.7.21",
     "@antv/layout": "^0.3.22",
-    "@antv/s2": "^1.29.0",
-    "@antv/s2-react": "^1.26.0",
+    "@antv/s2": "^1.48.0",
+    "@antv/s2-react": "^1.41.0",
     "@antv/util": "^3.2.5",
     "antd": "4.x",
     "buffer": "^6.0.3",
@@ -54,11 +54,11 @@
     "umi": "3.x"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@changesets/cli": "^2.26.1",
     "@types/react": "17.x",
     "@types/react-dom": "17.x",
     "babel-loader": "^8.2.5",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "css-loader": "^6.7.1",
     "father": "^2.30.6",
     "fs-extra": "^10.1.0",

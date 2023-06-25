@@ -36,7 +36,7 @@
   "author": "pomelo.lcw",
   "license": "ISC",
   "devDependencies": {
-    "@ant-design/icons": "^4.6.3",
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.x",
     "css-loader": "^6.2.0",
     "dumi": "^1.1.25",

@@ -5,21 +5,21 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  antd: 4.x
+  antd: ^4.24.10
 
 importers:
 
   .:
     dependencies:
       '@ant-design/icons':
-        specifier: 4.7.0
+        specifier: ^4.7.0
         version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/algorithm':
         specifier: ^0.1.26-beta.0
         version: 0.1.26-beta.0
       '@antv/g6':
-        specifier: ^4.8.8
-        version: 4.8.15
+        specifier: ^4.8.19
+        version: 4.8.19
       '@antv/graphin':
         specifier: ^2.7.21
         version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
@@ -27,16 +27,16 @@ importers:
         specifier: ^0.3.22
         version: 0.3.22(dagre@0.8.5)
       '@antv/s2':
-        specifier: ^1.29.0
+        specifier: ^1.48.0
         version: 1.48.0(@antv/g-base@0.4.7)
       '@antv/s2-react':
-        specifier: ^1.26.0
+        specifier: ^1.41.0
         version: 1.41.0(@ant-design/icons@4.7.0)(@antv/s2@1.48.0)(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@antv/util':
         specifier: ^3.2.5
         version: 3.3.2
       antd:
-        specifier: 4.x
+        specifier: ^4.24.10
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       buffer:
         specifier: ^6.0.3
@@ -124,13 +124,13 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/algorithm':
         specifier: ^0.1.26-beta.0
         version: 0.1.26-beta.0
       '@antv/g2plot':
-        specifier: ^2.4.4
+        specifier: ^2.4.31
         version: 2.4.31
       '@antv/gi-common-components':
         specifier: workspace:*
@@ -208,8 +208,8 @@ importers:
         specifier: ^1.21.3
         version: 1.21.3(@types/react@17.0.61)(react-dom@17.0.2)(react@17.0.2)
       react-spring:
-        specifier: 9.3.2
-        version: 9.3.2(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.135.0)(zdog@1.1.3)
+        specifier: 9.6.0
+        version: 9.6.0(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.135.0)(zdog@1.1.3)
       react-transition-group:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@17.0.2)(react@17.0.2)
@@ -220,19 +220,19 @@ importers:
         specifier: ^0.135.0
         version: 0.135.0
       use-immer:
-        specifier: ^0.6.0
-        version: 0.6.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-algorithm:
     dependencies:
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/algorithm':
         specifier: ^0.1.26-beta.0
         version: 0.1.26-beta.0
       '@antv/g2plot':
-        specifier: ^2.4.20
+        specifier: ^2.4.31
         version: 2.4.31
       '@antv/gi-sdk':
         specifier: workspace:*
@@ -244,11 +244,11 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@antv/s2':
-        specifier: ^1.3.0
+        specifier: ^1.48.0
         version: 1.48.0(@antv/g-base@0.4.7)
       '@antv/s2-react':
-        specifier: ^1.3.0
-        version: 1.41.0(@ant-design/icons@4.8.0)(@antv/s2@1.48.0)(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^1.41.0
+        version: 1.41.0(@ant-design/icons@4.7.0)(@antv/s2@1.48.0)(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       ahooks:
         specifier: ^3.7.7
         version: 3.7.7(react@17.0.2)
@@ -265,8 +265,8 @@ importers:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-basic:
     dependencies:
@@ -277,13 +277,13 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: latest
-        version: 5.1.4(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/algorithm':
         specifier: ^0.1.26-beta.0
         version: 0.1.26-beta.0
       '@antv/g2plot':
-        specifier: ^2.4.20
+        specifier: ^2.4.31
         version: 2.4.31
       '@antv/gi-common-components':
         specifier: workspace:*
@@ -328,8 +328,8 @@ importers:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-galaxybase:
     dependencies:
@@ -340,19 +340,19 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@16.14.0)(react@17.0.2)
       '@antv/gi-sdk':
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: 2.x
-        version: 2.7.16(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^2.7.21
+        version: 2.7.21(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2)
       '@antv/graphin-icons':
         specifier: ^1.0.0
         version: 1.0.0
       antd:
-        specifier: 4.x
+        specifier: ^4.24.10
         version: 4.24.10(react-dom@16.14.0)(react@17.0.2)
       codemirror:
         specifier: ^5.25.0
@@ -376,8 +376,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
     devDependencies:
       dumi:
         specifier: ^1.1.38
@@ -410,8 +410,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/gi-sdk':
         specifier: workspace:*
         version: link:../gi-sdk
@@ -434,8 +434,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-hugegraph:
     dependencies:
@@ -446,8 +446,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/gi-sdk':
         specifier: workspace:*
         version: link:../gi-sdk
@@ -467,8 +467,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-janusgraph:
     dependencies:
@@ -497,8 +497,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/gi-sdk':
         specifier: workspace:*
         version: link:../gi-sdk
@@ -521,8 +521,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
 
   packages/gi-assets-scene:
     dependencies:
@@ -536,8 +536,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/g2':
         specifier: ^5.0.11
         version: 5.0.12(@antv/g-lite@1.0.69)
@@ -578,8 +578,8 @@ importers:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
       react-spring:
-        specifier: 9.4.4
-        version: 9.4.4(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.139.2)(zdog@1.1.3)
+        specifier: 9.6.0
+        version: 9.6.0(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.139.2)(zdog@1.1.3)
       three:
         specifier: 0.139.2
         version: 0.139.2
@@ -606,8 +606,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.15
-        version: 2.7.16(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.21
+        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -640,8 +640,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@ant-design/icons':
-        specifier: ^4.6.2
-        version: 4.8.0(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@16.14.0)(react@17.0.2)
       '@antv/gi-sdk':
         specifier: workspace:*
         version: link:../gi-sdk
@@ -652,7 +652,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       antd:
-        specifier: 4.x
+        specifier: ^4.24.10
         version: 4.24.10(react-dom@16.14.0)(react@17.0.2)
       codemirror:
         specifier: ^5.25.0
@@ -670,8 +670,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
     devDependencies:
       dumi:
         specifier: ^1.1.38
@@ -744,14 +744,14 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7
       '@antv/g2plot':
-        specifier: ^2.4.20
+        specifier: ^2.4.31
         version: 2.4.31
       '@antv/graphin':
         specifier: ^2.7.21
         version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@formily/antd':
         specifier: ^2.1.0
-        version: 2.2.24(@ant-design/icons@4.7.0)(@types/react-dom@17.0.20)(@types/react@17.0.61)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.9.5)
+        version: 2.2.24(@ant-design/icons@4.8.0)(@types/react-dom@17.0.20)(@types/react@17.0.61)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.9.5)
       '@formily/core':
         specifier: ^2.1.0
         version: 2.2.24
@@ -789,8 +789,8 @@ importers:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
     devDependencies:
       rimraf:
         specifier: ^3.0.2
@@ -830,7 +830,7 @@ importers:
         version: 17.0.2(react@17.0.2)
     devDependencies:
       '@antv/gi-sdk':
-        specifier: ^2.4.0
+        specifier: ^2.4.1
         version: link:../gi-sdk
       '@antv/graphin':
         specifier: ^2.7.21
@@ -885,9 +885,6 @@ importers:
       '@aligov/global-string-format':
         specifier: ^1.0.7
         version: 1.0.7
-      '@react-spring/types':
-        specifier: 9.6.0
-        version: 9.6.0
       react:
         specifier: 17.x || 17
         version: 17.0.2
@@ -897,6 +894,10 @@ importers:
       react-spring:
         specifier: 9.6.0
         version: 9.6.0(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.135.0)(zdog@1.1.3)
+    devDependencies:
+      '@react-spring/types':
+        specifier: 9.6.0
+        version: 9.6.0
 
   packages/gi-sdk:
     dependencies:
@@ -937,8 +938,10 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1
       use-immer:
-        specifier: ^0.6.0
-        version: 0.6.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
+
+  packages/gi-sdk-app: {}
 
   packages/gi-site:
     dependencies:
@@ -950,13 +953,13 @@ importers:
         version: 1.0.7
       '@ant-design/charts':
         specifier: ^1.0.21
-        version: 1.4.2(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
+        version: 1.4.2(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
       '@ant-design/compatible':
         specifier: ^1.0.2
         version: 1.1.2(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/icons':
-        specifier: ^4.0.6
-        version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-components':
         specifier: 2.3.57
         version: 2.3.57(antd@4.24.10)(prop-types@15.8.1)(rc-field-form@1.32.1)(react-dom@17.0.2)(react@17.0.2)
@@ -1028,10 +1031,10 @@ importers:
         version: 6.13.1
       '@umijs/preset-react':
         specifier: ^1.8.12
-        version: 1.8.32(@ant-design/icons@4.8.0)(@ant-design/pro-layout@6.38.22)(dva-core@1.6.0-beta.7)(react-dom@17.0.2)(react-router@5.3.4)(react@17.0.2)(redbox-react@1.6.0)(umi@3.5.41)
+        version: 1.8.32(@ant-design/icons@4.7.0)(@ant-design/pro-layout@6.38.22)(dva-core@1.6.0-beta.7)(react-dom@17.0.2)(react-router@5.3.4)(react@17.0.2)(redbox-react@1.6.0)(umi@3.5.41)
       ahooks:
-        specifier: ^2.10.9
-        version: 2.10.14(react@17.0.2)
+        specifier: ^3.7.7
+        version: 3.7.7(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -1099,8 +1102,8 @@ importers:
         specifier: ^1.3.9
         version: 1.4.0
       use-immer:
-        specifier: ^0.7.0
-        version: 0.7.0(immer@9.0.21)(react@17.0.2)
+        specifier: ^0.9.0
+        version: 0.9.0(immer@9.0.21)(react@17.0.2)
       xlsx2js:
         specifier: ^1.3.8
         version: 1.3.8
@@ -1121,10 +1124,10 @@ importers:
   packages/gi-theme-antd:
     devDependencies:
       '@ant-design/icons':
-        specifier: ^4.6.3
-        version: 4.8.0(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^4.7.0
+        version: 4.7.0(react-dom@16.14.0)(react@17.0.2)
       antd:
-        specifier: 4.x
+        specifier: ^4.24.10
         version: 4.24.10(react-dom@16.14.0)(react@17.0.2)
       css-loader:
         specifier: ^6.2.0
@@ -1228,7 +1231,7 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
 
-  /@ant-design/charts@1.4.2(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
+  /@ant-design/charts@1.4.2(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
     resolution: {integrity: sha512-BcVx6AAnwxSdzAVUZReSuvUVtnT5AkJivq3wmcYj17scll26HHficg35yimGskAj3Gu1upYjBQBz6Tk7GEMJsQ==}
     peerDependencies:
       '@ant-design/icons': ^4.6.0
@@ -1237,9 +1240,9 @@ packages:
       react: '>=16.8.4 || 17'
       react-dom: '>=16.8.4'
     dependencies:
-      '@ant-design/flowchart': 1.2.2(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
+      '@ant-design/flowchart': 1.2.2(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
       '@ant-design/graphs': 1.4.0(react-dom@17.0.2)(react@17.0.2)
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/maps': 1.0.6(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/plots': 1.2.5(react-dom@17.0.2)(react@17.0.2)
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -1261,12 +1264,6 @@ packages:
     dependencies:
       '@ctrl/tinycolor': 3.6.0
 
-  /@ant-design/colors@7.0.0:
-    resolution: {integrity: sha512-iVm/9PfGCbC0dSMBrz7oiEXZaaGH7ceU40OJEfKmyuzR9R5CRimJYPlRiFtMQGQcbNMea/ePcoIebi4ASGYXtg==}
-    dependencies:
-      '@ctrl/tinycolor': 3.6.0
-    dev: false
-
   /@ant-design/compatible@1.1.2(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-Qsx5Qw97eiSgcxyQDlY45QSbvGn0gUdpX8XFImPvzZpKwabqQ2HnXXuUlb8RbrkURswaPIoyLEGKDPeogIaURA==}
     peerDependencies:
@@ -1274,7 +1271,7 @@ packages:
       react: '>=16.0.0 || 17'
       react-dom: '>=16.0.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       classnames: 2.3.2
       lodash.camelcase: 4.3.0
@@ -1307,7 +1304,7 @@ packages:
       stylis: 4.2.0
     dev: false
 
-  /@ant-design/flowchart@1.2.2(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
+  /@ant-design/flowchart@1.2.2(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
     resolution: {integrity: sha512-bzHZ81qqHjWIrXcCMInDB6eMTzbswaVCOAdUTCQJ+B45aybkVsU9LMCKquyOwRM7U7PWNfPC9S/lAlx2i2BvBQ==}
     peerDependencies:
       '@ant-design/icons': ^4.6.0
@@ -1316,12 +1313,12 @@ packages:
       react: '>=16.8.4 || 17'
       react-dom: '>=16.8.4'
     dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/layout': 0.1.31
       '@antv/x6': 1.34.13
       '@antv/x6-react-components': 1.1.20(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6-react-shape': 1.6.4(@antv/x6@1.34.13)(react-dom@17.0.2)(react@17.0.2)
-      '@antv/xflow': 1.0.55(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
+      '@antv/xflow': 1.0.55(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       lodash: 4.17.21
       react: 17.0.2
@@ -1340,7 +1337,7 @@ packages:
       react-dom: '>=16.8.4'
     dependencies:
       '@antv/dom-util': 2.0.4
-      '@antv/g6': 4.8.15
+      '@antv/g6': 4.8.19
       '@antv/layout': 0.1.31
       '@antv/util': 2.0.17
       insert-css: 2.0.0
@@ -1381,6 +1378,7 @@ packages:
       rc-util: 5.33.0(react-dom@17.0.2)(react@17.0.2)
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
+    dev: false
 
   /@ant-design/icons@4.8.0(react-dom@16.14.0)(react@17.0.2):
     resolution: {integrity: sha512-T89P2jG2vM7OJ0IfGx2+9FC5sQjtTzRSz+mCHTXkFn/ELZc2YpfStmYHmqzq2Jx55J0F7+O6i5/ZKFSVNWCKNg==}
@@ -1411,23 +1409,6 @@ packages:
       rc-util: 5.33.0(react-dom@17.0.2)(react@17.0.2)
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-    dev: false
-
-  /@ant-design/icons@5.1.4(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-YHKL7Jx3bM12OxvtiYDon04BsBT/6LGitYEqar3GljzWaAyMOAD8i/uF1Rsi5Us/YNdWWXBGSvZV2OZWMpJlcA==}
-    engines: {node: '>=8'}
-    peerDependencies:
-      react: '>=16.0.0 || 17'
-      react-dom: '>=16.0.0'
-    dependencies:
-      '@ant-design/colors': 7.0.0
-      '@ant-design/icons-svg': 4.2.1
-      '@babel/runtime': 7.22.5
-      classnames: 2.3.2
-      rc-util: 5.33.0(react-dom@17.0.2)(react@17.0.2)
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-    dev: false
 
   /@ant-design/maps@1.0.6(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-Q14zOiwwPiZQ4wqp6L/N6DcnIIMAn6FQzlKmu0I3If+iGoeeDSkaNojg/LPR57ON37i/5nC/zOZrRK4wqH6Ecg==}
@@ -1462,7 +1443,7 @@ packages:
       antd: '>=4.23.0'
       react: '>=16.9.0 || 17'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 2.4.3(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 2.5.8(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
@@ -1532,7 +1513,7 @@ packages:
       antd: '>=4.18.0'
       react: '>=16.9.0 || 17'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.6.0(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 1.35.3(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
@@ -1556,7 +1537,7 @@ packages:
       antd: '>=4.23.0'
       react: '>=16.9.0 || 17'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 2.4.3(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 2.5.8(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
@@ -1582,7 +1563,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-field': 1.32.4(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.6.0(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 1.35.3(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
@@ -1615,7 +1596,7 @@ packages:
       '@types/lodash.merge':
         optional: true
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-field': 2.2.9(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 2.4.3(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 2.5.8(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
@@ -1642,7 +1623,7 @@ packages:
     peerDependencies:
       react: '>=16.9.0 || 17'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.10.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 1.45.3(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
@@ -1674,7 +1655,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 2.4.3(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-utils': 2.5.8(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
@@ -1704,7 +1685,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-card': 2.1.14(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-field': 2.2.9(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-table': 3.3.1(antd@4.24.10)(prop-types@15.8.1)(rc-field-form@1.32.1)(react-dom@17.0.2)(react@17.0.2)
@@ -1791,7 +1772,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-field': 1.32.4(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-form': 1.57.0(antd@4.24.10)(prop-types@15.8.1)(rc-field-form@1.32.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.6.0(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
@@ -1821,7 +1802,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-card': 2.1.14(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-field': 2.2.9(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-form': 2.5.8(antd@4.24.10)(prop-types@15.8.1)(rc-field-form@1.32.1)(react-dom@17.0.2)(react@17.0.2)
@@ -1851,7 +1832,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.6.0(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -1872,7 +1853,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 1.10.0(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -1894,7 +1875,7 @@ packages:
       react: '>=16.9.0 || 17'
       react-dom: '>=16.9.0'
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-provider': 2.4.3(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@babel/runtime': 7.22.5
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -2377,12 +2358,35 @@ packages:
       ml-matrix: 6.10.4
       tslib: 2.5.3
 
+  /@antv/g6-core@0.8.19:
+    resolution: {integrity: sha512-JBpmdMuHOLCOvoF3EReCH3w1jTsZ/GL6Kl0aYNGEAlAeKVTT3iqHgXUAim3G49RKELXRfhit+IsYTRN1jboF9A==}
+    dependencies:
+      '@antv/algorithm': 0.1.25
+      '@antv/dom-util': 2.0.4
+      '@antv/event-emitter': 0.1.3
+      '@antv/g-base': 0.5.15
+      '@antv/g-math': 0.1.9
+      '@antv/matrix-util': 3.1.0-beta.3
+      '@antv/path-util': 2.0.15
+      '@antv/util': 2.0.17
+      ml-matrix: 6.10.4
+      tslib: 2.5.3
+    dev: false
+
   /@antv/g6-element@0.8.15:
     resolution: {integrity: sha512-eSCPxncGHc7N+Xq9pcSxccngXrmHUzQDP5wYG8HT6SL0DBYnJbVu2BefD0w4FtTjt//43M6Nw9K/q2oiiKZpPQ==}
     dependencies:
       '@antv/g-base': 0.5.15
       '@antv/g6-core': 0.8.15
       '@antv/util': 2.0.17
+
+  /@antv/g6-element@0.8.19:
+    resolution: {integrity: sha512-q22KlMHlFjR+hUMeHJyDt1NDsuMB6YBGSV/AgJRcaoatNQRHqdUBDQuwoNhw40tjVs4OJQsWwJ/6PI0zlA3LwQ==}
+    dependencies:
+      '@antv/g-base': 0.5.15
+      '@antv/g6-core': 0.8.19
+      '@antv/util': 2.0.17
+    dev: false
 
   /@antv/g6-pc@0.8.15:
     resolution: {integrity: sha512-ncYQ9bPwAZkB49KN0lxAPgvhqARLCSN3fZlEMf+lvdCFUIwxX99GydAI14vhBqaZPlu5VivCjo06oOte48DW7Q==}
@@ -2409,6 +2413,32 @@ packages:
       insert-css: 2.0.0
       ml-matrix: 6.10.4
 
+  /@antv/g6-pc@0.8.19:
+    resolution: {integrity: sha512-dxaFGQlT7NGQ6kWweBYaBd0hwW7OQtQfT6DB/r431gP02vbXkl3C2Nnjw1rtOeSVBI7PcWOX9T9yHZglM0GsHg==}
+    dependencies:
+      '@ant-design/colors': 4.0.5
+      '@antv/algorithm': 0.1.25
+      '@antv/dom-util': 2.0.4
+      '@antv/event-emitter': 0.1.3
+      '@antv/g-base': 0.5.15
+      '@antv/g-canvas': 0.5.14
+      '@antv/g-math': 0.1.9
+      '@antv/g-svg': 0.5.7
+      '@antv/g6-core': 0.8.19
+      '@antv/g6-element': 0.8.19
+      '@antv/g6-plugin': 0.8.19
+      '@antv/hierarchy': 0.6.11
+      '@antv/layout': 0.3.22(dagre@0.8.5)
+      '@antv/matrix-util': 3.1.0-beta.3
+      '@antv/path-util': 2.0.15
+      '@antv/util': 2.0.17
+      color: 3.2.1
+      d3-force: 2.1.1
+      dagre: 0.8.5
+      insert-css: 2.0.0
+      ml-matrix: 6.10.4
+    dev: false
+
   /@antv/g6-plugin@0.8.15:
     resolution: {integrity: sha512-+R8vDGslj4gAjNo6ko46NJH+yfg34zj1hcqDoQ1dHnQs4ljIvJTfNgAqwtQk8HvWvHCTlsX4cOMYJyN4eX8V+g==}
     dependencies:
@@ -2424,10 +2454,32 @@ packages:
       '@antv/util': 2.0.17
       insert-css: 2.0.0
 
+  /@antv/g6-plugin@0.8.19:
+    resolution: {integrity: sha512-vPDko7gdrszRp/2OlYwxyWOAFiW/mn/I798s689KsC7/e/YSOuq94TdmdZHulNLOlT6zqqYwIP3JQG6YxdyPTQ==}
+    dependencies:
+      '@antv/dom-util': 2.0.4
+      '@antv/g-base': 0.5.15
+      '@antv/g-canvas': 0.5.14
+      '@antv/g-svg': 0.5.7
+      '@antv/g6-core': 0.8.19
+      '@antv/g6-element': 0.8.19
+      '@antv/matrix-util': 3.1.0-beta.3
+      '@antv/path-util': 2.0.15
+      '@antv/scale': 0.3.18
+      '@antv/util': 2.0.17
+      insert-css: 2.0.0
+    dev: false
+
   /@antv/g6@4.8.15:
     resolution: {integrity: sha512-jApz3z+blU7i6bqA6Zuq5sIs3OcutCbOx+/ah0uUdDSPc4jgh9suRjF+RJ/OlEFcKcRO8OQBbjB8/lZP+uwpxw==}
     dependencies:
       '@antv/g6-pc': 0.8.15
+
+  /@antv/g6@4.8.19:
+    resolution: {integrity: sha512-VBs45lAnxjjfDu6CTDdb/nMJRYcwAG4K5MWZiVf+vq4789rtElm7q2GKV5zVChadtrqcUt/dCjKp56zR5/foaA==}
+    dependencies:
+      '@antv/g6-pc': 0.8.19
+    dev: false
 
   /@antv/g@5.16.32:
     resolution: {integrity: sha512-ObRhoVUaVLTiyRBiIMLg2mszPj5m7Auu0wB7C7JZrsRvZ3zZJtBbNMFYOZPL2iKhaz35lbp9ICcx4wsFq11dAA==}
@@ -2442,36 +2494,6 @@ packages:
 
   /@antv/graphin-icons@1.0.0:
     resolution: {integrity: sha512-2nogK6ZrDklnfIOJrqOAgD7iFLjfZIjLbA8pDUbeXN5c9b0Mu84oCfyqg8OmWwvi9Gt80eUzoplo73gKjZECJg==}
-    dev: false
-
-  /@antv/graphin@2.7.16(react-dom@16.14.0)(react@17.0.2):
-    resolution: {integrity: sha512-tS3Dk/9I1jef/qQ92a13kQQvP5Cow2qUl53/GNC8vpImvn8IoOjoZI0EqSlVEFudfgfD7BCYdo8Qp6l+ScdHzQ==}
-    peerDependencies:
-      react: '>=16.9.0 || 17'
-      react-dom: '>=16.9.0'
-    dependencies:
-      '@antv/g6': 4.8.15
-      '@antv/util': 2.0.17
-      '@types/lodash.clonedeep': 4.5.7
-      d3-quadtree: 3.0.1
-      lodash.clonedeep: 4.5.0
-      react: 17.0.2
-      react-dom: 16.14.0(react@17.0.2)
-    dev: false
-
-  /@antv/graphin@2.7.16(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-tS3Dk/9I1jef/qQ92a13kQQvP5Cow2qUl53/GNC8vpImvn8IoOjoZI0EqSlVEFudfgfD7BCYdo8Qp6l+ScdHzQ==}
-    peerDependencies:
-      react: '>=16.9.0 || 17'
-      react-dom: '>=16.9.0'
-    dependencies:
-      '@antv/g6': 4.8.15
-      '@antv/util': 2.0.17
-      '@types/lodash.clonedeep': 4.5.7
-      d3-quadtree: 3.0.1
-      lodash.clonedeep: 4.5.0
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
     dev: false
 
   /@antv/graphin@2.7.21(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2):
@@ -2827,28 +2849,6 @@ packages:
       - react-native
     dev: false
 
-  /@antv/s2-react@1.41.0(@ant-design/icons@4.8.0)(@antv/s2@1.48.0)(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-kCENyP1lZ4xRB7ovG8re1LxFDuCvlrVyLhu72S1GiuiU5AQWEVmwbckUL0WMtHKqpnAxkPi1/W00UU2iIwgG0w==}
-    peerDependencies:
-      '@ant-design/icons': '>=4.7.0'
-      '@antv/s2': '>=1.0.0'
-      antd: '>=4.16.13'
-      react: '>=16.8.0 || 17'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
-      '@antv/s2': 1.48.0(@antv/g-base@0.4.7)
-      ahooks: 3.7.7(react@17.0.2)
-      antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
-      classnames: 2.3.2
-      lodash: 4.17.21
-      react: 17.0.2
-      react-beautiful-dnd: 13.1.1(react-dom@17.0.2)(react@17.0.2)
-      react-dom: 17.0.2(react@17.0.2)
-    transitivePeerDependencies:
-      - react-native
-    dev: false
-
   /@antv/s2@1.48.0(@antv/g-base@0.4.7):
     resolution: {integrity: sha512-phrOEdTI1PkMH1lIQkrFmOS1jnLV9ry5DgXAWVFKcOOQ7/KeEGe1QxucaBMx9z61kd4+vT+IYcZJtp7gtdrjGQ==}
     dependencies:
@@ -2933,7 +2933,7 @@ packages:
       utility-types: 3.10.0
     dev: false
 
-  /@antv/xflow-core@1.0.55(@ant-design/icons@4.8.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2):
+  /@antv/xflow-core@1.0.55(@ant-design/icons@4.7.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-FhjTstp/ZdO6mj8ERARJ6M9PWgikXvOpWwMTLCjc+i8vS4O3t4XL/fIu16MqJNuNdqfETcjJluHd06c32MTB/w==}
     peerDependencies:
       '@ant-design/icons': ^4.6.0
@@ -2945,7 +2945,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || 17
       react-dom: ^16.8.0  || ^17.0.0
     dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6': 1.34.13
       '@antv/x6-react-components': 1.1.20(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6-react-shape': 1.6.4(@antv/x6@1.34.13)(react-dom@17.0.2)(react@17.0.2)
@@ -2962,7 +2962,7 @@ packages:
       rxjs: 6.6.7
     dev: false
 
-  /@antv/xflow-extension@1.0.55(@ant-design/icons@4.8.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
+  /@antv/xflow-extension@1.0.55(@ant-design/icons@4.7.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
     resolution: {integrity: sha512-iHRfO/ae4/9xvC5xVFmA9eIFg813DQa06hTgTdxLlt0Aojnfa5VnsGrIrPQoDDQovCXG8SavMDlnLZUpa491GQ==}
     peerDependencies:
       '@ant-design/icons': ^4.6.0
@@ -2975,11 +2975,11 @@ packages:
       react-dom: ^16.8.0  || ^17.0.0
       reflect-metadata: ^0.1.13
     dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6': 1.34.13
       '@antv/x6-react-components': 1.1.20(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6-react-shape': 1.6.4(@antv/x6@1.34.13)(react-dom@17.0.2)(react@17.0.2)
-      '@antv/xflow-core': 1.0.55(@ant-design/icons@4.8.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+      '@antv/xflow-core': 1.0.55(@ant-design/icons@4.7.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/xflow-hook': 1.0.55
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       classnames: 2.3.2
@@ -3000,7 +3000,7 @@ packages:
       toposort: 2.0.2
     dev: false
 
-  /@antv/xflow@1.0.55(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
+  /@antv/xflow@1.0.55(@ant-design/icons@4.7.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13):
     resolution: {integrity: sha512-1LRFZsDZDVuRwEYD0xFt7SGCbHducgXQ4GgPOzmaCMA5FMbQfZVpXhsOG4o/a9X+gKfYdpOELCLqpz7iykyArQ==}
     peerDependencies:
       '@ant-design/icons': ^4.6.0
@@ -3009,13 +3009,13 @@ packages:
       react: ^16.8.0 || ^17.0.0 || 17
       react-dom: ^16.8.0  || ^17.0.0
     dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@antv/layout': 0.1.31
       '@antv/x6': 1.34.13
       '@antv/x6-react-components': 1.1.20(antd@4.24.10)(react-dom@17.0.2)(react@17.0.2)
       '@antv/x6-react-shape': 1.6.4(@antv/x6@1.34.13)(react-dom@17.0.2)(react@17.0.2)
-      '@antv/xflow-core': 1.0.55(@ant-design/icons@4.8.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)
-      '@antv/xflow-extension': 1.0.55(@ant-design/icons@4.8.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
+      '@antv/xflow-core': 1.0.55(@ant-design/icons@4.7.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+      '@antv/xflow-extension': 1.0.55(@ant-design/icons@4.7.0)(@antv/x6-react-components@1.1.20)(@antv/x6-react-shape@1.6.4)(@antv/x6@1.34.13)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
       '@antv/xflow-hook': 1.0.55
       antd: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       lodash: 4.17.21
@@ -10215,7 +10215,7 @@ packages:
       typescript: 4.9.5
     dev: false
 
-  /@formily/antd@2.2.24(@ant-design/icons@4.7.0)(@types/react-dom@17.0.20)(@types/react@17.0.61)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.9.5):
+  /@formily/antd@2.2.24(@ant-design/icons@4.8.0)(@types/react-dom@17.0.20)(@types/react@17.0.61)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.9.5):
     resolution: {integrity: sha512-jMrbg63FMQvkwT+y4mum2DE2mRlSuqwd1cuvWiUsH2RkaQM/SQhVdwigIsKFwzj69ujN75IeQCmAhZJIBFoLvQ==}
     engines: {npm: '>=3.0.0'}
     peerDependencies:
@@ -10232,7 +10232,7 @@ packages:
       '@types/react-dom':
         optional: true
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@formily/core': 2.2.24
       '@formily/grid': 2.2.24(typescript@4.9.5)
       '@formily/json-schema': 2.2.24(typescript@4.9.5)
@@ -11862,26 +11862,6 @@ packages:
     resolution: {integrity: sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==}
     dev: false
 
-  /@react-spring/animated@9.3.2(react@17.0.2):
-    resolution: {integrity: sha512-pBvKydRHbTzuyaeHtxGIOvnskZxGo/S5/YK1rtYm88b9NQZuZa95Rgd3O0muFL+99nvBMBL8cvQGD0UJmsqQsg==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-    dependencies:
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-    dev: false
-
-  /@react-spring/animated@9.4.5(react@17.0.2):
-    resolution: {integrity: sha512-KWqrtvJSMx6Fj9nMJkhTwM9r6LIriExDRV6YHZV9HKQsaolUFppgkOXpC+rsL1JEtEvKv6EkLLmSqHTnuYjiIA==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-    dependencies:
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      react: 17.0.2
-    dev: false
-
   /@react-spring/animated@9.6.1(react@17.0.2):
     resolution: {integrity: sha512-ls/rJBrAqiAYozjLo5EPPLLOb1LM0lNVQcXODTC1SMtS6DbuBCPaKco5svFUQFMP2dso3O+qcC4k9FsKc0KxMQ==}
     peerDependencies:
@@ -11889,29 +11869,6 @@ packages:
     dependencies:
       '@react-spring/shared': 9.6.1(react@17.0.2)
       '@react-spring/types': 9.6.1
-      react: 17.0.2
-    dev: false
-
-  /@react-spring/core@9.3.2(react@17.0.2):
-    resolution: {integrity: sha512-kMRjkgdQ6LJ0lmb/wQlONpghaMT83UxglXHJC6m9kZS/GKVmN//TYMEK85xN1rC5Gg+BmjG61DtLCSkkLDTfNw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-    dev: false
-
-  /@react-spring/core@9.4.5(react@17.0.2):
-    resolution: {integrity: sha512-83u3FzfQmGMJFwZLAJSwF24/ZJctwUkWtyPD7KYtNagrFeQKUH1I05ZuhmCmqW+2w1KDW1SFWQ43RawqfXKiiQ==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/rafz': 9.4.5
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
       react: 17.0.2
     dev: false
 
@@ -11925,38 +11882,6 @@ packages:
       '@react-spring/shared': 9.6.1(react@17.0.2)
       '@react-spring/types': 9.6.1
       react: 17.0.2
-    dev: false
-
-  /@react-spring/konva@9.3.2(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2):
-    resolution: {integrity: sha512-LLpmj6bj7Z2LYZDM75JkQ+dNasvdH56+th7VXcoMcOouAcogfI+iJ5tIFFz4yI2f2oTJzy/RkjeovmHMYIP+KQ==}
-    peerDependencies:
-      konva: '>=2.6'
-      react: ^16.8.0 || ^17.0.0 || 17
-      react-konva: ^16.8.0  || ^17.0.0
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      konva: 9.2.0
-      react: 17.0.2
-      react-konva: 16.8.6(konva@9.2.0)(react-dom@17.0.2)(react@17.0.2)
-    dev: false
-
-  /@react-spring/konva@9.4.5(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2):
-    resolution: {integrity: sha512-b3wTs7YT5102+Gs488r2JCNBoyZQd+SWg35AdxmiI6FARBFvBjIA0z7VJx8ILAlmTVBows5UwiDWvk2vmWmLLw==}
-    peerDependencies:
-      konva: '>=2.6'
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-      react-konva: ^16.8.0  || ^17.0.0
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      konva: 9.2.0
-      react: 17.0.2
-      react-konva: 16.8.6(konva@9.2.0)(react-dom@17.0.2)(react@17.0.2)
     dev: false
 
   /@react-spring/konva@9.6.1(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2):
@@ -11975,34 +11900,6 @@ packages:
       react-konva: 16.8.6(konva@9.2.0)(react-dom@17.0.2)(react@17.0.2)
     dev: false
 
-  /@react-spring/native@9.3.2(react-native@0.71.10)(react@17.0.2):
-    resolution: {integrity: sha512-UQS07N639JIEJBGNGiFre6el6Sk5QEcOQeyBFyA7JmT4ewpRH7mM6JQ7Sd3DNduplsFmypIsWg+9+lmE2d52Rw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-      react-native: '>=0.58'
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-      react-native: 0.71.10(@babel/core@7.22.5)(@babel/preset-env@7.22.5)(react@17.0.2)
-    dev: false
-
-  /@react-spring/native@9.4.5(react-native@0.71.10)(react@17.0.2):
-    resolution: {integrity: sha512-11GcqFZfIhOOVQI25FcDLdeJLOSVOgIh2AF6WMXpCNWguhIv6N33zLL8d4cYfhYhsLOVXprU/8uefNorj7/h3g==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-      react-native: '>=0.58'
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      react: 17.0.2
-      react-native: 0.71.10(@babel/core@7.22.5)(@babel/preset-env@7.22.5)(react@17.0.2)
-    dev: false
-
   /@react-spring/native@9.6.1(react-native@0.71.10)(react@17.0.2):
     resolution: {integrity: sha512-ZIfSytxFGLw4gYOb8gsmwG0+JZYxuM/Y1XPCXCkhuoMn+RmOYrr0kQ4gLczbmf+TRxth7OT1c8vBYz0+SCGcIQ==}
     peerDependencies:
@@ -12017,36 +11914,8 @@ packages:
       react-native: 0.71.10(@babel/core@7.22.5)(@babel/preset-env@7.22.5)(react@17.0.2)
     dev: false
 
-  /@react-spring/rafz@9.3.2:
-    resolution: {integrity: sha512-YtqNnAYp5bl6NdnDOD5TcYS40VJmB+Civ4LPtcWuRPKDAOa/XAf3nep48r0wPTmkK936mpX8aIm7h+luW59u5A==}
-    dev: false
-
-  /@react-spring/rafz@9.4.5:
-    resolution: {integrity: sha512-swGsutMwvnoyTRxvqhfJBtGM8Ipx6ks0RkIpNX9F/U7XmyPvBMGd3GgX/mqxZUpdlsuI1zr/jiYw+GXZxAlLcQ==}
-    dev: false
-
   /@react-spring/rafz@9.6.1:
     resolution: {integrity: sha512-v6qbgNRpztJFFfSE3e2W1Uz+g8KnIBs6SmzCzcVVF61GdGfGOuBrbjIcp+nUz301awVmREKi4eMQb2Ab2gGgyQ==}
-    dev: false
-
-  /@react-spring/shared@9.3.2(react@17.0.2):
-    resolution: {integrity: sha512-ypGQQ8w7mWnrELLon4h6mBCBxdd8j1pgLzmHXLpTC/f4ya2wdP+0WIKBWXJymIf+5NiTsXgSJra5SnHP5FBY+A==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-    dependencies:
-      '@react-spring/rafz': 9.3.2
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-    dev: false
-
-  /@react-spring/shared@9.4.5(react@17.0.2):
-    resolution: {integrity: sha512-JhMh3nFKsqyag0KM5IIM8BQANGscTdd0mMv3BXsUiMZrcjQTskyfnv5qxEeGWbJGGar52qr5kHuBHtCjQOzniA==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-    dependencies:
-      '@react-spring/rafz': 9.4.5
-      '@react-spring/types': 9.4.5
-      react: 17.0.2
     dev: false
 
   /@react-spring/shared@9.6.1(react@17.0.2):
@@ -12057,38 +11926,6 @@ packages:
       '@react-spring/rafz': 9.6.1
       '@react-spring/types': 9.6.1
       react: 17.0.2
-    dev: false
-
-  /@react-spring/three@9.3.2(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.135.0):
-    resolution: {integrity: sha512-nZHHjOl4GksoOFNTwvP4h5bACm5OymCUsR3nejWFigqCPep8prUHaawX4kZRwfUbWTYgkp15yM5hy7BkWNN16A==}
-    peerDependencies:
-      '@react-three/fiber': '>=6.0'
-      react: '>=16.11 || 17'
-      three: '>=0.126'
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      '@react-three/fiber': 8.13.1(react-dom@17.0.2)(react-native@0.71.10)(react@17.0.2)(three@0.135.0)
-      react: 17.0.2
-      three: 0.135.0
-    dev: false
-
-  /@react-spring/three@9.4.5(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.139.2):
-    resolution: {integrity: sha512-mArxfIhg9kyFL/8Y09TarS/ZKLd/qAWS4T3Ro/B46ILPfPnoPywDdw9/rknZihy/tslnviCgMrB4pZ29X1Dfxw==}
-    peerDependencies:
-      '@react-three/fiber': '>=6.0'
-      react: ^16.11.0 || >=17.0.0 || >=18.0.0 || 17
-      three: '>=0.126'
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      '@react-three/fiber': 8.13.1(react-dom@17.0.2)(react-native@0.71.10)(react@17.0.2)(three@0.139.2)
-      react: 17.0.2
-      three: 0.139.2
     dev: false
 
   /@react-spring/three@9.6.1(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.135.0):
@@ -12107,48 +11944,28 @@ packages:
       three: 0.135.0
     dev: false
 
-  /@react-spring/types@9.3.2:
-    resolution: {integrity: sha512-u+IK9z9Re4hjNkBYKebZr7xVDYTai2RNBsI4UPL/k0B6lCNSwuqWIXfKZUDVlMOeZHtDqayJn4xz6HcSkTj3FQ==}
-    dev: false
-
-  /@react-spring/types@9.4.5:
-    resolution: {integrity: sha512-mpRIamoHwql0ogxEUh9yr4TP0xU5CWyZxVQeccGkHHF8kPMErtDXJlxyo0lj+telRF35XNihtPTWoflqtyARmg==}
+  /@react-spring/three@9.6.1(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.139.2):
+    resolution: {integrity: sha512-Tyw2YhZPKJAX3t2FcqvpLRb71CyTe1GvT3V+i+xJzfALgpk10uPGdGaQQ5Xrzmok1340DAeg2pR/MCfaW7b8AA==}
+    peerDependencies:
+      '@react-three/fiber': '>=6.0'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || 17
+      three: '>=0.126'
+    dependencies:
+      '@react-spring/animated': 9.6.1(react@17.0.2)
+      '@react-spring/core': 9.6.1(react@17.0.2)
+      '@react-spring/shared': 9.6.1(react@17.0.2)
+      '@react-spring/types': 9.6.1
+      '@react-three/fiber': 8.13.1(react-dom@17.0.2)(react-native@0.71.10)(react@17.0.2)(three@0.139.2)
+      react: 17.0.2
+      three: 0.139.2
     dev: false
 
   /@react-spring/types@9.6.0:
     resolution: {integrity: sha512-XOWupgf+/rMhQTiIxZzjVRw+4ZNkXcO5tuha3pOBNK88a7LPGjM6imdS1aQ2kl3y1sBy0f9JrclNShfASbkvTw==}
-    dev: false
+    dev: true
 
   /@react-spring/types@9.6.1:
     resolution: {integrity: sha512-POu8Mk0hIU3lRXB3bGIGe4VHIwwDsQyoD1F394OK7STTiX9w4dG3cTLljjYswkQN+hDSHRrj4O36kuVa7KPU8Q==}
-    dev: false
-
-  /@react-spring/web@9.3.2(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-zzM95rqanap6s0udRCoI4gerONjQjyI6I0h23UZ0X36w5sXmuzv/tBtjGPbsASo377EGM7tRIg9po1KHwb6yQg==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-      react-dom: ^16.8.0  || ^17.0.0
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-    dev: false
-
-  /@react-spring/web@9.4.5(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-NGAkOtKmOzDEctL7MzRlQGv24sRce++0xAY7KlcxmeVkR7LRSGkoXHaIfm9ObzxPMcPHQYQhf3+X9jepIFNHQA==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-      react-dom: ^16.8.0  || >=17.0.0 || >=18.0.0
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
     dev: false
 
   /@react-spring/web@9.6.1(react-dom@17.0.2)(react@17.0.2):
@@ -12163,42 +11980,6 @@ packages:
       '@react-spring/types': 9.6.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-    dev: false
-
-  /@react-spring/zdog@9.3.2(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3):
-    resolution: {integrity: sha512-E8MtTG4kNBcW/sEu0Im7L2FZXmhZDfeHSNbaL35cebfBlL5iI6+Pdlr7A/RPJ2pCUUKJRLlxYu3DVTuaqwf6hQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || 17
-      react-dom: ^16.8.0  || ^17.0.0
-      react-zdog: '>=1.0'
-      zdog: '>=1.0'
-    dependencies:
-      '@react-spring/animated': 9.3.2(react@17.0.2)
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/shared': 9.3.2(react@17.0.2)
-      '@react-spring/types': 9.3.2
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      react-zdog: 1.0.11(react-dom@17.0.2)(react@17.0.2)(zdog@1.1.3)
-      zdog: 1.1.3
-    dev: false
-
-  /@react-spring/zdog@9.4.5(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3):
-    resolution: {integrity: sha512-STrePM34ZK1T3oK8mo71pvKxvIzELJTpVi0U0qDh0s15e9rmN6XYkd406LqFtuchhmLoy24lD4ds7LAqhIEraw==}
-    peerDependencies:
-      react: ^16.8.0 || >=17.0.0 || >=18.0.0 || 17
-      react-dom: ^16.8.0  || >=17.0.0 || >=18.0.0
-      react-zdog: '>=1.0'
-      zdog: '>=1.0'
-    dependencies:
-      '@react-spring/animated': 9.4.5(react@17.0.2)
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/shared': 9.4.5(react@17.0.2)
-      '@react-spring/types': 9.4.5
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      react-zdog: 1.0.11(react-dom@17.0.2)(react@17.0.2)(zdog@1.1.3)
-      zdog: 1.1.3
     dev: false
 
   /@react-spring/zdog@9.6.1(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3):
@@ -14451,7 +14232,7 @@ packages:
       react: '>=16.8 || 17'
       react-dom: '>=16.8'
     dependencies:
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       tippy.js: 4.3.5
@@ -14464,7 +14245,7 @@ packages:
       react: '>=16.8 || 17'
       react-dom: '>=16.8'
     dependencies:
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       tippy.js: 4.3.5
@@ -16825,16 +16606,6 @@ packages:
       '@types/node': 7.10.14
     dev: false
 
-  /@types/lodash.clonedeep@4.5.7:
-    resolution: {integrity: sha512-ccNqkPptFIXrpVqUECi60/DFxjNKsfoQxSQsgcBJCX/fuX1wgyQieojkcWH/KpE3xzLoWN/2k+ZeGqIN3paSvw==}
-    dependencies:
-      '@types/lodash': 4.14.195
-    dev: false
-
-  /@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
-    dev: false
-
   /@types/long@4.0.2:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
@@ -17910,7 +17681,7 @@ packages:
       umi: 3.5.41(react-router@5.3.4)
     dev: false
 
-  /@umijs/plugin-layout@0.18.1(@ant-design/icons@4.8.0)(@ant-design/pro-layout@6.38.22)(@umijs/plugin-initial-state@2.4.0)(@umijs/plugin-locale@0.15.2)(@umijs/plugin-model@2.6.2)(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41):
+  /@umijs/plugin-layout@0.18.1(@ant-design/icons@4.7.0)(@ant-design/pro-layout@6.38.22)(@umijs/plugin-initial-state@2.4.0)(@umijs/plugin-locale@0.15.2)(@umijs/plugin-model@2.6.2)(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41):
     resolution: {integrity: sha512-15YTcFpic0v15nFzlg6G8nvMCveBtcBL77Wr9wXYJdgR0iU7dnO7T4OqbLwgEc1uHxtGhTVibi6nSGelX56zCg==}
     peerDependencies:
       '@ant-design/icons': ^4.0.0
@@ -17920,7 +17691,7 @@ packages:
       '@umijs/plugin-model': 2.x
       umi: 3.x
     dependencies:
-      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/pro-layout': 6.38.22(prop-types@15.8.1)(react-dom@17.0.2)(react@17.0.2)
       '@umijs/plugin-initial-state': 2.4.0(umi@3.5.41)
       '@umijs/plugin-locale': 0.15.2(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41)
@@ -17940,7 +17711,7 @@ packages:
     peerDependencies:
       umi: 3.x
     dependencies:
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@formatjs/intl-pluralrules': 1.5.9
       '@formatjs/intl-relativetimeformat': 4.5.16
       intl: 1.2.5
@@ -18213,7 +17984,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@umijs/preset-react@1.8.32(@ant-design/icons@4.8.0)(@ant-design/pro-layout@6.38.22)(dva-core@1.6.0-beta.7)(react-dom@17.0.2)(react-router@5.3.4)(react@17.0.2)(redbox-react@1.6.0)(umi@3.5.41):
+  /@umijs/preset-react@1.8.32(@ant-design/icons@4.7.0)(@ant-design/pro-layout@6.38.22)(dva-core@1.6.0-beta.7)(react-dom@17.0.2)(react-router@5.3.4)(react@17.0.2)(redbox-react@1.6.0)(umi@3.5.41):
     resolution: {integrity: sha512-f/jJRxIRzRrZ040GMdBuV3byvtbx35oWymDT5A/q/e+QmjCrs6c9XCRktGInKIhZycqI/GuA6eLaxXIKvu6b9A==}
     peerDependencies:
       umi: 3.x
@@ -18225,7 +17996,7 @@ packages:
       '@umijs/plugin-dva': 0.13.0(dva-core@1.6.0-beta.7)(react-dom@17.0.2)(react-router@5.3.4)(react@17.0.2)(redbox-react@1.6.0)(umi@3.5.41)
       '@umijs/plugin-helmet': 1.1.3(react@17.0.2)(umi@3.5.41)
       '@umijs/plugin-initial-state': 2.4.0(umi@3.5.41)
-      '@umijs/plugin-layout': 0.18.1(@ant-design/icons@4.8.0)(@ant-design/pro-layout@6.38.22)(@umijs/plugin-initial-state@2.4.0)(@umijs/plugin-locale@0.15.2)(@umijs/plugin-model@2.6.2)(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41)
+      '@umijs/plugin-layout': 0.18.1(@ant-design/icons@4.7.0)(@ant-design/pro-layout@6.38.22)(@umijs/plugin-initial-state@2.4.0)(@umijs/plugin-locale@0.15.2)(@umijs/plugin-model@2.6.2)(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41)
       '@umijs/plugin-locale': 0.15.2(react-dom@17.0.2)(react@17.0.2)(umi@3.5.41)
       '@umijs/plugin-model': 2.6.2(umi@3.5.41)
       '@umijs/plugin-request': 2.8.0(react@17.0.2)(umi@3.5.41)
@@ -19078,25 +18849,6 @@ packages:
     resolution: {integrity: sha512-V7uUvAwnimu6eh/PED4mCDjE7tokeZQLKlxg9lCTMPhN+NjsSbtdacByVlR1oluXQzD3MOw55wylDmQo4+S9ZQ==}
     dev: false
 
-  /ahooks@2.10.14(react@17.0.2):
-    resolution: {integrity: sha512-axWa7VoAgu7bxA56dDl0CXW4rvaQmDBiov/d3tAy0x1YNYywYMKokL8TdLgJ5zO/oXGiWmG7BxlGOQGkqE/zkQ==}
-    engines: {node: '>=8.0.0'}
-    peerDependencies:
-      react: ^16.8.6 || ^17.0 || 17
-    dependencies:
-      '@ahooksjs/use-request': 2.8.15(react@17.0.2)
-      '@types/js-cookie': 2.2.7
-      dayjs: 1.11.8
-      intersection-observer: 0.7.0
-      js-cookie: 2.2.1
-      lodash.debounce: 4.0.8
-      lodash.isequal: 4.5.0
-      lodash.throttle: 4.1.1
-      react: 17.0.2
-      resize-observer-polyfill: 1.5.1
-      screenfull: 5.2.0
-    dev: false
-
   /ahooks@3.7.7(react@17.0.2):
     resolution: {integrity: sha512-5e5WlPq81Y84UnTLOKIQeq2cJw4aa7yj8fR2Nb/oMmXPrWMjIMCbPS1o+fpxSfCaNA3AzOnnMc8AehWRZltkJQ==}
     engines: {node: '>=8.0.0'}
@@ -19405,7 +19157,7 @@ packages:
       react-dom: '>=16.9.0'
     dependencies:
       '@ant-design/colors': 6.0.0
-      '@ant-design/icons': 4.7.0(react-dom@16.14.0)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@16.14.0)(react@17.0.2)
       '@ant-design/react-slick': 0.29.2(react@17.0.2)
       '@babel/runtime': 7.22.5
       '@ctrl/tinycolor': 3.6.0
@@ -19457,7 +19209,7 @@ packages:
       react-dom: '>=16.9.0'
     dependencies:
       '@ant-design/colors': 6.0.0
-      '@ant-design/icons': 4.7.0(react-dom@17.0.2)(react@17.0.2)
+      '@ant-design/icons': 4.8.0(react-dom@17.0.2)(react@17.0.2)
       '@ant-design/react-slick': 0.29.2(react@17.0.2)
       '@babel/runtime': 7.22.5
       '@ctrl/tinycolor': 3.6.0
@@ -23729,7 +23481,7 @@ packages:
       object-assign: 4.1.1
     dev: false
 
-  /create-react-context@0.2.3(prop-types@15.7.2)(react@17.0.2):
+  /create-react-context@0.2.3(prop-types@15.8.1)(react@17.0.2):
     resolution: {integrity: sha512-CQBmD0+QGgTaxDL3OX1IDXYqjkp2It4RIbcb99jS6AEg27Ga+a9G3JtK6SIu0HBwPLZlmwt9F7UwWA4Bn92Rag==}
     peerDependencies:
       prop-types: ^15.0.0
@@ -23737,7 +23489,7 @@ packages:
     dependencies:
       fbjs: 0.8.18
       gud: 1.0.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
     dev: true
 
@@ -31406,6 +31158,7 @@ packages:
 
   /intersection-observer@0.7.0:
     resolution: {integrity: sha512-Id0Fij0HsB/vKWGeBe9PxeY45ttRiBmhFyyt/geBdDHBYNctMRTE3dC1U3ujzz3lap+hVXlEcVaB56kZP/eEUg==}
+    dev: true
 
   /intl-format-cache@4.3.1:
     resolution: {integrity: sha512-OEUYNA7D06agqPOYhbTkl0T8HA3QKSuwWh1HiClEnpd9vw7N+3XsQt5iZ0GUEchp5CW1fQk/tary+NsbF3yQ1Q==}
@@ -34936,6 +34689,7 @@ packages:
 
   /lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: true
 
   /lodash.curry@4.1.1:
     resolution: {integrity: sha512-/u14pXGviLaweY5JI0IUzgzF2J6Ne8INyzAZjImcryjgkZ+ebruBxy2/JaOOkTqScddcYtakjhSaeemV8lR0tA==}
@@ -42672,10 +42426,10 @@ packages:
     dependencies:
       buble: 0.19.8
       core-js: 2.6.12
-      create-react-context: 0.2.3(prop-types@15.7.2)(react@17.0.2)
+      create-react-context: 0.2.3(prop-types@15.8.1)(react@17.0.2)
       dom-iterator: 1.0.0
       prismjs: 1.6.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       unescape: 0.2.0
@@ -42690,10 +42444,10 @@ packages:
     dependencies:
       buble: 0.19.8
       core-js: 2.6.12
-      create-react-context: 0.2.3(prop-types@15.7.2)(react@17.0.2)
+      create-react-context: 0.2.3(prop-types@15.8.1)(react@17.0.2)
       dom-iterator: 1.0.0
       prismjs: 1.6.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       unescape: 0.2.0
@@ -42851,7 +42605,7 @@ packages:
       react-dom: '>=16.3.3'
     dependencies:
       perfect-scrollbar: 1.5.5
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
     dev: true
@@ -42863,7 +42617,7 @@ packages:
       react-dom: '>=16.3.3'
     dependencies:
       perfect-scrollbar: 1.5.5
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
     dev: true
@@ -43326,48 +43080,6 @@ packages:
       react-dom: 17.0.2(react@17.0.2)
     dev: false
 
-  /react-spring@9.3.2(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.135.0)(zdog@1.1.3):
-    resolution: {integrity: sha512-LMFgjvTJVg2ltthzgJcZ7siOdRig7L8wJZIHrc7p6ss4AaJ446xHzm9L2ZQha1ZC9QVY8/e6XfLhMTFAG6dtjw==}
-    dependencies:
-      '@react-spring/core': 9.3.2(react@17.0.2)
-      '@react-spring/konva': 9.3.2(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2)
-      '@react-spring/native': 9.3.2(react-native@0.71.10)(react@17.0.2)
-      '@react-spring/three': 9.3.2(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.135.0)
-      '@react-spring/web': 9.3.2(react-dom@17.0.2)(react@17.0.2)
-      '@react-spring/zdog': 9.3.2(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3)
-    transitivePeerDependencies:
-      - '@react-three/fiber'
-      - konva
-      - react
-      - react-dom
-      - react-konva
-      - react-native
-      - react-zdog
-      - three
-      - zdog
-    dev: false
-
-  /react-spring@9.4.4(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.139.2)(zdog@1.1.3):
-    resolution: {integrity: sha512-VOqilh9DJBsS6Pf550YLhdReS3j9a2AQVh7NcsNtWoxTYIeuErWi6ym0++6bBhQp4yT5xvVvUDaJ8ez8vrFgaw==}
-    dependencies:
-      '@react-spring/core': 9.4.5(react@17.0.2)
-      '@react-spring/konva': 9.4.5(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2)
-      '@react-spring/native': 9.4.5(react-native@0.71.10)(react@17.0.2)
-      '@react-spring/three': 9.4.5(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.139.2)
-      '@react-spring/web': 9.4.5(react-dom@17.0.2)(react@17.0.2)
-      '@react-spring/zdog': 9.4.5(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3)
-    transitivePeerDependencies:
-      - '@react-three/fiber'
-      - konva
-      - react
-      - react-dom
-      - react-konva
-      - react-native
-      - react-zdog
-      - three
-      - zdog
-    dev: false
-
   /react-spring@9.6.0(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.135.0)(zdog@1.1.3):
     resolution: {integrity: sha512-BJJBhGPkNNoj83i6+7z7BDDuB3Q25j0w3WCCKlSqgLQafcjx+Se2ogxKM05m+JjjeML5DTDTbsw0UD0GbAzW4g==}
     peerDependencies:
@@ -43378,6 +43090,30 @@ packages:
       '@react-spring/konva': 9.6.1(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2)
       '@react-spring/native': 9.6.1(react-native@0.71.10)(react@17.0.2)
       '@react-spring/three': 9.6.1(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.135.0)
+      '@react-spring/web': 9.6.1(react-dom@17.0.2)(react@17.0.2)
+      '@react-spring/zdog': 9.6.1(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3)
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+    transitivePeerDependencies:
+      - '@react-three/fiber'
+      - konva
+      - react-konva
+      - react-native
+      - react-zdog
+      - three
+      - zdog
+    dev: false
+
+  /react-spring@9.6.0(@react-three/fiber@8.13.1)(konva@9.2.0)(react-dom@17.0.2)(react-konva@16.8.6)(react-native@0.71.10)(react-zdog@1.0.11)(react@17.0.2)(three@0.139.2)(zdog@1.1.3):
+    resolution: {integrity: sha512-BJJBhGPkNNoj83i6+7z7BDDuB3Q25j0w3WCCKlSqgLQafcjx+Se2ogxKM05m+JjjeML5DTDTbsw0UD0GbAzW4g==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || 17
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@react-spring/core': 9.6.1(react@17.0.2)
+      '@react-spring/konva': 9.6.1(konva@9.2.0)(react-konva@16.8.6)(react@17.0.2)
+      '@react-spring/native': 9.6.1(react-native@0.71.10)(react@17.0.2)
+      '@react-spring/three': 9.6.1(@react-three/fiber@8.13.1)(react@17.0.2)(three@0.139.2)
       '@react-spring/web': 9.6.1(react-dom@17.0.2)(react@17.0.2)
       '@react-spring/zdog': 9.6.1(react-dom@17.0.2)(react-zdog@1.0.11)(react@17.0.2)(zdog@1.1.3)
       react: 17.0.2
@@ -46775,7 +46511,7 @@ packages:
       css-to-react-native: 2.3.2
       memoize-one: 5.2.1
       merge-anything: 2.4.4
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       react-is: 16.13.1
@@ -46799,7 +46535,7 @@ packages:
       css-to-react-native: 2.3.2
       memoize-one: 5.2.1
       merge-anything: 2.4.4
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       react-is: 16.13.1
@@ -48982,18 +48718,8 @@ packages:
       react: 17.0.2
     dev: false
 
-  /use-immer@0.6.0(immer@9.0.21)(react@17.0.2):
-    resolution: {integrity: sha512-dFGRfvWCqPDTOt/S431ETYTg6+uxbpb7A1pptufwXVzGJY3RlXr38+3wyLNpc6SbbmAKjWl6+EP6uW74fkEsXQ==}
-    peerDependencies:
-      immer: '>=2.0.0'
-      react: ^16.8.0 || ^17.0.1 || 17
-    dependencies:
-      immer: 9.0.21
-      react: 17.0.2
-    dev: false
-
-  /use-immer@0.7.0(immer@9.0.21)(react@17.0.2):
-    resolution: {integrity: sha512-Re4hjrP3a/2ABZjAc0b7AK9s626bnO+H33RO2VUhiDZ2StBz5B663K6WNNlr4QtHWaGUmvLpwt3whFvvWuolQw==}
+  /use-immer@0.9.0(immer@9.0.21)(react@17.0.2):
+    resolution: {integrity: sha512-/L+enLi0nvuZ6j4WlyK0US9/ECUtV5v9RUbtxnn5+WbtaXYUaOBoKHDNL9I5AETdurQ4rIFIj/s+Z5X80ATyKw==}
     peerDependencies:
       immer: '>=2.0.0'
       react: ^16.8.0 || ^17.0.1 || ^18.0.0 || 17

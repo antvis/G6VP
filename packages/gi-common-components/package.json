@@ -30,7 +30,7 @@
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
     "@aligov/global-string-format": "^1.0.7",
-    "@antv/g2plot": "^2.4.20",
+    "@antv/g2plot": "^2.4.31",
     "@formily/antd": "^2.1.0",
     "@formily/core": "^2.1.0",
     "@formily/json-schema": "^2.2.2",
@@ -41,7 +41,7 @@
     "dumi": "^1.1.38",
     "nanoid": "^4.0.0",
     "react-color": "^2.19.3",
-    "use-immer": "^0.7.0"
+    "use-immer": "^0.9.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
