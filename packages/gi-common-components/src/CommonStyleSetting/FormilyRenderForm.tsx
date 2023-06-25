@@ -2,7 +2,7 @@ import { BgColorsOutlined } from '@ant-design/icons';
 import { ArrayCollapse, ArrayItems, DatePicker, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';
 import { FormProvider, createSchemaField } from '@formily/react';
-import { Button, Radio } from 'antd';
+import { Button, Radio, Typography } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 import { AssetCollapse, FormCollapse, Offset } from '../FormilyForm';
@@ -11,6 +11,8 @@ import ColorInput from './ColorInput';
 import GroupSelect from './GroupSelect';
 import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
+
+const { Text } = Typography;
 
 interface RenderFormProps {
   onChange: (all: any, elementId: string) => void;
@@ -88,7 +90,7 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
   const dataTypeKey = elementType === 'nodes' ? 'nodeTypeKeyFromProperties' : 'edgeTypeKeyFromProperties';
   const typeKeyFromProperties = schemaType && schemaType[dataTypeKey];
 
-  const nodeTypeExpression = config.expressions.find(d => {
+  const nodeTypeExpression = config.expressions?.find(d => {
     if (!d) {
       return false;
     }
@@ -131,17 +133,6 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
         <PopoverContainer
           title="选择元素资产"
           content={
-            // <AntdSelect value={elementId} onChange={handleChangeElement}>
-            //   {OPTIONS.map(c => {
-            //     const { id, name } = c;
-            //     return (
-            //       <Option value={id} key={id}>
-            //         {name}
-            //       </Option>
-            //     );
-            //   })}
-            // </AntdSelect>
-
             <Radio.Group value={elementId} onChange={handleChangeElement}>
               {OPTIONS.map(c => {
                 const { id, name, cover } = c;
@@ -162,8 +153,8 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
                       src={cover}
                       alt=""
                       style={{ display: 'block', margin: 'auto', width: '40px', height: '40px' }}
-                    />{' '}
-                    {name}
+                    />
+                    <Text ellipsis={{ tooltip: name }}>{name}</Text>
                   </Radio.Button>
                 );
               })}

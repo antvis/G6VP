@@ -1,7 +1,10 @@
 import React from 'react';
+import { debounce as _debounce } from '@antv/util';
 import GroupContainer from '../GroupContainer';
 import RenderForm from './FormilyRenderForm';
 import type { ItemConfig } from './typing';
+
+const debounce = fn => _debounce(fn, 500, false) as any;
 
 export interface StyleSettingProps {
   data: { nodes: any[]; edges: any[] };
@@ -79,7 +82,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
    * @param current
    * @param all
    */
-  const handleChange = (all, groupIndex = 0, elementId) => {
+  const handleChange = debounce((all, groupIndex = 0, elementId) => {
     if (preStyleGroup.current[groupIndex]) {
       preStyleGroup.current[groupIndex].props = all;
       preStyleGroup.current[groupIndex].id = elementId;
@@ -98,14 +101,14 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     if (onChange) {
       onChange(preStyleGroup.current);
     }
-  };
+  });
 
   /**
    * change rules / expression / groupIndex /groupName
    * @param _current
    * @param all
    */
-  const handleGroupChange = (_current, all) => {
+  const handleGroupChange = debounce((_current, all) => {
     const resultGroup: ItemConfig[] = [];
     for (const group of all.groups) {
       // 从 preStyleGroup 中过滤出相同 ID 的对象，进行 merge
@@ -126,7 +129,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
     if (onChange) {
       onChange(preStyleGroup.current);
     }
-  };
+  });
 
   return (
     <GroupContainer
@@ -146,9 +149,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
               elementType={elementType}
               schemaData={schemaData}
               elements={elements}
-              //@ts-ignore
               config={itemConfig}
-              // debounceInput={true}
               onChange={(all, elementId) => handleChange(all, groupIndex, elementId)}
             />
           </div>
