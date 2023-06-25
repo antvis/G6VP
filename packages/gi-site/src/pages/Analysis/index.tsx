@@ -1,4 +1,4 @@
-import GISDK, { useContext as useGIContext, utils, getCurrentLang } from '@antv/gi-sdk';
+import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { message } from 'antd';
 import { original } from 'immer';
 import React, { useRef, useState } from 'react';
