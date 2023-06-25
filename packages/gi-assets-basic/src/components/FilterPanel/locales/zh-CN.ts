@@ -6,7 +6,8 @@ const locale = {
   'FilterPanel.node': '节点',
   'FilterPanel.edge': '边',
   'FilterPanel.recommend': '智能推荐',
-  'FilterPanel.info.name': '筛选面板'
+  'FilterPanel.info.name': '筛选面板',
+  'FilterPanel.meta.filterKeys': '默认筛选字段',
 };
 
 export default locale;

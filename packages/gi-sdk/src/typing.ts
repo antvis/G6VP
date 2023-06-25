@@ -1,6 +1,7 @@
 import type { Combo } from '@antv/g6';
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { GraphSchemaData, IGraphData } from './process/schema';
+import type { LANGUAGE_KEY_NAME } from './process/locale';
 export type { GraphSchemaData };
 export interface State<
   G extends {
@@ -91,7 +92,7 @@ export interface Props {
   services: GIService[];
   /** 国际化语言配置 */
   locales: {
-    language: string;
+    language: LANGUAGE_KEY_NAME;
     [k: string]: string;
   }
   /**
@@ -203,7 +204,7 @@ export interface ElementAsset {
   registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
 }
 export interface LocaleAsset {
-  language: string;
+  language: LANGUAGE_KEY_NAME;
   [key: string]: string;
 }
 

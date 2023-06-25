@@ -6,7 +6,8 @@ const locale = {
   'FilterPanel.node': 'node',
   'FilterPanel.edge': 'edge',
   'FilterPanel.recommend': 'Recommend',
-  'FilterPanel.info.name': 'Filter Panel'
+  'FilterPanel.info.name': 'Filter Panel',
+  'FilterPanel.meta.filterKeys': 'Default filter keys',
 };
 
 export default locale;

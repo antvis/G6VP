@@ -117,8 +117,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services, templates, deploys, locale } = curr;
-
+      const { components, version, name, elements, layouts, services, templates, deploys, locales } = curr;
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
@@ -157,7 +156,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
             ]
           : acc.services,
         locales: {
-          ...merge(acc.locales, locale)
+          ...merge(acc.locales, locales)
         }
       };
     },

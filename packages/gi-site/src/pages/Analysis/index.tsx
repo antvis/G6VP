@@ -1,4 +1,4 @@
-import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
+import GISDK, { useContext as useGIContext, utils, getCurrentLang } from '@antv/gi-sdk';
 import { message } from 'antd';
 import { original } from 'immer';
 import React, { useRef, useState } from 'react';
@@ -311,7 +311,7 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
-                // 测试 暂写死
+                // todo 测试 暂写死 zh-CN
                 locales={utils.getCurrentLocales(activeAssets!.locales, 'zh-CN')}
               >
                 <GraphRef graphRef={graphRef} />

@@ -1,8 +1,9 @@
-import { extra } from '@antv/gi-sdk';
+import { extra, formatMessage } from '@antv/gi-sdk';
 import info from './info';
+import locales from './locales';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
-
+// @ts-ignore
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.tooltip.default = info.desc;
@@ -35,7 +36,7 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
 
   const schema = {
     filterKeys: {
-      title: '默认筛选字段',
+      title: formatMessage({ id: 'FilterPanel.meta.filterKeys' }, locales),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
