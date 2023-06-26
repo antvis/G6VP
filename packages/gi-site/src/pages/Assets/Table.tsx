@@ -2,6 +2,7 @@ import { Button, Form, Modal, Popconfirm, Table } from 'antd';
 import React from 'react';
 import PackageForm from './Form';
 import { useState } from 'react';
+import $i18n from '../../i18n';
 
 const PackageTable = ({ data, onEdit }) => {
   const [form] = Form.useForm();
@@ -17,27 +18,27 @@ const PackageTable = ({ data, onEdit }) => {
 
   const columns = [
     {
-      title: '包名',
+      title: $i18n.get({ id: 'gi-site.pages.Assets.Table.PackageName', dm: '包名' }),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'UMD 全局变量',
+      title: $i18n.get({ id: 'gi-site.pages.Assets.Table.UmdGlobalVariables', dm: 'UMD 全局变量' }),
       dataIndex: 'global',
       key: 'global',
     },
     {
-      title: '版本',
+      title: $i18n.get({ id: 'gi-site.pages.Assets.Table.Version', dm: '版本' }),
       dataIndex: 'version',
       key: 'version',
     },
     {
-      title: '地址',
+      title: $i18n.get({ id: 'gi-site.pages.Assets.Table.Address', dm: '地址' }),
       dataIndex: 'url',
       key: 'url',
     },
     {
-      title: '操作',
+      title: $i18n.get({ id: 'gi-site.pages.Assets.Table.Operation', dm: '操作' }),
       width: 160,
       render: record => {
         const disabled = record.name === '@antv/gi-assets-basic';
@@ -54,11 +55,14 @@ const PackageTable = ({ data, onEdit }) => {
                 form.setFieldsValue(record);
               }}
             >
-              编辑
+              {$i18n.get({ id: 'gi-site.pages.Assets.Table.Edit', dm: '编辑' })}
             </Button>
             <Popconfirm
               placement="topRight"
-              title={'删除后，资产将不会出现在探索分析页面'}
+              title={$i18n.get({
+                id: 'gi-site.pages.Assets.Table.AfterDeletionAssetsWillNot',
+                dm: '删除后，资产将不会出现在探索分析页面',
+              })}
               onConfirm={() => {
                 handleDelete(record);
               }}
@@ -66,7 +70,7 @@ const PackageTable = ({ data, onEdit }) => {
               cancelText="No"
             >
               <Button type="text" disabled={disabled}>
-                删除
+                {$i18n.get({ id: 'gi-site.pages.Assets.Table.Delete', dm: '删除' })}
               </Button>
             </Popconfirm>
           </>
@@ -74,10 +78,14 @@ const PackageTable = ({ data, onEdit }) => {
       },
     },
   ];
+
   return (
     <>
       <Modal
-        title={form.getFieldValue('name') ?? '编辑资产包'}
+        title={
+          form.getFieldValue('name') ??
+          $i18n.get({ id: 'gi-site.pages.Assets.Table.EditAssetPackage', dm: '编辑资产包' })
+        }
         open={editOpen}
         onOk={() => {
           form

@@ -11,6 +11,7 @@ import DatasetTable from './Table';
 
 import { utils } from '@antv/gi-sdk';
 import { getConfigByEngineId } from '../Workspace/utils';
+import $i18n from '../../i18n';
 const styles = {
   code: {
     background: '#000',
@@ -73,23 +74,29 @@ const SystemDirectConnect: React.FunctionComponent = props => {
   const INFO = (
     <div style={{ padding: '12px' }}>
       <p>
-        任何系统，都可以通过 URL 携带参数，访问 AntV Insight ，实现数据集的自动创建，从而实现系统间的「一键连接」分析。
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.SystemDirectConnect.AnySystemCanUseThe',
+          dm: '任何系统，都可以通过 URL 携带参数，访问 AntV Insight ，实现数据集的自动创建，从而实现系统间的「一键连接」分析。',
+        })}
       </p>
-      <h4> STEP 1 : 构建 info 信息</h4>
+      <h4>
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.SystemDirectConnect.StepBuildInfoInformation',
+          dm: 'STEP 1 : 构建 info 信息',
+        })}
+      </h4>
       <pre style={styles.code}>
-        {`
-    const info = encodeURIComponent(
-      JSON.stringify({
-        id: '以 "ds_" 为前缀的数据集 ID ',
-        name: '数据集名称',
-        engineId:"数据引擎ID",
-        engineContext: "数据引擎上下文",
-        schemaData: "数据模型（图数据需要）",
-        workbook:"GI_WORKBOOK",// 选择用「关系图画布」还是「地理画布」
-      }),
-    ); `}
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.SystemDirectConnect.ConstInfoEncodeuricomponentJsonStringify',
+          dm: '\n    const info = encodeURIComponent(\n      JSON.stringify({\n        id: \'以 "ds_" 为前缀的数据集 ID \',\n        name: \'数据集名称\',\n        engineId:"数据引擎ID",\n        engineContext: "数据引擎上下文",\n        schemaData: "数据模型（图数据需要）",\n        workbook:"GI_WORKBOOK",// 选择用「关系图画布」还是「地理画布」\n      }),\n    ); ',
+        })}
       </pre>
-      <h4>STEP 2 : 将 info 信息以 URL 的方式带入到 AntV Insight 站点</h4>
+      <h4>
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.SystemDirectConnect.StepBringInfoInformationTo',
+          dm: 'STEP 2 : 将 info 信息以 URL 的方式带入到 AntV Insight 站点',
+        })}
+      </h4>
       <pre style={styles.code}>{`   
     window.open('graphinsight.antgroup.com/#/dataset/SYSTEM_DIRECT_CONNECT?datasetInfo=info');
       `}</pre>
@@ -111,13 +118,13 @@ const SystemDirectConnect: React.FunctionComponent = props => {
         {
           key: 'list',
           icon: <BarsOutlined />,
-          label: '数据列表',
+          label: $i18n.get({ id: 'gi-site.pages.Dataset.SystemDirectConnect.DataList', dm: '数据列表' }),
           children: <DatasetTable data={lists} queryData={refreshDataset} />,
         },
         {
           key: 'code',
           icon: <CodeOutlined />,
-          label: '对接说明',
+          label: $i18n.get({ id: 'gi-site.pages.Dataset.SystemDirectConnect.DockingInstructions', dm: '对接说明' }),
           children: INFO,
         },
       ]}

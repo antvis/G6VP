@@ -3,6 +3,7 @@ import { Button, Card } from 'antd';
 import * as React from 'react';
 import { deleteDataset, queryRecycleDatasetList } from '../../services/dataset';
 import DatasetTable from './Table';
+import $i18n from '../../i18n';
 interface DatasetsProps {}
 
 const Datasets: React.FunctionComponent<DatasetsProps> = props => {
@@ -36,10 +37,18 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
       title={
         <>
           <IssuesCloseOutlined />
-          &nbsp;七天后将自动清空数据
+          {$i18n.get({ id: 'gi-site.pages.Dataset.Delete.DataWillBeAutomaticallyCleared', dm: '七天后将自动清空数据' })}
         </>
       }
-      extra={lists?.length ? <Button onClick={handleClear}>清空回收站</Button> : ''}
+      extra={
+        lists?.length ? (
+          <Button onClick={handleClear}>
+            {$i18n.get({ id: 'gi-site.pages.Dataset.Delete.ClearRecycleBin', dm: '清空回收站' })}
+          </Button>
+        ) : (
+          ''
+        )
+      }
     >
       <DatasetTable data={lists} queryData={refreshDataset} deletable={false} recoverable={true} />
     </Card>

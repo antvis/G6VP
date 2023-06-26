@@ -15,6 +15,7 @@ import { edgeColumns, nodeColumns } from '../../../../components/FileServerEngin
 import { useContext } from '../../hooks/useContext';
 import DataSchema from './DataSchema';
 import DataSource from './DataSource';
+import $i18n from '../../../../i18n';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -27,12 +28,27 @@ const columnsData = {
 
 /** 临时方案 */
 const ENGINE_TYPE = {
-  GI: { icon: 'icon-file-excel', name: '本地文件' },
-  GS: { icon: 'icon-file-database', name: '图数据库' },
-  TuGraph: { icon: 'icon-file-database', name: '图数据库' },
-  Neo4j: { icon: 'icon-file-database', name: '图数据库' },
-  AKG: { icon: 'icon-file-api', name: '在线接口' },
-  SHASENG: { icon: 'icon-file-api', name: '在线接口' },
+  GI: { icon: 'icon-file-excel', name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.LocalFile', dm: '本地文件' }) },
+  GS: {
+    icon: 'icon-file-database',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.GraphDatabase', dm: '图数据库' }),
+  },
+  TuGraph: {
+    icon: 'icon-file-database',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.GraphDatabase', dm: '图数据库' }),
+  },
+  Neo4j: {
+    icon: 'icon-file-database',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.GraphDatabase', dm: '图数据库' }),
+  },
+  AKG: {
+    icon: 'icon-file-api',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.OnlineInterface', dm: '在线接口' }),
+  },
+  SHASENG: {
+    icon: 'icon-file-api',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.OnlineInterface', dm: '在线接口' }),
+  },
 };
 
 const ServiceHeader = props => {
@@ -62,7 +78,7 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   if (!engineId && context.data.nodes.length === 0) {
     EngineView = (
       <ActionList
-        title={`请点击「导入」，选择数据源`}
+        title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.ClickImportToSelectA', dm: '请点击「导入」，选择数据源' })}
         extra={
           <Space>
             <ExclamationCircleOutlined style={{ color: 'orangered' }} />
@@ -103,8 +119,11 @@ const DataPanel: React.FunctionComponent<DataPanelProps> = props => {
   return (
     <>
       <div>
-        <div className="gi-config-panel-title">数据</div>
-        <CollapseCard title={'图数据源'} extra={<DataSource data={data} engineId={engineId} />}>
+        <div className="gi-config-panel-title">{$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.Data', dm: '数据' })}</div>
+        <CollapseCard
+          title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.GraphDataSource', dm: '图数据源' })}
+          extra={<DataSource data={data} engineId={engineId} />}
+        >
           {EngineView}
         </CollapseCard>
         <DataSchema />

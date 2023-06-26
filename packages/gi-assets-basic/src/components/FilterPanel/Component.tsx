@@ -40,7 +40,8 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
   }>({ node: [], edge: [] });
-  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData, useIntl } = useContext();
+  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData, useIntl } =
+    useContext();
   const { formatMessage } = useIntl();
 
   useEffect(() => {
@@ -338,7 +339,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        {formatMessage({id: 'FilterPanel.addfilter'})}
+        {formatMessage({ id: 'FilterPanel.addfilter' })}
       </Button>
       {enableInfoDetect ? (
         <Button style={{ width: '100px', marginLeft: '4px' }} onClick={handleClickRecommend}>

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { IVersionObj } from './type';
 import VersionList from './VersionList';
+import $i18n from '../../i18n';
 
 export interface IState {
   popoverVisible: boolean;
@@ -48,7 +49,7 @@ const Notification = () => {
 
   const content = (
     <div>
-      <p>G6VP 新版本上线啦 🎉</p>
+      <p>{$i18n.get({ id: 'gi-site.components.Notification.TheNewVersionOfG', dm: 'G6VP 新版本上线啦 🎉' })}</p>
     </div>
   );
 
@@ -67,9 +68,14 @@ const Notification = () => {
 
   return (
     <>
-      <Popover visible={state.popoverVisible} title="版本通知" content={content} placement="bottom">
+      <Popover
+        visible={state.popoverVisible}
+        title={$i18n.get({ id: 'gi-site.components.Notification.VersionNotification', dm: '版本通知' })}
+        content={content}
+        placement="bottom"
+      >
         <Button icon={<BellOutlined />} onClick={handleClick}>
-          版本通知
+          {$i18n.get({ id: 'gi-site.components.Notification.VersionNotification', dm: '版本通知' })}
         </Button>
       </Popover>
       <Drawer visible={state.drawerVisible} onClose={onCloseDrawer} closable closeIcon={false} width="600px">

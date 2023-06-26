@@ -91,10 +91,10 @@ export interface Props {
   /** 注册的全局数据服务 */
   services: GIService[];
   /** 国际化语言配置 */
-  locales: {
+  locales?: {
     language: LANGUAGE_KEY_NAME;
     [k: string]: string;
-  }
+  };
   /**
    * style
    */

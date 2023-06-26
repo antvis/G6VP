@@ -8,6 +8,7 @@ import { AssetInfo } from '../../typing';
 import ContainerPanel from '../ContainerPanel';
 import ComponentPanel from './ComponentPanel';
 import { REQUIRED_ASSET_IDS } from '../ContainerPanel/constants';
+import $i18n from '../../../../i18n';
 import './index.less';
 
 /**
@@ -16,7 +17,6 @@ import './index.less';
  * @param componentsMap 当前所有资产（包括非活跃）的 map
  * @param activeComponents 活跃的资产
  * @returns
- */
 const formatCommonContainer = (container, componentsMap, activeComponents) => {
   const { id, meta, props: defaultProps } = container;
   const configuredComponent = activeComponents.find(configuredCom => configuredCom.id === id);
@@ -148,11 +148,11 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
   });
   return {
     id: 'GI_FreeContainer',
-    name: '自运行组件',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
     required: true,
     info: {
       id: 'GI_FreeContainer',
-      name: '自运行组件',
+      name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
       icon: 'icon-layout',
       type: 'GICC',
     },
@@ -161,7 +161,7 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
         'x-component-props': { mode: 'multiple' },
       },
       id: 'GI_FreeContainer',
-      name: '自运行组件',
+      name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
       required: true,
     },
     props: {

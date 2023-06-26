@@ -1,6 +1,7 @@
 import { GraphinData } from '@antv/graphin';
 
 // 因为后续要转化为 JSON 字符串，所以这里不能返回一个函数
+import $i18n from '../../i18n';
 export const GIDefaultTrans = (id, source, target, nodeType, edgeType) => `
 data => {
   const {combos} = data;
@@ -52,7 +53,10 @@ export const getOptions = (data: GraphinData) => {
 
   return [
     {
-      title: 'NodeID (节点唯一标识)',
+      title: $i18n.get({
+        id: 'gi-site.components.FileServerEngine.utils.NodeidUniqueIdentifierOfThe',
+        dm: 'NodeID (节点唯一标识)',
+      }),
       key: 'id',
       dataIndex: 'id',
       valueType: 'select',
@@ -64,13 +68,19 @@ export const getOptions = (data: GraphinData) => {
           {
             required: true,
             whitespace: true,
-            message: '此项是必填项',
+            message: $i18n.get({
+              id: 'gi-site.components.FileServerEngine.utils.ThisItemIsRequired',
+              dm: '此项是必填项',
+            }),
           },
         ],
       },
     },
     {
-      title: 'NodeType (节点分类)',
+      title: $i18n.get({
+        id: 'gi-site.components.FileServerEngine.utils.NodetypeNodeClassification',
+        dm: 'NodeType (节点分类)',
+      }),
       key: 'nodeType',
       dataIndex: 'nodeType',
       valueType: 'select',
@@ -79,7 +89,10 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'Source (边的起点)',
+      title: $i18n.get({
+        id: 'gi-site.components.FileServerEngine.utils.SourceTheStartingNodeOf',
+        dm: 'Source (边的起点)',
+      }),
       key: 'source',
       dataIndex: 'source',
       valueType: 'select',
@@ -88,7 +101,7 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'Target (边的终点)',
+      title: $i18n.get({ id: 'gi-site.components.FileServerEngine.utils.TargetEndOfEdge', dm: 'Target (边的终点)' }),
       key: 'target',
       dataIndex: 'target',
       valueType: 'select',
@@ -97,7 +110,7 @@ export const getOptions = (data: GraphinData) => {
       },
     },
     {
-      title: 'EdgeType (边的类型)',
+      title: $i18n.get({ id: 'gi-site.components.FileServerEngine.utils.EdgetypeEdgeType', dm: 'EdgeType (边的类型)' }),
       key: 'edgeType',
       dataIndex: 'edgeType',
       valueType: 'select',

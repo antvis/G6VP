@@ -1,16 +1,16 @@
-// devCost: 开发人日
+import $i18n from '../../i18n'; // devCost: 开发人日
 // useProbability：使用的概率
 const assets = [
   {
     id: 'LockNodeWithMenu',
-    name: '锁定/解锁（右键菜单）',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.LockUnlockRightClickMenu', dm: '锁定/解锁（右键菜单）' }),
     category: 'elements-interaction',
     devCost: 8,
     useProbability: 0.4,
   },
   {
     id: 'SuperLinkWithMenu',
-    name: '超链接（右键菜单）',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.HyperlinkRightClickMenu', dm: '超链接（右键菜单）' }),
     category: 'elements-interaction',
     devCost: 10,
     useProbability: 0.1,
@@ -18,48 +18,48 @@ const assets = [
   {
     id: 'TagNodeWithMenu',
     category: 'elements-interaction',
-    name: '打标节点（右键菜单）',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.MarkingNodeRightClickMenu', dm: '打标节点（右键菜单）' }),
     devCost: 12,
     useProbability: 0.8,
   },
   {
     id: 'ToggleClusterWithMenu',
     category: 'elements-interaction',
-    name: '展开/收起（右键菜单）',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.ExpandCollapseRightClickMenu', dm: '展开/收起（右键菜单）' }),
     devCost: 20,
     useProbability: 0.5,
   },
   {
     id: 'NodeTooltip',
-    name: '节点悬停提示框',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.NodeHoverPromptBox', dm: '节点悬停提示框' }),
     category: 'elements-interaction',
     devCost: 6,
     useProbability: 0.5,
   },
   {
     id: 'NodeHighlight',
-    name: '节点高亮',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.NodeHighlight', dm: '节点高亮' }),
     category: 'elements-interaction',
     devCost: 5,
     useProbability: 1,
   },
   {
     id: 'EdgeTooltip',
-    name: '边悬停提示框',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.HoverPromptBox', dm: '边悬停提示框' }),
     category: 'elements-interaction',
     devCost: 5,
     useProbability: 0.2,
   },
   {
     id: 'EdgeHighlight',
-    name: '边高亮',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.EdgeHighlight', dm: '边高亮' }),
     category: 'elements-interaction',
     devCost: 5,
     useProbability: 1,
   },
   {
     id: 'PropertiesPanel',
-    name: '属性面板',
+    name: $i18n.get({ id: 'gi-site.pages.Assets.DATA.PropertiesPanel', dm: '属性面板' }),
     category: 'elements-interaction',
     devCost: 10,
     useProbability: 0.9,

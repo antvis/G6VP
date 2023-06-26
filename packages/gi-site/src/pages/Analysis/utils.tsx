@@ -7,6 +7,7 @@ import { queryDatasetInfo } from '../../services/dataset';
 import * as ProjectServices from '../../services/project';
 import { getComponentsByAssets, getElementsByAssets } from './getAssets';
 import getLayoutsByAssets from './getAssets/getLayoutsByAssets';
+import $i18n from '../../i18n';
 const { generatorSchemaByGraphData, generatorStyleConfigBySchema } = utils;
 export { generatorSchemaByGraphData, generatorStyleConfigBySchema };
 
@@ -35,8 +36,11 @@ export const getUpdateGISite =
 
     if (!schemaData || !engineId) {
       notification.error({
-        message: '服务引擎启动失败',
-        description: '没有查询到图模型，请检查接口是否正常',
+        message: $i18n.get({ id: 'gi-site.pages.Analysis.utils.FailedToStartTheService', dm: '服务引擎启动失败' }),
+        description: $i18n.get({
+          id: 'gi-site.pages.Analysis.utils.NoGraphModelIsFound',
+          dm: '没有查询到图模型，请检查接口是否正常',
+        }),
       });
       return false;
     }
@@ -76,8 +80,14 @@ export const getUpdateGISite =
 
     ProjectServices.updateById(projectId, updateParams).then(res => {
       notification.success({
-        message: '服务引擎启动成功',
-        description: '服务引擎启动成功,正在重启窗口',
+        message: $i18n.get({
+          id: 'gi-site.pages.Analysis.utils.ServiceEngineStartedSuccessfully',
+          dm: '服务引擎启动成功',
+        }),
+        description: $i18n.get({
+          id: 'gi-site.pages.Analysis.utils.TheServiceEngineStartedSuccessfully',
+          dm: '服务引擎启动成功,正在重启窗口',
+        }),
       });
       utils.setServerEngineContext({
         GI_SITE_PROJECT_ID: projectId,

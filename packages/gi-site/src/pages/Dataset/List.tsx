@@ -2,6 +2,7 @@ import * as React from 'react';
 import Empty from '../../components/Empty';
 import { queryDatasetList } from '../../services/dataset';
 import DatasetTable from './Table';
+import $i18n from '../../i18n';
 interface DatasetsProps {}
 
 const Datasets: React.FunctionComponent<DatasetsProps> = props => {
@@ -28,7 +29,13 @@ const Datasets: React.FunctionComponent<DatasetsProps> = props => {
       }}
     >
       {lists.length === 0 ? (
-        <Empty title="暂无数据，先去创建一个数据集吧" url="/dataset/create" />
+        <Empty
+          title={$i18n.get({
+            id: 'gi-site.pages.Dataset.List.NoDataIsAvailableCreate',
+            dm: '暂无数据，先去创建一个数据集吧',
+          })}
+          url="/dataset/create"
+        />
       ) : (
         <DatasetTable data={lists} queryData={refreshDataset} />
       )}

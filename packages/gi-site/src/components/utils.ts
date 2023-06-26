@@ -55,3 +55,18 @@ export const getSearchParams = (location: Location) => {
     searchParams,
   };
 };
+
+/**
+ * 判断浏览器系统语言是否为中文
+ * @returns
+ */
+export const isNavigatorLanguageZh = () => {
+  const type = navigator.appName;
+  let lang = navigator.language;
+  if (type !== 'Netscape') {
+    // @ts-ignore
+    lang = navigator.userLanguage;
+  }
+  lang = lang.substr(0, 2);
+  return lang === 'zh';
+};

@@ -4,6 +4,7 @@ import { getSearchParams } from '../../components/utils';
 import Detail from './Detail';
 import './index.less';
 import SideList from './List';
+import $i18n from '../../i18n';
 const S4 = () => {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1).toLocaleUpperCase();
 };
@@ -30,7 +31,7 @@ const DataSource = React.forwardRef((props, ref) => {
         return localData;
       }`,
       mode: 'MOCK',
-      name: '未命名的服务',
+      name: $i18n.get({ id: 'gi-site.components.DataSource.UnnamedService', dm: '未命名的服务' }),
     };
     setState(draft => {
       draft.options = [...draft.options, option];

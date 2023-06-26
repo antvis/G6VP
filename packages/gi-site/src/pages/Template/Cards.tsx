@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteDataset } from '../../services/dataset';
 import { ITemplate } from '../../services/typing';
+import $i18n from '../../i18n';
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -24,12 +25,12 @@ const Cards: React.FunctionComponent<ICardsProps> = props => {
 
   const items = [
     {
-      label: '删除',
+      label: $i18n.get({ id: 'gi-site.pages.Template.Cards.Delete', dm: '删除' }),
       icon: <DeleteOutlined />,
       key: 'delete',
     },
     {
-      label: '分享',
+      label: $i18n.get({ id: 'gi-site.pages.Template.Cards.Share', dm: '分享' }),
       key: 'share',
       disabled: true,
       icon: <ExportOutlined />,
@@ -51,6 +52,7 @@ const Cards: React.FunctionComponent<ICardsProps> = props => {
             </div>
           </>
         );
+
         return (
           <Col span={8} key={item.id}>
             <Card

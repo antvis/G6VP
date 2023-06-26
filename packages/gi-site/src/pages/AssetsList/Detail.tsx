@@ -7,6 +7,7 @@ import CartButton from './CartButton';
 import { CategroyOptions, otherCategory } from '../../components/AssetsCenter/constants';
 import { getSearchParams } from '../../components/utils';
 import { ASSETS_KEY } from './index';
+import $i18n from '../../i18n';
 import './index.less';
 
 interface DetailProps {
@@ -112,6 +113,7 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
               window.location.hash = `${path}?${searchParams.toString()}`;
             }}
           />
+
           <div className="assets-list-container-iframe">
             <div>
               <div
@@ -138,7 +140,7 @@ const Detail: React.FunctionComponent<DetailProps> = ({ data }) => {
                       window.open(currentDoc.docs);
                     }}
                   >
-                    评论
+                    {$i18n.get({ id: 'gi-site.pages.AssetsList.Detail.Comments', dm: '评论' })}
                   </Button>
                 </Space>
               </div>

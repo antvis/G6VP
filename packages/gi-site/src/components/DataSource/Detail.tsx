@@ -1,6 +1,7 @@
 import { Alert, Button, Card, Input } from 'antd';
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import $i18n from '../../i18n';
 import './index.less';
 export interface Option {
   id: string;
@@ -57,13 +58,17 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
 
   const extra = (
     <Button type="primary" size="small" onClick={handleSave}>
-      保存
+      {$i18n.get({ id: 'gi-site.components.DataSource.Detail.Save', dm: '保存' })}
     </Button>
   );
 
   return (
     <div className="gi-services-editor">
-      <Card title="服务详情" extra={extra} style={{ borderTop: 'none', borderBottom: 'none', borderRight: 'none' }}>
+      <Card
+        title={$i18n.get({ id: 'gi-site.components.DataSource.Detail.ServiceDetails', dm: '服务详情' })}
+        extra={extra}
+        style={{ borderTop: 'none', borderBottom: 'none', borderRight: 'none' }}
+      >
         <Alert
           message="用户可在线自定义数据服务，需要注意编写的脚本是通过 eval() 运行在浏览器VM中，因此不支持ES6及其以上的JS语法"
           type="warning"
@@ -72,7 +77,8 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
             marginBottom: '12px',
           }}
         />
-        服务ID:
+        {$i18n.get({ id: 'gi-site.components.DataSource.Detail.ServiceId', dm: '服务ID:' })}
+
         <Input
           placeholder="Basic usage"
           defaultValue={id}
@@ -81,8 +87,10 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
           }}
           disabled={id === 'GI_SERVICE_INTIAL_GRAPH'}
         />
+
         <br />
-        服务名称:
+        {$i18n.get({ id: 'gi-site.components.DataSource.Detail.ServiceName', dm: '服务名称:' })}
+
         <Input
           placeholder="Basic usage"
           defaultValue={name}
@@ -90,8 +98,10 @@ const Detail: React.FunctionComponent<SidebarProps> = props => {
             serviceNameRef = node;
           }}
         />
+
         <br />
-        服务实现：
+        {$i18n.get({ id: 'gi-site.components.DataSource.Detail.ServiceImplementation', dm: '服务实现：' })}
+
         <MonacoEditor
           ref={node => {
             monacoRef = node;

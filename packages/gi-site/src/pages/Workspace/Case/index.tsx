@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import { queryCaseList } from '../../../services/case';
 import { IProject } from '../../../services/typing';
+import $i18n from '../../../i18n';
 import './index.less';
 interface CaseProps {}
 
@@ -67,14 +68,18 @@ const Case: React.FunctionComponent<CaseProps> = props => {
                 </div>
                 <div className="gi-case-flex">
                   <div className="time">{time || gmtCreate}</div>
-                  <div className="author">{author || 'GraphInsight 官方'}</div>
+                  <div className="author">
+                    {author ||
+                      $i18n.get({ id: 'gi-site.Workspace.Case.GraphinsightOfficial', dm: 'GraphInsight 官方' })}
+                  </div>
                   <div className="video">
                     <span
                       onClick={() => {
                         window.open(video, '_blank');
                       }}
                     >
-                      <VideoCameraOutlined /> 视频讲解
+                      <VideoCameraOutlined />
+                      {$i18n.get({ id: 'gi-site.Workspace.Case.VideoExplanation', dm: '视频讲解' })}
                     </span>
                   </div>
                 </div>
@@ -95,7 +100,7 @@ const Case: React.FunctionComponent<CaseProps> = props => {
               marginTop: '24px',
             }}
           >
-            更多案例准备中，敬请期待
+            {$i18n.get({ id: 'gi-site.Workspace.Case.MoreCasesAreBeingPrepared', dm: '更多案例准备中，敬请期待' })}
           </div>
         </Col>
       </Row>

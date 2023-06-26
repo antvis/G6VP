@@ -3,6 +3,7 @@ import { Button, notification, Space } from 'antd';
 import React from 'react';
 import request from 'umi-request';
 import { GI_SITE } from './const';
+import $i18n from '../i18n';
 
 const key = `open${Date.now()}`;
 const btn = (
@@ -14,11 +15,11 @@ const btn = (
         window.location.reload();
       }}
     >
-      确认
+      {$i18n.get({ id: 'gi-site.src.services.user.Confirm', dm: '确认' })}
     </Button>
 
     <Button size="small" onClick={() => notification.close(key)}>
-      取消
+      {$i18n.get({ id: 'gi-site.src.services.user.Cancel', dm: '取消' })}
     </Button>
   </Space>
 );
@@ -49,22 +50,40 @@ export const getUser = async () => {
     const errorMessage = String(error);
     if (errorMessage === 'RequestError: timeout of 4000ms exceeded') {
       // 互联网公网环境
-      console.log('登陆超时：RequestError: timeout of 4000ms exceeded');
+      console.log(
+        $i18n.get({
+          id: 'gi-site.src.services.user.LogonTimeoutRequesterrorTimeoutOf',
+          dm: '登陆超时：RequestError: timeout of 4000ms exceeded',
+        }),
+      );
       return {};
     }
     if (errorMessage === 'ResponseError: http error') {
       // 独立部署，或者云端模式
-      console.log('请求出错：ResponseError: http error');
+      console.log(
+        $i18n.get({
+          id: 'gi-site.src.services.user.RequestErrorResponseerrorHttpError',
+          dm: '请求出错：ResponseError: http error',
+        }),
+      );
       return {};
     }
     if (errorMessage === 'TypeError: Failed to fetch') {
-      console.log('尝试访问 VIP 资产服务 TypeError: Failed to fetch');
+      console.log(
+        $i18n.get({
+          id: 'gi-site.src.services.user.TryToAccessVipAsset',
+          dm: '尝试访问 VIP 资产服务 TypeError: Failed to fetch',
+        }),
+      );
       createSuperLabel(`${GI_SITE.SERVICE_URL}/user/info`, 'gi-login');
       notification.info({
         placement: 'top',
-        message: '刷新页面',
+        message: $i18n.get({ id: 'gi-site.src.services.user.RefreshThePage', dm: '刷新页面' }),
         duration: null,
-        description: '系统已自动跳转到登录链接，请登录完成后，刷新页面，从而下发 VIP 资产',
+        description: $i18n.get({
+          id: 'gi-site.src.services.user.TheSystemHasAutomaticallyJumped',
+          dm: '系统已自动跳转到登录链接，请登录完成后，刷新页面，从而下发 VIP 资产',
+        }),
         btn,
         key,
       });

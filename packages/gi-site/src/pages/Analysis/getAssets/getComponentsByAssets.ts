@@ -2,6 +2,7 @@ import type { GIAC_ITEMS_TYPE, GIComponentAssets, GIConfig, GIService, GraphSche
 import { utils } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import type { TypeAssetInfo } from './typing';
+import $i18n from '../../../i18n';
 const { getDefaultValues } = utils;
 
 const getAllkeysBySchema = (schema, shapeType): string[] => {
@@ -77,7 +78,14 @@ const getComponentsByAssets = (
     .map(key => {
       const component = assets[key];
       if (!component) {
-        console.log('%c !!! 未找到资产包 !!! ', 'color:red', key);
+        console.log(
+          $i18n.get({
+            id: 'gi-site.Analysis.getAssets.getComponentsByAssets.CAssetPackageNotFound',
+            dm: '%c !!! 未找到资产包 !!!',
+          }),
+          'color:red',
+          key,
+        );
         return;
       }
       const {

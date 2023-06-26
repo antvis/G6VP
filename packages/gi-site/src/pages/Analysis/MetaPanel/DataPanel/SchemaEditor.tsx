@@ -3,6 +3,7 @@ import Graphin, { GraphinData } from '@antv/graphin';
 import { Alert, Button, Card, Col, Row, notification } from 'antd';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import $i18n from '../../../../i18n';
 interface SchemaEditorProps {
   schemaGraph: GraphinData;
   schemaData: GraphSchemaData;
@@ -34,7 +35,10 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
       console.log('error', error);
       isError = true;
       notification.error({
-        message: '模型格式解析失败',
+        message: $i18n.get({
+          id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.ModelFormatParsingFailed',
+          dm: '模型格式解析失败',
+        }),
         description: error.message,
       });
     }
@@ -57,7 +61,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
     } catch (error) {
       console.log('error', error);
       notification.error({
-        message: '模型预览失败',
+        message: $i18n.get({ id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.ModelPreviewFailed', dm: '模型预览失败' }),
         description: error.message,
       });
     }
@@ -72,14 +76,19 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
 
   return (
     <div>
-      <Alert message="该图模型（Graph Schema）是 G6VP 平台根据您上传数据时，指定的节点类型（NodeType）和边类型（EdgeType）自动生成的，您可以在此二次编辑，目前仅提供代码编辑功能，可视化编辑功能，还在开发中..." />
+      <Alert
+        message={$i18n.get({
+          id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.TheGraphModelGraphSchema',
+          dm: '该图模型（Graph Schema）是 G6VP 平台根据您上传数据时，指定的节点类型（NodeType）和边类型（EdgeType）自动生成的，您可以在此二次编辑，目前仅提供代码编辑功能，可视化编辑功能，还在开发中...',
+        })}
+      />
       <Row gutter={8} style={{ marginTop: '12px' }}>
         <Col span={12}>
           <Card
-            title="Schema 编辑"
+            title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.SchemaEditing', dm: 'Schema 编辑' })}
             extra={
               <Button type="primary" onClick={handlePreview}>
-                可视化预览
+                {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.VisualPreview', dm: '可视化预览' })}
               </Button>
             }
           >
@@ -99,15 +108,36 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
         </Col>
         <Col span={12}>
           <div style={{ height: 'calc(100vh - 380px)' }}>
-            <Alert message="nodeType:节点类型" type="success" style={{ marginBottom: '8px' }} />
-            <Alert message="properties: 节点的其他属性字段" type="success" style={{ marginBottom: '8px' }} />
             <Alert
-              message="nodeTypeKeyFromProperties: nodeType的映射关系来源的属性字段"
+              message={$i18n.get({
+                id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.NodetypeNodeType',
+                dm: 'nodeType:节点类型',
+              })}
+              type="success"
+              style={{ marginBottom: '8px' }}
+            />
+            <Alert
+              message={$i18n.get({
+                id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.PropertiesOtherAttributeFieldsOf',
+                dm: 'properties: 节点的其他属性字段',
+              })}
+              type="success"
+              style={{ marginBottom: '8px' }}
+            />
+            <Alert
+              message={$i18n.get({
+                id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.NodetypekeyfrompropertiesAttributeFieldsOfThe',
+                dm: 'nodeTypeKeyFromProperties: nodeType的映射关系来源的属性字段',
+              })}
               type="success"
               style={{ marginBottom: '8px' }}
             />
 
-            <Card title="预览图模型" style={{ height: '100%' }} bodyStyle={{ height: '100%' }}>
+            <Card
+              title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.PreviewModel', dm: '预览图模型' })}
+              style={{ height: '100%' }}
+              bodyStyle={{ height: '100%' }}
+            >
               <Graphin
                 style={{ minHeight: '300px', background: 'var(--background-color)' }}
                 data={schemaGraph}
@@ -127,7 +157,7 @@ const SchemaEditor: React.FunctionComponent<SchemaEditorProps> = props => {
           right: '80px',
         }}
       >
-        保存模型
+        {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.SchemaEditor.SaveModel', dm: '保存模型' })}
       </Button>
     </div>
   );

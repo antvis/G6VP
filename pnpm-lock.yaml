@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
   antd: 4.x
 
@@ -828,6 +832,9 @@ importers:
 
   packages/gi-sdk:
     dependencies:
+      '@aligov/global-locale':
+        specifier: ^1.0.5
+        version: 1.0.5
       '@ant-design/icons':
         specifier: ^4.7.0
         version: 4.8.0(react-dom@17.0.2)(react@17.0.2)
@@ -843,12 +850,18 @@ importers:
       immer:
         specifier: ^9.0.7
         version: 9.0.21
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       react:
         specifier: 17.x || 17
         version: 17.0.2
       react-dom:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
+      react-intl:
+        specifier: ^6.4.4
+        version: 6.4.4(react@17.0.2)(typescript@4.9.5)
       size-sensor:
         specifier: ^1.0.1
         version: 1.0.1
@@ -858,6 +871,12 @@ importers:
 
   packages/gi-site:
     dependencies:
+      '@aligov/global-locale':
+        specifier: ^1.0.5
+        version: 1.0.5
+      '@aligov/global-string-format':
+        specifier: ^1.0.7
+        version: 1.0.7
       '@ant-design/charts':
         specifier: ^1.0.21
         version: 1.4.2(@ant-design/icons@4.8.0)(antd@4.24.10)(classnames@2.3.2)(lodash@4.17.21)(react-dom@17.0.2)(react@17.0.2)(reflect-metadata@0.1.13)
@@ -923,7 +942,7 @@ importers:
         version: 2.7.16(react-dom@17.0.2)(react@17.0.2)
       '@faker-js/faker':
         specifier: latest
-        version: 7.6.0
+        version: 8.0.2
       '@fast-csv/format':
         specifier: latest
         version: 4.3.5
@@ -9968,9 +9987,9 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@faker-js/faker@7.6.0:
-    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
-    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+  /@faker-js/faker@8.0.2:
+    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: false
 
   /@fast-csv/format@4.3.5:
@@ -9984,16 +10003,66 @@ packages:
       lodash.isnil: 4.0.0
     dev: false
 
+  /@formatjs/ecma402-abstract@1.17.0:
+    resolution: {integrity: sha512-6ueQTeJZtwKjmh23bdkq/DMqH4l4bmfvtQH98blOSbiXv/OUiyijSW6jU22IT8BNM1ujCaEvJfTtyCYVH38EMQ==}
+    dependencies:
+      '@formatjs/intl-localematcher': 0.4.0
+      tslib: 2.5.3
+    dev: false
+
+  /@formatjs/fast-memoize@2.2.0:
+    resolution: {integrity: sha512-hnk/nY8FyrL5YxwP9e4r9dqeM6cAbo8PeU9UjyXojZMNvVad2Z06FAVHyR3Ecw6fza+0GH7vdJgiKIVXTMbSBA==}
+    dependencies:
+      tslib: 2.5.3
+    dev: false
+
+  /@formatjs/icu-messageformat-parser@2.6.0:
+    resolution: {integrity: sha512-yT6at0qc0DANw9qM/TU8RZaCtfDXtj4pZM/IC2WnVU80yAcliS3KVDiuUt4jSQAeFL9JS5bc2hARnFmjPdA6qw==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/icu-skeleton-parser': 1.6.0
+      tslib: 2.5.3
+    dev: false
+
+  /@formatjs/icu-skeleton-parser@1.6.0:
+    resolution: {integrity: sha512-eMmxNpoX/J1IPUjPGSZwo0Wh+7CEvdEMddP2Jxg1gQJXfGfht/FdW2D5XDFj3VMbOTUQlDIdZJY7uC6O6gjPoA==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      tslib: 2.5.3
+    dev: false
+
   /@formatjs/intl-displaynames@1.2.10:
     resolution: {integrity: sha512-GROA2RP6+7Ouu0WnHFF78O5XIU7pBfI19WM1qm93l6MFWibUk67nCfVCK3VAYJkLy8L8ZxjkYT11VIAfvSz8wg==}
     dependencies:
       '@formatjs/intl-utils': 2.3.0
     dev: false
 
+  /@formatjs/intl-displaynames@6.5.0:
+    resolution: {integrity: sha512-sg/nR8ILEdUl+2sWu6jc1nQ5s04yucGlH1RVfatW8TSJ5uG3Yy3vgigi8NNC/BuhcncUNPWqSpTCSI1hA+rhiw==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/intl-localematcher': 0.4.0
+      tslib: 2.5.3
+    dev: false
+
   /@formatjs/intl-listformat@1.4.8:
     resolution: {integrity: sha512-WNMQlEg0e50VZrGIkgD5n7+DAMGt3boKi1GJALfhFMymslJb5i+5WzWxyj/3a929Z6MAFsmzRIJjKuv+BxKAOQ==}
     dependencies:
       '@formatjs/intl-utils': 2.3.0
+    dev: false
+
+  /@formatjs/intl-listformat@7.4.0:
+    resolution: {integrity: sha512-ifupb+balZUAF/Oh3QyGRqPRWGSKwWoMPR0cYZEG7r61SimD+m38oFQqVx/3Fp7LfQFF11m7IS+MlxOo2sKINA==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/intl-localematcher': 0.4.0
+      tslib: 2.5.3
+    dev: false
+
+  /@formatjs/intl-localematcher@0.4.0:
+    resolution: {integrity: sha512-bRTd+rKomvfdS4QDlVJ6TA/Jx1F2h/TBVO5LjvhQ7QPPHp19oPNMIum7W2CMEReq/zPxpmCeB31F9+5gl/qtvw==}
+    dependencies:
+      tslib: 2.5.3
     dev: false
 
   /@formatjs/intl-pluralrules@1.5.9:
@@ -10018,6 +10087,24 @@ packages:
   /@formatjs/intl-utils@2.3.0:
     resolution: {integrity: sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==}
     deprecated: the package is rather renamed to @formatjs/ecma-abstract with some changes in functionality (primarily selectUnit is removed and we don't plan to make any further changes to this package
+    dev: false
+
+  /@formatjs/intl@2.9.0(typescript@4.9.5):
+    resolution: {integrity: sha512-Ym0trUoC/VO6wQu4YHa0H1VR2tEixFRmwZgADkDLm7nD+vv1Ob+/88mUAoT0pwvirFqYKgUKEwp1tFepqyqvVA==}
+    peerDependencies:
+      typescript: ^4.7 || 5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/fast-memoize': 2.2.0
+      '@formatjs/icu-messageformat-parser': 2.6.0
+      '@formatjs/intl-displaynames': 6.5.0
+      '@formatjs/intl-listformat': 7.4.0
+      intl-messageformat: 10.5.0
+      tslib: 2.5.3
+      typescript: 4.9.5
     dev: false
 
   /@formily/antd@2.2.24(@ant-design/icons@4.7.0)(@types/react-dom@17.0.20)(@types/react@17.0.61)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.9.5):
@@ -12274,6 +12361,7 @@ packages:
 
   /@sinonjs/fake-timers@10.2.0:
     resolution: {integrity: sha512-OPwQlEdg40HAj5KNF8WW6q2KG4Z+cBCZb3m4ninfTZKaBmbIJodviQsDBoYMPHkOyJJMHnOJo5j2+LKDOhOACg==}
+    deprecated: Use version 10.1.0. Version 10.2.0 has potential breaking issues
     dependencies:
       '@sinonjs/commons': 3.0.0
 
@@ -16503,7 +16591,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
       hoist-non-react-statics: 3.3.2
 
   /@types/html-minifier-terser@5.1.2:
@@ -16725,13 +16813,13 @@ packages:
   /@types/reach__router@1.3.11:
     resolution: {integrity: sha512-j23ChnIEiW8aAP4KT8OVyTXOFr+Ri65BDnwzmfHFO9WHypXYevHFjeil1Cj7YH3emfCE924BwAmgW4hOv7Wg3g==}
     dependencies:
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
     dev: true
 
   /@types/react-color@3.0.6:
     resolution: {integrity: sha512-OzPIO5AyRmLA7PlOyISlgabpYUa3En74LP8mTMa0veCA719SvYQov4WLMsHvCgXP+L+KI9yGhYnqZafVGG0P4w==}
     dependencies:
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
       '@types/reactcss': 1.2.6
     dev: true
 
@@ -16748,7 +16836,7 @@ packages:
   /@types/react-helmet@6.1.6:
     resolution: {integrity: sha512-ZKcoOdW/Tg+kiUbkFCBtvDw0k3nD4HJ/h/B9yWxN4uDO8OkRksWTO+EL+z/Qu3aHTeTll3Ro0Cc/8UhwBCMG5A==}
     dependencies:
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
     dev: false
 
   /@types/react-reconciler@0.26.7:
@@ -16765,7 +16853,7 @@ packages:
     resolution: {integrity: sha512-bAGh4e+w5D8dajd6InASVIyCo4pZLJ66oLb80F9OBLO1gKESbZcRCJpTT6uLXX+HAB57zw1WTdwJdAsewuTweg==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
       hoist-non-react-statics: 3.3.2
       redux: 4.2.1
 
@@ -16787,7 +16875,7 @@ packages:
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
       '@types/react-router': 5.1.20
     dev: false
 
@@ -16795,7 +16883,7 @@ packages:
     resolution: {integrity: sha512-0bhXQwHYfMeJlCh7mGhc0VJTRm0Gk+Z8T00aiP4702mDUuLs9SMhnd2DitpjWFjdOecx2UXtICK14H9iMnziGA==}
     dependencies:
       '@types/history': 5.0.0
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
 
   /@types/react-router@5.1.20:
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
@@ -16829,17 +16917,10 @@ packages:
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
 
-  /@types/react@18.2.11:
-    resolution: {integrity: sha512-+hsJr9hmwyDecSMQAmX7drgbDpyE+EgSF6t7+5QEBAn1tQK7kl1vWZ4iRf6SjQ8lk7dyEULxUmZOIpN0W5baZA==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.3
-      csstype: 3.1.2
-
   /@types/reactcss@1.2.6:
     resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
     dependencies:
-      '@types/react': 18.2.11
+      '@types/react': 17.0.61
     dev: true
 
   /@types/resolve@1.17.1:
@@ -17400,7 +17481,7 @@ packages:
       esbuild: 0.17.19
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.0
-      spdy: 4.0.2(supports-color@6.1.0)
+      spdy: 4.0.2
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -31175,6 +31256,15 @@ packages:
       '@formatjs/intl-unified-numberformat': 3.3.7
     dev: false
 
+  /intl-messageformat@10.5.0:
+    resolution: {integrity: sha512-AvojYuOaRb6r2veOKfTVpxH9TrmjSdc5iR9R5RgBwrDZYSmAAFVT+QLbW3C4V7Qsg0OguMp67Q/EoUkxZzXRGw==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/fast-memoize': 2.2.0
+      '@formatjs/icu-messageformat-parser': 2.6.0
+      tslib: 2.5.3
+    dev: false
+
   /intl-messageformat@2.2.0:
     resolution: {integrity: sha512-I+tSvHnXqJYjDfNmY95tpFMj30yoakC6OXAo+wu/wTMy6tA/4Fd4mvV7Uzs4cqK/Ap29sHhwjcY+78a8eifcXw==}
     dependencies:
@@ -42288,6 +42378,29 @@ packages:
       shallow-equal: 1.2.1
     dev: false
 
+  /react-intl@6.4.4(react@17.0.2)(typescript@4.9.5):
+    resolution: {integrity: sha512-/C9Sl/5//ohfkNG6AWlJuf4BhTXsbzyk93K62A4zRhSPANyOGpKZ+fWhN+TLfFd5YjDUHy+exU/09y0w1bO4Xw==}
+    peerDependencies:
+      react: ^16.6.0 || 17 || 18
+      typescript: ^4.7 || 5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.17.0
+      '@formatjs/icu-messageformat-parser': 2.6.0
+      '@formatjs/intl': 2.9.0(typescript@4.9.5)
+      '@formatjs/intl-displaynames': 6.5.0
+      '@formatjs/intl-listformat': 7.4.0
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 17.0.61
+      hoist-non-react-statics: 3.3.2
+      intl-messageformat: 10.5.0
+      react: 17.0.2
+      tslib: 2.5.3
+      typescript: 4.9.5
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -45808,6 +45921,19 @@ packages:
   /spdx-license-ids@3.0.13:
     resolution: {integrity: sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==}
 
+  /spdy-transport@3.0.0:
+    resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
+    dependencies:
+      debug: 4.3.4(supports-color@5.5.0)
+      detect-node: 2.1.0
+      hpack.js: 2.1.6
+      obuf: 1.1.2
+      readable-stream: 3.6.2
+      wbuf: 1.7.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /spdy-transport@3.0.0(supports-color@6.1.0):
     resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
     dependencies:
@@ -45817,6 +45943,19 @@ packages:
       obuf: 1.1.2
       readable-stream: 3.6.2
       wbuf: 1.7.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /spdy@4.0.2:
+    resolution: {integrity: sha512-r46gZQZQV+Kl9oItvl1JZZqJKGr+oEkB08A6BzkiR7593/7IbtuncXHd2YoYeTsG4157ZssMu9KYvUHLcjcDoA==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      debug: 4.3.4(supports-color@5.5.0)
+      handle-thing: 2.0.1
+      http-deceiver: 1.2.7
+      select-hose: 2.0.0
+      spdy-transport: 3.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true

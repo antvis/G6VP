@@ -4,6 +4,7 @@ import { Button, Col, Collapse, Popover, Row, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import ConfigPanel from './ConfigPanel';
+import $i18n from '../../../../i18n';
 import './index.less';
 
 const { Panel } = Collapse;
@@ -50,10 +51,16 @@ const ComponentPanel = props => {
       }));
     const freeContainer = {
       id: 'GI_FreeContainer',
-      name: '自运行组件',
+      name: $i18n.get({
+        id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.SelfRunningComponents',
+        dm: '自运行组件',
+      }),
       info: {
         id: 'GI_FreeContainer',
-        name: '自运行组件',
+        name: $i18n.get({
+          id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.SelfRunningComponents',
+          dm: '自运行组件',
+        }),
         icon: 'icon-rocket',
         type: 'GICC',
       },
@@ -114,13 +121,16 @@ const ComponentPanel = props => {
         <Col>
           {state.guideVisible ? (
             <Popover
-              title="由此进入页面布局和容器配置"
+              title={$i18n.get({
+                id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.ThePageLayoutAndContainer',
+                dm: '由此进入页面布局和容器配置',
+              })}
               open={state.guideVisible}
               placement="right"
               content={
                 <div style={{ textAlign: 'right' }}>
                   <Button size="small" onClick={handleCloseGuide}>
-                    知道了
+                    {$i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.GotIt', dm: '知道了' })}
                   </Button>
                 </div>
               }
@@ -130,7 +140,12 @@ const ComponentPanel = props => {
               </span>
             </Popover>
           ) : (
-            <Tooltip title="配置页面布局和容器">
+            <Tooltip
+              title={$i18n.get({
+                id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.ConfigurePageLayoutAndContainers',
+                dm: '配置页面布局和容器',
+              })}
+            >
               <span onClick={handleGoToContainerPanel} style={{ float: 'right' }}>
                 <SettingOutlined style={{ color: 'var(--primary-color)' }} />
               </span>
@@ -173,7 +188,13 @@ const ComponentPanel = props => {
               key={id}
               className="gi-container-asset-panel"
               extra={
-                <Tooltip title="配置容器" placement="right">
+                <Tooltip
+                  title={$i18n.get({
+                    id: 'gi-site.MetaPanel.ComponentPanel.ComponentPanel.ConfigureContainers',
+                    dm: '配置容器',
+                  })}
+                  placement="right"
+                >
                   <EditOutlined onClick={() => handleGoToContainerPanel(id)} />
                 </Tooltip>
               }

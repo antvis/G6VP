@@ -11,6 +11,7 @@ import * as TemplateService from '../../services/template';
 import { IDataset, ITemplate } from '../../services/typing';
 import Recover from '../Workspace/Recover';
 import TemplateDesc from './TemplateDesc';
+import $i18n from '../../i18n';
 
 interface CreateProps {}
 const styles = {
@@ -158,50 +159,69 @@ const Create: React.FunctionComponent<CreateProps> = props => {
         items={[
           {
             key: 'new',
-            label: '新建画布',
+            label: $i18n.get({ id: 'gi-site.pages.Workbook.Create.CreateACanvas', dm: '新建画布' }),
             children: (
               <Form form={form} layout="vertical">
                 <Form.Item
-                  label="工作薄名称"
+                  label={$i18n.get({ id: 'gi-site.pages.Workbook.Create.NameOfWorkbook', dm: '工作簿名称' })}
                   name="name"
                   rules={[
                     {
                       required: true,
-                      message: '请输入画布名称!',
+                      message: $i18n.get({
+                        id: 'gi-site.pages.Workbook.Create.EnterACanvasName',
+                        dm: '请输入画布名称!',
+                      }),
                     },
                   ]}
                 >
-                  <Input placeholder="请填写画布名称" />
+                  <Input
+                    placeholder={$i18n.get({
+                      id: 'gi-site.pages.Workbook.Create.PleaseFillInTheCanvas',
+                      dm: '请填写画布名称',
+                    })}
+                  />
                 </Form.Item>
                 <Form.Item
-                  label="选择数据集"
+                  label={$i18n.get({ id: 'gi-site.pages.Workbook.Create.SelectADataset', dm: '选择数据集' })}
                   name="datasetId"
                   rules={[
                     {
                       required: true,
-                      message: '请选择数据集!',
+                      message: $i18n.get({ id: 'gi-site.pages.Workbook.Create.SelectADataset.1', dm: '请选择数据集!' }),
                     },
                   ]}
                 >
-                  <Select placeholder="请选择数据集" options={datasetOptions} onChange={handleChangeDataset}></Select>
+                  <Select
+                    placeholder={$i18n.get({
+                      id: 'gi-site.pages.Workbook.Create.SelectADataset.2',
+                      dm: '请选择数据集',
+                    })}
+                    options={datasetOptions}
+                    onChange={handleChangeDataset}
+                  ></Select>
                 </Form.Item>
                 <Form.Item
-                  label="选择模版"
+                  label={$i18n.get({ id: 'gi-site.pages.Workbook.Create.SelectTemplate', dm: '选择模版' })}
                   name="templateId"
                   rules={[
                     {
                       required: true,
-                      message: '请选择模版!',
+                      message: $i18n.get({ id: 'gi-site.pages.Workbook.Create.SelectATemplate', dm: '请选择模版!' }),
                     },
                   ]}
                 >
-                  <Select placeholder="请选择模版" options={templateOptions} onChange={handleChangeTemplate}></Select>
+                  <Select
+                    placeholder={$i18n.get({ id: 'gi-site.pages.Workbook.Create.SelectATemplate.1', dm: '请选择模版' })}
+                    options={templateOptions}
+                    onChange={handleChangeTemplate}
+                  ></Select>
                 </Form.Item>
                 <TemplateDesc {...template} />
 
                 <Form.Item>
                   <Button type="primary" onClick={handleSubmit}>
-                    创建
+                    {$i18n.get({ id: 'gi-site.pages.Workbook.Create.Create', dm: '创建' })}
                   </Button>
                 </Form.Item>
               </Form>
@@ -209,7 +229,7 @@ const Create: React.FunctionComponent<CreateProps> = props => {
           },
           {
             key: 'recover',
-            label: '恢复工作簿',
+            label: $i18n.get({ id: 'gi-site.pages.Workbook.Create.RestoreWorkbook', dm: '恢复工作簿' }),
             children: <Recover onRecover={handleRecover} />,
           },
         ]}

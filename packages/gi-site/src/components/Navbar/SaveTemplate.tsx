@@ -8,17 +8,18 @@ const { TextArea } = Input;
 
 import { useImmer } from 'use-immer';
 import './index.less';
+import $i18n from '../../i18n';
 interface SaveWorkbookProps {
   workbookId: string;
 }
 
 const items: MenuProps['items'] = [
   {
-    label: '另存为模版',
+    label: $i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.SaveAsTemplate', dm: '另存为模版' }),
     key: 'save',
   },
   {
-    label: '切换模版',
+    label: $i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.SwitchTemplate', dm: '切换模版' }),
     key: 'change',
   },
 ];
@@ -45,9 +46,20 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
       pageLayout: { id, name, type, props },
     });
     if (isSuccess) {
-      notification.success({ message: '模版保存成功！' });
+      notification.success({
+        message: $i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.TheTemplateIsSaved', dm: '模版保存成功！' }),
+      });
     } else {
-      notification.success({ message: '模版保存失败！', description: '请打开浏览器控制台，查看接口请求是否正确' });
+      notification.success({
+        message: $i18n.get({
+          id: 'gi-site.components.Navbar.SaveTemplate.FailedToSaveTheTemplate',
+          dm: '模版保存失败！',
+        }),
+        description: $i18n.get({
+          id: 'gi-site.components.Navbar.SaveTemplate.OpenTheBrowserConsoleTo',
+          dm: '请打开浏览器控制台，查看接口请求是否正确',
+        }),
+      });
     }
     updateState(draft => {
       draft.save.visible = false;
@@ -61,7 +73,7 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
       });
     }
     if (key === 'change') {
-      message.info('正在开发中...');
+      message.info($i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.UnderDevelopment', dm: '正在开发中...' }));
     }
   };
 
@@ -75,13 +87,13 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
       <div>
         <Dropdown menu={menuProps}>
           <Button size="small" icon={<GiftOutlined />} type="text">
-            模版
+            {$i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.Template', dm: '模版' })}
           </Button>
         </Dropdown>
       </div>
 
       <Modal
-        title="另存为模版"
+        title={$i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.SaveAsTemplate', dm: '另存为模版' })}
         open={state.save.visible}
         onOk={handleSave}
         onCancel={() => {
@@ -91,13 +103,40 @@ const SaveTemplate: React.FunctionComponent<SaveWorkbookProps> = props => {
         }}
       >
         <Form layout={'vertical'} form={form}>
-          <Form.Item label="模版名称" name="name" rules={[{ required: true, message: '请填写模版名称' }]}>
+          <Form.Item
+            label={$i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.TemplateName', dm: '模版名称' })}
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: $i18n.get({
+                  id: 'gi-site.components.Navbar.SaveTemplate.EnterTheTemplateName',
+                  dm: '请填写模版名称',
+                }),
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="模版描述" name="desc" rules={[{ required: true, message: '请填写模版描述' }]}>
+          <Form.Item
+            label={$i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.TemplateDescription', dm: '模版描述' })}
+            name="desc"
+            rules={[
+              {
+                required: true,
+                message: $i18n.get({
+                  id: 'gi-site.components.Navbar.SaveTemplate.PleaseFillInTheTemplate',
+                  dm: '请填写模版描述',
+                }),
+              },
+            ]}
+          >
             <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
           </Form.Item>
-          <Form.Item label="模版插画" name="image">
+          <Form.Item
+            label={$i18n.get({ id: 'gi-site.components.Navbar.SaveTemplate.TemplateIllustration', dm: '模版插画' })}
+            name="image"
+          >
             <Input placeholder="https://xxx.img" />
           </Form.Item>
         </Form>

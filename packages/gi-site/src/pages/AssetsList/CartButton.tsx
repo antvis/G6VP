@@ -2,6 +2,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { AssetInfo } from '@antv/gi-sdk';
 import { Button } from 'antd';
 import * as React from 'react';
+import $i18n from '../../i18n';
 interface CartButtonProps {
   data: any;
 }
@@ -53,7 +54,9 @@ const CartButton: React.FunctionComponent<CartButtonProps> = props => {
   const { data } = props;
   const value = getValue(data);
   const [_state, setState] = React.useState({ checked: value });
-  const title = value ? '已选购' : '加入选购';
+  const title = value
+    ? $i18n.get({ id: 'gi-site.pages.AssetsList.CartButton.Purchased', dm: '已选购' })
+    : $i18n.get({ id: 'gi-site.pages.AssetsList.CartButton.AddToPurchase', dm: '加入选购' });
   const type = value ? 'primary' : 'text';
   const handleClick = () => {
     setValue(data, !value);

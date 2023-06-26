@@ -1,5 +1,6 @@
 import { Table } from 'antd';
 import * as React from 'react';
+import $i18n from '../../i18n';
 
 const PackageTable = ({ data }) => {
   const containerRef = React.useRef<null | HTMLDivElement>(null);
@@ -19,17 +20,17 @@ const PackageTable = ({ data }) => {
       key: 'id',
     },
     {
-      title: '名称',
+      title: $i18n.get({ id: 'gi-site.pages.ServerCenter.Table.Name', dm: '名称' }),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: '类型',
+      title: $i18n.get({ id: 'gi-site.pages.ServerCenter.Table.Type', dm: '类型' }),
       dataIndex: 'type',
       key: 'method',
     },
     {
-      title: '入参',
+      title: $i18n.get({ id: 'gi-site.pages.ServerCenter.Table.InputParameters', dm: '入参' }),
       dataIndex: 'req',
       key: 'req',
       render: record => {
@@ -44,7 +45,7 @@ const PackageTable = ({ data }) => {
       },
     },
     {
-      title: '出参: Promise<T>',
+      title: $i18n.get({ id: 'gi-site.pages.ServerCenter.Table.OutputParametersPromiseT', dm: '出参: Promise<T>' }),
       dataIndex: 'res',
       key: 'res',
       render: record => {
@@ -59,6 +60,7 @@ const PackageTable = ({ data }) => {
       },
     },
   ];
+
   const onClose = () => {
     setState({
       visible: false,

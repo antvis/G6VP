@@ -7,6 +7,7 @@ import Logo from './Logo';
 
 import Theme from './Theme';
 import UserInfo from './UserInfo';
+import Language from './Language';
 interface WorkbookBarProps {
   active: string;
 }
@@ -47,6 +48,7 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
         <DataModeCard />
         <Github />
         <Theme />
+        <Language />
         <UserInfo />
       </div>
     </header>

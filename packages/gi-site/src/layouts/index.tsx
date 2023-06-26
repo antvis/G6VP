@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar/SiteNav';
 import { BUILD_MODE } from '../env';
 import useInitial from '../hooks/useInitial';
 import useUpdate from '../hooks/useUpdate';
-import { changeLanguage, LANGUAGE_KEY_NAME } from '@antv/gi-sdk'
 import './index.less';
 /** 挂载在浏览器全局下面，方便其他资产包需要 */
 window['GI_PUBLIC_PATH'] = BUILD_MODE === 'docker' ? '/public/' : '/';
@@ -17,10 +16,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = props => {
   React.useEffect(() => {
     useUpdate();
     useInitial();
-    // todo 测试用 待切换开关逻辑替换
-    // 切换后页面需 reload
-    changeLanguage(LANGUAGE_KEY_NAME.ZhCN);
-    // changeLanguage(LANGUAGE_KEY_NAME.EnUs);
   }, []);
 
   return (

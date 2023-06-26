@@ -1,4 +1,6 @@
 import type { GIConfig } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
+
 /**
  *
  * @param
@@ -28,9 +30,9 @@ export const getMockData = () => {
 const baseNodesConfig: GIConfig['nodes'] = [
   {
     id: 'SimpleNode',
-    name: '官方节点',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.OfficialNode', dm: '官方节点' }),
     expressions: [],
-    groupName: '默认样式',
+    groupName: $i18n.get({ id: 'gi-site.pages.Workspace.utils.DefaultStyle', dm: '默认样式' }),
     props: {
       size: 26,
       color: '#ddd',
@@ -42,9 +44,9 @@ const baseNodesConfig: GIConfig['nodes'] = [
 const baseEdgesConfig: GIConfig['edges'] = [
   {
     id: 'SimpleEdge',
-    name: '官方边',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.OfficialSide', dm: '官方边' }),
     expressions: [],
-    groupName: '默认样式',
+    groupName: $i18n.get({ id: 'gi-site.pages.Workspace.utils.DefaultStyle', dm: '默认样式' }),
     props: {
       size: 1,
       color: '#ddd',
@@ -62,7 +64,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '放大',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ZoomIn', dm: '放大' }),
         isShowIcon: true,
         icon: 'icon-zoomin',
         isShowTooltip: true,
@@ -83,7 +85,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '缩小',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ZoomOut', dm: '缩小' }),
         isShowIcon: true,
         icon: 'icon-zoomout',
         isShowTooltip: true,
@@ -104,7 +106,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '自适应',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Adaptive', dm: '自适应' }),
         isShowIcon: true,
         icon: 'icon-fit-view',
         isShowTooltip: true,
@@ -125,7 +127,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '视图居中',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ViewCenter', dm: '视图居中' }),
         isShowIcon: true,
         icon: 'icon-fit-center',
         isShowTooltip: true,
@@ -146,11 +148,14 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '自由圈选',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.FreeSelection', dm: '自由圈选' }),
         isShowIcon: true,
         icon: 'icon-lasso',
         isShowTooltip: true,
-        tooltip: '按住Shift，点击画布即可自由圈选',
+        tooltip: $i18n.get({
+          id: 'gi-site.pages.Workspace.utils.HoldDownShiftAndClick',
+          dm: '按住Shift，点击画布即可自由圈选',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -163,7 +168,7 @@ const baseComponentsConfig = [
     id: 'PropertiesPanel',
     props: {
       serviceId: 'GI/PropertiesPanel',
-      title: '属性面板',
+      title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.PropertiesPanel', dm: '属性面板' }),
       placement: 'RT',
       width: '356px',
       height: 'calc(100% - 0px)',
@@ -211,17 +216,20 @@ const baseComponentsConfig = [
   },
   {
     id: 'Placeholder',
-    name: '画布占位符',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.CanvasPlaceholder', dm: '画布占位符' }),
     props: {
       img: 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
-      text: '当前画布为空，请先试试「数据/图数据源/导入/示例数据」',
+      text: $i18n.get({
+        id: 'gi-site.pages.Workspace.utils.TheCurrentCanvasIsEmpty',
+        dm: '当前画布为空，请先试试「数据/图数据源/导入/示例数据」',
+      }),
       width: 380,
     },
   },
 
   {
     id: 'FilterPanel',
-    name: '筛选面板',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.FilterPanel', dm: '筛选面板' }),
     props: {
       histogramColor: '#3056E3',
       isFilterIsolatedNodes: true,
@@ -232,11 +240,14 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: '筛选面板',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.FilterPanel', dm: '筛选面板' }),
         isShowIcon: true,
         icon: 'icon-filter',
         isShowTooltip: true,
-        tooltip: '通过属性筛选画布信息，可自定义',
+        tooltip: $i18n.get({
+          id: 'gi-site.pages.Workspace.utils.FilterCanvasInformationThroughAttributes',
+          dm: '通过属性筛选画布信息，可自定义',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'top',
         hasDivider: false,
@@ -254,7 +265,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'LargeGraph',
-    name: '3D大图',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.DBigPicture', dm: '3D大图' }),
     props: {
       visible: false,
       minSize: '50%',
@@ -266,7 +277,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '3D大图',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.DBigPicture', dm: '3D大图' }),
         isShowIcon: true,
         icon: 'icon-3d',
         isShowTooltip: true,
@@ -281,7 +292,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'MapMode',
-    name: '地图模式',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.MapMode', dm: '地图模式' }),
     props: {
       visible: false,
       type: 'amap',
@@ -297,7 +308,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '地图模式',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.MapMode', dm: '地图模式' }),
         isShowIcon: true,
         icon: 'icon-global',
         isShowTooltip: true,
@@ -312,7 +323,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'SnapshotGallery',
-    name: '快照画廊',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.SnapshotGallery', dm: '快照画廊' }),
     props: {
       background: '#fff',
       direction: 'horizontal',
@@ -323,11 +334,14 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '快照画廊',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.SnapshotGallery', dm: '快照画廊' }),
         isShowIcon: true,
         icon: 'icon-camera',
         isShowTooltip: true,
-        tooltip: '快照画廊(快捷键ctrl+x)',
+        tooltip: $i18n.get({
+          id: 'gi-site.pages.Workspace.utils.SnapshotGalleryShortcutCtrlX',
+          dm: '快照画廊(快捷键ctrl+x)',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -338,7 +352,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'ContextMenu',
-    name: '右键菜单',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.RightClickMenu', dm: '右键菜单' }),
     props: {
       GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
       nodeMenuComponents: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
@@ -346,7 +360,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'ToggleClusterWithMenu',
-    name: '展开/收起',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ExpandFoldUp', dm: '展开/收起' }),
     props: {
       isReLayout: false,
       degree: 1,
@@ -354,7 +368,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'NeighborsQuery',
-    name: '邻居查询',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.NeighborQuery', dm: '邻居查询' }),
     props: {
       serviceId: 'GI/NeighborsQuery',
       degree: '1',
@@ -363,7 +377,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'Copyright',
-    name: '版权',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Copyright', dm: '版权' }),
     props: {
       imageUrl: 'https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg',
       width: 200,
@@ -374,12 +388,12 @@ const baseComponentsConfig = [
   },
   {
     id: 'Loading',
-    name: '加载动画',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.LoadAnimation', dm: '加载动画' }),
     props: {},
   },
   {
     id: 'PinNodeWithMenu',
-    name: '固定节点(MENU)',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.FixedNodeMenu', dm: '固定节点(MENU)' }),
     props: {
       color: '#fff',
       fill: '#262626',
@@ -387,7 +401,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'ForceSimulation',
-    name: '力导布局控制器',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ForceGuideLayoutController', dm: '力导布局控制器' }),
     props: {
       autoPin: true,
       dragNodeMass: 10000000,
@@ -396,7 +410,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '力导布局控制器',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ForceGuideLayoutController', dm: '力导布局控制器' }),
         isShowIcon: true,
         icon: 'icon-layout-force',
         isShowTooltip: true,
@@ -411,7 +425,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'Initializer',
-    name: '初始化器',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Initializer', dm: '初始化器' }),
     props: {
       serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
       schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
@@ -421,23 +435,23 @@ const baseComponentsConfig = [
   {
     id: 'PropertyGraphInitializer',
     type: 'AUTO',
-    name: '属性图计算',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.AttributeGraphCalculation', dm: '属性图计算' }),
     props: {},
   },
   {
     id: 'LayoutSwitch',
-    name: '布局切换',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.LayoutSwitching', dm: '布局切换' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '布局切换',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.LayoutSwitching', dm: '布局切换' }),
         isShowIcon: true,
         icon: 'icon-layout',
         isShowTooltip: false,
-        tooltip: '一键切换画布布局',
+        tooltip: $i18n.get({ id: 'gi-site.pages.Workspace.utils.SwitchCanvasLayoutWithOne', dm: '一键切换画布布局' }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -448,7 +462,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'GrailLayout',
-    name: '圣杯布局',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.HolyGrailLayout', dm: '圣杯布局' }),
     props: {
       containers: [
         {
@@ -474,7 +488,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'Toolbar',
-    name: '工具栏',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Toolbar', dm: '工具栏' }),
     props: {
       GI_CONTAINER: [
         'ZoomIn',
@@ -487,6 +501,7 @@ const baseComponentsConfig = [
         'LayoutSwitch',
         'Export',
       ],
+
       direction: 'vertical',
       placement: 'LT',
       offset: [24, 64],
@@ -494,18 +509,18 @@ const baseComponentsConfig = [
   },
   {
     id: 'Export',
-    name: '导出',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Export', dm: '导出' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '导出',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.Export', dm: '导出' }),
         isShowIcon: true,
         icon: 'icon-export',
         isShowTooltip: true,
-        tooltip: '导出CSV,PNG,JSON数据',
+        tooltip: $i18n.get({ id: 'gi-site.pages.Workspace.utils.ExportCsvPngJsonData', dm: '导出CSV,PNG,JSON数据' }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -516,7 +531,7 @@ const baseComponentsConfig = [
   },
   {
     id: 'Overview',
-    name: '大图概览',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.BigPictureOverview', dm: '大图概览' }),
     props: {
       limit: 600,
       filterLogic: 'and',
@@ -525,7 +540,7 @@ const baseComponentsConfig = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: '大图概览',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.BigPictureOverview', dm: '大图概览' }),
         isShowIcon: true,
         icon: 'icon-dashboard',
         isShowTooltip: true,
@@ -546,6 +561,7 @@ const baseComponentsConfig = [
     },
   },
 ];
+
 const baseLayoutConfig = {
   id: 'Force2',
   props: {
@@ -572,7 +588,7 @@ export const activeAssetsKeys = {
 const Cypher_Template = [
   {
     id: 'CypherQuery',
-    name: 'Cypher 语句查询',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.CypherStatementQuery', dm: 'Cypher 语句查询' }),
     props: {
       serviceId: 'GI/CypherQuery',
       isShowPublishButton: false,
@@ -583,7 +599,7 @@ const Cypher_Template = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: 'Cypher 语句查询',
+        title: $i18n.get({ id: 'gi-site.pages.Workspace.utils.CypherStatementQuery', dm: 'Cypher 语句查询' }),
         isShowIcon: true,
         icon: 'icon-query',
         isShowTooltip: true,
@@ -608,7 +624,7 @@ const Cypher_Template = [
 const Gremlin_Template = [
   {
     id: 'GremlinQuery',
-    name: 'Gremlin 查询',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.utils.GremlinQuery', dm: 'Gremlin 查询' }),
     props: {
       serviceId: 'GraphScope/GremlinQuery',
       isShowPublishButton: false,

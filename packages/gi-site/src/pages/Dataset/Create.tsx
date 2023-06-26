@@ -8,6 +8,7 @@ import { getSearchParams } from '../../components/utils';
 import { queryAssets } from '../../services/assets';
 import { createDataset } from '../../services/dataset';
 import { getUid } from '../Workspace/utils';
+import $i18n from '../../i18n';
 
 interface uploadPanel {
   visible: boolean;
@@ -21,25 +22,28 @@ const styles = {
   },
 };
 const TYPE_ICONS = {
-  file: { icon: 'icon-file-excel', name: '本地文件' },
-  api: { icon: 'icon-api', name: '在线接口' },
-  database: { icon: 'icon-database', name: '图数据库' },
+  file: { icon: 'icon-file-excel', name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.LocalFile', dm: '本地文件' }) },
+  api: { icon: 'icon-api', name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.OnlineInterface', dm: '在线接口' }) },
+  database: {
+    icon: 'icon-database',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GraphDatabase', dm: '图数据库' }),
+  },
 };
 
 const ITEMS = [
   {
     id: 'FILE',
-    name: '本地文件',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.LocalFile', dm: '本地文件' }),
     icon: <FileExcelOutlined />,
   },
   {
     id: 'GRAPH',
-    name: '图数据库',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GraphDatabase', dm: '图数据库' }),
     icon: <DeploymentUnitOutlined />,
   },
   {
     id: 'GEO',
-    name: '地理数据库',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GeographicDatabase', dm: '地理数据库' }),
     icon: <GlobalOutlined />,
   },
   // {
@@ -49,7 +53,7 @@ const ITEMS = [
   // },
   {
     id: 'API',
-    name: 'API 服务',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.ApiService', dm: 'API 服务' }),
     icon: <ApiOutlined />,
   },
 ];
@@ -156,7 +160,9 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
           alignItems: 'center',
         }}
       >
-        {name === 'G6VP 官方数据服务' ? 'GraphJSON' : name}
+        {name === $i18n.get({ id: 'gi-site.pages.Dataset.Create.OfficialGVpDataService', dm: 'G6VP 官方数据服务' })
+          ? 'GraphJSON'
+          : name}
       </div>
     );
 
@@ -168,9 +174,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
     );
   });
   const emptyContent = (
-    <TabPane tab={'开发中'} key="develope">
+    <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Developing', dm: '开发中' })} key="develope">
       <div style={{ padding: '8px 0px 0px 0px' }}>
-        该类型的数据源还在建设中，请关注我们 github 进展：https://github.com/antvis/G6VP
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.Create.ThisTypeOfDataSource',
+          dm: '该类型的数据源还在建设中，请关注我们 github 进展：https://github.com/antvis/G6VP',
+        })}
       </div>
     </TabPane>
   );
@@ -186,7 +195,9 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         }}
       >
         <div>
-          <label style={styles.label}>选择数据源类型</label>
+          <label style={styles.label}>
+            {$i18n.get({ id: 'gi-site.pages.Dataset.Create.SelectADataSourceType', dm: '选择数据源类型' })}
+          </label>
           <RadioNote items={ITEMS} value={active} onChange={handleChangeType} />
         </div>
       </div>

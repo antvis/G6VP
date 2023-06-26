@@ -4,6 +4,7 @@ import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.um
 import ThemeVars from '../components/ThemeVars';
 import type { Package } from '../loader';
 import { getAssetPackages } from '../loader';
+import $i18n from '../i18n';
 
 export function beautifyCode(code: string) {
   //@ts-ignore
@@ -125,21 +126,14 @@ export const getConstantFiles = opts => {
     }, [])
     .join(';');
 
-  const HTML_HEADER = `
-<head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GISDK EXPORT FILE</title>
-<!--- CSS -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css" />
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
-<!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
-<!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/${theme}.css" /> 
+  const HTML_HEADER = $i18n.get(
+    {
+      id: 'gi-site.src.hooks.common.HeadMetaCharsetUtfMeta',
+      dm: '\n<head>\n<meta charset="UTF-8" />\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>GISDK EXPORT FILE</title>\n<!--- CSS -->\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/{GRAPHINVERSION}/dist/index.css" />\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/{GIVERSION}/dist/index.css" /> \n<!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->\n<!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/{ANTDVERSION}/dist/antd.css" /> -->\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/{theme}.css" /> \n\n</head>\n',
+    },
+    { GRAPHINVERSION: GRAPHIN_VERSION, GIVERSION: GI_VERSION, ANTDVERSION: ANTD_VERSION, theme: theme },
+  );
 
-</head>
-`;
   const engineContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!);
   const SERVER_ENGINE_CONTEXT = beautifyCode(
     JSON.stringify({
@@ -206,57 +200,7 @@ export const HTML_SCRIPTS = `
 <script src="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js"></script>
 `;
 
-export const MY_GRAPH_SDK = `
-
-//@ts-ignore
-const {  getCombineServices,loaderCombinedAssets } = window.GISDK.utils;
-const { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;
-// 设置引擎上下文
-window.localStorage.setItem( 'SERVER_ENGINE_CONTEXT', JSON.stringify(SERVER_ENGINE_CONTEXT));
-
-const MyGraphApp= (props) => {
-  const [state,setState]= React.useState({
-    isReady:false,
-    assets:null,
-    config:{},
-    services:[]
-  });
-  React.useEffect(()=>{
-    loaderCombinedAssets(GI_ASSETS_PACKAGE).then(res=>{
-      /** 生成服务 */
-      const services = getCombineServices(res.services)
-      setState(preState=>{
-        return {
-          ...preState,
-          isReady:true,
-          assets:res,
-          services,
-          config:GI_PROJECT_CONFIG,
-        }
-      })
-    })
-  },[]);
-  const {assets,isReady,config,services} =state;
-  if(!isReady){
-    return <div>loading...</div>
-  }
-  return (
-    <div>
-      <div style={{ height: "100vh" }}>
-        {/** @ts-ignore */}
-        <window.GISDK.default
-          config={config}
-          assets={assets}
-          services={services}
-        />
-      </div>
-    </div>
-  );
-};
-
-// 因为没有做 external，避免多个版本react冲突，统一从window对象中获取
-
-//@ts-ignore 
-window.ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
- 
-`;
+export const MY_GRAPH_SDK = $i18n.get({
+  id: 'gi-site.src.hooks.common.TsIgnoreConstGetcombineservicesLoadercombinedassets',
+  dm: '\n\n//@ts-ignore\nconst {  getCombineServices,loaderCombinedAssets } = window.GISDK.utils;\nconst { GI_SITE_PROJECT_ID } = SERVER_ENGINE_CONTEXT;\n// 设置引擎上下文\nwindow.localStorage.setItem( \'SERVER_ENGINE_CONTEXT\', JSON.stringify(SERVER_ENGINE_CONTEXT));\n\nconst MyGraphApp= (props) => {\n  const [state,setState]= React.useState({\n    isReady:false,\n    assets:null,\n    config:{},\n    services:[]\n  });\n  React.useEffect(()=>{\n    loaderCombinedAssets(GI_ASSETS_PACKAGE).then(res=>{\n      /** 生成服务 */\n      const services = getCombineServices(res.services)\n      setState(preState=>{\n        return {\n          ...preState,\n          isReady:true,\n          assets:res,\n          services,\n          config:GI_PROJECT_CONFIG,\n        }\n      })\n    })\n  },[]);\n  const {assets,isReady,config,services} =state;\n  if(!isReady){\n    return <div>loading...</div>\n  }\n  return (\n    <div>\n      <div style={{ height: "100vh" }}>\n        {/** @ts-ignore */}\n        <window.GISDK.default\n          config={config}\n          assets={assets}\n          services={services}\n        />\n      </div>\n    </div>\n  );\n};\n\n// 因为没有做 external，避免多个版本react冲突，统一从window对象中获取\n\n//@ts-ignore \nwindow.ReactDOM.render(<MyGraphApp />, document.getElementById("root"));\n \n',
+});
