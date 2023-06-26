@@ -23,7 +23,7 @@ export const getLoginUserInfo = async () => {
       const VIP_ASSETS = await fetch('https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/json/assets.json').then(
         res => res.json(),
       );
-      setAssetPackages(VIP_ASSETS); //暂时移除从user中获取资产信息
+      // setAssetPackages(VIP_ASSETS); //暂时移除从user中获取资产信息
       //@ts-ignore
       window.GI_USER_INFO = result;
       return result;

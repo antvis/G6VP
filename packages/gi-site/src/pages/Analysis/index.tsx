@@ -1,4 +1,5 @@
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
+import { useMatch } from 'umi';
 import { message } from 'antd';
 import { original } from 'immer';
 import React, { useRef, useState } from 'react';
@@ -27,8 +28,8 @@ const GraphRef = props => {
   return null;
 };
 const Analysis = props => {
-  const { match } = props;
-  const { projectId } = match.params;
+  const match = useMatch({ path: '/workspace/:projectId' })!;
+  const projectId = match.params.projectId!;
   const graphRef = useRef(null);
 
   const [state, updateState] = useModel();

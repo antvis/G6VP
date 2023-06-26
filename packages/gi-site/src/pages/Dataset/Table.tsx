@@ -11,7 +11,7 @@ import {
 import { utils } from '@antv/gi-sdk';
 import { Button, Input, Table, Tag, Tooltip } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { recoverDataset, recycleDataset, updateDataset } from '../../services/dataset';
 import { isNil } from '@antv/util';
 // import { getUid } from '../Workspace/utils';
@@ -42,7 +42,6 @@ export const TYPE_MAPPING = {
   },
 };
 const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }) => {
-  const history = useHistory();
 
   // const handleEncode = record => {
   //   console.log(record);

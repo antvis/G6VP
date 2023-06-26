@@ -58,6 +58,7 @@ export type {
   GraphSchemaData,
   ISourceDataMap,
   ServiceObject,
+  LayoutConfig,
 } from './typing';
 export { extra, template, useContext, utils, version };
 

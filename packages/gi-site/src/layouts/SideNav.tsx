@@ -1,3 +1,4 @@
+import { history, useLocation } from 'umi';
 import {
   AppstoreOutlined,
   DeleteOutlined,
@@ -11,7 +12,7 @@ import {
 
 import { Menu, MenuProps } from 'antd';
 import * as React from 'react';
-import './index.less';
+import { Outlet } from 'umi';
 interface ILayoutProps {}
 
 const DATASET_ITEMS = [
@@ -70,8 +71,7 @@ const getItems = location => {
 };
 
 const SideNav: React.FunctionComponent<ILayoutProps> = props => {
-  //@ts-ignore
-  const { children, location, history } = props;
+  const location = useLocation();
   const [state, setState] = React.useState({
     active: location.pathname.split('/').splice(0, 3).join('/'),
   });
@@ -81,25 +81,23 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
     history.push(e.key);
   };
 
-  const { items, name } = getItems(location);
+  const { items } = getItems(location);
 
   const { active } = state;
 
   return (
     <div style={{ display: 'flex', height: '-webkit-fill-available' }}>
       <div style={{ width: '160px' }}>
-        {/* <h2>{name}</h2> */}
         <Menu className="gi-layout__side" items={items} onClick={onClick} selectedKeys={[active]} />
       </div>
       <div
         style={{
           flex: 1,
-          // background: 'var(--background-color)',
           padding: '0px 12px',
           width: 'calc(100% - 160px)',
         }}
       >
-        {children}
+        <Outlet />
       </div>
     </div>
   );

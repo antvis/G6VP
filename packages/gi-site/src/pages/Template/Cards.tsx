@@ -1,7 +1,7 @@
 import { DeleteOutlined, EllipsisOutlined, ExportOutlined } from '@ant-design/icons';
 import { Card, Col, Dropdown, Row, Typography } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { deleteDataset } from '../../services/dataset';
 import { ITemplate } from '../../services/typing';
 
@@ -14,7 +14,6 @@ interface ICardsProps {
 
 const Cards: React.FunctionComponent<ICardsProps> = props => {
   const { data } = props;
-  const history = useHistory();
   const handleClick = id => {
     history.push(`/workbook/template/${id}`);
   };

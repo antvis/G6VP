@@ -1,5 +1,6 @@
 import { ApartmentOutlined, BarsOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
+import { useMatch } from 'umi';
 import Graphin, { GraphinData } from '@antv/graphin';
 import { Breadcrumb } from 'antd';
 import * as React from 'react';
@@ -9,8 +10,7 @@ import { IDataset } from '../../services/typing';
 interface DetailProps {}
 
 const Detail: React.FunctionComponent<DetailProps> = props => {
-  //@ts-ignore
-  const { match } = props;
+  const match = useMatch({ path: '/dataset/list/:id' })!;
   const { id } = match.params;
   const [state, setState] = React.useState<{ dataset: Partial<IDataset>; schemaGraph: GraphinData }>({
     dataset: {},
@@ -20,7 +20,7 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
 
   React.useEffect(() => {
     (async () => {
-      const info = (await DatasetServices.queryDatasetInfo(id)) as IDataset;
+      const info = (await DatasetServices.queryDatasetInfo(id!)) as IDataset;
       const schemaGraph = utils.getSchemaGraph(info.schemaData, { nodes: [], edges: [] });
 
       setState(preState => {

@@ -5,7 +5,7 @@ import ThemeVars from '../ThemeVars';
 import './index.less';
 
 interface ThemeProps {
-  changeTheme: (val: string) => void;
+  changeTheme?: (val: string) => void;
 }
 const options = [
   {

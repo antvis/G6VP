@@ -1,7 +1,7 @@
 import { EditableProTable } from '@ant-design/pro-table';
 import { Alert, Button, Form, Input, Modal, Radio, Tabs } from 'antd';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import * as ProjectServices from '../../services/project';
 
 import './index.less';
@@ -66,7 +66,6 @@ const SOLUTIONS = [
 const GI_ENV = localStorage.getItem('GI_SERVER_ENV');
 const CreatePanel: React.FC<IProps> = ({ visible, handleClose }) => {
   const [form] = Form.useForm();
-  const history = useHistory();
   const defaultData = [
     {
       name: 'test',
