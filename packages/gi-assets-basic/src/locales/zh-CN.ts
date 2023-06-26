@@ -1,7 +1,7 @@
-import FilterPanel from '../components/FilterPanel/locales/zh-CN';
-import { LANGUAGE_KEY_NAME } from '@antv/gi-sdk'
+import FilterPanel from '../components/FilterPanel/locales';
+import { LANGUAGE_KEY_NAME } from '@antv/gi-sdk';
 
 export default {
   language: LANGUAGE_KEY_NAME.ZhCN,
-  ...FilterPanel,
-}
+  ...FilterPanel[LANGUAGE_KEY_NAME.ZhCN],
+};
