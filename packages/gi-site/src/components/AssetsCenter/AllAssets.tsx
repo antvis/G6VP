@@ -5,7 +5,9 @@ import React from 'react';
 import { queryAssetList } from '../../services/assets';
 import AssetCard from './Card';
 import ComponentsPanel from './Components';
+import $i18n from '../../i18n';
 import './index.less';
+
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
 
@@ -16,17 +18,17 @@ interface AssetsCenterProps {
 }
 const options = [
   {
-    name: '组件',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.AllAssets.Component', dm: '组件' }),
     key: 'components',
     icon: <AppstoreOutlined />,
   },
   {
-    name: '元素',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.AllAssets.Element', dm: '元素' }),
     key: 'elements',
     icon: <BgColorsOutlined />,
   },
   {
-    name: '布局',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.AllAssets.Layout', dm: '布局' }),
     key: 'layouts',
     icon: <BranchesOutlined />,
   },

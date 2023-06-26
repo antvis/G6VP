@@ -6,6 +6,7 @@ import './index.less';
 import { IState, ServerComponentProps } from './typing';
 import UploadLocalFile from './UploadLocalFile';
 import { GIDefaultTrans } from './utils';
+import $i18n from '../../i18n';
 
 const { Step } = Steps;
 
@@ -27,7 +28,7 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
 
   const steps = [
     {
-      title: '上传数据',
+      title: $i18n.get({ id: 'gi-site.components.FileServerEngine.ServerComponent.UploadData', dm: '上传数据' }),
       content: (
         <UploadLocalFile
           state={state}
@@ -38,7 +39,10 @@ const ServerComponent: React.FC<ServerComponentProps> = props => {
       ),
     },
     {
-      title: '配置字段',
+      title: $i18n.get({
+        id: 'gi-site.components.FileServerEngine.ServerComponent.ConfigurationFields',
+        dm: '配置字段',
+      }),
       content: (
         <ConfigData state={state} updateState={updateState} updateGISite={updateGISite} giSiteContext={giSiteContext} />
       ),

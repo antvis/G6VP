@@ -6,6 +6,7 @@ import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
 import * as DatasetServices from '../../services/dataset';
 import { IDataset } from '../../services/typing';
+import $i18n from '../../i18n';
 interface DetailProps {}
 
 const Detail: React.FunctionComponent<DetailProps> = props => {
@@ -39,7 +40,7 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
         defaultActive="schema"
         extra={
           <Breadcrumb>
-            <Breadcrumb.Item>数据集</Breadcrumb.Item>
+            <Breadcrumb.Item>{$i18n.get({ id: 'gi-site.pages.Dataset.Detail.Dataset', dm: '数据集' })}</Breadcrumb.Item>
             <Breadcrumb.Item>{id}</Breadcrumb.Item>
           </Breadcrumb>
         }
@@ -47,7 +48,7 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
           {
             key: 'schema',
             icon: <ApartmentOutlined />,
-            label: '图模型',
+            label: $i18n.get({ id: 'gi-site.pages.Dataset.Detail.GraphModel', dm: '图模型' }),
             children: (
               <div style={{ width: '100%', height: '100%' }}>
                 <Graphin
@@ -67,7 +68,7 @@ const Detail: React.FunctionComponent<DetailProps> = props => {
           {
             key: 'table',
             icon: <BarsOutlined />,
-            label: '数据',
+            label: $i18n.get({ id: 'gi-site.pages.Dataset.Detail.Data', dm: '数据' }),
             children: <pre>{JSON.stringify(state.dataset, null, 2)}</pre>,
           },
         ]}

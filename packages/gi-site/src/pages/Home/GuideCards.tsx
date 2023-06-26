@@ -15,6 +15,7 @@ import {
 import { Col, Divider, Row } from 'antd';
 import * as React from 'react';
 import RadioNote from '../../components/RadioNote';
+import $i18n from '../../i18n';
 interface IGuideCardsProps {
   history: any;
 }
@@ -39,77 +40,77 @@ const styles: Record<string, React.CSSProperties> = {
 
 const ITEMS = [
   {
-    name: 'Step 1：选择数据源',
+    name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.StepSelectADataSource', dm: 'Step 1：选择数据源' }),
     items: [
       {
         id: 'DEMO',
         icon: <FolderViewOutlined />,
-        name: '样例数据',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.SampleData', dm: '样例数据' }),
       },
       {
         id: 'FILE',
         icon: <FileExcelOutlined />,
-        name: '本地文件',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.LocalFile', dm: '本地文件' }),
       },
       {
         id: 'GRAPH',
         icon: <DeploymentUnitOutlined />,
-        name: '图数据库',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.GraphDatabase', dm: '图数据库' }),
       },
       {
         id: 'GEO',
         icon: <EnvironmentOutlined />,
-        name: '地理数据库',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.GeographicDatabase', dm: '地理数据库' }),
       },
     ],
   },
   {
-    name: 'Step 2：定制分析画布',
+    name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.StepCustomizeTheAnalysisCanvas', dm: 'Step 2：定制分析画布' }),
     items: [
       {
         id: 'STYLE',
         icon: <BgColorsOutlined />,
-        name: '视觉映射',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.VisualMapping', dm: '视觉映射' }),
       },
       {
         id: 'LAYOUT',
         icon: <LayoutOutlined />,
-        name: '设置布局',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.SetLayout', dm: '设置布局' }),
       },
       {
         id: 'ASSETS',
         icon: <MacCommandOutlined />,
-        name: '组合分析',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.CombinationAnalysis', dm: '组合分析' }),
       },
       {
         id: 'INSIGHT',
         icon: <FundProjectionScreenOutlined />,
-        name: '发现洞察',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.DiscoveryInsight', dm: '发现洞察' }),
       },
     ],
   },
   {
-    name: 'Step 3：发现更多可能',
+    name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.StepDiscoverMorePossibilities', dm: 'Step 3：发现更多可能' }),
     items: [
       {
         id: 'AVA',
         icon: <RobotOutlined />,
-        name: '智能解读',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntelligentInterpretation', dm: '智能解读' }),
       },
       {
         id: 'DEVELOPMENT',
         icon: <CodeOutlined />,
-        name: '定制开发',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.CustomDevelopment', dm: '定制开发' }),
       },
       {
         id: 'DEPLOY',
         icon: <AliyunOutlined />,
-        name: '集成部署',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntegratedDeployment', dm: '集成部署' }),
       },
       {
         id: 'VIP_ASSETS',
         icon: <GiftOutlined />,
-        name: 'VIP 资产',
+        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.VipAssets', dm: 'VIP 资产' }),
       },
     ],
   },

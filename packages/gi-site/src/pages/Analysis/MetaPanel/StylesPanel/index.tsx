@@ -1,8 +1,9 @@
 import { Tabs } from 'antd';
 import React from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
-import './index.less';
 import StyleSettig from './StyleSetting';
+import $i18n from '../../../../i18n';
+import './index.less';
 
 const { TabPane } = Tabs;
 
@@ -13,8 +14,8 @@ interface StylePanelProps {
   config: any;
 }
 
-const NodeTab = <div className="tab-title">节点</div>;
-const EdgeTab = <div className="tab-title">边</div>;
+const NodeTab = <div className="tab-title">{$i18n.get({ id: 'gi-site.MetaPanel.StylesPanel.Node', dm: '节点' })}</div>;
+const EdgeTab = <div className="tab-title">{$i18n.get({ id: 'gi-site.MetaPanel.StylesPanel.Edge', dm: '边' })}</div>;
 const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
   const { elements } = props;
   const { nodes: NodeElements, edges: EdgeElements } = elements;
@@ -22,7 +23,10 @@ const StylePanel: React.FunctionComponent<StylePanelProps> = props => {
 
   return (
     <>
-      <AssetsCenterHandler title="元素" id="elements" />
+      <AssetsCenterHandler
+        title={$i18n.get({ id: 'gi-site.MetaPanel.StylesPanel.Element', dm: '元素' })}
+        id="elements"
+      />
       <Tabs defaultActiveKey={defaultActiveKey} centered id="gi-switch-elements-tab">
         <TabPane tab={NodeTab} key="nodes">
           <StyleSettig elementType="nodes" elements={NodeElements} />

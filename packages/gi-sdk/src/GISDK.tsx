@@ -391,7 +391,7 @@ const GISDK = (props: Props) => {
   }, [data]);
 
   return (
-    <IntlProvider locale={language} messages={localeMessages}>
+    <IntlProvider locale={language as string} messages={localeMessages}>
       {/* @ts-ignore */}
       <GraphInsightContext.Provider value={ContextValue}>
         <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>

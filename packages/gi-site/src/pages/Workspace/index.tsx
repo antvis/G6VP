@@ -13,6 +13,7 @@ import CreatePanel from './Create';
 import './index.less';
 import ProjectList from './Projects';
 import SaveList from './SaveList';
+import $i18n from '../../i18n';
 
 interface WorkspaceProps {}
 const { TabPane } = Tabs;
@@ -27,15 +28,15 @@ export interface DeployItem {
 const LIST_OPTIONS: { id: NavbarId; name: string }[] = [
   {
     id: 'case',
-    name: '行业案例',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.IndustryCases', dm: '行业案例' }),
   },
   {
     id: 'project',
-    name: '我的项目',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.MyProject', dm: '我的项目' }),
   },
   {
     id: 'save',
-    name: '我的保存',
+    name: $i18n.get({ id: 'gi-site.pages.Workspace.MySave', dm: '我的保存' }),
   },
 ];
 
@@ -93,7 +94,7 @@ const Workspace: React.FunctionComponent<WorkspaceProps> = props => {
         const assets_deploys = res.map(item => {
           return {
             id: 'deployed',
-            name: '我的部署',
+            name: $i18n.get({ id: 'gi-site.pages.Workspace.MyDeployment', dm: '我的部署' }),
             //@ts-ignore
             component: item.deploy,
           };

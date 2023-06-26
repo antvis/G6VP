@@ -2,6 +2,7 @@ import { GithubOutlined } from '@ant-design/icons';
 import { Button, Popover } from 'antd';
 import * as React from 'react';
 import { fetch } from 'umi-request';
+import $i18n from '../../i18n';
 import './github.less';
 interface GithubProps {}
 
@@ -40,7 +41,10 @@ const Github: React.FunctionComponent<GithubProps> = props => {
     <Popover
       style={{ width: '400px' }}
       trigger="hover"
-      title="开源不易，给个鼓励，加个 ⭐️ 吧！"
+      title={$i18n.get({
+        id: 'gi-site.components.Navbar.Github.OpenSourceIsNotEasy',
+        dm: '开源不易，给个鼓励，加个 ⭐️ 吧！',
+      })}
       {...otherProps}
       placement="bottomRight"
       overlayStyle={{ marginLeft: '20px' }}
@@ -51,10 +55,10 @@ const Github: React.FunctionComponent<GithubProps> = props => {
           }}
         >
           <Button size="small" onClick={handleCloseGithubPopover}>
-            别烦我
+            {$i18n.get({ id: 'gi-site.components.Navbar.Github.LeaveMeAlone', dm: '别烦我' })}
           </Button>
           <Button size="small" type="primary" style={{ marginLeft: '8px' }} onClick={handleJumpToGithub}>
-            这就去
+            {$i18n.get({ id: 'gi-site.components.Navbar.Github.RightAway', dm: '这就去' })}
           </Button>
         </div>
       }

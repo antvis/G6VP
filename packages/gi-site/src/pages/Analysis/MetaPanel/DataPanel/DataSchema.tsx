@@ -7,6 +7,7 @@ import CollapseCard from '../../../../components/CollapseCard';
 import * as ProjectServices from '../../../../services/project';
 import { useContext } from '../../hooks/useContext';
 import SchemaEditor from './SchemaEditor';
+import $i18n from '../../../../i18n';
 interface DataServiceProps {}
 
 /**
@@ -91,10 +92,11 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
   return (
     <div>
       <CollapseCard
-        title="图模型"
+        title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataSchema.GraphModel', dm: '图模型' })}
         extra={
           <Button type="dashed" style={{ width: '100%' }} size="small" onClick={handleClick}>
-            <EditFilled /> 编辑
+            <EditFilled />
+            {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataSchema.Edit', dm: '编辑' })}
           </Button>
         }
       >
@@ -109,7 +111,13 @@ const DataSchema: React.FunctionComponent<DataServiceProps> = props => {
           fitView
           layout={{ type: 'graphin-force', animation: false }}
         ></Graphin>
-        <Drawer title="编辑图模型" placement="right" onClose={onClose} visible={visible} width="calc(100vw - 382px)">
+        <Drawer
+          title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataSchema.EditGraphModel', dm: '编辑图模型' })}
+          placement="right"
+          onClose={onClose}
+          visible={visible}
+          width="calc(100vw - 382px)"
+        >
           <SchemaEditor schemaGraph={schemaGraph} schemaData={schemaData} onSave={onSave} config={config} />
         </Drawer>
       </CollapseCard>

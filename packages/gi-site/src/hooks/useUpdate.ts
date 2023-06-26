@@ -1,6 +1,7 @@
 import localforage from 'localforage';
 import { getUid } from '../pages/Workspace/utils';
 import { IProject } from '../services/typing';
+import $i18n from '../i18n';
 
 export const GI_PROJECT_DB = localforage.createInstance({
   name: 'gi-project',
@@ -28,7 +29,7 @@ const useUpdate = async () => {
       }).length === 2;
 
     if (!isLatest) {
-      console.log('旧版本的数据库，需要升级');
+      console.log($i18n.get({ id: 'gi-site.src.hooks.useUpdate.TheOldVersionOfThe', dm: '旧版本的数据库，需要升级' }));
 
       localforage.iterate((item: IProject) => {
         //@ts-ignore

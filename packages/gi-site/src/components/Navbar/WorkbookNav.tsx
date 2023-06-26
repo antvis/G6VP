@@ -11,6 +11,7 @@ import SaveTemplate from './SaveTemplate';
 import SaveWorkbook from './SaveWorkbook';
 import Share from './Share';
 import Theme from './Theme';
+import Language from './Language';
 interface WorkbookBarProps {
   workbookId: string;
 }
@@ -63,6 +64,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <SaveWorkbook workbookId={workbookId} />
         <Github />
         <Theme changeTheme={changeTheme} />
+        <Language />
       </div>
     </header>
   );

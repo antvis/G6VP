@@ -1,6 +1,7 @@
 import { FileTextOutlined } from '@ant-design/icons';
 import { Button, Upload } from 'antd';
 import * as React from 'react';
+import $i18n from '../../i18n';
 const { Dragger } = Upload;
 
 interface RecoverProps {
@@ -71,7 +72,12 @@ const Recover: React.FunctionComponent<RecoverProps> = props => {
           <p className="ant-upload-drag-icon">
             <FileTextOutlined />
           </p>
-          <p>下载的工作薄文件，可以在这里通过「点击」或者「拖拽」上传恢复</p>
+          <p>
+            {$i18n.get({
+              id: 'gi-site.pages.Workspace.Recover.TheDownloadedWorkbookFileCan',
+              dm: '下载的工作簿文件，可以在这里通过「点击」或者「拖拽」上传恢复',
+            })}
+          </p>
         </Dragger>
         <Button
           type="primary"
@@ -82,7 +88,7 @@ const Recover: React.FunctionComponent<RecoverProps> = props => {
           onClick={handleRecover}
           disabled={!success}
         >
-          立即恢复项目
+          {$i18n.get({ id: 'gi-site.pages.Workspace.Recover.RestoreTheProjectNow', dm: '立即恢复项目' })}
         </Button>
       </div>
     </>

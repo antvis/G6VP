@@ -94,7 +94,7 @@ export interface Props {
   locales?: {
     language: LANGUAGE_KEY_NAME;
     [k: string]: string;
-  }
+  };
   /**
    * style
    */

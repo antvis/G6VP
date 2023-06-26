@@ -185,7 +185,7 @@ export const deleteDataset = async (id: string) => {
   if (GI_SITE.IS_OFFLINE) {
     const res = await GI_DATASET_DB.getItem(id);
     GI_DATASET_DB.removeItem(id);
-    /** 删除数据集的同时，删除对应的工作薄 */
+    /** 删除数据集的同时，删除对应的工作簿 */
     GI_PROJECT_DB.iterate(item => {
       //@ts-ignore
       const { datasetId, id: PROJECT_ID } = item;
@@ -213,7 +213,7 @@ export const recycleDataset = async (id: string) => {
     const recycleTime = new Date().getTime();
     const dataset = await GI_DATASET_DB.getItem(id);
     if (dataset) GI_DATASET_DB.setItem(id, { ...dataset, recycleTime });
-    /** 数据集进入回收站的同时，对应的工作薄打标 */
+    /** 数据集进入回收站的同时，对应的工作簿打标 */
     await GI_PROJECT_DB.iterate((item: IDataset) => {
       //@ts-ignore
       const { datasetId, id: PROJECT_ID, type } = item;

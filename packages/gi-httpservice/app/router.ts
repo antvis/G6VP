@@ -68,7 +68,7 @@ export default (app: Application) => {
   // router.post('/dataset/delete', controller.graphinsight.removeProjectById);
   // router.post('/dataset/update', controller.graphinsight.updateProjectById);
 
-  // project 工作薄
+  // project 工作簿
   router.post('/project/create', controller.graphinsight.createProject);
   router.post('/project/list', controller.graphinsight.listProject);
   router.post('/project/delete', controller.graphinsight.removeProjectById);

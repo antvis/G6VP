@@ -9,6 +9,7 @@ import { GI_SITE } from '../../services/const';
 import * as ProjectServices from '../../services/project';
 import { deleteShareById, queryShareList } from '../../services/share';
 import type { IProject } from '../../services/typing';
+import $i18n from '../../i18n';
 
 interface SaveListState {
   lists: IProject[];
@@ -55,7 +56,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
     } else {
       const result = await deleteShareById(id);
       if (result) {
-        message.success('删除成功');
+        message.success($i18n.get({ id: 'gi-site.pages.Workspace.SaveList.DeletedSuccessfully', dm: '删除成功' }));
         // 重新加载列表
         const list = await queryShareList();
         updateState(draft => {
@@ -69,7 +70,7 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
     <Menu>
       <Menu.Item>
         <Popconfirm
-          title="是否删除该画布?"
+          title={$i18n.get({ id: 'gi-site.pages.Workspace.SaveList.DeleteTheCanvas', dm: '是否删除该画布?' })}
           onConfirm={e => {
             //@ts-ignore
             e.preventDefault();
@@ -78,19 +79,26 @@ const SaveList: React.FunctionComponent<SaveListProps> = props => {
           okText="Yes"
           cancelText="No"
         >
-          删除画布
+          {$i18n.get({ id: 'gi-site.pages.Workspace.SaveList.DeleteCanvas', dm: '删除画布' })}
         </Popconfirm>
       </Menu.Item>
     </Menu>
   );
+
   if (lists.length === 0) {
     return (
       <div style={{ margin: '50px auto' }}>
         <Empty
           description={
             <div>
-              当用户在工作台中使用<Typography.Text type="success">「保存分析」</Typography.Text>
-              资产的时候，默认会被保存在这里。
+              {$i18n.get({ id: 'gi-site.pages.Workspace.SaveList.WhenUsersUseItIn', dm: '当用户在工作台中使用' })}
+              <Typography.Text type="success">
+                {$i18n.get({ id: 'gi-site.pages.Workspace.SaveList.SaveAnalysis', dm: '「保存分析」' })}
+              </Typography.Text>
+              {$i18n.get({
+                id: 'gi-site.pages.Workspace.SaveList.AssetsAreSavedHereBy',
+                dm: '资产的时候，默认会被保存在这里。',
+              })}
             </div>
           }
         />

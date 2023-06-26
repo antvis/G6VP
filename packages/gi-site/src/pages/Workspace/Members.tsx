@@ -2,6 +2,7 @@ import { EditableProTable } from '@ant-design/pro-table';
 import { Button, Form, message, Modal, Space } from 'antd';
 import React, { useState } from 'react';
 import { updateProjectById } from '../../services';
+import $i18n from '../../i18n';
 import './index.less';
 interface IProps {
   visible: boolean;
@@ -21,31 +22,36 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>(() => defaultData.map(item => item.id));
   const columns = [
     {
-      title: '工号',
+      title: $i18n.get({ id: 'gi-site.pages.Workspace.Members.EmployeeNumber', dm: '工号' }),
       dataIndex: 'userId',
       width: '40%',
       formItemProps: (form, { rowIndex }) => {
         return {
-          rules: [{ required: true, message: '此项为必填项' }],
+          rules: [
+            {
+              required: true,
+              message: $i18n.get({ id: 'gi-site.pages.Workspace.Members.ThisItemIsRequired', dm: '此项为必填项' }),
+            },
+          ],
         };
       },
     },
     {
-      title: '权限',
+      title: $i18n.get({ id: 'gi-site.pages.Workspace.Members.Permission', dm: '权限' }),
       dataIndex: 'role',
       valueType: 'select',
       valueEnum: {
-        ADMIN: { text: '管理员' },
+        ADMIN: { text: $i18n.get({ id: 'gi-site.pages.Workspace.Members.Administrator', dm: '管理员' }) },
         DEVELOPER: {
-          text: '项目成员',
+          text: $i18n.get({ id: 'gi-site.pages.Workspace.Members.ProjectMembers', dm: '项目成员' }),
         },
         REPORTER: {
-          text: '游客',
+          text: $i18n.get({ id: 'gi-site.pages.Workspace.Members.Tourists', dm: '游客' }),
         },
       },
     },
     {
-      title: '操作',
+      title: $i18n.get({ id: 'gi-site.pages.Workspace.Members.Operation', dm: '操作' }),
       valueType: 'option',
       width: 200,
       render: () => null,
@@ -57,14 +63,14 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
       members: dataSource,
     });
     if (result) {
-      message.success('更新成功');
+      message.success($i18n.get({ id: 'gi-site.pages.Workspace.Members.UpdatedSuccessfully', dm: '更新成功' }));
       handleClose();
     }
   };
 
   return (
     <Modal
-      title={'成员管理'}
+      title={$i18n.get({ id: 'gi-site.pages.Workspace.Members.MemberManagement', dm: '成员管理' })}
       visible={visible}
       width={846}
       footer={null}
@@ -79,7 +85,7 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
           value={dataSource}
           rowKey="id"
           recordCreatorProps={{
-            creatorButtonText: '添加成员',
+            creatorButtonText: $i18n.get({ id: 'gi-site.pages.Workspace.Members.AddMembers', dm: '添加成员' }),
             newRecordType: 'dataSource',
             record: () => ({
               id: dataSource.length + 1,
@@ -100,10 +106,10 @@ const MembersPanel: React.FC<IProps> = ({ visible, handleClose, values }) => {
 
         <Space>
           <Button shape="round" onClick={handleClose}>
-            取消
+            {$i18n.get({ id: 'gi-site.pages.Workspace.Members.Cancel', dm: '取消' })}
           </Button>
           <Button type="primary" shape="round" onClick={handleUpdateMemebers}>
-            确定
+            {$i18n.get({ id: 'gi-site.pages.Workspace.Members.Ok', dm: '确定' })}
           </Button>
         </Space>
       </Form>

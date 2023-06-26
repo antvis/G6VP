@@ -6,6 +6,7 @@ import { Updater } from 'use-immer';
 import xlsx2js from 'xlsx2js';
 import { IInputData, IState } from './typing';
 import { getOptions } from './utils';
+import $i18n from '../../i18n';
 
 interface IProps {
   state: IState;
@@ -46,9 +47,15 @@ const UploadLocalFile: React.FC<IProps> = props => {
         const isEdgeFile = (file.name as string).includes('edges');
         if (!isNodeFile && !isEdgeFile) {
           notification.error({
-            message: '文件名不规范',
-            description: `按照规范，CSV 或者 Excel 文件，文件名中需要包含 nodes 或者 edges 以此区分是点表还是边表。规范命名示例如下:
-             交易表.edges.csv 用户表.nodes.csv`,
+            message: $i18n.get({
+              id: 'gi-site.components.FileServerEngine.UploadLocalFile.TheFileNameIsNot',
+              dm: '文件名不规范',
+            }),
+            description: $i18n.get({
+              id: 'gi-site.components.FileServerEngine.UploadLocalFile.AccordingToTheSpecificationsCsv',
+              dm: '按照规范，CSV 或者 Excel 文件，文件名中需要包含 nodes 或者 edges 以此区分是点表还是边表。规范命名示例如下:\n             交易表.edges.csv 用户表.nodes.csv',
+            }),
+
             duration: 0,
           });
           return;
@@ -133,7 +140,12 @@ const UploadLocalFile: React.FC<IProps> = props => {
         draft.transData = eval(state.transfunc)({ nodes, edges });
       });
     } catch (e) {
-      message.error('请上传合法数据');
+      message.error(
+        $i18n.get({
+          id: 'gi-site.components.FileServerEngine.UploadLocalFile.PleaseUploadValidData',
+          dm: '请上传合法数据',
+        }),
+      );
     }
   };
 
@@ -154,7 +166,10 @@ const UploadLocalFile: React.FC<IProps> = props => {
     <div className="upload-panel" style={{ margin: '10px 0px 0px 0px' }}>
       <div style={{ textAlign: 'left' }}>
         <Alert
-          message="JSON 文件规范：点边数据必须放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合"
+          message={$i18n.get({
+            id: 'gi-site.components.FileServerEngine.UploadLocalFile.JsonFileSpecificationPointAnd',
+            dm: 'JSON 文件规范：点边数据必须放在同一个 JSON 文件中上传，nodes 表示点的集合，edges 表示边的集合',
+          })}
           type="info"
           showIcon
           closable
@@ -162,14 +177,20 @@ const UploadLocalFile: React.FC<IProps> = props => {
           action={
             <Space direction="vertical">
               <Button size="small" type="primary" onClick={downloadJSON}>
-                下载示例数据
+                {$i18n.get({
+                  id: 'gi-site.components.FileServerEngine.UploadLocalFile.DownloadSampleData',
+                  dm: '下载示例数据',
+                })}
               </Button>
             </Space>
           }
         />
 
         <Alert
-          message="CSV/XLS/XLSX文件规范： 分别上传点表和边表，按照约定，点表文件名必须包含 nodes ,例如 acount.nodes.csv，边表文件名必须包含 edges ，例如 transfer.edges.csv"
+          message={$i18n.get({
+            id: 'gi-site.components.FileServerEngine.UploadLocalFile.CsvXlsXlsxFileSpecification',
+            dm: 'CSV/XLS/XLSX文件规范： 分别上传点表和边表，按照约定，点表文件名必须包含 nodes ,例如 acount.nodes.csv，边表文件名必须包含 edges ，例如 transfer.edges.csv',
+          })}
           type="info"
           showIcon
           closable
@@ -177,28 +198,38 @@ const UploadLocalFile: React.FC<IProps> = props => {
           action={
             <Space direction="vertical">
               <Button size="small" type="primary" onClick={downloadMockFiles}>
-                下载示例数据
+                {$i18n.get({
+                  id: 'gi-site.components.FileServerEngine.UploadLocalFile.DownloadSampleData',
+                  dm: '下载示例数据',
+                })}
               </Button>
             </Space>
           }
         />
       </div>
 
-      <h4 style={{ marginBottom: 0, marginTop: '10px' }}>已传数据</h4>
+      <h4 style={{ marginBottom: 0, marginTop: '10px' }}>
+        {$i18n.get({ id: 'gi-site.components.FileServerEngine.UploadLocalFile.TransmittedData', dm: '已传数据' })}
+      </h4>
 
       <div className="upload-panel-section">
         <Dragger {...draggerProps}>
           <p className="ant-upload-drag-icon">
             <FileTextOutlined />
           </p>
-          <p>点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式</p>
+          <p>
+            {$i18n.get({
+              id: 'gi-site.components.FileServerEngine.UploadLocalFile.ClickOrDragTheData',
+              dm: '点击或将数据文件拖拽到这里上传，支持 JSON，CSV，XLS，XLSX格式',
+            })}
+          </p>
           {/* <Divider /> */}
         </Dragger>
       </div>
 
       <Row style={{ padding: '30px 0px 10px 0px', justifyContent: 'center' }}>
         <Button type="primary" disabled={buttonDisabled} shape="round" onClick={checkData}>
-          进入下一步
+          {$i18n.get({ id: 'gi-site.components.FileServerEngine.UploadLocalFile.GoToTheNextStep', dm: '进入下一步' })}
         </Button>
       </Row>
     </div>

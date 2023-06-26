@@ -5,6 +5,7 @@ import { useImmer } from 'use-immer';
 import { AssetInfo } from '../../typing';
 import AssetsCenter from './AssetsCenter';
 import RenderForm from './RenderForm';
+import $i18n from '../../../../i18n';
 import './index.less';
 
 let refComponentKeys: string[] = [];
@@ -331,18 +332,27 @@ const ContainerPanel = props => {
       {/* 容器配置 */}
       <div>
         <Row justify="space-between" align="middle" className="gi-container-config-header">
-          <Col className="gi-container-config-title">容器配置</Col>
+          <Col className="gi-container-config-title">
+            {$i18n.get({ id: 'gi-site.MetaPanel.ContainerPanel.ContainerConfiguration', dm: '容器配置' })}
+          </Col>
           <Col>
-            <Tooltip title="返回资产配置">
+            <Tooltip
+              title={$i18n.get({
+                id: 'gi-site.MetaPanel.ContainerPanel.ReturnToAssetConfiguration',
+                dm: '返回资产配置',
+              })}
+            >
               <Button onClick={handleComplete} type="primary" size="small">
-                完成
+                {$i18n.get({ id: 'gi-site.MetaPanel.ContainerPanel.Complete', dm: '完成' })}
               </Button>
             </Tooltip>
           </Col>
         </Row>
         <div className="gi-container-config-wrapper">
           <div className="gi-container-config-item">
-            <p className="gi-container-config-label">页面布局</p>
+            <p className="gi-container-config-label">
+              {$i18n.get({ id: 'gi-site.MetaPanel.ContainerPanel.PageLayout', dm: '页面布局' })}
+            </p>
             <div className="gi-container-config-input">
               <Select className="gi-container-config-seletor" onSelect={handlePageLayoutChange} value={pageLayout?.id}>
                 {layoutComponents.map(component => (
@@ -357,7 +367,10 @@ const ContainerPanel = props => {
           {/* 相关容器组件的 checkbox */}
           {pageLayout ? (
             <div className="gi-container-config-item">
-              <p className="gi-container-config-label">{pageLayout?.name}容器</p>
+              <p className="gi-container-config-label">
+                {pageLayout?.name}
+                {$i18n.get({ id: 'gi-site.MetaPanel.ContainerPanel.Container', dm: '容器' })}
+              </p>
               <div className="gi-container-config-input">
                 <Checkbox.Group
                   value={selectedContainers.map(con => con.id)}

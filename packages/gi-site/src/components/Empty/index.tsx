@@ -1,6 +1,7 @@
 import { Button, Empty } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import $i18n from '../../i18n';
 interface EmptyDemoProps {
   url: string;
   title: string;
@@ -24,7 +25,7 @@ const EmptyDemo: React.FunctionComponent<EmptyDemoProps> = props => {
           history.push(url);
         }}
       >
-        开始创建
+        {$i18n.get({ id: 'gi-site.components.Empty.StartCreating', dm: '开始创建' })}
       </Button>
     </Empty>
   );

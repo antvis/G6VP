@@ -3,6 +3,7 @@ import { Alert, Button, Space, Tooltip } from 'antd';
 import * as React from 'react';
 import ActionList from '../../../../components/ActionList';
 import CollapseCard from '../../../../components/CollapseCard';
+import $i18n from '../../../../i18n';
 interface DataServiceProps {
   projectId: string;
   serviceLists: any[];
@@ -20,7 +21,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
   return (
     <div>
       <CollapseCard
-        title="自定义服务"
+        title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataService.CustomService', dm: '自定义服务' })}
         extra={
           <Button
             type="dashed"
@@ -30,7 +31,8 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
               window.open(`#/services/${projectId}?serviceId=NEW_GI_SERVICE`);
             }}
           >
-            <PlusOutlined /> 新建
+            <PlusOutlined />
+            {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataService.Create', dm: '新建' })}
           </Button>
         }
       >
@@ -38,9 +40,13 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
           type="info"
           message={
             <>
-              用户可在线自定义,点击查看
+              {$i18n.get({
+                id: 'gi-site.MetaPanel.DataPanel.DataService.UsersCanCustomizeItOnline',
+                dm: '用户可在线自定义,点击查看',
+              })}
+
               <a href="https://www.yuque.com/antv/gi/iwiv6g" target="_black">
-                文档
+                {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataService.Document', dm: '文档' })}
               </a>
             </>
           }
@@ -53,7 +59,10 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
               title={item.id}
               extra={
                 <Space>
-                  <Tooltip placement="top" title={'编辑服务'}>
+                  <Tooltip
+                    placement="top"
+                    title={$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataService.EditService', dm: '编辑服务' })}
+                  >
                     <EditOutlined
                       onClick={() => {
                         window.open(`#/services/${projectId}?serviceId=${item.id}`);

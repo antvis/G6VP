@@ -6,6 +6,7 @@ import { ANTD_VERSION, G6_VERSION, GI_THEME_ANTD_VERSION, GI_VERSION, GRAPHIN_VE
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
+import $i18n from '../../i18n';
 import './index.less';
 
 const SdkContent = () => {
@@ -68,7 +69,17 @@ const SdkContent = () => {
   const counts = THIRD_PARTY_DEPLOYS.length;
   return (
     <>
-      <Alert type="info" message={`G6VP 支持 ${counts} 种导出模式，点击即可体验，建议 UMD 模式`} showIcon></Alert>
+      <Alert
+        type="info"
+        message={$i18n.get(
+          {
+            id: 'gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport',
+            dm: 'G6VP 支持 {counts} 种导出模式，点击即可体验，建议 UMD 模式',
+          },
+          { counts: counts },
+        )}
+        showIcon
+      ></Alert>
       <br />
       <Row gutter={[20, 20]}>
         {THIRD_PARTY_DEPLOYS.map((item, index) => {
@@ -106,11 +117,14 @@ const ExportSdk = props => {
   return (
     <div>
       <Button size="small" onClick={handleOpen} icon={<CodeOutlined />} type="text">
-        开放
+        {$i18n.get({ id: 'gi-site.components.Navbar.ExportSdk.Open', dm: '开放' })}
       </Button>
       {state.visible && (
         <Modal
-          title="开放集成：画布 SDK 源码导出"
+          title={$i18n.get({
+            id: 'gi-site.components.Navbar.ExportSdk.OpenIntegrationCanvasSdkSource',
+            dm: '开放集成：画布 SDK 源码导出',
+          })}
           open={state.visible}
           width={'80%'}
           onCancel={handleClose}

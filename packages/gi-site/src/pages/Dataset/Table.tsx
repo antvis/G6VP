@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 import { recoverDataset, recycleDataset, updateDataset } from '../../services/dataset';
 import { isNil } from '@antv/util';
 // import { getUid } from '../Workspace/utils';
-
+import $i18n from '../../i18n';
 const styles = {
   botton: {
     padding: '4px 8px',
@@ -25,19 +25,19 @@ export const TYPE_MAPPING = {
   FILE: {
     id: 'FILE',
     icon: <FileExcelOutlined />,
-    name: '本地文件',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Table.LocalFile', dm: '本地文件' }),
     color: 'green',
   },
   GRAPH: {
     id: 'GRAPH',
     icon: <DeploymentUnitOutlined />,
-    name: '图数据',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Table.GraphData', dm: '图数据' }),
     color: 'blue',
   },
   GEO: {
     id: 'GEO',
     icon: <EnvironmentOutlined />,
-    name: '地理数据',
+    name: $i18n.get({ id: 'gi-site.pages.Dataset.Table.GeographicData', dm: '地理数据' }),
     color: 'orange',
   },
 };
@@ -111,12 +111,19 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
   };
   const columns = [
     {
-      title: '数据集名称',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.DatasetName', dm: '数据集名称' }),
       dataIndex: 'name',
       key: 'name',
       render: (record, data) => {
         const { type } = data;
-        let tag = type === 'case' ? <Tag color="var(--primary-color)">官方案例</Tag> : '';
+        let tag =
+          type === 'case' ? (
+            <Tag color="var(--primary-color)">
+              {$i18n.get({ id: 'gi-site.pages.Dataset.Table.OfficialCase', dm: '官方案例' })}
+            </Tag>
+          ) : (
+            ''
+          );
         return (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {tag}
@@ -135,14 +142,14 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       },
     },
     {
-      title: '数据集ID',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.DatasetId', dm: '数据集ID' }),
       dataIndex: 'id',
       width: 400,
       key: 'id',
     },
 
     {
-      title: '引擎 ID',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.EngineId', dm: '引擎 ID' }),
       dataIndex: 'engineId',
       key: 'engineId',
       render: (record, data) => {
@@ -167,7 +174,7 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
     //   key: 'size',
     // },
     {
-      title: '创建时间',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.CreationTime', dm: '创建时间' }),
       dataIndex: 'gmtCreate',
       key: 'gmtCreate',
       width: 180,
@@ -178,12 +185,15 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       sorter: (a, b) => a.gmtCreate - b.gmtCreate,
     },
     {
-      title: '操作',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.Operation', dm: '操作' }),
       width: 160,
       render: record => {
         return (
           <span>
-            <Tooltip title="创建分析画布" color={'var(--primary-color)'}>
+            <Tooltip
+              title={$i18n.get({ id: 'gi-site.pages.Dataset.Table.CreateAnAnalysisCanvas', dm: '创建分析画布' })}
+              color={'var(--primary-color)'}
+            >
               <Button
                 type="text"
                 onClick={() => handleAnalysis(record)}
@@ -193,25 +203,34 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
                 <FundProjectionScreenOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="查看数据基本信息">
+            <Tooltip
+              title={$i18n.get({ id: 'gi-site.pages.Dataset.Table.ViewBasicDataInformation', dm: '查看数据基本信息' })}
+            >
               <Button type="text" onClick={() => handleView(record)} style={styles.botton}>
                 <TableOutlined />
               </Button>
             </Tooltip>
-            <Tooltip title="分享数据集">
+            <Tooltip title={$i18n.get({ id: 'gi-site.pages.Dataset.Table.ShareDatasets', dm: '分享数据集' })}>
               <Button type="text" style={styles.botton}>
                 <SendOutlined />
               </Button>
             </Tooltip>
             {deletable && (
-              <Tooltip title="删除数据集" color={'red'}>
+              <Tooltip
+                title={$i18n.get({ id: 'gi-site.pages.Dataset.Table.DeleteADataset', dm: '删除数据集' })}
+                color={'red'}
+              >
                 <Button type="text" onClick={() => handleDelete(record)} style={{ padding: '4px 4px' }}>
                   <DeleteOutlined />
                 </Button>
               </Tooltip>
             )}
+
             {recoverable && (
-              <Tooltip title="恢复数据集" color={'red'}>
+              <Tooltip
+                title={$i18n.get({ id: 'gi-site.pages.Dataset.Table.RestoreADataset', dm: '恢复数据集' })}
+                color={'red'}
+              >
                 <Button type="text" onClick={() => handleRecover(record)} style={{ padding: '4px 4px' }}>
                   <RollbackOutlined />
                 </Button>
@@ -222,9 +241,10 @@ const DatasetTable = ({ data, queryData, recoverable = false, deletable = true }
       },
     },
   ];
+
   if (recoverable) {
     columns.splice(4, 0, {
-      title: '过期时间',
+      title: $i18n.get({ id: 'gi-site.pages.Dataset.Table.ExpirationTime', dm: '过期时间' }),
       dataIndex: 'recycleTime',
       key: 'expiredTime',
       render: record => {

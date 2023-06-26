@@ -1,6 +1,7 @@
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
 import { beautifyCode, getConstantFiles, HTML_SCRIPTS, MY_GRAPH_SDK } from './common';
+import $i18n from '../i18n';
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';
 
@@ -26,33 +27,29 @@ function getCSBData(opts) {
   const formatSchemaData = beautifyCode(JSON.stringify(schemaData));
 
   files['src/GI_EXPORT_FILES.ts'] = {
-    content: ` 
-      /** 动态请求需要的配套资产 **/
-      export const GI_ASSETS_PACKAGE = ${GI_ASSETS_PACKAGE};
-
-      /** G6VP 站点自动生成的配置 **/
-      export const GI_PROJECT_CONFIG = ${GI_PROJECT_CONFIG};
-      
-      /** G6VP 站点选择服务引擎的上下文配置信息 **/
-      export const SERVER_ENGINE_CONTEXT = ${SERVER_ENGINE_CONTEXT};
-
-      window['LOCAL_DATA_FOR_GI_ENGINE'] = {
-        data: ${formatData},
-        schemaData: ${formatSchemaData},
-      };
-    `,
+    content: $i18n.get(
+      {
+        id: 'gi-site.src.hooks.useCodeSandbox.SupportingAssetsRequiredForDynamic',
+        dm: " \n      /** 动态请求需要的配套资产 **/\n      export const GI_ASSETS_PACKAGE = {GIASSETSPACKAGE}\n\n      /** G6VP 站点自动生成的配置 **/\n      export const GI_PROJECT_CONFIG = {GIPROJECTCONFIG};\n      \n      /** G6VP 站点选择服务引擎的上下文配置信息 **/\n      export const SERVER_ENGINE_CONTEXT = {SERVERENGINECONTEXT};\n\n      window['LOCAL_DATA_FOR_GI_ENGINE'] = {\n        data: {formatData},\n        schemaData: {formatSchemaData},\n      };\n    ",
+      },
+      {
+        GIASSETSPACKAGE: GI_ASSETS_PACKAGE,
+        GIPROJECTCONFIG: GI_PROJECT_CONFIG,
+        SERVERENGINECONTEXT: SERVER_ENGINE_CONTEXT,
+        formatData: formatData,
+        formatSchemaData: formatSchemaData,
+      },
+    ),
   };
 
   files['src/index.tsx'] = {
-    content: `
-    // 因为没有做 external，避免多个版本react冲突，统一从window对象中获取
-    // import React from "react";
-    // import ReactDOM from "react-dom";
-
-    import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE } from "./GI_EXPORT_FILES";
-
-    ${MY_GRAPH_SDK}
-    `,
+    content: $i18n.get(
+      {
+        id: 'gi-site.src.hooks.useCodeSandbox.AvoidConflictsBetweenMultipleVersions',
+        dm: '\n    // 因为没有做 external，避免多个版本react冲突，统一从window对象中获取\n    // import React from "react"\n    // import ReactDOM from "react-dom";\n\n    import {  GI_PROJECT_CONFIG, SERVER_ENGINE_CONTEXT,GI_ASSETS_PACKAGE } from "./GI_EXPORT_FILES";\n\n    {MYGRAPHSDK}\n    ',
+      },
+      { MYGRAPHSDK: MY_GRAPH_SDK },
+    ),
   };
 
   files['package.json'] = {
