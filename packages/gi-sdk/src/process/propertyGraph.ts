@@ -46,6 +46,7 @@ export const graphData2PropertyGraph = (graphData: IGraphData, schemaData: Graph
     const dataTypeKey = typeKeyMap[itemType];
     items.forEach(item => {
       const { data } = item;
+      if (!data) return;
       const { id, others } = splitData(itemType, data);
 
       const dataType = data[dataTypeKey];
