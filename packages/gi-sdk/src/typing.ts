@@ -91,7 +91,7 @@ export interface Props {
   /** 注册的全局数据服务 */
   services: GIService[];
   /** 国际化语言配置 */
-  locales: {
+  locales?: {
     language: LANGUAGE_KEY_NAME;
     [k: string]: string;
   }
@@ -277,7 +277,7 @@ export type GIAssets = Partial<{
   /** 模版资产 */
   templates: { [key: string]: ITemplate };
   /** 国际化资产 */
-  locales: GILocaleAssets;
+  locales?: GILocaleAssets;
   deploys: {
     [key: string]: {
       component: React.ReactNode;
