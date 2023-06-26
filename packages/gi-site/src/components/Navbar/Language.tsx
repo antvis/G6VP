@@ -33,7 +33,12 @@ const Language: React.FunctionComponent<LanguageProps> = () => {
   };
 
   return (
-    <Button shape="circle" onClick={() => switchLang(option.value)}>
+    <Button
+      shape="circle"
+      size="small"
+      style={{ backgroundColor: 'var(--primary-color-opacity-1)', border: '0px solid #fff' }}
+      onClick={() => switchLang(option.value)}
+    >
       {option.label}
     </Button>
   );
