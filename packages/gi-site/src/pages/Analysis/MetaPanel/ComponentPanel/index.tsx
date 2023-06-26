@@ -2,13 +2,13 @@ import { GIComponentAssets } from '@antv/gi-sdk';
 import { clone } from '@antv/util';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../../../i18n';
 import { queryAssets } from '../../../../services/assets';
 import { getComponentsByAssets } from '../../getAssets';
 import { AssetInfo } from '../../typing';
 import ContainerPanel from '../ContainerPanel';
-import ComponentPanel from './ComponentPanel';
 import { REQUIRED_ASSET_IDS } from '../ContainerPanel/constants';
-import $i18n from '../../../../i18n';
+import ComponentPanel from './ComponentPanel';
 import './index.less';
 
 /**
@@ -17,6 +17,7 @@ import './index.less';
  * @param componentsMap 当前所有资产（包括非活跃）的 map
  * @param activeComponents 活跃的资产
  * @returns
+ */
 const formatCommonContainer = (container, componentsMap, activeComponents) => {
   const { id, meta, props: defaultProps } = container;
   const configuredComponent = activeComponents.find(configuredCom => configuredCom.id === id);
