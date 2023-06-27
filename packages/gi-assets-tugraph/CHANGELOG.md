@@ -1,5 +1,16 @@
 # @antv/gi-assets-tugraph
 
+## 2.1.0
+
+### Minor Changes
+
+- add locales for assets
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.0
+
 ## 2.0.5
 
 ### Patch Changes

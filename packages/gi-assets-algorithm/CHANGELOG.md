@@ -1,5 +1,16 @@
 # @antv/gi-assets-algorithm
 
+## 2.3.0
+
+### Minor Changes
+
+- add locales for assets
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.0
+
 ## 2.2.4
 
 ### Patch Changes

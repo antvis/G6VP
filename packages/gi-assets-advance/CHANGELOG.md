@@ -1,5 +1,17 @@
 # @antv/gi-assets-advance
 
+## 2.5.0
+
+### Minor Changes
+
+- add locales for assets
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.0
+  - @antv/gi-common-components@1.3.0
+
 ## 2.4.4
 
 ### Patch Changes
