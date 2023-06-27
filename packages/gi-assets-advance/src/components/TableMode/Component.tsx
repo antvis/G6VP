@@ -14,6 +14,7 @@ import useSwitcher from './hooks/useSwitcher';
 import './index.less';
 import getColumns from './utils/getColumns';
 import getData from './utils/getData';
+import $i18n from '../../i18n';
 
 export interface IProps {
   isSelectedActive: boolean;
@@ -244,10 +245,10 @@ const TableMode: React.FC<IProps> = props => {
         const data = copyData(s2Instance[instanceName], ',', true);
         download(data, instanceName);
       });
-      message.success('导出成功');
+      message.success($i18n.get({ id: 'advance.components.TableMode.Component.ExportedSuccessfully', dm: '导出成功' }));
     } catch (error) {
       console.log(error);
-      message.error('导出失败');
+      message.error($i18n.get({ id: 'advance.components.TableMode.Component.ExportFailed', dm: '导出失败' }));
     }
   };
 
@@ -283,13 +284,24 @@ const TableMode: React.FC<IProps> = props => {
       icon={isFullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
       onClick={toggleFullScreen}
     />,
+
     enableTabSplitScreen && (
-      <Tooltip title="使用浏览器新页签打开，分屏操作更高效" key="tabSplitScreen">
+      <Tooltip
+        title={$i18n.get({
+          id: 'advance.components.TableMode.Component.UseANewBrowserTab',
+          dm: '使用浏览器新页签打开，分屏操作更高效',
+        })}
+        key="tabSplitScreen"
+      >
         <Button type="text" icon={<ChromeOutlined />} onClick={handleOpen} />
       </Tooltip>
     ),
+
     exportable && (
-      <Tooltip title="导出点边数据" key="export">
+      <Tooltip
+        title={$i18n.get({ id: 'advance.components.TableMode.Component.ExportPointEdgeData', dm: '导出点边数据' })}
+        key="export"
+      >
         <Button type="text" icon={<ExportOutlined />} onClick={handleExport} />
       </Tooltip>
     ),
@@ -350,20 +362,26 @@ const TableMode: React.FC<IProps> = props => {
   // }, []);
   const SwitcherTitle = (
     <Button size="small" style={{ position: 'absolute', right: `${extra.length * 30 + 10}px`, top: '-51px' }}>
-      自定义列
+      {$i18n.get({ id: 'advance.components.TableMode.Component.CustomColumns', dm: '自定义列' })}
     </Button>
   );
+
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={{ width: '100%', height: '100%', ...style }}>
       <Tabs tabPosition="top" tabBarExtraContent={extraContent} destroyInactiveTabPane centered>
-        <TabPane tab="点表" key="node" forceRender>
+        <TabPane
+          tab={$i18n.get({ id: 'advance.components.TableMode.Component.PointTable', dm: '点表' })}
+          key="node"
+          forceRender
+        >
           <Switcher
             sheetType="table"
             {...switcherFields_NODES}
             onSubmit={onSwitch_NODES}
-            contentTitleText="自定义列"
+            contentTitleText={$i18n.get({ id: 'advance.components.TableMode.Component.CustomColumns', dm: '自定义列' })}
             title={SwitcherTitle}
           />
+
           <SheetComponent
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {
@@ -379,14 +397,19 @@ const TableMode: React.FC<IProps> = props => {
             themeCfg={themeCfg}
           />
         </TabPane>
-        <TabPane tab="边表" key="edge" forceRender>
+        <TabPane
+          tab={$i18n.get({ id: 'advance.components.TableMode.Component.EdgeTable', dm: '边表' })}
+          key="edge"
+          forceRender
+        >
           <Switcher
             sheetType="table"
             {...switcherFields_EDGES}
             onSubmit={onSwitch_EDGES}
-            contentTitleText="自定义列"
+            contentTitleText={$i18n.get({ id: 'advance.components.TableMode.Component.CustomColumns', dm: '自定义列' })}
             title={SwitcherTitle}
           />
+
           <SheetComponent
             getSpreadSheet={s2 => {
               updateS2Instance(draft => {

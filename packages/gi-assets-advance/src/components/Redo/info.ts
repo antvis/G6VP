@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'Redo',
-  name: '重做',
-  desc: '重做，画布进入下一步状态',
+  name: $i18n.get({ id: 'advance.components.Redo.info.Redo', dm: '重做' }),
+  desc: $i18n.get({ id: 'advance.components.Redo.info.RedoTheCanvasEntersThe', dm: '重做，画布进入下一步状态' }),
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'GIAC',

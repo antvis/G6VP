@@ -6,6 +6,7 @@ import { useImmer } from 'use-immer';
 import PublishTemplate from '../PublishTemplate';
 import CyperEditor from './CyperEditor';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface CyperQueryProps {
   serviceId: string;
@@ -88,7 +89,9 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
     });
 
     const success = !!resultData.nodes;
-    const message = success ? undefined : '查询失败';
+    const message = success
+      ? undefined
+      : $i18n.get({ id: 'advance.components.CypherQuery.Component.QueryFailed', dm: '查询失败' });
     handleUpateHistory(success, message, statement);
     setState(draft => {
       draft.loading = false;
@@ -134,14 +137,16 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
           })
         }
       />
+
       <div style={{ textAlign: 'right', padding: '12px 0px' }}>
         {isShowPublishButton && (
           <Button className="publishButton" disabled={!state.value} onClick={handleShowModal}>
-            发布成模板
+            {$i18n.get({ id: 'advance.components.CypherQuery.Component.PublishAsATemplate', dm: '发布成模板' })}
           </Button>
         )}
+
         <Button onClick={() => handleQuery()} type="primary" loading={state.loading}>
-          执行查询
+          {$i18n.get({ id: 'advance.components.CypherQuery.Component.ExecuteAQuery', dm: '执行查询' })}
         </Button>
       </div>
       {state.modalVisible && (

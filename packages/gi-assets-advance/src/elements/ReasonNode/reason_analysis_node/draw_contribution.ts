@@ -2,6 +2,7 @@ import { IGroup } from '@antv/g6';
 import { ITreeData } from './interface';
 import { getValueInRange_linear, getClientRelativPoint } from './util';
 import { Tooltip, ISimpleKVTooltipData, getSimpleKVContent } from './tooltip';
+import $i18n from '../../../i18n';
 
 const Cfg = {
   Radius_Min: 25,
@@ -10,13 +11,8 @@ const Cfg = {
 
 // 得到key shape
 export default function drawContribution(group: IGroup, data: ITreeData) {
-
   console.log('drawContribution', data);
-  const {
-    contributionRange = { min: 0, max: 0 },
-    property = { contribution: 0 },
-    attrShowingCfg = {},
-  } = data;
+  const { contributionRange = { min: 0, max: 0 }, property = { contribution: 0 }, attrShowingCfg = {} } = data;
   // 显示属性
   const { degreeState = {} } = attrShowingCfg as any;
 
@@ -61,7 +57,7 @@ export default function drawContribution(group: IGroup, data: ITreeData) {
   });
 
   const tooltipData: ISimpleKVTooltipData = {
-    key: '贡献度',
+    key: $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_contribution.Contribution', dm: '贡献度' }),
     value: `${contribution}`,
     inicatorColor: '#3D76DD',
   };

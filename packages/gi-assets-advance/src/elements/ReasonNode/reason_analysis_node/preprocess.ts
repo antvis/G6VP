@@ -2,7 +2,7 @@
 import { ITreeData } from './interface';
 import { tree_dfs } from './util';
 import BizIdentifiedMapping from './bizQuotasMapping';
-import RoseChangeMapping  from './roseChangeMapping';
+import RoseChangeMapping from './roseChangeMapping';
 
 export type IStatisticsCount = {
   canBeInterupt: number;
@@ -22,7 +22,7 @@ import { isBoolean, isNumber, cloneDeep } from 'lodash';
 
 /**
  * 数据预处理
- */
+ */ import $i18n from '../../../i18n';
 export function preprocess_data(originData: ITreeData) {
   // 遍历下增加自定义节点的 type
   tree_dfs<ITreeData>(originData, item => {
@@ -90,7 +90,11 @@ export function statistics_data(originData: ITreeData): IStatisticsCount {
       count.finished += 1;
     }
     quotas.forEach(quota => {
-      if (isBoolean(quota.value) || quota.value === '是' || quota.value === '否') {
+      if (
+        isBoolean(quota.value) ||
+        quota.value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.preprocess.Yes', dm: '是' }) ||
+        quota.value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.preprocess.No', dm: '否' })
+      ) {
         // 布尔
         count.quotas_boolean += 1;
       } else if (isBranch(quota)) {

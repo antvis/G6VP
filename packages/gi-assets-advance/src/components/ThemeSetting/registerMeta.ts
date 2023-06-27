@@ -1,5 +1,6 @@
 import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 
@@ -17,7 +18,7 @@ export default ({ services }) => {
   });
   return {
     getThemeServiceId: {
-      title: '获取主题服务',
+      title: $i18n.get({ id: 'advance.components.ThemeSetting.registerMeta.GetThemeServices', dm: '获取主题服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -27,7 +28,7 @@ export default ({ services }) => {
       default: 'GI/GetTheme',
     },
     addThemeServiceId: {
-      title: '添加主题服务',
+      title: $i18n.get({ id: 'advance.components.ThemeSetting.registerMeta.AddThemeService', dm: '添加主题服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -37,7 +38,7 @@ export default ({ services }) => {
       default: 'GI/AddTheme',
     },
     removeThemeServiceId: {
-      title: '删除主题服务',
+      title: $i18n.get({ id: 'advance.components.ThemeSetting.registerMeta.DeleteAThemeService', dm: '删除主题服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

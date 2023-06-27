@@ -3,6 +3,7 @@ import { debounce } from '@antv/util';
 import { Input, Select, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -214,10 +215,12 @@ const SearchBar: React.FC<ISearchBarProps> = ({ serviceId, schemaServiceId, styl
   return (
     <div className="searchContainer" style={style as any}>
       <Space>
-        <span className="typeLabel">类型：</span>
+        <span className="typeLabel">
+          {$i18n.get({ id: 'advance.components.SearchBar.Component.Type', dm: '类型：' })}
+        </span>
         <Select showSearch defaultValue="" style={{ width: 120 }} onChange={handleNodeTypeChange} size="small">
           <Option value="" key="">
-            全部
+            {$i18n.get({ id: 'advance.components.SearchBar.Component.All', dm: '全部' })}
           </Option>
           {schemaTypeData?.map(std => (
             <Option value={std} key={std}>
@@ -225,7 +228,9 @@ const SearchBar: React.FC<ISearchBarProps> = ({ serviceId, schemaServiceId, styl
             </Option>
           ))}
         </Select>
-        <span className="attrLabel">属性：</span>
+        <span className="attrLabel">
+          {$i18n.get({ id: 'advance.components.SearchBar.Component.Properties', dm: '属性：' })}
+        </span>
         <Select
           showSearch
           style={{ width: 120 }}
@@ -242,7 +247,10 @@ const SearchBar: React.FC<ISearchBarProps> = ({ serviceId, schemaServiceId, styl
         </Select>
         <Search
           style={{ width: 145 }}
-          placeholder="请输入属性值"
+          placeholder={$i18n.get({
+            id: 'advance.components.SearchBar.Component.EnterAnAttributeValue',
+            dm: '请输入属性值',
+          })}
           size="small"
           value={inputValue}
           onChange={handleInputChange}

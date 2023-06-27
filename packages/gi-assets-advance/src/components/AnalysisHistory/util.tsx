@@ -4,6 +4,7 @@ import { PictureOutlined } from '@ant-design/icons';
 import G6 from '@antv/g6';
 import { TemplateNode } from './type';
 import RJV from 'react-json-view';
+import $i18n from '../../i18n';
 
 const ReactJson: any = RJV;
 
@@ -22,9 +23,9 @@ export const ColorMap = {
  * 历史记录根据类型不同，映射不同标题文案
  */
 export const LabelMap = {
-  query: '查询',
-  analyse: '分析',
-  configure: '配置',
+  query: $i18n.get({ id: 'advance.components.AnalysisHistory.util.Query', dm: '查询' }),
+  analyse: $i18n.get({ id: 'advance.components.AnalysisHistory.util.Analysis', dm: '分析' }),
+  configure: $i18n.get({ id: 'advance.components.AnalysisHistory.util.Configuration', dm: '配置' }),
 };
 
 /**
@@ -57,7 +58,7 @@ export const getRecordsFromHistory = (
  * @returns
  */
 export const getRecordContent = (
-  item: any, // TODO
+  item: any,
   screenshotUrl?: string,
   style: React.CSSProperties = {},
   showTag: boolean = true,
@@ -208,9 +209,9 @@ const getStringParameterizedValueDOM = (
     }
     // 参数化部分
     doms.push(
-      <span
-        style={{ color: configureOpt ? 'var(--primary-color)' : '#ccc', userSelect: 'none', width: 'fit-content' }}
-      >{`\$\{${parameterName}}`}</span>,
+      <span style={{ color: configureOpt ? 'var(--primary-color)' : '#ccc', userSelect: 'none', width: 'fit-content' }}>
+        {`\$\{${parameterName}}`}
+      </span>,
     );
 
     const formItemName = `${id}-${fieldName}-${fieldName}--${parameterName}`;
@@ -321,7 +322,16 @@ const getWholeParameterizedValueDOM = (
     </Form.Item>
   ) : (
     // 在沉淀模版的参数化态下直接返回属性值
-    <Tooltip title={configureOpt ? '未参数化内容不可修改' : ''}>
+    <Tooltip
+      title={
+        configureOpt
+          ? $i18n.get({
+              id: 'advance.components.AnalysisHistory.util.UnparameterizedContentCannotBeModified',
+              dm: '未参数化内容不可修改',
+            })
+          : ''
+      }
+    >
       <span {...valueDomProps} style={{ userSelect: 'none', ...(valueDomProps as any).style }}>
         {oriValue}
       </span>
@@ -487,6 +497,7 @@ export const createFlowGraph = (container, tooltip, isConfigure) => {
         [0.5, 0],
         [0.5, 1],
       ],
+
       labelCfg: {
         style: {
           fill: '#fff',

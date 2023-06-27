@@ -7,9 +7,9 @@ import { ColorPicker, IColorPair } from './colors';
 import { Tooltip, getTextContent } from './tooltip';
 
 // 业务指标
+import $i18n from '../../../i18n';
 export default function drawBizQuotas(group: any, data: ITreeData) {
-
-  console.log('drawBizQuotas',data);
+  console.log('drawBizQuotas', data);
   const { property = { quotas: [] }, attrShowingCfg = {} } = data;
 
   const { quotas = [] } = property;
@@ -38,13 +38,18 @@ export default function drawBizQuotas(group: any, data: ITreeData) {
   // 根据显示设置过滤数据
   const filteredQuotas = quotas.filter(quota => {
     const { value, isBranchData = false } = quota;
-    if ((isBoolean(value) || value === '是' || value === '否') && bizQuotas.cat_boolean)
+    if (
+      (isBoolean(value) ||
+        value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.Yes', dm: '是' }) ||
+        value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.No', dm: '否' })) &&
+      bizQuotas.cat_boolean
+    )
       return true;
     if (isBranchData && bizQuotas.cat_number) return true;
     if (
       isString(value) &&
-      value !== '是' &&
-      value !== '否' &&
+      value !== $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.Yes', dm: '是' }) &&
+      value !== $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.No', dm: '否' }) &&
       !isBranchData &&
       bizQuotas.cat_string
     )
@@ -79,7 +84,8 @@ function drawQuotaItem(
   quota: IQuotaItem,
   position: { x: number; y: number },
   colorPair: IColorPair,
-  bizQuotas: any, // 显示的配置设置
+  bizQuotas: // 显示的配置设置
+  any,
 ) {
   const { value, name, isBranchData = false } = quota;
   const bizIdentifiedMap = BizIdentifiedMapping.getInstance().getMappingData();
@@ -88,7 +94,11 @@ function drawQuotaItem(
   if (identifiedArr) {
     // 是预设值
     addIdentifiedShape(group, value, identifiedArr, position, colorPair);
-  } else if (isBoolean(value) || value === '是' || value === '否') {
+  } else if (
+    isBoolean(value) ||
+    value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.Yes', dm: '是' }) ||
+    value === $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.No', dm: '否' })
+  ) {
     // 添加正方形
     const rect_width = 12;
     const rect1 = group.addShape('rect', {
@@ -109,10 +119,7 @@ function drawQuotaItem(
   } else if (isBranchData) {
     const radius_base = 10;
     const { min = 0, max = 0 } = quota;
-    const radius = getValueInRange_linear(
-      { current: value as number, min, max },
-      { min: 5, max: 8 },
-    );
+    const radius = getValueInRange_linear({ current: value as number, min, max }, { min: 5, max: 8 });
 
     group.addShape('circle', {
       attrs: {
@@ -160,7 +167,11 @@ function addIdentifiedShape(
   position: { x: number; y: number },
   colorPair: IColorPair,
 ) {
-  const index = identifiedArr.filter(item => item !== '其他').findIndex(item => item === dataValue);
+  const index = identifiedArr
+    .filter(
+      item => item !== $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.Other', dm: '其他' }),
+    )
+    .findIndex(item => item === dataValue);
   const radius_base = 10;
   const indexRadius = [3, 5, 8, 10];
 
@@ -293,7 +304,9 @@ function addDescription(group: any, quota: IQuotaItem, basePostion: { x: number;
    */
   let valueStr = value;
   if (isBoolean(value)) {
-    valueStr = value ? '是' : '否';
+    valueStr = value
+      ? $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.Yes', dm: '是' })
+      : $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_bizQuotas.No', dm: '否' });
   }
   const showText = `${label}:  ${valueStr}`;
   const fullText = `${name}:  ${valueStr}`;

@@ -4,6 +4,7 @@ import { Button, Card } from 'antd';
 import React from 'react';
 import { animated, useSpring } from 'react-spring';
 import { IHistoryObj } from './typing';
+import $i18n from '../../i18n';
 
 export interface ISnapShotProps {
   id: string;
@@ -51,7 +52,14 @@ const Snapshot: React.FC<ISnapShotProps> = props => {
       <Card
         hoverable
         onClick={() => onClickSnapshot(graphData)}
-        cover={<animated.img style={{ ...style }} src={imgURL} alt="画廊图片" className="gi-gallery-img" />}
+        cover={
+          <animated.img
+            style={{ ...style }}
+            src={imgURL}
+            alt={$i18n.get({ id: 'advance.components.SnapshotGallery.Snapshot.GalleryPicture', dm: '画廊图片' })}
+            className="gi-gallery-img"
+          />
+        }
         bodyStyle={{ width: 100 }}
       >
         <div onClick={stopPropagation}>

@@ -1,9 +1,10 @@
+import $i18n from '../../i18n';
 const ASSET_ID = 'CypherQuery';
 const info = {
   id: ASSET_ID,
-  name: 'Cypher 语句查询',
+  name: $i18n.get({ id: 'advance.components.CypherQuery.info.CypherStatementQuery', dm: 'Cypher 语句查询' }),
   category: 'data-query',
-  desc: '数据查询模块',
+  desc: $i18n.get({ id: 'advance.components.CypherQuery.info.DataQueryModule', dm: '数据查询模块' }),
   cover: 'http://xxxx.jpg',
   type: 'GIAC_CONTENT',
   icon: 'icon-query',

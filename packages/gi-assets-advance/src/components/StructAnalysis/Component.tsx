@@ -2,6 +2,7 @@ import { useContext, utils } from '@antv/gi-sdk';
 import Graphin, { GraphinData } from '@antv/graphin';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../i18n';
 
 const StructAnalysis = () => {
   const { data, sourceDataMap, config, schemaData } = useContext();
@@ -78,6 +79,7 @@ const StructAnalysis = () => {
                 value: nodeType,
               },
             ];
+
             const exkey = JSON.stringify(expressions);
             const prev = nodesConfigMap.get(exkey);
             const color = (prev && prev.props && prev.props.color) || '#ddd';
@@ -119,6 +121,7 @@ const StructAnalysis = () => {
                 value: edgeType,
               },
             ];
+
             const exkey = JSON.stringify(expressions);
             const prev = edgesConfigMap.get(exkey);
             const color = (prev && prev.props && prev.props.color) || '#ddd';
@@ -174,7 +177,10 @@ const StructAnalysis = () => {
   return (
     <>
       <div style={{ margin: '8px 0', textAlign: 'center' }}>
-        分析当前画布中所有路径的 Schema 抽象结构，即路径中节点与边的类型组合
+        {$i18n.get({
+          id: 'advance.components.StructAnalysis.Component.AnalyzeTheSchemaAbstractionStructure',
+          dm: '分析当前画布中所有路径的 Schema 抽象结构，即路径中节点与边的类型组合',
+        })}
       </div>
       <Graphin
         data={state.graphStruct}

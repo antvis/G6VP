@@ -4,6 +4,7 @@ import { getFanPath, getClientRelativPoint } from './util';
 import { Tooltip, ISimpleKVTooltipData, getSimpleKVContent } from './tooltip';
 
 // variability 变异度
+import $i18n from '../../../i18n';
 export default function drawVariability(group: any, data: ITreeData) {
   const bk_color = '#aaaaaa';
   const bk_startAngle = -Math.PI / 2;
@@ -62,7 +63,7 @@ export default function drawVariability(group: any, data: ITreeData) {
   });
 
   const tooltipData: ISimpleKVTooltipData = {
-    key: '变异度',
+    key: $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_variability.Variation', dm: '变异度' }),
     value: `${variability}`,
     inicatorColor: '#E8684A',
   };

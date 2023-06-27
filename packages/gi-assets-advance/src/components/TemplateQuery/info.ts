@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'TemplateQuery',
-  name: '语句模版查询',
-  desc: '通过模版查询图数据',
+  name: $i18n.get({ id: 'advance.components.TemplateQuery.info.StatementTemplateQuery', dm: '语句模版查询' }),
+  desc: $i18n.get({
+    id: 'advance.components.TemplateQuery.info.QueryGraphDataThroughTemplates',
+    dm: '通过模版查询图数据',
+  }),
   icon: 'icon-query',
   category: 'data-query',
   cover: 'http://xxxx.jpg',

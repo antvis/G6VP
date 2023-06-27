@@ -1,5 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 
@@ -14,14 +15,17 @@ export default ({ keys, schemaData }) => {
   const nodeTypeKeyFromProperties = schemaData.nodes[0]?.nodeTypeKeyFromProperties;
   return {
     isDefaultSubGraph: {
-      title: '默认子图划分',
+      title: $i18n.get({
+        id: 'advance.components.SubGraphLayout.registerMeta.DefaultSubgraphPartition',
+        dm: '默认子图划分',
+      }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: true,
     },
     sortKey: {
-      title: '映射字段',
+      title: $i18n.get({ id: 'advance.components.SubGraphLayout.registerMeta.MappingField', dm: '映射字段' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -29,7 +33,7 @@ export default ({ keys, schemaData }) => {
       default: nodeTypeKeyFromProperties || '',
     },
     gap: {
-      title: '子图间距',
+      title: $i18n.get({ id: 'advance.components.SubGraphLayout.registerMeta.SubgraphSpacing', dm: '子图间距' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -40,20 +44,24 @@ export default ({ keys, schemaData }) => {
       default: 200,
     },
     direction: {
-      title: '子图排列方向',
+      title: $i18n.get({
+        id: 'advance.components.SubGraphLayout.registerMeta.SubgraphArrangementDirection',
+        dm: '子图排列方向',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
         {
           value: 'vertical',
-          label: '垂直',
+          label: $i18n.get({ id: 'advance.components.SubGraphLayout.registerMeta.Vertical', dm: '垂直' }),
         },
         {
           value: 'horizontal',
-          label: '水平',
+          label: $i18n.get({ id: 'advance.components.SubGraphLayout.registerMeta.Horizontal', dm: '水平' }),
         },
       ],
+
       default: 'horizontal',
     },
     ...metas,

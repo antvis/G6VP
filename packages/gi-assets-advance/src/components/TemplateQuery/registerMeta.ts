@@ -1,9 +1,13 @@
 import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
-metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = '语句模版';
+metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = $i18n.get({
+  id: 'advance.components.TemplateQuery.registerMeta.StatementTemplate',
+  dm: '语句模版',
+});
 
 const registerMeta = context => {
   const { services, engineId } = context;
@@ -18,7 +22,7 @@ const registerMeta = context => {
   return {
     /** 分类信息 */
     templateListServiceId: {
-      title: '模板列表服务',
+      title: $i18n.get({ id: 'advance.components.TemplateQuery.registerMeta.TemplateListService', dm: '模板列表服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -28,7 +32,7 @@ const registerMeta = context => {
       default: defaultValue,
     },
     execTemplateServiceId: {
-      title: '执行查询服务',
+      title: $i18n.get({ id: 'advance.components.TemplateQuery.registerMeta.ExecuteQueryService', dm: '执行查询服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

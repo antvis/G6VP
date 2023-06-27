@@ -1,6 +1,7 @@
 import { CommonStyleSetting } from '@antv/gi-common-components';
 import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import React, { useEffect } from 'react';
+import $i18n from '../../i18n';
 
 export interface StyleSettingProps {
   elementType: 'nodes' | 'edges';
@@ -57,8 +58,8 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
     updateHistory({
       componentId: 'StyleSettingPanel',
       type: 'configure',
-      subType: '样式设置',
-      statement: '样式设置',
+      subType: $i18n.get({ id: 'advance.components.StyleSetting.StyleSettingPanel.StyleSettings', dm: '样式设置' }),
+      statement: $i18n.get({ id: 'advance.components.StyleSetting.StyleSettingPanel.StyleSettings', dm: '样式设置' }),
       success: true,
       params: {
         elementType,

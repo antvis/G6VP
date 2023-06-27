@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'AnalysisHistory',
-  name: '分析历史沉淀',
-  desc: '记录分析历史，并可沉淀为模版',
+  name: $i18n.get({ id: 'advance.components.AnalysisHistory.info.AnalyzeHistoricalPrecipitation', dm: '分析历史沉淀' }),
+  desc: $i18n.get({
+    id: 'advance.components.AnalysisHistory.info.RecordsTheAnalysisHistoryAnd',
+    dm: '记录分析历史，并可沉淀为模版',
+  }),
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'AUTO',

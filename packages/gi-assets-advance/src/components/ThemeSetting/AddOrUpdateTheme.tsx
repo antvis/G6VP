@@ -7,9 +7,16 @@ import React from 'react';
 import { Updater } from 'use-immer';
 import mockServices from './mockServices';
 import { ICanvasConfig, ITheme, IThemeSettingState } from './typing';
+import $i18n from '../../i18n';
 
-const addMsg = '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式';
-const updateMsg = '请在【画布设置】资产中修改画布背景样式，在【样式设置】资产或左侧修改面板中配置元素样式';
+const addMsg = $i18n.get({
+  id: 'advance.components.ThemeSetting.AddOrUpdateTheme.ConfigureTheCanvasBackgroundStyle',
+  dm: '请在【画布设置】资产中配置画布背景样式，在【样式设置】资产或左侧配置面板中配置元素样式',
+});
+const updateMsg = $i18n.get({
+  id: 'advance.components.ThemeSetting.AddOrUpdateTheme.ModifyTheCanvasBackgroundStyle',
+  dm: '请在【画布设置】资产中修改画布背景样式，在【样式设置】资产或左侧修改面板中配置元素样式',
+});
 
 interface Props {
   updateState: Updater<IThemeSettingState>;
@@ -95,19 +102,34 @@ const AddTheme: React.FC<Props> = props => {
     <div className="add-theme">
       <header>
         <Button type="text" icon={<LeftOutlined style={{ fontSize: '18x' }} />} onClick={goBack} />
-        <span className="title">{status === 'add' ? '创建主题' : '编辑主题'}</span>
+        <span className="title">
+          {status === 'add'
+            ? $i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.CreateATopic', dm: '创建主题' })
+            : $i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.EditTopic', dm: '编辑主题' })}
+        </span>
       </header>
       <Form layout="vertical" form={form}>
-        <Form.Item label="主题名称" name="name">
+        <Form.Item
+          label={$i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.TopicName', dm: '主题名称' })}
+          name="name"
+        >
           <Input defaultValue={currentTheme?.name} />
         </Form.Item>
-        <Form.Item label="描述">
+        <Form.Item
+          label={$i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.Description', dm: '描述' })}
+        >
           <Alert message={status === 'add' ? addMsg : updateMsg} type="info" />
         </Form.Item>
-        <Form.Item label="主题样式">
+        <Form.Item
+          label={$i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.ThemeStyle', dm: '主题样式' })}
+        >
           <div className="theme-style">
             <List
-              header={<span style={{ fontWeight: 'bold' }}>节点样式</span>}
+              header={
+                <span style={{ fontWeight: 'bold' }}>
+                  {$i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.NodeStyle', dm: '节点样式' })}
+                </span>
+              }
               style={{
                 padding: '10px',
                 boxShadow: '0px 0px 4px rgb(0 0 0 / 10%)',
@@ -119,7 +141,11 @@ const AddTheme: React.FC<Props> = props => {
               })}
             </List>
             <List
-              header={<span style={{ fontWeight: 'bold' }}>边样式</span>}
+              header={
+                <span style={{ fontWeight: 'bold' }}>
+                  {$i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.EdgeStyle', dm: '边样式' })}
+                </span>
+              }
               style={{
                 padding: '10px',
                 boxShadow: '0px 0px 4px rgb(0 0 0 / 10%)',
@@ -135,7 +161,9 @@ const AddTheme: React.FC<Props> = props => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" style={{ width: '100%' }} onClick={handleConfirm}>
-            {status === 'add' ? '立即创建' : '确认编辑'}
+            {status === 'add'
+              ? $i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.CreateNow', dm: '立即创建' })
+              : $i18n.get({ id: 'advance.components.ThemeSetting.AddOrUpdateTheme.ConfirmEditing', dm: '确认编辑' })}
           </Button>
         </Form.Item>
       </Form>

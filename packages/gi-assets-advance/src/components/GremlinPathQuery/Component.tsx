@@ -4,6 +4,7 @@ import { GraphinContext } from '@antv/graphin';
 import { Button, Col, Divider, Form, Input, Row, Select, Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Option } = Select;
 
@@ -19,8 +20,11 @@ interface PathParam {
 const pathTemplateList = [
   {
     pathId: 'shortestpath',
-    pathName: '最短路径',
-    description: '查询两个节点之间的最短路径',
+    pathName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.ShortestPath', dm: '最短路径' }),
+    description: $i18n.get({
+      id: 'advance.components.GremlinPathQuery.Component.QueryTheShortestPathBetween',
+      dm: '查询两个节点之间的最短路径',
+    }),
     queryTemplate: `g.V({{sourceId}})
       .repeat(out().simplePath()).until(hasId({{targetId}})
       .or().loops().is(gte({{maxDegree}}))).hasId({{targetId}})
@@ -28,30 +32,36 @@ const pathTemplateList = [
     params: [
       {
         parameterKey: 'sourceId',
-        parameterName: '开始节点',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.StartNode', dm: '开始节点' }),
         parameterValue: '',
       },
       {
         parameterKey: 'targetId',
-        parameterName: '目标节点',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.TargetNode', dm: '目标节点' }),
         parameterValue: '',
       },
       {
         parameterKey: 'maxDegree',
-        parameterName: '最大度数',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.MaximumDegree', dm: '最大度数' }),
         parameterValue: '3',
       },
       {
         parameterKey: 'limit',
-        parameterName: '限制路径条数',
+        parameterName: $i18n.get({
+          id: 'advance.components.GremlinPathQuery.Component.LimitTheNumberOfPaths',
+          dm: '限制路径条数',
+        }),
         parameterValue: '3',
       },
     ],
   },
   {
     pathId: 'cyclicPath',
-    pathName: '环路检测',
-    description: '检测指定的一个或两个节点是否在环路中，并查询所在的环路',
+    pathName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.LoopDetection', dm: '环路检测' }),
+    description: $i18n.get({
+      id: 'advance.components.GremlinPathQuery.Component.ChecksWhetherOneOrTwo',
+      dm: '检测指定的一个或两个节点是否在环路中，并查询所在的环路',
+    }),
     queryTemplate: `g.V({{targetId1}})
       .repeat(out().cyclicPath()).until(hasId({{targetId2}})
       .or().loops().is(gte({{maxDegree}}))).hasId({{targetId2}})
@@ -59,29 +69,32 @@ const pathTemplateList = [
     params: [
       {
         parameterKey: 'targetId1',
-        parameterName: '目标节点1',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.TargetNode.1', dm: '目标节点1' }),
         parameterValue: '',
       },
       {
         parameterKey: 'targetId2',
-        parameterName: '目标节点2',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.TargetNode.2', dm: '目标节点2' }),
         parameterValue: '',
       },
       {
         parameterKey: 'maxDegree',
-        parameterName: '最大度数',
+        parameterName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.MaximumDegree', dm: '最大度数' }),
         parameterValue: '3',
       },
       {
         parameterKey: 'limit',
-        parameterName: '限制路径条数',
+        parameterName: $i18n.get({
+          id: 'advance.components.GremlinPathQuery.Component.LimitTheNumberOfPaths',
+          dm: '限制路径条数',
+        }),
         parameterValue: '3',
       },
     ],
   },
   {
     pathId: 'commonNeighbors',
-    pathName: '共同邻居',
+    pathName: $i18n.get({ id: 'advance.components.GremlinPathQuery.Component.CommonNeighbor', dm: '共同邻居' }),
   },
 ];
 
@@ -129,7 +142,16 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
           key={t.parameterName}
           colon={false}
         >
-          <Input placeholder={`请输入${t.parameterName}`} style={{ border: '1px solid #434343' }} />
+          <Input
+            placeholder={$i18n.get(
+              {
+                id: 'advance.components.GremlinPathQuery.Component.EnterTparametername',
+                dm: '请输入{tParameterName}',
+              },
+              { tParameterName: t.parameterName },
+            )}
+            style={{ border: '1px solid #434343' }}
+          />
         </Form.Item>
       );
     });
@@ -146,7 +168,18 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
       options.push(
         // @ts-ignore
         <Option key={item.pathId} value={item.pathId} disabled={item.pathId === 'commonNeighbors'}>
-          {item.pathId === 'commonNeighbors' ? <Tooltip title="敬请期待">{item.pathName}</Tooltip> : item.pathName}
+          {item.pathId === 'commonNeighbors' ? (
+            <Tooltip
+              title={$i18n.get({
+                id: 'advance.components.GremlinPathQuery.Component.PleaseLookForward',
+                dm: '敬请期待',
+              })}
+            >
+              {item.pathName}
+            </Tooltip>
+          ) : (
+            item.pathName
+          )}
         </Option>,
       );
     });
@@ -169,7 +202,14 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
     if (value) {
       const template = templateData.find(d => d.queryTemplate === value);
       if (!template) {
-        handleUpateHistory(false, '本项目不存在该查询模版', value);
+        handleUpateHistory(
+          false,
+          $i18n.get({
+            id: 'advance.components.GremlinPathQuery.Component.TheQueryTemplateDoesNot',
+            dm: '本项目不存在该查询模版',
+          }),
+          value,
+        );
         return;
       }
       templateChange(template.pathId);
@@ -201,7 +241,14 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
 
     setBtnLoading(false);
     if (!result) {
-      handleUpateHistory(false, 'Gremlin 模版查询失败', gremlin);
+      handleUpateHistory(
+        false,
+        $i18n.get({
+          id: 'advance.components.GremlinPathQuery.Component.GremlinTemplateQueryFailed',
+          dm: 'Gremlin 模版查询失败',
+        }),
+        gremlin,
+      );
       return;
     }
     handleUpateHistory(result?.success, '', gremlin);
@@ -218,7 +265,10 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
     updateHistory({
       componentId: 'GremlinPathQuery',
       type: 'query',
-      subType: 'Gremlin 模版查询',
+      subType: $i18n.get({
+        id: 'advance.components.GremlinPathQuery.Component.GremlinTemplateQuery',
+        dm: 'Gremlin 模版查询',
+      }),
       statement: value,
       success,
       errorMsg,
@@ -308,7 +358,7 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
     >
       <Row className="header">
         <Col span={22} className="title">
-          路径查询
+          {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.PathQuery', dm: '路径查询' })}
         </Col>
         <Col span={2}>
           <span className="collapseIcon" onClick={onClose}>
@@ -328,11 +378,15 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
             }}
           >
             <div className="blockContainer">
-              路径列表
+              {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.PathList', dm: '路径列表' })}
+
               <br />
               <Select
                 className="algorithmSelector"
-                placeholder="请选择路径模版"
+                placeholder={$i18n.get({
+                  id: 'advance.components.GremlinPathQuery.Component.SelectAPathTemplate',
+                  dm: '请选择路径模版',
+                })}
                 onChange={templateChange}
                 value={currentTemplate && currentTemplate.pathId}
               >
@@ -341,14 +395,17 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
             </div>
             {currentTemplate.description && (
               <div className="blockContainer">
-                描述
+                {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.Description', dm: '描述' })}
+
                 <br />
                 <span className="description">{currentTemplate.description}</span>
               </div>
             )}
+
             {paramInput && (
               <div className="blockContainer">
-                参数
+                {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.Parameter', dm: '参数' })}
+
                 <Form
                   name="paramsForm"
                   form={form}
@@ -360,9 +417,12 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
                 </Form>
               </div>
             )}
+
             {showTemplate && (
               <div className="blockContainer">
-                <div style={{ padding: '8px 0 16px 0' }}>查询语句</div>
+                <div style={{ padding: '8px 0 16px 0' }}>
+                  {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.QueryStatement', dm: '查询语句' })}
+                </div>
                 <pre className="tpre" dangerouslySetInnerHTML={createMarkup()}></pre>
               </div>
             )}
@@ -376,7 +436,7 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
           >
             <Divider />
             <Button loading={btnLoading} className="queryButton" type="primary" onClick={handleExecTemplate}>
-              查询
+              {$i18n.get({ id: 'advance.components.GremlinPathQuery.Component.Query', dm: '查询' })}
             </Button>
           </div>
         </>

@@ -3,6 +3,7 @@ export interface ServiceObject {
   service: (params: any) => Promise<{}>;
 }
 import { utils } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 
 const DEFAULT_LANGUAGE_TEMPLATE = [
   {
@@ -22,7 +23,7 @@ const DEFAULT_LANGUAGE_TEMPLATE = [
 ];
 
 export const PublishTemplate: ServiceObject = {
-  name: '发布模板',
+  name: $i18n.get({ id: 'advance.src.services.TemplateService.PublishTemplate', dm: '发布模板' }),
   service: async params => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -43,7 +44,10 @@ export const PublishTemplate: ServiceObject = {
     return new Promise(resolve => {
       return resolve({
         success: true,
-        message: 'GI 默认提供的发布模板的服务',
+        message: $i18n.get({
+          id: 'advance.src.services.TemplateService.GiDefaultServiceForPublishing',
+          dm: 'GI 默认提供的发布模板的服务',
+        }),
         data: params,
       });
     });
@@ -51,7 +55,7 @@ export const PublishTemplate: ServiceObject = {
 };
 
 export const TemplateListService = {
-  name: '查询模板列表',
+  name: $i18n.get({ id: 'advance.src.services.TemplateService.QueryTemplateList', dm: '查询模板列表' }),
   service: async () => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -62,7 +66,10 @@ export const TemplateListService = {
     return new Promise(resolve => {
       return resolve({
         success: true,
-        message: 'GI 默认提供的发布模板的服务',
+        message: $i18n.get({
+          id: 'advance.src.services.TemplateService.GiDefaultServiceForPublishing',
+          dm: 'GI 默认提供的发布模板的服务',
+        }),
         data: gremlin_template,
       });
     });
@@ -70,9 +77,12 @@ export const TemplateListService = {
 };
 
 export const ExecTemplateQueryService = {
-  name: '执行模板查询',
+  name: $i18n.get({ id: 'advance.src.services.TemplateService.ExecuteTemplateQuery', dm: '执行模板查询' }),
   service: params => {
-    console.log('执行模板查询参数', params);
+    console.log(
+      $i18n.get({ id: 'advance.src.services.TemplateService.ExecuteTemplateQueryParameters', dm: '执行模板查询参数' }),
+      params,
+    );
     const id = 'mock_template_query';
     const data = {
       nodes: [
@@ -90,6 +100,7 @@ export const ExecTemplateQueryService = {
           type: 'card',
         },
       ],
+
       edges: [
         {
           source: id,

@@ -6,6 +6,7 @@ import { Menu } from 'antd';
 import insertCss from 'insert-css';
 import React, { useEffect, useMemo } from 'react';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface GraphAnnotationProps {
   contextmenu: any;
@@ -15,34 +16,34 @@ export interface GraphAnnotationProps {
 const tagColors = [
   {
     key: 'red',
-    label: '红色',
+    label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Red', dm: '红色' }),
     hex: '#ff4d4f',
   },
   {
     key: 'green',
-    label: '绿色',
+    label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Green', dm: '绿色' }),
     hex: '#389e0d',
   },
   {
     key: 'blue',
-    label: '蓝色',
+    label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Blue', dm: '蓝色' }),
     hex: '#1890ff',
   },
   {
     key: 'yellow',
-    label: '黄色',
+    label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Yellow', dm: '黄色' }),
     hex: '#ffc53d',
   },
   {
     key: 'black',
-    label: '黑色',
+    label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Black', dm: '黑色' }),
     hex: '#000',
   },
 ];
 
 const cancelColor = {
   key: 'cancel',
-  label: '取消',
+  label: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Cancel', dm: '取消' }),
   hex: '#ccc',
 };
 
@@ -58,10 +59,10 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   }
   const itemType = menuTargetItem?.getType?.() || 'canvas';
   const menuItemName = {
-    node: '节点',
-    edge: '边',
-    combo: '节点分组',
-    canvas: '画布',
+    node: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Node', dm: '节点' }),
+    edge: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Edge', dm: '边' }),
+    combo: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.NodeGrouping', dm: '节点分组' }),
+    canvas: $i18n.get({ id: 'advance.components.GraphAnnotation.Component.Canvas', dm: '画布' }),
   };
 
   const annotationPlugin = useMemo(() => {
@@ -92,7 +93,11 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
         return menuItemName[type];
       },
       getContent: (item => undefined) as any,
-      getContentPlaceholder: item => '双击此处开始编辑',
+      getContentPlaceholder: item =>
+        $i18n.get({
+          id: 'advance.components.GraphAnnotation.Component.DoubleClickHereToStart',
+          dm: '双击此处开始编辑',
+        }),
     });
     graph.addPlugin(newAnnotation);
     return newAnnotation;
@@ -222,12 +227,27 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     if (annotationWay === 'annotateOnly' || (item?.isCanvas?.() && annotationWay !== 'tagOnly')) {
       return (
         <Menu.Item key="graph-annotation" eventKey="graph-annotation" onClick={handleAnnotate}>
-          {`标注${menuItemName[itemType]}`}
+          {$i18n.get(
+            {
+              id: 'advance.components.GraphAnnotation.Component.LabelMenuitemnameitemtype',
+              dm: '标注{menuItemNameItemType}',
+            },
+            { menuItemNameItemType: menuItemName[itemType] },
+          )}
         </Menu.Item>
       );
     }
     return (
-      <Menu.SubMenu key="tag" title={`标记${menuItemName[itemType]}`}>
+      <Menu.SubMenu
+        key="tag"
+        title={$i18n.get(
+          {
+            id: 'advance.components.GraphAnnotation.Component.MarkMenuitemnameitemtype',
+            dm: '标记{menuItemNameItemType}',
+          },
+          { menuItemNameItemType: menuItemName[itemType] },
+        )}
+      >
         <div className="gi-annotation-tag-color-container">
           {tagColors.map(color => (
             <div
@@ -239,7 +259,7 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
             </div>
           ))}
           <div style={{ marginLeft: '8px', lineHeight: '24px' }} onClick={() => handleAnnotate(cancelColor)}>
-            取消
+            {$i18n.get({ id: 'advance.components.GraphAnnotation.Component.Cancel', dm: '取消' })}
           </div>
         </div>
       </Menu.SubMenu>

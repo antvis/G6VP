@@ -3,6 +3,7 @@ import { Divider, Form } from 'antd';
 import { getValueDOM } from './util';
 import { TemplateNode } from './type';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface ConfigurepanelProps {
   // 正在配置中的模版图节点
@@ -63,7 +64,9 @@ const Configurepanel: React.FC<ConfigurepanelProps> = props => {
       <div style={{ margin: '8px 0', wordBreak: 'break-all' }}>{getDescription()}</div>
       <Form form={form}>
         <div style={{ borderBottom: '1px solid #f0f0f0', paddingBottom: '16px' }}>
-          描述：{configuring.description || '无'}
+          {$i18n.get({ id: 'advance.components.AnalysisHistory.ConfigurePanel.Description', dm: '描述：' })}
+          {configuring.description ||
+            $i18n.get({ id: 'advance.components.AnalysisHistory.ConfigurePanel.None', dm: '无' })}
         </div>
         {Object.keys(params).map(fieldName => (
           <div className="gi-history-modal-configure-field" style={{ marginTop: '12px', display: 'block' }}>
@@ -87,7 +90,10 @@ const Configurepanel: React.FC<ConfigurepanelProps> = props => {
     </div>
   ) : (
     <div className="gi-history-modal-configure-panel" style={containerStyle}>
-      请点击一个节点进行参数配置
+      {$i18n.get({
+        id: 'advance.components.AnalysisHistory.ConfigurePanel.ClickANodeToConfigure',
+        dm: '请点击一个节点进行参数配置',
+      })}
     </div>
   );
 };

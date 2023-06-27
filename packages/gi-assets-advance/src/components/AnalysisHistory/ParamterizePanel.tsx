@@ -4,6 +4,7 @@ import { ellipsisString, getValueDOM } from './util';
 import { useImmer } from 'use-immer';
 import { TemplateData, TemplateNode } from './type';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface ParamterizePanelProps {
   // 模版图数据
@@ -98,7 +99,12 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
    */
   const handleWindowMouseup = () => {
     if (!selectingField || brushing === false) return;
-    message.info('刷选文本时，请在参数值文字范围内抬起鼠标以完成参数化');
+    message.info(
+      $i18n.get({
+        id: 'advance.components.AnalysisHistory.ParamterizePanel.WhenSwipingTheSelectedText',
+        dm: '刷选文本时，请在参数值文字范围内抬起鼠标以完成参数化',
+      }),
+    );
     updateState(draft => {
       draft.brushing = false;
     });
@@ -128,7 +134,12 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
     const mouseDownStartPosition = brushing as number;
     // 若与 mousedown 时记录的 startPosition 不一致，则不在同一个连续的文本上，不可参数化
     if (mouseDownStartPosition !== currentTargetStartPosition) {
-      message.error('框选请勿跨越已参数化的内容');
+      message.error(
+        $i18n.get({
+          id: 'advance.components.AnalysisHistory.ParamterizePanel.BoxSelectionDoNotSpan',
+          dm: '框选请勿跨越已参数化的内容',
+        }),
+      );
       return;
     }
     const range = window.getSelection()?.getRangeAt(0);
@@ -216,20 +227,35 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
       const { parameterName, parameterDesc } = values;
       const pattern = /^[a-zA-Z][a-zA-Z0-9]*$/;
       if (!pattern.test(parameterName)) {
-        message.error('命名失败，变量名必须以字母开头，且不包含特殊字符');
+        message.error(
+          $i18n.get({
+            id: 'advance.components.AnalysisHistory.ParamterizePanel.FailedToNameTheVariable',
+            dm: '命名失败，变量名必须以字母开头，且不包含特殊字符',
+          }),
+        );
         return;
       }
       if (typeof selectingField !== 'string') {
         const [field, ...paths] = selectingField;
         const pathNames = paths.join(',');
         if (parameterized[field]?.[pathNames]?.find(item => item.parameterName === parameterName)) {
-          message.error('命名失败，在一个参数中，不可使用重复的参数命名');
+          message.error(
+            $i18n.get({
+              id: 'advance.components.AnalysisHistory.ParamterizePanel.NamingFailedDuplicateParameterNaming',
+              dm: '命名失败，在一个参数中，不可使用重复的参数命名',
+            }),
+          );
           return;
         }
         updateQueryParameterize(configuring.id, selectingField, operatingQueryValue, parameterName, parameterDesc);
       } else {
         if (parameterized[selectingField]?.find(item => item.parameterName === parameterName)) {
-          message.error('命名失败，在一个参数中，不可使用重复的参数命名');
+          message.error(
+            $i18n.get({
+              id: 'advance.components.AnalysisHistory.ParamterizePanel.NamingFailedDuplicateParameterNaming',
+              dm: '命名失败，在一个参数中，不可使用重复的参数命名',
+            }),
+          );
           return;
         }
         updateQueryParameterize(configuring.id, [selectingField], operatingQueryValue, parameterName, parameterDesc);
@@ -249,11 +275,15 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
       <Divider type="horizontal" style={{ margin: '12px 0' }} />
       {getDescription()}
       <Form form={form}>
-        描述：
+        {$i18n.get({ id: 'advance.components.AnalysisHistory.ParamterizePanel.Description', dm: '描述：' })}
+
         <Form.Item name="description">
           <Input
             size="small"
-            placeholder="该条历史记录的辅助描述"
+            placeholder={$i18n.get({
+              id: 'advance.components.AnalysisHistory.ParamterizePanel.AuxiliaryDescriptionOfTheHistory',
+              dm: '该条历史记录的辅助描述',
+            })}
             onBlur={handleChangeDescription}
             defaultValue={configuring.description}
           />
@@ -264,9 +294,15 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
           const isPart = (content.type === 'query' && fieldName === 'value') || isJSON;
           let brushTooltip = '';
           if (isJSON) {
-            brushTooltip = '点选对象中的值，进行参数化';
+            brushTooltip = $i18n.get({
+              id: 'advance.components.AnalysisHistory.ParamterizePanel.ClickTheValueInThe',
+              dm: '点选对象中的值，进行参数化',
+            });
           } else if (isPart) {
-            brushTooltip = '刷选部分文字进行参数化';
+            brushTooltip = $i18n.get({
+              id: 'advance.components.AnalysisHistory.ParamterizePanel.SelectSomeTextToParameterize',
+              dm: '刷选部分文字进行参数化',
+            });
           }
           const hasParameterized = !isPart && parameterized?.[fieldName];
           return (
@@ -278,21 +314,44 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
                     <div>
                       <Form.Item
                         name="parameterName"
-                        label="名称(英文)"
+                        label={$i18n.get({
+                          id: 'advance.components.AnalysisHistory.ParamterizePanel.NameEnglish',
+                          dm: '名称(英文)',
+                        })}
                         style={{ width: '100%' }}
                         rules={[
                           {
                             required: true,
-                            message: '请为参数命名',
+                            message: $i18n.get({
+                              id: 'advance.components.AnalysisHistory.ParamterizePanel.NameTheParameter',
+                              dm: '请为参数命名',
+                            }),
                           },
                         ]}
                       >
-                        <Input className="gi-history-modal-parametername-input" placeholder="输入名称" size="small" />
-                      </Form.Item>
-                      <Form.Item name="parameterDesc" label="描述" style={{ width: '100%' }}>
                         <Input
                           className="gi-history-modal-parametername-input"
-                          placeholder="该参数的辅助描述"
+                          placeholder={$i18n.get({
+                            id: 'advance.components.AnalysisHistory.ParamterizePanel.EnterAName',
+                            dm: '输入名称',
+                          })}
+                          size="small"
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name="parameterDesc"
+                        label={$i18n.get({
+                          id: 'advance.components.AnalysisHistory.ParamterizePanel.Description.1',
+                          dm: '描述',
+                        })}
+                        style={{ width: '100%' }}
+                      >
+                        <Input
+                          className="gi-history-modal-parametername-input"
+                          placeholder={$i18n.get({
+                            id: 'advance.components.AnalysisHistory.ParamterizePanel.AuxiliaryDescriptionOfThisParameter',
+                            dm: '该参数的辅助描述',
+                          })}
                           size="small"
                         />
                       </Form.Item>
@@ -307,7 +366,7 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
                             form.resetFields();
                           }}
                         >
-                          取消
+                          {$i18n.get({ id: 'advance.components.AnalysisHistory.ParamterizePanel.Cancel', dm: '取消' })}
                         </Button>
                         <Button
                           className="gi-history-modal-parametername-confirm"
@@ -316,7 +375,7 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
                           size="small"
                           onClick={handleClickParameterizeQuery}
                         >
-                          确定
+                          {$i18n.get({ id: 'advance.components.AnalysisHistory.ParamterizePanel.Ok', dm: '确定' })}
                         </Button>
                       </div>
                     </div>
@@ -338,7 +397,12 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
                     onClick={() => handleClickParameterize(fieldName, !hasParameterized, isPart)}
                     size="small"
                   >
-                    {hasParameterized ? '取消' : '参数化'}
+                    {hasParameterized
+                      ? $i18n.get({ id: 'advance.components.AnalysisHistory.ParamterizePanel.Cancel', dm: '取消' })
+                      : $i18n.get({
+                          id: 'advance.components.AnalysisHistory.ParamterizePanel.Parameterized',
+                          dm: '参数化',
+                        })}
                   </Button>
                 </Popover>
               </div>
@@ -358,7 +422,15 @@ const ParamterizePanel: React.FC<ParamterizePanelProps> = props => {
     </div>
   ) : (
     <div className="gi-history-modal-configure-panel">
-      {graphData?.nodes.length > 2 ? '请点击一个节点进行参数配置' : '请先从左侧时间轴中点选历史记录加入模版图'}
+      {graphData?.nodes.length > 2
+        ? $i18n.get({
+            id: 'advance.components.AnalysisHistory.ParamterizePanel.ClickANodeToConfigure',
+            dm: '请点击一个节点进行参数配置',
+          })
+        : $i18n.get({
+            id: 'advance.components.AnalysisHistory.ParamterizePanel.ClickHistoryFromTheLeft',
+            dm: '请先从左侧时间轴中点选历史记录加入模版图',
+          })}
     </div>
   );
 };

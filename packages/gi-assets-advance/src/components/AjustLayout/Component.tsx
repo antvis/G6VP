@@ -5,6 +5,7 @@ import { Button, Collapse, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Panel } = Collapse;
 
@@ -22,7 +23,7 @@ export interface IGremlinQueryProps {
 const LAYOUTS = [
   {
     value: 'grid',
-    label: '网格布局',
+    label: $i18n.get({ id: 'advance.components.AjustLayout.Component.GridLayout', dm: '网格布局' }),
     options: {
       type: 'grid',
       rows: 4,
@@ -31,11 +32,11 @@ const LAYOUTS = [
   },
   {
     value: 'circular',
-    label: '同心圆布局',
+    label: $i18n.get({ id: 'advance.components.AjustLayout.Component.ConcentricCircleLayout', dm: '同心圆布局' }),
   },
   {
     value: 'dagre',
-    label: '层次布局',
+    label: $i18n.get({ id: 'advance.components.AjustLayout.Component.HierarchicalLayout', dm: '层次布局' }),
   },
 ];
 
@@ -225,7 +226,13 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
         {layouts.map((item, index) => {
           return (
             <Panel
-              header={`布局${index}`}
+              header={$i18n.get(
+                {
+                  id: 'advance.components.AjustLayout.Component.LayoutIndex',
+                  dm: '布局{index}',
+                },
+                { index: index },
+              )}
               key={index}
               className="site-collapse-custom-panel"
               extra={
@@ -243,12 +250,17 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
             >
               <div>
                 <div style={{ marginBottom: '6px' }} className="custom-item">
-                  <div>选择节点：</div>
+                  <div>
+                    {$i18n.get({ id: 'advance.components.AjustLayout.Component.SelectANode', dm: '选择节点：' })}
+                  </div>
                   <Select
                     mode="multiple"
                     allowClear
                     style={{ width: '316px' }}
-                    placeholder="请选择节点"
+                    placeholder={$i18n.get({
+                      id: 'advance.components.AjustLayout.Component.SelectANode.1',
+                      dm: '请选择节点',
+                    })}
                     value={item.nodes.map(node => node.id)}
                     disabled={item.locked}
                     onChange={values => {
@@ -279,11 +291,16 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
                   </Button>
                 </div>
                 <div style={{ marginBottom: '6px' }} className="custom-item">
-                  <div>选择布局：</div>
+                  <div>
+                    {$i18n.get({ id: 'advance.components.AjustLayout.Component.SelectLayout', dm: '选择布局：' })}
+                  </div>
                   <Select
                     allowClear
                     style={{ maxWidth: '247px' }}
-                    placeholder="请选择布局"
+                    placeholder={$i18n.get({
+                      id: 'advance.components.AjustLayout.Component.PleaseSelectALayout',
+                      dm: '请选择布局',
+                    })}
                     value={item.type}
                     defaultValue={item.type}
                     onChange={val => {
@@ -308,11 +325,11 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
       </Collapse>
 
       <Button type="dashed" style={{ width: '100%' }} onClick={handlePlus}>
-        添加布局
+        {$i18n.get({ id: 'advance.components.AjustLayout.Component.AddLayout', dm: '添加布局' })}
       </Button>
 
       <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
-        开始调整
+        {$i18n.get({ id: 'advance.components.AjustLayout.Component.StartAdjustment', dm: '开始调整' })}
       </Button>
     </div>
   );

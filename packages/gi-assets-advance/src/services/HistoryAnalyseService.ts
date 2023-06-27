@@ -1,4 +1,5 @@
 import { utils } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 
 export interface ServiceObject {
   name: string;
@@ -6,7 +7,10 @@ export interface ServiceObject {
 }
 
 export const SaveHistoryTemplateService: ServiceObject = {
-  name: '保存分析链路模版',
+  name: $i18n.get({
+    id: 'advance.src.services.HistoryAnalyseService.SaveAnalysisLinkTemplate',
+    dm: '保存分析链路模版',
+  }),
   service: async params => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     let success;
@@ -24,7 +28,10 @@ export const SaveHistoryTemplateService: ServiceObject = {
     return new Promise(resolve => {
       return resolve({
         success,
-        message: 'GI 默认提供的保存分析链路服务',
+        message: $i18n.get({
+          id: 'advance.src.services.HistoryAnalyseService.TheDefaultSaveAnalysisLink',
+          dm: 'GI 默认提供的保存分析链路服务',
+        }),
         data: params,
       });
     });
@@ -32,7 +39,10 @@ export const SaveHistoryTemplateService: ServiceObject = {
 };
 
 export const RemoveHistoryTemplateService: ServiceObject = {
-  name: '删除分析链路模版',
+  name: $i18n.get({
+    id: 'advance.src.services.HistoryAnalyseService.DeleteAnAnalysisLinkTemplate',
+    dm: '删除分析链路模版',
+  }),
   service: async params => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     let successMsg;
@@ -58,7 +68,13 @@ export const RemoveHistoryTemplateService: ServiceObject = {
     return new Promise(resolve => {
       return resolve({
         success: !successMsg,
-        message: `GI 默认提供的删除分析链路服务。错误信息：${successMsg}`,
+        message: $i18n.get(
+          {
+            id: 'advance.src.services.HistoryAnalyseService.TheDeleteAnalysisLinkService',
+            dm: 'GI 默认提供的删除分析链路服务。错误信息：{successMsg}',
+          },
+          { successMsg: successMsg },
+        ),
         data: params,
       });
     });
@@ -66,7 +82,10 @@ export const RemoveHistoryTemplateService: ServiceObject = {
 };
 
 export const ListHistoryTemplateService = {
-  name: '查询历史分析链路模版列表',
+  name: $i18n.get({
+    id: 'advance.src.services.HistoryAnalyseService.QueryTheListOfHistorical',
+    dm: '查询历史分析链路模版列表',
+  }),
   service: async () => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -77,7 +96,10 @@ export const ListHistoryTemplateService = {
     return new Promise(resolve => {
       return resolve({
         success: true,
-        message: 'GI 默认提供的查询历史分析链路模版服务',
+        message: $i18n.get({
+          id: 'advance.src.services.HistoryAnalyseService.TheQueryHistoryAnalysisLink',
+          dm: 'GI 默认提供的查询历史分析链路模版服务',
+        }),
         data: history_template,
       });
     });

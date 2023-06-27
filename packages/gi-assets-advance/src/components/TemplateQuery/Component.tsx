@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Option } = Select;
 
@@ -81,7 +82,15 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
           key={t.parameterName}
           colon={false}
         >
-          <Input placeholder={`请输入${t.parameterName}`} />
+          <Input
+            placeholder={$i18n.get(
+              {
+                id: 'advance.components.TemplateQuery.Component.EnterTparametername',
+                dm: '请输入{tParameterName}',
+              },
+              { tParameterName: t.parameterName },
+            )}
+          />
         </Form.Item>
       );
     });
@@ -152,7 +161,16 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
             key={pkey}
             colon={false}
           >
-            <Input placeholder={`请输入${pkey}`} style={{ border: '1px solid #434343' }} />
+            <Input
+              placeholder={$i18n.get(
+                {
+                  id: 'advance.components.TemplateQuery.Component.EnterPkey',
+                  dm: '请输入{pkey}',
+                },
+                { pkey: pkey },
+              )}
+              style={{ border: '1px solid #434343' }}
+            />
           </Form.Item>
         );
       });
@@ -288,7 +306,8 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
           >
             <div className="blockContainer">
               <div className="template-title">
-                模版
+                {$i18n.get({ id: 'advance.components.TemplateQuery.Component.Template', dm: '模版' })}
+
                 {currentTemplate.templateId && (
                   <>
                     （
@@ -296,7 +315,12 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
                         copy(currentTemplate.templateId);
-                        message.success('复制成功');
+                        message.success(
+                          $i18n.get({
+                            id: 'advance.components.TemplateQuery.Component.CopiedSuccessfully',
+                            dm: '复制成功',
+                          }),
+                        );
                       }}
                     >
                       {currentTemplate.templateId}
@@ -308,7 +332,10 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
               <Select
                 allowClear
                 className="templateSelector"
-                placeholder="请选择模版"
+                placeholder={$i18n.get({
+                  id: 'advance.components.TemplateQuery.Component.SelectATemplate',
+                  dm: '请选择模版',
+                })}
                 onChange={templateChange}
                 dropdownClassName="dropDown"
                 showSearch
@@ -319,13 +346,18 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
             </div>
             {currentTemplate.description && (
               <div className="blockContainer">
-                <div className="template-title">模版描述</div>
+                <div className="template-title">
+                  {$i18n.get({ id: 'advance.components.TemplateQuery.Component.TemplateDescription', dm: '模版描述' })}
+                </div>
                 <span className="description">{currentTemplate.description}</span>
               </div>
             )}
+
             {paramInput && (
               <div className="blockContainer">
-                <div className="template-title">模板参数</div>
+                <div className="template-title">
+                  {$i18n.get({ id: 'advance.components.TemplateQuery.Component.TemplateParameters', dm: '模板参数' })}
+                </div>
                 <Form
                   name="paramsForm"
                   form={form}
@@ -337,9 +369,12 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
                 </Form>
               </div>
             )}
+
             {showTemplate && (
               <div className="blockContainer">
-                <div style={{ padding: '8px 0 10px 0', fontWeight: 'bold' }}>模板语句</div>
+                <div style={{ padding: '8px 0 10px 0', fontWeight: 'bold' }}>
+                  {$i18n.get({ id: 'advance.components.TemplateQuery.Component.TemplateStatement', dm: '模板语句' })}
+                </div>
                 <pre className="tpre" dangerouslySetInnerHTML={createMarkup()}></pre>
               </div>
             )}
@@ -352,7 +387,7 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
             }}
           >
             <Button loading={btnLoading} type="primary" onClick={handleExecTemplate}>
-              查询
+              {$i18n.get({ id: 'advance.components.TemplateQuery.Component.Query', dm: '查询' })}
             </Button>
           </div>
         </>

@@ -4,6 +4,7 @@ import { getClientRelativPoint } from './util';
 import { Tooltip, ISimpleKVTooltipData, getSimpleKVContent } from './tooltip';
 
 // 业务可干预
+import $i18n from '../../../i18n';
 export default function drawRunningState(group: any, data: ITreeData) {
   const { property = { canBeInterupt: true, runningState: 'running' }, attrShowingCfg } = data;
 
@@ -32,8 +33,19 @@ export default function drawRunningState(group: any, data: ITreeData) {
     },
   });
 
-  const key = runningState === 'running' ? '运行中，' : '已完成，';
-  const value = canBeInterupt ? '业务可干预' : '业务不可干预';
+  const key =
+    runningState === 'running'
+      ? $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_runningState.Running', dm: '运行中，' })
+      : $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_runningState.Completed', dm: '已完成，' });
+  const value = canBeInterupt
+    ? $i18n.get({
+        id: 'advance.ReasonNode.reason_analysis_node.draw_runningState.BusinessIntervention',
+        dm: '业务可干预',
+      })
+    : $i18n.get({
+        id: 'advance.ReasonNode.reason_analysis_node.draw_runningState.BusinessNonIntervention',
+        dm: '业务不可干预',
+      });
   const tooltipData: ISimpleKVTooltipData = {
     key,
     value,

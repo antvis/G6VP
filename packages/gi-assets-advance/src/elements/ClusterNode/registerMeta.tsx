@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   try {
     const { data, keys } = context;
@@ -10,19 +11,19 @@ const registerMeta = context => {
     });
     return {
       label: {
-        name: '标签',
+        name: $i18n.get({ id: 'advance.elements.ClusterNode.registerMeta.Label', dm: '标签' }),
         type: 'group',
         enableHide: false,
         fold: false,
         children: {
           showlabel: {
-            name: '开关',
+            name: $i18n.get({ id: 'advance.elements.ClusterNode.registerMeta.Switch', dm: '开关' }),
             type: 'switch',
             default: true,
             statusText: true,
           },
           mappingKey: {
-            name: '映射字段',
+            name: $i18n.get({ id: 'advance.elements.ClusterNode.registerMeta.MappingField', dm: '映射字段' }),
             type: 'select',
             useFont: true,
             default: 'type',
