@@ -1,6 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import Neo4JDriver from './Driver';
+import $i18n from '../i18n';
 
 export let Driver: Neo4JDriver | undefined;
 
@@ -16,19 +17,28 @@ export const connect = async () => {
         ENGINE_USER_TOKEN: `Bearer ${Math.random()}`,
       });
       notification.success({
-        message: 'Neo4j 数据库链接成功',
+        message: $i18n.get({
+          id: 'neo4j.src.services.Neo4jService.NeoJDatabaseLinkSucceeded',
+          dm: 'Neo4j 数据库链接成功',
+        }),
       });
       return true;
     }
     notification.error({
-      message: 'Neo4j 数据库链接失败',
-      description: '请检查数据库地址，用户名，密码是否填写正确',
+      message: $i18n.get({ id: 'neo4j.src.services.Neo4jService.NeoJDatabaseLinkFailed', dm: 'Neo4j 数据库链接失败' }),
+      description: $i18n.get({
+        id: 'neo4j.src.services.Neo4jService.CheckWhetherTheDatabaseAddress',
+        dm: '请检查数据库地址，用户名，密码是否填写正确',
+      }),
     });
     return false;
   } else {
     notification.error({
-      message: 'Neo4j 数据库链接失败',
-      description: '数据库地址仅支持 neo4j+s: 协议',
+      message: $i18n.get({ id: 'neo4j.src.services.Neo4jService.NeoJDatabaseLinkFailed', dm: 'Neo4j 数据库链接失败' }),
+      description: $i18n.get({
+        id: 'neo4j.src.services.Neo4jService.TheDatabaseAddressOnlySupports',
+        dm: '数据库地址仅支持 neo4j+s: 协议',
+      }),
     });
     return false;
   }

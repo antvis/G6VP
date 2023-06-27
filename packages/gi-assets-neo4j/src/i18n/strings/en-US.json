@@ -1,0 +1,23 @@
+{
+  "neo4j.src.services.CypherQuery.NeoJCypherQuery": "Neo4j Cypher Query",
+  "neo4j.src.services.CypherQuery.FailedToExecuteCypherQuery": "Failed to execute Cypher Query",
+  "neo4j.src.services.CypherQuery.QueryFailedRes": "Query failed:{res}",
+  "neo4j.src.services.Driver.CNeoJDriverNeighborsquery": "% c[Neo4j Driver] NeighborsQuery query statement",
+  "neo4j.src.services.Driver.CNeoJDriverNeighborsquery.1": "% c[Neo4j Driver] NeighborsQuery query results",
+  "neo4j.src.services.Driver.ErrorInNeighborQuery": "Error in neighbor query",
+  "neo4j.src.services.Driver.CNeoJDriverQuerycypher": "% c[Neo4j Driver] QueryCypher query statement",
+  "neo4j.src.services.Driver.CNeoJDriverQuerycypher.1": "% c[Neo4j Driver] QueryCypher query results",
+  "neo4j.src.services.Driver.CypherQueryError": "Cypher Query error",
+  "neo4j.src.services.Engine.NeoJHasMoreThan": "Neo4j has more than 950 enterprise customers and is the world's leading provider of scalable graphics technology, providing connected data applications for more than 75% of Fortune 100 enterprises.",
+  "neo4j.src.services.Initializer.InitializeAQuery": "Initialize a query",
+  "neo4j.src.services.Initializer.QueryGraphModel": "Query graph model",
+  "neo4j.src.services.Initializer.NeoJDataSourceConnection": "Neo4j data source connection failed: No connection information is obtained to the Neo4j Database. Please connect to the Neo4j database before trying!",
+  "neo4j.src.services.NeighborsQuery.NeighborQuery": "Neighbor query",
+  "neo4j.src.services.Neo4jService.NeoJDatabaseLinkSucceeded": "Neo4j Database link succeeded",
+  "neo4j.src.services.Neo4jService.NeoJDatabaseLinkFailed": "Neo4j Database link failed",
+  "neo4j.src.services.Neo4jService.CheckWhetherTheDatabaseAddress": "Check whether the database address, username, and password are correct.",
+  "neo4j.src.services.Neo4jService.TheDatabaseAddressOnlySupports": "The database address only supports neo4j + s: Protocol.",
+  "neo4j.src.services.NeoJEngineService": "Neo4j engine service",
+  "neo4j.src.services.NeoJComputingEngineAsset": "Neo4j computing engine asset package provided by GI team by default",
+  "neo4j.src.services.GVpTeam": "G6VP team"
+}

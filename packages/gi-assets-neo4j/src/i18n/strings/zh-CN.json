@@ -1,0 +1,23 @@
+{
+  "neo4j.src.services.CypherQuery.NeoJCypherQuery": "Neo4j Cypher 查询",
+  "neo4j.src.services.CypherQuery.FailedToExecuteCypherQuery": "执行 Cypher 查询失败",
+  "neo4j.src.services.CypherQuery.QueryFailedRes": "查询失败：{res}",
+  "neo4j.src.services.Driver.CNeoJDriverNeighborsquery": "%c[Neo4j Driver] NeighborsQuery 查询语句",
+  "neo4j.src.services.Driver.CNeoJDriverNeighborsquery.1": "%c[Neo4j Driver] NeighborsQuery 查询结果",
+  "neo4j.src.services.Driver.ErrorInNeighborQuery": "邻居查询出错",
+  "neo4j.src.services.Driver.CNeoJDriverQuerycypher": "%c[Neo4j Driver] QueryCypher 查询语句",
+  "neo4j.src.services.Driver.CNeoJDriverQuerycypher.1": "%c[Neo4j Driver] QueryCypher 查询结果",
+  "neo4j.src.services.Driver.CypherQueryError": "Cypher 查询出错",
+  "neo4j.src.services.Engine.NeoJHasMoreThan": "Neo4j 拥有超过 950 家企业客户，是全球领先的可扩展图形技术提供商，为超过 75% 的财富 100 强企业提供连接数据应用程序。",
+  "neo4j.src.services.Initializer.InitializeAQuery": "初始化查询",
+  "neo4j.src.services.Initializer.QueryGraphModel": "查询图模型",
+  "neo4j.src.services.Initializer.NeoJDataSourceConnection": "Neo4j 数据源连接失败: 没有获取到连接 Neo4j 数据库的连接信息，请先连接 Neo4j 数据库再进行尝试！",
+  "neo4j.src.services.NeighborsQuery.NeighborQuery": "邻居查询",
+  "neo4j.src.services.Neo4jService.NeoJDatabaseLinkSucceeded": "Neo4j 数据库链接成功",
+  "neo4j.src.services.Neo4jService.NeoJDatabaseLinkFailed": "Neo4j 数据库链接失败",
+  "neo4j.src.services.Neo4jService.CheckWhetherTheDatabaseAddress": "请检查数据库地址，用户名，密码是否填写正确",
+  "neo4j.src.services.Neo4jService.TheDatabaseAddressOnlySupports": "数据库地址仅支持 neo4j+s: 协议",
+  "neo4j.src.services.NeoJEngineService": "Neo4j 引擎服务",
+  "neo4j.src.services.NeoJComputingEngineAsset": "GI 团队默认提供的 Neo4j 计算引擎资产包",
+  "neo4j.src.services.GVpTeam": "G6VP 团队"
+}
