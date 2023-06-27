@@ -1,4 +1,5 @@
 import { extra } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 
@@ -11,7 +12,7 @@ const registerMeta = context => {
 
   const schema = {
     GI_CONTAINER: {
-      title: '集成组件',
+      title: $i18n.get({ id: 'basic.components.SideTabs.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -22,14 +23,14 @@ const registerMeta = context => {
       default: [],
     },
     outSideFromCanvas: {
-      title: '独立DOM',
+      title: $i18n.get({ id: 'basic.components.SideTabs.registerMeta.IndependentDom', dm: '独立DOM' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: true,
     },
     tabPosition: {
-      title: '导航布局',
+      title: $i18n.get({ id: 'basic.components.SideTabs.registerMeta.NavigationLayout', dm: '导航布局' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -39,10 +40,11 @@ const registerMeta = context => {
         { label: 'top', value: 'top' },
         { label: 'bottom', value: 'bottom' },
       ],
+
       default: 'left',
     },
     defaultVisible: {
-      title: '默认展开',
+      title: $i18n.get({ id: 'basic.components.SideTabs.registerMeta.DefaultExpansion', dm: '默认展开' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',

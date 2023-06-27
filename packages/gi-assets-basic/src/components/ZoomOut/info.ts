@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'ZoomOut',
-  name: '缩小',
-  desc: '点击可缩小画布',
+  name: $i18n.get({ id: 'basic.components.ZoomOut.info.ZoomOut', dm: '缩小' }),
+  desc: $i18n.get({ id: 'basic.components.ZoomOut.info.ClickToNarrowTheCanvas', dm: '点击可缩小画布' }),
   icon: 'icon-zoomout',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',

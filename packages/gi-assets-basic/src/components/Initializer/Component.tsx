@@ -1,6 +1,7 @@
 import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import * as React from 'react';
+import $i18n from '../../i18n';
 const { isPosition, isStyles } = utils;
 
 export type GIService = any;
@@ -27,8 +28,14 @@ const Initializer: React.FunctionComponent<IProps> = props => {
 
     if (!initialService) {
       notification.error({
-        message: '画布渲染失败',
-        description: `缺少 ${serviceId} 服务，请检查相关资产是否加载成功`,
+        message: $i18n.get({ id: 'basic.components.Initializer.Component.CanvasRenderingFailed', dm: '画布渲染失败' }),
+        description: $i18n.get(
+          {
+            id: 'basic.components.Initializer.Component.TheServiceidServiceIsMissing',
+            dm: '缺少 {serviceId} 服务，请检查相关资产是否加载成功',
+          },
+          { serviceId: serviceId },
+        ),
       });
       initialService = {
         service: () => {
@@ -43,8 +50,17 @@ const Initializer: React.FunctionComponent<IProps> = props => {
     }
     if (!schemaService) {
       notification.error({
-        message: '图模型获取失败',
-        description: `缺少 ${serviceId} 服务，请检查相关资产是否加载成功`,
+        message: $i18n.get({
+          id: 'basic.components.Initializer.Component.FailedToObtainGraphModel',
+          dm: '图模型获取失败',
+        }),
+        description: $i18n.get(
+          {
+            id: 'basic.components.Initializer.Component.TheServiceidServiceIsMissing',
+            dm: '缺少 {serviceId} 服务，请检查相关资产是否加载成功',
+          },
+          { serviceId: serviceId },
+        ),
       });
       schemaService = {
         service: () => {
@@ -73,8 +89,14 @@ const Initializer: React.FunctionComponent<IProps> = props => {
 
         if (nodes.length > largeGraphLimit) {
           notification.warn({
-            message: '加载的数据量过大',
-            description: `建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染`,
+            message: $i18n.get({
+              id: 'basic.components.Initializer.Component.TheAmountOfDataLoaded',
+              dm: '加载的数据量过大',
+            }),
+            description: $i18n.get({
+              id: 'basic.components.Initializer.Component.WeRecommendThatYouAggregate',
+              dm: '建议聚合数据，默认切换到网格布局。您也可以在「资产中心」中加载「大图组件」启用 3D 渲染',
+            }),
           });
         }
         updateContext(draft => {

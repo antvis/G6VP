@@ -63,7 +63,6 @@ const QueryContainer: React.FunctionComponent<ContainerProps> = props => {
     top: '14px',
     fontSize: 10,
   };
-
   const { children } = props;
   return (
     <div style={styles} className="gi-side-select-tabs">

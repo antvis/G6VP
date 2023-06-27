@@ -1,29 +1,30 @@
 import { PLACEMENT_OPTIONS } from '../const';
+import $i18n from '../../i18n';
 const registerMeta = () => {
   const schema = {
     imageUrl: {
-      title: '版权图片',
+      title: $i18n.get({ id: 'basic.components.Copyright.registerMeta.CopyrightImage', dm: '版权图片' }),
       type: 'string',
       'x-component': 'Input',
       'x-decorator': 'FormItem',
       default: '',
     },
     width: {
-      title: '宽度',
+      title: $i18n.get({ id: 'basic.components.Copyright.registerMeta.Width', dm: '宽度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       default: 100,
     },
     height: {
-      title: '高度',
+      title: $i18n.get({ id: 'basic.components.Copyright.registerMeta.Height', dm: '高度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       default: 100,
     },
     placement: {
-      title: '组件位置',
+      title: $i18n.get({ id: 'basic.components.Copyright.registerMeta.ComponentLocation', dm: '组件位置' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -31,7 +32,7 @@ const registerMeta = () => {
       default: 'RB',
     },
     offset: {
-      title: '偏移量',
+      title: $i18n.get({ id: 'basic.components.Copyright.registerMeta.Offset', dm: '偏移量' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',

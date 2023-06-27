@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'Export',
-  name: '导出',
-  desc: '导出CSV,PNG,JSON数据',
+  name: $i18n.get({ id: 'basic.components.Export.info.Export', dm: '导出' }),
+  desc: $i18n.get({ id: 'basic.components.Export.info.ExportCsvPngJsonData', dm: '导出CSV,PNG,JSON数据' }),
   icon: 'icon-export',
   cover: 'http://xxxx.jpg',
   category: 'workbook',

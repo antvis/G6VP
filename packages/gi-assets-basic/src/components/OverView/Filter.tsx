@@ -9,6 +9,7 @@ import '../FilterPanel/index.less';
 import { IFilterCriteria } from '../FilterPanel/type';
 import { filterGraphData } from '../FilterPanel/utils';
 import Interpretation from './Interpretation';
+import $i18n from '../../i18n';
 
 const { isStyles } = utils;
 
@@ -148,7 +149,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     <div className="gi-filter-panel">
       <Interpretation filterOptions={filterOptions} filterLogic={filterLogic} />
       <Button type="primary" style={{ width: '100%', borderRadius: '4px' }} onClick={addFilter} icon={<PlusOutlined />}>
-        增加筛选器
+        {$i18n.get({ id: 'basic.components.OverView.Filter.AddFilter', dm: '增加筛选器' })}
       </Button>
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriter => {

@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'TooltipForEdge',
-  name: '边提示框',
-  desc: 'Hover 边，展示其详细信息',
+  name: $i18n.get({ id: 'basic.components.TooltipForEdge.info.EdgePromptBox', dm: '边提示框' }),
+  desc: $i18n.get({
+    id: 'basic.components.TooltipForEdge.info.HoverEdgeShowingItsDetails',
+    dm: 'Hover 边，展示其详细信息',
+  }),
   cover: 'http://xxxx.jpg',
   category: 'elements-interaction',
   icon: 'icon-tooltip',

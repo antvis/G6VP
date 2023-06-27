@@ -1,8 +1,9 @@
+import $i18n from '../../i18n';
 const ASSET_ID = 'Save';
 const info = {
   id: 'Save',
-  name: '保存分享',
-  desc: '保存画布,并分享给其他人',
+  name: $i18n.get({ id: 'basic.components.Save.info.SaveShare', dm: '保存分享' }),
+  desc: $i18n.get({ id: 'basic.components.Save.info.SaveTheCanvasAndShare', dm: '保存画布,并分享给其他人' }),
   icon: 'icon-save',
   cover: 'http://xxxx.jpg',
   category: 'workbook',

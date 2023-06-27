@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const driverItem = {
   type: 'void',
   'x-decorator': 'FormItem',
@@ -11,7 +12,7 @@ const driverItem = {
       type: 'object',
       'x-component': 'FormCollapse.CollapsePanel',
       'x-component-props': {
-        header: '分割线配置'
+        header: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.SplitLineConfiguration', dm: '分割线配置' }),
       },
       properties: {
         remove: {
@@ -20,12 +21,12 @@ const driverItem = {
             style: {
               position: 'absolute',
               right: 14,
-              top: 15
-            }
-          }
+              top: 15,
+            },
+          },
         },
         position: {
-          title: '位置',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Location', dm: '位置' }),
           'x-decorator': 'FormItem',
           'x-component': 'Select',
           'x-component-props': {
@@ -34,42 +35,42 @@ const driverItem = {
           default: 'End',
           enum: [
             {
-              label: '开始',
-              value: 'Start'
+              label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Start', dm: '开始' }),
+              value: 'Start',
             },
             {
-              label: '结尾',
-              value: 'End'
-            }
-          ]
+              label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.End', dm: '结尾' }),
+              value: 'End',
+            },
+          ],
         },
         start: {
-          title: '起始边距',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.StartMargin', dm: '起始边距' }),
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
-          default: 0
+          default: 0,
         },
         end: {
-          title: '结束边距',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.EndMargin', dm: '结束边距' }),
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
-          default: 0
+          default: 0,
         },
         color: {
-          title: '颜色',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Color', dm: '颜色' }),
           'x-decorator': 'FormItem',
           'x-component': 'ColorInput',
-          default: '#eee'
+          default: '#eee',
         },
         size: {
-          title: '线宽',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.LineWidth', dm: '线宽' }),
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
-          default: 1
-        }
-      }
-    }
-  }
+          default: 1,
+        },
+      },
+    },
+  },
 };
 const drivers = {
   type: 'array',
@@ -80,36 +81,37 @@ const drivers = {
     addGroup: {
       type: 'void',
       'x-component': 'ArrayItems.Addition',
-      title: '添加分割线'
-    }
-  }
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.AddSplitLine', dm: '添加分割线' }),
+    },
+  },
 };
 export const createGroupsMeta = ({ GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] }) => {
   return {
-    title: '分组',
+    title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Grouping', dm: '分组' }),
     type: 'array',
     'x-component': 'ArrayCollapse',
     'x-component-props': {},
     enum: [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS],
     default: [
       {
-        components: []
-      }
+        components: [],
+      },
     ],
+
     properties: {
       addGroup: {
         type: 'void',
         'x-component': 'ArrayCollapse.Addition',
-        title: '添加分组'
-      }
+        title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.AddGroup', dm: '添加分组' }),
+      },
     },
     items: {
       type: 'object',
-      title: '分组配置',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.ClusterSetting', dm: '分组配置' }),
       'x-component-props': {
         style: {
-          margin: '1px !important'
-        }
+          margin: '1px !important',
+        },
       },
       properties: {
         remove: {
@@ -117,7 +119,7 @@ export const createGroupsMeta = ({ GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] }) =
         },
         components: {
           type: 'array',
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.IntegratedComponents', dm: '集成组件' }),
           enum: [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS],
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -127,39 +129,45 @@ export const createGroupsMeta = ({ GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] }) =
           default: [],
         },
         width: {
-          title: '宽度',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Width', dm: '宽度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: '字符串或数字类型'
+            placeholder: $i18n.get({
+              id: 'basic.components.GroupBar.registerMeta.StringOrNumericType',
+              dm: '字符串或数字类型',
+            }),
           },
-          default: 'auto'
+          default: 'auto',
         },
         height: {
-          title: '高度',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Height', dm: '高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           'x-component-props': {
-            placeholder: '字符串或数字类型'
+            placeholder: $i18n.get({
+              id: 'basic.components.GroupBar.registerMeta.StringOrNumericType',
+              dm: '字符串或数字类型',
+            }),
           },
         },
         background: {
-          title: '背景色',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.BackgroundColor', dm: '背景色' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'ColorInput',
         },
         color: {
-          title: '文字颜色',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.TextColor', dm: '文字颜色' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'ColorInput',
-          default: '#000'
+          default: '#000',
         },
         align: {
-          title: '对齐方式',
+          title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Alignment', dm: '对齐方式' }),
           'x-decorator': 'FormItem',
           'x-component': 'Select',
           'x-component-props': {
@@ -168,31 +176,31 @@ export const createGroupsMeta = ({ GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] }) =
           default: 'Left',
           enum: [
             {
-              label: '左对齐',
-              value: 'Left'
+              label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.LeftAlignment', dm: '左对齐' }),
+              value: 'Left',
             },
             {
-              label: '居中对齐',
-              value: 'Center'
+              label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.CenterAlignment', dm: '居中对齐' }),
+              value: 'Center',
             },
             {
-              label: '右对齐',
-              value: 'Right'
-            }
-          ]
+              label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.RightAlignment', dm: '右对齐' }),
+              value: 'Right',
+            },
+          ],
         },
-        drivers
-      }
-    }
-  }
-}
-export default (context) => {
-  const { GIAC_ITEMS = [],GIAC_CONTENT_ITEMS = [] } = context;
+        drivers,
+      },
+    },
+  };
+};
+export default context => {
+  const { GIAC_ITEMS = [], GIAC_CONTENT_ITEMS = [] } = context;
   return {
     GI_CONTAINER: {
-      title: '集成组件',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'array',
-      enum: [...GIAC_ITEMS,...GIAC_CONTENT_ITEMS],
+      enum: [...GIAC_ITEMS, ...GIAC_CONTENT_ITEMS],
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
@@ -201,49 +209,49 @@ export default (context) => {
       default: [],
     },
     background: {
-      title: '背景色',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.BackgroundColor', dm: '背景色' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'ColorInput',
     },
     suspend: {
-      title: '悬浮',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Suspension', dm: '悬浮' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: false
+      default: false,
     },
     position: {
-      title: '位置',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Location', dm: '位置' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       default: 'Top',
       enum: [
         {
-          label: '顶部',
-          value: 'Top'
+          label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Top', dm: '顶部' }),
+          value: 'Top',
         },
         {
-          label: '底部',
-          value: 'Bottom'
+          label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Bottom', dm: '底部' }),
+          value: 'Bottom',
         },
         {
-          label: '左侧',
-          value: 'Left'
+          label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.LeftSide', dm: '左侧' }),
+          value: 'Left',
         },
         {
-          label: '右侧',
-          value: 'Right'
-        }
-      ]
+          label: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.RightSide', dm: '右侧' }),
+          value: 'Right',
+        },
+      ],
     },
     size: {
-      title: '大小',
+      title: $i18n.get({ id: 'basic.components.GroupBar.registerMeta.Size', dm: '大小' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
-      default: 60
+      default: 60,
     },
     left: {
       title: 'Left',
@@ -254,10 +262,10 @@ export default (context) => {
         dependencies: ['.position'],
         fulfill: {
           schema: {
-            "x-visible": "{{$deps[0] === 'Top' || $deps[0] === 'Bottom'}}"
-          }
-        }
-      }
+            'x-visible': "{{$deps[0] === 'Top' || $deps[0] === 'Bottom'}}",
+          },
+        },
+      },
     },
     right: {
       title: 'Right',
@@ -268,10 +276,10 @@ export default (context) => {
         dependencies: ['.position'],
         fulfill: {
           schema: {
-            "x-visible": "{{$deps[0] === 'Top' || $deps[0] === 'Bottom'}}"
-          }
-        }
-      }
+            'x-visible': "{{$deps[0] === 'Top' || $deps[0] === 'Bottom'}}",
+          },
+        },
+      },
     },
     top: {
       title: 'Top',
@@ -282,10 +290,10 @@ export default (context) => {
         dependencies: ['.position'],
         fulfill: {
           schema: {
-            "x-visible": "{{$deps[0] === 'Left' || $deps[0] === 'Right'}}"
-          }
-        }
-      }
+            'x-visible': "{{$deps[0] === 'Left' || $deps[0] === 'Right'}}",
+          },
+        },
+      },
     },
     bottom: {
       title: 'Bottom',
@@ -296,11 +304,11 @@ export default (context) => {
         dependencies: ['.position'],
         fulfill: {
           schema: {
-            "x-visible": "{{$deps[0] === 'Left' || $deps[0] === 'Right'}}"
-          }
-        }
-      }
+            'x-visible': "{{$deps[0] === 'Left' || $deps[0] === 'Right'}}",
+          },
+        },
+      },
     },
-    groups: createGroupsMeta(context)
+    groups: createGroupsMeta(context),
   };
 };

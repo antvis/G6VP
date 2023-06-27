@@ -1,13 +1,14 @@
 import { template } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 
 const pageLayout = {
   id: 'SegmentedLayout',
-  name: '分段布局',
+  name: $i18n.get({ id: 'basic.src.templates.Simple.SegmentLayout', dm: '分段布局' }),
   props: {
     containers: [
       {
         id: 'GI_CONTAINER_SIDE',
-        name: '侧边容器',
+        name: $i18n.get({ id: 'basic.src.templates.Simple.SideContainer', dm: '侧边容器' }),
         required: true,
         GI_CONTAINER: ['FilterPanel'],
         display: true,
@@ -33,9 +34,15 @@ export const activeAssetsKeys = {
 };
 
 export default {
-  name: '极简模版',
+  name: $i18n.get({ id: 'basic.src.templates.Simple.MinimalistTemplate', dm: '极简模版' }),
   id: 'TP_SIMPLE',
-  desc: `该模版是官方提供的极简模版，包含 ${activeAssetsKeys.components.length} 个分析资产，提供常见的「交互分析」「筛选看数」等功能，页面布局上，画布展示空间较大，提供沉浸式分析体验`,
+  desc: $i18n.get(
+    {
+      id: 'basic.src.templates.Simple.ThisTemplateIsAnOfficial',
+      dm: '该模版是官方提供的极简模版，包含 {activeAssetsKeysComponentsLength} 个分析资产，提供常见的「交互分析」「筛选看数」等功能，页面布局上，画布展示空间较大，提供沉浸式分析体验',
+    },
+    { activeAssetsKeysComponentsLength: activeAssetsKeys.components.length },
+  ),
   image: `/image/tp_simple.png`,
   activeAssetsKeys,
   ...config,

@@ -2,6 +2,7 @@ import { SlidersOutlined } from '@ant-design/icons';
 import { Button, Form, InputNumber, Popover } from 'antd';
 import * as React from 'react';
 import { IFilterCriteria } from '../type';
+import $i18n from '../../../i18n';
 interface HistogramOptionsProps {
   filterCriteria: IFilterCriteria;
   updateFilterCriteria: (id: string, filterCriteria: IFilterCriteria) => void;
@@ -37,20 +38,32 @@ const Content = (props: HistogramOptionsProps & { onClose: () => void }) => {
       autoComplete="off"
       style={{ width: '250px' }}
     >
-      <Form.Item label="范围最小值" name="min">
+      <Form.Item
+        label={$i18n.get({ id: 'basic.FilterPanel.Charts.HistogramOptions.MinimumRange', dm: '范围最小值' })}
+        name="min"
+      >
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
 
-      <Form.Item label="范围最大值" name="max">
+      <Form.Item
+        label={$i18n.get({ id: 'basic.FilterPanel.Charts.HistogramOptions.MaximumRange', dm: '范围最大值' })}
+        name="max"
+      >
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
-      <Form.Item label="分箱值" name="binWidth">
+      <Form.Item
+        label={$i18n.get({ id: 'basic.FilterPanel.Charts.HistogramOptions.BinValue', dm: '分箱值' })}
+        name="binWidth"
+      >
         <InputNumber style={{ width: '120px' }} />
       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 24 }}>
         <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-          保存分箱配置
+          {$i18n.get({
+            id: 'basic.FilterPanel.Charts.HistogramOptions.SaveTheSubBoxConfiguration',
+            dm: '保存分箱配置',
+          })}
         </Button>
       </Form.Item>
     </Form>
@@ -73,7 +86,7 @@ const HistogramOptions: React.FunctionComponent<HistogramOptionsProps> = props =
         open={open}
         onOpenChange={handleOpenChange}
         placement="topLeft"
-        title={'设置分箱规则'}
+        title={$i18n.get({ id: 'basic.FilterPanel.Charts.HistogramOptions.SetTheRuleOfGrouping', dm: '设置分箱规则' })}
         content={<Content {...props} onClose={hide} />}
         trigger="click"
       >

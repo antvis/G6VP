@@ -1,12 +1,13 @@
 import { Components } from '@antv/graphin';
 import registerMeta from './registerMeta';
+import $i18n from '../../i18n';
 const { MiniMap } = Components;
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
   id: 'MiniMap',
-  name: '小地图',
-  desc: '启用后，可在小地图上展示信息',
+  name: $i18n.get({ id: 'basic.components.MiniMap.SmallMap', dm: '小地图' }),
+  desc: $i18n.get({ id: 'basic.components.MiniMap.WhenEnabledInformationCanBe', dm: '启用后，可在小地图上展示信息' }),
   icon: 'icon-minimap',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',

@@ -1,4 +1,5 @@
 import { extra } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 
@@ -12,7 +13,7 @@ const registerMeta = context => {
 
   const schema = {
     GI_CONTAINER: {
-      title: '集成组件',
+      title: $i18n.get({ id: 'basic.components.SideSelectTabs.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -25,7 +26,7 @@ const registerMeta = context => {
     width,
     offset,
     placement: {
-      title: '放置方位',
+      title: $i18n.get({ id: 'basic.components.SideSelectTabs.registerMeta.PlacementOrientation', dm: '放置方位' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -33,7 +34,7 @@ const registerMeta = context => {
         options: [
           {
             value: 'LB',
-            label: '左下 / left',
+            label: $i18n.get({ id: 'basic.components.SideSelectTabs.registerMeta.LowerLeftLeft', dm: '左下 / left' }),
           },
         ],
       },

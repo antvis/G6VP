@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [] } = context;
 
@@ -5,9 +6,9 @@ const registerMeta = context => {
     containers: [
       {
         id: 'GI_CONTAINER_LEFT',
-        name: '左侧容器',
+        name: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.LeftContainer', dm: '左侧容器' }),
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -18,14 +19,17 @@ const registerMeta = context => {
           default: [],
         },
         visible: {
-          title: '默认展开左侧容器',
+          title: $i18n.get({
+            id: 'basic.components.GrailLayout.registerMeta.ByDefaultTheLeftContainer',
+            dm: '默认展开左侧容器',
+          }),
           type: 'boolean',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: true,
         },
         width: {
-          title: '左侧宽度',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.LeftWidth', dm: '左侧宽度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -35,9 +39,9 @@ const registerMeta = context => {
       },
       {
         id: 'GI_CONTAINER_RIGHT',
-        name: '右侧容器',
+        name: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.RightContainer', dm: '右侧容器' }),
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -48,14 +52,17 @@ const registerMeta = context => {
           default: [],
         },
         visible: {
-          title: '默认展开右侧容器',
+          title: $i18n.get({
+            id: 'basic.components.GrailLayout.registerMeta.ByDefaultTheContainerOn',
+            dm: '默认展开右侧容器',
+          }),
           type: 'boolean',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: true,
         },
         width: {
-          title: '右侧宽度',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.RightWidth', dm: '右侧宽度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -65,9 +72,9 @@ const registerMeta = context => {
       },
       {
         id: 'GI_CONTAINER_BOTTOM',
-        name: '底部容器',
+        name: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.BottomContainer', dm: '底部容器' }),
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -78,14 +85,17 @@ const registerMeta = context => {
           default: [],
         },
         visible: {
-          title: '默认展开底部容器',
+          title: $i18n.get({
+            id: 'basic.components.GrailLayout.registerMeta.ByDefaultTheBottomContainer',
+            dm: '默认展开底部容器',
+          }),
           type: 'boolean',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: true,
         },
         height: {
-          title: '底部高度',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.BottomHeight', dm: '底部高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -95,9 +105,9 @@ const registerMeta = context => {
       },
       {
         id: 'GI_CONTAINER_TOP',
-        name: '顶部容器',
+        name: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.TopContainer', dm: '顶部容器' }),
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -108,14 +118,17 @@ const registerMeta = context => {
           default: [],
         },
         visible: {
-          title: '默认展开顶部容器',
+          title: $i18n.get({
+            id: 'basic.components.GrailLayout.registerMeta.ByDefaultTheTopContainer',
+            dm: '默认展开顶部容器',
+          }),
           type: 'boolean',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         height: {
-          title: '顶部高度',
+          title: $i18n.get({ id: 'basic.components.GrailLayout.registerMeta.TopHeight', dm: '顶部高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',

@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'LayoutSwitch',
-  name: '布局切换',
-  desc: '一键切换布局',
+  name: $i18n.get({ id: 'basic.components.LayoutSwitch.info.LayoutSwitching', dm: '布局切换' }),
+  desc: $i18n.get({ id: 'basic.components.LayoutSwitch.info.SwitchLayoutWithOneClick', dm: '一键切换布局' }),
   icon: 'icon-layout',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',

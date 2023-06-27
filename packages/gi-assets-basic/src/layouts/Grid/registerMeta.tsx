@@ -1,8 +1,9 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   return {
     rows: {
       type: 'number',
-      title: '网格行数',
+      title: $i18n.get({ id: 'basic.layouts.Grid.registerMeta.NumberOfGridRows', dm: '网格行数' }),
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {
@@ -11,7 +12,7 @@ const registerMeta = context => {
     },
     cols: {
       type: 'slider',
-      title: '网格列数',
+      title: $i18n.get({ id: 'basic.layouts.Grid.registerMeta.NumberOfGridColumns', dm: '网格列数' }),
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {
@@ -20,7 +21,7 @@ const registerMeta = context => {
     },
     sortBy: {
       type: 'select',
-      title: '排序依据',
+      title: $i18n.get({ id: 'basic.layouts.Grid.registerMeta.Sort', dm: '排序依据' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {

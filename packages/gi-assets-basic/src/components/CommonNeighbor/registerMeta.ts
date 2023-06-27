@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 export default () => {
   return {
     hop: {
-      title: '跳数',
+      title: $i18n.get({ id: 'basic.components.CommonNeighbor.registerMeta.NumberOfHops', dm: '跳数' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',

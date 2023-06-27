@@ -1,6 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import React from 'react';
 import './index.less';
+import $i18n from '../../i18n';
 const { getPositionStyles } = utils;
 
 export interface CopyrightProps {
@@ -19,7 +20,7 @@ const Copyright: React.FunctionComponent<CopyrightProps> = props => {
     <div className="gi-copyright" style={positionStyles}>
       <img
         src={`${imageUrl}`}
-        alt="版权图片"
+        alt={$i18n.get({ id: 'basic.components.Copyright.Component.CopyrightImage', dm: '版权图片' })}
         style={{
           width: `${width}px`,
           height: `${height}px`,

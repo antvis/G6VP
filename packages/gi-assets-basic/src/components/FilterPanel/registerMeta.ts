@@ -1,6 +1,6 @@
 import { extra, formatMessage } from '@antv/gi-sdk';
 import info from './info';
-import locales from './locales';
+import $i18n from '../../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 // @ts-ignore
@@ -36,7 +36,7 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
 
   const schema = {
     filterKeys: {
-      title: formatMessage({ id: 'FilterPanel.meta.filterKeys' }, locales),
+      title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.DefaultFilterField', dm: '默认筛选字段' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -48,7 +48,7 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
     },
     enableInfoDetect: hasPropertyGraph
       ? {
-          title: '智能推荐',
+          title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.SmartRecommendation', dm: '智能推荐' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -56,21 +56,21 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
         }
       : undefined,
     isFilterIsolatedNodes: {
-      title: '过滤孤立节点',
+      title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.FilterIsolatedNodes', dm: '过滤孤立节点' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: true,
     },
     highlightMode: {
-      title: '高亮模式',
+      title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.HighlightMode', dm: '高亮模式' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: true,
     },
     filterLogic: {
-      title: '筛选逻辑',
+      title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.FilteringLogic', dm: '筛选逻辑' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -78,6 +78,7 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
         { value: 'and', label: 'and' },
         { value: 'or', label: 'or' },
       ],
+
       default: 'and',
     },
     histogramOptions: {
@@ -85,11 +86,11 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
       'x-decorator': 'FormItem',
       'x-component': 'FormCollapse.CollapsePanel',
       'x-component-props': {
-        header: '分箱设置',
+        header: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.SubBoxSetting', dm: '分箱设置' }),
       },
       properties: {
         isCustom: {
-          title: '自定义分箱',
+          title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.CustomSubBox', dm: '自定义分箱' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -122,21 +123,21 @@ const registerMeta = ({ schemaData, hasPropertyGraph }) => {
           ],
         },
         min: {
-          title: '区间最小值',
+          title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.IntervalMinimum', dm: '区间最小值' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: null,
         },
         max: {
-          title: '区间最大值',
+          title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.IntervalMaximum', dm: '区间最大值' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: null,
         },
         binWidth: {
-          title: '分箱值',
+          title: $i18n.get({ id: 'basic.components.FilterPanel.registerMeta.BinValue', dm: '分箱值' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',

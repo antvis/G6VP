@@ -1,7 +1,7 @@
 import registerLayout from './registerLayout';
 import registerMeta from './registerMeta';
 
-/**   index.md 中解析得到默认值，也可用户手动修改 */
+/**   index.md 中解析得到默认值，也可用户手动修改 */ import $i18n from '../../i18n';
 const info = {
   id: 'Force2',
   options: {
@@ -20,10 +20,13 @@ const info = {
     maxSpeed: 1000,
     distanceThresholdMode: 'max',
   },
-  name: '快速力导',
+  name: $i18n.get({ id: 'basic.layouts.Force2.FastForceGuide', dm: '快速力导' }),
   category: 'basic',
   type: 'LAYOUT',
-  desc: '渐进式力导布局，可用于动态布局',
+  desc: $i18n.get({
+    id: 'basic.layouts.Force2.ProgressiveForceDirectedLayoutFor',
+    dm: '渐进式力导布局，可用于动态布局',
+  }),
   icon: 'icon-layout-force',
   cover: 'http://xxxx.jpg',
   docs: 'https://www.yuque.com/antv/gi/rloo8d2l7qbsuyg8',

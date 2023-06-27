@@ -2,6 +2,7 @@ import { useContext, utils } from '@antv/gi-sdk';
 
 import { Menu } from 'antd';
 import React, { useEffect, useRef } from 'react';
+import $i18n from '../../i18n';
 
 const { SubMenu } = Menu;
 type ControlledValues = {
@@ -72,7 +73,15 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     };
     if (!propNodes) {
       nodes = ids.map(id => graph.findById(id)?.getModel()).filter(Boolean);
-      if (!nodes?.length) handleUpateHistory(historyProps, false, '当前画布中未找到指定的扩散起始节点');
+      if (!nodes?.length)
+        handleUpateHistory(
+          historyProps,
+          false,
+          $i18n.get({
+            id: 'basic.components.NeighborsQuery.Component.TheSpecifiedDiffusionStartNode',
+            dm: '当前画布中未找到指定的扩散起始节点',
+          }),
+        );
     }
     try {
       const result = await service({
@@ -114,8 +123,9 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     updateHistory({
       componentId: 'NeighborsQuery',
       type: 'analyse',
-      subType: '邻居查询',
-      statement: `查询 ${params.startIds.join(', ')} 的邻居`,
+      subType: $i18n.get({ id: 'basic.components.NeighborsQuery.Component.NeighborQuery', dm: '邻居查询' }),
+      statement1: `查询 ${params.startIds.join(', ')} 的邻居`,
+      statement: $i18n.get({ id: 'basic.components.NeighborsQuery.Component.NeighborQueryOfStarts', dm: `查询 ${params.startIds.join(', ')} 的邻居` }, { startIds: params.startIds.join(', ') },),
       success,
       errorMsg,
       params,
@@ -158,9 +168,14 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     };
   }, [isFocus]);
 
-  const ChineseIndex = ['一', '二', '三'];
+  const ChineseIndex = [
+    $i18n.get({ id: 'basic.components.NeighborsQuery.Component.One', dm: '一' }),
+    $i18n.get({ id: 'basic.components.NeighborsQuery.Component.Ii', dm: '二' }),
+    $i18n.get({ id: 'basic.components.NeighborsQuery.Component.Three', dm: '三' }),
+  ];
   const menuItem = Array.from({ length: Number(degree) }).map((_item, idx) => {
-    const name = ChineseIndex[idx] + '度扩展';
+    const name =
+      ChineseIndex[idx] + $i18n.get({ id: 'basic.components.NeighborsQuery.Component.DegreeExtension', dm: '度扩展' });
     const sep = idx + 1;
     return (
       <Menu.Item key={`expand-${sep}`} eventKey={`expand-${sep}`} onClick={handleClick}>
@@ -171,7 +186,12 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
 
   return (
     // @ts-ignore
-    <SubMenu key="expand" eventKey="expand" title="扩展查询">
+    <SubMenu
+      key="expand"
+      // @ts-ignore
+      eventKey="expand"
+      title={$i18n.get({ id: 'basic.components.NeighborsQuery.Component.ExtendedQuery', dm: '扩展查询' })}
+    >
       {menuItem}
     </SubMenu>
   );

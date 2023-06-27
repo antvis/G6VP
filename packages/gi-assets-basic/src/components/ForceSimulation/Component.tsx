@@ -3,6 +3,7 @@ import { handlePinNode } from '../common/handlePinNode';
 
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 
 const { GIAComponent, deepClone } = extra;
 
@@ -59,10 +60,16 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
 
   GIAC.icon = 'icon-play-circle';
   GIAC.disabled = true;
-  GIAC.tooltip = '该功能仅在力导布局下才可使用';
+  GIAC.tooltip = $i18n.get({
+    id: 'basic.components.ForceSimulation.Component.ThisFunctionCanOnlyBe',
+    dm: '该功能仅在力导布局下才可使用',
+  });
   if (isForce) {
     GIAC.disabled = false;
-    GIAC.tooltip = '重启力导布局，点击画布可以暂停力导';
+    GIAC.tooltip = $i18n.get({
+      id: 'basic.components.ForceSimulation.Component.RestartTheForceGuideLayout',
+      dm: '重启力导布局，点击画布可以暂停力导',
+    });
   }
 
   return <GIAComponent GIAC={GIAC} onClick={handleClick} />;

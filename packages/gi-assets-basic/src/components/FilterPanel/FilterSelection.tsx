@@ -17,6 +17,7 @@ import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
 import { getChartData, getHistogramData } from './utils';
+import $i18n from '../../i18n';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -261,7 +262,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           style={{ width: '80%' }}
           onChange={onSelectChange}
           className="gi-filter-panel-prop-select"
-          placeholder={formatMessage({ id: 'FilterPanel.selectElementAttr' })}
+          placeholder={$i18n.get({
+            id: 'basic.components.FilterPanel.FilterSelection.SelectElementAttributes',
+            dm: '选择元素属性',
+          })}
           showSearch
           filterOption={(input, option) => {
             return (option?.value as string)?.toLowerCase().includes(input.toLowerCase());
@@ -272,10 +276,16 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
               : undefined
           }
         >
-          <Select.OptGroup key="node" label={formatMessage({ id: 'FilterPanel.node' })}>
+          <Select.OptGroup
+            key="node"
+            label={$i18n.get({ id: 'basic.components.FilterPanel.FilterSelection.Node', dm: '节点' })}
+          >
             {getPropertyOptions('node')}
           </Select.OptGroup>
-          <Select.OptGroup key="edge" label={formatMessage({ id: 'FilterPanel.edge' })}>
+          <Select.OptGroup
+            key="edge"
+            label={$i18n.get({ id: 'basic.components.FilterPanel.FilterSelection.Edge', dm: '边' })}
+          >
             {getPropertyOptions('edge')}
           </Select.OptGroup>
         </Select>
@@ -284,6 +294,7 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             <Button icon={analyzerType2Icon[filterCriteria.analyzerType!]} type="text"></Button>
           </Dropdown>
         )}
+
         <HistogramOptions filterCriteria={filterCriteria} updateFilterCriteria={updateFilterCriteria} />
         <Button onClick={() => removeFilterCriteria(filterCriteria.id!)} type="text" style={{ padding: '4px' }}>
           <DeleteOutlined className="gi-filter-panel-delete" />
@@ -295,7 +306,10 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
             style={{ width: '100%' }}
             onChange={onValueSelectChange}
             mode="tags"
-            placeholder={formatMessage({id: 'FilterPanel.selectFilterValue'})}
+            placeholder={$i18n.get({
+              id: 'basic.components.FilterPanel.FilterSelection.SelectAFilterValue',
+              dm: '选择筛选值',
+            })}
             value={filterCriteria.selectValue}
           >
             {filterCriteria.selectOptions?.map(option => {
@@ -350,7 +364,11 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
           />
         )}
 
-        {filterCriteria.analyzerType === 'NONE' && <span>{formatMessage({id: 'FilterPanel.selectValidField'})}</span>}
+        {filterCriteria.analyzerType === 'NONE' && (
+          <span>
+            {$i18n.get({ id: 'basic.components.FilterPanel.FilterSelection.SelectAValidField', dm: '请选择合法字段' })}
+          </span>
+        )}
       </div>
     </div>
   );

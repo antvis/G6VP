@@ -2,6 +2,7 @@ import { Sankey } from '@antv/g2plot';
 import { useContext } from '@antv/gi-sdk';
 import { Empty } from 'antd';
 import * as React from 'react';
+import $i18n from '../../i18n';
 
 export interface IProps {
   weightField: string;
@@ -40,7 +41,14 @@ const SankeyAnalysis: React.FunctionComponent<IProps> = props => {
     };
   }, [weightField, data]);
   if (!weightField) {
-    return <Empty description="请先设置「桑基图」的「权重映射」"></Empty>;
+    return (
+      <Empty
+        description={$i18n.get({
+          id: 'basic.components.Sankey.Component.PleaseSetTheWeightMapping',
+          dm: '请先设置「桑基图」的「权重映射」',
+        })}
+      ></Empty>
+    );
   }
 
   return (

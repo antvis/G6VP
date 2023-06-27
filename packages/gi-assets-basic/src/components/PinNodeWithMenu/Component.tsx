@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
 import { INode } from '@antv/g6';
+import $i18n from '../../i18n';
 
 export interface PinNodeMenuItemProps {
   contextmenu: any;
@@ -26,7 +27,12 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     // 仅支持对节点的操作
     const invalidFromContextMenu = !target || target.destroyed || target.getType?.() !== 'node';
     if (invalidFromContextMenu && !propId) {
-      handleUpateHistory(undefined, undefined, false, '节点不存在');
+      handleUpateHistory(
+        undefined,
+        undefined,
+        false,
+        $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.TheNodeDoesNotExist', dm: '节点不存在' }),
+      );
       return null;
     }
     contextmenu.onClose();
@@ -36,7 +42,12 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     let id;
     if (propId) {
       if (!graph.findById(propId)) {
-        handleUpateHistory(undefined, undefined, false, '节点不存在');
+        handleUpateHistory(
+          undefined,
+          undefined,
+          false,
+          $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.TheNodeDoesNotExist', dm: '节点不存在' }),
+        );
         return;
       }
       id = propId;
@@ -66,8 +77,14 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     updateHistory({
       componentId: 'PinNodeWithMenu',
       type: 'configure',
-      subType: '固定节点',
-      statement: `固定 ${id}`,
+      subType: $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.FixedNode', dm: '固定节点' }),
+      statement: $i18n.get(
+        {
+          id: 'basic.components.PinNodeWithMenu.Component.FixedId',
+          dm: '固定 {id}',
+        },
+        { id: id },
+      ),
       success,
       errorMsg,
       params: { id, action },
@@ -96,7 +113,9 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
 
   return (
     <Menu.Item key="lock-node" eventKey="lock-node" onClick={() => handleLockNode()}>
-      {targetNode.getModel().pinned ? '解除固定' : '固定节点'}
+      {targetNode.getModel().pinned
+        ? $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.Unfix', dm: '解除固定' })
+        : $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.FixedNode', dm: '固定节点' })}
     </Menu.Item>
   );
 };

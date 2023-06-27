@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'FitCenter',
-  name: '视图居中',
-  desc: '调整画布，使其居中对齐',
+  name: $i18n.get({ id: 'basic.components.FitCenter.info.ViewCenter', dm: '视图居中' }),
+  desc: $i18n.get({ id: 'basic.components.FitCenter.info.AdjustTheCanvasToCenter', dm: '调整画布，使其居中对齐' }),
   icon: 'icon-fit-center',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',

@@ -1,26 +1,31 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const presetOptions = [
     {
-      label: '网格布局',
+      label: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.GridLayout', dm: '网格布局' }),
       value: 'grid',
     },
     {
-      label: '环形布局',
+      label: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.CircularLayout', dm: '环形布局' }),
       value: 'circular',
     },
     {
-      label: '同心圆布局',
+      label: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.ConcentricCircleLayout', dm: '同心圆布局' }),
       value: 'concentric',
     },
     {
-      label: '有向分层',
+      label: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.DirectedLayering', dm: '有向分层' }),
       value: 'dagre',
     },
   ];
+
   return {
     stiffness: {
       type: 'number',
-      title: '弹簧劲度系数',
+      title: $i18n.get({
+        id: 'basic.layouts.GraphinForce.registerMeta.SpringStiffnessCoefficient',
+        dm: '弹簧劲度系数',
+      }),
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {
@@ -29,7 +34,10 @@ const registerMeta = context => {
       default: 200,
     },
     repulsion: {
-      title: '库伦常量Ke（斥力）',
+      title: $i18n.get({
+        id: 'basic.layouts.GraphinForce.registerMeta.CullenConstantKeRepulsion',
+        dm: '库伦常量Ke（斥力）',
+      }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -37,7 +45,7 @@ const registerMeta = context => {
       default: 1000,
     },
     damping: {
-      title: '阻尼系数',
+      title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.DampingCoefficient', dm: '阻尼系数' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -49,7 +57,7 @@ const registerMeta = context => {
       default: 0.9,
     },
     animation: {
-      title: '启用动画',
+      title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.EnableAnimation', dm: '启用动画' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -60,7 +68,7 @@ const registerMeta = context => {
       properties: {
         type: {
           type: 'string',
-          title: '前置布局',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.FrontLayout', dm: '前置布局' }),
           'x-component': 'Select',
           'x-decorator': 'FormItem',
           'x-component-props': {
@@ -74,21 +82,24 @@ const registerMeta = context => {
       type: 'object',
       properties: {
         minLimitDegree: {
-          title: '最小界限度数',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.MinimumLimitDegree', dm: '最小界限度数' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 5,
         },
         maxLimitLength: {
-          title: '最大限制边长',
+          title: $i18n.get({
+            id: 'basic.layouts.GraphinForce.registerMeta.MaximumLimitSideLength',
+            dm: '最大限制边长',
+          }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 500,
         },
         defaultSpring: {
-          title: '默认边长',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.DefaultSideLength', dm: '默认边长' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
@@ -100,21 +111,21 @@ const registerMeta = context => {
       type: 'object',
       properties: {
         leaf: {
-          title: '叶子节点',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.LeafNode', dm: '叶子节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 2,
         },
         single: {
-          title: '孤立节点',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.IsolatedNode', dm: '孤立节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 2,
         },
         others: {
-          title: '其他节点',
+          title: $i18n.get({ id: 'basic.layouts.GraphinForce.registerMeta.OtherNodes', dm: '其他节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',

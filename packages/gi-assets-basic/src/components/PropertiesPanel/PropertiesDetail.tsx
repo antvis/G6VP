@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, Empty, Row, Col, Tooltip } from 'antd';
 import { useImmer } from 'use-immer';
 import { FireTwoTone } from '@ant-design/icons';
+import $i18n from '../../i18n';
 const Search = Input.Search;
 
 interface PropertiesDetailProp {
@@ -78,6 +79,7 @@ const PropertiesDetail: React.FC<PropertiesDetailProp> = props => {
             }}
           />
         )}
+
         {content.map(item => {
           const { key, value, isObject, rank, isOutlier } = item;
 
@@ -85,12 +87,29 @@ const PropertiesDetail: React.FC<PropertiesDetailProp> = props => {
           let tip = '';
           if (rank !== undefined || isOutlier !== undefined) {
             let importance = 3 - (rank || 0);
+            tip = $i18n.get(
+              {
+                id: 'basic.components.PropertiesPanel.PropertiesDetail.CompareWithOtherAttribute',
+                dm: `相对于属性 “${key}” 的其他值而言，当前属性值 “${value}” 出现概率${
+                  importance > 1 ? '极低' : '较低'
+                }，可能含有大信息量，值得关注`,
+              },
+              { key: key, value: value, importance: $i18n.get({
+                id: `basic.components.PropertiesPanel.PropertiesDetail.${importance > 1 ? 'VeryLow' : 'RelativelyLow'}Importance`
+              })},
+            )
             tip = `相对于属性 “${key}” 的其他值而言，当前属性值 “${value}” 出现概率${
               importance > 1 ? '极低' : '较低'
             }，可能含有大信息量，值得关注`;
             if (isOutlier) {
               importance = 4;
-              tip = `属性 “${key}” 的大部分属性值具有相同出现次数，而当前属性值 “${value}” 出现此处大于平均出现次数，值得关注`;
+              tip = $i18n.get(
+                {
+                  id: 'basic.components.PropertiesPanel.PropertiesDetail.MostAttributeValuesOfThe',
+                  dm: '属性 “{key}” 的大部分属性值具有相同出现次数，而当前属性值 “{value}” 出现此处大于平均出现次数，值得关注',
+                },
+                { key: key, value: value },
+              );
             }
             stars = new Array(importance).fill(<FireTwoTone twoToneColor="#eb2f96" />);
           }

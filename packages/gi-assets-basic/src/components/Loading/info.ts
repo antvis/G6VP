@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'Loading',
-  name: '加载动画',
-  desc: '异步加载数据时，可展示加载动画',
+  name: $i18n.get({ id: 'basic.components.Loading.info.LoadAnimation', dm: '加载动画' }),
+  desc: $i18n.get({
+    id: 'basic.components.Loading.info.WhenLoadingDataAsynchronouslyThe',
+    dm: '异步加载数据时，可展示加载动画',
+  }),
   icon: 'icon-loading',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',

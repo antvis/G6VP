@@ -22,7 +22,6 @@ interface IContainersVisible {
 
 const GrailLayout: React.FC<FreeLayoutProps> = props => {
   const { graph } = useContext();
-
   const { ComponentCfgMap, assets, GISDK_ID, containers = [], children } = props;
 
   const {

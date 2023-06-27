@@ -5,6 +5,7 @@ import { Menu, message } from 'antd';
 import { useCallback } from 'react';
 import { IEdge, INode } from '@antv/g6';
 import { ContextMenuValue } from '@antv/graphin';
+import $i18n from '../../i18n';
 
 export interface IProps {
   contextmenu: ContextMenuValue;
@@ -107,11 +108,13 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
     });
     const { nodes, edges } = findCommonNeighbors(beginNodes, hop);
     if (nodes.size < 1) {
-      message.warn('没有发现共同邻居！');
+      message.warn(
+        $i18n.get({ id: 'basic.components.CommonNeighbor.Component.NoCommonNeighborsFound', dm: '没有发现共同邻居！' }),
+      );
       handleUpateHistory(
         beginNodes.map(node => node.getID()),
         false,
-        '没有发现共同邻居！',
+        $i18n.get({ id: 'basic.components.CommonNeighbor.Component.NoCommonNeighborsFound', dm: '没有发现共同邻居！' }),
       );
       return;
     }
@@ -134,8 +137,8 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
     updateHistory({
       componentId: 'CommonNeighbor',
       type: 'configure',
-      subType: '共同邻居',
-      statement: `${ids.join(', ')} 的共同邻居`,
+      subType: $i18n.get({ id: 'basic.components.CommonNeighbor.Component.CommonNeighbor', dm: '共同邻居' }),
+      statement: `${ids.join(', ')} ${$i18n.get({ id: 'basic.components.CommonNeighbor.Component.CommonNeighbor', dm: '共同邻居' })}`,
       success,
       errorMsg,
       params: { startIds: ids },
@@ -151,7 +154,14 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
       const { startIds } = controlledValues;
       const nodes = startIds.map(id => graph.findById(id));
       if (!nodes.length) {
-        handleUpateHistory(startIds, false, '当前画布未找到相关节点');
+        handleUpateHistory(
+          startIds,
+          false,
+          $i18n.get({
+            id: 'basic.components.CommonNeighbor.Component.NoRelatedNodeFoundOn',
+            dm: '当前画布未找到相关节点',
+          }),
+        );
         return;
       }
       findNeighbors(nodes);
@@ -165,7 +175,15 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
       eventKey="common-neighbor"
       onClick={handleClick}
     >
-      {hop > 1 ? `共同邻居(${hop}跳)` : '共同邻居'}
+      {hop > 1
+        ? $i18n.get(
+            {
+              id: 'basic.components.CommonNeighbor.Component.CommonNeighborHopJump',
+              dm: '共同邻居({hop}跳)',
+            },
+            { hop: hop },
+          )
+        : $i18n.get({ id: 'basic.components.CommonNeighbor.Component.CommonNeighbor', dm: '共同邻居' })}
     </Menu.Item>
   );
 };

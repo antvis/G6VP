@@ -1,10 +1,11 @@
 import { DIRECTION_OPTIONS, PLACEMENT_OPTIONS } from '../const';
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { GIAC_ITEMS = [] } = context;
 
   const schema = {
     GI_CONTAINER: {
-      title: '集成组件',
+      title: $i18n.get({ id: 'basic.components.Toolbar.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'array',
       enum: GIAC_ITEMS,
       'x-decorator': 'FormItem',
@@ -15,7 +16,7 @@ const registerMeta = context => {
       default: [],
     },
     direction: {
-      title: '展示方向',
+      title: $i18n.get({ id: 'basic.components.Toolbar.registerMeta.DisplayDirection', dm: '展示方向' }),
       type: 'string',
       'x-decorator': 'FormItem',
       ' x-component': 'Radio.Group',
@@ -23,7 +24,7 @@ const registerMeta = context => {
       default: 'vertical',
     },
     placement: {
-      title: '组件位置',
+      title: $i18n.get({ id: 'basic.components.Toolbar.registerMeta.ComponentLocation', dm: '组件位置' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -33,7 +34,7 @@ const registerMeta = context => {
       default: 'LT',
     },
     offset: {
-      title: '偏移量',
+      title: $i18n.get({ id: 'basic.components.Toolbar.registerMeta.Offset', dm: '偏移量' }),
       type: 'array',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',
