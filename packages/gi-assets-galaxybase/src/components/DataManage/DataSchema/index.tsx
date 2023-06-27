@@ -2,6 +2,7 @@ import { useContext, utils } from '@antv/gi-sdk';
 import Graphin from '@antv/graphin';
 import * as React from 'react';
 import CollapseCard from '../../../components-ui/CollapseCard';
+import $i18n from '../../../i18n';
 
 const { getSchemaGraph } = utils;
 
@@ -17,7 +18,7 @@ const DataSchema = () => {
 
   return (
     <div>
-      <CollapseCard title="图模型">
+      <CollapseCard title={$i18n.get({ id: 'galaxybase.DataManage.DataSchema.GraphModel', dm: '图模型' })}>
         <Graphin
           style={{ width: '322px', height: '300px', minHeight: '300px' }}
           data={schemaGraph}

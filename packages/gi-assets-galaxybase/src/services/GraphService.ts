@@ -1,19 +1,19 @@
 import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
-import NodeRSA from 'node-rsa'
-import qs from 'qs'
+import NodeRSA from 'node-rsa';
+import qs from 'qs';
 //rsa加密
+import $i18n from '../i18n';
 export const encryp = password => {
-    //公钥
-    var PUBLIC_KEY =
-        'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCXgctF+noMbOXv5c8hVef4vE6eK/mwnzEpMoHpZJjphuyTcowsD9DBWe+PrqZOEm1PomzD/TxOn9eMhn9O+w3yuuv8fipMs6OjU6Y+rKLrGJ8aCZpzd7Y5eewQS/0hOGmWtQlLdayJaUT0B0Fpz3yhR7u7vtVhKwbCYYfHxhg1PQIDAQAB'
-    //使用公钥加密
-    var encrypt = new NodeRSA('-----BEGIN PUBLIC KEY-----' + PUBLIC_KEY + '-----END PUBLIC KEY-----')
-    encrypt.setOptions({encryptionScheme: 'pkcs1'})
-    var encrypted = encrypt.encrypt(password,'base64')
-    return encrypted
-}
-
+  //公钥
+  var PUBLIC_KEY =
+    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCXgctF+noMbOXv5c8hVef4vE6eK/mwnzEpMoHpZJjphuyTcowsD9DBWe+PrqZOEm1PomzD/TxOn9eMhn9O+w3yuuv8fipMs6OjU6Y+rKLrGJ8aCZpzd7Y5eewQS/0hOGmWtQlLdayJaUT0B0Fpz3yhR7u7vtVhKwbCYYfHxhg1PQIDAQAB';
+  //使用公钥加密
+  var encrypt = new NodeRSA('-----BEGIN PUBLIC KEY-----' + PUBLIC_KEY + '-----END PUBLIC KEY-----');
+  encrypt.setOptions({ encryptionScheme: 'pkcs1' });
+  var encrypted = encrypt.encrypt(password, 'base64');
+  return encrypted;
+};
 
 export const connectGalaxybaseDataSource = async () => {
   const { username, password, HTTP_SERVICE_URL } = utils.getServerEngineContext();
@@ -21,7 +21,7 @@ export const connectGalaxybaseDataSource = async () => {
     method: 'POST',
     data: qs.stringify({
       username,
-      password:encryp(password),
+      password: encryp(password),
     }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -49,7 +49,7 @@ export const querySubGraphList = async () => {
       Authorization: GALAXYBASE_USER_TOKEN,
     },
   });
-  
+
   return result;
 };
 
@@ -86,7 +86,10 @@ export const queryGraphSchema = async params => {
       nodes: [],
       edges: [],
       code: 500,
-      message: `图模型查询失败: 没有获取到连接 Galaxybase 数据库的 Token 信息，请先连接 Galaxybase 数据库再进行尝试！`,
+      message: $i18n.get({
+        id: 'galaxybase.src.services.GraphService.FailedToQueryTheGraph',
+        dm: '图模型查询失败: 没有获取到连接 Galaxybase 数据库的 Token 信息，请先连接 Galaxybase 数据库再进行尝试！',
+      }),
     };
   }
 
@@ -109,7 +112,13 @@ export const queryGraphSchema = async params => {
     return {
       success: false,
       code: 500,
-      message: `图模型查询失败: ${e}`,
+      message: $i18n.get(
+        {
+          id: 'galaxybase.src.services.GraphService.GraphModelQueryFailedE',
+          dm: '图模型查询失败: {e}',
+        },
+        { e: e },
+      ),
       nodes: [],
       edges: [],
     };
