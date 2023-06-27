@@ -31,10 +31,12 @@ export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
 export { default as EngineServer } from './components/EngineServer';
+export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
 // export { default as Icon } from './components/Icon';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
+
 export type { IGraphData } from './process/schema';
 export type {
   AssetCategory,
