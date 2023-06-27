@@ -2,6 +2,7 @@ import type { IGIAC } from '@antv/gi-sdk';
 import { extra } from '@antv/gi-sdk';
 import * as React from 'react';
 import L7Map from './L7Map';
+import $i18n from '../i18n';
 const { GIAComponent } = extra;
 export interface MapModeProps {
   GIAC: IGIAC;
@@ -32,7 +33,9 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
     longitudeKey,
   } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
-  GIAC.title = visible ? '切换至网图' : '切换至地图';
+  GIAC.title = visible
+    ? $i18n.get({ id: 'scene.src.MapMode.Component.SwitchToNetmap', dm: '切换至网图' })
+    : $i18n.get({ id: 'scene.src.MapMode.Component.SwitchToMap', dm: '切换至地图' });
 
   return (
     <div>
@@ -43,6 +46,7 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
           setVisible(true);
         }}
       />
+
       {visible && (
         <L7Map
           setVisible={setVisible}

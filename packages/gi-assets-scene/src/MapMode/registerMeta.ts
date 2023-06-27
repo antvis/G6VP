@@ -1,5 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../i18n';
 const { GIAC_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_METAS);
 
@@ -18,7 +19,7 @@ export default context => {
   });
   return {
     visible: {
-      title: '默认显示',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.DefaultDisplay', dm: '默认显示' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -26,13 +27,13 @@ export default context => {
     },
     type: {
       type: 'string',
-      title: '地图类型',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.MapType', dm: '地图类型' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
         options: [
           {
-            label: '高德',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.Amap', dm: '高德' }),
             value: 'amap',
           },
           {
@@ -45,17 +46,17 @@ export default context => {
     },
     theme: {
       type: 'string',
-      title: '主题',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.Theme', dm: '主题' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
         options: [
           {
-            label: '明亮',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.Bright', dm: '明亮' }),
             value: 'light',
           },
           {
-            label: '黑暗',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.Darkness', dm: '黑暗' }),
             value: 'dark',
           },
         ],
@@ -64,20 +65,20 @@ export default context => {
     },
     minSize: {
       type: 'string',
-      title: '最小尺寸',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.MinimumSize', dm: '最小尺寸' }),
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       default: '20%',
     },
     maxSize: {
       type: 'string',
-      title: '最大尺寸',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.MaximumSize', dm: '最大尺寸' }),
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       default: '100%',
     },
     placement: {
-      title: '放置方位',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.PlacementOrientation', dm: '放置方位' }),
       type: 'string',
       default: 'RB',
       'x-decorator': 'FormItem',
@@ -86,25 +87,25 @@ export default context => {
         options: [
           {
             value: 'LT',
-            label: '左上 / top',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.TopLeftTop', dm: '左上 / top' }),
           },
           {
             value: 'RT',
-            label: '右上 / right',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.TopRightRight', dm: '右上 / right' }),
           },
           {
             value: 'LB',
-            label: '左下 / left',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.LowerLeftLeft', dm: '左下 / left' }),
           },
           {
             value: 'RB',
-            label: '右下 / bottom',
+            label: $i18n.get({ id: 'scene.src.MapMode.registerMeta.BottomRightBottom', dm: '右下 / bottom' }),
           },
         ],
       },
     },
     offset: {
-      title: '偏移距离',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.OffsetDistance', dm: '偏移距离' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',
@@ -116,7 +117,7 @@ export default context => {
     },
     longitudeKey: {
       type: 'string',
-      title: '经度字段',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.LongitudeField', dm: '经度字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
@@ -126,7 +127,7 @@ export default context => {
     },
     latitudeKey: {
       type: 'string',
-      title: '纬度字段',
+      title: $i18n.get({ id: 'scene.src.MapMode.registerMeta.LatitudeField', dm: '纬度字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {

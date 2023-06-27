@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Aggregation, DataType, FieldType, Selection, Speed, TimeGranularity } from '../types';
 import TimebarPanel from './panel';
 import { dataFilter, dataTransform, getTimeRange, timeParser } from './utils';
+import $i18n from '../../i18n';
 
 export interface TimebarControlType {
   aggregation: Aggregation;
@@ -67,7 +68,9 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   );
 
   if (isEmpty(renderData)) {
-    return <Empty description="请先进行图查询" />;
+    return (
+      <Empty description={$i18n.get({ id: 'scene.Timebar.control.PleaseQueryTheGraphFirst', dm: '请先进行图查询' })} />
+    );
   }
 
   // 删除筛选条件

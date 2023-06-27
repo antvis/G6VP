@@ -10,6 +10,7 @@ import AnimateContainer from '../../CommonCmponents/AnimateContainer';
 import PropertiesPanel from '../PropertiesPanel/Component';
 import ToolbarContainer from '../Toolbar';
 import './index.less';
+import $i18n from '../../i18n';
 const { deepClone } = extra;
 
 export interface MapModeProps {
@@ -129,8 +130,11 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
   }, [data]);
   if (geoNodesData.length === 0) {
     notification.warn({
-      message: '数据格式不合要求',
-      description: '请检查源数据是否有经纬度字段,或者检查「配置面板」，是否指定了经纬度坐标',
+      message: $i18n.get({ id: 'scene.MapMode.L7Map.TheDataFormatDoesNot', dm: '数据格式不合要求' }),
+      description: $i18n.get({
+        id: 'scene.MapMode.L7Map.CheckWhetherTheSourceData',
+        dm: '请检查源数据是否有经纬度字段,或者检查「配置面板」，是否指定了经纬度坐标',
+      }),
     });
     console.info('%c invalid data', 'color:red', 'nodes has no longitude or latitude field');
     setVisible(false);
