@@ -1,6 +1,7 @@
 import { Icon } from '@antv/gi-common-components';
 import { Button, Col, Row } from 'antd';
 import React from 'react';
+import $i18n from '../i18n';
 
 export interface EngineBannerProps {
   logo: string;
@@ -44,7 +45,7 @@ const EngineBanner: React.FC<EngineBannerProps> = props => {
               docs && window.open(docs);
             }}
           >
-            使用文档
+            {$i18n.get({ id: 'sdk.src.components.EngineBanner.UseDocuments', dm: '使用文档' })}
           </Button>
         </p>
       </Col>

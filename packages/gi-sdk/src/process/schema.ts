@@ -1,4 +1,5 @@
 import type { GIConfig, GIEdgeConfig, GINodeConfig } from '../typing';
+import $i18n from '../i18n';
 export const isObjectEmpty = obj => {
   return Object.keys(obj).length === 0;
 };
@@ -42,14 +43,20 @@ export interface GraphSchemaData {
     /** 默认的标签映射字段 */
     defaultLabelField?: string;
     /** 点边信息映射配置 */
-    nodeFieldMapping?: Record<string, {
-      name: string;
-      [k: string]: any
-    }>;
-    edgeFieldMapping?: Record<string, {
-      name: string;
-      [k: string]: any
-    }>;
+    nodeFieldMapping?: Record<
+      string,
+      {
+        name: string;
+        [k: string]: any;
+      }
+    >;
+    edgeFieldMapping?: Record<
+      string,
+      {
+        name: string;
+        [k: string]: any;
+      }
+    >;
   };
 }
 
@@ -186,11 +193,11 @@ const defaultNodeConfig = {
     color: '#ddd',
     label: [],
   },
-  name: '官方节点',
+  name: $i18n.get({ id: 'sdk.src.process.schema.OfficialNode', dm: '官方节点' }),
   order: -1,
   expressions: [],
   logic: true,
-  groupName: `默认样式`,
+  groupName: $i18n.get({ id: 'sdk.src.process.schema.DefaultStyle', dm: '默认样式' }),
 };
 const defaultEdgeConfig = {
   id: 'SimpleEdge',
@@ -199,11 +206,11 @@ const defaultEdgeConfig = {
     color: '#ddd',
     label: [],
   },
-  name: '官方边',
+  name: $i18n.get({ id: 'sdk.src.process.schema.OfficialSide', dm: '官方边' }),
   order: -1,
   expressions: [],
   logic: true,
-  groupName: `默认样式`,
+  groupName: $i18n.get({ id: 'sdk.src.process.schema.DefaultStyle', dm: '默认样式' }),
 };
 
 export const generatorStyleConfigBySchema = (
@@ -233,7 +240,7 @@ export const generatorStyleConfigBySchema = (
           label: [`${c.nodeType}^^${defaultLabelField}`],
           // label:[[c.nodeType,defaultLabelField]]
         },
-        name: '官方节点',
+        name: $i18n.get({ id: 'sdk.src.process.schema.OfficialNode', dm: '官方节点' }),
         expressions: [
           {
             name: c.nodeTypeKeyFromProperties,
@@ -241,6 +248,7 @@ export const generatorStyleConfigBySchema = (
             value: c.nodeType,
           },
         ],
+
         order: index,
         logic: true,
         groupName: `${String(c.nodeType).toUpperCase()} TYPE`,
@@ -264,7 +272,7 @@ export const generatorStyleConfigBySchema = (
           color: colorMap.get(c.sourceNodeType) || '#ddd',
           label: [],
         },
-        name: '官方边',
+        name: $i18n.get({ id: 'sdk.src.process.schema.OfficialSide', dm: '官方边' }),
         expressions: [
           {
             name: c.edgeTypeKeyFromProperties,
@@ -272,6 +280,7 @@ export const generatorStyleConfigBySchema = (
             value: c.edgeType,
           },
         ],
+
         order: index,
         logic: true,
         groupName: `${String(c.edgeType).toUpperCase()} TYPE`,
