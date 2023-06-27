@@ -2,7 +2,7 @@
   "scene.src.LargeGraph.Component.SwitchToD": "Switch to 2D",
   "scene.src.LargeGraph.Component.SwitchToD.1": "Switch to 3D",
   "scene.LargeGraph.Toolbar.SmallWindow": "Small window",
-  "scene.src.LargeGraph.info.DBigPicture": "3D big picture",
+  "scene.src.LargeGraph.info.DBigPicture": "3D large graph",
   "scene.src.LargeGraph.info.EnableDViewAndRight": "Enable 3D View and right-click node interaction",
   "scene.src.LargeGraph.registerMeta.DefaultDisplay": "Default display",
   "scene.src.LargeGraph.registerMeta.BackgroundColor": "Background color",
