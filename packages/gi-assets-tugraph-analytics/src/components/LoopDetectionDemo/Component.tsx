@@ -21,6 +21,7 @@ import {
   type LoopMsg,
   parseLoopData,
 } from './utils';
+import $i18n from '../../i18n';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -148,6 +149,7 @@ export default memo(({ url }: Props) => {
             };
           }),
         ],
+
         edges: [
           //  @ts-ignore
           ...draft.data.edges.filter(edge => {
@@ -227,7 +229,9 @@ export default memo(({ url }: Props) => {
 
   const send = (value: string) => {
     if (!isUrlLegal) {
-      message.error('URL 不可用');
+      message.error(
+        $i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.UrlUnavailable', dm: 'URL 不可用' }),
+      );
       return;
     }
     if (!testMode) {
@@ -292,13 +296,18 @@ export default memo(({ url }: Props) => {
           );
         }}
       />
+
       <div className={`${CLS_PREFIX}-controller`}>
         <TextArea
           value={inputValue}
           rows={4}
-          placeholder="点示例: . 1,name&#10;边示例: - 1,2,0.5 "
+          placeholder={$i18n.get({
+            id: 'tugraph-analytics.components.LoopDetectionDemo.Component.ExampleNameEdgeExample',
+            dm: '点示例: . 1,name\n边示例: - 1,2,0.5',
+          })}
           onChange={e => setInputValue(e.target.value)}
         />
+
         <div className={`${CLS_PREFIX}-controller-btn-group`}>
           <Button
             disabled={!connected}
@@ -306,22 +315,39 @@ export default memo(({ url }: Props) => {
             onClick={() => {
               if (!inputValue) return;
               if (!validateGraphData(inputValue)) {
-                message.error('输入不合法');
+                message.error(
+                  $i18n.get({
+                    id: 'tugraph-analytics.components.LoopDetectionDemo.Component.InvalidInput',
+                    dm: '输入不合法',
+                  }),
+                );
                 return;
               }
               if (inputValue) send(inputValue);
               setInputValue('');
             }}
           >
-            提交
+            {$i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.Submit', dm: '提交' })}
           </Button>
           <Dropdown
             trigger={['click']}
             disabled={!connected}
             menu={{
               items: [
-                { key: 'addNodes', label: '添加点' },
-                { key: 'addEdges', label: '添加边' },
+                {
+                  key: 'addNodes',
+                  label: $i18n.get({
+                    id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddPoint',
+                    dm: '添加点',
+                  }),
+                },
+                {
+                  key: 'addEdges',
+                  label: $i18n.get({
+                    id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddEdge',
+                    dm: '添加边',
+                  }),
+                },
                 // tugraph 方暂时未实现重置操作
                 // { key: 'reset', label: '重置操作' },
               ],
@@ -342,48 +368,91 @@ export default memo(({ url }: Props) => {
               },
             }}
           >
-            <Button>选项</Button>
+            <Button>
+              {$i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.Options', dm: '选项' })}
+            </Button>
           </Dropdown>
-          {socketRef.current && !connected && <Button onClick={connect}>重连</Button>}
+          {socketRef.current && !connected && (
+            <Button onClick={connect}>
+              {$i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.Reconnection', dm: '重连' })}
+            </Button>
+          )}
           <Button disabled={!connected} onClick={toggleTest}>
-            {testMode ? '退出' : '演示'}
+            {testMode
+              ? $i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.Exit', dm: '退出' })
+              : $i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.Component.Demo', dm: '演示' })}
           </Button>
         </div>
       </div>
       {testMode && (
         <>
-          <Text>使用内置数据进行演示</Text>
+          <Text>
+            {$i18n.get({
+              id: 'tugraph-analytics.components.LoopDetectionDemo.Component.UseBuiltInDataFor',
+              dm: '使用内置数据进行演示',
+            })}
+          </Text>
           <Steps
             direction="vertical"
             size="small"
             current={testStep}
             items={[
               {
-                title: '添加点数据',
-                description: '添加一组点到画布',
+                title: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddPointData',
+                  dm: '添加点数据',
+                }),
+                description: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddASetOfPoints',
+                  dm: '添加一组点到画布',
+                }),
                 cb: () => send(BASE_NODES_DATA),
               },
               {
-                title: '添加边数据',
-                description: '添加一组边到画布',
+                title: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddEdgeData',
+                  dm: '添加边数据',
+                }),
+                description: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddASetOfEdges',
+                  dm: '添加一组边到画布',
+                }),
                 cb: () => send(BASE_EDGES_DATA),
               },
               {
-                title: '环路检测',
-                description: '手动添加环路结果',
+                title: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.LoopDetection',
+                  dm: '环路检测',
+                }),
+                description: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.ManuallyAddLoopResults',
+                  dm: '手动添加环路结果',
+                }),
                 cb: () => {
                   addLoop('1,2,3,4,1');
                   addLoop('1,2,3,4,5,1');
                 },
               },
               {
-                title: '添加边',
-                description: '添加一条边到画布',
+                title: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddEdge',
+                  dm: '添加边',
+                }),
+                description: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.AddAnEdgeToThe',
+                  dm: '添加一条边到画布',
+                }),
                 cb: () => send('- 7,2,1'),
               },
               {
-                title: '环路检测',
-                description: '手动添加环路结果',
+                title: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.LoopDetection',
+                  dm: '环路检测',
+                }),
+                description: $i18n.get({
+                  id: 'tugraph-analytics.components.LoopDetectionDemo.Component.ManuallyAddLoopResults',
+                  dm: '手动添加环路结果',
+                }),
                 cb: () => {
                   addLoop('2,3,4,5,6,7,2');
                   addLoop('2,1,5,6,7,2');
@@ -395,6 +464,7 @@ export default memo(({ url }: Props) => {
                   {title}
                 </Button>
               ),
+
               description,
             }))}
           />
