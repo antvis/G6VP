@@ -1,7 +1,8 @@
 import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
+import $i18n from '../i18n';
 export const GremlinQuery = {
-  name: 'Gremlin 查询',
+  name: $i18n.get({ id: 'graphscope.src.services.GremlinQuery.GremlinQuery', dm: 'Gremlin 查询' }),
   service: async (params = {}) => {
     const { value } = params as any;
     const { GI_SITE_PROJECT_ID, HTTP_SERVICE_URL, gremlin_endpoint, GRAPHSCOPE_ACCOUNT } =

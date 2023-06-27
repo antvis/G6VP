@@ -1,4 +1,5 @@
 import { GraphSchemaData } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 
 export interface GraphData {
   nodes: {
@@ -16,7 +17,7 @@ export interface GraphData {
 }
 
 export const GI_SERVICE_INTIAL_GRAPH = {
-  name: '初始化查询',
+  name: $i18n.get({ id: 'graphscope.src.services.Initializer.InitializeAQuery', dm: '初始化查询' }),
   service: async (): Promise<GraphData> => {
     try {
       //@ts-ignore
@@ -32,7 +33,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 };
 
 export const GI_SERVICE_SCHEMA = {
-  name: '查询图模型',
+  name: $i18n.get({ id: 'graphscope.src.services.Initializer.QueryGraphModel', dm: '查询图模型' }),
   method: 'GET',
 
   service: async (): Promise<GraphSchemaData> => {
