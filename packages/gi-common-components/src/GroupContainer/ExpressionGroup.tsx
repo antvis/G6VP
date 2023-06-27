@@ -97,10 +97,10 @@ const ExpressionGroup: React.FunctionComponent<{
                     </Col>
                     <Col span={7}>
                       <Form.Item {...restField} name={[name, 'value']}>
-                        {propertyType === 'string' ? (
-                          <Input size="small" />
-                        ) : (
+                        {propertyType === 'number' ? (
                           <InputNumber size="small" style={{ width: '100%' }} />
+                        ) : (
+                          <Input size="small" />
                         )}
                       </Form.Item>
                     </Col>
