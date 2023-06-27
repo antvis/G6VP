@@ -5,7 +5,7 @@ export interface AssetPackage {
   version: string;
 }
 
-const loadCss = options => {
+export const loadCss = options => {
   const link = document.createElement('link');
   link.type = 'text/css';
   link.href = options.id || options.url;
@@ -15,7 +15,7 @@ const loadCss = options => {
   document.head.append(link);
 };
 
-const loadJS = async (options: AssetPackage) => {
+export const loadJS = async (options: AssetPackage) => {
   return new Promise(resolve => {
     // load js
     const script = document.createElement('script');
@@ -41,7 +41,7 @@ const loadJS = async (options: AssetPackage) => {
   });
 };
 
-const loader = async (options: AssetPackage[]) => {
+export const loader = async (options: AssetPackage[]) => {
   return Promise.all([
     ...options.map(opt => {
       const asset = window[opt.global];

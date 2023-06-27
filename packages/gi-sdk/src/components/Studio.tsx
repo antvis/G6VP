@@ -1,6 +1,7 @@
 import * as React from 'react';
 import GISDK from '../GISDK';
 import { getCombineServices, loaderCombinedAssets } from '../process';
+import { loader } from '../process/loaderAssets';
 
 export interface Project {
   dataset: {
@@ -19,7 +20,12 @@ export interface Project {
     themes: {};
   };
   deps: {
-    [pkgName: string]: string;
+    [key: string]: {
+      global: string;
+      name: string;
+      url: string;
+      version: string;
+    };
   };
   GI_ASSETS_PACKAGES: {
     [key: string]: {
@@ -47,9 +53,11 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   const starStudio = async () => {
     try {
       const { data } = await service(id);
-      const { dataset, workbook, GI_ASSETS_PACKAGES } = data;
+      const { dataset, workbook, GI_ASSETS_PACKAGES, deps } = data;
       const { projectConfig } = workbook;
       const { engineContext } = dataset;
+      // 请求依赖资源包
+      await loader(Object.values(deps));
       // 根据包名，请求资产
       const assets = await loaderCombinedAssets(Object.values(GI_ASSETS_PACKAGES));
       // 设置引擎上下文
