@@ -127,9 +127,6 @@ function link() {
       }
     });
   }
-  if (!fs.existsSync(siteNodeModulePath)) {
-    fs.symlinkSync(targetPath, siteNodeModulePath);
-  }
 
   // 校验是否存在 build:es 命令
   if (!srcPkg?.scripts['build:es']) {

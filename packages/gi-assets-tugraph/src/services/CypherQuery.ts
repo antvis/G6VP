@@ -2,7 +2,8 @@ import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import request from 'umi-request';
 import $i18n from '../i18n';
-
+import { refreshToken } from './TuGraphService';
+ 
 export const CypherQuery = {
   name: $i18n.get({ id: 'tugraph.src.services.CypherQuery.GraphStatementQuery', dm: '图语句查询' }),
   service: async (params = {}) => {
@@ -44,6 +45,7 @@ export const CypherQuery = {
       };
     }
     if (data.error_message) {
+
       notification.error({
         message: $i18n.get({
           id: 'tugraph.src.services.CypherQuery.EngineAuthenticationFailedCheckThe',
@@ -51,6 +53,8 @@ export const CypherQuery = {
         }),
         description: data.error_message,
       });
+ 
+      refreshToken();
       return {
         nodes: [],
         edges: [],

@@ -1,8 +1,8 @@
 import React from 'react';
 import Banner from '../components/Banner/index';
 import Feature from '../components/Feature/index';
-import RoleSwitch from '../components/RoleSwitch/index';
 import SwitchContainer from '../components/RoleSwitch/SwitchContainer';
+import RoleSwitch from '../components/RoleSwitch/index';
 import { analyst, developer, roles } from './const';
 import './index.less';
 

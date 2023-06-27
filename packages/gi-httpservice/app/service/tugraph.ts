@@ -1,8 +1,8 @@
 import { Service } from 'egg';
+import fs from 'fs';
 import { getNodeIds, getNodeIdsByEids } from '../tugraph.utils';
 import { readTuGraphConfig } from '../util';
 import { ILanguageQueryParams, INeighborsParams } from './serviceInterface';
-const fs = require('fs');
 
 class TuGraphService extends Service {
   async connect(username, password, serverUrl) {
@@ -32,6 +32,34 @@ class TuGraphService extends Service {
       };
     }
 
+    return {
+      data: result.data,
+      code: 200,
+      success: true,
+    };
+  }
+  async refresh(params) {
+    const { authorization } = params;
+
+    const { engineServerURL } = readTuGraphConfig();
+
+    const result = await this.ctx.curl(`${engineServerURL}/refresh`, {
+      headers: {
+        'content-type': 'application/json',
+        Authorization: authorization,
+      },
+      method: 'POST',
+      timeout: [30000, 50000],
+      dataType: 'json',
+    });
+
+    if (result.status !== 200) {
+      return {
+        success: false,
+        code: result.status,
+        data: result.data,
+      };
+    }
     return {
       data: result.data,
       code: 200,
@@ -169,11 +197,11 @@ class TuGraphService extends Service {
    */
   async queryNeighbors(params: INeighborsParams) {
     const { ids, graphName = '', sep = 1, authorization = '', limit = 100 } = params;
-    let cypher = `match(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN n, m LIMIT ${limit}`;
+    let cypher = `match p=(n)-[*..${sep}]-(m) WHERE id(n)=${ids[0]} RETURN p LIMIT ${limit}`;
 
     if (ids.length > 1) {
       // 查询两度关系，需要先查询节点，再查询子图
-      cypher = `match(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN n, m LIMIT ${limit}`;
+      cypher = `match p=(n)-[*..${sep}]-(m) WHERE id(n) in [${ids}] RETURN p LIMIT ${limit}`;
     }
 
     const responseData = await this.querySubGraphByCypher(cypher, graphName, authorization);

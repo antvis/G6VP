@@ -1,15 +1,13 @@
 import { FieldStringOutlined, NumberOutlined } from '@ant-design/icons';
-import { Select } from 'antd';
-import React, { useState, useMemo } from 'react';
-import './index.less';
+import { Select, type SelectProps } from 'antd';
+import React, { useMemo, useState } from 'react';
 
-const { Option, OptGroup } = Select;
+type SchemaDatum = ({ nodeType: string } | { edgeType: string }) & {
+  properties: Record<string, string>;
+};
 
-export interface GroupSelectProps {
-  value?: string;
-  onChange?: (color: string) => void;
-  schemaData: any;
-  mode?: 'multiple' | 'tags' | undefined;
+export interface GroupSelectProps extends SelectProps {
+  schemaData: SchemaDatum[];
 }
 
 const iconMap = {
@@ -20,12 +18,15 @@ const iconMap = {
 
 const match = (a: string, b: string) => a.toLocaleLowerCase().includes(b.toLocaleLowerCase());
 
-const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData, onChange }) => {
+const getTypeName = (sd: SchemaDatum) => ('nodeType' in sd ? sd.nodeType : sd.edgeType);
+
+const GroupSelect: React.FC<GroupSelectProps> = ({ schemaData, onSearch, ...selectProps }) => {
   const [searchValue, setSearchValue] = useState('');
-  const options = useMemo(() => {
+
+  const groups = useMemo(() => {
     return schemaData
       .map(d => {
-        if (match(d.nodeType || d.edgeType, searchValue)) return d;
+        if (match(getTypeName(d), searchValue)) return d;
         const properties = Object.entries(d.properties).filter(([key]) => match(key, searchValue));
         return {
           ...d,
@@ -35,40 +36,34 @@ const GroupSelect: React.FC<GroupSelectProps> = ({ value = [], mode, schemaData,
       .filter(d => Object.keys(d.properties).length > 0);
   }, [schemaData, searchValue]);
 
+  const options = useMemo(() => {
+    return groups.map(group => {
+      const { properties } = group;
+      const typeName = getTypeName(group);
+      return {
+        label: typeName,
+        options: Object.entries(properties).map(([property, type]) => ({
+          label: (
+            <>
+              {iconMap[type]}
+              {property}
+            </>
+          ),
+          value: `${typeName}^^${property}`,
+        })),
+      };
+    });
+  }, [groups]);
+
   return (
-    <div className="group-select-container">
-      <Select
-        defaultValue={Array.from(value) as any}
-        style={{ width: 200 }}
-        onChange={onChange}
-        mode={mode}
-        onSearch={setSearchValue}
-      >
-        {schemaData.map(d => {
-          const properties = d.properties;
-          const current: any = [];
-          for (const p in properties) {
-            current.push({
-              key: `${d.nodeType || d.edgeType}^^${p}`,
-              value: p,
-              type: properties[p],
-            });
-          }
-          return (
-            <OptGroup label={d.nodeType || d.edgeType}>
-              {current.map(sd => {
-                return (
-                  <Option value={sd.key}>
-                    {iconMap[sd.type]}
-                    {sd.value}
-                  </Option>
-                );
-              })}
-            </OptGroup>
-          );
-        })}
-      </Select>
-    </div>
+    <Select
+      {...selectProps}
+      options={options}
+      onSearch={value => {
+        setSearchValue(value);
+        return onSearch?.(value);
+      }}
+    />
   );
 };
 

@@ -3,9 +3,20 @@ import { message } from 'antd';
 import request from 'umi-request';
 import $i18n from '../i18n';
 
+import { CypherQuery } from './CypherQuery';
+import { refreshToken } from './TuGraphService';
+
 export const GI_SERVICE_INTIAL_GRAPH = {
   name: $i18n.get({ id: 'tugraph.src.services.Initializer.InitializeAQuery', dm: '初始化查询' }),
   service: async () => {
+    const cypher = utils.searchParamOf('cypher');
+
+    if (cypher) {
+      return CypherQuery.service({
+        value: cypher,
+        limit: 500,
+      });
+    }
     return new Promise(resolve => {
       resolve({
         nodes: [],
@@ -42,29 +53,20 @@ export const GI_SERVICE_SCHEMA = {
           graphName: CURRENT_SUBGRAPH,
         },
       });
-      const { success, data } = result;
-      // if (success) {
-      //   res = data;
-      // }
-      // if (data.code === 401) {
-      //   notification.error({
-      //     message: '认证失败：Unauthorized',
-      //     description: data.data.error_message,
-      //   });
-      //   res = {
-      //     nodes: [],
-      //     edges: [],
-      //   };
-      // }
-      if (success) {
-        return data;
+
+      const { success, data, code } = result;
+
+      if (!success) {
+        if (code === 401) {
+          refreshToken();
+        }
+        return {
+          nodes: [],
+          edges: [],
+        };
       }
-      return {
-        nodes: [],
-        edges: [],
-      };
+      return data;
     } catch (error) {
-      console.error('error', error);
       return {
         nodes: [],
         edges: [],
