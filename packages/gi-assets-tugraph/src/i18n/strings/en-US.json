@@ -1,0 +1,19 @@
+{
+  "tugraph.src.services.CypherQuery.GraphStatementQuery": "Graph statement query",
+  "tugraph.src.services.CypherQuery.FailedToExecuteCypherQuery": "Failed to execute Cypher Query",
+  "tugraph.src.services.CypherQuery.QueryFailedMessage": "Query failed:{message}",
+  "tugraph.src.services.CypherQuery.EngineAuthenticationFailedCheckThe": "Engine authentication failed: check the dataset",
+  "tugraph.src.services.Engine.HighPerformanceGraphDatabase": "High performance graph database",
+  "tugraph.src.services.Engine.TugraphIsALargeScale": "TuGraph is a large-scale graph computing system independently developed by Ant Financial Group, providing graph database engine and graph analysis engine. Its main features are large data storage and computing, high throughput, and flexible APIs. It also supports efficient online transaction processing (OLTP) and online analytical processing (OLAP).",
+  "tugraph.src.services.Initializer.InitializeAQuery": "Initialize a query",
+  "tugraph.src.services.Initializer.QueryGraphModel": "Query graph model",
+  "tugraph.src.services.Initializer.TugraphDataSourceConnectionFailed": "TuGraph data source connection failed: the Token information of the database connected to TuGraph is not obtained. Please connect to the database TuGraph before trying!",
+  "tugraph.src.services.NeighborsQuery.NeighborQuery": "Neighbor query",
+  "tugraph.src.services.Server.HighPerformanceGraphDatabase": "High performance graph database",
+  "tugraph.src.services.Server.TugraphIsALargeScale": "TuGraph is a large-scale graph computing system independently developed by Ant Financial Group, providing graph database engine and graph analysis engine. Its main features are large data storage and computing, high throughput, and flexible APIs. It also supports efficient online transaction processing (OLTP) and online analytical processing (OLAP).",
+  "tugraph.src.services.TuGraphService.FailedToConnectToTugraph": "Failed to connect to TuGraph database",
+  "tugraph.src.services.TuGraphService.CheckWhetherTheAntvisGi": "✅Check whether the antvis/gi-httpservice image is started <br />✅Check whether the {engineId} database address, account, and password are correct.",
+  "tugraph.src.services.TuGraphService.ConnectionToDatabaseTugraphSucceeded": "Connection to database TuGraph succeeded",
+  "tugraph.src.services.TuGraphService.ContinueToSelectSubgraphsAnd": "Continue to select subgraphs and enter analysis.",
+  "tugraph.src.services.TugraphEngineService": "TuGraph engine service"
+}
