@@ -1,5 +1,6 @@
 import { InputNumber, Space } from 'antd';
 import React from 'react';
+import $i18n from '../../i18n';
 
 interface IOffsetProps {
   value: number[];
@@ -26,8 +27,9 @@ const Offset: React.FC<IOffsetProps> = props => {
           //@ts-ignore
           props.onChange([v, y]);
         }}
-        placeholder="X轴偏移量"
+        placeholder={$i18n.get({ id: 'common-components.FormilyForm.Offset.XAxisOffset', dm: 'X轴偏移量' })}
       />
+
       <InputNumber
         size="small"
         //defaultValue={defaultY}
@@ -38,7 +40,7 @@ const Offset: React.FC<IOffsetProps> = props => {
           //@ts-ignore
           props.onChange([x, v]);
         }}
-        placeholder="Y轴偏移量"
+        placeholder={$i18n.get({ id: 'common-components.FormilyForm.Offset.YAxisOffset', dm: 'Y轴偏移量' })}
       />
     </Space>
   );

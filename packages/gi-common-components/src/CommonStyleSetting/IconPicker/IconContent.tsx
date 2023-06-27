@@ -2,6 +2,7 @@ import { Button, Input, Menu, Modal } from 'antd';
 import React from 'react';
 import { Icon as MyIcon } from '../../Icon';
 import font from '../../Icon/font.json';
+import $i18n from '../../i18n';
 const { Search } = Input;
 interface IconContentProps {
   activeCategory: string;
@@ -26,6 +27,7 @@ const basic = [
   'pause',
   'contacts',
 ];
+
 const device = [
   'desktop',
   'wifi',
@@ -50,6 +52,7 @@ const company = [
   'windows',
   'zhihu',
 ];
+
 const badges = [
   'pushpin',
   'star',
@@ -68,6 +71,7 @@ const badges = [
   'lock',
   'unlock',
 ];
+
 const getIconOptions = (icons: string[]) => {
   return icons.map(icon => {
     return {
@@ -79,22 +83,22 @@ const getIconOptions = (icons: string[]) => {
 const category = [
   {
     id: 'basic',
-    name: '基础',
+    name: $i18n.get({ id: 'common-components.CommonStyleSetting.IconPicker.IconContent.Foundation', dm: '基础' }),
     options: getIconOptions(basic),
   },
   {
     id: 'device',
-    name: '设备',
+    name: $i18n.get({ id: 'common-components.CommonStyleSetting.IconPicker.IconContent.Equipment', dm: '设备' }),
     options: getIconOptions(device),
   },
   {
     id: 'company',
-    name: '公司',
+    name: $i18n.get({ id: 'common-components.CommonStyleSetting.IconPicker.IconContent.Company', dm: '公司' }),
     options: getIconOptions(company),
   },
   {
     id: 'badges',
-    name: '徽标',
+    name: $i18n.get({ id: 'common-components.CommonStyleSetting.IconPicker.IconContent.Logo', dm: '徽标' }),
     options: getIconOptions(badges),
   },
 ];
@@ -139,7 +143,10 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
     <div>
       <>
         <Button size="small" onClick={handleClick} type="primary" style={{ width: '100%', marginBottom: '8px' }}>
-          查看全部图标
+          {$i18n.get({
+            id: 'common-components.CommonStyleSetting.IconPicker.IconContent.ViewAllIcons',
+            dm: '查看全部图标',
+          })}
         </Button>
       </>
       {/* <Divider /> */}
@@ -176,7 +183,10 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
       </div>
       <Modal
         width={'100%'}
-        title="全部图标"
+        title={$i18n.get({
+          id: 'common-components.CommonStyleSetting.IconPicker.IconContent.AllIcons',
+          dm: '全部图标',
+        })}
         open={open}
         onCancel={() => {
           setOpen(false);

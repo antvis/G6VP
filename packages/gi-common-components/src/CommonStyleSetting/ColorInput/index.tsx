@@ -2,6 +2,7 @@ import { Input, Popover } from 'antd';
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface IColorInputProps {
   value?: string;
@@ -20,7 +21,10 @@ const ColorInput: React.FC<IColorInputProps> = props => {
           setColor(e.target.value);
           props.onChange?.(e.target.value);
         }}
-        placeholder="请选择颜色"
+        placeholder={$i18n.get({
+          id: 'common-components.CommonStyleSetting.ColorInput.PleaseSelectAColor',
+          dm: '请选择颜色',
+        })}
         prefix={
           <Popover
             placement="topLeft"
