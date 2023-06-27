@@ -30,6 +30,8 @@
     "postpublish": "tnpm sync @antv/gi-assets-janusgraph"
   },
   "dependencies": {
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@antv/gi-sdk": "workspace:*",
     "umi-request": "^1.4.0"
   },
@@ -38,5 +40,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": "git@github.com:antvis/G6VP.git"
 }
