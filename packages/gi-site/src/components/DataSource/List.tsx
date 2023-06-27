@@ -1,6 +1,7 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Card } from 'antd';
 import React from 'react';
+import $i18n from '../../i18n';
 import './index.less';
 
 interface SidebarProps {
@@ -24,17 +25,17 @@ const SideList: React.FunctionComponent<SidebarProps> = props => {
     <div className="gi-services-sidebar">
       <Card
         bordered={false}
-        title="自定义数据服务"
+        title={$i18n.get({ id: 'gi-site.components.DataSource.List.CustomDataService', dm: '自定义数据服务' })}
         extra={
           <Button size="small" onClick={handleAdd} icon={<PlusOutlined />} type="dashed">
-            新增
+            {$i18n.get({ id: 'gi-site.components.DataSource.List.Add', dm: '新增' })}
           </Button>
         }
       >
         <ul>
           {/* <li key="plus" onClick={handleAdd} className="plus">
-            自定义数据服务 <PlusOutlined />
-          </li> */}
+             自定义数据服务 <PlusOutlined />
+            </li> */}
           {options.map(opt => {
             const { id } = opt;
             const isActive = id === activeId;

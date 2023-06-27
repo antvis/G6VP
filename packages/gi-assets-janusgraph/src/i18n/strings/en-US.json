@@ -1,0 +1,14 @@
+{
+  "janusgraph.src.services.Engine.JanusgraphIsAHighlyScalable": "JanusGraph is a highly scalable graph database optimized for storing and querying large graphs with billions of vertices and edges distributed in multi-machine clusters. JanusGraph is a transactional database that supports thousands of concurrent users, complex traversal, and graph analysis queries.",
+  "janusgraph.src.services.EngineService.FailedToConnectToThe": "Failed to connect to the database",
+  "janusgraph.src.services.EngineService.CheckWhetherAntvisGiHttpservice": "✅Check whether antvis/gi-httpservice proxy service is started <br />✅Check whether the database address, account, and password are correct.",
+  "janusgraph.src.services.EngineService.DatabaseConnectionSucceeded": "Database Connection succeeded",
+  "janusgraph.src.services.EngineService.ContinueToSelectSubgraphsAnd": "Continue to select subgraphs and enter analysis.",
+  "janusgraph.src.services.GremlinQuery.GremlinCypherQuery": "Gremlin Cypher query",
+  "janusgraph.src.services.Initializer.InitializeAQuery": "Initialize a query",
+  "janusgraph.src.services.Initializer.QueryGraphModel": "Query graph model",
+  "janusgraph.src.services.NeighborsQuery.NeighborQuery": "Neighbor query",
+  "janusgraph.src.services.JanusgraphEngineService": "JanusGraph engine service",
+  "janusgraph.src.services.TheJanusgraphGraphDataAsset": "The JanusGraph graph data asset package provided by the G6VP team by default",
+  "janusgraph.src.services.GVpTeam": "G6VP team"
+}

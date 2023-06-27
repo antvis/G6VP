@@ -6,6 +6,7 @@ import TimebarAnimation from '../animation';
 import { TimebarChart } from '../chart';
 import { getFormatData, getInitTimeRange, getTimeFormat } from './helper';
 import './index.less';
+import $i18n from '../../../i18n';
 
 type Props = {
   aggregation: Aggregation;
@@ -56,10 +57,22 @@ const TimebarPanel: React.FC<Props> = props => {
 
   const selectionTime = useMemo(() => {
     if (currentSelectedRange) {
-      return `${currentSelectedRange[0]} 至 ${currentSelectedRange[1]}`;
+      return $i18n.get(
+        {
+          id: 'scene.control.panel.CurrentselectedrangeToCurrentselectedrange',
+          dm: '{currentSelectedRangeStart} 至 {currentSelectedRangeEnd}',
+        },
+        { currentSelectedRangeStart: currentSelectedRange[0], currentSelectedRangeEnd: currentSelectedRange[1] },
+      );
     }
 
-    return `${dataTimes.times[0]} 至 ${dataTimes.times[1]}`;
+    return $i18n.get(
+      {
+        id: 'scene.control.panel.DatatimestimesToDatatimestimes',
+        dm: '{dataTimesTimesStart} 至 {dataTimesTimesEnd}',
+      },
+      { dataTimesTimesStart: dataTimes.times[0], dataTimesTimesEnd: dataTimes.times[1] },
+    );
   }, [currentSelectedRange, dataTimes.times]);
 
   // 移动框选事件

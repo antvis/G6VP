@@ -27,6 +27,8 @@
     "postpublish": "tnpm sync @antv/gi-assets-tugraph-analytics"
   },
   "dependencies": {
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
     "ahooks": "^3.7.7"
@@ -39,5 +41,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": "git@github.com:antvis/G6VP.git"
 }

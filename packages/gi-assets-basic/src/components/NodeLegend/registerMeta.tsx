@@ -1,4 +1,5 @@
 import { PLACEMENT_OPTIONS } from '../const';
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { data, schemaData } = context;
   let keys = ['id'];
@@ -17,7 +18,7 @@ const registerMeta = context => {
 
   const schema = {
     sortKey: {
-      title: '映射字段',
+      title: $i18n.get({ id: 'basic.components.NodeLegend.registerMeta.MappingField', dm: '映射字段' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -25,14 +26,14 @@ const registerMeta = context => {
       enum: options,
     },
     textColor: {
-      title: '字体颜色',
+      title: $i18n.get({ id: 'basic.components.NodeLegend.registerMeta.FontColor', dm: '字体颜色' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'ColorInput',
       default: '#ddd',
     },
     placement: {
-      title: '组件位置',
+      title: $i18n.get({ id: 'basic.components.NodeLegend.registerMeta.ComponentLocation', dm: '组件位置' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -40,7 +41,7 @@ const registerMeta = context => {
       default: 'LB',
     },
     offset: {
-      title: '偏移量',
+      title: $i18n.get({ id: 'basic.components.NodeLegend.registerMeta.Offset', dm: '偏移量' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',

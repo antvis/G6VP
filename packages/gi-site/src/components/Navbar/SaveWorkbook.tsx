@@ -6,8 +6,9 @@ import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import * as ProjectServices from '../../services/project';
 import type { IProject } from '../../services/typing';
-
+import $i18n from '../../i18n';
 import './index.less';
+
 interface SaveWorkbookProps {
   workbookId: string;
 }
@@ -33,7 +34,7 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
     // TODO：case 的需要保存到另一个表中
     if (origin.type === 'case') {
       const workbookId = await ProjectServices.create({
-        name: origin?.name + '_复制',
+        name: origin?.name + $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.Copy', dm: '_复制' }),
         type: 'project',
         activeAssetsKeys,
         projectConfig: config,
@@ -44,7 +45,7 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
           draft.isSave = true;
         });
         notification.success({
-          message: '保存成功',
+          message: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SavedSuccessfully', dm: '保存成功' }),
         });
         return;
       }
@@ -63,13 +64,13 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       /** 临时的兼容处理，需要重新设计 */
       const {
         id = 'SegmentedLayout',
-        name = '分段布局',
+        name = $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SegmentLayout', dm: '分段布局' }),
         type = 'GICC_LAYOUT',
         props = {
           containers: [
             {
               id: 'GI_CONTAINER_SIDE',
-              name: '侧边容器',
+              name: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SideContainer', dm: '侧边容器' }),
               required: true,
               GI_CONTAINER: ['FilterPanel'],
               display: true,
@@ -78,13 +79,13 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
         },
       } = pageLayout || {
         id: 'SegmentedLayout',
-        name: '分段布局',
+        name: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SegmentLayout', dm: '分段布局' }),
         type: 'GICC_LAYOUT',
         props: {
           containers: [
             {
               id: 'GI_CONTAINER_SIDE',
-              name: '侧边容器',
+              name: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SideContainer', dm: '侧边容器' }),
               required: true,
               GI_CONTAINER: ['FilterPanel'],
               display: true,
@@ -108,20 +109,20 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
           draft.isSave = true;
         });
         notification.success({
-          message: '保存成功',
+          message: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SavedSuccessfully', dm: '保存成功' }),
         });
         return;
       }
     }
     notification.error({
-      message: '保存失败',
+      message: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SaveFailed', dm: '保存失败' }),
     });
   };
 
   return (
-    <Tooltip title="保存画布">
+    <Tooltip title={$i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SaveCanvas', dm: '保存画布' })}>
       <Button icon={<SaveOutlined />} onClick={handleSave} size="small" type="text">
-        保存
+        {$i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.Save', dm: '保存' })}
       </Button>
     </Tooltip>
   );

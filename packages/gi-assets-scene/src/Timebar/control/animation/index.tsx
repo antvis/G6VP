@@ -12,6 +12,7 @@ import type { Selection, Speed, TimeWindowType } from '../../types';
 import { playbackSpeedList, timeWindowList } from './constants';
 import { getKeySteps, getTimeInterval } from './helper';
 import './index.less';
+import $i18n from '../../../i18n';
 
 type Props = {
   className?: string;
@@ -171,7 +172,13 @@ const TimebarAnimation: React.FC<Props> = props => {
       </Popover>
       <div className="content-btn-item" onClick={onIsAnimationChange}>
         <Button type="link" onClick={onIsAnimationChange} disabled={!selection}>
-          <Tooltip title={selection ? '' : '请先框选区间'}>
+          <Tooltip
+            title={
+              selection
+                ? ''
+                : $i18n.get({ id: 'scene.control.animation.PleaseBoxTheSelectionArea', dm: '请先框选区间' })
+            }
+          >
             {isAnimation ? <PauseOutlined /> : <CaretRightOutlined />}
           </Tooltip>
         </Button>

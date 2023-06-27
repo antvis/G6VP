@@ -2,6 +2,8 @@ import { GIConfig } from '@antv/gi-sdk';
 import { produce } from 'immer';
 import localforage from 'localforage';
 import React from 'react';
+import $i18n from '../../i18n';
+
 //@ts-ignore
 window.localforage = localforage;
 interface ThemeVars {
@@ -14,25 +16,25 @@ interface ThemeVars {
 const THEME_VARS = {
   light: {
     id: 'light',
-    name: '清新蓝',
+    name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.FreshBlue', dm: '清新蓝' }),
     textColor: '#000',
     backgroundColor: '#fff',
   },
   ali: {
     id: 'ali',
-    name: '暖阳橙',
+    name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.WarmSunOrange', dm: '暖阳橙' }),
     textColor: '#000',
     backgroundColor: '#fff',
   },
   green: {
     id: 'ali',
-    name: '芒种绿',
+    name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.MangoGreen', dm: '芒种绿' }),
     textColor: '#000',
     backgroundColor: '#fff',
   },
   dark: {
     id: 'dark',
-    name: '暗夜黑',
+    name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.DarkNightBlack', dm: '暗夜黑' }),
     textColor: '#fff',
     backgroundColor: '#1f1f1f',
   },
@@ -97,7 +99,7 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(lightConfig),
           nodesConfig: lightConfig.nodes,
           edgesConfig: lightConfig.edges,
-          name: '清新蓝',
+          name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.FreshBlue', dm: '清新蓝' }),
           id: 'light',
           primaryColor: 'rgb(48, 86, 227)',
         };
@@ -105,7 +107,7 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(aliConfig),
           nodesConfig: lightConfig.nodes,
           edgesConfig: lightConfig.edges,
-          name: '暖阳橙',
+          name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.WarmSunOrange', dm: '暖阳橙' }),
           id: 'ali',
           primaryColor: 'rgb(255, 106, 0)',
         };
@@ -113,7 +115,7 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(darkConfig),
           nodesConfig: darkConfig.nodes,
           edgesConfig: darkConfig.edges,
-          name: '暗夜黑',
+          name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.DarkNightBlack', dm: '暗夜黑' }),
           id: 'dark',
           primaryColor: 'rgb(31, 31, 31)',
         };
@@ -121,7 +123,7 @@ const useTheme = (context, updateState) => {
           canvasConfig: getCanvasStyle(greenConfig),
           nodesConfig: greenConfig.nodes,
           edgesConfig: greenConfig.edges,
-          name: '芒种绿',
+          name: $i18n.get({ id: 'gi-site.components.ThemeVars.useTheme.MangoGreen', dm: '芒种绿' }),
           id: 'green',
           primaryColor: 'rgb(39,118,88)',
         };

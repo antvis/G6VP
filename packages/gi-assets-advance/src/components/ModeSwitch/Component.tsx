@@ -4,6 +4,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { useImmer } from 'use-immer';
 import type { ContainerProps } from './typing';
+import $i18n from '../../i18n';
 
 export interface ModeSwitchProps extends ContainerProps {
   GI_CONTAINER: string[];
@@ -44,7 +45,7 @@ const ModeSwitch: React.FunctionComponent<ModeSwitchProps> = props => {
   // 画布模式默认存在
   options.unshift({
     value: 'CanvasMode',
-    label: '画布模式',
+    label: $i18n.get({ id: 'advance.components.ModeSwitch.Component.CanvasMode', dm: '画布模式' }),
   });
 
   const onChange = value => {

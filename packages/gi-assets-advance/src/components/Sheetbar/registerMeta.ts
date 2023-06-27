@@ -1,4 +1,4 @@
-// import { extra } from '@antv/gi-sdk';
+import $i18n from '../../i18n'; // import { extra } from '@antv/gi-sdk';
 // const { deepClone, GIAC_METAS } = extra;
 
 // const metas = deepClone(GIAC_METAS);
@@ -10,7 +10,7 @@
 const registerMeta = () => {
   return {
     placement: {
-      title: '放置方位',
+      title: $i18n.get({ id: 'advance.components.Sheetbar.registerMeta.PlacementOrientation', dm: '放置方位' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -18,18 +18,18 @@ const registerMeta = () => {
         options: [
           {
             value: 'top',
-            label: '顶部',
+            label: $i18n.get({ id: 'advance.components.Sheetbar.registerMeta.Top', dm: '顶部' }),
           },
           {
             value: 'bottom',
-            label: '底部',
+            label: $i18n.get({ id: 'advance.components.Sheetbar.registerMeta.Bottom', dm: '底部' }),
           },
         ],
       },
       default: 'bottom',
     },
     height: {
-      title: '页签高度',
+      title: $i18n.get({ id: 'advance.components.Sheetbar.registerMeta.TabHeight', dm: '页签高度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',

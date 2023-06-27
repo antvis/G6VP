@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'Toolbar',
-  name: '工具栏',
-  desc: '画布工具栏，可集成画布交互组件',
+  name: $i18n.get({ id: 'basic.components.Toolbar.info.Toolbar', dm: '工具栏' }),
+  desc: $i18n.get({
+    id: 'basic.components.Toolbar.info.CanvasToolbarWhichCanIntegrate',
+    dm: '画布工具栏，可集成画布交互组件',
+  }),
   icon: 'icon-tools',
   cover: 'http://xxxx.jpg',
   category: 'container-components',

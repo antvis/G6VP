@@ -1,6 +1,7 @@
 import type { GIEdgeConfig } from '@antv/gi-sdk';
 import { Utils } from '@antv/graphin';
 import merge from 'deepmerge';
+import $i18n from '../../i18n';
 
 const defaultEdgeTheme = {
   primaryEdgeColor: '#ddd',

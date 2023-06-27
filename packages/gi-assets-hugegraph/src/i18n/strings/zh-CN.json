@@ -1,0 +1,14 @@
+{
+  "hugegraph.src.services.ElementProperties.QueryElementAttributes": "查询元素属性",
+  "hugegraph.src.services.Engine.HugegraphIsAnEasyTo": "HugeGraph 是一款易用、高效、通用的图数据库。实现了 Apache TinkerPop3 框架、兼容 Gremlin 查询语言。",
+  "hugegraph.src.services.GremlinQuery.GremlinQuery": "Gremlin 查询",
+  "hugegraph.src.services.Initializer.InitializeAQuery": "初始化查询",
+  "hugegraph.src.services.Initializer.QueryGraphModel": "查询图模型",
+  "hugegraph.src.services.Initializer.HugegraphDataSourceConnectionFailed": "HugeGraph 数据源连接失败: 没有获取到连接 HugeGraph 数据库的连接信息，请先连接 HugeGraph 数据库再进行尝试！",
+  "hugegraph.src.services.Initializer.GraphModelQueryFailedE": "图模型查询失败: {e}",
+  "hugegraph.src.services.NeighborsQuery.NeighborQuery": "邻居查询",
+  "hugegraph.src.services.HugegraphEngineService": "HugeGraph 引擎服务",
+  "hugegraph.src.services.HugegraphComputingEngineAssetPackage": "GI 团队默认提供的 HugeGraph 计算引擎资产包",
+  "hugegraph.src.services.GVpTeam": "G6VP 团队",
+  "hugegraph.src.services.util.InterfaceRequestError": "接口请求错误"
+}

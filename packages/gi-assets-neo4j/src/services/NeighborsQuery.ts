@@ -1,6 +1,7 @@
 import { getDriver } from './Neo4jService';
+import $i18n from '../i18n';
 export const NeighborsQuery = {
-  name: '邻居查询',
+  name: $i18n.get({ id: 'neo4j.src.services.NeighborsQuery.NeighborQuery', dm: '邻居查询' }),
   service: async params => {
     const { ids, sep } = params;
     const driver = await getDriver();

@@ -3,6 +3,7 @@ import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Form, Popover, Select } from 'antd';
 import React, { useMemo } from 'react';
 import { IState } from './typing';
+import $i18n from '../../i18n';
 export interface FileRuleProps {
   children: React.FC;
 }
@@ -15,15 +16,15 @@ export interface IFilterRuleContentProps {
 const options = [
   {
     value: 'All-Path',
-    label: '所有路径',
+    label: $i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.AllPaths', dm: '所有路径' }),
   },
   {
     value: 'Shortest-Path',
-    label: '加权最短路径',
+    label: $i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.WeightedShortestPath', dm: '加权最短路径' }),
   },
   {
     value: 'Edge-Type-Filter',
-    label: '边类型过滤',
+    label: $i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.EdgeTypeFiltering', dm: '边类型过滤' }),
   },
 ];
 
@@ -69,11 +70,13 @@ const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
 
   return (
     <div className="gi-filter-rule-container">
-      <Form.Item label="过滤规则">
+      <Form.Item label={$i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.FilterRules', dm: '过滤规则' })}>
         <Select value={filterRule.type} options={options} style={{ width: '100%' }} onChange={onRuleTypeChange} />
       </Form.Item>
       {filterRule.type === 'Shortest-Path' && (
-        <Form.Item label="权重属性">
+        <Form.Item
+          label={$i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.WeightAttribute', dm: '权重属性' })}
+        >
           <Select value={filterRule.weightPropertyName} allowClear onChange={onWeightChange}>
             {weightProperties.map(prop => {
               return <Select.Option value={prop}>{prop}</Select.Option>;
@@ -81,8 +84,9 @@ const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
           </Select>
         </Form.Item>
       )}
+
       {filterRule.type === 'Edge-Type-Filter' && (
-        <Form.Item label="边类型">
+        <Form.Item label={$i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.EdgeType', dm: '边类型' })}>
           <Select value={filterRule.edgeType} onChange={onEdgeTypeChange}>
             {edgeTypeOptions.map(option => {
               return <Select.Option value={option.value}>{option.label}</Select.Option>;
@@ -99,7 +103,7 @@ export const FilterRule = props => {
   return (
     <Popover
       trigger="click"
-      title="过滤规则"
+      title={$i18n.get({ id: 'basic.components.PathAnalysis.FilterRule.FilterRules', dm: '过滤规则' })}
       placement="right"
       content={<FilterRuleContent state={state} updateState={updateState} />}
     >

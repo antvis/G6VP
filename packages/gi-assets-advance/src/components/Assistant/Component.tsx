@@ -18,7 +18,7 @@ import './index.less';
 /**
  * react-draggable 在 React 18 存在一点类型问题
  * 不这样的话会报错，并导致构建失败
- */
+ */ import $i18n from '../../i18n';
 const Draggable: any = DG;
 
 const { getPositionStyles } = utils;
@@ -86,7 +86,7 @@ const Assistant: React.FC<AssistantProps> = ({
       const res = transform(resultData);
 
       if (res.nodes.length === 0) {
-        amessage.info('没有查询到数据');
+        amessage.info($i18n.get({ id: 'advance.components.Assistant.Component.NoDataFound', dm: '没有查询到数据' }));
       }
 
       if (res.nodes.length > largeGraphLimit) {
@@ -119,7 +119,7 @@ const Assistant: React.FC<AssistantProps> = ({
    */
   const sendMessage = async (message: Message) => {
     if (!apiKey) {
-      amessage.error('请先设置API Key');
+      amessage.error($i18n.get({ id: 'advance.components.Assistant.Component.SetApiKeyFirst', dm: '请先设置API Key' }));
       return false;
     }
 
@@ -141,14 +141,16 @@ const Assistant: React.FC<AssistantProps> = ({
       }),
     );
 
-    const codeBlocks = extractCodeBlocks(response.message.content)
+    const codeBlocks = extractCodeBlocks(response.message.content);
     // 由于目前返回代码格式不是特别稳定，暂不做语言过滤
     // .filter(({ language }) =>
     //   SUPPORT_LANGUAGES.includes(language.toLowerCase()),
     // );
 
     if (codeBlocks.length) {
-      amessage.success('开始查询图数据...');
+      amessage.success(
+        $i18n.get({ id: 'advance.components.Assistant.Component.StartQueryingGraphData', dm: '开始查询图数据...' }),
+      );
       // 目前只执行第一个被支持语句的代码块
       return await queryGraph(codeBlocks[0]);
     }
@@ -231,7 +233,10 @@ const Assistant: React.FC<AssistantProps> = ({
                   clearMessages,
                 }}
               >
-                <Header title="AI 助理" onClose={() => setIsDialogOpen(false)} />
+                <Header
+                  title={$i18n.get({ id: 'advance.components.Assistant.Component.AiAssistant', dm: 'AI 助理' })}
+                  onClose={() => setIsDialogOpen(false)}
+                />
                 <Dialog />
               </ComponentContext.Provider>
             </div>

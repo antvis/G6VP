@@ -6,6 +6,7 @@ import { Updater } from 'use-immer';
 import { edgeColumns, nodeColumns, translist } from './const';
 import { IColumns, IState, ITableType } from './typing';
 import { GIDefaultTrans } from './utils';
+import $i18n from '../../i18n';
 
 interface IProps {
   state: IState;
@@ -68,10 +69,16 @@ const ConfigData: React.FC<IProps> = props => {
 
     try {
       if (transData.nodes?.find(d => d.id === undefined || d.data === undefined)) {
-        throw 'nodes缺少对应字段';
+        throw $i18n.get({
+          id: 'gi-site.components.FileServerEngine.ConfigData.NodesIsMissingTheCorresponding',
+          dm: 'nodes缺少对应字段',
+        });
       }
       if (transData.edges?.find(d => d.source === undefined || d.target === undefined || d.data === undefined)) {
-        throw 'edges缺少对应字段';
+        throw $i18n.get({
+          id: 'gi-site.components.FileServerEngine.ConfigData.TheEdgesFieldIsMissing',
+          dm: 'edges缺少对应字段',
+        });
       }
 
       const mergeData = {
@@ -99,22 +106,31 @@ const ConfigData: React.FC<IProps> = props => {
           // data: mergeData,
           // schemaData,
         },
-        data: {
-          transData: mergeData,
-          inputData: [...renderData],
-        },
+        data: { transData: mergeData, inputData: [...renderData] },
         schemaData: schemaData,
       });
 
       notification.success({
-        message: `解析成功`,
-        description: `数据格式正确`,
+        message: $i18n.get({
+          id: 'gi-site.components.FileServerEngine.ConfigData.ResolvedSuccessfully',
+          dm: '解析成功',
+        }),
+        description: $i18n.get({
+          id: 'gi-site.components.FileServerEngine.ConfigData.TheDataFormatIsCorrect',
+          dm: '数据格式正确',
+        }),
         placement: 'topLeft',
       });
     } catch (error) {
       notification.error({
-        message: `解析出错`,
-        description: `请检查数据是否为严格JSON格式且存在对应字段:${error}`,
+        message: $i18n.get({ id: 'gi-site.components.FileServerEngine.ConfigData.ParsingError', dm: '解析出错' }),
+        description: $i18n.get(
+          {
+            id: 'gi-site.components.FileServerEngine.ConfigData.CheckWhetherTheDataIs',
+            dm: '请检查数据是否为严格JSON格式且存在对应字段:{error}',
+          },
+          { error: error },
+        ),
         placement: 'topLeft',
       });
     }
@@ -122,7 +138,15 @@ const ConfigData: React.FC<IProps> = props => {
 
   return (
     <div className="dataCheck-panel">
-      <Alert message="请从下表中选择合适的字段，用于系统自动构图" type="info" showIcon style={{ margin: '12px 0px' }} />
+      <Alert
+        message={$i18n.get({
+          id: 'gi-site.components.FileServerEngine.ConfigData.SelectTheAppropriateFieldFrom',
+          dm: '请从下表中选择合适的字段，用于系统自动构图',
+        })}
+        type="info"
+        showIcon
+        style={{ margin: '12px 0px' }}
+      />
       <EditableProTable
         columns={state.transColumns}
         rowKey="key"
@@ -137,8 +161,11 @@ const ConfigData: React.FC<IProps> = props => {
           },
         }}
       />
+
       <div className="fliter-group">
-        <span className="title">数据预览</span>
+        <span className="title">
+          {$i18n.get({ id: 'gi-site.components.FileServerEngine.ConfigData.DataPreview', dm: '数据预览' })}
+        </span>
         <Radio.Group onChange={e => onChange(e.target.value)} defaultValue={tableType}>
           <Radio.Button value="nodes">Node</Radio.Button>
           <Radio.Button value="edges">Edge</Radio.Button>
@@ -148,14 +175,31 @@ const ConfigData: React.FC<IProps> = props => {
       <Table dataSource={state.tableData} columns={columns} scroll={{ y: 240, x: 1300 }} />
       <div>
         <Form layout="vertical" form={form}>
-          <Form.Item label="数据集名称" name="name" rules={[{ required: true, message: '请填写数据名称!' }]}>
-            <Input placeholder="请填写数据名称" />
+          <Form.Item
+            label={$i18n.get({ id: 'gi-site.components.FileServerEngine.ConfigData.DatasetName', dm: '数据集名称' })}
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: $i18n.get({
+                  id: 'gi-site.components.FileServerEngine.ConfigData.PleaseEnterTheDataName',
+                  dm: '请填写数据名称!',
+                }),
+              },
+            ]}
+          >
+            <Input
+              placeholder={$i18n.get({
+                id: 'gi-site.components.FileServerEngine.ConfigData.EnterTheDataName',
+                dm: '请填写数据名称',
+              })}
+            />
           </Form.Item>
         </Form>
       </div>
       <Row style={{ justifyContent: 'center' }}>
         <Button style={{ margin: '0 10px' }} shape="round" onClick={() => prev()}>
-          上一步
+          {$i18n.get({ id: 'gi-site.components.FileServerEngine.ConfigData.PreviousStep', dm: '上一步' })}
         </Button>
         <Button
           type="primary"
@@ -163,7 +207,7 @@ const ConfigData: React.FC<IProps> = props => {
           // onClick={() => updateData(state.transData, state.inputData, state.transfunc)}
           onClick={handleSave}
         >
-          创建数据集
+          {$i18n.get({ id: 'gi-site.components.FileServerEngine.ConfigData.CreateADataset', dm: '创建数据集' })}
         </Button>
       </Row>
     </div>

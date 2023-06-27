@@ -1,5 +1,6 @@
 import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
@@ -8,17 +9,24 @@ metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
 export const SchemaData = {
   name: {
     type: 'string',
-    title: '算法类型',
+    title: $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.AlgorithmType', dm: '算法类型' }),
     'x-decorator': 'FormItem',
     'x-component': 'Select',
     enum: [
       { label: 'PageRank', value: 'pagerank' },
-      { label: '单源最短路径', value: 'sssp' },
+      {
+        label: $i18n.get({
+          id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.SingleSourceShortestPath',
+          dm: '单源最短路径',
+        }),
+        value: 'sssp',
+      },
       { label: 'k-Core', value: 'k_core' },
       { label: 'wcc', value: 'wcc' },
       { label: 'clustering', value: 'clustering' },
       { label: 'eigenvector_centrality', value: 'eigenvector_centrality' },
     ],
+
     'x-reactions': [
       {
         target: 'delta',
@@ -85,7 +93,7 @@ export const SchemaData = {
     default: 10,
   },
   weight: {
-    title: '权重',
+    title: $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.Weight', dm: '权重' }),
     type: 'number',
     'x-decorator': 'FormItem',
     'x-component': 'NumberPicker',
@@ -105,13 +113,13 @@ export const SchemaData = {
     'x-component': 'Input',
   },
   src: {
-    title: '起点ID',
+    title: $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.StartPointId', dm: '起点ID' }),
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Input',
   },
   limit: {
-    title: '限制数量',
+    title: $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.LimitedQuantity', dm: '限制数量' }),
     type: 'number',
     'x-decorator': 'FormItem',
     'x-component': 'NumberPicker',
@@ -119,7 +127,10 @@ export const SchemaData = {
   },
   sortById: {
     type: 'boolean',
-    title: '是否根据ID排序',
+    title: $i18n.get({
+      id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.WhetherToSortById',
+      dm: '是否根据ID排序',
+    }),
     'x-decorator': 'FormItem',
     'x-component': 'Switch',
     default: true,
@@ -132,7 +143,7 @@ const registerMeta = context => {
 
   return {
     serviceId: {
-      title: '数据服务',
+      title: $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.registerMeta.DataService', dm: '数据服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

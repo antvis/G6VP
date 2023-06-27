@@ -1,4 +1,5 @@
 import { defaultConfig } from './registerTransform';
+import $i18n from '../../i18n';
 const { advanced, color, size } = defaultConfig;
 const { keyshape, label, animate } = advanced;
 
@@ -9,21 +10,21 @@ const registerMeta = context => {
     type: 'object',
     properties: {
       color: {
-        title: '颜色',
+        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Color', dm: '颜色' }),
         type: 'string',
         'x-decorator': 'FormItem',
         'x-component': 'ColorInput',
         default: color,
       },
       size: {
-        title: '大小',
+        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Size', dm: '大小' }),
         type: 'number',
         'x-decorator': 'FormItem',
         'x-component': 'NumberPicker',
         default: size,
       },
       label: {
-        title: '文本',
+        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Text', dm: '文本' }),
         type: 'string',
         // enum: keys.map(c => {
         //   return {
@@ -51,7 +52,7 @@ const registerMeta = context => {
             type: 'object',
             'x-component': 'FormCollapse.CollapsePanel',
             'x-component-props': {
-              header: '高级配置',
+              header: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.AdvancedConfiguration', dm: '高级配置' }),
               key: 'advanced-panel',
             },
             properties: {
@@ -70,20 +71,23 @@ const registerMeta = context => {
                     'x-decorator': 'FormItem',
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
-                      header: '形状',
+                      header: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Shape', dm: '形状' }),
                       key: 'icon-panel',
                     },
                     properties: {
                       hasArrow: {
                         type: 'boolean',
-                        title: '箭头',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Arrow', dm: '箭头' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: true,
                       },
                       customPoly: {
                         type: 'boolean',
-                        title: '定义弧度',
+                        title: $i18n.get({
+                          id: 'basic.elements.SimpleEdge.registerMeta.DefineRadians',
+                          dm: '定义弧度',
+                        }),
                         default: keyshape.customPoly,
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
@@ -115,7 +119,7 @@ const registerMeta = context => {
                         ],
                       },
                       poly: {
-                        title: '弧度',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Radian', dm: '弧度' }),
                         type: 'number',
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
@@ -123,7 +127,7 @@ const registerMeta = context => {
                       },
 
                       lineDash: {
-                        title: '虚线',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.DottedLine', dm: '虚线' }),
                         type: 'array',
                         'x-decorator': 'FormItem',
                         'x-component': 'Offset',
@@ -135,7 +139,7 @@ const registerMeta = context => {
                       },
                       opacity: {
                         type: 'string',
-                        title: '透明度',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Transparency', dm: '透明度' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         default: keyshape.opacity,
@@ -147,27 +151,27 @@ const registerMeta = context => {
                     'x-decorator': 'FormItem',
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
-                      header: '标签',
+                      header: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Label', dm: '标签' }),
                       key: 'keyshape-panel',
                     },
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: '显隐',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Implicit', dm: '显隐' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: label.visible,
                       },
                       fontSize: {
                         type: 'string',
-                        title: '大小',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Size', dm: '大小' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',
                         default: label.fontSize,
                       },
                       offset: {
                         type: 'string',
-                        title: '偏移',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Offset', dm: '偏移' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Offset',
                         'x-component-props': {
@@ -178,28 +182,34 @@ const registerMeta = context => {
                       },
                       fill: {
                         type: 'string',
-                        title: '颜色',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Color', dm: '颜色' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: label.fill,
                       },
                       backgroundEnable: {
                         type: 'string',
-                        title: '背景',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Background', dm: '背景' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: label.backgroundEnable,
                       },
                       backgroundFill: {
                         type: 'string',
-                        title: '背景色',
+                        title: $i18n.get({
+                          id: 'basic.elements.SimpleEdge.registerMeta.BackgroundColor',
+                          dm: '背景色',
+                        }),
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: label.backgroundFill,
                       },
                       backgroundStroke: {
                         type: 'string',
-                        title: '背景描边',
+                        title: $i18n.get({
+                          id: 'basic.elements.SimpleEdge.registerMeta.BackgroundStroke',
+                          dm: '背景描边',
+                        }),
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: label.backgroundStroke,
@@ -210,13 +220,13 @@ const registerMeta = context => {
                     type: 'object',
                     'x-component': 'FormCollapse.CollapsePanel',
                     'x-component-props': {
-                      header: '动画',
+                      header: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Animation', dm: '动画' }),
                       key: 'aniamte-panel',
                     },
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: '开关',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Switch', dm: '开关' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: animate.visible,
@@ -256,33 +266,46 @@ const registerMeta = context => {
                         ],
                       },
                       type: {
-                        title: '类型',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Type', dm: '类型' }),
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Select',
                         enum: [
-                          { label: '圆球', value: 'circle-running' },
-                          { label: '虚线', value: 'line-dash' },
-                          { label: '渐长', value: 'line-growth' },
+                          {
+                            label: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Ball', dm: '圆球' }),
+                            value: 'circle-running',
+                          },
+                          {
+                            label: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.DottedLine', dm: '虚线' }),
+                            value: 'line-dash',
+                          },
+                          {
+                            label: $i18n.get({
+                              id: 'basic.elements.SimpleEdge.registerMeta.GradualLength',
+                              dm: '渐长',
+                            }),
+                            value: 'line-growth',
+                          },
                         ],
+
                         default: animate.type,
                       },
                       dotColor: {
                         type: 'string',
-                        title: '圆球颜色',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.BallColor', dm: '圆球颜色' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'ColorInput',
                         default: animate.dotColor,
                       },
                       repeat: {
-                        title: '重复',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Repeat', dm: '重复' }),
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: animate.repeat,
                       },
                       duration: {
-                        title: '时长',
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Duration', dm: '时长' }),
                         type: 'string',
                         'x-decorator': 'FormItem',
                         'x-component': 'NumberPicker',

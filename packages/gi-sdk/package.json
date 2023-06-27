@@ -31,9 +31,13 @@
     "postpublish": "tnpm sync @antv/gi-sdk"
   },
   "dependencies": {
-    "@antv/gi-common-components": "workspace:*",
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",
+    "@antv/gi-common-components": "workspace:*",
     "immer": "^9.0.7",
+    "lodash-es": "^4.17.21",
+    "react-intl": "^6.4.4",
     "size-sensor": "^1.0.1",
     "use-immer": "^0.6.0"
   },

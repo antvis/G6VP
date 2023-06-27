@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 export default {
   id: 'LoopDetectionDemo',
-  name: '环路检测Demo',
-  desc: '环路检测Demo',
+  name: $i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.info.LoopDetectionDemo', dm: '环路检测Demo' }),
+  desc: $i18n.get({ id: 'tugraph-analytics.components.LoopDetectionDemo.info.LoopDetectionDemo', dm: '环路检测Demo' }),
   cover: 'http://xxx.jpg',
   category: 'data-analysis',
   icon: 'icon-sync',

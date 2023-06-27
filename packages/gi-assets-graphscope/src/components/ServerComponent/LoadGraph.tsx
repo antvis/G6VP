@@ -4,6 +4,7 @@ import { Button, Col, Input, notification, Row, Select, Form } from 'antd';
 import * as React from 'react';
 import { querySubGraphList } from './services';
 import { formatGSSchema } from './utils';
+import $i18n from '../../i18n';
 
 const { getSchemaGraph } = utils;
 
@@ -38,15 +39,33 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
     setLoading(false);
     if (!result.success) {
       notification.error({
-        message: '查询子图列表失败',
-        description: `查询失败：${result.message}`,
+        message: $i18n.get({
+          id: 'graphscope.components.ServerComponent.LoadGraph.FailedToQuerySubgraphList',
+          dm: '查询子图列表失败',
+        }),
+        description: $i18n.get(
+          {
+            id: 'graphscope.components.ServerComponent.LoadGraph.QueryFailedResultmessage',
+            dm: '查询失败：{resultMessage}',
+          },
+          { resultMessage: result.message },
+        ),
       });
       return;
     }
     if (!result.data?.length) {
       notification.warn({
-        message: '查询成功，子图列表为空',
-        description: `查询成功：${result.message}`,
+        message: $i18n.get({
+          id: 'graphscope.components.ServerComponent.LoadGraph.TheQueryIsSuccessfulThe',
+          dm: '查询成功，子图列表为空',
+        }),
+        description: $i18n.get(
+          {
+            id: 'graphscope.components.ServerComponent.LoadGraph.QuerySucceededResultmessage',
+            dm: '查询成功：{resultMessage}',
+          },
+          { resultMessage: result.message },
+        ),
       });
       setSubGraphList([]);
       return;
@@ -124,7 +143,9 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const isEmpty = schemaData.nodes.length === 0;
 
   return (
-    <CollapseCard title="选择子图">
+    <CollapseCard
+      title={$i18n.get({ id: 'graphscope.components.ServerComponent.LoadGraph.SelectSubgraph', dm: '选择子图' })}
+    >
       <Form name="subgraphForm" form={form} layout="vertical">
         <Row>
           <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{ border: '2px dashed rgb(22, 101, 255)' }}>
@@ -138,7 +159,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                   alignItems: 'center',
                 }}
               >
-                请选择子图
+                {$i18n.get({
+                  id: 'graphscope.components.ServerComponent.LoadGraph.PleaseSelectASubgraph',
+                  dm: '请选择子图',
+                })}
               </div>
             ) : (
               <Graphin
@@ -152,12 +176,18 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div style={{ padding: '24px' }}>
               <Form.Item
-                label="选择子图"
+                label={$i18n.get({
+                  id: 'graphscope.components.ServerComponent.LoadGraph.SelectSubgraph',
+                  dm: '选择子图',
+                })}
                 name="subgraph"
                 rules={[
                   {
                     required: true,
-                    message: '请选择子图!',
+                    message: $i18n.get({
+                      id: 'graphscope.components.ServerComponent.LoadGraph.PleaseSelectASubgraph.1',
+                      dm: '请选择子图!',
+                    }),
                   },
                 ]}
                 style={{
@@ -167,7 +197,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                 <Select
                   loading={loading}
                   showSearch
-                  placeholder="请选择要查询的子图"
+                  placeholder={$i18n.get({
+                    id: 'graphscope.components.ServerComponent.LoadGraph.SelectASubgraphToQuery',
+                    dm: '请选择要查询的子图',
+                  })}
                   onChange={handleSubgraphChange}
                   style={{ width: '100%' }}
                 >
@@ -178,25 +211,34 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
               </Form.Item>
               {selectedSubgraph ? (
                 <Form.Item
-                  label="数据名称"
+                  label={$i18n.get({ id: 'graphscope.components.ServerComponent.LoadGraph.DataName', dm: '数据名称' })}
                   name="datasetName"
                   rules={[
                     {
                       required: true,
-                      message: '请输入数据名称!',
+                      message: $i18n.get({
+                        id: 'graphscope.components.ServerComponent.LoadGraph.EnterADataName',
+                        dm: '请输入数据名称!',
+                      }),
                     },
                   ]}
                   style={{
                     marginTop: 16,
                   }}
                 >
-                  <Input placeholder="请为该数据集命名" />
+                  <Input
+                    placeholder={$i18n.get({
+                      id: 'graphscope.components.ServerComponent.LoadGraph.NameTheDataset',
+                      dm: '请为该数据集命名',
+                    })}
+                  />
                 </Form.Item>
               ) : (
                 ''
               )}
+
               <Button type="primary" onClick={handleSubmit} style={{ width: '100%', marginTop: '16px' }}>
-                进入分析
+                {$i18n.get({ id: 'graphscope.components.ServerComponent.LoadGraph.EnterAnalysis', dm: '进入分析' })}
               </Button>
             </div>
           </Col>

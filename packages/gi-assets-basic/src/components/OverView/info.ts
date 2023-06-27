@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'Overview',
-  name: '大图概览',
-  desc: '大图概览',
+  name: $i18n.get({ id: 'basic.components.OverView.info.BigPictureOverview', dm: '大图概览' }),
+  desc: $i18n.get({ id: 'basic.components.OverView.info.BigPictureOverview', dm: '大图概览' }),
   icon: 'icon-dashboard',
   cover: 'http://xxxx.jpg',
   category: 'system-interaction',

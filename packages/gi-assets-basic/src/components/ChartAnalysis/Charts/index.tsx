@@ -7,6 +7,7 @@ import ColumnChart from './ColumnChart';
 import LineChart from './LineChart';
 const { highlightEdgeIds } = utils;
 import '../index.less';
+import $i18n from '../../../i18n';
 
 const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -18,12 +19,12 @@ let timer;
 const chartOptions = [
   {
     value: 'lineChart',
-    title: '折线图',
+    title: $i18n.get({ id: 'basic.ChartAnalysis.Charts.LineChart', dm: '折线图' }),
     label: <LineChartOutlined />,
   },
   {
     value: 'columnChart',
-    title: '柱状图',
+    title: $i18n.get({ id: 'basic.ChartAnalysis.Charts.Histogram', dm: '柱状图' }),
     label: <BarChartOutlined />,
   },
 ];
@@ -157,13 +158,14 @@ const ChartCard: React.FC<ChartCardProps> = props => {
   const extra = (
     <div className="gi-chart-analysis-form-container">
       {/* <Button type="text" onClick={handlePlay}>
-        <PlayCircleOutlined />
-        自动播放
+       <PlayCircleOutlined />
+       自动播放
       </Button> */}
       <div className="gi-chart-analysis-form-item">
-        X轴：
+        {$i18n.get({ id: 'basic.ChartAnalysis.Charts.XAxis', dm: 'X轴：' })}
+
         <Select
-          placeholder="X轴字段"
+          placeholder={$i18n.get({ id: 'basic.ChartAnalysis.Charts.XAxisField', dm: 'X轴字段' })}
           onChange={updateXField}
           size="small"
           style={{ width: '100px', marginRight: '12px' }}
@@ -178,8 +180,15 @@ const ChartCard: React.FC<ChartCardProps> = props => {
         </Select>
       </div>
       <div className="gi-chart-analysis-form-item">
-        Y轴：
-        <Select placeholder="Y轴字段" onChange={updateYField} size="small" style={{ width: '100px' }} value={yField}>
+        {$i18n.get({ id: 'basic.ChartAnalysis.Charts.YAxis', dm: 'Y轴：' })}
+
+        <Select
+          placeholder={$i18n.get({ id: 'basic.ChartAnalysis.Charts.YAxisField', dm: 'Y轴字段' })}
+          onChange={updateYField}
+          size="small"
+          style={{ width: '100px' }}
+          value={yField}
+        >
           {Object.keys(properties).map(k => (
             <Select.Option value={k}>
               {iconMap[properties[k]]}
@@ -213,6 +222,7 @@ const ChartCard: React.FC<ChartCardProps> = props => {
         {chartType === 'lineChart' && (
           <LineChart xField={xField} yField={yField} data={data} highlight={highlight} height={props.height} />
         )}
+
         {chartType === 'columnChart' && (
           <ColumnChart xField={xField} yField={yField} data={data} highlight={highlight} height={props.height} />
         )}

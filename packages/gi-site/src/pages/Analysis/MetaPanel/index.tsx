@@ -6,31 +6,33 @@ import ContainerPanel from './ContainerPanel';
 import WrapDataPanel from './DataPanel';
 import LayoutPanel from './LayoutPanel';
 import StylesPanel from './StylesPanel';
+import $i18n from '../../../i18n';
 import './index.less';
 
 const navbarOptions = [
   {
     id: 'data',
-    name: '数据',
+    name: $i18n.get({ id: 'gi-site.Analysis.MetaPanel.Data', dm: '数据' }),
     component: WrapDataPanel,
   },
   {
     id: 'style',
-    name: '样式',
+    name: $i18n.get({ id: 'gi-site.Analysis.MetaPanel.Style', dm: '样式' }),
     component: StylesPanel, // StylePanel,
   },
 
   {
     id: 'layout',
-    name: '布局',
+    name: $i18n.get({ id: 'gi-site.Analysis.MetaPanel.Layout', dm: '布局' }),
     component: LayoutPanel,
   },
   {
     id: 'components',
-    name: '组件',
+    name: $i18n.get({ id: 'gi-site.Analysis.MetaPanel.Component', dm: '组件' }),
     component: ComponentPanel,
   },
 ];
+
 const navbarOptionsMap = navbarOptions.reduce((acc, curr) => {
   return {
     ...acc,

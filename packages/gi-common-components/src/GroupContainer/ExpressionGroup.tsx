@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { getOperatorList } from './utils';
 
 import './expressionGroup.less';
+import $i18n from '../i18n';
 
 export type Operator = 'contain' | 'not-contain' | 'eql' | 'not-eql' | 'gt' | 'lt' | 'gte' | 'lte';
 
@@ -51,7 +52,17 @@ const ExpressionGroup: React.FunctionComponent<{
   }, [options]);
 
   const content = (
-    <Form.Item name={[name, 'expressions']} label="属性过滤" tooltip={'支持自定义属性路径，例: a.b.c'}>
+    <Form.Item
+      name={[name, 'expressions']}
+      label={$i18n.get({
+        id: 'common-components.src.GroupContainer.ExpressionGroup.PropertyFiltering',
+        dm: '属性过滤',
+      })}
+      tooltip={$i18n.get({
+        id: 'common-components.src.GroupContainer.ExpressionGroup.CustomAttributePathsAreSupported',
+        dm: '支持自定义属性路径，例: a.b.c',
+      })}
+    >
       <Form.List name={[name, 'expressions']}>
         {(fields, { add, remove }) => {
           const { expressions } = form.getFieldValue('groups')[index] || {};
@@ -113,7 +124,10 @@ const ExpressionGroup: React.FunctionComponent<{
                     block
                     icon={<PlusOutlined />}
                   >
-                    添加属性
+                    {$i18n.get({
+                      id: 'common-components.src.GroupContainer.ExpressionGroup.AddAttributes',
+                      dm: '添加属性',
+                    })}
                   </Button>
                 </Col>
               </Row>

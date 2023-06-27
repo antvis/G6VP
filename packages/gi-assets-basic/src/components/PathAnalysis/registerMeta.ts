@@ -1,5 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
@@ -19,7 +20,7 @@ const registerMeta = ({ schemaData }) => {
 
   return {
     pathNodeLabel: {
-      title: '标签映射',
+      title: $i18n.get({ id: 'basic.components.PathAnalysis.registerMeta.TagMapping', dm: '标签映射' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

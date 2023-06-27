@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import AssetsCenterHandler from '../../../../components/AssetsCenter/AssetsCenterHandler';
 import AssetsSelect from '../../../../components/AssetsSelect';
 import { useContext } from '../../hooks/useContext';
+import $i18n from '../../../../i18n';
 
 const defSpringLen = (_edge, source, target) => {
   /** 默认返回的是 200 的弹簧长度 */
@@ -121,7 +122,7 @@ const LayoutPanel: React.FunctionComponent<NodeStylePanelProps> = props => {
 
   return (
     <div>
-      <AssetsCenterHandler title="布局" id="layouts" />
+      <AssetsCenterHandler title={$i18n.get({ id: 'gi-site.MetaPanel.LayoutPanel.Layout', dm: '布局' })} id="layouts" />
       <AssetsSelect
         onChange={handleChangeLayout}
         value={layoutId}

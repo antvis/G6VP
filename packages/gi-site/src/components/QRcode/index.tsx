@@ -2,6 +2,7 @@ import { BugOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Menu } from 'antd';
 import React from 'react';
 import { QR_URL } from '../../services/const';
+import $i18n from '../../i18n';
 import './index.less';
 
 const QRcode = () => {
@@ -19,7 +20,7 @@ const QRcode = () => {
             window.open('https://github.com/antvis/G6VP/issues', '_blank');
           }}
         >
-          提需求/Bug
+          {$i18n.get({ id: 'gi-site.components.QRcode.RequestBug', dm: '提需求/Bug' })}
         </Menu.Item>
       </Menu>
     </div>
@@ -27,7 +28,7 @@ const QRcode = () => {
 
   return (
     <Dropdown placement="bottom" overlay={menu}>
-      <Button icon={<BugOutlined />}>反馈</Button>
+      <Button icon={<BugOutlined />}>{$i18n.get({ id: 'gi-site.components.QRcode.Feedback', dm: '反馈' })}</Button>
     </Dropdown>
   );
 };

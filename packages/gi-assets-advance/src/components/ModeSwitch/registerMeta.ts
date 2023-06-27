@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const modes = ['TableMode', 'MapMode'];
 
 const registerMeta = context => {
@@ -6,7 +7,7 @@ const registerMeta = context => {
 
   const schema = {
     GI_CONTAINER: {
-      title: '集成组件',
+      title: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -18,7 +19,7 @@ const registerMeta = context => {
     },
     // ...metas,
     placement: {
-      title: '放置方位',
+      title: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.PlacementOrientation', dm: '放置方位' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -26,26 +27,29 @@ const registerMeta = context => {
         options: [
           {
             value: 'LT',
-            label: '左上 / top',
+            label: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.TopLeftTop', dm: '左上 / top' }),
           },
           {
             value: 'RT',
-            label: '右上 / right',
+            label: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.TopRightRight', dm: '右上 / right' }),
           },
           {
             value: 'LB',
-            label: '左下 / left',
+            label: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.LowerLeftLeft', dm: '左下 / left' }),
           },
           {
             value: 'RB',
-            label: '右下 / bottom',
+            label: $i18n.get({
+              id: 'advance.components.ModeSwitch.registerMeta.BottomRightBottom',
+              dm: '右下 / bottom',
+            }),
           },
         ],
       },
       default: 'LT',
     },
     offset: {
-      title: '偏移距离',
+      title: $i18n.get({ id: 'advance.components.ModeSwitch.registerMeta.OffsetDistance', dm: '偏移距离' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',

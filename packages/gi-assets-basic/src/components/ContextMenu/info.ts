@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'ContextMenu',
-  name: '右键菜单',
-  desc: '鼠标右键即可出现菜单容器',
+  name: $i18n.get({ id: 'basic.components.ContextMenu.info.RightClickMenu', dm: '右键菜单' }),
+  desc: $i18n.get({
+    id: 'basic.components.ContextMenu.info.RightClickTheMenuContainer',
+    dm: '鼠标右键即可出现菜单容器',
+  }),
   cover: 'http://xxxx.jpg',
   category: 'container-components',
   type: 'GICC_MENU',

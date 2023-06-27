@@ -1,5 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 
@@ -34,36 +35,50 @@ const registerMeta = ({ schemaData }) => {
   });
   return {
     title: {
-      title: '图表标题',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.ChartTitle', dm: '图表标题' }),
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       type: 'string',
-      default: '未命名图表',
+      default: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.UnnamedChart', dm: '未命名图表' }),
     },
     chartType: {
-      title: '图表类型',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.ChartType', dm: '图表类型' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { value: 'columnChart', label: '柱状图' },
-        { value: 'lineChart', label: '折线图' },
+        {
+          value: 'columnChart',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.Histogram', dm: '柱状图' }),
+        },
+        {
+          value: 'lineChart',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.LineChart', dm: '折线图' }),
+        },
       ],
+
       default: 'columnChart',
     },
     brushMode: {
-      title: '交互模式',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.InteractionMode', dm: '交互模式' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { value: 'highlight', label: '高亮' },
-        { value: 'filter', label: '过滤' },
+        {
+          value: 'highlight',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.Highlight', dm: '高亮' }),
+        },
+        {
+          value: 'filter',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.Filtering', dm: '过滤' }),
+        },
       ],
+
       default: 'highlight',
     },
     height: {
-      title: '图表高度',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.ChartHeight', dm: '图表高度' }),
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       type: 'number',
@@ -71,14 +86,21 @@ const registerMeta = ({ schemaData }) => {
     },
 
     dataType: {
-      title: '数据类型',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.DataType', dm: '数据类型' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { value: 'nodes', label: '节点数据' },
-        { value: 'edges', label: '边数据' },
+        {
+          value: 'nodes',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.NodeData', dm: '节点数据' }),
+        },
+        {
+          value: 'edges',
+          label: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.EdgeData', dm: '边数据' }),
+        },
       ],
+
       default: 'edges',
       'x-reactions': [
         {
@@ -116,25 +138,25 @@ const registerMeta = ({ schemaData }) => {
       ],
     },
     xField_nodes: {
-      title: 'X轴字段',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.XAxisField', dm: 'X轴字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [...nodeOptions],
     },
     yField_nodes: {
-      title: 'Y轴字段',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.YAxisField', dm: 'Y轴字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [...nodeOptions],
     },
     xField_edges: {
-      title: 'X轴字段',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.XAxisField', dm: 'X轴字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [...edgeOptions],
     },
     yField_edges: {
-      title: 'Y轴字段',
+      title: $i18n.get({ id: 'basic.components.ChartAnalysis.registerMeta.YAxisField', dm: 'Y轴字段' }),
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [...edgeOptions],

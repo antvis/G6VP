@@ -4,25 +4,27 @@ import React from 'react';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { queryAssetList } from '../../services/assets';
 import AllAssets from './AllAssets';
-import './index.less';
 import useAssetsCenter from './useHook';
+import $i18n from '../../i18n';
+import './index.less';
+
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
 
 interface AssetsCenterProps {}
 const options = [
   {
-    name: '组件',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.Component', dm: '组件' }),
     key: 'components',
     icon: <AppstoreOutlined />,
   },
   {
-    name: '元素',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.Element', dm: '元素' }),
     key: 'elements',
     icon: <BgColorsOutlined />,
   },
   {
-    name: '布局',
+    name: $i18n.get({ id: 'gi-site.components.AssetsCenter.Layout', dm: '布局' }),
     key: 'layouts',
     icon: <BranchesOutlined />,
   },
@@ -67,10 +69,10 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   const Footer = (
     <div>
       <Button onClick={handleCancel} size="small" style={{ borderRadius: 4, marginRight: 8 }}>
-        取消
+        {$i18n.get({ id: 'gi-site.components.AssetsCenter.Cancel', dm: '取消' })}
       </Button>
       <Button onClick={handleOk} type="primary" size="small" style={{ borderRadius: 4 }}>
-        确认
+        {$i18n.get({ id: 'gi-site.components.AssetsCenter.Confirm', dm: '确认' })}
       </Button>
     </div>
   );
@@ -83,7 +85,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     <div>
       <Drawer
         className="gi-assets-center-drawer"
-        title="资产中心"
+        title={$i18n.get({ id: 'gi-site.components.AssetsCenter.AssetCenter', dm: '资产中心' })}
         placement="right"
         onClose={handleCloseAssetsCenter}
         visible={assetsCenter.visible}
@@ -94,54 +96,54 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
           <AllAssets activeAssetsKeys={activeAssetsKeys} assetsCenter={assetsCenter} onChange={handleChange} />
         )}
         {/* {assetsCenter.visible && (
-          <Tabs defaultActiveKey={assetsCenter.hash}>
-            {options.map(category => {
-              const { name, key, icon } = category;
-              const defaultValue = activeAssetsKeys[key];
-              return (
-                <TabPane
-                  tab={
-                    <span className="gi-assets-center-pane-title">
-                      {icon}
-                      {name}
-                    </span>
-                  }
-                  key={key}
-                >
-                  {key === 'components' && (
-                    <ComponentsPanel data={assets[key]} handleChange={handleChange} defaultValue={defaultValue} />
-                  )}
-                  {key !== 'components' && (
-                    <CheckCard.Group
-                      multiple
-                      onChange={val => {
-                        handleChange(key, val);
-                      }}
-                      defaultValue={defaultValue}
-                    >
-                      <Row
-                        gutter={[
-                          { xs: 8, sm: 12, md: 12, lg: 12 },
-                          { xs: 8, sm: 12, md: 12, lg: 12 },
-                        ]}
-                        style={{ padding: '8px 0px' }}
-                      >
-                        {assets[key].map(item => {
-                          const { id: AssetId } = item;
-                          return (
-                            <Col key={AssetId}>
-                              <AssetCard {...item}></AssetCard>
-                            </Col>
-                          );
-                        })}
-                      </Row>
-                    </CheckCard.Group>
-                  )}
-                </TabPane>
-              );
-            })}
-          </Tabs>
-        )} */}
+           <Tabs defaultActiveKey={assetsCenter.hash}>
+             {options.map(category => {
+               const { name, key, icon } = category;
+               const defaultValue = activeAssetsKeys[key];
+               return (
+                 <TabPane
+                   tab={
+                     <span className="gi-assets-center-pane-title">
+                       {icon}
+                       {name}
+                     </span>
+                   }
+                   key={key}
+                 >
+                   {key === 'components' && (
+                     <ComponentsPanel data={assets[key]} handleChange={handleChange} defaultValue={defaultValue} />
+                   )}
+                   {key !== 'components' && (
+                     <CheckCard.Group
+                       multiple
+                       onChange={val => {
+                         handleChange(key, val);
+                       }}
+                       defaultValue={defaultValue}
+                     >
+                       <Row
+                         gutter={[
+                           { xs: 8, sm: 12, md: 12, lg: 12 },
+                           { xs: 8, sm: 12, md: 12, lg: 12 },
+                         ]}
+                         style={{ padding: '8px 0px' }}
+                       >
+                         {assets[key].map(item => {
+                           const { id: AssetId } = item;
+                           return (
+                             <Col key={AssetId}>
+                               <AssetCard {...item}></AssetCard>
+                             </Col>
+                           );
+                         })}
+                       </Row>
+                     </CheckCard.Group>
+                   )}
+                 </TabPane>
+               );
+             })}
+           </Tabs>
+          )} */}
       </Drawer>
     </div>
   );

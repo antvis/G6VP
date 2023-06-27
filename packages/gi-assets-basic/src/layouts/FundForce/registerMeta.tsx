@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const registerMeta = ({ keys, schemaData }) => {
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
     return {
@@ -5,12 +6,11 @@ const registerMeta = ({ keys, schemaData }) => {
       ...cur.properties,
     };
   }, {});
-  
 
   const options = keys.filter(k => nodeProperties[k] === 'number').map(k => ({ label: k, value: k }));
   return {
     income: {
-      title: '流入资金',
+      title: $i18n.get({ id: 'basic.layouts.FundForce.registerMeta.InflowFunds', dm: '流入资金' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -19,7 +19,7 @@ const registerMeta = ({ keys, schemaData }) => {
       default: options[0]?.value,
     },
     outcome: {
-      title: '流出资金',
+      title: $i18n.get({ id: 'basic.layouts.FundForce.registerMeta.OutflowFunds', dm: '流出资金' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -27,9 +27,15 @@ const registerMeta = ({ keys, schemaData }) => {
       },
       default: options[0]?.value,
     },
-    isLog: { title: 'log 映射', type: 'boolean', 'x-decorator': 'FormItem', 'x-component': 'Switch', default: true },
+    isLog: {
+      title: $i18n.get({ id: 'basic.layouts.FundForce.registerMeta.LogMapping', dm: 'log 映射' }),
+      type: 'boolean',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: true,
+    },
     multiple: {
-      title: '倍数映射',
+      title: $i18n.get({ id: 'basic.layouts.FundForce.registerMeta.MultipleMapping', dm: '倍数映射' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',

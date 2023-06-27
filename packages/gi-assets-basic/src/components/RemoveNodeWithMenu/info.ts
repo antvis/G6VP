@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'RemoveNodeWithMenu',
-  name: '节点删除',
-  desc: '节点删除-右键菜单集成',
+  name: $i18n.get({ id: 'basic.components.RemoveNodeWithMenu.info.NodeDeletion', dm: '节点删除' }),
+  desc: $i18n.get({
+    id: 'basic.components.RemoveNodeWithMenu.info.NodeDeletionRightClickMenu',
+    dm: '节点删除-右键菜单集成',
+  }),
   icon: 'icon-minus-circle',
   cover: 'http://xxxx.jpg',
   category: 'elements-interaction',

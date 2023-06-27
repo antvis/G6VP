@@ -1,5 +1,6 @@
 import { GraphSchemaData } from '@antv/gi-sdk';
 import { ICase } from '../typing';
+import $i18n from '../../i18n';
 const source = {
   nodes: [
     {
@@ -189,6 +190,7 @@ const source = {
       risk_score: '-',
     },
   ],
+
   edges: [
     {
       amount: 1000000,
@@ -571,6 +573,7 @@ const schema: GraphSchemaData = {
       },
     },
   ],
+
   edges: [
     {
       edgeType: 'ib_txn',
@@ -665,6 +668,7 @@ const activeAssetsKeys = {
     'SankeyAnalysis',
     'ChartAnalysis',
   ],
+
   layouts: ['Force2', 'Concentric', 'Dagre', 'FundForce'],
 };
 
@@ -682,7 +686,7 @@ const projectConfig = {
           },
         },
       },
-      groupName: '默认样式',
+      groupName: $i18n.get({ id: 'gi-site.services.case.bank.DefaultStyle', dm: '默认样式' }),
       expressions: [],
       logic: true,
     },
@@ -721,6 +725,7 @@ const projectConfig = {
           value: 'account_balance',
         },
       ],
+
       logic: true,
     },
     {
@@ -758,6 +763,7 @@ const projectConfig = {
           value: 'account_box',
         },
       ],
+
       logic: true,
     },
     {
@@ -780,9 +786,11 @@ const projectConfig = {
           value: '-',
         },
       ],
+
       logic: true,
     },
   ],
+
   edges: [
     {
       id: 'SimpleEdge',
@@ -791,7 +799,7 @@ const projectConfig = {
         color: '#ddd',
         label: [],
       },
-      groupName: '默认样式',
+      groupName: $i18n.get({ id: 'gi-site.services.case.bank.DefaultStyle', dm: '默认样式' }),
       expressions: [],
       logic: true,
     },
@@ -833,6 +841,7 @@ const projectConfig = {
           value: 'ib_txn',
         },
       ],
+
       logic: true,
     },
     {
@@ -869,9 +878,11 @@ const projectConfig = {
           value: 'ownership',
         },
       ],
+
       logic: true,
     },
   ],
+
   layout: {
     id: 'Dagre',
     props: {
@@ -891,7 +902,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '放大',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.ZoomIn', dm: '放大' }),
           isShowIcon: true,
           icon: 'icon-zoomin',
           isShowTooltip: true,
@@ -912,7 +923,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '缩小',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.ZoomOut', dm: '缩小' }),
           isShowIcon: true,
           icon: 'icon-zoomout',
           isShowTooltip: true,
@@ -933,7 +944,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '自适应',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.Adaptive', dm: '自适应' }),
           isShowIcon: true,
           icon: 'icon-fit-view',
           isShowTooltip: true,
@@ -954,7 +965,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '视图居中',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.ViewCenter', dm: '视图居中' }),
           isShowIcon: true,
           icon: 'icon-fit-center',
           isShowTooltip: true,
@@ -975,11 +986,14 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '自由圈选',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.FreeSelection', dm: '自由圈选' }),
           isShowIcon: true,
           icon: 'icon-lasso',
           isShowTooltip: true,
-          tooltip: '按住Shift，点击画布即可自由圈选',
+          tooltip: $i18n.get({
+            id: 'gi-site.services.case.bank.HoldDownShiftAndClick',
+            dm: '按住Shift，点击画布即可自由圈选',
+          }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
@@ -992,7 +1006,7 @@ const projectConfig = {
       id: 'PropertiesPanel',
       props: {
         serviceId: 'GI/PropertiesPanel',
-        title: '属性面板',
+        title: $i18n.get({ id: 'gi-site.services.case.bank.PropertiesPanel', dm: '属性面板' }),
         placement: 'RT',
         width: '356px',
         height: 'calc(100% - 0px)',
@@ -1045,16 +1059,19 @@ const projectConfig = {
     },
     {
       id: 'Placeholder',
-      name: '画布占位符',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.CanvasPlaceholder', dm: '画布占位符' }),
       props: {
         img: 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
-        text: '当前画布为空，请先试试「数据/图数据源/导入/示例数据」',
+        text: $i18n.get({
+          id: 'gi-site.services.case.bank.TheCurrentCanvasIsEmpty',
+          dm: '当前画布为空，请先试试「数据/图数据源/导入/示例数据」',
+        }),
         width: 380,
       },
     },
     {
       id: 'FilterPanel',
-      name: '筛选面板',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.FilterPanel', dm: '筛选面板' }),
       props: {
         filterKeys: ['edge-amount', 'node-icon'],
         isFilterIsolatedNodes: true,
@@ -1068,11 +1085,14 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '筛选面板',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.FilterPanel', dm: '筛选面板' }),
           isShowIcon: true,
           icon: 'icon-filter',
           isShowTooltip: true,
-          tooltip: '通过属性筛选画布信息，可自定义',
+          tooltip: $i18n.get({
+            id: 'gi-site.services.case.bank.FilterCanvasInformationThroughAttributes',
+            dm: '通过属性筛选画布信息，可自定义',
+          }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'top',
           hasDivider: false,
@@ -1091,7 +1111,7 @@ const projectConfig = {
     },
     {
       id: 'LargeGraph',
-      name: '3D大图',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.DBigPicture', dm: '3D大图' }),
       props: {
         visible: false,
         minSize: '50%',
@@ -1103,7 +1123,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '3D大图',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.DBigPicture', dm: '3D大图' }),
           isShowIcon: true,
           icon: 'icon-3d',
           isShowTooltip: true,
@@ -1120,7 +1140,7 @@ const projectConfig = {
     },
     {
       id: 'MapMode',
-      name: '地图模式',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.MapMode', dm: '地图模式' }),
       props: {
         visible: false,
         type: 'amap',
@@ -1136,7 +1156,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '地图模式',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.MapMode', dm: '地图模式' }),
           isShowIcon: true,
           icon: 'icon-global',
           isShowTooltip: true,
@@ -1151,7 +1171,7 @@ const projectConfig = {
     },
     {
       id: 'SnapshotGallery',
-      name: '快照画廊',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.SnapshotGallery', dm: '快照画廊' }),
       props: {
         background: '#fff',
         direction: 'horizontal',
@@ -1162,11 +1182,14 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '快照画廊',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.SnapshotGallery', dm: '快照画廊' }),
           isShowIcon: true,
           icon: 'icon-camera',
           isShowTooltip: true,
-          tooltip: '快照画廊(快捷键ctrl+x)',
+          tooltip: $i18n.get({
+            id: 'gi-site.services.case.bank.SnapshotGalleryShortcutCtrlX',
+            dm: '快照画廊(快捷键ctrl+x)',
+          }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
@@ -1177,7 +1200,7 @@ const projectConfig = {
     },
     {
       id: 'ContextMenu',
-      name: '右键菜单',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.RightClickMenu', dm: '右键菜单' }),
       props: {
         GI_CONTAINER: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
         nodeMenuComponents: ['NeighborsQuery', 'ToggleClusterWithMenu', 'PinNodeWithMenu'],
@@ -1189,7 +1212,7 @@ const projectConfig = {
     },
     {
       id: 'ToggleClusterWithMenu',
-      name: '展开/收起',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.ExpandFoldUp', dm: '展开/收起' }),
       props: {
         isReLayout: false,
         degree: 1,
@@ -1197,7 +1220,7 @@ const projectConfig = {
     },
     {
       id: 'NeighborsQuery',
-      name: '邻居查询',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.NeighborQuery', dm: '邻居查询' }),
       props: {
         serviceId: 'GI/NeighborsQuery',
         degree: '1',
@@ -1206,7 +1229,7 @@ const projectConfig = {
     },
     {
       id: 'Copyright',
-      name: '版权',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.Copyright', dm: '版权' }),
       props: {
         imageUrl: 'https://gw.alipayobjects.com/zos/bmw-prod/c2d4b2f5-2a34-4ae5-86c4-df97f7136105.svg',
         width: 200,
@@ -1217,12 +1240,12 @@ const projectConfig = {
     },
     {
       id: 'Loading',
-      name: '加载动画',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.LoadAnimation', dm: '加载动画' }),
       props: {},
     },
     {
       id: 'PinNodeWithMenu',
-      name: '固定节点(MENU)',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.FixedNodeMenu', dm: '固定节点(MENU)' }),
       props: {
         color: '#fff',
         fill: '#262626',
@@ -1230,7 +1253,7 @@ const projectConfig = {
     },
     {
       id: 'ForceSimulation',
-      name: '力导布局控制器',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.ForceGuideLayoutController', dm: '力导布局控制器' }),
       props: {
         autoPin: true,
         dragNodeMass: 10000000,
@@ -1239,7 +1262,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '力导布局控制器',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.ForceGuideLayoutController', dm: '力导布局控制器' }),
           isShowIcon: true,
           icon: 'icon-layout-force',
           isShowTooltip: true,
@@ -1254,7 +1277,7 @@ const projectConfig = {
     },
     {
       id: 'Initializer',
-      name: '初始化器',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.Initializer', dm: '初始化器' }),
       props: {
         serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
         schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
@@ -1265,23 +1288,23 @@ const projectConfig = {
     {
       id: 'PropertyGraphInitializer',
       type: 'AUTO',
-      name: '属性图计算',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.AttributeGraphCalculation', dm: '属性图计算' }),
       props: {},
     },
     {
       id: 'LayoutSwitch',
-      name: '布局切换',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.LayoutSwitching', dm: '布局切换' }),
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '布局切换',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.LayoutSwitching', dm: '布局切换' }),
           isShowIcon: true,
           icon: 'icon-layout',
           isShowTooltip: false,
-          tooltip: '一键切换画布布局',
+          tooltip: $i18n.get({ id: 'gi-site.services.case.bank.SwitchCanvasLayoutWithOne', dm: '一键切换画布布局' }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
@@ -1292,7 +1315,7 @@ const projectConfig = {
     },
     {
       id: 'GrailLayout',
-      name: '圣杯布局',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.HolyGrailLayout', dm: '圣杯布局' }),
       props: {
         GI_CONTAINER_LEFT: [],
         leftDisplay: false,
@@ -1314,7 +1337,7 @@ const projectConfig = {
     },
     {
       id: 'Toolbar',
-      name: '工具栏',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.Toolbar', dm: '工具栏' }),
       props: {
         GI_CONTAINER: [
           'ZoomIn',
@@ -1327,6 +1350,7 @@ const projectConfig = {
           'LayoutSwitch',
           'Export',
         ],
+
         direction: 'vertical',
         placement: 'LT',
         offset: [24, 64],
@@ -1334,18 +1358,18 @@ const projectConfig = {
     },
     {
       id: 'Export',
-      name: '导出',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.Export', dm: '导出' }),
       props: {
         GI_CONTAINER_INDEX: 2,
         GIAC: {
           visible: false,
           disabled: false,
           isShowTitle: false,
-          title: '导出',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.Export', dm: '导出' }),
           isShowIcon: true,
           icon: 'icon-export',
           isShowTooltip: true,
-          tooltip: '导出CSV,PNG,JSON数据',
+          tooltip: $i18n.get({ id: 'gi-site.services.case.bank.ExportCsvPngJsonData', dm: '导出CSV,PNG,JSON数据' }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
@@ -1356,7 +1380,7 @@ const projectConfig = {
     },
     {
       id: 'Overview',
-      name: '大图概览',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.BigPictureOverview', dm: '大图概览' }),
       props: {
         limit: 600,
         filterLogic: 'and',
@@ -1365,7 +1389,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '大图概览',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.BigPictureOverview', dm: '大图概览' }),
           isShowIcon: true,
           icon: 'icon-dashboard',
           isShowTooltip: true,
@@ -1387,7 +1411,7 @@ const projectConfig = {
     },
     {
       id: 'SankeyAnalysis',
-      name: '桑基图分析',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.SankeyDiagramAnalysis', dm: '桑基图分析' }),
       props: {
         weightField: 'amount',
         GI_CONTAINER_INDEX: 2,
@@ -1395,7 +1419,7 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '桑基图分析',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.SankeyDiagramAnalysis', dm: '桑基图分析' }),
           isShowIcon: true,
           icon: 'icon-sankey',
           isShowTooltip: true,
@@ -1417,9 +1441,9 @@ const projectConfig = {
     },
     {
       id: 'ChartAnalysis',
-      name: '图表分析',
+      name: $i18n.get({ id: 'gi-site.services.case.bank.ChartAnalysis', dm: '图表分析' }),
       props: {
-        title: '未命名图表',
+        title: $i18n.get({ id: 'gi-site.services.case.bank.UnnamedChart', dm: '未命名图表' }),
         chartType: 'columnChart',
         height: 150,
         dataType: 'edges',
@@ -1430,11 +1454,14 @@ const projectConfig = {
           visible: false,
           disabled: false,
           isShowTitle: true,
-          title: '图表分析',
+          title: $i18n.get({ id: 'gi-site.services.case.bank.ChartAnalysis', dm: '图表分析' }),
           isShowIcon: true,
           icon: 'icon-barchart',
           isShowTooltip: true,
-          tooltip: '图中数据通过统计图表展示分析',
+          tooltip: $i18n.get({
+            id: 'gi-site.services.case.bank.TheDataInTheGraph',
+            dm: '图中数据通过统计图表展示分析',
+          }),
           tooltipColor: '#3056e3',
           tooltipPlacement: 'right',
           hasDivider: false,
@@ -1463,18 +1490,22 @@ const project: ICase = {
         name: 'bank.json',
       },
     ],
+
     transData: transform(source),
   },
   schemaData: schema,
   activeAssetsKeys,
   type: 'case',
-  name: '银行案例',
+  name: $i18n.get({ id: 'gi-site.services.case.bank.BankCase', dm: '银行案例' }),
   projectConfig,
   gmtCreate: '2022-11-22',
   id: 'bank',
-  title: '在银行反洗钱分析场景的应用实践',
-  tag: '金融风控',
-  author: '山果',
+  title: $i18n.get({
+    id: 'gi-site.services.case.bank.ApplicationPracticeInBankAnti',
+    dm: '在银行反洗钱分析场景的应用实践',
+  }),
+  tag: $i18n.get({ id: 'gi-site.services.case.bank.FinancialRiskControl', dm: '金融风控' }),
+  author: $i18n.get({ id: 'gi-site.services.case.bank.MountainFruit', dm: '山果' }),
   time: '2022.06.06',
   video: 'https://www.bilibili.com/video/BV1mg411X7Bh?share_source=copy_web',
   coverImg: `${window['GI_PUBLIC_PATH']}image/bank.demo.png`,

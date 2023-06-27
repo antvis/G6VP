@@ -1,3 +1,4 @@
+import $i18n from '../i18n';
 const GIAC_CONTENT = {
   type: 'void',
   'x-decorator': 'FormItem',
@@ -12,25 +13,25 @@ const GIAC_CONTENT = {
       'x-decorator': 'FormItem',
       'x-component': 'FormCollapse.CollapsePanel',
       'x-component-props': {
-        header: '容器配置',
+        header: $i18n.get({ id: 'sdk.src.components.const.ContainerConfiguration', dm: '容器配置' }),
       },
       properties: {
         visible: {
-          title: '默认显示',
+          title: $i18n.get({ id: 'sdk.src.components.const.DefaultDisplay', dm: '默认显示' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         disabled: {
-          title: '功能禁用',
+          title: $i18n.get({ id: 'sdk.src.components.const.FeatureDisabled', dm: '功能禁用' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         isShowTitle: {
-          title: '显示名称',
+          title: $i18n.get({ id: 'sdk.src.components.const.DisplayName', dm: '显示名称' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -44,17 +45,18 @@ const GIAC_CONTENT = {
               },
             },
           ],
+
           default: true,
         },
         title: {
-          title: '填写名称',
+          title: $i18n.get({ id: 'sdk.src.components.const.EnterAName', dm: '填写名称' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: '未命名组件',
+          default: $i18n.get({ id: 'sdk.src.components.const.UnnamedComponent', dm: '未命名组件' }),
         },
         isShowIcon: {
-          title: '显示图标',
+          title: $i18n.get({ id: 'sdk.src.components.const.ShowIcon', dm: '显示图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -71,14 +73,14 @@ const GIAC_CONTENT = {
           ],
         },
         icon: {
-          title: '选择图标',
+          title: $i18n.get({ id: 'sdk.src.components.const.SelectIcon', dm: '选择图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: 'icon-star',
         },
         isShowTooltip: {
-          title: '提示框',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptBox', dm: '提示框' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -92,24 +94,25 @@ const GIAC_CONTENT = {
               },
             },
           ],
+
           default: true,
         },
         tooltip: {
-          title: '提示内容',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptContent', dm: '提示内容' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: '',
         },
         tooltipColor: {
-          title: '提示颜色',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptColor', dm: '提示颜色' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'ColorInput',
           default: '#3056e3',
         },
         tooltipPlacement: {
-          title: '提示方位',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptOrientation', dm: '提示方位' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -117,40 +120,40 @@ const GIAC_CONTENT = {
             options: [
               {
                 value: 'top',
-                label: '上方',
+                label: $i18n.get({ id: 'sdk.src.components.const.Above', dm: '上方' }),
               },
               {
                 value: 'left',
-                label: '左方',
+                label: $i18n.get({ id: 'sdk.src.components.const.LeftSquare', dm: '左方' }),
               },
               {
                 value: 'right',
-                label: '右方',
+                label: $i18n.get({ id: 'sdk.src.components.const.RightSide', dm: '右方' }),
               },
               {
                 value: 'bottom',
-                label: '下方',
+                label: $i18n.get({ id: 'sdk.src.components.const.Below', dm: '下方' }),
               },
             ],
           },
           default: 'right',
         },
         hasDivider: {
-          title: '分隔符',
+          title: $i18n.get({ id: 'sdk.src.components.const.Separator', dm: '分隔符' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         height: {
-          title: '单元高度',
+          title: $i18n.get({ id: 'sdk.src.components.const.UnitHeight', dm: '单元高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: '60px',
         },
         isVertical: {
-          title: '垂直排列',
+          title: $i18n.get({ id: 'sdk.src.components.const.VerticalArrangement', dm: '垂直排列' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -158,35 +161,39 @@ const GIAC_CONTENT = {
           default: true,
         },
         containerType: {
-          title: '容器类型',
+          title: $i18n.get({ id: 'sdk.src.components.const.ContainerType', dm: '容器类型' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Radio.Group',
           enum: [
             {
-              label: '普通DIV',
+              label: $i18n.get({ id: 'sdk.src.components.const.CommonDiv', dm: '普通DIV' }),
               value: 'div',
             },
             {
-              label: '抽屉',
+              label: $i18n.get({ id: 'sdk.src.components.const.Drawer', dm: '抽屉' }),
               value: 'drawer',
             },
             {
-              label: '弹窗',
+              label: $i18n.get({ id: 'sdk.src.components.const.PopUpWindow', dm: '弹窗' }),
               value: 'modal',
             },
           ],
+
           default: 'div',
         },
         containerAnimate: {
-          title: '容器动画（仅DIV有效）',
+          title: $i18n.get({
+            id: 'sdk.src.components.const.ContainerAnimationValidOnlyFor',
+            dm: '容器动画（仅DIV有效）',
+          }),
           type: 'boolean',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         containerPlacement: {
-          title: '容器位置',
+          title: $i18n.get({ id: 'sdk.src.components.const.ContainerLocation', dm: '容器位置' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -194,40 +201,40 @@ const GIAC_CONTENT = {
             options: [
               {
                 value: 'LT',
-                label: '左上 / top',
+                label: $i18n.get({ id: 'sdk.src.components.const.TopLeftTop', dm: '左上 / top' }),
               },
               {
                 value: 'LB',
-                label: '左下 / left',
+                label: $i18n.get({ id: 'sdk.src.components.const.LowerLeftLeft', dm: '左下 / left' }),
               },
               {
                 value: 'RT',
-                label: '右上 / right',
+                label: $i18n.get({ id: 'sdk.src.components.const.TopRightRight', dm: '右上 / right' }),
               },
               {
                 value: 'RB',
-                label: '右下 / bottom',
+                label: $i18n.get({ id: 'sdk.src.components.const.BottomRightBottom', dm: '右下 / bottom' }),
               },
             ],
           },
           default: 'RT',
         },
         offset: {
-          title: '偏移距离',
+          title: $i18n.get({ id: 'sdk.src.components.const.OffsetDistance', dm: '偏移距离' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Offset',
           default: [0, 0],
         },
         containerWidth: {
-          title: '容器宽度',
+          title: $i18n.get({ id: 'sdk.src.components.const.ContainerWidth', dm: '容器宽度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: '350px',
         },
         containerHeight: {
-          title: '容器高度',
+          title: $i18n.get({ id: 'sdk.src.components.const.ContainerHeight', dm: '容器高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -235,7 +242,7 @@ const GIAC_CONTENT = {
         },
 
         contaienrMask: {
-          title: '容器遮罩',
+          title: $i18n.get({ id: 'sdk.src.components.const.ContainerMask', dm: '容器遮罩' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -260,25 +267,25 @@ const GIAC = {
       'x-decorator': 'FormItem',
       'x-component': 'FormCollapse.CollapsePanel',
       'x-component-props': {
-        header: '容器配置',
+        header: $i18n.get({ id: 'sdk.src.components.const.ContainerConfiguration', dm: '容器配置' }),
       },
       properties: {
         visible: {
-          title: '默认显示',
+          title: $i18n.get({ id: 'sdk.src.components.const.DefaultDisplay', dm: '默认显示' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         disabled: {
-          title: '功能禁用',
+          title: $i18n.get({ id: 'sdk.src.components.const.FeatureDisabled', dm: '功能禁用' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         isShowTitle: {
-          title: '显示名称',
+          title: $i18n.get({ id: 'sdk.src.components.const.DisplayName', dm: '显示名称' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -292,17 +299,18 @@ const GIAC = {
               },
             },
           ],
+
           default: false,
         },
         title: {
-          title: '填写名称',
+          title: $i18n.get({ id: 'sdk.src.components.const.EnterAName', dm: '填写名称' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: '时序分析',
+          default: $i18n.get({ id: 'sdk.src.components.const.TimeSeriesAnalysis', dm: '时序分析' }),
         },
         isShowIcon: {
-          title: '显示图标',
+          title: $i18n.get({ id: 'sdk.src.components.const.ShowIcon', dm: '显示图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -319,14 +327,14 @@ const GIAC = {
           ],
         },
         icon: {
-          title: '选择图标',
+          title: $i18n.get({ id: 'sdk.src.components.const.SelectIcon', dm: '选择图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: 'icon-star',
         },
         isShowTooltip: {
-          title: '提示框',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptBox', dm: '提示框' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -340,24 +348,25 @@ const GIAC = {
               },
             },
           ],
+
           default: true,
         },
         tooltip: {
-          title: '提示内容',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptContent', dm: '提示内容' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: '',
         },
         tooltipColor: {
-          title: '提示颜色',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptColor', dm: '提示颜色' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'ColorInput',
           default: '#3056e3',
         },
         tooltipPlacement: {
-          title: '提示方位',
+          title: $i18n.get({ id: 'sdk.src.components.const.PromptOrientation', dm: '提示方位' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -365,21 +374,22 @@ const GIAC = {
             options: [
               {
                 value: 'top',
-                label: '上方',
+                label: $i18n.get({ id: 'sdk.src.components.const.Above', dm: '上方' }),
               },
               {
                 value: 'left',
-                label: '左方',
+                label: $i18n.get({ id: 'sdk.src.components.const.LeftSquare', dm: '左方' }),
               },
               {
                 value: 'right',
-                label: '右方',
+                label: $i18n.get({ id: 'sdk.src.components.const.RightSide', dm: '右方' }),
               },
               {
                 value: 'bottom',
-                label: '下方',
+                label: $i18n.get({ id: 'sdk.src.components.const.Below', dm: '下方' }),
               },
             ],
+
             showInPanel: {
               conditions: [['.isShowTooltip', '$eq', true]],
             },
@@ -387,21 +397,21 @@ const GIAC = {
           default: 'right',
         },
         hasDivider: {
-          title: '分隔符',
+          title: $i18n.get({ id: 'sdk.src.components.const.Separator', dm: '分隔符' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
           default: false,
         },
         height: {
-          title: '单元高度',
+          title: $i18n.get({ id: 'sdk.src.components.const.UnitHeight', dm: '单元高度' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
           default: '46px',
         },
         isVertical: {
-          title: '垂直排列',
+          title: $i18n.get({ id: 'sdk.src.components.const.VerticalArrangement', dm: '垂直排列' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -421,7 +431,7 @@ const GIAC = {
 };
 
 const GI_CONTAINER_INDEX = {
-  title: '排序位置',
+  title: $i18n.get({ id: 'sdk.src.components.const.SortPosition', dm: '排序位置' }),
   type: 'number',
   'x-decorator': 'FormItem',
   'x-component': 'NumberPicker',
@@ -484,7 +494,7 @@ export const GIAC_PROPS = {
 
 export const GI_CONTAINER_METAS = {
   placement: {
-    title: '放置方位',
+    title: $i18n.get({ id: 'sdk.src.components.const.PlacementOrientation', dm: '放置方位' }),
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Select',
@@ -492,33 +502,33 @@ export const GI_CONTAINER_METAS = {
       options: [
         {
           value: 'LT',
-          label: '左上 / top',
+          label: $i18n.get({ id: 'sdk.src.components.const.TopLeftTop', dm: '左上 / top' }),
         },
         {
           value: 'RT',
-          label: '右上 / right',
+          label: $i18n.get({ id: 'sdk.src.components.const.TopRightRight', dm: '右上 / right' }),
         },
         {
           value: 'LB',
-          label: '左下 / left',
+          label: $i18n.get({ id: 'sdk.src.components.const.LowerLeftLeft', dm: '左下 / left' }),
         },
         {
           value: 'RB',
-          label: '右下 / bottom',
+          label: $i18n.get({ id: 'sdk.src.components.const.BottomRightBottom', dm: '右下 / bottom' }),
         },
       ],
     },
     default: 'LT',
   },
   offset: {
-    title: '偏移距离',
+    title: $i18n.get({ id: 'sdk.src.components.const.OffsetDistance', dm: '偏移距离' }),
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Offset',
     default: [0, 0],
   },
   height: {
-    title: '高度',
+    title: $i18n.get({ id: 'sdk.src.components.const.Height', dm: '高度' }),
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Input',
@@ -526,7 +536,7 @@ export const GI_CONTAINER_METAS = {
     default: '46px',
   },
   width: {
-    title: '宽度',
+    title: $i18n.get({ id: 'sdk.src.components.const.Width', dm: '宽度' }),
     type: 'string',
     'x-decorator': 'FormItem',
     'x-component': 'Input',

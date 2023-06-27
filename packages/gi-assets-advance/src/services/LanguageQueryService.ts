@@ -1,4 +1,5 @@
 import { GraphinData } from '@antv/graphin';
+import $i18n from '../i18n';
 
 export interface ServiceObject {
   name: string;
@@ -11,9 +12,9 @@ export interface NeighborsQueryParams {
 }
 
 export const LanguageQueryService: ServiceObject = {
-  name: '语句查询',
+  name: $i18n.get({ id: 'advance.src.services.LanguageQueryService.StatementQuery', dm: '语句查询' }),
   service: params => {
-    console.log('查询参数', params);
+    console.log($i18n.get({ id: 'advance.src.services.LanguageQueryService.QueryParameters', dm: '查询参数' }), params);
     const id = 'mock_language_query';
     const data = {
       nodes: [
@@ -31,6 +32,7 @@ export const LanguageQueryService: ServiceObject = {
           type: 'card',
         },
       ],
+
       edges: [
         {
           source: id,

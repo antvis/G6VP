@@ -2,6 +2,7 @@ import type { IGIAC } from '@antv/gi-sdk';
 import { extra } from '@antv/gi-sdk';
 import * as React from 'react';
 import ForceGraph from './ForceGraph';
+import $i18n from '../i18n';
 const { GIAComponent } = extra;
 
 export interface MapModeProps {
@@ -20,7 +21,9 @@ const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
   const GIAC = { ...props.GIAC };
   const { visible: defaultVisible, maxSize, minSize, placement, offset, highlightColor, backgroundColor } = props;
   const [visible, setVisible] = React.useState(defaultVisible);
-  GIAC.title = visible ? '切换至2D' : '切换至3D';
+  GIAC.title = visible
+    ? $i18n.get({ id: 'scene.src.LargeGraph.Component.SwitchToD', dm: '切换至2D' })
+    : $i18n.get({ id: 'scene.src.LargeGraph.Component.SwitchToD.1', dm: '切换至3D' });
   return (
     <>
       <GIAComponent
@@ -30,6 +33,7 @@ const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
           setVisible(true);
         }}
       />
+
       {visible && (
         <ForceGraph
           backgroundColor={backgroundColor}

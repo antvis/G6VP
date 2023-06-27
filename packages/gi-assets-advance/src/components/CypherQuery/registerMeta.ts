@@ -1,5 +1,6 @@
 import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { GIAC_CONTENT_METAS, deepClone } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.icon.default = info.icon;
@@ -17,7 +18,7 @@ const registerMeta = context => {
   return {
     /** 分类信息 */
     serviceId: {
-      title: '数据服务',
+      title: $i18n.get({ id: 'advance.components.CypherQuery.registerMeta.DataService', dm: '数据服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -27,14 +28,14 @@ const registerMeta = context => {
       default: defaultValue,
     },
     limit: {
-      title: '查询限制',
+      title: $i18n.get({ id: 'advance.components.CypherQuery.registerMeta.QueryLimits', dm: '查询限制' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       default: 100,
     },
     isShowPublishButton: {
-      title: '发布成模板',
+      title: $i18n.get({ id: 'advance.components.CypherQuery.registerMeta.PublishAsATemplate', dm: '发布成模板' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -48,10 +49,14 @@ const registerMeta = context => {
           },
         },
       ],
+
       default: false,
     },
     saveCypherTemplateServceId: {
-      title: '发布模板服务',
+      title: $i18n.get({
+        id: 'advance.components.CypherQuery.registerMeta.PublishTemplateService',
+        dm: '发布模板服务',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -61,7 +66,7 @@ const registerMeta = context => {
       default: publishDefaultValue,
     },
     initialValue: {
-      title: '初始语句',
+      title: $i18n.get({ id: 'advance.components.CypherQuery.registerMeta.InitialStatement', dm: '初始语句' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input.TextArea',

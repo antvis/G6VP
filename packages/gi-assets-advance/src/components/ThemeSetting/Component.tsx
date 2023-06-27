@@ -7,6 +7,7 @@ import AddTheme from './AddOrUpdateTheme';
 import './index.less';
 import mockServices from './mockServices';
 import { ITheme, IThemeSettingState } from './typing';
+import $i18n from '../../i18n';
 
 export interface Props {
   serviceId: string;
@@ -44,7 +45,7 @@ const ThemeSetting: React.FC<Props> = props => {
     >
       <Menu.Item>
         <Popconfirm
-          title="是否删除该主题?"
+          title={$i18n.get({ id: 'advance.components.ThemeSetting.Component.DeleteTheTopic', dm: '是否删除该主题?' })}
           onConfirm={e => {
             removeTheme(item.id);
             e!.preventDefault();
@@ -52,7 +53,7 @@ const ThemeSetting: React.FC<Props> = props => {
           okText="Yes"
           cancelText="No"
         >
-          删除主题
+          {$i18n.get({ id: 'advance.components.ThemeSetting.Component.DeleteATopic', dm: '删除主题' })}
         </Popconfirm>
       </Menu.Item>
       <Menu.Item
@@ -65,7 +66,7 @@ const ThemeSetting: React.FC<Props> = props => {
           });
         }}
       >
-        编辑主题
+        {$i18n.get({ id: 'advance.components.ThemeSetting.Component.EditTopic', dm: '编辑主题' })}
       </Menu.Item>
     </Menu>
   );
@@ -124,7 +125,9 @@ const ThemeSetting: React.FC<Props> = props => {
                   })
                 }
               >
-                <span className="name">创建主题</span>
+                <span className="name">
+                  {$i18n.get({ id: 'advance.components.ThemeSetting.Component.CreateATopic', dm: '创建主题' })}
+                </span>
               </Card>
             </Col>
             {state.themes.map((item, index) => {
@@ -147,7 +150,10 @@ const ThemeSetting: React.FC<Props> = props => {
                       color: primaryColor === cardBgColor ? 'rgba(0, 0, 0, 0.85)' : primaryColor,
                     }}
                   >
-                    <span className="name">{item.name || '自定义主题'}</span>
+                    <span className="name">
+                      {item.name ||
+                        $i18n.get({ id: 'advance.components.ThemeSetting.Component.CustomTheme', dm: '自定义主题' })}
+                    </span>
                     <Dropdown overlay={menu(item)}>
                       <Button
                         type="text"
@@ -165,6 +171,7 @@ const ThemeSetting: React.FC<Props> = props => {
           </Row>
         </div>
       )}
+
       {state.status !== 'show' && (
         <AddTheme status={state.status} currentTheme={state.currentTheme!} updateState={updateState} />
       )}

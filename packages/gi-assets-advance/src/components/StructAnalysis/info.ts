@@ -1,7 +1,11 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'StructAnalysis',
-  name: '路径结构分析',
-  desc: '自动解析画布所有路径，做聚合分析',
+  name: $i18n.get({ id: 'advance.components.StructAnalysis.info.PathStructureAnalysis', dm: '路径结构分析' }),
+  desc: $i18n.get({
+    id: 'advance.components.StructAnalysis.info.AutomaticallyParseAllPathsOf',
+    dm: '自动解析画布所有路径，做聚合分析',
+  }),
   icon: 'icon-layout-tree',
   cover: 'http://xxxx.jpg',
   category: 'algorithm-analysis',

@@ -6,6 +6,7 @@ import DataSource from '../../../components/DataSource/index';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../../components/utils';
 import * as ProjectServices from '../../../services/project';
+import $i18n from '../../../i18n';
 interface DataServicesProps {}
 
 const DataServices: React.FunctionComponent<DataServicesProps> = props => {
@@ -55,8 +56,11 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
     }).then(res => {
       if (res) {
         notification['success']({
-          message: '保存成功',
-          description: '该服务保存成功，快去分析页面查看～',
+          message: $i18n.get({ id: 'gi-site.Analysis.DataServices.SavedSuccessfully', dm: '保存成功' }),
+          description: $i18n.get({
+            id: 'gi-site.Analysis.DataServices.TheServiceIsSavedSuccessfully',
+            dm: '该服务保存成功，快去分析页面查看～',
+          }),
         });
       }
     });
@@ -73,7 +77,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
     }).then(res => {
       if (res) {
         notification['success']({
-          message: '删除成功',
+          message: $i18n.get({ id: 'gi-site.Analysis.DataServices.DeletedSuccessfully', dm: '删除成功' }),
         });
       }
     });

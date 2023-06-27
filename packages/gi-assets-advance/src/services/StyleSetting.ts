@@ -1,5 +1,6 @@
 import type { GIConfig } from '@antv/gi-sdk';
 import { utils } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 
 export interface ServiceObject {
   name: string;
@@ -10,7 +11,7 @@ export interface ServiceObject {
 }
 
 export const StyleSetting: ServiceObject = {
-  name: '样式设置',
+  name: $i18n.get({ id: 'advance.src.services.StyleSetting.StyleSettings', dm: '样式设置' }),
   service: async (elementConfig: GIConfig['nodes'] | GIConfig['edges'], elementType: string) => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     if (projectId) {

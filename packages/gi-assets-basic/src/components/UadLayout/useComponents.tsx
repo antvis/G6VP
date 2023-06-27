@@ -1,6 +1,7 @@
 import { Empty } from 'antd';
 import React from 'react';
 import { useContext } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
   return React.useMemo(() => {
@@ -24,7 +25,14 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
           id: 'empty',
           icon: 'icon-empty',
           props: {},
-          children: <Empty description="当前容器中无可用资产，请在配置面板中集成"></Empty>,
+          children: (
+            <Empty
+              description={$i18n.get({
+                id: 'basic.components.UadLayout.useComponents.NoAssetsAreAvailableIn',
+                dm: '当前容器中无可用资产，请在配置面板中集成',
+              })}
+            ></Empty>
+          ),
         },
       ];
     }

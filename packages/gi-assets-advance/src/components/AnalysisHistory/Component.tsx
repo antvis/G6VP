@@ -10,6 +10,7 @@ import TemplateModal from './TemplateModal';
 import TemplateDrawer from './TemplateDrawer';
 import { TemplateData } from './type';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface AnalysisHistoryProps {
   height: number;
@@ -91,7 +92,12 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
    */
   const fetchTemplates = (callback?: Function) => {
     if (!listService) {
-      message.error('获取模版列表失败，无获取模版的服务');
+      message.error(
+        $i18n.get({
+          id: 'advance.components.AnalysisHistory.Component.FailedToObtainTheTemplate',
+          dm: '获取模版列表失败，无获取模版的服务',
+        }),
+      );
       return;
     }
     (async () => {
@@ -106,7 +112,12 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
         updateState(draft => {
           draft.templates = [];
         });
-        message.error('分析历史模版列表获取失败');
+        message.error(
+          $i18n.get({
+            id: 'advance.components.AnalysisHistory.Component.FailedToObtainTheAnalysis',
+            dm: '分析历史模版列表获取失败',
+          }),
+        );
       }
     })();
   };
@@ -119,15 +130,28 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
    */
   const handleSaveTemplate = async (data: TemplateData, name: string, description?: string) => {
     if (!saveService) {
-      message.error('保存失败，无保存模版的服务');
+      message.error(
+        $i18n.get({
+          id: 'advance.components.AnalysisHistory.Component.SaveFailedThereIsNo',
+          dm: '保存失败，无保存模版的服务',
+        }),
+      );
       return;
     }
     const reuslt = await saveService({ ...data, name, description });
     if (reuslt.success) {
-      message.success(`历史分析链路模版 ${name}(${description}) 保存成功，您将可以右下方「使用分析模版」中使用`);
+      message.success(
+        $i18n.get(
+          {
+            id: 'advance.components.AnalysisHistory.Component.TheHistoricalAnalysisLinkTemplate',
+            dm: '历史分析链路模版 {name}({description}) 保存成功，您将可以右下方「使用分析模版」中使用',
+          },
+          { name: name, description: description },
+        ),
+      );
       fetchTemplates();
     } else {
-      message.error('保存失败');
+      message.error($i18n.get({ id: 'advance.components.AnalysisHistory.Component.SaveFailed', dm: '保存失败' }));
     }
   };
 
@@ -139,16 +163,29 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
    */
   const handleRemoveTemplate = async (templateId: string, name: string, description?: string) => {
     if (!removeService) {
-      message.error('移除失败，无移除模版的服务');
+      message.error(
+        $i18n.get({
+          id: 'advance.components.AnalysisHistory.Component.FailedToRemoveNoService',
+          dm: '移除失败，无移除模版的服务',
+        }),
+      );
       return;
     }
     const reuslt = await removeService({ ids: [templateId] });
     if (reuslt?.success) {
       const title = description ? `${name}(${description})` : name;
-      message.success(`历史分析链路模版 ${title} 删除成功`);
+      message.success(
+        $i18n.get(
+          {
+            id: 'advance.components.AnalysisHistory.Component.HistoricalAnalysisLinkTemplateTitle',
+            dm: '历史分析链路模版 {title} 删除成功',
+          },
+          { title: title },
+        ),
+      );
       fetchTemplates();
     } else {
-      message.error('删除失败');
+      message.error($i18n.get({ id: 'advance.components.AnalysisHistory.Component.FailedToDelete', dm: '删除失败' }));
     }
   };
 
@@ -196,7 +233,10 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
    */
   const configBtn = (
     <Popover
-      title="管理已有模版"
+      title={$i18n.get({
+        id: 'advance.components.AnalysisHistory.Component.ManageExistingTemplates',
+        dm: '管理已有模版',
+      })}
       trigger="click"
       placement="topRight"
       content={
@@ -207,7 +247,10 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
               <Row justify="space-between">
                 <Col>{ellipsisString(description ? `${name}(${description})` : name, 30)}</Col>
                 <Col>
-                  <Tooltip title="删除" placement="right">
+                  <Tooltip
+                    title={$i18n.get({ id: 'advance.components.AnalysisHistory.Component.Delete', dm: '删除' })}
+                    placement="right"
+                  >
                     <DeleteOutlined onClick={() => handleRemoveTemplate(id, name, description)} />
                   </Tooltip>
                 </Col>
@@ -244,7 +287,14 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
                 }}
                 style={{ marginRight: '8px', marginTop: '12px' }}
               />
-              {lastHistory ? getRecordContent(lastHistory, urlMap[lastHistory.id]) : <span>暂无记录</span>}
+
+              {lastHistory ? (
+                getRecordContent(lastHistory, urlMap[lastHistory.id])
+              ) : (
+                <span>
+                  {$i18n.get({ id: 'advance.components.AnalysisHistory.Component.NoRecord', dm: '暂无记录' })}
+                </span>
+              )}
             </>
           ) : (
             <>
@@ -256,21 +306,42 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
                   });
                 }}
               />
-              <span style={{ marginLeft: '4px' }}>历史记录列表</span>
+
+              <span style={{ marginLeft: '4px' }}>
+                {$i18n.get({ id: 'advance.components.AnalysisHistory.Component.HistoryList', dm: '历史记录列表' })}
+              </span>
             </>
           )}
         </Col>
         <Col span={7} offset={1} style={{ textAlign: 'right' }}>
-          <Tooltip title="⭐️检测到该项目存在分析模版，点击此处使用" open={collapsed && templateApplyTooltipVisible}>
+          <Tooltip
+            title={$i18n.get({
+              id: 'advance.components.AnalysisHistory.Component.TheAnalysisTemplateIsDetected',
+              dm: '⭐️检测到该项目存在分析模版，点击此处使用',
+            })}
+            open={collapsed && templateApplyTooltipVisible}
+          >
             <a
               onClick={handleUseTemplate}
               onMouseLeave={() => toggleTemplateApplyTooltipVisible(false)}
               style={{ display: templates?.length ? 'inline-flex' : 'none' }}
             >
-              使用分析模版
+              {$i18n.get({
+                id: 'advance.components.AnalysisHistory.Component.UseAnalysisTemplates',
+                dm: '使用分析模版',
+              })}
             </a>
           </Tooltip>
-          <Tooltip title={!history?.length ? '暂无历史，请先分析数据' : ''}>
+          <Tooltip
+            title={
+              !history?.length
+                ? $i18n.get({
+                    id: 'advance.components.AnalysisHistory.Component.NoHistoryPleaseAnalyzeThe',
+                    dm: '暂无历史，请先分析数据',
+                  })
+                : ''
+            }
+          >
             <Button
               type="text"
               onClick={() => {
@@ -284,7 +355,10 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
                 color: !history?.length ? 'var(--text-color-secondary)' : 'var(--primary-color)',
               }}
             >
-              沉淀分析历史
+              {$i18n.get({
+                id: 'advance.components.AnalysisHistory.Component.PrecipitationAnalysisHistory',
+                dm: '沉淀分析历史',
+              })}
             </Button>
           </Tooltip>
           {configBtn}
@@ -295,6 +369,7 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
       ) : (
         ''
       )}
+
       <TemplateModal
         templates={templates}
         open={modalOpened}
@@ -306,6 +381,7 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
           });
         }}
       />
+
       <TemplateDrawer
         open={templateDrawerVisible}
         templates={templates}

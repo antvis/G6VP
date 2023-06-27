@@ -3,6 +3,7 @@ import { Empty, message } from 'antd';
 import React from 'react';
 import TimebarControl from './control';
 import type { Aggregation, Speed, TimeGranularity } from './types';
+import $i18n from '../i18n';
 
 type TimebarProps = {
   /** 时间范围(时间戳) */
@@ -39,7 +40,7 @@ export const Timebar: React.FC<TimebarProps> = ({
   if (!timeField)
     return (
       <Empty
-        description="请配置时间字段"
+        description={$i18n.get({ id: 'scene.src.Timebar.Component.PleaseConfigureTheTimeField', dm: '请配置时间字段' })}
         style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
       />
     );
@@ -48,7 +49,12 @@ export const Timebar: React.FC<TimebarProps> = ({
   const [yType, _yField] = yField.split(':');
 
   if (xType !== yType) {
-    message.warning('请确保时间字段和指标字段同属于节点或边！');
+    message.warning(
+      $i18n.get({
+        id: 'scene.src.Timebar.Component.MakeSureThatTheTime',
+        dm: '请确保时间字段和指标字段同属于节点或边！',
+      }),
+    );
     return null;
   }
 

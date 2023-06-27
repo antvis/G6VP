@@ -4,6 +4,7 @@ import * as DatasetServices from '../../services/dataset';
 import * as WorkbookServices from '../../services/project';
 
 import { ShareAltOutlined } from '@ant-design/icons';
+import $i18n from '../../i18n';
 interface ShareProjectProps {
   context: any;
 }
@@ -33,15 +34,26 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
       elementA.click();
       document.body.removeChild(elementA);
       notification.success({
-        message: '备份项目成功！',
-        description:
-          '当前环境为「本地存储」，所有的操作数据均在您的浏览器本地 IndexedDB 中，因此您可下载项目文件进行分享，然后在「新建画布/恢复工作薄」中进行文件恢复',
+        message: $i18n.get({
+          id: 'gi-site.components.Navbar.Share.TheBackupProjectIsSuccessful',
+          dm: '备份项目成功！',
+        }),
+        description: $i18n.get({
+          id: 'gi-site.components.Navbar.Share.TheCurrentEnvironmentIsLocal',
+          dm: '当前环境为「本地存储」，所有的操作数据均在您的浏览器本地 IndexedDB 中，因此您可下载项目文件进行分享，然后在「新建画布/恢复工作簿」中进行文件恢复',
+        }),
       });
     } catch (error) {
       console.log(error);
       notification.error({
-        message: '备份项目失败！',
-        description: `失败原因：${error}`,
+        message: $i18n.get({ id: 'gi-site.components.Navbar.Share.FailedToBackUpThe', dm: '备份项目失败！' }),
+        description: $i18n.get(
+          {
+            id: 'gi-site.components.Navbar.Share.FailureReasonError',
+            dm: '失败原因：{error}',
+          },
+          { error: error },
+        ),
       });
     }
   };
@@ -49,7 +61,7 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
   return (
     <div>
       <Button size="small" onClick={handleClick} icon={<ShareAltOutlined />} type="text">
-        备份
+        {$i18n.get({ id: 'gi-site.components.Navbar.Share.Backup', dm: '备份' })}
       </Button>
     </div>
   );

@@ -1,6 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import request from 'umi-request';
+import $i18n from '../i18n';
 
 export const connectTuGraphDataSource = async () => {
   const { username, password, engineServerURL, HTTP_SERVICE_URL } = utils.getServerEngineContext();
@@ -19,18 +20,30 @@ export const connectTuGraphDataSource = async () => {
 
   if (!result || !result.success) {
     notification.error({
-      message: `连接 TuGraph 数据库失败`,
+      message: $i18n.get({
+        id: 'tugraph.src.services.TuGraphService.FailedToConnectToTugraph',
+        dm: '连接 TuGraph 数据库失败',
+      }),
       style: {
         width: 500,
       },
-      description: `✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 {engineId} 数据库地址，账户，密码是否填写正确`,
+      description: $i18n.get({
+        id: 'tugraph.src.services.TuGraphService.CheckWhetherTheAntvisGi',
+        dm: '✅ 请检查 antvis/gi-httpservice 镜像是否启动 <br />✅ 请检查 {engineId} 数据库地址，账户，密码是否填写正确',
+      }),
     });
     return result;
   }
 
   notification.success({
-    message: `连接 TuGraph 数据库成功`,
-    description: '请继续选择子图，进入分析',
+    message: $i18n.get({
+      id: 'tugraph.src.services.TuGraphService.ConnectionToDatabaseTugraphSucceeded',
+      dm: '连接 TuGraph 数据库成功',
+    }),
+    description: $i18n.get({
+      id: 'tugraph.src.services.TuGraphService.ContinueToSelectSubgraphsAnd',
+      dm: '请继续选择子图，进入分析',
+    }),
   });
 
   const { data } = result;

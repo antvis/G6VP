@@ -10,6 +10,7 @@ import PanelExtra from './PanelExtra';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
 import { findShortestPath } from '@antv/algorithm';
+import $i18n from '../../i18n';
 
 const { Panel } = Collapse;
 
@@ -74,8 +75,14 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       const history = {
         componentId: 'PathAnalysis',
         type: 'analyse',
-        subType: '路径',
-        statement: `起点: ${source}, 终点: ${target}`,
+        subType: $i18n.get({ id: 'basic.components.PathAnalysis.Component.Path', dm: '路径' }),
+        statement: $i18n.get(
+          {
+            id: 'basic.components.PathAnalysis.Component.StartPointSourceEndPoint',
+            dm: '起点: {source}, 终点: {target}',
+          },
+          { source: source, target: target },
+        ),
         params: {
           source,
           target,
@@ -85,11 +92,26 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       try {
         const { allPath: allNodePath, allEdgePath }: any = findShortestPath(graphData, source, target, direction);
         if (!allNodePath?.length) {
-          let info = '无符合条件的路径';
+          let info = $i18n.get({
+            id: 'basic.components.PathAnalysis.Component.NoPathThatMeetsThe',
+            dm: '无符合条件的路径',
+          });
           if (direction) {
-            info = `${info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点`;
+            info = $i18n.get(
+              {
+                id: 'basic.components.PathAnalysis.Component.InfoYouCanTryTo',
+                dm: '{info}，可尝试将“是否有向”设置为“无向”，或改变起点与终点',
+              },
+              { info: info },
+            );
           } else {
-            info = `${info}，可尝试改变起点与终点`;
+            info = $i18n.get(
+              {
+                id: 'basic.components.PathAnalysis.Component.InfoYouCanTryTo.1',
+                dm: '{info}，可尝试改变起点与终点',
+              },
+              { info: info },
+            );
           }
           message.info(info);
           updateHistory({
@@ -296,12 +318,23 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         <Row justify="space-between">
           <Col span={22}>
             <Form.Item
-              label="起始节点"
+              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.StartNode', dm: '起始节点' })}
               name="source"
-              rules={[{ required: true, message: '请填写起点节点ID' }]}
+              rules={[
+                {
+                  required: true,
+                  message: $i18n.get({
+                    id: 'basic.components.PathAnalysis.Component.EnterTheStartNodeId',
+                    dm: '请填写起点节点ID',
+                  }),
+                },
+              ]}
               tooltip={{
                 open: state.selecting === 'source',
-                title: '可点选画布节点，快速选择起始节点',
+                title: $i18n.get({
+                  id: 'basic.components.PathAnalysis.Component.YouCanClickTheCanvas',
+                  dm: '可点选画布节点，快速选择起始节点',
+                }),
               }}
             >
               <Select
@@ -332,12 +365,23 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         <Row justify="space-between">
           <Col span={22}>
             <Form.Item
-              label="目标节点"
+              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.TargetNode', dm: '目标节点' })}
               name="target"
-              rules={[{ required: true, message: '请填写终点节点ID' }]}
+              rules={[
+                {
+                  required: true,
+                  message: $i18n.get({
+                    id: 'basic.components.PathAnalysis.Component.EnterTheEndpointId',
+                    dm: '请填写终点节点ID',
+                  }),
+                },
+              ]}
               tooltip={{
                 open: state.selecting === 'target',
-                title: '可点选画布节点，快速选择目标节点',
+                title: $i18n.get({
+                  id: 'basic.components.PathAnalysis.Component.YouCanClickTheCanvas.1',
+                  dm: '可点选画布节点，快速选择目标节点',
+                }),
               }}
             >
               <Select
@@ -365,14 +409,21 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             />
           </Col>
         </Row>
-        <Form.Item name="direction" label="是否有向">
-          <Switch checkedChildren="有向" unCheckedChildren="无向" defaultChecked />
+        <Form.Item
+          name="direction"
+          label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
+        >
+          <Switch
+            checkedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Directed', dm: '有向' })}
+            unCheckedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Undirected', dm: '无向' })}
+            defaultChecked
+          />
         </Form.Item>
         <Form.Item>
           <Row>
             <Col span={16}>
               <Button type="primary" onClick={handleSearch} style={{ width: '100%' }}>
-                查询路径
+                {$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryPath', dm: '查询路径' })}
               </Button>
             </Col>
             <Col offset="2" span={6} style={{ textAlign: 'right' }}>
@@ -380,6 +431,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                 {state.isAnalysis && state.allNodePath.length > 0 && (
                   <FilterRule state={state} updateState={updateState} />
                 )}
+
                 <Button danger onClick={handleResetForm} icon={<DeleteOutlined />}></Button>
               </Space>
             </Col>
@@ -398,7 +450,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               return (
                 <Panel
                   key={index}
-                  header={`路径${index + 1}`}
+                  header={$i18n.get({ id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径${index + 1}` }, { numebr: index + 1 })}
                   extra={
                     <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                   }
@@ -415,6 +467,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             })}
           </Collapse>
         )}
+
         {state.isAnalysis && state.nodePath.length === 0 && <Empty />}
       </div>
     </div>

@@ -6,6 +6,7 @@ import { GraphSchemaData, utils } from '../../index';
 import CollapseCard from '../CollapseCard';
 import type { GraphDBConfig } from './index';
 import { getEngineForm, setEngineForm } from './utils';
+import $i18n from '../../i18n';
 
 const { getSchemaGraph } = utils;
 
@@ -145,18 +146,21 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
   const isEmpty = schemaData.nodes.length === 0;
 
   return (
-    <CollapseCard title="选择子图">
+    <CollapseCard title={$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.SelectSubgraph', dm: '选择子图' })}>
       <Form name="subgraphForm" form={form} layout="vertical">
         <Row>
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <div style={{ padding: '24px' }}>
               <Form.Item
-                label="选择子图"
+                label={$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.SelectSubgraph', dm: '选择子图' })}
                 name="subgraph"
                 rules={[
                   {
                     required: true,
-                    message: '请选择子图!',
+                    message: $i18n.get({
+                      id: 'sdk.components.EngineServer.LoadGraph.PleaseSelectASubgraph',
+                      dm: '请选择子图!',
+                    }),
                   },
                 ]}
                 style={{
@@ -166,7 +170,10 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
               >
                 <Select
                   showSearch
-                  placeholder="请选择要查询的子图"
+                  placeholder={$i18n.get({
+                    id: 'sdk.components.EngineServer.LoadGraph.SelectASubgraphToQuery',
+                    dm: '请选择要查询的子图',
+                  })}
                   onChange={handleChange}
                   style={{ width: '100%' }}
                   value={subGraphName}
@@ -179,34 +186,49 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
               <div style={{ margin: '20px 0px' }}>
                 <Row gutter={[12, 12]}>
                   <Col span={12}>
-                    <Statistic title="节点规模" value={count.nodes} />
+                    <Statistic
+                      title={$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.NodeSize', dm: '节点规模' })}
+                      value={count.nodes}
+                    />
                   </Col>
                   <Col span={12}>
-                    <Statistic title="边规模" value={count.edges} />
+                    <Statistic
+                      title={$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.EdgeScale', dm: '边规模' })}
+                      value={count.edges}
+                    />
                   </Col>
                 </Row>
               </div>
               {schemaData ? (
                 <Form.Item
-                  label="数据名称"
+                  label={$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.DataName', dm: '数据名称' })}
                   name="datasetName"
                   rules={[
                     {
                       required: true,
-                      message: '请输入数据名称!',
+                      message: $i18n.get({
+                        id: 'sdk.components.EngineServer.LoadGraph.EnterADataName',
+                        dm: '请输入数据名称!',
+                      }),
                     },
                   ]}
                   style={{
                     marginTop: 16,
                   }}
                 >
-                  <Input placeholder="请为该数据集命名" />
+                  <Input
+                    placeholder={$i18n.get({
+                      id: 'sdk.components.EngineServer.LoadGraph.NameTheDataset',
+                      dm: '请为该数据集命名',
+                    })}
+                  />
                 </Form.Item>
               ) : (
                 ''
               )}
+
               <Button type="primary" onClick={handleSubmit} style={{ width: '100%' }}>
-                进入分析
+                {$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.EnterAnalysis', dm: '进入分析' })}
               </Button>
             </div>
           </Col>
@@ -221,7 +243,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                   alignItems: 'center',
                 }}
               >
-                暂无图模型
+                {$i18n.get({ id: 'sdk.components.EngineServer.LoadGraph.NoGraphModel', dm: '暂无图模型' })}
               </div>
             ) : (
               <Graphin

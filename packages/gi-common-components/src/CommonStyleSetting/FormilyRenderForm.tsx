@@ -11,6 +11,7 @@ import ColorInput from './ColorInput';
 import GroupSelect from './GroupSelect';
 import IconPicker from './IconPicker';
 import IconSelector from './IconSelector';
+import $i18n from '../i18n';
 
 const { Text } = Typography;
 
@@ -131,7 +132,10 @@ const RenderForm: React.FunctionComponent<RenderFormProps> = props => {
     <>
       <div className="gi-assets-selector" style={{ position: 'absolute', right: '48px', top: '-34px' }}>
         <PopoverContainer
-          title="选择元素资产"
+          title={$i18n.get({
+            id: 'common-components.src.CommonStyleSetting.FormilyRenderForm.SelectElementAssets',
+            dm: '选择元素资产',
+          })}
           content={
             <Radio.Group value={elementId} onChange={handleChangeElement}>
               {OPTIONS.map(c => {

@@ -38,6 +38,7 @@ export {
   getPropertyRanks,
   getPropertyValueRanks,
 } from './propertyGraph';
+export { default as getCurrentLocales } from './getCurrentLocales';
 
 export {
   transNodeOrEdgeByFieldMapping,

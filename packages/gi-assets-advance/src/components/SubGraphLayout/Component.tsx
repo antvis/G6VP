@@ -8,6 +8,7 @@ import { LAYOUTS } from './const';
 import { ILayoutOption } from './typing';
 import { updateLayout, getLayoutOptions } from './utils';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Panel } = Collapse;
 
@@ -50,7 +51,12 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
       });
 
     if (selectedNodes.length === 0) {
-      message.error('当前画布中无选中元素');
+      message.error(
+        $i18n.get({
+          id: 'advance.components.SubGraphLayout.Component.NoSelectedElementInThe',
+          dm: '当前画布中无选中元素',
+        }),
+      );
     } else {
       updateState(draft => {
         draft.layouts.push({
@@ -138,7 +144,13 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
         {state.layouts.map((item, index) => {
           return (
             <Panel
-              header={`布局${index}`}
+              header={$i18n.get(
+                {
+                  id: 'advance.components.SubGraphLayout.Component.LayoutIndex',
+                  dm: '布局{index}',
+                },
+                { index: index },
+              )}
               key={index}
               className="site-collapse-custom-panel"
               extra={
@@ -156,12 +168,17 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
             >
               <div>
                 <div style={{ marginBottom: '6px' }} className="custom-item">
-                  <div>选择节点：</div>
+                  <div>
+                    {$i18n.get({ id: 'advance.components.SubGraphLayout.Component.SelectANode', dm: '选择节点：' })}
+                  </div>
                   <Select
                     mode="multiple"
                     allowClear
                     style={{ width: '316px' }}
-                    placeholder="请选择节点"
+                    placeholder={$i18n.get({
+                      id: 'advance.components.SubGraphLayout.Component.SelectANode.1',
+                      dm: '请选择节点',
+                    })}
                     value={item.nodes.map(node => node.id)}
                     onChange={values => {
                       updateState(draft => {
@@ -181,11 +198,16 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
                   </Select>
                 </div>
                 <div style={{ marginBottom: '6px' }} className="custom-item">
-                  <div>选择布局：</div>
+                  <div>
+                    {$i18n.get({ id: 'advance.components.SubGraphLayout.Component.SelectLayout', dm: '选择布局：' })}
+                  </div>
                   <Select
                     allowClear
                     style={{ maxWidth: '247px' }}
-                    placeholder="请选择布局"
+                    placeholder={$i18n.get({
+                      id: 'advance.components.SubGraphLayout.Component.PleaseSelectALayout',
+                      dm: '请选择布局',
+                    })}
                     value={item.type}
                     defaultValue={item.type}
                     onChange={val => {
@@ -211,11 +233,11 @@ const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
       </Collapse>
 
       <Button type="dashed" style={{ width: '100%' }} onClick={handlePlus}>
-        添加布局
+        {$i18n.get({ id: 'advance.components.SubGraphLayout.Component.AddLayout', dm: '添加布局' })}
       </Button>
 
       <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
-        开始调整
+        {$i18n.get({ id: 'advance.components.SubGraphLayout.Component.StartAdjustment', dm: '开始调整' })}
       </Button>
     </div>
   );

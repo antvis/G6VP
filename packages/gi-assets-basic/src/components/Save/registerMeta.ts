@@ -1,5 +1,6 @@
 import { extra, utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -12,7 +13,7 @@ export default ({ services }) => {
   const serviceOptions = utils.getServiceOptions(services, info.services[0]);
   return {
     serviceId: {
-      title: '保存服务',
+      title: $i18n.get({ id: 'basic.components.Save.registerMeta.SaveService', dm: '保存服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

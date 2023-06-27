@@ -1,6 +1,7 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Card, Tooltip } from 'antd';
 import React from 'react';
+import $i18n from '../../i18n';
 import './index.less';
 const { Meta } = Card;
 
@@ -35,8 +36,15 @@ const ProjectCard: React.FunctionComponent<ProjectCardProps> = props => {
         <Meta title={title} description={time} />
         {expiredStr && (
           <div className="expired">
-            将于{expiredStr}过期&nbsp;
-            <Tooltip title="相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据">
+            {$i18n.get({ id: 'gi-site.components.ProjectCard.Will', dm: '将于' })}
+            {expiredStr}
+            {$i18n.get({ id: 'gi-site.components.ProjectCard.Expired', dm: '过期' })}
+            <Tooltip
+              title={$i18n.get({
+                id: 'gi-site.components.ProjectCard.TheDataHasBeenDeleted',
+                dm: '相关数据已删除，该工作簿即将过期。若需恢复，请在「数据集-回收站」恢复相关数据',
+              })}
+            >
               <QuestionCircleOutlined />
             </Tooltip>
           </div>

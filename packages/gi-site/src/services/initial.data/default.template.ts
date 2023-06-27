@@ -1,10 +1,11 @@
 import { GIConfig } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 export const baseNodesConfig: GIConfig['nodes'] = [
   {
     id: 'SimpleNode',
-    name: '官方节点',
+    name: $i18n.get({ id: 'gi-site.services.initial.data.default.template.OfficialNode', dm: '官方节点' }),
     expressions: [],
-    groupName: '默认样式',
+    groupName: $i18n.get({ id: 'gi-site.services.initial.data.default.template.DefaultStyle', dm: '默认样式' }),
     logic: true,
     props: {
       size: 26,
@@ -17,9 +18,9 @@ export const baseNodesConfig: GIConfig['nodes'] = [
 export const baseEdgesConfig: GIConfig['edges'] = [
   {
     id: 'SimpleEdge',
-    name: '官方边',
+    name: $i18n.get({ id: 'gi-site.services.initial.data.default.template.OfficialSide', dm: '官方边' }),
     expressions: [],
-    groupName: '默认样式',
+    groupName: $i18n.get({ id: 'gi-site.services.initial.data.default.template.DefaultStyle', dm: '默认样式' }),
     logic: true,
     props: {
       size: 1,
@@ -28,6 +29,7 @@ export const baseEdgesConfig: GIConfig['edges'] = [
     },
   },
 ];
+
 export const baseLayoutConfig = {
   id: 'Force2',
   props: {

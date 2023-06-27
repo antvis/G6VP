@@ -1,8 +1,9 @@
 import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
+import $i18n from '../i18n';
 
 export const GI_SERVICE_INTIAL_GRAPH = {
-  name: '初始化查询',
+  name: $i18n.get({ id: 'janusgraph.src.services.Initializer.InitializeAQuery', dm: '初始化查询' }),
   service: async () => {
     return new Promise(resolve => {
       resolve({
@@ -14,7 +15,7 @@ export const GI_SERVICE_INTIAL_GRAPH = {
 };
 
 export const GI_SERVICE_SCHEMA = {
-  name: '查询图模型',
+  name: $i18n.get({ id: 'janusgraph.src.services.Initializer.QueryGraphModel', dm: '查询图模型' }),
   service: async () => {
     const { ENGINE_USER_TOKEN, HTTP_SERVICE_URL, CURRENT_SUBGRAPH } = utils.getServerEngineContext();
 

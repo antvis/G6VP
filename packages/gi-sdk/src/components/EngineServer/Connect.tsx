@@ -4,6 +4,7 @@ import { utils } from '../../index';
 import CollapseCard from '../CollapseCard';
 import './index.less';
 import { getEngineForm, setEngineForm } from './utils';
+import $i18n from '../../i18n';
 
 export interface ConnectProps {
   isSocketConnect?: boolean;
@@ -50,47 +51,76 @@ const Connect: React.FC<ConnectProps> = ({ updateToken, token, engineId, connect
       updateToken();
     }
   };
-  const submitMessage = token ? '重新连接' : '开始连接';
+  const submitMessage = token
+    ? $i18n.get({ id: 'sdk.components.EngineServer.Connect.Reconnect', dm: '重新连接' })
+    : $i18n.get({ id: 'sdk.components.EngineServer.Connect.StartConnection', dm: '开始连接' });
 
   return (
     <>
-      <CollapseCard title="连接数据库" defaultActive={!Boolean(token)}>
+      <CollapseCard
+        title={$i18n.get({ id: 'sdk.components.EngineServer.Connect.ConnectToADatabase', dm: '连接数据库' })}
+        defaultActive={!Boolean(token)}
+      >
         <Form name="gsform" form={form}>
           {loading && (
             <Alert
               type="info"
               showIcon
               style={{ marginTop: 16, marginBottom: 16 }}
-              message={`正在连接 ${engineId} 数据库，请耐心等待……`}
+              message={$i18n.get(
+                {
+                  id: 'sdk.components.EngineServer.Connect.ConnectingToTheEngineidDatabase',
+                  dm: '正在连接 {engineId} 数据库，请耐心等待……',
+                },
+                { engineId: engineId },
+              )}
             />
           )}
+
           {!isSocketConnect && (
             <Form.Item
-              label="代理地址"
+              label={$i18n.get({ id: 'sdk.components.EngineServer.Connect.ProxyAddress', dm: '代理地址' })}
               name="HTTP_SERVICE_URL"
-              tooltip="平台提供 packages/gi-httpservices 来代理连接，请依照文档启动：https://www.yuque.com/antv/gi/fyc33eg85bwnlqxa"
+              tooltip={$i18n.get({
+                id: 'sdk.components.EngineServer.Connect.ThePlatformProvidesPackagesGi',
+                dm: '平台提供 packages/gi-httpservices 来代理连接，请依照文档启动：https://www.yuque.com/antv/gi/fyc33eg85bwnlqxa',
+              })}
               // rules={[{ required: true, message: 'G6VP 平台服务地址必填!' }]}
             >
-              <Input placeholder="请输入代理地址，默认 http://127.0.0.1:7001" />
+              <Input
+                placeholder={$i18n.get({
+                  id: 'sdk.components.EngineServer.Connect.EnterTheProxyAddressDefault',
+                  dm: '请输入代理地址，默认 http://127.0.0.1:7001',
+                })}
+              />
             </Form.Item>
           )}
+
           <Form.Item
-            label="引擎地址"
+            label={$i18n.get({ id: 'sdk.components.EngineServer.Connect.EngineAddress', dm: '引擎地址' })}
             name="engineServerURL"
-            tooltip={`图数据库地址，请提前准备好数据`}
+            tooltip={$i18n.get({
+              id: 'sdk.components.EngineServer.Connect.MapDatabaseAddressPleasePrepare',
+              dm: '图数据库地址，请提前准备好数据',
+            })}
             // rules={[{ required: true, message: '数据库地址必填!' }]}
           >
-            <Input placeholder="请输入图引擎地址" />
+            <Input
+              placeholder={$i18n.get({
+                id: 'sdk.components.EngineServer.Connect.EnterTheGraphEngineAddress',
+                dm: '请输入图引擎地址',
+              })}
+            />
           </Form.Item>
           <Form.Item
-            label="账名"
+            label={$i18n.get({ id: 'sdk.components.EngineServer.Connect.AccountName', dm: '账名' })}
             name="username"
             //  rules={[{ required: true, message: '数据库用户名必填!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="密码"
+            label={$i18n.get({ id: 'sdk.components.EngineServer.Connect.Password', dm: '密码' })}
             name="password"
             // rules={[{ required: true, message: '数据库登录密码必填!' }]}
           >

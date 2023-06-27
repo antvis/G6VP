@@ -1,7 +1,8 @@
 import { utils } from '@antv/gi-sdk';
 import type { ITheme } from '../components/ThemeSetting/typing';
+import $i18n from '../i18n';
 export const AddTheme = {
-  name: '添加主题',
+  name: $i18n.get({ id: 'advance.src.services.ThemeSetting.AddTopic', dm: '添加主题' }),
   service: async (theme: ITheme) => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -13,13 +14,13 @@ export const AddTheme = {
     localforage.setItem(projectId, { ...project, themes: newThemes });
     return {
       success: true,
-      msg: '主题创建成功！',
+      msg: $i18n.get({ id: 'advance.src.services.ThemeSetting.TheThemeHasBeenCreated', dm: '主题创建成功！' }),
       data: [...newThemes],
     };
   },
 };
 export const GetTheme = {
-  name: '获取主题',
+  name: $i18n.get({ id: 'advance.src.services.ThemeSetting.GetTopics', dm: '获取主题' }),
   service: async () => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -33,7 +34,7 @@ export const GetTheme = {
   },
 };
 export const UpdateTheme = {
-  name: '更新主题',
+  name: $i18n.get({ id: 'advance.src.services.ThemeSetting.UpdateTopic', dm: '更新主题' }),
   service: async (id: string, theme: ITheme) => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -46,19 +47,19 @@ export const UpdateTheme = {
       localforage.setItem(projectId, { ...project, themes });
       return {
         success: true,
-        msg: '主题更新成功',
+        msg: $i18n.get({ id: 'advance.src.services.ThemeSetting.TheTopicHasBeenUpdated', dm: '主题更新成功' }),
         data: [...themes],
       };
     } else {
       return {
         sucess: false,
-        msg: '主题不存在',
+        msg: $i18n.get({ id: 'advance.src.services.ThemeSetting.TheTopicDoesNotExist', dm: '主题不存在' }),
       };
     }
   },
 };
 export const RemoveTheme = {
-  name: '删除主题',
+  name: $i18n.get({ id: 'advance.src.services.ThemeSetting.DeleteATopic', dm: '删除主题' }),
   service: async (id: string) => {
     const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
     //@ts-ignore
@@ -69,7 +70,7 @@ export const RemoveTheme = {
     localforage.setItem(projectId, { ...project, themes: filterThemes });
     return {
       success: true,
-      msg: '删除成功',
+      msg: $i18n.get({ id: 'advance.src.services.ThemeSetting.DeletedSuccessfully', dm: '删除成功' }),
       data: filterThemes,
     };
   },

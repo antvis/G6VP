@@ -1,12 +1,13 @@
 import request from 'umi-request';
 import { GI_SITE } from './const';
+import $i18n from '../i18n';
 
 export const querySharedAnalysisById = async (shareId: string) => {
   const response = await request(`${GI_SITE.SERVICE_URL}/share/list/${shareId}`, {
     method: 'get',
   });
 
-  console.log('查询', response);
+  console.log($i18n.get({ id: 'gi-site.src.services.share.Query', dm: '查询' }), response);
 
   if (response.success && response.data) {
     return response.data;

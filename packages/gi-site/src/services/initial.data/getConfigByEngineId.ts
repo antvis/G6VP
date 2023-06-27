@@ -1,9 +1,13 @@
+import $i18n from '../../i18n';
 const SUPPORT_CYPHER_ENGINE = ['TuGraph', 'Neo4j', 'Galaxybase'];
 
 const Cypher_Template = engineId => [
   {
     id: 'CypherQuery',
-    name: 'Cypher 语句查询',
+    name: $i18n.get({
+      id: 'gi-site.services.initial.data.getConfigByEngineId.CypherStatementQuery',
+      dm: 'Cypher 语句查询',
+    }),
     props: {
       serviceId: `${engineId}/CypherQuery`,
       isShowPublishButton: false,
@@ -14,7 +18,10 @@ const Cypher_Template = engineId => [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: 'Cypher 语句查询',
+        title: $i18n.get({
+          id: 'gi-site.services.initial.data.getConfigByEngineId.CypherStatementQuery',
+          dm: 'Cypher 语句查询',
+        }),
         isShowIcon: true,
         icon: 'icon-query',
         isShowTooltip: true,
@@ -39,7 +46,7 @@ const Cypher_Template = engineId => [
 const Gremlin_Template = engineId => [
   {
     id: 'GremlinQuery',
-    name: 'Gremlin 查询',
+    name: $i18n.get({ id: 'gi-site.services.initial.data.getConfigByEngineId.GremlinQuery', dm: 'Gremlin 查询' }),
     props: {
       serviceId: `${engineId}/GremlinQuery`,
       isShowPublishButton: false,

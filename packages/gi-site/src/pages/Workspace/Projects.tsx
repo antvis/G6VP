@@ -8,6 +8,7 @@ import { useImmer } from 'use-immer';
 import Empty from '../../components/Empty';
 import * as ProjectService from '../../services/project';
 import type { IProject } from '../../services/typing';
+import $i18n from '../../i18n';
 const { Meta } = Card;
 
 interface ProjectListProps {
@@ -62,7 +63,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
     <Menu>
       <Menu.Item>
         <Popconfirm
-          title="是否删除该项目?"
+          title={$i18n.get({ id: 'gi-site.pages.Workspace.Projects.DeleteTheProject', dm: '是否删除该项目?' })}
           onConfirm={e => {
             e!.preventDefault();
             confirm(id);
@@ -70,11 +71,12 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
           okText="Yes"
           cancelText="No"
         >
-          删除项目
+          {$i18n.get({ id: 'gi-site.pages.Workspace.Projects.DeleteAProject', dm: '删除项目' })}
         </Popconfirm>
       </Menu.Item>
     </Menu>
   );
+
   if (state.isLoading) {
     return (
       <>
@@ -88,7 +90,13 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   if (lists.length === 0) {
     return (
       <div style={styles.container}>
-        <Empty title="暂无数据，先去创建一个工作薄吧" url="/workbook/create" />
+        <Empty
+          title={$i18n.get({
+            id: 'gi-site.pages.Workspace.Projects.NoDataIsAvailableCreate',
+            dm: '暂无数据，先去创建一个工作簿吧',
+          })}
+          url="/workbook/create"
+        />
       </div>
     );
   }
@@ -117,19 +125,28 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
             const expiredInfo = expiredStr && (
               <span style={{ color: 'red' }}>
-                数据源已删除&nbsp;
+                {$i18n.get({ id: 'gi-site.pages.Workspace.Projects.DataSourceDeleted', dm: '数据源已删除' })}
+
                 <Tooltip
-                  title={`相关数据集已删除，该工作簿将于 ${expiredStr} 过期自动销毁。若需恢复，请在「数据集-回收站」恢复相关数据`}
+                  title={$i18n.get(
+                    {
+                      id: 'gi-site.pages.Workspace.Projects.TheRelevantDatasetHasBeen',
+                      dm: '相关数据集已删除，该工作簿将于 {expiredStr} 过期自动销毁。若需恢复，请在「数据集-回收站」恢复相关数据',
+                    },
+                    { expiredStr: expiredStr },
+                  )}
                 >
                   <QuestionCircleOutlined style={{ cursor: 'pointer' }} />
                 </Tooltip>
               </span>
             );
+
             const description = (
               <>
                 {time} {expiredInfo}
               </>
             );
+
             return (
               <Col key={id} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                 <Card cover={Cover}>
@@ -152,7 +169,10 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
 
                     <div style={{ position: 'absolute', bottom: '0px', right: '0px' }}>
                       <Popconfirm
-                        title="是否删除该项目?"
+                        title={$i18n.get({
+                          id: 'gi-site.pages.Workspace.Projects.DeleteTheProject',
+                          dm: '是否删除该项目?',
+                        })}
                         onConfirm={e => {
                           e!.preventDefault();
                           confirm(id);

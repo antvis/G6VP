@@ -5,6 +5,7 @@ import { Button, Col, Drawer, Form, Input, message, Modal, Popconfirm, Row, Sele
 import React from 'react';
 import { useImmer } from 'use-immer';
 import './index.less';
+import $i18n from '../../i18n';
 
 const { Option } = Select;
 
@@ -27,7 +28,9 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
 
   // 没有选择
   if (!saveTemplateServceId) {
-    message.error('请选择发布成模板的服务');
+    message.error(
+      $i18n.get({ id: 'advance.components.PublishTemplate.SelectAServiceToPublish', dm: '请选择发布成模板的服务' }),
+    );
     return null;
   }
 
@@ -92,7 +95,12 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
     // 检查参数化的参数名称是否已经存在，如果存在则覆盖并给出提示信息
     const hasParams = currents.find((t: any) => t.parameterName === values.parameterName);
     if (hasParams) {
-      message.info('参数化已经存在的参数，会覆盖已有的参数');
+      message.info(
+        $i18n.get({
+          id: 'advance.components.PublishTemplate.ParameterizeExistingParametersAndOverwrite',
+          dm: '参数化已经存在的参数，会覆盖已有的参数',
+        }),
+      );
     }
 
     const resultParams = currents.filter((t: any) => t.parameterName !== values.parameterName);
@@ -126,7 +134,9 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
   const publishTemplate = async () => {
     const values = await form.validateFields();
     if (!values.templateName) {
-      message.error('模板名称为空或格式不正确!');
+      message.error(
+        $i18n.get({ id: 'advance.components.PublishTemplate.TheTemplateNameIsEmpty', dm: '模板名称为空或格式不正确!' }),
+      );
       return;
     }
 
@@ -152,7 +162,9 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
       return;
     }
 
-    message.success('发布模板成功');
+    message.success(
+      $i18n.get({ id: 'advance.components.PublishTemplate.TemplatePublishedSuccessfully', dm: '发布模板成功' }),
+    );
     close();
   };
 
@@ -167,25 +179,30 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
 
   const tableColumns = [
     {
-      title: '参数名称',
+      title: $i18n.get({ id: 'advance.components.PublishTemplate.ParameterName', dm: '参数名称' }),
       dataIndex: 'parameterName',
       key: 'parameterName',
     },
     {
-      title: '类型',
+      title: $i18n.get({ id: 'advance.components.PublishTemplate.Type', dm: '类型' }),
       dataIndex: 'valueType',
       key: 'valueType',
     },
     {
-      title: '替换值',
+      title: $i18n.get({ id: 'advance.components.PublishTemplate.ReplacementValue', dm: '替换值' }),
       dataIndex: 'parameterValue',
       key: 'parameterValue',
     },
     {
-      title: '操作',
+      title: $i18n.get({ id: 'advance.components.PublishTemplate.Operation', dm: '操作' }),
       key: 'action',
       render: (text, record) => (
-        <Popconfirm title="确定删除？" onConfirm={() => handleDelete(record)} okText="确定" cancelText="取消">
+        <Popconfirm
+          title={$i18n.get({ id: 'advance.components.PublishTemplate.AreYouSureYouWant', dm: '确定删除？' })}
+          onConfirm={() => handleDelete(record)}
+          okText={$i18n.get({ id: 'advance.components.PublishTemplate.Ok', dm: '确定' })}
+          cancelText={$i18n.get({ id: 'advance.components.PublishTemplate.Cancel', dm: '取消' })}
+        >
           <a>
             <DeleteOutlined />
           </a>
@@ -206,7 +223,7 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
 
   return (
     <Drawer
-      title="发布成模板"
+      title={$i18n.get({ id: 'advance.components.PublishTemplate.PublishAsATemplate', dm: '发布成模板' })}
       visible={visible}
       width={700}
       onClose={close}
@@ -222,10 +239,10 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
               marginRight: 8,
             }}
           >
-            取消
+            {$i18n.get({ id: 'advance.components.PublishTemplate.Cancel', dm: '取消' })}
           </Button>
           <Button type="primary" onClick={publishTemplate} loading={btnLoading}>
-            发布
+            {$i18n.get({ id: 'advance.components.PublishTemplate.Publish', dm: '发布' })}
           </Button>
         </div>
       }
@@ -240,10 +257,13 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
         >
           <Form name="templateNames" form={form}>
             <Form.Item
-              label="模板名称"
+              label={$i18n.get({ id: 'advance.components.PublishTemplate.TemplateName', dm: '模板名称' })}
               name="templateName"
               tooltip={{
-                title: '模板名称只能包含字母、数字或下划线，且只能以字母开头',
+                title: $i18n.get({
+                  id: 'advance.components.PublishTemplate.TheTemplateNameCanOnly',
+                  dm: '模板名称只能包含字母、数字或下划线，且只能以字母开头',
+                }),
                 icon: <InfoCircleOutlined />,
               }}
             >
@@ -265,8 +285,14 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
             marginTop: 0,
           }}
         >
-          原始语句
-          <span className="description">请选择要参数化的内容，然后点击右边的参数化按钮进行下一步的操作</span>
+          {$i18n.get({ id: 'advance.components.PublishTemplate.OriginalStatement', dm: '原始语句' })}
+
+          <span className="description">
+            {$i18n.get({
+              id: 'advance.components.PublishTemplate.SelectTheContentToBe',
+              dm: '请选择要参数化的内容，然后点击右边的参数化按钮进行下一步的操作',
+            })}
+          </span>
         </Col>
         <Col
           span={8}
@@ -275,9 +301,17 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
             marginTop: 20,
           }}
         >
-          <Tooltip title={`选择 ${fileType} 中的参数值后进行参数化操作`}>
+          <Tooltip
+            title={$i18n.get(
+              {
+                id: 'advance.components.PublishTemplate.SelectTheParameterValueIn',
+                dm: '选择 {fileType} 中的参数值后进行参数化操作',
+              },
+              { fileType: fileType },
+            )}
+          >
             <Button size="small" onClick={showParamsModal} disabled={!selectValue}>
-              参数化
+              {$i18n.get({ id: 'advance.components.PublishTemplate.Parameterized', dm: '参数化' })}
             </Button>
           </Tooltip>
         </Col>
@@ -295,11 +329,12 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
           />
         </Col>
         <Col span={24} className="title">
-          模板语句
+          {$i18n.get({ id: 'advance.components.PublishTemplate.TemplateStatement', dm: '模板语句' })}
+
           <pre className="tpre" dangerouslySetInnerHTML={createMarkup()}></pre>
         </Col>
         <Col span={24} className="title">
-          参数列表
+          {$i18n.get({ id: 'advance.components.PublishTemplate.ParameterList', dm: '参数列表' })}
         </Col>
         <Col span={24}>
           <Table
@@ -312,7 +347,7 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
           />
         </Col>
         <Col span={24} className="title">
-          模板描述
+          {$i18n.get({ id: 'advance.components.PublishTemplate.TemplateDescription', dm: '模板描述' })}
         </Col>
         <Col span={24}>
           <Input.TextArea
@@ -325,12 +360,18 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
         </Col>
       </Row>
       <Modal
-        title={`${fileType} 参数化`}
+        title={$i18n.get(
+          {
+            id: 'advance.components.PublishTemplate.FiletypeParameterized',
+            dm: '{fileType} 参数化',
+          },
+          { fileType: fileType },
+        )}
         visible={modalVisible}
         onOk={handleParams}
         width={350}
-        okText="确定"
-        cancelText="取消"
+        okText={$i18n.get({ id: 'advance.components.PublishTemplate.Ok', dm: '确定' })}
+        cancelText={$i18n.get({ id: 'advance.components.PublishTemplate.Cancel', dm: '取消' })}
         onCancel={() => {
           setState(draft => {
             draft.modalVisible = false;
@@ -342,12 +383,15 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
       >
         <Form {...layout} name="templateParams" form={form} initialValues={defaultFormValue}>
           <Form.Item
-            label="参数名称"
+            label={$i18n.get({ id: 'advance.components.PublishTemplate.ParameterName', dm: '参数名称' })}
             name="parameterName"
             rules={[
               {
                 required: true,
-                message: '请输入参数的名称!',
+                message: $i18n.get({
+                  id: 'advance.components.PublishTemplate.EnterTheNameOfThe',
+                  dm: '请输入参数的名称!',
+                }),
               },
             ]}
             style={{
@@ -358,12 +402,15 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
           </Form.Item>
 
           <Form.Item
-            label="参数类型"
+            label={$i18n.get({ id: 'advance.components.PublishTemplate.ParameterType', dm: '参数类型' })}
             name="valueType"
             rules={[
               {
                 required: true,
-                message: '请选择参数类型!',
+                message: $i18n.get({
+                  id: 'advance.components.PublishTemplate.SelectAParameterType',
+                  dm: '请选择参数类型!',
+                }),
               },
             ]}
             style={{
@@ -379,7 +426,7 @@ const TemplateParam: React.FC<IProps> = ({ fileType, value, visible, close, save
 
           <Form.Item
             name="parameterValue"
-            label="替换值"
+            label={$i18n.get({ id: 'advance.components.PublishTemplate.ReplacementValue', dm: '替换值' })}
             style={{
               marginBottom: 0,
             }}

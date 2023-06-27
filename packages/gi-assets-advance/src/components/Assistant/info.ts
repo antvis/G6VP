@@ -1,9 +1,10 @@
+import $i18n from '../../i18n';
 const ASSET_ID = 'Assistant';
 
 const info = {
   id: ASSET_ID,
-  name: 'AI 助理',
-  desc: 'AI 助理',
+  name: $i18n.get({ id: 'advance.components.Assistant.info.AiAssistant', dm: 'AI 助理' }),
+  desc: $i18n.get({ id: 'advance.components.Assistant.info.AiAssistant', dm: 'AI 助理' }),
   cover: 'http://xxx.jpg',
   category: 'system-interaction',
   services: ['CypherQuery', 'GremlinQuery'],

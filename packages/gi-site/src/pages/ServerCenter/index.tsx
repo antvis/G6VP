@@ -6,6 +6,7 @@ import SegmentedTabs from '../../components/SegmentedTabs';
 import { queryAssets } from '../../services/assets';
 import Cards from './Cards';
 import ServiceTable from './Table';
+import $i18n from '../../i18n';
 import './index.less';
 interface AssetsCenterProps {}
 
@@ -81,7 +82,7 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         items={[
           {
             key: 'relation',
-            label: '图引擎',
+            label: $i18n.get({ id: 'gi-site.pages.ServerCenter.GraphEngine', dm: '图引擎' }),
             children: (
               <>
                 <Cards data={lists} changeServerId={changeServerId}></Cards>
@@ -90,13 +91,18 @@ const ServerCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                 </Card>
               </>
             ),
+
             icon: <DeploymentUnitOutlined />,
           },
           {
             key: 'location',
             icon: <EnvironmentOutlined />,
-            label: '地理引擎',
-            children: <Empty description="正在建设中" />,
+            label: $i18n.get({ id: 'gi-site.pages.ServerCenter.GeographicEngine', dm: '地理引擎' }),
+            children: (
+              <Empty
+                description={$i18n.get({ id: 'gi-site.pages.ServerCenter.UnderConstruction', dm: '正在建设中' })}
+              />
+            ),
           },
         ]}
       />

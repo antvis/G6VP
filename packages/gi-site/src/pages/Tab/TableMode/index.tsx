@@ -6,6 +6,7 @@ import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import getData from './utils';
 import { IGraphData } from '@antv/gi-sdk/src/process/schema';
+import $i18n from '../../../i18n';
 
 const { TabPane } = Tabs;
 interface TableModeProps {}
@@ -146,9 +147,20 @@ const TableMode: React.FunctionComponent<TableModeProps> = props => {
 
   return (
     <>
-      <Alert message="您可以利用浏览器特性，分屏展示，操作更加高效。" type="info" showIcon />
+      <Alert
+        message={$i18n.get({
+          id: 'gi-site.Tab.TableMode.YouCanUseBrowserFeatures',
+          dm: '您可以利用浏览器特性，分屏展示，操作更加高效。',
+        })}
+        type="info"
+        showIcon
+      />
       <Tabs tabPosition="top" destroyInactiveTabPane centered style={{ height: '100%', width: '100%' }}>
-        <TabPane tab="点表" key="node" style={{ height: '100%' }}>
+        <TabPane
+          tab={$i18n.get({ id: 'gi-site.Tab.TableMode.NodeTable', dm: '点表' })}
+          key="node"
+          style={{ height: '100%' }}
+        >
           <div style={{ height: 'calc(100vh - 60px)' }}>
             <SheetComponent
               getSpreadSheet={s2 => {
@@ -172,7 +184,7 @@ const TableMode: React.FunctionComponent<TableModeProps> = props => {
             />
           </div>
         </TabPane>
-        <TabPane tab="边表" key="edge">
+        <TabPane tab={$i18n.get({ id: 'gi-site.Tab.TableMode.EdgeTable', dm: '边表' })} key="edge">
           <div style={{ height: 'calc(100vh - 60px)' }}>
             <SheetComponent
               getSpreadSheet={s2 => {

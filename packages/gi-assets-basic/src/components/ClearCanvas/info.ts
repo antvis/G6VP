@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'ClearCanvas',
-  name: '清空画布',
-  desc: '清空画布上的所有内容',
+  name: $i18n.get({ id: 'basic.components.ClearCanvas.info.ClearCanvas', dm: '清空画布' }),
+  desc: $i18n.get({ id: 'basic.components.ClearCanvas.info.ClearEverythingOnTheCanvas', dm: '清空画布上的所有内容' }),
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',
   type: 'GIAC',

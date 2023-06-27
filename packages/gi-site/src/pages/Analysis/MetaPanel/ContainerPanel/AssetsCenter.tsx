@@ -5,6 +5,7 @@ import { Avatar, Col, Row, Tag, Tooltip } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
 import { CategroyOptions, REQUIRED_ASSET_IDS, otherCategory } from './constants';
+import $i18n from '../../../../i18n';
 import './index.less';
 
 const COLOR_MAP = {
@@ -142,7 +143,7 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
         {/* 筛选 */}
         <Row className="gi-assets-center-filter-wrapper">
           <Col key="title" span={4} style={{ fontSize: '12px', textAlign: 'right' }}>
-            分类筛选：
+            {$i18n.get({ id: 'gi-site.MetaPanel.ContainerPanel.AssetsCenter.CategoryFiltering', dm: '分类筛选：' })}
           </Col>
           {candidateCategories.map(key => {
             let option = CategroyOptions[key];
@@ -202,7 +203,17 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
                           display: 'block',
                         }}
                       >
-                        <Tooltip title={isRequired ? '必要的资产不可删除' : ''} placement="top">
+                        <Tooltip
+                          title={
+                            isRequired
+                              ? $i18n.get({
+                                  id: 'gi-site.MetaPanel.ContainerPanel.AssetsCenter.NecessaryAssetsCannotBeDeleted',
+                                  dm: '必要的资产不可删除',
+                                })
+                              : ''
+                          }
+                          placement="top"
+                        >
                           {name}
                         </Tooltip>
                       </div>

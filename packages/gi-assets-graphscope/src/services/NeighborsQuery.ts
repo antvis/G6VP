@@ -1,7 +1,8 @@
 import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
+import $i18n from '../i18n';
 export const NeighborsQuery = {
-  name: '邻居查询',
+  name: $i18n.get({ id: 'graphscope.src.services.NeighborsQuery.NeighborQuery', dm: '邻居查询' }),
   service: async params => {
     const { ids, sep } = params;
     const { HTTP_SERVICE_URL, gremlin_endpoint, GRAPHSCOPE_ACCOUNT } = utils.getServerEngineContext();

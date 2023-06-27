@@ -1,6 +1,7 @@
 import { Form, Input, Radio, Select } from 'antd';
 import React, { useState } from 'react';
 import { Icon } from '../../Icon';
+import $i18n from '../../i18n';
 const { Search } = Input;
 
 const IconSet = {
@@ -18,6 +19,7 @@ const IconSet = {
       value: 'icon-phone',
     },
   ],
+
   all: [
     {
       key: 'user',
@@ -84,19 +86,34 @@ const IconSelector = props => {
         <Select
           showSearch
           style={{ width: 87 }}
-          placeholder="选择图标类型"
+          placeholder={$i18n.get({
+            id: 'common-components.CommonStyleSetting.IconSelector.SelectIconType',
+            dm: '选择图标类型',
+          })}
           onChange={handleChangeIconSource}
           defaultValue={iconSource}
         >
-          <Select.Option value="default">常用</Select.Option>
-          <Select.Option value="all">全部</Select.Option>
+          <Select.Option value="default">
+            {$i18n.get({ id: 'common-components.CommonStyleSetting.IconSelector.CommonlyUsed', dm: '常用' })}
+          </Select.Option>
+          <Select.Option value="all">
+            {$i18n.get({ id: 'common-components.CommonStyleSetting.IconSelector.All', dm: '全部' })}
+          </Select.Option>
         </Select>
       </Form.Item>
       {iconSource === 'all' && (
         <Form.Item noStyle>
-          <Search placeholder="输入图标名称进行搜索" onChange={handleValueChange} style={{ width: '65%' }} />
+          <Search
+            placeholder={$i18n.get({
+              id: 'common-components.CommonStyleSetting.IconSelector.EnterAnIconNameTo',
+              dm: '输入图标名称进行搜索',
+            })}
+            onChange={handleValueChange}
+            style={{ width: '65%' }}
+          />
         </Form.Item>
       )}
+
       <Radio.Group
         optionType="button"
         buttonStyle="solid"

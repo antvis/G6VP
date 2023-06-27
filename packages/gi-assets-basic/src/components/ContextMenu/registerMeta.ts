@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { GIAC_MENU_ITEMS = [] } = context;
   GIAC_MENU_ITEMS.map(item => {
@@ -6,7 +7,7 @@ const registerMeta = context => {
   return {
     /** 分类信息 */
     GI_CONTAINER: {
-      title: '可集成组件',
+      title: $i18n.get({ id: 'basic.components.ContextMenu.registerMeta.IntegratedComponents', dm: '可集成组件' }),
       type: 'string',
       enum: GIAC_MENU_ITEMS,
       'x-decorator': 'FormItem',

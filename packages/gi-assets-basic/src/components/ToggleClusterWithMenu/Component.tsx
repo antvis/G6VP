@@ -4,6 +4,7 @@ import type { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import * as React from 'react';
 import { filterGraphDataByNodes, getLeafNodes } from '../utils';
+import $i18n from '../../i18n';
 
 type ControlledValues = {
   startId: string;
@@ -141,8 +142,17 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
     updateHistory({
       componentId: 'ToggleClusterWithMenu',
       type: 'configure',
-      subType: '收起/展开',
-      statement: `${params.action === 'fold' ? '收起' : '展开'} ${params.startId}`,
+      subType: $i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.FoldUpExpand', dm: '收起/展开' }),
+      statement: `${$i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.FoldUpExpandStatus', dm: params.action === 'fold' ? '收起' : '展开' }, {
+        action: params.action === 'fold' ? $i18n.get({
+          id: 'basic.components.ToggleClusterWithMenu.Component.Fold',
+          dm: '收起'
+        }) : $i18n.get({
+          id: 'basic.components.ToggleClusterWithMenu.Component.Expand',
+          dm: '展开'
+        })
+      })} ${params.startId}`,
+      // statement: `${params.action === 'fold' ? '收起' : '展开'} ${params.startId}`,
       success,
       errorMsg,
       params,
@@ -158,7 +168,14 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       const { startId, action } = controlledValues;
       const targetNode = graph.findById(startId) as INode;
       if (!targetNode) {
-        handleUpateHistory({ startId, action }, false, '目标节点不存在');
+        handleUpateHistory(
+          { startId, action },
+          false,
+          $i18n.get({
+            id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
+            dm: '目标节点不存在',
+          }),
+        );
         return;
       }
       const leafNodeIds = getLeafNodes(targetNode).map(node => node.getModel().id as string);
@@ -184,7 +201,14 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       const { startId, action } = controlledValues;
       const node = graph.findById(startId) as INode;
       if (!node) {
-        handleUpateHistory({ startId, action }, false, '目标节点不存在');
+        handleUpateHistory(
+          { startId, action },
+          false,
+          $i18n.get({
+            id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
+            dm: '目标节点不存在',
+          }),
+        );
         return;
       }
       const leafNodeIds = getLeafNodes(node).map(node => node.getModel().id as string);
@@ -209,7 +233,9 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const model = targetNode.getModel();
   return (
     <Menu.Item key="toggleClusterWithMenu" onClick={handleToggleCluster}>
-      {model.folded ? '展开节点' : '收起节点'}
+      {model.folded
+        ? $i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.ExpandANode', dm: '展开节点' })
+        : $i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.CollapseNode', dm: '收起节点' })}
     </Menu.Item>
   );
 };

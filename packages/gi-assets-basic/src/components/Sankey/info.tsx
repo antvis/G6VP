@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'SankeyAnalysis',
-  name: '桑基图分析',
-  desc: '桑基图分析',
+  name: $i18n.get({ id: 'basic.components.Sankey.info.SankeyDiagramAnalysis', dm: '桑基图分析' }),
+  desc: $i18n.get({ id: 'basic.components.Sankey.info.SankeyDiagramAnalysis', dm: '桑基图分析' }),
   icon: 'icon-sankey',
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',

@@ -1,5 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 
@@ -13,7 +14,7 @@ const themeOptions = ['tomorrow', 'rjv-default', 'google', 'harmonic', 'mocha', 
 const registerMeta = ({ schemaData }) => {
   const schema = {
     theme: {
-      title: '样式主题',
+      title: $i18n.get({ id: 'advance.components.JSONMode.registerMeta.StyleTheme', dm: '样式主题' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

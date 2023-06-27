@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useImmer } from 'use-immer';
 // import UploadPanel from '../../uploadData/index';
 import UploadPanel from '../../DataSource';
+import $i18n from '../../../../i18n';
 
 interface DataSourceProps {
   data: any;
@@ -38,7 +39,8 @@ const DataSource: React.FunctionComponent<DataSourceProps> = props => {
         onClick={uploadData}
         className="gi-intro-upload-data"
       >
-        <UploadOutlined /> 导入
+        <UploadOutlined />
+        {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataSource.Import', dm: '导入' })}
       </Button>
       <UploadPanel visible={visible} handleClose={handleClose}></UploadPanel>
     </div>

@@ -1,6 +1,7 @@
 import { utils } from '@antv/gi-sdk';
 import { ADD_THEME, GET_THEMES, REMOVE_THEME, UPDATE_THEME } from './const';
 import { ITheme } from './typing';
+import $i18n from '../../i18n';
 
 const mockServices = () => {
   return [
@@ -33,7 +34,10 @@ const mockServices = () => {
         GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes: newThemes });
         return {
           success: true,
-          msg: '主题创建成功！',
+          msg: $i18n.get({
+            id: 'advance.components.ThemeSetting.mockServices.TheThemeHasBeenCreated',
+            dm: '主题创建成功！',
+          }),
           data: [...newThemes],
         };
       },
@@ -53,13 +57,19 @@ const mockServices = () => {
           GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes });
           return {
             success: true,
-            msg: '主题更新成功',
+            msg: $i18n.get({
+              id: 'advance.components.ThemeSetting.mockServices.TheTopicHasBeenUpdated',
+              dm: '主题更新成功',
+            }),
             data: [...themes],
           };
         } else {
           return {
             sucess: false,
-            msg: '主题不存在',
+            msg: $i18n.get({
+              id: 'advance.components.ThemeSetting.mockServices.TheTopicDoesNotExist',
+              dm: '主题不存在',
+            }),
           };
         }
       },
@@ -77,7 +87,7 @@ const mockServices = () => {
         GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, { ...project, themes: filterThemes });
         return {
           success: true,
-          msg: '删除成功',
+          msg: $i18n.get({ id: 'advance.components.ThemeSetting.mockServices.DeletedSuccessfully', dm: '删除成功' }),
           data: filterThemes,
         };
       },

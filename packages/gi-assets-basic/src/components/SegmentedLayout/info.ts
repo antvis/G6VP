@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'SegmentedLayout', // up and down layout
-  name: '分段布局',
-  desc: '分段器布局',
+  name: $i18n.get({ id: 'basic.components.SegmentedLayout.info.SegmentLayout', dm: '分段布局' }),
+  desc: $i18n.get({ id: 'basic.components.SegmentedLayout.info.SectionalizerLayout', dm: '分段器布局' }),
   icon: 'icon-pic-center',
   cover: 'http://xxxx.jpg',
   category: 'container-components',

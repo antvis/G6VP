@@ -7,6 +7,7 @@ import { useImmer } from 'use-immer';
 import { CollapseCard } from '../../../components-ui';
 import { queryGraphSchema, querySubGraphList, queryVertexLabelCount } from '../../../services/GraphService';
 import Import from './Import';
+import $i18n from '../../../i18n';
 
 const { Option } = Select;
 export interface DataImportProps {}
@@ -46,8 +47,17 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
     const result = await querySubGraphList();
     if (!result.success) {
       notification.error({
-        message: '查询子图列表失败',
-        description: `查询失败：${result.message}`,
+        message: $i18n.get({
+          id: 'galaxybase.DataManage.DataImport.FailedToQuerySubgraphList',
+          dm: '查询子图列表失败',
+        }),
+        description: $i18n.get(
+          {
+            id: 'galaxybase.DataManage.DataImport.QueryFailedResultmessage',
+            dm: '查询失败：{resultMessage}',
+          },
+          { resultMessage: result.message },
+        ),
       });
       return;
     }
@@ -98,7 +108,10 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
 
   return (
     <div>
-      <CollapseCard title="图数据" extra={<Import />}>
+      <CollapseCard
+        title={$i18n.get({ id: 'galaxybase.DataManage.DataImport.GraphData', dm: '图数据' })}
+        extra={<Import />}
+      >
         <div
           style={{
             borderBottom: '1px solid #d9d9d9',
@@ -108,22 +121,36 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
         >
           {useToken ? (
             <>
-              <Tag color="green">已连接</Tag>
-              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>Galaxybase 数据源已连接, 开始分析</span>
+              <Tag color="green">{$i18n.get({ id: 'galaxybase.DataManage.DataImport.Connected', dm: '已连接' })}</Tag>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+                {$i18n.get({
+                  id: 'galaxybase.DataManage.DataImport.GalaxybaseDataSourceConnectedStart',
+                  dm: 'Galaxybase 数据源已连接, 开始分析',
+                })}
+              </span>
             </>
           ) : (
             <>
-              <Tag color="red">未连接</Tag>
-              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>Galaxybase 数据源未连接, 请先连接</span>
+              <Tag color="red">{$i18n.get({ id: 'galaxybase.DataManage.DataImport.NotConnected', dm: '未连接' })}</Tag>
+              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+                {$i18n.get({
+                  id: 'galaxybase.DataManage.DataImport.GalaxybaseTheDataSourceIs',
+                  dm: 'Galaxybase 数据源未连接, 请先连接',
+                })}
+              </span>
             </>
           )}
         </div>
 
         <div style={{ marginBottom: 8 }}>
-          选择子图：
+          {$i18n.get({ id: 'galaxybase.DataManage.DataImport.SelectASubgraph', dm: '选择子图：' })}
+
           <Select
             showSearch
-            placeholder="请选择要查询的子图"
+            placeholder={$i18n.get({
+              id: 'galaxybase.DataManage.DataImport.SelectASubgraphToQuery',
+              dm: '请选择要查询的子图',
+            })}
             size="small"
             defaultValue={state.defaultGraphName}
             onChange={handleChange}
@@ -136,18 +163,30 @@ const DataImport: React.FunctionComponent<DataImportProps> = props => {
         </div>
         <Row gutter={[0, 12]}>
           <Col span={12}>
-            <Statistic title="节点规模" value={count.node} />
+            <Statistic
+              title={$i18n.get({ id: 'galaxybase.DataManage.DataImport.NodeSize', dm: '节点规模' })}
+              value={count.node}
+            />
           </Col>
           <Col span={12}>
-            <Statistic title="边规模" value={count.edge} />
+            <Statistic
+              title={$i18n.get({ id: 'galaxybase.DataManage.DataImport.EdgeScale', dm: '边规模' })}
+              value={count.edge}
+            />
           </Col>
         </Row>
         <Row gutter={[0, 12]}>
           <Col span={12}>
-            <Statistic title="当前节点" value={data.nodes.length} />
+            <Statistic
+              title={$i18n.get({ id: 'galaxybase.DataManage.DataImport.CurrentNode', dm: '当前节点' })}
+              value={data.nodes.length}
+            />
           </Col>
           <Col span={12}>
-            <Statistic title="当前边" value={data.edges.length} />
+            <Statistic
+              title={$i18n.get({ id: 'galaxybase.DataManage.DataImport.CurrentEdge', dm: '当前边' })}
+              value={data.edges.length}
+            />
           </Col>
         </Row>
       </CollapseCard>

@@ -1,14 +1,14 @@
 import registerLayout from './registerLayout';
 import registerMeta from './registerMeta';
 
-/**   index.md 中解析得到默认值，也可用户手动修改 */
+/**   index.md 中解析得到默认值，也可用户手动修改 */ import $i18n from '../../i18n';
 const info = {
   id: 'Random',
   /** 该布局资产下的布局的参数 */
   options: {
     type: 'custom-random',
   },
-  name: '随机布局',
+  name: $i18n.get({ id: 'basic.layouts.Random.RandomLayout', dm: '随机布局' }),
   category: 'custom',
   type: 'LAYOUT',
   desc: '',

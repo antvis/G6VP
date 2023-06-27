@@ -3,6 +3,7 @@ import { Button, Form, Input, InputNumber, message, Select, Switch } from 'antd'
 import { Parser } from 'json2csv';
 import React, { useState } from 'react';
 import AlgorithmResultPanel from './AlgorithmResultPanel';
+import $i18n from '../../i18n';
 
 const { Option } = Select;
 
@@ -24,7 +25,10 @@ const ExecAlgorithmPanel = ({ serviceId }) => {
   });
 
   const handleExecAlgorithm = async () => {
-    console.log('算法参数', algorithmParams);
+    console.log(
+      $i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.AlgorithmParameters', dm: '算法参数' }),
+      algorithmParams,
+    );
 
     setParams({
       ...params,
@@ -32,9 +36,23 @@ const ExecAlgorithmPanel = ({ serviceId }) => {
     });
     const result = await service(algorithmParams);
 
-    console.log('Gremlin 算法结果', result);
+    console.log(
+      $i18n.get({
+        id: 'graphscope.components.ExecAlgorithmPanel.Component.GremlinAlgorithmResults',
+        dm: 'Gremlin 算法结果',
+      }),
+      result,
+    );
     if (!result || !result.success) {
-      message.error(`执行图算法失败：${result.message}`);
+      message.error(
+        $i18n.get(
+          {
+            id: 'graphscope.components.ExecAlgorithmPanel.Component.FailedToExecuteTheGraph',
+            dm: '执行图算法失败：{resultMessage}',
+          },
+          { resultMessage: result.message },
+        ),
+      );
       return;
     }
 
@@ -76,10 +94,25 @@ const ExecAlgorithmPanel = ({ serviceId }) => {
   return (
     <div className="gi-algorithm-analysis">
       <Form form={form} onValuesChange={handleFormValueChange} initialValues={initFormValue}>
-        <Form.Item name="name" label="算法类型">
-          <Select placeholder="请选择算法" onChange={handleTypeChange} allowClear>
+        <Form.Item
+          name="name"
+          label={$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.AlgorithmType', dm: '算法类型' })}
+        >
+          <Select
+            placeholder={$i18n.get({
+              id: 'graphscope.components.ExecAlgorithmPanel.Component.SelectAnAlgorithm',
+              dm: '请选择算法',
+            })}
+            onChange={handleTypeChange}
+            allowClear
+          >
             <Option value="pagerank">PageRank</Option>
-            <Option value="sssp">单源最短路径</Option>
+            <Option value="sssp">
+              {$i18n.get({
+                id: 'graphscope.components.ExecAlgorithmPanel.Component.SingleSourceShortestPath',
+                dm: '单源最短路径',
+              })}
+            </Option>
             <Option value="clustering">clustering</Option>
             <Option value="wcc">wcc</Option>
             <Option value="lpa">LPA</Option>
@@ -92,49 +125,85 @@ const ExecAlgorithmPanel = ({ serviceId }) => {
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
         )}
+
         {algorithmType === 'pagerank' && (
           <Form.Item name="delta" label="delta">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
         )}
-        <Form.Item name="vertex_label" label="节点类型">
+
+        <Form.Item
+          name="vertex_label"
+          label={$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.NodeType', dm: '节点类型' })}
+        >
           <Input />
         </Form.Item>
-        <Form.Item name="edge_label" label="边类型">
+        <Form.Item
+          name="edge_label"
+          label={$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.EdgeType', dm: '边类型' })}
+        >
           <Input />
         </Form.Item>
         {(algorithmType === 'eigenvector_centrality' || algorithmType === 'sssp') && (
-          <Form.Item name="weight" label="权重">
+          <Form.Item
+            name="weight"
+            label={$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.Weight', dm: '权重' })}
+          >
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
         )}
+
         {algorithmType === 'sssp' && (
-          <Form.Item name="src" label="源节点ID">
+          <Form.Item
+            name="src"
+            label={$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.SourceNodeId', dm: '源节点ID' })}
+          >
             <Input />
           </Form.Item>
         )}
+
         {algorithmType === 'k_core' && (
           <Form.Item name="k" label="k">
             <Input />
           </Form.Item>
         )}
+
         {algorithmType === 'eigenvector_centrality' && (
           <Form.Item name="tolerance" label="tolerance">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
         )}
-        <Form.Item name="limit" label="限制数量">
+
+        <Form.Item
+          name="limit"
+          label={$i18n.get({
+            id: 'graphscope.components.ExecAlgorithmPanel.Component.LimitedQuantity',
+            dm: '限制数量',
+          })}
+        >
           <InputNumber style={{ width: '100%' }} />
         </Form.Item>
-        <Form.Item name="sortById" label="是否根据ID排序">
+        <Form.Item
+          name="sortById"
+          label={$i18n.get({
+            id: 'graphscope.components.ExecAlgorithmPanel.Component.WhetherToSortById',
+            dm: '是否根据ID排序',
+          })}
+        >
           <Switch defaultChecked />
         </Form.Item>
-        <Form.Item name="colomnName" label="追加字段名称">
+        <Form.Item
+          name="colomnName"
+          label={$i18n.get({
+            id: 'graphscope.components.ExecAlgorithmPanel.Component.AppendFieldName',
+            dm: '追加字段名称',
+          })}
+        >
           <Input />
         </Form.Item>
         <Form.Item style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={handleExecAlgorithm} loading={params.btnLoading}>
-            执行算法
+            {$i18n.get({ id: 'graphscope.components.ExecAlgorithmPanel.Component.ExecutionAlgorithm', dm: '执行算法' })}
           </Button>
         </Form.Item>
       </Form>

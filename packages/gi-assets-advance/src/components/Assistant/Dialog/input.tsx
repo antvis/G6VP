@@ -2,10 +2,11 @@ import { LoadingOutlined, SyncOutlined } from '@ant-design/icons';
 import { Input as AntdInput, Spin, Tooltip } from 'antd';
 import React, { useContext, useState } from 'react';
 import { ComponentContext } from '../context';
+import $i18n from '../../../i18n';
 
 export const Input: React.FC<{
   defaultValue?: string;
-}> = (props) => {
+}> = props => {
   const { onInput, clearMessages } = useContext(ComponentContext);
   const { loading, setLoading } = useContext(ComponentContext);
   const { defaultValue = '' } = props;
@@ -18,16 +19,16 @@ export const Input: React.FC<{
       <Spin indicator={antIcon} spinning={loading}>
         <AntdInput.TextArea
           autoSize
-          placeholder="AI 助理为您服务"
+          placeholder={$i18n.get({ id: 'advance.Assistant.Dialog.input.AiAssistantServesYou', dm: 'AI 助理为您服务' })}
           value={value}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' && !e.shiftKey) {
               const valueToSend = value.trim();
               e.preventDefault();
               if (!!valueToSend) {
                 if (!onInput) return;
                 setLoading?.(true);
-                onInput(valueToSend).then((res) => {
+                onInput(valueToSend).then(res => {
                   if (res) setValue('');
                   setLoading?.(false);
                 });
@@ -35,10 +36,13 @@ export const Input: React.FC<{
             }
           }}
           style={{ maxHeight: '60vh' }}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={e => setValue(e.target.value)}
         />
       </Spin>
-      <Tooltip title="新对话" mouseEnterDelay={1}>
+      <Tooltip
+        title={$i18n.get({ id: 'advance.Assistant.Dialog.input.NewConversation', dm: '新对话' })}
+        mouseEnterDelay={1}
+      >
         <SyncOutlined className="new-dialog" onClick={clearMessages} />
       </Tooltip>
     </div>

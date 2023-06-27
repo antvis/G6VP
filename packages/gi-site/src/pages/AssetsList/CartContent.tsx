@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { queryAssets } from '../../services/assets';
 import * as TemplateServices from '../../services/template';
 import getComponentsByAssets from '../Analysis/getAssets/getComponentsByAssets';
+import $i18n from '../../i18n';
 const { CheckableTag } = Tag;
 const { TextArea } = Input;
 
@@ -121,6 +122,7 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
         components: [
           ...new Set([...KEYS_COMPONENTS, 'Initializer', 'CanvasSetting', 'SegmentedLayout', 'Toolbar', 'ContextMenu']),
         ],
+
         layouts: [...new Set([...KEYS_LAYOUT, 'Force2'])],
         elements: [...new Set([...KEYS_ELEMENTS, 'SimpleNode', 'SimpleEdge'])],
       };
@@ -158,10 +160,22 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
       }
 
       const template = {
-        name: values.name || `选购清单自动创建`,
+        name:
+          values.name ||
+          $i18n.get({
+            id: 'gi-site.pages.AssetsList.CartContent.ThePurchaseListIsAutomatically',
+            dm: '选购清单自动创建',
+          }),
         desc:
           values.desc ||
-          `从「资产列表/选购清单」中自动创建的模版，包含${KEYS_GIAC_CONTENT.length}个分析模块，${KEYS_GIAC.length}个分析能力`,
+          $i18n.get(
+            {
+              id: 'gi-site.pages.AssetsList.CartContent.TheTemplateAutomaticallyCreatedFrom',
+              dm: '从「资产列表/选购清单」中自动创建的模版，包含{KEYSGIACCONTENT}个分析模块，{KEYSGIACLength}个分析能力',
+            },
+            { KEYSGIACCONTENT: KEYS_GIAC_CONTENT.length, KEYSGIACLength: KEYS_GIAC.length },
+          ),
+
         components: components,
         image: values.image,
         activeAssetsKeys,
@@ -178,7 +192,10 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
       console.log('isSucess', isSuccess, template);
       if (isSuccess) {
         notification.success({
-          message: '根据清单列表，已经成功创建模版',
+          message: $i18n.get({
+            id: 'gi-site.pages.AssetsList.CartContent.AccordingToTheListThe',
+            dm: '根据清单列表，已经成功创建模版',
+          }),
         });
         history.push('/workbook/template?tab=my');
       }
@@ -192,7 +209,7 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
     <div>
       <Drawer
         width={'400px'}
-        title="选购清单"
+        title={$i18n.get({ id: 'gi-site.pages.AssetsList.CartContent.PurchaseList', dm: '选购清单' })}
         placement="right"
         closable={false}
         onClose={() => {
@@ -219,6 +236,7 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
                     &nbsp;{name}
                   </CheckableTag>
                 }
+
                 {desc}
               </li>
             );
@@ -229,18 +247,27 @@ const CartContent: React.FunctionComponent<CartContentProps> = props => {
 
         <div>
           <Form layout={'horizontal'} form={form}>
-            <Form.Item label="模版名称" name="name">
+            <Form.Item
+              label={$i18n.get({ id: 'gi-site.pages.AssetsList.CartContent.TemplateName', dm: '模版名称' })}
+              name="name"
+            >
               <Input />
             </Form.Item>
-            <Form.Item label="模版描述" name="desc">
+            <Form.Item
+              label={$i18n.get({ id: 'gi-site.pages.AssetsList.CartContent.TemplateDescription', dm: '模版描述' })}
+              name="desc"
+            >
               <TextArea autoSize={{ minRows: 2, maxRows: 4 }} />
             </Form.Item>
-            <Form.Item label="模版插画" name="image">
+            <Form.Item
+              label={$i18n.get({ id: 'gi-site.pages.AssetsList.CartContent.TemplateIllustration', dm: '模版插画' })}
+              name="image"
+            >
               <Input placeholder="https://xxx.img" />
             </Form.Item>
           </Form>
           <Button type="primary" style={{ width: '100%' }} onClick={handleOk}>
-            创建模版
+            {$i18n.get({ id: 'gi-site.pages.AssetsList.CartContent.CreateATemplate', dm: '创建模版' })}
           </Button>
         </div>
       </Drawer>

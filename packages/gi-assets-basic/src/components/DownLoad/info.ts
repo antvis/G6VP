@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'DownLoad',
-  name: '下载',
-  desc: '点击下载画布图片',
+  name: $i18n.get({ id: 'basic.components.DownLoad.info.Download', dm: '下载' }),
+  desc: $i18n.get({ id: 'basic.components.DownLoad.info.ClickToDownloadTheCanvas', dm: '点击下载画布图片' }),
   icon: 'icon-download',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',

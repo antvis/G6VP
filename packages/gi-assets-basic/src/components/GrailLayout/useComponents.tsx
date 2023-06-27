@@ -1,6 +1,7 @@
 import { Icon, useContext } from '@antv/gi-sdk';
 import { Empty } from 'antd';
 import React from 'react';
+import $i18n from '../../i18n';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
@@ -28,7 +29,10 @@ const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
             transform: 'translate(-50%, -50%)',
             left: '50%',
           }}
-          description="当前容器中无可用资产，请在配置面板中集成"
+          description={$i18n.get({
+            id: 'basic.components.GrailLayout.useComponents.NoAssetsAreAvailableIn',
+            dm: '当前容器中无可用资产，请在配置面板中集成',
+          })}
         ></Empty>
       );
     }

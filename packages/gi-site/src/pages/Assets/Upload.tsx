@@ -2,6 +2,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Modal } from 'antd';
 import * as React from 'react';
 import PackageForm from './Form';
+import $i18n from '../../i18n';
 
 const UploadAssets = () => {
   const [form] = Form.useForm();
@@ -36,10 +37,15 @@ const UploadAssets = () => {
   return (
     <div>
       <Button onClick={handleUpload} type="primary" icon={<UploadOutlined />}>
-        本地上传资产包
+        {$i18n.get({ id: 'gi-site.pages.Assets.Upload.UploadAssetPackagesLocally', dm: '本地上传资产包' })}
       </Button>
 
-      <Modal title="上传配置" visible={visible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title={$i18n.get({ id: 'gi-site.pages.Assets.Upload.UploadConfiguration', dm: '上传配置' })}
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <PackageForm form={form} />
       </Modal>
     </div>

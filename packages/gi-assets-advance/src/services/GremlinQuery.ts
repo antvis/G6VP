@@ -1,4 +1,5 @@
 import { GraphinData } from '@antv/graphin';
+import $i18n from '../i18n';
 
 export interface ServiceObject {
   name: string;
@@ -11,7 +12,7 @@ export interface NeighborsQueryParams {
 }
 
 export const GremlinQuery: ServiceObject = {
-  name: 'Gremlin 查询',
+  name: $i18n.get({ id: 'advance.src.services.GremlinQuery.GremlinQuery', dm: 'Gremlin 查询' }),
   service: localData => {
     const id = 'mock_gremlin_query';
     const data = {
@@ -30,6 +31,7 @@ export const GremlinQuery: ServiceObject = {
           type: 'card',
         },
       ],
+
       edges: [
         {
           source: id,

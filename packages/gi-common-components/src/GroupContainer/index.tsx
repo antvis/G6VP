@@ -7,6 +7,7 @@ import ExpressionGroup, { Expression } from './ExpressionGroup';
 import './index.less';
 import DisplayColor from './DisplayColor';
 import PopoverContainer from './PopoverContainer';
+import $i18n from '../i18n';
 
 export interface ElementTypeOption {
   value: string;
@@ -104,11 +105,22 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
         <Form.Item
           name="groups"
           shouldUpdate={() => true}
-          initialValue={[{ groupName: '样式配置分组1', groupId: 'default-group', id: 'SimpleNode', props: {} }]}
+          initialValue={[
+            {
+              groupName: $i18n.get({
+                id: 'common-components.src.GroupContainer.StyleConfigurationGroup',
+                dm: '样式配置分组1',
+              }),
+              groupId: 'default-group',
+              id: 'SimpleNode',
+              props: {},
+            },
+          ]}
         >
           <Form.List name="groups">
             {(fields, { add, remove }) => {
               return (
+
                 <div className="gi-style-form-list">
                   <div className="gi-style-form-btn-group">
                     <Button
@@ -119,17 +131,24 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         const options = {
                           ...defaultGroupOption,
                           groupId: Math.random().toString(36).slice(-8),
-                          groupName: `自定义样式 ${idx}`,
+                          groupName:  $i18n.get(
+                          {
+                            id: 'common-components.src.GroupContainer.CustomStyleIdx',
+                            dm: '自定义样式 {idx}',
+                          },
+                          { idx: idx },
+                        ),
                         };
                         add(options);
                         setActiveKeys([...activeKeys, `${fields.length}`]);
                       }}
                       icon={<PlusOutlined />}
                     >
-                      新增样式分组
+                         {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
                     </Button>
                     <Button onClick={clear}>重置</Button>
                   </div>
+                  
                   <Collapse
                     className="gi-sidebar-collapse"
                     bordered={false}
@@ -165,7 +184,10 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                             >
                               {isActive ? null : <DisplayColor color={color}></DisplayColor>}
                               <PopoverContainer
-                                title="分组规则"
+                                title={$i18n.get({
+                                  id: 'common-components.src.GroupContainer.GroupingRules',
+                                  dm: '分组规则',
+                                })}
                                 disabled={index === 0}
                                 content={
                                   <Row>
@@ -177,6 +199,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                         index={index}
                                         form={form}
                                       />
+
                                       <div className="switch-button-wrap">
                                         <Form.Item name={[name, 'logic']}>
                                           <Switch
@@ -223,7 +246,13 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                                   name={[name, 'groupName']}
                                   className="gi-group-container-panel-header"
                                 >
-                                  <Input placeholder="请输入样式分组名称" bordered={false} />
+                                  <Input
+                                    placeholder={$i18n.get({
+                                      id: 'common-components.src.GroupContainer.EnterAStyleGroupName',
+                                      dm: '请输入样式分组名称',
+                                    })}
+                                    bordered={false}
+                                  />
                                 </Form.Item>
                               </div>
                             </div>

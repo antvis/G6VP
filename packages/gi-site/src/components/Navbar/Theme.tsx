@@ -2,6 +2,7 @@ import ThemeSwitch from '@antv/gi-theme-antd';
 import { Button } from 'antd';
 import React from 'react';
 import ThemeVars from '../ThemeVars';
+import $i18n from '../../i18n';
 import './index.less';
 
 interface ThemeProps {
@@ -18,7 +19,8 @@ const options = [
         }}
       />
     ),
-    name: '清新蓝',
+
+    name: $i18n.get({ id: 'gi-site.components.Navbar.Theme.FreshBlue', dm: '清新蓝' }),
   },
   {
     value: 'ali',
@@ -30,7 +32,8 @@ const options = [
         }}
       />
     ),
-    name: '暖阳橙',
+
+    name: $i18n.get({ id: 'gi-site.components.Navbar.Theme.WarmSunOrange', dm: '暖阳橙' }),
   },
   {
     value: 'dark',
@@ -42,7 +45,8 @@ const options = [
         }}
       />
     ),
-    name: '暗夜黑',
+
+    name: $i18n.get({ id: 'gi-site.components.Navbar.Theme.DarkNightBlack', dm: '暗夜黑' }),
   },
   {
     value: 'green',
@@ -54,7 +58,8 @@ const options = [
         }}
       />
     ),
-    name: '芒种绿',
+
+    name: $i18n.get({ id: 'gi-site.components.Navbar.Theme.MangoGreen', dm: '芒种绿' }),
   },
 ];
 const Theme: React.FunctionComponent<ThemeProps> = props => {

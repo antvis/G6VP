@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Menu } from 'antd';
 import { useCallback } from 'react';
 import useRemove from './useRemove';
+import $i18n from '../../i18n';
 export interface IProps {
   contextmenu: any;
   controlledValues?: {
@@ -33,8 +34,14 @@ const NodeRemoveMenuItem: React.FunctionComponent<IProps> = props => {
     updateHistory({
       componentId: 'RemoveNodeWithMenu',
       type: 'configure',
-      subType: '删除节点',
-      statement: `删除 ${nodeIds.length} 个节点`,
+      subType: $i18n.get({ id: 'basic.components.RemoveNodeWithMenu.Component.DeleteANode', dm: '删除节点' }),
+      statement: $i18n.get(
+        {
+          id: 'basic.components.RemoveNodeWithMenu.Component.DeleteNodeidslengthNodes',
+          dm: '删除 {nodeIdsLength} 个节点',
+        },
+        { nodeIdsLength: nodeIds.length },
+      ),
       success,
       errorMsg,
       params: {
@@ -52,7 +59,14 @@ const NodeRemoveMenuItem: React.FunctionComponent<IProps> = props => {
       const { nodeIds } = controlledValues;
       const existIds = nodeIds.filter(id => graph.findById(id));
       if (!existIds.length) {
-        handleUpateHistory([], false, '当前画布中未找到指定 id 的节点');
+        handleUpateHistory(
+          [],
+          false,
+          $i18n.get({
+            id: 'basic.components.RemoveNodeWithMenu.Component.TheNodeWithTheSpecified',
+            dm: '当前画布中未找到指定 id 的节点',
+          }),
+        );
       } else {
         removeNodes(existIds);
         handleUpateHistory(existIds);
@@ -62,7 +76,7 @@ const NodeRemoveMenuItem: React.FunctionComponent<IProps> = props => {
 
   return (
     <Menu.Item key="node-remove" eventKey="node-remove" onClick={handleClick}>
-      删除节点
+      {$i18n.get({ id: 'basic.components.RemoveNodeWithMenu.Component.DeleteANode', dm: '删除节点' })}
     </Menu.Item>
   );
 };

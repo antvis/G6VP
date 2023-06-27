@@ -1,7 +1,12 @@
+import $i18n from '../../i18n';
+
 const info = {
   id: 'FilterPanel',
-  name: '筛选面板',
-  desc: '通过属性筛选画布信息，可自定义',
+  name: $i18n.get({ id: 'basic.components.FilterPanel.info.FilterPanel', dm: '筛选面板' }),
+  desc: $i18n.get({
+    id: 'basic.components.FilterPanel.info.FilterCanvasInformationThroughAttributes',
+    dm: '通过属性筛选画布信息，可自定义',
+  }),
   icon: 'icon-filter',
   cover: 'http://xxxx.jpg',
   category: 'data-analysis',

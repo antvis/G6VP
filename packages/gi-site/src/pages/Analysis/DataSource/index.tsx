@@ -3,6 +3,7 @@ import { Drawer, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../../components/FileServerEngine';
 import { useContext } from '../../Analysis/hooks/useContext';
+import $i18n from '../../../i18n';
 
 interface uploadPanel {
   visible: boolean;
@@ -10,9 +11,12 @@ interface uploadPanel {
 }
 
 const TYPE_ICONS = {
-  file: { icon: 'icon-file-excel', name: '本地文件' },
-  api: { icon: 'icon-api', name: '在线接口' },
-  database: { icon: 'icon-database', name: '图数据库' },
+  file: { icon: 'icon-file-excel', name: $i18n.get({ id: 'gi-site.Analysis.DataSource.LocalFile', dm: '本地文件' }) },
+  api: { icon: 'icon-api', name: $i18n.get({ id: 'gi-site.Analysis.DataSource.OnlineInterface', dm: '在线接口' }) },
+  database: {
+    icon: 'icon-database',
+    name: $i18n.get({ id: 'gi-site.Analysis.DataSource.GraphDatabase', dm: '图数据库' }),
+  },
 };
 
 const { TabPane } = Tabs;
@@ -24,7 +28,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const CustomServer = [...utils.getCombineServer([FileServerEngine, ...context.activeAssets.services])];
 
   return (
-    <Drawer title="导入数据" visible={visible} width={'calc(100vw - 382px)'} onClose={handleClose}>
+    <Drawer
+      title={$i18n.get({ id: 'gi-site.Analysis.DataSource.ImportData', dm: '导入数据' })}
+      visible={visible}
+      width={'calc(100vw - 382px)'}
+      onClose={handleClose}
+    >
       <Tabs tabPosition="left">
         {CustomServer.map(server => {
           const { component: ServerComponent, name } = server;

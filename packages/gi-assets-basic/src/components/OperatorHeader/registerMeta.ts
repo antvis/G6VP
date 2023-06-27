@@ -1,9 +1,10 @@
 import { extra } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 const { deepClone, GI_CONTAINER_METAS } = extra;
 const metas = deepClone(GI_CONTAINER_METAS);
 //@ts-ignore
 metas.gap = {
-  name: '间隔',
+  name: $i18n.get({ id: 'basic.components.OperatorHeader.registerMeta.Interval', dm: '间隔' }),
   type: 'text',
   default: '0px',
 };
@@ -12,13 +13,13 @@ const registerMeta = context => {
   return {
     /** 分类信息 */
     GI_CONTAINER: {
-      name: '集成组件',
+      name: $i18n.get({ id: 'basic.components.OperatorHeader.registerMeta.IntegratedComponents', dm: '集成组件' }),
       type: 'TagsSelect',
       default: [],
       options: GI_CONTAINER_INDEXS,
     },
     leftContainer: {
-      name: '左侧组件',
+      name: $i18n.get({ id: 'basic.components.OperatorHeader.registerMeta.LeftComponent', dm: '左侧组件' }),
       type: 'TagsSelect',
       default: [],
       options: GI_CONTAINER_INDEXS,
@@ -27,7 +28,7 @@ const registerMeta = context => {
       },
     },
     centerContainer: {
-      name: '中间组件',
+      name: $i18n.get({ id: 'basic.components.OperatorHeader.registerMeta.IntermediateComponent', dm: '中间组件' }),
       type: 'TagsSelect',
       default: [],
       options: GI_CONTAINER_INDEXS,
@@ -36,7 +37,7 @@ const registerMeta = context => {
       },
     },
     rightContainer: {
-      name: '右侧组件',
+      name: $i18n.get({ id: 'basic.components.OperatorHeader.registerMeta.RightComponent', dm: '右侧组件' }),
       type: 'TagsSelect',
       default: [],
       options: GI_CONTAINER_INDEXS,

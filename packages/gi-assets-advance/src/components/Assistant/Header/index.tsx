@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Tooltip } from 'antd';
 import { ComponentContext } from '../context';
 import './index.less';
+import $i18n from '../../../i18n';
 
 type HeaderProps = {
   title: string;
@@ -15,12 +16,13 @@ export const Header: React.FC<HeaderProps> = ({ title, onClose }) => {
       <div className="dialog-header-title">{title}</div>
       <div className="dialog-header-button-group">
         {loading && (
-          <Tooltip title="停止查询" mouseEnterDelay={1}>
+          <Tooltip title={$i18n.get({ id: 'advance.Assistant.Header.StopQuery', dm: '停止查询' })} mouseEnterDelay={1}>
             <div className="dialog-header-cancel" onClick={abortQuery}>
               <div className="cancel-button"></div>
             </div>
           </Tooltip>
         )}
+
         <div className="dialog-header-close" onClick={onClose}>
           <div className="close-button">
             <div className="close-button-bar"></div>

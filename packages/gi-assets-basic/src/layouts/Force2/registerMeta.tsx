@@ -1,3 +1,4 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { schemaData, keys } = context;
   const nodeProperties = schemaData.nodes.reduce((acc, cur) => {
@@ -8,37 +9,38 @@ const registerMeta = context => {
   }, {});
   const presetOptions = [
     {
-      label: '网格布局',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.GridLayout', dm: '网格布局' }),
       value: 'grid',
     },
     {
-      label: '环形布局',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.CircularLayout', dm: '环形布局' }),
       value: 'circular',
     },
     {
-      label: '同心圆布局',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.ConcentricCircleLayout', dm: '同心圆布局' }),
       value: 'concentric',
     },
     {
-      label: '有向分层',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.DirectedLayering', dm: '有向分层' }),
       value: 'dagre',
     },
   ];
+
   const weightScaleOptions = [
     {
-      label: '原始值',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.OriginalValue', dm: '原始值' }),
       value: 1,
     },
     {
-      label: '开平方',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.Square', dm: '开平方' }),
       value: 'sqrt',
     },
     {
-      label: '平方',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.Square.1', dm: '平方' }),
       value: 'sqr',
     },
     {
-      label: '倒数',
+      label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.Reciprocal', dm: '倒数' }),
       value: 'reciprocal',
     },
     {
@@ -50,12 +52,13 @@ const registerMeta = context => {
       value: 'log10',
     },
   ];
+
   const directedWeightOptions = keys.filter(k => nodeProperties[k] === 'number').map(k => ({ label: k, value: k }));
 
   return {
     edgeStrength: {
       type: 'number',
-      title: '边引力系数',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.EdgeGravityCoefficient', dm: '边引力系数' }),
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {
@@ -64,7 +67,10 @@ const registerMeta = context => {
       default: 200,
     },
     nodeStrength: {
-      title: '节点间斥力系数',
+      title: $i18n.get({
+        id: 'basic.layouts.Force2.registerMeta.RepulsionCoefficientBetweenNodes',
+        dm: '节点间斥力系数',
+      }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -72,7 +78,7 @@ const registerMeta = context => {
       default: 1000,
     },
     damping: {
-      title: '阻尼系数',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.DampingCoefficient', dm: '阻尼系数' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -84,7 +90,7 @@ const registerMeta = context => {
       default: 0.8,
     },
     animate: {
-      title: '启用动画',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.EnableAnimation', dm: '启用动画' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -95,7 +101,7 @@ const registerMeta = context => {
       properties: {
         type: {
           type: 'string',
-          title: '前置布局',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.FrontLayout', dm: '前置布局' }),
           'x-component': 'Select',
           'x-decorator': 'FormItem',
           'x-component-props': {
@@ -104,14 +110,14 @@ const registerMeta = context => {
           default: 'concentric',
         },
         width: {
-          title: '预设布局宽度',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.PresetLayoutWidth', dm: '预设布局宽度' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 800,
         },
         height: {
-          title: '预设布局高度',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.PresetLayoutHeight', dm: '预设布局高度' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
@@ -123,21 +129,21 @@ const registerMeta = context => {
       type: 'object',
       properties: {
         minLimitDegree: {
-          title: '最小界限度数',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.MinimumLimitDegree', dm: '最小界限度数' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 5,
         },
         maxLimitLength: {
-          title: '最大限制边长',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.MaximumLimitSideLength', dm: '最大限制边长' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 500,
         },
         defaultSpring: {
-          title: '默认边长',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.DefaultSideLength', dm: '默认边长' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
@@ -146,7 +152,7 @@ const registerMeta = context => {
       },
     },
     clusterNodeStrength: {
-      title: '节点聚类力强度',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.NodeClusteringStrength', dm: '节点聚类力强度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -154,7 +160,10 @@ const registerMeta = context => {
       default: 35,
     },
     minMovement: {
-      title: '迭代停止最小距离',
+      title: $i18n.get({
+        id: 'basic.layouts.Force2.registerMeta.MinimumDistanceOfIterationStop',
+        dm: '迭代停止最小距离',
+      }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -162,22 +171,22 @@ const registerMeta = context => {
       default: context.data?.nodes?.length > 200 ? 10 : 2,
     },
     distanceThresholdMode: {
-      title: '迭代停止判断依据',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.IterationStopJudgmentBasis', dm: '迭代停止判断依据' }),
       type: 'string',
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
         options: [
           {
-            label: '平均值',
+            label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.Average', dm: '平均值' }),
             value: 'mean',
           },
           {
-            label: '最小值',
+            label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.MinimumValue', dm: '最小值' }),
             value: 'min',
           },
           {
-            label: '最大值',
+            label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.Maximum', dm: '最大值' }),
             value: 'max',
           },
         ],
@@ -185,7 +194,7 @@ const registerMeta = context => {
       default: 'max',
     },
     maxSpeed: {
-      title: '初始速度',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.InitialVelocity', dm: '初始速度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
@@ -196,21 +205,21 @@ const registerMeta = context => {
       type: 'object',
       properties: {
         leaf: {
-          title: '叶子节点',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.LeafNode', dm: '叶子节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 2,
         },
         single: {
-          title: '孤立节点',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.IsolatedNode', dm: '孤立节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
           default: 2,
         },
         others: {
-          title: '其他节点',
+          title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.OtherNodes', dm: '其他节点' }),
           type: 'number',
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
@@ -232,7 +241,7 @@ const registerMeta = context => {
     },
 
     advanceWeight: {
-      title: '权重高级配置',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.AdvancedWeightConfiguration', dm: '权重高级配置' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -262,7 +271,7 @@ const registerMeta = context => {
     },
     edgeWeightField: {
       type: 'string',
-      title: '引力权重关联',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.GravityWeightAssociation', dm: '引力权重关联' }),
       'x-decorator': 'FormItem',
       'x-component': 'GroupSelect',
       'x-component-props': {
@@ -272,7 +281,7 @@ const registerMeta = context => {
     },
     edgeWeightFieldScale: {
       type: 'string',
-      title: '引力权重关联归一',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.GravityWeightAssociation.1', dm: '引力权重关联归一' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -281,21 +290,22 @@ const registerMeta = context => {
       default: 1,
     },
     nodeWeightFromType: {
-      title: '斥力关联类型',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.RepulsionAssociationType', dm: '斥力关联类型' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component-props': {},
       'x-component': 'Radio.Group',
       enum: [
         {
-          label: '节点属性',
+          label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.NodeProperties', dm: '节点属性' }),
           value: 'node',
         },
         {
-          label: '相关边属性加和',
+          label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.AddAndAddRelatedEdge', dm: '相关边属性加和' }),
           value: 'edge',
         },
       ],
+
       default: 'node',
       'x-reactions': [
         {
@@ -318,7 +328,7 @@ const registerMeta = context => {
     },
     nodeWeightField: {
       type: 'string',
-      title: '斥力权重关联',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.RepulsionWeightAssociation', dm: '斥力权重关联' }),
       'x-decorator': 'FormItem',
       'x-component': 'GroupSelect',
       'x-component-props': {
@@ -331,7 +341,7 @@ const registerMeta = context => {
     },
     nodeWeightFieldFromEdge: {
       type: 'string',
-      title: '斥力权重关联',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.RepulsionWeightAssociation', dm: '斥力权重关联' }),
       'x-decorator': 'FormItem',
       'x-component': 'GroupSelect',
       'x-component-props': {
@@ -344,7 +354,7 @@ const registerMeta = context => {
     },
     nodeWeightFieldScale: {
       type: 'string',
-      title: '斥力权重关联归一',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.RepulsiveWeightAssociation', dm: '斥力权重关联归一' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -353,7 +363,7 @@ const registerMeta = context => {
       default: 1,
     },
     directed: {
-      title: '启用有向力',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.EnableDirectionalForce', dm: '启用有向力' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
@@ -387,21 +397,22 @@ const registerMeta = context => {
     },
 
     directedFromType: {
-      title: '资金关联元素',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.CapitalAssociationElements', dm: '资金关联元素' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component-props': {},
       'x-component': 'Radio.Group',
       enum: [
         {
-          label: '节点属性',
+          label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.NodeProperties', dm: '节点属性' }),
           value: 'node',
         },
         {
-          label: '相关边属性加和',
+          label: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.AddAndAddRelatedEdge', dm: '相关边属性加和' }),
           value: 'edge',
         },
       ],
+
       default: 'node',
       'x-reactions': [
         {
@@ -434,7 +445,7 @@ const registerMeta = context => {
       ],
     },
     directedInWeightField: {
-      title: '入权重字段',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.EnterWeightField', dm: '入权重字段' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -444,7 +455,7 @@ const registerMeta = context => {
       default: directedWeightOptions[0]?.value,
     },
     directedOutWeightField: {
-      title: '出权重字段',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.OutputWeightField', dm: '出权重字段' }),
       'x-component': 'Select',
       'x-decorator': 'FormItem',
       'x-component-props': {
@@ -455,7 +466,7 @@ const registerMeta = context => {
     },
     directedAmountFromEdge: {
       type: 'string',
-      title: '相关边属性',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.RelatedEdgeProperties', dm: '相关边属性' }),
       'x-decorator': 'FormItem',
       'x-component': 'GroupSelect',
       'x-component-props': {
@@ -464,14 +475,14 @@ const registerMeta = context => {
       },
     },
     directedIsLog: {
-      title: 'log 映射',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.LogMapping', dm: 'log 映射' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: true,
     },
     directedMultiple: {
-      title: '倍数映射',
+      title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.MultipleMapping', dm: '倍数映射' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',

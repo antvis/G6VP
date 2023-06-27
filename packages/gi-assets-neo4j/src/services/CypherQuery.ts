@@ -1,7 +1,8 @@
 import { notification } from 'antd';
 import { getDriver } from './Neo4jService';
+import $i18n from '../i18n';
 export const CypherQuery = {
-  name: 'Neo4j Cypher 查询',
+  name: $i18n.get({ id: 'neo4j.src.services.CypherQuery.NeoJCypherQuery', dm: 'Neo4j Cypher 查询' }),
   service: async (params = {}) => {
     const { value } = params as any;
 
@@ -10,8 +11,17 @@ export const CypherQuery = {
       const res = await driver.queryCypher(value);
       if (!res) {
         notification.error({
-          message: '执行 Cypher 查询失败',
-          description: `查询失败：${res}`,
+          message: $i18n.get({
+            id: 'neo4j.src.services.CypherQuery.FailedToExecuteCypherQuery',
+            dm: '执行 Cypher 查询失败',
+          }),
+          description: $i18n.get(
+            {
+              id: 'neo4j.src.services.CypherQuery.QueryFailedRes',
+              dm: '查询失败：{res}',
+            },
+            { res: res },
+          ),
         });
       }
       return res;

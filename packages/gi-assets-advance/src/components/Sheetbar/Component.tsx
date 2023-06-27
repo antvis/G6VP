@@ -4,6 +4,7 @@ import { Button, Dropdown, Menu } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { getStyles } from './utils';
+import $i18n from '../../i18n';
 export interface SheetbarProps {
   height: number;
   placement: 'top' | 'bottom';
@@ -18,14 +19,14 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
     const initialSheetMap = new Map();
     initialSheetMap.set('default', {
       sheetId: 'default',
-      sheetName: '默认画布',
+      sheetName: $i18n.get({ id: 'advance.components.Sheetbar.Component.DefaultCanvas', dm: '默认画布' }),
       config: config,
       data: data,
       source: source,
     });
     return {
       currentId: 'default',
-      currentName: '默认画布',
+      currentName: $i18n.get({ id: 'advance.components.Sheetbar.Component.DefaultCanvas', dm: '默认画布' }),
       sheetMap: initialSheetMap,
     };
   });
@@ -37,7 +38,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
 
   const handleAdd = (data?: { nodes: never[]; edges: never[] }) => {
     const uid = Math.random().toString(36).substr(2);
-    const sheetName = '未命名画布';
+    const sheetName = $i18n.get({ id: 'advance.components.Sheetbar.Component.UnnamedCanvas', dm: '未命名画布' });
     let newData = { nodes: [], edges: [] };
     if (data) {
       newData = JSON.parse(JSON.stringify(data));
@@ -96,7 +97,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
         ...preState,
         sheetMap: preState.sheetMap,
         currentId: 'default',
-        currentName: '默认画布',
+        currentName: $i18n.get({ id: 'advance.components.Sheetbar.Component.DefaultCanvas', dm: '默认画布' }),
       };
     });
   };
@@ -144,10 +145,15 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
           const menuOptions = [
             {
               key: 'delete',
-              label: <div onClick={() => handleDelete(sheetId)}>删除</div>,
+              label: (
+                <div onClick={() => handleDelete(sheetId)}>
+                  {$i18n.get({ id: 'advance.components.Sheetbar.Component.Delete', dm: '删除' })}
+                </div>
+              ),
               icon: <DeleteOutlined />,
             },
           ];
+
           const menu = <Menu items={sheetId === 'default' ? [] : menuOptions} />;
           return (
             <div
@@ -185,6 +191,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
                       ...styles.container,
                     }}
                   />,
+
                   GISDK_PARENT_DOM,
                 )}
             </div>

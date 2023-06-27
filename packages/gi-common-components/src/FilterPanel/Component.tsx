@@ -7,6 +7,7 @@ import FilterSelection from './FilterSelection';
 import './index.less';
 import { IFilterCriteria } from './type';
 import { filterGraphData, highlightSubGraph, uniqueElementsBy } from './utils';
+import $i18n from '../i18n';
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
@@ -152,7 +153,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        增加筛选器
+        {$i18n.get({ id: 'common-components.src.FilterPanel.Component.AddFilter', dm: '增加筛选器' })}
       </Button>
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriteria => {

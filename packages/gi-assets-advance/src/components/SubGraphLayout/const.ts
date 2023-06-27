@@ -1,11 +1,12 @@
 import { CircularLayout, DagreLayout, GridLayout, ConcentricLayout, RadialLayout } from '@antv/layout';
+import $i18n from '../../i18n';
 
 export const NODE_SPACING = 20;
 
 export const LAYOUTS = [
   {
     value: 'grid',
-    label: '网格布局',
+    label: $i18n.get({ id: 'advance.components.SubGraphLayout.const.GridLayout', dm: '网格布局' }),
     options: {
       type: 'grid',
       rows: 4,
@@ -14,22 +15,22 @@ export const LAYOUTS = [
   },
   {
     value: 'circular',
-    label: '圆形布局',
+    label: $i18n.get({ id: 'advance.components.SubGraphLayout.const.CircularLayout', dm: '圆形布局' }),
     options: {
       nodeSpacing: NODE_SPACING,
     },
   },
   {
     value: 'dagre',
-    label: '层次布局',
+    label: $i18n.get({ id: 'advance.components.SubGraphLayout.const.HierarchicalLayout', dm: '层次布局' }),
   },
   {
     value: 'concentric',
-    label: '同心圆布局',
+    label: $i18n.get({ id: 'advance.components.SubGraphLayout.const.ConcentricCircleLayout', dm: '同心圆布局' }),
   },
   {
     value: 'radial',
-    label: '径向布局',
+    label: $i18n.get({ id: 'advance.components.SubGraphLayout.const.RadialLayout', dm: '径向布局' }),
   },
 ];
 

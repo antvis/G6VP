@@ -1,10 +1,11 @@
 import { template } from '@antv/gi-sdk';
 
 // 页面布局容器
+import $i18n from '../i18n';
 const pageLayout = {
   id: 'UadLayout',
   type: 'GICC_LAYOUT',
-  name: '上下布局',
+  name: $i18n.get({ id: 'basic.src.templates.Query.UpperAndLowerLayout', dm: '上下布局' }),
   props: {
     containers: [
       {
@@ -25,7 +26,7 @@ const addComponents = [
   {
     id: 'GremlinQuery',
     type: 'GIAC_CONTENT',
-    name: 'Gremlin 查询',
+    name: $i18n.get({ id: 'basic.src.templates.Query.GremlinQuery', dm: 'Gremlin 查询' }),
     props: {
       serviceId: 'GraphScope/GremlinQuery',
       isShowPublishButton: false,
@@ -60,7 +61,7 @@ const addComponents = [
   {
     id: 'TableMode',
     type: 'GIAC_CONTENT',
-    name: '表格模式',
+    name: $i18n.get({ id: 'basic.src.templates.Query.TableMode', dm: '表格模式' }),
     props: {
       enableCopy: true,
       isSelectedActive: true,
@@ -69,11 +70,14 @@ const addComponents = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: '表格模式',
+        title: $i18n.get({ id: 'basic.src.templates.Query.TableMode', dm: '表格模式' }),
         isShowIcon: true,
         icon: 'icon-table',
         isShowTooltip: true,
-        tooltip: '将画布中的节点和边以表格形式展示',
+        tooltip: $i18n.get({
+          id: 'basic.src.templates.Query.ShowNodesAndEdgesIn',
+          dm: '将画布中的节点和边以表格形式展示',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -92,7 +96,7 @@ const addComponents = [
   {
     id: 'JSONMode',
     type: 'GIAC_CONTENT',
-    name: '代码模式',
+    name: $i18n.get({ id: 'basic.src.templates.Query.CodeMode', dm: '代码模式' }),
     props: {
       theme: 'rjv-default',
       GI_CONTAINER_INDEX: 2,
@@ -100,11 +104,11 @@ const addComponents = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: '代码模式',
+        title: $i18n.get({ id: 'basic.src.templates.Query.CodeMode', dm: '代码模式' }),
         isShowIcon: true,
         icon: 'icon-table',
         isShowTooltip: true,
-        tooltip: '将数据以代码形式展示',
+        tooltip: $i18n.get({ id: 'basic.src.templates.Query.ShowDataInCode', dm: '将数据以代码形式展示' }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -123,7 +127,7 @@ const addComponents = [
   {
     id: 'SideTabs',
     type: 'GICC',
-    name: '侧边栏',
+    name: $i18n.get({ id: 'basic.src.templates.Query.Sidebar', dm: '侧边栏' }),
     props: {
       GI_CONTAINER: ['FilterPanel', 'NodeImportance', 'CommunityDetection', 'PatternMatch'],
       outSideFromCanvas: true,
@@ -138,18 +142,21 @@ const addComponents = [
   {
     id: 'StructAnalysis',
     type: 'GIAC_CONTENT',
-    name: '路径结构分析',
+    name: $i18n.get({ id: 'basic.src.templates.Query.PathStructureAnalysis', dm: '路径结构分析' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: '路径结构分析',
+        title: $i18n.get({ id: 'basic.src.templates.Query.PathStructureAnalysis', dm: '路径结构分析' }),
         isShowIcon: true,
         icon: 'icon-layout-tree',
         isShowTooltip: true,
-        tooltip: '自动解析画布所有路径，做聚合分析',
+        tooltip: $i18n.get({
+          id: 'basic.src.templates.Query.AutomaticallyParseAllPathsOf',
+          dm: '自动解析画布所有路径，做聚合分析',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -168,18 +175,21 @@ const addComponents = [
   {
     id: 'InfoDetection',
     type: 'GIAC_CONTENT',
-    name: '信息检测',
+    name: $i18n.get({ id: 'basic.src.templates.Query.InformationDetection', dm: '信息检测' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '信息检测',
+        title: $i18n.get({ id: 'basic.src.templates.Query.InformationDetection', dm: '信息检测' }),
         isShowIcon: true,
         icon: 'icon-infomation',
         isShowTooltip: true,
-        tooltip: '检测画布中孤立点、环等',
+        tooltip: $i18n.get({
+          id: 'basic.src.templates.Query.DetectIsolatedPointsRingsEtc',
+          dm: '检测画布中孤立点、环等',
+        }),
         tooltipColor: '#3056e3',
         tooltipPlacement: 'right',
         hasDivider: false,
@@ -198,14 +208,14 @@ const addComponents = [
   {
     id: 'NodeImportance',
     type: 'GIAC_CONTENT',
-    name: '节点重要性',
+    name: $i18n.get({ id: 'basic.src.templates.Query.NodeImportance', dm: '节点重要性' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '节点重要性',
+        title: $i18n.get({ id: 'basic.src.templates.Query.NodeImportance', dm: '节点重要性' }),
         isShowIcon: true,
         icon: 'icon-rules',
         isShowTooltip: true,
@@ -228,14 +238,14 @@ const addComponents = [
   {
     id: 'CommunityDetection',
     type: 'GIAC_CONTENT',
-    name: '社区发现',
+    name: $i18n.get({ id: 'basic.src.templates.Query.CommunityDiscovery', dm: '社区发现' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '社区发现',
+        title: $i18n.get({ id: 'basic.src.templates.Query.CommunityDiscovery', dm: '社区发现' }),
         isShowIcon: true,
         icon: 'icon-associate',
         isShowTooltip: true,
@@ -258,14 +268,14 @@ const addComponents = [
   {
     id: 'PatternMatch',
     type: 'GIAC_CONTENT',
-    name: '模式匹配',
+    name: $i18n.get({ id: 'basic.src.templates.Query.PatternMatching', dm: '模式匹配' }),
     props: {
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
         disabled: false,
         isShowTitle: false,
-        title: '模式匹配',
+        title: $i18n.get({ id: 'basic.src.templates.Query.PatternMatching', dm: '模式匹配' }),
         isShowIcon: true,
         icon: 'icon-query-path',
         isShowTooltip: true,
@@ -288,7 +298,7 @@ const addComponents = [
   {
     id: 'CypherQuery',
     type: 'GIAC_CONTENT',
-    name: 'Cypher 语句查询',
+    name: $i18n.get({ id: 'basic.src.templates.Query.CypherStatementQuery', dm: 'Cypher 语句查询' }),
     props: {
       serviceId: 'TuGraph/CypherQuery',
       isShowPublishButton: false,
@@ -299,7 +309,7 @@ const addComponents = [
         visible: false,
         disabled: false,
         isShowTitle: true,
-        title: 'Cypher 语句查询',
+        title: $i18n.get({ id: 'basic.src.templates.Query.CypherStatementQuery', dm: 'Cypher 语句查询' }),
         isShowIcon: true,
         icon: 'icon-query',
         isShowTooltip: true,
@@ -336,10 +346,16 @@ export const activeAssetsKeys = {
 };
 
 export default {
-  name: '查询模版',
+  name: $i18n.get({ id: 'basic.src.templates.Query.QueryTemplate', dm: '查询模版' }),
   id: 'TP_QUERY',
   image: `/image/tp_query.png`,
-  desc: `以查询语句为主体的模版，包含 ${activeAssetsKeys.components.length} 个分析资产，页面布局呈上下分布，最上方集成「Gremlin」或者「Cypher」查询语句，常用于数据库查询场景。`,
+  desc: $i18n.get(
+    {
+      id: 'basic.src.templates.Query.TheTemplateWithTheQuery',
+      dm: '以查询语句为主体的模版，包含 {activeAssetsKeysComponentsLength} 个分析资产，页面布局呈上下分布，最上方集成「Gremlin」或者「Cypher」查询语句，常用于数据库查询场景。',
+    },
+    { activeAssetsKeysComponentsLength: activeAssetsKeys.components.length },
+  ),
   activeAssetsKeys,
   ...config,
 };

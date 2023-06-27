@@ -1,5 +1,6 @@
 import { utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 
 const registerMeta = context => {
   const { services, engineId } = context;
@@ -21,7 +22,10 @@ const registerMeta = context => {
 
   return {
     saveTemplateServiceId: {
-      title: '保存分析历史模版服务',
+      title: $i18n.get({
+        id: 'advance.components.AnalysisHistory.registerMeta.SaveAnalysisHistoryTemplateService',
+        dm: '保存分析历史模版服务',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -31,7 +35,10 @@ const registerMeta = context => {
       default: saveDefaultValue,
     },
     listTemplateServiceId: {
-      title: '读取分析历史模版列表服务',
+      title: $i18n.get({
+        id: 'advance.components.AnalysisHistory.registerMeta.ReadAnalysisHistoryTemplateList',
+        dm: '读取分析历史模版列表服务',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -41,7 +48,10 @@ const registerMeta = context => {
       default: listDefaultValue,
     },
     removeTemplateServiceId: {
-      title: '删除分析历史模版服务',
+      title: $i18n.get({
+        id: 'advance.components.AnalysisHistory.registerMeta.DeleteAnalysisHistoryTemplateService',
+        dm: '删除分析历史模版服务',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -51,7 +61,7 @@ const registerMeta = context => {
       default: removeDefaultValue,
     },
     placement: {
-      title: '放置方位',
+      title: $i18n.get({ id: 'advance.components.AnalysisHistory.registerMeta.PlacementOrientation', dm: '放置方位' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -59,18 +69,18 @@ const registerMeta = context => {
         options: [
           {
             value: 'top',
-            label: '顶部',
+            label: $i18n.get({ id: 'advance.components.AnalysisHistory.registerMeta.Top', dm: '顶部' }),
           },
           {
             value: 'bottom',
-            label: '底部',
+            label: $i18n.get({ id: 'advance.components.AnalysisHistory.registerMeta.Bottom', dm: '底部' }),
           },
         ],
       },
       default: 'bottom',
     },
     height: {
-      title: '历史栏高度',
+      title: $i18n.get({ id: 'advance.components.AnalysisHistory.registerMeta.HistoryBarHeight', dm: '历史栏高度' }),
       type: 'number',
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',

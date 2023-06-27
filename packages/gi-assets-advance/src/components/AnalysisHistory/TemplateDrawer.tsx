@@ -10,6 +10,7 @@ import { useMemoizedFn } from 'ahooks';
 
 import './index.less';
 import { updateObjWithPaths } from './util';
+import $i18n from '../../i18n';
 
 let stepTimer: any = 0;
 
@@ -132,6 +133,7 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
             msg: errorMsg,
           },
         ];
+
         draft.runningId = undefined;
         draft.runningStatus = 'failed';
       });
@@ -262,9 +264,16 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
             ...errorInfos,
             {
               id: node.id,
-              msg: `未找到资产 ${componentId}，请先将它配置到画布中`,
+              msg: $i18n.get(
+                {
+                  id: 'advance.components.AnalysisHistory.TemplateDrawer.AssetComponentidIsNotFound',
+                  dm: '未找到资产 {componentId}，请先将它配置到画布中',
+                },
+                { componentId: componentId },
+              ),
             },
           ];
+
           draft.runningId = undefined;
           draft.runningStatus = 'failed';
         });
@@ -292,7 +301,12 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
     switch (applyWay) {
       case 'controlledSteps':
         return runningStatus === 'failed' ? (
-          <Tooltip title="当前节点执行失败，点从头重新执行">
+          <Tooltip
+            title={$i18n.get({
+              id: 'advance.components.AnalysisHistory.TemplateDrawer.TheCurrentNodeFailedTo',
+              dm: '当前节点执行失败，点从头重新执行',
+            })}
+          >
             <Button type="primary" onClick={() => resetStep()} style={style}>
               <RedoOutlined color="#fff" />
             </Button>
@@ -302,11 +316,17 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
             <CaretRightOutlined color="#fff" />
           </Button>
         );
+
       case 'autoSteps':
       default:
         if (runningStatus === 'failed') {
           return (
-            <Tooltip title="当前节点执行失败，点从头重新执行">
+            <Tooltip
+              title={$i18n.get({
+                id: 'advance.components.AnalysisHistory.TemplateDrawer.TheCurrentNodeFailedTo',
+                dm: '当前节点执行失败，点从头重新执行',
+              })}
+            >
               <Button
                 type="primary"
                 onClick={() => {
@@ -343,17 +363,31 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
   }, [currentStep, applyWay, runningStatus]);
 
   return (
-    <Drawer title="分析链路模版" width="50vw" maskClosable={false} mask={false} open={open} onClose={handleClose}>
+    <Drawer
+      title={$i18n.get({
+        id: 'advance.components.AnalysisHistory.TemplateDrawer.AnalysisLinkTemplate',
+        dm: '分析链路模版',
+      })}
+      width="50vw"
+      maskClosable={false}
+      mask={false}
+      open={open}
+      onClose={handleClose}
+    >
       <Form>
-        <Form.Item label="选择模版" name="template" className="gi-history-drawer-select">
+        <Form.Item
+          label={$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateDrawer.SelectTemplate', dm: '选择模版' })}
+          name="template"
+          className="gi-history-drawer-select"
+        >
           <Select defaultValue={state.activeTemplateId} style={{ width: '100%' }} onChange={handleTemplateChange}>
             {templates?.map(template => (
               <Select.Option value={template.id}>
                 {template.name}
                 {template.description ? (
-                  <span
-                    style={{ color: 'var(--text-color-secondary)', marginLeft: '4px' }}
-                  >{`(${template.description})`}</span>
+                  <span style={{ color: 'var(--text-color-secondary)', marginLeft: '4px' }}>
+                    {`(${template.description})`}
+                  </span>
                 ) : (
                   ''
                 )}
@@ -363,7 +397,10 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
         </Form.Item>
         <div style={{ width: '100%', display: 'inline-flex' }}>
           <Form.Item
-            label="执行方式"
+            label={$i18n.get({
+              id: 'advance.components.AnalysisHistory.TemplateDrawer.ExecutionMethod',
+              dm: '执行方式',
+            })}
             name="applyWay"
             initialValue={'autoSteps'}
             style={{ width: 'calc(100% - 83px)' }}
@@ -380,16 +417,29 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
               options={[
                 {
                   value: 'autoSteps',
-                  label: '自动分步执行',
+                  label: $i18n.get({
+                    id: 'advance.components.AnalysisHistory.TemplateDrawer.AutomaticStepByStepExecution',
+                    dm: '自动分步执行',
+                  }),
                 },
                 {
                   value: 'controlledSteps',
-                  label: '手动分步执行',
+                  label: $i18n.get({
+                    id: 'advance.components.AnalysisHistory.TemplateDrawer.ManualStepByStepExecution',
+                    dm: '手动分步执行',
+                  }),
                 },
               ]}
             />
           </Form.Item>
-          <Tooltip title="可不配置，使用默认参数执行" placement="bottomLeft" open={state.applyBtnTooltipVisible}>
+          <Tooltip
+            title={$i18n.get({
+              id: 'advance.components.AnalysisHistory.TemplateDrawer.DoNotConfigureUseDefault',
+              dm: '可不配置，使用默认参数执行',
+            })}
+            placement="bottomLeft"
+            open={state.applyBtnTooltipVisible}
+          >
             <div style={{ width: '83px' }}>{applyButton}</div>
           </Tooltip>
         </div>
@@ -410,6 +460,7 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
             })
           }
         />
+
         <ConfigurePanel
           configuring={state.configuring}
           updateConfigure={(nodeId, values) => handleUpdateConfigure(state.activeTemplateId, nodeId, values)}

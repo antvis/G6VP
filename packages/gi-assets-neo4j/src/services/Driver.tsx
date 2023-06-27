@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 import neo4j, { Driver, Node, Path, Relationship } from 'neo4j-driver';
+import $i18n from '../i18n';
 export interface GraphNode {
   id: string; // 节点id
   label: string; // 节点标签
@@ -279,8 +280,22 @@ class Neo4JDriver {
       `;
 
       const result = await session.run(value);
-      console.log('%c[Neo4j Driver] NeighborsQuery 查询语句', 'color:yellow', value);
-      console.log('%c[Neo4j Driver] NeighborsQuery 查询结果', 'color:green', result);
+      console.log(
+        $i18n.get({
+          id: 'neo4j.src.services.Driver.CNeoJDriverNeighborsquery',
+          dm: '%c[Neo4j Driver] NeighborsQuery 查询语句',
+        }),
+        'color:yellow',
+        value,
+      );
+      console.log(
+        $i18n.get({
+          id: 'neo4j.src.services.Driver.CNeoJDriverNeighborsquery.1',
+          dm: '%c[Neo4j Driver] NeighborsQuery 查询结果',
+        }),
+        'color:green',
+        result,
+      );
 
       session.close();
 
@@ -288,7 +303,7 @@ class Neo4JDriver {
     } catch (error: any) {
       console.log('error', error);
       notification.error({
-        message: '邻居查询出错',
+        message: $i18n.get({ id: 'neo4j.src.services.Driver.ErrorInNeighborQuery', dm: '邻居查询出错' }),
         description: error.toString(),
       });
       return {
@@ -310,14 +325,28 @@ class Neo4JDriver {
         database: this.database,
       });
       const result = await session.run(cypher);
-      console.log('%c[Neo4j Driver] QueryCypher 查询语句', 'color:yellow', cypher);
-      console.log('%c[Neo4j Driver] QueryCypher 查询结果', 'color:green', result);
+      console.log(
+        $i18n.get({
+          id: 'neo4j.src.services.Driver.CNeoJDriverQuerycypher',
+          dm: '%c[Neo4j Driver] QueryCypher 查询语句',
+        }),
+        'color:yellow',
+        cypher,
+      );
+      console.log(
+        $i18n.get({
+          id: 'neo4j.src.services.Driver.CNeoJDriverQuerycypher.1',
+          dm: '%c[Neo4j Driver] QueryCypher 查询结果',
+        }),
+        'color:green',
+        result,
+      );
       session.close();
       return this.processResult(result);
     } catch (error: any) {
       console.log(error);
       notification.error({
-        message: 'Cypher 查询出错',
+        message: $i18n.get({ id: 'neo4j.src.services.Driver.CypherQueryError', dm: 'Cypher 查询出错' }),
         description: error.toString(),
       });
       return {

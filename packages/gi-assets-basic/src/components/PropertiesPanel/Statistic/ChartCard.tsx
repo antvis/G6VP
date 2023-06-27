@@ -4,6 +4,7 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import ColumnChart from './Charts/ColumnChart';
 import LineChart from './Charts/LineChart';
+import $i18n from '../../../i18n';
 
 const chartOptions = [
   {
@@ -80,13 +81,18 @@ const ChartCard: React.FC<ChartCardProps> = props => {
 
   const extra = (
     <>
-      <Select placeholder="X轴字段" onChange={updateXField} style={{ width: '80px' }} value={state.xField}>
+      <Select
+        placeholder={$i18n.get({ id: 'basic.PropertiesPanel.Statistic.ChartCard.XAxisField', dm: 'X轴字段' })}
+        onChange={updateXField}
+        style={{ width: '80px' }}
+        value={state.xField}
+      >
         {xFieldOptions.map(x => (
           <Select.Option value={x}>{x}</Select.Option>
         ))}
       </Select>
       <Select
-        placeholder="Y轴字段"
+        placeholder={$i18n.get({ id: 'basic.PropertiesPanel.Statistic.ChartCard.YAxisField', dm: 'Y轴字段' })}
         onChange={updateYField}
         style={{ width: '80px', marginLeft: '10px' }}
         value={state.yField}
@@ -105,13 +111,18 @@ const ChartCard: React.FC<ChartCardProps> = props => {
 
   return (
     <div>
-      <Card title={statisticProp} extra={extra} style={{marginBottom: "20px",  boxShadow: "0 0 2px rgba(0, 0, 0, 0.1)"}}>
+      <Card
+        title={statisticProp}
+        extra={extra}
+        style={{ marginBottom: '20px', boxShadow: '0 0 2px rgba(0, 0, 0, 0.1)' }}
+      >
         {state.chartType === 'lineChart' && (
           <LineChart xField={state.xField} yField={state.yField} data={data[statisticProp]} />
         )}
+
         {state.chartType === 'columnChart' && (
-        <ColumnChart xField={state.xField} yField={state.yField} data={data[statisticProp]} />
-      )}
+          <ColumnChart xField={state.xField} yField={state.yField} data={data[statisticProp]} />
+        )}
       </Card>
     </div>
   );

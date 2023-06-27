@@ -97,6 +97,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   let templates;
   let deploys;
   let FinalAssets;
+  let locales;
 
   const packages = getAssetPackages();
 
@@ -138,6 +139,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   layouts = { ...FinalAssets.layouts };
   templates = { ...FinalAssets.templates };
   deploys = { ...FinalAssets.deploys };
+  locales = { ...FinalAssets.locales };
 
   return await new Promise(resolve => {
     resolve({
@@ -147,6 +149,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
       templates,
       deploys,
       services: FinalAssets.services,
+      locales,
     } as GIAssets);
   });
 };

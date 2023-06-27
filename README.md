@@ -29,7 +29,7 @@ G6VP 取名意为 AntV G6 Visualization Platform，曾用名 `AntV/GraphInsight`
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/85667759-70b2-4166-8181-47cb9e9fa3a3)
 
-### 1.2 创建工作薄
+### 1.2 创建工作簿
 
 有了数据，我们便可以创建一个分析画布，创建画布的时候，我们可以选择不同的模版，模版来自资产包，也可以来自用户手动保存或者从资产清单选购的模版。
 

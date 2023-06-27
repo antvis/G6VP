@@ -15,10 +15,11 @@ import MetaPanel from './MetaPanel';
 import { getServicesByConfig } from './getAssets';
 import getCombinedServiceConfig from './getAssets/getCombinedServiceConfig';
 import { AnalysisContext } from './hooks/useContext';
-import './index.less';
-
+import locale from '@aligov/global-locale';
 import useModel from './useModel';
 import { getUpdateGISite, isObjectEmpty, queryActiveAssetsInformation } from './utils';
+import $i18n from '../../i18n';
+import './index.less';
 
 const GraphRef = props => {
   const { graphRef } = props;
@@ -79,7 +80,7 @@ const Analysis = props => {
       const datasetInfo = await queryDatasetInfo(datasetId);
       if (!datasetInfo) {
         window.location.href = window.location.origin;
-        message.info('请先选择数据集...');
+        message.info($i18n.get({ id: 'gi-site.pages.Analysis.SelectADatasetFirst', dm: '请先选择数据集...' }));
         return;
       }
       let { engineId, engineContext, schemaData, data, name: DATASET_NAME } = datasetInfo;
@@ -311,6 +312,7 @@ const Analysis = props => {
                   layouts: activeAssets!.layouts,
                 }}
                 services={state.services}
+                locales={utils.getCurrentLocales(activeAssets!.locales, locale.getLocale().lang)}
               >
                 <GraphRef graphRef={graphRef} />
               </GISDK>

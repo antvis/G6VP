@@ -8,6 +8,7 @@ import './index.less';
 import SideContainer from './SideContainer';
 import type { ContainerProps } from './typing';
 import WrapTab from './WrapTab';
+import $i18n from '../../i18n';
 const { TabPane } = Tabs;
 const defaultVisibleKey = 'side-tabs-default-visible';
 export interface SideTabsProps extends ContainerProps {
@@ -86,7 +87,10 @@ const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
   };
 
   const tabBarExtraContent = (
-    <Tooltip placement="right" title="可展开收起导航栏">
+    <Tooltip
+      placement="right"
+      title={$i18n.get({ id: 'basic.components.SideTabs.Component.YouCanExpandAndCollapse', dm: '可展开收起导航栏' })}
+    >
       <Button type="text" icon={visible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={toggleVisible} />
     </Tooltip>
   );

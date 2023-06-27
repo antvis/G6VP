@@ -1,5 +1,6 @@
 import { utils } from '@antv/gi-sdk';
 import info from './info';
+import $i18n from '../../i18n';
 
 const registerMeta = context => {
   const { services, engineId, hasPropertyGraph } = context;
@@ -8,7 +9,7 @@ const registerMeta = context => {
 
   const schema = {
     serviceId: {
-      title: '数据服务',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.DataService', dm: '数据服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -20,7 +21,10 @@ const registerMeta = context => {
 
     enableInfoDetect: hasPropertyGraph
       ? {
-          title: '属性推荐',
+          title: $i18n.get({
+            id: 'basic.components.PropertiesPanel.registerMeta.AttributeRecommendation',
+            dm: '属性推荐',
+          }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Switch',
@@ -29,40 +33,43 @@ const registerMeta = context => {
       : undefined,
 
     defaultiStatistic: {
-      title: '默认展示统计信息',
+      title: $i18n.get({
+        id: 'basic.components.PropertiesPanel.registerMeta.StatisticsAreDisplayedByDefault',
+        dm: '默认展示统计信息',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: false,
     },
     title: {
-      title: '标题',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Title', dm: '标题' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
-      default: '属性面板',
+      default: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.PropertiesPanel', dm: '属性面板' }),
     },
     placement: {
-      title: '展示方位',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.DisplayOrientation', dm: '展示方位' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       'x-component-props': {
         options: [
           {
-            label: '左部',
+            label: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Left', dm: '左部' }),
             value: 'LB',
           },
           {
-            label: '右部',
+            label: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Right', dm: '右部' }),
             value: 'RT',
           },
           {
-            label: '上部',
+            label: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.UpperPart', dm: '上部' }),
             value: 'LT',
           },
           {
-            label: '底部',
+            label: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Bottom', dm: '底部' }),
             value: 'RB',
           },
         ],
@@ -70,28 +77,28 @@ const registerMeta = context => {
       default: 'LB',
     },
     width: {
-      title: '宽度',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Width', dm: '宽度' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       default: '500px',
     },
     height: {
-      title: '高度',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.Height', dm: '高度' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Input',
       default: 'calc(100% - 80px)',
     },
     offset: {
-      title: '偏移距离',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.OffsetDistance', dm: '偏移距离' }),
       type: 'array',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',
       default: [10, 10],
     },
     animate: {
-      title: '抽屉动画',
+      title: $i18n.get({ id: 'basic.components.PropertiesPanel.registerMeta.DrawerAnimation', dm: '抽屉动画' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',

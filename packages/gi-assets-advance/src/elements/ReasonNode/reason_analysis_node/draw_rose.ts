@@ -5,11 +5,12 @@ import { ColorPicker, IColorPair } from './colors';
 import RoseChangeMapping from './roseChangeMapping';
 
 import { Tooltip, IKVAttrs, getContentMoreDemensions } from './tooltip';
+import $i18n from '../../../i18n';
 
 const Cfg = {
   Radius_Min: 20,
   Radius_Max: 54,
-  Start_Angle: -((Math.PI * 3) / 2),  
+  Start_Angle: -((Math.PI * 3) / 2),
 };
 // 绘制玫瑰图
 export default function drawRose(group: any, data: ITreeData) {
@@ -39,14 +40,7 @@ export default function drawRose(group: any, data: ITreeData) {
 
   changes.forEach(change => {
     const colorPair = colorPicker.pickColorPair();
-    const { drawAfer, drawBefore } = addFan(
-      group,
-      change,
-      startAngle,
-      endAngle,
-      colorPair,
-      roseCompare,
-    );
+    const { drawAfer, drawBefore } = addFan(group, change, startAngle, endAngle, colorPair, roseCompare);
 
     afterDrawingFuncs.push(drawAfer);
     beforeDrawingFuncs.push(drawBefore);
@@ -78,11 +72,10 @@ function getDrawingValueByUnit(change: IChangeItem) {
 
   const max = 50;
 
-  const before = Math.abs(Math.random() * 50 / max) || 0;
-  const after = Math.abs(Math.random() * 50 / max);
+  const before = Math.abs((Math.random() * 50) / max) || 0;
+  const after = Math.abs((Math.random() * 50) / max);
 
-
-  console.log('before after',before,beforeValue_maybe, after, afterValue_maybe)
+  console.log('before after', before, beforeValue_maybe, after, afterValue_maybe);
   return {
     beforeValue: Number(Number(before).toFixed(2)),
     afterValue: Number(Number(after).toFixed(2)),
@@ -96,7 +89,8 @@ function addFan(
   startAngle: number,
   endAngle: number,
   colorPair: IColorPair,
-  roseCompare: any, // 显示配置
+  roseCompare: // 显示配置
+  any,
 ) {
   // value都先按照‘率’处理
   // const { beforeValue = 0, afterValue = 0 } = change;
@@ -192,7 +186,6 @@ function getToolTipDatas(change: IChangeItem, mainColorPair: IColorPair) {
       }
     }
 
-
     if (index === 0) {
       // 如果是0，就构造 main datas
       mainDatas.title = name;
@@ -200,13 +193,13 @@ function getToolTipDatas(change: IChangeItem, mainColorPair: IColorPair) {
       const bValue = (before / 100).toFixed(2) + '%';
       mainDatas.attrs = [
         {
-          key: '先前值',
+          key: $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_rose.PreviousValue', dm: '先前值' }),
           value: before === 0 ? '0' : bValue,
           color: mainColorPair.primary,
           needIcon: true,
         },
         {
-          key: '变化后',
+          key: $i18n.get({ id: 'advance.ReasonNode.reason_analysis_node.draw_rose.AfterChange', dm: '变化后' }),
           value: value,
           color: mainColorPair.secondary,
           isCurrent: true,
@@ -221,7 +214,6 @@ function getToolTipDatas(change: IChangeItem, mainColorPair: IColorPair) {
         inicatorColor: primary,
       });
     }
-
 
     // 临时逻辑
     // const { primary } = mainColorPair;

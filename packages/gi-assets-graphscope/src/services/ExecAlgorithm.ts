@@ -1,7 +1,11 @@
 import { utils } from '@antv/gi-sdk';
 import request from 'umi-request';
+import $i18n from '../i18n';
 export const ExecAlgorithm = {
-  name: '执行 GraphScope 图算法',
+  name: $i18n.get({
+    id: 'graphscope.src.services.ExecAlgorithm.ExecuteGraphscopeGraphAlgorithm',
+    dm: '执行 GraphScope 图算法',
+  }),
   service: async (params = {}) => {
     const { GRAPHSCOPE_ACCOUNT } = utils.getServerEngineContext();
     const graphName = localStorage.getItem('graphScopeGraphName');

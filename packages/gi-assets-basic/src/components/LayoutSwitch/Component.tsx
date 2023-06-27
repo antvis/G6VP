@@ -3,6 +3,7 @@ import { Icon, extra, useContext, utils } from '@antv/gi-sdk';
 import { LayoutConfig } from '@antv/gi-sdk/lib/typing';
 import { Card, Popover, Radio, Space } from 'antd';
 import React, { useEffect, useMemo } from 'react';
+import $i18n from '../../i18n';
 
 const { GIAComponent } = extra;
 
@@ -41,8 +42,14 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
     updateHistory({
       componentId: 'LayoutSwitch',
       type: 'configure',
-      subType: '布局切换',
-      statement: `布局 ${layoutProps.type}`,
+      subType: $i18n.get({ id: 'basic.components.LayoutSwitch.Component.LayoutSwitching', dm: '布局切换' }),
+      statement: $i18n.get(
+        {
+          id: 'basic.components.LayoutSwitch.Component.LayoutLayoutpropstype',
+          dm: '布局 {layoutPropsType}',
+        },
+        { layoutPropsType: layoutProps.type },
+      ),
       success,
       errorMsg,
       params: layoutProps,
@@ -100,7 +107,10 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   }, [layouts]);
 
   const content = (
-    <Card title="布局方案" size="small">
+    <Card
+      title={$i18n.get({ id: 'basic.components.LayoutSwitch.Component.LayoutScheme', dm: '布局方案' })}
+      size="small"
+    >
       <Radio.Group value={config.layout?.id}>{Radios}</Radio.Group>
     </Card>
   );

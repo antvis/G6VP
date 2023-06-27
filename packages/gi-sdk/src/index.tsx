@@ -36,6 +36,7 @@ export { Info } from './constants/info';
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
 export type { IGraphData } from './process/schema';
+export { formatMessage, getCurrentLanguage, changeLanguage, LANGUAGE_KEY_NAME } from './process/locale';
 export type {
   AssetCategory,
   AssetInfo,

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import { nanoid } from 'nanoid';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface IGremlinQueryProps {
   initialValue?: string;
@@ -83,8 +84,17 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     setBtnLoading(false);
     if (!result || !result.success) {
       notification.error({
-        message: '执行 Gremlin 查询失败',
-        description: `失败原因：${result.message}`,
+        message: $i18n.get({
+          id: 'advance.components.GremlinQuery.Component.FailedToExecuteGremlinQuery',
+          dm: '执行 Gremlin 查询失败',
+        }),
+        description: $i18n.get(
+          {
+            id: 'advance.components.GremlinQuery.Component.FailureReasonResultmessage',
+            dm: '失败原因：{resultMessage}',
+          },
+          { resultMessage: result.message },
+        ),
       });
       return;
     }
@@ -141,28 +151,28 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           {/* {isShowPublishButton && ( */}
 
           <Button className={'publishButton'} disabled>
-            发布成模板
+            {$i18n.get({ id: 'advance.components.GremlinQuery.Component.PublishAsATemplate', dm: '发布成模板' })}
           </Button>
 
           {/* )} */}
           <Button className={'queryButton'} loading={btnLoading} type="primary" onClick={handleClickQuery}>
-            执行查询
+            {$i18n.get({ id: 'advance.components.GremlinQuery.Component.ExecuteAQuery', dm: '执行查询' })}
           </Button>
         </Space>
       </div>
       {/* {state.modalVisible && (
-        <PublishTemplate
-          saveTemplateServceId={saveTemplateServceId}
-          visible={state.modalVisible}
-          value={editorValue}
-          close={() => {
-            setState(draft => {
-              draft.modalVisible = false;
-            });
-          }}
-          fileType={'GREMLIN'}
-        />
-      )} */}
+         <PublishTemplate
+           saveTemplateServceId={saveTemplateServceId}
+           visible={state.modalVisible}
+           value={editorValue}
+           close={() => {
+             setState(draft => {
+               draft.modalVisible = false;
+             });
+           }}
+           fileType={'GREMLIN'}
+         />
+        )} */}
     </div>
   );
 };

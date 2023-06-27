@@ -1,13 +1,14 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS } = context;
   return {
     containers: [
       {
         id: 'GI_CONTAINER_TOP',
-        name: '顶部容器',
+        name: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.TopContainer', dm: '顶部容器' }),
         required: true,
         GI_CONTAINER: {
-          title: '顶部组件',
+          title: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.TopAssembly', dm: '顶部组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -17,14 +18,14 @@ const registerMeta = context => {
         },
         height: {
           type: 'number',
-          title: '顶部高度',
+          title: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.TopHeight', dm: '顶部高度' }),
           'x-component': 'NumberPicker',
           'x-decorator': 'FormItem',
           default: 251,
         },
         padding: {
           type: 'string',
-          title: '内部间距',
+          title: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.InternalSpacing', dm: '内部间距' }),
           'x-component': 'Input',
           'x-decorator': 'FormItem',
           default: '0px 0px',
@@ -32,10 +33,10 @@ const registerMeta = context => {
       },
       {
         id: 'GI_CONTAINER_SIDE',
-        name: '侧边容器',
+        name: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.SideContainer', dm: '侧边容器' }),
         required: true,
         GI_CONTAINER: {
-          title: '侧边组件',
+          title: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.SideComponents', dm: '侧边组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -46,7 +47,7 @@ const registerMeta = context => {
           default: [],
         },
         tabPosition: {
-          title: 'Tab 位置',
+          title: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.TabLocation', dm: 'Tab 位置' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -54,19 +55,19 @@ const registerMeta = context => {
             options: [
               {
                 value: 'left',
-                label: '左边',
+                label: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.Left', dm: '左边' }),
               },
               {
                 value: 'right',
-                label: '右边',
+                label: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.Right', dm: '右边' }),
               },
               {
                 value: 'top',
-                label: '上方',
+                label: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.Above', dm: '上方' }),
               },
               {
                 value: 'bottom',
-                label: '下方',
+                label: $i18n.get({ id: 'basic.components.UadLayout.registerMeta.Below', dm: '下方' }),
               },
             ],
           },

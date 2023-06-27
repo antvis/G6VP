@@ -2,12 +2,13 @@ import { GIComponentAssets } from '@antv/gi-sdk';
 import { clone } from '@antv/util';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../../../i18n';
 import { queryAssets } from '../../../../services/assets';
 import { getComponentsByAssets } from '../../getAssets';
 import { AssetInfo } from '../../typing';
 import ContainerPanel from '../ContainerPanel';
-import ComponentPanel from './ComponentPanel';
 import { REQUIRED_ASSET_IDS } from '../ContainerPanel/constants';
+import ComponentPanel from './ComponentPanel';
 import './index.less';
 
 /**
@@ -148,11 +149,11 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
   });
   return {
     id: 'GI_FreeContainer',
-    name: '自运行组件',
+    name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
     required: true,
     info: {
       id: 'GI_FreeContainer',
-      name: '自运行组件',
+      name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
       icon: 'icon-layout',
       type: 'GICC',
     },
@@ -161,7 +162,7 @@ const getFreeContainer = (refComponentKeys, autoComponents, componentsMap) => {
         'x-component-props': { mode: 'multiple' },
       },
       id: 'GI_FreeContainer',
-      name: '自运行组件',
+      name: $i18n.get({ id: 'gi-site.MetaPanel.ComponentPanel.SelfRunningComponents', dm: '自运行组件' }),
       required: true,
     },
     props: {

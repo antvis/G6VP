@@ -1,0 +1,14 @@
+{
+  "hugegraph.src.services.ElementProperties.QueryElementAttributes": "Query element attributes",
+  "hugegraph.src.services.Engine.HugegraphIsAnEasyTo": "HugeGraph is an easy-to-use, efficient and universal graph database. It implements Apache TinkerPop3 framework and is compatible with Gremlin query languages.",
+  "hugegraph.src.services.GremlinQuery.GremlinQuery": "Gremlin query",
+  "hugegraph.src.services.Initializer.InitializeAQuery": "Initialize a query",
+  "hugegraph.src.services.Initializer.QueryGraphModel": "Query graph model",
+  "hugegraph.src.services.Initializer.HugegraphDataSourceConnectionFailed": "HugeGraph data source connection failed: No connection information is obtained for the HugeGraph Database. Please connect to the HugeGraph database before trying!",
+  "hugegraph.src.services.Initializer.GraphModelQueryFailedE": "Graph model query failed: {e}",
+  "hugegraph.src.services.NeighborsQuery.NeighborQuery": "Neighbor query",
+  "hugegraph.src.services.HugegraphEngineService": "HugeGraph engine service",
+  "hugegraph.src.services.HugegraphComputingEngineAssetPackage": "HugeGraph computing engine asset package provided by GI team by default",
+  "hugegraph.src.services.GVpTeam": "G6VP team",
+  "hugegraph.src.services.util.InterfaceRequestError": "Interface request error"
+}

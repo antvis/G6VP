@@ -27,6 +27,8 @@
     "postpublish": "tnpm sync @antv/gi-assets-advance"
   },
   "dependencies": {
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.6.2",
     "@antv/algorithm": "^0.1.26-beta.0",
     "@antv/g2plot": "^2.4.4",
@@ -48,14 +50,14 @@
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "query-string": "^7.1.1",
+    "react-draggable": "^4.4.5",
     "react-force-graph-3d": "^1.21.10",
     "react-json-view": "^1.21.3",
     "react-spring": "9.3.2",
     "react-transition-group": "^4.4.5",
-    "react-draggable": "^4.4.5",
+    "size-sensor": "^1.0.1",
     "three": "^0.135.0",
-    "use-immer": "^0.6.0",
-    "size-sensor": "^1.0.1"
+    "use-immer": "^0.6.0"
   },
   "peerDependencies": {
     "@antv/graphin": "^2.7.15",
@@ -65,5 +67,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": "git@github.com:antvis/G6VP.git"
 }

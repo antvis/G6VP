@@ -3,6 +3,7 @@ import { L7Plot } from '@antv/l7plot';
 import { Drawer, Skeleton } from 'antd';
 import React from 'react';
 import Properties from './Properties';
+import $i18n from '../../i18n';
 
 export interface PropertiesPanelProps {
   mapInstance: L7Plot;
@@ -118,7 +119,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
       visible={visible}
       placement="right"
       onClose={handleClose}
-      title={'属性面板'}
+      title={$i18n.get({ id: 'scene.MapMode.PropertiesPanel.Component.PropertiesPanel', dm: '属性面板' })}
       width={'356px'}
       style={{
         marginTop: '61px',

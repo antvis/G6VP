@@ -1,3 +1,4 @@
+import $i18n from '../i18n';
 const aggregate = data => {
   const { nodes, edges } = data;
   const edgeMap = new Map();
@@ -44,7 +45,13 @@ const aggregate = data => {
           target,
           [edgeTypeKeyFromProperties]: edgeType,
           aggregate: children,
-          aggregateCount: `汇总：${children.length} 条`,
+          aggregateCount: $i18n.get(
+            {
+              id: 'sdk.src.process.aggregateEdges.SummaryChildrenlength',
+              dm: '汇总：{childrenLength} 条',
+            },
+            { childrenLength: children.length },
+          ),
         },
       };
     }

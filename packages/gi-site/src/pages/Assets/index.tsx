@@ -8,6 +8,7 @@ import './index.less';
 import PackageTable from './Table';
 import UploadAssets from './Upload';
 import ViewMode from './ViewMode';
+import $i18n from '../../i18n';
 setDefaultAssetPackages();
 
 interface AssetsCenterProps {}
@@ -67,12 +68,19 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
     <>
       <SegmentedTabs
         items={[
-          { key: 'relation', label: '关系图资产', children: renderMangeContainer(), icon: <DeploymentUnitOutlined /> },
+          {
+            key: 'relation',
+            label: $i18n.get({ id: 'gi-site.pages.Assets.DiagramAssets', dm: '关系图资产' }),
+            children: renderMangeContainer(),
+            icon: <DeploymentUnitOutlined />,
+          },
           {
             key: 'location',
             icon: <EnvironmentOutlined />,
-            label: '地图资产',
-            children: <Empty description="正在建设中" />,
+            label: $i18n.get({ id: 'gi-site.pages.Assets.MapAssets', dm: '地图资产' }),
+            children: (
+              <Empty description={$i18n.get({ id: 'gi-site.pages.Assets.UnderConstruction', dm: '正在建设中' })} />
+            ),
           },
         ]}
         extra={

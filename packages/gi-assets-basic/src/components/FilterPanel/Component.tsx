@@ -8,6 +8,7 @@ import RecommendFilter from './RecommendFilter';
 import './index.less';
 import { HistogramOpt, IFilterCriteria } from './type';
 import { filterGraphData, getChartData, highlightSubGraph } from './utils';
+import $i18n from '../../i18n';
 
 const { isStyles } = utils;
 
@@ -40,7 +41,9 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
   }>({ node: [], edge: [] });
-  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData } = useContext();
+  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData, useIntl } =
+    useContext();
+  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (!enableInfoDetect) return;
@@ -283,8 +286,8 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     updateHistory({
       componentId: 'FilterPanel',
       type: 'analyse',
-      subType: '筛选',
-      statement: '筛选',
+      subType: $i18n.get({ id: 'basic.components.FilterPanel.Component.Filter', dm: '筛选' }),
+      statement: $i18n.get({ id: 'basic.components.FilterPanel.Component.Filter', dm: '筛选' }),
       success,
       errorMsg,
       params: {
@@ -337,16 +340,17 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         onClick={() => addFilter()}
         icon={<PlusOutlined />}
       >
-        增加筛选器
+        {$i18n.get({ id: 'basic.components.FilterPanel.Component.AddFilter', dm: '增加筛选器' })}
       </Button>
       {enableInfoDetect ? (
         <Button style={{ width: '100px', marginLeft: '4px' }} onClick={handleClickRecommend}>
           <FireTwoTone twoToneColor="#eb2f96" />
-          智能推荐
+          {$i18n.get({ id: 'basic.components.FilterPanel.Component.SmartRecommendation', dm: '智能推荐' })}
         </Button>
       ) : (
         ''
       )}
+
       <div className="gi-filter-panel-criteria-container">
         {Object.values(filterOptions).map(filterCriteria => {
           const { isRecommend } = filterCriteria;

@@ -4,6 +4,7 @@ import { Icon } from '../../Icon';
 import IconContent from './IconContent';
 
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface IColorInputProps {
   value?: string;
@@ -36,7 +37,10 @@ const IconPicker: React.FC<IColorInputProps> = props => {
             onChange(e.target.value);
           }
         }}
-        placeholder="请选择图标"
+        placeholder={$i18n.get({
+          id: 'common-components.CommonStyleSetting.IconPicker.PleaseSelectTheIcon',
+          dm: '请选择图标',
+        })}
         prefix={
           <Popover
             style={{}}

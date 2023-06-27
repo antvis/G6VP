@@ -2,6 +2,7 @@ import { Column } from '@antv/g2plot';
 import { Select } from 'antd';
 import * as React from 'react';
 import { iconMap } from '../FilterSelection';
+import $i18n from '../../../i18n';
 interface LineChartProps {
   source: any;
   filterCriteria: any;
@@ -63,7 +64,13 @@ const LineChart: React.FunctionComponent<LineChartProps> = props => {
         style={{ width: '80%' }}
         onChange={onSelectChange}
         className="gi-filter-panel-prop-select"
-        placeholder={`选择${elementType}属性`}
+        placeholder={$i18n.get(
+          {
+            id: 'basic.FilterPanel.Charts.LineChart.SelectElementtypeAttribute',
+            dm: '选择{elementType}属性',
+          },
+          { elementType: elementType },
+        )}
       >
         {Object.entries(elementProps).map(e => {
           const [key, value] = e;

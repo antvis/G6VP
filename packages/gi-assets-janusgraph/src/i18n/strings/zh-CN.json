@@ -1,0 +1,14 @@
+{
+  "janusgraph.src.services.Engine.JanusgraphIsAHighlyScalable": "JanusGraph 是一个高度可扩展的图数据库，针对存储和查询分布在多机集群中的数十亿个顶点和边的大型图进行了优化。 JanusGraph 是一个事务型数据库，可以支持数千个并发用户、复杂遍历和分析图查询。",
+  "janusgraph.src.services.EngineService.FailedToConnectToThe": "连接数据库失败",
+  "janusgraph.src.services.EngineService.CheckWhetherAntvisGiHttpservice": "✅ 请检查 antvis/gi-httpservice 代理服务是否启动 <br />✅ 请检查数据库地址，账户，密码是否填写正确",
+  "janusgraph.src.services.EngineService.DatabaseConnectionSucceeded": "连接数据库成功",
+  "janusgraph.src.services.EngineService.ContinueToSelectSubgraphsAnd": "请继续选择子图，进入分析",
+  "janusgraph.src.services.GremlinQuery.GremlinCypherQuery": "Gremlin Cypher 查询",
+  "janusgraph.src.services.Initializer.InitializeAQuery": "初始化查询",
+  "janusgraph.src.services.Initializer.QueryGraphModel": "查询图模型",
+  "janusgraph.src.services.NeighborsQuery.NeighborQuery": "邻居查询",
+  "janusgraph.src.services.JanusgraphEngineService": "JanusGraph 引擎服务",
+  "janusgraph.src.services.TheJanusgraphGraphDataAsset": "G6VP 团队默认提供的 JanusGraph 图数据资产包",
+  "janusgraph.src.services.GVpTeam": "G6VP 团队"
+}

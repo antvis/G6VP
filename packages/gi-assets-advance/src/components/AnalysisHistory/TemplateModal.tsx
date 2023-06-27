@@ -10,6 +10,7 @@ import ParamterizePanel from './ParamterizePanel';
 import { original } from 'immer';
 import { TemplateData, TemplateNode } from './type';
 import './index.less';
+import $i18n from '../../i18n';
 
 export interface TemplateModalProps {
   // 沉淀历史弹窗是否打开
@@ -74,15 +75,16 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
     const nodes: any = [
       {
         id: 'start',
-        label: '开始',
+        label: $i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Start', dm: '开始' }),
         ...circleNodeStyle,
       },
       {
         id: 'end',
-        label: '结束',
+        label: $i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.End', dm: '结束' }),
         ...circleNodeStyle,
       },
     ];
+
     if (!history?.length || !checkedRecordIds?.length) {
       updateState(draft => {
         draft.configuring = undefined;
@@ -260,9 +262,14 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
    */
   const saveBtn =
     graphData?.nodes.length < 3 ? (
-      <Tooltip title="暂无可保存内容，请先将历史记录加入模版图">
+      <Tooltip
+        title={$i18n.get({
+          id: 'advance.components.AnalysisHistory.TemplateModal.ThereIsNoContentTo',
+          dm: '暂无可保存内容，请先将历史记录加入模版图',
+        })}
+      >
         <Button type="primary" disabled>
-          保存
+          {$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Save', dm: '保存' })}
         </Button>
       </Tooltip>
     ) : (
@@ -270,58 +277,99 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
         content={
           <Form form={form}>
             <Form.Item
-              label="名称"
+              label={$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Name', dm: '名称' })}
               name="templateName"
               rules={[
                 {
                   required: true,
-                  message: '请为模版命名',
+                  message: $i18n.get({
+                    id: 'advance.components.AnalysisHistory.TemplateModal.NameTheTemplate',
+                    dm: '请为模版命名',
+                  }),
                 },
               ]}
             >
-              <Input placeholder={'输入模版名'} />
+              <Input
+                placeholder={$i18n.get({
+                  id: 'advance.components.AnalysisHistory.TemplateModal.EnterATemplateName',
+                  dm: '输入模版名',
+                })}
+              />
             </Form.Item>
-            <Form.Item label="描述" name="templateDesc">
-              <Input placeholder="辅助描述" />
+            <Form.Item
+              label={$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Description', dm: '描述' })}
+              name="templateDesc"
+            >
+              <Input
+                placeholder={$i18n.get({
+                  id: 'advance.components.AnalysisHistory.TemplateModal.AuxiliaryDescription',
+                  dm: '辅助描述',
+                })}
+              />
             </Form.Item>
             <Button type="primary" disabled={graphData?.nodes.length < 3} onClick={handleSaveTemplate}>
-              确定
+              {$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Ok', dm: '确定' })}
             </Button>
           </Form>
         }
-        title="请为模版命名"
+        title={$i18n.get({
+          id: 'advance.components.AnalysisHistory.TemplateModal.NameTheTemplate',
+          dm: '请为模版命名',
+        })}
         trigger="click"
         open={savePopoverOpen}
         onOpenChange={handleSavePopoverOpenChange}
       >
-        <Tooltip title="存储为工作簿的分析模版">
-          <Button type="primary">保存</Button>
+        <Tooltip
+          title={$i18n.get({
+            id: 'advance.components.AnalysisHistory.TemplateModal.AnalysisTemplatesStoredAsWorkbook',
+            dm: '存储为工作簿的分析模版',
+          })}
+        >
+          <Button type="primary">
+            {$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Save', dm: '保存' })}
+          </Button>
         </Tooltip>
       </Popover>
     );
 
   return (
     <Modal
-      title="沉淀分析历史"
+      title={$i18n.get({
+        id: 'advance.components.AnalysisHistory.TemplateModal.PrecipitationAnalysisHistory',
+        dm: '沉淀分析历史',
+      })}
       width="80%"
       open={open}
       maskClosable={false}
       onCancel={handleCloseModal}
       footer={[
-        <Tooltip title="暂存并关闭对话框">
+        <Tooltip
+          title={$i18n.get({
+            id: 'advance.components.AnalysisHistory.TemplateModal.SaveAndCloseTheDialog',
+            dm: '暂存并关闭对话框',
+          })}
+        >
           <Button style={{ margin: '0 8px' }} onClick={handleCloseModal}>
-            关闭
+            {$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.Close', dm: '关闭' })}
           </Button>
         </Tooltip>,
         saveBtn,
       ]}
     >
       {!history?.length ? (
-        <Empty description="暂无历史记录，请先对图进行操作" />
+        <Empty
+          description={$i18n.get({
+            id: 'advance.components.AnalysisHistory.TemplateModal.NoHistoryIsAvailablePlease',
+            dm: '暂无历史记录，请先对图进行操作',
+          })}
+        />
       ) : (
         <div className="gi-history-modal-wrapper">
           <div className="gi-history-modal-timeline-wrapper">
-            <h3 className="gi-history-modal-title">操作历史</h3>
+            <h3 className="gi-history-modal-title">
+              {$i18n.get({ id: 'advance.components.AnalysisHistory.TemplateModal.OperationHistory', dm: '操作历史' })}
+            </h3>
             <Timeline>
               {history?.map((item, i) => {
                 const { id, type, subType, statement, timestamp } = item;
@@ -336,13 +384,17 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
                     onMouseLeave={() => toggleTimelineTooltipVisible(false)}
                   />
                 );
+
                 return (
                   <Timeline.Item
                     color={ColorMap[type]}
                     dot={
                       i === 0 ? (
                         <Tooltip
-                          title={'在时间轴上勾选记录，可加入分析链路模版中'}
+                          title={$i18n.get({
+                            id: 'advance.components.AnalysisHistory.TemplateModal.SelectRecordsOnTheTimeline',
+                            dm: '在时间轴上勾选记录，可加入分析链路模版中',
+                          })}
                           placement="topLeft"
                           open={timelineTooltipVisible}
                         >
@@ -376,7 +428,12 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
             </Timeline>
           </div>
           <div className="gi-history-modal-graph-wrapper">
-            <h3 className="gi-history-modal-title">分析链路模版</h3>
+            <h3 className="gi-history-modal-title">
+              {$i18n.get({
+                id: 'advance.components.AnalysisHistory.TemplateModal.AnalysisLinkTemplate',
+                dm: '分析链路模版',
+              })}
+            </h3>
             <div className="gi-history-modal-graph-area">
               <FlowGraph
                 graphData={graphData}
@@ -388,6 +445,7 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
                   })
                 }
               />
+
               <ParamterizePanel
                 graphData={graphData}
                 configuring={configuring}

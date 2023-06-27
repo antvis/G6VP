@@ -1,3 +1,4 @@
+import $i18n from '../i18n';
 /**
  * Requests a URL, returning a promise.
  *
@@ -55,7 +56,7 @@ export default function request(url: string, options: any = {}, errorHandlerOpti
       const noWrap = Reflect.has(response, 'success');
       if (!response || !Object.keys(response)?.length) {
         const error: any = new Error();
-        error.errMessage = '接口请求错误';
+        error.errMessage = $i18n.get({ id: 'hugegraph.src.services.util.InterfaceRequestError', dm: '接口请求错误' });
         throw error;
       } else if (response.result) {
         const responseResult = noWrap ? response : response.result;
