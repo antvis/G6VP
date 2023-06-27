@@ -29,6 +29,8 @@
     "postpublish": "tnpm sync @antv/gi-assets-hugegraph"
   },
   "dependencies": {
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.6.2",
     "@antv/gi-sdk": "workspace:*",
     "json2csv": "^5.0.7",
@@ -42,5 +44,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": "git@github.com:antvis/G6VP.git"
 }
