@@ -2,7 +2,7 @@ import { CodeOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Modal, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { ANTD_VERSION, G6_VERSION, GI_THEME_ANTD_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
+import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
@@ -55,14 +55,54 @@ const SdkContent = () => {
       data: { transData: data },
     },
     deps: {
-      react: '17.x',
-      'react-dom': '17.x',
-      localforage: '1.10.0',
-      antd: ANTD_VERSION,
-      '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
-      '@antv/g6': G6_VERSION,
-      '@antv/graphin': GRAPHIN_VERSION,
-      '@antv/gi-sdk': GI_VERSION,
+      React: {
+        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+        name: 'react-dom',
+        version: '17.0.2',
+        global: 'React',
+      },
+      ReactDOM: {
+        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+        name: 'react-dom',
+        version: '17.0.2',
+        global: 'ReactDOM',
+      },
+      antd: {
+        url: `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
+        name: 'antd',
+        version: ANTD_VERSION,
+        global: 'antd',
+      },
+      G6: {
+        url: `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+        name: '@antv/g6',
+        version: G6_VERSION,
+        global: 'G6',
+      },
+      Graphin: {
+        url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+        name: '@antv/graphin',
+        version: GRAPHIN_VERSION,
+        global: 'Graphin',
+      },
+      GISDK: {
+        name: '@antv/gi-sdk',
+        version: GI_VERSION,
+        url: `https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js`,
+        global: 'GISDK',
+      },
+      G2Plot: {
+        url: `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
+        name: '@antv/g2plot',
+        version: G2PLOT_VERSION,
+        global: 'G2Plot',
+      },
+      // '@antv/gi-theme-antd': {
+      //   name: '@antv/gi-sdk',
+      //   version: GI_THEME_ANTD_VERSION,
+      //   url: '',
+      //   global: '@antv/gi-theme-antd',
+      // },
     },
     GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
   };
