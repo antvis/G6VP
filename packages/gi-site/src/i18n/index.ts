@@ -40,7 +40,7 @@ function change(langTag) {
  * @param {object} variable variable for id
  * @return {string} format message
  */
-function get(id, variable) {
+function get(id, variable = {}) {
   if (!intl) update();
   if (typeof id === 'string') {
     return stringFormat.format(
