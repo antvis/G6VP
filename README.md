@@ -83,3 +83,7 @@ For more development and build issues, please refer to[《CONTRIBUTING》](/docs
 - [Application of G6VP in supply chain vulnerability analysis](https://www.yuque.com/antv/gi/nxv0yx)
 - [How big a scale can G6VP handle relationship data?](https://www.yuque.com/antv/gi/geyqyr)
 - [TuGraph + G6VP visualizes your relationship data](https://www.bilibili.com/video/BV1Vv4y1V7tH)
+
+## 04 Open Source Graph Visualization Platform
+
+[![Star History Chart](https://api.star-history.com/svg?repos=noduslabs/infranodus,glato/emerge,cytoscape/cytoscape,antvis/G6VP,constellation-app/constellation,aws/graph-explorer,graphia-app/graphia,dmlc/GNNLens2,invana/invana-studio,cylynx/motif.gl,kyleruss/graphi&type=Date)](https://star-history.com/#noduslabs/infranodus&glato/emerge&cytoscape/cytoscape&antvis/G6VP&constellation-app/constellation&aws/graph-explorer&graphia-app/graphia&dmlc/GNNLens2&invana/invana-studio&cylynx/motif.gl&kyleruss/graphi&Date)
