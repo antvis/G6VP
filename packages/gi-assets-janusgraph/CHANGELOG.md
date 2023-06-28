@@ -1,5 +1,16 @@
 # @antv/gi-assets-janusgraph
 
+## 1.1.0
+
+### Minor Changes
+
+- add locales for assets
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.0
+
 ## 1.0.1
 
 ### Patch Changes

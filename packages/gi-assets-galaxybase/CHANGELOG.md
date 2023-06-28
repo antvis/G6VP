@@ -1,5 +1,16 @@
 # @antv/gi-assets-galaxybase
 
+## 1.2.0
+
+### Minor Changes
+
+- add locales for assets
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.0
+
 ## 1.1.4
 
 ### Patch Changes

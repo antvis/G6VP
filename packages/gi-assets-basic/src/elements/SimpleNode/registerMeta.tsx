@@ -1,5 +1,5 @@
-import { defaultConfig } from './registerTransform';
 import $i18n from '../../i18n';
+import { defaultConfig } from './registerTransform';
 
 const { icon, keyshape, label, badge } = defaultConfig.advanced;
 const registerMeta = context => {
@@ -74,7 +74,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: $i18n.get({ id: 'basic.elements.SimpleNode.registerMeta.Implicit', dm: '显隐' }),
+                        title: $i18n.get({ id: 'basic.elements.SimpleNode.registerMeta.Visible', dm: '显隐' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         'x-reactions': [
@@ -271,7 +271,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: $i18n.get({ id: 'basic.elements.SimpleNode.registerMeta.Implicit', dm: '显隐' }),
+                        title: $i18n.get({ id: 'basic.elements.SimpleNode.registerMeta.Visible', dm: '显隐' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: badge.visible,

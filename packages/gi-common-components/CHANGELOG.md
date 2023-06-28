@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.0
+
+### Minor Changes
+
+- add locales for assets
+
 ## 1.2.3
 
 ### Patch Changes

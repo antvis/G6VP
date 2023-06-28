@@ -1,5 +1,11 @@
 # @antv/gi-httpservice
 
+## 1.2.0
+
+### Minor Changes
+
+- add locales for assets
+
 ## 1.1.2
 
 ### Patch Changes

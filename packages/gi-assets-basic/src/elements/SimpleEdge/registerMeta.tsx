@@ -1,5 +1,5 @@
-import { defaultConfig } from './registerTransform';
 import $i18n from '../../i18n';
+import { defaultConfig } from './registerTransform';
 const { advanced, color, size } = defaultConfig;
 const { keyshape, label, animate } = advanced;
 
@@ -157,7 +157,7 @@ const registerMeta = context => {
                     properties: {
                       visible: {
                         type: 'boolean',
-                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Implicit', dm: '显隐' }),
+                        title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Visible', dm: '显隐' }),
                         'x-decorator': 'FormItem',
                         'x-component': 'Switch',
                         default: label.visible,
