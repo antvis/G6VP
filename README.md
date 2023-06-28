@@ -12,74 +12,74 @@
   
 </div>
 
-<img src="https://gw.alipayobjects.com/zos/antfincdn/R8sN%24GNdh6/language.svg" width="18"> 简体中文 | [English](/docs/README.en-US.md)
+<img src="https://gw.alipayobjects.com/zos/antfincdn/R8sN%24GNdh6/language.svg" width="18"> English | [简体中文](/docs/README.zh-CN.md)
 
-G6VP 取名意为 AntV G6 Visualization Platform，曾用名 `AntV/GraphInsight`，它是一款在线图可视分析产品，也是一款图应用的低代码搭建工具。
+G6VP takes its name from AntV G6 Visualization Platform and was formerly known as `AntV/GraphInsight`. It is an online visual analysis tool for graphs and a low-code tool for building graph applications.
 
 ![demo2](https://github.com/antvis/G6VP/assets/10703060/40560cd2-3fea-41f8-888b-5abc1eb09b66)
 
-## 01 快速体验
+## 01 Quick Start
 
-- 站点地址：https://insight.antv.antgroup.com
-- 文档地址：https://www.yuque.com/antv/gi
+- Site: https://insight.antv.antgroup.com
+- Documentation: https://www.yuque.com/antv/gi
 
-### 1.1 创建数据集
+### 1.1 Create a Dataset
 
-巧妇难为无米之炊，在分析数据之前，我们需要创建一个数据集，数据集可以来自本地的 JSON，CSV，XLSX 文件，可以来自图数据库：TuGraph，GraphScope，HugeGraph，Galaxybase，Neo4j，JanusGraph,也可以是用户自定义的服务，如下图所示，我们选择 Neo4j 某个 database 作为数据集。
+Before analyzing data, we need to create a dataset. The dataset can be a local JSON, CSV, XLSX file, or a graph database, such as TuGraph, GraphScope, HugeGraph, Galaxybase,JanusGraph and Neo4j. It may also be a user-defined service, as shown below, where we choose a Neo4j database as the dataset.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/85667759-70b2-4166-8181-47cb9e9fa3a3)
 
-### 1.2 创建工作簿
+### 1.2 Create a Workbook
 
-有了数据，我们便可以创建一个分析画布，创建画布的时候，我们可以选择不同的模版，模版来自资产包，也可以来自用户手动保存或者从资产清单选购的模版。
+With the data, we can create an analysis canvas. When creating a canvas, we can choose different templates. The template may come from an asset package or it may be manually saved or selected from an asset inventory.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/91d44a3e-873c-48e6-9a82-3576677d73a8)
 
-### 1.3 配置画布
+### 1.3 Configure the Canvas
 
-进入画布后，我们便可以通过侧边栏的「样式」「布局」对画布进行视觉映射，同时也可以在「组件」导航栏中配置整个画布应用，整个图分析能力，在这里可以像搭建积木一样组装起来。
+After entering the canvas, we can use the "Style" and "Layout" in the sidebar to map the visual representation of the canvas. At the same time, the entire canvas application, and the entire graph analysis capability, can be configured in the "Components" navigation panel. Components can be assembled like building blocks.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/a1069da9-3034-4580-a3fc-c3d824445d4a)
 
-### 1.4 记得按时保存
+### 1.4 Remember to Save Timely
 
-记得按时点击右上角的「保存」按钮，这样画布的配置信息都会保存下来，下次进入直接分析
+Remember to click the "Save" button in the upper right corner in a timely manner. This way, the configuration information of the canvas will be saved, and it can be analyzed directly next time.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/11779885-5e43-4c37-81c4-54f152d9ebbe)
 
-### 1.5 导出 SDK
+### 1.5 Export SDK
 
-对于有研发需要的朋友，可以点击画布的右上角「开放」按钮，即可进行画布的源码导出，目前支持 HTML，CDN，NPM 三种源码导出方式，方便开发者进行二次开发和独立部署
+For friends in need of development, you can click the "Export" button in the upper right corner of the canvas to export the source code of the canvas. Currently, HTML, CDN, and NPM export methods are supported, which facilitates developers to carry out secondary development and independent deployment.
 
 ![image](https://github.com/antvis/G6VP/assets/10703060/557a3555-60f6-432f-a898-073bfe478983)
 
-### 1.6 探索更多惊喜
+### 1.6 Explore More Surprises
 
-G6VP 产品中包含了很多的惊喜功能，大家可以前往「开放市场 / 资产列表」中查看还有哪些好玩的分析功能，对于感兴趣的资产，还可以加入购物车，在这里选购的资产清单还可以快速生成应用模版。目前 G6VP 开源版本包含图分析资产 79 个，图元素资产 3 个，图布局资产 9 个。欢迎大家多多提宝贵意见～
+G6VP contains many amazing functions. You can go to "Open Market/Asset List" to see what other interesting analysis functions are available. For assets that interest you, you can also add them to the shopping cart. The selected asset list can also quickly generate an application template. The G6VP open source version currently contains 79 graph analysis assets, 3 graph element assets, and 9 graph layout assets. Welcome to provide valuable feedback
 
-## 02. 开发 G6VP
+## 02. Develop G6VP
 
-G6VP 采用 pnpm 8 和 Node 16 进行开发，Node 版本过高在安装依赖和运行 NPM 脚本时可能存在问题。我们建议使用 [nvm](https://github.com/nvm-sh/nvm) 管理 Node 版本，在使用 nvm 切换到 Node 16 环境后运行`npm -g install pnpm@8`安装 pnpm 8。
+G6VP uses pnpm to manage the repository. According to pnpm's official [compatibility statement](https://pnpm.io/installation#compatibility), please use nvm to switch the Node.js version to 14 and above.
 
-### 2.1 安装依赖
+### 2.1 Install Dependencies
 
 ```bash
-pnpm install // 会安装全部的依赖，且将子包的产物一次性运行出来
+pnpm install // Will install all dependencies and run the subpackage products at once.
 ```
 
-### 2.2 启动站点
+### 2.2 Start Insight Site
 
 ```bash
 cd packages/gi-site
 npm run start
 ```
 
-更多研发，构建问题，请移步阅读[《共建 G6VP 项目》](/docs/CONTRIBUTING.md)
+For more development and build issues, please refer to[《CONTRIBUTING》](/docs/CONTRIBUTING.en-US.md)
 
-## 03 扩展阅读
+## 03 More Reading
 
-- [关系数据分析利器：G6VP 开源啦！](https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6)
-- [藏不住了!一线大厂内部图可视分析的需求清单](https://www.yuque.com/antv/gi/hzbk0g)
-- [G6VP 在供应链漏洞分析场景中应用](https://www.yuque.com/antv/gi/nxv0yx)
-- [G6VP 能处理多大规模的关系数据？](https://www.yuque.com/antv/gi/geyqyr)
-- [TuGraph + G6VP 让关系数据跃然纸上](https://www.bilibili.com/video/BV1Vv4y1V7tH)
+- [G6VP, the ultimate weapon for relationship data analysis, is open-source now!](https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6)
+- [The demand list for internal graph visual analysis from a first-tier company is revealed](https://www.yuque.com/antv/gi/hzbk0g)
+- [Application of G6VP in supply chain vulnerability analysis](https://www.yuque.com/antv/gi/nxv0yx)
+- [How big a scale can G6VP handle relationship data?](https://www.yuque.com/antv/gi/geyqyr)
+- [TuGraph + G6VP visualizes your relationship data](https://www.bilibili.com/video/BV1Vv4y1V7tH)
