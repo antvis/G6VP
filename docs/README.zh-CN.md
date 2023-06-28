@@ -83,3 +83,7 @@ npm run start
 - [G6VP 在供应链漏洞分析场景中应用](https://www.yuque.com/antv/gi/nxv0yx)
 - [G6VP 能处理多大规模的关系数据？](https://www.yuque.com/antv/gi/geyqyr)
 - [TuGraph + G6VP 让关系数据跃然纸上](https://www.bilibili.com/video/BV1Vv4y1V7tH)
+
+## 04 开源图可视化平台产品
+
+[![Star History Chart](https://api.star-history.com/svg?repos=noduslabs/infranodus,glato/emerge,cytoscape/cytoscape,antvis/G6VP,constellation-app/constellation,aws/graph-explorer,graphia-app/graphia,dmlc/GNNLens2,invana/invana-studio,cylynx/motif.gl,kyleruss/graphi&type=Date)](https://star-history.com/#noduslabs/infranodus&glato/emerge&cytoscape/cytoscape&antvis/G6VP&constellation-app/constellation&aws/graph-explorer&graphia-app/graphia&dmlc/GNNLens2&invana/invana-studio&cylynx/motif.gl&kyleruss/graphi&Date)
