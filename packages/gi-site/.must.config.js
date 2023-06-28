@@ -5,6 +5,14 @@ module.exports = {
     sourcePath: 'src',
     fileType: 'ts',
     prettier: true,
+    matchCopy: (text, path) => {
+      const isConsoleLog = /^console\.(log|warn|error|info)\(/gi.test(path.parentPath.toString());
+      // 简单正则先处理 匹配是否是注释字符串
+      const isCodeComment = /\/\/.*|\/*[sS]*?\*\//gi.test(path.parentPath.toString());
+      // ^\x00-\xff 表示匹配中文字符
+      const isChinese = /[^\x00-\xff]/.test(text);
+      return isChinese && !isConsoleLog && !isCodeComment;
+    },
     macro: {
       path: 'src/i18n',
       method: '$i18n.get({id:"$key$",dm:"$defaultMessage$"})',
