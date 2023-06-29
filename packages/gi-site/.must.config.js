@@ -5,6 +5,9 @@ module.exports = {
     sourcePath: 'src',
     fileType: 'ts',
     prettier: true,
+    exclude: (path)=>{
+      return path.includes('useHtml') || path.includes('useCodeSandbox') || path.includes('useNodeModule'); // 
+    },
     matchCopy: (text, path) => {
       const isConsoleLog = /^console\.(log|warn|error|info)\(/gi.test(path.parentPath.toString());
       // 简单正则先处理 匹配是否是注释字符串
