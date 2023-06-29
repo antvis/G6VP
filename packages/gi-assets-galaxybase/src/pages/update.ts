@@ -1,6 +1,5 @@
 import DataManage from '../components/DataManage';
 import DataManageRegisterMeta from '../components/DataManage/registerMeta';
-//@ts-ignore
 const { getDefaultValues } = window.GISDK.utils;
 export const updateAssets = assets => {
   assets.components['GalaxybaseDataSource'] = DataManage;
