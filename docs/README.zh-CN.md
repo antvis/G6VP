@@ -76,7 +76,18 @@ npm run start
 
 更多研发，构建问题，请移步阅读[《共建 G6VP 项目》](/docs/CONTRIBUTING.md)
 
-## 03 扩展阅读
+## 03 支持的数据源
+
+- TuGraph-DB：[https://github.com/TuGraph-family/tugraph-db/issues/246](https://github.com/TuGraph-family/tugraph-db/issues/246)
+- TuGraph-Analytics：[https://github.com/TuGraph-family/tugraph-analytics/issues/2](https://github.com/TuGraph-family/tugraph-analytics/issues/2)
+- GraphScope：[https://github.com/alibaba/GraphScope/issues/2951](https://github.com/alibaba/GraphScope/issues/2951)
+- HugeGraph：[https://github.com/apache/incubator-hugegraph/issues/2222](https://github.com/apache/incubator-hugegraph/issues/2222)
+- Galaxybase：[https://github.com/antvis/G6VP/pull/207](https://github.com/antvis/G6VP/pull/207)
+- Neo4J：[https://github.com/neo4j/neo4j](https://github.com/neo4j/neo4j)
+- JanusGraph：[https://github.com/antvis/G6VP/pull/310](https://github.com/antvis/G6VP/pull/310)
+- More API DataSource： 10+
+
+## 04 扩展阅读
 
 - [关系数据分析利器：G6VP 开源啦！](https://www.yuque.com/antv/blog/hvyi6wtaqsgug2a6)
 - [藏不住了!一线大厂内部图可视分析的需求清单](https://www.yuque.com/antv/gi/hzbk0g)
@@ -84,6 +95,6 @@ npm run start
 - [G6VP 能处理多大规模的关系数据？](https://www.yuque.com/antv/gi/geyqyr)
 - [TuGraph + G6VP 让关系数据跃然纸上](https://www.bilibili.com/video/BV1Vv4y1V7tH)
 
-## 04 开源图可视化平台产品
+## 05 开源图可视化平台产品
 
 [![Star History Chart](https://api.star-history.com/svg?repos=noduslabs/infranodus,glato/emerge,cytoscape/cytoscape,antvis/G6VP,constellation-app/constellation,aws/graph-explorer,graphia-app/graphia,dmlc/GNNLens2,invana/invana-studio,cylynx/motif.gl,kyleruss/graphi&type=Date)](https://star-history.com/#noduslabs/infranodus&glato/emerge&cytoscape/cytoscape&antvis/G6VP&constellation-app/constellation&aws/graph-explorer&graphia-app/graphia&dmlc/GNNLens2&invana/invana-studio&cylynx/motif.gl&kyleruss/graphi&Date)
