@@ -366,8 +366,10 @@ const GISDK = (props: Props) => {
 
   const graphData = useMemo(() => {
     const nodeMap = {};
+    const comboMap = {};
     const edgeMap = {};
     const edges: any[] = [];
+    const combos: any[] = [];
     const nodes: any[] = [];
     data.nodes?.forEach(node => {
       if (!nodeMap[node.id]) {
@@ -376,13 +378,26 @@ const GISDK = (props: Props) => {
       }
     });
 
+    data.combos?.forEach(combo => {
+      // @ts-ignore
+      if (!comboMap[combo.id]) {
+        combos.push(combo);
+        // @ts-ignore
+        comboMap[combo.id] = combo;
+      }
+    });
+
     data.edges.forEach(edge => {
-      if (nodeMap[edge.source] && nodeMap[edge.target] && !edgeMap[edge.id]) {
+      if (
+        (nodeMap[edge.source] || comboMap[edge.source]) &&
+        (nodeMap[edge.target] || comboMap[edge.target]) &&
+        !edgeMap[edge.id]
+      ) {
         edges?.push(edge);
         edgeMap[edge.id] = edge;
       }
     });
-    const { combos } = data;
+
     return {
       nodes,
       edges,
