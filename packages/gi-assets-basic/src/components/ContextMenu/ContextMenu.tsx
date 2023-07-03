@@ -2,7 +2,8 @@ import { Item } from '@antv/g6';
 import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import React, { useMemo } from 'react';
-import ContextMenu from './Container';
+import { GIComponentConfig, GIComponentAssets } from '@antv/gi-sdk';
+import ContextMenu, { ContextMenuProps } from './Container';
 
 // const { ContextMenu } = Components;
 
@@ -15,21 +16,26 @@ interface ContextMenuState {
   item: Item | undefined;
 }
 
-const ContextMenuContainer = props => {
-  const { components = [], assets } = props;
+export interface ContextMenuContainerProps extends Pick<ContextMenuProps, 'bindTypes'> {
+  components: GIComponentConfig[];
+  assets: GIComponentAssets;
+}
+
+const ContextMenuContainer = (props: ContextMenuContainerProps) => {
+  const { components = [], assets, bindTypes } = props;
 
   const [state, setState] = React.useState<ContextMenuState>({
     item: undefined,
   });
 
   const sortedComponents = useMemo(
-    () => components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX),
+    () => components.sort((a, b) => Number(a.props?.GI_CONTAINER_INDEX) - Number(b.props?.GI_CONTAINER_INDEX)),
     [components, state.item],
   );
 
   return (
     //@ts-ignore
-    <ContextMenu style={defaultStyle} setItem={item => setState({ item })}>
+    <ContextMenu style={defaultStyle} bindTypes={bindTypes} setItem={item => setState({ item })}>
       {(menuProps: ContextMenuValue) => {
         return (
           <Menu mode="vertical">

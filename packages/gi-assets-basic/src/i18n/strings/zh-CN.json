@@ -70,6 +70,7 @@
   "basic.components.ContentContainer.info.CombinedContentContainer": "组合内容容器",
   "basic.components.ContentContainer.registerMeta.IntegratedComponents": "集成组件",
   "basic.components.ContextMenu.info.RightClickMenu": "右键菜单",
+  "basic.components.ContextMenu.info.EdgeRightClickMenu": "边右键菜单",
   "basic.components.ContextMenu.info.RightClickTheMenuContainer": "鼠标右键即可出现菜单容器",
   "basic.components.ContextMenu.registerMeta.IntegratedComponents": "可集成组件",
   "basic.components.Copyright.Component.CopyrightImage": "版权图片",

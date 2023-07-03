@@ -2,6 +2,7 @@ import ActivateRelations from './ActivateRelations';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
+import EdgeContextMenu from './EdgeContextMenu';
 import Copyright from './Copyright';
 import DownLoad from './DownLoad';
 import Export from './Export';
@@ -70,6 +71,7 @@ export {
   ZoomOut,
   DownLoad,
   ContextMenu,
+  EdgeContextMenu,
   Tooltip,
   // TooltipForEdge, //体验问题，暂不放开
   ClearCanvas,

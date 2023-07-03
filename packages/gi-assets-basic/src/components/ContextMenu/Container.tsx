@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import type { IG6GraphEvent } from '@antv/graphin';
 import React, { useEffect } from 'react';
-import useContextMenu, { State } from './useContextMenu';
+import useContextMenu, { State, ContextMenuProps as ContextMenuOptions } from './useContextMenu';
 
 export const defaultStyle: React.CSSProperties = {
   width: '120px',
@@ -14,7 +14,7 @@ export interface ContextMenuValue extends State {
   id: string;
 }
 
-export interface ContextMenuProps {
+export interface ContextMenuProps extends Pick<ContextMenuOptions, 'bindTypes'> {
   children: (content: ContextMenuValue) => React.ReactNode;
   setItem: (item: any) => void;
   style?: React.CSSProperties;
@@ -23,9 +23,10 @@ export interface ContextMenuProps {
 const container = React.createRef() as React.RefObject<HTMLDivElement>;
 
 const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
-  const { children, style, setItem } = props;
+  const { children, style, bindTypes, setItem } = props;
   const contextmenu = useContextMenu({
     container,
+    bindTypes,
   });
   const { visible, x, y, item } = contextmenu;
   useEffect(() => setItem(item), [item]);
