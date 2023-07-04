@@ -1,5 +1,4 @@
-import { useContext } from '@antv/gi-sdk';
-import Graphin from '@antv/graphin';
+import Graphin, { useBehaviorHook } from '@antv/graphin';
 import * as React from 'react';
 
 import ActivateRelationsBehavior from './activate-relations-v2';
@@ -11,34 +10,6 @@ interface Props {
   userProps: any;
   mode?: string;
 }
-/** TODO 沉淀到 Graphin 中 */
-const useBehaviorHook = (params: Props) => {
-  const { type, defaultConfig, userProps, mode = 'default' } = params;
-  const { graph } = useContext();
-  const { disabled, ...otherConfig } = userProps;
-
-  React.useEffect(() => {
-    /** 保持单例 */
-    graph.removeBehaviors(type, mode);
-
-    if (disabled) {
-      return;
-    }
-    graph.addBehaviors(
-      {
-        type,
-        ...defaultConfig,
-        ...otherConfig,
-      },
-      mode,
-    );
-    return () => {
-      if (!graph.destroyed) {
-        graph.removeBehaviors(type, mode);
-      }
-    };
-  }, []);
-};
 
 const defaultConfig = {
   /**
