@@ -64,4 +64,18 @@ export type {
 } from './typing';
 export { extra, template, useContext, utils, version };
 
+declare global {
+  interface Window {
+    GISDK: {
+      (): typeof GISDK;
+      default: typeof GISDK;
+      extra: typeof extra;
+      template: typeof template;
+      useContext: typeof useContext;
+      utils: typeof utils;
+      version: typeof version;
+    };
+  }
+}
+
 export default GISDK;
