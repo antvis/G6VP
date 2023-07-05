@@ -117,12 +117,13 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services, templates, deploys, locales } = curr;
+      const { components, version, name, elements, layouts, services, templates, deploys, locales, siteSlots } = curr;
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
       const temps = appendInfo(templates, version, name);
       const dpy = appendInfo(deploys, version, name);
+      const slots = appendInfo(siteSlots, version, name)
 
       return {
         components: {
@@ -157,6 +158,10 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
           : acc.services,
         locales: {
           ...merge(acc.locales, locales)
+        },
+        siteSlots: {
+          ...acc.siteSlots,
+          ...slots,
         }
       };
     },
@@ -167,7 +172,8 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
       templates: {},
       services: [],
       deploys: {},
-      locales: {}
+      locales: {},
+      slots: {},
     },
   );
 };
