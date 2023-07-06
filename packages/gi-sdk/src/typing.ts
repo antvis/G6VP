@@ -296,7 +296,7 @@ export type GIAssets = Partial<{
       [key: string]: any;
     };
   };
-  siteSlots: {
+  siteSlots?: {
     [key: string]: ISiteSlot;
 }
 }>;
