@@ -265,6 +265,18 @@ export interface ITemplate {
   image: string;
 }
 
+export interface ISiteSlot {
+  /** 插槽ID */
+  id: string;
+  /** 插槽渲染组件 */
+  component: React.FunctionComponent;
+  /** 插槽名称*/
+  name?: string;
+  /** 模版描述 */
+  desc: string;
+  [key: string]: any;
+}
+
 export type GIAssets = Partial<{
   /** 分析资产 */
   components: GIComponentAssets;
@@ -284,6 +296,9 @@ export type GIAssets = Partial<{
       [key: string]: any;
     };
   };
+  siteSlots: {
+    [key: string]: ISiteSlot;
+}
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force

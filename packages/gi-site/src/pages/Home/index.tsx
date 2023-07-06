@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import * as React from 'react';
 import SegmentedTabs from '../../components/SegmentedTabs';
-import SiteSlotComponent from '../../components/SiteSlotComponent';
+import SlotComponent from '../../components/SlotComponent';
 import DatasetList from '../Dataset/List';
 import WorkbookList from '../Workspace/Projects';
 import { NOTIFICATION_ITEMS, STUDY_ITEMS } from './const';
@@ -33,7 +33,7 @@ const Home = props => {
     history.push('/workbook/create');
   };
   return (
-    <SiteSlotComponent name="SLOT_HOME_CONTENT">
+    <SlotComponent name="SLOT_HOME_CONTENT">
       <div className="gi-site-home">
         <section className="greeting">
           {$i18n.get({
@@ -72,7 +72,7 @@ const Home = props => {
           </section>
         </div>
       </div>
-    </SiteSlotComponent>
+    </SlotComponent>
   );
 };
 
