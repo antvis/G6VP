@@ -273,7 +273,7 @@ export interface ISiteSlot {
   /** 插槽名称*/
   name?: string;
   /** 模版描述 */
-  desc: string;
+  desc?: string;
   [key: string]: any;
 }
 
