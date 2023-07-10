@@ -51,16 +51,17 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       }
     } else {
       const graph = graphRef.current as Graph;
-      if (!graph) {
-        return;
+      if (graph) {
+        const width = graph.getWidth();
+        const height = graph.getHeight();
+        graph.changeSize(400, 300);
+        graphRef.current.fitView(10);
+        graph.changeSize(width, height);
+        graph.fitView(20);
       }
-      const width = graph.getWidth();
-      const height = graph.getHeight();
-      graph.changeSize(400, 300);
-      graphRef.current.fitView(10);
-      const cover = await getCover(graph);
-      graph.changeSize(width, height);
-      graph.fitView(20);
+
+      const cover = graph ? await getCover(graph) : '';
+
       /** 临时的兼容处理，需要重新设计 */
       const {
         id = 'SegmentedLayout',
