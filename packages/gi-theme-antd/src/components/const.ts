@@ -201,6 +201,6 @@ const name = pkg.name.replace('@antv', 'antv');
 export const DEFAULT_ANTD_CSS_LINKS = {
   dark: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/dark.css`,
   light: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
-  ali: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
-  green: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
+  ali: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/ali.css`,
+  green: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/green.css`,
 };
