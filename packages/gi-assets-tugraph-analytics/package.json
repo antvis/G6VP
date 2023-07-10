@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-tugraph-analytics",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tugraph Analytics Assets",
   "main": "lib/index.js",
   "module": "es/index.js",

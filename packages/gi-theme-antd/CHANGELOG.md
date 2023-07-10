@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.1
+
+### Patch Changes
+
+- update version
+
 ## 0.5.0
 
 ### Minor Changes
