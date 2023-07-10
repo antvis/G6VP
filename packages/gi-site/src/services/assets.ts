@@ -90,7 +90,7 @@ const LOCAL_ASSETS: any[] = [
  * 从全量的资产中Pick用户活跃的资产
  * @returns
  */
-export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => {
+export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Promise<GIAssets> => {
   let components = {};
   let elements;
   let layouts;
@@ -98,6 +98,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   let deploys;
   let FinalAssets;
   let locales;
+  let services;
 
   const packages = getAssetPackages();
 
@@ -109,37 +110,30 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
-  console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
-  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
-  //   const assetKeys = activeAssetsKeys.components[containerId];
-  //   components[containerId] = assetKeys.reduce((acc, curr) => {
-  //     const asset = FinalAssets.components[curr];
-  //     if (asset) {
-  //       return {
-  //         ...acc,
-  //         [curr]: asset,
-  //       };
-  //     }
-  //     return acc;
-  //   }, {});
-  // });
 
-  components = activeAssetsKeys.components.reduce((acc, curr) => {
-    const asset = FinalAssets.components[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  const getActiveAssets = (activeAssetsKeys, FinalAssets, key) => {
+    return activeAssetsKeys[key].reduce((acc, curr) => {
+      const asset = FinalAssets[key][curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
+    }, {});
+  };
 
-  elements = { ...FinalAssets.elements };
-  layouts = { ...FinalAssets.layouts };
-  templates = { ...FinalAssets.templates };
-  deploys = { ...FinalAssets.deploys };
+  components = getActiveAssets(activeAssetsKeys, FinalAssets, 'components');
+  elements = getActiveAssets(activeAssetsKeys, FinalAssets, 'elements');
+  layouts = getActiveAssets(activeAssetsKeys, FinalAssets, 'layouts');
   locales = { ...FinalAssets.locales };
+  templates = { ...FinalAssets.templates };
+  /** deploy,services 和 engineId 是有关联关系的 */
+  deploys = { ...FinalAssets.deploys };
+  services = FinalAssets.services.filter(item => {
+    return item.id === 'GI' || item.id === engineId;
+  });
 
   return await new Promise(resolve => {
     resolve({
@@ -148,7 +142,7 @@ export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => 
       layouts,
       templates,
       deploys,
-      services: FinalAssets.services,
+      services,
       locales,
     } as GIAssets);
   });
