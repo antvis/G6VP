@@ -43,7 +43,7 @@ export const getServiceOptionsByEngineId = (services: GIService[], serviceId: st
     }) || options[0];
   return {
     options,
-    defaultValue: defaultValue.value,
+    defaultValue: defaultValue?.value || '',
   };
 };
 
