@@ -66,6 +66,23 @@ const registerMeta = context => {
       'x-component': 'Input.TextArea',
       default: 'g.V().hasLabel("Film").has("id","c54e6f7dd4dacc1ac5b0fa66565a4a60")',
     },
+
+    isShowLimit: {
+      title: $i18n.get({ id: 'advance.components.GremlinQuery.registerMeta.IsShowLimit', dm: '可设置 limit' }),
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
+
+    isShowTimeout: {
+      title: $i18n.get({ id: 'advance.components.GremlinQuery.registerMeta.IsShowTimeout', dm: '可设置 timeout' }),
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
+
     height: {
       title: $i18n.get({ id: 'advance.components.GremlinQuery.registerMeta.Height', dm: '高度' }),
       type: 'number',

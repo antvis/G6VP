@@ -1,6 +1,6 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import GremlinEditor from 'ace-gremlin-editor';
-import { Button, notification, Space } from 'antd';
+import { Button, Col, InputNumber, notification, Row, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import { nanoid } from 'nanoid';
@@ -16,6 +16,8 @@ export interface IGremlinQueryProps {
   style?: React.CSSProperties | undefined;
   visible?: boolean;
   isShowPublishButton?: boolean;
+  isShowLimit?: boolean;
+  isShowTimeout?: boolean;
   controlledValues?: {
     value: string;
   };
@@ -29,6 +31,8 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   style,
   visible,
   isShowPublishButton,
+  isShowLimit,
+  isShowTimeout,
   controlledValues,
 }) => {
   const { updateContext, transform, services, updateHistory } = useContext();
@@ -40,11 +44,15 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     editorValue: string;
     isFullScreen: boolean;
     modalVisible: boolean;
+    limit: number | null;
+    timeout: number | null;
   }>({
     // 优先级: url 参数 > props 参数
     editorValue: gremlinFromUrl || initialValue || '',
     isFullScreen: false,
     modalVisible: false,
+    limit: null,
+    timeout: null,
   });
 
   const setEditorValue = val => {
@@ -52,7 +60,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       draft.editorValue = val;
     });
   };
-  const { editorValue, isFullScreen } = state;
+  const { editorValue, isFullScreen, limit, timeout } = state;
 
   const handleChangeEditorValue = (value: string) => {
     setEditorValue(value);
@@ -66,18 +74,26 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
       return;
     }
 
+    let gremlinCode = `${editorValue}`;
+    if (limit) {
+      gremlinCode = `${gremlinCode}.limit(${limit})`;
+    }
+    if (timeout) {
+      gremlinCode = `${gremlinCode.substring(0, 1)}.with('evaluationTimeout', ${timeout})${gremlinCode.substring(1)}`;
+    }
+
     const result = await service({
-      value: editorValue,
+      value: gremlinCode,
     });
 
     updateHistory({
       componentId: 'GremlinQuery',
       type: 'query',
       subType: 'Gremlin',
-      statement: editorValue,
+      statement: gremlinCode,
       success: result && result.success,
       params: {
-        value: editorValue,
+        value: gremlinCode,
       },
     });
 
@@ -139,6 +155,88 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           onValueChange={value => handleChangeEditorValue(value)}
         />
       </div>
+
+      {isShowLimit ? (
+        <div className="gi-gremlin-query-config">
+          <Row>
+            <Col span={6}>
+              <label>Limit: </label>
+            </Col>
+            <Col span={18}>
+              <InputNumber
+                min={1}
+                max={Infinity}
+                value={limit}
+                size="small"
+                style={{ width: '100%' }}
+                onChange={val =>
+                  setState(draft => {
+                    draft.limit = val;
+                  })
+                }
+              />
+            </Col>
+          </Row>
+          {limit ? (
+            <div className="gi-gremlin-query-config-tip">
+              {$i18n.get(
+                {
+                  id: 'advance.components.GremlinQuery.Component.LimitConfigTip',
+                  dm: `语句将添加后缀: .limt(${limit})`,
+                },
+                {
+                  value: limit,
+                },
+              )}
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+      ) : (
+        ''
+      )}
+
+      {isShowTimeout ? (
+        <div className="gi-gremlin-query-config">
+          <Row>
+            <Col span={6}>
+              <label>Timeout: </label>
+            </Col>
+            <Col span={18}>
+              <InputNumber
+                min={1}
+                max={Infinity}
+                value={timeout}
+                size="small"
+                style={{ width: '100%' }}
+                onChange={val =>
+                  setState(draft => {
+                    draft.timeout = val;
+                  })
+                }
+              />
+            </Col>
+          </Row>
+          {timeout ? (
+            <div className="gi-gremlin-query-config-tip">
+              {$i18n.get(
+                {
+                  id: 'advance.components.GremlinQuery.Component.TimeoutConfigTip',
+                  dm: `语句将添加约束: .with('evaluationTimeout', ${timeout})`,
+                },
+                {
+                  value: timeout,
+                },
+              )}
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+      ) : (
+        ''
+      )}
 
       <div
         style={{
