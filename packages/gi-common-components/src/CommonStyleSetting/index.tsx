@@ -72,9 +72,10 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
 }) => {
   const elementConfig = JSON.parse(JSON.stringify(CONFIG[elementType] || {}));
   const preStyleGroup = React.useRef(elementConfig as any);
-  const defaultNodeConfig = {
-    id: 'SimpleNode',
-    props: {},
+
+  const defaultItemConfig = {
+    nodes: { id: 'SimpleNode', props: {} },
+    edges: { id: 'SimpleEdge', props: {} },
   };
 
   /**
@@ -142,7 +143,7 @@ const CommonStyleSetting: React.FunctionComponent<StyleSettingProps> = ({
       valuesChange={handleGroupChange}
     >
       {groupIndex => {
-        const itemConfig = elementConfig[groupIndex] || defaultNodeConfig;
+        const itemConfig = elementConfig[groupIndex] || defaultItemConfig[elementType];
         return (
           <div>
             <RenderForm
