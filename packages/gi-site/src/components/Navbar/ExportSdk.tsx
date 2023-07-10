@@ -4,11 +4,33 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
+import { getActivePackageName } from '../../hooks/common';
 import $i18n from '../../i18n';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
 import './index.less';
 
+const getPkg = activeAssets => {
+  const GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}') as {
+    [key: string]: {
+      name: string;
+      global: string;
+      url: string;
+      version: string;
+    };
+  };
+  const names = getActivePackageName(activeAssets);
+  return Object.values(GI_ASSETS_PACKAGES).reduce((acc, curr) => {
+    const isMatch = names.indexOf(curr.name) !== -1;
+    if (isMatch) {
+      return {
+        ...acc,
+        [curr.global]: curr,
+      };
+    }
+    return acc;
+  }, {});
+};
 const SdkContent = () => {
   const { context: st } = useContext();
 
@@ -36,8 +58,10 @@ const SdkContent = () => {
     schemaData,
     data,
     name,
+    activeAssets,
   } = st;
 
+  const GI_ASSETS_PACKAGES = getPkg(activeAssets);
   const deployContext = {
     workbook: {
       id,
@@ -105,9 +129,10 @@ const SdkContent = () => {
         global: 'GI_THEME_ANTD',
       },
     },
-    GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
+    GI_ASSETS_PACKAGES,
   };
   const counts = THIRD_PARTY_DEPLOYS.length;
+
   return (
     <>
       <Alert
