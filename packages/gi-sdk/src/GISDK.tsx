@@ -21,7 +21,7 @@ const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
   const { children, assets, id, services, config, locales } = props;
-  const { language, ...localeMessages } = locales || {};
+  const { language = 'zh-CN', ...localeMessages } = locales || {};
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
