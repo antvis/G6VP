@@ -4,9 +4,9 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
+import $i18n from '../../i18n';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
-import $i18n from '../../i18n';
 import './index.less';
 
 const SdkContent = () => {
@@ -45,6 +45,7 @@ const SdkContent = () => {
       activeAssetsKeys,
       projectConfig: config,
       themes,
+      theme: localStorage.getItem('@theme') || 'light',
     },
     dataset: {
       id: datasetId,
@@ -97,12 +98,12 @@ const SdkContent = () => {
         version: G2PLOT_VERSION,
         global: 'G2Plot',
       },
-      // '@antv/gi-theme-antd': {
-      //   name: '@antv/gi-sdk',
-      //   version: GI_THEME_ANTD_VERSION,
-      //   url: '',
-      //   global: '@antv/gi-theme-antd',
-      // },
+      '@antv/gi-theme-antd': {
+        name: '@antv/gi-theme-antd',
+        version: '0.6.0',
+        url: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.6.0/dist/index.min.js',
+        global: 'GI_THEME_ANTD',
+      },
     },
     GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
   };
