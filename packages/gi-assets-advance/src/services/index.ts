@@ -1,9 +1,9 @@
+import * as CypherQuery from './CypherQuery';
 import * as GremlinQueryServices from './GremlinQuery';
-import * as LanguageQueryService from './LanguageQueryService';
+import * as HistoryAnalyseService from './HistoryAnalyseService';
 import * as StyleSetting from './StyleSetting';
 import * as TemplateService from './TemplateService';
 import * as ThemeSetting from './ThemeSetting';
-import * as HistoryAnalyseService from './HistoryAnalyseService';
 export default {
   id: 'GI',
   services: {
@@ -11,7 +11,7 @@ export default {
     ...ThemeSetting,
     ...StyleSetting,
     ...TemplateService,
-    ...LanguageQueryService,
+    ...CypherQuery,
     ...HistoryAnalyseService,
   },
 };
