@@ -24,27 +24,28 @@
 
 ```html
 <body>
-<div id="root"></div>
-<script type="text/babel">
-  const GraphApp = () => {
-    const service = async () => {
-      const config = await fetch('./GI_EXPORT_CONFIG.json').then(res => res.json())
-      return {
-        data: config,
-        success: true,
-      }
-    }
-    const { default: GI_SDK_APP } = window.GI_SDK_APP;
+  <div id="root"></div>
+  <script type="text/babel">
+    const GraphApp = () => {
+      const service = async () => {
+        const config = await fetch('./GI_EXPORT_CONFIG.json').then(res => res.json());
+        return {
+          data: config,
+          success: true,
+        };
+      };
+      const { default: GI_SDK_APP } = window.GI_SDK_APP;
 
-    return <div style={{ height: "100vh" }}>
-      <GI_SDK_APP id={'8e85de53-dcf3-492f-9786-c21554d07e8a'} service={service} />
-    </div>
-  }
-  //@ts-ignore
-  window.ReactDOM.render(<GraphApp />, document.getElementById("root"));
-</script>
+      return (
+        <div style={{ height: '100vh' }}>
+          <GI_SDK_APP id={'8e85de53-dcf3-492f-9786-c21554d07e8a'} service={service} />
+        </div>
+      );
+    };
+    //@ts-ignore
+    window.ReactDOM.render(<GraphApp />, document.getElementById('root'));
+  </script>
 </body>
-</html>
 ```
 
 - 最终效果

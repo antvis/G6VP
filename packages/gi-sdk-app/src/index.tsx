@@ -75,7 +75,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
         window['LOCAL_DATA_FOR_GI_ENGINE'] = {
           //@ts-ignore
           data: dataset.data.transData,
-          schema: dataset.schemaData,
+          schemaData: dataset.schemaData,
         };
       }
 
