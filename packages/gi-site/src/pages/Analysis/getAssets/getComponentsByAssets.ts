@@ -42,6 +42,7 @@ const getComponentsByAssets = (
   schemaData: GraphSchemaData,
   engineId: string,
 ) => {
+  const AUTO_ITEMS: GIAC_ITEMS_TYPE = []; //属于AUTO的组件
   const GIAC_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的组件
   const GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的菜单组件
   const GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE = []; //属于GIAC的内容组件
@@ -50,24 +51,18 @@ const getComponentsByAssets = (
   Object.values(assets).forEach((item: any) => {
     const info = ((item && item.info) || {}) as TypeAssetInfo;
     const { type, id } = info;
-    if (type === 'GIAC') {
-      GIAC_ITEMS.push({
-        label: info.name,
-        value: info.id,
-      });
+
+    const containerMap = {
+      GIAC: GIAC_ITEMS,
+      GIAC_MENU: GIAC_MENU_ITEMS,
+      GIAC_CONTENT: GIAC_CONTENT_ITEMS,
+      AUTO: AUTO_ITEMS,
+    };
+
+    if (type in containerMap) {
+      containerMap[type].push({ label: info.name, value: info.id });
     }
-    if (type === 'GIAC_MENU') {
-      GIAC_MENU_ITEMS.push({
-        label: info.name,
-        value: info.id,
-      });
-    }
-    if (type === 'GIAC_CONTENT') {
-      GIAC_CONTENT_ITEMS.push({
-        label: info.name,
-        value: info.id,
-      });
-    }
+
     if (id === 'PropertyGraphInitializer') {
       hasPropertyGraph = true;
     }
@@ -106,6 +101,7 @@ const getComponentsByAssets = (
         edgeKeys,
         services,
         config,
+        AUTO_ITEMS,
         GI_CONTAINER_INDEXS,
         GIAC_ITEMS,
         GIAC_MENU_ITEMS,
