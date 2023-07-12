@@ -5,9 +5,9 @@ import { Button, Empty, InputNumber, Row, Col, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClustersTable from '../ClusterTable';
-import FormattedMessage, { formatMessage } from './locale';
 
 import './index.less';
+import $i18n from '../i18n';
 
 export enum NodesClusteringAlgorithm {
   KMeans = 'k-means',
@@ -134,7 +134,13 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
       edges: graphData?.edges,
       combos: clusters.map((cluster, index) => ({
         id: `gi-kmeans-combo-${String(index)}`,
-        label: `${formatMessage({ id: 'category' })}${index}`,
+        label: $i18n.get(
+          {
+            id: 'gi-assets-algorithm.src.NodesClustering.Component.CategoryIndex',
+            dm: '分类{index}',
+          },
+          { index: index },
+        ),
       })),
     };
   };
@@ -175,8 +181,14 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
       updateHistory({
         componentId: 'NodesClustering',
         type: 'analyse',
-        subType: '节点聚类',
-        statement: `算法 ${nodeClusteringAlgo}`,
+        subType: $i18n.get({ id: 'gi-assets-algorithm.src.NodesClustering.Component.NodeClustering', dm: '节点聚类' }),
+        statement: $i18n.get(
+          {
+            id: 'gi-assets-algorithm.src.NodesClustering.Component.AlgorithmNodeclusteringalgo',
+            dm: '算法 {nodeClusteringAlgo}',
+          },
+          { nodeClusteringAlgo: nodeClusteringAlgo },
+        ),
         success: true,
         params: {
           algorithm: nodeClusteringAlgo,
@@ -201,17 +213,28 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
     }
 
     if (!resData?.nodes?.length) {
-      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id="data.no-data" />} />;
+      return (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description={$i18n.get({
+            id: 'gi-assets-algorithm.src.NodesClustering.Component.NoDataAvailable',
+            dm: '暂无数据',
+          })}
+        />
+      );
     }
 
     return (
       <div className="nodes-clustering-result-wrapper">
         <span className="intelligent-analysis-title nodes-clustering-result-title">
-          <FormattedMessage id={'analysis-result'} />
+          {$i18n.get({ id: 'gi-assets-algorithm.src.NodesClustering.Component.AnalysisResults', dm: '分析结果' })}
         </span>
         <ClustersTable
           data={resData}
-          clusterTitle={formatMessage({ id: 'category' })}
+          clusterTitle={$i18n.get({
+            id: 'gi-assets-algorithm.src.NodesClustering.Component.Classification',
+            dm: '分类',
+          })}
           focusNodeAndHighlightHull={focusNodeAndHighlightHull}
         />
       </div>
@@ -276,10 +299,19 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
           <Col span={21}>
             <div className="nodes-clustering-algo-title">
               <h4 className="nodes-clustering-algo-title-name">
-                <FormattedMessage id={`itelligent-analysis.nodes-clustering.${NodesClusteringAlgorithm.KMeans}`} />
+                {$i18n.get(
+                  {
+                    id: 'gi-assets-algorithm.src.NodesClustering.Component.NodesclusteringalgorithmkmeansAlgorithm',
+                    dm: '{NodesClusteringAlgorithmKMeans}算法',
+                  },
+                  { NodesClusteringAlgorithmKMeans: NodesClusteringAlgorithm.KMeans },
+                )}
               </h4>
               <div className="nodes-clustering-algo-title-tip">
-                <FormattedMessage id={`itelligent-analysis.nodes-clustering.${NodesClusteringAlgorithm.KMeans}-tip`} />
+                {$i18n.get({
+                  id: 'gi-assets-algorithm.src.NodesClustering.Component.GatherNodesIntoKClusters',
+                  dm: '根据节点之间的距离将节点聚成K个簇',
+                })}
               </div>
             </div>
           </Col>
@@ -290,7 +322,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
 
         <div className="nodes-clustering-algo-body">
           <span>
-            <FormattedMessage id="itelligent-analysis.nodes-clustering.k-means.set-k" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodesClustering.Component.SetTheKValue', dm: '设置 K 值' })}
           </span>
           <InputNumber
             min={1}
@@ -301,7 +333,7 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
         </div>
 
         <Button type="primary" style={{ width: '100%', marginTop: '12px' }} loading={loading} onClick={onAnalyse}>
-          <FormattedMessage id="analyse" />
+          {$i18n.get({ id: 'gi-assets-algorithm.src.NodesClustering.Component.Analysis', dm: '分析' })}
         </Button>
 
         {renderResult()}

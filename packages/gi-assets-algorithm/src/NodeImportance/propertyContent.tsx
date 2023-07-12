@@ -5,6 +5,7 @@ import { useContext } from '@antv/gi-sdk';
 import { Form, Select, Spin } from 'antd';
 import React, { useState } from 'react';
 import { locale, MappingWay, PropertyContentProps } from './registerMeta';
+import $i18n from '../i18n';
 
 const { Option } = Select;
 
@@ -20,9 +21,7 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
     // dataTypeMap: { edgeTypeMap = {} },
     // schemaData
   } = useContext();
-
   const [loading, setLoading] = useState(false);
-
   return (
     <div className="algo-body algo-body-property">
       {/* 实体类型 */}
@@ -32,15 +31,32 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
       {/* 属性 */}
       <span style={{ marginLeft: 8 }}>
         <Form.Item
-          rules={[{ required: visible, message: '不可为空' }]}
+          rules={[
+            {
+              required: visible,
+              message: $i18n.get({
+                id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.CannotBeEmpty',
+                dm: '不可为空',
+              }),
+            },
+          ]}
           name={`${type}-property.property`}
           key={`${type}-property.property`}
-          label={'属性'}
+          label={$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.Properties', dm: '属性' })}
         >
           <Select
-            placeholder={'请选择'}
+            placeholder={$i18n.get({
+              id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.PleaseSelect',
+              dm: '请选择',
+            })}
             dropdownMatchSelectWidth={false}
-            notFoundContent={loading ? <Spin /> : '无数据'}
+            notFoundContent={
+              loading ? (
+                <Spin />
+              ) : (
+                $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.NoData', dm: '无数据' })
+              )
+            }
           >
             {properties?.map?.(property => {
               return (
@@ -57,13 +73,27 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
       {type === 'edge' && (
         <span style={{ marginLeft: 8 }}>
           <Form.Item
-            rules={[{ required: visible, message: '不可为空' }]}
+            rules={[
+              {
+                required: visible,
+                message: $i18n.get({
+                  id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.CannotBeEmpty',
+                  dm: '不可为空',
+                }),
+              },
+            ]}
             name={`${type}-property.calcway`}
             key={`${type}-property.calcway`}
-            label={'计算方式'}
+            label={$i18n.get({
+              id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.CalculationMethod',
+              dm: '计算方式',
+            })}
           >
             <Select
-              placeholder={'请选择'}
+              placeholder={$i18n.get({
+                id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.PleaseSelect',
+                dm: '请选择',
+              })}
               dropdownMatchSelectWidth={false}
               dropdownClassName="calc"
               //@ts-ignore
@@ -83,17 +113,32 @@ const PropertyContent: React.FC<PropertyContentProps> = ({
           </Form.Item>
         </span>
       )}
+
       {/* 映射方式 */}
       <span style={{ marginLeft: 8 }}>
         <Form.Item
-          rules={[{ required: visible, message: '不可为空' }]}
+          rules={[
+            {
+              required: visible,
+              message: $i18n.get({
+                id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.CannotBeEmpty',
+                dm: '不可为空',
+              }),
+            },
+          ]}
           name={`${type}-property.mappingway`}
           key={`${type}-property.mappingway`}
           initialValue={MappingWay.Positive}
-          label={'映射方式'}
+          label={$i18n.get({
+            id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.MappingMethod',
+            dm: '映射方式',
+          })}
         >
           <Select
-            placeholder={'请选择'}
+            placeholder={$i18n.get({
+              id: 'gi-assets-algorithm.src.NodeImportance.propertyContent.PleaseSelect',
+              dm: '请选择',
+            })}
             dropdownMatchSelectWidth={false}
             dropdownClassName="mapping"
             //@ts-ignore

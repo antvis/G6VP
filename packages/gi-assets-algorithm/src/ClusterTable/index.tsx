@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import type { PlainObject } from '../types';
 import { exportCSV, formatFileName } from '../utils/csv';
 import './index.less';
-import FormattedMessage, { formatMessage } from './locale';
+import $i18n from '../i18n';
 
 const getConfig = (data: GraphinData, clusterTitle, properties) => {
   const resData = [];
@@ -36,6 +36,7 @@ const getConfig = (data: GraphinData, clusterTitle, properties) => {
         name: 'id',
       },
     ],
+
     data: resData || [],
   };
   return { dataCfg, resData, properties };
@@ -89,7 +90,10 @@ export default class ClustersTable extends Component<Props, State> {
     exportCSV(
       {
         data: resData,
-        title: [clusterTitle, formatMessage({ id: 'node-name' })].concat(properties),
+        title: [
+          clusterTitle,
+          $i18n.get({ id: 'gi-assets-algorithm.src.ClusterTable.NodeName', dm: '节点名称' }),
+        ].concat(properties),
         titleForKey: ['clusterId', 'label'].concat(properties),
       },
       fileName,
@@ -111,7 +115,10 @@ export default class ClustersTable extends Component<Props, State> {
 
     return (
       <>
-        <Tooltip title={<FormattedMessage id="download-csv" />} placement="topRight">
+        <Tooltip
+          title={$i18n.get({ id: 'gi-assets-algorithm.src.ClusterTable.DownloadCsv', dm: '下载 CSV' })}
+          placement="topRight"
+        >
           <DownloadOutlined style={{ float: 'right' }} onClick={this.download} />
         </Tooltip>
         <div className="community-cluster-table-wrapper">
