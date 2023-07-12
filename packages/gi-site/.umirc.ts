@@ -1,12 +1,7 @@
-import GI_SDK from '@antv/gi-sdk/package.json';
 import GI_THEME_ANTD from '@antv/gi-theme-antd/package.json';
 
 import deps_externals from './scripts/deps_externals.json';
-export const G6_VERSION = '4.8.14';
-export const GRAPHIN_VERSION = '2.7.16';
-export const G2PLOT_VERSION = '2.4.16';
-export const ANTD_VERSION = '4.24.8';
-export const GI_VERSION = GI_SDK.version;
+
 export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 
 /** 是否为本地研发模式 */

@@ -11,14 +11,14 @@ import GI_ASSETS_GTAPHSCOPE from '@antv/gi-assets-graphscope/package.json' asser
 import GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph/package.json' assert { type: 'json' };
 import GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph/package.json' assert { type: 'json' };
 import GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j/package.json' assert { type: 'json' };
-import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
 import GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics/package.json' assert { type: 'json' };
+import GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph/package.json' assert { type: 'json' };
 /** inject assets */
 import INJECT from './pre-build-inject.json' assert { type: 'json' };
 
 import path from 'path';
 export const G6_VERSION = '4.8.14';
-export const GRAPHIN_VERSION = '2.7.16';
+export const GRAPHIN_VERSION = '2.7.21';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.8';
 export const GI_VERSION = GI_SDK.version;
@@ -177,8 +177,17 @@ fs.writeFile(path.resolve(__dirname, './deps_assets.json'), JSON.stringify(deps_
 fs.writeFile(
   path.resolve(__dirname, '../src/env.ts'),
   `
-  /** 脚本生成的环境变量，请勿修改 **/
-  export const BUILD_MODE = '${BUILD_MODE}';`,
+  /** 脚本生成的环境变量，请在 gi-site/scrripts/pre-build.mjs 中修改 **/
+  export const NODE_ENV = '${process.env.NODE_ENV}';
+  export const BUILD_MODE = '${BUILD_MODE}';
+  export const G6_VERSION = '${G6_VERSION}';
+  export const GRAPHIN_VERSION = '${GRAPHIN_VERSION}';
+  export const G2PLOT_VERSION = '${G2PLOT_VERSION}';
+  export const ANTD_VERSION = '${ANTD_VERSION}';
+  export const GI_VERSION = '${GI_VERSION}';
+
+  /** 脚本生成的环境变量，请在 gi-site/scrripts/pre-build.mjs 中修改 **/
+  `,
 
   () => {},
 );
