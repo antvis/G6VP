@@ -931,6 +931,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      mousetrap:
+        specifier: ^1.6.5
+        version: 1.6.5
       react:
         specifier: 17.x || 17
         version: 17.0.2
@@ -946,6 +949,10 @@ importers:
       use-immer:
         specifier: ^0.9.0
         version: 0.9.0(immer@9.0.21)(react@17.0.2)
+    devDependencies:
+      '@types/mousetrap':
+        specifier: ^1.6.11
+        version: 1.6.11
 
   packages/gi-sdk-app: {}
 
@@ -16649,6 +16656,10 @@ packages:
 
   /@types/mocha@2.2.48:
     resolution: {integrity: sha512-nlK/iyETgafGli8Zh9zJVCTicvU3iajSkRwOh3Hhiva598CMqNJ4NcVCGMTGKpGpTYj/9R8RLzS9NAykSSCqGw==}
+    dev: true
+
+  /@types/mousetrap@1.6.11:
+    resolution: {integrity: sha512-F0oAily9Q9QQpv9JKxKn0zMKfOo36KHCW7myYsmUyf2t0g+sBTbG3UleTPoguHdE1z3GLFr3p7/wiOio52QFjQ==}
     dev: true
 
   /@types/ms@0.7.31:

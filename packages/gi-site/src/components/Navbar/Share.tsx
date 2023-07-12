@@ -1,3 +1,4 @@
+import { useShortcuts } from '@antv/gi-sdk';
 import { Button, notification } from 'antd';
 import * as React from 'react';
 import * as DatasetServices from '../../services/dataset';
@@ -57,6 +58,10 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
       });
     }
   };
+
+  useShortcuts(['ctrl+shift+s', 'command+shift+s'], () => {
+    handleClick();
+  });
 
   return (
     <div>
