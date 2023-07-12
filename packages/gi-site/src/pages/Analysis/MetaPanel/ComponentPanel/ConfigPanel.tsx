@@ -21,7 +21,6 @@ const ConfigPanel: React.FunctionComponent<ConfigPanelProps> = props => {
   const { container, item, handleChange, config } = props;
 
   const { id, defaultProps, meta } = item;
-  console.log('configpanel', item);
 
   const matchComponent = config.components?.find(c => c.id === id) || {};
   const defaultValue = { ...defaultProps, ...matchComponent.props };

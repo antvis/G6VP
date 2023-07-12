@@ -2,6 +2,7 @@ import { Scatter, G2 } from '@antv/g2plot';
 import { Card, Select } from 'antd';
 import React from 'react';
 import { IDegreeState } from './type';
+import $i18n from '../i18n';
 
 interface DegreeScatterProps {
   degree: IDegreeState;
@@ -9,15 +10,15 @@ interface DegreeScatterProps {
 
 const options = [
   {
-    label: '总度数',
+    label: $i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.TotalDegree', dm: '总度数' }),
     value: 'totalDegree',
   },
   {
-    label: '出度',
+    label: $i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.Outdegree', dm: '出度' }),
     value: 'outDegree',
   },
   {
-    label: '入度',
+    label: $i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.Penetration', dm: '入度' }),
     value: 'inDegree',
   },
 ];
@@ -75,19 +76,19 @@ const DegreeScatter: React.FC<DegreeScatterProps> = props => {
       height: 300,
       xField: 'value',
       yField: 'count',
-      interactions: [{type: 'other-visible'}],
+      interactions: [{ type: 'other-visible' }],
       size: 5,
       pointStyle: {
         fill: '#5B8FF9',
       },
       xAxis: {
         title: {
-          text: '度数',
+          text: $i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.Degree', dm: '度数' }),
         },
       },
       yAxis: {
         title: {
-          text: '数量',
+          text: $i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.Quantity', dm: '数量' }),
         },
       },
     });
@@ -101,7 +102,13 @@ const DegreeScatter: React.FC<DegreeScatterProps> = props => {
   const extra = <Select options={options} value={current} onChange={val => setCurrent(val)}></Select>;
 
   return (
-    <Card title="度数分布" extra={extra}>
+    <Card
+      title={$i18n.get({
+        id: 'gi-assets-algorithm.src.InfoDetection.DegreeScatter.DegreeDistribution',
+        dm: '度数分布',
+      })}
+      extra={extra}
+    >
       <div id="gi-info-detection-degree-scatter"></div>
     </Card>
   );

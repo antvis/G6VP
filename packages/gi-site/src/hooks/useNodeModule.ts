@@ -1,7 +1,7 @@
 import { version as GI_THEME_ANTD_VERSION } from '@antv/gi-theme-antd/package.json';
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
-import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
+import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../env';
 import { beautifyCode, getActivePackage, getConstantFiles } from './common';
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';

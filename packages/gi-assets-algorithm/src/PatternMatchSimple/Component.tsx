@@ -5,6 +5,7 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import './index.less';
 import PatterGraph from './PatternGraph';
+import $i18n from '../i18n';
 const { GADDI } = Algorithm;
 const { Panel } = Collapse;
 
@@ -34,35 +35,95 @@ const getKeys = (pattern, type) => {
 const PATTERNS = [
   {
     id: 'pattern-0',
-    name: '电信诈骗风险模式0',
+    name: $i18n.get({
+      id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.TelecomFraudRiskModel',
+      dm: '电信诈骗风险模式0',
+    }),
     pattern: {
       nodes: [
         { id: 'p1', cluster: 'unkown' },
         { id: 'p2', cluster: 'unkown' },
         { id: 'p3', cluster: 'unkown' },
       ],
+
       edges: [
-        { source: 'p1', target: 'p2', cluster: 'transfer', label: '转账' },
-        { source: 'p2', target: 'p1', cluster: 'transfer', label: '转账' },
-        { source: 'p1', target: 'p3', cluster: 'transfer', label: '转账' },
-        { source: 'p2', target: 'p3', cluster: 'transfer', label: '转账' },
+        {
+          source: 'p1',
+          target: 'p2',
+          cluster: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p2',
+          target: 'p1',
+          cluster: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p1',
+          target: 'p3',
+          cluster: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p2',
+          target: 'p3',
+          cluster: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
       ],
     },
   },
   {
     id: 'pattern-1',
-    name: '电信诈骗风险模式一',
+    name: $i18n.get({
+      id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.TelecomFraudRiskModel.1',
+      dm: '电信诈骗风险模式一',
+    }),
     pattern: {
       nodes: [
-        { id: 'p1', dataType: 'unkown', label: '账户' },
-        { id: 'p2', dataType: 'account', label: '账户' },
-        { id: 'p3', dataType: 'account', label: '账户' },
+        {
+          id: 'p1',
+          dataType: 'unkown',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Account', dm: '账户' }),
+        },
+        {
+          id: 'p2',
+          dataType: 'account',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Account', dm: '账户' }),
+        },
+        {
+          id: 'p3',
+          dataType: 'account',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Account', dm: '账户' }),
+        },
       ],
+
       edges: [
-        { source: 'p1', target: 'p2', dataType: 'transfer', label: '转账' },
-        { source: 'p2', target: 'p1', dataType: 'transfer', label: '转账' },
-        { source: 'p1', target: 'p3', dataType: 'transfer', label: '转账' },
-        { source: 'p2', target: 'p3', dataType: 'transfer', label: '转账' },
+        {
+          source: 'p1',
+          target: 'p2',
+          dataType: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p2',
+          target: 'p1',
+          dataType: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p1',
+          target: 'p3',
+          dataType: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
+        {
+          source: 'p2',
+          target: 'p3',
+          dataType: 'transfer',
+          label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Transfer', dm: '转账' }),
+        },
       ],
     },
   },
@@ -189,16 +250,17 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
 
   const PatternOptions = [
     {
-      label: '新建',
+      label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Create', dm: '新建' }),
       value: 'new',
       disabled: false,
     },
     {
-      label: '模式库',
+      label: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SchemaLibrary', dm: '模式库' }),
       value: 'template',
       disabled: true,
     },
   ];
+
   const NODE_KEYS = ['type', 'dataType']; //getKeys(pattern, 'node');
   const EDGE_KEYS = ['edgeType', 'dataType']; //getKeys(pattern, 'edge');
 
@@ -218,9 +280,32 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
       >
         <Form initialValues={state} form={form}>
           <div>
-            <h3>模式匹配</h3> <Button onClick={clear}>重制</Button>
+            <h3>
+              {$i18n.get({
+                id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.PatternMatching',
+                dm: '模式匹配',
+              })}
+            </h3>{' '}
+            <Button onClick={clear}>
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.Reproduction', dm: '重制' })}
+            </Button>
           </div>
-          <Form.Item label="模式选择" name="mode" rules={[{ required: true, message: '请选择模式' }]}>
+          <Form.Item
+            label={$i18n.get({
+              id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.ModeSelection',
+              dm: '模式选择',
+            })}
+            name="mode"
+            rules={[
+              {
+                required: true,
+                message: $i18n.get({
+                  id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SelectAMode',
+                  dm: '请选择模式',
+                }),
+              },
+            ]}
+          >
             <Radio.Group
               options={PatternOptions}
               onChange={e => {
@@ -231,11 +316,20 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
               value={state.mode}
             />
           </Form.Item>
-          <Form.Item label="选择节点的聚类字段" name="nodeKey">
+          <Form.Item
+            label={$i18n.get({
+              id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SelectTheClusterFieldOf',
+              dm: '选择节点的聚类字段',
+            })}
+            name="nodeKey"
+          >
             <Select
               allowClear
               style={{ width: '100%' }}
-              placeholder="请选择字段，默认为unkown"
+              placeholder={$i18n.get({
+                id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SelectAFieldDefaultValue',
+                dm: '请选择字段，默认为unkown',
+              })}
               value={state.nodeKey}
               onChange={val => {
                 updateState(draft => {
@@ -252,11 +346,20 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
               })}
             </Select>
           </Form.Item>
-          <Form.Item label="选择边的聚类字段" name="nodeKey">
+          <Form.Item
+            label={$i18n.get({
+              id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SelectTheClusterFieldOf.1',
+              dm: '选择边的聚类字段',
+            })}
+            name="nodeKey"
+          >
             <Select
               allowClear
               style={{ width: '100%' }}
-              placeholder="请选择字段，默认为unkown"
+              placeholder={$i18n.get({
+                id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.SelectAFieldDefaultValue',
+                dm: '请选择字段，默认为unkown',
+              })}
               value={state.edgeKey}
               onChange={val => {
                 updateState(draft => {
@@ -275,26 +378,26 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
           </Form.Item>
           <PatterGraph pattern={pattern} />
           {/* <Select
-          allowClear
-          style={{ width: '100%' }}
-          placeholder="请选择模式"
-          value={pattern}
-          onChange={val => {
-            updateState(draft => {
-              draft.pattern = val;
-            });
-          }}
-        >
-          {PATTERNS.map(pattern => {
-            return (
-              <Select.Option key={pattern.id} value={pattern.id}>
-                {pattern.name}
-              </Select.Option>
-            );
-          })}
-        </Select> */}
+            allowClear
+            style={{ width: '100%' }}
+            placeholder="请选择模式"
+            value={pattern}
+            onChange={val => {
+             updateState(draft => {
+               draft.pattern = val;
+             });
+            }}
+            >
+            {PATTERNS.map(pattern => {
+             return (
+               <Select.Option key={pattern.id} value={pattern.id}>
+                 {pattern.name}
+               </Select.Option>
+             );
+            })}
+            </Select> */}
           <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={handleClick}>
-            开始匹配
+            {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatchSimple.Component.StartMatching', dm: '开始匹配' })}
           </Button>
         </Form>
       </div>

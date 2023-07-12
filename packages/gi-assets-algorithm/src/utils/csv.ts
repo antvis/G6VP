@@ -1,6 +1,6 @@
-// 格式化表格标题
+import $i18n from '../i18n'; // 格式化表格标题
 export const formatFileName = name => {
-  let formattedName = '导出数据.csv';
+  let formattedName = $i18n.get({ id: 'gi-assets-algorithm.src.utils.csv.ExportDataCsv', dm: '导出数据.csv' });
   if (name) {
     if (name.indexOf('.csv') > 0) {
       formattedName = name;

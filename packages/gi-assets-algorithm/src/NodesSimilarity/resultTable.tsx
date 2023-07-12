@@ -3,8 +3,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import { Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { exportCSV, formatFileName } from '../utils/csv';
-import { NodesSimilarityAlgorithm } from './Component';
-import FormattedMessage, { formatMessage } from './locale';
+import $i18n from '../i18n';
 
 interface Props {
   similarNodes;
@@ -40,14 +39,14 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
 
   const columns = [
     {
-      title: <FormattedMessage id={'index'} />,
+      title: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.SerialNumber', dm: '序号' }),
       dataIndex: 'index',
       key: 'index',
       width: 60,
       fixed: 'left',
     },
     {
-      title: <FormattedMessage id={'node-name'} />,
+      title: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.NodeName', dm: '节点名称' }),
       dataIndex: 'label',
       key: 'label',
       textWrap: 'word-break',
@@ -56,7 +55,7 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
       width: 100,
     },
     {
-      title: <FormattedMessage id={'node-id'} />,
+      title: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.NodeId', dm: '节点 ID' }),
       dataIndex: 'id',
       key: 'id',
       textWrap: 'word-break',
@@ -65,11 +64,10 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
       width: 100,
     },
     {
-      title: (
-        <FormattedMessage
-          id={`itelligent-analysis.nodes-similarity.table-title.${NodesSimilarityAlgorithm.nodesConsineSimilarity}`}
-        />
-      ),
+      title: $i18n.get({
+        id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.CosineSimilarity',
+        dm: '余弦相似度',
+      }),
       dataIndex: 'similarity',
       key: 'similarity',
       textWrap: 'word-break',
@@ -103,11 +101,9 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
       {
         data: resData,
         title: [
-          formatMessage({ id: 'index' }),
-          formatMessage({ id: 'node-name' }),
-          formatMessage({
-            id: `nodes-similarity.table-title.${NodesSimilarityAlgorithm.nodesConsineSimilarity}`,
-          }),
+          $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.SerialNumber', dm: '序号' }),
+          $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.NodeName', dm: '节点名称' }),
+          $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.CosineSimilarity', dm: '余弦相似度' }),
         ].concat(propertiesKeys),
         titleForKey: ['index', 'label', 'similarity'].concat(propertiesKeys),
       },
@@ -120,14 +116,17 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
 
   return (
     <>
-      <Tooltip title={<FormattedMessage id="download-csv" />} placement="topRight">
+      <Tooltip
+        title={$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.DownloadCsv', dm: '下载 CSV' })}
+        placement="topRight"
+      >
         <DownloadOutlined style={{ float: 'right' }} onClick={download} />
       </Tooltip>
       <div className="nodes-similarity-table-wrapper">
         <div className="nodes-similarity-statistic">
           <div>
             <span>
-              <FormattedMessage id="max" />:{' '}
+              {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.MaximumValue', dm: '最大值:' })}
             </span>
             <span className="nodes-similarity-statistic-value">
               {formatSimilar(maxSimilarNode[similarityKey])}（{maxSimilarNode?.label}）
@@ -135,7 +134,7 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
           </div>
           <div>
             <span>
-              <FormattedMessage id="min" />:{' '}
+              {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.MinimumValue', dm: '最小值:' })}
             </span>
             <span className="nodes-similarity-statistic-value">
               {formatSimilar(minSimilarNode[similarityKey])}（{minSimilarNode?.label}）
@@ -147,7 +146,7 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
           columns={columns}
           size="small"
           showSorterTooltip={{
-            title: formatMessage({ id: 'sort' }),
+            title: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.resultTable.Sort', dm: '排序' }),
           }}
           scroll={{ x: 200 }}
           onChange={onTableChange}

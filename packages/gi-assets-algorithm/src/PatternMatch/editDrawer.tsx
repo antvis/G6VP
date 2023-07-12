@@ -1,55 +1,55 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Form, Select, Drawer, Tooltip, Button } from 'antd';
-import FormattedMessage, { formatMessage } from './locale';
 import StyleConfigPropertyItem from './StyleConfigPropertyItem';
 import { SPLITOR } from './registerMeta';
 import Util from '../utils';
+import $i18n from '../i18n';
 
 const { Option } = Select;
 const { createUuid } = Util;
 
 interface Props {
-  type: 'node' | 'edge',
-  itemData: any,
-  id: string,
-  visible: boolean,
+  type: 'node' | 'edge';
+  itemData: any;
+  id: string;
+  visible: boolean;
   nodeProperties: object;
   edgeProperties: object;
   nodeTypes: TypeInfo[];
   edgeTypes: TypeInfo[];
-  container?: HTMLElement | undefined,
+  container?: HTMLElement | undefined;
   saveItem: (type: 'node' | 'edge', data: any) => void;
-  onClose: () => void,
+  onClose: () => void;
 }
 
 type PropertyCondition = {
-  id: string,
-  color: string,
-  visible: boolean,
-}
+  id: string;
+  color: string;
+  visible: boolean;
+};
 type Rule = {
-  name?: string,
-  key?: string,
-  rule?: '>' | '>=' | '<=' | '<' | '=' | '!=' | 'like' | 'unlike',
-  value?: string | number
-}
+  name?: string;
+  key?: string;
+  rule?: '>' | '>=' | '<=' | '<' | '=' | '!=' | 'like' | 'unlike';
+  value?: string | number;
+};
 type DataItem = {
-  id: string,
-  data: object,
-  rules: Rule[],
-  nodeType?: string,
-  edgeType?: string,
-  sourceNodeType?: string,
-  targetNodeType?: string
-}
+  id: string;
+  data: object;
+  rules: Rule[];
+  nodeType?: string;
+  edgeType?: string;
+  sourceNodeType?: string;
+  targetNodeType?: string;
+};
 export type TypeInfo = {
-  key: string,
-  content: ReactNode,
-  text?: string,
-  typeName?: string,
-  sourceNodeType?: string,
-  targetNodeType?: string,
-}
+  key: string;
+  content: ReactNode;
+  text?: string;
+  typeName?: string;
+  sourceNodeType?: string;
+  targetNodeType?: string;
+};
 
 const EditDrawer: React.FC<Props> = ({
   type,
@@ -63,7 +63,6 @@ const EditDrawer: React.FC<Props> = ({
   saveItem,
   onClose,
 }) => {
-
   const [form] = Form.useForm();
   const { getFieldsValue, setFieldsValue, validateFields, resetFields } = form;
 
@@ -77,7 +76,7 @@ const EditDrawer: React.FC<Props> = ({
 
   const onSelectNodeType = (key, endType) => {
     switch (endType) {
-      case 'source': 
+      case 'source':
         setSource(key);
         form.setFieldsValue({
           [`edge.edgeType`]: null,
@@ -97,12 +96,12 @@ const EditDrawer: React.FC<Props> = ({
         break;
     }
     setAddedProperties([]);
-  }
+  };
 
-  const onSelectEdgeType = (edgeType) => {
+  const onSelectEdgeType = edgeType => {
     setProperties(Array.from(edgeProperties[edgeType]));
     setSelectedEdgeType(edgeType);
-  }
+  };
 
   const addPropertyItem = (propertyId: string | undefined = undefined) => {
     setAddedProperties(oldAddedProperties => {
@@ -146,7 +145,7 @@ const EditDrawer: React.FC<Props> = ({
     setSelectedNodeType(undefined);
     setSelectedEdgeType(undefined);
     onClose();
-  }
+  };
 
   const confirmEdit = () => {
     const values = getFieldsValue();
@@ -174,8 +173,8 @@ const EditDrawer: React.FC<Props> = ({
             }
           }
           if (key.split(SPLITOR).length === 4) {
-            const [ruleId, type, dataId,  field] = key.split(SPLITOR);
-            
+            const [ruleId, type, dataId, field] = key.split(SPLITOR);
+
             if (!rulesMap[ruleId]) rulesMap[ruleId] = {};
             switch (field) {
               case 'name':
@@ -188,7 +187,7 @@ const EditDrawer: React.FC<Props> = ({
               case 'value':
                 rulesMap[ruleId].value = value;
                 break;
-              default: 
+              default:
                 break;
             }
           }
@@ -201,13 +200,13 @@ const EditDrawer: React.FC<Props> = ({
     });
     // 清空面板内容
     cancelEdit();
-  }
+  };
 
   const init = () => {
     setSelectedEdgeType(type === 'edge' ? itemData?.edgeType : undefined);
     setSelectedNodeType(type === 'node' ? itemData?.nodeType : undefined);
     resetFields();
-  }
+  };
 
   useEffect(() => {
     setSelectedEdgeType(undefined);
@@ -244,7 +243,7 @@ const EditDrawer: React.FC<Props> = ({
       itemData?.rules?.forEach(rule => {
         const propertyId = createUuid();
         const pid = `${propertyId}${SPLITOR}${type}${SPLITOR}${itemData.id}`;
-        setTimeout(() =>{
+        setTimeout(() => {
           setFieldsValue({
             [`${pid}${SPLITOR}name`]: rule.name,
             [`${pid}${SPLITOR}operator`]: rule.rule,
@@ -267,23 +266,32 @@ const EditDrawer: React.FC<Props> = ({
       return;
     }
     setProperties(Array.from(nodeProperties[selectedNodeType]));
-  }, [selectedNodeType])
+  }, [selectedNodeType]);
 
   const edgeSelectorEnabled = relatedEdgeTypes && relatedEdgeTypes?.length;
-  const edgeSelector = 
-    <Form.Item 
-      rules={[{ required: true, message: formatMessage({ id: 'not-empty' }) }]}
+  const edgeSelector = (
+    <Form.Item
+      rules={[
+        {
+          required: true,
+          message: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.CannotBeEmpty', dm: '不可为空' }),
+        },
+      ]}
       name="edge.edgeType"
       key="edge.edgeType"
     >
       <Select
         showSearch
-        placeholder={<FormattedMessage id="please-select" />}
+        placeholder={$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.PleaseSelect', dm: '请选择' })}
         style={{ width: 316, marginTop: 8 }}
         onSelect={onSelectEdgeType}
         dropdownMatchSelectWidth={false}
         disabled={!edgeSelectorEnabled}
-        defaultValue={itemData?.edgeType ? `${itemData?.sourceNodeType}_${itemData?.edgeType}_${itemData?.targetNodeType}` : undefined}
+        defaultValue={
+          itemData?.edgeType
+            ? `${itemData?.sourceNodeType}_${itemData?.edgeType}_${itemData?.targetNodeType}`
+            : undefined
+        }
       >
         {relatedEdgeTypes?.map(edgeType => {
           return (
@@ -293,127 +301,192 @@ const EditDrawer: React.FC<Props> = ({
           );
         })}
       </Select>
-    </Form.Item>;
+    </Form.Item>
+  );
 
-  const propertySelectorEnabled = type === 'edge' ?
-    relatedEdgeTypes?.length && (selectedEdgeType || itemData?.edgeType) :
-    (!!selectedNodeType || itemData?.edgeType); 
+  const propertySelectorEnabled =
+    type === 'edge'
+      ? relatedEdgeTypes?.length && (selectedEdgeType || itemData?.edgeType)
+      : !!selectedNodeType || itemData?.edgeType;
 
-  const propertySelector = <div>
-    {addedProperties?.map((property: any) => (
-      <StyleConfigPropertyItem
-        pid={property.id}
-        properties={properties}
-        deleteItem={deleteProperty}
-        color={property?.color}
-        visible={property?.visible}
-        form={form}
-        disabled={!propertySelectorEnabled}
-        configColor={false}
-      />
-    ))}
-    {addedProperties?.filter((property: any) => property.visible)?.length < 2 && (
-      <Button
-        className="kg-style-config-add-property-button"
-        type="dashed"
-        onClick={() => {
-          addPropertyItem();
-        }}
-        disabled={!propertySelectorEnabled}
-      >
-        <FormattedMessage id="add-property" />
-      </Button>
-    )}
-  </div>
+  const propertySelector = (
+    <div>
+      {addedProperties?.map((property: any) => (
+        <StyleConfigPropertyItem
+          pid={property.id}
+          properties={properties}
+          deleteItem={deleteProperty}
+          color={property?.color}
+          visible={property?.visible}
+          form={form}
+          disabled={!propertySelectorEnabled}
+          configColor={false}
+        />
+      ))}
+      {addedProperties?.filter((property: any) => property.visible)?.length < 2 && (
+        <Button
+          className="kg-style-config-add-property-button"
+          type="dashed"
+          onClick={() => {
+            addPropertyItem();
+          }}
+          disabled={!propertySelectorEnabled}
+        >
+          {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.AddAttributes', dm: '增加属性' })}
+        </Button>
+      )}
+    </div>
+  );
 
+  const getPropertySelector = itemType => (
+    <>
+      {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.AttributeCondition', dm: '属性条件' })}
 
+      <span className="kg-pattern-match-tip">
+        {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.Optional', dm: '可选' })}
+      </span>
+      <br />
+      {propertySelectorEnabled ? (
+        propertySelector
+      ) : (
+        <Tooltip
+          title={
+            (type === 'edge' && relatedEdgeTypes?.length && selectedEdgeType) ||
+            (itemType === 'node' && nodeTypes?.length && selectedNodeType)
+              ? ''
+              : `请先选择${itemType === 'node' ? '节点' : '边'}类型`
+          }
+        >
+          {propertySelector}
+        </Tooltip>
+      )}
+    </>
+  );
 
-  const getPropertySelector = itemType => (<>
-    <FormattedMessage id='property-condition' /> &nbsp;&nbsp;
-    <span className="kg-pattern-match-tip"><FormattedMessage id='optional' /></span>
-    <br />
-    {propertySelectorEnabled ?
-      propertySelector :
-      <Tooltip title={
-        ((type === 'edge' && relatedEdgeTypes?.length && selectedEdgeType) ||
-        (itemType === 'node' && nodeTypes?.length && selectedNodeType)) ?
-        '' :
-        <FormattedMessage id={`select-${itemType}-before-property`}/>} >
-        {propertySelector}
-      </Tooltip>
-    }
-    </>);
+  const getEndTypeSelector = endType => (
+    <>
+      {endType === 'source'
+        ? $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.StartingPoint', dm: '起点' })
+        : $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.EndPoint', dm: '终点' })}
+      {itemData?.[`${endType}NodeType`] ? (
+        <span>
+          {' '}
+          :{' '}
+          {nodeTypes.find(nodeType => nodeType.key === itemData?.[`${endType}NodeType`])?.content ||
+            itemData?.[`${endType}NodeType`]}{' '}
+          <br />
+          <br />
+        </span>
+      ) : (
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: $i18n.get({
+                id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.CannotBeEmpty',
+                dm: '不可为空',
+              }),
+            },
+          ]}
+          name={`edge.${endType}NodeType`}
+          key={`edge.${endType}NodeType`}
+        >
+          <Select
+            showSearch
+            placeholder={$i18n.get({
+              id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.PleaseSelect',
+              dm: '请选择',
+            })}
+            style={{ width: 316, marginTop: 8 }}
+            onSelect={key => onSelectNodeType(key, endType)}
+            dropdownMatchSelectWidth={false}
+          >
+            {nodeTypes.map(nodeType => (
+              <Option value={nodeType.key} key={nodeType.key}>
+                {nodeType.content}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      )}
+    </>
+  );
 
-  const getEndTypeSelector = endType => (<>
-    <FormattedMessage id={endType} />
-    {itemData?.[`${endType}NodeType`] ?
-      <span> : {nodeTypes.find(nodeType => nodeType.key === itemData?.[`${endType}NodeType`])?.content || itemData?.[`${endType}NodeType`]} <br /><br /></span> :
-      <Form.Item 
-        rules={[{ required: true, message: formatMessage({ id: 'not-empty' }) }]}
-        name={`edge.${endType}NodeType`}
-        key={`edge.${endType}NodeType`}
+  const edgeEditor = (
+    <Form form={form} name="edge">
+      {/* 边起点类型 */}
+      {getEndTypeSelector('source')}
+      {/* 边终点类型 */}
+      {getEndTypeSelector('target')}
+      {/* 边类型 */}
+      {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.EdgeType', dm: '边类型' })}
+
+      <br />
+      {edgeSelectorEnabled ? (
+        edgeSelector
+      ) : (
+        <Tooltip
+          title={
+            !relatedEdgeTypes
+              ? $i18n.get({
+                  id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.SelectTheStartAndEnd',
+                  dm: '请先选择起点与终点的类型',
+                })
+              : $i18n.get({
+                  id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.TheEdgeTypeDoesNot',
+                  dm: '起点类型与终点类型之间不存在边类型',
+                })
+          }
+        >
+          {edgeSelector}
+        </Tooltip>
+      )}
+
+      {/* 属性条件 */}
+      {getPropertySelector('edge')}
+    </Form>
+  );
+
+  const nodeEditor = (
+    <Form form={form} name="node">
+      {/* 节点类型 */}
+      {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.NodeType', dm: '节点类型' })}
+
+      <Form.Item
+        rules={[
+          {
+            required: true,
+            message: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.CannotBeEmpty', dm: '不可为空' }),
+          },
+        ]}
+        name="node.nodeType"
+        key="node.nodeType"
       >
         <Select
           showSearch
-          placeholder={<FormattedMessage id="please-select" />}
+          placeholder={$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.PleaseSelect', dm: '请选择' })}
           style={{ width: 316, marginTop: 8 }}
-          onSelect={key => onSelectNodeType(key, endType)}
+          onSelect={key => onSelectNodeType(key, 'node')}
           dropdownMatchSelectWidth={false}
+          defaultValue={itemData?.nodeType}
         >
-          {nodeTypes.map(nodeType => <Option value={nodeType.key} key={nodeType.key}>{nodeType.content}</Option>)}
+          {nodeTypes.map((nodeType: any) => (
+            <Option value={nodeType.key} key={nodeType.key}>
+              {nodeType.content}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
-    }
-  </>)
-
-
-  const edgeEditor = <Form form={form} name="edge">
-    {/* 边起点类型 */}
-    {getEndTypeSelector('source')}
-
-    {/* 边终点类型 */}
-    {getEndTypeSelector('target')}
-
-    {/* 边类型 */}
-    <FormattedMessage id='relation-type' />
-    <br />
-    {edgeSelectorEnabled ?
-      edgeSelector :
-      <Tooltip title={!relatedEdgeTypes ? <FormattedMessage id="select-node-before-edge"/> : <FormattedMessage id="no-edge-type-for-nodes"/>} >
-        {edgeSelector}
-      </Tooltip>
-    }
-
-    {/* 属性条件 */}
-    {getPropertySelector('edge')}
-  </Form>
-  
-  const nodeEditor = <Form form={form} name="node">
-    {/* 节点类型 */}
-    <FormattedMessage id='entity-type' />
-    <Form.Item 
-      rules={[{ required: true, message: formatMessage({ id: 'not-empty' }) }]}
-      name="node.nodeType"
-      key="node.nodeType"
-    >
-      <Select
-        showSearch
-        placeholder={<FormattedMessage id="please-select" />}
-        style={{ width: 316, marginTop: 8 }}
-        onSelect={key => onSelectNodeType(key, 'node')}
-        dropdownMatchSelectWidth={false}
-        defaultValue={itemData?.nodeType}
-      >
-        {nodeTypes.map((nodeType: any) => <Option value={nodeType.key} key={nodeType.key}>{nodeType.content}</Option>)}
-      </Select>
-    </Form.Item>
-
-    {/* 属性条件 */}
-    {getPropertySelector('node')}
-  </Form>
+      {/* 属性条件 */}
+      {getPropertySelector('node')}
+    </Form>
+  );
 
   let drawerContent = type === 'edge' ? edgeEditor : nodeEditor;
-  let drawerTitle = type === 'edge' ? '编辑边' : '编辑点';
+  let drawerTitle =
+    type === 'edge'
+      ? $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.EditEdge', dm: '编辑边' })
+      : $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.EditPoint', dm: '编辑点' });
   if (!itemData) {
     drawerContent = <></>;
     drawerTitle = '';
@@ -421,31 +494,42 @@ const EditDrawer: React.FC<Props> = ({
 
   const confirmDisabled = type === 'edge' && !selectedEdgeType && !itemData?.edgeType;
 
-  return <Drawer
-    title={drawerTitle}
-    visible={visible}
-    width={364}
-    closable={true}
-    onClose={cancelEdit}
-    mask={false}
-    style={{ textAlign: 'left' }}
-    footerStyle={{ textAlign: 'right' }}
-    getContainer={container || false}
-    footer={
-      <>
-        <Button onClick={cancelEdit}><FormattedMessage id="cancel"/></Button>
-        <Tooltip title={confirmDisabled ? '关系类型不可为空' : ''} placement="topRight">
-          <Button
-            type='primary'
-            style={{ marginLeft: '8px' }}
-            onClick={confirmEdit}
-            disabled={confirmDisabled}
-          ><FormattedMessage id="confirm"/></Button>
-        </Tooltip>
-      </>
-    }
-  >
-    {drawerContent}
-  </Drawer>
-}
+  return (
+    <Drawer
+      title={drawerTitle}
+      visible={visible}
+      width={364}
+      closable={true}
+      onClose={cancelEdit}
+      mask={false}
+      style={{ textAlign: 'left' }}
+      footerStyle={{ textAlign: 'right' }}
+      getContainer={container || false}
+      footer={
+        <>
+          <Button onClick={cancelEdit}>
+            {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.Cancel', dm: '取消' })}
+          </Button>
+          <Tooltip
+            title={
+              confirmDisabled
+                ? $i18n.get({
+                    id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.TheRelationshipTypeCannotBe',
+                    dm: '关系类型不可为空',
+                  })
+                : ''
+            }
+            placement="topRight"
+          >
+            <Button type="primary" style={{ marginLeft: '8px' }} onClick={confirmEdit} disabled={confirmDisabled}>
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.editDrawer.Ok', dm: '确定' })}
+            </Button>
+          </Tooltip>
+        </>
+      }
+    >
+      {drawerContent}
+    </Drawer>
+  );
+};
 export default EditDrawer;

@@ -33,10 +33,12 @@
     "postpublish": "tnpm sync @antv/gi-assets-algorithm"
   },
   "dependencies": {
-    "@antv/gi-sdk": "workspace:*",
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",
     "@antv/algorithm": "^0.1.26-beta.0",
     "@antv/g2plot": "^2.4.31",
+    "@antv/gi-sdk": "workspace:*",
     "@antv/matrix-util": "^3.0.4",
     "@antv/s2": "^1.48.0",
     "@antv/s2-react": "^1.41.0",

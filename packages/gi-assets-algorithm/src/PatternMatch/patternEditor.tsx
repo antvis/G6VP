@@ -12,10 +12,10 @@ import Util from '../utils';
 import AddRelation from './AddRelation';
 import EditDrawer, { TypeInfo } from './editDrawer';
 import './index.less';
-import FormattedMessage, { formatMessage } from './locale';
 import { ITEM_STATE, SPLITOR } from './registerMeta';
 import templates from './templates';
 import { formatDataModels } from './util';
+import $i18n from '../i18n';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -286,18 +286,33 @@ const PatternEditor: React.FC<Props> = ({
   const onSave = () => {
     //  若当前模式为空，则无法保存
     if (!graphData?.nodes?.length) {
-      message.info(formatMessage({ id: 'save-failed-not-empty' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.FailedToSaveTheMode',
+          dm: '保存模式失败，模式不可为空。若希望放弃编辑器，请点击“取消”按钮',
+        }),
+      );
       return;
     }
     //  验证当前模式中每个节点和边有类型
     const emptyNodes = graphData.nodes.filter(node => !node.nodeType);
     if (emptyNodes?.length) {
-      message.info(formatMessage({ id: 'save-failed-no-empty-type' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.FailedToSaveTheMode.2',
+          dm: '保存模式失败，创建边失败。请为所有节点和边指定类型',
+        }),
+      );
       return;
     }
     const emptyEdges = graphData.edges.filter(edge => !edge.edgeType);
     if (emptyEdges?.length) {
-      message.info(formatMessage({ id: 'save-failed-no-empty-type' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.FailedToSaveTheMode.2',
+          dm: '保存模式失败，创建边失败。请为所有节点和边指定类型',
+        }),
+      );
       return;
     }
 
@@ -314,7 +329,12 @@ const PatternEditor: React.FC<Props> = ({
       false,
     );
     if (Object.keys(traversedTag).length < graphData.nodes.length) {
-      message.info(formatMessage({ id: 'save-failed-must-connected' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.FailedToCreateTheSchema',
+          dm: '创建模式失败。模式必须是连通的',
+        }),
+      );
       return;
     }
 
@@ -571,7 +591,15 @@ const PatternEditor: React.FC<Props> = ({
 
     // 起点和终点的节点类型之间不存在边，不可创建
     if (!hasRelatedEdges) {
-      message.info(formatMessage({ id: 'create-edge-failed-no-edge-type', sourceType, targetType }));
+      message.info(
+        $i18n.get(
+          {
+            id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.FailedToCreateAnEdge',
+            dm: '创建边失败。起点类型 {sourceType} 与终点类型 {targetType} 之间不存在边类型',
+          },
+          { sourceType: sourceType, targetType: targetType },
+        ),
+      );
       return;
     }
 
@@ -686,10 +714,10 @@ const PatternEditor: React.FC<Props> = ({
           </Col>
           <Col span={4} offset={16}>
             <Button onClick={closeEditor}>
-              <FormattedMessage id="cancel" />
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.Cancel', dm: '取消' })}
             </Button>
             <Button className="kg-pattern-match-editor-save" type="primary" onClick={onSave}>
-              <FormattedMessage id="save" />
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.Save', dm: '保存' })}
             </Button>
           </Col>
         </Row>
@@ -703,9 +731,15 @@ const PatternEditor: React.FC<Props> = ({
             activeKey={activePanel}
             onChange={key => setActivePanel(key)}
           >
-            <TabPane tab={<FormattedMessage id="add-node" />} key="node">
+            <TabPane
+              tab={$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.AddNode', dm: '添加节点' })}
+              key="node"
+            >
               <Search
-                placeholder={formatMessage({ id: 'input-name-search-node' })}
+                placeholder={$i18n.get({
+                  id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.SearchNode',
+                  dm: '搜索节点',
+                })}
                 onSearch={onSearch}
                 style={{ width: 200 }}
               />
@@ -742,7 +776,11 @@ const PatternEditor: React.FC<Props> = ({
                 </Graphin>
               </div>
             </TabPane>
-            <TabPane tab={<FormattedMessage id="add-template" />} key="template" style={{ height: '100%' }}>
+            <TabPane
+              tab={$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.AddTemplate', dm: '添加模版' })}
+              key="template"
+              style={{ height: '100%' }}
+            >
               <div className="kg-pattern-match-template-wrapper">
                 {templates.map(template => (
                   <div
@@ -794,7 +832,10 @@ const PatternEditor: React.FC<Props> = ({
               {contextMenu.type === 'node' ? (
                 <Menu>
                   <Menu.Item key="removeNode" onClick={() => onContextMenuClick('removeNode')}>
-                    <FormattedMessage id="delete-node" />
+                    {$i18n.get({
+                      id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.DeleteANode',
+                      dm: '删除节点',
+                    })}
                   </Menu.Item>
                   <Menu.Item key="addRelation" onClick={() => onContextMenuClick('addRelation')}>
                     <AddRelation
@@ -803,14 +844,17 @@ const PatternEditor: React.FC<Props> = ({
                       options={{
                         onOk: createEdge,
                       }}
-                      name={<FormattedMessage id="contextmenu-add-relation" />}
+                      name={$i18n.get({
+                        id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.AddEdge',
+                        dm: '添加边',
+                      })}
                     />
                   </Menu.Item>
                 </Menu>
               ) : (
                 <Menu>
                   <Menu.Item key="removeEdge" onClick={() => onContextMenuClick('removeEdge')}>
-                    <FormattedMessage id="delete-relation" />
+                    {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternEditor.DeleteEdge', dm: '删除边' })}
                   </Menu.Item>
                 </Menu>
               )}

@@ -10,10 +10,8 @@ import { GraphinData } from '@antv/graphin';
 import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
-import ReactDOM from 'react-dom';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
-import FormattedMessage, { formatMessage } from './locale';
 import PatternEditor, { TypeProperties } from './patternEditor';
 import PatternPane from './patternPane';
 import { ControlledValues, ITEM_STATE, PatternMatchProps, SPLITOR } from './registerMeta';
@@ -21,6 +19,7 @@ import ResultTable from './resultTable';
 import { filterByPatternRules } from './util';
 
 import './index.less';
+import $i18n from '../i18n';
 
 const { confirm } = Modal;
 const { TabPane } = Tabs;
@@ -58,7 +57,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     () => ({
       '1': {
         id: '1',
-        title: <FormattedMessage id="pattern-title" value={'1'} />,
+        title: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.Mode', dm: '模式-1' }),
         data: null,
       },
     }),
@@ -74,7 +73,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const [panes, setPanes] = useState(() => [
     {
-      title: <FormattedMessage id="pattern-title" value={intialPatternInfoMap['1'].id} />,
+      title: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeIntialpatterninfomapid',
+          dm: '模式-{intialPatternInfoMapId}',
+        },
+        { intialPatternInfoMapId: intialPatternInfoMap['1'].id },
+      ),
       content: (
         <PatternPane
           {...intialPatternInfoMap['1']}
@@ -83,6 +88,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           importData={importData}
         />
       ),
+
       key: intialPatternInfoMap['1'].id,
     },
   ]);
@@ -205,15 +211,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       duration: 0,
       content: (
         <>
-          {formatMessage({ id: 'extract-pattern-tip-long' })}
+          {$i18n.get({
+            id: 'gi-assets-algorithm.src.PatternMatch.Component.TheCanvasIsInThe',
+            dm: '画布处于选择状态，你可以通过【圈选】或【点选】子图，被选中的子图将被抽取为模式。【按住 W】 可拖拽画布',
+          })}
+
           <Button onClick={cancelExtracting} style={{ marginLeft: 8 }} size="small">
-            <FormattedMessage id="cancel" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.Cancel', dm: '取消' })}
           </Button>
           <Button type="primary" onClick={extractPattern} style={{ marginLeft: 8 }} size="small">
-            <FormattedMessage id="confirm" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.Confirm', dm: '确认' })}
           </Button>
         </>
       ),
+
       style: {
         marginTop: '20px',
       },
@@ -272,7 +283,12 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       false,
     );
     if (Object.keys(traversedTag).length < patternGraphData.nodes.length) {
-      message.info(formatMessage({ id: 'save-failed-must-connected' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.FailedToCreateTheSchema',
+          dm: '创建模式失败。模式必须是连通的',
+        }),
+      );
       return;
     }
 
@@ -338,7 +354,12 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     }
 
     if (invalid) {
-      message.info(formatMessage({ id: 'save-failed-edge-must-have-nodes' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.FailedToCreateTheSchema.1',
+          dm: '创建模式失败。模式中不可以存在悬挂边',
+        }),
+      );
       return;
     }
 
@@ -356,9 +377,15 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     const selectedEdges = graph.findAllByState('node', ITEM_STATE.Active);
     if (selectedNodes?.length || selectedEdges?.length) {
       confirm({
-        title: formatMessage({ id: 'extract-confirm-cancel' }),
+        title: $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.ConfirmToExitTheExtraction',
+          dm: '确认退出抽取模式',
+        }),
         icon: <ExclamationCircleOutlined />,
-        content: formatMessage({ id: 'extract-confirm-cancel-content' }),
+        content: $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.IfTheSelectedContentAlready',
+          dm: '已有选中内容，退出将不会将使用选中内容作为模式。确认退出吗？',
+        }),
         onOk() {
           clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
           clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
@@ -437,6 +464,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           shouldBegin: () => keydown,
         },
       ],
+
       'pattern-match-lasso',
     );
 
@@ -489,7 +517,12 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const addTab = (copyItem: any = undefined) => {
     if (panes.length > MAX_PATTERN_NUM - 1) {
-      message.info(formatMessage({ id: 'pattern-num-limit' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.FailedToAddModeThe',
+          dm: '添加模式失败。模式数量已达上限！',
+        }),
+      );
       return;
     }
     newTabIndex += 1;
@@ -498,7 +531,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     const newPatternInfoMap = { ...patternInfoMap };
     newPatternInfoMap[id] = {
       id,
-      title: <FormattedMessage id="pattern-title" value={id} />,
+      title: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeId',
+          dm: '模式-{id}',
+        },
+        { id: id },
+      ),
       data: null,
     };
     if (copyItem && patternInfoMap[copyItem.key]?.data) {
@@ -514,7 +553,14 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           importData={importData}
         />
       ),
-      title: <FormattedMessage id="pattern-title" value={id} />,
+
+      title: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeId',
+          dm: '模式-{id}',
+        },
+        { id: id },
+      ),
       key: id,
     });
     setPanes(newPanes);
@@ -567,12 +613,28 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const onMatch = async (patternProp?: GraphinData) => {
     if (!graph || graph.destroyed) {
-      handleUpateHistory({}, false, '图实例不存在');
+      handleUpateHistory(
+        {},
+        false,
+        $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.TheGraphInstanceDoesNot', dm: '图实例不存在' }),
+      );
       return;
     }
     if (!patternProp && (!activeKey || !patternInfoMap[+activeKey]?.data)) {
-      message.info(formatMessage({ id: 'cannot-match-empty-pattern' }));
-      handleUpateHistory({}, false, formatMessage({ id: 'cannot-match-empty-pattern' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.TheNullPatternCannotBe',
+          dm: '无法匹配空模式！',
+        }),
+      );
+      handleUpateHistory(
+        {},
+        false,
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.TheNullPatternCannotBe',
+          dm: '无法匹配空模式！',
+        }),
+      );
       return;
     }
     const res = patternInfoMap[+activeKey].data;
@@ -639,11 +701,17 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       console.warn('Pattern Matching Failed.', error);
     }
     if (!matches?.length) {
-      message.info(formatMessage({ id: 'no-result' }));
+      message.info(
+        $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.NoMatchFound', dm: '没有找到匹配！' }),
+      );
       setLoading(false);
       drawHulls([]);
       setResult([]);
-      handleUpateHistory({ pattern }, false, formatMessage({ id: 'no-result' }));
+      handleUpateHistory(
+        { pattern },
+        false,
+        $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.NoMatchFound', dm: '没有找到匹配！' }),
+      );
       return;
     }
 
@@ -651,7 +719,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     filterByPatternRules(graphData, pattern, matches, directed);
     // 进行 rules 筛选之后，若 matches 被删空了，提示没找到匹配
     if (!matches?.length) {
-      message.info(formatMessage({ id: 'no-result' }));
+      message.info(
+        $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.NoMatchFound', dm: '没有找到匹配！' }),
+      );
     }
 
     setLoading(false);
@@ -664,7 +734,12 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   const onExport = () => {
     if (!graph || graph.destroyed) return;
     if (!activeKey || !patternInfoMap[+activeKey]?.data) {
-      message.info(formatMessage({ id: 'cannot-match-empty-pattern' }));
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.TheNullPatternCannotBe',
+          dm: '无法匹配空模式！',
+        }),
+      );
       return;
     }
     const res = patternInfoMap[+activeKey].data;
@@ -688,7 +763,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     if (!newPatternInfoMap[id]) {
       newPatternInfoMap[id] = {
         id,
-        title: <FormattedMessage id="pattern-title" value={id} />,
+        title: $i18n.get(
+          {
+            id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeId',
+            dm: '模式-{id}',
+          },
+          { id: id },
+        ),
       };
     }
     newPatternInfoMap[id].data = saveData;
@@ -714,7 +795,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     updateHistory({
       componentId: 'PatternMatch',
       type: 'analyse',
-      subType: '模式匹配',
+      subType: $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.PatternMatching', dm: '模式匹配' }),
       statement: `子图 ${pattern.nodes?.length} 个节点，${pattern.edges?.length} 条边`,
       success,
       errorMsg,
@@ -736,11 +817,12 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   const patternTabsMenu = (
     <Menu className="kg-pattern-match-patten-tab-dropdown">
       <Menu.Item key="new" onClick={addTab}>
-        <FormattedMessage id="new-pattern" />
+        {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.CreateMode', dm: '新建模式' })}
       </Menu.Item>
       {panes?.map(item => (
         <Menu.Item key={item.key} onClick={() => addTab(item)}>
-          <FormattedMessage id="clone-title" value={item.key} />
+          {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.CopyMode', dm: '复制模式-' })}
+          {item.key}
         </Menu.Item>
       ))}
     </Menu>
@@ -801,7 +883,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
             loading={loading}
             onClick={() => onMatch()}
           >
-            <FormattedMessage id="match" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.Match', dm: '匹配' })}
           </Button>
         </Col>
         <Col span={6}>
@@ -816,7 +898,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
               disabled={!!extracting}
               onClick={onExport}
             >
-              {exportButton?.text || <FormattedMessage id="export-pattern" />}
+              {exportButton?.text ||
+                $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.ExportMode', dm: '导出模式' })}
             </Button>
           ) : (
             ''

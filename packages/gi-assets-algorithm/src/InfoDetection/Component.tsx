@@ -6,6 +6,7 @@ import { List } from 'antd';
 import React, { useState } from 'react';
 import DegreeScatter from './DegreeScatter';
 import './index.less';
+import $i18n from '../i18n';
 
 const InfoDetection = () => {
   const { data, graph } = useContext();
@@ -113,7 +114,7 @@ const InfoDetection = () => {
             border: selectedIsolate ? 'solid blue 1px' : 'none',
           }}
         >
-          孤立点
+          {$i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.Component.IsolatedPoint', dm: '孤立点' })}
         </List.Item>
         <List.Item
           key="circle"
@@ -123,7 +124,7 @@ const InfoDetection = () => {
             border: selectedCircle ? 'solid blue 1px' : 'none',
           }}
         >
-          环
+          {$i18n.get({ id: 'gi-assets-algorithm.src.InfoDetection.Component.Ring', dm: '环' })}
         </List.Item>
       </List>
       <DegreeScatter degree={{ inDegree, outDegree, totalDegree }}></DegreeScatter>
