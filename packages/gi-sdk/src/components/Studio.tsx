@@ -54,7 +54,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     ThemeComponent: () => null,
   });
 
-  const starStudio = async () => {
+  const startStudio = async () => {
     try {
       const { data } = await service(id);
       const { dataset, workbook, GI_ASSETS_PACKAGES, deps } = data;
@@ -85,7 +85,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   };
 
   React.useEffect(() => {
-    starStudio();
+    startStudio();
   }, []);
   const { assets, isReady, config, services, ThemeComponent } = state;
   if (!isReady) {
