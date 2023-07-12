@@ -1,10 +1,10 @@
 import { GIAssets } from '@antv/gi-sdk';
 import beautify from 'js-beautify';
-import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../.umirc';
 import ThemeVars from '../components/ThemeVars';
+import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../env';
+import $i18n from '../i18n';
 import type { Package } from '../loader';
 import { getAssetPackages } from '../loader';
-import $i18n from '../i18n';
 
 export function beautifyCode(code: string) {
   //@ts-ignore

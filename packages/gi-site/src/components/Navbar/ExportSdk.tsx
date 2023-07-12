@@ -2,7 +2,7 @@ import { CodeOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Modal, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
+import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../env';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { getActivePackageName } from '../../hooks/common';
 import $i18n from '../../i18n';
