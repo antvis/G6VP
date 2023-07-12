@@ -45,6 +45,7 @@ const usePanels = () => {
           ...schema?.['x-component-props'],
           key: schema?.['x-component-props']?.key || name,
         },
+        // @ts-ignore
         schema,
       });
     }
@@ -142,6 +143,7 @@ export const FormCollapse: ComposedFormCollapse = observer(({ formCollapse, ...p
         }
         return (
           <Collapse.Panel key={index} {...props} header={header} forceRender>
+            {/* @ts-ignore */}
             <RecursionField schema={schema} name={name} />
           </Collapse.Panel>
         );
