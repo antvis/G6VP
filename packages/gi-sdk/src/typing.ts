@@ -147,6 +147,7 @@ export interface ComponentAsset {
     edgeKeys: string[];
     schemaData: GraphSchemaData;
     config: GIConfig;
+    AUTO_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;

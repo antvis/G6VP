@@ -1,5 +1,6 @@
 import { GraphinData } from '@antv/graphin';
-import { GIService } from '../typing';
+import { GIService, AssetType } from '../typing';
+
 export const isPosition = nodes => {
   //若收到一个空数组，Array.prototype.every() 方法在一切情况下都会返回 true
   if (nodes.length === 0) {
@@ -150,7 +151,7 @@ export const getService = (services: any[], serviceId?: string): GIService['serv
  * @param source 原数据 格式 { type:"object",properties:{}}
  * @returns
  */
-export const getDefaultValues = (s, componentType = undefined) => {
+export const getDefaultValues = (s, componentType?: AssetType) => {
   const ROOT = 'props';
   const result = {};
   const walk = (schema, obj, k) => {
