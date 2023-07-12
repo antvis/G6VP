@@ -90,12 +90,16 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
       CURRENT_SUBGRAPH: subGraphName,
     });
     const schemaData = (await queryGraphSchema()) as GraphSchemaData;
-    const counts = await queryVertexLabelCount();
 
     updateState(draft => {
       if (schemaData.nodes && schemaData.edges) {
         draft.schemaData = schemaData;
       }
+    });
+
+    const counts = await queryVertexLabelCount();
+
+    updateState(draft => {
       draft.count = {
         nodes: counts.nodeCount,
         edges: counts.edgeCount,

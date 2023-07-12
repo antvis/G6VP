@@ -2,6 +2,7 @@ import { useContext } from '@antv/gi-sdk';
 import { Select, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ITEM_STATE, MappingWay } from './registerMeta';
+import $i18n from '../i18n';
 
 interface Props {
   data;
@@ -27,7 +28,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
   const getResultColumns = () => {
     const columns = [
       {
-        title: '序号',
+        title: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.SerialNumber', dm: '序号' }),
         dataIndex: 'index',
         key: 'index',
         width: 60,
@@ -35,7 +36,8 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
       {
         title: nodeProperties?.length ? (
           <>
-            节点
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.Node', dm: '节点' })}
+
             <Select
               className="result-table-property-select"
               size="small"
@@ -46,15 +48,16 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
             />
           </>
         ) : (
-          '节点'
+          $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.Node', dm: '节点' })
         ),
+
         dataIndex: 'name',
         key: 'name',
         textWrap: 'word-break',
         ellipsis: true,
       },
       {
-        title: '重要性',
+        title: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.Importance', dm: '重要性' }),
         dataIndex: 'value',
         key: 'value',
         textWrap: 'word-break',
@@ -62,15 +65,19 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
         sorter: (a, b) => a.value - b.value,
       },
     ];
+
     if (currentAlgo === 'edge-property' && data.calcWay === 'count') {
       //@ts-ignore
       columns.splice(2, 0, {
-        title: '属性名',
+        title: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.AttributeName', dm: '属性名' }),
         dataIndex: 'values',
         key: 'values',
         textWrap: 'word-break',
       });
-      columns[3].title = '计算方式';
+      columns[3].title = $i18n.get({
+        id: 'gi-assets-algorithm.src.NodeImportance.resultTable.CalculationMethod',
+        dm: '计算方式',
+      });
     }
     return columns;
   };
@@ -142,7 +149,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, form, reAnalyse, node
         size="small"
         style={{ marginTop: '16px' }}
         showSorterTooltip={{
-          title: '排序',
+          title: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultTable.Sort', dm: '排序' }),
         }}
         onRow={record => {
           return {

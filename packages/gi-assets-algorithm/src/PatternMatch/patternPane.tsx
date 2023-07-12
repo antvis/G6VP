@@ -5,8 +5,8 @@ import { Dropdown, Empty, Menu, message, Tooltip, Upload } from 'antd';
 import React, { useEffect, useMemo, useRef } from 'react';
 import Util from '../utils';
 import './index.less';
-import FormattedMessage, { formatMessage } from './locale';
 import { formatData } from './util';
+import $i18n from '../i18n';
 
 const { exportGraphData } = Util;
 
@@ -74,29 +74,39 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
       };
       fReader.readAsText(file);
     } else {
-      message.error(formatMessage({ id: '请上传 JSON 格式的数据' }));
+      message.error(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternPane.PleaseUploadDataInJson',
+          dm: '请上传 JSON 格式的数据',
+        }),
+      );
     }
   };
 
   const buildPatternMenuItems = [
     <Menu.Item onClick={() => editPattern?.(id)}>
-      <FormattedMessage id="edit-pattern" />
+      {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.EditMode', dm: '编辑模式' })}
     </Menu.Item>,
     <Menu.Item onClick={() => extractPattern?.(id)}>
-      <Tooltip title={<FormattedMessage id="extract-pattern-tip" />}>
-        <FormattedMessage id="extract-pattern" />
+      <Tooltip
+        title={$i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.patternPane.DragOrClickTheContent',
+          dm: '从主图上拖拽圈选或点选内容并抽取为模式',
+        })}
+      >
+        {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.ExtractionMode', dm: '提取模式' })}
       </Tooltip>
     </Menu.Item>,
     <Menu.Item>
       <Upload accept=".json,.txt" onChange={importPattern} fileList={[]}>
-        <FormattedMessage id="import-pattern" />
+        {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.ImportMode', dm: '导入模式' })}
       </Upload>
     </Menu.Item>,
   ];
 
   const modifyPatternMenuItems = buildPatternMenuItems.concat(
     <Menu.Item onClick={downloadPatternData}>
-      <FormattedMessage id="download-pattern" />
+      {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.DownloadMode', dm: '下载模式' })}
     </Menu.Item>,
   );
 
@@ -111,7 +121,8 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
         <div className="kg-pattern-pane-graph">
           <Dropdown overlay={modifyPatternMenu} className="kg-pattern-pane-edit">
             <a onClick={e => e.preventDefault()}>
-              <FormattedMessage id="build-pattern" /> <DownOutlined />
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.BuildMode', dm: '构建模式' })}
+              <DownOutlined />
             </a>
           </Dropdown>
           <Graphin
@@ -132,11 +143,12 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
           image={Empty.PRESENTED_IMAGE_SIMPLE}
           description={
             <span>
-              <FormattedMessage id="no-pattern" />
-              &nbsp;&nbsp;
+              {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.NoMode', dm: '暂无模式' })}
+
               <Dropdown overlay={buildPatternMenu}>
                 <a onClick={e => e.preventDefault()}>
-                  <FormattedMessage id="build-pattern" /> <DownOutlined />
+                  {$i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.patternPane.BuildMode', dm: '构建模式' })}
+                  <DownOutlined />
                 </a>
               </Dropdown>
             </span>

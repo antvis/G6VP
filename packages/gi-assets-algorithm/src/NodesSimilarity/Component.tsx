@@ -5,9 +5,9 @@ import type { GraphinData } from '@antv/graphin';
 import { Button, Col, Empty, Input, message, Row } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import FormattedMessage, { formatMessage } from './locale';
 import SimilarityResultTable from './resultTable';
 import './index.less';
+import $i18n from '../i18n';
 
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
@@ -81,8 +81,14 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     updateHistory({
       componentId: 'NodesSimilarity',
       type: 'analyse',
-      subType: '节点相似性',
-      statement: `算法 ${similarityAlgo}`,
+      subType: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.NodeSimilarity', dm: '节点相似性' }),
+      statement: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.NodesSimilarity.Component.AlgorithmSimilarityalgo',
+          dm: '算法 {similarityAlgo}',
+        },
+        { similarityAlgo: similarityAlgo },
+      ),
       success,
       errorMsg,
       params: {
@@ -151,14 +157,34 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     switch (algorithm || similarityAlgo) {
       case NodesSimilarityAlgorithm.nodesConsineSimilarity:
         if (!graph || graph.destroyed) {
-          handleUpateHistory(false, '图实例不存在');
+          handleUpateHistory(
+            false,
+            $i18n.get({
+              id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheGraphInstanceDoesNot',
+              dm: '图实例不存在',
+            }),
+          );
           return;
         }
         const nodes = formatData?.nodes || [];
         const seedNode = nodes?.find(node => node.id === seed || seedNodeId);
         if (!seedNode) {
-          message.info(formatMessage({ id: 'seed-node-not-found' }));
-          handleUpateHistory(false, `种子节点${seedNodeId}不存在`);
+          message.info(
+            $i18n.get({
+              id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheSeedNodeDoesNot',
+              dm: '种子节点不存在',
+            }),
+          );
+          handleUpateHistory(
+            false,
+            $i18n.get(
+              {
+                id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheSeedNodeSeednodeidDoes',
+                dm: '种子节点{seedNodeId}不存在',
+              },
+              { seedNodeId: seedNodeId },
+            ),
+          );
           return;
         }
         // @ts-ignore
@@ -184,14 +210,22 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     const { similarityRes, similarNodes } = resData || {};
 
     if (!similarityRes?.length) {
-      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id={`data.no-data`} />} />;
+      return (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description={$i18n.get({
+            id: 'gi-assets-algorithm.src.NodesSimilarity.Component.NoDataAvailable',
+            dm: '暂无数据',
+          })}
+        />
+      );
     }
 
     if (similarityAlgo === NodesSimilarityAlgorithm.nodesConsineSimilarity) {
       return (
         <div className="nodes-similarity-result-wrapper">
           <span className="nodes-similarity-title">
-            <FormattedMessage id="analysis-result" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.AnalysisResults', dm: '分析结果' })}
           </span>
           <SimilarityResultTable similarNodes={similarNodes} topReset={topReset} similarityKey="cosineSimilarity" />
         </div>
@@ -250,7 +284,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <Row justify="space-between">
             <Col span={21}>
               <p className="nodes-similarity-title">
-                <FormattedMessage id="itelligent-analysis.nodes-similarity.select-seed-node" />
+                {$i18n.get({
+                  id: 'gi-assets-algorithm.src.NodesSimilarity.Component.SelectASeedNode',
+                  dm: '选择种子节点',
+                })}
               </p>
             </Col>
             <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
@@ -260,8 +297,9 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
           <Row justify="space-between">
             <Col span={21}>
               <Input
-                placeholder={formatMessage({
-                  id: 'itelligent-analysis.nodes-similarity.select-seed-node',
+                placeholder={$i18n.get({
+                  id: 'gi-assets-algorithm.src.NodesSimilarity.Component.SelectASeedNode',
+                  dm: '选择种子节点',
                 })}
                 style={{ display: 'block', margin: '0 0 30px 10px' }}
                 onChange={onSeachSeed}
@@ -279,7 +317,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         </div>
 
         <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={() => onAnalyse()}>
-          <FormattedMessage id="analyse" />
+          {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.Analysis', dm: '分析' })}
         </Button>
 
         {renderResult()}
