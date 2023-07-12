@@ -92,6 +92,12 @@ const SdkContent = () => {
         version: '17.0.2',
         global: 'ReactDOM',
       },
+      _: {
+        name: 'lodash',
+        version: '4.17.21',
+        global: '_',
+        url: 'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
+      },
       antd: {
         url: `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
         name: 'antd',

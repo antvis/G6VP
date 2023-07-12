@@ -1,7 +1,6 @@
 import * as React from 'react';
-import GISDK from '../GISDK';
-import { getCombineServices, loaderCombinedAssets } from '../process';
-import { loader } from '../process/loaderAssets';
+
+import { loader } from './loaderAssets';
 import Loading from './Loading';
 
 export interface Project {
@@ -52,6 +51,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     config: {},
     services: [],
     ThemeComponent: () => null,
+    GISDK: () => <></>,
   });
 
   const startStudio = async () => {
@@ -62,12 +62,24 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       const { engineContext } = dataset;
       // 请求依赖资源包
       await loader(Object.values(deps));
+      //@ts-ignore
+      const { default: GISDK, utils } = window.GISDK;
       // 根据包名，请求资产
-      const assets = await loaderCombinedAssets(Object.values(GI_ASSETS_PACKAGES));
+      const assets = await utils.loaderCombinedAssets(Object.values(GI_ASSETS_PACKAGES));
       // 设置引擎上下文
       window.localStorage.setItem('SERVER_ENGINE_CONTEXT', JSON.stringify(engineContext));
       window.localStorage.setItem('@theme', theme);
-      const services = getCombineServices(assets.services);
+      // 特殊情况判断
+      if (dataset.engineId === 'GI') {
+        //@ts-ignore
+        window['LOCAL_DATA_FOR_GI_ENGINE'] = {
+          //@ts-ignore
+          data: dataset.data.transData,
+          schemaData: dataset.schemaData,
+        };
+      }
+
+      const services = utils.getCombineServices(assets.services);
       setState(preState => {
         return {
           ...preState,
@@ -77,6 +89,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
           config: projectConfig,
           //@ts-ignore
           ThemeComponent: (window.GI_THEME_ANTD && window.GI_THEME_ANTD.default) || (() => null),
+          //@ts-ignore
+          GISDK,
         };
       });
     } catch (error) {
@@ -87,7 +101,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   React.useEffect(() => {
     startStudio();
   }, []);
-  const { assets, isReady, config, services, ThemeComponent } = state;
+  const { assets, isReady, config, services, ThemeComponent, GISDK } = state;
   if (!isReady) {
     return (
       <div>
