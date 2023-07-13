@@ -205,7 +205,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
             </Col>
             <Col span={18}>
               <InputNumber
-                min={1}
+                min={500}
                 max={Infinity}
                 value={timeout}
                 size="small"
