@@ -35,7 +35,7 @@
     "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",
     "@antv/gi-common-components": "workspace:*",
-    "immer": "^9.0.7",
+    "immer": "^9.0.0",
     "lodash-es": "^4.17.21",
     "mousetrap": "^1.6.5",
     "react-intl": "^6.4.4",

@@ -12,7 +12,6 @@ export default {
     antd: 'antd',
     '@antv/g2plot': 'G2Plot',
     'antd/es/*': 'antd',
-    '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
     '@antv/gi-sdk': 'GISDK',
@@ -40,7 +39,6 @@ export default {
     'https://gw.alipayobjects.com/os/lib/alipay/gi-assets-scene/2.2.3/dist/index.min.js',
     // "https://gw.alipayobjects.com/os/lib/alipay/gi-assets-algorithm/1.0.2/dist/index.min.js",
 
-    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
   ],
   styles: [
