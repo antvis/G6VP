@@ -744,7 +744,7 @@ importers:
         version: 5.0.12(@antv/g-lite@1.0.69)
       '@antv/g6':
         specifier: 4.x
-        version: 4.8.15
+        version: 4.8.19
       '@antv/gi-assets-basic':
         specifier: latest
         version: link:../gi-assets-basic
@@ -764,7 +764,7 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(react@17.0.2)
       antd:
-        specifier: 4.x
+        specifier: ^4.24.10
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
       lodash:
         specifier: ^4.17.21
@@ -1032,8 +1032,6 @@ importers:
       '@types/mousetrap':
         specifier: ^1.6.11
         version: 1.6.11
-
-  packages/gi-sdk-app: {}
 
   packages/gi-sdk-app: {}
 
