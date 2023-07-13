@@ -44,7 +44,7 @@
     "@antv/util": "^3.2.5",
     "d3-scale": "^4.0.0",
     "deepmerge": "^4.2.2",
-    "immer": "^9.0.15",
+    "immer": "^9.0.0",
     "json2csv": "^5.0.7",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",

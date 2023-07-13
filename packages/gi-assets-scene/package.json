@@ -49,10 +49,10 @@
     "three": "0.139.2"
   },
   "devDependencies": {
-    "mini-css-extract-plugin": "^2.3.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "rimraf": "^3.0.2",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.0.0"
   },
   "peerDependencies": {
     "@antv/graphin": "^2.7.21",
