@@ -422,5 +422,11 @@
   "advance.src.services.ThemeSetting.TheTopicHasBeenUpdated": "The topic has been updated.",
   "advance.src.services.ThemeSetting.TheTopicDoesNotExist": "The topic does not exist.",
   "advance.src.services.ThemeSetting.DeleteATopic": "Delete a topic",
-  "advance.src.services.ThemeSetting.DeletedSuccessfully": "Deleted successfully"
+  "advance.src.services.ThemeSetting.DeletedSuccessfully": "Deleted successfully",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedLimitNum": "Cannot be modified. limit(num) constraint exists in the statement.",
+  "advance.components.GremlinQuery.Component.TheStatementAddsASuffix": "The statement adds a suffix: .limt({limit}).",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout": "Cannot be modified. with('evaluationTimeout', timeout) constraint exists in the statement.",
+  "advance.components.GremlinQuery.Component.StatementToAddConstraintsWith": "Statement to add constraints: .with('evaluationTimeout', {timeout})",
+  "advance.src.services.CypherQuery.QuerySucceeded": "Query succeeded",
+  "advance.src.services.CypherQuery.TheCurrentQueryRequestIs": "The current query request is MOCK. Use it with the graph database."
 }

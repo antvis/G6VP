@@ -1,6 +1,6 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import GremlinEditor from 'ace-gremlin-editor';
-import { Button, Col, InputNumber, notification, Row, Space } from 'antd';
+import { Button, Col, InputNumber, notification, Row, Space, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useImmer } from 'use-immer';
 import { nanoid } from 'nanoid';
@@ -158,31 +158,49 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
       {isShowLimit ? (
         <div className="gi-gremlin-query-config">
-          <Row>
-            <Col span={6}>
-              <label>Limit: </label>
-            </Col>
-            <Col span={18}>
-              <InputNumber
-                min={1}
-                max={Infinity}
-                value={limit}
-                size="small"
-                style={{ width: '100%' }}
-                onChange={val =>
-                  setState(draft => {
-                    draft.limit = val;
+          <Tooltip
+            title={
+              editorValue.includes('.limit')
+                ? $i18n.get({
+                    id: 'advance.components.GremlinQuery.Component.CannotBeModifiedLimitNum',
+                    dm: '不可修改，语句中已有 .limit(num) 约束',
                   })
-                }
-              />
-            </Col>
-          </Row>
+                : ''
+            }
+          >
+            <Row>
+              <Col span={6}>
+                <label>Limit: </label>
+              </Col>
+              <Col span={18}>
+                <InputNumber
+                  min={1}
+                  max={Infinity}
+                  value={limit}
+                  size="small"
+                  disabled={editorValue.includes('.limit')}
+                  style={{ width: '100%' }}
+                  onChange={val =>
+                    setState(draft => {
+                      draft.limit = val;
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+          </Tooltip>
           {limit ? (
             <div className="gi-gremlin-query-config-tip">
               {$i18n.get(
                 {
                   id: 'advance.components.GremlinQuery.Component.LimitConfigTip',
-                  dm: `语句将添加后缀: .limt(${limit})`,
+                  dm: $i18n.get(
+                    {
+                      id: 'advance.components.GremlinQuery.Component.TheStatementAddsASuffix',
+                      dm: '语句将添加后缀: .limt({limit})',
+                    },
+                    { limit: limit },
+                  ),
                 },
                 {
                   value: limit,
@@ -199,31 +217,49 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
       {isShowTimeout ? (
         <div className="gi-gremlin-query-config">
-          <Row>
-            <Col span={6}>
-              <label>Timeout: </label>
-            </Col>
-            <Col span={18}>
-              <InputNumber
-                min={500}
-                max={Infinity}
-                value={timeout}
-                size="small"
-                style={{ width: '100%' }}
-                onChange={val =>
-                  setState(draft => {
-                    draft.timeout = val;
+          <Tooltip
+            title={
+              editorValue.includes('evaluationTimeout')
+                ? $i18n.get({
+                    id: 'advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout',
+                    dm: "不可修改，语句中已有 .with('evaluationTimeout', timeout) 约束",
                   })
-                }
-              />
-            </Col>
-          </Row>
+                : ''
+            }
+          >
+            <Row>
+              <Col span={6}>
+                <label>Timeout: </label>
+              </Col>
+              <Col span={18}>
+                <InputNumber
+                  min={500}
+                  max={Infinity}
+                  value={timeout}
+                  size="small"
+                  disabled={editorValue.includes('evaluationTimeout')}
+                  style={{ width: '100%' }}
+                  onChange={val =>
+                    setState(draft => {
+                      draft.timeout = val;
+                    })
+                  }
+                />
+              </Col>
+            </Row>
+          </Tooltip>
           {timeout ? (
             <div className="gi-gremlin-query-config-tip">
               {$i18n.get(
                 {
                   id: 'advance.components.GremlinQuery.Component.TimeoutConfigTip',
-                  dm: `语句将添加约束: .with('evaluationTimeout', ${timeout})`,
+                  dm: $i18n.get(
+                    {
+                      id: 'advance.components.GremlinQuery.Component.StatementToAddConstraintsWith',
+                      dm: "语句将添加约束: .with('evaluationTimeout', {timeout})",
+                    },
+                    { timeout: timeout },
+                  ),
                 },
                 {
                   value: timeout,
@@ -259,18 +295,18 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
         </Space>
       </div>
       {/* {state.modalVisible && (
-         <PublishTemplate
-           saveTemplateServceId={saveTemplateServceId}
-           visible={state.modalVisible}
-           value={editorValue}
-           close={() => {
-             setState(draft => {
-               draft.modalVisible = false;
-             });
-           }}
-           fileType={'GREMLIN'}
-         />
-        )} */}
+          <PublishTemplate
+            saveTemplateServceId={saveTemplateServceId}
+            visible={state.modalVisible}
+            value={editorValue}
+            close={() => {
+              setState(draft => {
+                draft.modalVisible = false;
+              });
+            }}
+            fileType={'GREMLIN'}
+          />
+         )} */}
     </div>
   );
 };
