@@ -30,9 +30,11 @@ const addComponents = [
     props: {
       serviceId: 'GraphScope/GremlinQuery',
       isShowPublishButton: false,
+      isShowLimit: true,
+      isShowTimeout: true,
       saveTemplateServceId: 'GI/PublishTemplate',
       initialValue: 'g.V().limit(10)',
-      height: 200,
+      height: 166,
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
         visible: false,
