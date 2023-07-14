@@ -22,8 +22,11 @@ export const CypherQuery: ServiceObject = {
       .graphin();
 
     notification.info({
-      message: '查询成功',
-      description: '当前的查询请求是 MOCK 的，请搭配图数据库使用。',
+      message: $i18n.get({ id: 'advance.src.services.CypherQuery.QuerySucceeded', dm: '查询成功' }),
+      description: $i18n.get({
+        id: 'advance.src.services.CypherQuery.TheCurrentQueryRequestIs',
+        dm: '当前的查询请求是 MOCK 的，请搭配图数据库使用。',
+      }),
     });
     return new Promise(resolve => {
       return resolve(data);
