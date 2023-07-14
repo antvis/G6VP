@@ -117,7 +117,7 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
   }
   return assets.reduce(
     (acc, curr) => {
-      const { components, version, name, elements, layouts, services, templates, deploys, locales } = curr;
+      const { components, version, name, elements, layouts, services, templates, deploys, locales, icons } = curr;
       const coms = appendInfo(components, version, name);
       const elems = appendInfo(elements, version, name);
       const lays = appendInfo(layouts, version, name);
@@ -156,8 +156,18 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
             ]
           : acc.services,
         locales: {
-          ...merge(acc.locales, locales)
-        }
+          ...merge(acc.locales, locales),
+        },
+        icons: icons
+          ? [
+              ...acc.icons,
+              {
+                version,
+                pkg: name,
+                icons: Array.isArray(icons) ? icons : [icons],
+              },
+            ]
+          : acc.icons,
       };
     },
     {
@@ -167,7 +177,8 @@ export const loaderCombinedAssets = async (packages: AssetPackage[], ASSETS?: an
       templates: {},
       services: [],
       deploys: {},
-      locales: {}
+      locales: {},
+      icons: [],
     },
   );
 };

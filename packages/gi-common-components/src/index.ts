@@ -13,7 +13,7 @@ export { AssetCollapse, FormCollapse, Offset } from './FormilyForm';
 export { default as GroupContainer } from './GroupContainer';
 export { default as DisplayColor } from './GroupContainer/DisplayColor';
 export { default as Handler } from './Handler';
-export { Icon, icons } from './Icon/index';
+export { Icon, icons, registerIconFonts } from './Icon/index';
 export { default as RadiusTabs } from './RadiusTabs';
 export { default as SchemaField } from './SchemaField';
 export { default as Utils } from './Utils';

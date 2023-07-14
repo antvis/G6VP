@@ -91,22 +91,9 @@ const LOCAL_ASSETS: any[] = [
  * @returns
  */
 export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Promise<GIAssets> => {
-  let components = {};
-  let elements;
-  let layouts;
-  let templates;
-  let deploys;
-  let FinalAssets;
-  let locales;
-  let services;
-
   const packages = getAssetPackages();
+  const FinalAssets = await loaderCombinedAssets(packages, IS_DEV_ENV && LOCAL_ASSETS);
 
-  if (IS_DEV_ENV) {
-    FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
-  } else {
-    FinalAssets = await loaderCombinedAssets(packages);
-  }
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
@@ -124,26 +111,27 @@ export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Pr
     }, {});
   };
 
-  components = getActiveAssets(activeAssetsKeys, FinalAssets, 'components');
-  elements = getActiveAssets(activeAssetsKeys, FinalAssets, 'elements');
-  layouts = getActiveAssets(activeAssetsKeys, FinalAssets, 'layouts');
-  locales = { ...FinalAssets.locales };
-  templates = { ...FinalAssets.templates };
+  const components = getActiveAssets(activeAssetsKeys, FinalAssets, 'components');
+  const elements = getActiveAssets(activeAssetsKeys, FinalAssets, 'elements');
+  const layouts = getActiveAssets(activeAssetsKeys, FinalAssets, 'layouts');
+
   /** deploy,services 和 engineId 是有关联关系的 */
-  deploys = { ...FinalAssets.deploys };
-  services = FinalAssets.services.filter(item => {
+  const { locales, templates, deploys, icons } = FinalAssets;
+
+  const services = FinalAssets.services.filter(item => {
     return item.id === 'GI' || item.id === engineId;
   });
 
   return await new Promise(resolve => {
     resolve({
       components,
-      elements,
-      layouts,
-      templates,
       deploys,
-      services,
+      elements,
+      icons,
+      layouts,
       locales,
+      services,
+      templates,
     } as GIAssets);
   });
 };
