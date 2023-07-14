@@ -69,6 +69,9 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
 
   const [btnLoading, setBtnLoading] = useState(false);
 
+  const editorValueHasLimit = useMemo(() => editorValue.includes('.limit'), [editorValue]);
+  const editorValueHasTimeout = useMemo(() => editorValue.includes('evaluationTimeout'), [editorValue]);
+
   const handleClickQuery = async () => {
     setBtnLoading(true);
     if (!service) {
@@ -76,10 +79,10 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     }
 
     let gremlinCode = `${editorValue}`;
-    if (limit) {
+    if (limit && !editorValueHasLimit) {
       gremlinCode = `${gremlinCode}.limit(${limit})`;
     }
-    if (timeout) {
+    if (timeout && !editorValueHasTimeout) {
       gremlinCode = `${gremlinCode.substring(0, 1)}.with('evaluationTimeout', ${timeout})${gremlinCode.substring(1)}`;
     }
 
@@ -160,7 +163,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     <div className="gi-gremlin-query-config" style={{ width: constraintsHorizontal ? '50%' : 'unset' }}>
       <Tooltip
         title={
-          editorValue.includes('.limit')
+          editorValueHasLimit
             ? $i18n.get({
                 id: 'advance.components.GremlinQuery.Component.CannotBeModifiedLimitNum',
                 dm: '不可修改，语句中已有 .limit(num) 约束',
@@ -173,10 +176,10 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           <InputNumber
             min={1}
             max={Infinity}
-            value={limit}
+            value={editorValueHasLimit ? undefined : limit}
             size="small"
             style={{ width: 'calc(100% - 80px)' }}
-            disabled={editorValue.includes('.limit')}
+            disabled={editorValueHasLimit}
             onChange={val =>
               setState(draft => {
                 draft.limit = val;
@@ -185,7 +188,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           />
         </div>
       </Tooltip>
-      {limit ? (
+      {limit && !editorValueHasLimit ? (
         <div className="gi-gremlin-query-config-tip">
           {$i18n.get(
             {
@@ -215,7 +218,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     <div className="gi-gremlin-query-config" style={{ width: constraintsHorizontal ? '50%' : 'unset' }}>
       <Tooltip
         title={
-          editorValue.includes('evaluationTimeout')
+          editorValueHasTimeout
             ? $i18n.get({
                 id: 'advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout',
                 dm: "不可修改，语句中已有 .with('evaluationTimeout', timeout) 约束",
@@ -228,9 +231,9 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           <InputNumber
             min={500}
             max={Infinity}
-            value={timeout}
+            value={editorValueHasTimeout ? undefined : timeout}
             size="small"
-            disabled={editorValue.includes('evaluationTimeout')}
+            disabled={editorValueHasTimeout}
             style={{ width: 'calc(100% - 80px)' }}
             onChange={val =>
               setState(draft => {
@@ -240,7 +243,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
           />
         </div>
       </Tooltip>
-      {timeout ? (
+      {timeout && !editorValueHasTimeout ? (
         <div className="gi-gremlin-query-config-tip">
           {$i18n.get(
             {
