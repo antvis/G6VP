@@ -6,21 +6,21 @@ const backStyleMap = {
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent transparent transparent var(--border-color)',
+    borderColor: 'transparent transparent transparent var(--border-color, #ddd)',
   },
   right: {
     right: '100%',
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent var(--border-color) transparent transparent',
+    borderColor: 'transparent var(--border-color, #ddd) transparent transparent',
   },
   bottom: {
     left: '10%',
     bottom: 'calc(100% + 1px)',
     height: '38px',
     width: '80px',
-    borderColor: 'transparent transparent var(--border-color) transparent',
+    borderColor: 'transparent transparent var(--border-color, #ddd) transparent',
   },
 };
 
@@ -30,21 +30,21 @@ const handlerStyleMap = {
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent transparent transparent var(--background-color)',
+    borderColor: 'transparent transparent transparent var(--background-color, #fff)',
   },
   right: {
     right: 'calc(100% - 1px)',
     top: '30%',
     height: '80px',
     width: '38px',
-    borderColor: 'transparent var(--background-color) transparent transparent ',
+    borderColor: 'transparent var(--background-color, #fff) transparent transparent ',
   },
   bottom: {
     left: '10%',
     bottom: '100%',
     height: '38px',
     width: '80px',
-    borderColor: 'transparent transparent var(--background-color)  transparent',
+    borderColor: 'transparent transparent var(--background-color, #fff)  transparent',
   },
 };
 
