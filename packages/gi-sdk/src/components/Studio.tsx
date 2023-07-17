@@ -2,6 +2,7 @@ import * as React from 'react';
 import GISDK from '../GISDK';
 import { getCombineServices, loaderCombinedAssets } from '../process';
 import { loader } from '../process/loaderAssets';
+import registerIconFonts from '../process/registerIconFonts';
 import Loading from './Loading';
 
 export interface Project {
@@ -68,6 +69,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       window.localStorage.setItem('SERVER_ENGINE_CONTEXT', JSON.stringify(engineContext));
       window.localStorage.setItem('@theme', theme);
       const services = getCombineServices(assets.services);
+      // 注册图标字体
+      await registerIconFonts(assets.icons);
       setState(preState => {
         return {
           ...preState,

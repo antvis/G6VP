@@ -1,7 +1,6 @@
 import { Button, Input, Menu, Modal } from 'antd';
 import React from 'react';
-import { Icon as MyIcon } from '../../Icon';
-import font from '../../Icon/font.json';
+import { Icon as MyIcon, glyphs } from '../../Icon';
 import $i18n from '../../i18n';
 const { Search } = Input;
 interface IconContentProps {
@@ -103,13 +102,6 @@ const category = [
   },
 ];
 
-const allIconOptions = font.glyphs.map(item => {
-  return {
-    key: item.font_class,
-    value: `icon-${item.font_class}`,
-  };
-});
-
 const IconContent: React.FunctionComponent<IconContentProps> = props => {
   const { onChange, updateState, activeCategory, activeIcon } = props;
   const onSearch = value => console.log(value);
@@ -134,6 +126,13 @@ const IconContent: React.FunctionComponent<IconContentProps> = props => {
       onChange(key);
     }
   };
+
+  const allIconOptions = glyphs.map(item => {
+    return {
+      key: item.font_class,
+      value: `icon-${item.font_class}`,
+    };
+  });
 
   const options = category.find(item => item.id === activeCategory)?.options;
   const handleClick = () => {

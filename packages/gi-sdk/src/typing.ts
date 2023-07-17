@@ -285,6 +285,11 @@ export type GIAssets = Partial<{
       [key: string]: any;
     };
   };
+  /** iconfont 图标 */
+  icons: {
+    icons: string[];
+    [keys: string]: any;
+  }[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force

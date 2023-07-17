@@ -133,14 +133,17 @@ const Analysis = props => {
       /** 根据活跃资产Key值，动态加载资产实例 */
       queryAssets(activeAssetsKeys, engineId).then(
         //@ts-ignore
-        activeAssets => {
+        async activeAssets => {
           const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
           const assetServices = utils.getCombineServices(activeAssets.services!);
+          // 注册图标
+          await utils.registerIconFonts(activeAssets.icons);
+
           updateState(draft => {
             /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
             const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
             const schemaData = original(draft.schemaData);
-
+            
             const activeAssetsInformation = queryActiveAssetsInformation({
               engineId,
               assets: activeAssets,
@@ -194,8 +197,7 @@ const Analysis = props => {
               },
             };
 
-            /** 根据服务配置列表，得到真正运行的Service实例 */
-
+            // 根据服务配置列表，得到真正运行的Service实例
             const services = utils.uniqueElementsBy(
               [...getServicesByConfig(combinedServiceConfig, data, schemaData), ...assetServices],
               (a, b) => {

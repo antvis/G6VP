@@ -1,59 +1,86 @@
-import { createFromIconfontCN } from '@ant-design/icons';
 // 资源地址：https://www.iconfont.cn/manage/index?spm=a313x.7781069.1998910419.20&manage_type=myprojects&projectId=3381398&keyword=&project_type=&page=
+
+import IconFont, { createFromIconfontCN } from '@ant-design/icons';
 import Graphin from '@antv/graphin';
-import font from './font.json';
+import React from 'react';
+import { loadFontJson, loadUnicodeFont, type FontJson } from './loader';
 
-export const FONT_ID = 'font_3381398_hecr296g6n8';
-const scriptUrl = `//at.alicdn.com/t/a/${FONT_ID}.js`;
-const glyphs = font.glyphs.map(item => {
-  return {
-    ...item,
-    name: item.font_class, //统一为font class
-  };
-});
-const initFont = () => {
-  let fontList = [
-    {
-      fontUrl: `//at.alicdn.com/t/a/${FONT_ID}.woff2`,
-      format: 'woff2',
-    },
-    {
-      fontUrl: `//at.alicdn.com/t/a/${FONT_ID}.woff`,
-      format: 'woff',
-    },
-    {
-      fontUrl: `//at.alicdn.com/t/a/${FONT_ID}.ttf`,
-      format: 'truetype',
-    },
-  ];
-  const loadFonts = async (fontFamily, fontUrl) => {
-    const font = new FontFace(fontFamily, `url(${fontUrl})`);
-    await font.load();
-    //@ts-ignore
-    document.fonts.add(font);
-  };
-  for (let i in fontList) {
-    loadFonts('iconfont', fontList[i].fontUrl);
+export const fontFamily = 'iconfont';
+
+// --- 注册 font icon ---
+
+let icons = Graphin.registerFontFamily(() => ({ fontFamily, glyphs: [] }));
+let glyphs: FontJson['glyphs'] = [];
+
+async function loadFontsJson(ids: string[]) {
+  const fonts = await Promise.all(ids.map(id => loadFontJson(id)));
+  // 合并所有字体
+  const _glyphs = fonts.reduce((acc, curr) => {
+    acc.push(...curr.glyphs);
+    return acc;
+  }, [] as FontJson['glyphs']);
+
+  glyphs = _glyphs;
+  icons = Graphin.registerFontFamily(() => ({
+    fontFamily,
+    glyphs: _glyphs.map(item => {
+      return {
+        ...item,
+        name: item.font_class, //统一为font class
+      };
+    }),
+  }));
+}
+
+export { icons, glyphs };
+
+// --- 注册 antd iconfont ---
+const registeredIds = new Set<string>();
+const builtInIconFontId = 'font_3381398_hecr296g6n8';
+const getIconfontScriptUrl = (id: string) => `//at.alicdn.com/t/a/${id}.js`;
+
+async function loadUnicodeFonts(ids: string[]) {
+  await Promise.all(ids.map(id => loadUnicodeFont(id)));
+}
+
+export async function registerIconFonts(ids: string[]) {
+  const unregisteredIds = ids.filter(id => !registeredIds.has(id));
+  if (!unregisteredIds.length) return;
+
+  // register
+  createFromIconfontCN({
+    scriptUrl: unregisteredIds.map(getIconfontScriptUrl),
+  });
+
+  await Promise.all([loadUnicodeFonts(unregisteredIds), loadFontsJson(unregisteredIds)]);
+
+  unregisteredIds.forEach(id => registeredIds.add(id));
+}
+
+// 注册内置 iconfont
+registerIconFonts([builtInIconFontId]);
+
+interface IconProps extends React.HTMLProps<HTMLSpanElement> {
+  spin?: boolean;
+  rotate?: number;
+  type: string;
+}
+
+/**
+ * @reference https://github.com/ant-design/ant-design-icons/blob/master/packages/icons-react/src/components/IconFont.tsx
+ */
+export const Icon = React.forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
+  const { type, children, ...restProps } = props;
+  let content: React.ReactNode = null;
+  if (props.type) {
+    content = <use xlinkHref={`#${type}`} />;
   }
-};
-
-initFont();
-
-// https://github.com/ant-design/ant-design-icons/blob/master/packages/icons-react/src/components/IconFont.tsx
-export const Icon = createFromIconfontCN({
-  scriptUrl: scriptUrl,
+  if (children) {
+    content = children;
+  }
+  return (
+    <IconFont {...restProps} ref={ref}>
+      {content}
+    </IconFont>
+  );
 });
-
-// 生成iconLoader函数
-const iconLoaderFunction = () => {
-  return {
-    fontFamily: 'iconfont',
-    glyphs: glyphs,
-  };
-};
-
-// 注册到 Graphin 中
-const ilf = iconLoaderFunction();
-export const fontFamily = ilf.fontFamily;
-
-export const icons = Graphin.registerFontFamily(iconLoaderFunction);
