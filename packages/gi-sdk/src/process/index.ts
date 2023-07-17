@@ -46,3 +46,5 @@ export {
   transDataBySchemaMeta,
   transSchemaByMeta,
 } from './transGraphDataBySchemaMate';
+
+export { getSiteContext, setSiteContext } from './siteContext';
