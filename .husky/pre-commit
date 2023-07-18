@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$current_branch" = "master" ]; then
+  printf "\e[31m警告: 不允许直接在master分支上提交代码\n\e[0m"
+  exit 1
+fi

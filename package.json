@@ -12,7 +12,8 @@
     "clean": "pnpm run -r clean",
     "publish": "pnpm publish -r --registry=https://registry.npmjs.org",
     "cdn": "node ./scripts/publish_yuyan.mjs",
-    "tar:gi-httpservice": "node scripts/tar_httpservice.mjs && cd packages/gi-httpservice-xxx  && npm install && npm run build:docker && npm run tar && cd ../../ && node scripts/rm_httpservice.mjs"
+    "tar:gi-httpservice": "node scripts/tar_httpservice.mjs && cd packages/gi-httpservice-xxx  && npm install && npm run build:docker && npm run tar && cd ../../ && node scripts/rm_httpservice.mjs",
+    "scriptname": "cmd"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -62,6 +63,7 @@
     "css-loader": "^6.8.1",
     "father": "^2.30.23",
     "fs-extra": "^10.1.0",
+    "husky": "^8.0.3",
     "less-loader": "^11.0.0",
     "mini-css-extract-plugin": "^2.7.6",
     "npm-run-all": "^4.1.5",

@@ -3,6 +3,7 @@ import $i18n from '../i18n';
 export const nodes: GIConfig['nodes'] = [
   {
     id: 'SimpleNode',
+    default: true,
     name: $i18n.get({ id: 'sdk.src.constants.template.OfficialNode', dm: '官方节点' }),
     expressions: [],
     groupName: $i18n.get({ id: 'sdk.src.constants.template.DefaultStyle', dm: '默认样式' }),
@@ -18,6 +19,7 @@ export const nodes: GIConfig['nodes'] = [
 export const edges: GIConfig['edges'] = [
   {
     id: 'SimpleEdge',
+    default: true,
     name: $i18n.get({ id: 'sdk.src.constants.template.OfficialSide', dm: '官方边' }),
     expressions: [],
     groupName: $i18n.get({ id: 'sdk.src.constants.template.DefaultStyle', dm: '默认样式' }),
