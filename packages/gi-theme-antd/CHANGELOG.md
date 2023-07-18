@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.2
+
+### Patch Changes
+
+- weekly publish
+
 ## 0.6.1
 
 ### Patch Changes
