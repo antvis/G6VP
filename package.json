@@ -7,7 +7,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npm run build:all:es",
     "build:all:es": "turbo run build:es",
-    "build:all:umd": "turbo run build:umd",
+    "build:all:umd": "turbo run build:umd --no-cache",
     "start": "cd packages/gi-site && npm run start",
     "clean": "pnpm run -r clean",
     "publish": "pnpm publish -r --registry=https://registry.npmjs.org",
