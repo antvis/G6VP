@@ -94,12 +94,15 @@ const Create: React.FunctionComponent<CreateProps> = props => {
   const handleSubmit = async () => {
     //@ts-ignore
     const values = await form.validateFields();
-
-    const style = utils.generatorStyleConfigBySchema(dataset.schemaData);
     const { nodes, edges, layout, activeAssetsKeys, components } = getConfigByEngineId(
       dataset.engineId,
       JSON.parse(JSON.stringify(template)),
     );
+
+    // 如果 nodes 和 edges 都是默认值，那么使用 defaultProjectConfig 替换
+    const isDefault = item => item.default === true;
+    const overwriteElements =
+      nodes.every(isDefault) && edges.every(isDefault) ? utils.generatorStyleConfigBySchema(dataset.schemaData) : {};
 
     const projectId = await ProjectServices.create({
       datasetId: dataset.id,
@@ -112,7 +115,7 @@ const Create: React.FunctionComponent<CreateProps> = props => {
         edges,
         layout,
         components,
-        ...style,
+        ...overwriteElements,
       },
       activeAssetsKeys,
       type: 'project',

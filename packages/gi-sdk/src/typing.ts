@@ -335,6 +335,7 @@ export interface GINodeConfig {
   }[];
   logic: boolean;
   groupName: string;
+  default?: boolean;
 }
 export interface GIEdgeConfig {
   id: string;
@@ -352,6 +353,7 @@ export interface GIEdgeConfig {
   }[];
   logic: boolean;
   groupName: string;
+  default?: boolean;
 }
 
 export interface GIConfig {
