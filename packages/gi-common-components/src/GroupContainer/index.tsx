@@ -21,7 +21,7 @@ export interface GroupContainerProps {
     groups: ItemConfig[];
   };
   valuesChange: (
-    currenr: any,
+    current: any,
     allValues: {
       groups: ItemConfig[];
     },
@@ -94,7 +94,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
 
   return (
     /** 让fixed定位从该容器开始 */
-    <div className="gi-group-contaner" style={{ transform: 'scale(1)', height: '100%' }}>
+    <div className="gi-group-container" style={{ transform: 'scale(1)', height: '100%' }}>
       <Form
         initialValues={initValues}
         layout="vertical"
@@ -120,7 +120,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           <Form.List name="groups">
             {(fields, { add, remove }) => {
               return (
-
                 <div className="gi-style-form-list">
                   <div className="gi-style-form-btn-group">
                     <Button
@@ -131,24 +130,24 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         const options = {
                           ...defaultGroupOption,
                           groupId: Math.random().toString(36).slice(-8),
-                          groupName:  $i18n.get(
-                          {
-                            id: 'common-components.src.GroupContainer.CustomStyleIdx',
-                            dm: '自定义样式 {idx}',
-                          },
-                          { idx: idx },
-                        ),
+                          groupName: $i18n.get(
+                            {
+                              id: 'common-components.src.GroupContainer.CustomStyleIdx',
+                              dm: '自定义样式 {idx}',
+                            },
+                            { idx: idx },
+                          ),
                         };
                         add(options);
                         setActiveKeys([...activeKeys, `${fields.length}`]);
                       }}
                       icon={<PlusOutlined />}
                     >
-                         {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
+                      {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
                     </Button>
                     <Button onClick={clear}>重置</Button>
                   </div>
-                  
+
                   <Collapse
                     className="gi-sidebar-collapse"
                     bordered={false}
@@ -166,7 +165,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       }
                       return (
                         <Panel
-                          className="gi-group-contaner-panel"
+                          className="gi-group-container-panel"
                           key={`${key}`}
                           extra={
                             <div
