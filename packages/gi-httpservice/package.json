@@ -22,8 +22,7 @@
     "tsc": "ets && tsc -p tsconfig.json",
     "ci": "npm run lint && npm run cov && npm run tsc",
     "autod": "autod",
-    "lint": "eslint . --ext .ts --resolve-plugins-relative-to .",
-    "clean": "ets clean"
+    "lint": "eslint . --ext .ts --resolve-plugins-relative-to ."
   },
   "dependencies": {
     "egg": "^2.6.1",
