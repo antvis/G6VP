@@ -21,7 +21,7 @@ export interface ContextMenuProps {
 }
 
 const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
-  const container = useRef() as RefObject<HTMLDivElement>;
+  const container = useRef<HTMLDivElement>(null);
   const { children, style, setItem } = props;
   const contextmenu = useContextMenu({
     container,
