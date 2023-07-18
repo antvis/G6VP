@@ -76,16 +76,16 @@ function eject() {
   copyDir(targetPath, sourcePath);
 
   // 回写 package.json 版本号
-  modifyPkgJson(path.resolve(sourcePath, 'package.json'), pkgJson => {
-    if (pkgJson['dependencies']['@antv/gi-sdk']) {
-      const giSDKPkgJson = readPkgJson(path.resolve('../gi-sdk/package.json'));
-      pkgJson['dependencies']['@antv/gi-sdk'] = `^${giSDKPkgJson.version}`;
-    }
-    if (pkgJson['dependencies']['@antv/gi-common-components']) {
-      const giCommonComponentsPkgJson = readPkgJson(path.resolve('../gi-common-components/package.json'));
-      pkgJson['dependencies']['@antv/gi-common-components'] = `^${giCommonComponentsPkgJson.version}`;
-    }
-  });
+  // modifyPkgJson(path.resolve(sourcePath, 'package.json'), pkgJson => {
+  //   if (pkgJson['dependencies']['@antv/gi-sdk']) {
+  //     const giSDKPkgJson = readPkgJson(path.resolve('../gi-sdk/package.json'));
+  //     pkgJson['dependencies']['@antv/gi-sdk'] = `^${giSDKPkgJson.version}`;
+  //   }
+  //   if (pkgJson['dependencies']['@antv/gi-common-components']) {
+  //     const giCommonComponentsPkgJson = readPkgJson(path.resolve('../gi-common-components/package.json'));
+  //     pkgJson['dependencies']['@antv/gi-common-components'] = `^${giCommonComponentsPkgJson.version}`;
+  //   }
+  // });
 }
 
 /**
@@ -118,14 +118,14 @@ function link() {
   if (!fs.existsSync(targetPath)) {
     copyDir(sourcePath, targetPath);
     // 修改 package.json 中的 gi-sdk 依赖为 'workspace:*'
-    modifyPkgJson(path.resolve(targetPath, 'package.json'), targetPkgJson => {
-      if (targetPkgJson.dependencies['@antv/gi-sdk']) {
-        targetPkgJson.dependencies['@antv/gi-sdk'] = 'workspace:*';
-      }
-      if (targetPkgJson.dependencies['@antv/gi-common-components']) {
-        targetPkgJson.dependencies['@antv/gi-common-components'] = 'workspace:*';
-      }
-    });
+    // modifyPkgJson(path.resolve(targetPath, 'package.json'), targetPkgJson => {
+    //   if (targetPkgJson.dependencies['@antv/gi-sdk']) {
+    //     targetPkgJson.dependencies['@antv/gi-sdk'] = 'workspace:*';
+    //   }
+    //   if (targetPkgJson.dependencies['@antv/gi-common-components']) {
+    //     targetPkgJson.dependencies['@antv/gi-common-components'] = 'workspace:*';
+    //   }
+    // });
   }
 
   // 校验是否存在 build:es 命令
