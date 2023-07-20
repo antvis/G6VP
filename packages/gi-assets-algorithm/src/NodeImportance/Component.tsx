@@ -234,7 +234,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
         graph.updateItem(nodeItem, {
           size,
-          oriSize: modelSize || style?.keyshape.size || 30,
+          oriSize: modelSize || style?.keyshape?.size || 30,
           // 兼容 graphin-circle
           style: {
             keyshape: {
@@ -267,7 +267,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
             graph.updateItem(edgeItem, {
               size: lineWidth,
-              oriSize: modelSize || style?.keyshape.size || 1,
+              oriSize: modelSize || style?.keyshape?.size || 1,
               // 兼容 graphin-line 类型边
               style: {
                 keyshape: {
