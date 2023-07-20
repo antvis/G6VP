@@ -1,5 +1,13 @@
 # @antv/gi-sdk
 
+## 2.4.3
+
+### Patch Changes
+
+- publish in 2023-07-20
+- Updated dependencies
+  - @antv/gi-common-components@1.3.3
+
 ## 2.4.2
 
 ### Patch Changes

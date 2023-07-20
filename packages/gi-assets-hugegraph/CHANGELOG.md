@@ -1,5 +1,13 @@
 # @antv/gi-assets-hugegraph
 
+## 1.1.3
+
+### Patch Changes
+
+- publish in 2023-07-20
+- Updated dependencies
+  - @antv/gi-sdk@2.4.3
+
 ## 1.1.2
 
 ### Patch Changes
