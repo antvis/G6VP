@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.3
+
+### Patch Changes
+
+- publish in 2023-07-20
+
 ## 1.3.2
 
 ### Patch Changes
