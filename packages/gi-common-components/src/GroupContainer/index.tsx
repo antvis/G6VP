@@ -120,7 +120,6 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
           <Form.List name="groups">
             {(fields, { add, remove }) => {
               return (
-
                 <div className="gi-style-form-list">
                   <div className="gi-style-form-btn-group">
                     <Button
@@ -131,24 +130,26 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                         const options = {
                           ...defaultGroupOption,
                           groupId: Math.random().toString(36).slice(-8),
-                          groupName:  $i18n.get(
-                          {
-                            id: 'common-components.src.GroupContainer.CustomStyleIdx',
-                            dm: '自定义样式 {idx}',
-                          },
-                          { idx: idx },
-                        ),
+                          groupName: $i18n.get(
+                            {
+                              id: 'common-components.src.GroupContainer.CustomStyleIdx',
+                              dm: '自定义样式 {idx}',
+                            },
+                            { idx: idx },
+                          ),
                         };
                         add(options);
                         setActiveKeys([...activeKeys, `${fields.length}`]);
                       }}
                       icon={<PlusOutlined />}
                     >
-                         {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
+                      {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
                     </Button>
-                    <Button onClick={clear}>重置</Button>
+                    <Button onClick={clear}>
+                      {$i18n.get({ id: 'common-components.src.GroupContainer.Reset', dm: '重置' })}
+                    </Button>
                   </div>
-                  
+
                   <Collapse
                     className="gi-sidebar-collapse"
                     bordered={false}
