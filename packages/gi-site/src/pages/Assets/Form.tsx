@@ -4,7 +4,7 @@ import $i18n from '../../i18n';
 
 const { TextArea } = Input;
 
-export default ({ form }: { form: FormInstance }) => {
+export default ({ form, mode = 'create' }: { form: FormInstance, mode?: 'edit' | 'create' }) => {
   return (
     <Form form={form} name="basic" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
       <Form.Item
@@ -26,7 +26,8 @@ export default ({ form }: { form: FormInstance }) => {
         name="global"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input placeholder="GI_ASSETS_BASIC" />
+        {/* UMD名 作为资产的唯一性标识，不允许修改 */}
+        <Input placeholder="GI_ASSETS_BASIC"  disabled={mode === 'edit'}/>
       </Form.Item>
       <Form.Item
         label={$i18n.get({ id: 'gi-site.pages.Assets.Form.CdnAddress', dm: 'CDN地址' })}

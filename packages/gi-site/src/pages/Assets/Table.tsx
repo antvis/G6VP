@@ -104,7 +104,7 @@ const PackageTable = ({ data, onEdit }) => {
           form.resetFields();
         }}
       >
-        <PackageForm form={form}></PackageForm>
+        <PackageForm form={form} mode='edit'></PackageForm>
       </Modal>
       <Table dataSource={data} columns={columns} />
     </>
