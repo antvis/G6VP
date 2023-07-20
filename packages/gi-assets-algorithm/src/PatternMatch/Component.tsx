@@ -9,7 +9,7 @@ import { useContext, common } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
 import { cloneDeep, set } from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
 import PatternEditor, { TypeProperties } from './patternEditor';
@@ -27,6 +27,7 @@ const { GADDI, breadthFirstSearch } = Algorithm;
 const { createUuid, clearItemsStates, fittingString } = Util;
 
 const MAX_PATTERN_NUM = 4;
+const PATTERN_MATCH_MODE = 'pattern-match-lasso';
 const EXTRACT_MESSAGE_KEY = 'kg-pattern-match-extract-message';
 const EXTRACT_MODE_CANVAS_CLASSNAME = 'kg-pattern-match-extract-mode-canvas';
 
@@ -57,8 +58,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
   const [schemaEdgeMap, setSchemaEdgeMap] = useState({});
   const [schemaNodeMap, setSchemaNodeMap] = useState({});
+  const graphModeCacheRef = useRef(graph?.getCurrentMode() || 'default');
 
-  const intialPatternInfoMap = useMemo(
+  const initialPatternInfoMap = useMemo(
     () => ({
       '1': {
         id: '1',
@@ -68,7 +70,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     }),
     [],
   );
-  const [patternInfoMap, setPatternInfoMap] = useState(intialPatternInfoMap);
+  const [patternInfoMap, setPatternInfoMap] = useState(initialPatternInfoMap);
 
   const importData = (data, patternId) => {
     const newPatternInfoMap = { ...patternInfoMap };
@@ -83,20 +85,38 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeIntialpatterninfomapid',
           dm: '模式-{intialPatternInfoMapId}',
         },
-        { intialPatternInfoMapId: intialPatternInfoMap['1'].id },
+        { intialPatternInfoMapId: initialPatternInfoMap['1'].id },
       ),
       content: (
         <PatternPane
-          {...intialPatternInfoMap['1']}
+          {...initialPatternInfoMap['1']}
           schemaEdgeMap={schemaEdgeMap}
           editPattern={() => setEditorVisible(true)}
           importData={importData}
         />
       ),
 
-      key: intialPatternInfoMap['1'].id,
+      key: initialPatternInfoMap['1'].id,
     },
   ]);
+
+  useEffect(() => {
+    if (!graph || graph.destroyed) return;
+    const handleClickEdge = e => {
+      const mode = graph.getCurrentMode();
+      if (mode !== PATTERN_MATCH_MODE) return;
+      // 选中边时，自动选中边的端点
+      const edge = e.item;
+      const source = edge.getSource();
+      const target = edge.getTarget();
+      graph.setItemState(source, ITEM_STATE.Active, true);
+      graph.setItemState(target, ITEM_STATE.Active, true);
+    };
+    graph.on('edge:click', handleClickEdge);
+    return () => {
+      graph.off('edge:click', handleClickEdge);
+    };
+  }, []);
 
   useEffect(() => {
     const sEdgeMap = {};
@@ -234,7 +254,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         marginTop: '20px',
       },
     });
-    graph.setMode('pattern-match-lasso'); // 切换为 lasso 交互模式，该模式下没有其他 behavior
+    graph.setMode(PATTERN_MATCH_MODE); // 切换为 lasso 交互模式，该模式下没有其他 behavior
     // 恢复图上的选中状态，为拉索框选做准备
     clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
     clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
@@ -247,7 +267,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   });
 
   const quitExtractMode = () => {
-    graph.setMode('default'); // 恢复默认交互模式
+    graph.setMode(graphModeCacheRef.current); // 恢复默认交互模式
     message.destroy(EXTRACT_MESSAGE_KEY); // 销毁提示 message
     setExtracting(false); // 恢复面板状态
     onOpen?.(); // 显示抽屉
@@ -394,14 +414,14 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         onOk() {
           clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
           clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
-          graph.setMode('default');
+          graph.setMode(graphModeCacheRef.current);
           message.destroy(EXTRACT_MESSAGE_KEY);
           onOpen?.(); // 显示抽屉
           quitExtractMode();
         },
       });
     } else {
-      graph.setMode('default');
+      graph.setMode(graphModeCacheRef.current);
       message.destroy(EXTRACT_MESSAGE_KEY);
       onOpen?.(); // 显示抽屉
       quitExtractMode();
