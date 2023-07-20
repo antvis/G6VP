@@ -5,10 +5,10 @@
 import { useMemoizedFn } from 'ahooks';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
-import { useContext } from '@antv/gi-sdk';
+import { useContext, common } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, set } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
@@ -35,7 +35,12 @@ let previousSize = { width: 500, height: 500 };
 let keydown = false;
 
 const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, onClose, onOpen, options = {} }) => {
-  const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
+  const {
+    onGraphEditorVisibleChange,
+    onExtractModeChange,
+    exportPattern = content => common.createDownload(JSON.stringify(content), 'pattern.json'),
+    exportButton,
+  } = options;
   const { graph, data, schemaData, updateHistory } = useContext();
 
   const [activeKey, setActiveKey] = useState('1');
@@ -613,7 +618,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const onMatch = async (patternProp?: GraphinData) => {
     if (!graph || graph.destroyed) {
-      handleUpateHistory(
+      handleUpdateHistory(
         {},
         false,
         $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.TheGraphInstanceDoesNot', dm: '图实例不存在' }),
@@ -627,7 +632,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           dm: '无法匹配空模式！',
         }),
       );
-      handleUpateHistory(
+      handleUpdateHistory(
         {},
         false,
         $i18n.get({
@@ -707,7 +712,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       setLoading(false);
       drawHulls([]);
       setResult([]);
-      handleUpateHistory(
+      handleUpdateHistory(
         { pattern },
         false,
         $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.NoMatchFound', dm: '没有找到匹配！' }),
@@ -728,7 +733,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     drawHulls(matches);
     setResult(matches);
 
-    handleUpateHistory({ pattern });
+    handleUpdateHistory({ pattern });
   };
 
   const onExport = () => {
@@ -745,13 +750,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     const res = patternInfoMap[+activeKey].data;
     const pattern = {
       nodes: res.nodes.map(node => {
-        node.data.label = node.nodeType;
-        node.data.rules = node.rules;
+        set(node, 'data.label', node.nodeType);
+        set(node, 'data.rules', node.rules);
         return node.data;
       }),
       edges: res.edges.map(edge => {
-        edge.data.label = edge.nodeType;
-        edge.data.rules = edge.rules;
+        set(edge, 'data.label', edge.edgeType);
+        set(edge, 'data.rules', edge.rules);
         return edge.data;
       }),
     };
@@ -789,7 +794,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
+  const handleUpdateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
     const { pattern } = params;
     if (!pattern) return;
     updateHistory({
