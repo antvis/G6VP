@@ -884,20 +884,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         </div>
         <Tabs
           type="editable-card"
-          activeKey={`${activeKey}`}
+          activeKey={activeKey}
           onChange={setActiveKey}
           onEdit={onTabEdit}
           hideAdd
           style={{
             marginTop: panes.length > MAX_PATTERN_NUM - 1 ? '-4px' : '-40px',
           }}
-        >
-          {panes.map(pane => (
-            <TabPane tab={pane.title} key={pane.key} closable={panes.length > 1}>
-              {pane.content}
-            </TabPane>
-          ))}
-        </Tabs>
+          items={panes.map(({ key, title, content }) => ({
+            label: title,
+            key,
+            closable: panes.length > 1,
+            children: content,
+          }))}
+        />
       </div>
       <Row className="button-wrapper" justify="space-between">
         <Col span={6}>
