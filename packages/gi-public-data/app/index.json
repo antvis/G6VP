@@ -1,0 +1,14 @@
+[
+  {
+    "route": "timeline",
+    "config": "/app/timeline.json",
+    "desc": "时序图项目",
+    "cover": ""
+  },
+  {
+    "route": "social",
+    "config": "/app/social.json",
+    "desc": "社交网络展示项目",
+    "cover": ""
+  }
+]
