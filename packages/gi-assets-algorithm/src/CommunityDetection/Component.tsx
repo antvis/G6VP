@@ -198,6 +198,9 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     return {
       nodes: nodes.map(node => ({
         ...(node.data || {}),
+        properties: {
+          ...(node?.data?.properties || {}),
+        },
         label: node.label || node.data.label || node.data.name,
         id: node.id,
       })),

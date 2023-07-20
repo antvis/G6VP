@@ -21,7 +21,7 @@ export interface GroupContainerProps {
     groups: ItemConfig[];
   };
   valuesChange: (
-    currenr: any,
+    current: any,
     allValues: {
       groups: ItemConfig[];
     },
@@ -94,7 +94,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
 
   return (
     /** 让fixed定位从该容器开始 */
-    <div className="gi-group-contaner" style={{ transform: 'scale(1)', height: '100%' }}>
+    <div className="gi-group-container" style={{ transform: 'scale(1)', height: '100%' }}>
       <Form
         initialValues={initValues}
         layout="vertical"
@@ -167,7 +167,7 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                       }
                       return (
                         <Panel
-                          className="gi-group-contaner-panel"
+                          className="gi-group-container-panel"
                           key={`${key}`}
                           extra={
                             <div

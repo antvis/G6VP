@@ -84,6 +84,9 @@ importers:
       fs-extra:
         specifier: ^10.1.0
         version: 10.1.0
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
       less-loader:
         specifier: ^11.0.0
         version: 11.0.0(less@3.13.1)(webpack@5.88.0)
@@ -836,7 +839,7 @@ importers:
         version: 17.0.2(react@17.0.2)
     devDependencies:
       '@antv/gi-sdk':
-        specifier: ^2.4.1
+        specifier: ^2.4.2
         version: link:../gi-sdk
       '@antv/graphin':
         specifier: ^2.7.21
@@ -30352,6 +30355,12 @@ packages:
 
   /humps@2.0.1:
     resolution: {integrity: sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==}
+
+  /husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}

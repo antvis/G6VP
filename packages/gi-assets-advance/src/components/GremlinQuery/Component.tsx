@@ -53,7 +53,7 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     isFullScreen: false,
     modalVisible: false,
     limit: null,
-    timeout: null,
+    timeout: 5000,
   });
 
   const setEditorValue = val => {
@@ -227,10 +227,11 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
         }
       >
         <div className="gi-gremlin-query-constraint-constraint">
-          <label className="gi-gremlin-query-constraint-label">Timeout: </label>
+          <label className="gi-gremlin-query-constraint-label">Timeout(ms): </label>
           <InputNumber
             min={500}
             max={Infinity}
+            step={1000}
             value={editorValueHasTimeout ? undefined : timeout}
             size="small"
             disabled={editorValueHasTimeout}

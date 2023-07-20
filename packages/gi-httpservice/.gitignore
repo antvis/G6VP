@@ -26,3 +26,7 @@ HUGEGRAPH_CONFIG.json
 
 
 default.etcd
+
+app/public
+
+view/index.html

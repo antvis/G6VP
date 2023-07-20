@@ -19,7 +19,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
-    handleUpateHistory(layoutConfig, true, '');
+    handleUpdateHistory(layoutConfig, true, '');
     updateContext(draft => {
       draft.layout = layoutConfig.props;
       draft.config.layout = layoutConfig;
@@ -37,7 +37,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
+  const handleUpdateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
     const { props: layoutProps } = layoutConfig;
     updateHistory({
       componentId: 'LayoutSwitch',
