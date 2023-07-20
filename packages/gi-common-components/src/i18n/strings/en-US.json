@@ -36,5 +36,8 @@
   "common-components.src.GroupContainer.utils.Greater": "Greater",
   "common-components.src.GroupContainer.utils.GreaterThanOrEqual": "Greater than or equal",
   "common-components.src.GroupContainer.utils.Less": "Less",
-  "common-components.src.GroupContainer.utils.LessThanOrEqual": "Less than or equal"
+  "common-components.src.GroupContainer.utils.LessThanOrEqual": "Less than or equal",
+  "common-components.src.GroupContainer.Reset": "Reset",
+  "common-components.src.NodeSelectionWrap.PleaseFillInLabelNodelabel": "Please fill in {label}{nodeLabel}",
+  "common-components.src.NodeSelectionWrap.YouCanClickCanvasNodes": "You can click canvas nodes to quickly select {label}"
 }

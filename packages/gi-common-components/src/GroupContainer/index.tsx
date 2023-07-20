@@ -145,7 +145,9 @@ const GroupContainer: React.FC<GroupContainerProps> = props => {
                     >
                       {$i18n.get({ id: 'common-components.src.GroupContainer.AddStyleGroups', dm: '新增样式分组' })}
                     </Button>
-                    <Button onClick={clear}>重置</Button>
+                    <Button onClick={clear}>
+                      {$i18n.get({ id: 'common-components.src.GroupContainer.Reset', dm: '重置' })}
+                    </Button>
                   </div>
 
                   <Collapse

@@ -11,10 +11,12 @@ import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
 import { findShortestPath } from '@antv/algorithm';
 import $i18n from '../../i18n';
+import { NodeSelectionWrap } from '@antv/gi-common-components';
 
 const { Panel } = Collapse;
 
 export interface IPathAnalysisProps {
+  nodeSelectionMode: string[];
   pathNodeLabel: string;
   controlledValues?: {
     source: string;
@@ -27,7 +29,7 @@ export interface IPathAnalysisProps {
 enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
-  const { pathNodeLabel, controlledValues, onOpen = () => {} } = props;
+  const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {} } = props;
   const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
@@ -311,104 +313,27 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     }
   }, [controlledValues]);
 
+  const items = [
+    { name: 'source', label: $i18n.get({ id: 'basic.components.PathAnalysis.Component.StartNode', dm: '起始节点' }) },
+    {
+      name: 'target',
+      label: $i18n.get({ id: 'basic.components.PathAnalysis.Component.TargetNode', dm: '目标节点' }),
+    },
+  ];
+
   return (
     <div className="gi-path-analysis">
       {/* <h2 className="gi-path-analysis-title">路径分析</h2> */}
       <Form form={form}>
-        <Row justify="space-between">
-          <Col span={22}>
-            <Form.Item
-              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.StartNode', dm: '起始节点' })}
-              name="source"
-              rules={[
-                {
-                  required: true,
-                  message: $i18n.get({
-                    id: 'basic.components.PathAnalysis.Component.EnterTheStartNodeId',
-                    dm: '请填写起点节点ID',
-                  }),
-                },
-              ]}
-              tooltip={{
-                open: state.selecting === 'source',
-                title: $i18n.get({
-                  id: 'basic.components.PathAnalysis.Component.YouCanClickTheCanvas',
-                  dm: '可点选画布节点，快速选择起始节点',
-                }),
-              }}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                onChange={() => {
-                  updateState(draft => {
-                    draft.selecting = '';
-                  });
-                }}
-                onFocus={() => beginSelect('source')}
-              >
-                {graphData.nodes.map(node => (
-                  <Select.Option key={node.id} value={node.id}>
-                    {node.id}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
-            <FormOutlined
-              style={{ cursor: 'pointer', color: state.selecting === 'source' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
-              onClick={() => beginSelect('source')}
-            />
-          </Col>
-        </Row>
-        <Row justify="space-between">
-          <Col span={22}>
-            <Form.Item
-              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.TargetNode', dm: '目标节点' })}
-              name="target"
-              rules={[
-                {
-                  required: true,
-                  message: $i18n.get({
-                    id: 'basic.components.PathAnalysis.Component.EnterTheEndpointId',
-                    dm: '请填写终点节点ID',
-                  }),
-                },
-              ]}
-              tooltip={{
-                open: state.selecting === 'target',
-                title: $i18n.get({
-                  id: 'basic.components.PathAnalysis.Component.YouCanClickTheCanvas.1',
-                  dm: '可点选画布节点，快速选择目标节点',
-                }),
-              }}
-            >
-              <Select
-                showSearch
-                optionFilterProp="children"
-                onChange={() => {
-                  updateState(draft => {
-                    draft.selecting = '';
-                  });
-                }}
-                onFocus={() => beginSelect('target')}
-              >
-                {graphData.nodes.map(node => (
-                  <Select.Option key={node.id} value={node.id}>
-                    {node.id}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={2} style={{ lineHeight: '32px', textAlign: 'right' }}>
-            <FormOutlined
-              style={{ cursor: 'pointer', color: state.selecting === 'target' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
-              onClick={() => beginSelect('target')}
-            />
-          </Col>
-        </Row>
+        <NodeSelectionWrap
+          graph={graph}
+          form={form}
+          items={items}
+          data={graphData.nodes}
+          nodeLabel={pathNodeLabel}
+          nodeSelectionMode={nodeSelectionMode}
+        />
+
         <Form.Item
           name="direction"
           label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
@@ -450,7 +375,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               return (
                 <Panel
                   key={index}
-                  header={$i18n.get({ id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径${index + 1}` }, { numebr: index + 1 })}
+                  header={$i18n.get(
+                    { id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径${index + 1}` },
+                    { numebr: index + 1 },
+                  )}
                   extra={
                     <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
                   }
