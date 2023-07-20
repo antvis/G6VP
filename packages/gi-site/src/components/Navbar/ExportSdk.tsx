@@ -6,8 +6,8 @@ import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION }
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import { getActivePackageName } from '../../hooks/common';
 import $i18n from '../../i18n';
+import { common } from '@antv/gi-sdk';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
-import { saveAs } from '../utils';
 import './index.less';
 
 const getPkg = activeAssets => {
@@ -40,8 +40,7 @@ const SdkContent = () => {
   /** 下载 */
   const openHtml = () => {
     let [code, ext] = [htmlCode, '.html'];
-    //@ts-ignore
-    saveAs(code, `gi-export-project-id-${st.id}${ext}`);
+    common.createDownload(code, `gi-export-project-id-${st.id}${ext}`);
   };
 
   const THIRD_PARTY_DEPLOYS = Object.values((st.activeAssets && st.activeAssets.deploys) || {});
