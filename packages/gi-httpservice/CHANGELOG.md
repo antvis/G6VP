@@ -1,5 +1,11 @@
 # @antv/gi-httpservice
 
+## 1.2.4
+
+### Patch Changes
+
+- publish in 0720 pm
+
 ## 1.2.3
 
 ### Patch Changes

@@ -839,7 +839,7 @@ importers:
         version: 17.0.2(react@17.0.2)
     devDependencies:
       '@antv/gi-sdk':
-        specifier: ^2.4.3
+        specifier: ^2.4.4
         version: link:../gi-sdk
       '@antv/graphin':
         specifier: ^2.7.21

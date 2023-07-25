@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.4
+
+### Patch Changes
+
+- publish in 0720 pm
+
 ## 0.6.3
 
 ### Patch Changes
