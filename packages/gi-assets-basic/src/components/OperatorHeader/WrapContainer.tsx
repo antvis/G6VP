@@ -77,6 +77,7 @@ export interface ContainerTypeProps {
   getContainer: HTMLDivElement;
   containerAnimate?: boolean;
   containerDraggable?: boolean;
+  dragHandle: 'header' | 'divContainer';
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
@@ -96,6 +97,7 @@ const ContainerType = (props: ContainerTypeProps) => {
     getContainer,
     containerAnimate,
     containerDraggable,
+    dragHandle,
   } = props;
 
   const placement = POSITION_MAP[containerPlacement] as 'right' | 'left' | 'top' | 'bottom';
@@ -151,6 +153,7 @@ const ContainerType = (props: ContainerTypeProps) => {
       animate={containerAnimate}
       getContainer={getContainer}
       draggable={containerDraggable}
+      dragHandle={dragHandle}
     >
       {children}
     </DivContainer>
@@ -182,6 +185,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
       containerPlacement,
       containerAnimate,
       containerDraggable = false,
+      dragHandle,
     } = GIAC_CONTENT;
 
     const [containerVisible, setVisible] = React.useState(defaultVisible);
@@ -249,6 +253,7 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             getContainer={ContainerDOM}
             containerAnimate={containerAnimate}
             containerDraggable={containerDraggable}
+            dragHandle={dragHandle}
           >
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} onOpen={onOpen} />
           </ContainerType>,

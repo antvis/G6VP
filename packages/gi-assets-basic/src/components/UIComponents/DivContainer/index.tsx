@@ -25,6 +25,7 @@ export interface ContainerTypeProps {
   animate?: boolean;
   getContainer?: HTMLDivElement;
   draggable?: boolean;
+  dragHandle?: 'header' | 'divContainer';
 }
 
 const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
@@ -40,6 +41,7 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
     animate,
     getContainer,
     draggable = false,
+    dragHandle = 'header',
   } = props;
 
   const styles = utils.getPositionStyles(containerPlacement, offset);
@@ -56,17 +58,20 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
     : {
         display: visible ? 'block' : 'none',
       };
+  const nodeRef = React.useRef(null);
 
   const DivContainer = (
     <div
+      ref={nodeRef}
       style={{
         width: containerWidth,
         height: containerHeight,
         boxShadow: '6px 0 16px -8px rgb(0 0 0 / 8%), 9px 0 28px 0 rgb(0 0 0 / 5%), 12px 0 48px 16px rgb(0 0 0 / 3%)',
+        cursor: draggable && dragHandle === 'divContainer' ? 'move' : 'default',
         ...styles,
         ...displayStyle,
       }}
-      className={`gi-panel-div ${classes}`}
+      className={`divContainer gi-panel-div ${classes}`}
     >
       <div className="header" style={{ cursor: draggable ? 'move' : 'default' }}>
         <div className="title"> {title}</div>
@@ -81,7 +86,7 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
 
   if (draggable) {
     return ReactDOM.createPortal(
-      <Draggable handle=".header" bounds="parent">
+      <Draggable handle={`.${dragHandle}`} bounds="parent">
         {DivContainer}
       </Draggable>,
       getContainer!,

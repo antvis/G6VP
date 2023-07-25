@@ -199,6 +199,25 @@ const GIAC_CONTENT = {
           'x-component': 'Switch',
           default: false,
         },
+        dragHandle: {
+          title: '拖拽生效区域',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            options: [
+              {
+                value: 'header',
+                label: '仅标题',
+              },
+              {
+                value: 'divContainer',
+                label: '整个容器',
+              },
+            ],
+          },
+          default: 'header',
+        },
         containerPlacement: {
           title: $i18n.get({ id: 'sdk.src.components.const.ContainerLocation', dm: '容器位置' }),
           type: 'string',
