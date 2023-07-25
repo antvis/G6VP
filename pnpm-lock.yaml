@@ -336,6 +336,9 @@ importers:
       react-dom:
         specifier: 17.x
         version: 17.0.2(react@17.0.2)
+      react-draggable:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@17.0.2)(react@17.0.2)
       use-immer:
         specifier: ^0.9.0
         version: 0.9.0(immer@9.0.0)(react@17.0.2)
@@ -13808,7 +13811,7 @@ packages:
       react: '>=16.8 || 17'
       react-dom: '>=16.8'
     dependencies:
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       tippy.js: 4.3.5
@@ -13821,7 +13824,7 @@ packages:
       react: '>=16.8 || 17'
       react-dom: '>=16.8'
     dependencies:
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       tippy.js: 4.3.5
@@ -23119,7 +23122,7 @@ packages:
       object-assign: 4.1.1
     dev: false
 
-  /create-react-context@0.2.3(prop-types@15.7.2)(react@17.0.2):
+  /create-react-context@0.2.3(prop-types@15.8.1)(react@17.0.2):
     resolution: {integrity: sha512-CQBmD0+QGgTaxDL3OX1IDXYqjkp2It4RIbcb99jS6AEg27Ga+a9G3JtK6SIu0HBwPLZlmwt9F7UwWA4Bn92Rag==}
     peerDependencies:
       prop-types: ^15.0.0
@@ -23127,7 +23130,7 @@ packages:
     dependencies:
       fbjs: 0.8.18
       gud: 1.0.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
     dev: true
 
@@ -41942,10 +41945,10 @@ packages:
     dependencies:
       buble: 0.19.8
       core-js: 2.6.12
-      create-react-context: 0.2.3(prop-types@15.7.2)(react@17.0.2)
+      create-react-context: 0.2.3(prop-types@15.8.1)(react@17.0.2)
       dom-iterator: 1.0.0
       prismjs: 1.6.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       unescape: 0.2.0
@@ -41960,10 +41963,10 @@ packages:
     dependencies:
       buble: 0.19.8
       core-js: 2.6.12
-      create-react-context: 0.2.3(prop-types@15.7.2)(react@17.0.2)
+      create-react-context: 0.2.3(prop-types@15.8.1)(react@17.0.2)
       dom-iterator: 1.0.0
       prismjs: 1.6.0
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       unescape: 0.2.0
@@ -42107,7 +42110,7 @@ packages:
       react-dom: '>=16.3.3'
     dependencies:
       perfect-scrollbar: 1.5.5
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
     dev: true
@@ -42119,7 +42122,7 @@ packages:
       react-dom: '>=16.3.3'
     dependencies:
       perfect-scrollbar: 1.5.5
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
     dev: true
@@ -45938,7 +45941,7 @@ packages:
       css-to-react-native: 2.3.2
       memoize-one: 5.2.1
       merge-anything: 2.4.4
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 16.14.0(react@17.0.2)
       react-is: 16.13.1
@@ -45964,7 +45967,7 @@ packages:
       css-to-react-native: 2.3.2
       memoize-one: 5.2.1
       merge-anything: 2.4.4
-      prop-types: 15.7.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       react-is: 16.13.1

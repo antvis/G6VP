@@ -4,6 +4,7 @@ import { getCombineServices, loaderCombinedAssets } from '../process';
 import { loader } from '../process/loaderAssets';
 import registerIconFonts from '../process/registerIconFonts';
 import Loading from './Loading';
+import $i18n from '../i18n';
 
 export interface Project {
   dataset: {
@@ -46,7 +47,11 @@ export interface StudioProps {
 }
 
 const Studio: React.FunctionComponent<StudioProps> = props => {
-  const { id, service, loadingText = '正在加载图应用...' } = props;
+  const {
+    id,
+    service,
+    loadingText = $i18n.get({ id: 'sdk.src.components.Studio.LoadingGraphApplication', dm: '正在加载图应用...' }),
+  } = props;
   const [state, setState] = React.useState({
     isReady: false,
     assets: null,

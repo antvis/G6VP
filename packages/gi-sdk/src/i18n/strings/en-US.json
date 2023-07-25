@@ -93,5 +93,10 @@
   "sdk.src.process.aggregateEdges.SummaryChildrenlength": "Summary:{childrenLength}",
   "sdk.src.process.schema.OfficialNode": "Official node",
   "sdk.src.process.schema.DefaultStyle": "Default style",
-  "sdk.src.process.schema.OfficialSide": "Official side"
+  "sdk.src.process.schema.OfficialSide": "Official side",
+  "sdk.src.components.Studio.LoadingGraphApplication": "Loading Graph application...",
+  "sdk.src.components.const.DraggableValidOnlyForDiv": "Draggable (valid only for DIV)",
+  "sdk.src.components.const.DragAndDropTheEffective": "Drag and drop the effective area",
+  "sdk.src.components.const.TitleOnly": "Title only",
+  "sdk.src.components.const.EntireContainer": "Entire container"
 }

@@ -59,7 +59,7 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
         display: visible ? 'block' : 'none',
       };
   const nodeRef = React.useRef(null);
-
+  
   const DivContainer = (
     <div
       ref={nodeRef}
