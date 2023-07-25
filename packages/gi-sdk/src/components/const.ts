@@ -192,6 +192,13 @@ const GIAC_CONTENT = {
           'x-component': 'Switch',
           default: false,
         },
+        containerDraggable: {
+          title: '可拖拽（仅DIV有效）',
+          type: 'boolean',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: false,
+        },
         containerPlacement: {
           title: $i18n.get({ id: 'sdk.src.components.const.ContainerLocation', dm: '容器位置' }),
           type: 'string',

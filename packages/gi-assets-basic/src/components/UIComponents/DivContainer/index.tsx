@@ -1,8 +1,11 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Button } from 'antd';
-import * as React from 'react';
+import { Button, Divider } from 'antd';
+import React from 'react';
+import Draggable from 'react-draggable';
 import './index.less';
+import ReactDOM from 'react-dom';
+
 const POSITION_MAP = {
   LT: 'top',
   LB: 'left',
@@ -20,6 +23,8 @@ export interface ContainerTypeProps {
   onClose: () => void;
   title: string;
   animate?: boolean;
+  getContainer?: HTMLDivElement;
+  draggable?: boolean;
 }
 
 const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
@@ -33,6 +38,8 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
     onClose,
     title,
     animate,
+    getContainer,
+    draggable = false,
   } = props;
 
   const styles = utils.getPositionStyles(containerPlacement, offset);
@@ -49,7 +56,8 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
     : {
         display: visible ? 'block' : 'none',
       };
-  return (
+
+  const DivContainer = (
     <div
       style={{
         width: containerWidth,
@@ -60,15 +68,26 @@ const DivContainer: React.FunctionComponent<ContainerTypeProps> = props => {
       }}
       className={`gi-panel-div ${classes}`}
     >
-      <div className="header">
+      <div className="header" style={{ cursor: draggable ? 'move' : 'default' }}>
         <div className="title"> {title}</div>
         <div className="close">
           <Button icon={<CloseOutlined />} type="text" onClick={onClose}></Button>
         </div>
       </div>
+      <Divider style={{ margin: 0 }} />
       <div className="body">{children}</div>
     </div>
   );
+
+  if (draggable) {
+    return ReactDOM.createPortal(
+      <Draggable handle=".header" bounds="parent">
+        {DivContainer}
+      </Draggable>,
+      getContainer!,
+    );
+  }
+  return DivContainer;
 };
 
 export default DivContainer;
