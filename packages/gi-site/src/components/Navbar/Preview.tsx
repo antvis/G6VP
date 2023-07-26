@@ -1,29 +1,17 @@
-import { useShortcuts } from '@antv/gi-sdk';
 import { Button, notification } from 'antd';
 import * as React from 'react';
 
-import { ShareAltOutlined } from '@ant-design/icons';
+import { DesktopOutlined } from '@ant-design/icons';
 import $i18n from '../../i18n';
 import getExportContext from './getExportContext';
-interface ShareProjectProps {
+interface PreviewProps {
   context: any;
 }
 
-const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
+const Preview: React.FunctionComponent<PreviewProps> = props => {
   const { context } = props;
 
   const handleClick = async () => {
-    // const workbook = await WorkbookServices.getById(context.id);
-    // if (!workbook) {
-    //   return;
-    // }
-    // const dataset = await DatasetServices.queryDatasetInfo(workbook.datasetId);
-    // const params = {
-    //   dataset,
-    //   workbook,
-    //   GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-    // };
-
     const params = getExportContext(context);
     const { workbook } = params;
     const elementA = document.createElement('a');
@@ -60,17 +48,13 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
     }
   };
 
-  useShortcuts(['ctrl+shift+s', 'command+shift+s'], () => {
-    handleClick();
-  });
-
   return (
     <div>
-      <Button size="small" onClick={handleClick} icon={<ShareAltOutlined />} type="text">
-        {$i18n.get({ id: 'gi-site.components.Navbar.Share.Backup', dm: '备份' })}
+      <Button size="small" onClick={handleClick} icon={<DesktopOutlined />} type="text">
+        预览
       </Button>
     </div>
   );
 };
 
-export default ShareProject;
+export default Preview;
