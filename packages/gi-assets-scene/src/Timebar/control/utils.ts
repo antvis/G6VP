@@ -15,6 +15,9 @@ export function timeParser(time: number | string, timeGranularity?: TimeGranular
 
 /**
  * 根据时间范围筛选图数据
+ * 从 context graph 中读取图数据，然后根据时间粒度进行筛选
+ * 由于无法识别 graphData 是播放过程更新的还是外部更新的
+ * 因此对每个播放的节点/边都加上 __GI_PLAYING__ 标记，用于区分
  * @param data 图数据
  * @param range 时间范围
  * @param timeField 时间字段(边)
@@ -30,7 +33,7 @@ export function dataFilter(
 ) {
   const parser = time => timeParser(time, timeGranularity);
 
-  const baseFiltrerd = (data[type] as any[]).filter(item => {
+  const baseFiltered = (data[type] as any[]).filter(item => {
     const time = parser(item.data[timeField]);
     return time >= parser(range[0]) && time <= parser(range[1]);
   });
@@ -47,14 +50,14 @@ export function dataFilter(
     // 如果节点数据中没有时间字段，根据 base 数据进行筛选
     else {
       if (type === 'edges') {
-        const allNodesFromEdges = baseFiltrerd.reduce((acc, cur) => {
+        const allNodesFromEdges = baseFiltered.reduce((acc, cur) => {
           acc.add(cur.source);
           acc.add(cur.target);
           return acc;
         }, new Set<string>([]));
         anotherFiltered = another.filter(node => allNodesFromEdges.has(node.id));
       } else {
-        const allEdgesFromNodes = baseFiltrerd.reduce((acc, cur) => {
+        const allEdgesFromNodes = baseFiltered.reduce((acc, cur) => {
           acc.add(cur.id);
           return acc;
         }, new Set<string>([]));
@@ -65,9 +68,14 @@ export function dataFilter(
     }
   }
 
+  const addPlayingTag = <T>(data: T[]) => {
+    const now = new Date().getTime();
+    return data.map(datum => ({ ...datum, __GI_PLAYING__: now }));
+  };
+
   return {
-    [type]: baseFiltrerd,
-    [type === 'nodes' ? 'edges' : 'nodes']: anotherFiltered,
+    [type]: addPlayingTag(baseFiltered),
+    [type === 'nodes' ? 'edges' : 'nodes']: addPlayingTag(anotherFiltered),
   } as unknown as GIGraphData;
 }
 
@@ -92,4 +100,13 @@ export function getTimeRange(data: Record<string, any>[], timeGranularity: TimeG
  */
 export function dataTransform(data: GIGraphData, type: FieldType) {
   return data[type].map(node => node.data);
+}
+
+/**
+ * 判断图数据中是否有正在播放的节点/边
+ * @param data 图数据
+ * @returns 是否有正在播放的节点/边
+ */
+export function isPlayingData(data: GIGraphData) {
+  return data.nodes.some(node => node.__GI_PLAYING__) || data.edges.some(edge => edge.__GI_PLAYING__);
 }
