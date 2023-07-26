@@ -192,6 +192,32 @@ const GIAC_CONTENT = {
           'x-component': 'Switch',
           default: false,
         },
+        containerDraggable: {
+          title: $i18n.get({ id: 'sdk.src.components.const.DraggableValidOnlyForDiv', dm: '可拖拽（仅DIV有效）' }),
+          type: 'boolean',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: false,
+        },
+        dragHandle: {
+          title: $i18n.get({ id: 'sdk.src.components.const.DragAndDropTheEffective', dm: '拖拽生效区域' }),
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            options: [
+              {
+                value: 'header',
+                label: $i18n.get({ id: 'sdk.src.components.const.TitleOnly', dm: '仅标题' }),
+              },
+              {
+                value: 'divContainer',
+                label: $i18n.get({ id: 'sdk.src.components.const.EntireContainer', dm: '整个容器' }),
+              },
+            ],
+          },
+          default: 'header',
+        },
         containerPlacement: {
           title: $i18n.get({ id: 'sdk.src.components.const.ContainerLocation', dm: '容器位置' }),
           type: 'string',

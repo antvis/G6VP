@@ -93,5 +93,10 @@
   "sdk.src.process.aggregateEdges.SummaryChildrenlength": "汇总：{childrenLength} 条",
   "sdk.src.process.schema.OfficialNode": "官方节点",
   "sdk.src.process.schema.DefaultStyle": "默认样式",
-  "sdk.src.process.schema.OfficialSide": "官方边"
+  "sdk.src.process.schema.OfficialSide": "官方边",
+  "sdk.src.components.Studio.LoadingGraphApplication": "正在加载图应用...",
+  "sdk.src.components.const.DraggableValidOnlyForDiv": "可拖拽（仅DIV有效）",
+  "sdk.src.components.const.DragAndDropTheEffective": "拖拽生效区域",
+  "sdk.src.components.const.TitleOnly": "仅标题",
+  "sdk.src.components.const.EntireContainer": "整个容器"
 }
