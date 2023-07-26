@@ -1,28 +1,39 @@
-// import { request } from './utils';
-import { Button, notification, Space } from 'antd';
+import { CrownTwoTone } from '@ant-design/icons';
+import { Button, Space, notification } from 'antd';
 import React from 'react';
 import request from 'umi-request';
-import { GI_SITE } from './const';
 import $i18n from '../i18n';
+import { GI_SITE } from './const';
 
 const key = `open${Date.now()}`;
-const btn = (
-  <Space>
-    <Button
-      type="primary"
-      size="small"
-      onClick={() => {
-        window.location.reload();
-      }}
-    >
-      {$i18n.get({ id: 'gi-site.src.services.user.Confirm', dm: '确认' })}
-    </Button>
+const Btn = () => {
+  const [clicked, setClicked] = React.useState(false);
 
-    <Button size="small" onClick={() => notification.close(key)}>
-      {$i18n.get({ id: 'gi-site.src.services.user.Cancel', dm: '取消' })}
-    </Button>
-  </Space>
-);
+  return (
+    <Space>
+      <Button
+        type="primary"
+        size="small"
+        onClick={() => {
+          if (!clicked) {
+            createSuperLabel(`${GI_SITE.SERVICE_URL}/user/info`, 'gi-login');
+            setClicked(true);
+          } else window.location.reload();
+        }}
+      >
+        {!clicked
+          ? $i18n.get({ id: 'gi-site.src.services.user.Get', dm: '获取' })
+          : $i18n.get({ id: 'gi-site.src.services.user.Confirm', dm: '刷新' })}
+      </Button>
+
+      {!clicked && (
+        <Button size="small" onClick={() => notification.close(key)}>
+          {$i18n.get({ id: 'gi-site.src.services.user.Cancel', dm: '取消' })}
+        </Button>
+      )}
+    </Space>
+  );
+};
 
 const createSuperLabel = (url, id) => {
   let a = document.createElement('a');
@@ -69,22 +80,17 @@ export const getUser = async () => {
       return {};
     }
     if (errorMessage === 'TypeError: Failed to fetch') {
-      console.log(
-        $i18n.get({
-          id: 'gi-site.src.services.user.TryToAccessVipAsset',
-          dm: '尝试访问 VIP 资产服务 TypeError: Failed to fetch',
-        }),
-      );
-      createSuperLabel(`${GI_SITE.SERVICE_URL}/user/info`, 'gi-login');
       notification.info({
+        icon: <CrownTwoTone twoToneColor="#f1d247" />,
         placement: 'top',
-        message: $i18n.get({ id: 'gi-site.src.services.user.RefreshThePage', dm: '刷新页面' }),
-        duration: null,
+        message: $i18n.get({ id: 'gi-site.src.services.user.AvailableVipAssets', dm: '可用的 VIP 资产' }),
         description: $i18n.get({
-          id: 'gi-site.src.services.user.TheSystemHasAutomaticallyJumped',
-          dm: '系统已自动跳转到登录链接，请登录完成后，刷新页面，从而下发 VIP 资产',
+          id: 'gi-site.src.services.user.DetectedAvailableVipAssetsWhether',
+          dm: '检测到可用的 VIP 资产，是否前往登陆获取',
         }),
-        btn,
+        duration: null,
+
+        btn: <Btn />,
         key,
       });
       return {};

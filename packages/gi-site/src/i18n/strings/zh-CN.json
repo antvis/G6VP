@@ -708,8 +708,9 @@
   "gi-site.src.services.user.LogonTimeoutRequesterrorTimeoutOf": "登陆超时：RequestError: timeout of 4000ms exceeded",
   "gi-site.src.services.user.RequestErrorResponseerrorHttpError": "请求出错：ResponseError: http error",
   "gi-site.src.services.user.TryToAccessVipAsset": "尝试访问 VIP 资产服务 TypeError: Failed to fetch",
-  "gi-site.src.services.user.RefreshThePage": "刷新页面",
-  "gi-site.src.services.user.TheSystemHasAutomaticallyJumped": "系统已自动跳转到登录链接，请登录完成后，刷新页面，从而下发 VIP 资产",
   "gi-site.src.services.utils.NetworkProblems": "网路问题",
-  "gi-site.src.services.utils.NetworkProblems.1": "网络问题"
+  "gi-site.src.services.utils.NetworkProblems.1": "网络问题",
+  "gi-site.src.services.user.Get": "获取",
+  "gi-site.src.services.user.AvailableVipAssets": "可用的 VIP 资产",
+  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "检测到可用的 VIP 资产，是否前往登陆获取"
 }
