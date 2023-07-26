@@ -40,15 +40,13 @@ const AssetsCenter: React.FunctionComponent<AssetsCenterProps> = props => {
   };
 
   const handleEdit = (umd: string, val: Package) => {
-    const packages = getAssetPackages();
-    const packageIndex = packages.findIndex(item => item.global === umd);
-    packages[packageIndex] = val;
-
+    const packages = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+    packages[umd] = val;
     localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(packages));
     setState(preState => {
       return {
         ...preState,
-        lists: [...packages],
+        lists: [...getAssetPackages()],
       };
     });
   };

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-theme-antd",
-  "version": "0.6.1",
+  "version": "0.6.4",
   "description": "设置 Antd 主题样式的脚本，同时提供主题切换组件",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -36,19 +36,19 @@
   "author": "pomelo.lcw",
   "license": "ISC",
   "devDependencies": {
-    "@ant-design/icons": "^4.6.3",
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.x",
-    "css-loader": "^6.2.0",
-    "dumi": "^1.1.25",
-    "father": "^2.30.8",
+    "css-loader": "^6.8.0",
+    "dumi": "^1.1.50",
+    "father": "^2.30.23",
     "less": "^3.13.1",
-    "less-loader": "^10.0.1",
-    "mini-css-extract-plugin": "^2.2.0",
+    "less-loader": "^11.0.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "moment": "^2.29.1",
     "rc-picker": "^2.5.15",
     "rimraf": "^3.0.2",
     "style-loader": "^3.2.1",
-    "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0"
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.0.0"
   }
 }

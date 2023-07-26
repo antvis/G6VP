@@ -422,5 +422,11 @@
   "advance.src.services.ThemeSetting.TheTopicHasBeenUpdated": "主题更新成功",
   "advance.src.services.ThemeSetting.TheTopicDoesNotExist": "主题不存在",
   "advance.src.services.ThemeSetting.DeleteATopic": "删除主题",
-  "advance.src.services.ThemeSetting.DeletedSuccessfully": "删除成功"
+  "advance.src.services.ThemeSetting.DeletedSuccessfully": "删除成功",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedLimitNum": "不可修改，语句中已有 .limit(num) 约束",
+  "advance.components.GremlinQuery.Component.TheStatementAddsASuffix": "语句将添加后缀: .limt({limit})",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout": "不可修改，语句中已有 .with('evaluationTimeout', timeout) 约束",
+  "advance.components.GremlinQuery.Component.StatementToAddConstraintsWith": "语句将添加约束: .with('evaluationTimeout', {timeout})",
+  "advance.src.services.CypherQuery.QuerySucceeded": "查询成功",
+  "advance.src.services.CypherQuery.TheCurrentQueryRequestIs": "当前的查询请求是 MOCK 的，请搭配图数据库使用。"
 }

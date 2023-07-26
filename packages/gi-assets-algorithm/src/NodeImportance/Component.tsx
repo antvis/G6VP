@@ -16,6 +16,7 @@ import ResultTable from './resultTable';
 import { fittingString } from './util';
 
 // 计算 data 里的每个节点的真实度数, 返回一个 node.id: { in, out } 的映射, 并缓存, 在没有更新图数据之前再次进入不再计算
+import $i18n from '../i18n';
 const getDegreeMap = (data, degreeMap) => {
   if (degreeMap) {
     return degreeMap;
@@ -117,7 +118,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const mappingWay = formValues[`${currentAlgo}.mappingway`];
 
     if (!res?.nodes?.length || (currentAlgo === 'edge-property' && !res?.edges?.length)) {
-      let message = '无结果';
+      let message = $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.NoResults', dm: '无结果' });
       setResult({
         type: currentAlgo,
         calcWay,
@@ -233,7 +234,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
         //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
         graph.updateItem(nodeItem, {
           size,
-          oriSize: modelSize || style?.keyshape.size || 30,
+          oriSize: modelSize || style?.keyshape?.size || 30,
           // 兼容 graphin-circle
           style: {
             keyshape: {
@@ -266,7 +267,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
             graph.updateItem(edgeItem, {
               size: lineWidth,
-              oriSize: modelSize || style?.keyshape.size || 1,
+              oriSize: modelSize || style?.keyshape?.size || 1,
               // 兼容 graphin-line 类型边
               style: {
                 keyshape: {
@@ -327,7 +328,15 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const onAnalyse = (algo, params = {}) => {
     if (!graph || graph.destroyed) {
-      handleUpdateHistory(currentAlgo, {}, false, '图实例不存在');
+      handleUpdateHistory(
+        currentAlgo,
+        {},
+        false,
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.NodeImportance.Component.TheGraphInstanceDoesNot',
+          dm: '图实例不存在',
+        }),
+      );
       return;
     }
     validateFields().then(values => {
@@ -480,8 +489,14 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     updateHistory({
       componentId: 'NodeImportance',
       type: 'analyse',
-      subType: '节点重要性',
-      statement: `算法 ${algorithm}`,
+      subType: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.NodeImportance', dm: '节点重要性' }),
+      statement: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.NodeImportance.Component.AlgorithmAlgorithm',
+          dm: '算法 {algorithm}',
+        },
+        { algorithm: algorithm },
+      ),
       success,
       errorMsg: msg,
       params: {
@@ -498,7 +513,12 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const nodeProperty = formValues['node-property.property'];
     const edgeProperty = formValues['edge-property.property'];
     if (result?.type === 'node-property') {
-      return <>{nodeProperty}&nbsp;-&nbsp;排序</>;
+      return (
+        <>
+          {nodeProperty}
+          {$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.Sort', dm: '- 排序' })}
+        </>
+      );
     }
     if (result?.type === 'edge-property') {
       return (
@@ -543,6 +563,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
       ) : (
         <ResultPlot data={result} currentAlgo={currentAlgo} edgeType={edgeType} />
       );
+
     return (
       <div className="result-wrapper">
         <div className="result-title">{getResultTitle()}</div>
@@ -558,6 +579,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             </Row>
           </div>
         )}
+
         {!failedMessage && resultBlock}
       </div>
     );
@@ -599,11 +621,11 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           className="algo-body"
           options={[
             {
-              label: '入度',
+              label: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.Penetration', dm: '入度' }),
               value: 'in',
             },
             {
-              label: '出度',
+              label: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.Outdegree', dm: '出度' }),
               value: 'out',
             },
           ]}
@@ -650,7 +672,9 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     <div style={props.style}>
       <div className="content-wrapper" id="select-drop-down-area">
         <div className="title-wrapper">
-          <span className="title">算法</span>
+          <span className="title">
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.Algorithm', dm: '算法' })}
+          </span>
         </div>
         <Form form={form}>
           <Radio.Group onChange={onRadioChange} value={currentAlgo}>
@@ -679,7 +703,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
               onAnalyse();
             }}
           >
-            分析
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.Analysis', dm: '分析' })}
           </Button>
         </Col>
         <Col offset="2" span={6} style={{ textAlign: 'right', lineHeight: '56px' }}>
@@ -693,7 +717,10 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           onChange={setResultPaneKey}
           tabBarExtraContent={{
             right: (
-              <Tooltip title="下载CSV" placement="topRight">
+              <Tooltip
+                title={$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.DownloadCsv', dm: '下载CSV' })}
+                placement="topRight"
+              >
                 <i
                   className="iconfont icon-download"
                   onClick={() => {
@@ -705,10 +732,16 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             ),
           }}
         >
-          <TabPane tab="结果列表" key="table">
+          <TabPane
+            tab={$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.ResultList', dm: '结果列表' })}
+            key="table"
+          >
             {getResultPane('table')}
           </TabPane>
-          <TabPane tab="统计图表" key="plot">
+          <TabPane
+            tab={$i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.Component.StatisticalChart', dm: '统计图表' })}
+            key="plot"
+          >
             {getResultPane('plot')}
           </TabPane>
         </Tabs>

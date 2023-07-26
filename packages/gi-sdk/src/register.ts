@@ -1,4 +1,5 @@
 import Graphin from '@antv/graphin';
+
 let registeredShapes = '';
 let registeredLayouts = '';
 
@@ -14,6 +15,7 @@ export const registerShapes = Elements => {
     }
   }
 };
+
 export const registerLayouts = Layouts => {
   if (Layouts) {
     const nextLayout = Object.keys(Layouts).join('-');
@@ -27,11 +29,4 @@ export const registerLayouts = Layouts => {
   }
 };
 
-// export const  registerIconFont =()=>{
-//   return
-//   const MyIcon = React.useMemo(() => {
-//     return createFromIconfontCN({
-//       scriptUrl: iconFontUrl, // 在 iconfont.cn 上生成
-//     });
-//   }, [iconFontUrl]);
-// }
+export { registerIconFonts } from '@antv/gi-common-components';

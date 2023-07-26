@@ -1,8 +1,10 @@
 /* eslint-disable react/require-default-props */
 import type { IG6GraphEvent } from '@antv/graphin';
-import React, { useEffect } from 'react';
+ 
 import useContextMenu, { State, ContextMenuProps as ContextMenuOptions } from './useContextMenu';
-
+ 
+import React, { RefObject, useEffect, useRef } from 'react';
+ 
 export const defaultStyle: React.CSSProperties = {
   width: '120px',
   boxShadow: '0 4px 12px rgb(0 0 0 / 15%)',
@@ -20,10 +22,11 @@ export interface ContextMenuProps extends Pick<ContextMenuOptions, 'bindTypes'> 
   style?: React.CSSProperties;
 }
 
-const container = React.createRef() as React.RefObject<HTMLDivElement>;
-
 const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
+
   const { children, style, bindTypes, setItem } = props;
+  const container = useRef<HTMLDivElement>(null);
+
   const contextmenu = useContextMenu({
     container,
     bindTypes,

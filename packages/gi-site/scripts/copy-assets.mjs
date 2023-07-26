@@ -1,71 +1,21 @@
 import fs from 'fs';
+import fsExtra from 'fs-extra';
 import fetch from 'node-fetch';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import allDeps from './deps.json' assert { type: 'json' };
-
-import fsExtra from 'fs-extra';
+import deps from './deps.json' assert { type: 'json' };
+import deps_assets from './deps_assets.json' assert { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
-
-const packages = [
-  /** sdk */
-  {
-    name: '@antv/gi-sdk',
-  },
-  /** assets */
-  {
-    name: '@antv/gi-assets-basic',
-  },
-  {
-    name: '@antv/gi-assets-advance',
-  },
-  {
-    name: '@antv/gi-assets-scene',
-  },
-  {
-    name: '@antv/gi-assets-algorithm',
-  },
-  /** engine */
-  {
-    name: '@antv/gi-assets-tugraph',
-  },
-  {
-    name: '@antv/gi-assets-tugraph-analytics',
-  },
-  {
-    name: '@antv/gi-assets-graphscope',
-  },
-  {
-    name: '@antv/gi-assets-galaxybase',
-  },
-  {
-    name: '@antv/gi-assets-neo4j',
-  },
-  {
-    name: '@antv/gi-assets-hugegraph',
-  },
-  {
-    name: '@antv/gi-assets-janusgraph',
-  },
-];
-
-const assets = packages.map(item => {
-  return {
-    name: item.name.split('/')[1],
-  };
+const deps_asset_keys = [...deps_assets.map(item => item.name), '@antv/gi-sdk'];
+const deps_env_keys = deps.filter(item => {
+  return deps_asset_keys.indexOf(item.name) === -1;
 });
 
-const deps = allDeps.filter(item => {
-  return packages.indexOf(item.name) === -1;
-});
-
-console.log('assets', assets, deps);
-
-assets.forEach(item => {
-  const { name } = item;
+deps_asset_keys.forEach(item => {
+  const name = item.split('/')[1];
   fsExtra.copy(
     path.resolve(__dirname, `../../${name}/dist/index.min.js`),
     path.resolve(__dirname, `../public/libs/@antv/${name}.min.js`),
@@ -87,7 +37,7 @@ assets.forEach(item => {
   );
 });
 
-deps.forEach(item => {
+deps_env_keys.forEach(item => {
   const { url, name } = item;
   fetch(url)
     .then(res => {
@@ -96,9 +46,9 @@ deps.forEach(item => {
     .then(res => {
       fs.writeFile(path.resolve(__dirname, '../public/libs/', `${name}.min.js`), res, error => {
         if (error) {
-          console.log(`%c Error! JS : ${name} :${error} `, `color:red`);
+          console.log(`%c Fetch Error! JS : ${name} :${error} `, `color:red`);
         } else {
-          console.log(`%c Success! JS : ${name}  `, `color:green`);
+          console.log(`%c Fetch Success! JS : ${name}  `, `color:green`);
         }
       });
     });
@@ -110,9 +60,9 @@ deps.forEach(item => {
     .then(res => {
       fs.writeFile(path.resolve(__dirname, '../public/libs/', `${name}.css`), res, error => {
         if (error) {
-          console.log(`%c Error! CSS : ${name} :${error} `, `color:red`);
+          console.log(`%c Fetch Error! CSS : ${name} :${error} `, `color:red`);
         } else {
-          console.log(`%c Success! CSS : ${name} `, `color:green`);
+          console.log(`%c Fetch Success! CSS : ${name} `, `color:green`);
         }
       });
     });

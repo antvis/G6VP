@@ -9,7 +9,6 @@ export default {
 
     '@antv/g6': 'G6',
     antd: 'antd',
-    '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
   },
@@ -21,7 +20,6 @@ export default {
     'https://gw.alipayobjects.com/os/lib/antd/4.16.13/dist/antd.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.5.0/dist/g6.min.js',
     'https://gw.alipayobjects.com/os/lib/antv/graphin/2.6.6/dist/graphin.min.js',
-    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
   ],
   styles: [

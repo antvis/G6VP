@@ -99,6 +99,7 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
           dm: '双击此处开始编辑',
         }),
     });
+    // @ts-ignore
     graph.addPlugin(newAnnotation);
     return newAnnotation;
   }, []);

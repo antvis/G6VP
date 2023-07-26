@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-httpservice",
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "G6VP 对接社区引擎的 HTTPServer，基于 Egg 框架",
   "private": true,
   "egg": {
@@ -22,8 +22,7 @@
     "tsc": "ets && tsc -p tsconfig.json",
     "ci": "npm run lint && npm run cov && npm run tsc",
     "autod": "autod",
-    "lint": "eslint . --ext .ts --resolve-plugins-relative-to .",
-    "clean": "ets clean"
+    "lint": "eslint . --ext .ts --resolve-plugins-relative-to ."
   },
   "dependencies": {
     "egg": "^2.6.1",
@@ -38,7 +37,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@antv/gi-sdk": "^2.4.1",
+    "@antv/gi-sdk": "^2.4.4",
     "@antv/graphin": "^2.7.21",
     "@eggjs/tsconfig": "^1.0.0",
     "@types/gremlin": "^3.6.1",
@@ -52,7 +51,7 @@
     "egg-mock": "^3.16.0",
     "eslint": "^8.0.0",
     "eslint-config-egg": "^12.0.0",
-    "typescript": "^4.0.0"
+    "typescript": "^5.1.6"
   },
   "engines": {
     "node": ">=14.0.0"

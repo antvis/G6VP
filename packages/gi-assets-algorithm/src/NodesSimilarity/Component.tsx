@@ -1,14 +1,14 @@
-import { FormOutlined, ReloadOutlined } from '@ant-design/icons';
+import { ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
-import { Button, Col, Empty, Input, message, Row } from 'antd';
+import { Button, Empty, Form, message } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import FormattedMessage, { formatMessage } from './locale';
 import SimilarityResultTable from './resultTable';
 import './index.less';
-
+import $i18n from '../i18n';
+import { NodeSelectionWrap } from '@antv/gi-common-components';
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
   controlledValues?: {
@@ -16,6 +16,8 @@ export interface CommunityDiscoveryProps {
     seedNodeId: string | null;
   };
   onOpen?: () => void;
+  nodeSelectionMode: string[];
+  nodeLabel: string;
 }
 
 export enum NodesSimilarityAlgorithm {
@@ -27,7 +29,7 @@ interface ResData {
   similarNodes: any[] | undefined;
 }
 const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
-  const { controlledValues, style = {}, onOpen } = props;
+  const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel } = props;
   const { data, graph, updateHistory } = useContext();
   const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
@@ -37,9 +39,8 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [seedNodeId, setSeedNodeId] = useState<string | null>(null);
   const [topReset, setTopReset] = useState(false);
-  const [selecting, setSelecting] = useState(false);
 
-  let nodeClickListener = e => {};
+  const [form] = Form.useForm();
 
   useEffect(() => {
     setInitData({
@@ -67,7 +68,8 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       onOpen?.();
       setSeedNodeId(controlledSeed);
       setSimilarityAlgo(algorithm);
-      onAnalyse(algorithm, controlledSeed);
+      form?.setFieldValue('seed', controlledSeed);
+      onAnalyse(algorithm);
     }
   }, [controlledValues]);
 
@@ -77,12 +79,18 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (success: boolean, errorMsg?: string) => {
+  const handleUpdateHistory = (success: boolean, errorMsg?: string) => {
     updateHistory({
       componentId: 'NodesSimilarity',
       type: 'analyse',
-      subType: '节点相似性',
-      statement: `算法 ${similarityAlgo}`,
+      subType: $i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.NodeSimilarity', dm: '节点相似性' }),
+      statement: $i18n.get(
+        {
+          id: 'gi-assets-algorithm.src.NodesSimilarity.Component.AlgorithmSimilarityalgo',
+          dm: '算法 {similarityAlgo}',
+        },
+        { similarityAlgo: similarityAlgo },
+      ),
       success,
       errorMsg,
       params: {
@@ -144,73 +152,10 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     });
   };
 
-  const onAnalyse = (algorithm?: string, seed?: string | null) => {
-    setSelecting(false);
-    setHasAnalysis(true);
-    const formatData = formatOriginData(data);
-    switch (algorithm || similarityAlgo) {
-      case NodesSimilarityAlgorithm.nodesConsineSimilarity:
-        if (!graph || graph.destroyed) {
-          handleUpateHistory(false, '图实例不存在');
-          return;
-        }
-        const nodes = formatData?.nodes || [];
-        const seedNode = nodes?.find(node => node.id === seed || seedNodeId);
-        if (!seedNode) {
-          message.info(formatMessage({ id: 'seed-node-not-found' }));
-          handleUpateHistory(false, `种子节点${seedNodeId}不存在`);
-          return;
-        }
-        // @ts-ignore
-        const { allCosineSimilarity, similarNodes } = nodesCosineSimilarity(nodes, seedNode, 'properties');
-        setResData({
-          similarityRes: allCosineSimilarity,
-          similarNodes: [seedNode, ...similarNodes],
-        });
-        setNodeStyle(similarNodes, 'cosineSimilarity');
-        handleUpateHistory(true);
-        break;
-      default:
-        handleUpateHistory(false, `算法${algorithm || similarityAlgo}不存在`);
-        break;
-    }
-  };
-
-  const renderResult = () => {
-    if (!hasAnalysis) {
-      return;
-    }
-
-    const { similarityRes, similarNodes } = resData || {};
-
-    if (!similarityRes?.length) {
-      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id={`data.no-data`} />} />;
-    }
-
-    if (similarityAlgo === NodesSimilarityAlgorithm.nodesConsineSimilarity) {
-      return (
-        <div className="nodes-similarity-result-wrapper">
-          <span className="nodes-similarity-title">
-            <FormattedMessage id="analysis-result" />
-          </span>
-          <SimilarityResultTable similarNodes={similarNodes} topReset={topReset} similarityKey="cosineSimilarity" />
-        </div>
-      );
-    }
-  };
-
-  const reset = () => {
-    resetMapping([], []);
-    setResData({ similarityRes: [], similarNodes: [] });
-    setCommunityAlgo(NodesSimilarityAlgorithm.nodesConsineSimilarity);
-    setTopReset(true);
-  };
-
-  const onSeachSeed = e => {
-    setSelecting(false);
-    const nodeId = typeof e === 'string' ? e : e.target.value;
-    setSeedNodeId(nodeId);
-    if (graph.findById(nodeId)) {
+  const highlightNode = nodeId => {
+    const node = graph.findById(nodeId);
+    if (node) {
+      graph.setItemState(nodeId, 'selected', true);
       graph.updateItem(nodeId, {
         style: {
           keyshape: {
@@ -224,19 +169,99 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     }
   };
 
-  const beginSelect = () => {
-    setSelecting(true);
-    graph.off('node:click', nodeClickListener);
-
-    nodeClickListener = e => {
-      setSelecting(false);
-      const { item } = e;
-      if (!item || item.destroyed) return;
-      onSeachSeed(item.getID());
-      // setSeedNodeId(item.getID());
-    };
-    graph.once('node:click', nodeClickListener);
+  const onAnalyse = async (algorithm?: string) => {
+    setHasAnalysis(true);
+    const formatData = formatOriginData(data);
+    const { seed } = await form.validateFields();
+    setSeedNodeId(seed);
+    switch (algorithm || similarityAlgo) {
+      case NodesSimilarityAlgorithm.nodesConsineSimilarity:
+        if (!graph || graph.destroyed) {
+          handleUpdateHistory(
+            false,
+            $i18n.get({
+              id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheGraphInstanceDoesNot',
+              dm: '图实例不存在',
+            }),
+          );
+          return;
+        }
+        const nodes = formatData?.nodes || [];
+        const seedNode = nodes?.find(node => node.id === seed);
+        if (!seedNode) {
+          message.info(
+            $i18n.get({
+              id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheSeedNodeDoesNot',
+              dm: '种子节点不存在',
+            }),
+          );
+          handleUpdateHistory(
+            false,
+            $i18n.get(
+              {
+                id: 'gi-assets-algorithm.src.NodesSimilarity.Component.TheSeedNodeSeednodeidDoes',
+                dm: '种子节点{seedNodeId}不存在',
+              },
+              { seedNodeId: seed },
+            ),
+          );
+          return;
+        }
+        highlightNode(seed);
+        // @ts-ignore
+        const { allCosineSimilarity, similarNodes } = nodesCosineSimilarity(nodes, seedNode, 'properties');
+        setResData({
+          similarityRes: allCosineSimilarity,
+          similarNodes: [seedNode, ...similarNodes],
+        });
+        setNodeStyle(similarNodes, 'cosineSimilarity');
+        handleUpdateHistory(true);
+        break;
+      default:
+        handleUpdateHistory(false, `算法${algorithm || similarityAlgo}不存在`);
+        break;
+    }
   };
+
+  const renderResult = () => {
+    if (!hasAnalysis) {
+      return;
+    }
+
+    const { similarityRes, similarNodes } = resData || {};
+
+    if (!similarityRes?.length) {
+      return (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description={$i18n.get({
+            id: 'gi-assets-algorithm.src.NodesSimilarity.Component.NoDataAvailable',
+            dm: '暂无数据',
+          })}
+        />
+      );
+    }
+
+    if (similarityAlgo === NodesSimilarityAlgorithm.nodesConsineSimilarity) {
+      return (
+        <div className="nodes-similarity-result-wrapper">
+          <span className="nodes-similarity-title">
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.AnalysisResults', dm: '分析结果' })}
+          </span>
+          <SimilarityResultTable similarNodes={similarNodes} topReset={topReset} similarityKey="cosineSimilarity" />
+        </div>
+      );
+    }
+  };
+
+  const reset = () => {
+    form.resetFields();
+    resetMapping([], []);
+    setResData({ similarityRes: [], similarNodes: [] });
+    setCommunityAlgo(NodesSimilarityAlgorithm.nodesConsineSimilarity);
+    setTopReset(true);
+  };
+
   return (
     <div
       style={
@@ -247,40 +272,32 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     >
       <div className="nodes-similarity-wrapper">
         <div>
-          <Row justify="space-between">
-            <Col span={21}>
-              <p className="nodes-similarity-title">
-                <FormattedMessage id="itelligent-analysis.nodes-similarity.select-seed-node" />
-              </p>
-            </Col>
-            <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
-              <ReloadOutlined onClick={reset} />
-            </Col>
-          </Row>
-          <Row justify="space-between">
-            <Col span={21}>
-              <Input
-                placeholder={formatMessage({
-                  id: 'itelligent-analysis.nodes-similarity.select-seed-node',
-                })}
-                style={{ display: 'block', margin: '0 0 30px 10px' }}
-                onChange={onSeachSeed}
-                //@ts-ignore
-                value={seedNodeId}
-              />
-            </Col>
-            <Col span={2} offset={1} style={{ lineHeight: '32px', textAlign: 'right' }}>
-              <FormOutlined
-                style={{ cursor: 'pointer', color: selecting ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
-                onClick={beginSelect}
-              />
-            </Col>
-          </Row>
+          <Form form={form} layout={'vertical'}>
+            <NodeSelectionWrap
+              graph={graph}
+              form={form}
+              items={[
+                {
+                  name: 'seed',
+                  label: $i18n.get({
+                    id: 'gi-assets-algorithm.src.NodesSimilarity.Component.SeedNode',
+                    dm: '种子节点',
+                  }),
+                },
+              ]}
+              data={data.nodes}
+              nodeLabel={nodeLabel}
+              nodeSelectionMode={nodeSelectionMode}
+            />
+          </Form>
         </div>
 
-        <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={() => onAnalyse()}>
-          <FormattedMessage id="analyse" />
-        </Button>
+        <div className="nodes-similarity-operations">
+          <Button type="primary" style={{ width: '100%', marginTop: '12px' }} onClick={() => onAnalyse()}>
+            {$i18n.get({ id: 'gi-assets-algorithm.src.NodesSimilarity.Component.Analysis', dm: '分析' })}
+          </Button>
+          <ReloadOutlined onClick={reset} />
+        </div>
 
         {renderResult()}
       </div>

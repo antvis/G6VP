@@ -11,7 +11,7 @@ const Cypher_Template = engineId => [
     props: {
       serviceId: `${engineId}/CypherQuery`,
       isShowPublishButton: false,
-      saveCypherTemplateServceId: `${engineId}/PublishTemplate`,
+      saveCypherTemplateServiceId: `${engineId}/PublishTemplate`,
       initialValue: 'MATCH n RETURN LIMIT 100',
       GI_CONTAINER_INDEX: 2,
       GIAC_CONTENT: {
@@ -37,7 +37,7 @@ const Cypher_Template = engineId => [
         offset: [0, 0],
         containerWidth: '350px',
         containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
+        containerMask: false,
       },
     },
   },
@@ -74,7 +74,7 @@ const Gremlin_Template = engineId => [
         offset: [0, 0],
         containerWidth: '350px',
         containerHeight: 'calc(100% - 100px)',
-        contaienrMask: false,
+        containerMask: false,
       },
     },
   },

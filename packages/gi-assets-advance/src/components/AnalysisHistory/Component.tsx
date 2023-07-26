@@ -52,7 +52,6 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
   const { collapsed, urlMap, modalOpened, templates, templateDrawerVisible, templateApplyTooltipVisible } = state;
 
   const GISDK_DOM = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
-  const GISDK_PARENT_DOM = GISDK_DOM.parentElement as HTMLDivElement;
 
   /**
    * 挂载组件时，获取已保存的模版列表
@@ -396,7 +395,7 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
     </div>
   );
 
-  return ReactDOM.createPortal(HistoryFooterComponent, GISDK_PARENT_DOM);
+  return ReactDOM.createPortal(HistoryFooterComponent, GISDK_DOM);
 };
 
 export default AnalysisHistory;
