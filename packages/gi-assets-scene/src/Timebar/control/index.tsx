@@ -37,7 +37,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
 
   // 缓存图数据、设置 G2 渲染数据
   useEffect(() => {
-    if (!graphDataRef.current && !isEmptyGraphData(graphData)) {
+    if (!isEmptyGraphData(graphData)) {
       graphDataRef.current = graphData;
       setRenderData(dataTransform(graphData, type as any));
     }

@@ -45,9 +45,10 @@ export const Timebar: React.FC<TimebarProps> = ({
       />
     );
 
-  const [xType, _timeField] = timeField.split(':');
-  const [yType, _yField] = yField.split(':');
+  const [xType, _timeField] = timeField?.split(':');
+  const [yType, _yField] = yField?.split(':');
 
+  if (!yType || !xType) return null;
   if (xType !== yType) {
     message.warning(
       $i18n.get({
