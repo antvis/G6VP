@@ -34,6 +34,9 @@ const EXTRA_CONFIG = isDev
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
+
+        // 'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.1.0/dist/index.min.js',
+        'http://localhost:5500/index.min.js',
         // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
         // // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js',
         // 'http://localhost:5501/graphin.min.js',
@@ -73,12 +76,18 @@ export default {
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
     {
+      exact: true,
+      path: '/app',
+      component: 'Applaction',
+    },
+    {
       path: '/',
       component: '@/layouts/index',
       routes: [
         { exact: true, path: '/workspace', component: 'Workspace' },
         { exact: true, path: '/services', component: 'ServerCenter' },
         { exact: true, path: '/home', component: 'Home' },
+        { exact: true, path: '/app', component: 'Applaction' },
         {
           path: '/dataset',
           component: '@/layouts/SideNav',
@@ -150,6 +159,11 @@ export default {
           path: '/open',
           component: '@/layouts/SideNav',
           routes: [
+            {
+              exact: true,
+              path: 'app',
+              component: 'Applaction/List',
+            },
             {
               exact: true,
               path: 'assets-manage',
