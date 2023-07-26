@@ -102,6 +102,10 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   useEffect(() => {
     if (!graph || graph.destroyed) return;
+
+    // init previousSize
+    previousSize = { width: graph.getWidth(), height: graph.getHeight() };
+
     const handleClickEdge = e => {
       const mode = graph.getCurrentMode();
       if (mode !== PATTERN_MATCH_MODE) return;
