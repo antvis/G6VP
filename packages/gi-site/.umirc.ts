@@ -34,7 +34,6 @@ const EXTRA_CONFIG = isDev
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
-
         // 'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.1.0/dist/index.min.js',
         'http://localhost:5500/index.min.js',
         // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
@@ -161,8 +160,8 @@ export default {
           routes: [
             {
               exact: true,
-              path: 'app',
-              component: 'Applaction/List',
+              path: 'solution',
+              component: 'Solution',
             },
             {
               exact: true,
