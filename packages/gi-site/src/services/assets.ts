@@ -13,7 +13,6 @@ import * as GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph';
 import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
 import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
 import * as GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics';
-import * as GI_ASSETS_XLAB from '@antv/gi-assets-xlab';
 
 import INJECT from './inject';
 
@@ -78,10 +77,6 @@ const LOCAL_ASSETS: any[] = [
   {
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_JANUSGRAPH'],
     ...GI_ASSETS_JANUSGRAPH,
-  },
-  {
-    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_XLAB'],
-    ...GI_ASSETS_XLAB,
   },
 
   // 本地开发资产
