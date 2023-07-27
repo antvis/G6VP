@@ -64,7 +64,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
       <div style={{ borderRadius: '8px', textAlign: 'center', paddingBottom: '12px' }}>
         <Segmented options={options} value={active} onChange={onChange} />
       </div>
-      <div className="gi-segmented-tabs">
+      <div className="gi-segmented-container-tabs">
         {items.map(item => {
           const { key, children } = item;
           const isActive = key === active;

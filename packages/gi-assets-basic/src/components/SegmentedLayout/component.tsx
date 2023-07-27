@@ -1,8 +1,7 @@
-import { Icon, useContext } from '@antv/gi-sdk';
+import { Icon, useContainer, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
-import './index.less';
 import SegmentedTabs from './SegmentedTabs';
-import useComponents from './useComponents';
+import './index.less';
 
 export interface UadLayoutProps {
   topItems: any[];
@@ -15,26 +14,43 @@ export interface UadLayoutProps {
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
-  const { config, assets, HAS_GRAPH } = useContext();
-  // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
+  const context = useContext();
+  const { HAS_GRAPH } = context;
 
-  const { containers } = props;
-
-  const ComponentCfgMap = config.components.reduce((acc, curr) => {
+  /**
+   * hack start
+   *
+   * 不应该修改 registerMeta 原有的containers 数据结构
+   * 1. 先把追加的 GI_FreeContainer 移除
+   * 2. 把 GI_CONTAINER 中的 数组对象 改为字符串
+   *
+   * TODO：
+   * 需要在gi-site层修改这个containers的值
+   *
+   */
+  const containers = props.containers.slice(0, -1).map(item => {
     return {
-      ...acc,
-      [curr.id]: curr,
+      ...item,
+      GI_CONTAINER: item.GI_CONTAINER.map(item => item.value),
     };
-  }, {});
+  });
+  /** hack end */
 
-  const { GI_CONTAINER: sideItems = [], width = 360, padding = 12 } = containers[0] || {};
+  const Containers = useContainer(context, containers);
 
-  const SideContent = useComponents(sideItems, ComponentCfgMap, assets.components);
-  const items = SideContent.map((item: any) => {
+  const [SideContent] = Containers;
+
+  const {
+    width = 360,
+    padding = 12, // 为什么这里没有值，需要关注
+    children: SideContentChildren,
+  } = SideContent;
+
+  const items = SideContentChildren.map((item: any) => {
     return {
       icon: <Icon type={item.icon} />,
       key: item.id,
-      children: HAS_GRAPH && item.children,
+      children: HAS_GRAPH && item.component,
     };
   });
 
