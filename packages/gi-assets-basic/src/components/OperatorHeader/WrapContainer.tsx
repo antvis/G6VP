@@ -227,10 +227,15 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             tooltipPlacement={tooltipPlacement}
             isShowTooltip={isShowTooltip}
           >
-            <Button type="text" style={isVertical ? { height: '60px' } : {}} onClick={onClick} disabled={disabled}>
+            <Button
+              type="text"
+              // style={isVertical ? { height: '60px' } : {}}
+              onClick={onClick}
+              disabled={disabled}
+            >
               {isShowIcon && <Icon type={icon} />}
-              {isVertical && <br />}
-              {isShowTitle && title}
+              {/* {isVertical && <br />}
+              {isShowTitle && title} */}
             </Button>
           </WrapTooltip>
           {hasDivider && <Divider type="vertical" />}
