@@ -1,18 +1,19 @@
 import {
   AppstoreOutlined,
+  BookOutlined,
   DeleteOutlined,
+  DeploymentUnitOutlined,
   GlobalOutlined,
   MenuUnfoldOutlined,
   OrderedListOutlined,
   PlusOutlined,
   RocketOutlined,
-  DeploymentUnitOutlined,
 } from '@ant-design/icons';
 
 import { Menu, MenuProps } from 'antd';
 import * as React from 'react';
-import './index.less';
 import $i18n from '../i18n';
+import './index.less';
 interface ILayoutProps {}
 
 const DATASET_ITEMS = [
@@ -59,6 +60,7 @@ const OPEN_ITEMS = [
     key: '/open/engines',
     icon: <RocketOutlined />,
   },
+  { label: '解决方案', key: '/open/solution', icon: <BookOutlined /> },
   { label: 'V5 DEMO', key: '/open/g6v5demo', icon: <DeploymentUnitOutlined /> },
   // { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
   // { label: '图应用', key: '/open/portal', icon: <AppstoreOutlined /> },

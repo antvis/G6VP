@@ -76,7 +76,7 @@ export default {
     { exact: true, path: '/tabs/:type', component: 'Tab' },
     {
       exact: true,
-      path: '/app',
+      path: '/app/:id',
       component: 'Applaction',
     },
     {
@@ -86,7 +86,6 @@ export default {
         { exact: true, path: '/workspace', component: 'Workspace' },
         { exact: true, path: '/services', component: 'ServerCenter' },
         { exact: true, path: '/home', component: 'Home' },
-        { exact: true, path: '/app', component: 'Applaction' },
         {
           path: '/dataset',
           component: '@/layouts/SideNav',
