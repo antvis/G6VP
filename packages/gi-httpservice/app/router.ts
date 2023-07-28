@@ -48,11 +48,7 @@ export default (app: Application) => {
   router.post('/api/hugegraph/properties', controller.hugegraph.queryOneElementProperties);
   router.post('/api/hugegraph/graphs', controller.hugegraph.listGraphs);
   router.post('/api/hugegraph/schema', controller.hugegraph.getSchema);
-
-  // Xlab
-  router.post('/api/xlab/properties', controller.xlab.queryElementProperties);
-  router.post('/api/xlab/fuzzy', controller.xlab.fuzzyQuery);
-
+  
   //  gremlin database
 
   router.post('/gremlin/connect', controller.gremlin.connect);
