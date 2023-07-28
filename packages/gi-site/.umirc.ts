@@ -80,6 +80,11 @@ export default {
       component: 'Applaction',
     },
     {
+      exact: true,
+      path: '/preview/:id',
+      component: 'Preview',
+    },
+    {
       path: '/',
       component: '@/layouts/index',
       routes: [

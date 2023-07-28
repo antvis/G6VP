@@ -1,7 +1,7 @@
 import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../env';
 import { getActivePackageName } from '../../hooks/common';
 
-const getPkg = activeAssets => {
+export const getPkg = activeAssets => {
   const GI_ASSETS_PACKAGES = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}') as {
     [key: string]: {
       name: string;
@@ -23,6 +23,62 @@ const getPkg = activeAssets => {
   }, {});
 };
 
+export const deps = {
+  React: {
+    url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+    name: 'react-dom',
+    version: '17.0.2',
+    global: 'React',
+  },
+  ReactDOM: {
+    url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
+    name: 'react-dom',
+    version: '17.0.2',
+    global: 'ReactDOM',
+  },
+  _: {
+    name: 'lodash',
+    version: '4.17.21',
+    global: '_',
+    url: 'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
+  },
+  antd: {
+    url: `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
+    name: 'antd',
+    version: ANTD_VERSION,
+    global: 'antd',
+  },
+  G6: {
+    url: `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+    name: '@antv/g6',
+    version: G6_VERSION,
+    global: 'G6',
+  },
+  Graphin: {
+    url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+    name: '@antv/graphin',
+    version: GRAPHIN_VERSION,
+    global: 'Graphin',
+  },
+  GISDK: {
+    name: '@antv/gi-sdk',
+    version: GI_VERSION,
+    url: `https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js`,
+    global: 'GISDK',
+  },
+  G2Plot: {
+    url: `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
+    name: '@antv/g2plot',
+    version: G2PLOT_VERSION,
+    global: 'G2Plot',
+  },
+  '@antv/gi-theme-antd': {
+    name: '@antv/gi-theme-antd',
+    version: '0.6.0',
+    url: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.6.0/dist/index.min.js',
+    global: 'GI_THEME_ANTD',
+  },
+};
 const getExportContext = ctx => {
   const {
     activeAssetsKeys,
@@ -57,62 +113,7 @@ const getExportContext = ctx => {
       schemaData,
       data: { transData: data },
     },
-    deps: {
-      React: {
-        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-        name: 'react-dom',
-        version: '17.0.2',
-        global: 'React',
-      },
-      ReactDOM: {
-        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-        name: 'react-dom',
-        version: '17.0.2',
-        global: 'ReactDOM',
-      },
-      _: {
-        name: 'lodash',
-        version: '4.17.21',
-        global: '_',
-        url: 'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
-      },
-      antd: {
-        url: `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
-        name: 'antd',
-        version: ANTD_VERSION,
-        global: 'antd',
-      },
-      G6: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
-        name: '@antv/g6',
-        version: G6_VERSION,
-        global: 'G6',
-      },
-      Graphin: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
-        name: '@antv/graphin',
-        version: GRAPHIN_VERSION,
-        global: 'Graphin',
-      },
-      GISDK: {
-        name: '@antv/gi-sdk',
-        version: GI_VERSION,
-        url: `https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js`,
-        global: 'GISDK',
-      },
-      G2Plot: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
-        name: '@antv/g2plot',
-        version: G2PLOT_VERSION,
-        global: 'G2Plot',
-      },
-      '@antv/gi-theme-antd': {
-        name: '@antv/gi-theme-antd',
-        version: '0.6.0',
-        url: 'https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.6.0/dist/index.min.js',
-        global: 'GI_THEME_ANTD',
-      },
-    },
+    deps,
     GI_ASSETS_PACKAGES,
   };
 };
