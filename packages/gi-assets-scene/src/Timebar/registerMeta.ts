@@ -152,6 +152,17 @@ const registerMeta = ({ schemaData }) => {
       enum: playbackSpeedList,
       default: 1,
     },
+    playMode: {
+      title: '播放模式',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      enum: [
+        { label: '过滤', value: 'filter' },
+        { label: '高亮', value: 'highlight' },
+      ],
+      default: 'filter',
+    },
     ...metas,
   };
 

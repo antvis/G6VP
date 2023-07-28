@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-httpservice",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "description": "G6VP 对接社区引擎的 HTTPServer，基于 Egg 框架",
   "private": true,
   "egg": {
@@ -37,7 +37,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@antv/gi-sdk": "^2.4.2",
+    "@antv/gi-sdk": "^2.4.5",
     "@antv/graphin": "^2.7.21",
     "@eggjs/tsconfig": "^1.0.0",
     "@types/gremlin": "^3.6.1",

@@ -95,7 +95,7 @@ class TuGraphService extends Service {
     }
 
     // 如果返回有Eid,就使用Eid组装nodeIds
-    const { nodeIds: nodeIdsFromEdges, edgeIds } = getNodeIdsByEids(result);
+    const { nodeIds: nodeIdsFromEdges, edgeIds, paths } = getNodeIdsByEids(result);
     const nodeIds = [...new Set([...nodeIdsFromEdges, ...getNodeIds(result)])];
 
     // 拿到节点 ID 后，查询子图
@@ -172,6 +172,7 @@ class TuGraphService extends Service {
           source: String(src),
         };
       }),
+      paths,
     };
     return graphData;
   }

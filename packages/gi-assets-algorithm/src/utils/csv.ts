@@ -1,4 +1,6 @@
+import { common } from '@antv/gi-sdk';
 import $i18n from '../i18n'; // 格式化表格标题
+
 export const formatFileName = name => {
   let formattedName = $i18n.get({ id: 'gi-assets-algorithm.src.utils.csv.ExportDataCsv', dm: '导出数据.csv' });
   if (name) {
@@ -51,11 +53,7 @@ export const exportCSV = (config, fileName) => {
     }
     csvText.push(temp.join(',') + '\n');
   }
-  const link = document.createElement('a');
-  link.download = fileName;
-  const csvData = new Blob(['\ufeff' + csvText.join('')], { type: 'text/csv' });
-  link.href = URL.createObjectURL(csvData);
-  link.click();
+  common.createDownload(new Blob(['\ufeff' + csvText.join('')], { type: 'text/csv' }), fileName);
   return csvText;
 };
 

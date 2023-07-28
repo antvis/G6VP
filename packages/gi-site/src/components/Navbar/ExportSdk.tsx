@@ -4,9 +4,11 @@ import React from 'react';
 import { useImmer } from 'use-immer';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
 import $i18n from '../../i18n';
+import { common } from '@antv/gi-sdk';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
 import getExportContext from './getExportContext';
+
 import './index.less';
 
 const SdkContent = () => {
@@ -18,8 +20,8 @@ const SdkContent = () => {
   /** 下载 */
   const openHtml = () => {
     let [code, ext] = [htmlCode, '.html'];
-    //@ts-ignore
-    saveAs(code, `gi-export-project-id-${ctx.id}${ext}`);
+    common.createDownload(code, `gi-export-project-id-${st.id}${ext}`);
+
   };
 
   const THIRD_PARTY_DEPLOYS = Object.values((ctx.activeAssets && ctx.activeAssets.deploys) || {});

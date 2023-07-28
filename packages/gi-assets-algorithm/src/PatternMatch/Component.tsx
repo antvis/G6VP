@@ -5,11 +5,11 @@
 import { useMemoizedFn } from 'ahooks';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
-import { useContext } from '@antv/gi-sdk';
+import { useContext, common } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
-import { cloneDeep } from 'lodash';
-import React, { useEffect, useMemo, useState } from 'react';
+import { cloneDeep, set } from 'lodash';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
 import PatternEditor, { TypeProperties } from './patternEditor';
@@ -27,6 +27,7 @@ const { GADDI, breadthFirstSearch } = Algorithm;
 const { createUuid, clearItemsStates, fittingString } = Util;
 
 const MAX_PATTERN_NUM = 4;
+const PATTERN_MATCH_MODE = 'pattern-match-lasso';
 const EXTRACT_MESSAGE_KEY = 'kg-pattern-match-extract-message';
 const EXTRACT_MODE_CANVAS_CLASSNAME = 'kg-pattern-match-extract-mode-canvas';
 
@@ -35,7 +36,12 @@ let previousSize = { width: 500, height: 500 };
 let keydown = false;
 
 const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, onClose, onOpen, options = {} }) => {
-  const { onGraphEditorVisibleChange, onExtractModeChange, exportPattern, exportButton } = options;
+  const {
+    onGraphEditorVisibleChange,
+    onExtractModeChange,
+    exportPattern = content => common.createDownload(JSON.stringify(content), 'pattern.json'),
+    exportButton,
+  } = options;
   const { graph, data, schemaData, updateHistory } = useContext();
 
   const [activeKey, setActiveKey] = useState('1');
@@ -52,8 +58,9 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
   const [schemaEdgeMap, setSchemaEdgeMap] = useState({});
   const [schemaNodeMap, setSchemaNodeMap] = useState({});
+  const graphModeCacheRef = useRef(graph?.getCurrentMode() || 'default');
 
-  const intialPatternInfoMap = useMemo(
+  const initialPatternInfoMap = useMemo(
     () => ({
       '1': {
         id: '1',
@@ -63,7 +70,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     }),
     [],
   );
-  const [patternInfoMap, setPatternInfoMap] = useState(intialPatternInfoMap);
+  const [patternInfoMap, setPatternInfoMap] = useState(initialPatternInfoMap);
 
   const importData = (data, patternId) => {
     const newPatternInfoMap = { ...patternInfoMap };
@@ -78,20 +85,42 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           id: 'gi-assets-algorithm.src.PatternMatch.Component.ModeIntialpatterninfomapid',
           dm: '模式-{intialPatternInfoMapId}',
         },
-        { intialPatternInfoMapId: intialPatternInfoMap['1'].id },
+        { intialPatternInfoMapId: initialPatternInfoMap['1'].id },
       ),
       content: (
         <PatternPane
-          {...intialPatternInfoMap['1']}
+          {...initialPatternInfoMap['1']}
           schemaEdgeMap={schemaEdgeMap}
           editPattern={() => setEditorVisible(true)}
           importData={importData}
         />
       ),
 
-      key: intialPatternInfoMap['1'].id,
+      key: initialPatternInfoMap['1'].id,
     },
   ]);
+
+  useEffect(() => {
+    if (!graph || graph.destroyed) return;
+
+    // init previousSize
+    previousSize = { width: graph.getWidth(), height: graph.getHeight() };
+
+    const handleClickEdge = e => {
+      const mode = graph.getCurrentMode();
+      if (mode !== PATTERN_MATCH_MODE) return;
+      // 选中边时，自动选中边的端点
+      const edge = e.item;
+      const source = edge.getSource();
+      const target = edge.getTarget();
+      graph.setItemState(source, ITEM_STATE.Active, true);
+      graph.setItemState(target, ITEM_STATE.Active, true);
+    };
+    graph.on('edge:click', handleClickEdge);
+    return () => {
+      graph.off('edge:click', handleClickEdge);
+    };
+  }, []);
 
   useEffect(() => {
     const sEdgeMap = {};
@@ -229,7 +258,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         marginTop: '20px',
       },
     });
-    graph.setMode('pattern-match-lasso'); // 切换为 lasso 交互模式，该模式下没有其他 behavior
+    graph.setMode(PATTERN_MATCH_MODE); // 切换为 lasso 交互模式，该模式下没有其他 behavior
     // 恢复图上的选中状态，为拉索框选做准备
     clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
     clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
@@ -242,7 +271,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   });
 
   const quitExtractMode = () => {
-    graph.setMode('default'); // 恢复默认交互模式
+    graph.setMode(graphModeCacheRef.current); // 恢复默认交互模式
     message.destroy(EXTRACT_MESSAGE_KEY); // 销毁提示 message
     setExtracting(false); // 恢复面板状态
     onOpen?.(); // 显示抽屉
@@ -389,14 +418,14 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         onOk() {
           clearItemsStates(graph, graph.getEdges(), [ITEM_STATE.Active]);
           clearItemsStates(graph, graph.getNodes(), [ITEM_STATE.Active]);
-          graph.setMode('default');
+          graph.setMode(graphModeCacheRef.current);
           message.destroy(EXTRACT_MESSAGE_KEY);
           onOpen?.(); // 显示抽屉
           quitExtractMode();
         },
       });
     } else {
-      graph.setMode('default');
+      graph.setMode(graphModeCacheRef.current);
       message.destroy(EXTRACT_MESSAGE_KEY);
       onOpen?.(); // 显示抽屉
       quitExtractMode();
@@ -613,7 +642,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const onMatch = async (patternProp?: GraphinData) => {
     if (!graph || graph.destroyed) {
-      handleUpateHistory(
+      handleUpdateHistory(
         {},
         false,
         $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.TheGraphInstanceDoesNot', dm: '图实例不存在' }),
@@ -627,7 +656,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
           dm: '无法匹配空模式！',
         }),
       );
-      handleUpateHistory(
+      handleUpdateHistory(
         {},
         false,
         $i18n.get({
@@ -707,7 +736,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       setLoading(false);
       drawHulls([]);
       setResult([]);
-      handleUpateHistory(
+      handleUpdateHistory(
         { pattern },
         false,
         $i18n.get({ id: 'gi-assets-algorithm.src.PatternMatch.Component.NoMatchFound', dm: '没有找到匹配！' }),
@@ -728,7 +757,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     drawHulls(matches);
     setResult(matches);
 
-    handleUpateHistory({ pattern });
+    handleUpdateHistory({ pattern });
   };
 
   const onExport = () => {
@@ -745,13 +774,13 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     const res = patternInfoMap[+activeKey].data;
     const pattern = {
       nodes: res.nodes.map(node => {
-        node.data.label = node.nodeType;
-        node.data.rules = node.rules;
+        set(node, 'data.label', node.nodeType);
+        set(node, 'data.rules', node.rules);
         return node.data;
       }),
       edges: res.edges.map(edge => {
-        edge.data.label = edge.nodeType;
-        edge.data.rules = edge.rules;
+        set(edge, 'data.label', edge.edgeType);
+        set(edge, 'data.rules', edge.rules);
         return edge.data;
       }),
     };
@@ -789,7 +818,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
+  const handleUpdateHistory = (params: ControlledValues, success: boolean = true, errorMsg?: string) => {
     const { pattern } = params;
     if (!pattern) return;
     updateHistory({
@@ -859,20 +888,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
         </div>
         <Tabs
           type="editable-card"
-          activeKey={`${activeKey}`}
+          activeKey={activeKey}
           onChange={setActiveKey}
           onEdit={onTabEdit}
           hideAdd
           style={{
             marginTop: panes.length > MAX_PATTERN_NUM - 1 ? '-4px' : '-40px',
           }}
-        >
-          {panes.map(pane => (
-            <TabPane tab={pane.title} key={pane.key} closable={panes.length > 1}>
-              {pane.content}
-            </TabPane>
-          ))}
-        </Tabs>
+          items={panes.map(({ key, title, content }) => ({
+            label: title,
+            key,
+            closable: panes.length > 1,
+            children: content,
+          }))}
+        />
       </div>
       <Row className="button-wrapper" justify="space-between">
         <Col span={6}>

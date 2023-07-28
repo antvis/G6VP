@@ -24,6 +24,8 @@ type TimebarProps = {
   /** 倍速(每 1/speed 秒播放 timeGranularity 个) */
   speed: Speed;
   aggregation: Aggregation;
+  /** 播放模式：过滤/高亮 */
+  playMode: 'filter' | 'highlight';
 };
 
 export const Timebar: React.FC<TimebarProps> = ({
@@ -34,10 +36,11 @@ export const Timebar: React.FC<TimebarProps> = ({
   defaultTimeRange,
   timeGranularity,
   speed,
+  playMode,
 }) => {
   const { data: graphData } = useContext();
 
-  if (!timeField)
+  if (!timeField || !yField)
     return (
       <Empty
         description={$i18n.get({ id: 'scene.src.Timebar.Component.PleaseConfigureTheTimeField', dm: '请配置时间字段' })}
@@ -68,6 +71,7 @@ export const Timebar: React.FC<TimebarProps> = ({
       timeGranularity={timeGranularity}
       type={xType as any}
       yField={_yField}
+      playMode={playMode}
     />
   );
 };

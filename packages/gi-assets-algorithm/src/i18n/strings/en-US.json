@@ -183,5 +183,10 @@
   "gi-assets-algorithm.src.PatternMatchSimple.Component.SelectTheClusterFieldOf.1": "Select the cluster field of the edge",
   "gi-assets-algorithm.src.PatternMatchSimple.Component.StartMatching": "Start matching",
   "gi-assets-algorithm.src.PatternMatchSimple.PatternMatching": "Pattern matching",
-  "gi-assets-algorithm.src.utils.csv.ExportDataCsv": "Export data. csv"
+  "gi-assets-algorithm.src.utils.csv.ExportDataCsv": "Export data. csv",
+  "gi-assets-algorithm.src.NodesSimilarity.Component.SeedNode": "Seed node",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.ListAcquisition": "List acquisition",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.CanvasPickup": "Canvas pickup",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.ObtainNodeMode": "Obtain node mode",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.TagMapping": "Tag Mapping"
 }

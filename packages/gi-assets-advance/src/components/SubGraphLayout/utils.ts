@@ -24,7 +24,7 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
     })
     .map(node => {
       // 映射节点大小，用于圆形布局防重叠：https://github.com/antvis/layout/blob/master/src/layout/circular.ts#L213
-      node.size = node.style?.keyshape.size || 26;
+      node.size = node.style?.keyshape?.size || 26;
       /* 
         注意：这里不能使用 return {...node, size: node.style?.keyshape.size || 26}，
         因为我们需要将原来的那批节点返回，进行布局转化

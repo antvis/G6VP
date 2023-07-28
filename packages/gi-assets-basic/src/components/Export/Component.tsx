@@ -1,5 +1,5 @@
 import type { IGIAC } from '@antv/gi-sdk';
-import { extra, useContext } from '@antv/gi-sdk';
+import { common, extra, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 const { GIAComponent } = extra;
 
@@ -29,14 +29,7 @@ const Export: React.FunctionComponent<ClearCanvasProps> = props => {
       }),
     };
 
-    const element = document.createElement('a');
-    const file = new Blob([JSON.stringify(data)], { type: 'text/json' });
-    element.href = URL.createObjectURL(file);
-    element.download = 'data.json';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    URL.revokeObjectURL(element.href);
+    common.createDownload(new Blob([JSON.stringify(data)], { type: 'text/json' }), 'data.json');
   };
 
   return <GIAComponent GIAC={GIAC} onClick={onExport} />;

@@ -183,5 +183,10 @@
   "gi-assets-algorithm.src.PatternMatchSimple.Component.SelectTheClusterFieldOf.1": "选择边的聚类字段",
   "gi-assets-algorithm.src.PatternMatchSimple.Component.StartMatching": "开始匹配",
   "gi-assets-algorithm.src.PatternMatchSimple.PatternMatching": "模式匹配",
-  "gi-assets-algorithm.src.utils.csv.ExportDataCsv": "导出数据.csv"
+  "gi-assets-algorithm.src.utils.csv.ExportDataCsv": "导出数据.csv",
+  "gi-assets-algorithm.src.NodesSimilarity.Component.SeedNode": "种子节点",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.ListAcquisition": "列表获取",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.CanvasPickup": "画布拾取",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.ObtainNodeMode": "获取节点模式",
+  "gi-assets-algorithm.src.NodesSimilarity.registerMeta.TagMapping": "标签映射"
 }

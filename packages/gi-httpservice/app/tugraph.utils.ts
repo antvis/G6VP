@@ -184,27 +184,34 @@ export function getNodeIds(params: any): Array<number> {
   return nodeIds;
 }
 
-export function getNodeIdsByEids(params: any): { nodeIds: Array<number>; edgeIds: Array<string> } {
-  let nodeIds: Array<number> = [];
-  let edgeIds: Array<string> = [];
-  let result = params.data.result;
-  let headers = params.data.header;
-  let edgeIndexList: Array<number> = [];
-  let pathIndexList: Array<number> = [];
+export function getNodeIdsByEids(
+  params: any,
+): { nodeIds: Array<number>; edgeIds: Array<string>; paths: { nodes: number[]; edges: string[] }[] } {
+  const nodeIds: Array<number> = [];
+  const edgeIds: Array<string> = [];
+  const result = params.data.result;
+  const headers = params.data.header;
+  const edgeIndexList: Array<number> = [];
+  const pathIndexList: Array<number> = [];
+  const shortestPathIndexList: Array<number> = [];
+
   headers.forEach((item: any, index: number) => {
     if (item.type === 4) {
       pathIndexList.push(index);
     } else if (item.type === 2) {
       edgeIndexList.push(index);
+    } else if (item.type === 0) {
+      shortestPathIndexList.push(index);
     }
   });
+  const paths: { nodes: number[]; edges: string[] }[] = [];
   result.forEach(item => {
     pathIndexList.forEach(c => {
       if (item && item[c]) {
-        let data = JSON.parse(item[c]);
+        const data = JSON.parse(item[c]);
         data.forEach((el: any, index: number) => {
           if (index % 2 === 1) {
-            let eid = `${el.src}_${el.dst}_${el.label_id}_${el.temporal_id}_${el.identity}`;
+            const eid = `${el.src}_${el.dst}_${el.label_id}_${el.temporal_id}_${el.identity}`;
             edgeIds.push(eid);
             nodeIds.push(parseInt(el.src), parseInt(el.dst));
           }
@@ -219,11 +226,32 @@ export function getNodeIdsByEids(params: any): { nodeIds: Array<number>; edgeIds
         nodeIds.push(parseInt(data.src), parseInt(data.dst));
       }
     });
+    shortestPathIndexList.forEach(c => {
+      if (item && item[c]) {
+        const data = JSON.parse(item[c].replace('[', '["').replaceAll(',', '","').replace(']', '"]'));
+        const pathEdgeIds: string[] = [];
+        const pathNodeIds: number[] = [];
+        console.log('data', item[c]);
+        data.forEach((eid: any) => {
+          pathEdgeIds.push(eid);
+          edgeIds.push(eid);
+          const [source, target] = eid.split('_');
+          pathNodeIds.push(parseInt(source), parseInt(target));
+          nodeIds.push(parseInt(source), parseInt(target));
+        });
+        paths.push({
+          nodes: [...new Set(pathNodeIds)],
+          edges: [...new Set(pathEdgeIds)],
+        });
+      }
+    });
   });
 
+  console.log('paths', paths);
   return {
     nodeIds: [...new Set(nodeIds)],
     edgeIds: [...new Set(edgeIds)],
+    paths,
   };
 }
 
