@@ -1,5 +1,13 @@
 # @antv/gi-assets-scene
 
+## 2.2.5
+
+### Patch Changes
+
+- publish in 20230728
+- Updated dependencies
+  - @antv/gi-sdk@2.4.5
+
 ## 2.2.4
 
 ### Patch Changes
