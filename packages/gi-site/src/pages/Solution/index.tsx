@@ -1,6 +1,6 @@
 import { Card, Col, Row } from 'antd';
 import * as React from 'react';
-
+import { getUser } from '../../services/user';
 interface SolutionProps {}
 
 const Solution: React.FunctionComponent<SolutionProps> = props => {
@@ -9,24 +9,26 @@ const Solution: React.FunctionComponent<SolutionProps> = props => {
     isLoading: true,
   });
   const { lists, isLoading } = state;
+
+  const queryVipSolution = async () => {
+    const isVIP = await getUser();
+
+    const url = isVIP
+      ? 'https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/solution/index.json'
+      : 'https://unpkg.com/@antv/gi-public-data@latest/solution/index.json';
+
+    const res = await fetch(url).then(res => res.json());
+
+    setState(preState => {
+      return {
+        ...preState,
+        lists: res || [],
+        isLoading: false,
+      };
+    });
+  };
   React.useLayoutEffect(() => {
-    //@ts-ignore
-    // const url = window.GI_USER_INFO
-    //   ? 'https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/solution/index.json'
-    //   : 'https://unpkg.com/@antv/gi-public-data/solution/index.json';
-    console.log(window.GI_USER_INFO);
-    const url = `https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/solution/index.json`;
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        setState(preState => {
-          return {
-            ...preState,
-            lists: res,
-            isLoading: false,
-          };
-        });
-      });
+    queryVipSolution();
   }, []);
 
   if (isLoading) {

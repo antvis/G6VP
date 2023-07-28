@@ -3,6 +3,7 @@ import { deps, getPkg } from '../../components/Navbar/getExportContext';
 import { queryAssets } from '../../services/assets';
 import * as DatasetServices from '../../services/dataset';
 import * as WorkbookServices from '../../services/project';
+
 interface ApplactionProps {}
 //@ts-ignore
 const { default: GI_SDK_APP } = window.GI_SDK_APP;
