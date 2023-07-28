@@ -23,7 +23,7 @@ type Props = {
 const TimebarPanel: React.FC<Props> = props => {
   const {
     aggregation,
-    data: orignalData,
+    data: originalData,
     defaultSelection,
     timeField,
     onChangeTimeRange,
@@ -34,12 +34,12 @@ const TimebarPanel: React.FC<Props> = props => {
   } = props;
 
   const dataTimes = useMemo(() => {
-    const data = getFormatData(orignalData, timeField, getTimeFormat(timeGranularity));
+    const data = getFormatData(originalData, timeField, getTimeFormat(timeGranularity));
     const line: string[] = data.map(item => item[timeField]);
     const times = [...new Set(line)];
 
     return { data, times };
-  }, [orignalData, timeField]);
+  }, [originalData, timeField]);
 
   const [initSelection, setInitSelection] = useState<Selection>(getInitTimeRange(dataTimes.times));
   // 当前选中区间
@@ -102,6 +102,8 @@ const TimebarPanel: React.FC<Props> = props => {
     onChartReset();
     setChartSelectedRange([-Infinity, Infinity]);
   };
+
+  console.log('dataTimes', dataTimes);
 
   return (
     <div className="content">

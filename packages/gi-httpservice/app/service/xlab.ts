@@ -34,10 +34,18 @@ class XlabService extends Service {
     });
 
     if (result.status !== 200) {
+      const data = { ...result.data };
+      if (data.created_at !== undefined) {
+        data.created_at = data.created_at * 1000;
+      }
+      if (data.properties?.created_at !== undefined) {
+        data.properties.created_at = data.properties.created_at * 1000;
+      }
+
       return {
         success: false,
         code: result.status,
-        data: result.data,
+        data,
       };
     }
     return {
@@ -71,10 +79,42 @@ class XlabService extends Service {
     });
 
     if (result.status !== 200) {
+      const { nodes = [], edges = [] } = result.data;
+      const data: any = { nodes: [], edges: [] };
+      nodes.forEach(node => {
+        const { created_at } = node.properties;
+        if (created_at !== undefined) {
+          data.nodes.push({
+            ...node,
+            properties: {
+              ...node.properties,
+              created_at: created_at * 1000,
+            },
+            created_at: created_at * 1000,
+          });
+        } else {
+          data.nodes.push(node);
+        }
+      });
+      edges.forEach(edge => {
+        const { created_at } = edge.properties;
+        if (created_at !== undefined) {
+          data.edges.push({
+            ...edge,
+            properties: {
+              ...edge.properties,
+              created_at: created_at * 1000,
+            },
+            created_at: created_at * 1000,
+          });
+        } else {
+          data.edges.push(edge);
+        }
+      });
       return {
         success: false,
         code: result.status,
-        data: result.data,
+        data,
       };
     }
     return {
