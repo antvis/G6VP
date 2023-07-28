@@ -1,10 +1,11 @@
 {
-  "name": "@antv/gi-mock-data",
-  "version": "1.0.5",
-  "description": "G6VP MOCK DATA",
+  "name": "@antv/gi-public-data",
+  "version": "1.0.1",
+  "description": "G6VP public data",
   "main": "index.js",
   "files": [
-    "cdn"
+    "app",
+    "dataset"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +18,5 @@
     "url": "https://github.com/antvis/G6VP.git"
   },
   "author": "",
-  "license": "ISC",
-  "private": true
+  "license": "ISC"
 }

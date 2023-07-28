@@ -86,7 +86,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
           isReady: true,
           assets,
           services,
-          config: projectConfig,
+          //@ts-ignore
+          config: projectConfig || workbook.config,
           //@ts-ignore
           ThemeComponent: (window.GI_THEME_ANTD && window.GI_THEME_ANTD.default) || (() => null),
           //@ts-ignore
@@ -109,10 +110,11 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       </div>
     );
   }
+
   return (
     <>
       {/** @ts-ignore */}
-      <ThemeComponent style={{ visibility: 'hidden' }} />
+      <ThemeComponent style={{ visibility: 'hidden', position: 'absolute' }} />
       {/** @ts-ignore */}
       <GISDK config={config} assets={assets} services={services} id={`GI_STUDIO_${id}`} />
     </>
