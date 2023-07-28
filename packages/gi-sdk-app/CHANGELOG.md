@@ -1,5 +1,11 @@
 # @antv/gi-sdk-app
 
+## 1.0.4
+
+### Patch Changes
+
+- publish in 20230728
+
 ## 1.0.3
 
 ### Patch Changes

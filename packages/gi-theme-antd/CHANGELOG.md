@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.5
+
+### Patch Changes
+
+- publish in 20230728
+
 ## 0.6.4
 
 ### Patch Changes
