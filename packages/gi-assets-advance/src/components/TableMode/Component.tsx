@@ -5,8 +5,8 @@ import { generatePalette, getPalette, S2DataConfig, copyData, download } from '@
 
 import { SheetComponent, Switcher } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
-import { Button, Tabs, Tooltip, message } from 'antd';
-import React, { useEffect } from 'react';
+import { Button, Form, Modal, Tabs, Tooltip, message } from 'antd';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
 import { useFullScreen } from './hooks';
 import useCellSelect from './hooks/useCellSelect';
@@ -15,6 +15,10 @@ import './index.less';
 import getColumns from './utils/getColumns';
 import getData from './utils/getData';
 import $i18n from '../../i18n';
+import { FilterPopover } from './FilterPopover';
+import { CustomTableColCell } from './CustomTableColCell';
+import { filterIcon } from './utils/icon';
+import { measureTextWidth } from '@antv/g2plot';
 
 export interface IProps {
   isSelectedActive: boolean;
@@ -37,7 +41,12 @@ const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, targetWindowPath, style = {} } = props;
   const { graph, schemaData, largeGraphData, data: graphData } = useContext();
   const isFullScreen = useFullScreen();
-  const targetWindowRef = React.useRef<null | Window>(null);
+  const targetWindowRef = useRef<null | Window>(null);
+  const modalCallbackRef = useRef(e => {});
+  const s2Refs = {
+    node: useRef(null),
+    edge: useRef(null),
+  };
 
   // 使用内置的 colorful 色板作为参考色板
   const palette = getPalette('colorful');
@@ -49,6 +58,17 @@ const TableMode: React.FC<IProps> = props => {
   const themeCfg = {
     name: 'colorful',
     palette: newPalette,
+    theme: {
+      dataCell: {
+        cell: {
+          interactionState: {
+            selected: {
+              backgroundColor: '#ffa940',
+            },
+          },
+        },
+      },
+    },
   };
 
   // S2 的 options 配置
@@ -60,6 +80,37 @@ const TableMode: React.FC<IProps> = props => {
     },
     tooltip: {},
     refreshIndex: INTIAL_NUMBER,
+    colCell: (item, spreadsheet, headerConfig) => {
+      return new CustomTableColCell(item, spreadsheet, headerConfig, onIconClick);
+    },
+    customSVGIcons: [
+      {
+        name: 'Filter',
+        svg: filterIcon,
+      },
+    ],
+    style: {
+      colCfg: {
+        width: colNode => {
+          const { value, spreadsheet } = colNode;
+          const values = spreadsheet.dataSet.displayData.map(datum => datum[value]);
+          const font = { fontSize: 15 };
+          let maxLength = measureTextWidth(String(value), font) + 40;
+          let maxLengthValue = 'none';
+          values.forEach(val => {
+            const len = measureTextWidth(String(val), font);
+            if (maxLength < len) {
+              maxLength = len;
+              maxLengthValue = val;
+            }
+          });
+          return maxLength;
+        },
+        valuesCfg: {
+          showOriginalValue: true,
+        },
+      },
+    },
   });
 
   const [s2Instance, updateS2Instance] = useImmer<{ nodeTable: any; edgeTable: any }>({
@@ -67,14 +118,18 @@ const TableMode: React.FC<IProps> = props => {
     edgeTable: null,
   });
 
-  const [selectItems, setSelectItems] = React.useState<GraphinData>({
+  const [selectItems, setSelectItems] = useState<GraphinData>({
     nodes: [],
     edges: [],
   });
-  const [state, setState] = React.useState({
+  const [filterModelVisible, setFilterModelVisible] = useState(false);
+  const [filteringCol, setFilteringCol] = useState('');
+  const [currentTableType, setCurrentTableType] = useState('node');
+  const [state, setState] = useState({
     isPostStart: false,
     postParmas: {},
   });
+  const [form] = Form.useForm();
 
   const { isPostStart, postParmas } = state;
 
@@ -252,6 +307,11 @@ const TableMode: React.FC<IProps> = props => {
     }
   };
 
+  const onIconClick = ({ meta }) => {
+    setFilteringCol(meta.value);
+    setFilterModelVisible(!filterModelVisible);
+  };
+
   React.useEffect(() => {
     if (!isPostStart) {
       return;
@@ -366,9 +426,41 @@ const TableMode: React.FC<IProps> = props => {
     </Button>
   );
 
+  const filterPopOver = useMemo(
+    () => (
+      <Modal
+        title={`${currentTableType === 'node' ? '节点' : '边'} ${filteringCol} 值筛选`}
+        visible={filterModelVisible}
+        className="antv-s2-data-preview-demo-modal"
+        onCancel={() => {
+          setFilterModelVisible(false);
+          form.resetFields();
+        }}
+        onOk={() => {
+          // @ts-ignore
+          modalCallbackRef.current();
+          setFilterModelVisible(false);
+        }}
+      >
+        <FilterPopover
+          spreadsheet={s2Refs[currentTableType].current}
+          fieldName={filteringCol}
+          modalCallbackRef={modalCallbackRef}
+        />
+      </Modal>
+    ),
+    [currentTableType, filteringCol, filterModelVisible],
+  );
+
   return (
     <div className="gi-table-mode" id="gi-table-mode" style={{ width: '100%', height: '100%', ...style }}>
-      <Tabs tabPosition="top" tabBarExtraContent={extraContent} destroyInactiveTabPane centered>
+      <Tabs
+        tabPosition="top"
+        tabBarExtraContent={extraContent}
+        destroyInactiveTabPane
+        centered
+        onChange={setCurrentTableType}
+      >
         <TabPane
           tab={$i18n.get({ id: 'advance.components.TableMode.Component.PointTable', dm: '点表' })}
           key="node"
@@ -389,6 +481,7 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
+            ref={s2Refs.node}
             adaptive={true}
             options={options}
             dataCfg={nodeDataCfg}
@@ -417,6 +510,7 @@ const TableMode: React.FC<IProps> = props => {
               });
               // 处理你的业务逻辑
             }}
+            ref={s2Refs.edge}
             adaptive={true}
             options={options}
             dataCfg={edgeDataCfg}
@@ -426,6 +520,7 @@ const TableMode: React.FC<IProps> = props => {
           />
         </TabPane>
       </Tabs>
+      {filterPopOver}
     </div>
   );
 };
