@@ -4,9 +4,10 @@ import { RecursionField, observer, useField, useFieldSchema } from '@formily/rea
 import { markRaw, model } from '@formily/reactive';
 import { toArr } from '@formily/shared';
 import { Badge, Collapse } from 'antd';
+import { isArray } from '@antv/util';
 import { CollapsePanelProps, CollapseProps } from 'antd/lib/collapse';
 import cls from 'classnames';
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { Icon } from '../../Icon';
 import usePrefixCls from './usePrefixCls';
 
@@ -98,13 +99,17 @@ export const FormCollapse: ComposedFormCollapse = observer(({ formCollapse, ...p
   const _formCollapse = useMemo(() => {
     return formCollapse ? formCollapse : createFormCollapse();
   }, []);
+  const [activeKeys, setActiveKeys] = useState<ActiveKeys>([]);
 
-  const takeActiveKeys = () => {
-    if (props.activeKey) return props.activeKey;
-    if (_formCollapse?.activeKeys) return _formCollapse?.activeKeys;
-    if (props.accordion) return panels[0]?.name;
-    return panels.map(item => item.name);
-  };
+  useEffect(() => {
+    if (props.activeKey) setActiveKeys(isArray(props.activeKey) ? props.activeKey : [props.activeKey]);
+  }, [props.activeKey]);
+  useEffect(() => {
+    if (_formCollapse?.activeKeys) setActiveKeys(_formCollapse?.activeKeys);
+  }, [_formCollapse?.activeKeys]);
+  useEffect(() => {
+    if (props.accordion) setActiveKeys(panels[0]?.name);
+  }, [props.accordion]);
 
   const badgedHeader = (key: SchemaKey, props: any) => {
     const errors = field.form.queryFeedbacks({
@@ -124,9 +129,10 @@ export const FormCollapse: ComposedFormCollapse = observer(({ formCollapse, ...p
     <Collapse
       {...props}
       className={cls(prefixCls, props.className)}
-      activeKey={takeActiveKeys()}
+      activeKey={activeKeys}
       expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       onChange={key => {
+        setActiveKeys(key);
         props?.onChange?.(key);
         _formCollapse?.setActiveKeys?.(key);
       }}
