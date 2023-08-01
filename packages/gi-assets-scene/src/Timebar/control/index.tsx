@@ -16,7 +16,7 @@ export interface TimebarControlType {
   timeGranularity: TimeGranularity;
   type: FieldType;
   yField?: string;
-  playMode: 'filter' | 'highlight';
+  playMode: 'filter' | 'highlight' | 'show-hide';
 }
 
 const isEmptyGraphData = (data: GIGraphData) => !data.edges.length && !data.nodes.length;
@@ -81,7 +81,29 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
           graph.setItemState(edge.id, 'inactive', true);
         }
       });
+    } else if (playMode === 'show-hide') {
+      // 遍历数据，将不在时间范围内的点、边状态置为 disable
+      const shownNodes = {};
+      graphData.nodes.forEach(node => {
+        const { id } = node;
+        if (filteredData.nodes.some(data => data.id === id)) {
+          graph.showItem(id);
+          shownNodes[id] = true;
+        } else {
+          graph.hideItem(id);
+        }
+      });
+      graphData.edges.forEach(edge => {
+        const { id, source, target } = edge;
+        if (filteredData.edges.some(data => data.id === id) && shownNodes[source] && shownNodes[target]) {
+          graph.showItem(id);
+        } else {
+          graph.hideItem(id);
+        }
+      });
     }
+
+    graph.emit('timechange', { timeRange });
   }, [timeRange, graphDataRef.current]);
 
   const { run: onFilterChange } = useThrottleFn(

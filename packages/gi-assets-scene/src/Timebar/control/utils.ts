@@ -34,39 +34,12 @@ export function dataFilter(
   const parser = time => timeParser(time, timeGranularity);
 
   const baseFiltered = (data[type] as any[]).filter(item => {
+    if (!item.data[timeField]) return true;
     const time = parser(item.data[timeField]);
     return time >= parser(range[0]) && time <= parser(range[1]);
   });
 
-  let anotherFiltered: any[] = [];
   const another: any[] = data[type === 'nodes' ? 'edges' : 'nodes'];
-  if (another.length > 0) {
-    if (another[0].data[timeField]) {
-      anotherFiltered = another.filter(item => {
-        const time = parser(item.data[timeField]);
-        return time >= parser(range[0]) && time <= parser(range[1]);
-      });
-    }
-    // 如果节点数据中没有时间字段，根据 base 数据进行筛选
-    else {
-      if (type === 'edges') {
-        const allNodesFromEdges = baseFiltered.reduce((acc, cur) => {
-          acc.add(cur.source);
-          acc.add(cur.target);
-          return acc;
-        }, new Set<string>([]));
-        anotherFiltered = another.filter(node => allNodesFromEdges.has(node.id));
-      } else {
-        const allEdgesFromNodes = baseFiltered.reduce((acc, cur) => {
-          acc.add(cur.id);
-          return acc;
-        }, new Set<string>([]));
-        anotherFiltered = another.filter(
-          edge => allEdgesFromNodes.has(edge.source) && allEdgesFromNodes.has(edge.target),
-        );
-      }
-    }
-  }
 
   const addPlayingTag = <T>(data: T[]) => {
     const now = new Date().getTime();
@@ -75,7 +48,7 @@ export function dataFilter(
 
   return {
     [type]: addPlayingTag(baseFiltered),
-    [type === 'nodes' ? 'edges' : 'nodes']: addPlayingTag(anotherFiltered),
+    [type === 'nodes' ? 'edges' : 'nodes']: addPlayingTag(another),
   } as unknown as GIGraphData;
 }
 

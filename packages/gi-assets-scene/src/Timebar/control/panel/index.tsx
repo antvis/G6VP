@@ -103,8 +103,6 @@ const TimebarPanel: React.FC<Props> = props => {
     setChartSelectedRange([-Infinity, Infinity]);
   };
 
-  console.log('dataTimes', dataTimes);
-
   return (
     <div className="content">
       <div className="content-header">

@@ -160,6 +160,7 @@ const registerMeta = ({ schemaData }) => {
       enum: [
         { label: '过滤', value: 'filter' },
         { label: '高亮', value: 'highlight' },
+        { label: '显示/隐藏', value: 'show-hide' },
       ],
       default: 'filter',
     },
