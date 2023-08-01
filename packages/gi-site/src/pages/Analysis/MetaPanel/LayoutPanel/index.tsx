@@ -53,7 +53,6 @@ const getCacheValues = (object, layoutId) => {
   const { props } = object[layoutId];
   const layoutProps = verifyProps(props);
   const cacheLayout = cache[layoutId];
-  console.log('layout', layoutProps, cacheLayout);
 
   if (!cacheLayout) {
     cache[layoutId] = { id: layoutId, props: layoutProps };
