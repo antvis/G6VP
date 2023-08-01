@@ -25,7 +25,7 @@ type TimebarProps = {
   speed: Speed;
   aggregation: Aggregation;
   /** 播放模式：过滤/高亮 */
-  playMode: 'filter' | 'highlight';
+  playMode: 'filter' | 'highlight' | 'show-hide';
 };
 
 export const Timebar: React.FC<TimebarProps> = ({
