@@ -60,8 +60,14 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       const { dataset, workbook, GI_ASSETS_PACKAGES, deps } = data;
       const { projectConfig, theme = 'light' } = workbook;
       const { engineContext } = dataset;
+      const { Graphin: Graphin_DEP, GISDK: GISDK_DEP, ...FirstDeps } = deps;
       // 请求依赖资源包
-      await loader(Object.values(deps));
+      await loader(Object.values(FirstDeps));
+      // Graphin
+      await loader([Graphin_DEP]);
+      // GISDK
+      await loader([GISDK_DEP]);
+
       //@ts-ignore
       const { default: GISDK, utils } = window.GISDK;
       // 根据包名，请求资产
