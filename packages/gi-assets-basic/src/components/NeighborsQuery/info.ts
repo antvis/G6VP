@@ -12,7 +12,7 @@ const info = {
   }),
   icon: 'icon-kinship',
   cover: 'http://xxxx.jpg',
-  services: [ASSET_ID],
+  services: [ASSET_ID, `${ASSET_ID}Menu`],
   docs: 'https://www.yuque.com/antv/gi/oqw3qkdworuvhp22',
 };
 export default info;

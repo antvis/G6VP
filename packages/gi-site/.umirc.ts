@@ -46,7 +46,7 @@ const EXTRA_CONFIG = isDev
       externals: {
         ...externals,
       },
-      scripts: [...externalScripts],
+      scripts: [...externalScripts, 'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.0.5/dist/index.min.js'],
       links: [
         ...externalScripts.map(c => {
           return { href: c.src.replace('min.js', 'css'), rel: 'stylesheet' };
