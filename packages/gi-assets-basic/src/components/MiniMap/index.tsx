@@ -1,7 +1,6 @@
-import { Components } from '@antv/graphin';
 import registerMeta from './registerMeta';
 import $i18n from '../../i18n';
-const { MiniMap } = Components;
+import Component from './Component';
 
 /**   index.md 中解析得到默认值，也可用户手动修改 */
 const info = {
@@ -17,6 +16,6 @@ const info = {
 
 export default {
   info,
-  component: MiniMap,
+  component: Component,
   registerMeta,
 } as any;
