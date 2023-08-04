@@ -1,7 +1,7 @@
 const info = {
-  id: 'ConciseContainer',
-  name: '极简布局',
-  desc: '极简布局',
+  id: 'RichContainer',
+  name: '中台布局',
+  desc: '中台布局',
   cover: 'http://xxx.jpg',
   category: 'system-interaction',
   icon: 'icon-home',

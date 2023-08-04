@@ -28,7 +28,6 @@ import Tooltip from './Tooltip';
 // import ContentContainer from './ContentContainer';
 import ChartAnalysis from './ChartAnalysis';
 import CommonNeighbor from './CommonNeighbor';
-import ConciseContainer from './ConciseContainer';
 import ForceSimulation from './ForceSimulation';
 import GroupBar from './GroupBar';
 import Initializer from './Initializer';
@@ -37,6 +36,7 @@ import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import PropertyGraphInitializer from './PropertyGraphInitializer';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
+import RichContainer from './RichContainer';
 import SankeyAnalysis from './Sankey';
 import SegmentedLayout from './SegmentedLayout';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
@@ -58,7 +58,6 @@ export {
   // TooltipForEdge, //体验问题，暂不放开
   ClearCanvas,
   CommonNeighbor,
-  ConciseContainer,
   ContextMenu,
   Copyright,
   DownLoad,
@@ -88,6 +87,7 @@ export {
   PropertiesPanel,
   PropertyGraphInitializer,
   RemoveNodeWithMenu,
+  RichContainer,
   SankeyAnalysis,
   Save,
   SegmentedLayout,

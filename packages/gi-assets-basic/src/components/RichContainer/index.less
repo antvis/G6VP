@@ -1,0 +1,43 @@
+@panel-width: 600px;
+.gi-rich-container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  display: block;
+
+  .gi-rich-container-navbar {
+    position: relative;
+    height: 54px;
+    width: 100%;
+    background: green;
+  }
+  .gi-rich-container-toolbar {
+    position: relative;
+    height: 44px;
+    width: 100%;
+    background: #f3f5f9;
+    border-bottom: 1px solid #ddd;
+  }
+  .gi-rich-container-content {
+    position: absolute;
+    bottom: 0px;
+    top: 98px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    .gi-rich-container-side {
+      width: 400px;
+      height: 100%;
+      background: #f3f5f9;
+    }
+    .gi-rich-container-canvas {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 400px;
+      right: 0px;
+    }
+  }
+}
