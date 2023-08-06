@@ -1,4 +1,3 @@
-import { Empty } from 'antd';
 import React from 'react';
 
 const compatibleContainers = containers => {
@@ -13,17 +12,24 @@ const compatibleContainers = containers => {
    * 需要在gi-site层修改这个containers的值
    *
    */
-  return containers.slice(0, -1).map(item => {
-    return {
-      ...item,
-      GI_CONTAINER: item.GI_CONTAINER.map(item => {
-        if (item.value) {
-          return item.value;
-        }
-        return item;
-      }),
-    };
-  });
+  return containers
+    .filter(item => {
+      if (item.id === 'GI_FreeContainer') {
+        return false;
+      }
+      return true;
+    })
+    .map(item => {
+      return {
+        ...item,
+        GI_CONTAINER: item.GI_CONTAINER.map(item => {
+          if (item.value) {
+            return item.value;
+          }
+          return item;
+        }),
+      };
+    });
   /** hack end */
 };
 
@@ -45,45 +51,31 @@ const useContainer = (context, _containers?: any) => {
     };
   }, {});
   const getComponentById = componentId => {
+    if (!componentId) {
+      return null;
+    }
     const asset = assets.components[componentId];
     const assetConfig = ComponentCfgMap[componentId];
     if (!asset || !assetConfig) {
       console.warn(`asset: ${componentId} not found`);
       return null;
     }
-    const { component: Component } = asset;
-    const { props: componentProps } = assetConfig;
-    const { icon } = componentProps.GIAC_CONTENT || {};
     return {
       id: componentId,
-      icon,
-      props: componentProps,
-      component: <Component {...componentProps} />,
+      info: asset.info,
+      props: assetConfig.props,
+      component: asset.component,
     };
   };
 
   return React.useMemo(() => {
-    const Containers = containers.map(container => {
-      let children;
-      if (container.GI_CONTAINER.length === 0) {
-        children = [
-          {
-            id: 'empty',
-            icon: 'icon-empty',
-            props: {},
-            component: <Empty description={'当前容器中无可用资产，请在配置面板中集成'} />,
-          },
-        ];
-      } else {
-        children = container.GI_CONTAINER.map(getComponentById).filter(c => c);
-      }
+    return containers.map(container => {
+      const components = container.GI_CONTAINER.map(getComponentById).filter(c => c);
       return {
         ...container,
-        children,
+        components,
       };
     });
-
-    return Containers;
   }, [ComponentCfgMap, assets]);
 };
 
