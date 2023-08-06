@@ -359,6 +359,45 @@ const GIAC = {
           'x-component': 'Input',
           default: 'icon-star',
         },
+        iconFontSize: {
+          title: '图标大小',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: '18px',
+        },
+        buttonType: {
+          title: '按钮类型',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            options: [
+              {
+                value: 'text',
+                label: 'text',
+              },
+              {
+                value: 'primary',
+                label: 'primary',
+              },
+              {
+                value: 'default',
+                label: 'default',
+              },
+              {
+                value: 'dashed',
+                label: 'dashed',
+              },
+              {
+                value: 'link',
+                label: 'link',
+              },
+            ],
+          },
+          default: 'text',
+        },
+
         isShowTooltip: {
           title: $i18n.get({ id: 'sdk.src.components.const.PromptBox', dm: '提示框' }),
           type: 'string',
@@ -509,12 +548,13 @@ export const GIAC_PROPS = {
     isShowTooltip: true,
     title: '',
     icon: '',
+    iconFontSize: '18px',
     tooltip: '',
     tooltipPlacement: 'top',
     tooltipColor: '#3056e3',
     hasDivider: false,
     isVertical: false,
-    height: '40px',
+    buttonType: 'text',
   },
 };
 
