@@ -1,7 +1,7 @@
 import { useContext } from '@antv/gi-sdk';
 import * as React from 'react';
-import './index.less';
 import $i18n from '../../i18n';
+import './index.less';
 
 export interface LoadingProps {
   img?: string;
@@ -13,7 +13,7 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   const context = useContext();
   const {
     width = 200,
-    img = 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
+    img = 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*1BGfQ78mW4kAAAAAAAAAAAAADmJ7AQ/original',
     text,
   } = props;
 

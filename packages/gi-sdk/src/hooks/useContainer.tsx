@@ -60,7 +60,9 @@ const useContainer = (context, _containers?: any) => {
       console.warn(`asset: ${componentId} not found`);
       return null;
     }
+    const { icon } = assetConfig.props?.GIAC_CONTENT || asset.info;
     return {
+      icon,
       id: componentId,
       info: asset.info,
       props: assetConfig.props,

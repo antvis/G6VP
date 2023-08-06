@@ -22,14 +22,14 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const {
     width = 360,
     padding = 12, // 为什么这里没有值，需要关注
-    children: SideContentChildren,
+    components: SideContentChildren,
   } = SideContent;
 
   const items = SideContentChildren.map((item: any) => {
     return {
       icon: <Icon type={item.icon} />,
       key: item.id,
-      children: HAS_GRAPH && item.component,
+      children: HAS_GRAPH && <item.component {...item.props} />,
     };
   });
 
