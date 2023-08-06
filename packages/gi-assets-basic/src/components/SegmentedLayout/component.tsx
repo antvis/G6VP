@@ -25,11 +25,11 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
     components: SideContentChildren,
   } = SideContent;
 
-  const items = SideContentChildren.map((item: any) => {
+  const items = SideContentChildren.map(item => {
     return {
       icon: <Icon type={item.icon} />,
       key: item.id,
-      children: HAS_GRAPH && <item.component {...item.props} />,
+      children: HAS_GRAPH && <item.component key={item.id} {...item.props} />,
     };
   });
 

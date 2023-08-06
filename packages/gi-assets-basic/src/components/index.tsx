@@ -49,6 +49,7 @@ import ZoomStatus from './ZoomStatus';
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
 // import CreateCombo from './CreateCombo';
+import ShortcutKeys from './ShortcutKeys';
 
 export {
   ActivateRelations,
@@ -92,6 +93,7 @@ export {
   Save,
   SegmentedLayout,
   SelectExchangeMenuItem,
+  ShortcutKeys,
   SideSelectTabs,
   SideTabs,
   ToggleClusterWithMenu,

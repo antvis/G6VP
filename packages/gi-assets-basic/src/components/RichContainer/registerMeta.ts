@@ -3,8 +3,24 @@ const registerMeta = context => {
   return {
     containers: [
       {
-        id: 'navbar',
-        name: '顶部导航',
+        id: 'navbar-left',
+        name: '导航左区',
+        required: true,
+        GI_CONTAINER: {
+          title: '集成组件',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
+          enum: GIAC_ITEMS,
+          default: [],
+        },
+      },
+      {
+        id: 'navbar-right',
+        name: '导航右区',
         required: true,
         GI_CONTAINER: {
           title: '集成组件',
@@ -51,22 +67,6 @@ const registerMeta = context => {
         },
       },
       {
-        id: 'canvas-operator',
-        name: '画布操作',
-        required: true,
-        GI_CONTAINER: {
-          title: '集成组件',
-          type: 'string',
-          'x-decorator': 'FormItem',
-          'x-component': 'Select',
-          'x-component-props': {
-            mode: 'multiple',
-          },
-          enum: GIAC_ITEMS,
-          default: [],
-        },
-      },
-      {
         id: 'styling-setting',
         name: '布局样式',
         required: true,
@@ -79,6 +79,22 @@ const registerMeta = context => {
             mode: 'multiple',
           },
           enum: GIAC_CONTENT_ITEMS,
+          default: [],
+        },
+      },
+      {
+        id: 'canvas-operator',
+        name: '画布操作',
+        required: true,
+        GI_CONTAINER: {
+          title: '集成组件',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
+          enum: GIAC_ITEMS,
           default: [],
         },
       },

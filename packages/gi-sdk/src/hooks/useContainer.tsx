@@ -1,4 +1,33 @@
 import React from 'react';
+import type { IGIAC, TGIAC_CONTENT } from '../components/const';
+import { TYPE } from '../constants/info';
+export interface AssetComponet {
+  icon: string;
+  id: string;
+  info: TYPE;
+  props: {
+    GIAC_CONTENT: TGIAC_CONTENT;
+    GIAC: IGIAC;
+    [key: string]: any;
+  };
+  component: React.FunctionComponent;
+}
+export interface Container {
+  /** 容器中资产ID */
+  GI_CONTAINER: string[];
+  /** 容器中资产的具体实现 */
+  components: AssetComponet[];
+  /** 容器ID */
+  id: string;
+  /** 容器名称 */
+  name: string;
+  /** 是否展示 */
+  display: boolean;
+  /** 是否启用配置 */
+  require: boolean;
+  /** 其他配置参数 */
+  [key: string]: any;
+}
 
 const compatibleContainers = containers => {
   /**
@@ -40,7 +69,7 @@ const compatibleContainers = containers => {
  * @param containers 容器资产 props.containers
  * @returns
  */
-const useContainer = (context, _containers?: any) => {
+const useContainer = (context, _containers?: any): Container[] => {
   const { assets, config } = context;
   const { pageLayout } = config;
   const containers = compatibleContainers(pageLayout.props.containers);
@@ -50,7 +79,7 @@ const useContainer = (context, _containers?: any) => {
       [curr.id]: curr,
     };
   }, {});
-  const getComponentById = componentId => {
+  const getComponentById = (componentId: string) => {
     if (!componentId) {
       return null;
     }
