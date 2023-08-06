@@ -1,5 +1,5 @@
-import { GIConfig } from '../typing';
 import $i18n from '../i18n';
+import { GIConfig } from '../typing';
 export const nodes: GIConfig['nodes'] = [
   {
     id: 'SimpleNode',
@@ -205,12 +205,12 @@ export const components = [
     id: 'Placeholder',
     name: $i18n.get({ id: 'sdk.src.constants.template.CanvasPlaceholder', dm: '画布占位符' }),
     props: {
-      img: 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
+      img: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*1BGfQ78mW4kAAAAAAAAAAAAADmJ7AQ/original',
       text: $i18n.get({
         id: 'sdk.src.constants.template.TheCurrentCanvasIsEmpty',
-        dm: '当前画布为空，请先试试「数据/图数据源/导入/示例数据」',
+        dm: '当前暂无画布数据，请先试试「案例数据」',
       }),
-      width: 380,
+      width: 340,
     },
   },
   {
