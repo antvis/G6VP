@@ -6,6 +6,8 @@
 
 - https://github.com/gephi/gephi
 
+- https://github.com/neo4j/neo4j-browser
+
 - https://github.com/antvis/G6VP
 
 - https://github.com/noduslabs/infranodus

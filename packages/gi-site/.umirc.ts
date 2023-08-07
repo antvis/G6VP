@@ -1,7 +1,7 @@
 import GI_THEME_ANTD from '@antv/gi-theme-antd/package.json';
 
 import deps_externals from './scripts/deps_externals.json';
-
+import { G6_VERSION, GRAPHIN_VERSION } from './src/env';
 export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 
 /** 是否为本地研发模式 */
@@ -27,18 +27,16 @@ const EXTRA_CONFIG = isDev
         react: 'React',
         'react-dom': 'ReactDOM',
         antd: 'antd',
-        // '@antv/g6': 'G6',
-        // '@antv/graphin': 'Graphin',
+        '@antv/g6': 'G6',
+        '@antv/graphin': 'Graphin',
       },
       scripts: [
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
+        `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+        `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
         'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.0.5/dist/index.min.js',
-        // 'http://localhost:5500/index.min.js',
-        // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
-        // // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js',
-        // 'http://localhost:5501/graphin.min.js',
       ],
       links: [],
     }

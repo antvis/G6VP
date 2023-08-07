@@ -34,13 +34,24 @@ const GIAComponent = (props: GIAComponentProps) => {
     isShowIcon,
     icon,
     isVertical,
-    height = '40px',
     disabled,
     isShowTooltip,
+    iconFontSize = '16px',
+    buttonType = 'text',
   } = GIAC || GIAC_PROPS.GIAC;
 
+  const buttonStyle = isVertical
+    ? { height: '100%' }
+    : {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      };
   return (
-    <div {...others}>
+    <div
+      style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center' }}
+      {...others}
+    >
       <WrapTooltip
         title={title}
         tooltip={tooltip}
@@ -49,13 +60,14 @@ const GIAComponent = (props: GIAComponentProps) => {
         isShowTooltip={isShowTooltip}
       >
         <Button
-          type="text"
-          style={isVertical ? { height } : {}}
+          //@ts-ignore
+          type={buttonType}
+          style={buttonStyle}
           disabled={disabled}
           onClick={onClick}
           className={className}
         >
-          {isShowIcon && <Icon type={icon} />}
+          {isShowIcon && <Icon type={icon} style={{ fontSize: iconFontSize }} />}
           {isVertical && <br />}
           {isShowTitle && title}
         </Button>

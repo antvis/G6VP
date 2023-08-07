@@ -36,6 +36,7 @@ import Overview from './OverView';
 import PinNodeWithMenu from './PinNodeWithMenu';
 import PropertyGraphInitializer from './PropertyGraphInitializer';
 import RemoveNodeWithMenu from './RemoveNodeWithMenu';
+import RichContainer from './RichContainer';
 import SankeyAnalysis from './Sankey';
 import SegmentedLayout from './SegmentedLayout';
 import SelectExchangeMenuItem from './SelectExchangeMenuItem';
@@ -45,60 +46,62 @@ import Watermark from './Watermark';
 import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import ZoomStatus from './ZoomStatus';
-
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
 // import CreateCombo from './CreateCombo';
+import ShortcutKeys from './ShortcutKeys';
 
 export {
-  UadLayout,
-  Initializer,
-  PropertyGraphInitializer,
-  Save,
-  Placeholder,
+  ActivateRelations,
+  CanvasSetting,
+  // ContentContainer,
+  ChartAnalysis,
+  // TooltipForEdge, //体验问题，暂不放开
+  ClearCanvas,
+  CommonNeighbor,
+  ContextMenu,
+  Copyright,
+  DownLoad,
+  Export,
+  FilterPanel,
   // FitCenter,
   // FitView,
   FitCenterView,
-  OperatorBar,
-  GroupBar,
-  NodeLegend,
-  MiniMap,
-  CanvasSetting,
-  Toolbar,
-  FilterPanel,
-  ZoomIn,
-  ZoomOut,
-  DownLoad,
-  ContextMenu,
-  Tooltip,
-  // TooltipForEdge, //体验问题，暂不放开
-  ClearCanvas,
-  LassoSelect,
-  Export,
-  // OperatorHeader,
-  PathAnalysis,
-  PropertiesPanel,
-  Loading,
-  SideTabs,
-  NeighborsQuery,
-  Copyright,
-  ToggleClusterWithMenu,
-  ActivateRelations,
   // CreateCombo,
   // FuseEditPanel,
   ForceSimulation,
-  PinNodeWithMenu,
-  Overview,
-  SankeyAnalysis,
-  LayoutSwitch,
   GrailLayout,
-  SideSelectTabs,
-  // ContentContainer,
-  ChartAnalysis,
-  ZoomStatus,
+  GroupBar,
+  Initializer,
+  LassoSelect,
+  LayoutSwitch,
+  Loading,
+  MiniMap,
+  NeighborsQuery,
+  NodeLegend,
+  OperatorBar,
+  Overview,
+  // OperatorHeader,
+  PathAnalysis,
+  PinNodeWithMenu,
+  Placeholder,
+  PropertiesPanel,
+  PropertyGraphInitializer,
   RemoveNodeWithMenu,
-  SelectExchangeMenuItem,
-  CommonNeighbor,
+  RichContainer,
+  SankeyAnalysis,
+  Save,
   SegmentedLayout,
+  SelectExchangeMenuItem,
+  ShortcutKeys,
+  SideSelectTabs,
+  SideTabs,
+  ToggleClusterWithMenu,
+  Toolbar,
+  Tooltip,
+  UadLayout,
   Watermark,
+  ZoomIn,
+  ZoomOut,
+  ZoomStatus,
 };

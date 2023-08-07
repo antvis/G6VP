@@ -1,8 +1,7 @@
-import { Icon, useContext } from '@antv/gi-sdk';
+import { Icon, useContainer, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
-import './index.less';
 import SegmentedTabs from './SegmentedTabs';
-import useComponents from './useComponents';
+import './index.less';
 
 export interface UadLayoutProps {
   topItems: any[];
@@ -15,26 +14,22 @@ export interface UadLayoutProps {
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
-  const { config, assets, HAS_GRAPH } = useContext();
-  // 对于布局组件，因为其渲染顺序高于画布组件，因此不得不先判断一次是否存在 graph 实例
+  const context = useContext();
+  const { HAS_GRAPH } = context;
+  const Containers = useContainer(context);
+  const [SideContent] = Containers;
 
-  const { containers } = props;
+  const {
+    width = 360,
+    padding = 12, // 为什么这里没有值，需要关注
+    components: SideContentChildren,
+  } = SideContent;
 
-  const ComponentCfgMap = config.components.reduce((acc, curr) => {
-    return {
-      ...acc,
-      [curr.id]: curr,
-    };
-  }, {});
-
-  const { GI_CONTAINER: sideItems = [], width = 360, padding = 12 } = containers[0] || {};
-
-  const SideContent = useComponents(sideItems, ComponentCfgMap, assets.components);
-  const items = SideContent.map((item: any) => {
+  const items = SideContentChildren.map(item => {
     return {
       icon: <Icon type={item.icon} />,
       key: item.id,
-      children: HAS_GRAPH && item.children,
+      children: HAS_GRAPH && <item.component key={item.id} {...item.props} />,
     };
   });
 
