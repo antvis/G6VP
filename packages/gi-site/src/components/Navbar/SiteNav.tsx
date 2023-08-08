@@ -8,6 +8,7 @@ import Logo from './Logo';
 import Theme from './Theme';
 import UserInfo from './UserInfo';
 import Language from './Language';
+import SlotComponent from '../SlotComponent';
 interface WorkbookBarProps {
   active: string;
 }
@@ -34,14 +35,16 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   return (
     <header style={styles.container} className="gi-navbar-container">
       <div style={styles.left}>
-        <Logo
-          title="AntV Insight"
-          handleClick={() => {
-            history.push('/home');
-          }}
-          size={30}
-          style={{ padding: '0px 8px', cursor: 'pointer' }}
-        />
+        <SlotComponent name="SLOT_LAYOUT_LOGO">
+          <Logo
+            title="AntV Insight"
+            handleClick={() => {
+              history.push('/home');
+            }}
+            size={30}
+            style={{ padding: '0px 8px', cursor: 'pointer' }}
+          />
+        </SlotComponent>
         <Links active={active} />
       </div>
       <div style={styles.right}>

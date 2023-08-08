@@ -1,7 +1,7 @@
 import type { Combo } from '@antv/g6';
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-import type { GraphSchemaData, IGraphData } from './process/schema';
 import type { LANGUAGE_KEY_NAME } from './process/locale';
+import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
 export interface State<
   G extends {
@@ -266,6 +266,18 @@ export interface ITemplate {
   image: string;
 }
 
+export interface ISiteSlot {
+  /** 插槽ID */
+  id: string;
+  /** 插槽渲染组件 */
+  component: React.FunctionComponent;
+  /** 插槽名称*/
+  name?: string;
+  /** 模版描述 */
+  desc?: string;
+  [key: string]: any;
+}
+
 export type GIAssets = Partial<{
   /** 分析资产 */
   components: GIComponentAssets;
@@ -284,6 +296,9 @@ export type GIAssets = Partial<{
       component: React.ReactNode;
       [key: string]: any;
     };
+  };
+  siteSlots?: {
+    [key: string]: ISiteSlot;
   };
   /** iconfont 图标 */
   icons: {

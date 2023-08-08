@@ -114,7 +114,7 @@ export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Pr
   const components = getActiveAssets(activeAssetsKeys, FinalAssets, 'components');
   const elements = FinalAssets.elements; // getActiveAssets(activeAssetsKeys, FinalAssets, 'elements');
   const layouts = FinalAssets.layouts; // getActiveAssets(activeAssetsKeys, FinalAssets, 'layouts');
-
+  const siteSlots = FinalAssets.siteSlots;
   /** deploy,services 和 engineId 是有关联关系的 */
   const { locales, templates, deploys, icons } = FinalAssets;
 
@@ -132,6 +132,7 @@ export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Pr
       locales,
       services,
       templates,
+      siteSlots,
     } as GIAssets);
   });
 };
