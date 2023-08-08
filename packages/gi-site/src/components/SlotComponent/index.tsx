@@ -1,10 +1,15 @@
 import React from 'react';
-import { Spin } from 'antd';
+import { Spin, Skeleton } from 'antd';
 import getSlotEntity from './getSlotEntity';
 import { useHistory } from 'react-router-dom';
 
 interface Props {
   name: 'SLOT_LAYOUT_LOGO' | 'SLOT_HOME_CONTENT' | string;
+}
+
+const SlotSkeletonMap = {
+  SLOT_LAYOUT_LOGO: <Skeleton.Button />,
+  DEFAULT: <Skeleton />,
 }
 
 // @ts-ignore
@@ -23,7 +28,7 @@ const SlotComponent: React.FC<Props> = props => {
     });
   }, [name]);
 
-  if (!slot) return <Spin />;
+  if (!slot) return SlotSkeletonMap[name] || SlotSkeletonMap.DEFAULT;
 
   return slot;
 };
