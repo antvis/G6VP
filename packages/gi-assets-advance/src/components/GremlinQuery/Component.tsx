@@ -79,10 +79,10 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
     }
 
     let gremlinCode = `${editorValue}`;
-    if (limit && !editorValueHasLimit) {
+    if (isShowLimit && limit && !editorValueHasLimit) {
       gremlinCode = `${gremlinCode}.limit(${limit})`;
     }
-    if (timeout && !editorValueHasTimeout) {
+    if (isShowTimeout && timeout && !editorValueHasTimeout) {
       gremlinCode = `${gremlinCode.substring(0, 1)}.with('evaluationTimeout', ${timeout})${gremlinCode.substring(1)}`;
     }
 
