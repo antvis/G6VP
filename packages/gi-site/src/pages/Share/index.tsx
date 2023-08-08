@@ -30,7 +30,8 @@ const Share = props => {
           layouts: ['Force2', 'Concentric', 'Dagre'],
         };
         const services = getServicesByConfig(ServicesConfig, data, schema);
-        queryAssets(activeAssetsKeys).then(res_assets => {
+        queryAssets(activeAssetsKeys).then(async res_assets => {
+          await utils.registerIconFonts(res_assets.icons);
           setState(preState => {
             //@ts-ignore
             const assetServices = utils.getCombineServices(res_assets.services);

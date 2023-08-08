@@ -96,3 +96,35 @@ For more development and build issues, please refer to[《CONTRIBUTING》](/docs
 ## 05 Open Source Graph Visualization Platform
 
 ![](https://api.star-history.com/svg?repos=noduslabs/infranodus,glato/emerge,cytoscape/cytoscape,antvis/G6VP,constellation-app/constellation,aws/graph-explorer,graphia-app/graphia,dmlc/GNNLens2,invana/invana-studio,cylynx/motif.gl,kyleruss/graphi&type=Date#id=d2DaR&originHeight=533&originWidth=800&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=)
+
+- https://github.com/gephi/gephi
+
+- https://github.com/neo4j/neo4j-browser
+
+- https://github.com/antvis/G6VP
+
+- https://github.com/noduslabs/infranodus
+
+- https://github.com/glato/emerge
+
+- https://github.com/cytoscape/cytoscape
+
+- https://github.com/constellation-app/constellation
+
+- https://github.com/aws/graph-explorer
+
+- https://github.com/graphia-app/graphia
+
+- https://github.com/dmlc/GNNLens2
+
+- https://github.com/invana/invana-studio
+
+- https://github.com/cylynx/motif.gl
+
+- https://github.com/kyleruss/graphi
+
+## 06 Business Graph Analysis Software
+
+- GraphXR：https://www.kineviz.com/
+
+- Graphaware：https://graphaware.com/features/

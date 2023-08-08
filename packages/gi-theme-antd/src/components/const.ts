@@ -42,6 +42,7 @@ export const DEFAULT_THEME_VARS = {
     '--box-shadow-left': '-1px 0px 8px 0px #ddd',
     '--box-shadow-top': '-1px 0px 8px 0px #ddd',
     '--box-shadow-bottom': '1px 0px 8px 0px #ddd',
+    '--disabled-color': 'rgba(0, 0, 0, 0.25)', // 失效色
   },
   ali: {
     // 主题色
@@ -89,6 +90,7 @@ export const DEFAULT_THEME_VARS = {
     '--box-shadow-left': '-1px 0px 8px 0px #ddd',
     '--box-shadow-top': '-1px 0px 8px 0px #ddd',
     '--box-shadow-bottom': '1px 0px 8px 0px #ddd',
+    '--disabled-color': 'rgba(0, 0, 0, 0.25)', // 失效色
   },
   dark: {
     // 主题色
@@ -192,6 +194,7 @@ export const DEFAULT_THEME_VARS = {
     '--box-shadow-left': '-1px 0px 8px 0px #ddd',
     '--box-shadow-top': '-1px 0px 8px 0px #ddd',
     '--box-shadow-bottom': '1px 0px 8px 0px #ddd',
+    '--disabled-color': 'rgba(0, 0, 0, 0.25)', // 失效色
   },
 };
 
@@ -201,6 +204,6 @@ const name = pkg.name.replace('@antv', 'antv');
 export const DEFAULT_ANTD_CSS_LINKS = {
   dark: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/dark.css`,
   light: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
-  ali: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
-  green: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/light.css`,
+  ali: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/ali.css`,
+  green: `https://gw.alipayobjects.com/os/lib/${name}/${version}/dist/green.css`,
 };

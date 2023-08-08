@@ -1,4 +1,5 @@
 import { Graph, Item } from '@antv/g6';
+import { common } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { ext } from '@antv/matrix-util';
 import { isNumber } from 'lodash';
@@ -123,12 +124,13 @@ const exportGraphData = (data, fileName = 'graph-data') => {
   if (!data || typeof data !== 'object') {
     return;
   }
+
   const jsonText = JSON.stringify(data);
-  const link = document.createElement('a');
-  link.download = fileName.includes('.json') ? fileName : `${fileName}.json`;
-  const jsonData = new Blob([jsonText], { type: 'text/json' });
-  link.href = URL.createObjectURL(jsonData);
-  link.click();
+  common.createDownload(
+    new Blob([jsonText], { type: 'text/json' }),
+    fileName.includes('.json') ? fileName : `${fileName}.json`,
+  );
+
   return jsonText;
 };
 

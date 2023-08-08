@@ -1,9 +1,10 @@
+import $i18n from '../i18n';
 import * as Initializer from './Initializer';
 import * as NeighborsQueryServices from './NeighborsQuery';
+import * as NeighborsQueryServicesMenu from './NeighborsQueryMenu';
 import * as PropertiesPanel from './PropertiesPanel';
 import * as Save from './Save';
 import * as WatermarkService from './WatermarkService';
-import $i18n from '../i18n';
 
 export default {
   id: 'GI',
@@ -17,6 +18,7 @@ export default {
   services: {
     ...PropertiesPanel,
     ...NeighborsQueryServices,
+    ...NeighborsQueryServicesMenu,
     ...Initializer,
     ...Save,
     ...WatermarkService,

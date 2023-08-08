@@ -2,111 +2,32 @@ import { CodeOutlined } from '@ant-design/icons';
 import { Alert, Button, Col, Modal, Row } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../../.umirc';
 import { useCodeSandbox, useHtml, useNodeModule } from '../../hooks';
+import $i18n from '../../i18n';
+import { common } from '@antv/gi-sdk';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import { saveAs } from '../utils';
-import $i18n from '../../i18n';
+import getExportContext from './getExportContext';
+
 import './index.less';
 
 const SdkContent = () => {
-  const { context: st } = useContext();
+  const { context: ctx } = useContext();
 
-  const htmlCode = useHtml(st);
-  const openCSB = useCodeSandbox(st);
-  const openNodeModule = useNodeModule(st);
+  const htmlCode = useHtml(ctx);
+  const openCSB = useCodeSandbox(ctx);
+  const openNodeModule = useNodeModule(ctx);
   /** 下载 */
   const openHtml = () => {
     let [code, ext] = [htmlCode, '.html'];
-    //@ts-ignore
-    saveAs(code, `gi-export-project-id-${st.id}${ext}`);
+    common.createDownload(code, `gi-export-project-id-${st.id}${ext}`);
+
   };
 
-  const THIRD_PARTY_DEPLOYS = Object.values((st.activeAssets && st.activeAssets.deploys) || {});
-
-  const {
-    activeAssetsKeys,
-    datasetId,
-    datasetName,
-    config,
-    themes,
-    engineContext,
-    engineId,
-    id,
-    schemaData,
-    data,
-    name,
-  } = st;
-
-  const deployContext = {
-    workbook: {
-      id,
-      name,
-      activeAssetsKeys,
-      projectConfig: config,
-      themes,
-    },
-    dataset: {
-      id: datasetId,
-      engineContext,
-      engineId,
-      name: datasetName,
-      schemaData,
-      data: { transData: data },
-    },
-    deps: {
-      React: {
-        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-        name: 'react-dom',
-        version: '17.0.2',
-        global: 'React',
-      },
-      ReactDOM: {
-        url: 'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
-        name: 'react-dom',
-        version: '17.0.2',
-        global: 'ReactDOM',
-      },
-      antd: {
-        url: `https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js`,
-        name: 'antd',
-        version: ANTD_VERSION,
-        global: 'antd',
-      },
-      G6: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
-        name: '@antv/g6',
-        version: G6_VERSION,
-        global: 'G6',
-      },
-      Graphin: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
-        name: '@antv/graphin',
-        version: GRAPHIN_VERSION,
-        global: 'Graphin',
-      },
-      GISDK: {
-        name: '@antv/gi-sdk',
-        version: GI_VERSION,
-        url: `https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.min.js`,
-        global: 'GISDK',
-      },
-      G2Plot: {
-        url: `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
-        name: '@antv/g2plot',
-        version: G2PLOT_VERSION,
-        global: 'G2Plot',
-      },
-      // '@antv/gi-theme-antd': {
-      //   name: '@antv/gi-sdk',
-      //   version: GI_THEME_ANTD_VERSION,
-      //   url: '',
-      //   global: '@antv/gi-theme-antd',
-      // },
-    },
-    GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-  };
+  const THIRD_PARTY_DEPLOYS = Object.values((ctx.activeAssets && ctx.activeAssets.deploys) || {});
+  const deployContext = getExportContext(ctx);
   const counts = THIRD_PARTY_DEPLOYS.length;
+
   return (
     <>
       <Alert

@@ -90,68 +90,48 @@ const LOCAL_ASSETS: any[] = [
  * 从全量的资产中Pick用户活跃的资产
  * @returns
  */
-export const queryAssets = async (activeAssetsKeys?: any): Promise<GIAssets> => {
-  let components = {};
-  let elements;
-  let layouts;
-  let templates;
-  let deploys;
-  let FinalAssets;
-  let locales;
-  let siteSlots;
-
+export const queryAssets = async (activeAssetsKeys?: any, engineId?: string): Promise<GIAssets> => {
   const packages = getAssetPackages();
+  const FinalAssets = await loaderCombinedAssets(packages, IS_DEV_ENV && LOCAL_ASSETS);
 
-  if (IS_DEV_ENV) {
-    FinalAssets = await loaderCombinedAssets(packages, LOCAL_ASSETS);
-  } else {
-    FinalAssets = await loaderCombinedAssets(packages);
-  }
   if (!activeAssetsKeys) {
     return FinalAssets;
   }
-  console.log('FinalAssets', FinalAssets, LOCAL_ASSETS);
-  // Object.keys(activeAssetsKeys.components).forEach(containerId => {
-  //   const assetKeys = activeAssetsKeys.components[containerId];
-  //   components[containerId] = assetKeys.reduce((acc, curr) => {
-  //     const asset = FinalAssets.components[curr];
-  //     if (asset) {
-  //       return {
-  //         ...acc,
-  //         [curr]: asset,
-  //       };
-  //     }
-  //     return acc;
-  //   }, {});
-  // });
 
-  components = activeAssetsKeys.components.reduce((acc, curr) => {
-    const asset = FinalAssets.components[curr];
-    if (asset) {
-      return {
-        ...acc,
-        [curr]: asset,
-      };
-    }
-    return acc;
-  }, {});
+  const getActiveAssets = (activeAssetsKeys, FinalAssets, key) => {
+    return activeAssetsKeys[key].reduce((acc, curr) => {
+      const asset = FinalAssets[key][curr];
+      if (asset) {
+        return {
+          ...acc,
+          [curr]: asset,
+        };
+      }
+      return acc;
+    }, {});
+  };
 
-  elements = { ...FinalAssets.elements };
-  layouts = { ...FinalAssets.layouts };
-  templates = { ...FinalAssets.templates };
-  deploys = { ...FinalAssets.deploys };
-  locales = { ...FinalAssets.locales };
-  siteSlots = { ...FinalAssets.siteSlots };
+  const components = getActiveAssets(activeAssetsKeys, FinalAssets, 'components');
+  const elements = FinalAssets.elements; // getActiveAssets(activeAssetsKeys, FinalAssets, 'elements');
+  const layouts = FinalAssets.layouts; // getActiveAssets(activeAssetsKeys, FinalAssets, 'layouts');
+  const siteSlots = FinalAssets.siteSlots;
+  /** deploy,services 和 engineId 是有关联关系的 */
+  const { locales, templates, deploys, icons } = FinalAssets;
+
+  const services = FinalAssets.services.filter(item => {
+    return item.id === 'GI' || item.id === engineId;
+  });
 
   return await new Promise(resolve => {
     resolve({
       components,
-      elements,
-      layouts,
-      templates,
       deploys,
-      services: FinalAssets.services,
+      elements,
+      icons,
+      layouts,
       locales,
+      services,
+      templates,
       siteSlots,
     } as GIAssets);
   });

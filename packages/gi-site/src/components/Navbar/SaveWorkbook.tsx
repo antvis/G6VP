@@ -1,12 +1,13 @@
 import { SaveOutlined } from '@ant-design/icons';
+import { useShortcuts } from '@antv/gi-sdk';
 import { Graph } from '@antv/graphin';
 import { Button, notification, Tooltip } from 'antd';
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import $i18n from '../../i18n';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import * as ProjectServices from '../../services/project';
 import type { IProject } from '../../services/typing';
-import $i18n from '../../i18n';
 import './index.less';
 
 interface SaveWorkbookProps {
@@ -51,16 +52,17 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       }
     } else {
       const graph = graphRef.current as Graph;
-      if (!graph) {
-        return;
+      if (graph) {
+        const width = graph.getWidth();
+        const height = graph.getHeight();
+        graph.changeSize(400, 300);
+        graphRef.current.fitView(10);
+        graph.changeSize(width, height);
+        graph.fitView(20);
       }
-      const width = graph.getWidth();
-      const height = graph.getHeight();
-      graph.changeSize(400, 300);
-      graphRef.current.fitView(10);
-      const cover = await getCover(graph);
-      graph.changeSize(width, height);
-      graph.fitView(20);
+
+      const cover = graph ? await getCover(graph) : '';
+
       /** 临时的兼容处理，需要重新设计 */
       const {
         id = 'SegmentedLayout',
@@ -118,6 +120,10 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       message: $i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SaveFailed', dm: '保存失败' }),
     });
   };
+
+  useShortcuts(['ctrl+s', 'command+s'], () => {
+    handleSave();
+  });
 
   return (
     <Tooltip title={$i18n.get({ id: 'gi-site.components.Navbar.SaveWorkbook.SaveCanvas', dm: '保存画布' })}>

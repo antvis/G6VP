@@ -17,7 +17,7 @@ const Copyright: React.FunctionComponent<CopyrightProps> = props => {
   const positionStyles = getPositionStyles(placement, offset);
 
   return (
-    <div className="gi-copyright" style={positionStyles}>
+    <div className="gi-copyright" style={{ ...positionStyles, userSelect: 'none' }}>
       <img
         src={`${imageUrl}`}
         alt={$i18n.get({ id: 'basic.components.Copyright.Component.CopyrightImage', dm: '版权图片' })}

@@ -269,7 +269,7 @@ const getPartParameterizedValueDOM = (
       id,
       fieldName,
       oriValue as object,
-      parameterizedValues,
+      parameterizedValues as object,
       valueDomProps,
       configureOpt,
       formItems,

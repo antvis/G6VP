@@ -3,6 +3,7 @@ import { GraphinContext } from '@antv/graphin';
 import { groupBy } from 'lodash';
 import React, { useContext, useEffect, useRef } from 'react';
 import { ITEM_STATE } from './registerMeta';
+import $i18n from '../i18n';
 
 interface Props {
   data;
@@ -44,7 +45,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, edgeType }) => {
       },
       xAxis: {
         title: {
-          text: '重要性值',
+          text: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultPlot.ImportanceValue', dm: '重要性值' }),
           position: 'end',
           offset: 14,
           style: {
@@ -56,7 +57,7 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, edgeType }) => {
       },
       yAxis: {
         title: {
-          text: '节点数量',
+          text: $i18n.get({ id: 'gi-assets-algorithm.src.NodeImportance.resultPlot.NumberOfNodes', dm: '节点数量' }),
           position: 'end',
           autoRotate: false,
           spacing: -55,
@@ -75,8 +76,8 @@ const ResultTable: React.FC<Props> = ({ data, currentAlgo, edgeType }) => {
 
   const getPlotData = () => {
     const plotData: any[] = [];
-    const countMap = groupBy(data.node?.data || [], "value");
-    Object.keys(countMap).forEach((key) => {
+    const countMap = groupBy(data.node?.data || [], 'value');
+    Object.keys(countMap).forEach(key => {
       plotData.push({
         //@ts-ignore
         value: key,

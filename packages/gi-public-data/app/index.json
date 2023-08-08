@@ -1,0 +1,8 @@
+[
+  {
+    "route": "social",
+    "config": "/app/social.json",
+    "desc": "社交网络展示项目",
+    "cover": ""
+  }
+]

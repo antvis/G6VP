@@ -187,10 +187,14 @@
   "advance.components.GremlinQuery.info.QueryGraphDataThroughGremlin": "通过 Gremlin 语句查询图数据",
   "advance.components.GremlinQuery.registerMeta.DataService": "数据服务",
   "advance.components.GremlinQuery.registerMeta.PublishAsATemplate": "发布成模板",
+  "advance.components.GremlinQuery.registerMeta.IsShowLimit": "Limit可配",
+  "advance.components.GremlinQuery.registerMeta.IsShowTimeout": "Timeout可配",
   "advance.components.GremlinQuery.registerMeta.PublishTemplateService": "发布模板服务",
   "advance.components.GremlinQuery.registerMeta.InitialQuery": "初始查询",
   "advance.components.GremlinQuery.registerMeta.Height": "高度",
   "advance.components.JSONMode.info.CodeMode": "代码模式",
+  "advance.components.GremlinQuery.Component.LimitConfigTip": "语句将添加后缀: .limt({value})",
+  "advance.components.GremlinQuery.Component.TimeoutConfigTip": "语句将添加约束: .with('evaluationTimeout', {value})",
   "advance.components.JSONMode.info.ShowDataInCode": "将数据以代码形式展示",
   "advance.components.JSONMode.registerMeta.StyleTheme": "样式主题",
   "advance.components.ModeSwitch.Component.CanvasMode": "画布模式",
@@ -418,5 +422,11 @@
   "advance.src.services.ThemeSetting.TheTopicHasBeenUpdated": "主题更新成功",
   "advance.src.services.ThemeSetting.TheTopicDoesNotExist": "主题不存在",
   "advance.src.services.ThemeSetting.DeleteATopic": "删除主题",
-  "advance.src.services.ThemeSetting.DeletedSuccessfully": "删除成功"
+  "advance.src.services.ThemeSetting.DeletedSuccessfully": "删除成功",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedLimitNum": "不可修改，语句中已有 .limit(num) 约束",
+  "advance.components.GremlinQuery.Component.TheStatementAddsASuffix": "语句将添加后缀: .limt({limit})",
+  "advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout": "不可修改，语句中已有 .with('evaluationTimeout', timeout) 约束",
+  "advance.components.GremlinQuery.Component.StatementToAddConstraintsWith": "语句将添加约束: .with('evaluationTimeout', {timeout})",
+  "advance.src.services.CypherQuery.QuerySucceeded": "查询成功",
+  "advance.src.services.CypherQuery.TheCurrentQueryRequestIs": "当前的查询请求是 MOCK 的，请搭配图数据库使用。"
 }

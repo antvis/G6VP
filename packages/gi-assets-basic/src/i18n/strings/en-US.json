@@ -637,5 +637,8 @@
   "basic.src.templates.Simple.SegmentLayout": "Segment layout",
   "basic.src.templates.Simple.SideContainer": "Side Container",
   "basic.src.templates.Simple.MinimalistTemplate": "Minimalist template",
-  "basic.src.templates.Simple.ThisTemplateIsAnOfficial": "This template is an official minimalist template that contains {activeAssetsKeysComponentsLength} analysis assets and provides common interactive analysis, filter views, and other functions. On the page layout, canvas Display space is large, providing immersive analysis experience"
+  "basic.src.templates.Simple.ThisTemplateIsAnOfficial": "This template is an official minimalist template that contains {activeAssetsKeysComponentsLength} analysis assets and provides common interactive analysis, filter views, and other functions. On the page layout, canvas Display space is large, providing immersive analysis experience",
+  "basic.components.PathAnalysis.registerMeta.ListAcquisition": "List acquisition",
+  "basic.components.PathAnalysis.registerMeta.CanvasPickup": "Canvas pickup",
+  "basic.components.PathAnalysis.registerMeta.ObtainNodeMode": "Obtain node mode"
 }

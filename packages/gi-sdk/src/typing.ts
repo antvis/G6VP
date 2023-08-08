@@ -1,7 +1,7 @@
 import type { Combo } from '@antv/g6';
 import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
-import type { GraphSchemaData, IGraphData } from './process/schema';
 import type { LANGUAGE_KEY_NAME } from './process/locale';
+import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
 export interface State<
   G extends {
@@ -147,6 +147,7 @@ export interface ComponentAsset {
     edgeKeys: string[];
     schemaData: GraphSchemaData;
     config: GIConfig;
+    AUTO_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_MENU_ITEMS: GIAC_ITEMS_TYPE;
     GIAC_CONTENT_ITEMS: GIAC_ITEMS_TYPE;
@@ -298,7 +299,12 @@ export type GIAssets = Partial<{
   };
   siteSlots?: {
     [key: string]: ISiteSlot;
-}
+  };
+  /** iconfont 图标 */
+  icons: {
+    icons: string[];
+    [keys: string]: any;
+  }[];
 }>;
 export interface LayoutConfig {
   // 支持的布局类型，默认为 force
@@ -344,6 +350,7 @@ export interface GINodeConfig {
   }[];
   logic: boolean;
   groupName: string;
+  default?: boolean;
 }
 export interface GIEdgeConfig {
   id: string;
@@ -361,6 +368,7 @@ export interface GIEdgeConfig {
   }[];
   logic: boolean;
   groupName: string;
+  default?: boolean;
 }
 
 export interface GIConfig {

@@ -6,7 +6,7 @@ export default () => {
       'x-component': 'Input',
       'x-decorator': 'FormItem',
       title: $i18n.get({ id: 'basic.components.Placeholder.registerMeta.ImageAddress', dm: '图片地址' }),
-      default: 'https://gw.alipayobjects.com/zos/bmw-prod/db278704-6158-432e-99d2-cc5db457585d.svg',
+      default: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*1BGfQ78mW4kAAAAAAAAAAAAADmJ7AQ/original',
     },
     text: {
       type: 'string',

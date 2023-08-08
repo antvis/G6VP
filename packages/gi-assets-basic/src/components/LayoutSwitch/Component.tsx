@@ -15,14 +15,25 @@ let timer: NodeJS.Timer;
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   const { GIAC, controlledValues } = props;
-  const { assets, config, data, schemaData, updateContext, updateHistory, graph } = useContext();
+  const { assets, config, data, schemaData, updateContext, updateHistory, graph, layout: contextLayout } = useContext();
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
-    handleUpateHistory(layoutConfig, true, '');
+    handleUpdateHistory(layoutConfig, true, '');
+    // get the props from layout metapanel configuring
+    let layoutProps = { ...layoutConfig.props };
+    if (config.layout.id === layoutConfig.id) {
+      layoutProps = {
+        ...layoutProps,
+        ...config.layout.props,
+      };
+    }
     updateContext(draft => {
-      draft.layout = layoutConfig.props;
-      draft.config.layout = layoutConfig;
+      draft.layout = layoutProps;
+      draft.config.layout = {
+        id: layoutConfig.id,
+        props: layoutProps,
+      };
       draft.layoutCache = false;
     });
     clearTimeout(timer);
@@ -37,7 +48,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
    * @param errorMsg 若失败，填写失败信息
    * @param value 查询语句
    */
-  const handleUpateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
+  const handleUpdateHistory = (layoutConfig: GILayoutConfig, success: boolean, errorMsg?: string) => {
     const { props: layoutProps } = layoutConfig;
     updateHistory({
       componentId: 'LayoutSwitch',

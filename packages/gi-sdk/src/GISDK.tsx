@@ -21,7 +21,7 @@ const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
   const { children, assets, id, services, config, locales } = props;
-  const { language, ...localeMessages } = locales || {};
+  const { language = 'zh-CN', ...localeMessages } = locales || {};
 
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -391,7 +391,7 @@ const GISDK = (props: Props) => {
   }, [data]);
 
   return (
-    <IntlProvider locale={language as string} messages={localeMessages}>
+    <IntlProvider locale={language as string} messages={localeMessages as any}>
       {/* @ts-ignore */}
       <GraphInsightContext.Provider value={ContextValue}>
         <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>

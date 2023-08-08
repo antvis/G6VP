@@ -1,0 +1,144 @@
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { GIComponentAssets, GIComponentConfig } from '@antv/gi-sdk';
+import { Button, Tabs, Tooltip } from 'antd';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import CollapseContainer from './CollapseContainer';
+import './index.less';
+import SideContainer from './SideContainer';
+import type { ContainerProps } from './typing';
+import WrapTab from './WrapTab';
+import $i18n from '../../i18n';
+const { TabPane } = Tabs;
+const defaultVisibleKey = 'side-tabs-default-visible';
+export interface SideTabsProps extends ContainerProps {
+  GI_CONTAINER: string[];
+  components: GIComponentConfig[];
+  assets: GIComponentAssets;
+  tabPosition: 'left' | 'right' | 'top' | 'bottom';
+  /**
+   * 是否在画布的外围
+   */
+  outSideFromCanvas: boolean;
+  flexDirection: 'row' | 'column';
+  GISDK_ID: string;
+}
+
+const SideTabs: React.FunctionComponent<SideTabsProps> = props => {
+  const {
+    components,
+    assets,
+    placement,
+    offset,
+    width,
+    height,
+    defaultVisible,
+    outSideFromCanvas,
+    GISDK_ID,
+    tabPosition,
+  } = props;
+
+  // 独立 DOM 状态下是否可见
+  const [visible, setVisible] = React.useState<boolean>(() => {
+    const defaultVisibleValue = localStorage.getItem(defaultVisibleKey);
+    if (defaultVisibleValue === null) {
+      return defaultVisible;
+    }
+    return defaultVisibleValue === 'true' ? true : false;
+  });
+
+  const sortedComponents = React.useMemo(() => {
+    return (
+      components
+        //@ts-ignore
+        .sort((a, b) => a.props.GI_CONTAINER_INDEX - b.props.GI_CONTAINER_INDEX)
+        .filter(item => item && item.props && item.props.GIAC_CONTENT)
+    );
+  }, [components]);
+
+  const panes = React.useMemo(() => {
+    return sortedComponents.map((item, index) => {
+      if (!item) {
+        console.warn(`config not found, index: ${index}`);
+        return null;
+      }
+      const { props: itemProps, id: itemId } = item;
+      const asset = assets[itemId];
+      if (!asset) {
+        console.warn(`asset: ${itemId} not found`);
+        return null;
+      }
+
+      const { component: Component } = asset;
+      return (
+        <TabPane key={index} tab={<WrapTab {...itemProps} />}>
+          {/* @ts-ignore */}
+          <Component {...itemProps} />
+        </TabPane>
+      );
+    });
+  }, [sortedComponents]);
+
+  const toggleVisible = () => {
+    setVisible(preState => {
+      localStorage.setItem(defaultVisibleKey, String(!preState));
+      return !preState;
+    });
+  };
+
+  const tabBarExtraContent = (
+    <Tooltip
+      placement="right"
+      title={$i18n.get({ id: 'basic.components.SideTabs.Component.YouCanExpandAndCollapse', dm: '可展开收起导航栏' })}
+    >
+      <Button type="text" icon={visible ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />} onClick={toggleVisible} />
+    </Tooltip>
+  );
+
+  const Content = (
+    <div
+      className="gi-side-tabs"
+      style={{
+        // LB 左，RT 右，LT 上，RB 下
+        borderRight: placement === 'LB' ? '1px solid var(--border-color)' : 'unset',
+        borderLeft: placement === 'RT' ? '1px solid var(--border-color)' : 'unset',
+        borderBottom: placement === 'LT' ? '1px solid var(--border-color)' : 'unset',
+        borderTop: placement === 'RB' ? '1px solid var(--border-color)' : 'unset',
+      }}
+    >
+      <Tabs tabPosition={tabPosition} tabBarExtraContent={outSideFromCanvas ? tabBarExtraContent : null}>
+        {panes}
+      </Tabs>
+    </div>
+  );
+
+  if (!outSideFromCanvas) {
+    return (
+      <CollapseContainer
+        width={width}
+        height={height}
+        defaultVisible={defaultVisible}
+        placement={placement}
+        offset={offset}
+      >
+        {Content}
+      </CollapseContainer>
+    );
+  }
+  return ReactDOM.createPortal(
+    <SideContainer
+      visible={visible}
+      width={width}
+      height={height}
+      defaultVisible={defaultVisible}
+      placement={placement}
+      GISDK_ID={GISDK_ID}
+      outSideFromCanvas={outSideFromCanvas}
+    >
+      {Content}
+    </SideContainer>,
+    document.getElementById(`${GISDK_ID}-container`) as HTMLElement,
+  );
+};
+
+export default SideTabs;

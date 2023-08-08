@@ -1,12 +1,7 @@
-import GI_SDK from '@antv/gi-sdk/package.json';
 import GI_THEME_ANTD from '@antv/gi-theme-antd/package.json';
 
 import deps_externals from './scripts/deps_externals.json';
-export const G6_VERSION = '4.8.14';
-export const GRAPHIN_VERSION = '2.7.16';
-export const G2PLOT_VERSION = '2.4.16';
-export const ANTD_VERSION = '4.24.8';
-export const GI_VERSION = GI_SDK.version;
+import { G6_VERSION, GRAPHIN_VERSION } from './src/env';
 export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 
 /** 是否为本地研发模式 */
@@ -32,16 +27,16 @@ const EXTRA_CONFIG = isDev
         react: 'React',
         'react-dom': 'ReactDOM',
         antd: 'antd',
-        // '@antv/g6': 'G6',
-        // '@antv/graphin': 'Graphin',
+        '@antv/g6': 'G6',
+        '@antv/graphin': 'Graphin',
       },
       scripts: [
         'https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js',
         'https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
-        // 'https://gw.alipayobjects.com/os/lib/antv/g6/4.8.8/dist/g6.min.js',
-        // // 'https://gw.alipayobjects.com/os/lib/antv/graphin/2.7.13/dist/graphin.min.js',
-        // 'http://localhost:5501/graphin.min.js',
+        `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
+        `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+        'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.0.5/dist/index.min.js',
       ],
       links: [],
     }
@@ -49,7 +44,7 @@ const EXTRA_CONFIG = isDev
       externals: {
         ...externals,
       },
-      scripts: [...externalScripts],
+      scripts: [...externalScripts, 'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.0.5/dist/index.min.js'],
       links: [
         ...externalScripts.map(c => {
           return { href: c.src.replace('min.js', 'css'), rel: 'stylesheet' };
@@ -77,6 +72,16 @@ export default {
     { exact: true, path: '/workspace/:projectId', component: 'Analysis' },
     { exact: true, path: '/share/:shareId', component: 'Share' },
     { exact: true, path: '/tabs/:type', component: 'Tab' },
+    {
+      exact: true,
+      path: '/app/:id',
+      component: 'Applaction',
+    },
+    {
+      exact: true,
+      path: '/preview/:id',
+      component: 'Preview',
+    },
     {
       path: '/',
       component: '@/layouts/index',
@@ -155,6 +160,11 @@ export default {
           path: '/open',
           component: '@/layouts/SideNav',
           routes: [
+            {
+              exact: true,
+              path: 'solution',
+              component: 'Solution',
+            },
             {
               exact: true,
               path: 'assets-manage',

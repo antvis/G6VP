@@ -708,8 +708,9 @@
   "gi-site.src.services.user.LogonTimeoutRequesterrorTimeoutOf": "Logon timeout: RequestError: timeout of 4000Ms exceeded",
   "gi-site.src.services.user.RequestErrorResponseerrorHttpError": "Request error: ResponseError: http error",
   "gi-site.src.services.user.TryToAccessVipAsset": "Try to access VIP asset service TypeError: Failed to fetch",
-  "gi-site.src.services.user.RefreshThePage": "Refresh the page",
-  "gi-site.src.services.user.TheSystemHasAutomaticallyJumped": "The system has automatically jumped to the login link. After logging in, refresh the page to issue VIP assets.",
   "gi-site.src.services.utils.NetworkProblems": "Network problems",
-  "gi-site.src.services.utils.NetworkProblems.1": "Network problems"
+  "gi-site.src.services.utils.NetworkProblems.1": "Network problems",
+  "gi-site.src.services.user.Get": "Get",
+  "gi-site.src.services.user.AvailableVipAssets": "Available VIP assets",
+  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "Detected available VIP assets, whether to log in to obtain"
 }

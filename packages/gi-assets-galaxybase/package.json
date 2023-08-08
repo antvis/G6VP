@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-galaxybase",
-  "version": "1.2.0",
+  "version": "1.2.5",
   "description": "Galaxybase 团队的图分析资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -31,9 +31,9 @@
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
     "@aligov/global-string-format": "^1.0.7",
-    "@ant-design/icons": "^4.6.2",
+    "@ant-design/icons": "^4.7.0",
     "@antv/gi-sdk": "workspace:*",
-    "@antv/graphin": "2.x",
+    "@antv/graphin": "^2.7.21",
     "@antv/graphin-icons": "^1.0.0",
     "antd": "4.x",
     "codemirror": "^5.25.0",
@@ -43,16 +43,16 @@
     "react": "17.x",
     "react-monaco-editor": "^0.48.0",
     "umi-request": "^1.4.0",
-    "use-immer": "^0.7.0"
+    "use-immer": "^0.9.0"
   },
   "devDependencies": {
-    "dumi": "^1.1.38",
-    "father": "^2.30.6",
-    "mini-css-extract-plugin": "^2.3.0",
+    "dumi": "^1.1.50",
+    "father": "^2.30.23",
+    "mini-css-extract-plugin": "^2.7.6",
     "rimraf": "^3.0.2",
-    "umi": "^3.5.20",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
+    "umi": "^3.5.41",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.0.0"
   },
   "peerDependencies": {},
   "publishConfig": {

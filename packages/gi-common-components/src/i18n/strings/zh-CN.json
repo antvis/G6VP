@@ -36,5 +36,8 @@
   "common-components.src.GroupContainer.utils.Greater": "大于",
   "common-components.src.GroupContainer.utils.GreaterThanOrEqual": "大于等于",
   "common-components.src.GroupContainer.utils.Less": "小于",
-  "common-components.src.GroupContainer.utils.LessThanOrEqual": "小于等于"
+  "common-components.src.GroupContainer.utils.LessThanOrEqual": "小于等于",
+  "common-components.src.GroupContainer.Reset": "重置",
+  "common-components.src.NodeSelectionWrap.PleaseFillInLabelNodelabel": "请填写{label}{nodeLabel}",
+  "common-components.src.NodeSelectionWrap.YouCanClickCanvasNodes": "可点选画布节点，快速选择{label}"
 }

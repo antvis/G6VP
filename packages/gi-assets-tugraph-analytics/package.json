@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-tugraph-analytics",
-  "version": "0.2.0",
+  "version": "0.2.5",
   "description": "Tugraph Analytics Assets",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -34,7 +34,7 @@
     "ahooks": "^3.7.7"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.15",
+    "@antv/graphin": "^2.7.21",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-scene",
-  "version": "2.2.0",
+  "version": "2.2.7",
   "description": "G6VP 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,7 @@
     "3d-force-graph": "1.70.10",
     "@aligov/global-locale": "^1.0.5",
     "@aligov/global-string-format": "^1.0.7",
-    "@ant-design/icons": "^4.6.2",
+    "@ant-design/icons": "^4.7.0",
     "@antv/g2": "^5.0.11",
     "@antv/gi-sdk": "workspace:*",
     "@antv/l7-draw": "^2.4.24",
@@ -45,17 +45,17 @@
     "dayjs": "^1.10.5",
     "graph-timeline": "^1.1.7",
     "lodash-es": "^4.17.21",
-    "react-spring": "9.4.4",
+    "react-spring": "9.6.0",
     "three": "0.139.2"
   },
   "devDependencies": {
-    "mini-css-extract-plugin": "^2.3.0",
+    "mini-css-extract-plugin": "^2.7.6",
     "rimraf": "^3.0.2",
-    "webpack": "^5.53.0",
-    "webpack-cli": "^4.8.0"
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.0.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.15",
+    "@antv/graphin": "^2.7.21",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

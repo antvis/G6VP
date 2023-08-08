@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GISDK EXPORT FILE</title>
+  <link rel="stylesheet" href="./dist/index.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="https://gw.alipayobjects.com/os/lib/babel/standalone/7.19.2/babel.min.js"></script>
+  <!--- REACT DEPENDENCIES-->
+  <script crossorigin src="https://gw.alipayobjects.com/os/lib/react/17.0.2/umd/react.production.min.js"></script>
+  <script crossorigin
+    src="https://gw.alipayobjects.com/os/lib/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+  <script src='./dist/index.min.js'></script>
+
+  <script>
+
+  </script>
+  <script type="text/babel">
+    const GraphApp = () => {
+      const service = async () => {
+        const config = await fetch('./GI_EXPORT_CONFIG.json').then(res => res.json())
+        return {
+          data: config,
+          success: true,
+        }
+      }
+      const { default: GI_SDK_APP } = window.GI_SDK_APP
+      return <div style={{ height: "100vh" }}>
+
+        <GI_SDK_APP id={'8e85de53-dcf3-492f-9786-c21554d07e8a'} service={service} />
+
+      </div>
+    }
+    //@ts-ignore 
+    window.ReactDOM.render(<GraphApp />, document.getElementById("root"));
+  </script>
+
+</body>
+
+</html>

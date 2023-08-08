@@ -8,8 +8,8 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import ClusterTable from '../ClusterTable';
 import Utils from '../utils/index';
-import FormattedMessage, { formatMessage } from './locale';
 import './index.less';
+import $i18n from '../i18n';
 
 const { ClickSelect } = Behaviors;
 
@@ -97,7 +97,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       content: (
         <div className="community-detection-algo-body">
           <span>
-            <FormattedMessage id="k-core.set-k" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.CommunityDetection.Component.SetCoreK', dm: '设置核心度k：' })}
           </span>
           <InputNumber
             min={1}
@@ -198,6 +198,9 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     return {
       nodes: nodes.map(node => ({
         ...(node.data || {}),
+        properties: {
+          ...(node?.data?.properties || {}),
+        },
         label: node.label || node.data.label || node.data.name,
         id: node.id,
       })),
@@ -214,7 +217,13 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     setLoading(true);
     setTimeout(() => {
       if (!graph || graph.destroyed) {
-        handleUpateHistory(false, '图实例不存在');
+        handleUpateHistory(
+          false,
+          $i18n.get({
+            id: 'gi-assets-algorithm.src.CommunityDetection.Component.TheGraphInstanceDoesNot',
+            dm: '图实例不存在',
+          }),
+        );
         return;
       }
       const formatData = formatOriginData(data);
@@ -299,7 +308,12 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
         case CommunityDetectionAlgorithm.ConnectedComponent:
           const components = connectedComponent(formatData);
           if (components.length <= 1) {
-            message.info(formatMessage({ id: 'connected-component.all-connected' }));
+            message.info(
+              $i18n.get({
+                id: 'gi-assets-algorithm.src.CommunityDetection.Component.TheCurrentGraphIsConnected',
+                dm: '当前图整体连通，无非连通子图',
+              }),
+            );
             break;
           }
           const clustersComponent: { id: string; nodes: any[] }[] = [];
@@ -316,7 +330,12 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
             });
           });
           if (existSingleNode) {
-            message.info(formatMessage({ id: 'connected-component.has-single' }));
+            message.info(
+              $i18n.get({
+                id: 'gi-assets-algorithm.src.CommunityDetection.Component.ThereAreIsolatedPointOn',
+                dm: '当前图上存在孤点，将不参与社区划分',
+              }),
+            );
           }
           setResData(formatData);
           setAllClusters(clustersComponent);
@@ -344,7 +363,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     updateHistory({
       componentId: 'CommunityDetection',
       type: 'analyse',
-      subType: '社区发现',
+      subType: $i18n.get({
+        id: 'gi-assets-algorithm.src.CommunityDetection.Component.CommunityDiscovery',
+        dm: '社区发现',
+      }),
       statement: communityAlgo,
       success,
       errorMsg,
@@ -382,18 +404,29 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
     }
 
     if (!resData?.nodes?.length) {
-      return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={<FormattedMessage id="data.no-data" />} />;
+      return (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description={$i18n.get({
+            id: 'gi-assets-algorithm.src.CommunityDetection.Component.NoDataAvailable',
+            dm: '暂无数据',
+          })}
+        />
+      );
     }
 
     if (divisionAlgo.includes(communityAlgo)) {
       return (
         <div className="community-detection-result-wrapper">
           <span className="community-detection-title">
-            <FormattedMessage id="analysis-result" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.CommunityDetection.Component.AnalysisResults', dm: '分析结果' })}
           </span>
           <ClusterTable
             data={resData}
-            clusterTitle={formatMessage({ id: 'community-index' })}
+            clusterTitle={$i18n.get({
+              id: 'gi-assets-algorithm.src.CommunityDetection.Component.CommunityNumber',
+              dm: '社区编号',
+            })}
             focusNodeAndHighlightHull={focusNodeAndHighlightHull}
             properties={nodeProperties}
           />
@@ -404,7 +437,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       return (
         <div className="community-detection-result-wrapper">
           <p className="community-detection-title">
-            <FormattedMessage id="analysis-result" />
+            {$i18n.get({ id: 'gi-assets-algorithm.src.CommunityDetection.Component.AnalysisResults', dm: '分析结果' })}
           </p>
           <div className="community-detection-graph-container">
             <Graphin
@@ -450,7 +483,10 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
       <div className="community-detection-wrapper">
         <div className="top-info">
           <p className="community-detection-title">
-            <FormattedMessage id="select-algo" />
+            {$i18n.get({
+              id: 'gi-assets-algorithm.src.CommunityDetection.Component.SelectionAlgorithm',
+              dm: '选择算法',
+            })}
           </p>
           <ReloadOutlined onClick={reset} />
         </div>
@@ -460,12 +496,8 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
             <div key={selection.name}>
               <Radio value={selection.name} className="community-detection-algo-radio">
                 <div className="community-detection-algo-title">
-                  <span className="community-detection-algo-title-name">
-                    <FormattedMessage id={`${selection.name}`} />
-                  </span>
-                  <span className="community-detection-algo-title-tip">
-                    <FormattedMessage id={`${selection.name}-tip`} />
-                  </span>
+                  <span className="community-detection-algo-title-name">{selection.name}</span>
+                  <span className="community-detection-algo-title-tip">{selection.name}</span>
                 </div>
               </Radio>
               {selection.content}
@@ -479,7 +511,7 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
           loading={loading}
           onClick={() => onCommunityAnalyse()}
         >
-          <FormattedMessage id="analyse" />
+          {$i18n.get({ id: 'gi-assets-algorithm.src.CommunityDetection.Component.Analysis', dm: '分析' })}
         </Button>
 
         {renderResult()}

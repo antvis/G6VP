@@ -18,7 +18,6 @@ export default {
     antd: 'antd',
     '@antv/g2plot': 'G2Plot',
     'antd/es/*': 'antd',
-    '@ant-design/charts': 'charts',
     '@ant-design/icons': 'icons',
     moment: 'moment',
     '@antv/gi-sdk': 'GISDK',
@@ -31,7 +30,6 @@ export default {
     'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
     'https://gw.alipayobjects.com/os/lib/moment/2.29.1/moment.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.20.6/dist/antd.min.js',
-    'https://gw.alipayobjects.com/os/lib/ant-design/charts/1.2.13/dist/charts.min.js',
     'https://gw.alipayobjects.com/os/lib/ant-design/icons/4.6.4/dist/index.umd.min.js',
     // <!--- Graphin DEPENDENCIES-->
     'https://gw.alipayobjects.com/os/lib/antv/g6/4.7.0/dist/g6.min.js',

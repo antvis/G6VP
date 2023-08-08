@@ -192,6 +192,32 @@ const GIAC_CONTENT = {
           'x-component': 'Switch',
           default: false,
         },
+        containerDraggable: {
+          title: $i18n.get({ id: 'sdk.src.components.const.DraggableValidOnlyForDiv', dm: '可拖拽（仅DIV有效）' }),
+          type: 'boolean',
+          'x-decorator': 'FormItem',
+          'x-component': 'Switch',
+          default: false,
+        },
+        dragHandle: {
+          title: $i18n.get({ id: 'sdk.src.components.const.DragAndDropTheEffective', dm: '拖拽生效区域' }),
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            options: [
+              {
+                value: 'header',
+                label: $i18n.get({ id: 'sdk.src.components.const.TitleOnly', dm: '仅标题' }),
+              },
+              {
+                value: 'divContainer',
+                label: $i18n.get({ id: 'sdk.src.components.const.EntireContainer', dm: '整个容器' }),
+              },
+            ],
+          },
+          default: 'header',
+        },
         containerPlacement: {
           title: $i18n.get({ id: 'sdk.src.components.const.ContainerLocation', dm: '容器位置' }),
           type: 'string',
@@ -333,6 +359,45 @@ const GIAC = {
           'x-component': 'Input',
           default: 'icon-star',
         },
+        iconFontSize: {
+          title: '图标大小',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: '18px',
+        },
+        buttonType: {
+          title: '按钮类型',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            options: [
+              {
+                value: 'text',
+                label: 'text',
+              },
+              {
+                value: 'primary',
+                label: 'primary',
+              },
+              {
+                value: 'default',
+                label: 'default',
+              },
+              {
+                value: 'dashed',
+                label: 'dashed',
+              },
+              {
+                value: 'link',
+                label: 'link',
+              },
+            ],
+          },
+          default: 'text',
+        },
+
         isShowTooltip: {
           title: $i18n.get({ id: 'sdk.src.components.const.PromptBox', dm: '提示框' }),
           type: 'string',
@@ -483,12 +548,13 @@ export const GIAC_PROPS = {
     isShowTooltip: true,
     title: '',
     icon: '',
+    iconFontSize: '18px',
     tooltip: '',
     tooltipPlacement: 'top',
     tooltipColor: '#3056e3',
     hasDivider: false,
     isVertical: false,
-    height: '40px',
+    buttonType: 'text',
   },
 };
 

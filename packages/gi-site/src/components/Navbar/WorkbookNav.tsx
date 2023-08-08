@@ -6,12 +6,13 @@ import useTheme from '../ThemeVars/useTheme';
 import DatasetInfo from './DatasetInfo';
 import ExportSdk from './ExportSdk';
 import Github from './Github';
+import Language from './Language';
 import Logo from './Logo';
+import Preview from './Preview';
 import SaveTemplate from './SaveTemplate';
 import SaveWorkbook from './SaveWorkbook';
 import Share from './Share';
 import Theme from './Theme';
-import Language from './Language';
 interface WorkbookBarProps {
   workbookId: string;
 }
@@ -60,6 +61,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
       <div style={styles.right}>
         <SaveTemplate workbookId={workbookId} />
         <Share context={context} />
+        <Preview context={context} />
         <ExportSdk />
         <SaveWorkbook workbookId={workbookId} />
         <Github />

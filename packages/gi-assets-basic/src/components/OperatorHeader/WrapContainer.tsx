@@ -76,6 +76,8 @@ export interface ContainerTypeProps {
   GISDK_ID: string;
   getContainer: HTMLDivElement;
   containerAnimate?: boolean;
+  containerDraggable?: boolean;
+  dragHandle: 'header' | 'divContainer';
 }
 
 const ContainerType = (props: ContainerTypeProps) => {
@@ -94,6 +96,8 @@ const ContainerType = (props: ContainerTypeProps) => {
     GISDK_ID,
     getContainer,
     containerAnimate,
+    containerDraggable,
+    dragHandle,
   } = props;
 
   const placement = POSITION_MAP[containerPlacement] as 'right' | 'left' | 'top' | 'bottom';
@@ -147,6 +151,9 @@ const ContainerType = (props: ContainerTypeProps) => {
       offset={offset}
       containerPlacement={containerPlacement}
       animate={containerAnimate}
+      getContainer={getContainer}
+      draggable={containerDraggable}
+      dragHandle={dragHandle}
     >
       {children}
     </DivContainer>
@@ -177,6 +184,8 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
       containerMaskClosable = false,
       containerPlacement,
       containerAnimate,
+      containerDraggable = false,
+      dragHandle,
     } = GIAC_CONTENT;
 
     const [containerVisible, setVisible] = React.useState(defaultVisible);
@@ -218,10 +227,15 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             tooltipPlacement={tooltipPlacement}
             isShowTooltip={isShowTooltip}
           >
-            <Button type="text" style={isVertical ? { height: '60px' } : {}} onClick={onClick} disabled={disabled}>
+            <Button
+              type="text"
+              // style={isVertical ? { height: '60px' } : {}}
+              onClick={onClick}
+              disabled={disabled}
+            >
               {isShowIcon && <Icon type={icon} />}
-              {isVertical && <br />}
-              {isShowTitle && title}
+              {/* {isVertical && <br />}
+              {isShowTitle && title} */}
             </Button>
           </WrapTooltip>
           {hasDivider && <Divider type="vertical" />}
@@ -243,6 +257,8 @@ const WrapContainer = (Component, componentId, GISDK_ID) => {
             GISDK_ID={GISDK_ID}
             getContainer={ContainerDOM}
             containerAnimate={containerAnimate}
+            containerDraggable={containerDraggable}
+            dragHandle={dragHandle}
           >
             <Component {...ComponentProps} visible={containerVisible} onClose={onClose} onOpen={onOpen} />
           </ContainerType>,

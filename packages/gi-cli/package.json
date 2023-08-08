@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-cli",
-  "version": "1.2.0",
+  "version": "1.2.4",
   "description": "the create CLI tool for G6VP assets",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,7 +27,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@umijs/utils": "^4.0.29"
+    "@umijs/utils": "^3.5.41"
   },
   "devDependencies": {
     "father": "^4.0.7"

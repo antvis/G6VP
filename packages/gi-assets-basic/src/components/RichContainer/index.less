@@ -1,0 +1,63 @@
+@side-width: 320px;
+.gi-rich-container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  display: block;
+
+  .gi-rich-container-navbar {
+    padding: 0px 20px;
+    position: relative;
+    height: 54px;
+    width: 100%;
+    background: var(--background-color);
+    display: flex;
+    justify-content: space-between;
+    .navbar-back {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .navbar-setting {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .gi-rich-container-toolbar {
+    position: relative;
+    height: 44px;
+    width: 100%;
+    background: #f3f5f9;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    padding: 0px 12px;
+    .toolbar-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .gi-rich-container-content {
+    position: absolute;
+    bottom: 0px;
+    top: 98px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    .gi-rich-container-side {
+      width: @side-width;
+      height: 100%;
+      background: #f3f5f9;
+    }
+    .gi-rich-container-canvas {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: @side-width;
+      right: 0px;
+    }
+  }
+}

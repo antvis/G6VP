@@ -1,6 +1,6 @@
 import { utils } from '@antv/gi-sdk';
-import info from './info';
 import $i18n from '../../i18n';
+import info from './info';
 
 interface Service {
   id: string;
@@ -9,6 +9,12 @@ interface Service {
 export default context => {
   const { services, engineId } = context;
   const { options, defaultValue } = utils.getServiceOptionsByEngineId(services, info.services[0], engineId);
+
+  const { options: menuOptions, defaultValue: defaultMenuValue } = utils.getServiceOptionsByEngineId(
+    services,
+    info.services[1],
+    engineId,
+  );
 
   return {
     serviceId: {
@@ -21,8 +27,18 @@ export default context => {
         options: options,
       },
     },
+    menuServiceId: {
+      title: '条件服务',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      default: defaultMenuValue,
+      'x-component-props': {
+        options: menuOptions,
+      },
+    },
     degree: {
-      title: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.QueryableDegrees', dm: '可查询度数' }),
+      title: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.QueryableDegrees', dm: '限定度数' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -30,15 +46,15 @@ export default context => {
         options: [
           {
             value: 1,
-            label: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.OnceQuery', dm: '一度查询' }),
+            label: 1,
           },
           {
             value: 2,
-            label: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.SecondDegreeQuery', dm: '二度查询' }),
+            label: 2,
           },
           {
             value: 3,
-            label: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.ThreeDegreeQuery', dm: '三度查询' }),
+            label: 3,
           },
         ],
       },

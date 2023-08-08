@@ -1,10 +1,10 @@
+import { useShortcuts } from '@antv/gi-sdk';
 import { Button, notification } from 'antd';
 import * as React from 'react';
-import * as DatasetServices from '../../services/dataset';
-import * as WorkbookServices from '../../services/project';
 
 import { ShareAltOutlined } from '@ant-design/icons';
 import $i18n from '../../i18n';
+import getExportContext from './getExportContext';
 interface ShareProjectProps {
   context: any;
 }
@@ -13,17 +13,19 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
   const { context } = props;
 
   const handleClick = async () => {
-    const workbook = await WorkbookServices.getById(context.id);
-    if (!workbook) {
-      return;
-    }
-    const dataset = await DatasetServices.queryDatasetInfo(workbook.datasetId);
-    const params = {
-      dataset,
-      workbook,
-      GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
-    };
+    // const workbook = await WorkbookServices.getById(context.id);
+    // if (!workbook) {
+    //   return;
+    // }
+    // const dataset = await DatasetServices.queryDatasetInfo(workbook.datasetId);
+    // const params = {
+    //   dataset,
+    //   workbook,
+    //   GI_ASSETS_PACKAGES: JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}'),
+    // };
 
+    const params = getExportContext(context);
+    const { workbook } = params;
     const elementA = document.createElement('a');
     elementA.download = workbook.name as string;
     elementA.style.display = 'none';
@@ -57,6 +59,10 @@ const ShareProject: React.FunctionComponent<ShareProjectProps> = props => {
       });
     }
   };
+
+  useShortcuts(['ctrl+shift+s', 'command+shift+s'], () => {
+    handleClick();
+  });
 
   return (
     <div>

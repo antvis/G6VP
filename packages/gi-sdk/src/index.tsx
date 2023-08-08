@@ -33,12 +33,20 @@ export { default as EngineBanner } from './components/EngineBanner';
 export { default as EngineServer } from './components/EngineServer';
 export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
+export { default as useContainer } from './hooks/useContainer';
+export { Shortcuts, useShortcuts } from './utils';
+import { createDownload } from './utils';
+const common = {
+  createDownload,
+};
+export { common };
 // export { default as Icon } from './components/Icon';
+
 /** export typing */
 export { COLORS, IEdgeSchema, INodeSchema } from './process/schema';
 
+export { changeLanguage, formatMessage, getCurrentLanguage, LANGUAGE_KEY_NAME } from './process/locale';
 export type { IGraphData } from './process/schema';
-export { formatMessage, getCurrentLanguage, changeLanguage, LANGUAGE_KEY_NAME } from './process/locale';
 export type {
   AssetCategory,
   AssetInfo,
@@ -63,5 +71,19 @@ export type {
   ServiceObject,
 } from './typing';
 export { extra, template, useContext, utils, version };
+
+declare global {
+  interface Window {
+    GISDK: {
+      (): typeof GISDK;
+      default: typeof GISDK;
+      extra: typeof extra;
+      template: typeof template;
+      useContext: typeof useContext;
+      utils: typeof utils;
+      version: typeof version;
+    };
+  }
+}
 
 export default GISDK;
