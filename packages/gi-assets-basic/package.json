@@ -49,6 +49,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "react-draggable": "^4.4.5",
+    "re-resizable": "^6.9.9",
     "use-immer": "^0.9.0"
   },
   "peerDependencies": {

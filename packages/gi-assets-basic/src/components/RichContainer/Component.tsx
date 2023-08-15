@@ -1,6 +1,8 @@
+import { Handler } from '@antv/gi-common-components';
 import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
 import { Select, Space } from 'antd';
-import React from 'react';
+import { Resizable } from 're-resizable';
+import React, { useEffect, useState } from 'react';
 import Toolbar from './Toolbar';
 import './index.less';
 const URL_SEARCH_KEY = 'ActiveAssetID';
@@ -20,8 +22,12 @@ export interface RichContainerState {
   /** 当前的模式 */
   viewMode: string;
 }
+const getDefaultSideWidth = () => {
+  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || '320';
+  return Number(defaultWidth);
+};
 const RichContainer = props => {
-  const { children } = props;
+  const { children, resizable = true } = props;
   const context = useContext();
   const { HAS_GRAPH } = context;
   const Containers = useContainer(context);
@@ -30,7 +36,31 @@ const RichContainer = props => {
     viewMode: 'GISDK_CANVAS',
   });
   const { activeKey, viewMode } = state;
+  const [isExpanded, setIsExpanded] = useState(true);
+  const defaultWidth = getDefaultSideWidth();
+  const [width, setWidth] = useState(defaultWidth);
+  const [isResizing, setIsResizing] = useState(false);
+  const enable = {
+    top: false,
+    right: resizable ? true : false,
+    bottom: false,
+    left: false,
+    topRight: false,
+    bottomRight: false,
+    bottomLeft: false,
+    topLeft: false,
+  };
 
+  useEffect(() => {
+    if (isExpanded) {
+      const defaultWidth = getDefaultSideWidth();
+      setWidth(defaultWidth);
+    } else setWidth(0);
+  }, [isExpanded]);
+
+  const toggleClick = () => {
+    setIsExpanded(prev => !prev);
+  };
   const [NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, StylingArea, CanvasArea, AnalysisArea] = Containers;
 
   const handleChange = id => {
@@ -53,6 +83,17 @@ const RichContainer = props => {
         viewMode: id,
       };
     });
+  };
+
+  const onResizeStart = () => {
+    setIsResizing(true);
+  };
+  const onResizeStop = (e, direction, ref, d) => {
+    setWidth(prev => {
+      localStorage.setItem('GI_RICH_CONTAINER_SIDE_WIDTH', prev + d.width);
+      return prev + d.width;
+    });
+    setIsResizing(false);
   };
 
   const ViewModeOptions = [
@@ -134,16 +175,49 @@ const RichContainer = props => {
       <div className="gi-rich-container-content">
         <div style={viewMode === 'GISDK_CANVAS' ? visibleStyle : hiddenStyle}>
           <div className="gi-rich-container-side">
-            {[...DataArea.components, ...StylingArea.components].map(item => {
-              const isActive = activeKey === item.id;
-              return (
-                <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>
-                  <item.component key={item.id} {...item.props} />
-                </div>
-              );
-            })}
+            <Resizable
+              // @ts-ignore
+              defaultSize={{ width }}
+              style={{
+                pointerEvents: 'all',
+                backgroundColor: '#f3f5f9',
+                // transition: 'width 5.3s ease 0s',
+                zIndex: 10,
+              }}
+              // @ts-ignore
+              size={{ width, height: '100%' }}
+              enable={enable}
+              onResizeStart={onResizeStart}
+              onResizeStop={onResizeStop}
+            >
+              <div style={{ overflow: 'hidden' }}>
+                {[...DataArea.components, ...StylingArea.components].map(item => {
+                  const isActive = activeKey === item.id;
+                  return (
+                    <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>
+                      <item.component key={item.id} {...item.props} />
+                    </div>
+                  );
+                })}
+              </div>
+              <Handler
+                type="left"
+                handleClick={toggleClick}
+                style={{
+                  borderColor: 'transparent transparent transparent #f3f5f9',
+                }}
+              />
+            </Resizable>
           </div>
-          <div className="gi-rich-container-canvas">{children}</div>
+          <div
+            className="gi-rich-container-canvas"
+            style={{
+              left: width,
+              //  transition: 'width 5.3s ease 0s'
+            }}
+          >
+            {children}
+          </div>
         </div>
         {ViewArea.components.map(item => {
           const isActive = item.id === viewMode;
