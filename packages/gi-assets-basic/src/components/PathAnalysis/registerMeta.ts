@@ -1,7 +1,7 @@
-import { extra } from '@antv/gi-sdk';
-import info from './info';
-import $i18n from '../../i18n';
 import { NodeSelectionMode } from '@antv/gi-common-components/lib/NodeSelectionWrap';
+import { extra } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
+import info from './info';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
 metas.GIAC_CONTENT.properties.GIAC_CONTENT.properties.title.default = info.name;
@@ -52,6 +52,7 @@ const registerMeta = ({ schemaData }) => {
       enum: options,
       default: 'id',
     },
+
     ...metas,
   };
 };

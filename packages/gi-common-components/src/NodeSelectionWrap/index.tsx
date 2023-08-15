@@ -3,12 +3,13 @@
  * 用于获取目标节点，提供 2 种方式：从列表中选择节点或从画布中点选节点
  */
 import { FormOutlined } from '@ant-design/icons';
-import { Form, Select } from 'antd';
-import type { FormInstance } from 'antd';
-import React, { memo, useMemo, useState } from 'react';
-import './index.less';
 import { Graph } from '@antv/g6';
+import type { FormInstance } from 'antd';
+import { Form, Select, Tooltip } from 'antd';
+import React, { memo, useMemo, useState } from 'react';
+import { Icon } from '../Icon';
 import $i18n from '../i18n';
+import './index.less';
 
 export enum NodeSelectionMode {
   List = 'List', // 从列表中选择节点
@@ -47,7 +48,7 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
 
   const beginSelect = () => {
     setSelecting(name);
-    graph.off('node:click', nodeClickListener);
+    graph && graph.off('node:click', nodeClickListener);
 
     nodeClickListener = e => {
       setSelecting('');
@@ -75,10 +76,10 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
         className="main"
         key={key}
         name={name}
-        label={label}
+        label={<Icon type="icon-location" />}
         rules={[
           {
-            required: true,
+            // required: true,
             message: $i18n.get(
               {
                 id: 'common-components.src.NodeSelectionWrap.PleaseFillInLabelNodelabel',
@@ -88,18 +89,6 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
             ),
           },
         ]}
-        tooltip={
-          isCanvas && {
-            open: selecting === name,
-            title: $i18n.get(
-              {
-                id: 'common-components.src.NodeSelectionWrap.YouCanClickCanvasNodes',
-                dm: `可点选画布节点，快速选择${label}`,
-              },
-              { label: label },
-            ),
-          }
-        }
       >
         <Select
           showSearch
@@ -117,11 +106,21 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
         </Select>
       </Form.Item>
       {isCanvas && (
-        <FormOutlined
-          className="operation"
-          style={{ cursor: 'pointer', color: selecting === name ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
-          onClick={beginSelect}
-        />
+        <Tooltip
+          title={$i18n.get(
+            {
+              id: 'common-components.src.NodeSelectionWrap.YouCanClickCanvasNodes',
+              dm: `可点选画布节点，快速选择${label}`,
+            },
+            { label: label },
+          )}
+        >
+          <FormOutlined
+            className="operation"
+            style={{ cursor: 'pointer', color: selecting === name ? '#1890ff' : 'rgba(0, 0, 0, 0.65)' }}
+            onClick={beginSelect}
+          />
+        </Tooltip>
       )}
     </div>
   );
@@ -131,7 +130,7 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
   const { graph, nodeSelectionMode, nodeLabel, items, form, data } = props;
   const [selecting, setSelecting] = useState('');
   return (
-    <>
+    <div>
       {items.map(item => (
         <NodeSelectionFormItem
           graph={graph}
@@ -146,7 +145,19 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
           setSelecting={setSelecting}
         />
       ))}
-    </>
+      <div
+        className="gi-path-analysis-line"
+        style={{
+          display: 'block',
+          height: '35px',
+          width: '2px',
+          border: '1px solid #ddd',
+          position: 'absolute',
+          top: '85px',
+          left: '26px',
+        }}
+      ></div>
+    </div>
   );
 });
 

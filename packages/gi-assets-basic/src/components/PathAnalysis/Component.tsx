@@ -1,17 +1,17 @@
-import { CaretRightOutlined, DeleteOutlined, FormOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import { findShortestPath } from '@antv/algorithm';
+import { NodeSelectionWrap } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
-import { Button, Col, Collapse, Empty, Form, Row, Select, Space, Switch, Timeline, message } from 'antd';
+import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../i18n';
 import FilterRule from './FilterRule';
-import './index.less';
 import PanelExtra from './PanelExtra';
+import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
-import { findShortestPath } from '@antv/algorithm';
-import $i18n from '../../i18n';
-import { NodeSelectionWrap } from '@antv/gi-common-components';
 
 const { Panel } = Collapse;
 
@@ -323,48 +323,55 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
   return (
     <div className="gi-path-analysis">
-      {/* <h2 className="gi-path-analysis-title">路径分析</h2> */}
-      <Form form={form}>
-        <NodeSelectionWrap
-          graph={graph}
-          form={form}
-          items={items}
-          data={graphData.nodes}
-          nodeLabel={pathNodeLabel}
-          nodeSelectionMode={nodeSelectionMode}
-        />
-
-        <Form.Item
-          name="direction"
-          label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
-        >
-          <Switch
-            checkedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Directed', dm: '有向' })}
-            unCheckedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Undirected', dm: '无向' })}
-            defaultChecked
+      <div className="gi-path-analysis-container">
+        <div className="gi-path-analysis-title">路径配置</div>
+        <Form form={form}>
+          <NodeSelectionWrap
+            graph={graph}
+            form={form}
+            items={items}
+            data={graphData.nodes}
+            nodeLabel={pathNodeLabel}
+            nodeSelectionMode={nodeSelectionMode}
           />
-        </Form.Item>
-        <Form.Item>
-          <Row>
-            <Col span={16}>
-              <Button type="primary" onClick={handleSearch} style={{ width: '100%' }}>
-                {$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryPath', dm: '查询路径' })}
-              </Button>
-            </Col>
-            <Col offset="2" span={6} style={{ textAlign: 'right' }}>
-              <Space size={'small'}>
-                {state.isAnalysis && state.allNodePath.length > 0 && (
-                  <FilterRule state={state} updateState={updateState} />
-                )}
 
-                <Button danger onClick={handleResetForm} icon={<DeleteOutlined />}></Button>
-              </Space>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Form>
-      <div className="gi-path-analysis-path-list-container">
-        {state.nodePath.length > 0 && (
+          <Form.Item
+            name="direction"
+            label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
+          >
+            <Switch
+              checkedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Directed', dm: '有向' })}
+              unCheckedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Undirected', dm: '无向' })}
+              defaultChecked
+            />
+          </Form.Item>
+          <Form.Item name="maxdeep" label="最大深度">
+            <InputNumber />
+          </Form.Item>
+          <Form.Item>
+            <Row>
+              <Col span={16}>
+                <Button type="primary" onClick={handleSearch} style={{ width: '100%' }}>
+                  {$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryPath', dm: '查询路径' })}
+                </Button>
+              </Col>
+              <Col offset="2" span={6} style={{ textAlign: 'right' }}>
+                <Space size={'small'}>
+                  {state.isAnalysis && state.allNodePath.length > 0 && (
+                    <FilterRule state={state} updateState={updateState} />
+                  )}
+
+                  <Button danger onClick={handleResetForm} icon={<DeleteOutlined />}></Button>
+                </Space>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Form>
+      </div>
+
+      {state.nodePath.length > 0 && (
+        <div className="gi-path-analysis-container">
+          <div className="gi-path-analysis-title">查询结果</div>
           <Collapse
             defaultActiveKey={0}
             ghost={true}
@@ -376,7 +383,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                 <Panel
                   key={index}
                   header={$i18n.get(
-                    { id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径${index + 1}` },
+                    { id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径 ${index + 1}` },
                     { numebr: index + 1 },
                   )}
                   extra={
@@ -394,10 +401,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               );
             })}
           </Collapse>
-        )}
+        </div>
+      )}
 
-        {state.isAnalysis && state.nodePath.length === 0 && <Empty />}
-      </div>
+      {state.isAnalysis && state.nodePath.length === 0 && <Empty />}
     </div>
   );
 };
