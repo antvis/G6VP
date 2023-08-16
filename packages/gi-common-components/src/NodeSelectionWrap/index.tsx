@@ -5,7 +5,7 @@
 import { FormOutlined } from '@ant-design/icons';
 import { Graph } from '@antv/g6';
 import type { FormInstance } from 'antd';
-import { Form, Select, Tooltip } from 'antd';
+import { Button, Form, Select, Tooltip } from 'antd';
 import React, { memo, useMemo, useState } from 'react';
 import { Icon } from '../Icon';
 import $i18n from '../i18n';
@@ -32,6 +32,7 @@ interface NodeSelectionWrapProps extends NodeSelectionProps {
 }
 
 interface NodeSelectionFormItemProps extends NodeSelectionProps {
+  color: string;
   key: string;
   name: string;
   label: string;
@@ -42,7 +43,7 @@ interface NodeSelectionFormItemProps extends NodeSelectionProps {
 let nodeClickListener = e => {};
 
 const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props => {
-  const { graph, nodeSelectionMode, nodeLabel, key, name, label, form, data, setSelecting, selecting } = props;
+  const { graph, nodeSelectionMode, nodeLabel, key, name, label, form, data, setSelecting, selecting, color } = props;
   const isList = nodeSelectionMode.includes(NodeSelectionMode.List);
   const isCanvas = nodeSelectionMode.includes(NodeSelectionMode.Canvas);
 
@@ -76,7 +77,8 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
         className="main"
         key={key}
         name={name}
-        label={<Icon type="icon-location" />}
+        label={<Icon type="icon-dot" style={{ fontSize: '12px', color }} />}
+        colon={false}
         rules={[
           {
             // required: true,
@@ -129,10 +131,19 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
 const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
   const { graph, nodeSelectionMode, nodeLabel, items, form, data } = props;
   const [selecting, setSelecting] = useState('');
+  const colors = ['#1650FF', '#FFC53D'];
+  const handleSwap = async () => {
+    const values = await form.getFieldsValue();
+    console.log('values', values);
+    const { source, target } = values;
+    form.setFieldsValue({ source: target, target: source });
+  };
+
   return (
-    <div>
-      {items.map(item => (
+    <div style={{ position: 'relative' }}>
+      {items.map((item, index) => (
         <NodeSelectionFormItem
+          color={colors[index]}
           graph={graph}
           form={form}
           key={item.name}
@@ -148,15 +159,31 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
       <div
         className="gi-path-analysis-line"
         style={{
-          display: 'block',
-          height: '35px',
-          width: '2px',
-          border: '1px solid #ddd',
           position: 'absolute',
-          top: '85px',
-          left: '26px',
+          top: '22px',
+          left: '-6px',
+          height: '44px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
         }}
-      ></div>
+      >
+        <div
+          style={{
+            height: '38px',
+            width: '1px',
+            background: '#DDDDDF',
+            position: 'absolute',
+          }}
+        ></div>
+        <Button
+          icon={<Icon type="icon-swap" />}
+          size="small"
+          type="text"
+          onClick={handleSwap}
+          style={{ background: '#fff' }}
+        />
+      </div>
     </div>
   );
 });

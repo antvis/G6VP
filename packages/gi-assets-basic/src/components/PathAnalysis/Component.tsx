@@ -1,4 +1,4 @@
-import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
@@ -7,8 +7,8 @@ import { enableMapSet } from 'immer';
 import React, { useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
-import FilterRule from './FilterRule';
 import PanelExtra from './PanelExtra';
+import SegementFilter from './SegmentFilter';
 import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
@@ -16,6 +16,8 @@ import { getPathByWeight } from './utils';
 const { Panel } = Collapse;
 
 export interface IPathAnalysisProps {
+  hasDirection: boolean;
+  hasMaxDeep: boolean;
   nodeSelectionMode: string[];
   pathNodeLabel: string;
   controlledValues?: {
@@ -29,8 +31,9 @@ export interface IPathAnalysisProps {
 enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
-  const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {} } = props;
+  const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {}, hasMaxDeep, hasDirection } = props;
   const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
+
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],
     allEdgePath: [],
@@ -73,7 +76,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const handleSearch = () => {
     form.validateFields().then(values => {
       cancelHighlight();
-      const { source, target, direction = true } = values;
+      const { source, target, direction = false } = values;
       const history = {
         componentId: 'PathAnalysis',
         type: 'analyse',
@@ -172,7 +175,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             animate: {
               visible: false,
               type: 'circle-running',
-              color: 'rgba(236,65,198,1)',
+              color: 'red',
               repeat: true,
               duration: 1000,
             },
@@ -234,7 +237,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                 animate: {
                   visible: true,
                   type: 'circle-running',
-                  color: 'rgba(236,65,198,1)',
+                  color: 'red',
                   repeat: true,
                   duration: 1000,
                 },
@@ -335,33 +338,38 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             nodeSelectionMode={nodeSelectionMode}
           />
 
-          <Form.Item
-            name="direction"
-            label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
-          >
-            <Switch
-              checkedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Directed', dm: '有向' })}
-              unCheckedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Undirected', dm: '无向' })}
-              defaultChecked
-            />
-          </Form.Item>
-          <Form.Item name="maxdeep" label="最大深度">
-            <InputNumber />
-          </Form.Item>
+          {hasDirection && (
+            <Form.Item
+              wrapperCol={{ span: 24 }}
+              labelCol={{ span: 24 }}
+              name="direction"
+              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.IsThereAnyDirection', dm: '是否有向' })}
+            >
+              <Switch
+                checkedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Directed', dm: '有向' })}
+                unCheckedChildren={$i18n.get({ id: 'basic.components.PathAnalysis.Component.Undirected', dm: '无向' })}
+                defaultChecked
+              />
+            </Form.Item>
+          )}
+          {hasMaxDeep && (
+            <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+              <InputNumber min={1} style={{ width: '100%' }} />
+            </Form.Item>
+          )}
           <Form.Item>
             <Row>
-              <Col span={16}>
+              <Col span={18}>
                 <Button type="primary" onClick={handleSearch} style={{ width: '100%' }}>
                   {$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryPath', dm: '查询路径' })}
                 </Button>
               </Col>
-              <Col offset="2" span={6} style={{ textAlign: 'right' }}>
+              <Col span={6} style={{ textAlign: 'right' }}>
                 <Space size={'small'}>
-                  {state.isAnalysis && state.allNodePath.length > 0 && (
+                  {/* {state.isAnalysis && state.allNodePath.length > 0 && (
                     <FilterRule state={state} updateState={updateState} />
-                  )}
-
-                  <Button danger onClick={handleResetForm} icon={<DeleteOutlined />}></Button>
+                  )} */}
+                  <Button onClick={handleResetForm}>重置</Button>
                 </Space>
               </Col>
             </Row>
@@ -371,7 +379,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
 
       {state.nodePath.length > 0 && (
         <div className="gi-path-analysis-container">
-          <div className="gi-path-analysis-title">查询结果</div>
+          <div className="gi-path-analysis-title">
+            <div>查询结果</div>
+            <SegementFilter state={state} updateState={updateState} />
+          </div>
           <Collapse
             defaultActiveKey={0}
             ghost={true}
