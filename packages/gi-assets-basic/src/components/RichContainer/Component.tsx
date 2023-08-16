@@ -1,6 +1,6 @@
 import { Handler } from '@antv/gi-common-components';
 import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
-import { Select, Space } from 'antd';
+import { Button, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
 import React, { useEffect, useState } from 'react';
 import Toolbar from './Toolbar';
@@ -61,7 +61,7 @@ const RichContainer = props => {
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
   };
-  const [NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, StylingArea, CanvasArea, AnalysisArea] = Containers;
+  const [NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea] = Containers;
 
   const handleChange = id => {
     const { searchParams, path } = utils.getSearchParams(window.location);
@@ -84,6 +84,18 @@ const RichContainer = props => {
       };
     });
   };
+  const DATA_QUERY_ID = DataArea.components.map(item => item.id);
+  const DATA_FILTER_ID = FilterArea.components.map(item => item.id);
+  const DATA_QUERY_OPTIONS = DataArea.components.map(item => {
+    //@ts-ignore
+    return { label: item.info.name, value: item.id };
+  });
+  const DATA_FILTER_OPTIONS = FilterArea.components.map(item => {
+    //@ts-ignore
+    return { label: item.info.name, value: item.id };
+  });
+  const HAS_QUERY_VIEW = DATA_QUERY_ID.indexOf(activeKey) !== -1;
+  const HAS_FILTER_VIEW = DATA_FILTER_ID.indexOf(activeKey) !== -1;
 
   const onResizeStart = () => {
     setIsResizing(true);
@@ -146,14 +158,35 @@ const RichContainer = props => {
             options={ViewModeOptions}
           />
         </div>
-        <Toolbar
-          value={activeKey}
-          onChange={handleChange}
-          title="查询过滤"
-          displayText
-          options={DataArea.components}
-          HAS_GRAPH={HAS_GRAPH}
-        />
+        <div className="toolbar-item">
+          <Button
+            type={HAS_QUERY_VIEW ? 'primary' : 'text'}
+            icon={<Icon type={'icon-query'} />}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            onClick={() => {
+              if (!HAS_QUERY_VIEW) {
+                handleChange(DATA_QUERY_ID[0]);
+              }
+            }}
+          >
+            查询
+          </Button>
+        </div>
+        <div className="toolbar-item">
+          <Button
+            type={HAS_FILTER_VIEW ? 'primary' : 'text'}
+            icon={<Icon type={'icon-filter'} />}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            onClick={() => {
+              if (!HAS_FILTER_VIEW) {
+                handleChange(DATA_FILTER_ID[0]);
+              }
+            }}
+          >
+            筛选
+          </Button>
+        </div>
+
         <Toolbar
           value={activeKey}
           onChange={handleChange}
@@ -168,8 +201,6 @@ const RichContainer = props => {
           options={CanvasArea.components}
           HAS_GRAPH={HAS_GRAPH}
         />
-        <div className="toolbar-item"></div>
-        <div className="toolbar-item"></div>
       </div>
 
       <div className="gi-rich-container-content">
@@ -183,6 +214,7 @@ const RichContainer = props => {
                 backgroundColor: '#f3f5f9',
                 // transition: 'width 5.3s ease 0s',
                 zIndex: 10,
+                padding: '12px',
               }}
               // @ts-ignore
               size={{ width, height: '100%' }}
@@ -191,7 +223,13 @@ const RichContainer = props => {
               onResizeStop={onResizeStop}
             >
               <div style={{ overflow: 'hidden' }}>
-                {[...DataArea.components, ...StylingArea.components].map(item => {
+                {HAS_QUERY_VIEW && (
+                  <Segmented block value={activeKey} options={DATA_QUERY_OPTIONS} onChange={handleChange} />
+                )}
+                {HAS_FILTER_VIEW && (
+                  <Segmented block value={activeKey} options={DATA_FILTER_OPTIONS} onChange={handleChange} />
+                )}
+                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components].map(item => {
                   const isActive = activeKey === item.id;
                   return (
                     <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>

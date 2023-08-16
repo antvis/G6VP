@@ -67,6 +67,22 @@ const registerMeta = context => {
         },
       },
       {
+        id: 'data-filter',
+        name: '数据筛选',
+        required: true,
+        GI_CONTAINER: {
+          title: '集成组件',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
+          enum: GIAC_CONTENT_ITEMS,
+          default: [],
+        },
+      },
+      {
         id: 'styling-setting',
         name: '布局样式',
         required: true,
