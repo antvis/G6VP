@@ -1,8 +1,8 @@
 import { Handler } from '@antv/gi-common-components';
 import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
-import { Button, Segmented, Select, Space } from 'antd';
+import { Button, Divider, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Toolbar from './Toolbar';
 import './index.less';
 const URL_SEARCH_KEY = 'ActiveAssetID';
@@ -133,6 +133,11 @@ const RichContainer = props => {
   ];
 
   console.log('render.....', Containers, HAS_GRAPH, ViewModeOptions, viewMode);
+  const ActiveButtonStyle: React.CSSProperties = {
+    background: 'var(--background-color)',
+    borderColor: 'var(--background-color)',
+    color: 'var(--text-color)',
+  };
 
   return (
     <div className="gi-rich-container">
@@ -159,10 +164,16 @@ const RichContainer = props => {
           />
         </div>
         <div className="toolbar-item">
+          <Divider type="vertical" />
           <Button
             type={HAS_QUERY_VIEW ? 'primary' : 'text'}
             icon={<Icon type={'icon-query'} />}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...(HAS_QUERY_VIEW ? ActiveButtonStyle : {}),
+            }}
             onClick={() => {
               if (!HAS_QUERY_VIEW) {
                 handleChange(DATA_QUERY_ID[0]);
@@ -176,7 +187,12 @@ const RichContainer = props => {
           <Button
             type={HAS_FILTER_VIEW ? 'primary' : 'text'}
             icon={<Icon type={'icon-filter'} />}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
+            }}
             onClick={() => {
               if (!HAS_FILTER_VIEW) {
                 handleChange(DATA_FILTER_ID[0]);
@@ -271,4 +287,4 @@ const RichContainer = props => {
   );
 };
 
-export default RichContainer;
+export default memo(RichContainer);

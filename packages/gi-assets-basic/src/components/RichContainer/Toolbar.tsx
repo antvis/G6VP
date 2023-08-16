@@ -15,6 +15,11 @@ export interface ToolbarProps {
   /** Context.HAS_GRAPH */
   HAS_GRAPH: boolean;
 }
+const ActiveButtonStyle: React.CSSProperties = {
+  background: 'var(--background-color)',
+  borderColor: 'var(--background-color)',
+  color: 'var(--text-color)',
+};
 const Toolbar = (props: ToolbarProps) => {
   const { title, options, value, onChange, displayText, HAS_GRAPH } = props;
   return (
@@ -39,7 +44,12 @@ const Toolbar = (props: ToolbarProps) => {
             type={buttonType}
             icon={<Icon type={icon} />}
             key={id}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              ...(isActive ? ActiveButtonStyle : {}),
+            }}
             onClick={() => {
               onChange(id);
             }}
