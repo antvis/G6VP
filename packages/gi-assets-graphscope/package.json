@@ -33,7 +33,7 @@
     "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",
     "@antv/gi-sdk": "workspace:*",
-    "@antv/graphin": "^2.7.21",
+    "@antv/graphin": "^2.7.25",
     "gremlin_patch": "^3.5.1",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",

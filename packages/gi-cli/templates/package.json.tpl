@@ -33,7 +33,7 @@
     "@antv/gi-assets-basic": "latest",
     "@antv/gi-sdk": "latest",
     "@antv/gi-theme-antd": "latest",
-    "@antv/graphin": "^2.7.21",
+    "@antv/graphin": "^2.7.25",
     "antd": "4.x",
     "lodash": "^4.17.21",
     "react-dom": "17.x",
