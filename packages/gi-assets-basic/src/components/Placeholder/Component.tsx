@@ -25,7 +25,7 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   }
   if (largeGraphData) {
     return (
-      <div className="gi-placeholader" style={{ width: `${width}px` }}>
+      <div className="gi-placeholder" style={{ width: `${width}px` }}>
         {img && <img src={img} width={width} />}
         {$i18n.get({
           id: 'basic.components.Placeholder.Component.TheNodeSizeOfThe',
@@ -40,9 +40,13 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
     );
   }
   return (
-    <div className="gi-placeholader" style={{ width: `${width}px` }}>
-      {img && <img src={img} width={width} />}
-      {text}
+    <div className="gi-placeholder" style={{ width: `${width}px` }}>
+      {img && (
+        <div className="image-wrapper">
+          <img src={img} width={width} />
+        </div>
+      )}
+      <span>{text}</span>
     </div>
   );
 };
