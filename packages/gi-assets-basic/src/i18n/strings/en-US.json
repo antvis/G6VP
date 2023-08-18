@@ -287,6 +287,8 @@
   "basic.components.Placeholder.registerMeta.ImageAddress": "Image address",
   "basic.components.Placeholder.registerMeta.Text": "Text",
   "basic.components.Placeholder.registerMeta.StartYourGraphAnalysisApplication": "Start your graph analysis application ~",
+  "basic.components.Placeholder.registerMeta.TextColor": "Text Color",
+  "basic.components.Placeholder.registerMeta.Spacing": "Spacing",
   "basic.components.Placeholder.registerMeta.Width": "Width",
   "basic.components.PropertiesPanel.PropertiesDetail.CompareWithOtherAttribute": "Compared to other values of the attribute {key}, the current attribute value {value} has a {importance} occurrence rate, which may contain significant information and deserves attention",
   "basic.components.PropertiesPanel.PropertiesDetail.VeryLow": " very low",
