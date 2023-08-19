@@ -11,6 +11,8 @@ import $i18n from '../../i18n';
 export interface GraphAnnotationProps {
   contextmenu: any;
   annotationWay: string;
+  defaultTitleField?: string;
+  defaultContentFields?: string[];
 }
 
 const tagColors = [
@@ -51,7 +53,7 @@ const BADGE_CLASSNAME = 'gi-graph-annotation';
 let unbindSizeSensor;
 
 const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => {
-  const { contextmenu, annotationWay } = props;
+  const { contextmenu, annotationWay, defaultTitleField, defaultContentFields } = props;
   const { graph, GISDK_ID } = useContext();
   const { item: menuTargetItem, x, y } = contextmenu; // target 为 null 可能是 canvas
   if (menuTargetItem && menuTargetItem.destroyed) {
@@ -89,10 +91,20 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
         // onClickIcon: hideIconTooltip,
       },
       getTitle: item => {
+        if (defaultTitleField) return item.getModel()[defaultTitleField];
         const type = item.getType?.() || 'canvas';
         return menuItemName[type];
       },
-      getContent: (item => undefined) as any,
+      getContent: (item => {
+        if (defaultContentFields) {
+          const model = item.getModel();
+          return defaultContentFields
+            .map(field => (model.hasOwnProperty(field) ? `${field}: ${model[field]}` : undefined))
+            .filter(Boolean)
+            .join('\n\r');
+        }
+        return undefined;
+      }) as any,
       getContentPlaceholder: item =>
         $i18n.get({
           id: 'advance.components.GraphAnnotation.Component.DoubleClickHereToStart',
