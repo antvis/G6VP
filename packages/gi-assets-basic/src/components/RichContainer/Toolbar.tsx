@@ -1,6 +1,6 @@
 import { Icon } from '@antv/gi-sdk';
 import { Button, Divider } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
 export interface ToolbarProps {
   /** 分类的标题 */
   title: string;
@@ -62,4 +62,4 @@ const Toolbar = (props: ToolbarProps) => {
   );
 };
 
-export default Toolbar;
+export default memo(Toolbar);

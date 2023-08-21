@@ -3,6 +3,7 @@ import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
 import { Button, Divider, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
 import React, { memo, useEffect, useState } from 'react';
+import Header from './Header';
 import Toolbar from './Toolbar';
 import './index.less';
 const URL_SEARCH_KEY = 'ActiveAssetID';
@@ -29,7 +30,7 @@ const getDefaultSideWidth = () => {
 const RichContainer = props => {
   const { children, resizable = true } = props;
   const context = useContext();
-  const { HAS_GRAPH } = context;
+  const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
   const [state, setState] = React.useState<RichContainerState>({
     activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'FilterPanel',
@@ -66,7 +67,7 @@ const RichContainer = props => {
   const handleChange = id => {
     const { searchParams, path } = utils.getSearchParams(window.location);
     searchParams.set(URL_SEARCH_KEY, id);
-    window.location.hash = `${path}?${searchParams.toString()}`;
+    // window.location.hash = `${path}?${searchParams.toString()}`;
 
     setState(preState => {
       return {
@@ -141,18 +142,8 @@ const RichContainer = props => {
 
   return (
     <div className="gi-rich-container">
-      <div className="gi-rich-container-navbar">
-        <div className="navbar-back">
-          {NavbarLeftArea.components.map(item => {
-            return <item.component key={item.id} {...item.props} />;
-          })}
-        </div>
-        <div className="navbar-setting">
-          {NavbarRightArea.components.map(item => {
-            return <item.component key={item.id} {...item.props} />;
-          })}
-        </div>
-      </div>
+      <Header leftArea={NavbarLeftArea} rightArea={NavbarRightArea} />
+      <div id={`${GISDK_ID}-sheetbar-container`}></div>
       <div className="gi-rich-container-toolbar">
         <div className="toolbar-item">
           <Select
