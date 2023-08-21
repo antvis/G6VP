@@ -1,3 +1,6 @@
+import { utils } from '@antv/gi-sdk';
+
+const { getSiteContext } = utils;
 // GI 默认使用离线数据模式的站点
 const GI_DEPOLY_OFFLINE_SITE = [
   'graphinsight.antv.vision',
@@ -22,15 +25,18 @@ export const GI_SITE = {
   },
   get SERVICE_URL() {
     const { hostname, protocol } = window.location;
+    const { GI_SITE_ID = 'DEFAULT' } = getSiteContext();
     const port = 7001;
     let online = `${protocol}//${hostname}:${port}`;
-    if (!IS_DEV_ENV) {
+    if (GI_SITE_ID === 'DEFAULT') {
+      online = 'https://rplus-pre.alipay.com/api/function/gi';
+    } else if (!IS_DEV_ENV){
       online = window.location.origin + window.location.pathname;
       if (online.endsWith('/')) {
         online = online.slice(0, -1);
       }
     }
-
+  
     return GI_SITE.IS_OFFLINE
       ? 'https://graphinsight.antgroup-inc.cn' //  'https://graphinsight-pre.alipay.com'
       : online;

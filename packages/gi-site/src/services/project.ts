@@ -6,7 +6,9 @@ import { GI_SITE } from './const';
 import { IProject } from './typing';
 import { request } from './utils';
 import $i18n from '../i18n';
+import { utils } from '@antv/gi-sdk';
 
+const { getSiteContext } = utils;
 /**
  * 获取所有项目
  * @returns
@@ -31,7 +33,6 @@ export const list = async (type: 'project' | 'case' | 'save'): Promise<IProject[
   const response = await request(`${GI_SITE.SERVICE_URL}/project/list`, {
     method: 'post',
   });
-
   if (response.success) {
     return response.data;
   }
@@ -75,6 +76,7 @@ export const create = async (param: any): Promise<string | undefined> => {
  * @returns
  */
 export const getById = async (id: string): Promise<IProject | undefined> => {
+  const { GI_SITE_ID = 'DEFAULT' } = getSiteContext();
   if (GI_SITE.IS_OFFLINE) {
     const project: any = await GI_PROJECT_DB.getItem(id);
     if (!project) {
@@ -93,9 +95,23 @@ export const getById = async (id: string): Promise<IProject | undefined> => {
       engineId: engineId || 'GI',
     };
   }
-  const response = await request(`${GI_SITE.SERVICE_URL}/project/${id}`, {
-    method: 'get',
-  });
+  const requestParams: Record<string, any> = {
+    url: `${GI_SITE.SERVICE_URL}/project/${id}`,
+    params: {
+      method: 'get',
+    }
+  }
+  if (GI_SITE_ID == 'DEFAULT') {
+    requestParams.url = `${GI_SITE.SERVICE_URL}/project/id`;
+    requestParams.params = {
+      method: 'post',
+      data: {
+        id: id
+      }
+    }
+  }
+  const response = await request(requestParams.url, requestParams.params);
+
   if (response.success) {
     const { projectConfig, engineId, ...others } = response.data;
     return {

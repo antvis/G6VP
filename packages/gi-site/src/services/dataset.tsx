@@ -4,6 +4,9 @@ import DATASET_CASE from './initial.data/default.case';
 import { IDataset } from './typing';
 import { request } from './utils';
 import { deepMix } from '@antv/util';
+import { utils } from '@antv/gi-sdk';
+
+const { getSiteContext } = utils;
 
 /**
  * 更新或保存指定项目
@@ -15,9 +18,23 @@ export const queryDatasetInfo = async (id: string) => {
   if (GI_SITE.IS_OFFLINE) {
     return await GI_DATASET_DB.getItem(id);
   } else {
-    const response = await request(`${GI_SITE.SERVICE_URL}/dataset/${id}`, {
-      method: 'get',
-    });
+    const { GI_SITE_ID = 'DEFAULT' } = getSiteContext();
+    const requestParams: Record<string, any> = {
+      url: `${GI_SITE.SERVICE_URL}/dataset/${id}`,
+      params: {
+        method: 'get',
+      }
+    }
+    if (GI_SITE_ID == 'DEFAULT') {
+      requestParams.url = `${GI_SITE.SERVICE_URL}/dataset/id`;
+      requestParams.params = {
+        method: 'post',
+        data: {
+          id: id
+        }
+      }
+    }
+    const response = await request(requestParams.url, requestParams.params);
     return response.data;
   }
 };
