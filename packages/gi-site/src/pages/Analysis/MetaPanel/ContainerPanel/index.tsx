@@ -1,11 +1,11 @@
-import { clone, isArray, difference } from '@antv/util';
+import { clone, difference, isArray } from '@antv/util';
 import { Button, Checkbox, Col, Row, Select, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../../../i18n';
 import { AssetInfo } from '../../typing';
 import AssetsCenter from './AssetsCenter';
 import RenderForm from './RenderForm';
-import $i18n from '../../../../i18n';
 import './index.less';
 
 let refComponentKeys: string[] = [];
@@ -282,6 +282,7 @@ const ContainerPanel = props => {
             item.props.GI_CONTAINER = containerAssetsIds;
           }
         });
+
         const activeComponentKeys = new Set<string>(refComponentKeys);
         if (action === 'add') {
           assetList.forEach(asset => {
