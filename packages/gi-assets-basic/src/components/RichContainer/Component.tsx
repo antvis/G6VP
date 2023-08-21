@@ -114,7 +114,7 @@ const RichContainer = props => {
       value: 'GISDK_CANVAS',
       label: (
         <Space>
-          <Icon type="icon-deploymentunit1"></Icon>
+          <Icon type={ViewArea.icon}></Icon>
           图谱视图
         </Space>
       ),
@@ -158,7 +158,7 @@ const RichContainer = props => {
           <Divider type="vertical" />
           <Button
             type={HAS_QUERY_VIEW ? 'primary' : 'text'}
-            icon={<Icon type={'icon-query'} />}
+            icon={<Icon type={DataArea.icon} />}
             style={{
               display: 'flex',
               justifyContent: 'center',
@@ -177,7 +177,7 @@ const RichContainer = props => {
         <div className="toolbar-item">
           <Button
             type={HAS_FILTER_VIEW ? 'primary' : 'text'}
-            icon={<Icon type={'icon-filter'} />}
+            icon={<Icon type={FilterArea.icon} />}
             style={{
               display: 'flex',
               justifyContent: 'center',
