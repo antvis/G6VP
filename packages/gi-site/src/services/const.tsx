@@ -29,7 +29,7 @@ export const GI_SITE = {
     const port = 7001;
     let online = `${protocol}//${hostname}:${port}`;
     if (GI_SITE_ID === 'DEFAULT') {
-      online = 'https://rplus-pre.alipay.com/api/function/gi';
+      online = 'https://rplus.alipay.com/api/function/gi';
     } else if (!IS_DEV_ENV){
       online = window.location.origin + window.location.pathname;
       if (online.endsWith('/')) {
