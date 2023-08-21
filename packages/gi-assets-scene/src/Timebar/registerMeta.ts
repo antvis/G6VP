@@ -84,15 +84,29 @@ const registerMeta = ({ schemaData }) => {
     //     showTime: true,
     //   },
     // },
-    // defaultTimeRange: {
-    //   title: '默认时间范围',
-    //   type: 'string',
-    //   'x-decorator': 'FormItem',
-    //   'x-component': 'DatePicker.RangePicker',
-    //   'x-component-props': {
-    //     showTime: true,
-    //   },
-    // },
+    defaultTimeLength: {
+      title: '默认时间长度',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: 'all',
+            label: '全部',
+          },
+          {
+            value: 'month',
+            label: '一个月',
+          },
+          {
+            value: 'year',
+            label: '一年',
+          },
+        ],
+      },
+      default: 'all',
+    },
     timeGranularity: {
       title: $i18n.get({ id: 'scene.src.Timebar.registerMeta.TimeGranularity', dm: '时间粒度' }),
       type: 'string',
