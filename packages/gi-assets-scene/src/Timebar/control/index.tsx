@@ -8,6 +8,7 @@ import TimebarPanel from './panel';
 import { dataFilter, dataTransform, getTimeRange, isPlayingData, timeParser } from './utils';
 import $i18n from '../../i18n';
 
+let initiated = false;
 export interface TimebarControlType {
   aggregation: Aggregation;
   graphData: GIGraphData;
@@ -28,7 +29,6 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   const { updateContext, transform, graph } = useContext();
   const [timeRange, setTimeRange] = useState<Selection>();
   const [renderData, setRenderData] = useState<any[]>([]);
-  const [initiated, setInitiated] = useState<boolean>(false);
   const [defaultTimeRange, setDefaultTimeRange] = useState<Selection>();
   const graphDataRef = useRef<GIGraphData>();
 
@@ -37,7 +37,6 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   }, [graphData, type]);
 
   useEffect(() => {
-    console.log('settimeoange', defaultTimeRange);
     setTimeRange(defaultTimeRange);
   }, [defaultTimeRange]);
 
@@ -51,23 +50,28 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
   };
 
   useEffect(() => {
-    if (initiated || !data?.length) return;
-    const graphTimeRange = getTimeRange(data, timeGranularity, timeField);
-    setInitiated(true);
+    if (!data?.length) return;
+    if (initiated) {
+      initiated = true;
+      return;
+    }
     setTimeout(() => {
+      const graphTimeRange = getTimeRange(data, timeGranularity, timeField);
       switch (defaultTimeLength) {
         case 'all':
-          setDefaultTimeRange(getTimeRange(data, timeGranularity, timeField));
+          onFilterChange(graphTimeRange);
+          setDefaultTimeRange(graphTimeRange);
           return;
         case 'day':
-          setDefaultTimeRange([graphTimeRange[0], graphTimeRange[0] + 86400000]);
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 86400000]);
           return;
         case 'month':
-          setDefaultTimeRange([graphTimeRange[0], graphTimeRange[0] + 2678400000]);
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 2678400000]);
           return;
         case 'year':
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 31536000000]);
+          return;
         default:
-          setDefaultTimeRange([graphTimeRange[0], graphTimeRange[0] + 31536000000]);
           return;
       }
     });
