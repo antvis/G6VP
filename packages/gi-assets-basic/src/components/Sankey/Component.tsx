@@ -1,7 +1,7 @@
 import { Sankey } from '@antv/g2plot';
 import { useContext } from '@antv/gi-sdk';
 import { Empty } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
 
 export interface IProps {
@@ -58,4 +58,4 @@ const SankeyAnalysis: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default SankeyAnalysis;
+export default memo(SankeyAnalysis);

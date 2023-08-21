@@ -1,6 +1,6 @@
 import { utils } from '@antv/gi-sdk';
 import { Components } from '@antv/graphin';
-import React from 'react';
+import React, { memo } from 'react';
 
 const { getPositionStyles } = utils;
 
@@ -28,4 +28,4 @@ const Component: React.FunctionComponent<ComponentProps> = props => {
   );
 };
 
-export default Component;
+export default memo(Component);

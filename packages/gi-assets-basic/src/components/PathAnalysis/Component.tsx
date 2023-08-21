@@ -4,7 +4,7 @@ import { NodeSelectionWrap } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
 import PanelExtra from './PanelExtra';
@@ -420,4 +420,4 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   );
 };
 
-export default PathAnalysis;
+export default memo(PathAnalysis);

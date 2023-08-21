@@ -1,7 +1,7 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import React, { useEffect, useRef, useState } from 'react';
-import { getPixelRatio, getStyleStr, rotateWatermark } from './utils';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { getPixelRatio, getStyleStr, rotateWatermark } from './utils';
 
 const BaseSize = 2;
 const FontGap = 3;
@@ -312,4 +312,4 @@ const Watermark: React.FunctionComponent<WatermarkProps> = props => {
   return ReactDOM.createPortal(<div id={WATERMARK_ID} ref={watermarkRef}></div>, RenderDomMap[renderMode]);
 };
 
-export default Watermark;
+export default memo(Watermark);

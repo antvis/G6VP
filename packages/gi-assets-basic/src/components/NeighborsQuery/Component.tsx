@@ -1,7 +1,7 @@
 import { useContext, utils } from '@antv/gi-sdk';
 
 import { Menu } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import $i18n from '../../i18n';
 
 const { SubMenu } = Menu;
@@ -239,4 +239,4 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
   );
 };
 
-export default QueryNeighbors;
+export default memo(QueryNeighbors);

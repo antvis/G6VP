@@ -1,13 +1,13 @@
 import { ReloadOutlined } from '@ant-design/icons';
 import { kMeans } from '@antv/algorithm';
 import { useContext, type GIGraphData } from '@antv/gi-sdk';
-import { Button, Empty, InputNumber, Row, Col, Spin } from 'antd';
+import { Button, Col, Empty, InputNumber, Row, Spin } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import ClustersTable from '../ClusterTable';
 
-import './index.less';
 import $i18n from '../i18n';
+import './index.less';
 
 export enum NodesClusteringAlgorithm {
   KMeans = 'k-means',
@@ -342,4 +342,4 @@ const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => 
   );
 };
 
-export default NodesClustering;
+export default memo(NodesClustering);

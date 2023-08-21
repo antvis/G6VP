@@ -2,9 +2,9 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
   if (placement === 'top') {
     return {
       container: {
-        position: 'relative',
-        top: `${height}px`,
-        height: `calc( 100% - ${height}px )`,
+        // position: 'relative',
+        // top: `${height}px`,
+        // height: `calc( 100% - ${height}px )`,
       },
       sheetbar: {
         position: 'absolute',
@@ -23,9 +23,9 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
 
   return {
     container: {
-      position: 'relative',
-      top: `unset`,
-      height: `calc( 100% - ${height}px )`,
+      // position: 'relative',
+      // top: `unset`,
+      // height: `calc( 100% - ${height}px )`,
     },
     sheetbar: {
       display: 'flex',

@@ -1,14 +1,14 @@
 import { FireTwoTone, PlusOutlined } from '@ant-design/icons';
-import { useContext, utils, GIGraphData } from '@antv/gi-sdk';
+import { GIGraphData, useContext, utils } from '@antv/gi-sdk';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import $i18n from '../../i18n';
 import FilterSelection from './FilterSelection';
 import RecommendFilter from './RecommendFilter';
 import './index.less';
 import { HistogramOpt, IFilterCriteria } from './type';
 import { filterGraphData, getChartData, highlightSubGraph } from './utils';
-import $i18n from '../../i18n';
 
 const { isStyles } = utils;
 
@@ -378,4 +378,4 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   );
 };
 
-export default FilterPanel;
+export default memo(FilterPanel);

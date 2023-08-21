@@ -1,5 +1,5 @@
 import { utils } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 import Toolbar from './Toolbar';
 const { getPositionStyles } = utils;
 
@@ -42,4 +42,4 @@ const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
   );
 };
 
-export default ToolbarContainer;
+export default memo(ToolbarContainer);

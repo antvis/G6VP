@@ -1,6 +1,6 @@
-import React from 'react';
-import { Components } from '@antv/graphin';
 import { utils } from '@antv/gi-sdk';
+import { Components } from '@antv/graphin';
+import React, { memo } from 'react';
 
 const { getPositionStyles } = utils;
 const { MiniMap } = Components;
@@ -21,4 +21,4 @@ const MiniMapContainer: React.FC<MiniMapProps> = props => {
   );
 };
 
-export default MiniMapContainer;
+export default memo(MiniMapContainer);

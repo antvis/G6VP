@@ -2,7 +2,7 @@ import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { Icon, extra, useContext, utils } from '@antv/gi-sdk';
 import { LayoutConfig } from '@antv/gi-sdk/lib/typing';
 import { Card, Popover, Radio, Space } from 'antd';
-import React, { useEffect, useMemo } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import $i18n from '../../i18n';
 
 const { GIAComponent } = extra;
@@ -133,4 +133,4 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   );
 };
 
-export default LayoutSwitch;
+export default memo(LayoutSwitch);

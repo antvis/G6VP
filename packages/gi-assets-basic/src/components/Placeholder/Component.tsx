@@ -1,5 +1,5 @@
 import { useContext } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
 import './index.less';
 
@@ -47,4 +47,4 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   );
 };
 
-export default Placeholder;
+export default memo(Placeholder);

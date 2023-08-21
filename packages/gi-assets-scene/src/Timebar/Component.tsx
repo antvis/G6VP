@@ -1,9 +1,9 @@
 import { useContext, type GIGraphData } from '@antv/gi-sdk';
 import { Empty, message } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
+import $i18n from '../i18n';
 import TimebarControl from './control';
 import type { Aggregation, Speed, TimeGranularity } from './types';
-import $i18n from '../i18n';
 
 type TimebarProps = {
   /** 时间范围(时间戳) */
@@ -28,7 +28,7 @@ type TimebarProps = {
   playMode: 'filter' | 'highlight' | 'show-hide';
 };
 
-export const Timebar: React.FC<TimebarProps> = ({
+const Timebar: React.FC<TimebarProps> = ({
   aggregation,
   timeField,
   yField,
@@ -75,3 +75,5 @@ export const Timebar: React.FC<TimebarProps> = ({
     />
   );
 };
+
+export default memo(Timebar);
