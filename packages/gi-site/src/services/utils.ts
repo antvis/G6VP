@@ -62,8 +62,8 @@ const getCompatibleResponse = (res: any) => {
   const { result, ...rest } = res;
   // 处理未登录逻辑
   if (!res.success) {
-    const { code, data } = res.error;
-    if (code === 'UNAUTHENTICATED_ERROR' && data.redirectUrl) {
+    const { code, data } = res.error || {};
+    if (code === 'UNAUTHENTICATED_ERROR' && data?.redirectUrl) {
       window.location.replace(data.redirectUrl)
     }
   }
