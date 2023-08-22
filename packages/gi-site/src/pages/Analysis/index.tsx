@@ -137,7 +137,11 @@ const Analysis = props => {
           const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
           const assetServices = utils.getCombineServices(activeAssets.services!);
           // 注册图标
-          await utils.registerIconFonts(activeAssets.icons);
+          try {
+            await utils.registerIconFonts(activeAssets.icons);
+          } catch (error) {
+            console.log('register font error', error);
+          }
 
           updateState(draft => {
             /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
