@@ -50,6 +50,8 @@ export type TimebarChartProps = {
   onReset: () => void;
 };
 
+let timeout: NodeJS.Timer | undefined = undefined;
+
 export const TimebarChart = (props: TimebarChartProps) => {
   const { className, data = [], xField, yField, selection, onSelection, onReset, aggregation, granularity } = props;
   const chartRef = useRef<Chart>();
@@ -166,8 +168,15 @@ export const TimebarChart = (props: TimebarChartProps) => {
       }
     };
 
+    if (timeout) {
+      clearTimeout(timeout);
+      timeout = undefined;
+    }
+
     if (chartRenderingRef.current) {
-      chartRef.current.once('afterrender', () => setTimeout(update, 1000));
+      chartRef.current.once('afterrender', () => {
+        timeout = setTimeout(update, 1000);
+      });
     } else {
       update();
     }

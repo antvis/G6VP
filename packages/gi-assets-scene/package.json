@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-scene",
-  "version": "2.2.7",
+  "version": "2.2.9",
   "description": "G6VP 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -49,6 +49,8 @@
     "three": "0.139.2"
   },
   "devDependencies": {
+    "@aligov/global-locale": "^1.0.5",
+    "@aligov/global-string-format": "^1.0.7",
     "mini-css-extract-plugin": "^2.7.6",
     "rimraf": "^3.0.2",
     "webpack": "^5.88.0",

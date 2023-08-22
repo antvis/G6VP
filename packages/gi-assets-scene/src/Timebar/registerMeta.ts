@@ -84,15 +84,29 @@ const registerMeta = ({ schemaData }) => {
     //     showTime: true,
     //   },
     // },
-    // defaultTimeRange: {
-    //   title: '默认时间范围',
-    //   type: 'string',
-    //   'x-decorator': 'FormItem',
-    //   'x-component': 'DatePicker.RangePicker',
-    //   'x-component-props': {
-    //     showTime: true,
-    //   },
-    // },
+    defaultTimeLength: {
+      title: $i18n.get({ id: 'scene.src.Timebar.registerMeta.DefaultTimeLength', dm: '默认时间长度' }),
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Select',
+      'x-component-props': {
+        options: [
+          {
+            value: 'all',
+            label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.All', dm: '全部' }),
+          },
+          {
+            value: 'month',
+            label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.OneMonth', dm: '一个月' }),
+          },
+          {
+            value: 'year',
+            label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.OneYear', dm: '一年' }),
+          },
+        ],
+      },
+      default: 'all',
+    },
     timeGranularity: {
       title: $i18n.get({ id: 'scene.src.Timebar.registerMeta.TimeGranularity', dm: '时间粒度' }),
       type: 'string',
@@ -153,15 +167,16 @@ const registerMeta = ({ schemaData }) => {
       default: 1,
     },
     playMode: {
-      title: '播放模式',
+      title: $i18n.get({ id: 'scene.src.Timebar.registerMeta.PlaybackMode', dm: '播放模式' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
       enum: [
-        { label: '过滤', value: 'filter' },
-        { label: '高亮', value: 'highlight' },
-        { label: '显示/隐藏', value: 'show-hide' },
+        { label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.Filtering', dm: '过滤' }), value: 'filter' },
+        { label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.Highlight', dm: '高亮' }), value: 'highlight' },
+        { label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.ShowHide', dm: '显示/隐藏' }), value: 'show-hide' },
       ],
+
       default: 'filter',
     },
     ...metas,

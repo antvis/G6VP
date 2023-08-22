@@ -76,5 +76,13 @@
   "scene.src.Timeline.registerMeta.NodeData": "Node data",
   "scene.src.Timeline.registerMeta.EdgeData": "EDGE data",
   "scene.src.Timeline.registerMeta.XAxisField": "X-axis field",
-  "scene.src.Timeline.registerMeta.YAxisField": "Y-axis field"
+  "scene.src.Timeline.registerMeta.YAxisField": "Y-axis field",
+  "scene.src.Timebar.registerMeta.DefaultTimeLength": "Default time length",
+  "scene.src.Timebar.registerMeta.All": "All",
+  "scene.src.Timebar.registerMeta.OneMonth": "One month",
+  "scene.src.Timebar.registerMeta.OneYear": "One year",
+  "scene.src.Timebar.registerMeta.PlaybackMode": "Playback mode",
+  "scene.src.Timebar.registerMeta.Filtering": "Filtering",
+  "scene.src.Timebar.registerMeta.Highlight": "Highlight",
+  "scene.src.Timebar.registerMeta.ShowHide": "Show/Hide"
 }
