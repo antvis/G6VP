@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import ProjectTitle from '../ProjectTitle';
@@ -72,4 +72,4 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
   );
 };
 
-export default WorkbookBar;
+export default memo(WorkbookBar);

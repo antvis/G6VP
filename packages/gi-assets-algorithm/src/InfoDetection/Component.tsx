@@ -3,10 +3,10 @@ import { INode } from '@antv/g6';
 import { useContext } from '@antv/gi-sdk';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
+import $i18n from '../i18n';
 import DegreeScatter from './DegreeScatter';
 import './index.less';
-import $i18n from '../i18n';
 
 const InfoDetection = () => {
   const { data, graph } = useContext();
@@ -132,4 +132,4 @@ const InfoDetection = () => {
   );
 };
 
-export default InfoDetection;
+export default memo(InfoDetection);

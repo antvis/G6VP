@@ -1,6 +1,6 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import Desscription from './Description';
 const { GIAComponent } = extra;
@@ -33,4 +33,4 @@ const ShortcutKeys: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default ShortcutKeys;
+export default memo(ShortcutKeys);

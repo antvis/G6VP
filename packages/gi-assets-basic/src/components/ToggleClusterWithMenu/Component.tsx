@@ -2,9 +2,9 @@ import { INode } from '@antv/g6';
 import { useContext } from '@antv/gi-sdk';
 import type { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
-import * as React from 'react';
-import { filterGraphDataByNodes, getLeafNodes } from '../utils';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
+import { filterGraphDataByNodes, getLeafNodes } from '../utils';
 
 type ControlledValues = {
   startId: string;
@@ -143,15 +143,24 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       componentId: 'ToggleClusterWithMenu',
       type: 'configure',
       subType: $i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.FoldUpExpand', dm: '收起/展开' }),
-      statement: `${$i18n.get({ id: 'basic.components.ToggleClusterWithMenu.Component.FoldUpExpandStatus', dm: params.action === 'fold' ? '收起' : '展开' }, {
-        action: params.action === 'fold' ? $i18n.get({
-          id: 'basic.components.ToggleClusterWithMenu.Component.Fold',
-          dm: '收起'
-        }) : $i18n.get({
-          id: 'basic.components.ToggleClusterWithMenu.Component.Expand',
-          dm: '展开'
-        })
-      })} ${params.startId}`,
+      statement: `${$i18n.get(
+        {
+          id: 'basic.components.ToggleClusterWithMenu.Component.FoldUpExpandStatus',
+          dm: params.action === 'fold' ? '收起' : '展开',
+        },
+        {
+          action:
+            params.action === 'fold'
+              ? $i18n.get({
+                  id: 'basic.components.ToggleClusterWithMenu.Component.Fold',
+                  dm: '收起',
+                })
+              : $i18n.get({
+                  id: 'basic.components.ToggleClusterWithMenu.Component.Expand',
+                  dm: '展开',
+                }),
+        },
+      )} ${params.startId}`,
       // statement: `${params.action === 'fold' ? '收起' : '展开'} ${params.startId}`,
       success,
       errorMsg,
@@ -240,4 +249,4 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default ToggleClusterWithMenu;
+export default memo(ToggleClusterWithMenu);

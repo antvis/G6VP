@@ -1,10 +1,10 @@
 import { DeleteOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
 import GISDK, { useContext } from '@antv/gi-sdk';
 import { Button, Dropdown, Menu } from 'antd';
-import * as React from 'react';
+import React, { memo, useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import { getStyles } from './utils';
 import $i18n from '../../i18n';
+import { getStyles } from './utils';
 export interface SheetbarProps {
   height: number;
   placement: 'top' | 'bottom';
@@ -104,10 +104,14 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
 
   const GISDK_DOM = document.getElementById(`${GISDK_ID}-container`) as HTMLDivElement;
   const GISDK_PARENT_DOM = GISDK_DOM.parentElement as HTMLDivElement;
+  // let SHEETBAR_DOM = document.getElementById(`${GISDK_ID}-sheetbar-container`) as HTMLDivElement;
+  // if (!SHEETBAR_DOM) {
+  //   SHEETBAR_DOM = GISDK_PARENT_DOM;
+  // }
 
   React.useEffect(() => {
     if (currentId === 'default') {
-      GISDK_DOM.style.display = 'flex';
+      GISDK_DOM.style.display = 'block';
       Object.keys(styles.container).forEach(key => {
         GISDK_DOM.style[key] = styles.container[key];
       });
@@ -116,103 +120,106 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
     }
   }, [currentId, GISDK_DOM]);
 
-  const SheetComponent = (
-    <>
-      <div style={styles.sheetbar} className="gi-sheetbar">
-        {options.map(option => {
-          const { sheetName, sheetId } = option;
-          const isActive = currentId === sheetId;
-          const sheetItemComponentsConfig = option.config.components.filter(c => {
-            return c.id !== 'Sheetbar';
-          });
-          const sheetItemService = services.map(c => {
-            if (c.id.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1) {
-              return {
-                ...c,
-                service: () => {
-                  return new Promise(resolve => {
-                    resolve(option.data);
-                  });
-                },
-              };
-            }
-            return c;
-          });
-          const itemConfig = {
-            ...option.config,
-            components: sheetItemComponentsConfig,
-          };
-          const menuOptions = [
-            {
-              key: 'delete',
-              label: (
-                <div onClick={() => handleDelete(sheetId)}>
-                  {$i18n.get({ id: 'advance.components.Sheetbar.Component.Delete', dm: '删除' })}
-                </div>
-              ),
-              icon: <DeleteOutlined />,
-            },
-          ];
+  const SheetComponent = useMemo(() => {
+    console.log('render ...sheet components');
+    return (
+      <>
+        <div style={styles.sheetbar} className="gi-sheetbar">
+          {options.map(option => {
+            const { sheetName, sheetId } = option;
+            const isActive = currentId === sheetId;
+            const sheetItemComponentsConfig = option.config.components.filter(c => {
+              return c.id !== 'Sheetbar';
+            });
+            const sheetItemService = services.map(c => {
+              if (c.id.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1) {
+                return {
+                  ...c,
+                  service: () => {
+                    return new Promise(resolve => {
+                      resolve(option.data);
+                    });
+                  },
+                };
+              }
+              return c;
+            });
+            const itemConfig = {
+              ...option.config,
+              components: sheetItemComponentsConfig,
+            };
+            const menuOptions = [
+              {
+                key: 'delete',
+                label: (
+                  <div onClick={() => handleDelete(sheetId)}>
+                    {$i18n.get({ id: 'advance.components.Sheetbar.Component.Delete', dm: '删除' })}
+                  </div>
+                ),
+                icon: <DeleteOutlined />,
+              },
+            ];
 
-          const menu = <Menu items={sheetId === 'default' ? [] : menuOptions} />;
-          return (
-            <div
-              key={sheetId}
-              onClick={() => {
-                handleReCover(sheetId);
-              }}
+            const menu = <Menu items={sheetId === 'default' ? [] : menuOptions} />;
+            return (
+              <div
+                key={sheetId}
+                onClick={() => {
+                  handleReCover(sheetId);
+                }}
+                style={{
+                  color: `${isActive ? 'var(--primary-color)' : 'var(--text-color)'}`,
+                  padding: '0px 0px 0px 12px',
+                  cursor: 'pointer',
+                  background: `${isActive ? 'var(--background-color-2)' : 'var(--background-color)'}`,
+                }}
+              >
+                {sheetName}
+
+                <Dropdown overlay={menu} placement="topRight" trigger={['click']}>
+                  <Button
+                    type="text"
+                    style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}
+                    icon={<MoreOutlined />}
+                  />
+                </Dropdown>
+
+                {sheetId !== 'default' &&
+                  ReactDOM.createPortal(
+                    <GISDK
+                      id={sheetId}
+                      config={itemConfig}
+                      assets={assets}
+                      //@ts-ignore
+                      services={sheetItemService}
+                      style={{
+                        display: sheetId === currentId ? 'flex' : 'none',
+                        ...styles.container,
+                      }}
+                    />,
+
+                    GISDK_PARENT_DOM,
+                  )}
+              </div>
+            );
+          })}
+          <div>
+            <Button
+              icon={<PlusOutlined />}
+              type="text"
+              onClick={() => handleAdd()}
               style={{
-                color: `${isActive ? 'var(--primary-color)' : 'var(--text-color)'}`,
-                padding: '0px 0px 0px 12px',
-                cursor: 'pointer',
-                background: `${isActive ? 'var(--background-color-2)' : 'var(--background-color)'}`,
+                width: `${height}px`,
+                height: `${height}px`,
               }}
-            >
-              {sheetName}
-
-              <Dropdown overlay={menu} placement="topRight" trigger={['click']}>
-                <Button
-                  type="text"
-                  style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}
-                  icon={<MoreOutlined />}
-                />
-              </Dropdown>
-
-              {sheetId !== 'default' &&
-                ReactDOM.createPortal(
-                  <GISDK
-                    id={sheetId}
-                    config={itemConfig}
-                    assets={assets}
-                    //@ts-ignore
-                    services={sheetItemService}
-                    style={{
-                      display: sheetId === currentId ? 'flex' : 'none',
-                      ...styles.container,
-                    }}
-                  />,
-
-                  GISDK_PARENT_DOM,
-                )}
-            </div>
-          );
-        })}
-        <div>
-          <Button
-            icon={<PlusOutlined />}
-            type="primary"
-            onClick={() => handleAdd()}
-            style={{
-              width: `${height}px`,
-              height: `${height}px`,
-            }}
-          ></Button>
+            ></Button>
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }, [currentId]);
 
   return ReactDOM.createPortal(SheetComponent, GISDK_PARENT_DOM);
 };
 
-export default Sheetbar;
+export default memo(Sheetbar);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Chart from './Charts';
 
 export interface TimeChartProps {
@@ -32,4 +32,4 @@ const TimeChart: React.FunctionComponent<TimeChartProps> = props => {
   );
 };
 
-export default TimeChart;
+export default memo(TimeChart);

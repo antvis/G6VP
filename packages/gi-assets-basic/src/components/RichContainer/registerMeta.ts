@@ -49,6 +49,13 @@ const registerMeta = context => {
           enum: GIAC_CONTENT_ITEMS,
           default: [],
         },
+        icon: {
+          title: '展示图标',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: 'icon-deploymentunit1',
+        },
       },
       {
         id: 'data-query',
@@ -64,6 +71,36 @@ const registerMeta = context => {
           },
           enum: GIAC_CONTENT_ITEMS,
           default: [],
+        },
+        icon: {
+          title: '展示图标',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: 'icon-query',
+        },
+      },
+      {
+        id: 'data-filter',
+        name: '数据筛选',
+        required: true,
+        GI_CONTAINER: {
+          title: '集成组件',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
+          enum: GIAC_CONTENT_ITEMS,
+          default: [],
+        },
+        icon: {
+          title: '展示图标',
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Input',
+          default: 'icon-filter',
         },
       },
       {

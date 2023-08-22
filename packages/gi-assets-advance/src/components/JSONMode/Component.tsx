@@ -1,5 +1,5 @@
 import { useContext } from '@antv/gi-sdk';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import ReactJson, { ThemeKeys } from 'react-json-view';
 import './index.less';
 
@@ -42,4 +42,4 @@ const JSONMode: React.FC<IProps> = props => {
   );
 };
 
-export default JSONMode;
+export default memo(JSONMode);

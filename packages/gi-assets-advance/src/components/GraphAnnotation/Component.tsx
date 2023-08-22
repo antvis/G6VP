@@ -1,12 +1,12 @@
 import { StarFilled } from '@ant-design/icons';
 import G6, { Item } from '@antv/g6';
 import { icons, useContext } from '@antv/gi-sdk';
-import { bind } from 'size-sensor';
 import { Menu } from 'antd';
 import insertCss from 'insert-css';
-import React, { useEffect, useMemo } from 'react';
-import './index.less';
+import React, { memo, useEffect, useMemo } from 'react';
+import { bind } from 'size-sensor';
 import $i18n from '../../i18n';
+import './index.less';
 
 export interface GraphAnnotationProps {
   contextmenu: any;
@@ -270,4 +270,4 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
   return <> {menuItem} </>;
 };
 
-export default GraphAnnotation;
+export default memo(GraphAnnotation);

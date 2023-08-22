@@ -1,14 +1,14 @@
 import { ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
+import { NodeSelectionWrap } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { Button, Empty, Form, message } from 'antd';
 import { cloneDeep } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import SimilarityResultTable from './resultTable';
-import './index.less';
+import React, { memo, useEffect, useState } from 'react';
 import $i18n from '../i18n';
-import { NodeSelectionWrap } from '@antv/gi-common-components';
+import './index.less';
+import SimilarityResultTable from './resultTable';
 export interface CommunityDiscoveryProps {
   style?: React.CSSProperties;
   controlledValues?: {
@@ -305,4 +305,4 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
   );
 };
 
-export default CommunityDiscovery;
+export default memo(CommunityDiscovery);

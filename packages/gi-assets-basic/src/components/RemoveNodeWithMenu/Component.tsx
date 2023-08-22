@@ -1,9 +1,8 @@
 import { useContext } from '@antv/gi-sdk';
-import React, { useEffect } from 'react';
 import { Menu } from 'antd';
-import { useCallback } from 'react';
-import useRemove from './useRemove';
+import React, { memo, useCallback, useEffect } from 'react';
 import $i18n from '../../i18n';
+import useRemove from './useRemove';
 export interface IProps {
   contextmenu: any;
   controlledValues?: {
@@ -81,4 +80,4 @@ const NodeRemoveMenuItem: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default NodeRemoveMenuItem;
+export default memo(NodeRemoveMenuItem);

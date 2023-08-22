@@ -1,12 +1,12 @@
 import { useContext, utils } from '@antv/gi-sdk';
 
 import { Button } from 'antd';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../i18n';
 import PublishTemplate from '../PublishTemplate';
 import CyperEditor from './CyperEditor';
 import './index.less';
-import $i18n from '../../i18n';
 
 export interface CyperQueryProps {
   serviceId: string;
@@ -166,4 +166,4 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   );
 };
 
-export default CypherEditorPanel;
+export default memo(CypherEditorPanel);

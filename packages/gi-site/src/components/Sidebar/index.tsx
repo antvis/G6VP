@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import { AppstoreOutlined } from '@ant-design/icons';
-import * as React from 'react';
-import useAssetsCenter from '../AssetsCenter/useHook';
+import React, { memo } from 'react';
 import { getSearchParams } from '../utils';
 import './index.less';
 interface Option {
@@ -49,4 +47,4 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

@@ -1,13 +1,13 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Card, Col, Dropdown, Menu, Popconfirm, Row } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../i18n';
 import AddTheme from './AddOrUpdateTheme';
 import './index.less';
 import mockServices from './mockServices';
 import { ITheme, IThemeSettingState } from './typing';
-import $i18n from '../../i18n';
 
 export interface Props {
   serviceId: string;
@@ -179,4 +179,4 @@ const ThemeSetting: React.FC<Props> = props => {
   );
 };
 
-export default ThemeSetting;
+export default memo(ThemeSetting);

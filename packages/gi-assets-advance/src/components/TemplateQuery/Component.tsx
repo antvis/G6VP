@@ -1,11 +1,11 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import { Button, Form, Input, message, Select, Spin } from 'antd';
+import { Button, Form, Input, Select, Spin, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import queryString from 'query-string';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import './index.less';
 import $i18n from '../../i18n';
+import './index.less';
 
 const { Option } = Select;
 
@@ -396,4 +396,4 @@ const TemplatePanel: React.FC<TemplateQueryProps> = ({
   );
 };
 
-export default TemplatePanel;
+export default memo(TemplatePanel);

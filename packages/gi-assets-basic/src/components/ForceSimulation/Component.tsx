@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { handlePinNode } from '../common/handlePinNode';
 
 import type { IGIAC } from '@antv/gi-sdk';
@@ -75,4 +75,4 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
   return <GIAComponent GIAC={GIAC} onClick={handleClick} />;
 };
 
-export default ForceSimulation;
+export default memo(ForceSimulation);

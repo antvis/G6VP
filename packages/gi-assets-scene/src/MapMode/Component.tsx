@@ -1,8 +1,8 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra } from '@antv/gi-sdk';
-import * as React from 'react';
-import L7Map from './L7Map';
+import React, { memo } from 'react';
 import $i18n from '../i18n';
+import L7Map from './L7Map';
 const { GIAComponent } = extra;
 export interface MapModeProps {
   GIAC: IGIAC;
@@ -68,4 +68,4 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
   );
 };
 
-export default MapMode;
+export default memo(MapMode);

@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 overrides:
   antd: ^4.24.10
 
@@ -330,6 +326,9 @@ importers:
       nanoid:
         specifier: ^4.0.0
         version: 4.0.0
+      re-resizable:
+        specifier: ^6.9.9
+        version: 6.9.9(react-dom@17.0.2)(react@17.0.2)
       react:
         specifier: 17.x || 17
         version: 17.0.2
@@ -887,8 +886,6 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
-  packages/gi-mock-data: {}
-
   packages/gi-portal:
     dependencies:
       '@aligov/global-locale':
@@ -910,6 +907,8 @@ importers:
       '@react-spring/types':
         specifier: 9.6.0
         version: 9.6.0
+
+  packages/gi-public-data: {}
 
   packages/gi-sdk:
     dependencies:
@@ -1032,7 +1031,7 @@ importers:
         version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@faker-js/faker':
         specifier: latest
-        version: 8.0.2
+        version: 7.6.0
       '@fast-csv/format':
         specifier: latest
         version: 4.3.5
@@ -9661,9 +9660,9 @@ packages:
       - supports-color
     dev: true
 
-  /@faker-js/faker@8.0.2:
-    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+  /@faker-js/faker@7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: false
 
   /@fast-csv/format@4.3.5:
@@ -17009,7 +17008,7 @@ packages:
       esbuild: 0.17.19
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.0
-      spdy: 4.0.2
+      spdy: 4.0.2(supports-color@6.1.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -41235,6 +41234,16 @@ packages:
     resolution: {integrity: sha512-dye+7rERqNf/6mDT1iwps+4Gf42420xuZgygF33uX178DxffqcyeuHbBuJ382FIcB5iP6mMZOhfW7kI0uXwb/Q==}
     dev: true
 
+  /re-resizable@6.9.9(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-l+MBlKZffv/SicxDySKEEh42hR6m5bAHfNu3Tvxks2c4Ah+ldnWjfnVRwxo/nxF27SsUsxDS0raAzFuJNKABXA==}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0 || 17
+      react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+    dev: false
+
   /react-attr-converter@0.3.1:
     resolution: {integrity: sha512-dSxo2Mn6Zx4HajeCeQNLefwEO4kNtV/0E682R1+ZTyFRPqxDa5zYb5qM/ocqw9Bxr/kFQO0IUiqdV7wdHw+Cdg==}
 
@@ -45305,19 +45314,6 @@ packages:
   /spdx-license-ids@3.0.13:
     resolution: {integrity: sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==}
 
-  /spdy-transport@3.0.0:
-    resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
-    dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
-      detect-node: 2.1.0
-      hpack.js: 2.1.6
-      obuf: 1.1.2
-      readable-stream: 3.6.2
-      wbuf: 1.7.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /spdy-transport@3.0.0(supports-color@6.1.0):
     resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
     dependencies:
@@ -45327,19 +45323,6 @@ packages:
       obuf: 1.1.2
       readable-stream: 3.6.2
       wbuf: 1.7.3
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /spdy@4.0.2:
-    resolution: {integrity: sha512-r46gZQZQV+Kl9oItvl1JZZqJKGr+oEkB08A6BzkiR7593/7IbtuncXHd2YoYeTsG4157ZssMu9KYvUHLcjcDoA==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
-      handle-thing: 2.0.1
-      http-deceiver: 1.2.7
-      select-hose: 2.0.0
-      spdy-transport: 3.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -49767,3 +49750,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

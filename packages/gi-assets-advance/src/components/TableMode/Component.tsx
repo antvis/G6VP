@@ -1,24 +1,24 @@
-import { ChromeOutlined, FullscreenExitOutlined, FullscreenOutlined, ExportOutlined } from '@ant-design/icons';
+import { ChromeOutlined, ExportOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import { generatePalette, getPalette, S2DataConfig, copyData, download } from '@antv/s2';
+import { S2DataConfig, copyData, download, generatePalette, getPalette } from '@antv/s2';
 
+import { measureTextWidth } from '@antv/g2plot';
 import { SheetComponent, Switcher } from '@antv/s2-react';
 import '@antv/s2-react/dist/style.min.css';
 import { Button, Form, Modal, Tabs, Tooltip, message } from 'antd';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../i18n';
+import { CustomTableColCell } from './CustomTableColCell';
+import { FilterPopover } from './FilterPopover';
 import { useFullScreen } from './hooks';
 import useCellSelect from './hooks/useCellSelect';
 import useSwitcher from './hooks/useSwitcher';
 import './index.less';
 import getColumns from './utils/getColumns';
 import getData from './utils/getData';
-import $i18n from '../../i18n';
-import { FilterPopover } from './FilterPopover';
-import { CustomTableColCell } from './CustomTableColCell';
 import { filterIcon } from './utils/icon';
-import { measureTextWidth } from '@antv/g2plot';
 
 export interface IProps {
   isSelectedActive: boolean;
@@ -525,4 +525,4 @@ const TableMode: React.FC<IProps> = props => {
   );
 };
 
-export default TableMode;
+export default memo(TableMode);
