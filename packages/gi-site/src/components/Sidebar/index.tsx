@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { memo } from 'react';
-import { getSearchParams } from '../utils';
+import React, { memo, useEffect } from 'react';
 import './index.less';
 interface Option {
   /** 导航图标 */
@@ -19,8 +18,14 @@ interface SidebarProps {
 
 const Sidebar: React.FunctionComponent<SidebarProps> = props => {
   const { options, collapse, onChange } = props;
-  const { searchParams, path } = getSearchParams(window.location);
-  const nav = searchParams.get('nav') || 'style';
+
+  const nav = location.hash.replace('#', '');
+
+  useEffect(() => {
+    if (!nav) return;
+    const opt = options.find(opt => opt.id === nav);
+    opt && onChange?.(opt);
+  }, []);
 
   return (
     <ul className="gi-sidebar">
@@ -32,8 +37,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = props => {
           <li
             key={id}
             onClick={() => {
-              searchParams.set('nav', id);
-              window.location.hash = `${path}?${searchParams.toString()}`;
+              window.location.hash = `#${id}`;
               onChange(opt);
             }}
             className={`${className} gi-intro-nav-${id}`}

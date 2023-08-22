@@ -64,22 +64,24 @@ const MetaPanel = props => {
     }
   }, [value]);
 
-  const { component: Component } = navbarOptionsMap[value];
+  const { component: Component } = navbarOptionsMap[value] || {};
 
   return (
     <div className="gi-config-panel" style={{ height: state.panelHeight || '100%' }}>
-      <Component
-        {...props}
-        updateContext={updateContext}
-        context={context}
-        setPanelHeight={height =>
-          setState(draft => {
-            draft.panelHeight = height;
-          })
-        }
-        setPanelWidth={setPanelWidth}
-        collapse={collapse}
-      />
+      {Component && (
+        <Component
+          {...props}
+          updateContext={updateContext}
+          context={context}
+          setPanelHeight={height =>
+            setState(draft => {
+              draft.panelHeight = height;
+            })
+          }
+          setPanelWidth={setPanelWidth}
+          collapse={collapse}
+        />
+      )}
     </div>
   );
 };

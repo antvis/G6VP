@@ -6,7 +6,6 @@ import React, { memo, useRef, useState } from 'react';
 import { Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar/WorkbookNav';
-import { getSearchParams } from '../../components/utils';
 import $i18n from '../../i18n';
 import { queryAssets } from '../../services/assets';
 import { queryDatasetInfo } from '../../services/dataset';
@@ -66,8 +65,7 @@ const Analysis = props => {
         draft.isReady = false;
       });
       /** 从地址栏上选择默认展示的tab */
-      const { searchParams } = getSearchParams(window.location);
-      const activeNavbar = searchParams.get('nav') || 'style';
+      const activeNavbar = location.hash.replace('#', '');
 
       /** 根据 projectId 获取项目的信息  */
       const { config, activeAssetsKeys, themes, name, datasetId } = (await ProjectServices.getById(

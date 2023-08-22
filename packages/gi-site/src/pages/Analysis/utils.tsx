@@ -104,7 +104,7 @@ export const getUpdateGISite =
  * @returns
  */
 export const useEngineSystemDirectConnect = async (projectId: string) => {
-  const { searchParams } = getSearchParams(window.location);
+  const searchParams = getSearchParams();
   const IS_ENGINE_SYSTEM_DIRECT_CONNECT = projectId === 'ENGINE_SYSTEM_DIRECT_CONNECT';
   const datasetInfoString = searchParams.get('datasetInfo');
   // 如果 URL中 直接带有这个参数，则直接解析使用
@@ -122,7 +122,7 @@ export const useEngineSystemDirectConnect = async (projectId: string) => {
 };
 
 export const useDatasetInfo = async datasetId => {
-  const { searchParams } = getSearchParams(window.location);
+  const searchParams = getSearchParams();
   const datasetInfoString = searchParams.get('datasetInfo');
   let datasetInfo;
   // 如果 URL中 直接带有这个参数，则直接解析使用

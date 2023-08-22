@@ -128,7 +128,7 @@ const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
                 src={cover || `${window['GI_PUBLIC_PATH']}image/empty_workbook.png`}
                 style={{ cursor: 'pointer', height: '100%' }}
                 onClick={() => {
-                  history.push(`/workspace/${id}?nav=style`);
+                  history.push(`/workspace/${id}#style`);
                 }}
               />
             </div>

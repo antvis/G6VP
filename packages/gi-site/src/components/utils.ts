@@ -2,6 +2,7 @@
  * 复制功能
  * @param {String} value
  */
+
 export function copyText(value: string) {
   const input = document.createElement('input');
   document.body.appendChild(input);
@@ -22,18 +23,12 @@ export function copyText(value: string) {
  */
 
 /**
- * 获取hash上的search对象
+ * 获取 search 参数对象
  * @param location
  * @returns
  */
-export const getSearchParams = (location: Location) => {
-  const { hash } = location;
-  const [path, search] = hash.split('?');
-  const searchParams = new URLSearchParams(search);
-  return {
-    path,
-    searchParams,
-  };
+export const getSearchParams = () => {
+  return new URLSearchParams(window.location.search);
 };
 
 /**
