@@ -59,10 +59,10 @@ const getCompatibleOptions = (url: string, options: RequestOptionsInit) => {
 
 // 云端存储 出参转换逻辑
 const getCompatibleResponse = (res: any) => {
-  const { result, success, error, ...rest } = res;
+  const { result, ...rest } = res;
   // 处理未登录逻辑
-  if (!success) {
-    const { code, data } = error;
+  if (!res.success) {
+    const { code, data } = res.error;
     if (code === 'UNAUTHENTICATED_ERROR' && data.redirectUrl) {
       window.location.replace(data.redirectUrl)
     }
