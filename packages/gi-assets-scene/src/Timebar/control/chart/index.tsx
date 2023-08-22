@@ -50,7 +50,7 @@ export type TimebarChartProps = {
   onReset: () => void;
 };
 
-let timeout: number | undefined = undefined;
+let timeout: NodeJS.Timer | undefined = undefined;
 
 export const TimebarChart = (props: TimebarChartProps) => {
   const { className, data = [], xField, yField, selection, onSelection, onReset, aggregation, granularity } = props;
