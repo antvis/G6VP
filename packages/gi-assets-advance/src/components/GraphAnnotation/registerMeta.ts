@@ -42,7 +42,10 @@ export default context => {
     },
 
     defaultTitleField: {
-      title: '默认标题填充属性',
+      title: $i18n.get({
+        id: 'advance.components.GraphAnnotation.registerMeta.DefaultTitleFillAttribute',
+        dm: '默认标题填充属性',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -56,7 +59,10 @@ export default context => {
     },
 
     defaultContentFields: {
-      title: '默认内容填充属性',
+      title: $i18n.get({
+        id: 'advance.components.GraphAnnotation.registerMeta.DefaultContentFillAttribute',
+        dm: '默认内容填充属性',
+      }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

@@ -327,7 +327,9 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   return (
     <div className="gi-path-analysis">
       <div className="gi-path-analysis-container">
-        <div className="gi-path-analysis-title">路径配置</div>
+        <div className="gi-path-analysis-title">
+          {$i18n.get({ id: 'basic.components.PathAnalysis.Component.PathConfiguration', dm: '路径配置' })}
+        </div>
         <Form form={form}>
           <NodeSelectionWrap
             graph={graph}
@@ -352,11 +354,18 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               />
             </Form.Item>
           )}
+
           {hasMaxDeep && (
-            <Form.Item name="maxdeep" label="最大深度" wrapperCol={{ span: 24 }} labelCol={{ span: 24 }}>
+            <Form.Item
+              name="maxdeep"
+              label={$i18n.get({ id: 'basic.components.PathAnalysis.Component.MaximumDepth', dm: '最大深度' })}
+              wrapperCol={{ span: 24 }}
+              labelCol={{ span: 24 }}
+            >
               <InputNumber min={1} style={{ width: '100%' }} />
             </Form.Item>
           )}
+
           <Form.Item>
             <Row>
               <Col span={18}>
@@ -367,9 +376,11 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               <Col span={6} style={{ textAlign: 'right' }}>
                 <Space size={'small'}>
                   {/* {state.isAnalysis && state.allNodePath.length > 0 && (
-                    <FilterRule state={state} updateState={updateState} />
-                  )} */}
-                  <Button onClick={handleResetForm}>重置</Button>
+                     <FilterRule state={state} updateState={updateState} />
+                    )} */}
+                  <Button onClick={handleResetForm}>
+                    {$i18n.get({ id: 'basic.components.PathAnalysis.Component.Reset', dm: '重置' })}
+                  </Button>
                 </Space>
               </Col>
             </Row>
@@ -380,7 +391,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       {state.nodePath.length > 0 && (
         <div className="gi-path-analysis-container">
           <div className="gi-path-analysis-title">
-            <div>查询结果</div>
+            <div>{$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryResults', dm: '查询结果' })}</div>
             <SegementFilter state={state} updateState={updateState} />
           </div>
           <Collapse

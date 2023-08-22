@@ -1,9 +1,10 @@
 import { PLACEMENT_OPTIONS } from '../const';
+import $i18n from '../../i18n';
 
 const registerMeta = () => {
   const schema = {
     placement: {
-      title: '组件位置',
+      title: $i18n.get({ id: 'basic.components.MiniMap.registerMeta.ComponentLocation', dm: '组件位置' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',
@@ -11,7 +12,7 @@ const registerMeta = () => {
       default: 'RB',
     },
     offset: {
-      title: '偏移量',
+      title: $i18n.get({ id: 'basic.components.MiniMap.registerMeta.Offset', dm: '偏移量' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Offset',

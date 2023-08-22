@@ -6,6 +6,7 @@ import React, { memo, useEffect, useState } from 'react';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import './index.less';
+import $i18n from '../../i18n';
 const URL_SEARCH_KEY = 'ActiveAssetID';
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
@@ -115,7 +116,7 @@ const RichContainer = props => {
       label: (
         <Space>
           <Icon type={ViewArea.icon}></Icon>
-          图谱视图
+          {$i18n.get({ id: 'basic.components.RichContainer.Component.GraphView', dm: '图谱视图' })}
         </Space>
       ),
     },
@@ -171,7 +172,7 @@ const RichContainer = props => {
               }
             }}
           >
-            查询
+            {$i18n.get({ id: 'basic.components.RichContainer.Component.Query', dm: '查询' })}
           </Button>
         </div>
         <div className="toolbar-item">
@@ -190,21 +191,22 @@ const RichContainer = props => {
               }
             }}
           >
-            筛选
+            {$i18n.get({ id: 'basic.components.RichContainer.Component.Filter', dm: '筛选' })}
           </Button>
         </div>
 
         <Toolbar
           value={activeKey}
           onChange={handleChange}
-          title="布局样式"
+          title={$i18n.get({ id: 'basic.components.RichContainer.Component.LayoutStyle', dm: '布局样式' })}
           options={StylingArea.components}
           HAS_GRAPH={HAS_GRAPH}
         />
+
         <Toolbar
           value={activeKey}
           onChange={handleChange}
-          title="画布操作"
+          title={$i18n.get({ id: 'basic.components.RichContainer.Component.CanvasOperation', dm: '画布操作' })}
           options={CanvasArea.components}
           HAS_GRAPH={HAS_GRAPH}
         />
@@ -233,9 +235,11 @@ const RichContainer = props => {
                 {HAS_QUERY_VIEW && (
                   <Segmented block value={activeKey} options={DATA_QUERY_OPTIONS} onChange={handleChange} />
                 )}
+
                 {HAS_FILTER_VIEW && (
                   <Segmented block value={activeKey} options={DATA_FILTER_OPTIONS} onChange={handleChange} />
                 )}
+
                 {[...DataArea.components, ...FilterArea.components, ...StylingArea.components].map(item => {
                   const isActive = activeKey === item.id;
                   return (
