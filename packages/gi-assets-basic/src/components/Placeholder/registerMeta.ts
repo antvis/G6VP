@@ -18,6 +18,20 @@ export default () => {
         dm: '开始你的图分析应用～',
       }),
     },
+    textColor: {
+      type: 'string',
+      title: $i18n.get({ id: 'basic.components.Placeholder.registerMeta.TextColor', dm: '文本颜色' }),
+      'x-component': 'ColorInput',
+      'x-decorator': 'FormItem',
+      default: '#999',
+    },
+    spacing: {
+      type: 'number',
+      title: $i18n.get({ id: 'basic.components.Placeholder.registerMeta.Spacing', dm: '间距' }),
+      'x-component': 'NumberPicker',
+      'x-decorator': 'FormItem',
+      default: 8,
+    },
     width: {
       type: 'number',
       title: $i18n.get({ id: 'basic.components.Placeholder.registerMeta.Width', dm: '宽度' }),

@@ -8,6 +8,7 @@ import TimebarPanel from './panel';
 import { dataFilter, dataTransform, getTimeRange, isPlayingData, timeParser } from './utils';
 import $i18n from '../../i18n';
 
+let initiated = false;
 export interface TimebarControlType {
   aggregation: Aggregation;
   graphData: GIGraphData;
@@ -17,24 +18,64 @@ export interface TimebarControlType {
   type: FieldType;
   yField?: string;
   playMode: 'filter' | 'highlight' | 'show-hide';
+  defaultTimeLength?: 'all' | 'day' | 'month' | 'year';
 }
 
 const isEmptyGraphData = (data: GIGraphData) => !data.edges.length && !data.nodes.length;
 
 const TimebarControl: React.FC<TimebarControlType> = props => {
-  const { aggregation, speed, timeField, timeGranularity, yField, graphData, type, playMode } = props;
+  const { aggregation, speed, timeField, timeGranularity, yField, graphData, type, playMode, defaultTimeLength } =
+    props;
   const { updateContext, transform, graph } = useContext();
   const [timeRange, setTimeRange] = useState<Selection>();
   const [renderData, setRenderData] = useState<any[]>([]);
+  const [defaultTimeRange, setDefaultTimeRange] = useState<Selection>();
   const graphDataRef = useRef<GIGraphData>();
 
   const data = useMemo<DataType>(() => {
     return graphData[type].map(datum => datum.data);
   }, [graphData, type]);
 
+  useEffect(() => {
+    setTimeRange(defaultTimeRange);
+  }, [defaultTimeRange]);
+
   const selectFullTimeRange = () => {
     setTimeRange(getTimeRange(data, timeGranularity, timeField));
   };
+
+  // 删除筛选条件
+  const disableFilter = () => {
+    selectFullTimeRange();
+  };
+
+  useEffect(() => {
+    if (!data?.length) return;
+    if (initiated) {
+      initiated = true;
+      return;
+    }
+    setTimeout(() => {
+      const graphTimeRange = getTimeRange(data, timeGranularity, timeField);
+      switch (defaultTimeLength) {
+        case 'all':
+          onFilterChange(graphTimeRange);
+          setDefaultTimeRange(graphTimeRange);
+          return;
+        case 'day':
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 86400000]);
+          return;
+        case 'month':
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 2678400000]);
+          return;
+        case 'year':
+          onFilterChange([graphTimeRange[0], graphTimeRange[0] + 31536000000]);
+          return;
+        default:
+          return;
+      }
+    });
+  }, [defaultTimeLength, data]);
 
   // 缓存图数据、设置 G2 渲染数据
   useEffect(() => {
@@ -119,11 +160,6 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
     );
   }
 
-  // 删除筛选条件
-  const disableFilter = () => {
-    selectFullTimeRange();
-  };
-
   return (
     <TimebarPanel
       aggregation={aggregation}
@@ -135,6 +171,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
       timeField={timeField}
       timeGranularity={timeGranularity}
       yField={yField}
+      defaultTimeRange={defaultTimeRange}
     />
   );
 };

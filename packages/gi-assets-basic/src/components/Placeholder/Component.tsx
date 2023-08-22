@@ -6,6 +6,8 @@ import './index.less';
 export interface LoadingProps {
   img?: string;
   text?: string;
+  textColor: string;
+  spacing: number;
   width: number;
 }
 
@@ -15,6 +17,8 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
     width = 200,
     img = 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*1BGfQ78mW4kAAAAAAAAAAAAADmJ7AQ/original',
     text,
+    spacing,
+    textColor,
   } = props;
 
   const { data, largeGraphData, largeGraphLimit } = context;
@@ -25,7 +29,7 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   }
   if (largeGraphData) {
     return (
-      <div className="gi-placeholader" style={{ width: `${width}px` }}>
+      <div className="gi-placeholder" style={{ width: `${width}px` }}>
         {img && <img src={img} width={width} />}
         {$i18n.get({
           id: 'basic.components.Placeholder.Component.TheNodeSizeOfThe',
@@ -40,9 +44,13 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
     );
   }
   return (
-    <div className="gi-placeholader" style={{ width: `${width}px` }}>
-      {img && <img src={img} width={width} />}
-      {text}
+    <div className="gi-placeholder" style={{ width: `${width}px`, gap: spacing }}>
+      {img && (
+        <div className="image-wrapper">
+          <img src={img} width={width} />
+        </div>
+      )}
+      <span style={{ color: textColor }}>{text}</span>
     </div>
   );
 };

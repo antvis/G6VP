@@ -76,5 +76,13 @@
   "scene.src.Timeline.registerMeta.NodeData": "节点数据",
   "scene.src.Timeline.registerMeta.EdgeData": "边数据",
   "scene.src.Timeline.registerMeta.XAxisField": "X轴字段",
-  "scene.src.Timeline.registerMeta.YAxisField": "Y轴字段"
+  "scene.src.Timeline.registerMeta.YAxisField": "Y轴字段",
+  "scene.src.Timebar.registerMeta.DefaultTimeLength": "默认时间长度",
+  "scene.src.Timebar.registerMeta.All": "全部",
+  "scene.src.Timebar.registerMeta.OneMonth": "一个月",
+  "scene.src.Timebar.registerMeta.OneYear": "一年",
+  "scene.src.Timebar.registerMeta.PlaybackMode": "播放模式",
+  "scene.src.Timebar.registerMeta.Filtering": "过滤",
+  "scene.src.Timebar.registerMeta.Highlight": "高亮",
+  "scene.src.Timebar.registerMeta.ShowHide": "显示/隐藏"
 }

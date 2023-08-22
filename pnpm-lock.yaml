@@ -17,8 +17,8 @@ importers:
         specifier: ^4.8.19
         version: 4.8.19
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/layout':
         specifier: ^0.3.22
         version: 0.3.22(dagre@0.8.5)
@@ -138,8 +138,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/graphin-icons':
         specifier: ^1.0.0
         version: 1.0.0
@@ -243,8 +243,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/matrix-util':
         specifier: ^3.0.4
         version: 3.0.4
@@ -297,8 +297,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/graphin-icons':
         specifier: ^1.0.0
         version: 1.0.0
@@ -357,8 +357,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2)
       '@antv/graphin-icons':
         specifier: ^1.0.0
         version: 1.0.0
@@ -427,8 +427,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -463,8 +463,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -514,8 +514,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -556,8 +556,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@antv/l7-draw':
         specifier: ^2.4.24
         version: 2.4.24(@antv/l7-maps@2.17.3)(@antv/l7@2.17.3)
@@ -657,8 +657,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2)
       '@antv/graphin-icons':
         specifier: ^1.0.0
         version: 1.0.0
@@ -721,8 +721,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       ahooks:
         specifier: ^3.7.7
         version: 3.7.7(react@17.0.2)
@@ -758,8 +758,8 @@ importers:
         specifier: ^2.4.31
         version: 2.4.31
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@formily/antd':
         specifier: ^2.1.0
         version: 2.1.0(@ant-design/icons@4.7.0)(@types/react-dom@17.0.0)(@types/react@17.0.0)(antd@4.24.10)(prop-types@15.8.1)(react-dom@17.0.2)(react-is@18.2.0)(react@17.0.2)(typescript@4.7.4)
@@ -844,8 +844,8 @@ importers:
         specifier: ^2.4.5
         version: link:../gi-sdk
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       '@eggjs/tsconfig':
         specifier: ^1.0.0
         version: 1.0.0
@@ -925,8 +925,8 @@ importers:
         specifier: workspace:*
         version: link:../gi-common-components
       '@antv/graphin':
-        specifier: ^2.7.21
-        version: 2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
+        specifier: ^2.7.25
+        version: 2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2)
       antd:
         specifier: 4.x
         version: 4.24.10(react-dom@17.0.2)(react@17.0.2)
@@ -1795,8 +1795,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@antv/algorithm@0.1.25:
-    resolution: {integrity: sha512-TGwPyFoAu4+iEJd0y1l0gHdBXCbUj8a4gR7P3GzZRfEfRnWfk+gswApzOSTd7c6HP402JOEF64PAJQKxQgSPSQ==}
+  /@antv/algorithm@0.1.26:
+    resolution: {integrity: sha512-DVhcFSQ8YQnMNW34Mk8BSsfc61iC1sAnmcfYoXTAshYHuU50p/6b7x3QYaGctDNKWGvi1ub7mPcSY0bK+aN0qg==}
     dependencies:
       '@antv/util': 2.0.17
       tslib: 2.6.0
@@ -2153,7 +2153,7 @@ packages:
   /@antv/g6-core@0.8.19:
     resolution: {integrity: sha512-JBpmdMuHOLCOvoF3EReCH3w1jTsZ/GL6Kl0aYNGEAlAeKVTT3iqHgXUAim3G49RKELXRfhit+IsYTRN1jboF9A==}
     dependencies:
-      '@antv/algorithm': 0.1.25
+      '@antv/algorithm': 0.1.26
       '@antv/dom-util': 2.0.4
       '@antv/event-emitter': 0.1.3
       '@antv/g-base': 0.5.15
@@ -2175,7 +2175,7 @@ packages:
     resolution: {integrity: sha512-dxaFGQlT7NGQ6kWweBYaBd0hwW7OQtQfT6DB/r431gP02vbXkl3C2Nnjw1rtOeSVBI7PcWOX9T9yHZglM0GsHg==}
     dependencies:
       '@ant-design/colors': 4.0.5
-      '@antv/algorithm': 0.1.25
+      '@antv/algorithm': 0.1.26
       '@antv/dom-util': 2.0.4
       '@antv/event-emitter': 0.1.3
       '@antv/g-base': 0.5.15
@@ -2229,8 +2229,22 @@ packages:
     resolution: {integrity: sha512-2nogK6ZrDklnfIOJrqOAgD7iFLjfZIjLbA8pDUbeXN5c9b0Mu84oCfyqg8OmWwvi9Gt80eUzoplo73gKjZECJg==}
     dev: false
 
-  /@antv/graphin@2.7.21(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2):
+  /@antv/graphin@2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-G4peQxcs4CApTLVfmD8shcbj4EjCjlSusNrn8olsQz/3HEIh5UqwZCV5F4ii8jmPNNQWTduhWlfCqlbI7Xw57g==}
+    peerDependencies:
+      lodash-es: '>=4.17.21'
+      react: '>=16.9.0 || 17'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@antv/g6': 4.8.19
+      d3-quadtree: 3.0.1
+      lodash-es: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+    dev: false
+
+  /@antv/graphin@2.7.25(lodash-es@4.17.21)(react-dom@16.14.0)(react@17.0.2):
+    resolution: {integrity: sha512-ascs0D+e87ukiap+1x2ru+R5QCzIQKFGWNG9vjnUrpphQzgGvHE7wGah28gu853oMPWegckdGQHaVlEukpadiw==}
     peerDependencies:
       lodash-es: '>=4.17.21'
       react: '>=16.9.0 || 17'
@@ -2243,8 +2257,8 @@ packages:
       react-dom: 16.14.0(react@17.0.2)
     dev: false
 
-  /@antv/graphin@2.7.21(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-G4peQxcs4CApTLVfmD8shcbj4EjCjlSusNrn8olsQz/3HEIh5UqwZCV5F4ii8jmPNNQWTduhWlfCqlbI7Xw57g==}
+  /@antv/graphin@2.7.25(lodash-es@4.17.21)(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-ascs0D+e87ukiap+1x2ru+R5QCzIQKFGWNG9vjnUrpphQzgGvHE7wGah28gu853oMPWegckdGQHaVlEukpadiw==}
     peerDependencies:
       lodash-es: '>=4.17.21'
       react: '>=16.9.0 || 17'
@@ -8832,7 +8846,7 @@ packages:
   /@babel/runtime@7.4.5:
     resolution: {integrity: sha512-TuI4qpWZP6lGOGIuGWtp9sPluqYICmbk8T/1vpSysqJxRPkudh/ofFWyqdcMsDf2s7KvDL4/YHgKyvcS3g9CJQ==}
     dependencies:
-      regenerator-runtime: 0.13.2
+      regenerator-runtime: 0.13.11
     dev: true
 
   /@babel/runtime@7.9.0:
@@ -19909,7 +19923,7 @@ packages:
   /babel-plugin-macros@2.6.1:
     resolution: {integrity: sha512-6W2nwiXme6j1n2erPOnmRiWfObUhWH7Qw1LMi9XZy8cj+KtESu3T6asZvtk5bMQQjX8te35o7CFueiSdL/2NmQ==}
     dependencies:
-      '@babel/runtime': 7.4.5
+      '@babel/runtime': 7.22.6
       cosmiconfig: 5.2.1
       resolve: 1.22.2
     dev: true

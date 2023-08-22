@@ -1,10 +1,10 @@
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { useUpdateEffect } from 'ahooks';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { Aggregation, Selection, Speed, TimeGranularity } from '../../types';
 import TimebarAnimation from '../animation';
 import { TimebarChart } from '../chart';
-import { getFormatData, getInitTimeRange, getTimeFormat } from './helper';
+import { formatXAxis, getFormatData, getInitTimeRange, getTimeFormat } from './helper';
 import './index.less';
 import $i18n from '../../../i18n';
 
@@ -18,6 +18,7 @@ type Props = {
   speed?: Speed;
   timeGranularity: TimeGranularity;
   yField?: string;
+  defaultTimeRange?: Selection;
 };
 
 const TimebarPanel: React.FC<Props> = props => {
@@ -31,6 +32,7 @@ const TimebarPanel: React.FC<Props> = props => {
     speed,
     timeGranularity,
     yField,
+    defaultTimeRange,
   } = props;
 
   const dataTimes = useMemo(() => {
@@ -41,14 +43,28 @@ const TimebarPanel: React.FC<Props> = props => {
     return { data, times };
   }, [originalData, timeField]);
 
-  const [initSelection, setInitSelection] = useState<Selection>(getInitTimeRange(dataTimes.times));
+  const [initSelection, setInitSelection] = useState<Selection>(
+    defaultTimeRange
+      ? (defaultTimeRange.map(time => formatXAxis(time, getTimeFormat(timeGranularity))) as [string, string])
+      : getInitTimeRange(dataTimes.times),
+  );
+
   // 当前选中区间
   const [currentSelectedRange, setCurrentSelectedRange] = useState<Selection | undefined>(initSelection);
   // 同步图标选中区间
   const [chartSelectedRange, setChartSelectedRange] = useState<Selection>(initSelection);
 
+  useEffect(() => {
+    if (!defaultTimeRange) return;
+    const range = defaultTimeRange.map(time => formatXAxis(time, getTimeFormat(timeGranularity))) as [string, string];
+    setInitSelection(range);
+    setCurrentSelectedRange(range);
+    setChartSelectedRange(range);
+  }, [defaultTimeRange]);
+
   // 当数据源发生更新变化时（配置状态切换数据源和时间字段），重置选中区间
   useUpdateEffect(() => {
+    if (defaultTimeRange) return;
     const initTimeRange = getInitTimeRange(dataTimes.times);
     setInitSelection(initTimeRange);
     setCurrentSelectedRange(undefined);

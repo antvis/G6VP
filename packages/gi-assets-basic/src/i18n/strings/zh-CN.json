@@ -296,6 +296,8 @@
   "basic.components.Placeholder.registerMeta.ImageAddress": "图片地址",
   "basic.components.Placeholder.registerMeta.Text": "文本",
   "basic.components.Placeholder.registerMeta.StartYourGraphAnalysisApplication": "开始你的图分析应用～",
+  "basic.components.Placeholder.registerMeta.TextColor": "文本颜色",
+  "basic.components.Placeholder.registerMeta.Spacing": "间距",
   "basic.components.Placeholder.registerMeta.Width": "宽度",
   "basic.components.PropertiesPanel.PropertiesDetail.MostAttributeValuesOfThe": "属性 “{key}” 的大部分属性值具有相同出现次数，而当前属性值 “{value}” 出现此处大于平均出现次数，值得关注",
   "basic.PropertiesPanel.Statistic.ChartCard.XAxisField": "X轴字段",

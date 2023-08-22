@@ -9,7 +9,7 @@ type TimebarProps = {
   /** 时间范围(时间戳) */
   timeRange: [number, number];
   /** 默认范围 */
-  defaultTimeRange?: [number, number];
+  defaultTimeLength?: 'all' | 'day' | 'month' | 'year';
   /** 时间字段 */
   timeField: string;
   /** 指标字段 */
@@ -33,7 +33,7 @@ const Timebar: React.FC<TimebarProps> = ({
   timeField,
   yField,
   timeRange,
-  defaultTimeRange,
+  defaultTimeLength,
   timeGranularity,
   speed,
   playMode,
@@ -72,6 +72,7 @@ const Timebar: React.FC<TimebarProps> = ({
       type={xType as any}
       yField={_yField}
       playMode={playMode}
+      defaultTimeLength={defaultTimeLength}
     />
   );
 };
