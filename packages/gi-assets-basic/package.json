@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-basic",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "description": "G6VP 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -49,6 +49,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "react-draggable": "^4.4.5",
+    "re-resizable": "^6.9.9",
     "use-immer": "^0.9.0"
   },
   "peerDependencies": {

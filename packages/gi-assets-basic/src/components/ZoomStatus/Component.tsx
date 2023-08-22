@@ -1,11 +1,11 @@
 import { useContext } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 
 export interface Props {
   minZoom?: number;
   statusName?: string;
 }
-export default (props: Props) => {
+export default memo((props: Props) => {
   const { minZoom = 0.6, statusName = 'minZoom' } = props;
   const graphContext = useContext();
   const graph = graphContext.graph;
@@ -39,4 +39,4 @@ export default (props: Props) => {
     };
   }, [graph, minZoom, statusName]);
   return null;
-};
+});

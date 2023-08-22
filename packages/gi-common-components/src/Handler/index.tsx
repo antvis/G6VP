@@ -64,12 +64,13 @@ const textStyleMap = {
 };
 
 export interface HandlerProps {
+  style?: React.CSSProperties;
   handleClick: () => void;
   type: 'left' | 'right' | 'bottom';
 }
 
 const Handler: React.FC<HandlerProps> = props => {
-  const { handleClick, type } = props;
+  const { handleClick, type, style = {} } = props;
 
   const handerBackStyles = {
     position: 'absolute',
@@ -92,8 +93,8 @@ const Handler: React.FC<HandlerProps> = props => {
 
   return (
     <>
-      <div style={handerBackStyles as any}></div>
-      <div onClick={handleClick} style={handlerStyles as any}>
+      <div style={{ ...handerBackStyles, ...style } as any}></div>
+      <div onClick={handleClick} style={{ ...handlerStyles, ...style } as any}>
         <span style={handlerTextStyles as any}>{type === 'bottom' ? '=' : '||'}</span>
       </div>
     </>

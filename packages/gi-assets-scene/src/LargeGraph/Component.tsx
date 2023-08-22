@@ -1,8 +1,8 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra } from '@antv/gi-sdk';
-import * as React from 'react';
-import ForceGraph from './ForceGraph';
+import React, { memo } from 'react';
 import $i18n from '../i18n';
+import ForceGraph from './ForceGraph';
 const { GIAComponent } = extra;
 
 export interface MapModeProps {
@@ -52,4 +52,4 @@ const LargeGraph: React.FunctionComponent<MapModeProps> = props => {
   );
 };
 
-export default LargeGraph;
+export default memo(LargeGraph);

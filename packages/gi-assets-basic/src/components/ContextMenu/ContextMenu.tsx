@@ -1,7 +1,7 @@
 import { Item } from '@antv/g6';
 import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import ContextMenu from './Container';
 
 // const { ContextMenu } = Components;
@@ -53,4 +53,4 @@ const ContextMenuContainer = props => {
   );
 };
 
-export default ContextMenuContainer;
+export default memo(ContextMenuContainer);

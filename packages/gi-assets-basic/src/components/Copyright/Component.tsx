@@ -1,7 +1,7 @@
 import { utils } from '@antv/gi-sdk';
-import React from 'react';
-import './index.less';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
+import './index.less';
 const { getPositionStyles } = utils;
 
 export interface CopyrightProps {
@@ -30,4 +30,4 @@ const Copyright: React.FunctionComponent<CopyrightProps> = props => {
   );
 };
 
-export default Copyright;
+export default memo(Copyright);

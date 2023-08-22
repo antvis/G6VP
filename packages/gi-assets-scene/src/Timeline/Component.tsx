@@ -2,7 +2,7 @@ import { GIGraphData, useContext } from '@antv/gi-sdk';
 
 import type {} from 'graph-timeline';
 import GraphTimeLine from 'graph-timeline';
-import * as React from 'react';
+import React, { memo } from 'react';
 
 export interface Props {
   dateKey: string;
@@ -90,4 +90,4 @@ const Timeline: React.FunctionComponent<Props> = props => {
   );
 };
 
-export default Timeline;
+export default memo(Timeline);

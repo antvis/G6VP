@@ -1,19 +1,18 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import { message as amessage } from 'antd';
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import DG from 'react-draggable';
 import { CSSTransition } from 'react-transition-group';
-import { useController } from './hooks/useController';
 import { query } from '../../services/OpenAIQuery';
-import { extractCodeBlocks } from './utils/extractCodeBlocks';
-import { Message } from './utils/message';
-import { getWelcomeMessage } from './utils/prompt';
 import { Dialog } from './Dialog';
 import { Header } from './Header';
 import { ComponentContext } from './context';
-import { SUPPORT_LANGUAGES } from './constants';
-import type { CodeBlock } from './utils/extractCodeBlocks';
+import { useController } from './hooks/useController';
 import './index.less';
+import type { CodeBlock } from './utils/extractCodeBlocks';
+import { extractCodeBlocks } from './utils/extractCodeBlocks';
+import { Message } from './utils/message';
+import { getWelcomeMessage } from './utils/prompt';
 
 /**
  * react-draggable 在 React 18 存在一点类型问题
@@ -247,4 +246,4 @@ const Assistant: React.FC<AssistantProps> = ({
   );
 };
 
-export default Assistant;
+export default memo(Assistant);

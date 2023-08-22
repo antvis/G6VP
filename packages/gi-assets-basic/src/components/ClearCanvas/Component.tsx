@@ -1,6 +1,6 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 
 const { GIAComponent } = extra;
 export interface IProps {
@@ -21,4 +21,4 @@ const ClearCanvas: React.FunctionComponent<IProps> = props => {
   return <GIAComponent GIAC={GIAC} onClick={handleClick} />;
 };
 
-export default ClearCanvas;
+export default memo(ClearCanvas);

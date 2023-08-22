@@ -1,11 +1,10 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import GremlinEditor from 'ace-gremlin-editor';
-import { Button, Col, InputNumber, notification, Row, Space, Tooltip } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Button, InputNumber, Space, Tooltip, notification } from 'antd';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useImmer } from 'use-immer';
-import { nanoid } from 'nanoid';
-import './index.less';
 import $i18n from '../../i18n';
+import './index.less';
 
 export interface IGremlinQueryProps {
   initialValue?: string;
@@ -330,4 +329,4 @@ const GremlinQueryPanel: React.FC<IGremlinQueryProps> = ({
   );
 };
 
-export default GremlinQueryPanel;
+export default memo(GremlinQueryPanel);

@@ -1,8 +1,8 @@
 import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
-import React from 'react';
-import ActiveEdge from './ActiveEdge';
+import React, { memo } from 'react';
 import ActivateRelations from './ActivateRelations';
+import ActiveEdge from './ActiveEdge';
 
 const { Hoverable } = Behaviors;
 
@@ -48,4 +48,4 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
   );
 };
 
-export default ActivateRelationsAsset;
+export default memo(ActivateRelationsAsset);

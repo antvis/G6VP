@@ -1,5 +1,5 @@
 import { IGIAC, extra } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 import useRedoUndo from '../hooks/useRedoUndo';
 const { GIAComponent } = extra;
 export interface Redo {
@@ -12,4 +12,4 @@ const Redo: React.FunctionComponent<Redo> = props => {
   return <GIAComponent GIAC={{ ...GIAC, disabled: redoStack.length === 0 }} onClick={redo} />;
 };
 
-export default Redo;
+export default memo(Redo);

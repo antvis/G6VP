@@ -2,14 +2,14 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { useMemoizedFn } from 'ahooks';
 import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
-import { useContext, common } from '@antv/gi-sdk';
+import { common, useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
-import { Button, Col, Dropdown, Menu, message, Modal, Row, Tabs, Tooltip } from 'antd';
+import { useMemoizedFn } from 'ahooks';
+import { Button, Col, Dropdown, Menu, Modal, Row, Tabs, Tooltip, message } from 'antd';
 import { cloneDeep, set } from 'lodash';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
 import PatternEditor, { TypeProperties } from './patternEditor';
@@ -18,8 +18,8 @@ import { ControlledValues, ITEM_STATE, PatternMatchProps, SPLITOR } from './regi
 import ResultTable from './resultTable';
 import { filterByPatternRules } from './util';
 
-import './index.less';
 import $i18n from '../i18n';
+import './index.less';
 
 const { confirm } = Modal;
 const { TabPane } = Tabs;
@@ -956,4 +956,4 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   );
 };
 
-export default PatternMatch;
+export default memo(PatternMatch);

@@ -3,13 +3,13 @@ import { connectedComponent, iLouvain, kCore, louvain } from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import Graphin, { Behaviors } from '@antv/graphin';
-import { Button, Empty, InputNumber, message, Radio, Spin } from 'antd';
+import { Button, Empty, InputNumber, Radio, Spin, message } from 'antd';
 import { cloneDeep } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import ClusterTable from '../ClusterTable';
+import $i18n from '../i18n';
 import Utils from '../utils/index';
 import './index.less';
-import $i18n from '../i18n';
 
 const { ClickSelect } = Behaviors;
 
@@ -520,4 +520,4 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
   );
 };
 
-export default CommunityDetection;
+export default memo(CommunityDetection);
