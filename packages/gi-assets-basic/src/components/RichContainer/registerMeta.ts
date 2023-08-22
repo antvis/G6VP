@@ -1,13 +1,14 @@
+import $i18n from '../../i18n';
 const registerMeta = context => {
   const { GIAC_CONTENT_ITEMS = [], GIAC_ITEMS = [] } = context;
   return {
     containers: [
       {
         id: 'navbar-left',
-        name: '导航左区',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.NavigationLeftArea', dm: '导航左区' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -20,10 +21,10 @@ const registerMeta = context => {
       },
       {
         id: 'navbar-right',
-        name: '导航右区',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.NavigationRightArea', dm: '导航右区' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -36,10 +37,10 @@ const registerMeta = context => {
       },
       {
         id: 'view-mode',
-        name: '模式展示',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.ModeDisplay', dm: '模式展示' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -50,7 +51,7 @@ const registerMeta = context => {
           default: [],
         },
         icon: {
-          title: '展示图标',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.DisplayIcon', dm: '展示图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -59,10 +60,10 @@ const registerMeta = context => {
       },
       {
         id: 'data-query',
-        name: '数据查询',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.DataQuery', dm: '数据查询' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -73,7 +74,7 @@ const registerMeta = context => {
           default: [],
         },
         icon: {
-          title: '展示图标',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.DisplayIcon', dm: '展示图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -82,10 +83,10 @@ const registerMeta = context => {
       },
       {
         id: 'data-filter',
-        name: '数据筛选',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.DataFiltering', dm: '数据筛选' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -96,7 +97,7 @@ const registerMeta = context => {
           default: [],
         },
         icon: {
-          title: '展示图标',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.DisplayIcon', dm: '展示图标' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
@@ -105,10 +106,10 @@ const registerMeta = context => {
       },
       {
         id: 'styling-setting',
-        name: '布局样式',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.LayoutStyle', dm: '布局样式' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',
@@ -121,10 +122,10 @@ const registerMeta = context => {
       },
       {
         id: 'canvas-operator',
-        name: '画布操作',
+        name: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.CanvasOperation', dm: '画布操作' }),
         required: true,
         GI_CONTAINER: {
-          title: '集成组件',
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Select',

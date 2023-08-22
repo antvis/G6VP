@@ -53,14 +53,14 @@ const registerMeta = ({ schemaData }) => {
       default: 'id',
     },
     hasDirection: {
-      title: '是否有向',
+      title: $i18n.get({ id: 'basic.components.PathAnalysis.registerMeta.IsThereAnyDirection', dm: '是否有向' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
       default: false,
     },
     hasMaxDeep: {
-      title: '是否有最大深度',
+      title: $i18n.get({ id: 'basic.components.PathAnalysis.registerMeta.MaximumDepth', dm: '是否有最大深度' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',

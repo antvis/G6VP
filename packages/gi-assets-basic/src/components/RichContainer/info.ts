@@ -1,7 +1,8 @@
+import $i18n from '../../i18n';
 const info = {
   id: 'RichContainer',
-  name: '中台布局',
-  desc: '中台布局',
+  name: $i18n.get({ id: 'basic.components.RichContainer.info.MidEndLayout', dm: '中台布局' }),
+  desc: $i18n.get({ id: 'basic.components.RichContainer.info.MidEndLayout', dm: '中台布局' }),
   cover: 'http://xxx.jpg',
   category: 'system-interaction',
   icon: 'icon-home',
