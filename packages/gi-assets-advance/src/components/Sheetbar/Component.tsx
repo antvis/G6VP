@@ -1,10 +1,12 @@
-import { DeleteOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import GISDK, { useContext } from '@antv/gi-sdk';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button } from 'antd';
 import React, { memo, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import $i18n from '../../i18n';
+import './index.less';
 import { getStyles } from './utils';
+
 export interface SheetbarProps {
   height: number;
   placement: 'top' | 'bottom';
@@ -16,6 +18,8 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
   const vars = React.useRef({
     tagContext: false,
   });
+  //@ts-ignore
+  console.log('sheetbar', performance.memory.usedJSHeapSize / 1024 / 1024, '%c color:red');
   const [state, setState] = React.useState(() => {
     const initialSheetMap = new Map();
     initialSheetMap.set('default', {
@@ -126,92 +130,105 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
     return (
       <>
         <div style={styles.sheetbar} className="gi-sheetbar">
-          {options.map(option => {
-            const { sheetName, sheetId } = option;
-            const isActive = currentId === sheetId;
-            const sheetItemComponentsConfig = option.config.components.filter(c => {
-              return c.id !== 'Sheetbar';
-            });
-            const sheetItemService = services.map(c => {
-              if (c.id.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1) {
-                return {
-                  ...c,
-                  service: () => {
-                    return new Promise(resolve => {
-                      resolve(option.data);
-                    });
-                  },
-                };
-              }
-              return c;
-            });
-            const itemConfig = {
-              ...option.config,
-              components: sheetItemComponentsConfig,
-            };
-            const menuOptions = [
-              {
-                key: 'delete',
-                label: (
-                  <div onClick={() => handleDelete(sheetId)}>
-                    {$i18n.get({ id: 'advance.components.Sheetbar.Component.Delete', dm: '删除' })}
-                  </div>
-                ),
-                icon: <DeleteOutlined />,
-              },
-            ];
+          <div className="gi-sheet-left">
+            {options.map(option => {
+              const { sheetName, sheetId } = option;
+              const isActive = currentId === sheetId;
+              const sheetItemComponentsConfig = option.config.components.filter(c => {
+                return c.id !== 'Sheetbar';
+              });
+              const sheetItemService = services.map(c => {
+                if (c.id.indexOf('GI_SERVICE_INTIAL_GRAPH') !== -1) {
+                  return {
+                    ...c,
+                    service: () => {
+                      return new Promise(resolve => {
+                        resolve(option.data);
+                      });
+                    },
+                  };
+                }
+                return c;
+              });
+              const itemConfig = {
+                ...option.config,
+                components: sheetItemComponentsConfig,
+              };
 
-            const menu = <Menu items={sheetId === 'default' ? [] : menuOptions} />;
-            return (
-              <div
-                key={sheetId}
-                onClick={() => {
-                  handleReCover(sheetId);
-                }}
-                style={{
-                  color: `${isActive ? 'var(--primary-color)' : 'var(--text-color)'}`,
-                  padding: '0px 0px 0px 12px',
-                  cursor: 'pointer',
-                  background: `${isActive ? 'var(--background-color-2)' : 'var(--background-color)'}`,
-                }}
-              >
-                {sheetName}
+              const borderStyle: React.CSSProperties = isActive
+                ? {
+                    borderTopLeftRadius: '8px',
+                    borderTopRightRadius: '8px',
+                  }
+                : {
+                    borderBottomLeftRadius: '8px',
+                    borderBottomRightRadius: '8px',
+                  };
+              return (
+                <div
+                  key={sheetId}
+                  onClick={() => {
+                    handleReCover(sheetId);
+                  }}
+                  style={{
+                    zIndex: 1,
+                    display: 'flex',
+                    color: `${isActive ? '#000' : 'var(--text-color)'}`,
+                    padding: '0px 0px 0px 12px',
+                    cursor: 'pointer',
+                    ...borderStyle,
+                    background: `${isActive ? '#f3f5f9' : 'var(--background-color)'}`, //'var(--background-color-2)'
+                  }}
+                >
+                  {sheetName}
 
-                <Dropdown overlay={menu} placement="topRight" trigger={['click']}>
-                  <Button
-                    type="text"
-                    style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px' }}
-                    icon={<MoreOutlined />}
-                  />
-                </Dropdown>
-
-                {sheetId !== 'default' &&
-                  ReactDOM.createPortal(
-                    <GISDK
-                      id={sheetId}
-                      config={itemConfig}
-                      assets={assets}
-                      //@ts-ignore
-                      services={sheetItemService}
-                      style={{
-                        display: sheetId === currentId ? 'flex' : 'none',
-                        ...styles.container,
+                  {sheetId !== 'default' && (
+                    <Button
+                      onClick={e => {
+                        e.preventDefault();
+                        console.log('sheetId', sheetId);
+                        handleDelete(sheetId);
                       }}
-                    />,
-
-                    GISDK_PARENT_DOM,
+                      type="text"
+                      style={{ height: `${height}px`, width: `${height}px`, marginLeft: '4px', color: '#ddd' }}
+                      icon={<CloseOutlined />}
+                    />
                   )}
-              </div>
-            );
-          })}
-          <div>
+
+                  {sheetId !== 'default' &&
+                    ReactDOM.createPortal(
+                      <GISDK
+                        id={sheetId}
+                        config={itemConfig}
+                        assets={assets}
+                        //@ts-ignore
+                        services={sheetItemService}
+                        style={{
+                          display: sheetId === currentId ? 'flex' : 'none',
+                          ...styles.container,
+                        }}
+                      />,
+
+                      GISDK_PARENT_DOM,
+                    )}
+                </div>
+              );
+            })}
+            <div className="gi-sheet-left-top-bg"></div>
+            <div className="gi-sheet-left-bottom-bg"></div>
+          </div>
+          <div className="gi-sheet-right">
             <Button
               icon={<PlusOutlined />}
               type="text"
-              onClick={() => handleAdd()}
+              onClick={e => {
+                e.preventDefault();
+                handleAdd();
+              }}
               style={{
                 width: `${height}px`,
                 height: `${height}px`,
+                background: '#fff',
               }}
             ></Button>
           </div>
