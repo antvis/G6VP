@@ -50,7 +50,7 @@ export type TimebarChartProps = {
   onReset: () => void;
 };
 
-let timeout: NodeJS.Timer | undefined = undefined;
+let timeout: number | undefined = undefined;
 
 export const TimebarChart = (props: TimebarChartProps) => {
   const { className, data = [], xField, yField, selection, onSelection, onReset, aggregation, granularity } = props;
@@ -87,11 +87,11 @@ export const TimebarChart = (props: TimebarChartProps) => {
         x: { labelAutoHide: true, title: false, labelAutoRotate: false },
         y: false,
       },
-      state: { inactive: { fill: 'rgb(105 116 131)' } },
+      state: { inactive: { fill: 'rgb(105,116,131)' } },
       animate: false,
       interaction: {
         brushXHighlight: {
-          series: true,
+          //series: true,
           maskOpacity: 0.3,
           maskFill: '#777',
           maskHandleWRender: createPathRender((width: number, height: number) => ({
@@ -169,13 +169,13 @@ export const TimebarChart = (props: TimebarChartProps) => {
     };
 
     if (timeout) {
-      clearTimeout(timeout);
+      window.clearTimeout(timeout);
       timeout = undefined;
     }
 
     if (chartRenderingRef.current) {
       chartRef.current.once('afterrender', () => {
-        timeout = setTimeout(update, 1000);
+        timeout = window.setTimeout(update, 1000);
       });
     } else {
       update();
