@@ -1,5 +1,11 @@
 # @antv/gi-cli
 
+## 1.2.5
+
+### Patch Changes
+
+- Publish in 0824
+
 ## 1.2.4
 
 ### Patch Changes
