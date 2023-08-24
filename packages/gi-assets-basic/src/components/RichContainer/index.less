@@ -15,6 +15,7 @@
     background: var(--background-color);
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #ddd;
     .navbar-back {
       display: flex;
       justify-content: center;
@@ -41,6 +42,9 @@
     }
   }
   .gi-rich-container-content {
+    &.has-sheet {
+      top: 138px; //98+40 = 138px
+    }
     position: absolute;
     bottom: 0px;
     top: 98px;

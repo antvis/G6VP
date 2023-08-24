@@ -8,9 +8,10 @@ import { getStyles } from './utils';
 export interface SheetbarProps {
   height: number;
   placement: 'top' | 'bottom';
+  position: number[];
 }
 const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
-  const { height, placement } = props;
+  const { height, placement, position = [0, 0] } = props;
   const { GISDK_ID, config, data, source, transform, services, updateContext, graph, assets } = useContext();
   const vars = React.useRef({
     tagContext: false,
@@ -34,7 +35,7 @@ const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
   const { sheetMap, currentId, currentName } = state;
 
   const options = [...sheetMap.values()];
-  const styles = getStyles(height, placement);
+  const styles = getStyles(height, placement, position);
 
   const handleAdd = (data?: { nodes: never[]; edges: never[] }) => {
     const uid = Math.random().toString(36).substr(2);

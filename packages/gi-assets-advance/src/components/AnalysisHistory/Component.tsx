@@ -263,7 +263,7 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
     </Popover>
   );
 
-  const styles = getStyles(height, placement);
+  const styles = getStyles(height, placement, [0, 0]);
   const style = collapsed
     ? styles.sheetbar
     : {

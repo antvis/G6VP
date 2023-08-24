@@ -3,10 +3,10 @@ import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
 import { Button, Divider, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
 import React, { memo, useEffect, useState } from 'react';
+import $i18n from '../../i18n';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import './index.less';
-import $i18n from '../../i18n';
 const URL_SEARCH_KEY = 'ActiveAssetID';
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
@@ -29,7 +29,7 @@ const getDefaultSideWidth = () => {
   return Number(defaultWidth);
 };
 const RichContainer = props => {
-  const { children, resizable = true } = props;
+  const { children, resizable = true, isSheet = true } = props;
   const context = useContext();
   const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
@@ -144,7 +144,7 @@ const RichContainer = props => {
   return (
     <div className="gi-rich-container">
       <Header leftArea={NavbarLeftArea} rightArea={NavbarRightArea} />
-      <div id={`${GISDK_ID}-sheetbar-container`}></div>
+      {isSheet && <div style={{ height: '40px', position: 'relative', display: 'block' }}></div>}
       <div className="gi-rich-container-toolbar">
         <div className="toolbar-item">
           <Select
@@ -212,7 +212,7 @@ const RichContainer = props => {
         />
       </div>
 
-      <div className="gi-rich-container-content">
+      <div className={`gi-rich-container-content ${isSheet ? 'has-sheet' : ''}`}>
         <div style={viewMode === 'GISDK_CANVAS' ? visibleStyle : hiddenStyle}>
           <div className="gi-rich-container-side">
             <Resizable

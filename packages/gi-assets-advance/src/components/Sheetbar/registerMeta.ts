@@ -35,6 +35,13 @@ const registerMeta = () => {
       'x-component': 'NumberPicker',
       default: 40,
     },
+    position: {
+      title: $i18n.get({ id: 'sdk.src.components.const.OffsetDistance', dm: '偏移距离' }),
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Offset',
+      default: [0, 0],
+    },
   };
 };
 
