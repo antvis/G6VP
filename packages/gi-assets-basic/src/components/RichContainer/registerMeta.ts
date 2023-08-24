@@ -137,6 +137,13 @@ const registerMeta = context => {
         },
       },
     ],
+    isSheet: {
+      title: '多页签',
+      type: 'string',
+      'x-decorator': 'FormItem',
+      'x-component': 'Switch',
+      default: false,
+    },
   };
 };
 export default registerMeta;
