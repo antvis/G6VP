@@ -7,10 +7,10 @@ import { DeleteOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import './index.less';
 import PropertyContent from './propertyContent';
-import { locale, MappingWay, NodeImportanceProps } from './registerMeta';
+import { MappingWay, NodeImportanceProps, locale } from './registerMeta';
 import ResultPlot from './resultPlot';
 import ResultTable from './resultTable';
 import { fittingString } from './util';
@@ -750,4 +750,4 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
   );
 };
 
-export default NodeImportance;
+export default memo(NodeImportance);

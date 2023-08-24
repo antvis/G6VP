@@ -1,9 +1,9 @@
 import { useContext } from '@antv/gi-sdk';
 import { Alert, Col, Row, Statistic } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
+import $i18n from '../../i18n';
 import FilterPanel from './Filter';
 import './index.less';
-import $i18n from '../../i18n';
 
 export interface LoadingProps {
   limit: number;
@@ -66,4 +66,4 @@ const Overview: React.FunctionComponent<LoadingProps> = props => {
   );
 };
 
-export default Overview;
+export default memo(Overview);

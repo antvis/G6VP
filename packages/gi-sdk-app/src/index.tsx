@@ -84,6 +84,12 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
           schemaData: dataset.schemaData,
         };
       }
+      /** 注册 font icon */
+      try {
+        await utils.registerIconFonts(assets.icons);
+      } catch (error) {
+        console.log('register font error', error);
+      }
 
       const services = utils.getCombineServices(assets.services);
       setState(preState => {
@@ -110,11 +116,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   }, []);
   const { assets, isReady, config, services, ThemeComponent, GISDK } = state;
   if (!isReady) {
-    return (
-      <div>
-        <Loading title={loadingText} />
-      </div>
-    );
+    return <Loading title={loadingText} />;
   }
 
   return (

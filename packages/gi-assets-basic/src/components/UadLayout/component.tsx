@@ -1,6 +1,6 @@
 import { Icon, useContext } from '@antv/gi-sdk';
 import { Tabs } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
 import './index.less';
 import useComponents from './useComponents';
 
@@ -84,4 +84,4 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   );
 };
 
-export default UadLayout;
+export default memo(UadLayout);

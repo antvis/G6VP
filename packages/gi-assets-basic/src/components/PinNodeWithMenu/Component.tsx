@@ -1,10 +1,10 @@
 import { useContext } from '@antv/gi-sdk';
 import { Menu } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
-import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
 import { INode } from '@antv/g6';
 import $i18n from '../../i18n';
+import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
 
 export interface PinNodeMenuItemProps {
   contextmenu: any;
@@ -120,4 +120,4 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   );
 };
 
-export default PinNodeMenuItem;
+export default memo(PinNodeMenuItem);

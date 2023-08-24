@@ -1,7 +1,7 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 const { GIAComponent } = extra;
 const { BrushSelect, DragCanvas } = Behaviors;
@@ -112,4 +112,4 @@ const LassoSelect: React.FunctionComponent<LassoType> = props => {
   );
 };
 
-export default LassoSelect;
+export default memo(LassoSelect);

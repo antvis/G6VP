@@ -28,18 +28,19 @@ export const NeighborsQueryMenu: ServiceObject = {
 
     const result = [
       {
-        label: '一度查询',
+        label: $i18n.get({ id: 'basic.src.services.NeighborsQueryMenu.OnceQuery', dm: '一度查询' }),
         code: 1,
       },
       {
-        label: '二度查询',
+        label: $i18n.get({ id: 'basic.src.services.NeighborsQueryMenu.SecondDegreeQuery', dm: '二度查询' }),
         code: 2,
       },
       {
-        label: '三度查询',
+        label: $i18n.get({ id: 'basic.src.services.NeighborsQueryMenu.ThreeDegreeQuery', dm: '三度查询' }),
         code: 3,
       },
     ];
+
     return new Promise(resolve => {
       return resolve(result);
     });

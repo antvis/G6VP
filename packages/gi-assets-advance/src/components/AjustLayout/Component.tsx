@@ -2,10 +2,10 @@ import { CaretRightOutlined, DeleteOutlined, EditOutlined, LockOutlined } from '
 import { useContext } from '@antv/gi-sdk';
 import { CircularLayout, DagreLayout, GridLayout } from '@antv/layout';
 import { Button, Collapse, Select } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
 import { useImmer } from 'use-immer';
-import './index.less';
 import $i18n from '../../i18n';
+import './index.less';
 
 const { Panel } = Collapse;
 
@@ -335,4 +335,4 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
   );
 };
 
-export default AjustLayout;
+export default memo(AjustLayout);

@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { DesktopOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import $i18n from '../../i18n';
 interface PreviewProps {
   context: any;
 }
@@ -18,7 +19,7 @@ const Preview: React.FunctionComponent<PreviewProps> = props => {
   return (
     <div>
       <Button size="small" onClick={handleClick} icon={<DesktopOutlined />} type="text">
-        预览
+        {$i18n.get({ id: 'gi-site.components.Navbar.Preview.Preview', dm: '预览' })}
       </Button>
     </div>
   );

@@ -330,6 +330,9 @@ importers:
       nanoid:
         specifier: ^4.0.0
         version: 4.0.0
+      re-resizable:
+        specifier: ^6.9.9
+        version: 6.9.9(react-dom@17.0.2)(react@17.0.2)
       react:
         specifier: 17.x || 17
         version: 17.0.2
@@ -842,7 +845,7 @@ importers:
         version: 17.0.2(react@17.0.2)
     devDependencies:
       '@antv/gi-sdk':
-        specifier: ^2.4.5
+        specifier: ^2.4.8
         version: link:../gi-sdk
       '@antv/graphin':
         specifier: ^2.7.25
@@ -41248,6 +41251,16 @@ packages:
   /re-resizable@4.11.0:
     resolution: {integrity: sha512-dye+7rERqNf/6mDT1iwps+4Gf42420xuZgygF33uX178DxffqcyeuHbBuJ382FIcB5iP6mMZOhfW7kI0uXwb/Q==}
     dev: true
+
+  /re-resizable@6.9.9(react-dom@17.0.2)(react@17.0.2):
+    resolution: {integrity: sha512-l+MBlKZffv/SicxDySKEEh42hR6m5bAHfNu3Tvxks2c4Ah+ldnWjfnVRwxo/nxF27SsUsxDS0raAzFuJNKABXA==}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0 || 17
+      react-dom: ^16.13.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+    dev: false
 
   /react-attr-converter@0.3.1:
     resolution: {integrity: sha512-dSxo2Mn6Zx4HajeCeQNLefwEO4kNtV/0E682R1+ZTyFRPqxDa5zYb5qM/ocqw9Bxr/kFQO0IUiqdV7wdHw+Cdg==}

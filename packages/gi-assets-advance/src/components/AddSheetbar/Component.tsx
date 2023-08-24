@@ -1,6 +1,6 @@
 import { extra, IGIAC, useContext } from '@antv/gi-sdk';
 import { message } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
 
 const { GIAComponent } = extra;
@@ -50,4 +50,4 @@ const AddSheetbar: React.FunctionComponent<AddSheetbarProps> = props => {
   );
 };
 
-export default AddSheetbar;
+export default memo(AddSheetbar);

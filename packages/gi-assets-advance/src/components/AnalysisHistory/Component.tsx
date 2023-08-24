@@ -1,16 +1,16 @@
-import { useContext, utils } from '@antv/gi-sdk';
-import * as React from 'react';
-import ReactDOM from 'react-dom';
-import { getStyles } from '../Sheetbar/utils';
-import { useImmer } from 'use-immer';
 import { DeleteOutlined, DownOutlined, SettingFilled, UpOutlined } from '@ant-design/icons';
+import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Col, Popover, Row, Tooltip, message } from 'antd';
-import { ellipsisString, getRecordContent, getRecordsFromHistory } from './util';
-import TemplateModal from './TemplateModal';
-import TemplateDrawer from './TemplateDrawer';
-import { TemplateData } from './type';
-import './index.less';
+import React, { memo } from 'react';
+import ReactDOM from 'react-dom';
+import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
+import { getStyles } from '../Sheetbar/utils';
+import TemplateDrawer from './TemplateDrawer';
+import TemplateModal from './TemplateModal';
+import './index.less';
+import { TemplateData } from './type';
+import { ellipsisString, getRecordContent, getRecordsFromHistory } from './util';
 
 export interface AnalysisHistoryProps {
   height: number;
@@ -263,7 +263,7 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
     </Popover>
   );
 
-  const styles = getStyles(height, placement);
+  const styles = getStyles(height, placement, [0, 0]);
   const style = collapsed
     ? styles.sheetbar
     : {
@@ -398,4 +398,4 @@ const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
   return ReactDOM.createPortal(HistoryFooterComponent, GISDK_DOM);
 };
 
-export default AnalysisHistory;
+export default memo(AnalysisHistory);

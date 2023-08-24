@@ -28,7 +28,7 @@ export default context => {
       },
     },
     menuServiceId: {
-      title: '条件服务',
+      title: $i18n.get({ id: 'basic.components.NeighborsQuery.registerMeta.ConditionalService', dm: '条件服务' }),
       type: 'string',
       'x-decorator': 'FormItem',
       'x-component': 'Select',

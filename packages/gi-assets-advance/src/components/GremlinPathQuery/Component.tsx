@@ -2,9 +2,9 @@ import { CloseOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { GraphinContext } from '@antv/graphin';
 import { Button, Col, Divider, Form, Input, Row, Select, Spin, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
-import './index.less';
+import React, { memo, useEffect, useState } from 'react';
 import $i18n from '../../i18n';
+import './index.less';
 
 const { Option } = Select;
 
@@ -445,4 +445,4 @@ const GremlinTemplateQuery: React.FC<IGremlinTemplateQueryProps> = ({
   );
 };
 
-export default GremlinTemplateQuery;
+export default memo(GremlinTemplateQuery);

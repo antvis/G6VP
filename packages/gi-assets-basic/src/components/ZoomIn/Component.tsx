@@ -1,6 +1,6 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext, useShortcuts } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 const { GIAComponent } = extra;
 export interface IProps {
   GIAC: IGIAC;
@@ -12,7 +12,8 @@ const ZoomIn: React.FunctionComponent<IProps> = props => {
   useShortcuts(['ctrl+=', 'command+='], () => {
     apis.handleZoomOut();
   });
+  console.log('zoom in....');
   return <GIAComponent GIAC={GIAC} onClick={() => apis.handleZoomOut()} />;
 };
 
-export default ZoomIn;
+export default memo(ZoomIn);
