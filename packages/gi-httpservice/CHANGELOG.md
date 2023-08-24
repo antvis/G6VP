@@ -1,5 +1,11 @@
 # @antv/gi-httpservice
 
+## 1.2.6
+
+### Patch Changes
+
+- Publish in 0824
+
 ## 1.2.5
 
 ### Patch Changes

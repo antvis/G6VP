@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.6
+
+### Patch Changes
+
+- Publish in 0824
+
 ## 1.3.5
 
 ### Patch Changes
