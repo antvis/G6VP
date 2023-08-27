@@ -60,7 +60,11 @@ const OPEN_ITEMS = [
     key: '/open/engines',
     icon: <RocketOutlined />,
   },
-  { label: '解决方案', key: '/open/solution', icon: <BookOutlined /> },
+  {
+    label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.Solution', dm: '解决方案' }),
+    key: '/open/solution',
+    icon: <BookOutlined />,
+  },
   { label: 'V5 DEMO', key: '/open/g6v5demo', icon: <DeploymentUnitOutlined /> },
   // { label: '用户管理', key: '/open/user', icon: <AppstoreOutlined /> },
   // { label: '图应用', key: '/open/portal', icon: <AppstoreOutlined /> },

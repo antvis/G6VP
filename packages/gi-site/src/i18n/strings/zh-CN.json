@@ -712,5 +712,7 @@
   "gi-site.src.services.utils.NetworkProblems.1": "网络问题",
   "gi-site.src.services.user.Get": "获取",
   "gi-site.src.services.user.AvailableVipAssets": "可用的 VIP 资产",
-  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "检测到可用的 VIP 资产，是否前往登陆获取"
+  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "检测到可用的 VIP 资产，是否前往登陆获取",
+  "gi-site.components.Navbar.Preview.Preview": "预览",
+  "gi-site.src.layouts.SideNav.Solution": "解决方案"
 }

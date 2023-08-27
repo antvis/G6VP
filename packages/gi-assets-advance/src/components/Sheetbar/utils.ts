@@ -1,16 +1,21 @@
-export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: string]: React.CSSProperties } => {
+export const getStyles = (
+  height: number,
+  placement: 'top' | 'bottom',
+  position: number[],
+): { [key: string]: React.CSSProperties } => {
+  const [x, y] = position;
   if (placement === 'top') {
     return {
       container: {
-        position: 'relative',
-        top: `${height}px`,
-        height: `calc( 100% - ${height}px )`,
+        // position: 'relative',
+        // top: `${height}px`,
+        // height: `calc( 100% - ${height}px )`,
       },
       sheetbar: {
         position: 'absolute',
         display: 'flex',
-        top: '0px',
-        left: '0px',
+        top: `${y}px`,
+        left: `${x}px`,
         right: '0px',
         height: `${height + 1}px`,
         lineHeight: `${height + 1}px`,
@@ -23,15 +28,15 @@ export const getStyles = (height: number, placement: 'top' | 'bottom'): { [key: 
 
   return {
     container: {
-      position: 'relative',
-      top: `unset`,
-      height: `calc( 100% - ${height}px )`,
+      // position: 'relative',
+      // top: `unset`,
+      // height: `calc( 100% - ${height}px )`,
     },
     sheetbar: {
       display: 'flex',
       position: 'absolute',
-      bottom: '0px',
-      left: '0px',
+      bottom: `${y}px`,
+      left: `${x}px`,
       right: '0px',
       height: `${height + 1}px`,
       lineHeight: `${height + 1}px`,

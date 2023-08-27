@@ -1,5 +1,13 @@
 # @antv/gi-sdk
 
+## 2.4.8
+
+### Patch Changes
+
+- Publish in 0824
+- Updated dependencies
+  - @antv/gi-common-components@1.3.6
+
 ## 2.4.5
 
 ### Patch Changes

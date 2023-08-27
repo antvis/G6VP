@@ -1,8 +1,9 @@
 import { Info } from '@antv/gi-sdk';
+import $i18n from '../../i18n';
 const info = {
   id: 'ShortcutKeys',
-  name: '快捷键',
-  desc: '快捷键说明',
+  name: $i18n.get({ id: 'basic.components.ShortcutKeys.info.ShortcutKeys', dm: '快捷键' }),
+  desc: $i18n.get({ id: 'basic.components.ShortcutKeys.info.ShortcutKeyDescription', dm: '快捷键说明' }),
   icon: 'icon-shortcut',
   cover: 'http://xxxx.jpg',
   category: 'canvas-interaction',

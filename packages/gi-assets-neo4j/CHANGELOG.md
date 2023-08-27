@@ -1,5 +1,13 @@
 # @antv/gi-assets-neo4j
 
+## 2.1.6
+
+### Patch Changes
+
+- Publish in 0824
+- Updated dependencies
+  - @antv/gi-sdk@2.4.8
+
 ## 2.1.5
 
 ### Patch Changes

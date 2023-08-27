@@ -1,5 +1,5 @@
 import { Components } from '@antv/graphin';
-import * as React from 'react';
+import React, { memo } from 'react';
 import './index.less';
 const { Tooltip } = Components;
 const isArray = arg => {
@@ -60,4 +60,4 @@ const NodeTooltip: React.FunctionComponent<NodeTooltipProps> = props => {
     </Tooltip>
   );
 };
-export default NodeTooltip;
+export default memo(NodeTooltip);

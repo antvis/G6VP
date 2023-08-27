@@ -1,7 +1,6 @@
 import type { GIAssets } from '@antv/gi-sdk';
 import { useContext } from '@antv/gi-sdk';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { memo } from 'react';
 import { useImmer } from 'use-immer';
 import { BottomContainer, LeftContainer, RightContainer, TopContainer } from './Containers';
 import useComponents from './useComponents';
@@ -198,4 +197,4 @@ const GrailLayout: React.FC<FreeLayoutProps> = props => {
   );
 };
 
-export default GrailLayout;
+export default memo(GrailLayout);

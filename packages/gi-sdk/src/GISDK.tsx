@@ -1,8 +1,8 @@
 import Graphin from '@antv/graphin';
 import { original } from 'immer';
 import React, { useMemo } from 'react';
-import { useImmer } from 'use-immer';
 import { IntlProvider, useIntl } from 'react-intl';
+import { useImmer } from 'use-immer';
 import { defaultInitializerCfg } from './Initializer';
 import SizeSensor from './SizeSensor';
 import FitCenterAfterMount from './components/FitCenterAfterMount';
@@ -391,14 +391,11 @@ const GISDK = (props: Props) => {
   }, [data]);
 
   return (
-    <IntlProvider locale={language as string} messages={localeMessages as any}>
-      {/* @ts-ignore */}
-      <GraphInsightContext.Provider value={ContextValue}>
-        <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
-          <div
-            id={`${GISDK_ID}-container`}
-            style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}
-          >
+    <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
+      <IntlProvider locale={language as string} messages={localeMessages as any}>
+        {/* @ts-ignore */}
+        <GraphInsightContext.Provider value={ContextValue}>
+          <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
             <Graphin
               animate={true}
               ref={graphinRef}
@@ -423,10 +420,10 @@ const GISDK = (props: Props) => {
                 {HAS_GRAPH && state.initialized && children}
               </>
             </Graphin>
-          </div>
-        </GICC_LAYOUT_COMPONENT>
-      </GraphInsightContext.Provider>
-    </IntlProvider>
+          </GICC_LAYOUT_COMPONENT>
+        </GraphInsightContext.Provider>
+      </IntlProvider>
+    </div>
   );
 };
 export default React.memo(GISDK);

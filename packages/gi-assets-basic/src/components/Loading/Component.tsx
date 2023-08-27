@@ -1,6 +1,6 @@
 import { useContext } from '@antv/gi-sdk';
 import { Spin } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
 import './index.less';
 
 export interface LoadingProps {}
@@ -20,4 +20,4 @@ const Loading: React.FunctionComponent<LoadingProps> = props => {
   return null;
 };
 
-export default Loading;
+export default memo(Loading);

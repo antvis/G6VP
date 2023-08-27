@@ -1,6 +1,6 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import Graphin, { GraphinData } from '@antv/graphin';
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
 
@@ -193,4 +193,4 @@ const StructAnalysis = () => {
   );
 };
 
-export default StructAnalysis;
+export default memo(StructAnalysis);

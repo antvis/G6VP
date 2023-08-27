@@ -3,3 +3,4 @@ packages:
   - 'packages/**'
   - '!packages/gi-cli/templates'
   - '!packages/gi-assets-tugraph-db'
+  - '!packages/gi-assets-xlab'

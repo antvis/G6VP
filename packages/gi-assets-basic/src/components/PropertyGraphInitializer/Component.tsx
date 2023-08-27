@@ -1,5 +1,5 @@
 import { useContext, utils } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo } from 'react';
 
 export interface IProps {}
 
@@ -17,4 +17,4 @@ const PropertyGraphInitializer: React.FunctionComponent<IProps> = props => {
   return null;
 };
 
-export default PropertyGraphInitializer;
+export default memo(PropertyGraphInitializer);

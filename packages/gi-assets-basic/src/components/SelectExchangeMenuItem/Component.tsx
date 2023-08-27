@@ -1,8 +1,8 @@
-import { useContext } from '@antv/gi-sdk';
-import React from 'react';
-import { Menu } from 'antd';
-import type { ContextMenuValue } from '@antv/graphin';
 import { GraphData } from '@antv/g6';
+import { useContext } from '@antv/gi-sdk';
+import type { ContextMenuValue } from '@antv/graphin';
+import { Menu } from 'antd';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
 
 export interface IProps {
@@ -53,4 +53,4 @@ const SelectExchangeMenuItem: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default SelectExchangeMenuItem;
+export default memo(SelectExchangeMenuItem);

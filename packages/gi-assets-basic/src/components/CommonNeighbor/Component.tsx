@@ -1,10 +1,9 @@
-import { useContext } from '@antv/gi-sdk';
-import * as React from 'react';
-import { intersectionWith, uniq, union } from 'lodash';
-import { Menu, message } from 'antd';
-import { useCallback } from 'react';
 import { IEdge, INode } from '@antv/g6';
+import { useContext } from '@antv/gi-sdk';
 import { ContextMenuValue } from '@antv/graphin';
+import { Menu, message } from 'antd';
+import { intersectionWith, union, uniq } from 'lodash';
+import React, { memo, useCallback } from 'react';
 import $i18n from '../../i18n';
 
 export interface IProps {
@@ -138,7 +137,10 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
       componentId: 'CommonNeighbor',
       type: 'configure',
       subType: $i18n.get({ id: 'basic.components.CommonNeighbor.Component.CommonNeighbor', dm: '共同邻居' }),
-      statement: `${ids.join(', ')} ${$i18n.get({ id: 'basic.components.CommonNeighbor.Component.CommonNeighbor', dm: '共同邻居' })}`,
+      statement: `${ids.join(', ')} ${$i18n.get({
+        id: 'basic.components.CommonNeighbor.Component.CommonNeighbor',
+        dm: '共同邻居',
+      })}`,
       success,
       errorMsg,
       params: { startIds: ids },
@@ -188,4 +190,4 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default CommonNeighbor;
+export default memo(CommonNeighbor);

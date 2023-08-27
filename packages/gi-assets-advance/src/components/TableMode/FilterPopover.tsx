@@ -3,6 +3,7 @@ import { get, uniq } from '@antv/util';
 import { Checkbox, Form, Input, Radio } from 'antd';
 import React, { useEffect } from 'react';
 import { convertToObject, getCurrentFilterParams } from './utils/filter';
+import $i18n from '../../i18n';
 
 export const FilterPopover = ({ fieldName, spreadsheet, modalCallbackRef }) => {
   const fieldData = React.useMemo(
@@ -83,15 +84,24 @@ export const FilterPopover = ({ fieldName, spreadsheet, modalCallbackRef }) => {
 
   return (
     <Form>
-      <p className="gi-tablemode-filter-tip">注意：仅控制表格中数据行的显示与隐藏</p>
+      <p className="gi-tablemode-filter-tip">
+        {$i18n.get({
+          id: 'advance.components.TableMode.FilterPopover.NoteOnlyTheDisplayAnd',
+          dm: '注意：仅控制表格中数据行的显示与隐藏',
+        })}
+      </p>
       <Form.Item className="gi-tablemode-filter-item">
         <div>
           <Input.Search
             value={searchKeyword}
             onChange={e => onKeywordChange(e.target.value)}
-            placeholder="请输入搜索关键词"
+            placeholder={$i18n.get({
+              id: 'advance.components.TableMode.FilterPopover.EnterASearchKeyword',
+              dm: '请输入搜索关键词',
+            })}
             className="search-box"
           />
+
           <div className="gi-tablemode-filter-check-item-list">
             <Checkbox
               className="check-item"
@@ -127,7 +137,7 @@ export const FilterPopover = ({ fieldName, spreadsheet, modalCallbackRef }) => {
                 }
               }}
             >
-              {'全选'}
+              {$i18n.get({ id: 'advance.components.TableMode.FilterPopover.SelectAll', dm: '全选' })}
             </Checkbox>
 
             {searchedFieldData.map(item => {

@@ -1,6 +1,6 @@
 import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
-import React from 'react';
+import React, { memo } from 'react';
 import CanvasClick from './CanvasClick';
 import CanvasDoubleClick from './CanvasDoubleClick';
 
@@ -54,4 +54,4 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   );
 };
 
-export default CanvasSetting;
+export default memo(CanvasSetting);

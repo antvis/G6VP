@@ -1,6 +1,6 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import { Skeleton } from 'antd';
-import React from 'react';
+import React, { memo } from 'react';
 import DivContainer from '../UIComponents/DivContainer';
 import Properties from './Properties';
 export interface PropertiesPanelProps {
@@ -137,4 +137,4 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
   );
 };
 
-export default PropertiesPanel;
+export default memo(PropertiesPanel);

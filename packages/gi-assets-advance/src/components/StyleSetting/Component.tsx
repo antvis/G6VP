@@ -1,9 +1,9 @@
 import { useContext, utils } from '@antv/gi-sdk';
 import { Tabs } from 'antd';
-import React from 'react';
-import './index.less';
-import StyleSettingPanel from './StyleSettingPanel';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
+import StyleSettingPanel from './StyleSettingPanel';
+import './index.less';
 
 const { TabPane } = Tabs;
 
@@ -34,4 +34,4 @@ const StyleSetting: React.FC<StyleSettingProps> = props => {
   );
 };
 
-export default StyleSetting;
+export default memo(StyleSetting);

@@ -15,6 +15,7 @@
     background: var(--background-color);
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #ddd;
     .navbar-back {
       display: flex;
       justify-content: center;
@@ -41,6 +42,9 @@
     }
   }
   .gi-rich-container-content {
+    &.has-sheet {
+      top: 138px; //98+40 = 138px
+    }
     position: absolute;
     bottom: 0px;
     top: 98px;
@@ -48,15 +52,15 @@
     right: 0px;
     display: flex;
     .gi-rich-container-side {
-      width: @side-width;
+      // width: @side-width;
       height: 100%;
-      background: #f3f5f9;
+      background: var(--background-color);
     }
     .gi-rich-container-canvas {
       position: absolute;
       top: 0px;
       bottom: 0px;
-      left: @side-width;
+      // left: @side-width;
       right: 0px;
     }
   }

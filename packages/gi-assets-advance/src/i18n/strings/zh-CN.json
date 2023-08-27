@@ -428,5 +428,10 @@
   "advance.components.GremlinQuery.Component.CannotBeModifiedWithEvaluationtimeout": "不可修改，语句中已有 .with('evaluationTimeout', timeout) 约束",
   "advance.components.GremlinQuery.Component.StatementToAddConstraintsWith": "语句将添加约束: .with('evaluationTimeout', {timeout})",
   "advance.src.services.CypherQuery.QuerySucceeded": "查询成功",
-  "advance.src.services.CypherQuery.TheCurrentQueryRequestIs": "当前的查询请求是 MOCK 的，请搭配图数据库使用。"
+  "advance.src.services.CypherQuery.TheCurrentQueryRequestIs": "当前的查询请求是 MOCK 的，请搭配图数据库使用。",
+  "advance.components.GraphAnnotation.registerMeta.DefaultTitleFillAttribute": "默认标题填充属性",
+  "advance.components.GraphAnnotation.registerMeta.DefaultContentFillAttribute": "默认内容填充属性",
+  "advance.components.TableMode.FilterPopover.NoteOnlyTheDisplayAnd": "注意：仅控制表格中数据行的显示与隐藏",
+  "advance.components.TableMode.FilterPopover.EnterASearchKeyword": "请输入搜索关键词",
+  "advance.components.TableMode.FilterPopover.SelectAll": "全选"
 }

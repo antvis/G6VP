@@ -1,7 +1,7 @@
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
+import React, { memo } from 'react';
 
-import * as React from 'react';
 const { GIAComponent } = extra;
 export interface IProps {
   GIAC: IGIAC;
@@ -23,4 +23,4 @@ const FitView: React.FunctionComponent<IProps> = props => {
   );
 };
 
-export default FitView;
+export default memo(FitView);

@@ -49,8 +49,8 @@ import ZoomStatus from './ZoomStatus';
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
 // import CreateCombo from './CreateCombo';
+import EdgeMerge from './EdgeMerge';
 import ShortcutKeys from './ShortcutKeys';
-
 export {
   ActivateRelations,
   CanvasSetting,
@@ -62,6 +62,7 @@ export {
   ContextMenu,
   Copyright,
   DownLoad,
+  EdgeMerge,
   Export,
   FilterPanel,
   // FitCenter,

@@ -7,5 +7,5 @@
   "access": "restricted",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": ["my-custom-server", "@antv/gi-site", "@antv/gi-portal", "@antv/gi-assets-testing", "@antv/gi-mock-data"]
+  "ignore": ["my-custom-server", "@antv/gi-site", "@antv/gi-portal", "@antv/gi-assets-testing", "@antv/gi-public-data"]
 }

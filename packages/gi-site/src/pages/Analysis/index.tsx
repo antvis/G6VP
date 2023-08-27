@@ -2,7 +2,7 @@ import locale from '@aligov/global-locale';
 import GISDK, { useContext as useGIContext, utils } from '@antv/gi-sdk';
 import { message } from 'antd';
 import { original } from 'immer';
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { Sidebar } from '../../components';
 import Loading from '../../components/Loading';
 import Navbar from '../../components/Navbar/WorkbookNav';
@@ -137,13 +137,17 @@ const Analysis = props => {
           const mockServiceConfig = []; //getMockServiceConfig(activeAssets.components);
           const assetServices = utils.getCombineServices(activeAssets.services!);
           // 注册图标
-          await utils.registerIconFonts(activeAssets.icons);
+          try {
+            await utils.registerIconFonts(activeAssets.icons);
+          } catch (error) {
+            console.log('register font error', error);
+          }
 
           updateState(draft => {
             /** 将组件资产中的的 MockServices 与项目自自定义的 Services 去重处理 */
             const combinedServiceConfig = getCombinedServiceConfig(mockServiceConfig, original(draft.serviceConfig));
             const schemaData = original(draft.schemaData);
-            
+
             const activeAssetsInformation = queryActiveAssetsInformation({
               engineId,
               assets: activeAssets,
@@ -326,4 +330,4 @@ const Analysis = props => {
   );
 };
 
-export default Analysis;
+export default memo(Analysis);

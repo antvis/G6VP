@@ -1,6 +1,6 @@
 import { GIConfig, useContext, utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
-import * as React from 'react';
+import React, { memo } from 'react';
 import $i18n from '../../i18n';
 const { isPosition, isStyles } = utils;
 
@@ -169,4 +169,4 @@ const Initializer: React.FunctionComponent<IProps> = props => {
   return null;
 };
 
-export default Initializer;
+export default memo(Initializer);

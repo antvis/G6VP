@@ -712,5 +712,7 @@
   "gi-site.src.services.utils.NetworkProblems.1": "Network problems",
   "gi-site.src.services.user.Get": "Get",
   "gi-site.src.services.user.AvailableVipAssets": "Available VIP assets",
-  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "Detected available VIP assets, whether to log in to obtain"
+  "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "Detected available VIP assets, whether to log in to obtain",
+  "gi-site.components.Navbar.Preview.Preview": "Preview",
+  "gi-site.src.layouts.SideNav.Solution": "Solution"
 }
