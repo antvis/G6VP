@@ -11,6 +11,15 @@ const GI_DEPOLY_OFFLINE_SITE = [
   'antv-insight-pre.alipay.com',
   'insight.antv.antgroup.com',
 ];
+
+// 内网部署站点
+const GI_DEPOLY_INC_SITE = [
+  'antv-insight-pre.alipay.com',
+  'insight.antv.antgroup.com',
+  // 本地联调 host 配置
+  // 'local.dev.alipay.com'
+];
+
 /** 是否是开发环境 */
 //@ts-ignore
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
@@ -23,12 +32,15 @@ export const GI_SITE = {
     }
     return GI_SITE_ENV === 'ONLINE' ? false : true;
   },
+  get IS_INC_SITE() {
+    return GI_DEPOLY_INC_SITE.includes(window.location.hostname);
+  },
   get SERVICE_URL() {
     const { hostname, protocol } = window.location;
     const { GI_SITE_ID = 'DEFAULT' } = getSiteContext();
     const port = 7001;
     let online = `${protocol}//${hostname}:${port}`;
-    if (GI_SITE_ID === 'DEFAULT') {
+    if (GI_SITE_ID === 'DEFAULT' && GI_SITE.IS_INC_SITE) {
       online = 'https://rplus.alipay.com/api/function/gi';
     } else if (!IS_DEV_ENV){
       online = window.location.origin + window.location.pathname;
@@ -36,7 +48,7 @@ export const GI_SITE = {
         online = online.slice(0, -1);
       }
     }
-  
+
     return GI_SITE.IS_OFFLINE
       ? 'https://graphinsight.antgroup-inc.cn' //  'https://graphinsight-pre.alipay.com'
       : online;
