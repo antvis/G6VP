@@ -2,6 +2,7 @@ import { notification } from 'antd';
 import { extend } from 'umi-request';
 import type { RequestOptionsInit } from 'umi-request';
 import { utils } from '@antv/gi-sdk';
+import { GI_SITE } from './const';
 import $i18n from '../i18n';
 
 const { getSiteContext } = utils;
@@ -92,12 +93,13 @@ const getCompatibleResponse = (res: any) => {
 export const request = (url: string, options: RequestOptionsInit = { method: 'get' }) => {
   const { GI_SITE_ID } = getSiteContext();
 
-  if (GI_SITE_ID === 'DEFAULT') {
+  if (GI_SITE_ID === 'DEFAULT' && GI_SITE.IS_INC_SITE) {
     const { url: finalUrl, options: finalOptions } = getCompatibleOptions(url, options);
     url = finalUrl;
     options = finalOptions;
+    return _request(url, options).then(res => {
+      return getCompatibleResponse(res);
+    });
   }
-  return _request(url, options).then(res => {
-    return getCompatibleResponse(res);
-  });
+  return _request(url, options);
 }
