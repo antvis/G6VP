@@ -1,5 +1,5 @@
 import { Icon } from '@antv/gi-sdk';
-import { Button, Divider } from 'antd';
+import { Button, Divider, Tooltip } from 'antd';
 import React, { memo } from 'react';
 export interface ToolbarProps {
   /** 分类的标题 */
@@ -25,7 +25,7 @@ const Toolbar = (props: ToolbarProps) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Divider type="vertical" />
-      <span style={{ padding: '0px 16px 0px 8px' }}>{title}</span>
+      <span style={{ padding: '0px 8px 0px 6px', color: '#98989D' }}>{title}</span>
       {options.map(item => {
         const isActive = value === item.id;
         const { id, props: itemProps, component: ItemComponent } = item;
@@ -38,24 +38,29 @@ const Toolbar = (props: ToolbarProps) => {
         if (!GIAC_CONTENT) {
           return <ItemComponent {...itemProps} />;
         }
-        const { icon } = GIAC_CONTENT || {};
+        const { icon, tooltipColor = 'var(--primary-color)' } = GIAC_CONTENT || {};
+
         return (
-          <Button
-            type={buttonType}
-            icon={<Icon type={icon} />}
-            key={id}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              ...(isActive ? ActiveButtonStyle : {}),
-            }}
-            onClick={() => {
-              onChange(id);
-            }}
-          >
-            {displayText ? title : null}
-          </Button>
+          <Tooltip title={title} color={tooltipColor}>
+            <Button
+              type={buttonType}
+              icon={<Icon type={icon} />}
+              key={id}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: 32,
+                marginRight: 8,
+                ...(isActive ? ActiveButtonStyle : {}),
+              }}
+              onClick={() => {
+                onChange(id);
+              }}
+            >
+              {displayText ? title : null}
+            </Button>
+          </Tooltip>
         );
       })}
     </div>

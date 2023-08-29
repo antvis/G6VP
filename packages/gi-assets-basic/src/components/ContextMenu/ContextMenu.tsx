@@ -3,6 +3,7 @@ import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import React, { memo, useMemo } from 'react';
 import ContextMenu from './Container';
+import './index.less'
 
 // const { ContextMenu } = Components;
 

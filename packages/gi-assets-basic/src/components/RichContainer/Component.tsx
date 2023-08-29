@@ -29,12 +29,12 @@ const getDefaultSideWidth = () => {
   return Number(defaultWidth);
 };
 const RichContainer = props => {
-  const { children, resizable = true, isSheet = true } = props;
+  const { children, resizable = true, isSheet } = props;
   const context = useContext();
   const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
   const [state, setState] = React.useState<RichContainerState>({
-    activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'FilterPanel',
+    activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'LanguageQuery',
     viewMode: 'GISDK_CANVAS',
   });
   const { activeKey, viewMode } = state;
@@ -76,6 +76,10 @@ const RichContainer = props => {
         activeKey: id,
       };
     });
+
+    if (!isExpanded) {
+      setIsExpanded(true)
+    }
   };
 
   const handleChangeViewMode = id => {
@@ -125,7 +129,7 @@ const RichContainer = props => {
       return {
         value: item.id,
         label: (
-          <Space>
+          <Space style={{ color: '#363740' }}>
             <Icon type={icon}></Icon>
             {title}
           </Space>
@@ -138,7 +142,7 @@ const RichContainer = props => {
   const ActiveButtonStyle: React.CSSProperties = {
     background: 'var(--background-color)',
     borderColor: 'var(--background-color)',
-    color: 'var(--text-color)',
+    color: '#6A6B71',
   };
 
   return (
@@ -157,6 +161,11 @@ const RichContainer = props => {
         </div>
         <div className="toolbar-item">
           <Divider type="vertical" />
+          <span style={{
+            marginLeft: 6,
+            color: '#98989D',
+            marginRight: 8
+          }}>查询过滤</span>
           <Button
             type={HAS_QUERY_VIEW ? 'primary' : 'text'}
             icon={<Icon type={DataArea.icon} />}
@@ -164,6 +173,7 @@ const RichContainer = props => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              fontSize: 12,
               ...(HAS_QUERY_VIEW ? ActiveButtonStyle : {}),
             }}
             onClick={() => {
@@ -183,6 +193,7 @@ const RichContainer = props => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              fontSize: 12,
               ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
             }}
             onClick={() => {

@@ -10,8 +10,9 @@ export interface IProps {
 
 const ShortcutKeys: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
+  
   const { GISDK_ID } = useContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(GIAC.visible);
 
   const showModal = () => {
     setIsModalOpen(true);
