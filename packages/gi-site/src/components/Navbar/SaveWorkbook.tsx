@@ -12,6 +12,7 @@ import './index.less';
 
 interface SaveWorkbookProps {
   workbookId: string;
+  context: any;
 }
 
 const getCover = async (graph: Graph) => {
@@ -24,10 +25,11 @@ const getCover = async (graph: Graph) => {
 };
 
 const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
-  const { workbookId } = props;
+  const { workbookId, context: projectContext = {} } = props;
   const history = useHistory();
   const { context, updateContext } = useContext();
   const { config, activeAssetsKeys, name, graphRef } = context;
+  const { name: projectName, datasetId } = projectContext;
   const handleSave = async () => {
     const origin = (await ProjectServices.getById(workbookId)) as IProject;
 
@@ -100,6 +102,8 @@ const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
       const result = await ProjectServices.updateById(workbookId, {
         cover,
         activeAssetsKeys,
+        name: projectName,
+        datasetId,
         projectConfig: {
           ...otherConfig,
           layout: clonedLayout,

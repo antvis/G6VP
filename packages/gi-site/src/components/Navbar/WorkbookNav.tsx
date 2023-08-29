@@ -63,7 +63,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <Share context={context} />
         <Preview context={context} />
         <ExportSdk />
-        <SaveWorkbook workbookId={workbookId} />
+        <SaveWorkbook workbookId={workbookId} context={context} />
         <Github />
         <Theme changeTheme={changeTheme} />
         <Language />
