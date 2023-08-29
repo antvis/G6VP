@@ -24,6 +24,8 @@ const GI_DEPOLY_INC_SITE = [
 //@ts-ignore
 export const IS_DEV_ENV = process.env.NODE_ENV === 'development';
 
+const INC_SERVICE_URL = 'https://rplus.alipay.com/api/function/gi';
+
 export const GI_SITE = {
   get IS_OFFLINE() {
     const GI_SITE_ENV = localStorage.getItem('GI_SITE_ENV');
@@ -41,7 +43,7 @@ export const GI_SITE = {
     const port = 7001;
     let online = `${protocol}//${hostname}:${port}`;
     if (GI_SITE_ID === 'DEFAULT' && GI_SITE.IS_INC_SITE) {
-      online = 'https://rplus.alipay.com/api/function/gi';
+      online = INC_SERVICE_URL;
     } else if (!IS_DEV_ENV){
       online = window.location.origin + window.location.pathname;
       if (online.endsWith('/')) {
@@ -50,7 +52,7 @@ export const GI_SITE = {
     }
 
     return GI_SITE.IS_OFFLINE
-      ? 'https://graphinsight.antgroup-inc.cn' //  'https://graphinsight-pre.alipay.com'
+      ? INC_SERVICE_URL
       : online;
   },
 };
