@@ -78,7 +78,7 @@ const RichContainer = props => {
     });
 
     if (!isExpanded) {
-      setIsExpanded(true)
+      setIsExpanded(true);
     }
   };
 
@@ -138,7 +138,6 @@ const RichContainer = props => {
     }),
   ];
 
-  console.log('render.....', Containers, HAS_GRAPH, ViewModeOptions, viewMode);
   const ActiveButtonStyle: React.CSSProperties = {
     background: 'var(--background-color)',
     borderColor: 'var(--background-color)',
@@ -161,11 +160,15 @@ const RichContainer = props => {
         </div>
         <div className="toolbar-item">
           <Divider type="vertical" />
-          <span style={{
-            marginLeft: 6,
-            color: '#98989D',
-            marginRight: 8
-          }}>查询过滤</span>
+          <span
+            style={{
+              marginLeft: 6,
+              color: '#98989D',
+              marginRight: 8,
+            }}
+          >
+            查询过滤
+          </span>
           <Button
             type={HAS_QUERY_VIEW ? 'primary' : 'text'}
             icon={<Icon type={DataArea.icon} />}

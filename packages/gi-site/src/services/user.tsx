@@ -1,9 +1,9 @@
 import { CrownTwoTone } from '@ant-design/icons';
 import { Button, Space, notification } from 'antd';
 import React from 'react';
-import { request } from './utils';
 import $i18n from '../i18n';
 import { GI_SITE } from './const';
+import { request } from './utils';
 
 const key = `open${Date.now()}`;
 const Btn = () => {
@@ -100,10 +100,10 @@ export const getUser = async () => {
   if (response.success && response.data) {
     // return response.data;
     // 内网用户 自动切换云端存储
-    if (!localStorage.getItem('GI_SITE_ENV')) {
-      localStorage.setItem('GI_SITE_ENV', 'ONLINE');
-      return window.location.reload();
-    }
+    // if (!localStorage.getItem('GI_SITE_ENV')) {
+    //   localStorage.setItem('GI_SITE_ENV', 'ONLINE');
+    //   return window.location.reload();
+    // }
     const { data } = response;
     return data;
   }
