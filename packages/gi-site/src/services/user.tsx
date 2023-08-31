@@ -1,6 +1,7 @@
 import { CrownTwoTone } from '@ant-design/icons';
 import { Button, Space, notification } from 'antd';
 import React from 'react';
+import { getSearchParams } from '../components/utils';
 import $i18n from '../i18n';
 import { GI_SITE } from './const';
 import { request } from './utils';
@@ -99,11 +100,13 @@ export const getUser = async () => {
   });
   if (response.success && response.data) {
     // return response.data;
-    // 内网用户 自动切换云端存储
-    // if (!localStorage.getItem('GI_SITE_ENV')) {
-    //   localStorage.setItem('GI_SITE_ENV', 'ONLINE');
-    //   return window.location.reload();
-    // }
+    // 根据参数 切换存储环境
+    const { searchParams } = getSearchParams(window.location);
+    const GI_SITE_ENV = searchParams.get('GI_SITE_ENV');
+    if (GI_SITE_ENV && localStorage.getItem('GI_SITE_ENV') !== GI_SITE_ENV) {
+      localStorage.setItem('GI_SITE_ENV', GI_SITE_ENV === 'ONLINE' ? 'ONLINE' : 'OFFLINE');
+      return window.location.reload();
+    }
     const { data } = response;
     return data;
   }
