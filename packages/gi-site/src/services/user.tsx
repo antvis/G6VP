@@ -1,10 +1,10 @@
 import { CrownTwoTone } from '@ant-design/icons';
-import { Button, Space, notification, Modal } from 'antd';
-import { getSearchParams } from '../components/utils';
+import { Button, Space, notification } from 'antd';
 import React from 'react';
-import { request } from './utils';
+import { getSearchParams } from '../components/utils';
 import $i18n from '../i18n';
 import { GI_SITE } from './const';
+import { request } from './utils';
 
 const key = `open${Date.now()}`;
 const Btn = () => {
