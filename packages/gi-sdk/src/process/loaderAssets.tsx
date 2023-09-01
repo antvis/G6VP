@@ -19,10 +19,27 @@ export const loadCss = options => {
 export const loadJS = async (options: AssetPackage) => {
   return new Promise(resolve => {
     // load js
+    const scriptId = options.global || options.url;
+    const scriptElement = document.getElementById(scriptId);
+
+    // 如果相应 js 已经添加到 dom 中，并且还未加载完成，则等待加载完成后 resolve
+    if (scriptElement && !scriptElement.getAttribute('loaded')) {
+      scriptElement.addEventListener('load', () => {
+        resolve(scriptElement);
+      });
+      return;
+    }
+
+    // 如果相应 js 已经添加到 dom 中，并且已经加载完成，则直接 resolve
+    if (scriptElement && scriptElement.getAttribute('loaded')) {
+      resolve(scriptElement);
+      return;
+    }
+
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
-    script.id = options.global || options.url;
+    script.id = scriptId;
     script.src = options.url;
     document.body.append(script);
     // load css
@@ -34,6 +51,7 @@ export const loadJS = async (options: AssetPackage) => {
     document.head.append(link);
 
     script.onload = () => {
+      script.setAttribute('loaded', 'true');
       resolve(script);
     };
     script.onerror = () => {
@@ -45,10 +63,6 @@ export const loadJS = async (options: AssetPackage) => {
 export const loader = async (options: AssetPackage[]) => {
   return Promise.all([
     ...options.map(opt => {
-      const asset = window[opt.global];
-      if (asset) {
-        return { ...asset, ...opt };
-      }
       return loadJS(opt).then(_res => {
         let assets = window[opt.global];
         if (!assets) {
