@@ -1,6 +1,7 @@
 import { ApiOutlined, DeploymentUnitOutlined, FileExcelOutlined, GlobalOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
-import { Tabs } from 'antd';
+import type { EngineServer } from '@antv/gi-sdk/lib/typing';
+import { Spin, Tabs } from 'antd';
 import * as React from 'react';
 import FileServerEngine from '../../components/FileServerEngine';
 import RadioNote from '../../components/RadioNote';
@@ -66,12 +67,17 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   const { history } = props;
   //@ts-ignore
 
-  const [state, setState] = React.useState<{ active: string; engines: Record<string, EngineServer[]> }>(() => {
+  const [state, setState] = React.useState<{
+    active: string;
+    engines: Record<string, EngineServer[]>;
+    isReady: boolean;
+  }>(() => {
     const { searchParams, path } = getSearchParams(window.location);
     const active = searchParams.get('type') || 'FILE';
     return {
       active,
-      engines: [],
+      engines: {},
+      isReady: false,
     };
   });
 
@@ -125,11 +131,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
         return {
           ...preState,
           engines: engines,
+          isReady: true,
         };
       });
     })();
   }, []);
-  const { engines, active } = state;
+  const { engines, active, isReady } = state;
 
   const handleChangeType = value => {
     const { searchParams, path } = getSearchParams(window.location);
@@ -184,6 +191,30 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
     </TabPane>
   );
 
+  const loadingContent = (
+    <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Loading', dm: '加载中' })} key="loading">
+      <div style={{ padding: '8px 0px 0px 0px' }}>
+        <Spin size="small" style={{ marginRight: '8px' }} />
+        {$i18n.get({
+          id: 'gi-site.pages.Dataset.Create.AssetsIsLoading',
+          dm: 'Please wait while the asset is loading',
+        })}
+      </div>
+    </TabPane>
+  );
+
+  const renderTabContent = () => {
+    if (!isReady) {
+      return loadingContent;
+    }
+
+    if (currentEngines.length === 0) {
+      return emptyContent;
+    }
+
+    return content;
+  };
+
   return (
     <>
       <div
@@ -203,7 +234,7 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       </div>
 
       <div style={{ background: 'var(--background-color)', padding: '24px 24px', borderRadius: '8px' }}>
-        <Tabs tabPosition="left">{currentEngines.length === 0 ? emptyContent : content}</Tabs>
+        <Tabs tabPosition="left">{renderTabContent()}</Tabs>
       </div>
     </>
   );
