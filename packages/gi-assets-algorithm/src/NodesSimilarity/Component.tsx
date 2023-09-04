@@ -1,6 +1,7 @@
 import { ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
+import type { NodeFormatProps } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { Button, Empty, Form, message } from 'antd';
@@ -9,7 +10,7 @@ import React, { memo, useEffect, useState } from 'react';
 import $i18n from '../i18n';
 import './index.less';
 import SimilarityResultTable from './resultTable';
-export interface CommunityDiscoveryProps {
+export interface CommunityDiscoveryProps extends NodeFormatProps {
   style?: React.CSSProperties;
   controlledValues?: {
     algorithm: string;
@@ -29,7 +30,7 @@ interface ResData {
   similarNodes: any[] | undefined;
 }
 const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
-  const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel } = props;
+  const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel, labelFormat } = props;
   const { data, graph, updateHistory } = useContext();
   const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
@@ -286,6 +287,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
                 },
               ]}
               data={data.nodes}
+              labelFormat={labelFormat}
               nodeLabel={nodeLabel}
               nodeSelectionMode={nodeSelectionMode}
             />

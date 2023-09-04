@@ -1,15 +1,20 @@
-.nodeSelectionFromItem {
+.nodeSelectionForm {
+  position: relative;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
 
-  .main {
-    flex: 1;
-  }
-  .operation {
-    width: 20px;
+  .nodeSelectionFormItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+
+    .main {
+      width: calc(100% - 25px);
+    }
   }
 }
 

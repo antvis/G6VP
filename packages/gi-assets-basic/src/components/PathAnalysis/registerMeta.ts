@@ -1,4 +1,4 @@
-import { NodeSelectionMode } from '@antv/gi-common-components/lib/NodeSelectionWrap';
+import { NodeSelectionMode, getNodeFormatOption } from '@antv/gi-common-components';
 import { extra } from '@antv/gi-sdk';
 import $i18n from '../../i18n';
 import info from './info';
@@ -30,7 +30,8 @@ const registerMeta = ({ schemaData }) => {
   }, {});
   const options = Object.keys(nodeProperties)
     .filter(key => nodeProperties[key] === 'string')
-    .map(e => ({ value: e, label: e }));
+    .map(e => ({ value: e, label: e }))
+    .sort((a, b) => a.value.localeCompare(b.value));
 
   return {
     nodeSelectionMode: {
@@ -51,7 +52,11 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Select',
       enum: options,
       default: 'id',
+      'x-component-props': {
+        showSearch: true,
+      },
     },
+    ...getNodeFormatOption(options),
     hasDirection: {
       title: $i18n.get({ id: 'basic.components.PathAnalysis.registerMeta.IsThereAnyDirection', dm: '是否有向' }),
       type: 'boolean',

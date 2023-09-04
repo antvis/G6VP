@@ -1,6 +1,6 @@
 import { extra } from '@antv/gi-sdk';
 import info from './info';
-import { NodeSelectionMode } from '@antv/gi-common-components/lib/NodeSelectionWrap';
+import { NodeSelectionMode, getNodeFormatOption } from '@antv/gi-common-components';
 import $i18n from '../i18n';
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -29,7 +29,8 @@ const registerMeta = ({ schemaData }) => {
   }, {});
   const options = Object.keys(nodeProperties)
     .filter(key => nodeProperties[key] === 'string')
-    .map(e => ({ value: e, label: e }));
+    .map(e => ({ value: e, label: e }))
+    .sort((a, b) => a.value.localeCompare(b.value));
 
   return {
     nodeSelectionMode: {
@@ -53,7 +54,11 @@ const registerMeta = ({ schemaData }) => {
       'x-component': 'Select',
       enum: options,
       default: 'id',
+      'x-component-props': {
+        showSearch: true,
+      },
     },
+    ...getNodeFormatOption(options),
     ...metas,
   };
 };
