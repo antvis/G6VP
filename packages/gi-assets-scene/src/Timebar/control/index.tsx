@@ -127,6 +127,7 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
       const shownNodes = {};
       graphData.nodes.forEach(node => {
         const { id } = node;
+        const item = graph.findById(id);
         if (!item || item.destroyed) return;
         if (filteredData.nodes.some(data => data.id === id)) {
           graph.showItem(id);
