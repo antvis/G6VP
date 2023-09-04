@@ -127,6 +127,8 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
       const shownNodes = {};
       graphData.nodes.forEach(node => {
         const { id } = node;
+        const item = graph.findById(id);
+        if (!item || item.destroyed) return;
         if (filteredData.nodes.some(data => data.id === id)) {
           graph.showItem(id);
           shownNodes[id] = true;
@@ -136,6 +138,8 @@ const TimebarControl: React.FC<TimebarControlType> = props => {
       });
       graphData.edges.forEach(edge => {
         const { id, source, target } = edge;
+        const item = graph.findById(id);
+        if (!item || item.destroyed) return;
         if (filteredData.edges.some(data => data.id === id) && shownNodes[source] && shownNodes[target]) {
           graph.showItem(id);
         } else {
