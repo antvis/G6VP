@@ -1,3 +1,4 @@
+import { GraphinContext } from '@antv/graphin';
 import React from 'react';
 import type { DraftFunction } from 'use-immer';
 import { GIAssets, GIService, ISourceDataMap, State } from './typing';
@@ -46,7 +47,8 @@ export const useContext = <
     edges: Record<string, any>[];
   },
 >() => {
-  const context = React.useContext(GraphInsightContext) as ContextType<G>;
+  //@ts-ignore
+  const context = React.useContext(GraphinContext) as ContextType<G>;
   if (context === undefined || Object.keys(context).length === 0) {
     throw new Error(`useContext must be used within a GraphInsightProvider`);
   }

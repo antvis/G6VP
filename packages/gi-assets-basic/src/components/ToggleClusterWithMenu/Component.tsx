@@ -1,4 +1,3 @@
-import { INode } from '@antv/g6';
 import { useContext } from '@antv/gi-sdk';
 import type { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
@@ -34,13 +33,13 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
       folded: false,
     });
     leafNodeIds.forEach(id => {
-      graph.showItem(id);
+      // graph.showItem(id);
     });
   };
 
   const handleFold = (node, leafNodeIds: string[] = []) => {
     leafNodeIds.forEach(id => {
-      graph.hideItem(id);
+      // graph.hideItem(id);
     });
     nodeIdsCache.add(nodeId);
     leafNodeIdsCache[nodeId] = leafNodeIds;
@@ -54,11 +53,11 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
     if (isReLayout) {
       let hiddenNodeIds: string[] = [];
       Array.from(nodeIdsCache).forEach(id => {
-        const node = graph.findById(id);
-        if (node && node.getModel().folded) {
-          const id = node.getModel().id as string;
-          hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
-        }
+        // const node = graph.findById(id);
+        // if (node && node.getModel().folded) {
+        //   const id = node.getModel().id as string;
+        //   hiddenNodeIds = [...hiddenNodeIds, ...leafNodeIdsCache[id]];
+        // }
       });
       const newData = filterGraphDataByNodes(source, hiddenNodeIds);
       updateContext(draft => {
@@ -173,66 +172,66 @@ const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
    * e.g. ChatGPT，历史记录模版等
    */
   React.useEffect(() => {
-    if (controlledValues) {
-      const { startId, action } = controlledValues;
-      const targetNode = graph.findById(startId) as INode;
-      if (!targetNode) {
-        handleUpateHistory(
-          { startId, action },
-          false,
-          $i18n.get({
-            id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
-            dm: '目标节点不存在',
-          }),
-        );
-        return;
-      }
-      const leafNodeIds = getLeafNodes(targetNode).map(node => node.getModel().id as string);
-      if (action === 'fold') {
-        handleFold(leafNodeIds);
-      } else {
-        handleUnfold(leafNodeIds);
-      }
-      handleRelayout();
-      handleUpateHistory({
-        startId: startId,
-        action,
-      });
-    }
+    // if (controlledValues) {
+    //   const { startId, action } = controlledValues;
+    //   const targetNode = graph.findById(startId) as INode;
+    //   if (!targetNode) {
+    //     handleUpateHistory(
+    //       { startId, action },
+    //       false,
+    //       $i18n.get({
+    //         id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
+    //         dm: '目标节点不存在',
+    //       }),
+    //     );
+    //     return;
+    //   }
+    //   const leafNodeIds = getLeafNodes(targetNode).map(node => node.getModel().id as string);
+    //   if (action === 'fold') {
+    //     handleFold(leafNodeIds);
+    //   } else {
+    //     handleUnfold(leafNodeIds);
+    //   }
+    //   handleRelayout();
+    //   handleUpateHistory({
+    //     startId: startId,
+    //     action,
+    //   });
+    // }
   }, [controlledValues]);
 
   /**
    * 受控参数变化，自动进行分析
    * e.g. ChatGPT，历史记录模版等
    */
-  React.useEffect(() => {
-    if (controlledValues) {
-      const { startId, action } = controlledValues;
-      const node = graph.findById(startId) as INode;
-      if (!node) {
-        handleUpateHistory(
-          { startId, action },
-          false,
-          $i18n.get({
-            id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
-            dm: '目标节点不存在',
-          }),
-        );
-        return;
-      }
-      const leafNodeIds = getLeafNodes(node).map(node => node.getModel().id as string);
-      if (action === 'fold') {
-        handleFold(node, leafNodeIds);
-      } else {
-        handleUnfold(node, leafNodeIds);
-      }
-      handleRelayout();
-      handleUpateHistory({
-        startId: startId,
-        action,
-      });
-    }
-  }, [controlledValues]);
+  // React.useEffect(() => {
+  //   if (controlledValues) {
+  //     const { startId, action } = controlledValues;
+  //     const node = graph.findById(startId) as INode;
+  //     if (!node) {
+  //       handleUpateHistory(
+  //         { startId, action },
+  //         false,
+  //         $i18n.get({
+  //           id: 'basic.components.ToggleClusterWithMenu.Component.TheTargetNodeDoesNot',
+  //           dm: '目标节点不存在',
+  //         }),
+  //       );
+  //       return;
+  //     }
+  //     const leafNodeIds = getLeafNodes(node).map(node => node.getModel().id as string);
+  //     if (action === 'fold') {
+  //       handleFold(node, leafNodeIds);
+  //     } else {
+  //       handleUnfold(node, leafNodeIds);
+  //     }
+  //     handleRelayout();
+  //     handleUpateHistory({
+  //       startId: startId,
+  //       action,
+  //     });
+  //   }
+  // }, [controlledValues]);
 
   // 仅支持对节点的操作
   if (!targetNode || targetNode.destroyed || targetNode.getType?.() !== 'node') {

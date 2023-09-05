@@ -10,8 +10,8 @@ const SizeSensor: React.FunctionComponent<SizeSensorProps> = props => {
     const unbind = bind(container, element => {
       if (element) {
         const { clientHeight, clientWidth } = element;
-        graph.changeSize(clientWidth, clientHeight);
-        graph.autoPaint();
+        // graph.changeSize(clientWidth, clientHeight);
+        // graph.autoPaint();
       }
     });
     return () => {

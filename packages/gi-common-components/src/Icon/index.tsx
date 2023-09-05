@@ -1,7 +1,7 @@
 // 资源地址：https://www.iconfont.cn/manage/index?spm=a313x.7781069.1998910419.20&manage_type=myprojects&projectId=3381398&keyword=&project_type=&page=
 
 import IconFont, { createFromIconfontCN } from '@ant-design/icons';
-import Graphin from '@antv/graphin';
+import { registerFontFamily } from '@antv/graphin';
 import React from 'react';
 import { loadFontJson, loadUnicodeFont, type FontJson } from './loader';
 
@@ -9,7 +9,7 @@ export const fontFamily = 'iconfont';
 
 // --- 注册 font icon ---
 
-let icons = Graphin.registerFontFamily(() => ({ fontFamily, glyphs: [] }));
+let icons = registerFontFamily(() => ({ fontFamily, glyphs: [] }));
 let glyphs: FontJson['glyphs'] = [];
 
 async function loadFontsJson(ids: string[]) {
@@ -21,7 +21,7 @@ async function loadFontsJson(ids: string[]) {
   }, [] as FontJson['glyphs']);
 
   glyphs = _glyphs;
-  icons = Graphin.registerFontFamily(() => ({
+  icons = registerFontFamily(() => ({
     fontFamily,
     glyphs: _glyphs.map(item => {
       return {

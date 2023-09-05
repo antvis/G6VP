@@ -13,6 +13,7 @@ import template from './constants/template';
 import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
+import { createDownload } from './utils';
 const { version } = pkg;
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
 const extra = {
@@ -35,11 +36,10 @@ export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
 export { default as useContainer } from './hooks/useContainer';
 export { Shortcuts, useShortcuts } from './utils';
-import { createDownload } from './utils';
+export { common };
 const common = {
   createDownload,
 };
-export { common };
 // export { default as Icon } from './components/Icon';
 
 /** export typing */

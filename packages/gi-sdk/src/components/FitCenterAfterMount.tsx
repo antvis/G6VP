@@ -10,10 +10,10 @@ const FitCenterAfterMount = () => {
     }
     if (type === 'dagre') {
       timer = setTimeout(() => {
-        graph.fitCenter(true);
+        // graph.fitCenter(true);
       }, 200);
     } else {
-      graph.fitCenter(true);
+      // graph.fitCenter(true);
     }
     return () => {
       timer && clearTimeout(timer);

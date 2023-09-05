@@ -1,7 +1,6 @@
 import GI_THEME_ANTD from '@antv/gi-theme-antd/package.json';
 
 import deps_externals from './scripts/deps_externals.json';
-import { G6_VERSION, GRAPHIN_VERSION } from './src/env';
 export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 
 /** 是否为本地研发模式 */
@@ -9,6 +8,7 @@ export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 export const isDev = process.env.NODE_ENV === 'development';
 //@ts-ignore
 export const { BUILD_MODE } = process.env;
+const G6_VERSION = '5.0.0-beta.3';
 
 export const externals = deps_externals.reduce((acc, curr) => {
   return {
@@ -27,8 +27,7 @@ const EXTRA_CONFIG = isDev
         react: 'React',
         'react-dom': 'ReactDOM',
         antd: 'antd',
-        '@antv/g6': 'G6',
-        '@antv/graphin': 'Graphin',
+        '@antv/g6': 'G6V5',
         _: 'lodash',
       },
       scripts: [
@@ -37,7 +36,7 @@ const EXTRA_CONFIG = isDev
         'https://gw.alipayobjects.com/os/lib/lodash/4.17.21/lodash.min.js',
         'https://gw.alipayobjects.com/os/lib/antd/4.24.8/dist/antd.min.js',
         `https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js`,
-        `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+        // `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
         'https://gw.alipayobjects.com/os/lib/antv/gi-sdk-app/1.0.5/dist/index.min.js',
       ],
       links: [],

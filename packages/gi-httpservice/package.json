@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@antv/gi-sdk": "^2.4.8",
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "workspace:*",
     "@eggjs/tsconfig": "^1.0.0",
     "@types/gremlin": "^3.6.1",
     "@types/mocha": "^2.2.40",

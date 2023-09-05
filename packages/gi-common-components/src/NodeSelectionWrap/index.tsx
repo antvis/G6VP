@@ -3,7 +3,6 @@
  * 用于获取目标节点，提供 2 种方式：从列表中选择节点或从画布中点选节点
  */
 import { FormOutlined } from '@ant-design/icons';
-import { Graph } from '@antv/g6';
 import type { FormInstance } from 'antd';
 import { Button, Form, Select, Tooltip } from 'antd';
 import React, { memo, useMemo, useState } from 'react';
@@ -17,7 +16,7 @@ export enum NodeSelectionMode {
 }
 
 interface NodeSelectionProps {
-  graph: Graph;
+  graph: any;
   form: FormInstance<any>;
   data: Record<string, any>[];
   nodeLabel: string;
