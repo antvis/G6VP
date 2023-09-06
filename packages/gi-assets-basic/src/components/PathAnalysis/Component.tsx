@@ -1,6 +1,7 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
+import type { NodeFormatProps } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
@@ -15,7 +16,7 @@ import { getPathByWeight } from './utils';
 
 const { Panel } = Collapse;
 
-export interface IPathAnalysisProps {
+export interface IPathAnalysisProps extends NodeFormatProps {
   hasDirection: boolean;
   hasMaxDeep: boolean;
   nodeSelectionMode: string[];
@@ -31,7 +32,15 @@ export interface IPathAnalysisProps {
 enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
-  const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {}, hasMaxDeep, hasDirection } = props;
+  const {
+    nodeSelectionMode,
+    pathNodeLabel,
+    controlledValues,
+    onOpen = () => {},
+    hasMaxDeep,
+    hasDirection,
+    labelFormat,
+  } = props;
   const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
 
   const [state, updateState] = useImmer<IState>({
@@ -336,6 +345,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             form={form}
             items={items}
             data={graphData.nodes}
+            labelFormat={labelFormat}
             nodeLabel={pathNodeLabel}
             nodeSelectionMode={nodeSelectionMode}
           />

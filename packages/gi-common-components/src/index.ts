@@ -17,4 +17,5 @@ export { Icon, icons, registerIconFonts } from './Icon/index';
 export { default as RadiusTabs } from './RadiusTabs';
 export { default as SchemaField } from './SchemaField';
 export { default as Utils } from './Utils';
-export { default as NodeSelectionWrap } from './NodeSelectionWrap';
+export { default as NodeSelectionWrap, NodeSelectionMode, getNodeFormatOption } from './NodeSelectionWrap';
+export type { NodeFormatProps } from './NodeSelectionWrap';

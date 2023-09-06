@@ -3,7 +3,6 @@
   .gi-path-analysis-container {
     padding: 12px 12px 8px 12px;
     border-radius: 4px;
-    background: #fff;
     margin: 8px 0px;
     position: relative;
   }
@@ -29,8 +28,12 @@
 .gi-collapse-container {
   margin: 1px !important;
   padding: 4px 4px !important;
-  background: var(--background-color);
+  background: var(--background-color, #fff);
   border-radius: 4px !important;
-  box-shadow: -1px -1px 4px 0 hsla(0, 0%, 87.5%, 0.5), -2px 2px 4px 0 hsla(0, 0%, 95.7%, 0.5),
-    2px 3px 8px 2px hsla(0, 0%, 59.2%, 0.05);
+  box-shadow: var(
+    --box-shadow-base,
+    0 3px 6px -4px rgba(0, 0, 0, 0.48),
+    0 6px 16px 0 rgba(0, 0, 0, 0.32),
+    0 9px 28px 8px rgba(0, 0, 0, 0.2)
+  ) !important;
 }
