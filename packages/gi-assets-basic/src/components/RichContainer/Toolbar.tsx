@@ -32,9 +32,11 @@ const Toolbar = (props: ToolbarProps) => {
         const { GIAC_CONTENT } = itemProps;
         const title = GIAC_CONTENT ? GIAC_CONTENT.title : 'EMPTY';
         const buttonType = isActive ? 'primary' : 'text';
+
         if (!HAS_GRAPH) {
           return null;
         }
+
         if (!GIAC_CONTENT) {
           return <ItemComponent {...itemProps} />;
         }
@@ -51,7 +53,7 @@ const Toolbar = (props: ToolbarProps) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: 32,
-                marginRight: 8,
+                marginRight: 4,
                 ...(isActive ? ActiveButtonStyle : {}),
               }}
               onClick={() => {
