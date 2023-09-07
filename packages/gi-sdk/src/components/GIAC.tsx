@@ -41,12 +41,13 @@ const GIAComponent = (props: GIAComponentProps) => {
   } = GIAC || GIAC_PROPS.GIAC;
 
   const buttonStyle = isVertical
-    ? { height: '100%' }
+    ? { height: '100%', padding: '4px 8px' }
     : {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       };
+
   return (
     <div
       style={{ display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center' }}
