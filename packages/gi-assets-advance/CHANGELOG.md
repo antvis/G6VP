@@ -1,5 +1,13 @@
 # @antv/gi-assets-advance
 
+## 2.5.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-common-components@1.3.7
+  - @antv/gi-sdk@2.4.13
+
 ## 2.5.10
 
 ### Patch Changes
