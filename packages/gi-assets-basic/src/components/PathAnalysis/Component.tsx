@@ -1,6 +1,6 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
-import { NodeSelectionWrap } from '@antv/gi-common-components';
+import { NodeSelectionWrap, getNodeSelectionLabel } from '@antv/gi-common-components';
 import type { NodeFormatProps } from '@antv/gi-common-components';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
@@ -27,6 +27,7 @@ export interface IPathAnalysisProps extends NodeFormatProps {
     direction: string;
   };
   onOpen: () => void;
+  filter?: (node: any) => boolean;
 }
 
 enableMapSet();
@@ -40,6 +41,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     hasMaxDeep,
     hasDirection,
     labelFormat,
+    filter,
   } = props;
   const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
 
@@ -344,6 +346,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
             graph={graph}
             form={form}
             items={items}
+            filter={filter}
             data={graphData.nodes}
             labelFormat={labelFormat}
             nodeLabel={pathNodeLabel}
@@ -426,7 +429,11 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                     {path.map(nodeId => {
                       const nodeConfig = sourceDataMap.nodes[nodeId];
                       const data = nodeConfig?.data || {};
-                      return <Timeline.Item>{data[pathNodeLabel] || nodeId}</Timeline.Item>;
+                      return (
+                        <Timeline.Item>
+                          {getNodeSelectionLabel(data, { nodeLabel: pathNodeLabel, labelFormat }) || nodeId}
+                        </Timeline.Item>
+                      );
                     })}
                   </Timeline>
                 </Panel>

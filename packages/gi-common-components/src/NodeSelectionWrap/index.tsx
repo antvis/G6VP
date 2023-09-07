@@ -91,6 +91,7 @@ interface NodeSelectionProps extends NodeFormatProps {
   data: Record<string, any>[];
   nodeLabel: string;
   nodeSelectionMode: string[];
+  filter?: (node: any) => boolean;
 }
 
 interface NodeSelectionWrapProps extends NodeSelectionProps {
@@ -110,6 +111,31 @@ interface NodeSelectionFormItemProps extends NodeSelectionProps {
   setSelecting: React.Dispatch<React.SetStateAction<string>>;
 }
 
+export const getNodeSelectionLabel = (
+  node: Record<string, any>,
+  config: Pick<NodeSelectionProps, 'nodeLabel' | 'labelFormat'>,
+) => {
+  const { nodeLabel, labelFormat } = config;
+  const value = node[nodeLabel];
+
+  const getByKey = (key: string) => node[key] ?? node.data[key];
+
+  if (!labelFormat?.enable) return <Text>{value}</Text>;
+  const { mainLabel, subLabel } = labelFormat;
+  const mainLabelText: string = mainLabel && getByKey(mainLabel[0]);
+  const subLabelText: string = subLabel && getByKey(subLabel[0]);
+
+  if (!mainLabelText && !subLabelText) return <Text>{value}</Text>;
+  if (!mainLabelText) return <Text type="secondary">{subLabelText}</Text>;
+  if (!subLabelText) return <Text>{mainLabelText}</Text>;
+  return (
+    <>
+      <Text>{mainLabelText}</Text>
+      <Text type="secondary">({subLabelText})</Text>
+    </>
+  );
+};
+
 let nodeClickListener = e => {};
 
 const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props => {
@@ -127,6 +153,7 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
     color,
     showDot,
     labelFormat,
+    filter,
   } = props;
   const isList = nodeSelectionMode.includes(NodeSelectionMode.List);
   const isCanvas = nodeSelectionMode.includes(NodeSelectionMode.Canvas);
@@ -171,32 +198,18 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
           onChange={() => {
             setSelecting('');
           }}
-          options={data.map(node => {
-            const value = node[nodeLabel];
+          options={data
+            .filter(node => {
+              if (filter) return filter(node);
+              return true;
+            })
+            .map(node => {
+              const value = node[nodeLabel];
 
-            const getLabel = () => {
-              const getByKey = (key: string) => node[key] ?? node.data[key];
+              const label = getNodeSelectionLabel(node, { nodeLabel, labelFormat });
 
-              if (!labelFormat?.enable) return <Text>{value}</Text>;
-              const { mainLabel, subLabel } = labelFormat;
-              const mainLabelText: string = mainLabel && getByKey(mainLabel[0]);
-              const subLabelText: string = subLabel && getByKey(subLabel[0]);
-
-              if (!mainLabelText && !subLabelText) return <Text>{value}</Text>;
-              if (!mainLabelText) return <Text type="secondary">{subLabelText}</Text>;
-              if (!subLabelText) return <Text>{mainLabelText}</Text>;
-              return (
-                <>
-                  <Text>{mainLabelText}</Text>
-                  <Text type="secondary">({subLabelText})</Text>
-                </>
-              );
-            };
-
-            const label = getLabel();
-
-            return { label, value };
-          })}
+              return { label, value };
+            })}
           {...selectProps}
         />
       </Form.Item>
@@ -222,7 +235,7 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
 });
 
 const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
-  const { graph, nodeSelectionMode, nodeLabel, items, form, data, labelFormat } = props;
+  const { graph, nodeSelectionMode, nodeLabel, items, form, data, labelFormat, filter } = props;
   const [selecting, setSelecting] = useState('');
   const colors = ['#1650FF', '#FFC53D'];
   const handleSwap = async () => {
@@ -242,6 +255,7 @@ const NodeSelectionWrap: React.FC<NodeSelectionWrapProps> = memo(props => {
           name={item.name}
           label={item.label}
           data={data}
+          filter={filter}
           nodeLabel={nodeLabel}
           labelFormat={labelFormat}
           nodeSelectionMode={nodeSelectionMode}
