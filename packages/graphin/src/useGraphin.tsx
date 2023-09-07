@@ -1,8 +1,7 @@
-import { Graph } from '@antv/g6';
 import React from 'react';
 
 export interface GraphinContextType {
-  graph: typeof Graph | null;
+  graph: any;
   isReady: boolean;
   [key: string]: any;
 }

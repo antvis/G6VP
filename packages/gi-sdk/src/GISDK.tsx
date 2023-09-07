@@ -288,7 +288,7 @@ const GISDK = (props: Props) => {
       }
     }
   };
-  console.log(' graphinRef.current', graphinRef.current);
+  console.log('graphinRef.current', graphinRef.current);
   const HAS_GRAPH = graphinRef.current?.graph && !graphinRef.current.graph.destroyed;
 
   const ContextValue = {

@@ -1,7 +1,7 @@
 import { version as GI_THEME_ANTD_VERSION } from '@antv/gi-theme-antd/package.json';
 import LZString from 'lz-string';
 import { useEffect, useState } from 'react';
-import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../env';
+import { ANTD_VERSION, G6_VERSION, GI_VERSION } from '../env';
 import { beautifyCode, getActivePackage, getConstantFiles } from './common';
 
 const CSB_API_ENDPOINT = 'https://codesandbox.io/api/v1/sandboxes/define';
@@ -211,7 +211,6 @@ ReactDOM.render(<MyGraphApp />, document.getElementById("root"));
           antd: ANTD_VERSION,
           '@antv/gi-theme-antd': GI_THEME_ANTD_VERSION,
           '@antv/g6': G6_VERSION,
-          '@antv/graphin': GRAPHIN_VERSION,
           '@antv/gi-sdk': GI_VERSION,
           ...assets_packages_json,
         },

@@ -132,7 +132,7 @@ module.exports = (env, argv) => {
       lodash: '_',
       react: 'React',
       'react-dom': 'ReactDOM',
-      '@antv/graphin': 'Graphin',
+      // '@antv/graphin': 'Graphin',
       '@antv/g6': 'G6',
       '@antv/gi-sdk': 'GISDK',
       antd: 'antd',

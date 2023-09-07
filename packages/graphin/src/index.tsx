@@ -8,6 +8,9 @@ export type IUserNode = any;
 export type Layout = any;
 export type IUserEdge = any;
 export type ContextMenuValue = any;
+export type IG6GraphEvent = any;
+export type GraphData = any;
+export type NodeConfig = any;
 
 export { GraphinContext, GraphinContextType, useGraphin } from './useGraphin';
 
@@ -42,9 +45,21 @@ export const registerFontFamily = iconLoader => {
   });
 };
 
-export const Behaviors = {};
+export const Behaviors = {
+  ClickSelect: (props: any) => null,
+  DragCanvas: (props: any) => null,
+  ZoomCanvas: (props: any) => null,
+  DragNode: (props: any) => null,
+  DragCombo: (props: any) => null,
+  LassoSelect: (props: any) => null,
+  Hoverable: (props: any) => null,
+  BrushSelect: (props: any) => null,
+};
 export const Components = {
-  MiniMap: () => null,
+  MiniMap: (props: any) => null,
+  Tooltip: (props: any) => null,
+  Legend: (props: any) => null,
+  LassoSelect: (props: any) => null,
 };
 export const useBehaviorHook = () => {};
 export default Graphin;

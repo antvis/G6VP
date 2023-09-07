@@ -3,19 +3,18 @@ import Algorithm from '@antv/algorithm';
 import { uniqueId } from '@antv/algorithm/lib/util';
 import { IItemBase } from '@antv/g6';
 import { extra, IEdgeSchema, INodeSchema, useContext } from '@antv/gi-sdk';
-import Graphin, { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
-import { Button, Col, Divider, Input, Layout, Menu, message, Row, Tabs } from 'antd';
+import { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
+import { Button, Col, Divider, Input, Layout, message, Row, Tabs } from 'antd';
 import deepmerge from 'deepmerge';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
+import $i18n from '../i18n';
 import Util from '../utils';
-import AddRelation from './AddRelation';
 import EditDrawer, { TypeInfo } from './editDrawer';
 import './index.less';
 import { ITEM_STATE, SPLITOR } from './registerMeta';
 import templates from './templates';
 import { formatDataModels } from './util';
-import $i18n from '../i18n';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -744,7 +743,7 @@ const PatternEditor: React.FC<Props> = ({
                 style={{ width: 200 }}
               />
               <div className="kg-pattern-match-schema-graph-wrapper">
-                <Graphin
+                {/* <Graphin
                   data={{
                     nodes: schemaNodes,
                     edges: [],
@@ -756,16 +755,15 @@ const PatternEditor: React.FC<Props> = ({
                     width: 200,
                     nodeSize: 50,
                   }}
-                  animate={false}
-                  modes={{
-                    default: [
-                      {
-                        type: 'scroll-canvas',
-                        direction: 'y',
-                        scalableRange: -0.99,
-                      },
-                    ],
-                  }}
+                  // modes={{
+                  //   default: [
+                  //     {
+                  //       type: 'scroll-canvas',
+                  //       direction: 'y',
+                  //       scalableRange: -0.99,
+                  //     },
+                  //   ],
+                  // }}
                 >
                   <ClickSelect disabled />
                   <ZoomCanvas disabled />
@@ -773,7 +771,7 @@ const PatternEditor: React.FC<Props> = ({
                   <LassoSelect disabled />
                   <DragNode disabled />
                   <DragCombo disabled />
-                </Graphin>
+                </Graphin> */}
               </div>
             </TabPane>
             <TabPane
@@ -798,7 +796,7 @@ const PatternEditor: React.FC<Props> = ({
           </Tabs>
         </Sider>
         <Content>
-          <Graphin
+          {/* <Graphin
             data={graphData}
             ref={graphRef as any}
             layout={{
@@ -859,7 +857,7 @@ const PatternEditor: React.FC<Props> = ({
                 </Menu>
               )}
             </div>
-          </Graphin>
+          </Graphin> */}
         </Content>
       </Layout>
       <EditDrawer

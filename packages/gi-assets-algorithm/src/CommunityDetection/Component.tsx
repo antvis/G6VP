@@ -2,7 +2,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import { connectedComponent, iLouvain, kCore, louvain } from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
-import Graphin, { Behaviors } from '@antv/graphin';
+import { Behaviors } from '@antv/graphin';
 import { Button, Empty, InputNumber, Radio, Spin, message } from 'antd';
 import { cloneDeep } from 'lodash';
 import React, { memo, useEffect, useState } from 'react';
@@ -440,19 +440,18 @@ const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = pro
             {$i18n.get({ id: 'gi-assets-algorithm.src.CommunityDetection.Component.AnalysisResults', dm: '分析结果' })}
           </p>
           <div className="community-detection-graph-container">
-            <Graphin
+            {/* <Graphin
               data={resData}
               height={300}
               layout={{
                 type: 'preset',
               }}
               fitView
-              animate={false}
               minZoom={0.1}
               layoutCache
             >
               <ClickSelect disabled />
-            </Graphin>
+            </Graphin> */}
           </div>
         </div>
       );

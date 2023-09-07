@@ -1,16 +1,18 @@
 import { Extensions, Graph as G6Graph, Specification, extend } from '@antv/g6';
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
 import { GraphinContext } from './useGraphin';
+
 interface GraphinProps extends Specification<{}, {}> {
   container?: string;
   style?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
-  /**  */
+  /** 兼容的props  */
   fitView?: boolean;
 }
 
 const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) => {
   const { containerStyle, children, container, ...options } = props;
+
   const { width, height, data, node, edge, modes, layout } = options;
   const [state, setState] = useState({
     graph: null,
@@ -38,9 +40,9 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
   useEffect(() => {
     console.log('Extensions', Extensions);
     const Graph = extend(G6Graph, {
-      // plugins: {
-      //   minimap: Extensions.Minimap,
-      // },
+      plugins: {
+        minimap: Extensions.Minimap,
+      },
     });
     const graph = new Graph({
       container,

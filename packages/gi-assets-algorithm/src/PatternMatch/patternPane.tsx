@@ -1,12 +1,12 @@
 import { DownOutlined } from '@ant-design/icons';
 import { IEdgeSchema, useContext } from '@antv/gi-sdk';
-import Graphin, { Behaviors, GraphinData } from '@antv/graphin';
-import { Dropdown, Empty, Menu, message, Tooltip, Upload } from 'antd';
+import { Behaviors, GraphinData } from '@antv/graphin';
+import { Dropdown, Empty, Menu, Tooltip, Upload, message } from 'antd';
 import React, { useEffect, useMemo, useRef } from 'react';
+import $i18n from '../i18n';
 import Util from '../utils';
 import './index.less';
 import { formatData } from './util';
-import $i18n from '../i18n';
 
 const { exportGraphData } = Util;
 
@@ -125,17 +125,17 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
               <DownOutlined />
             </a>
           </Dropdown>
-          <Graphin
+          {/* <Graphin
             width={388}
             height={246}
             data={graphData}
             ref={graphRef as any}
-            animate={false}
+            // animate={false}
             minZoom={0.001}
             fitView={true}
           >
             <ClickSelect disabled />
-          </Graphin>
+          </Graphin> */}
         </div>
       ) : (
         <Empty

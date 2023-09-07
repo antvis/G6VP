@@ -1,10 +1,9 @@
 import { utils } from '@antv/gi-sdk';
-import { Components } from '@antv/graphin';
 import React, { memo } from 'react';
 
 const { getPositionStyles } = utils;
 
-const { Legend } = Components;
+// const { Legend } = Components;
 
 export interface ComponentProps {
   sortKey: string;
@@ -19,11 +18,11 @@ const Component: React.FunctionComponent<ComponentProps> = props => {
 
   return (
     <div>
-      <Legend bindType="node" sortKey={`data.${sortKey}`} style={positionStyles}>
+      {/* <Legend bindType="node" sortKey={`data.${sortKey}`} style={positionStyles}>
         {renderProps => {
           return <Legend.Node {...renderProps} />;
         }}
-      </Legend>
+      </Legend> */}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { GIAssets } from '@antv/gi-sdk';
 import beautify from 'js-beautify';
 import ThemeVars from '../components/ThemeVars';
-import { ANTD_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../env';
+import { ANTD_VERSION, G6_VERSION, GI_VERSION } from '../env';
 import $i18n from '../i18n';
 import type { Package } from '../loader';
 import { getAssetPackages } from '../loader';
@@ -131,7 +131,7 @@ export const getConstantFiles = opts => {
       id: 'gi-site.src.hooks.common.HeadMetaCharsetUtfMeta',
       dm: '\n<head>\n<meta charset="UTF-8" />\n<meta http-equiv="X-UA-Compatible" content="IE=edge" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>GISDK EXPORT FILE</title>\n<!--- CSS -->\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/{GRAPHINVERSION}/dist/index.css" />\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/{GIVERSION}/dist/index.css" /> \n<!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->\n<!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/{ANTDVERSION}/dist/antd.css" /> -->\n<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-theme-antd/0.1.0/dist/{theme}.css" /> \n\n</head>\n',
     },
-    { GRAPHINVERSION: GRAPHIN_VERSION, GIVERSION: GI_VERSION, ANTDVERSION: ANTD_VERSION, theme: theme },
+    { GIVERSION: GI_VERSION, ANTDVERSION: ANTD_VERSION, theme: theme },
   );
 
   const engineContext = JSON.parse(localStorage.getItem('SERVER_ENGINE_CONTEXT')!);
@@ -172,7 +172,6 @@ export const HTML_HEADER = `
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GISDK EXPORT FILE</title>
 <!--- CSS -->
-<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/index.css" />
 <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antv/gi-sdk/${GI_VERSION}/dist/index.css" /> 
 <!--- 这里 Antd 的全局CSS样式，可以由也业务统一定制 -->
 <!---<link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.css" /> -->
@@ -193,7 +192,7 @@ export const HTML_SCRIPTS = `
 <script src="https://gw.alipayobjects.com/os/lib/antd/${ANTD_VERSION}/dist/antd.min.js"></script>
 <!--- Graphin DEPENDENCIES-->
 <script src="https://gw.alipayobjects.com/os/lib/antv/g6/${G6_VERSION}/dist/g6.min.js"></script>
-<script src="https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js"></script>
+
 <!--- G2/G2Plot DEPENDENCIES-->
 <script src="https://gw.alipayobjects.com/os/lib/antv/g2plot/2.4.16/dist/g2plot.min.js"></script>
 <!--- GI DEPENDENCIES-->

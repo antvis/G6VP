@@ -18,7 +18,7 @@ import INJECT from './pre-build-inject.json' assert { type: 'json' };
 
 import path from 'path';
 export const G6_VERSION = '4.8.14';
-export const GRAPHIN_VERSION = '2.7.25';
+// export const GRAPHIN_VERSION = '2.7.25';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.8';
 export const GI_VERSION = GI_SDK.version;
@@ -72,12 +72,12 @@ const depsPackage = [
     version: G6_VERSION,
     global: 'G6',
   },
-  {
-    url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
-    name: '@antv/graphin',
-    version: GRAPHIN_VERSION,
-    global: 'Graphin',
-  },
+  // {
+  //   url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
+  //   name: '@antv/graphin',
+  //   version: GRAPHIN_VERSION,
+  //   global: 'Graphin',
+  // },
   {
     url: `https://gw.alipayobjects.com/os/lib/antv/g2plot/${G2PLOT_VERSION}/dist/g2plot.min.js`,
     name: '@antv/g2plot',
@@ -181,7 +181,7 @@ fs.writeFile(
   export const NODE_ENV = '${process.env.NODE_ENV}';
   export const BUILD_MODE = '${BUILD_MODE}';
   export const G6_VERSION = '${G6_VERSION}';
-  export const GRAPHIN_VERSION = '${GRAPHIN_VERSION}';
+ 
   export const G2PLOT_VERSION = '${G2PLOT_VERSION}';
   export const ANTD_VERSION = '${ANTD_VERSION}';
   export const GI_VERSION = '${GI_VERSION}';

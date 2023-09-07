@@ -1,4 +1,4 @@
-import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION, GRAPHIN_VERSION } from '../../env';
+import { ANTD_VERSION, G2PLOT_VERSION, G6_VERSION, GI_VERSION } from '../../env';
 import { getActivePackageName } from '../../hooks/common';
 
 export const getPkg = activeAssets => {
@@ -54,12 +54,7 @@ export const deps = {
     version: G6_VERSION,
     global: 'G6',
   },
-  Graphin: {
-    url: `https://gw.alipayobjects.com/os/lib/antv/graphin/${GRAPHIN_VERSION}/dist/graphin.min.js`,
-    name: '@antv/graphin',
-    version: GRAPHIN_VERSION,
-    global: 'Graphin',
-  },
+
   GISDK: {
     name: '@antv/gi-sdk',
     version: GI_VERSION,

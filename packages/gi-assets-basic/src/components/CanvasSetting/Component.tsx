@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import CanvasClick from './CanvasClick';
 import CanvasDoubleClick from './CanvasDoubleClick';
 
-const { DragCanvas, ZoomCanvas, BrushSelect, Hoverable, ActivateRelations } = Behaviors;
+const { DragCanvas, ZoomCanvas, BrushSelect } = Behaviors;
 
 export interface CanvasSettingProps {
   dragCanvas: {
