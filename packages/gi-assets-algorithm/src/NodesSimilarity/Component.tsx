@@ -19,10 +19,11 @@ export interface CommunityDiscoveryProps extends NodeFormatProps {
   onOpen?: () => void;
   nodeSelectionMode: string[];
   nodeLabel: string;
+  filter?: (node: any) => boolean;
 }
 
 export enum NodesSimilarityAlgorithm {
-  nodesConsineSimilarity = 'nodes-cosine-similarity',
+  nodesCosineSimilarity = 'nodes-cosine-similarity',
 }
 
 interface ResData {
@@ -30,12 +31,12 @@ interface ResData {
   similarNodes: any[] | undefined;
 }
 const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
-  const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel, labelFormat } = props;
+  const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel, labelFormat, filter } = props;
   const { data, graph, updateHistory } = useContext();
-  const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
+  const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesCosineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
 
-  const [similarityAlgo, setSimilarityAlgo] = useState<string>(NodesSimilarityAlgorithm.nodesConsineSimilarity);
+  const [similarityAlgo, setSimilarityAlgo] = useState<string>(NodesSimilarityAlgorithm.nodesCosineSimilarity);
   const [resData, setResData] = useState<ResData>({ similarityRes: [], similarNodes: [] });
   const [hasAnalysis, setHasAnalysis] = useState(false);
   const [seedNodeId, setSeedNodeId] = useState<string | null>(null);
@@ -176,7 +177,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     const { seed } = await form.validateFields();
     setSeedNodeId(seed);
     switch (algorithm || similarityAlgo) {
-      case NodesSimilarityAlgorithm.nodesConsineSimilarity:
+      case NodesSimilarityAlgorithm.nodesCosineSimilarity:
         if (!graph || graph.destroyed) {
           handleUpdateHistory(
             false,
@@ -243,7 +244,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
       );
     }
 
-    if (similarityAlgo === NodesSimilarityAlgorithm.nodesConsineSimilarity) {
+    if (similarityAlgo === NodesSimilarityAlgorithm.nodesCosineSimilarity) {
       return (
         <div className="nodes-similarity-result-wrapper">
           <span className="nodes-similarity-title">
@@ -259,7 +260,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
     form.resetFields();
     resetMapping([], []);
     setResData({ similarityRes: [], similarNodes: [] });
-    setCommunityAlgo(NodesSimilarityAlgorithm.nodesConsineSimilarity);
+    setCommunityAlgo(NodesSimilarityAlgorithm.nodesCosineSimilarity);
     setTopReset(true);
   };
 
@@ -286,6 +287,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
                   }),
                 },
               ]}
+              filter={filter}
               data={data.nodes}
               labelFormat={labelFormat}
               nodeLabel={nodeLabel}
