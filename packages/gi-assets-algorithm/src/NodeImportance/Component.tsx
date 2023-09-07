@@ -3,7 +3,7 @@
  * author:shiwu.wyy@antgroup.com
  */
 
-import { DeleteOutlined } from '@ant-design/icons';
+import { ClearOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Checkbox, Col, Form, Radio, Row, Tabs, Tooltip } from 'antd';
@@ -707,7 +707,7 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
           </Button>
         </Col>
         <Col offset="2" span={6} style={{ textAlign: 'right', lineHeight: '56px' }}>
-          <Button className="button" danger onClick={reset} icon={<DeleteOutlined />}></Button>
+          <Button className="button" danger onClick={reset} icon={<ClearOutlined />}></Button>
         </Col>
       </Row>
       {result && (
