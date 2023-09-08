@@ -1,7 +1,7 @@
 import type { GraphinData } from '@antv/graphin';
 
-const scaleNodes = (graphData: GraphinData, value: number = 600) => {
-  const{ nodes = [], edges = [] } = graphData;
+export const scaleNodes = (graphData: GraphinData, value: number = 600) => {
+  const { nodes = [], edges = [] } = graphData;
   if (!nodes?.length) {
     return;
   }
@@ -46,6 +46,52 @@ const scaleNodes = (graphData: GraphinData, value: number = 600) => {
   };
 };
 
+export const dataURLToImage = (dataURL: string, renderer: string, link, fileName) => {
+  if (!dataURL || dataURL === 'data:') {
+    console.error('Download image failed. The graph is too large or there is invalid attribute values in graph items');
+    return;
+  }
+  if (typeof window !== 'undefined') {
+    if (window.Blob && window.URL && renderer !== 'svg') {
+      const arr = dataURL.split(',');
+      let mime = '';
+      if (arr && arr.length > 0) {
+        const match = arr[0].match(/:(.*?);/);
+        // eslint-disable-next-line prefer-destructuring
+        if (match && match.length >= 2) mime = match[1];
+      }
+
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+
+      const blobObj = new Blob([u8arr], { type: mime });
+
+      if ((window.navigator as any).msSaveBlob) {
+        (window.navigator as any).msSaveBlob(blobObj, fileName);
+      } else {
+        link.addEventListener('click', () => {
+          link.download = fileName;
+          link.href = window.URL.createObjectURL(blobObj);
+        });
+      }
+    } else {
+      link.addEventListener('click', () => {
+        link.download = fileName;
+        link.href = dataURL;
+      });
+    }
+  }
+  const e = document.createEvent('MouseEvents');
+  e.initEvent('click', false, false);
+  link.dispatchEvent(e);
+};
+
 export default {
   scaleNodes,
+  dataURLToImage,
 };

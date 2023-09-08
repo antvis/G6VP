@@ -72,6 +72,7 @@
   "basic.components.ContextMenu.info.RightClickMenu": "ContextMenu",
   "basic.components.ContextMenu.info.RightClickTheMenuContainer": "Right-click the menu container.",
   "basic.components.ContextMenu.registerMeta.IntegratedComponents": "Integrated Components",
+  "basic.components.ContextMenu.registerMeta.Mode": "Mode",
   "basic.components.Copyright.Component.CopyrightImage": "Copyright image",
   "basic.components.Copyright.info.Copyright": "Copyright",
   "basic.components.Copyright.info.ShowApplicationCopyrightInformationOn": "Show application copyright information on canvas",
