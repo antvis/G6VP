@@ -102,7 +102,7 @@ const getBadgesStyleByConfig = (style, data) => {
     }
     if (badge.type === 'font') {
       badge.type = 'font';
-      badge.fontFamily = 'graphin';
+      badge.fontFamily = 'iconfont';
       badge.value = icons[value] || '';
     }
     if (badge.type === 'text') {

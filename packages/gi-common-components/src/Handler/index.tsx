@@ -67,10 +67,11 @@ export interface HandlerProps {
   style?: React.CSSProperties;
   handleClick: () => void;
   type: 'left' | 'right' | 'bottom';
+  icon?: React.ReactNode;
 }
 
 const Handler: React.FC<HandlerProps> = props => {
-  const { handleClick, type, style = {} } = props;
+  const { handleClick, type, icon, style = {} } = props;
 
   const handerBackStyles = {
     position: 'absolute',
@@ -95,7 +96,9 @@ const Handler: React.FC<HandlerProps> = props => {
     <>
       <div style={{ ...handerBackStyles, ...style } as any}></div>
       <div onClick={handleClick} style={{ ...handlerStyles, ...style } as any}>
-        <span style={handlerTextStyles as any}>{type === 'bottom' ? '=' : '||'}</span>
+        <span style={handlerTextStyles as any}>
+          { icon ? icon : type === 'bottom' ? '=' : '||' }
+        </span>
       </div>
     </>
   );
