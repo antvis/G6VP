@@ -25,7 +25,7 @@ export interface RichContainerState {
   viewMode: string;
 }
 const getDefaultSideWidth = () => {
-  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || '320';
+  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || '330';
   return Number(defaultWidth);
 };
 const RichContainer = props => {
@@ -156,6 +156,7 @@ const RichContainer = props => {
             style={{ width: 120 }}
             onChange={handleChangeViewMode}
             options={ViewModeOptions}
+            suffixIcon={<Icon type='icon-shituxiala' />}
           />
         </div>
         <div className="toolbar-item">
@@ -269,6 +270,7 @@ const RichContainer = props => {
                 style={{
                   borderColor: 'transparent transparent transparent #f3f5f9',
                 }}
+                icon={<Icon type='icon-shituxiala' style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(-90deg)' }} />}
               />
             </Resizable>
           </div>
