@@ -72,6 +72,7 @@
   "basic.components.ContextMenu.info.RightClickMenu": "右键菜单",
   "basic.components.ContextMenu.info.RightClickTheMenuContainer": "鼠标右键即可出现菜单容器",
   "basic.components.ContextMenu.registerMeta.IntegratedComponents": "可集成组件",
+  "basic.components.ContextMenu.registerMeta.Mode": "模式",
   "basic.components.Copyright.Component.CopyrightImage": "版权图片",
   "basic.components.Copyright.info.Copyright": "版权",
   "basic.components.Copyright.info.ShowApplicationCopyrightInformationOn": "在画布上显示应用版权信息",
