@@ -18,7 +18,8 @@
   "pnpm": {
     "peerDependencyRules": {
       "allowedVersions": {
-        "react": "17"
+        "react": "17.x",
+        "react-dom": "17.x"
       }
     },
     "overrides": {
@@ -39,7 +40,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@antv/algorithm": "^0.1.26-beta.0",
-    "@antv/g6": "^4.8.19",
+    "@antv/g6": "5.0.0-beta.5",
     "@antv/graphin": "workspace:*",
     "@antv/layout": "^0.3.22",
     "@antv/s2": "^1.48.0",
@@ -49,7 +50,7 @@
     "buffer": "^6.0.3",
     "buffer-browserify": "^0.2.5",
     "node-fetch": "^3.3.0",
-    "react": "17",
+    "react": "17.x",
     "react-dom": "17.x",
     "stream-browserify": "^3.0.0",
     "umi": "3.x"

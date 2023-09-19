@@ -19,6 +19,7 @@
     "*.less"
   ],
   "scripts": {
+    "docs": "dumi dev",
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
     "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-sdk",
@@ -31,7 +32,7 @@
     "postpublish": "tnpm sync @antv/graphin"
   },
   "dependencies": {
-    "@antv/g6": "5.0.0-beta.3",
+    "@antv/g6": "5.0.0-beta.5",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -43,6 +44,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "dumi": "^1.1.50",
     "@types/mousetrap": "^1.6.11"
   }
 }

@@ -1,6 +1,7 @@
 import Graphin from './Graphin';
+export { default as Compatible } from './compatible';
+export { default as Components } from './components';
 export * as Utils from './utils';
-
 export type GraphinData = any;
 export type Graph = any;
 export type EdgeStyle = any;
@@ -12,7 +13,8 @@ export type IG6GraphEvent = any;
 export type GraphData = any;
 export type NodeConfig = any;
 
-export { GraphinContext, GraphinContextType, useGraphin } from './useGraphin';
+export { GraphinContext, useGraphin } from './useGraphin';
+export type { GraphinContextType } from './useGraphin';
 
 export const registerNode = () => {};
 //@ts-ignore
@@ -55,11 +57,6 @@ export const Behaviors = {
   Hoverable: (props: any) => null,
   BrushSelect: (props: any) => null,
 };
-export const Components = {
-  MiniMap: (props: any) => null,
-  Tooltip: (props: any) => null,
-  Legend: (props: any) => null,
-  LassoSelect: (props: any) => null,
-};
+
 export const useBehaviorHook = () => {};
 export default Graphin;
