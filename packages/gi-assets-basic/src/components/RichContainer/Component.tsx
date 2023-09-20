@@ -130,7 +130,7 @@ const RichContainer = props => {
         value: item.id,
         label: (
           <Space style={{ color: '#363740' }}>
-            <Icon type={icon} style={{ position: 'relative', top: 3, fontSize: 14 }}></Icon>
+            <Icon type={icon} style={{ position: 'relative', top: 2, fontSize: 14 }}></Icon>
             {title}
           </Space>
         ),
