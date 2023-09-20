@@ -11,7 +11,7 @@ interface LanguageProps {}
 const options = [
   {
     value: LANGUAGE_KEY_NAME.ZhCN,
-    label: '中',
+    label: $i18n.get({ id: 'gi-site.components.Navbar.Language.Medium', dm: '中' }),
   },
   {
     value: LANGUAGE_KEY_NAME.EnUs,

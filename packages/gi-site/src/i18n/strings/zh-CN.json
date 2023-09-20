@@ -716,5 +716,7 @@
   "gi-site.src.services.user.AvailableVipAssets": "可用的 VIP 资产",
   "gi-site.src.services.user.DetectedAvailableVipAssetsWhether": "检测到可用的 VIP 资产，是否前往登陆获取",
   "gi-site.components.Navbar.Preview.Preview": "预览",
-  "gi-site.src.layouts.SideNav.Solution": "解决方案"
+  "gi-site.src.layouts.SideNav.Solution": "解决方案",
+  "gi-site.components.Navbar.Language.Medium": "中",
+  "gi-site.pages.Workspace.Recover.AttentionTheSiteParsesAnd": "注意⚠️：站点会解析文件并运行，如果是他人分享的文件，请先确保安全可信。"
 }

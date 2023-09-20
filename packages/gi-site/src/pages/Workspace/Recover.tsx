@@ -1,5 +1,5 @@
 import { FileTextOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
+import { Alert, Button, Upload } from 'antd';
 import * as React from 'react';
 import $i18n from '../../i18n';
 const { Dragger } = Upload;
@@ -63,6 +63,15 @@ const Recover: React.FunctionComponent<RecoverProps> = props => {
 
   return (
     <>
+      <Alert
+        style={{ marginBottom: '8px' }}
+        type="warning"
+        message={$i18n.get({
+          id: 'gi-site.pages.Workspace.Recover.AttentionTheSiteParsesAnd',
+          dm: '注意⚠️：站点会解析文件并运行，如果是他人分享的文件，请先确保安全可信。',
+        })}
+      />
+
       <div
         style={{
           textAlign: 'center',
