@@ -130,7 +130,7 @@ const RichContainer = props => {
         value: item.id,
         label: (
           <Space style={{ color: '#363740' }}>
-            <Icon type={icon}></Icon>
+            <Icon type={icon} style={{ position: 'relative', top: 2, fontSize: 14 }}></Icon>
             {title}
           </Space>
         ),
@@ -159,72 +159,80 @@ const RichContainer = props => {
             suffixIcon={<Icon type='icon-shituxiala' />}
           />
         </div>
-        <div className="toolbar-item">
-          <Divider type="vertical" />
-          <span
-            style={{
-              marginLeft: 6,
-              color: '#98989D',
-              marginRight: 8,
-            }}
-          >
-            查询过滤
-          </span>
-          <Button
-            type={HAS_QUERY_VIEW ? 'primary' : 'text'}
-            icon={<Icon type={DataArea.icon} />}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: 12,
-              ...(HAS_QUERY_VIEW ? ActiveButtonStyle : {}),
-            }}
-            onClick={() => {
-              if (!HAS_QUERY_VIEW) {
-                handleChange(DATA_QUERY_ID[0]);
-              }
-            }}
-          >
-            {$i18n.get({ id: 'basic.components.RichContainer.Component.Query', dm: '查询' })}
-          </Button>
-        </div>
-        <div className="toolbar-item">
-          <Button
-            type={HAS_FILTER_VIEW ? 'primary' : 'text'}
-            icon={<Icon type={FilterArea.icon} />}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              fontSize: 12,
-              ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
-            }}
-            onClick={() => {
-              if (!HAS_FILTER_VIEW) {
-                handleChange(DATA_FILTER_ID[0]);
-              }
-            }}
-          >
-            {$i18n.get({ id: 'basic.components.RichContainer.Component.Filter', dm: '筛选' })}
-          </Button>
-        </div>
 
-        <Toolbar
-          value={activeKey}
-          onChange={handleChange}
-          title={$i18n.get({ id: 'basic.components.RichContainer.Component.LayoutStyle', dm: '布局样式' })}
-          options={StylingArea.components}
-          HAS_GRAPH={HAS_GRAPH}
-        />
+        {
+          viewMode === 'JSONMode' &&
+          <div className='operator-toolbar-overlay' />
+        }
 
-        <Toolbar
-          value={activeKey}
-          onChange={handleChange}
-          title={$i18n.get({ id: 'basic.components.RichContainer.Component.CanvasOperation', dm: '画布操作' })}
-          options={CanvasArea.components}
-          HAS_GRAPH={HAS_GRAPH}
-        />
+        <div className='toolbar-item' style={{ opacity: viewMode === 'JSONMode' ? 0.25 : 1 }}>
+          <div className="toolbar-item">
+            <Divider type="vertical" />
+            <span
+              style={{
+                marginLeft: 6,
+                color: '#98989D',
+                marginRight: 8,
+              }}
+            >
+              查询过滤
+            </span>
+            <Button
+              type={HAS_QUERY_VIEW ? 'primary' : 'text'}
+              icon={<Icon type={DataArea.icon} />}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: 12,
+                ...(HAS_QUERY_VIEW ? ActiveButtonStyle : {}),
+              }}
+              onClick={() => {
+                if (!HAS_QUERY_VIEW) {
+                  handleChange(DATA_QUERY_ID[0]);
+                }
+              }}
+            >
+              {$i18n.get({ id: 'basic.components.RichContainer.Component.Query', dm: '查询' })}
+            </Button>
+          </div>
+          <div className="toolbar-item">
+            <Button
+              type={HAS_FILTER_VIEW ? 'primary' : 'text'}
+              icon={<Icon type={FilterArea.icon} />}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: 12,
+                ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
+              }}
+              onClick={() => {
+                if (!HAS_FILTER_VIEW) {
+                  handleChange(DATA_FILTER_ID[0]);
+                }
+              }}
+            >
+              {$i18n.get({ id: 'basic.components.RichContainer.Component.Filter', dm: '筛选' })}
+            </Button>
+          </div>
+
+          <Toolbar
+            value={activeKey}
+            onChange={handleChange}
+            title={$i18n.get({ id: 'basic.components.RichContainer.Component.LayoutStyle', dm: '布局样式' })}
+            options={StylingArea.components}
+            HAS_GRAPH={HAS_GRAPH}
+          />
+
+          <Toolbar
+            value={activeKey}
+            onChange={handleChange}
+            title={$i18n.get({ id: 'basic.components.RichContainer.Component.CanvasOperation', dm: '画布操作' })}
+            options={CanvasArea.components}
+            HAS_GRAPH={HAS_GRAPH}
+          />
+        </div>
       </div>
 
       <div className={`gi-rich-container-content ${isSheet ? 'has-sheet' : ''}`}>
