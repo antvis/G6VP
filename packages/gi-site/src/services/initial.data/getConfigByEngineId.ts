@@ -107,36 +107,40 @@ const getConfigByEngineId = (engineId, template) => {
   const addComponentId = addComponent.map(item => item.id);
   const componentConfig = [...components, ...addComponent];
   //@TODO: 之后增加container，统一处理这段逻辑
-  componentConfig.forEach(item => {
-    if (item.id === 'GrailLayout') {
-      item.props.containers = [
-        {
-          id: 'GI_CONTAINER_RIGHT',
-          GI_CONTAINER: ['FilterPanel', ...addComponentId],
-        },
-      ];
-    }
-    if (item.id === 'SegmentedLayout') {
-      item.props.containers = [
-        {
-          id: 'GI_CONTAINER_SIDE',
-          GI_CONTAINER: [...addComponentId, 'FilterPanel'],
-        },
-      ];
-    }
-    if (item.id === 'UadLayout') {
-      item.props.containers = [
-        {
-          id: 'GI_CONTAINER_TOP',
-          GI_CONTAINER: isCypher ? ['CypherQuery'] : ['GremlinQuery'],
-        },
-        {
-          id: 'GI_CONTAINER_SIDE',
-          GI_CONTAINER: ['JSONMode'],
-        },
-      ];
-    }
-  });
+
+  if(engineId !== 'AKG'){
+    componentConfig.forEach(item => {
+      if (item.id === 'GrailLayout') {
+        item.props.containers = [
+          {
+            id: 'GI_CONTAINER_RIGHT',
+            GI_CONTAINER: ['FilterPanel', ...addComponentId],
+          },
+        ];
+      }
+      if (item.id === 'SegmentedLayout') {
+        item.props.containers = [
+          {
+            id: 'GI_CONTAINER_SIDE',
+            GI_CONTAINER: [...addComponentId, 'FilterPanel'],
+          },
+        ];
+      }
+      if (item.id === 'UadLayout') {
+        item.props.containers = [
+          {
+            id: 'GI_CONTAINER_TOP',
+            GI_CONTAINER: isCypher ? ['CypherQuery'] : ['GremlinQuery'],
+          },
+          {
+            id: 'GI_CONTAINER_SIDE',
+            GI_CONTAINER: ['JSONMode'],
+          },
+        ];
+      }
+    });
+  }
+
 
   const config = {
     nodes,
