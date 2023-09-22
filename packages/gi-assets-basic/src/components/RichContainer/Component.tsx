@@ -7,6 +7,7 @@ import $i18n from '../../i18n';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import './index.less';
+
 const URL_SEARCH_KEY = 'ActiveAssetID';
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
@@ -60,15 +61,26 @@ const RichContainer = props => {
     } else setWidth(0);
   }, [isExpanded]);
 
+  useEffect(()=>{
+    if (utils.searchParamOf(URL_SEARCH_KEY)) {
+      setState(preState => {
+        return {
+          ...preState,
+          activeKey: utils.searchParamOf(URL_SEARCH_KEY) as string,
+        };
+      });
+    }
+  },[utils.searchParamOf(URL_SEARCH_KEY)])
+
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
   };
-  const [NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea] = Containers;
+  const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea,ConditionArea] = Containers;
 
   const handleChange = id => {
     const { searchParams, path } = utils.getSearchParams(window.location);
     searchParams.set(URL_SEARCH_KEY, id);
-    // window.location.hash = `${path}?${searchParams.toString()}`;
+    window.location.hash = `${path}?${searchParams.toString()}`;
 
     setState(preState => {
       return {
@@ -90,6 +102,7 @@ const RichContainer = props => {
       };
     });
   };
+
   const DATA_QUERY_ID = DataArea.components.map(item => item.id);
   const DATA_FILTER_ID = FilterArea.components.map(item => item.id);
   const DATA_QUERY_OPTIONS = DataArea.components.map(item => {
@@ -102,6 +115,7 @@ const RichContainer = props => {
   });
   const HAS_QUERY_VIEW = DATA_QUERY_ID.indexOf(activeKey) !== -1;
   const HAS_FILTER_VIEW = DATA_FILTER_ID.indexOf(activeKey) !== -1;
+  
 
   const onResizeStart = () => {
     setIsResizing(true);
@@ -263,7 +277,7 @@ const RichContainer = props => {
                   <Segmented block value={activeKey} options={DATA_FILTER_OPTIONS} onChange={handleChange} />
                 )}
 
-                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components].map(item => {
+                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components, ...ConditionArea.components].map(item => {
                   const isActive = activeKey === item.id;
                   return (
                     <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>

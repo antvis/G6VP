@@ -136,6 +136,22 @@ const registerMeta = context => {
           default: [],
         },
       },
+      {
+        id: 'condition-content',
+        name:'条件展示容器',
+        required: true,
+        GI_CONTAINER: {
+          title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
+          type: 'string',
+          'x-decorator': 'FormItem',
+          'x-component': 'Select',
+          'x-component-props': {
+            mode: 'multiple',
+          },
+          enum: GIAC_CONTENT_ITEMS,
+          default: [],
+        },
+      },
     ],
     isSheet: {
       title: '多页签',
