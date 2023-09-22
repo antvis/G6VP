@@ -1,5 +1,5 @@
 import { Handler } from '@antv/gi-common-components';
-import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
+import { Icon, useContainer, useContext } from '@antv/gi-sdk';
 import { Button, Divider, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
 import React, { memo, useEffect, useState } from 'react';
@@ -35,7 +35,7 @@ const RichContainer = props => {
   const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
   const [state, setState] = React.useState<RichContainerState>({
-    activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'LanguageQuery',
+    activeKey: localStorage.getItem(URL_SEARCH_KEY) || 'LanguageQuery',
     viewMode: 'GISDK_CANVAS',
   });
   const { activeKey, viewMode } = state;
@@ -62,15 +62,15 @@ const RichContainer = props => {
   }, [isExpanded]);
 
   useEffect(()=>{
-    if (utils.searchParamOf(URL_SEARCH_KEY)) {
+    if (localStorage.getItem(URL_SEARCH_KEY)) {
       setState(preState => {
         return {
           ...preState,
-          activeKey: utils.searchParamOf(URL_SEARCH_KEY) as string,
+          activeKey: localStorage.getItem(URL_SEARCH_KEY) as string,
         };
       });
     }
-  },[utils.searchParamOf(URL_SEARCH_KEY)])
+  },[localStorage.getItem(URL_SEARCH_KEY)])
 
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
@@ -78,9 +78,7 @@ const RichContainer = props => {
   const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea,ConditionArea] = Containers;
 
   const handleChange = id => {
-    const { searchParams, path } = utils.getSearchParams(window.location);
-    searchParams.set(URL_SEARCH_KEY, id);
-    window.location.hash = `${path}?${searchParams.toString()}`;
+    localStorage.setItem(URL_SEARCH_KEY, id)
 
     setState(preState => {
       return {
