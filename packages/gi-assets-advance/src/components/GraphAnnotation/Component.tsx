@@ -194,6 +194,12 @@ const GraphAnnotation: React.FunctionComponent<GraphAnnotationProps> = props => 
     // update style
     graph.updateItem(menuTargetItem, {
       pinned: true,
+      // Graphin 使用 lodash.merge 来更新样式，当 merge { a: ['1'] } 和 { a: [] } 时，将得到 { a: ['1'] }。
+      // 这导致 badges 传入空数组不能达到删除 badge 的目的。因此这里只能通过修改内部被 merge 的 _initialStyle 来达到这个目的
+      _initialStyle: {
+        ...menuTargetItem.getModel()._initialStyle,
+        badges,
+      },
       style: {
         badges,
       },
