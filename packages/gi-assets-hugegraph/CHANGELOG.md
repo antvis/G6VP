@@ -1,5 +1,13 @@
 # @antv/gi-assets-hugegraph
 
+## 1.1.8
+
+### Patch Changes
+
+- publish in 0925
+- Updated dependencies
+  - @antv/gi-sdk@2.4.14
+
 ## 1.1.6
 
 ### Patch Changes
