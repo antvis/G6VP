@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getUser } from '../services/user';
 
+const ASSETS_PACKAGES_KEY = 'GI_ASSETS_PACKAGES';
+const VIP_ASSETS_RETRIEVED_KEY = 'GI_VIP_ASSETS_RETRIEVED';
+
 export const setAssetPackages = newAssets => {
-  const prevAssets = JSON.parse(localStorage.getItem('GI_ASSETS_PACKAGES') || '{}');
+  const prevAssets = JSON.parse(localStorage.getItem(ASSETS_PACKAGES_KEY) || '{}');
   newAssets.forEach(pkg => {
     const { global } = pkg;
     const prev = prevAssets[global];
@@ -12,7 +15,7 @@ export const setAssetPackages = newAssets => {
       prevAssets[global] = pkg;
     }
   });
-  localStorage.setItem('GI_ASSETS_PACKAGES', JSON.stringify(prevAssets));
+  localStorage.setItem(ASSETS_PACKAGES_KEY, JSON.stringify(prevAssets));
 };
 
 export const getLoginUserInfo = async () => {
@@ -20,10 +23,14 @@ export const getLoginUserInfo = async () => {
   try {
     const result = await getUser();
     if (result) {
-      const VIP_ASSETS = await fetch('https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/json/assets.json').then(
-        res => res.json(),
-      );
-      setAssetPackages(VIP_ASSETS); //暂时移除从user中获取资产信息
+      if (!localStorage.getItem(VIP_ASSETS_RETRIEVED_KEY)) {
+        const VIP_ASSETS = await fetch('https://unpkg.alipay.com/@alipay/gi-assets-vip@latest/json/assets.json').then(
+          res => res.json(),
+        );
+        setAssetPackages(VIP_ASSETS);
+        localStorage.setItem(VIP_ASSETS_RETRIEVED_KEY, new Date().toLocaleString());
+      }
+
       //@ts-ignore
       window.GI_USER_INFO = result;
       return result;
