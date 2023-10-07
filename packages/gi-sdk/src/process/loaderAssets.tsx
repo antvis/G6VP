@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es';
+import { memoize, merge } from 'lodash-es';
 export interface AssetPackage {
   name: string;
   url: string;
@@ -16,26 +16,10 @@ export const loadCss = options => {
   document.head.append(link);
 };
 
-export const loadJS = async (options: AssetPackage) => {
+export const loadJS = memoize(async (options: AssetPackage) => {
   return new Promise(resolve => {
     // load js
     const scriptId = options.global || options.url;
-    const scriptElement = document.getElementById(scriptId);
-
-    // 如果相应 js 已经添加到 dom 中，并且还未加载完成，则等待加载完成后 resolve
-    if (scriptElement && !scriptElement.getAttribute('loaded')) {
-      scriptElement.addEventListener('load', () => {
-        resolve(scriptElement);
-      });
-      return;
-    }
-
-    // 如果相应 js 已经添加到 dom 中，并且已经加载完成，则直接 resolve
-    if (scriptElement && scriptElement.getAttribute('loaded')) {
-      resolve(scriptElement);
-      return;
-    }
-
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.charset = 'UTF-8';
@@ -51,15 +35,13 @@ export const loadJS = async (options: AssetPackage) => {
     document.head.append(link);
 
     script.onload = () => {
-      script.setAttribute('loaded', 'true');
       resolve(script);
     };
     script.onerror = () => {
       resolve(script);
     };
   });
-};
-
+}, JSON.stringify);
 export const loader = async (options: AssetPackage[]) => {
   return Promise.all([
     ...options.map(opt => {
