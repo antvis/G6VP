@@ -31,33 +31,32 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
 
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
-  // console.log('dataRef', dataRef, layoutRef);
 
   const [state, setState] = useState<{
     isReady: boolean;
     graph: null | IGraph;
-    data: any;
-    layout: any;
-  }>({
+  }>(() => ({
     isReady: false,
     graph: null,
-    data,
-    layout,
-  });
+  }));
   const { isReady, graph } = state;
 
-  if (state.data !== data) {
-    console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)');
+  if (dataRef.current !== data) {
+    console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
     console.time('COST_CHANGE_DATA');
     //@ts-ignore
     graph && graph.changeData(data, 'replace');
+    //@ts-ignore
+    dataRef.current = data;
     console.timeEnd('COST_CHANGE_DATA');
   }
-  if (state.layout !== layout) {
+  if (layoutRef.current !== layout) {
     console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
     console.time('COST_CHANGE_LAYOUT');
     //@ts-ignore
     graph && graph.layout(layout);
+    //@ts-ignore
+    layoutRef.current = layout;
     console.timeEnd('COST_CHANGE_LAYOUT');
   }
 
