@@ -68,16 +68,19 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
   //@ts-ignore
 
   const [state, setState] = React.useState<{
-    active: string;
+    activeType: string;
+    activeEngine?: string;
     engines: Record<string, EngineServer[]>;
     isReady: boolean;
   }>(() => {
     const { searchParams, path } = getSearchParams(window.location);
-    const active = searchParams.get('type') || 'FILE';
+    const activeType = searchParams.get('type') || 'FILE';
+    const activeEngine = searchParams.get('engine') ?? undefined;
     return {
-      active,
+      activeType,
       engines: {},
       isReady: false,
+      activeEngine,
     };
   });
 
@@ -136,7 +139,24 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
       });
     })();
   }, []);
-  const { engines, active, isReady } = state;
+  const { engines, activeType, activeEngine, isReady } = state;
+  const currentEngines = engines[state.activeType] || [];
+
+  const handleChangeEngine = (value?: string) => {
+    const { searchParams, path } = getSearchParams(window.location);
+    if (value) {
+      searchParams.set('engine', value);
+    } else {
+      searchParams.delete('engine');
+    }
+    window.location.hash = `${path}?${searchParams.toString()}`;
+    setState(preState => {
+      return {
+        ...preState,
+        activeEngine: value,
+      };
+    });
+  };
 
   const handleChangeType = value => {
     const { searchParams, path } = getSearchParams(window.location);
@@ -145,74 +165,88 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
     setState(preState => {
       return {
         ...preState,
-        active: value,
+        activeType: value,
       };
     });
+
+    // 切换类型时同时触发更新引擎选择相关数据
+    handleChangeEngine(engines[value]?.[0]?.id);
   };
 
-  const currentEngines = engines[state.active] || [];
+  const renderEngineTabs = () => {
+    const content = currentEngines.map(server => {
+      const { component: ServerComponent, name } = server;
+      if (!ServerComponent) {
+        return null;
+      }
+      const { icon } = TYPE_ICONS[server.type || 'api'];
 
-  const content = currentEngines.map(server => {
-    const { component: ServerComponent, name } = server;
-    if (!ServerComponent) {
-      return null;
-    }
-    const { icon } = TYPE_ICONS[server.type || 'api'];
+      const TabTitle = (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {name === $i18n.get({ id: 'gi-site.pages.Dataset.Create.OfficialGVpDataService', dm: 'G6VP 官方数据服务' })
+            ? 'GraphJSON'
+            : name}
+        </div>
+      );
 
-    const TabTitle = (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {name === $i18n.get({ id: 'gi-site.pages.Dataset.Create.OfficialGVpDataService', dm: 'G6VP 官方数据服务' })
-          ? 'GraphJSON'
-          : name}
-      </div>
-    );
+      return (
+        <TabPane tab={TabTitle} key={server.id}>
+          {/** @ts-ignore */}
+          <ServerComponent updateGISite={callback} />
+        </TabPane>
+      );
+    });
 
     return (
-      <TabPane tab={TabTitle} key={server.id}>
-        {/** @ts-ignore */}
-        <ServerComponent updateGISite={callback} />
-      </TabPane>
+      <Tabs tabPosition="left" activeKey={activeEngine} onChange={handleChangeEngine}>
+        {content}
+      </Tabs>
     );
-  });
-  const emptyContent = (
-    <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Developing', dm: '开发中' })} key="develope">
-      <div style={{ padding: '8px 0px 0px 0px' }}>
-        {$i18n.get({
-          id: 'gi-site.pages.Dataset.Create.ThisTypeOfDataSource',
-          dm: '该类型的数据源还在建设中，请关注我们 github 进展：https://github.com/antvis/G6VP',
-        })}
-      </div>
-    </TabPane>
+  };
+
+  const emptyTabs = (
+    <Tabs tabPosition="left">
+      <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Developing', dm: '开发中' })} key="develope">
+        <div style={{ padding: '8px 0px 0px 0px' }}>
+          {$i18n.get({
+            id: 'gi-site.pages.Dataset.Create.ThisTypeOfDataSource',
+            dm: '该类型的数据源还在建设中，请关注我们 github 进展：https://github.com/antvis/G6VP',
+          })}
+        </div>
+      </TabPane>
+    </Tabs>
   );
 
-  const loadingContent = (
-    <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Loading', dm: '加载中' })} key="loading">
-      <div style={{ padding: '8px 0px 0px 0px' }}>
-        <Spin size="small" style={{ marginRight: '8px' }} />
-        {$i18n.get({
-          id: 'gi-site.pages.Dataset.Create.AssetsIsLoading',
-          dm: 'Please wait while the asset is loading',
-        })}
-      </div>
-    </TabPane>
+  const loadingTabs = (
+    <Tabs tabPosition="left">
+      <TabPane tab={$i18n.get({ id: 'gi-site.pages.Dataset.Create.Loading', dm: '加载中' })} key="loading">
+        <div style={{ padding: '8px 0px 0px 0px' }}>
+          <Spin size="small" style={{ marginRight: '8px' }} />
+          {$i18n.get({
+            id: 'gi-site.pages.Dataset.Create.AssetsIsLoading',
+            dm: 'Please wait while the asset is loading',
+          })}
+        </div>
+      </TabPane>
+    </Tabs>
   );
 
-  const renderTabContent = () => {
+  const renderTabs = () => {
     if (!isReady) {
-      return loadingContent;
+      return loadingTabs;
     }
 
     if (currentEngines.length === 0) {
-      return emptyContent;
+      return emptyTabs;
     }
 
-    return content;
+    return renderEngineTabs();
   };
 
   return (
@@ -229,12 +263,12 @@ const DataSource: React.FunctionComponent<uploadPanel> = props => {
           <label style={styles.label}>
             {$i18n.get({ id: 'gi-site.pages.Dataset.Create.SelectADataSourceType', dm: '选择数据源类型' })}
           </label>
-          <RadioNote items={ITEMS} value={active} onChange={handleChangeType} />
+          <RadioNote items={ITEMS} value={activeType} onChange={handleChangeType} />
         </div>
       </div>
 
       <div style={{ background: 'var(--background-color)', padding: '24px 24px', borderRadius: '8px' }}>
-        <Tabs tabPosition="left">{renderTabContent()}</Tabs>
+        {renderTabs()}
       </div>
     </>
   );
