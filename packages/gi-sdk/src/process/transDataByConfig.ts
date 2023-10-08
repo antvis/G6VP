@@ -1,4 +1,6 @@
 import { GraphinData, IUserEdge } from '@antv/graphin';
+import SimpleEdge from '../components/SimpleEdge';
+import SimpleNode from '../components/SimpleNode';
 import { GIAssets, GIConfig } from '../typing';
 import { uniqueElementsBy } from './common';
 import { filterByRules } from './filterByRules';
@@ -49,7 +51,8 @@ export const transDataByConfig = (
       }
       const Element = ElementAssets[id];
       const filterData = filterByRules(elementData, { logic, expressions });
-      return Element.registerTransform(filterData, item, reset);
+      const elementMapper = Element.registerTransform(filterData, item, reset);
+      return filterData.map(elementMapper);
     })
     .reduce((acc, curr) => {
       return [...curr, ...acc];
@@ -63,9 +66,21 @@ export const transDataByConfig = (
   const restElements = elementData.filter(n => {
     return uniqueIds.indexOf(n.id) === -1;
   });
+  //@ts-ignore
+  let elementAsset = ElementAssets[basicConfig.id];
+  if (!elementAsset) {
+    if (elementType === 'edges') {
+      //@ts-ignore
+      elementAsset = SimpleEdge;
+    } else {
+      //@ts-ignore
+      elementAsset = SimpleNode;
+    }
+  }
 
   //@ts-ignore
-  const restData = ElementAssets[basicConfig.id].registerTransform(restElements, basicConfig, reset);
+  const restMapper = elementAsset.registerTransform(restElements, basicConfig, reset);
+  const restData = restElements.map(restMapper);
 
   const nodes = [...uniqueElements, ...restData];
   console.timeEnd(`${elementType.toUpperCase()}_TRANS_COST`);

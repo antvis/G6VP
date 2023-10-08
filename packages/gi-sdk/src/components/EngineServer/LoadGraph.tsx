@@ -2,11 +2,12 @@ import Graphin from '@antv/graphin';
 import { Button, Col, Form, Input, Row, Select, Statistic } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import { GraphSchemaData, utils } from '../../index';
+import $i18n from '../../i18n';
+import { GraphSchemaData } from '../../index';
+import * as utils from '../../process';
 import CollapseCard from '../CollapseCard';
 import type { GraphDBConfig } from './index';
 import { getEngineForm, setEngineForm } from './utils';
-import $i18n from '../../i18n';
 
 const { getSchemaGraph } = utils;
 

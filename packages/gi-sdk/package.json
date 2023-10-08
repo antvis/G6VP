@@ -19,6 +19,7 @@
     "*.less"
   ],
   "scripts": {
+    "docs": "dumi dev",
     "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:es": "father build",
     "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-sdk",
@@ -31,8 +32,9 @@
     "postpublish": "tnpm sync @antv/gi-sdk"
   },
   "dependencies": {
+    "dumi": "^1.1.50",
     "@antv/graphin": "workspace:*",
-    "@antv/g6": "5.0.0-beta.3",
+    "@antv/g6": "5.0.0-beta.5",
     "@aligov/global-locale": "^1.0.5",
     "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",

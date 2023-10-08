@@ -42,6 +42,7 @@ export const loadJS = memoize(async (options: AssetPackage) => {
     };
   });
 }, JSON.stringify);
+
 export const loader = async (options: AssetPackage[]) => {
   return Promise.all([
     ...options.map(opt => {

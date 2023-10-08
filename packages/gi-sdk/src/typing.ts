@@ -101,7 +101,7 @@ export interface Props {
   schemaData?: GraphSchemaData;
   style?: React.CSSProperties;
   className?: string;
-  children?: React.ReactChildren | JSX.Element | JSX.Element[];
+  children?: React.ReactNode[];
 }
 
 export type AssetType =
