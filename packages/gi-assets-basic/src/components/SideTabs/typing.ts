@@ -5,4 +5,5 @@ export interface ContainerProps {
   width: string;
   height: string;
   defaultVisible: boolean;
+  children: React.ReactNode;
 }

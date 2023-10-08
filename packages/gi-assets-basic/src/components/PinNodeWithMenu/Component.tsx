@@ -1,10 +1,11 @@
 import { useContext } from '@antv/gi-sdk';
 import { Menu } from 'antd';
 import React, { memo, useEffect, useState } from 'react';
-
-import { INode } from '@antv/g6';
 import $i18n from '../../i18n';
 import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
+
+// import { INode } from '@antv/g6';
+type INode = any;
 
 export interface PinNodeMenuItemProps {
   contextmenu: any;

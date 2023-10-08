@@ -1,8 +1,9 @@
-import { useContext, utils } from '@antv/gi-sdk';
+import { Compatible, useContext, utils } from '@antv/gi-sdk';
 import { Skeleton } from 'antd';
 import React, { memo } from 'react';
 import DivContainer from '../UIComponents/DivContainer';
 import Properties from './Properties';
+
 export interface PropertiesPanelProps {
   hasService: boolean;
   serviceId?: string;
@@ -56,7 +57,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
           isLoading: true,
         };
       });
-
+      Compatible.item(e, graph);
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service({ ...model, type: 'node' });
@@ -83,7 +84,7 @@ const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => 
           isLoading: true,
         };
       });
-
+      Compatible.item(e, graph);
       const model = e.item.getModel();
       // 有数据服务就从服务中取数，没有服务就从Model中取数
       const detail = await service({ ...model, type: 'edge' });

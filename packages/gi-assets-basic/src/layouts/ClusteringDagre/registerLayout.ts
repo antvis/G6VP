@@ -227,6 +227,7 @@ const clusteringDagreLayout = Graphin => {
 
       // 结束后使用 force 进行微调
       if (self.postForce) {
+        //@ts-ignore
         const postForce = new G6.Layout.forceAtlas2({
           center: [width / 2, height / 2],
           preventOverlap: true,

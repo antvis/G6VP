@@ -13,6 +13,7 @@ export interface UadLayoutProps {
     padding?: string;
     height?: number;
   }[];
+  children: React.ReactNode[];
 }
 
 const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {

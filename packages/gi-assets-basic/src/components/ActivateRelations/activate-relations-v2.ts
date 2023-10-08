@@ -2,7 +2,14 @@
 // 1. 支持多选进行高亮
 // 2. 支持分别定义高亮时上下游进行扩展的度数
 
-import { Graph, Item, G6Event, IG6GraphEvent, INode, ICombo, IEdge } from '@antv/g6';
+// import { Graph, Item, G6Event, IG6GraphEvent, INode, ICombo, IEdge } from '@antv/g6';
+type Item = any;
+type G6Event = any;
+type INode = any;
+type ICombo = any;
+type IEdge = any;
+type IG6GraphEvent = any;
+type Graph = any;
 import { throttle } from '@antv/util';
 
 export default {

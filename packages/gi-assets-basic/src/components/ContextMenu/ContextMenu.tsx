@@ -1,9 +1,10 @@
-import { Item } from '@antv/g6';
+// import { Item } from '@antv/g6';
+type Item = any;
 import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
 import React, { memo, useMemo } from 'react';
 import ContextMenu from './Container';
-import './index.less'
+import './index.less';
 
 // const { ContextMenu } = Components;
 

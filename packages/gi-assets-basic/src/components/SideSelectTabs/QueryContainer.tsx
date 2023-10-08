@@ -8,6 +8,7 @@ export interface ContainerProps {
   width: string;
   height: string;
   defaultVisible: boolean;
+  children: React.ReactNode;
 }
 
 const QueryContainer: React.FunctionComponent<ContainerProps> = props => {

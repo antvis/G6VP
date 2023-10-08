@@ -1,4 +1,5 @@
-import type { EdgeConfig } from '@antv/g6';
+// import type { EdgeConfig } from '@antv/g6';
+type EdgeConfig = any;
 import type { IGIAC } from '@antv/gi-sdk';
 import { extra, useContext } from '@antv/gi-sdk';
 import cloneDeep from 'lodash/cloneDeep';

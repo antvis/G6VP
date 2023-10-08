@@ -10,6 +10,7 @@ export interface UadLayoutProps {
   height: number;
   padding: string;
   containers: any[];
+  children: any;
 }
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
@@ -24,7 +25,7 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
     padding = 12, // 为什么这里没有值，需要关注
     components: SideContentChildren,
   } = SideContent;
-
+  console.log('SegmentContainer', HAS_GRAPH);
   const items = SideContentChildren.map(item => {
     return {
       icon: <Icon type={item.icon} />,

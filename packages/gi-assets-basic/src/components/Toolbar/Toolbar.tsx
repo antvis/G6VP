@@ -16,7 +16,7 @@ export interface ToolBarProps {
   /**
    * @description 可以放置自定义组件
    */
-  children?: React.ReactChildren | JSX.Element | JSX.Element[];
+  children?: React.ReactNode[];
 
   direction?: ToolbarDirectionType;
   /**

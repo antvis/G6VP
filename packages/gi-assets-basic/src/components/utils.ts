@@ -1,4 +1,6 @@
-import { IEdge, INode } from '@antv/g6';
+// import { IEdge, INode } from '@antv/g6';
+type IEdge = any;
+type INode = any;
 
 /**
  *

@@ -195,8 +195,7 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
       isBug = true;
     }
     const { halo } = isBug ? defaultConfig.advanced : advanced;
-
-    const transNodes = nodes.map(node => {
+    const transNode = node => {
       // properties
       const data = node.data || node.properties || node;
 
@@ -273,11 +272,11 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
         // 数据中的style还是优先级最高的
         style: merge(styleByConfig, preStyle),
       };
-    });
-    return transNodes;
+    };
+    return transNode;
   } catch (error) {
     console.error('parse transform error:', error);
-    return nodes;
+    return node => node;
   }
 };
 export default transform;

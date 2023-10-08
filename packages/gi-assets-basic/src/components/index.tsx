@@ -1,4 +1,4 @@
-import ActivateRelations from './ActivateRelations';
+// import ActivateRelations from './ActivateRelations';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -27,7 +27,6 @@ import Tooltip from './Tooltip';
 // import TooltipForEdge from './TooltipForEdge';
 // import ContentContainer from './ContentContainer';
 import ChartAnalysis from './ChartAnalysis';
-import CommonNeighbor from './CommonNeighbor';
 import ForceSimulation from './ForceSimulation';
 import GroupBar from './GroupBar';
 import Initializer from './Initializer';
@@ -49,20 +48,18 @@ import ZoomStatus from './ZoomStatus';
 // 临时测试，后面要删掉，放到图谱业务资产库中
 // import FuseEditPanel from './FuseEditPanel';
 // import CreateCombo from './CreateCombo';
-import EdgeMerge from './EdgeMerge';
 import ShortcutKeys from './ShortcutKeys';
 export {
-  ActivateRelations,
   CanvasSetting,
   // ContentContainer,
   ChartAnalysis,
   // TooltipForEdge, //体验问题，暂不放开
   ClearCanvas,
-  CommonNeighbor,
+  // CommonNeighbor,
   ContextMenu,
   Copyright,
   DownLoad,
-  EdgeMerge,
+  // EdgeMerge,
   Export,
   FilterPanel,
   // FitCenter,

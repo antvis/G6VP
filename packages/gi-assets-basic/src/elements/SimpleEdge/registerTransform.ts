@@ -1,7 +1,6 @@
 import type { GIEdgeConfig } from '@antv/gi-sdk';
 import { Utils } from '@antv/graphin';
 import merge from 'deepmerge';
-import $i18n from '../../i18n';
 
 const defaultEdgeTheme = {
   primaryEdgeColor: '#ddd',
@@ -73,7 +72,7 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
 
     const { keyshape: keyshape_CFG } = advanced;
 
-    const transEdges = edges.map((edge, index) => {
+    const transEdge = (edge, index) => {
       // properties
       const { source, target } = edge;
       const id = edge.id || `${source}-${target}-${index}`;
@@ -225,11 +224,11 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         edgeType: edge.edgeType || 'UNKOWN',
         style: finalStyle,
       };
-    });
-    return transEdges;
+    };
+    return transEdge;
   } catch (error) {
     console.error('parse transform error:', error);
-    return edges;
+    return edge => edge;
   }
 };
 export default transform;

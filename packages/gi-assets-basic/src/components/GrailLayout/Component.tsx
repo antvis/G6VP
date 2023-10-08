@@ -10,6 +10,7 @@ export interface FreeLayoutProps extends IContainersVisible {
   assets: GIAssets;
   GISDK_ID: string;
   containers: any[];
+  children: React.ReactNode[];
 }
 
 interface IContainersVisible {
