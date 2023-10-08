@@ -7,8 +7,9 @@ interface ComponentDemosProps {}
 
 const MyComponent = () => {
   const { graph, isReady } = useGraphin();
-  console.log(graph, isReady);
-  return <div> My Component</div>;
+  const nodeCount = graph.getAllNodesData().length;
+  console.log(graph, isReady, nodeCount);
+  return <div> My Component,NodeCount: {nodeCount}</div>;
 };
 const ComponentDemos: React.FunctionComponent<ComponentDemosProps> = props => {
   return (

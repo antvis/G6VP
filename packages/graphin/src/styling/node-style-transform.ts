@@ -9,6 +9,9 @@ const transGraphinStyle = style => {
     },
     keyShape: {
       r: keyshape.size || 10,
+      fill: keyshape.fill || 'red',
+      stroke: keyshape.stroke || 'red',
+      strokeOpacity: keyshape.strokeOpacity || 1,
     },
     animates: {
       update: [
@@ -32,7 +35,7 @@ const transGraphinStyle = style => {
 export const nodeStyleTransform = node => {
   const { style, type, id, data } = node;
   const IS_GRAPHIN = (style && type === 'graphin-circle') || !type;
-  console.log('node', node);
+  // console.log('node', node);
   if (IS_GRAPHIN) {
     return {
       id,

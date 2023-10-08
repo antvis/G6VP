@@ -31,7 +31,7 @@ const transGraphinStyle = style => {
 export const edgeStyleTransform = edge => {
   const { style, type, id, data, source, target } = edge;
   const IS_GRAPHIN = (style && type === 'graphin-line') || !type;
-  console.log('edge', edge);
+  // console.log('edge', edge);
   if (IS_GRAPHIN) {
     return {
       source,

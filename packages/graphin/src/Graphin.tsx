@@ -1,5 +1,5 @@
 import { IGraph, Specification } from '@antv/g6';
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, memo, useEffect, useRef, useState } from 'react';
 import ExtendGraph from './ExtendGraph';
 import Compatible from './compatible';
 import { edgeStyleTransform } from './styling/edge-style-transform';
@@ -29,14 +29,37 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     ...options
   } = props;
 
+  const dataRef = useRef(data);
+  const layoutRef = useRef(layout);
+  // console.log('dataRef', dataRef, layoutRef);
+
   const [state, setState] = useState<{
     isReady: boolean;
     graph: null | IGraph;
+    data: any;
+    layout: any;
   }>({
     isReady: false,
     graph: null,
+    data,
+    layout,
   });
   const { isReady, graph } = state;
+
+  if (state.data !== data) {
+    console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)');
+    console.time('COST_CHANGE_DATA');
+    //@ts-ignore
+    graph && graph.changeData(data, 'replace');
+    console.timeEnd('COST_CHANGE_DATA');
+  }
+  if (state.layout !== layout) {
+    console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
+    console.time('COST_CHANGE_LAYOUT');
+    //@ts-ignore
+    graph && graph.layout(layout);
+    console.timeEnd('COST_CHANGE_LAYOUT');
+  }
 
   useEffect(() => {
     let {
@@ -48,7 +71,6 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       modes = { default: ['zoom-canvas', 'drag-canvas', 'drag-node'] },
     } = options;
     const ContainerDOM = document.getElementById(container);
-    console.log('init ...', edge);
 
     const { clientWidth, clientHeight } = ContainerDOM as HTMLDivElement;
     width = Number(width) || clientWidth || 500;
@@ -67,9 +89,15 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       layout,
       transforms: ['transform-graphin-data'],
     });
+    console.log('init ...', instance, ref);
 
     /** @ts-ignore 做兼容性处理 */
     Compatible.graph(instance);
+    //@ts-ignore
+    if (ref && ref.current) {
+      //@ts-ignore
+      ref.current = instance;
+    }
 
     onInit && onInit(instance);
 
@@ -86,33 +114,6 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       instance.destroy();
     };
   }, []);
-
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        get graph() {
-          return graph;
-        },
-      };
-    },
-    [isReady],
-  );
-
-  useEffect(() => {
-    if (graph) {
-      console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)');
-      //@ts-ignore
-      graph.changeData(data, 'replace');
-    }
-  }, [data]);
-  useEffect(() => {
-    if (graph) {
-      console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
-      //@ts-ignore
-      graph.layout(layout);
-    }
-  }, [layout]);
 
   const containerStyle: React.CSSProperties = {
     height: '100%',
