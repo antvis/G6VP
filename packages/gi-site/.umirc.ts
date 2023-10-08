@@ -8,7 +8,7 @@ export const GI_THEME_ANTD_VERSION = GI_THEME_ANTD.version;
 export const isDev = process.env.NODE_ENV === 'development';
 //@ts-ignore
 export const { BUILD_MODE } = process.env;
-const G6_VERSION = '5.0.0-beta.3';
+const G6_VERSION = '5.0.0-beta.11';
 
 export const externals = deps_externals.reduce((acc, curr) => {
   return {
