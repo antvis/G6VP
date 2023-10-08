@@ -93,8 +93,8 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
 
     /** @ts-ignore 做兼容性处理 */
     Compatible.graph(instance);
-    //@ts-ignore
-    if (ref && ref.current) {
+
+    if (ref) {
       //@ts-ignore
       ref.current = instance;
     }
