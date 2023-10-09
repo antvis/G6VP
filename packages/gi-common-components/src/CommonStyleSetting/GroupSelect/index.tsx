@@ -16,7 +16,7 @@ const iconMap = {
   number: <NumberOutlined style={{ color: 'rgb(255, 192, 67)', marginRight: '4px' }} />,
 };
 
-const match = (a: string, b: string) => a.toLocaleLowerCase().includes(b.toLocaleLowerCase());
+const match = (a: string, b: string) => String(a).toLocaleLowerCase().includes(String(b).toLocaleLowerCase());
 
 const getTypeName = (sd: SchemaDatum) => ('nodeType' in sd ? sd.nodeType : sd.edgeType);
 
