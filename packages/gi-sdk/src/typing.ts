@@ -73,6 +73,8 @@ export interface State<
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
+  nodeMapper: (n: any) => any;
+  edgeMapper: (n: any) => any;
 }
 
 export interface Props {
