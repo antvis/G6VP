@@ -127,6 +127,7 @@ export const defaultConfig = {
     keyshape: {
       ...keyshape,
       fillOpacity: 0.8,
+      type: 'circle-node',
     },
     label: {
       ...label,
@@ -179,7 +180,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 
-    const { color, size, label: LABEL_KEYS, advanced, status: userStatus } = defaultConfig;
+    const { color, size, label: LABEL_KEYS, advanced, status: userStatus } = nodeConfig.props;
 
     let isBug = false;
     //@ts-ignore
@@ -188,6 +189,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
     }
     const { halo } = isBug ? defaultConfig.advanced : advanced;
     const transNode = node => {
+      console.log('transNode.....');
       // properties
       const data = node.data || node.properties || node;
 
@@ -254,14 +256,40 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
           },
         },
       };
-
+      console.log('keyshape', keyshape.type, keyshape);
       return {
-        ...node,
         id: node.id,
-        data,
-        nodeType: node.nodeType || 'UNKNOW',
-        type: 'circle-node',
-        // 数据中的style还是优先级最高的
+        data: {
+          type: keyshape.type,
+          x: data.x,
+          y: data.y,
+          labelShape: {
+            text: label.value || '',
+            position: label.position || 'bottom',
+          },
+          keyShape: {
+            r: keyshape.size || 10,
+            fill: keyshape.fill || 'red',
+            stroke: keyshape.stroke || 'red',
+            strokeOpacity: keyshape.strokeOpacity || 1,
+          },
+          animates: {
+            update: [
+              {
+                fields: ['x', 'y'],
+                shapeId: 'group',
+              },
+              // {
+              //   fields: ['opacity'],
+              //   shapeId: 'haloShape',
+              // },
+              // {
+              //   fields: ['lineWidth'],
+              //   shapeId: 'keyShape',
+              // },
+            ],
+          },
+        },
       };
     };
     return transNode;

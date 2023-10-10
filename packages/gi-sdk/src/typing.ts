@@ -1,5 +1,5 @@
 import type { ComboModel as Combo } from '@antv/g6';
-import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
+import type { GraphinContextType, GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
 import type { LANGUAGE_KEY_NAME } from './process/locale';
 import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
@@ -39,25 +39,10 @@ export interface State<
 
   schemaData: GraphSchemaData;
 
-  /** 布局 */
-  layout: Layout;
-  /** 组件 */
-  components: GIComponentConfig[];
   HAS_GRAPH: boolean;
   /** 画布是否初始化完成 */
   initialized: boolean;
-  /** 图初始化组件  */
-  initializer: {
-    id: string;
-    props: {
-      GI_INITIALIZER: boolean;
-      serviceId: 'GI_SERVICE_INTIAL_GRAPH' | string;
-    };
-  };
-  GICC_LAYOUT: {
-    id: string;
-    props: any;
-  };
+
   /** 画布的配置,等同props.config */
   config: GIConfig;
   /** 画布所有注册的服务 */
@@ -66,15 +51,9 @@ export interface State<
   isLoading: boolean;
   /** 图的上下文准备 */
   isContextReady: boolean;
-  /**
-   * 数据映射函数
-   */
-  transform: (data: any, reset?: boolean) => any;
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
-  nodeMapper: (n: any) => any;
-  edgeMapper: (n: any) => any;
 }
 
 export interface Props {

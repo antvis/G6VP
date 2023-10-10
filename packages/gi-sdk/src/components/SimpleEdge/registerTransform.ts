@@ -59,13 +59,15 @@ export const defaultConfig = {
 export type EdgeConfig = typeof defaultConfig;
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
+const transform = (config: GIEdgeConfig, reset?: boolean) => {
   try {
-    const { color: color_CFG, size: size_CFG, label: LABEL_KEYS, advanced, status: defaultStatus } = defaultConfig;
+    const { color: color_CFG, size: size_CFG, label: LABEL_KEYS, advanced, status: defaultStatus } = config.props;
 
     const { keyshape: keyshape_CFG } = advanced;
 
-    const transEdge = (edge, index) => {
+    const transEdge = (_edge, index) => {
+      console.log('transEdge.....');
+      const edge = _edge.data;
       // properties
       const { source, target } = edge;
       const id = edge.id || `${source}-${target}-${index}`;
@@ -180,14 +182,50 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         preStyle = {};
       }
 
+      const finalStyle = {
+        keyshape: {
+          ...shape,
+          // ...edge.style?.keyshape,
+          lineWidth: size_CFG,
+          stroke: color_CFG,
+          opacity: keyshape_CFG.opacity,
+          lineDash: keyshape_CFG.lineDash,
+          lineAppendWidth: 10, //keyshape_CFG.lineAppendWidth,
+          ...endArrow,
+        },
+        label,
+        animate: {
+          visible: advanced.animate.visible,
+          type: advanced.animate.type,
+          color: advanced.animate.dotColor,
+          repeat: advanced.animate.repeat,
+          duration: advanced.animate.duration,
+        },
+        status: {
+          ...defaultStatus,
+        },
+      };
+      console.log('edge.......', edge, finalStyle);
+
       return {
-        ...edge,
         source,
         target,
         id,
-        data,
-        type: 'graphin-line',
-        edgeType: edge.edgeType || 'UNKOWN',
+        data: {
+          type: 'line-edge',
+          edgeType: edge.edgeType || 'UNKOWN',
+          style: finalStyle,
+          keyShape: {
+            lineWidth: finalStyle.keyshape.lineWidth,
+            stroke: finalStyle.keyshape.stroke,
+            endArrow: true,
+          },
+          haloShape: {},
+          labelShape: {
+            text: finalStyle.label.value,
+          },
+          labelBackgroundShape: {},
+        },
       };
     };
     return transEdge;

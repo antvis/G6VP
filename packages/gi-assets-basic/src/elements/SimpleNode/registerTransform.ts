@@ -263,7 +263,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
           },
         },
       };
-      console.log('keyshape', keyshape.type, keyshape);
+      console.log('keyshape', node.id);
       return {
         id: node.id,
         data: {
@@ -275,7 +275,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
             position: label.position || 'bottom',
           },
           keyShape: {
-            r: keyshape.size || 10,
+            r: keyshape.size / 2 || 10,
             fill: keyshape.fill || 'red',
             stroke: keyshape.stroke || 'red',
             strokeOpacity: keyshape.strokeOpacity || 1,

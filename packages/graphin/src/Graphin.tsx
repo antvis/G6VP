@@ -36,8 +36,11 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
 
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
-  const nodeMapperRef = useRef(node);
-  const edgeMapperRef = useRef(edge);
+
+  const constantRef = useRef({
+    AFTER_RENDER_NODE_MAPPER: false,
+    AFTER_RENDER_EDGE_MAPPER: false,
+  });
 
   const [state, setState] = useState<{
     isReady: boolean;
@@ -47,39 +50,53 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     graph: null,
   }));
   const { isReady, graph } = state;
-  console.log('%c GRAPHIN RENDER....', 'color:rgba(48,86,227,1)', nodeMapperRef.current, node);
+
+  if (dataRef.current !== data) {
+    // console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
+    console.time('GRAPHIN_CHANGE_DATA_COST');
+    //@ts-ignore
+    graph && graph.changeData(data, 'replace');
+    //@ts-ignore
+    dataRef.current = data;
+    console.timeEnd('GRAPHIN_CHANGE_DATA_COST');
+  }
+  if (layoutRef.current !== layout) {
+    // console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
+    console.time('GRAPHIN_CHANGE_LAYOUT_COST');
+    //@ts-ignore
+    graph && graph.layout(layout);
+    //@ts-ignore
+    layoutRef.current = layout;
+    console.timeEnd('GRAPHIN_CHANGE_LAYOUT_COST');
+  }
   useEffect(() => {
-    if (nodeMapperRef.current !== node) {
-      console.log('%c GRAPHIN NODE MAPPER CHANGE....', 'color:rgba(48,86,227,0.8)', node, graph);
-      //@ts-ignore
-      graph && graph.updateMapper('node', node);
-      nodeMapperRef.current = node;
+    if (graph) {
+      if (constantRef.current.AFTER_RENDER_EDGE_MAPPER) {
+        graph.updateMapper('edge', edge);
+      } else {
+        graph.once('afterrender', e => {
+          constantRef.current.AFTER_RENDER_EDGE_MAPPER = true;
+          setTimeout(() => {
+            graph.updateMapper('edge', edge);
+          }, 0);
+        });
+      }
     }
-    if (edgeMapperRef.current !== edge) {
-      console.log('%c GRAPHIN EDGE MAPPER CHANGE....', 'color:rgba(48,86,227,0.8)');
-      //@ts-ignore
-      graph && graph.updateMapper('edge', edge);
-      edgeMapperRef.current = edge;
+  }, [edge, graph]);
+  useEffect(() => {
+    if (graph) {
+      if (constantRef.current.AFTER_RENDER_NODE_MAPPER) {
+        graph.updateMapper('node', node);
+      } else {
+        graph.once('afterrender', e => {
+          constantRef.current.AFTER_RENDER_NODE_MAPPER = true;
+          setTimeout(() => {
+            graph.updateMapper('node', node);
+          }, 0);
+        });
+      }
     }
-    if (dataRef.current !== data) {
-      // console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
-      console.time('GRAPHIN_CHANGE_DATA_COST');
-      //@ts-ignore
-      graph && graph.changeData(data, 'replace');
-      //@ts-ignore
-      dataRef.current = data;
-      console.timeEnd('GRAPHIN_CHANGE_DATA_COST');
-    }
-    if (layoutRef.current !== layout) {
-      // console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
-      console.time('GRAPHIN_CHANGE_LAYOUT_COST');
-      //@ts-ignore
-      graph && graph.layout(layout);
-      //@ts-ignore
-      layoutRef.current = layout;
-      console.timeEnd('GRAPHIN_CHANGE_LAYOUT_COST');
-    }
-  }, [data, layout, node, edge]);
+  }, [node, graph]);
 
   useEffect(() => {
     let {
@@ -102,15 +119,10 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       height,
       modes,
       data,
-      // //@ts-ignore
-      // node,
-      // // //@ts-ignore
-      // edge,
       layout,
       renderer,
       transforms: ['transform-graphin-data'],
     });
-    console.log('init ...', instance, ref);
 
     /** @ts-ignore 做兼容性处理 */
     Compatible.graph(instance);
@@ -131,13 +143,6 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       };
     });
 
-    instance.once('afterrender', e => {
-      console.log('afterlayout', nodeMapperRef.current, edgeMapperRef.current);
-      //@ts-ignore
-      instance.updateMapper('node', nodeMapperRef.current);
-      //@ts-ignore
-      instance.updateMapper('edge', edgeMapperRef.current);
-    });
     return () => {
       console.log('%c GRAPHIN DESTORY....', 'color:rgba(48,86,227,1)');
       instance.destroy();

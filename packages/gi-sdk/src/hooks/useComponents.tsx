@@ -11,8 +11,15 @@ const DEFAULT_GICC_LAYOUT = {
   },
 };
 
-const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
-  const { config, initializer, GICC_LAYOUT, components, GISDK_ID } = state;
+const useComponents = ({
+  config,
+  initializer,
+  GICC_LAYOUT,
+  components,
+  GISDK_ID,
+  propsComponentsCfg,
+  ComponentAssets,
+}) => {
   const { components: stateComponentsCfg } = config;
   const ComponentCfgMap = propsComponentsCfg.concat(stateComponentsCfg).reduce((acc, curr) => {
     return {

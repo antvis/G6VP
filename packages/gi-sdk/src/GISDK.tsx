@@ -1,15 +1,13 @@
 import Graphin, { GraphinContext } from '@antv/graphin';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useImmer } from 'use-immer';
-import { defaultInitializerCfg } from './Initializer';
 import { deepClone } from './components/const';
 import getComponents from './hooks/useComponents';
 import './index.less';
-import * as utils from './process';
 import { createUuid } from './process/common';
 import { getMapperByCfg } from './process/getMapperByCfg';
-import type { GIComponentConfig, GIGraphData, Props, State } from './typing';
+import type { GIGraphData, Props, State } from './typing';
 
 let updateHistoryTimer: number;
 
@@ -35,34 +33,11 @@ const getComponentsCfg = (componentsCfg, pageLayout) => {
   return { componentsCfg, GICC_LAYOUT, INITIALIZER };
 };
 
-const getTransformer = (nodesCfg, edgesCfg, ElementAssets) => {
-  /**
-   *
-   * @param data 源数据
-   * @param reset 是否重置：按照 Node/Edge Schema来视觉映射
-   * @returns
-   */
-  const transform = (data, reset?: boolean) => {
-    const nodes = utils.transDataByConfig('nodes', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
-    const edges = utils.transDataByConfig('edges', data, { nodes: nodesCfg, edges: edgesCfg }, ElementAssets, reset);
-
-    const { combos, tableResult } = data;
-
-    return {
-      nodes,
-      edges,
-      combos,
-      tableResult,
-    };
-  };
-  return transform;
-};
-/** export  */
 const GISDK = (props: Props) => {
-  const graphRef = useRef(null);
-  const { children, assets, id, services, config, locales } = props;
+  const { children, assets, id, services, locales } = props;
   const { language = 'zh-CN', ...localeMessages } = locales || {};
 
+  /** get gisdk id */
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
       const defaultId = `${Math.random().toString(36).substr(2)}`;
@@ -87,156 +62,44 @@ const GISDK = (props: Props) => {
     },
     HAS_GRAPH: false,
     source: { nodes: [], edges: [] } as GIGraphData,
-    layout: {},
-    components: [] as GIComponentConfig[],
     config: props.config,
     isLoading: false,
     isContextReady: false,
     initialized: false,
-    initializer: defaultInitializerCfg,
-    transform: (data, reset?: boolean) => data,
     layoutCache: false,
     largeGraphLimit: 2000,
     largeGraphData: undefined,
-    GICC_LAYOUT: {
-      id: 'EmptyLayout',
-      props: {},
-    },
-    //@ts-ignore
-    GISDK_ID,
     //@ts-ignore
     nodeMapper: null,
   });
 
-  const { data, layout, components, initializer, theme, transform, GICC_LAYOUT, HAS_GRAPH, graph } = state;
+  const { data, HAS_GRAPH, graph, config } = state;
+  /** 计算逻辑 */
+  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg, pageLayout } = config;
 
-  useEffect(() => {
+  const handleGraphInit = ins => {
     updateState(draft => {
-      draft.config = config;
-    });
-  }, [config]);
-
-  useEffect(() => {
-    // init...
-
-    console.log('%c GISDK INTI ....', 'color:rgba(255,87,34,0.8)', graphRef);
-
-    const { assets, config, services } = props;
-
-    const { GICC_LAYOUT, INITIALIZER, componentsCfg } = getComponentsCfg(config.components, config.pageLayout);
-    const transform = getTransformer(config.nodes, config.edges, ElementAssets);
-    const nodeMapper = getMapperByCfg(config.nodes, ElementAssets);
-    const edgeMapper = getMapperByCfg(config.edges, ElementAssets);
-    updateState(draft => {
-      /** initializer */
-      if (INITIALIZER.id !== draft.initializer?.id) {
-        draft.initializer = INITIALIZER;
-      }
-      /** components */
-      draft.config.components = componentsCfg;
-      draft.components = componentsCfg;
-      /** layout */
-      draft.config.layout = config.layout;
-      draft.layout = config.layout.props || {};
-      draft.layoutCache = false;
-      /** styling */
-      draft.transform = transform;
-      draft.config.nodes = config.nodes;
-      draft.config.edges = config.edges;
-      // if (draft.data.nodes.length !== 0) {
-      //   const preData = original(draft.data);
-      //   // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
-      //   const newData = transform(preData, true);
-      //   //@ts-ignore
-      //   draft.data = newData;
-      // }
-
-      draft.GICC_LAYOUT = GICC_LAYOUT;
-      /** props */
-      draft.config = config;
-      draft.servives = services;
-      /** flag */
-      draft.graph = graphRef.current;
+      draft.graph = ins;
       draft.HAS_GRAPH = true;
-      draft.nodeMapper = nodeMapper;
-      draft.edgeMapper = edgeMapper;
     });
-  }, []);
+  };
 
-  const {
-    layout: layoutCfg,
-    components: componentsCfg = [],
-    nodes: nodesCfg,
-    edges: edgesCfg,
-    pageLayout,
-  } = state.config;
-  /** 根据注册的图元素，生成Transform函数 */
-
-  React.useEffect(() => {
-    if (!HAS_GRAPH) {
-      return;
-    }
-    console.log('%c GISDK COMPONENTS ....', 'color:rgba(255,87,34,0.8)');
-    const { GICC_LAYOUT, INITIALIZER, componentsCfg: ComponentCfg } = getComponentsCfg(componentsCfg, pageLayout);
-
+  useEffect(() => {
+    console.log('gisdk props config change.....');
     updateState(draft => {
-      draft.config.components = ComponentCfg;
-      draft.components = ComponentCfg;
-      if (INITIALIZER.id !== draft.initializer?.id) {
-        //@ts-ignore
-        draft.initializer = INITIALIZER;
-      }
-      draft.layoutCache = true;
-      //@ts-ignore
-      draft.GICC_LAYOUT = GICC_LAYOUT;
+      draft.config = props.config;
     });
+  }, [props.config]);
+
+  const { GICC_LAYOUT, INITIALIZER, ComponentCfg } = useMemo(() => {
+    const { GICC_LAYOUT, INITIALIZER, componentsCfg: ComponentCfg } = getComponentsCfg(componentsCfg, pageLayout);
+    return {
+      GICC_LAYOUT,
+      INITIALIZER,
+      ComponentCfg,
+    };
   }, [componentsCfg, pageLayout, HAS_GRAPH]);
 
-  React.useEffect(() => {
-    if (!layoutCfg || !HAS_GRAPH) {
-      return;
-    }
-    console.log('%c GISDK LAYOUT ....', 'color:rgba(255,87,34,0.8)');
-    stopForceSimulation();
-    const { type, ...options } = layoutCfg.props || {};
-    let otherOptions = {};
-
-    updateState(draft => {
-      draft.config.layout = layoutCfg;
-      draft.layout = layoutCfg.props;
-      draft.layoutCache = false;
-    });
-  }, [layoutCfg, HAS_GRAPH]);
-
-  /** 增加多元素 */
-  React.useEffect(() => {
-    if (!nodesCfg || !edgesCfg || nodesCfg.length === 0 || edgesCfg.length === 0 || !HAS_GRAPH) {
-      return;
-    }
-    console.log('%c GISDK STYLE ....', 'color:rgba(255,87,34,0.8)');
-
-    const nodeMapper = getMapperByCfg(nodesCfg, ElementAssets);
-    const edgeMapper = getMapperByCfg(edgesCfg, ElementAssets);
-
-    const transform = getTransformer(nodesCfg, edgesCfg, ElementAssets);
-
-    updateState(draft => {
-      // if (draft.data.nodes.length !== 0) {
-      //   const preData = original(draft.data);
-      //   // 当节点和边的Schema配置变化的时候，默认是重置视觉映射;
-      //   const newData = transform(preData, true);
-      //   //@ts-ignore
-      //   draft.data = newData;
-      // }
-      draft.transform = transform;
-      draft.config.nodes = nodesCfg;
-      draft.config.edges = edgesCfg;
-      draft.nodeMapper = nodeMapper;
-      draft.edgeMapper = edgeMapper;
-    });
-  }, [nodesCfg, edgesCfg, HAS_GRAPH]);
-
-  // console.log('%c G6VP Render...', 'color:red', state.layout);
   const sourceDataMap = useMemo(() => {
     const nodes = state.source.nodes.reduce((acc, cur) => {
       acc[cur.id] = cur;
@@ -302,11 +165,11 @@ const GISDK = (props: Props) => {
     assets,
     sourceDataMap,
     HAS_GRAPH,
-    graph: graph,
+    graph,
     updateContext: updateState,
     updateData: res => {
       updateState(draft => {
-        const newData = transform(res);
+        const newData = res;
         draft.data = newData;
         draft.source = newData;
         draft.layoutCache = false;
@@ -314,16 +177,16 @@ const GISDK = (props: Props) => {
     },
     updateLayout: res => {
       updateState(draft => {
-        draft.layout = res;
+        draft.config.layout = res;
         draft.layoutCache = false;
       });
     },
     updateDataAndLayout: (res, lay) => {
       updateState(draft => {
-        const newData = transform(res);
+        const newData = res;
         draft.data = newData;
         draft.source = newData;
-        draft.layout = lay;
+        draft.config.layout = lay;
         draft.layoutCache = false;
       });
     },
@@ -354,35 +217,44 @@ const GISDK = (props: Props) => {
     useIntl,
     language,
   };
-  if (!ComponentAssets) {
-    return null;
-  }
 
-  const layout2 = useMemo(() => deepClone(layout), [layout]);
+  const layout2 = useMemo(() => {
+    return deepClone(layoutCfg.props);
+  }, [layoutCfg]);
 
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents({ ...state, HAS_GRAPH }, config.components, ComponentAssets);
+    getComponents({
+      config: { pageLayout, components: ComponentCfg },
+      initializer: INITIALIZER,
+      GICC_LAYOUT,
+      components: ComponentCfg,
+      GISDK_ID,
+      propsComponentsCfg: ComponentCfg,
+      ComponentAssets,
+    });
+
+  /** 节点样式映射 */
+  const nodeMapper = useMemo(() => getMapperByCfg(nodesCfg, ElementAssets), [nodesCfg]);
+  /** 边样式映射 */
+  const edgeMapper = useMemo(() => getMapperByCfg(edgesCfg, ElementAssets), [edgesCfg]);
 
   return (
     <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
       {/* @ts-ignore */}
       <IntlProvider locale={language as string} messages={localeMessages as any}>
         {/* @ts-ignore */}
-
         <GraphinContext.Provider value={ContextValue}>
           <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
             <Graphin
               container={`${GISDK_ID}-graphin-container`}
               style={{ transform: 'scale(1)' }}
               //@ts-ignore
-              node={state.nodeMapper}
-              edge={state.edgeMapper}
+              node={nodeMapper}
+              edge={edgeMapper}
               data={data}
               //@ts-ignore
               layout={layout2}
-              // onInit={handleGraphInit}
-              //@ts-ignore
-              ref={graphRef}
+              onInit={handleGraphInit}
             />
             {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
             {HAS_GRAPH && state.initialized && renderComponents()}
