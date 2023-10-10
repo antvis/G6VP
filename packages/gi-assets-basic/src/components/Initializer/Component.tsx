@@ -131,7 +131,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           }
           /** 如果是大图模式 */
           if (nodes.length > largeGraphLimit) {
-            const newData = transform(data, true);
+            const newData = data;
             draft.largeGraphMode = true;
             draft.largeGraphData = newData;
             draft.source = newData;
@@ -144,17 +144,17 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           }
           /** 如果是聚合模式 */
           if (aggregate) {
-            const newData = transform(data, true);
+            const newData = data;
             draft.rawData = { ...data };
             draft.source = newData;
             draft.largeGraphMode = false;
             draft.largeGraphData = undefined;
-            draft.data = transform(utils.aggregateEdges(data), true);
+            draft.data = utils.aggregateEdges(data);
             draft.isLoading = false;
             return;
           }
           /** 默认是普通模式 */
-          const newData = transform(data, true);
+          const newData = data; // transform(data, true);
           draft.rawData = { ...data };
           draft.data = newData;
           draft.source = newData;

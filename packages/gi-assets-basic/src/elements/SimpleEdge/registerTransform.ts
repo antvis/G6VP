@@ -60,7 +60,7 @@ export const defaultConfig = {
 export type EdgeConfig = typeof defaultConfig;
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
+const transform = (config: GIEdgeConfig, reset?: boolean) => {
   try {
     const {
       color: color_CFG,
@@ -72,7 +72,8 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
 
     const { keyshape: keyshape_CFG } = advanced;
 
-    const transEdge = (edge, index) => {
+    const transEdge = (_edge, index) => {
+      const edge = _edge.data;
       // properties
       const { source, target } = edge;
       const id = edge.id || `${source}-${target}-${index}`;
@@ -213,16 +214,27 @@ const transform = (edges, config: GIEdgeConfig, reset?: boolean) => {
         },
         preStyle,
       );
+      console.log('edge.......', edge, finalStyle);
 
       return {
-        ...edge,
         source,
         target,
         id,
-        data,
-        type: 'graphin-line',
-        edgeType: edge.edgeType || 'UNKOWN',
-        style: finalStyle,
+        data: {
+          type: 'line-edge',
+          edgeType: edge.edgeType || 'UNKOWN',
+          style: finalStyle,
+          keyShape: {
+            lineWidth: finalStyle.keyshape.lineWidth,
+            stroke: finalStyle.keyshape.stroke,
+            endArrow: true,
+          },
+          haloShape: {},
+          labelShape: {
+            text: finalStyle.label.value,
+          },
+          labelBackgroundShape: {},
+        },
       };
     };
     return transEdge;

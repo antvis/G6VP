@@ -129,6 +129,7 @@ export const defaultConfig = {
     keyshape: {
       ...keyshape,
       fillOpacity: 0.8,
+      type: 'circle-node',
     },
     label: {
       ...label,
@@ -177,7 +178,7 @@ export const defaultConfig = {
 export type NodeConfig = typeof defaultConfig;
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
+const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 
@@ -262,15 +263,40 @@ const transform = (nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
           },
         },
       };
-
+      console.log('keyshape', keyshape.type, keyshape);
       return {
-        ...node,
         id: node.id,
-        data,
-        nodeType: node.nodeType || 'UNKNOW',
-        type: 'graphin-circle',
-        // 数据中的style还是优先级最高的
-        style: merge(styleByConfig, preStyle),
+        data: {
+          type: keyshape.type,
+          x: data.x,
+          y: data.y,
+          labelShape: {
+            text: label.value || '',
+            position: label.position || 'bottom',
+          },
+          keyShape: {
+            r: keyshape.size || 10,
+            fill: keyshape.fill || 'red',
+            stroke: keyshape.stroke || 'red',
+            strokeOpacity: keyshape.strokeOpacity || 1,
+          },
+          animates: {
+            update: [
+              {
+                fields: ['x', 'y'],
+                shapeId: 'group',
+              },
+              // {
+              //   fields: ['opacity'],
+              //   shapeId: 'haloShape',
+              // },
+              // {
+              //   fields: ['lineWidth'],
+              //   shapeId: 'keyShape',
+              // },
+            ],
+          },
+        },
       };
     };
     return transNode;

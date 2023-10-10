@@ -170,6 +170,27 @@ const registerMeta = context => {
                         min: 0,
                         default: keyshape.fillOpacity,
                       },
+                      type: {
+                        type: 'string',
+                        title: '类型',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Select',
+                        enum: [
+                          {
+                            label: '圆形',
+                            value: 'circle-node',
+                          },
+                          {
+                            label: '方形',
+                            value: 'rect-node',
+                          },
+                          {
+                            label: '菱形',
+                            value: 'diamond-node',
+                          },
+                        ],
+                        default: keyshape.type,
+                      },
                     },
                   },
                   label: {
