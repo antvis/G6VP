@@ -1,14 +1,26 @@
 import { Extensions, Graph as G6Graph, extend } from '@antv/g6';
 
 const TransformGraphinData = data => {
-  const { nodes, combos } = data;
-
-  const edges = data.edges.map((item, index) => {
+  const { combos } = data;
+  const nodes = data.nodes.map(item => {
+    const { id } = item;
     return {
-      ...item,
-      id: item.id || `edge-${index}`,
+      id: id,
+      data: item,
     };
   });
+
+  const edges = data.edges.map((item, index) => {
+    const { source, target, id } = item;
+    return {
+      id: item.id || `edge-${index}`,
+      source,
+      target,
+      data: item,
+    };
+  });
+
+  console.log('TransformGraphinData edges ', edges, nodes);
 
   return {
     nodes,
@@ -18,6 +30,10 @@ const TransformGraphinData = data => {
 };
 
 export default extend(G6Graph, {
+  edges: {
+    'quadratic-edge': Extensions.QuadraticEdge,
+  },
+
   layouts: {
     //@ts-ignore
     dagre: Extensions.DagreLayout,
@@ -25,6 +41,8 @@ export default extend(G6Graph, {
     force: Extensions.ForceLayout,
     //@ts-ignore
     force2: Extensions.ForceLayout,
+    //@ts-ignore
+    radial: Extensions.RadialLayout,
   },
   behaviors: {
     //@ts-ignore

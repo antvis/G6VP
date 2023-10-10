@@ -1,6 +1,6 @@
 import GISDK, { Initializer, SimpleEdge, SimpleNode, useContext } from '@antv/gi-sdk';
-import { Utils } from '@antv/graphin';
 import React from 'react';
+import { data, schemaData } from './const';
 interface DEMOProps {}
 
 const Counter = props => {
@@ -9,22 +9,10 @@ const Counter = props => {
   const { title } = props;
   const nodes = graph.getAllNodesData().length;
   console.log('Counter render....', nodes);
-  const handleClick = () => {
-    const newData = Utils.mock(Math.round(Math.random() * 300))
-      .circle()
-      .graphin();
 
-    const preData = graph.getAllNodesData().length;
-    console.log('Pre Counts', preData);
-
-    updateContext(draft => {
-      draft.data = newData;
-    });
-  };
   return (
     <div style={{ position: 'absolute', top: '0px', left: '0px' }}>
       {title}: {nodes}
-      <button onClick={handleClick}>add node</button>
     </div>
   );
 };
@@ -53,7 +41,78 @@ const assets = {
 };
 
 const config = {
-  nodes: [{ id: 'SimpleNode' }],
+  nodes: [
+    {
+      id: 'SimpleNode',
+      props: {
+        size: 26,
+        color: '#ddd',
+        label: [],
+      },
+      name: '官方节点',
+      order: -1,
+      expressions: [],
+      logic: true,
+      groupName: '默认样式',
+    },
+    {
+      id: 'SimpleNode',
+      props: {
+        size: 26,
+        color: '#3056E3',
+        label: ['account_balance^^id'],
+      },
+      name: '官方节点',
+      expressions: [
+        {
+          name: 'icon',
+          operator: 'eql',
+          value: 'account_balance',
+        },
+      ],
+      order: 0,
+      logic: true,
+      groupName: 'ACCOUNT_BALANCE TYPE',
+    },
+    {
+      id: 'SimpleNode',
+      props: {
+        size: 26,
+        color: '#faad14',
+        label: ['account_box^^id'],
+      },
+      name: '官方节点',
+      expressions: [
+        {
+          name: 'icon',
+          operator: 'eql',
+          value: 'account_box',
+        },
+      ],
+      order: 1,
+      logic: true,
+      groupName: 'ACCOUNT_BOX TYPE',
+    },
+    {
+      id: 'SimpleNode',
+      props: {
+        size: 26,
+        color: '#a0d911',
+        label: ['-^^id'],
+      },
+      name: '官方节点',
+      expressions: [
+        {
+          name: 'icon',
+          operator: 'eql',
+          value: '-',
+        },
+      ],
+      order: 2,
+      logic: true,
+      groupName: '- TYPE',
+    },
+  ],
   edges: [{ id: 'SimpleEdge' }],
   components: [
     {
@@ -91,14 +150,9 @@ const services = [
     method: 'GET',
     id: 'GI/GI_SERVICE_INTIAL_GRAPH',
     service: async () => {
+      console.log('data', data);
       return new Promise(resolve => {
-        resolve({
-          nodes: [
-            { id: 'node-1', data: {} },
-            { id: 'node-2', data: {} },
-          ],
-          edges: [],
-        });
+        resolve(data);
       });
     },
   },
@@ -108,10 +162,7 @@ const services = [
     id: 'GI/GI_SERVICE_SCHEMA',
     service: async () => {
       return new Promise(resolve => {
-        resolve({
-          nodes: [],
-          edges: [],
-        });
+        resolve(schemaData);
       });
     },
   },

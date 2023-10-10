@@ -175,7 +175,7 @@ export const defaultConfig = {
 export type NodeConfig = typeof defaultConfig;
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (_nodes, nodeConfig: GINodeConfig, reset?: boolean) => {
+const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 

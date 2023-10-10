@@ -35,7 +35,7 @@ const transGraphinStyle = style => {
 export const nodeStyleTransform = node => {
   const { style, type, id, data } = node;
   const IS_GRAPHIN = (style && type === 'graphin-circle') || !type;
-  // console.log('node', node);
+
   if (IS_GRAPHIN) {
     return {
       id,
