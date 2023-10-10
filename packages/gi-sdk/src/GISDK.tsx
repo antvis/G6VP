@@ -158,8 +158,30 @@ const GISDK = (props: Props) => {
   };
 
   console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)', HAS_GRAPH, state.initialized, state);
+
+  const layout = useMemo(() => {
+    return deepClone(layoutCfg.props);
+  }, [layoutCfg]);
+
+  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
+    getComponents({
+      config: { pageLayout, components: ComponentCfg },
+      initializer: INITIALIZER,
+      GICC_LAYOUT,
+      components: ComponentCfg,
+      GISDK_ID,
+      propsComponentsCfg: ComponentCfg,
+      ComponentAssets,
+    });
+
+  /** 节点样式映射 */
+  const nodeMapper = useMemo(() => getMapperByCfg(nodesCfg, ElementAssets), [nodesCfg]);
+  /** 边样式映射 */
+  const edgeMapper = useMemo(() => getMapperByCfg(edgesCfg, ElementAssets), [edgesCfg]);
+
   const ContextValue = {
     ...state,
+    layout,
     GISDK_ID,
     services,
     assets,
@@ -218,26 +240,6 @@ const GISDK = (props: Props) => {
     language,
   };
 
-  const layout2 = useMemo(() => {
-    return deepClone(layoutCfg.props);
-  }, [layoutCfg]);
-
-  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents({
-      config: { pageLayout, components: ComponentCfg },
-      initializer: INITIALIZER,
-      GICC_LAYOUT,
-      components: ComponentCfg,
-      GISDK_ID,
-      propsComponentsCfg: ComponentCfg,
-      ComponentAssets,
-    });
-
-  /** 节点样式映射 */
-  const nodeMapper = useMemo(() => getMapperByCfg(nodesCfg, ElementAssets), [nodesCfg]);
-  /** 边样式映射 */
-  const edgeMapper = useMemo(() => getMapperByCfg(edgesCfg, ElementAssets), [edgesCfg]);
-
   return (
     <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
       {/* @ts-ignore */}
@@ -253,7 +255,7 @@ const GISDK = (props: Props) => {
               edge={edgeMapper}
               data={data}
               //@ts-ignore
-              layout={layout2}
+              layout={layout}
               onInit={handleGraphInit}
             />
             {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
