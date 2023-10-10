@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.7
+
+### Patch Changes
+
+- publish in 1010
+
 ## 0.6.6
 
 ### Patch Changes
