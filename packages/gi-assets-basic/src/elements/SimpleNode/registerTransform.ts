@@ -263,7 +263,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
           },
         },
       };
-      console.log('keyshape', node.id);
+      // console.log('keyshape', node.id);
       return {
         id: node.id,
         data: {

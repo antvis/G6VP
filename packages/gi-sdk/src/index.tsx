@@ -21,6 +21,7 @@ export { default as SimpleNode } from './components/SimpleNode';
 /** default assets */
 export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
+export { useComponents } from './hooks/useComponents';
 export { default as useContainer } from './hooks/useContainer';
 export { Shortcuts, useShortcuts } from './utils';
 export { common };

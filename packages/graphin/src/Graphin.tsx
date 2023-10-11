@@ -30,7 +30,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     onInit,
     node = nodeStyleTransform,
     edge = edgeStyleTransform,
-    renderer = 'canvas',
+    renderer = 'webgl',
     ...options
   } = props;
 

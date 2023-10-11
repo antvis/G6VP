@@ -1,7 +1,8 @@
 import type { ComboModel as Combo } from '@antv/g6';
-import type { GraphinContextType, GraphinData, IUserEdge, IUserNode } from '@antv/graphin';
+import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { LANGUAGE_KEY_NAME } from './process/locale';
 import type { GraphSchemaData, IGraphData } from './process/schema';
+
 export type { GraphSchemaData };
 export interface State<
   G extends {
@@ -21,7 +22,7 @@ export interface State<
   restartForceSimulation: (nodes?: []) => void;
 
   /** graphinsight */
-
+  layout: Layout;
   /** 最原始的数据，本地数据或者服务端返回的数据，未经过视觉映射 */
   rawData: G;
   /** 当前画布渲染的数据，经过视觉映射 */

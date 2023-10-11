@@ -1,4 +1,4 @@
-import { utils } from '@antv/gi-sdk';
+import { useComponents, useContext, utils } from '@antv/gi-sdk';
 import React, { memo } from 'react';
 import Toolbar from './Toolbar';
 const { getPositionStyles } = utils;
@@ -10,30 +10,30 @@ export interface ToolbarProps {
   assets?: any;
   placement: string;
   offset: number[];
+  GI_CONTAINER: string[];
 }
 
+/**
+ * 获取根据容器资产配置，获取容器内资产实例
+ *
+ * @param context GISDK 上下文
+ * @param containers 容器资产 props.containers
+ * @returns
+ */
+
 const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
-  const { direction = 'horizontal', components, assets, placement, offset } = props;
+  const { direction = 'horizontal', placement, offset, GI_CONTAINER } = props;
+  const { assets, config } = useContext();
+  const { components } = useComponents(GI_CONTAINER, config, assets);
   const positionStyles = getPositionStyles(placement, offset);
 
-  const sortedComponents = components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX);
   return (
     <>
       <Toolbar direction={direction} style={positionStyles}>
-        {sortedComponents.map(item => {
-          if (!item) {
-            return null;
-          }
-          const { props: itemProps, id: itemId } = item;
-          const asset = assets[itemId];
-          if (!asset) {
-            console.warn(`asset: ${itemId} not found`);
-            return null;
-          }
-          const { component: Component } = asset;
+        {components.map(item => {
           return (
-            <span key={itemId}>
-              <Component {...itemProps} />
+            <span key={item.id}>
+              <item.component {...item.props} />
             </span>
           );
         })}

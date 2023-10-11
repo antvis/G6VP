@@ -11,17 +11,36 @@ const DEFAULT_GICC_LAYOUT = {
   },
 };
 
-const useComponents = ({
-  config,
-  initializer,
-  GICC_LAYOUT,
-  components,
-  GISDK_ID,
-  propsComponentsCfg,
-  ComponentAssets,
-}) => {
-  const { components: stateComponentsCfg } = config;
-  const ComponentCfgMap = propsComponentsCfg.concat(stateComponentsCfg).reduce((acc, curr) => {
+/**
+ * 兼容过去几个版本的不规范配置，计算真正的 components 和 container
+ * @param components
+ * @param pageLayout
+ * @returns
+ */
+const getComponentsCfg = (components, pageLayout) => {
+  let container = { id: 'EmptyLayout', props: {} };
+  let initializer;
+
+  components.forEach(item => {
+    if (item.type === 'INITIALIZER' || item.props.GI_INITIALIZER) {
+      initializer = item;
+      return;
+    }
+    if (pageLayout) {
+      container = pageLayout;
+      return;
+    }
+    if (item.type === 'GICC_LAYOUT') {
+      container = item;
+      return;
+    }
+  });
+  return { components, GICC_LAYOUT: container, initializer };
+};
+
+export const getComponents = (components, pageLayout, ComponentAssets) => {
+  const { GICC_LAYOUT, initializer } = getComponentsCfg(components, pageLayout);
+  const ComponentCfgMap = components.reduce((acc, curr) => {
     return {
       ...acc,
       [curr.id]: curr,
@@ -33,12 +52,12 @@ const useComponents = ({
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 
   // 默认使用空布局，graph ready 了才使用 config.pageLayout，避免 pageLayout 中的资产在 graph 实例之前调用 graph
-  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[config.pageLayout?.id || GICC_LAYOUT.id] || {
+  const { component: GICC_LAYOUT_COMPONENT } = ComponentAssets[pageLayout?.id || GICC_LAYOUT.id] || {
     component: DEFAULT_GICC_LAYOUT.component,
   };
 
   // 页面布局组件的 props 从 context.config.pageLayout 中读取，统一 pageLayout 读写方式
-  const { props: GICC_LAYOUT_PROPS } = config.pageLayout ||
+  const { props: GICC_LAYOUT_PROPS } = pageLayout ||
     ComponentCfgMap[GICC_LAYOUT.id] || {
       props: DEFAULT_GICC_LAYOUT.props,
     };
@@ -82,16 +101,7 @@ const useComponents = ({
         };
       }
 
-      return (
-        <Component
-          key={id}
-          GISDK_ID={GISDK_ID}
-          assets={ComponentAssets}
-          ComponentCfgMap={ComponentCfgMap}
-          {...itemProps}
-          {...GIProps}
-        />
-      );
+      return <Component key={id} {...itemProps} />;
     });
   };
 
@@ -104,11 +114,49 @@ const useComponents = ({
     GICC_LAYOUT_PROPS: {
       ComponentCfgMap,
       assets: ComponentAssets,
-      GISDK_ID,
       ...GICC_LAYOUT_PROPS,
     },
     isPageLayoutReady: true,
   };
 };
 
-export default useComponents;
+/**
+ *
+ * @param container ['ZoomIn','ZoomOut']
+ * @param config GI 配置文件
+ * @param assets GI 资产
+ */
+export const useComponents = (container, config, assets) => {
+  const componentsCfgMap = config.components.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr.id]: curr,
+    };
+  }, {});
+  const getComponentById = (componentId: string) => {
+    if (!componentId) {
+      return null;
+    }
+    const asset = assets.components[componentId];
+    const assetConfig = componentsCfgMap[componentId];
+    if (!asset || !assetConfig) {
+      console.warn(`asset: ${componentId} not found`);
+      return null;
+    }
+    const { icon } = assetConfig.props?.GIAC_CONTENT || asset.info;
+    return {
+      icon,
+      id: componentId,
+      info: asset.info,
+      props: assetConfig.props,
+      component: asset.component,
+    };
+  };
+
+  return React.useMemo(() => {
+    return {
+      components: container.map(getComponentById).filter(c => c),
+      componentsCfgMap,
+    };
+  }, [config.components, container]);
+};

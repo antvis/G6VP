@@ -214,7 +214,7 @@ const transform = (config: GIEdgeConfig, reset?: boolean) => {
         },
         preStyle,
       );
-      console.log('edge.......', id);
+      // console.log('edge.......', id);
 
       return {
         source,
