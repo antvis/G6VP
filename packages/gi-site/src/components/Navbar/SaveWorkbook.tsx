@@ -19,6 +19,7 @@ const getCover = async (graph: Graph) => {
   return new Promise(resolve => {
     setTimeout(() => {
       const cover = graph.toDataURL('image/png');
+
       resolve(cover);
     }, 30);
   });

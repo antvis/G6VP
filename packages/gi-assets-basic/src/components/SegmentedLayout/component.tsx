@@ -47,7 +47,16 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
       >
         <SegmentedTabs items={items} />
       </div>
-      <div style={{ width: `calc(100% - ${width + padding * 2}px)` }}>{children}</div>
+      <div
+        style={{
+          width: `calc(100% - ${width + padding * 2}px)`,
+          position: 'relative',
+          transform: 'scale(1)',
+          height: 'calc(100% - 12px)',
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

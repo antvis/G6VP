@@ -18,9 +18,7 @@ export default (graph: IGraph) => {
     changeSize: size => {
       graph.setSize(size);
     },
-    toDataURL: () => {
-      return true;
-    },
+
     setAutoPaint: paint => {
       return true;
     },

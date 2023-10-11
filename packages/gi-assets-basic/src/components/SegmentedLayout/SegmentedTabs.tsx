@@ -32,7 +32,7 @@ const SegmentedTabs: React.FunctionComponent<SegmentedTabsProps> = props => {
 
   const [state, setState] = React.useState<{ active: string }>(() => {
     const { searchParams } = getSearchParams(window.location);
-    const active = searchParams.get(queryKey) || defaultActive || items[0].key;
+    const active = searchParams.get(queryKey) || defaultActive || (items[0] && items[0].key) || '';
     return {
       active,
     };

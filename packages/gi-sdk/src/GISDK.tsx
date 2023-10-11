@@ -47,15 +47,6 @@ const GISDK = (props: Props) => {
   const { GISDK_ID } = constants;
 
   /**
-   *  响应 graph 的变化
-   */
-  const handleGraphInit = ins => {
-    updateState(draft => {
-      draft.graph = ins;
-      draft.HAS_GRAPH = true;
-    });
-  };
-  /**
    * 响应 props.config 变化
    */
   useEffect(() => {
@@ -66,6 +57,16 @@ const GISDK = (props: Props) => {
       draft.layout = props.config.layout.props;
     });
   }, [props.config]);
+
+  /**
+   *  响应 graph 的变化
+   */
+  const handleGraphInit = ins => {
+    updateState(draft => {
+      draft.graph = ins;
+      draft.HAS_GRAPH = true;
+    });
+  };
 
   /**
    * 响应 config.components 变化，重新渲染组件
