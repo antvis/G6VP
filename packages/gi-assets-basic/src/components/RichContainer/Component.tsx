@@ -75,7 +75,7 @@ const RichContainer = props => {
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
   };
-  const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea,ConditionArea] = Containers;
+  const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea, ConditionArea, TimeBarArea] = Containers;
 
   const handleChange = id => {
     localStorage.setItem(URL_SEARCH_KEY, id)
@@ -302,6 +302,13 @@ const RichContainer = props => {
             }}
           >
             {children}
+            <div className='gi-rich-container-timebar' style={{ position: 'absolute', bottom: 0, width: `calc(100vw - ${width}px)` }}>  
+              {TimeBarArea.components.map(item => {
+                return (
+                  <item.component key={item.id} {...item.props} />
+                );
+              })}
+            </div>
           </div>
         </div>
         {ViewArea.components.map(item => {
