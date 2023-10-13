@@ -62,48 +62,45 @@ export const getComponents = (components, pageLayout, ComponentAssets) => {
       props: DEFAULT_GICC_LAYOUT.props,
     };
 
-  const renderComponents = () => {
-    return components.map(c => {
-      const { id, props: itemProps = {} } = c;
-      const matchComponent = ComponentAssets[id]; //具体组件的实现
-      if (!matchComponent) {
-        return null;
-      }
-      const { component: Component, info } = matchComponent;
-      /** 三类原子组件，必须在容器组件中才能渲染，因此不单独渲染 */
-      if (
-        itemProps.GIAC_CONTENT ||
-        itemProps.GIAC_MENU ||
-        itemProps.GIAC ||
-        info.type === 'GICC_LAYOUT' ||
-        info.type === 'GIAC_CONTENT' ||
-        info.type === 'GIAC' ||
-        info.type === 'GIAC_MENU' ||
-        id === initializer.id
-      ) {
-        return null;
-      }
+  const renderComponents = components.map(c => {
+    const { id, props: itemProps = {} } = c;
+    const matchComponent = ComponentAssets[id]; //具体组件的实现
+    if (!matchComponent) {
+      return null;
+    }
+    const { component: Component, info } = matchComponent;
+    /** 三类原子组件，必须在容器组件中才能渲染，因此不单独渲染 */
+    if (
+      itemProps.GIAC_CONTENT ||
+      itemProps.GIAC_MENU ||
+      itemProps.GIAC ||
+      info.type === 'GICC_LAYOUT' ||
+      info.type === 'GIAC_CONTENT' ||
+      info.type === 'GIAC' ||
+      info.type === 'GIAC_MENU' ||
+      id === initializer.id
+    ) {
+      return null;
+    }
 
-      const { GI_CONTAINER } = itemProps;
-      /** 这些都是不规范的，后面统一处理 */
-      let GIProps = {};
-      if (GI_CONTAINER) {
-        const componentKeys: string[] = [];
-        GI_CONTAINER.forEach(item => {
-          if (typeof item === 'string') componentKeys.push(item);
-          else componentKeys.push(item.value);
-        });
-        GIProps = {
-          components: componentKeys.map(c => {
-            return ComponentCfgMap[c];
-          }),
-          // assets: ComponentAssets,
-        };
-      }
-
-      return <Component key={id} {...itemProps} />;
-    });
-  };
+    const { GI_CONTAINER } = itemProps;
+    /** 这些都是不规范的，后面统一处理 */
+    let GIProps = {};
+    if (GI_CONTAINER) {
+      const componentKeys: string[] = [];
+      GI_CONTAINER.forEach(item => {
+        if (typeof item === 'string') componentKeys.push(item);
+        else componentKeys.push(item.value);
+      });
+      GIProps = {
+        components: componentKeys.map(c => {
+          return ComponentCfgMap[c];
+        }),
+        // assets: ComponentAssets,
+      };
+    }
+    return <Component key={id} {...itemProps} />;
+  });
 
   return {
     renderComponents,

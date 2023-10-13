@@ -37,7 +37,7 @@ export const getMapperByCfg = (
       }
       const Element = ElementAssets[id];
       //@ts-ignore
-      const isMatch = filterByTopRule(item.data, { logic, expressions });
+      const isMatch = filterByTopRule(item, { logic, expressions });
 
       if (isMatch) {
         // console.log(id, cfg, item);

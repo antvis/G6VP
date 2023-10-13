@@ -12,10 +12,39 @@ export interface IProps {
   transByFieldMapping: boolean;
 }
 
+const transform = data => {
+  const { combos } = data;
+  const nodes = data.nodes.map(item => {
+    const { id, data } = item;
+    return {
+      id: id,
+      data: data,
+    };
+  });
+
+  const edges = data.edges.map((item, index) => {
+    const { source, target, id, data } = item;
+    return {
+      id: id || `edge-${index}`,
+      source,
+      target,
+      data,
+    };
+  });
+
+  console.log('TransformGraphinData edges ', edges, nodes);
+
+  return {
+    nodes,
+    edges,
+    combos,
+  };
+};
+
 const Initializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { serviceId, schemaServiceId, aggregate, transByFieldMapping } = props;
-  const { services, updateContext, transform, largeGraphLimit } = context;
+  const { services, updateContext, largeGraphLimit } = context;
 
   React.useEffect(() => {
     // const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
@@ -154,7 +183,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             return;
           }
           /** 默认是普通模式 */
-          const newData = data; // transform(data, true);
+          const newData = transform(data, true);
           draft.rawData = { ...data };
           draft.data = newData;
           draft.source = newData;

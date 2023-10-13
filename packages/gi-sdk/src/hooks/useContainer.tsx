@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { IGIAC, TGIAC_CONTENT } from '../components/const';
 import { TYPE } from '../constants/info';
 export interface AssetComponet {
@@ -99,7 +99,7 @@ const useContainer = (context, _containers?: any): Container[] => {
     };
   };
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     return containers.map(container => {
       const components = container.GI_CONTAINER.map(getComponentById).filter(c => c);
       return {
@@ -107,7 +107,7 @@ const useContainer = (context, _containers?: any): Container[] => {
         components,
       };
     });
-  }, [ComponentCfgMap, assets]);
+  }, [config.components]);
 };
 
 export default useContainer;

@@ -62,6 +62,8 @@ const GISDK = (props: Props) => {
    *  响应 graph 的变化
    */
   const handleGraphInit = ins => {
+    //@ts-ignore
+    window.graph = ins;
     updateState(draft => {
       draft.graph = ins;
       draft.HAS_GRAPH = true;
@@ -73,7 +75,9 @@ const GISDK = (props: Props) => {
    */
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
     useMemo(() => {
-      return getComponents(componentsCfg, pageLayout, ComponentAssets);
+      const a = getComponents(componentsCfg, pageLayout, ComponentAssets);
+
+      return a;
     }, [componentsCfg, pageLayout, HAS_GRAPH]);
 
   /**
@@ -110,7 +114,7 @@ const GISDK = (props: Props) => {
     useIntl,
     language,
   };
-  console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)', HAS_GRAPH, state.initialized, state);
+  console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)', HAS_GRAPH, state.initialized);
   return (
     <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
       {/* @ts-ignore */}
@@ -130,7 +134,7 @@ const GISDK = (props: Props) => {
               onInit={handleGraphInit}
             />
             {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
-            {HAS_GRAPH && state.initialized && renderComponents()}
+            {HAS_GRAPH && state.initialized && renderComponents}
             {HAS_GRAPH && state.initialized && children}
           </GICC_LAYOUT_COMPONENT>
         </GraphinContext.Provider>

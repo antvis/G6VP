@@ -185,11 +185,11 @@ export const highlightSubGraph = (graph, data: GIGraphData) => {
   source.nodes.forEach(node => {
     const hasMatch = nodeIds.includes(node.id);
     if (hasMatch) {
-      graph.setItemState(node.id, 'disabled', false);
+      graph.setItemState(node.id, 'inactice', false);
       graph.setItemState(node.id, 'selected', true);
     } else {
       graph.setItemState(node.id, 'selected', false);
-      graph.setItemState(node.id, 'disabled', true);
+      graph.setItemState(node.id, 'inactice', true);
     }
   });
   source.edges.forEach(edge => {
@@ -208,11 +208,11 @@ export const highlightSubGraph = (graph, data: GIGraphData) => {
     }
 
     if (hasMatch) {
-      graph.setItemState(edge.id, 'disabled', false);
+      graph.setItemState(edge.id, 'inactice', false);
       graph.setItemState(edge.id, 'selected', true);
     } else {
       graph.setItemState(edge.id, 'selected', false);
-      graph.setItemState(edge.id, 'disabled', true);
+      graph.setItemState(edge.id, 'inactice', true);
     }
   });
   return {

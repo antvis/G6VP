@@ -1,5 +1,5 @@
 import { Icon, useContainer, useContext } from '@antv/gi-sdk';
-import * as React from 'react';
+import React, { memo, useMemo } from 'react';
 import SegmentedTabs from './SegmentedTabs';
 import './index.less';
 
@@ -19,20 +19,17 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { HAS_GRAPH } = context;
   const Containers = useContainer(context);
   const [SideContent] = Containers;
-
-  const {
-    width = 360,
-    padding = 12, // 为什么这里没有值，需要关注
-    components: SideContentChildren,
-  } = SideContent;
-  console.log('SegmentContainer', HAS_GRAPH);
-  const items = SideContentChildren.map(item => {
-    return {
-      icon: <Icon type={item.icon} />,
-      key: item.id,
-      children: HAS_GRAPH && <item.component key={item.id} {...item.props} />,
-    };
-  });
+  const { width = 360, padding = 12 } = SideContent;
+  const items = useMemo(() => {
+    console.log('SegmentContainer >>>> calc');
+    return SideContent.components.map(item => {
+      return {
+        icon: <Icon type={item.icon} />,
+        key: item.id,
+        children: HAS_GRAPH && <item.component key={item.id} {...item.props} />,
+      };
+    });
+  }, [HAS_GRAPH, SideContent.components]);
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex' }}>
@@ -61,4 +58,4 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   );
 };
 
-export default SegmentedLayout;
+export default memo(SegmentedLayout);

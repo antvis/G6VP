@@ -3,20 +3,20 @@ import { Extensions, Graph as G6Graph, extend } from '@antv/g6';
 const TransformGraphinData = data => {
   const { combos } = data;
   const nodes = data.nodes.map(item => {
-    const { id } = item;
+    const { id, data } = item;
     return {
       id: id,
-      data: item,
+      data: data,
     };
   });
 
   const edges = data.edges.map((item, index) => {
-    const { source, target, id } = item;
+    const { source, target, id, data } = item;
     return {
-      id: item.id || `edge-${index}`,
+      id: id || `edge-${index}`,
       source,
       target,
-      data: item,
+      data,
     };
   });
 

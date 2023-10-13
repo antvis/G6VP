@@ -30,10 +30,11 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     onInit,
     node = nodeStyleTransform,
     edge = edgeStyleTransform,
-    renderer = 'webgl',
+    renderer = 'canvas',
     ...options
   } = props;
 
+  console.log('%c GRAPHIN RENDER....', 'color:rgba(48,86,227,0.8)');
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
 
@@ -52,7 +53,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
   const { isReady, graph } = state;
 
   if (dataRef.current !== data) {
-    // console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
+    console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
     console.time('GRAPHIN_CHANGE_DATA_COST');
     //@ts-ignore
     graph && graph.changeData(data, 'replace');
@@ -61,7 +62,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     console.timeEnd('GRAPHIN_CHANGE_DATA_COST');
   }
   if (layoutRef.current !== layout) {
-    // console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
+    console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
     console.time('GRAPHIN_CHANGE_LAYOUT_COST');
     //@ts-ignore
     graph && graph.layout(layout);
@@ -89,6 +90,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
         graph.updateMapper('node', node);
       } else {
         graph.once('afterrender', e => {
+          console.log('afterrender.....node.....');
           constantRef.current.AFTER_RENDER_NODE_MAPPER = true;
           setTimeout(() => {
             graph.updateMapper('node', node);
@@ -102,8 +104,10 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     let {
       width,
       height,
-      // node = nodeStyleTransform,
-      // edge = edgeStyleTransform,
+      //@ts-ignore
+      node,
+      //@ts-ignore
+      edge,
       // behaviors
       modes = { default: ['zoom-canvas', 'drag-canvas', 'drag-node'] },
     } = options;
@@ -121,6 +125,8 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       data,
       layout,
       renderer,
+      node,
+      edge,
       transforms: ['transform-graphin-data'],
     });
 
