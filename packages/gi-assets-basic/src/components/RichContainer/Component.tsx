@@ -192,6 +192,7 @@ const RichContainer = props => {
             <Button
               type={HAS_QUERY_VIEW ? 'primary' : 'text'}
               icon={<Icon type={DataArea.icon} />}
+              className='gi-richcontainer-query-button'
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -212,6 +213,7 @@ const RichContainer = props => {
             <Button
               type={HAS_FILTER_VIEW ? 'primary' : 'text'}
               icon={<Icon type={FilterArea.icon} />}
+              className='gi-richcontainer-filter-button'
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -265,6 +267,7 @@ const RichContainer = props => {
               enable={enable}
               onResizeStart={onResizeStart}
               onResizeStop={onResizeStop}
+              className='gi-richcontainer-side'
             >
               <div style={{ overflow: 'hidden' }}>
                 {HAS_QUERY_VIEW && (
