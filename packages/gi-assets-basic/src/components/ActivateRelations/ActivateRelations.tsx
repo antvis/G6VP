@@ -1,4 +1,4 @@
-import { Extensions, registerBehavior, useBehaviorHook } from '@antv/graphin';
+import { useBehaviorHook } from '@antv/graphin';
 import * as React from 'react';
 
 interface Props {
@@ -46,8 +46,6 @@ const defaultConfig = {
 };
 
 export type ActivateRelationsProps = Partial<typeof defaultConfig>;
-//@ts-ignore
-registerBehavior('activate-relations', Extensions.ActivateRelations);
 
 const ActivateRelations: React.FunctionComponent<ActivateRelationsProps> = props => {
   //@ts-ignore

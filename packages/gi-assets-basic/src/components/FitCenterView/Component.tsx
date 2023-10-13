@@ -12,18 +12,10 @@ const FitView: React.FunctionComponent<IProps> = props => {
   const { graph } = useContext();
 
   const callback = () => {
-    graph.fitCenter(true);
-    graph.fitView(20, {}, true, {
-      easing: 'easeCubic',
-      duration: 300,
-    });
+    graph.fitCenter();
+    graph.fitView();
   };
-  React.useEffect(() => {
-    graph.on('canvas:dblclick', callback);
-    return () => {
-      graph.off('canvas:dblclick', callback);
-    };
-  }, [graph]);
+
   return <GIAComponent GIAC={GIAC} onClick={callback} />;
 };
 

@@ -1,21 +1,18 @@
-import { useContext } from '@antv/gi-sdk';
-import { Graph } from '@antv/graphin';
+import { IGraph, useContext } from '@antv/gi-sdk';
+
 import React from 'react';
 /**
  * 清除所有的样式
  * @param graph G6的Graph实例
  * @type Graph
  */
-export const clearAllStates = (graph: Graph) => {
-  graph.setAutoPaint(false);
+export const clearAllStates = (graph: IGraph) => {
   graph.getNodes().forEach(function (node) {
     graph.clearItemStates(node);
   });
   graph.getEdges().forEach(function (edge) {
     graph.clearItemStates(edge);
   });
-  graph.paint();
-  graph.setAutoPaint(true);
 };
 
 /**

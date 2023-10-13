@@ -9,7 +9,8 @@ import {
 } from './components/const';
 import GIAComponent from './components/GIAC';
 export { Icon, icons } from '@antv/gi-common-components';
-export { Compatible, registerBehavior } from '@antv/graphin';
+export { Compatible, IG6GraphEvent, registerBehavior } from '@antv/graphin';
+export type { IGraph } from '@antv/graphin';
 export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';

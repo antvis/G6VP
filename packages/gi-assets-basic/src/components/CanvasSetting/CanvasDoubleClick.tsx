@@ -10,7 +10,7 @@ const CanvasClick = () => {
 
   React.useEffect(() => {
     const handleCenter = () => {
-      graph.fitCenter(true); // graph.fitCenter(true); 动画有bug
+      graph.fitView();
     };
     graph.on('canvas:dblclick', handleCenter);
     return () => {

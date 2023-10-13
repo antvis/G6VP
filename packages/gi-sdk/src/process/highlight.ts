@@ -1,5 +1,5 @@
-import { Graph, GraphinData } from '@antv/graphin';
-export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
+import { GraphinData, IGraph } from '@antv/graphin';
+export const highlightSubGraph = (graph: IGraph, data: GraphinData) => {
   const source = graph.save() as GraphinData;
 
   const nodeIds = data.nodes.map(node => node.id);
@@ -73,11 +73,11 @@ export const highlightSubGraph = (graph: Graph, data: GraphinData) => {
 };
 /**
  *
- * @param graph Graph
+ * @param graph IGraph
  * @param edges string[]
  * @returns
  */
-export const highlightEdgeIds = (graph: Graph, edgeIds: string[]) => {
+export const highlightEdgeIds = (graph: IGraph, edgeIds: string[]) => {
   const source = graph.save() as GraphinData;
 
   const isEmpty = edgeIds.length === 0;

@@ -1,10 +1,10 @@
 import { useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React, { memo } from 'react';
-import ActivateRelations from './ActivateRelations';
+
 import ActiveEdge from './ActiveEdge';
 
-const { Hoverable } = Behaviors;
+const { Hoverable, ActivateRelations } = Behaviors;
 
 export interface CanvasSettingProps {
   enableNodeHover: boolean;
@@ -35,10 +35,10 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
       {enable && !persistentHighlight && (
         <ActivateRelations
           trigger={trigger}
-          upstreamDegree={upstreamDegree}
-          downstreamDegree={downstreamDegree}
-          multiSelectEnabled={multiSelectEnabled}
-          modifierKey={modifierKey}
+          // upstreamDegree={upstreamDegree}
+          // downstreamDegree={downstreamDegree}
+          // multiSelectEnabled={multiSelectEnabled}
+          // modifierKey={modifierKey}
         />
       )}
       {enableNodeHover && <Hoverable bindType="node" />}

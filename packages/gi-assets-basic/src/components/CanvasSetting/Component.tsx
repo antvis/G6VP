@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import CanvasClick from './CanvasClick';
 import CanvasDoubleClick from './CanvasDoubleClick';
 
-const { DragCanvas, ZoomCanvas, BrushSelect } = Behaviors;
+const { DragCanvas, ZoomCanvas, BrushSelect, DragNode } = Behaviors;
 
 export interface CanvasSettingProps {
   dragCanvas: {
@@ -41,12 +41,13 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   }, [backgroundColor, backgroundImage]);
   return (
     <>
+      <DragNode />
       <DragCanvas
         disabled={dragCanvas.disabled}
         direction={dragCanvas.direction}
         enableOptimize={dragCanvas.enableOptimize}
       />
-      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} sensitivity={0.2} />
+      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
       <BrushSelect />
       {clearStatus !== false && <CanvasClick />}
       {doubleClick !== false && <CanvasDoubleClick />}
