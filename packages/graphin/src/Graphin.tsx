@@ -34,7 +34,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     ...options
   } = props;
 
-  console.log('%c GRAPHIN RENDER....', 'color:rgba(48,86,227,0.8)');
+  console.log('%c GRAPHIN RENDER....', 'color:rgba(48,86,227,0.8)', ExtendGraph);
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
 

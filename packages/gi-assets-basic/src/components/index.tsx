@@ -1,4 +1,4 @@
-// import ActivateRelations from './ActivateRelations';
+import ActivateRelations from './ActivateRelations';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
 import ContextMenu from './ContextMenu';
@@ -50,6 +50,7 @@ import ZoomStatus from './ZoomStatus';
 // import CreateCombo from './CreateCombo';
 import ShortcutKeys from './ShortcutKeys';
 export {
+  ActivateRelations,
   CanvasSetting,
   // ContentContainer,
   ChartAnalysis,

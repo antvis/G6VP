@@ -183,7 +183,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
             return;
           }
           /** 默认是普通模式 */
-          const newData = transform(data, true);
+          const newData = transform(data);
           draft.rawData = { ...data };
           draft.data = newData;
           draft.source = newData;

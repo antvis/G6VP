@@ -3,7 +3,7 @@ export { default as Compatible } from './compatible';
 export { default as Components } from './components';
 export * as Utils from './utils';
 export type GraphinData = any;
-export type Graph = any;
+
 export type EdgeStyle = any;
 export type IUserNode = any;
 export type Layout = any;
@@ -13,14 +13,15 @@ export type IG6GraphEvent = any;
 export type GraphData = any;
 export type NodeConfig = any;
 
+export { Extensions, Graph, extend } from '@antv/g6';
+
 export { GraphinContext, useGraphin } from './useGraphin';
 export type { GraphinContextType } from './useGraphin';
 
 export const registerNode = () => {};
 //@ts-ignore
 export const registerEdge = () => {};
-//@ts-ignore
-export const registerBehavior = () => {};
+
 //@ts-ignore
 export const registerFontFamily = iconLoader => {
   /**  注册 font icon */
@@ -58,5 +59,7 @@ export const Behaviors = {
   BrushSelect: (props: any) => null,
 };
 
-export const useBehaviorHook = () => {};
+export { default as registerBehavior } from './behaviors/registerBehavior';
+export { default as useBehaviorHook } from './behaviors/useBehaviorHook';
+
 export default Graphin;

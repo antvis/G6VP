@@ -1,7 +1,5 @@
-import { registerBehavior, useBehaviorHook } from '@antv/graphin';
+import { Extensions, registerBehavior, useBehaviorHook } from '@antv/graphin';
 import * as React from 'react';
-
-import ActivateRelationsBehavior from './activate-relations-v2';
 
 interface Props {
   type: string;
@@ -49,12 +47,12 @@ const defaultConfig = {
 
 export type ActivateRelationsProps = Partial<typeof defaultConfig>;
 //@ts-ignore
-registerBehavior('activate-relations-v2', ActivateRelationsBehavior);
+registerBehavior('activate-relations', Extensions.ActivateRelations);
 
 const ActivateRelations: React.FunctionComponent<ActivateRelationsProps> = props => {
   //@ts-ignore
   useBehaviorHook({
-    type: 'activate-relations-v2',
+    type: 'activate-relations',
     userProps: props,
     defaultConfig,
   });
