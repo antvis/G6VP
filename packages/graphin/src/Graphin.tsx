@@ -45,11 +45,12 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
 
   const [state, setState] = useState<{
     isReady: boolean;
-    graph: null | IGraph;
-  }>(() => ({
+    graph: IGraph;
+  }>({
     isReady: false,
+    //@ts-ignore
     graph: null,
-  }));
+  });
   const { isReady, graph } = state;
 
   if (dataRef.current !== data) {
@@ -109,7 +110,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       //@ts-ignore
       edge,
       // behaviors
-      modes = { default: ['zoom-canvas', 'drag-canvas', 'drag-node'] },
+      modes = { default: [], lasso: [] },
     } = options;
     const ContainerDOM = document.getElementById(container);
 
@@ -173,7 +174,11 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       </GraphinContext.Provider>
     );
   }
-  return <div id={container} style={containerStyle}></div>;
+  return (
+    <>
+      <div id={container} style={containerStyle}></div>
+    </>
+  );
 });
 
 export default memo(Graphin);

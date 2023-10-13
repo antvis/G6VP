@@ -50,6 +50,8 @@ export default extend(G6Graph, {
     //@ts-ignore
     'drag-canvas': Extensions.DragCanvas,
     'drag-node': Extensions.DragNode,
+    'hover-activate': Extensions.HoverActivate,
+    'brush-select': Extensions.BrushSelect,
   },
   plugins: {
     minimap: Extensions.Minimap,

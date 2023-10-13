@@ -9,11 +9,12 @@ export type IUserNode = any;
 export type Layout = any;
 export type IUserEdge = any;
 export type ContextMenuValue = any;
-export type IG6GraphEvent = any;
+
 export type GraphData = any;
 export type NodeConfig = any;
 
 export { Extensions, Graph, extend } from '@antv/g6';
+export type { IG6GraphEvent, IGraph } from '@antv/g6';
 
 export { GraphinContext, useGraphin } from './useGraphin';
 export type { GraphinContextType } from './useGraphin';
@@ -48,18 +49,6 @@ export const registerFontFamily = iconLoader => {
   });
 };
 
-export const Behaviors = {
-  ClickSelect: (props: any) => null,
-  DragCanvas: (props: any) => null,
-  ZoomCanvas: (props: any) => null,
-  DragNode: (props: any) => null,
-  DragCombo: (props: any) => null,
-  LassoSelect: (props: any) => null,
-  Hoverable: (props: any) => null,
-  BrushSelect: (props: any) => null,
-};
-
-export { default as registerBehavior } from './behaviors/registerBehavior';
-export { default as useBehaviorHook } from './behaviors/useBehaviorHook';
+export { default as Behaviors, registerBehavior, useBehaviorHook } from './behaviors';
 
 export default Graphin;
