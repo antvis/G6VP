@@ -42,7 +42,8 @@ const SelectExchangeMenuItem: React.FunctionComponent<IProps> = props => {
     if (contextmenu?.item) {
       graph.setItemState(contextmenu.item, 'selected', true);
     }
-    const nodeIds = (graph.findAllByState('node', 'selected') || []).map(n => n.getID());
+    const nodeIds = (graph.findAllByState('node', 'selected') || []).map(n => n.id);
+ 
     exchangeSelectContents(nodeIds);
   }, [contextmenu, graph]);
 

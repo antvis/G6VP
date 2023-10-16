@@ -8,6 +8,7 @@ export default (graph: IGraph) => {
         const { graphCore } = graph.dataController;
         const itemMap = graphCore[`${itemType}Map`];
         return {
+          ...itemMap.get(id),
           getNeighbors: () => {
             return graphCore.getNeighbors(id);
           },
