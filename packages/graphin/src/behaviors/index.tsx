@@ -8,7 +8,7 @@ import Hoverable from './Hoverable';
 import LassoSelect from './LassoSelect';
 import ResizeCanvas from './ResizeCanvas';
 import ZoomCanvas from './ZoomCanvas';
-
+ 
 export default {
   /** 内置 */
   DragCanvas,
