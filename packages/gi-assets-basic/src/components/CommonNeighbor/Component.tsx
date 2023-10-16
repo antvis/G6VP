@@ -78,7 +78,7 @@ function findCommonNeighbors(beginNodes: INode[], hop: number = 1): { nodes: Set
           return;
         }
         prevNode.getEdges().forEach(edge => {
-          if (edge.getTarget() === node || edge.getSource() === node) {
+          if (edge.target === node.id || edge.source === node.id) {
             edges.add(edge);
           }
         });
@@ -102,10 +102,10 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
 
   const findNeighbors = beginNodes => {
     graph.getNodes().forEach(node => {
-      graph.setItemState(node.getID(), activeStatus, false);
+      graph.setItemState(node.id, activeStatus, false);
     });
     graph.getEdges().forEach(edge => {
-      graph.setItemState(edge.getID(), activeStatus, false);
+      graph.setItemState(edge.id, activeStatus, false);
     });
     const { nodes, edges } = findCommonNeighbors(beginNodes, hop);
     if (nodes.size < 1) {
@@ -113,19 +113,19 @@ const CommonNeighbor: React.FunctionComponent<IProps> = props => {
         $i18n.get({ id: 'basic.components.CommonNeighbor.Component.NoCommonNeighborsFound', dm: '没有发现共同邻居！' }),
       );
       handleUpateHistory(
-        beginNodes.map(node => node.getID()),
+        beginNodes.map(node => node.id),
         false,
         $i18n.get({ id: 'basic.components.CommonNeighbor.Component.NoCommonNeighborsFound', dm: '没有发现共同邻居！' }),
       );
       return;
     }
     edges.forEach(edge => {
-      graph.setItemState(edge.getID(), activeStatus, true);
+      graph.setItemState(edge.id, activeStatus, true);
     });
     nodes.forEach(node => {
-      graph.setItemState(node.getID(), activeStatus, true);
+      graph.setItemState(node.id, activeStatus, true);
     });
-    handleUpateHistory(beginNodes.map(node => node.getID()));
+    handleUpateHistory(beginNodes.map(node => node.id));
   };
 
   /**

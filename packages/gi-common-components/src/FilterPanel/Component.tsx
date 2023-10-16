@@ -1,13 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Graph, GraphinData } from '@antv/graphin';
+import { GraphinData, IGraph } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
+import $i18n from '../i18n';
 import FilterSelection from './FilterSelection';
 import './index.less';
 import { IFilterCriteria } from './type';
 import { filterGraphData, highlightSubGraph, uniqueElementsBy } from './utils';
-import $i18n from '../i18n';
 export interface FilterPanelProps {
   isFilterIsolatedNodes: boolean;
   highlightMode?: boolean;
@@ -15,7 +15,7 @@ export interface FilterPanelProps {
   filterKeys: string[];
   source: GraphinData;
   schemaData: any;
-  graph: Graph;
+  graph: IGraph;
   onChange: (data: GraphinData) => void;
 }
 

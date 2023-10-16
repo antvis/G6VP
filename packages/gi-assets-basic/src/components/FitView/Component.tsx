@@ -14,10 +14,7 @@ const FitView: React.FunctionComponent<IProps> = props => {
     <GIAComponent
       GIAC={GIAC}
       onClick={() => {
-        graph.fitView(20, {}, true, {
-          easing: 'easeCubic',
-          duration: 200,
-        });
+        graph.fitView();
       }}
     />
   );

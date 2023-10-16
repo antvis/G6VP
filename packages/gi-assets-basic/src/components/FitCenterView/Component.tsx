@@ -12,7 +12,7 @@ const FitView: React.FunctionComponent<IProps> = props => {
   const { graph } = useContext();
 
   const callback = () => {
-    graph.fitCenter();
+    // graph.fitCenter();
     graph.fitView();
   };
 

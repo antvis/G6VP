@@ -2,6 +2,20 @@ import { IGraph } from '@antv/g6';
 
 export default (graph: IGraph) => {
   Object.assign(graph, {
+    findAllByState: (itemType, state) => {
+      console.warn('findAllByState is 4.x function...');
+      return graph.findIdByState(itemType, state).map(id => {
+        const { graphCore } = graph.dataController;
+        const itemMap = graphCore[`${itemType}Map`];
+        return {
+          getNeighbors: () => {
+            return graphCore.getNeighbors(id);
+          },
+          getModel: () => itemMap.get(id),
+          getEdges: () => graphCore.bothEdgesMap.get(id),
+        };
+      });
+    },
     save: () => {
       return {
         nodes: graph.getAllNodesData(),

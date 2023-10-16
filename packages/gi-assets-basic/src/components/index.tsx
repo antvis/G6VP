@@ -1,6 +1,7 @@
 import ActivateRelations from './ActivateRelations';
 import CanvasSetting from './CanvasSetting';
 import ClearCanvas from './ClearCanvas';
+import CommonNeighbor from './CommonNeighbor';
 import ContextMenu from './ContextMenu';
 import Copyright from './Copyright';
 import DownLoad from './DownLoad';
@@ -56,7 +57,7 @@ export {
   ChartAnalysis,
   // TooltipForEdge, //体验问题，暂不放开
   ClearCanvas,
-  // CommonNeighbor,
+  CommonNeighbor,
   ContextMenu,
   Copyright,
   DownLoad,
