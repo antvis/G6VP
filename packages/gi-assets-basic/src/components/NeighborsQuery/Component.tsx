@@ -1,4 +1,4 @@
-import { useContext, utils } from '@antv/gi-sdk';
+import { IGraph, useContext, utils } from '@antv/gi-sdk';
 
 import { Menu } from 'antd';
 import React, { memo, useEffect, useRef, useState } from 'react';
@@ -20,7 +20,7 @@ export interface QueryNeighborsProps {
   controlledValues?: ControlledValues;
 }
 
-const getContextMenuParams = (graph: any, contextmenu) => {
+const getContextMenuParams = (graph: IGraph, contextmenu) => {
   const selectedItems = graph.findAllByState('node', 'selected');
 
   const selectedNodes = new Map();
@@ -29,7 +29,8 @@ const getContextMenuParams = (graph: any, contextmenu) => {
     selectedNodes.set(model.id, model);
   });
 
-  const value = contextmenu.item.getModel();
+  const value = contextmenu.item;
+
   graph.setItemState(value.id, 'selected', true);
   selectedNodes.set(value.id, value);
 
@@ -62,9 +63,26 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
   });
   const { menus } = state;
   const { item: targetNode } = contextmenu;
-  if (!menuService || !service || targetNode?.destroyed || targetNode?.getType?.() !== 'node') {
-    return null;
-  }
+
+  useEffect(() => {
+    if (!menuService || !service || !targetNode) {
+      return;
+    }
+    const { ids, nodes, expandStartId } = getContextMenuParams(graph, contextmenu);
+    menuService({
+      ids,
+      nodes,
+      expandStartId,
+      limit,
+    }).then(res => {
+      setState(preState => {
+        return {
+          ...preState,
+          menus: res,
+        };
+      });
+    });
+  }, [contextmenu]);
 
   const handleClick = async code => {
     const { ids, nodes, expandStartId } = getContextMenuParams(graph, contextmenu);
@@ -72,7 +90,6 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     updateContext(draft => {
       draft.isLoading = true;
     });
-
     contextmenu.onClose();
     await expandNodes(ids, expandStartId, code, nodes);
   };
@@ -96,6 +113,9 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
           }),
         );
     }
+    if (!service) {
+      return null;
+    }
     try {
       const result = await service({
         ids,
@@ -108,17 +128,13 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       const expandIds = result.nodes?.map(n => n.id) || [];
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
+      console.log(data, result, newData);
 
       updateContext(draft => {
-        const res = transform(newData);
+        const res = newData;
         draft.data = res;
         draft.source = res;
         draft.isLoading = false;
-        if (draft.layout.type === 'preset') {
-          //兼容从save模式
-          const { props: layoutProps } = draft.config.layout || { props: { type: 'graphin-force' } };
-          draft.layout = layoutProps;
-        }
       });
       handleUpateHistory(historyProps);
     } catch (error) {
@@ -186,23 +202,6 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
       graph.off('graphin:datachange', handleCallback);
     };
   }, [isFocus]);
-
-  useEffect(() => {
-    const { ids, nodes, expandStartId } = getContextMenuParams(graph, contextmenu);
-    menuService({
-      ids,
-      nodes,
-      expandStartId,
-      limit,
-    }).then(res => {
-      setState(preState => {
-        return {
-          ...preState,
-          menus: res,
-        };
-      });
-    });
-  }, [graph]);
 
   if (menus.length === 0) {
     return (
