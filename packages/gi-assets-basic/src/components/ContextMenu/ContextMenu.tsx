@@ -1,8 +1,8 @@
-// import { Item } from '@antv/g6';
 type Item = any;
+import { useComponents, useContext } from '@antv/gi-sdk';
 import { ContextMenuValue } from '@antv/graphin';
 import { Menu } from 'antd';
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import ContextMenu from './Container';
 import './index.less';
 
@@ -18,35 +18,23 @@ interface ContextMenuState {
 }
 
 const ContextMenuContainer = props => {
-  const { components = [], assets } = props;
-
-  const [state, setState] = React.useState<ContextMenuState>({
-    item: undefined,
-  });
-
-  const sortedComponents = useMemo(
-    () => components.sort((a, b) => a.props?.GI_CONTAINER_INDEX - b.props?.GI_CONTAINER_INDEX),
-    [components, state.item],
-  );
-
+  const { GI_CONTAINER } = props;
+  const { config, assets } = useContext();
+  const { components } = useComponents(GI_CONTAINER, config, assets);
+  console.log(' components', components);
   return (
     //@ts-ignore
     <ContextMenu style={defaultStyle} setItem={item => setState({ item })}>
-      {(menuProps: ContextMenuValue) => {
+      {(menuContext: ContextMenuValue) => {
+        console.log('......', menuContext);
         return (
           <Menu mode="vertical">
-            {sortedComponents.map(item => {
-              if (!item) {
-                return null;
-              }
-              const { props: itemProps, id: itemId } = item;
-              const asset = assets[itemId];
-              if (!asset) {
-                console.warn(`asset: ${itemId} not found`);
-                return null;
-              }
-              const { component: Component } = asset;
-              return <Component {...itemProps} contextmenu={menuProps} key={itemId} />;
+            {components.map(item => {
+              return (
+                <span key={item.id}>
+                  <item.component contextmenu={menuContext} {...item.props} />
+                </span>
+              );
             })}
           </Menu>
         );

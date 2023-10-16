@@ -1,8 +1,7 @@
 /* eslint-disable react/require-default-props */
 import type { IG6GraphEvent } from '@antv/graphin';
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import useContextMenu, { State } from './useContextMenu';
-import { useContext } from '@antv/gi-sdk';
 
 export const defaultStyle: React.CSSProperties = {
   width: '120px',
@@ -23,50 +22,48 @@ export interface ContextMenuProps {
 
 const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
   const container = useRef<HTMLDivElement>(null);
-  const { graph } = useContext();
   const { children, style, setItem } = props;
   const contextmenu = useContextMenu({
     container,
   });
-  const { visible, x, y, item } = contextmenu;
-  const [top, setTop] = useState(y);
-  useEffect(() => setItem(item), [item]);
+  const { visible, x, y, id } = contextmenu;
 
-  useEffect(() => {
-    // 当 tooltip 超出画布高度，调整其位置
-    if (!visible || !container.current || !graph || graph.get('destroyed')) {
-      setTop(y);
-      return;
-    }
-    const { width, height } = container.current.getBoundingClientRect();
-    const { bottom } = graph.getContainer().getBoundingClientRect();
-    if (y + height > bottom) setTop(bottom - height - 40);
-    else setTop(y);
-  }, [visible, y]);
+  // 不建议在 useEffect 中处理数据：https://zh-hans.react.dev/learn/you-might-not-need-an-effect
+  // useEffect(() => setItem(item), [item]);
+
+  // 建议是在 useContextMenu 中处理x和y的指
+  // useEffect(() => {
+  //   // 当 tooltip 超出画布高度，调整其位置
+  //   if (!visible || !container.current || !graph || graph.get('destroyed')) {
+  //     setTop(y);
+  //     return;
+  //   }
+  //   const { width, height } = container.current.getBoundingClientRect();
+  //   const { bottom } = graph.getContainer().getBoundingClientRect();
+  //   if (y + height > bottom) setTop(bottom - height - 40);
+  //   else setTop(y);
+  // }, [visible, y]);
 
   const positionStyle: React.CSSProperties = {
     position: 'absolute',
     left: x,
-    top,
+    top: y,
   };
+  console.log('container........', contextmenu);
 
   if (typeof children !== 'function') {
     console.error('<ContextMenu /> children should be a function');
     return null;
   }
-  const id = (item && !item.destroyed && item.getModel && item.getModel().id) || '';
 
   return (
     <div
       ref={container}
       className="graphin-components-contextmenu"
-      style={{ ...defaultStyle, ...style, ...positionStyle, display: visible ? 'block' : 'none' }}
+      style={{ ...defaultStyle, ...style, ...positionStyle, visibility: visible ? 'visible' : 'hidden' }}
       key={id}
     >
-      {children({
-        ...contextmenu,
-        id,
-      })}
+      {children(contextmenu)}
     </div>
   );
 };
