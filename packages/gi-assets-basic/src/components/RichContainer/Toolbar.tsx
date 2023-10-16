@@ -28,7 +28,7 @@ const Toolbar = (props: ToolbarProps) => {
       <span style={{ padding: '0px 8px 0px 6px', color: '#98989D' }}>{title}</span>
       {options.map(item => {
         const isActive = value === item.id;
-        const { id, props: itemProps, component: ItemComponent } = item;
+        const { id, props: itemProps, component: ItemComponent, info } = item;
         const { GIAC_CONTENT } = itemProps;
         const title = GIAC_CONTENT ? GIAC_CONTENT.title : 'EMPTY';
         const buttonType = isActive ? 'primary' : 'text';
@@ -48,6 +48,7 @@ const Toolbar = (props: ToolbarProps) => {
               type={buttonType}
               icon={<Icon type={icon} />}
               key={id}
+              className={info.className}
               style={{
                 display: 'flex',
                 justifyContent: 'center',

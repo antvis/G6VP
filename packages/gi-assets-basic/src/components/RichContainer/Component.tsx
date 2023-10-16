@@ -1,5 +1,5 @@
 import { Handler } from '@antv/gi-common-components';
-import { Icon, useContainer, useContext, utils } from '@antv/gi-sdk';
+import { Icon, useContainer, useContext } from '@antv/gi-sdk';
 import { Button, Divider, Segmented, Select, Space } from 'antd';
 import { Resizable } from 're-resizable';
 import React, { memo, useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import $i18n from '../../i18n';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import './index.less';
+
 const URL_SEARCH_KEY = 'ActiveAssetID';
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
@@ -34,7 +35,7 @@ const RichContainer = props => {
   const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
   const [state, setState] = React.useState<RichContainerState>({
-    activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'LanguageQuery',
+    activeKey: localStorage.getItem(URL_SEARCH_KEY) || 'LanguageQuery',
     viewMode: 'GISDK_CANVAS',
   });
   const { activeKey, viewMode } = state;
@@ -60,15 +61,24 @@ const RichContainer = props => {
     } else setWidth(0);
   }, [isExpanded]);
 
+  useEffect(()=>{
+    if (localStorage.getItem(URL_SEARCH_KEY)) {
+      setState(preState => {
+        return {
+          ...preState,
+          activeKey: localStorage.getItem(URL_SEARCH_KEY) as string,
+        };
+      });
+    }
+  },[localStorage.getItem(URL_SEARCH_KEY)])
+
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
   };
-  const [NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea] = Containers;
+  const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea, ConditionArea, TimeBarArea] = Containers;
 
   const handleChange = id => {
-    const { searchParams, path } = utils.getSearchParams(window.location);
-    searchParams.set(URL_SEARCH_KEY, id);
-    // window.location.hash = `${path}?${searchParams.toString()}`;
+    localStorage.setItem(URL_SEARCH_KEY, id)
 
     setState(preState => {
       return {
@@ -90,6 +100,7 @@ const RichContainer = props => {
       };
     });
   };
+
   const DATA_QUERY_ID = DataArea.components.map(item => item.id);
   const DATA_FILTER_ID = FilterArea.components.map(item => item.id);
   const DATA_QUERY_OPTIONS = DataArea.components.map(item => {
@@ -102,6 +113,7 @@ const RichContainer = props => {
   });
   const HAS_QUERY_VIEW = DATA_QUERY_ID.indexOf(activeKey) !== -1;
   const HAS_FILTER_VIEW = DATA_FILTER_ID.indexOf(activeKey) !== -1;
+  
 
   const onResizeStart = () => {
     setIsResizing(true);
@@ -180,6 +192,7 @@ const RichContainer = props => {
             <Button
               type={HAS_QUERY_VIEW ? 'primary' : 'text'}
               icon={<Icon type={DataArea.icon} />}
+              className='gi-richcontainer-query-button'
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -200,6 +213,7 @@ const RichContainer = props => {
             <Button
               type={HAS_FILTER_VIEW ? 'primary' : 'text'}
               icon={<Icon type={FilterArea.icon} />}
+              className='gi-richcontainer-filter-button'
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -253,6 +267,7 @@ const RichContainer = props => {
               enable={enable}
               onResizeStart={onResizeStart}
               onResizeStop={onResizeStop}
+              className='gi-richcontainer-side'
             >
               <div style={{ overflow: 'hidden' }}>
                 {HAS_QUERY_VIEW && (
@@ -263,7 +278,7 @@ const RichContainer = props => {
                   <Segmented block value={activeKey} options={DATA_FILTER_OPTIONS} onChange={handleChange} />
                 )}
 
-                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components].map(item => {
+                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components, ...ConditionArea.components].map(item => {
                   const isActive = activeKey === item.id;
                   return (
                     <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>
@@ -290,6 +305,13 @@ const RichContainer = props => {
             }}
           >
             {children}
+            <div className='gi-rich-container-timebar' style={{ position: 'absolute', bottom: 0, width: `calc(100vw - ${width}px)` }}>  
+              {TimeBarArea.components.map(item => {
+                return (
+                  <item.component key={item.id} {...item.props} />
+                );
+              })}
+            </div>
           </div>
         </div>
         {ViewArea.components.map(item => {
