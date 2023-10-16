@@ -1,4 +1,4 @@
-import { icons } from '@antv/gi-sdk';
+import { IGraph, icons } from '@antv/gi-sdk';
 
 export const handlePinNode = (target, graph, restartForceSimulation, params) => {
   const { x, y, dragNodeMass, isForce } = params || {};
@@ -66,7 +66,7 @@ export const handlePinNode = (target, graph, restartForceSimulation, params) => 
   }
 };
 
-export const handleUnPinNode = (target, graph, restartForceSimulation, isForce) => {
+export const handleUnPinNode = (target, graph: IGraph, restartForceSimulation, isForce) => {
   try {
     const model = target.getModel();
     // 目前仅支持GraphinNode 节点
@@ -90,6 +90,7 @@ export const handleUnPinNode = (target, graph, restartForceSimulation, isForce) 
         badges,
       },
     });
+
     // 重启力导
     if (isForce) {
       restartForceSimulation([model], graph);

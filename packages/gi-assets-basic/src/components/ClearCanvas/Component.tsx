@@ -17,7 +17,7 @@ const ClearCanvas: React.FunctionComponent<IProps> = props => {
       draft.source = { nodes: [], edges: [] };
       draft.data = { nodes: [], edges: [] };
     });
-  }, [graph, updateContext]);
+  }, [graph]);
   return <GIAComponent GIAC={GIAC} onClick={handleClick} />;
 };
 

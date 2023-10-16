@@ -38,7 +38,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
     });
     clearTimeout(timer);
     timer = setTimeout(() => {
-      graph.fitCenter(true);
+      graph.fitCenter();
     }, 60);
   };
 

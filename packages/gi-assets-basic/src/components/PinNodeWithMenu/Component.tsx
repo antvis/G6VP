@@ -21,7 +21,8 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
   const isForce = layout.type === 'graphin-force';
 
   const [pinned, setPinned] = useState(false);
-  const [targetNode, setTargetNode] = useState<INode>();
+
+  const targetNode = contextmenu.item;
 
   const handleLockNode = (propId?: string, action?: 'pin' | 'unpin') => {
     const target = contextmenu.item;
@@ -92,29 +93,23 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     });
   };
 
-  useEffect(() => {
-    if (contextmenu.item && !contextmenu.item.destroyed) {
-      setTargetNode(contextmenu.item);
-    }
-  }, [contextmenu.item]);
-
   /**
    * 受控参数变化，自动进行分析
    * e.g. ChatGPT，历史记录模版等
    */
   useEffect(() => {
-    if (controlledValues) {
-      const { id, action } = controlledValues;
-      setTargetNode(graph.findById(id) as INode);
-      handleLockNode(id, action);
-    }
+    // if (controlledValues) {
+    //   const { id, action } = controlledValues;
+    //   setTargetNode(graph.findById(id) as INode);
+    //   handleLockNode(id, action);
+    // }
   }, [controlledValues]);
 
   if (!targetNode || targetNode.destroyed) return null;
 
   return (
     <Menu.Item key="lock-node" eventKey="lock-node" onClick={() => handleLockNode()}>
-      {targetNode.getModel().pinned
+      {targetNode.pinned
         ? $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.Unfix', dm: '解除固定' })
         : $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.FixedNode', dm: '固定节点' })}
     </Menu.Item>

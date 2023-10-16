@@ -102,9 +102,6 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         },
       };
     }
-    updateContext(draft => {
-      draft.isLoading = true;
-    });
     Promise.all([schemaService.service(), initialService.service()]).then(
       ([schemaData, graphData = { nodes: [], edges: [] }]) => {
         let schema = schemaData;
