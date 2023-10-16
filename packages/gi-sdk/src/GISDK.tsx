@@ -2,13 +2,13 @@ import Graphin, { GraphinContext } from '@antv/graphin';
 import React, { useEffect, useMemo } from 'react';
 import { IntlProvider, useIntl } from 'react-intl';
 import { useImmer } from 'use-immer';
+import SizeSensor from './SizeSensor';
 import { deepClone } from './components/const';
 import { getComponents } from './hooks/useComponents';
 import useConstant from './hooks/useConstant';
 import './index.less';
 import { getMapperByCfg } from './process/getMapperByCfg';
 import type { GIGraphData, Props, State } from './typing';
-
 const GISDK = (props: Props) => {
   const { children, assets, id, services, locales } = props;
   const { components: ComponentAssets, elements: ElementAssets, layouts: LayoutAssets } = assets;
@@ -137,6 +137,7 @@ const GISDK = (props: Props) => {
             {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
             {HAS_GRAPH && state.initialized && renderComponents}
             {HAS_GRAPH && state.initialized && children}
+            {HAS_GRAPH && state.initialized && <SizeSensor />}
           </GICC_LAYOUT_COMPONENT>
         </GraphinContext.Provider>
       </IntlProvider>

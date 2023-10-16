@@ -20,7 +20,6 @@ const ResizeCanvas: React.FunctionComponent<ResizeCanvasProps> = props => {
       const canvas = graph.get('canvas');
       if (canvas) {
         canvas.changeSize(clientWidth, clientHeight);
-        graph.autoPaint();
       }
     }, 200);
 
