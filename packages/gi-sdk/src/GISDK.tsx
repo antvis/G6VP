@@ -61,11 +61,12 @@ const GISDK = (props: Props) => {
   /**
    *  响应 graph 的变化
    */
-  const handleGraphInit = ins => {
+  const handleGraphInit = ({ graph, apis }) => {
     //@ts-ignore
-    window.graph = ins;
+    window.graph = graph;
     updateState(draft => {
-      draft.graph = ins;
+      draft.graph = graph;
+      draft.apis = apis;
       draft.HAS_GRAPH = true;
     });
   };

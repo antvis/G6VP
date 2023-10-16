@@ -1,6 +1,7 @@
 import { IGraph, Specification } from '@antv/g6';
 import React, { forwardRef, memo, useEffect, useRef, useState } from 'react';
 import ExtendGraph from './ExtendGraph';
+import ApiController from './apis';
 import Compatible from './compatible';
 import { edgeStyleTransform } from './styling/edge-style-transform';
 import { nodeStyleTransform } from './styling/node-style-transform';
@@ -50,6 +51,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     isReady: false,
     //@ts-ignore
     graph: null,
+    apis: {},
   });
   const { isReady, graph } = state;
 
@@ -138,8 +140,10 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       //@ts-ignore
       ref.current = instance;
     }
+    //@ts-ignore
+    const apis = ApiController(instance);
 
-    onInit && onInit(instance);
+    onInit && onInit({ graph: instance, apis });
 
     //@ts-ignore
     setState(preState => {
@@ -147,6 +151,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
         ...preState,
         graph: instance,
         isReady: true,
+        apis,
       };
     });
 
