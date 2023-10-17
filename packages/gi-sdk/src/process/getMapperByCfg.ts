@@ -21,7 +21,6 @@ export const getMapperByCfg = (
   if (!config) {
     return dumpMapper;
   }
-  console.log('start Mapper.....', config);
   const mapper = item => {
     // [ruleA,ruleB,ruleC] RuleC 的优先级最高
     const reverseCfg = [...config].reverse();

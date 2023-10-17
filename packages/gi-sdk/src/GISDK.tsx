@@ -85,6 +85,7 @@ const GISDK = (props: Props) => {
    * 响应 config.layout 变化，重新布局
    */
   const layout = useMemo(() => {
+    console.log('layoutCfg change >>>>>',layoutCfg)
     return deepClone(layoutCfg.props);
   }, [layoutCfg]);
 
@@ -115,7 +116,7 @@ const GISDK = (props: Props) => {
     useIntl,
     language,
   };
-  console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)', HAS_GRAPH, state.initialized);
+  console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)','HAS_GRAPH:', HAS_GRAPH,'initialized:', state.initialized);
   return (
     <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
       {/* @ts-ignore */}

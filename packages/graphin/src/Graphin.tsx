@@ -35,14 +35,9 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     ...options
   } = props;
 
-  console.log('%c GRAPHIN RENDER....', 'color:rgba(48,86,227,0.8)', ExtendGraph);
+  console.log('%c GRAPHIN RENDER....', 'color:yellow');
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
-
-  const constantRef = useRef({
-    AFTER_RENDER_NODE_MAPPER: false,
-    AFTER_RENDER_EDGE_MAPPER: false,
-  });
 
   const [state, setState] = useState<{
     isReady: boolean;
@@ -56,7 +51,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
   const { isReady, graph } = state;
 
   if (dataRef.current !== data) {
-    console.log('%c GRAPHIN DATA CHANGE....', 'color:rgba(48,86,227,0.8)', dataRef.current, data);
+    console.log('%c GRAPHIN DATA CHANGE....', 'color:yellow', data);
     console.time('GRAPHIN_CHANGE_DATA_COST');
     //@ts-ignore
     graph && graph.changeData(data, 'replace');
@@ -65,41 +60,24 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     console.timeEnd('GRAPHIN_CHANGE_DATA_COST');
   }
   if (layoutRef.current !== layout) {
-    console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:rgba(48,86,227,0.8)');
-    console.time('GRAPHIN_CHANGE_LAYOUT_COST');
+    console.log('%c GRAPHIN LAYOUT CHANGE....', 'color:yellow');
+
     //@ts-ignore
     graph && graph.layout(layout);
     //@ts-ignore
     layoutRef.current = layout;
-    console.timeEnd('GRAPHIN_CHANGE_LAYOUT_COST');
   }
   useEffect(() => {
     if (graph) {
-      if (constantRef.current.AFTER_RENDER_EDGE_MAPPER) {
-        graph.updateMapper('edge', edge);
-      } else {
-        graph.once('afterrender', e => {
-          constantRef.current.AFTER_RENDER_EDGE_MAPPER = true;
-          setTimeout(() => {
-            graph.updateMapper('edge', edge);
-          }, 0);
-        });
-      }
+      console.log('%c Graphin change EdgeMapper', 'color:yellow');
+      graph.updateMapper('edge', edge);
     }
   }, [edge, graph]);
+
   useEffect(() => {
     if (graph) {
-      if (constantRef.current.AFTER_RENDER_NODE_MAPPER) {
-        graph.updateMapper('node', node);
-      } else {
-        graph.once('afterrender', e => {
-          console.log('afterrender.....node.....');
-          constantRef.current.AFTER_RENDER_NODE_MAPPER = true;
-          setTimeout(() => {
-            graph.updateMapper('node', node);
-          }, 0);
-        });
-      }
+      console.log('%c Graphin change NodeMapper', 'color:yellow');
+      graph.updateMapper('node', node);
     }
   }, [node, graph]);
 

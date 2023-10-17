@@ -1,8 +1,8 @@
 import { Extensions, Graph as G6Graph, extend } from '@antv/g6';
 
-const TransformGraphinData = data => {
+const handler = (data, options = {}, graphCore) => {
   const { combos } = data;
-  const nodes = data.nodes.map(item => {
+  const nodes = (data.nodes || []).map(item => {
     const { id, data } = item;
     return {
       id: id,
@@ -10,7 +10,7 @@ const TransformGraphinData = data => {
     };
   });
 
-  const edges = data.edges.map((item, index) => {
+  const edges = (data.edges || []).map((item, index) => {
     const { source, target, id, data } = item;
     return {
       id: id || `edge-${index}`,
@@ -20,12 +20,21 @@ const TransformGraphinData = data => {
     };
   });
 
-  console.log('TransformGraphinData edges ', edges, nodes);
+  console.log('TransformGraphinData ', edges, nodes);
 
   return {
     nodes,
     edges,
     combos,
+  };
+};
+
+const TransformGraphinData = (data, options, graphCore) => {
+  const { dataAdded, dataUpdated, dataRemoved } = data;
+  return {
+    dataAdded: handler(dataAdded, options, graphCore),
+    dataUpdated: handler(dataUpdated, options, graphCore),
+    dataRemoved: handler(dataRemoved, options, graphCore),
   };
 };
 
