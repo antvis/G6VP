@@ -6,13 +6,13 @@ import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
 import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 // /** 引擎包 */
-// import * as GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase';
-// import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
-// import * as GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph';
-// import * as GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph';
-// import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
-// import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
-// import * as GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics';
+import * as GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase';
+import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
+import * as GI_ASSETS_HUGEGRAPH from '@antv/gi-assets-hugegraph';
+import * as GI_ASSETS_JANUSGRAPH from '@antv/gi-assets-janusgraph';
+import * as GI_ASSETS_NEO4J from '@antv/gi-assets-neo4j';
+import * as GI_ASSETS_TUGRAPH from '@antv/gi-assets-tugraph';
+import * as GI_ASSETS_TUGRAPH_ANALYTICS from '@antv/gi-assets-tugraph-analytics';
 
 import INJECT from './inject';
 
@@ -46,38 +46,38 @@ const LOCAL_ASSETS: any[] = [
     ...GI_ASSETS_SCENE,
   },
   // /** 引擎资产: TuGraph*/
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
-  //   ...GI_ASSETS_TUGRAPH,
-  // },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH_ANALYTICS'],
-  //   ...GI_ASSETS_TUGRAPH_ANALYTICS,
-  // },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
-  //   ...GI_ASSETS_GRAPHSCOPE,
-  // },
-  // // 内置 Neo4j
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_NEO4J'],
-  //   ...GI_ASSETS_NEO4J,
-  // },
-  // // 内置 HugeGraph
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
-  //   ...GI_ASSETS_HUGEGRAPH,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
+    ...GI_ASSETS_TUGRAPH,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH_ANALYTICS'],
+    ...GI_ASSETS_TUGRAPH_ANALYTICS,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GRAPHSCOPE'],
+    ...GI_ASSETS_GRAPHSCOPE,
+  },
+  // 内置 Neo4j
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_NEO4J'],
+    ...GI_ASSETS_NEO4J,
+  },
+  // 内置 HugeGraph
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_HUGEGRAPH'],
+    ...GI_ASSETS_HUGEGRAPH,
+  },
 
-  // // 内置 Galaxybase
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GALAXYBASE'],
-  //   ...GI_ASSETS_GALAXYBASE,
-  // },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_JANUSGRAPH'],
-  //   ...GI_ASSETS_JANUSGRAPH,
-  // },
+  // 内置 Galaxybase
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_GALAXYBASE'],
+    ...GI_ASSETS_GALAXYBASE,
+  },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_JANUSGRAPH'],
+    ...GI_ASSETS_JANUSGRAPH,
+  },
 
   // 本地开发资产
   ...Object.entries(INJECT).map(([key, value]) => ({
