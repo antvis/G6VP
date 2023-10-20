@@ -21,7 +21,6 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const [SideContent] = Containers;
   const { width = 360, padding = 12 } = SideContent;
   const items = useMemo(() => {
-    console.log('SegmentContainer >>>> calc');
     return SideContent.components.map(item => {
       return {
         icon: <Icon type={item.icon} />,

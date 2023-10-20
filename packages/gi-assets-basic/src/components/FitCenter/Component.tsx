@@ -13,7 +13,9 @@ const FitCenter: React.FunctionComponent<IProps> = props => {
     <GIAComponent
       GIAC={GIAC}
       onClick={() => {
-        graph.fitCenter();
+        graph.fitCenter({
+          'duration':100,
+        });
       }}
     />
   );

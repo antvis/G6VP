@@ -13,7 +13,12 @@ const FitView: React.FunctionComponent<IProps> = props => {
 
   const callback = () => {
     // graph.fitCenter();
-    graph.fitView();
+    graph.fitView({
+      padding:10,
+      rules:{}
+    },{
+      'duration':200,
+    });
   };
 
   return <GIAComponent GIAC={GIAC} onClick={callback} />;

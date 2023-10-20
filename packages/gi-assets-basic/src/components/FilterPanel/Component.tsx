@@ -173,22 +173,22 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     if (highlightMode) {
       const { isEmpty, isFull } = highlightSubGraph(graph, data);
 
-      updateContext(draft => {
-        //@ts-ignore
-        draft.persistentHighlight = !isEmpty && !isFull;
-      });
+      // updateContext(draft => {
+      //   //@ts-ignore
+      //   draft.persistentHighlight = !isEmpty && !isFull;
+      // });
 
       return;
     }
 
-    updateContext(draft => {
-      if (isStyles(source.nodes)) {
-        draft.data = data;
-      } else {
-        draft.data = transform(data);
-      }
-      draft.layoutCache = true;
-    });
+    // updateContext(draft => {
+    //   if (isStyles(source.nodes)) {
+    //     draft.data = data;
+    //   } else {
+    //     draft.data = transform(data);
+    //   }
+    //   draft.layoutCache = true;
+    // });
   };
 
   useEffect(() => {

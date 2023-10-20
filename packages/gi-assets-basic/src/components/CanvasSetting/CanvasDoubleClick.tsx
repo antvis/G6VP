@@ -10,7 +10,12 @@ const CanvasClick = () => {
 
   React.useEffect(() => {
     const handleCenter = () => {
-      graph.fitView();
+      graph.fitView(
+        { padding: 10, rules: {} },
+        {
+          duration: 500,
+        },
+      );
     };
     graph.on('canvas:dblclick', handleCenter);
     return () => {

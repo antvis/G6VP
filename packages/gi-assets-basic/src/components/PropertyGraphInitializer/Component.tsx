@@ -7,12 +7,12 @@ const PropertyGraphInitializer: React.FunctionComponent<IProps> = props => {
   const context = useContext();
   const { data, schemaData, updateContext } = context;
 
-  React.useEffect(() => {
-    const propertyGraphData = utils.graphData2PropertyGraph(data, schemaData);
-    updateContext(draft => {
-      draft.propertyGraphData = propertyGraphData;
-    });
-  }, [data]);
+  // React.useEffect(() => {
+  //   const propertyGraphData = utils.graphData2PropertyGraph(data, schemaData);
+  //   updateContext(draft => {
+  //     draft.propertyGraphData = propertyGraphData;
+  //   });
+  // }, [data]);
 
   return null;
 };

@@ -32,7 +32,7 @@ const transform = data => {
     };
   });
 
-  console.log('TransformGraphinData edges ', edges, nodes);
+  // console.log('TransformGraphinData edges ', edges, nodes);
 
   return {
     nodes,

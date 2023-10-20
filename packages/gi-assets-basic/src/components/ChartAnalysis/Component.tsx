@@ -15,7 +15,6 @@ export interface TimeChartProps {
 
 const TimeChart: React.FunctionComponent<TimeChartProps> = props => {
   const { chartType, height, dataType, title, brushMode } = props;
-  console.log(' props', props);
 
   return (
     <div>
