@@ -1,10 +1,10 @@
 import { GIAssets, utils } from '@antv/gi-sdk';
 // import { getCombinedAssets } from '../loader';
 
-// import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
+import * as GI_ASSETS_ADVANCE from '@antv/gi-assets-advance';
 // import * as GI_ASSETS_ALGORITHM from '@antv/gi-assets-algorithm';
 import * as GI_ASSETS_BASIC from '@antv/gi-assets-basic';
-// import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
+import * as GI_ASSETS_SCENE from '@antv/gi-assets-scene';
 // /** 引擎包 */
 // import * as GI_ASSETS_GALAXYBASE from '@antv/gi-assets-galaxybase';
 // import * as GI_ASSETS_GRAPHSCOPE from '@antv/gi-assets-graphscope';
@@ -33,18 +33,18 @@ const LOCAL_ASSETS: any[] = [
     ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_BASIC'],
     ...GI_ASSETS_BASIC,
   },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
-  //   ...GI_ASSETS_ADVANCE,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ADVANCE'],
+    ...GI_ASSETS_ADVANCE,
+  },
   // {
   //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_ALGORITHM'],
   //   ...GI_ASSETS_ALGORITHM,
   // },
-  // {
-  //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
-  //   ...GI_ASSETS_SCENE,
-  // },
+  {
+    ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_SCENE'],
+    ...GI_ASSETS_SCENE,
+  },
   // /** 引擎资产: TuGraph*/
   // {
   //   ...OFFICIAL_PACKAGES_MAP['GI_ASSETS_TUGRAPH'],
