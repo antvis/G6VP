@@ -1,14 +1,16 @@
 import { CaretRightOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Item } from '@antv/g6';
+
 import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, message, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import { LAYOUTS } from './const';
-import { ILayoutOption } from './typing';
-import { updateLayout, getLayoutOptions } from './utils';
-import './index.less';
 import $i18n from '../../i18n';
+import { LAYOUTS } from './const';
+import './index.less';
+import { ILayoutOption } from './typing';
+import { getLayoutOptions, updateLayout } from './utils';
+
+type Item = any;
 
 const { Panel } = Collapse;
 

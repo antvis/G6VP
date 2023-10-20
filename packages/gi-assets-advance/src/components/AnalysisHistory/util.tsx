@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { Form, Input, Popover, Tooltip } from 'antd';
+//@ts-nocheck
 import { PictureOutlined } from '@ant-design/icons';
 import G6 from '@antv/g6';
-import { TemplateNode } from './type';
+import { Form, Input, Popover, Tooltip } from 'antd';
+import * as React from 'react';
 import RJV from 'react-json-view';
 import $i18n from '../../i18n';
+import { TemplateNode } from './type';
 
 const ReactJson: any = RJV;
 

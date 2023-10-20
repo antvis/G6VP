@@ -1,6 +1,7 @@
-import { IEdge, INode } from '@antv/g6';
 import { S2Event, SpreadSheet } from '@antv/s2';
 import React from 'react';
+type IEdge = any;
+type INode = any;
 
 import { useContext } from '@antv/gi-sdk';
 

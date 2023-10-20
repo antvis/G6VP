@@ -9,13 +9,13 @@
 // import SearchBar from './SearchBar';
 import AddSheetbar from './AddSheetbar';
 import CypherQuery from './CypherQuery';
-import GraphAnnotation from './GraphAnnotation';
+// import GraphAnnotation from './GraphAnnotation';
 import GremlinQuery from './GremlinQuery';
 import ModeSwitch from './ModeSwitch';
 import Redo from './Redo';
 import Sheetbar from './Sheetbar';
 // import SnapshotGallery from './SnapshotGallery';
-import AnalysisHistory from './AnalysisHistory';
+// import AnalysisHistory from './AnalysisHistory';
 import Assistant from './Assistant';
 import JSONMode from './JSONMode';
 import StructAnalysis from './StructAnalysis';
@@ -27,11 +27,11 @@ import ThemeSetting from './ThemeSetting';
 import Undo from './Undo';
 export {
   AddSheetbar,
-  AnalysisHistory,
+  // AnalysisHistory,
   Assistant,
   // TemplateQuery,
   CypherQuery,
-  GraphAnnotation,
+  // GraphAnnotation,
   // SnapshotGallery,
   GremlinQuery,
   JSONMode,

@@ -1,4 +1,5 @@
-import { IEdge, INode } from '@antv/g6';
+type IEdge = any;
+type INode = any;
 export const highlightBySelectedNodes = (selectedNodes: Set<any>, context) => {
   const { updateContext, largeGraphData, data: graphData, graph } = context;
   if (largeGraphData) {

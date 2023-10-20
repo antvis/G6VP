@@ -1,5 +1,6 @@
+//@ts-nocheck
 import { StarFilled } from '@ant-design/icons';
-import G6, { Item } from '@antv/g6';
+import G6 from '@antv/g6';
 import { icons, useContext } from '@antv/gi-sdk';
 import { Menu } from 'antd';
 import insertCss from 'insert-css';
@@ -8,6 +9,7 @@ import { bind } from 'size-sensor';
 import $i18n from '../../i18n';
 import './index.less';
 
+type Item = any;
 export interface GraphAnnotationProps {
   contextmenu: any;
   annotationWay: string;

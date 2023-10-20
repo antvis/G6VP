@@ -1,12 +1,13 @@
-import { useMemoizedFn } from 'ahooks';
+//@ts-nocheck
 import G6, { IGraph } from '@antv/g6';
+import { useMemoizedFn } from 'ahooks';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
+import './flowNodeRegistry';
+import { registerNodes } from './flowNodeRegistry';
+import './index.less';
 import { TemplateData, TemplateNode } from './type';
 import { createFlowGraph, createTooltip } from './util';
-import { registerNodes } from './flowNodeRegistry';
-import './flowNodeRegistry';
-import './index.less';
 
 const { Tooltip } = G6;
 

@@ -1,5 +1,5 @@
+import { GraphData, IGraph } from '@antv/g6';
 import { LAYOUTS, LayoutMap } from './const';
-import { Graph, GraphData } from '@antv/g6';
 import { ILayoutOption } from './typing';
 
 /**
@@ -13,6 +13,7 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
   const ids = targetNodes.map(node => node.id);
   const newEdges = edges!.filter(edge => {
     const { source, target } = edge;
+    //@ts-ignore
     if (ids.indexOf(source!) !== -1 && ids.indexOf(target!) !== -1) {
       return true;
     }
@@ -20,9 +21,11 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
   });
   const newNodes = nodes!
     .filter(node => {
+      //@ts-ignore
       return ids.indexOf(node.id) !== -1;
     })
     .map(node => {
+      //@ts-ignore
       // 映射节点大小，用于圆形布局防重叠：https://github.com/antvis/layout/blob/master/src/layout/circular.ts#L213
       node.size = node.style?.keyshape?.size || 26;
       /* 
@@ -46,7 +49,7 @@ export const cropGraphByNodes = (graphData: GraphData, targetNodes: { id: string
  */
 export const updateLayout = (
   layouts: ILayoutOption[],
-  graph: Graph,
+  graph: IGraph,
   gap: number,
   direction: 'vertical' | 'horizontal',
 ) => {

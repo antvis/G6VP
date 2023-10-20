@@ -1,8 +1,8 @@
-import { IEdge, INode } from '@antv/g6';
+import { useContext } from '@antv/gi-sdk';
 import { S2Event, SpreadSheet } from '@antv/s2';
 import React from 'react';
-
-import { useContext } from '@antv/gi-sdk';
+type IEdge = any;
+type INode = any;
 const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet | null, isFullScreen: boolean) => {
   const { data: graphData, graph, largeGraphData, updateContext } = useContext();
   React.useEffect(() => {

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import G6 from '@antv/g6';
 
 /**
