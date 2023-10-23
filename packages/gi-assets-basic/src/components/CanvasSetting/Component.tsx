@@ -45,9 +45,12 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       <DragCanvas
         disabled={dragCanvas.disabled}
         direction={dragCanvas.direction}
-        enableOptimize={dragCanvas.enableOptimize}
+        // enableOptimize={dragCanvas.enableOptimize}
       />
-      <ZoomCanvas enableOptimize={zoomCanvas.enableOptimize} disabled={zoomCanvas.disabled} />
+      <ZoomCanvas
+        //  enableOptimize={zoomCanvas.enableOptimize}
+        disabled={zoomCanvas.disabled}
+      />
       <BrushSelect />
       {clearStatus !== false && <CanvasClick />}
       {doubleClick !== false && <CanvasDoubleClick />}
