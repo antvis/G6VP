@@ -120,20 +120,23 @@ export const getNodeSelectionLabel = (
 
   const getByKey = (key: string) => node[key] ?? node.data[key];
 
-  if (!labelFormat?.enable) return <Text>{value}</Text>;
+  if (!labelFormat?.enable) return { raw: value, ele: <Text>{value}</Text> };
   const { mainLabel, subLabel } = labelFormat;
   const mainLabelText: string = mainLabel && getByKey(mainLabel[0]);
   const subLabelText: string = subLabel && getByKey(subLabel[0]);
 
-  if (!mainLabelText && !subLabelText) return <Text>{value}</Text>;
-  if (!mainLabelText) return <Text type="secondary">{subLabelText}</Text>;
-  if (!subLabelText) return <Text>{mainLabelText}</Text>;
-  return (
-    <>
-      <Text>{mainLabelText}</Text>
-      <Text type="secondary">({subLabelText})</Text>
-    </>
-  );
+  if (!mainLabelText && !subLabelText) return { raw: value, ele: <Text>{value}</Text> };
+  if (!mainLabelText) return { raw: subLabelText, ele: <Text type="secondary">{subLabelText}</Text> };
+  if (!subLabelText) return { raw: mainLabelText, ele: <Text>{mainLabelText}</Text> };
+  return {
+    raw: `${mainLabelText}(${subLabelText})`,
+    ele: (
+      <>
+        <Text>{mainLabelText}</Text>
+        <Text type="secondary">({subLabelText})</Text>
+      </>
+    ),
+  };
 };
 
 let nodeClickListener = e => {};
@@ -182,6 +185,13 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
     [isList, isCanvas],
   );
 
+  const filterOption = (input: string, option?: Record<string, any>) => {
+    const normalizeInput = input.toLowerCase();
+    const match = (text: string = '') => text.toLowerCase().includes(normalizeInput);
+    if (!option) return false;
+    return match(option?.raw || option?.label);
+  };
+
   return (
     <div className="nodeSelectionFormItem">
       <Form.Item
@@ -195,6 +205,7 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
         <Select
           showSearch
           optionFilterProp="children"
+          filterOption={filterOption}
           onChange={() => {
             setSelecting('');
           }}
@@ -206,9 +217,9 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
             .map(node => {
               const value = node[nodeLabel];
 
-              const label = getNodeSelectionLabel(node, { nodeLabel, labelFormat });
+              const { ele: label, raw } = getNodeSelectionLabel(node, { nodeLabel, labelFormat });
 
-              return { label, value };
+              return { label, value, raw };
             })}
           {...selectProps}
         />
