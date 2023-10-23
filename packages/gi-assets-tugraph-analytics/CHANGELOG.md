@@ -1,5 +1,14 @@
 # @antv/gi-assets-tugraph-analytics
 
+## 0.2.10
+
+### Patch Changes
+
+- publish in 1023
+- Updated dependencies
+  - @antv/gi-common-components@1.3.10
+  - @antv/gi-sdk@2.4.16
+
 ## 0.2.8
 
 ### Patch Changes

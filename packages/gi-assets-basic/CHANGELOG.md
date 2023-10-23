@@ -1,5 +1,14 @@
 # @antv/gi-assets-basic
 
+## 2.4.31
+
+### Patch Changes
+
+- publish in 1023
+- Updated dependencies
+  - @antv/gi-common-components@1.3.10
+  - @antv/gi-sdk@2.4.16
+
 ## 2.4.23
 
 ### Patch Changes
