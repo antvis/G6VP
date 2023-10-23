@@ -1,5 +1,11 @@
 # @antv/gi-cli
 
+## 1.2.7
+
+### Patch Changes
+
+- publish in 1023
+
 ## 1.2.5
 
 ### Patch Changes
