@@ -1,5 +1,11 @@
 # @antv/gi-assets-basic
 
+## 2.4.33
+
+### Patch Changes
+
+- publish correct
+
 ## 2.4.31
 
 ### Patch Changes
