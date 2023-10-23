@@ -3,7 +3,6 @@ import { IGraph } from '@antv/g6';
 export default (graph: IGraph) => {
   Object.assign(graph, {
     findAllByState: (itemType, state) => {
-      console.warn('findAllByState is 4.x function...');
       return graph.findIdByState(itemType, state).map(id => {
         const { graphCore } = graph.dataController;
         const itemMap = graphCore[`${itemType}Map`];
@@ -33,7 +32,6 @@ export default (graph: IGraph) => {
     changeSize: size => {
       graph.setSize(size);
     },
-
     setAutoPaint: paint => {
       return true;
     },
@@ -53,7 +51,7 @@ export default (graph: IGraph) => {
       }
     },
     findById: id => {
-      graph.getNodeData(id);
+      return graph.getItemById(id);
     },
   });
   return graph;
