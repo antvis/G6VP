@@ -43,7 +43,7 @@ const MapMode: React.FunctionComponent<MapModeProps> = props => {
         //@ts-ignore
         GIAC={GIAC}
         onClick={() => {
-          setVisible(true);
+          setVisible(!visible);
         }}
       />
 

@@ -7,10 +7,10 @@ import { notification } from 'antd';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import AnimateContainer from '../../CommonCmponents/AnimateContainer';
+import $i18n from '../../i18n';
 import PropertiesPanel from '../PropertiesPanel/Component';
 import ToolbarContainer from '../Toolbar';
 import './index.less';
-import $i18n from '../../i18n';
 const { deepClone } = extra;
 
 export interface MapModeProps {
@@ -79,30 +79,30 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
   }, [data]);
   const geoEdgesData = React.useMemo(() => {
     return graph
-      .getEdges()
+      .getAllEdgesData()
       .filter(edge => {
-        const e = edge.get('model');
-        const source = edge.get('source').get('model');
-        const target = edge.get('target').get('model');
+        const source = graph.getNodeData(edge.source)!;
+        const target = graph.getNodeData(edge.target)!;
+
         if (
-          !source.data[longitudeKey] ||
-          !source.data[latitudeKey] ||
-          !target.data[longitudeKey] ||
-          !target.data[latitudeKey]
+          source.data[longitudeKey] &&
+          source.data[latitudeKey] &&
+          target.data[longitudeKey] &&
+          target.data[latitudeKey]
         ) {
-          return false;
+          return true;
         }
-        return true;
+        return false;
       })
       .map(edge => {
-        const e = edge.get('model');
-        const source = edge.get('source').get('model');
-        const target = edge.get('target').get('model');
+        const source = graph.getNodeData(edge.source)!;
+        const target = graph.getNodeData(edge.target)!;
 
         let source_longitude = source.data[longitudeKey];
         let source_latitude = source.data[latitudeKey];
         let target_longitude = target.data[longitudeKey];
         let target_latitude = target.data[latitudeKey];
+
         if (
           typeof source_longitude === 'string' ||
           typeof source_latitude === 'string' ||
@@ -110,17 +110,17 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
           typeof target_latitude === 'string'
         ) {
           try {
-            source_longitude = Number(JSON.parse(source_longitude));
-            source_latitude = Number(JSON.parse(source_latitude));
-            target_longitude = Number(JSON.parse(target_longitude));
-            target_latitude = Number(JSON.parse(target_latitude));
+            source_longitude = Number(source_longitude);
+            source_latitude = Number(source_latitude);
+            target_longitude = Number(target_longitude);
+            target_latitude = Number(target_latitude);
           } catch (error) {
             console.log('error', error);
           }
         }
 
         return {
-          ...e,
+          ...edge,
           lnglat: [
             [source_longitude, source_latitude],
             [target_longitude, target_latitude],
