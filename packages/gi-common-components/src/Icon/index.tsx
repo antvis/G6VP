@@ -36,7 +36,7 @@ export { glyphs, icons };
 
 // --- 注册 antd iconfont ---
 const registeredIds = new Set<string>();
-const builtInIconFontId = 'font_3381398_29c1c449r6f';
+const builtInIconFontId = 'font_3381398_i824ocozt7';
 const getIconfontScriptUrl = (id: string) => `//at.alicdn.com/t/a/${id}.js`;
 
 async function loadUnicodeFonts(ids: string[]) {
