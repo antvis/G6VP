@@ -1,9 +1,9 @@
 import { extra } from '@antv/gi-sdk';
+import $i18n from '../i18n';
 import { TIME_GRANULARITY_LIST } from './constant';
 import { playbackSpeedList } from './control/animation/constants';
 import info from './info';
 import type { FieldType } from './types';
-import $i18n from '../i18n';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -176,8 +176,7 @@ const registerMeta = ({ schemaData }) => {
         { label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.Highlight', dm: '高亮' }), value: 'highlight' },
         { label: $i18n.get({ id: 'scene.src.Timebar.registerMeta.ShowHide', dm: '显示/隐藏' }), value: 'show-hide' },
       ],
-
-      default: 'filter',
+      default: 'show-hide',
     },
     ...metas,
   };

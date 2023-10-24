@@ -36,11 +36,11 @@ export const highlightSubGraph = (graph: IGraph, data: GraphinData) => {
   source.nodes.forEach(node => {
     const hasMatch = nodeIds.includes(node.id);
     if (hasMatch) {
-      graph.setItemState(node.id, 'disabled', false);
+      graph.setItemState(node.id, 'inactive', false);
       graph.setItemState(node.id, 'selected', true);
     } else {
       graph.setItemState(node.id, 'selected', false);
-      graph.setItemState(node.id, 'disabled', true);
+      graph.setItemState(node.id, 'inactive', true);
     }
   });
   source.edges.forEach(edge => {
@@ -59,11 +59,11 @@ export const highlightSubGraph = (graph: IGraph, data: GraphinData) => {
     }
 
     if (hasMatch) {
-      graph.setItemState(edge.id, 'disabled', false);
+      graph.setItemState(edge.id, 'inactive', false);
       graph.setItemState(edge.id, 'selected', true);
     } else {
       graph.setItemState(edge.id, 'selected', false);
-      graph.setItemState(edge.id, 'disabled', true);
+      graph.setItemState(edge.id, 'inactive', true);
     }
   });
   return {
@@ -105,39 +105,41 @@ export const highlightEdgeIds = (graph: IGraph, edgeIds: string[]) => {
     }
 
     if (hasMatch) {
-      graph.setItemState(id, 'disabled', false);
+      graph.setItemState(id, 'inactive', false);
       graph.setItemState(id, 'selected', true);
       graph.setItemState(source, 'selected', true);
       graph.setItemState(target, 'selected', true);
-      graph.updateItem(id, {
-        style: {
-          animate: {
-            visible: true,
-            type: 'circle-running',
-            color: 'rgba(236,65,198,1)',
-            repeat: true,
-            duration: 1000,
-          },
-        },
-      });
+      // graph.updateItem(id, {
+      //   style: {
+      //     animate: {
+      //       visible: true,
+      //       type: 'circle-running',
+      //       color: 'rgba(236,65,198,1)',
+      //       repeat: true,
+      //       duration: 1000,
+      //     },
+      //   },
+      // });
+      graph.setItemState(edge.id, 'circleRunning', true);
     } else {
       graph.setItemState(id, 'selected', false);
-      graph.setItemState(id, 'disabled', true);
-      graph.setItemState(source, 'disable', true);
-      graph.setItemState(target, 'disable', true);
+      graph.setItemState(id, 'inactive', true);
+      graph.setItemState(source, 'inactive', true);
+      graph.setItemState(target, 'inactive', true);
       graph.setItemState(source, 'selected', false);
       graph.setItemState(target, 'selected', false);
-      graph.updateItem(id, {
-        style: {
-          animate: {
-            visible: false,
-            type: 'circle-running',
-            color: 'rgba(236,65,198,1)',
-            repeat: true,
-            duration: 1000,
-          },
-        },
-      });
+      // graph.updateItem(id, {
+      //   style: {
+      //     animate: {
+      //       visible: false,
+      //       type: 'circle-running',
+      //       color: 'rgba(236,65,198,1)',
+      //       repeat: true,
+      //       duration: 1000,
+      //     },
+      //   },
+      // });
+      graph.setItemState(edge.id, 'circleRunning', false);
     }
   });
   return {
