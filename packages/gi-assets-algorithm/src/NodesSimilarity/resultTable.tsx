@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { useContext } from '@antv/gi-sdk';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 'similarity', topReset }) => {
+  const { graph } = useContext();
   const [sortOrder, setSortOrder] = useState(false);
   useEffect(() => {
     setSortOrder(false);
@@ -111,6 +113,20 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
     );
   };
 
+  const activeItem = record => {
+    clearActiveItem();
+    const item = graph.findById(record.id);
+    if (!item) return;
+    graph.setItemState(item, 'active', true);
+  };
+
+  const clearActiveItem = () => {
+    const activateItems = graph.findAllByState('node', 'active').concat(graph.findAllByState('edge', 'active'));
+    activateItems.forEach(item => {
+      graph.setItemState(item, 'active', false);
+    });
+  };
+
   const maxSimilarNode = similarNodes[1];
   const minSimilarNode = similarNodes[similarNodes.length - 1];
 
@@ -150,6 +166,10 @@ const ClustersResultTable: React.FC<Props> = ({ similarNodes, similarityKey = 's
           }}
           scroll={{ x: 200 }}
           onChange={onTableChange}
+          onRow={record => ({
+            onMouseEnter: () => activeItem(record),
+            onMouseLeave: clearActiveItem,
+          })}
         />
       </div>
     </>
