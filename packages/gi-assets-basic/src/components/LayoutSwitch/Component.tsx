@@ -10,12 +10,13 @@ const { GIAComponent } = extra;
 export interface LayoutSwitchProps {
   GIAC: IGIAC;
   controlledValues?: LayoutConfig;
+  filter?: (layout: string) => boolean;
 }
 let timer: NodeJS.Timer;
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
-  const { GIAC, controlledValues } = props;
-  const { assets, config, data, schemaData, updateContext, updateHistory, graph, layout: contextLayout } = useContext();
+  const { GIAC, controlledValues, filter = () => true } = props;
+  const { assets, config, data, schemaData, updateContext, updateHistory, graph } = useContext();
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
@@ -84,35 +85,37 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   const Radios = useMemo(() => {
     return (
       <Space direction="vertical">
-        {Object.keys(layouts).map(key => {
-          const layout = layouts[key];
-          const {
-            registerMeta = () => {
-              return {};
-            },
+        {Object.keys(layouts)
+          .filter(filter)
+          .map(key => {
+            const layout = layouts[key];
+            const {
+              registerMeta = () => {
+                return {};
+              },
 
-            info = {},
-          } = layout;
-          const keys = utils.getKeysByData(data, 'node');
-          // @ts-ignore
-          const { id, name, options = {}, icon = '' } = info;
-          const configObj = registerMeta({ data, keys, schemaData });
-          /** 默认的配置值 */
-          const defaultProps = utils.getDefaultValues({ type: 'object', properties: configObj });
-          const layoutConfig = {
-            id,
-            props: {
-              ...options,
-              ...defaultProps,
-            },
-          };
-          return (
-            <Radio value={id} onClick={() => handleClick(layoutConfig)} key={id}>
-              <Icon type={icon} />
-              &nbsp;{name}
-            </Radio>
-          );
-        })}
+              info = {},
+            } = layout;
+            const keys = utils.getKeysByData(data, 'node');
+            // @ts-ignore
+            const { id, name, options = {}, icon = '' } = info;
+            const configObj = registerMeta({ data, keys, schemaData });
+            /** 默认的配置值 */
+            const defaultProps = utils.getDefaultValues({ type: 'object', properties: configObj });
+            const layoutConfig = {
+              id,
+              props: {
+                ...options,
+                ...defaultProps,
+              },
+            };
+            return (
+              <Radio value={id} onClick={() => handleClick(layoutConfig)} key={id}>
+                <Icon type={icon} />
+                &nbsp;{name}
+              </Radio>
+            );
+          })}
       </Space>
     );
   }, [layouts]);
