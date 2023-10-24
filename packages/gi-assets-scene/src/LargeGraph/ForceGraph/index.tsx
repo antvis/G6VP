@@ -1,5 +1,5 @@
 import ForceGraph3D, { ForceGraph3DInstance } from '3d-force-graph';
-import { extra, IGIAC, useContext, utils } from '@antv/gi-sdk';
+import { extra, IGIAC, useContext } from '@antv/gi-sdk';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';
@@ -36,8 +36,9 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     GISDK_ID,
     apis,
     config,
-
     transform,
+    nodeMapper,
+    edgeMapper,
   } = useContext();
   const { GIAC, handleClick, maxSize, minSize, placement, offset, highlightColor, backgroundColor } = props;
   const GraphRef = React.useRef<ForceGraph3DInstance>();
@@ -49,7 +50,7 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     DATA = largeGraphData;
     if (data.nodes.length > 0) {
       highlightNodes = data.nodes.map(c => c.id);
-      highlightLinks = data.edges.map(e => `${e.source}_${e.target}`);
+      highlightLinks = data.edges.map(e => e.id);
     }
   }
   const [state, setState] = React.useState({
@@ -73,17 +74,12 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
     const height = elem.offsetHeight;
 
     console.time('cost deepclone');
-    let nodes = deepClone(DATA.nodes);
-    let edges = deepClone(DATA.edges);
+    let nodes = deepClone(DATA.nodes).map(n => nodeMapper(n));
+    let edges = deepClone(DATA.edges).map(n => edgeMapper(n));
     console.timeEnd('cost deepclone');
 
-    const hasStyles = utils.isStyles(DATA.nodes);
-    if (!hasStyles) {
-      const res = transform(DATA);
-      nodes = res.nodes;
-      edges = res.edges;
-    }
     const data = { nodes, links: edges };
+
     try {
       GraphRef.current = ForceGraph3D()(elem)
         .width(width)
@@ -92,15 +88,15 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
         .enableNodeDrag(false)
         .nodeAutoColorBy('nodeType')
         .nodeLabel((node: any) => {
-          if (node?.style.label.value) {
-            return node.style.label.value;
+          if (node.data.labelShape.text) {
+            return node.data.labelShape.text;
           }
           return node.id;
         })
 
         .linkCurvature((edge: any) => {
           // return 0.4;
-          if (edge.style && edge.style.keyshape && edge.style.keyshape.poly) {
+          if (edge.data && edge.data.keyShape && edge.data.keyShape.poly) {
             return 0.5;
           }
           return 0.1;
@@ -182,37 +178,37 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
       })
       .linkDirectionalParticleWidth(2)
       .linkColor((edge: any) => {
-        const eid = `${edge.source.id}_${edge.target.id}`;
+        const eid = edge.id;
         if (highlightLinks.indexOf(eid) !== -1) {
           return highlightColor;
         }
-        if (edge.style && edge.style.keyshape) {
-          const { stroke } = edge.style.keyshape;
+        if (edge.data && edge.data.keyShape) {
+          const { stroke } = edge.data.keyShape;
           return stroke;
         }
       })
       .nodeThreeObject((node: any) => {
         //这里按照GraphinNode的规范
-        if (node.style.icon && node.style.icon.type === 'image') {
-          const image = node.style.icon.value;
-          const imgTexture = new THREE.TextureLoader().load(image);
-          const material = new THREE.SpriteMaterial({ map: imgTexture });
-          const sprite = new THREE.Sprite(material);
-          sprite.scale.set(24, 24);
-          return sprite;
-        }
+        // if (node.style.icon && node.style.icon.type === 'image') {
+        //   const image = node.style.icon.value;
+        //   const imgTexture = new THREE.TextureLoader().load(image);
+        //   const material = new THREE.SpriteMaterial({ map: imgTexture });
+        //   const sprite = new THREE.Sprite(material);
+        //   sprite.scale.set(24, 24);
+        //   return sprite;
+        // }
 
-        let { size, fill } = node.style.keyshape || {
-          size: 40,
+        let { r, fill } = node.data.keyShape || {
+          r: 40,
           fill: '#ddd',
         };
 
         if (highlightNodes.indexOf(node.id) !== -1) {
           fill = highlightColor;
-          size = size * 1.5;
+          r = r * 1.5;
         }
 
-        const geometry = new THREE.SphereGeometry(3, size);
+        const geometry = new THREE.SphereGeometry(3, r);
         let material = MaterialMap.get(fill);
         if (!material) {
           material = new THREE.MeshLambertMaterial({
