@@ -58,7 +58,7 @@
     "use-immer": "^0.9.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "^2.7.27",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

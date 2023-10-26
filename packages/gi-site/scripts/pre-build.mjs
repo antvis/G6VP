@@ -18,7 +18,7 @@ import INJECT from './pre-build-inject.json' assert { type: 'json' };
 
 import path from 'path';
 export const G6_VERSION = '4.8.14';
-export const GRAPHIN_VERSION = '2.7.25';
+export const GRAPHIN_VERSION = '2.7.27';
 export const G2PLOT_VERSION = '2.4.16';
 export const ANTD_VERSION = '4.24.8';
 export const GI_VERSION = GI_SDK.version;
