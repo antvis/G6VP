@@ -1,5 +1,14 @@
 # @antv/gi-assets-algorithm
 
+## 2.3.15
+
+### Patch Changes
+
+- publish in 1026
+- Updated dependencies
+  - @antv/gi-common-components@1.3.12
+  - @antv/gi-sdk@2.4.18
+
 ## 2.3.14
 
 ### Patch Changes
