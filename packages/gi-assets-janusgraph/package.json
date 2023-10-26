@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-janusgraph",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "JanusGraph 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

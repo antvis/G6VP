@@ -1,5 +1,11 @@
 # @antv/gi-sdk-app
 
+## 1.2.4
+
+### Patch Changes
+
+- publish in 1026
+
 ## 1.2.3
 
 ### Patch Changes
