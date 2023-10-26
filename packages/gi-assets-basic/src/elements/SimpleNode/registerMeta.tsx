@@ -126,6 +126,10 @@ const registerMeta = context => {
                             label: $i18n.get({ id: 'basic.elements.SimpleNode.registerMeta.FontIcon', dm: '字体图标' }),
                             value: 'font',
                           },
+                          {
+                            label: '图片地址',
+                            value: 'image',
+                          },
                         ],
                         default: icon.type,
                       },
@@ -184,10 +188,10 @@ const registerMeta = context => {
                             label: '方形',
                             value: 'rect-node',
                           },
-                          {
-                            label: '菱形',
-                            value: 'diamond-node',
-                          },
+                          // {
+                          //   label: '菱形',
+                          //   value: 'diamond-node',
+                          // },
                         ],
                         default: keyshape.type,
                       },

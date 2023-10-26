@@ -37,29 +37,27 @@ const getIconStyleByConfig = (style, data) => {
     if (icon.type === 'image') {
       return {
         fill: 'transparent',
-        size: [keyshape.size, keyshape.size],
-        type: 'image',
+        r: [keyshape.size, keyshape.size],
         clip: { r: keyshape.size / 2 },
-        value: value,
+        img: value,
+        visible: true,
       };
     }
-
     if (icon.type === 'font') {
       return {
-        ...icon,
-        size: keyshape.size / 2,
-        type: 'font',
+        fontSize: keyshape.size / 2,
         fontFamily: 'iconfont',
-        value: icons[value] || '',
+        text: icons[value] || '',
         fill: icon.fill || keyshape.fill,
+        visible: true,
       };
     }
     if (icon.type === 'text') {
       return {
-        ...icon,
-        fontSize: keyshape.size / 4,
+        fontSize: keyshape.size / 2,
         fill: '#fff',
-        value: value,
+        text: value,
+        visible: true,
       };
     }
     return {
@@ -69,7 +67,7 @@ const getIconStyleByConfig = (style, data) => {
   return {
     ...icon,
     visible: false,
-    value: '',
+    text: '',
   };
 };
 
@@ -208,6 +206,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
       };
       advanced.keyshape = keyshape;
       const LABEL_VALUE = getLabel(data, LABEL_KEYS);
+
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
 
@@ -263,7 +262,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
           },
         },
       };
-      // console.log('keyshape', node.id);
+
       return {
         id: node.id,
         data: {
@@ -273,13 +272,23 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
           labelShape: {
             text: label.value || '',
             position: label.position || 'bottom',
+            maxWidth: '400%',
+            maxLines: LABEL_KEYS.length,
+            fill: label.fill,
+            fontSize: label.fontSize,
           },
           keyShape: {
             r: keyshape.size / 2 || 10,
             fill: keyshape.fill || 'red',
             stroke: keyshape.stroke || 'red',
             strokeOpacity: keyshape.strokeOpacity || 1,
+            fillOpacity: keyshape.fillOpacity,
           },
+          ...(icon.visible
+            ? {
+                iconShape: icon,
+              }
+            : {}),
           animates: {
             update: [
               {
