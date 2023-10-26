@@ -3,10 +3,6 @@ import * as React from 'react';
 
 import { IState } from './typing';
 import $i18n from '../../i18n';
-interface SegementFilterProps {
-  state: IState;
-  updateState: any;
-}
 
 export const options = [
   {
@@ -20,7 +16,7 @@ export const options = [
   },
 ];
 
-const SegementFilter: React.FunctionComponent<SegementFilterProps> = props => {
+const SegmentFilter: React.FunctionComponent = () => {
   return (
     <div>
       <Segmented options={options} value={options[1].value} />
@@ -28,4 +24,4 @@ const SegementFilter: React.FunctionComponent<SegementFilterProps> = props => {
   );
 };
 
-export default SegementFilter;
+export default SegmentFilter;

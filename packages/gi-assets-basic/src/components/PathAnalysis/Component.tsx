@@ -9,7 +9,7 @@ import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
 import PanelExtra from './PanelExtra';
-import SegementFilter from './SegmentFilter';
+import SegmentFilter from './SegmentFilter';
 import './index.less';
 import { IHighlightElement, IState } from './typing';
 import { getPathByWeight } from './utils';
@@ -57,7 +57,6 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
     },
     selecting: '',
   });
-  let nodeClickListener = e => {};
 
   // 缓存被高亮的节点和边
   const highlightElementRef = useRef<IHighlightElement>({
@@ -194,23 +193,6 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         });
       }
     });
-  };
-
-  const beginSelect = type => {
-    updateState(draft => {
-      draft.selecting = type;
-    });
-    graph.off('node:click', nodeClickListener);
-
-    nodeClickListener = e => {
-      updateState(draft => {
-        draft.selecting = '';
-      });
-      const { item } = e;
-      if (!item || item.destroyed) return;
-      form.setFieldsValue({ [type]: item.getID() });
-    };
-    graph.once('node:click', nodeClickListener);
   };
 
   useEffect(() => {
@@ -388,9 +370,6 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
               </Col>
               <Col span={6} style={{ textAlign: 'right' }}>
                 <Space size={'small'}>
-                  {/* {state.isAnalysis && state.allNodePath.length > 0 && (
-                     <FilterRule state={state} updateState={updateState} />
-                    )} */}
                   <Button onClick={handleResetForm}>
                     {$i18n.get({ id: 'basic.components.PathAnalysis.Component.Reset', dm: '重置' })}
                   </Button>
@@ -405,7 +384,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         <div className="gi-path-analysis-container">
           <div className="gi-path-analysis-title">
             <div>{$i18n.get({ id: 'basic.components.PathAnalysis.Component.QueryResults', dm: '查询结果' })}</div>
-            <SegementFilter state={state} updateState={updateState} />
+            <SegmentFilter />
           </div>
           <Collapse
             defaultActiveKey={0}
@@ -419,7 +398,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                   key={index}
                   header={$i18n.get(
                     { id: 'basic.components.PathAnalysis.Component.PathNumber', dm: `路径 ${index + 1}` },
-                    { numebr: index + 1 },
+                    { number: index + 1 },
                   )}
                   extra={
                     <PanelExtra pathId={index} highlightPath={state.highlightPath} onSwitchChange={onSwitchChange} />
@@ -431,7 +410,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
                       const data = nodeConfig?.data || {};
                       return (
                         <Timeline.Item>
-                          {getNodeSelectionLabel(data, { nodeLabel: pathNodeLabel, labelFormat }) || nodeId}
+                          {getNodeSelectionLabel(data, { nodeLabel: pathNodeLabel, labelFormat }).ele || nodeId}
                         </Timeline.Item>
                       );
                     })}
