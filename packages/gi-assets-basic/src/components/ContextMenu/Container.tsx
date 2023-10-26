@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import type { IG6GraphEvent } from '@antv/graphin';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useContextMenu, { State } from './useContextMenu';
 
 export const defaultStyle: React.CSSProperties = {
@@ -55,6 +55,16 @@ const ContextMenu: React.FunctionComponent<ContextMenuProps> = props => {
     console.error('<ContextMenu /> children should be a function');
     return null;
   }
+  useEffect(() => {
+    const handlePreventDefault = e => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    container.current?.addEventListener('contextmenu', handlePreventDefault);
+    return () => {
+      container.current?.removeEventListener('contextmenu', handlePreventDefault);
+    };
+  }, []);
 
   return (
     <div
