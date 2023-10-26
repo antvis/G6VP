@@ -1,5 +1,13 @@
 # @antv/gi-assets-galaxybase
 
+## 1.2.13
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-sdk@2.4.19
+
 ## 1.2.12
 
 ### Patch Changes

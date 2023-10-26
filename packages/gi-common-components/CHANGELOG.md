@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.13
+
+### Patch Changes
+
+- update graphin version
+
 ## 1.3.12
 
 ### Patch Changes

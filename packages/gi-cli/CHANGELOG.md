@@ -1,5 +1,11 @@
 # @antv/gi-cli
 
+## 1.2.10
+
+### Patch Changes
+
+- update graphin version
+
 ## 1.2.9
 
 ### Patch Changes

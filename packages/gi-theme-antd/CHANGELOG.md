@@ -1,5 +1,11 @@
 # @antv/gi-theme-antd
 
+## 0.6.11
+
+### Patch Changes
+
+- update graphin version
+
 ## 0.6.10
 
 ### Patch Changes

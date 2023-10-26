@@ -1,5 +1,11 @@
 # @antv/gi-httpservice
 
+## 1.2.9
+
+### Patch Changes
+
+- update graphin version
+
 ## 1.2.8
 
 ### Patch Changes

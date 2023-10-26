@@ -1,5 +1,11 @@
 # @antv/gi-sdk-app
 
+## 1.2.6
+
+### Patch Changes
+
+- update graphin version
+
 ## 1.2.5
 
 ### Patch Changes

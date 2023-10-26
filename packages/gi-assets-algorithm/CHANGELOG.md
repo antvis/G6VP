@@ -1,5 +1,14 @@
 # @antv/gi-assets-algorithm
 
+## 2.3.16
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-common-components@1.3.13
+  - @antv/gi-sdk@2.4.19
+
 ## 2.3.15
 
 ### Patch Changes

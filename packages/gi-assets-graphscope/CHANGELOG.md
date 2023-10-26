@@ -1,5 +1,13 @@
 # @antv/gi-assets-graphscope
 
+## 2.1.13
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-sdk@2.4.19
+
 ## 2.1.12
 
 ### Patch Changes
