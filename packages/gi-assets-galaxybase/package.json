@@ -22,8 +22,7 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-galaxybase"
+    "sync": "tnpm sync @antv/gi-assets-galaxybase"
   },
   "resolutions": {
     "antd": "4.x"

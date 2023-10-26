@@ -25,8 +25,7 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-hugegraph"
+    "sync": "tnpm sync @antv/gi-assets-hugegraph"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",

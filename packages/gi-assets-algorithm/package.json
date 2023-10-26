@@ -29,8 +29,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-algorithm"
+    "sync": "tnpm sync @antv/gi-assets-algorithm"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",

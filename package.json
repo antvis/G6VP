@@ -6,11 +6,15 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npm run build:all:es",
+    "build": "npm run build:all:es && npm run build:all:umd",
     "build:all:es": "turbo run build:es",
     "build:all:umd": "turbo run build:umd --no-cache",
     "start": "cd packages/gi-site && npm run start",
     "clean": "pnpm run -r clean",
-    "publish": "pnpm publish -r --registry=https://registry.npmjs.org",
+    "sync": "turbo run sync",
+    "beforepublish": "npm run build",
+    "publish": "npm run beforepublish && pnpm publish -r --registry=https://registry.npmjs.org && npm run afterpublish",
+    "afterpublish": "turbo run sync",
     "cdn": "node ./scripts/publish_yuyan.mjs",
     "tar:gi-httpservice": "node scripts/tar_httpservice.mjs && cd packages/gi-httpservice-xxx  && npm install && npm run build:docker && npm run tar && cd ../../ && node scripts/rm_httpservice.mjs",
     "scriptname": "cmd"

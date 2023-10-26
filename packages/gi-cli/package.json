@@ -11,8 +11,7 @@
     "dev": "father dev",
     "build": "father build",
     "build:deps": "father prebundle",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-cli"
+    "sync": "tnpm sync @antv/gi-cli"
   },
   "keywords": [],
   "authors": [

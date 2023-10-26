@@ -8,8 +8,7 @@
     "build:umd": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-sdk-app",
     "build:umd:watch": "webpack --mode production  -c ../../webpack.config.js --env path=/packages/gi-sdk-app watch=true",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-sdk-app"
+    "sync": "tnpm sync @antv/gi-sdk-app"
   },
   "author": "",
   "publishConfig": {

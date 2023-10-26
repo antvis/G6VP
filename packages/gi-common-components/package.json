@@ -18,6 +18,7 @@
     "es"
   ],
   "scripts": {
+    "build": "npm run clean && npm run build:es & npm run build:umd",
     "build:umd": "npm run build:es",
     "build:es": "npm run clean && father build",
     "clean": "rimraf es esm lib dist",
@@ -25,8 +26,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build:es",
-    "postpublish": "tnpm sync @antv/gi-common-components"
+    "sync": "tnpm sync @antv/gi-common-components"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",

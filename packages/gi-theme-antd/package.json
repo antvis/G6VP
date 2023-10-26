@@ -19,6 +19,7 @@
     "*.less"
   ],
   "scripts": {
+    "build": "npm run clean && npm run build:es && npm run build:umd",
     "start": "npm run clean && father build --watch",
     "build:es": "npm run clean && father build && npm run build:css",
     "demo": "dumi dev",
@@ -27,8 +28,7 @@
     "clean:css": "rimraf dist",
     "clean": "rimraf es esm lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build:es && npm run build:umd",
-    "postpublish": "tnpm sync @antv/gi-theme-antd"
+    "sync": "tnpm sync @antv/gi-theme-antd"
   },
   "publishConfig": {
     "access": "public"
