@@ -35,8 +35,8 @@ export const edges: GIConfig['edges'] = [
 export const layout = {
   id: 'Force2',
   props: {
-    type: 'force2',
-    preset: {
+    type: 'force',
+    presetLayout: {
       type: 'concentric',
     },
   },

@@ -96,7 +96,7 @@ const registerMeta = context => {
       'x-component': 'Switch',
       default: context.data?.nodes?.length > 800 ? false : true,
     },
-    preset: {
+    presetLayout: {
       type: 'object',
       properties: {
         type: {

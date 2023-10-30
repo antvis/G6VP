@@ -25,9 +25,9 @@ export const layoutConfigPredRule: RuleModule = {
         };
         break;
       }
-      case 'force2': {
+      case 'force': {
         options = {
-          preset: {
+          presetLayout: {
             width: 800,
             height: 800,
             minNodeSpacing: 10,
@@ -41,7 +41,7 @@ export const layoutConfigPredRule: RuleModule = {
         };
         break;
       }
-      case 'force': {
+      case 'd3force': {
         options = {
           linkDistance: 100, // [1, 500]
           nodeStrength: 100, // [-100, 500]

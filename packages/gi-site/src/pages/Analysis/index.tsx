@@ -194,9 +194,9 @@ const Analysis = props => {
               props: {
                 ...defaultLayout.props,
                 ...layoutProps,
-                preset: {
-                  ...(defaultLayout.props.preset || {}),
-                  ...(layoutProps.preset || {}),
+                presetLayout: {
+                  ...(defaultLayout.props.presetLayout || {}),
+                  ...(layoutProps.presetLayout || {}),
                 },
               },
             };

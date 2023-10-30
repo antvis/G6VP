@@ -255,7 +255,7 @@ const SchemaGraph: React.FunctionComponent<SchemaGraphProps> = props => {
                 style={{ minHeight: '300px' }}
                 data={schemaGraph}
                 fitView
-                layout={{ type: 'force2', animation: false }}
+                layout={{ type: 'force', animation: false }}
               ></Graphin>
             )}
           </Col>

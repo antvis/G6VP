@@ -43,7 +43,7 @@ const App = () => {
               data={data}
               layout={{
                 type: 'force',
-                preset: {
+                presetLayout: {
                   type: 'concentric',
                 },
                 animation: false,
@@ -82,7 +82,7 @@ const App = () => {
               data={data}
               layout={{
                 type: 'force',
-                preset: {
+                presetLayout: {
                   type: 'concentric',
                 },
                 animation: true,

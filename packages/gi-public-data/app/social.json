@@ -1201,7 +1201,7 @@
       "layout": {
         "id": "Force2",
         "props": {
-          "type": "force2",
+          "type": "force",
           "animate": true,
           "preset": {
             "type": "concentric",
@@ -1215,7 +1215,7 @@
           "damping": 0.8,
           "maxSpeed": 1000,
           "distanceThresholdMode": "max",
-          "edgeStrength": 200,
+          "edgeStrength": 1000,
           "nodeStrength": 1000,
           "defSpringLenCfg": {
             "minLimitDegree": 5,

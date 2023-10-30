@@ -182,7 +182,7 @@ export const layoutTypePredRule: RuleModule = {
       concentric: shouldUseConcentric,
       radial: shouldUseRadial,
       grid: shouldUseGrid,
-      force2: shouldUseForce, // TODO force似乎目前不可用，先使用 graphin-force
+      force: shouldUseForce, // TODO force似乎目前不可用，先使用 graphin-force
     };
     const candidates = [];
     for (let layoutType of ALL_LAYOUT_TYPES) {
