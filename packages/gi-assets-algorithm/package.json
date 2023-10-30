@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-algorithm",
-  "version": "2.3.13",
+  "version": "2.3.16",
   "description": "G6VP 图分析算法资产库",
   "repository": {
     "type": "git",
@@ -29,8 +29,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-algorithm"
+    "sync": "tnpm sync @antv/gi-assets-algorithm"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
@@ -51,7 +50,7 @@
   "peerDependencies": {
     "@ant-design/icons": "^4.7.0",
     "@antv/g2plot": "^2.4.31",
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "^2.7.27",
     "react": "17.x",
     "react-dom": "17.x"
   },

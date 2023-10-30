@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-graphscope",
-  "version": "2.1.10",
+  "version": "2.1.13",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -25,15 +25,14 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-graphscope"
+    "sync": "tnpm sync @antv/gi-assets-graphscope"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
     "@aligov/global-string-format": "^1.0.7",
     "@ant-design/icons": "^4.7.0",
     "@antv/gi-sdk": "workspace:*",
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "^2.7.27",
     "gremlin_patch": "^3.5.1",
     "json2csv": "^5.0.7",
     "umi-request": "^1.4.0",

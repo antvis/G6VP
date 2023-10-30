@@ -8,6 +8,9 @@
     "build:umd": {
       "dependsOn": ["^build:umd"],
       "outputs": ["dist/**"]
+    },
+    "sync": {
+      "dependsOn": ["^sync"]
     }
   },
   "globalDependencies": [".prettierrc.js"]

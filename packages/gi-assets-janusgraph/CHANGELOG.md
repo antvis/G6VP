@@ -1,5 +1,29 @@
 # @antv/gi-assets-janusgraph
 
+## 1.1.13
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-sdk@2.4.19
+
+## 1.1.12
+
+### Patch Changes
+
+- publish in 1026
+- Updated dependencies
+  - @antv/gi-sdk@2.4.18
+
+## 1.1.11
+
+### Patch Changes
+
+- publish in 1026
+- Updated dependencies
+  - @antv/gi-sdk@2.4.17
+
 ## 1.1.10
 
 ### Patch Changes

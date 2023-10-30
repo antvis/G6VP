@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-janusgraph",
-  "version": "1.1.10",
+  "version": "1.1.13",
   "description": "JanusGraph 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,8 +26,7 @@
     "remove:antd": "rm -rf ./node_modules/antd",
     "start": "father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-janusgraph"
+    "sync": "tnpm sync @antv/gi-assets-janusgraph"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",

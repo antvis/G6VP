@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-tugraph-analytics",
-  "version": "0.2.10",
+  "version": "0.2.13",
   "description": "Tugraph Analytics Assets",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -23,8 +23,7 @@
     "prettier": "prettier --write ./src/**/**/**/*.js",
     "start": "npm run clean && father build --watch",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-tugraph-analytics"
+    "sync": "tnpm sync @antv/gi-assets-tugraph-analytics"
   },
   "dependencies": {
     "@aligov/global-locale": "^1.0.5",
@@ -34,7 +33,7 @@
     "ahooks": "^3.7.7"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "^2.7.27",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"

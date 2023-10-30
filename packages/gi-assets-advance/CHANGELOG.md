@@ -1,5 +1,32 @@
 # @antv/gi-assets-advance
 
+## 2.5.20
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-common-components@1.3.13
+  - @antv/gi-sdk@2.4.19
+
+## 2.5.19
+
+### Patch Changes
+
+- publish in 1026
+- Updated dependencies
+  - @antv/gi-common-components@1.3.12
+  - @antv/gi-sdk@2.4.18
+
+## 2.5.18
+
+### Patch Changes
+
+- publish in 1026
+- Updated dependencies
+  - @antv/gi-common-components@1.3.11
+  - @antv/gi-sdk@2.4.17
+
 ## 2.5.17
 
 ### Patch Changes

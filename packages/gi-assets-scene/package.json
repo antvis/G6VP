@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-scene",
-  "version": "2.2.16",
+  "version": "2.2.19",
   "description": "G6VP 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -28,8 +28,7 @@
     "start": "npm run clean && father build --watch",
     "test": "jest",
     "build:umd:analysis": "webpack  --mode production  -c ../../webpack.config.js --env path=/packages/gi-assets-scene analysis=true",
-    "prepublishOnly": "npm run build",
-    "postpublish": "tnpm sync @antv/gi-assets-scene"
+    "sync": "tnpm sync @antv/gi-assets-scene"
   },
   "dependencies": {
     "3d-force-graph": "1.70.10",
@@ -55,7 +54,7 @@
     "webpack-cli": "^5.0.0"
   },
   "peerDependencies": {
-    "@antv/graphin": "^2.7.25",
+    "@antv/graphin": "^2.7.27",
     "antd": "4.x",
     "react": "17.x",
     "react-dom": "17.x"
