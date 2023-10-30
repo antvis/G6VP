@@ -565,8 +565,8 @@ const baseComponentsConfig = [
 const baseLayoutConfig = {
   id: 'Force2',
   props: {
-    type: 'force2',
-    preset: {
+    type: 'force',
+    presetLayout: {
       type: 'concentric',
     },
   },

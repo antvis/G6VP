@@ -586,7 +586,7 @@
   },
   "Force2": {
     "id": "Force2",
-    "name": "渐进力导(force2)",
+    "name": "渐进力导(force)",
     "type": "LAYOUT",
     "docs": "",
     "icon": "icon-layout-force",

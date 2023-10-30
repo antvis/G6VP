@@ -17,7 +17,7 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
   const { graph, layoutInstance, layout, restartForceSimulation, stopForceSimulation } = useContext();
 
-  const isForce = layout.type === 'graphin-force' || layout.type === 'force2';
+  const isForce = layout.type === 'graphin-force' || layout.type === 'force';
 
   const handleClick = () => {
     if (isForce) {

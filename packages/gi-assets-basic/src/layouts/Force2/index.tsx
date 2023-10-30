@@ -5,9 +5,9 @@ import registerMeta from './registerMeta';
 const info = {
   id: 'Force2',
   options: {
-    type: 'force2',
+    type: 'force',
     animate: false,
-    preset: {
+    presetLayout: {
       type: 'concentric',
       width: 800,
       height: 800,
@@ -15,7 +15,9 @@ const info = {
       nodeSize: 10,
     },
     clusterNodeStrength: 35,
-    minMovement: 10,
+    linkDistance: 100,
+    edgeStrength: 1000,
+    minMovement: 4,
     damping: 0.8,
     maxSpeed: 1000,
     distanceThresholdMode: 'max',

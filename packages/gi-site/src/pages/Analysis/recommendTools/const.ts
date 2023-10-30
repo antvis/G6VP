@@ -27,4 +27,4 @@ export const DEGREE_FOR_SPARSE_GRAPH = 3;
 
 export const DEFAULT_NODE_TYPE = 'circle';
 
-export const DEFAULT_LAYOUT_TYPE = 'force2';
+export const DEFAULT_LAYOUT_TYPE = 'force';

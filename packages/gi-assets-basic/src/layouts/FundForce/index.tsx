@@ -7,7 +7,7 @@ const info = {
   options: {
     type: 'graphin-force',
     animation: true,
-    preset: {
+    presetLayout: {
       type: 'concentric',
     },
   },

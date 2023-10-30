@@ -51,7 +51,7 @@ export const GI_PROJECT_CONFIG = {
   layout: {
     id: 'Force2',
     props: {
-      type: 'force2',
+      type: 'force',
       animate: true,
       preset: {
         width: 800,

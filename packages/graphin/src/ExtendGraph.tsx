@@ -47,9 +47,9 @@ export default extend(G6Graph, {
     //@ts-ignore
     dagre: Extensions.DagreLayout,
     //@ts-ignore
-    force: Extensions.ForceLayout,
+    d3force: Extensions.D3ForceLayout,
     //@ts-ignore
-    force2: Extensions.ForceLayout,
+    force: Extensions.ForceLayout,
     //@ts-ignore
     radial: Extensions.RadialLayout,
   },

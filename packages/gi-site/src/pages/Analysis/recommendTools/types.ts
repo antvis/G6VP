@@ -18,8 +18,8 @@ export interface IExtendFieldInfo extends FieldInfo {
 
 export type LayoutTypes =
   | 'graphin-force'
-  | 'force2'
   | 'force'
+  | 'd3force'
   | 'grid'
   | 'dagre'
   | 'circular'

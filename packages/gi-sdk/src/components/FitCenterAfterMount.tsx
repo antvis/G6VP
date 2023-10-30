@@ -5,7 +5,7 @@ const FitCenterAfterMount = () => {
   let timer;
   React.useEffect(() => {
     const { type } = layout;
-    if (type === 'graphin-force' || type === 'force2') {
+    if (type === 'graphin-force' || type === 'force') {
       return;
     }
     if (type === 'dagre') {
