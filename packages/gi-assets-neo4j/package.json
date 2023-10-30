@@ -34,7 +34,7 @@
     "@ant-design/icons": "^4.7.0",
     "@antv/gi-sdk": "workspace:*",
     "json2csv": "^5.0.7",
-    "neo4j-driver": "^5.8.0",
+    "neo4j-driver": "^5.12.0",
     "umi-request": "^1.4.0",
     "use-immer": "^0.9.0"
   },

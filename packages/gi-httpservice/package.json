@@ -32,7 +32,7 @@
     "etcd3": "^1.1.0",
     "gremlin": "^3.6.4",
     "gremlin_patch": "^3.5.2",
-    "neo4j-driver": "^5.8.0",
+    "neo4j-driver": "^5.12.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
