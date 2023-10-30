@@ -55,16 +55,20 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
   if (dataRef.current !== data) {
     console.log('%c GRAPHIN DATA CHANGE....', 'color:yellow', data);
     console.time('GRAPHIN_CHANGE_DATA_COST');
+    //@ts-ignore
     if (dataRef.current.nodes !== data.nodes.length) {
       graph.updatePlugin({
         key: 'lod-controller',
         type: 'lod-controller',
+        //@ts-ignore
         disableLod: data.nodes.length < LOD_NODE_NUM_THRESHOLD,
       });
     }
     //@ts-ignore
     graph && graph.changeData(data, 'mergeReplace', false);
+    //@ts-ignore
     if (dataRef.current.nodes.length && graph) {
+      //@ts-ignore
       graph.layout({
         ...layout,
         presetLayout: {},
@@ -123,10 +127,22 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       renderer,
       node,
       edge,
-      transforms: ['transform-graphin-data'],
+      transforms: [
+        //@ts-ignore
+        'transform-graphin-data',
+        //@ts-ignore
+        {
+          //@ts-ignore
+          type: 'process-parallel-edges',
+          multiEdgeType: 'quadratic-edge',
+          loopEdgeType: 'loop-edge',
+        },
+      ],
       plugins: [
+        //@ts-ignore
         {
           type: 'lod-controller',
+          //@ts-ignore
           disableLod: data.nodes.length < LOD_NODE_NUM_THRESHOLD,
         },
       ],

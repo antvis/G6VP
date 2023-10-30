@@ -180,13 +180,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
   try {
     /** 解构配置项 */
 
-    const {
-      color,
-      size,
-      label: LABEL_KEYS,
-      advanced,
-      status: userStatus,
-    } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
+    const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
     let isBug = false;
     //@ts-ignore
@@ -197,98 +191,58 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
     const transNode = node => {
       // properties
       const data = node.data || node.properties || node;
-
+      const { x, y } = data;
       const keyshape = {
         ...advanced.keyshape,
         fill: color,
         stroke: color,
         size: size,
       };
+
       advanced.keyshape = keyshape;
       const LABEL_VALUE = getLabel(data, LABEL_KEYS);
-
       const icon = getIconStyleByConfig(advanced, data);
       const badges = getBadgesStyleByConfig(advanced, data);
-
-      const label = {
-        ...advanced.label,
-        value: advanced.label.visible ? LABEL_VALUE : '',
-      };
 
       let preStyle = (node && node.style) || {};
       if (reset) {
         preStyle = {};
       }
 
-      const styleByConfig = {
-        keyshape,
-        label,
-        icon,
-        halo,
-        badges,
-        status: {
-          ...status,
-          ...userStatus,
-          highlight: {
-            keyshape: {
-              lineWidth: 4,
-              fillOpacity: 0.6,
-            },
-          },
-          active: {
-            halo: {
-              visible: true,
-            },
-            keyshape: {
-              lineWidth: 5,
-            },
-          },
-          /** 扩散的状态 */
-          query_start: {
-            halo: {
-              visible: true,
-              stroke: color,
-              lineWidth: 4,
-              lineDash: [8, 8],
-            },
-          },
-          query_normal: {
-            halo: {
-              visible: true,
-              stroke: color,
-              lineWidth: 1,
-              lineDash: [8, 8],
-            },
-          },
-        },
+      /** 主节点 */
+      const keyShape = {
+        r: size / 2 || 10,
+        fill: color || 'red',
+        stroke: advanced.keyshape.stroke || 'red',
+        strokeOpacity: advanced.keyshape.strokeOpacity || 1,
+        fillOpacity: advanced.keyshape.fillOpacity,
       };
 
+      /** 标签 */
+      const labelShape = {
+        text: advanced.label.visible ? LABEL_VALUE : '' || '',
+        position: advanced.label.position || 'bottom',
+        maxWidth: '400%',
+        maxLines: LABEL_KEYS.length,
+        fill: advanced.label.fill,
+        fontSize: advanced.label.fontSize,
+      };
+      /** 图标 */
+      const iconShape = icon.visible
+        ? {
+            iconShape: icon,
+          }
+        : {};
+      console.log('node.id', node.id, keyShape);
       return {
         id: node.id,
         data: {
           type: keyshape.type,
-          x: data.x,
-          y: data.y,
-          labelShape: {
-            text: label.value || '',
-            position: label.position || 'bottom',
-            maxWidth: '400%',
-            maxLines: LABEL_KEYS.length,
-            fill: label.fill,
-            fontSize: label.fontSize,
-          },
-          keyShape: {
-            r: keyshape.size / 2 || 10,
-            fill: keyshape.fill || 'red',
-            stroke: keyshape.stroke || 'red',
-            strokeOpacity: keyshape.strokeOpacity || 1,
-            fillOpacity: keyshape.fillOpacity,
-          },
-          ...(icon.visible
-            ? {
-                iconShape: icon,
-              }
-            : {}),
+          x: x,
+          y: y,
+          labelShape,
+          keyShape,
+          ...iconShape,
           animates: {
             update: [
               {

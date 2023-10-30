@@ -75,6 +75,36 @@ const registerMeta = context => {
                       key: 'icon-panel',
                     },
                     properties: {
+                      type: {
+                        type: 'boolean',
+                        title: '类型',
+                        'x-decorator': 'FormItem',
+                        'x-component': 'Select',
+                        enum: [
+                          {
+                            label: '直线',
+                            value: 'line-edge',
+                          },
+                          {
+                            label: '二次贝塞尔曲线',
+                            value: 'quadratic-edge',
+                          },
+                          {
+                            label: '三次贝塞尔曲线',
+                            value: 'cubic-edge',
+                          },
+                          {
+                            label: '三次贝塞尔曲线-垂直',
+                            value: 'cubic-vertical-edge',
+                          },
+                          {
+                            label: '三次贝塞尔曲线-水平',
+                            value: 'cubic-horizontal-edge',
+                          },
+                        ],
+
+                        default: keyshape.type,
+                      },
                       hasArrow: {
                         type: 'boolean',
                         title: $i18n.get({ id: 'basic.elements.SimpleEdge.registerMeta.Arrow', dm: '箭头' }),
@@ -82,6 +112,7 @@ const registerMeta = context => {
                         'x-component': 'Switch',
                         default: true,
                       },
+
                       customPoly: {
                         type: 'boolean',
                         title: $i18n.get({

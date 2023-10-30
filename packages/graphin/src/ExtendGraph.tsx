@@ -41,6 +41,7 @@ const TransformGraphinData = (data, options, graphCore) => {
 export default extend(G6Graph, {
   edges: {
     'quadratic-edge': Extensions.QuadraticEdge,
+    'loop-edge': Extensions.LoopEdge,
   },
 
   layouts: {
@@ -69,5 +70,7 @@ export default extend(G6Graph, {
   //@ts-ignore
   transforms: {
     'transform-graphin-data': TransformGraphinData,
+    //@ts-ignore
+    'process-parallel-edges': Extensions.ProcessParallelEdges,
   },
 });
