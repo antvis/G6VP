@@ -13,15 +13,15 @@ export interface ServiceObject {
 export const StyleSetting: ServiceObject = {
   name: $i18n.get({ id: 'advance.src.services.StyleSetting.StyleSettings', dm: '样式设置' }),
   service: async (elementConfig: GIConfig['nodes'] | GIConfig['edges'], elementType: string) => {
-    const { GI_SITE_PROJECT_ID: projectId } = utils.getProjectContext();
-    if (projectId) {
+    const { GI_SITE_PROJECT_ID } = utils.getProjectContext();
+    if (GI_SITE_PROJECT_ID) {
       //@ts-ignore
-      const { localforage } = window;
+      const { GI_PROJECT_DB } = window;
       //  debugger
-      const project = await localforage?.getItem(projectId);
+      const project = await GI_PROJECT_DB?.getItem(GI_SITE_PROJECT_ID);
       project.projectConfig[elementType] = elementConfig;
 
-      localforage.setItem(projectId, {
+      GI_PROJECT_DB.setItem(GI_SITE_PROJECT_ID, {
         ...project,
       });
     }
