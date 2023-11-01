@@ -170,17 +170,17 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
       // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', false);
       if (graph.findById(edgeId)) {
         graph.setItemState(edgeId, 'active', false);
-        graph.updateItem(edgeId, {
-          style: {
-            animate: {
-              visible: false,
-              type: 'circle-running',
-              color: 'red',
-              repeat: true,
-              duration: 1000,
-            },
-          },
-        });
+        // graph.updateItem(edgeId, {
+        //   style: {
+        //     animate: {
+        //       visible: false,
+        //       type: 'circle-running',
+        //       color: 'red',
+        //       repeat: true,
+        //       duration: 1000,
+        //     },
+        //   },
+        // });
       }
     });
   };
@@ -232,17 +232,17 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
           // graph.findById(edgeId) && graph.setItemState(edgeId, 'active', true);
           if (graph.findById(edgeId)) {
             graph.setItemState(edgeId, 'active', true);
-            graph.updateItem(edgeId, {
-              style: {
-                animate: {
-                  visible: true,
-                  type: 'circle-running',
-                  color: 'red',
-                  repeat: true,
-                  duration: 1000,
-                },
-              },
-            });
+            // graph.updateItem(edgeId, {
+            //   style: {
+            //     animate: {
+            //       visible: true,
+            //       type: 'circle-running',
+            //       color: 'red',
+            //       repeat: true,
+            //       duration: 1000,
+            //     },
+            //   },
+            // });
           }
           highlightElementRef.current?.edges.add(edgeId);
         });

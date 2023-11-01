@@ -52,11 +52,12 @@ const NodeSelectionFormItem: React.FC<NodeSelectionFormItemProps> = memo(props =
 
     nodeClickListener = e => {
       setSelecting('');
-      const { item } = e;
-      if (!item || item.destroyed) return;
-      form.setFieldsValue({ [name]: item.getID() });
+      const { itemId } = e;
+      if (itemId) {
+        form.setFieldsValue({ [name]: itemId });
+      }
     };
-    graph.once('node:click', nodeClickListener);
+    graph && graph.once('node:click', nodeClickListener);
   };
 
   const selectProps = useMemo(
