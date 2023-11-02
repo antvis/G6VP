@@ -11,39 +11,47 @@ export interface IProps {
   GIAC: IGIAC;
   autoPin: boolean;
   dragNodeMass: number;
+  pinColor: '#7E92B5';
 }
 
 const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
-  const { graph, layoutInstance, layout, restartForceSimulation, stopForceSimulation } = useContext();
+  const { graph, layout } = useContext();
 
-  const isForce = layout.type === 'graphin-force' || layout.type === 'force';
+  const isForce = layout.type === 'graphin-force' || layout.type === 'force' || layout.type === 'd3force';
 
   const handleClick = () => {
     if (isForce) {
-      restartForceSimulation([]);
+      graph.layout({
+        animated: true,
+        presetLayout: {},
+      });
     }
   };
 
-  const { autoPin, dragNodeMass = 10000000000 } = props;
+  const { autoPin, pinColor, dragNodeMass = 1000 } = props;
 
   React.useEffect(() => {
     const handleNodeDragStart = () => {
       if (!isForce) {
         return;
       }
-      stopForceSimulation();
+      graph.stopLayout();
     };
     const handleNodeDragEnd = (e: any) => {
       if (!isForce || !autoPin) {
         return;
       }
-      if (e.item) {
-        handlePinNode(e.item, graph, restartForceSimulation, {
+      if (e.itemId) {
+        handlePinNode(e.itemId, graph, {
           dragNodeMass,
-          x: e.x,
-          y: e.y,
-          isForce,
+          x: e.canvas.x,
+          y: e.canvas.y,
+          color: pinColor,
+        });
+        graph.layout({
+          animated: true,
+          presetLayout: {},
         });
       }
     };
@@ -56,7 +64,7 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
       graph.off('node:dragend', handleNodeDragEnd);
       graph.off('canvas:click', handleNodeDragStart);
     };
-  }, [graph, autoPin, isForce, layoutInstance, restartForceSimulation]);
+  }, [graph, autoPin, isForce]);
 
   GIAC.icon = 'icon-play-circle';
   GIAC.disabled = true;
