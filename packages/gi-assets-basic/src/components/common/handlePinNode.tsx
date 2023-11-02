@@ -2,8 +2,15 @@ import { IGraph, icons } from '@antv/gi-sdk';
 
 export const handlePinNode = (itemId, graph, params) => {
   const { x, y, color, dragNodeMass } = params || {};
+  const nodeModel = graph.getNodeData(itemId);
+  if (!nodeModel) return;
 
   try {
+    const { x: ox, y: oy, __style } = nodeModel.data;
+    const pinPosition = {
+      x: isNaN(x) ? ox : x,
+      y: isNaN(y) ? oy : y,
+    };
     const pinBadge = {
       text: icons.pushpin,
       position: 'leftBottom',
@@ -15,17 +22,14 @@ export const handlePinNode = (itemId, graph, params) => {
       [
         {
           id: itemId,
-          data: {
-            x,
-            y,
-          },
+          data: pinPosition,
         },
       ],
       true,
       true,
     );
 
-    const { badgeShapes = [] } = graph.getNodeData(itemId)?.data || {};
+    const { badgeShapes = [] } = __style || {};
     if (!badgeShapes.find(badge => badge.name === 'pin')) {
       badgeShapes.push(pinBadge);
       graph.updateData('node', {
@@ -43,34 +47,21 @@ export const handlePinNode = (itemId, graph, params) => {
   }
 };
 
-export const handleUnPinNode = (target, graph: IGraph, restartForceSimulation, isForce) => {
+export const handleUnPinNode = (itemId, graph: IGraph) => {
   try {
-    const model = target.getModel();
-    // 目前仅支持GraphinNode 节点
-    const isGraphinNode = model.type === 'graphin-circle';
-    if (!isGraphinNode) {
-      return;
-    }
-    const style = model.style || { badges: [] };
-    const badges = [...style.badges];
-    const index = badges.findIndex(({ value }) => value === icons.pushpin);
-    badges.splice(index, 1);
-    // 更改样式
-    graph.updateItem(model.id, {
-      layout: {
-        ...model.layout,
-        force: { mass: null },
-      },
-      mass: 1,
-      pinned: false,
-      style: {
-        badges,
-      },
-    });
-
-    // 重启力导
-    if (isForce) {
-      restartForceSimulation([model], graph);
+    const { badgeShapes = [] } = graph.getNodeData(itemId)?.data?.__style || {};
+    const index = badgeShapes.findIndex(({ name }) => name === 'pin');
+    if (index > -1) {
+      badgeShapes.splice(index, 1);
+      graph.updateData('node', {
+        id: itemId,
+        data: {
+          mass: undefined,
+          __style: {
+            badgeShapes,
+          },
+        },
+      });
     }
   } catch (error) {
     console.log(error);

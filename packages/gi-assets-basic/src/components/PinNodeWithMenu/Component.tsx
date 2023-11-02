@@ -5,8 +5,8 @@ import $i18n from '../../i18n';
 import { handlePinNode, handleUnPinNode } from '../common/handlePinNode';
 
 // import { INode } from '@antv/g6';
-type INode = any;
 
+const hasPinned = nodeModel => nodeModel?.data.__style?.badgeShapes?.find(badge => badge.name === 'pin');
 export interface PinNodeMenuItemProps {
   contextmenu: any;
   controlledValues?: {
@@ -17,17 +17,17 @@ export interface PinNodeMenuItemProps {
 
 const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => {
   const { contextmenu, controlledValues } = props;
-  const { graph, layout, restartForceSimulation, updateHistory } = useContext();
-  const isForce = layout.type === 'graphin-force';
+  const { graph, layout, updateHistory } = useContext();
+  const isForce = layout.type === 'graphin-force' || layout.type === 'force' || layout.type === 'd3force';
 
   const [pinned, setPinned] = useState(false);
 
   const targetNode = contextmenu.item;
 
   const handleLockNode = (propId?: string, action?: 'pin' | 'unpin') => {
-    const target = contextmenu.item;
+    let { id } = contextmenu.item;
     // 仅支持对节点的操作
-    const invalidFromContextMenu = !target || target.destroyed || target.getType?.() !== 'node';
+    const invalidFromContextMenu = !graph.getNodeData(id);
     if (invalidFromContextMenu && !propId) {
       handleUpateHistory(
         undefined,
@@ -39,9 +39,7 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
     }
     contextmenu.onClose();
 
-    let item;
     let pinAction;
-    let id;
     if (propId) {
       if (!graph.findById(propId)) {
         handleUpateHistory(
@@ -53,19 +51,23 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
         return;
       }
       id = propId;
-      item = graph.findById(propId);
       pinAction = action || 'pin';
     } else {
-      item = target;
-      const model = target.getModel();
-      id = model.id;
-      pinAction = model.pinned ? 'unpin' : 'pin';
-      setPinned(model.pinned);
+      const model = graph.getNodeData(id);
+      const pinned = hasPinned(model);
+      pinAction = pinned ? 'unpin' : 'pin';
+      setPinned(pinned);
     }
     if (pinAction === 'unpin') {
-      handleUnPinNode(item, graph, restartForceSimulation, isForce);
+      handleUnPinNode(id, graph);
     } else {
-      handlePinNode(item, graph, restartForceSimulation, { dragNodeMass: 100000, isForce });
+      handlePinNode(id, graph, { dragNodeMass: 1000 });
+    }
+    if (isForce) {
+      graph.layout({
+        animated: true,
+        presetLayout: {},
+      });
     }
     handleUpateHistory(id, pinAction, true);
   };
@@ -109,7 +111,7 @@ const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => 
 
   return (
     <Menu.Item key="lock-node" eventKey="lock-node" onClick={() => handleLockNode()}>
-      {targetNode.pinned
+      {hasPinned(targetNode)
         ? $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.Unfix', dm: '解除固定' })
         : $i18n.get({ id: 'basic.components.PinNodeWithMenu.Component.FixedNode', dm: '固定节点' })}
     </Menu.Item>
