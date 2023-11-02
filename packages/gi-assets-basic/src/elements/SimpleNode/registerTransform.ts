@@ -208,6 +208,8 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
       if (reset) {
         preStyle = {};
       }
+      // TODO: 若 line205 的 badges 启用，则需要从 __style 解构出传入的 badgeShapes 进行合并后给到本函数返回值
+      const { keyShape: inputKeyShape, labelShape: inputLabelShape, animates, ...others } = data.__style || {};
 
       /** 主节点 */
       const keyShape = {
@@ -216,6 +218,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
         stroke: advanced.keyshape.stroke || 'red',
         strokeOpacity: advanced.keyshape.strokeOpacity || 1,
         fillOpacity: advanced.keyshape.fillOpacity,
+        ...inputKeyShape,
       };
 
       /** 标签 */
@@ -226,6 +229,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
         maxLines: LABEL_KEYS.length,
         fill: advanced.label.fill,
         fontSize: advanced.label.fontSize,
+        ...inputLabelShape,
       };
       /** 图标 */
       const iconShape = icon.visible
@@ -233,7 +237,6 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
             iconShape: icon,
           }
         : {};
-      console.log('node.id', node.id, keyShape);
       return {
         id: node.id,
         data: {
@@ -258,7 +261,9 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
               //   shapeId: 'keyShape',
               // },
             ],
+            ...animates,
           },
+          ...others,
         },
       };
     };
