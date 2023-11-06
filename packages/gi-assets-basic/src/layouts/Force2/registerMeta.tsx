@@ -64,7 +64,7 @@ const registerMeta = context => {
       'x-component-props': {
         step: 1,
       },
-      default: 200,
+      default: Math.max(context.data?.nodes?.length, 200),
     },
     nodeStrength: {
       title: $i18n.get({
@@ -87,14 +87,14 @@ const registerMeta = context => {
         min: 0,
         max: 1,
       },
-      default: 0.8,
+      default: 0.9,
     },
-    animate: {
+    animated: {
       title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.EnableAnimation', dm: '启用动画' }),
       type: 'boolean',
       'x-decorator': 'FormItem',
       'x-component': 'Switch',
-      default: context.data?.nodes?.length > 800 ? false : true,
+      default: false,
     },
     presetLayout: {
       type: 'object',
@@ -107,7 +107,7 @@ const registerMeta = context => {
           'x-component-props': {
             options: presetOptions,
           },
-          default: 'concentric',
+          default: 'dagre',
         },
         width: {
           title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.PresetLayoutWidth', dm: '预设布局宽度' }),
@@ -168,7 +168,7 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {},
-      default: context.data?.nodes?.length > 200 ? 10 : 2,
+      default: context.data?.nodes?.length > 2000 ? 10 : 0.5,
     },
     distanceThresholdMode: {
       title: $i18n.get({ id: 'basic.layouts.Force2.registerMeta.IterationStopJudgmentBasis', dm: '迭代停止判断依据' }),
@@ -199,7 +199,7 @@ const registerMeta = context => {
       'x-decorator': 'FormItem',
       'x-component': 'NumberPicker',
       'x-component-props': {},
-      default: 1000,
+      default: 2000,
     },
     centripetalOptions: {
       type: 'object',

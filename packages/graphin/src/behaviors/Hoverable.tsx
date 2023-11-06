@@ -5,11 +5,12 @@ import { GraphinContext } from '../useGraphin';
 export interface HoverableProps {
   bindType?: 'node' | 'edge';
   disabled?: boolean;
+  activateState?: string;
 }
 
 const Hoverable: React.FunctionComponent<HoverableProps> = props => {
   const graphin = React.useContext(GraphinContext);
-  const { bindType = 'node', disabled } = props;
+  const { bindType = 'node', disabled, activateState = 'active' } = props;
   const { graph } = graphin;
   React.useEffect(() => {
     if (disabled) {
@@ -17,23 +18,23 @@ const Hoverable: React.FunctionComponent<HoverableProps> = props => {
     }
 
     const handleNodeMouseEnter = (evt: IG6GraphEvent & any) => {
-      graph.setItemState(evt.itemId, 'active', true);
-      graph.setCursor('pointer')
+      graph.setItemState(evt.itemId, activateState, true);
+      graph.setCursor('pointer');
     };
 
     const handleNodeMouseLeave = (evt: IG6GraphEvent & any) => {
-      graph.setItemState(evt.itemId, 'active', false);
-      graph.setCursor('default')
+      graph.setItemState(evt.itemId, activateState, false);
+      graph.setCursor('default');
     };
 
     const handleEdgeMouseEnter = (evt: IG6GraphEvent & any) => {
-      graph.setItemState(evt.itemId, 'active', true);
-      graph.setCursor('pointer')
+      graph.setItemState(evt.itemId, activateState, true);
+      graph.setCursor('pointer');
     };
 
     const handleEdgeMouseLeave = (evt: IG6GraphEvent & any) => {
-      graph.setItemState(evt.itemId, 'active', false);
-      graph.setCursor('default')
+      graph.setItemState(evt.itemId, activateState, false);
+      graph.setCursor('default');
     };
 
     if (bindType === 'node') {

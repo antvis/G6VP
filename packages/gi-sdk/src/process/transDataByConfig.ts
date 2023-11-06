@@ -51,7 +51,7 @@ export const transDataByConfig = (
       }
       const Element = ElementAssets[id];
       const filterData = filterByRules(elementData, { logic, expressions });
-      const elementMapper = Element.registerTransform(filterData, item, reset);
+      const elementMapper = Element.registerTransform(filterData);
       return filterData.map(elementMapper);
     })
     .reduce((acc, curr) => {

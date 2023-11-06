@@ -1,8 +1,10 @@
-import GISDK, { Initializer, SimpleEdge, SimpleNode, useContext } from '@antv/gi-sdk';
-import React from 'react';
+import type { ElementAsset, GIAssets, GIConfig, GIService, LayoutAsset } from '@antv/gi-sdk';
+import GISDK, { useContext } from '@antv/gi-sdk';
+import React, { useEffect } from 'react';
 import { data, schemaData } from './const';
 interface DEMOProps {}
 
+/** components */
 const Counter = props => {
   const { graph, updateContext } = useContext();
 
@@ -16,104 +18,162 @@ const Counter = props => {
     </div>
   );
 };
-
-const CounterAsset = {
+/** initializer */
+const Initializer = props => {
+  const { services, updateContext } = useContext();
+  const { serviceId, schemaServiceId } = props;
+  useEffect(() => {
+    let initialService = services.find(s => s.id === serviceId) as GIService;
+    let schemaService = services.find(s => s.id === schemaServiceId) as GIService;
+    Promise.all([schemaService.service(), initialService.service()]).then(([schemaData, graphData]) => {
+      updateContext(draft => {
+        draft.data = graphData;
+        draft.schemaData = schemaData;
+        draft.initialized = true;
+      });
+    });
+  }, []);
+  return null;
+};
+/** elements */
+const SimpleNode: ElementAsset = {
   info: {
-    id: 'Counter',
-    type: 'AUTO',
+    type: 'NODE',
+    id: 'SimpleNode',
+    name: 'SimpleNode',
+    category: 'element',
   },
-  registerMeta: () => {
-    return {};
+  registerShape: () => {},
+  registerMeta: () => {},
+  registerTransform: nodeCfg => {
+    //@ts-ignore
+    const { color, size, label } = nodeCfg.props;
+    return node => {
+      console.log('node >>>>', node);
+      const { data, id } = node;
+      const { x, y, z } = data;
+      const LABEL_KEY = label[0] || 'id';
+      return {
+        id: id,
+        data: {
+          x,
+          y,
+          z,
+          keyShape: {
+            fill: color,
+            r: size,
+          },
+          labelShape: {
+            text: data[LABEL_KEY],
+          },
+        },
+      };
+    };
   },
-  component: Counter,
+};
+/** elements */
+const SimpleEdge: ElementAsset = {
+  info: {
+    type: 'EDGE',
+    id: 'SimpleEdge',
+    name: 'SimpleEdge',
+    category: 'element',
+  },
+  registerShape: () => {},
+  registerMeta: () => {},
+  registerTransform: edgeCfg => edge => edge,
+};
+/** Force Layout*/
+const ForceLayout: LayoutAsset = {
+  info: {
+    type: 'LAYOUT',
+    id: 'ForceLayout',
+    name: 'ForceLayout',
+    category: 'layout',
+    options: { type: 'force' },
+  },
+  registerLayout: () => {},
+  registerMeta: () => {},
 };
 
-const assets = {
+const assets: GIAssets = {
   elements: {
     SimpleEdge,
     SimpleNode,
   },
-  layouts: {},
+  layouts: {
+    ForceLayout,
+  },
   components: {
-    Initializer,
-    Counter: CounterAsset,
+    Initializer: {
+      component: Initializer,
+      info: {
+        name: '初始化器',
+        id: 'Initializer',
+        type: 'INITIALIZER',
+        category: 'system-interaction',
+      },
+      registerMeta: () => ({}),
+    },
+    Counter: {
+      component: Counter,
+      info: {
+        name: '计数器',
+        id: 'Counter',
+        type: 'AUTO',
+        category: 'workbook',
+      },
+      registerMeta: () => ({}),
+    },
   },
 };
 
-const config = {
+const config: GIConfig = {
   nodes: [
     {
       id: 'SimpleNode',
       props: {
         size: 26,
-        color: '#ddd',
+        color: 'red',
         label: [],
       },
       name: '官方节点',
-      order: -1,
       expressions: [],
       logic: true,
       groupName: '默认样式',
     },
     {
       id: 'SimpleNode',
+      expressions: [
+        {
+          name: 'id',
+          operator: 'eql',
+          value: 'account_7',
+        },
+      ],
       props: {
         size: 26,
         color: '#3056E3',
-        label: ['account_balance^^id'],
+        label: ['id'],
       },
       name: '官方节点',
-      expressions: [
-        {
-          name: 'icon',
-          operator: 'eql',
-          value: 'account_balance',
-        },
-      ],
-      order: 0,
       logic: true,
-      groupName: 'ACCOUNT_BALANCE TYPE',
-    },
-    {
-      id: 'SimpleNode',
-      props: {
-        size: 26,
-        color: '#faad14',
-        label: ['account_box^^id'],
-      },
-      name: '官方节点',
-      expressions: [
-        {
-          name: 'icon',
-          operator: 'eql',
-          value: 'account_box',
-        },
-      ],
-      order: 1,
-      logic: true,
-      groupName: 'ACCOUNT_BOX TYPE',
-    },
-    {
-      id: 'SimpleNode',
-      props: {
-        size: 26,
-        color: '#a0d911',
-        label: ['-^^id'],
-      },
-      name: '官方节点',
-      expressions: [
-        {
-          name: 'icon',
-          operator: 'eql',
-          value: '-',
-        },
-      ],
-      order: 2,
-      logic: true,
-      groupName: '- TYPE',
+      groupName: 'Account_7 TYPE',
     },
   ],
-  edges: [{ id: 'SimpleEdge' }],
+  edges: [
+    {
+      id: 'SimpleEdge',
+      props: {
+        size: 1,
+        color: 'red',
+        label: [],
+      },
+      name: 'SimpleEdge',
+      logic: true,
+      groupName: 'Default',
+    },
+  ],
   components: [
     {
       id: 'Initializer',
@@ -136,21 +196,22 @@ const config = {
     },
   ],
   layout: {
-    id: 'Concentric',
+    id: 'ForceLayout',
     props: {
-      type: 'concentric',
+      type: 'force',
+      presetLayout: {},
     },
   },
+  //@ts-ignore
   pageLayout: {},
 };
 
-const services = [
+const services: GIService[] = [
   {
     name: '初始化查询',
     method: 'GET',
     id: 'GI/GI_SERVICE_INTIAL_GRAPH',
     service: async () => {
-      console.log('data', data);
       return new Promise(resolve => {
         resolve(data);
       });

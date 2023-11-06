@@ -37,10 +37,9 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     ...options
   } = props;
 
-  console.log('%c GRAPHIN RENDER....', 'color:yellow');
   const dataRef = useRef(data);
   const layoutRef = useRef(layout);
-
+  console.log('%c GRAPHIN RENDER....', 'color:yellow', props, layoutRef.current);
   const [state, setState] = useState<{
     isReady: boolean;
     graph: IGraph;
@@ -56,18 +55,23 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     console.log('%c GRAPHIN DATA CHANGE....', 'color:yellow', data);
     console.time('GRAPHIN_CHANGE_DATA_COST');
     //@ts-ignore
-    if (dataRef.current.nodes !== data.nodes.length) {
-      graph.updatePlugin({
-        key: 'lod-controller',
-        type: 'lod-controller',
-        //@ts-ignore
-        disableLod: data.nodes.length < LOD_NODE_NUM_THRESHOLD,
-      });
-    }
+    // if (dataRef.current.nodes !== data.nodes.length) {
+    //   graph.updatePlugin({
+    //     key: 'lod-controller',
+    //     type: 'lod-controller',
+    //     //@ts-ignore
+    //     disableLod: data.nodes.length < LOD_NODE_NUM_THRESHOLD,
+    //   });
+    // }
     //@ts-ignore
     graph && graph.changeData(data, 'mergeReplace', false);
     //@ts-ignore
-    if (dataRef.current.nodes.length && graph) {
+    if (
+      //@ts-ignore
+      (dataRef.current.nodes.length && graph) ||
+      (graph && graph.layoutController.previousNodes && graph.layoutController.previousNodes.size === 0)
+    ) {
+      console.log('>>>>>>>> LAYOUT>>>>>>');
       //@ts-ignore
       graph.layout({
         ...layout,
@@ -86,6 +90,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     //@ts-ignore
     layoutRef.current = layout;
   }
+
   useEffect(() => {
     if (graph) {
       console.log('%c Graphin change EdgeMapper', 'color:yellow');
@@ -127,6 +132,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       renderer,
       node,
       edge,
+      optimize: { tileFirstRender: 100000000000 },
       transforms: [
         //@ts-ignore
         'transform-graphin-data',
@@ -146,6 +152,38 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
           disableLod: data.nodes.length < LOD_NODE_NUM_THRESHOLD,
         },
       ],
+      nodeState: {
+        hover: {
+          keyShape: {
+            lineWidth: 0,
+          },
+          //@ts-ignore
+          haloShape: {
+            opacity: 0.25,
+            lineWidth: 12,
+            pointerEvents: 'none',
+            zIndex: -1,
+            visible: true,
+            droppable: false,
+          },
+        },
+      },
+      edgeState: {
+        hover: {
+          keyShape: {
+            lineWidth: 1,
+          },
+          //@ts-ignore
+          haloShape: {
+            opacity: 0.25,
+            lineWidth: 12,
+            zIndex: -1,
+            pointerEvents: 'none',
+            visible: true,
+            droppable: false,
+          },
+        },
+      },
     });
 
     /** @ts-ignore 做兼容性处理 */

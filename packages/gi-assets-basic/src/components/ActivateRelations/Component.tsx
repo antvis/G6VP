@@ -41,8 +41,8 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
           // modifierKey={modifierKey}
         />
       )}
-      {enableNodeHover && <Hoverable bindType="node" />}
-      {enableEdgeHover && <Hoverable bindType="edge" />}
+      {enableNodeHover && <Hoverable bindType="node" activateState="hover" />}
+      {enableEdgeHover && <Hoverable bindType="edge" activateState="hover" />}
       {enable && !persistentHighlight && <ActiveEdge />}
     </>
   );

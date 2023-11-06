@@ -152,7 +152,7 @@ export interface LayoutAsset {
     keys: string[];
     schemaData: GraphSchemaData;
   }) => any;
-  registerLayout?: () => any[];
+  registerLayout?: () => void;
   info: {
     id: string;
     name: string;
@@ -175,7 +175,7 @@ export interface ElementAsset {
     keys?: string[];
     schemaData: GraphSchemaData;
   }) => any;
-  registerShape?: () => any[];
+  registerShape?: () => void;
   info: {
     id: string;
     name: string;
@@ -184,7 +184,7 @@ export interface ElementAsset {
     desc?: string;
     cover?: string;
   };
-  registerTransform: (data: GraphinData, metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => any[];
+  registerTransform: (metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => (item: any) => {};
 }
 export interface LocaleAsset {
   language: LANGUAGE_KEY_NAME;

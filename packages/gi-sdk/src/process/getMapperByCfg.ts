@@ -39,7 +39,6 @@ export const getMapperByCfg = (
       const isMatch = filterByTopRule(item, { logic, expressions });
 
       if (isMatch) {
-        // console.log(id, cfg, item);
         //@ts-ignore
         const mapper = Element.registerTransform(cfg, reset);
         //@ts-ignore

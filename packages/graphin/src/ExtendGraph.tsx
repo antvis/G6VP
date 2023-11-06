@@ -20,8 +20,6 @@ const handler = (data, options = {}, graphCore) => {
     };
   });
 
-  console.log('TransformGraphinData ', edges, nodes);
-
   return {
     nodes,
     edges,

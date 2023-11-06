@@ -17,13 +17,13 @@ export interface IProps {
 const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
   const { graph, layout } = useContext();
-
-  const isForce = layout.type === 'graphin-force' || layout.type === 'force' || layout.type === 'd3force';
+  const { type } = layout;
+  const isForce = type === 'graphin-force' || type === 'force' || type === 'd3force';
 
   const handleClick = () => {
     if (isForce) {
       graph.layout({
-        animated: true,
+        type: type,
         presetLayout: {},
       });
     }
@@ -50,7 +50,7 @@ const ForceSimulation: React.FunctionComponent<IProps> = props => {
           color: pinColor,
         });
         graph.layout({
-          animated: true,
+          type,
           presetLayout: {},
         });
       }

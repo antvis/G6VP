@@ -141,10 +141,10 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
           draft.selecting = '';
         });
         // 更新到历史记录
-        updateHistory({
-          ...history,
-          success: true,
-        });
+        // updateHistory({
+        //   ...history,
+        //   success: true,
+        // });
       } catch (error) {
         updateHistory({ ...history, success: false, errorMsg: error });
       }

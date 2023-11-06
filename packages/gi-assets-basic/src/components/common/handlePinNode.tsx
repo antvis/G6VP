@@ -49,6 +49,7 @@ export const handlePinNode = (itemId, graph, params) => {
 
 export const handleUnPinNode = (itemId, graph: IGraph) => {
   try {
+    //@ts-ignore
     const { badgeShapes = [] } = graph.getNodeData(itemId)?.data?.__style || {};
     const index = badgeShapes.findIndex(({ name }) => name === 'pin');
     if (index > -1) {

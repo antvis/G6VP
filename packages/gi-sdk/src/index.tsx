@@ -61,6 +61,7 @@ export type {
   AssetInfo,
   AssetType,
   ComponentAsset,
+  ElementAsset,
   GIAC_ITEMS_TYPE,
   GIAssets,
   GIComponentAssets,
@@ -77,6 +78,7 @@ export type {
   GISiteParams,
   GraphSchemaData,
   ISourceDataMap,
+  LayoutAsset,
   ServiceObject,
 } from './typing';
 export { extra, template, useContext, utils, version };
