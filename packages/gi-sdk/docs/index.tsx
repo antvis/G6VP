@@ -6,26 +6,40 @@ interface DEMOProps {}
 
 /** components */
 const Counter = props => {
-  const { graph, updateContext } = useContext();
+  const { context, updateContext, graph } = useContext();
 
   const { title } = props;
   const nodes = graph.getAllNodesData().length;
   console.log('Counter render....', nodes);
+  const handleClick = () => {
+    updateContext(draft => {
+      draft.layout = {
+        id: 'ForceLayout',
+        props: {
+          type: 'grid',
+        },
+      };
+    });
+  };
 
   return (
     <div style={{ position: 'absolute', top: '0px', left: '0px' }}>
+      <button onClick={handleClick}>click....{JSON.stringify(context.layout)}</button>
       {title}: {nodes}
     </div>
   );
 };
 /** initializer */
+
 const Initializer = props => {
   const { services, updateContext } = useContext();
   const { serviceId, schemaServiceId } = props;
   useEffect(() => {
     let initialService = services.find(s => s.id === serviceId) as GIService;
     let schemaService = services.find(s => s.id === schemaServiceId) as GIService;
+
     Promise.all([schemaService.service(), initialService.service()]).then(([schemaData, graphData]) => {
+      console.log('Initializer', Initializer);
       updateContext(draft => {
         draft.data = graphData;
         draft.schemaData = schemaData;
@@ -49,7 +63,7 @@ const SimpleNode: ElementAsset = {
     //@ts-ignore
     const { color, size, label } = nodeCfg.props;
     return node => {
-      console.log('node >>>>', node);
+      // console.log('node >>>>', node);
       const { data, id } = node;
       const { x, y, z } = data;
       const LABEL_KEY = label[0] || 'id';

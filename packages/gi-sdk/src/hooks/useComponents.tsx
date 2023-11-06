@@ -1,5 +1,4 @@
 import React from 'react';
-import DefaultInitializer from '../components/Initializer';
 
 const DEFAULT_GICC_LAYOUT = {
   id: 'EmptyLayout',
@@ -47,7 +46,7 @@ export const getComponents = (components, pageLayout, ComponentAssets) => {
     };
   }, {});
 
-  const { component: InitializerComponent } = ComponentAssets[initializer.id] || DefaultInitializer;
+  const { component: InitializerComponent } = ComponentAssets[initializer.id];
 
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 

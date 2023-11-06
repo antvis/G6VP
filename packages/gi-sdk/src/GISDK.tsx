@@ -1,157 +1,61 @@
-import Graphin, { GraphinContext } from '@antv/graphin';
-import React, { useEffect, useMemo } from 'react';
-import { IntlProvider, useIntl } from 'react-intl';
-import { useImmer } from 'use-immer';
-import SizeSensor from './SizeSensor';
-import { deepClone } from './components/const';
-import { getComponents } from './hooks/useComponents';
-import useConstant from './hooks/useConstant';
+import React, { useMemo } from 'react';
+import Canvas from './Canvas';
+import Components from './Components';
+import Prepare from './Prepare';
 import './index.less';
-import { getMapperByCfg } from './process/getMapperByCfg';
-import type { GIGraphData, Props, State } from './typing';
-const GISDK = (props: Props) => {
-  const { children, assets, id, services, locales } = props;
-  const { components: ComponentAssets, elements: ElementAssets, layouts: LayoutAssets } = assets;
-  const { language = 'zh-CN', ...localeMessages } = locales || {};
+import type { GIAssets, GIConfig, GIService } from './typing';
+import { IdContext } from './useContext';
 
-  // registerShapes(ElementAssets);
-  // registerLayouts(LayoutAssets);
-
-  const [state, updateState] = useImmer<State>({
-    config: props.config,
-    layout: props.config.layout.props,
-    data: { nodes: [], edges: [] } as GIGraphData,
-    propertyGraphData: undefined,
-    schemaData: {
-      //会在初始化时候更新
-      nodes: [],
-      edges: [],
-    },
-    HAS_GRAPH: false,
-    source: { nodes: [], edges: [] } as GIGraphData,
-
-    isLoading: false,
-    isContextReady: false,
-    initialized: false,
-    layoutCache: false,
-    largeGraphLimit: 2000,
-    largeGraphData: undefined,
-    //@ts-ignore
-    nodeMapper: null,
-  });
-
-  const { data, HAS_GRAPH, graph, config } = state;
-  /** 计算逻辑 */
-  const { layout: layoutCfg, components: componentsCfg = [], nodes: nodesCfg, edges: edgesCfg, pageLayout } = config;
-  const constants = useConstant(id, state, updateState);
-  const { GISDK_ID } = constants;
-
+export type SDKProps = {
   /**
-   * 响应 props.config 变化
+   * @description GISDK的ID，用于多实例管理，缺失会默认生成一个
    */
-  useEffect(() => {
-    console.log('gisdk props config change.....');
-    updateState(draft => {
-      draft.config = props.config;
-      //@ts-ignore
-      draft.layout = props.config.layout.props;
-    });
-  }, [props.config]);
-
+  id?: string;
   /**
-   *  响应 graph 的变化
+   * @description 配置信息
    */
-  const handleGraphInit = ({ graph, apis }) => {
-    //@ts-ignore
-    window.graph = graph;
-    updateState(draft => {
-      draft.graph = graph;
-      draft.apis = apis;
-      draft.HAS_GRAPH = true;
-    });
-  };
-
+  config: GIConfig;
   /**
-   * 响应 config.components 变化，重新渲染组件
+   * @description 资产实例
    */
-  const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    useMemo(() => {
-      const a = getComponents(componentsCfg, pageLayout, ComponentAssets);
+  assets: GIAssets;
+  /** 注册的全局数据服务 */
+  services: GIService[];
+  style?: React.CSSProperties;
+  className?: string;
+  children?: React.ReactNode[];
+};
 
-      return a;
-    }, [componentsCfg, pageLayout, HAS_GRAPH]);
+const GISDK = (props: SDKProps) => {
+  const { assets, id, services } = props;
+  /** get gisdk id */
+  const GISDK_ID = useMemo(() => {
+    if (!id) {
+      const defaultId = `${Math.random().toString(36).substr(2)}`;
+      console.warn(`⚠️: props.id 缺失，默认生成 GISDK_ID : ${defaultId} 用于多实例管理`);
+      return defaultId;
+    }
+    return id;
+  }, []);
 
-  /**
-   * 响应 config.layout 变化，重新布局
-   */
-  const layout = useMemo(() => {
-    console.log('layoutCfg change >>>>>', layoutCfg);
-    return deepClone(layoutCfg.props);
-  }, [layoutCfg]);
-
-  /**
-   * 响应 config.nodes 变化，重新设置节点样式
-   */
-  const nodeMapper = useMemo(() => getMapperByCfg(nodesCfg, ElementAssets), [nodesCfg]);
-  /**
-   * 响应 config.edges 变化，重新设置节点样式
-   */
-  const edgeMapper = useMemo(() => getMapperByCfg(edgesCfg, ElementAssets), [edgesCfg]);
-
-  /**
-   * 组装 context value
-   */
-  const ContextValue = {
-    ...state,
-    ...constants,
-    layout,
-    GISDK_ID,
-    HAS_GRAPH,
-    graph,
-    nodeMapper,
-    edgeMapper,
-    updateContext: updateState,
-    /** props */
+  console.log('%c GISDK RENDER....', 'color:rgba(255,87,34,1)');
+  const contextValue = {
+    id: GISDK_ID,
     assets,
     services,
-    locales,
-    useIntl,
-    language,
   };
-  console.log(
-    '%c GISDK RENDER....',
-    'color:rgba(255,87,34,1)',
-    'HAS_GRAPH:',
-    HAS_GRAPH,
-    'initialized:',
-    state.initialized,
-  );
   return (
-    <div id={`${GISDK_ID}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
+    <div id={`${id}-container`} style={{ width: '100%', height: '100%', position: 'relative', ...props.style }}>
       {/* @ts-ignore */}
-      <IntlProvider locale={language as string} messages={localeMessages as any}>
-        {/* @ts-ignore */}
-        <GraphinContext.Provider value={ContextValue}>
-          <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
-            <Graphin
-              container={`${GISDK_ID}-graphin-container`}
-              style={{ transform: 'scale(1)' }}
-              //@ts-ignore
-              node={nodeMapper}
-              edge={edgeMapper}
-              data={data}
-              //@ts-ignore
-              layout={layout}
-              onInit={handleGraphInit}
-            />
-            {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
-            {HAS_GRAPH && state.initialized && renderComponents}
-            {HAS_GRAPH && state.initialized && children}
-            {HAS_GRAPH && state.initialized && <SizeSensor />}
-          </GICC_LAYOUT_COMPONENT>
-        </GraphinContext.Provider>
-      </IntlProvider>
+      <IdContext.Provider value={contextValue}>
+        <Prepare config={props.config}>
+          <Components>
+            <Canvas />
+          </Components>
+        </Prepare>
+      </IdContext.Provider>
     </div>
   );
 };
+
 export default React.memo(GISDK);

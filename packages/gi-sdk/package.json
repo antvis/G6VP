@@ -32,6 +32,7 @@
     "postpublish": "tnpm sync @antv/gi-sdk"
   },
   "dependencies": {
+    "valtio": "^1.12.0",
     "dumi": "^1.1.50",
     "@antv/graphin": "workspace:*",
     "@antv/g6": "5.0.0-beta.5",

@@ -15,10 +15,7 @@ export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
 export { default as EngineServer } from './components/EngineServer';
-/** default assets */
-export { default as Initializer } from './components/Initializer';
-export { default as SimpleEdge } from './components/SimpleEdge';
-export { default as SimpleNode } from './components/SimpleNode';
+
 /** default assets */
 export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
@@ -28,9 +25,9 @@ export { Shortcuts, useShortcuts } from './utils';
 export { common };
 
 import template from './constants/template';
-import { useContext } from './context';
 import GISDK from './GISDK';
 import * as utils from './process';
+import { registerContext, useContext } from './useContext';
 import { createDownload } from './utils';
 const { version } = pkg;
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
@@ -81,7 +78,7 @@ export type {
   LayoutAsset,
   ServiceObject,
 } from './typing';
-export { extra, template, useContext, utils, version };
+export { extra, registerContext, template, useContext, utils, version };
 declare global {
   interface Window {
     GISDK: {
