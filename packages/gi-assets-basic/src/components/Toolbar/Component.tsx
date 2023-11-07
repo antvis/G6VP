@@ -23,8 +23,8 @@ export interface ToolbarProps {
 
 const ToolbarContainer: React.FunctionComponent<ToolbarProps> = props => {
   const { direction = 'horizontal', placement, offset, GI_CONTAINER } = props;
-  const { assets, config } = useContext();
-  const { components } = useComponents(GI_CONTAINER, config, assets);
+  const { assets, context } = useContext();
+  const { components } = useComponents(GI_CONTAINER, context.components, assets);
   const positionStyles = getPositionStyles(placement, offset);
 
   return (

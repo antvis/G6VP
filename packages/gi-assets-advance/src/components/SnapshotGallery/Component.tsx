@@ -27,7 +27,8 @@ const SnapshotGallery: React.FC<IProps> = props => {
 
   const positionStyles = getPositionStyles(placement, offset);
   const flexDirection = direction === 'horizontal' ? 'row' : 'column';
-  const { graph, data, GISDK_ID } = useContext();
+  const { graph, context, GISDK_ID } = useContext();
+  const { data } = context;
   const [state, updateState] = useImmer<IState>({
     history: new Map<string, IHistoryObj>(),
   });

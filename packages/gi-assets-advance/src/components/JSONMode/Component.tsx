@@ -10,7 +10,8 @@ export interface IProps {
 
 const JSONMode: React.FC<IProps> = props => {
   const { style = {}, theme = 'rjv-default' } = props;
-  const { data: graphData } = useContext();
+  const { context } = useContext();
+  const { data: graphData } = context;
 
   const json = useMemo(() => {
     const { nodes = [], edges = [], combos = [], ...others } = graphData;

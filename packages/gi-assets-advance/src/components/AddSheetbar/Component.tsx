@@ -10,8 +10,10 @@ export interface AddSheetbarProps {
 }
 
 const AddSheetbar: React.FunctionComponent<AddSheetbarProps> = props => {
-  const { handleAddSheetbar, graph } = useContext();
-
+  const { context, graph } = useContext<{
+    handleAddSheetbar: (options: any) => void;
+  }>();
+  const { handleAddSheetbar } = context;
   const { GIAC, isRelayout } = props;
   const handleClick = React.useCallback(() => {
     const nodes = graph.findAllByState('node', 'selected').map(c => {

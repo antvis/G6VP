@@ -15,26 +15,26 @@ let timer: NodeJS.Timer;
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
   const { GIAC, controlledValues } = props;
-  const { assets, config, data, schemaData, updateContext, updateHistory, graph, layout: contextLayout } = useContext();
+  const { assets, context, updateContext, updateHistory, graph } = useContext();
+  const { data, schemaData, layout } = context;
+
   const { layouts = {} } = assets;
 
   const handleClick = (layoutConfig: GILayoutConfig) => {
     handleUpdateHistory(layoutConfig, true, '');
     // get the props from layout metapanel configuring
     let layoutProps = { ...layoutConfig.props };
-    if (config.layout.id === layoutConfig.id) {
+    if (layout.id === layoutConfig.id) {
       layoutProps = {
         ...layoutProps,
-        ...config.layout.props,
+        ...layout.props,
       };
     }
     updateContext(draft => {
-      draft.layout = layoutProps;
-      draft.config.layout = {
+      draft.layout = {
         id: layoutConfig.id,
         props: layoutProps,
       };
-      draft.layoutCache = false;
     });
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -96,6 +96,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
           const keys = utils.getKeysByData(data, 'node');
           // @ts-ignore
           const { id, name, options = {}, icon = '' } = info;
+          //@ts-ignore
           const configObj = registerMeta({ data, keys, schemaData });
           /** 默认的配置值 */
           const defaultProps = utils.getDefaultValues({ type: 'object', properties: configObj });
@@ -122,7 +123,7 @@ const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
       title={$i18n.get({ id: 'basic.components.LayoutSwitch.Component.LayoutScheme', dm: '布局方案' })}
       size="small"
     >
-      <Radio.Group value={config.layout?.id}>{Radios}</Radio.Group>
+      <Radio.Group value={layout?.id}>{Radios}</Radio.Group>
     </Card>
   );
 

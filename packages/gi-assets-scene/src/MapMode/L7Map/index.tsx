@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import AnimateContainer from '../../CommonCmponents/AnimateContainer';
 import $i18n from '../../i18n';
 import PropertiesPanel from '../PropertiesPanel/Component';
-import ToolbarContainer from '../Toolbar';
 import './index.less';
 const { deepClone } = extra;
 
@@ -31,10 +30,10 @@ export interface MapModeProps {
 
 const L7Map: React.FunctionComponent<MapModeProps> = props => {
   const { theme, type, maxSize, minSize, placement, offset, longitudeKey, latitudeKey, setVisible } = props;
-  const context = useContext();
-  const { data, graph, config, GISDK_ID, apis } = context;
+  const { context, graph, GISDK_ID } = useContext();
+  const { data, nodes, apis } = context;
 
-  const { color: NODE_COLOR } = (config.nodes && config.nodes[0].props) || {};
+  const { color: NODE_COLOR } = (nodes && nodes[0].props) || {};
 
   const [state, setState] = React.useState<{
     isReady: boolean;
@@ -326,14 +325,6 @@ const L7Map: React.FunctionComponent<MapModeProps> = props => {
             zIndex: 9999,
           }}
         >
-          <ToolbarContainer
-            config={config}
-            GIAC={GIAC}
-            handleBrush={handleBrush}
-            handleSwitchMap={handleClick}
-            handleToggleMap={handleToggle}
-          />
-
           {isReady && (
             <PropertiesPanel mapInstance={mapInstance as L7Plot} geoData={geoNodesData} updateState={setState} />
           )}

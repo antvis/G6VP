@@ -2,8 +2,8 @@ import { FilterOutlined } from '@ant-design/icons';
 import { useContext, utils } from '@antv/gi-sdk';
 import { Button, Form, Popover, Select } from 'antd';
 import React, { useMemo } from 'react';
-import { IState } from './typing';
 import $i18n from '../../i18n';
+import { IState } from './typing';
 export interface FileRuleProps {
   children: React.FC;
 }
@@ -31,7 +31,8 @@ const options = [
 const FilterRuleContent: React.FC<IFilterRuleContentProps> = props => {
   const { state, updateState } = props;
   const { filterRule } = state;
-  const { data: graphData } = useContext();
+  const { context } = useContext();
+  const { data: graphData } = context;
   const { generatorSchemaByGraphData } = utils;
   const schemaData = useMemo(() => generatorSchemaByGraphData(graphData), [graphData]);
   const weightProperties = useMemo(() => {

@@ -12,9 +12,10 @@ export interface FormValues {
   content: string;
 }
 const DataSchema = () => {
-  const { schemaData, config } = useContext();
+  const { context } = useContext();
+  const { schemaData, nodes, edges } = context;
 
-  const schemaGraph = getSchemaGraph(schemaData, config);
+  const schemaGraph = getSchemaGraph(schemaData, { nodes, edges });
 
   return (
     <div>

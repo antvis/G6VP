@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { bind } from 'size-sensor';
-import { useContext } from './useContext';
+import { useContext } from './Context';
 interface SizeSensorProps {}
 
 const SizeSensor: React.FunctionComponent<SizeSensorProps> = props => {

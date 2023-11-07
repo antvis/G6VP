@@ -17,8 +17,9 @@ export interface PinNodeMenuItemProps {
 
 const PinNodeMenuItem: React.FunctionComponent<PinNodeMenuItemProps> = props => {
   const { contextmenu, controlledValues } = props;
-  const { graph, layout, updateHistory } = useContext();
-  const { type } = layout;
+  const { graph, context, updateHistory } = useContext();
+  const { layout } = context;
+  const { type } = layout.props;
   const isForce = type === 'graphin-force' || type === 'force' || type === 'd3force';
 
   const [pinned, setPinned] = useState(false);

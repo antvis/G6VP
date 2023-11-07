@@ -4,12 +4,12 @@ import { GraphinData } from '@antv/graphin';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useMemo, useState } from 'react';
+import $i18n from '../../i18n';
 import FilterSelection from '../FilterPanel/FilterSelection';
 import '../FilterPanel/index.less';
 import { IFilterCriteria } from '../FilterPanel/type';
 import { filterGraphData } from '../FilterPanel/utils';
 import Interpretation from './Interpretation';
-import $i18n from '../../i18n';
 
 const { isStyles } = utils;
 
@@ -23,7 +23,10 @@ export interface FilterPanelProps {
 const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   const { isFilterIsolatedNodes, limit, filterLogic } = props;
   const [filterOptions, setFilterOptions] = useState<{ [id: string]: IFilterCriteria }>({});
-  const { updateContext, transform, schemaData, largeGraphData } = useContext();
+  const { updateContext, transform, context } = useContext<{
+    largeGraphData: any;
+  }>();
+  const { schemaData, largeGraphData } = context;
   const dataSchemas = schemaData;
 
   const [state, setState] = React.useState({
@@ -141,7 +144,6 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         draft.data = transform(canvasData);
         draft.source = transform(canvasData);
       }
-      draft.layoutCache = true;
     });
   }, [filterOptions]);
 

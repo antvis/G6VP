@@ -1,7 +1,7 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { findShortestPath } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
-import { useContext } from '@antv/gi-sdk';
+import { useContext, useSourceDataMap } from '@antv/gi-sdk';
 import { Button, Col, Collapse, Empty, Form, InputNumber, Row, Space, Switch, Timeline, message } from 'antd';
 import { enableMapSet } from 'immer';
 import React, { memo, useEffect, useRef } from 'react';
@@ -32,7 +32,9 @@ enableMapSet();
 
 const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
   const { nodeSelectionMode, pathNodeLabel, controlledValues, onOpen = () => {}, hasMaxDeep, hasDirection } = props;
-  const { data: graphData, graph, sourceDataMap, updateHistory } = useContext();
+  const { graph, updateHistory, context } = useContext();
+  const { source, data: graphData } = context;
+  const sourceDataMap = useSourceDataMap(source);
 
   const [state, updateState] = useImmer<IState>({
     allNodePath: [],

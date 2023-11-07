@@ -43,7 +43,8 @@ const transformer = (timeTable, dateKey) => {
 
 const Timeline: React.FunctionComponent<Props> = props => {
   const { dateKey, height } = props;
-  const { source } = useContext();
+  const { context } = useContext();
+  const { source } = context;
   const { nodes, links } = React.useMemo(() => {
     return transformer(source.edges, dateKey);
   }, [dateKey]);

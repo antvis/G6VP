@@ -21,13 +21,14 @@ export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
 export { useComponents } from './hooks/useComponents';
 export { default as useContainer } from './hooks/useContainer';
+export { default as useSourceDataMap } from './hooks/useSourceDataMap';
 export { Shortcuts, useShortcuts } from './utils';
 export { common };
 
 import template from './constants/template';
+import { registerContext, useContext } from './Context';
 import GISDK from './GISDK';
 import * as utils from './process';
-import { registerContext, useContext } from './useContext';
 import { createDownload } from './utils';
 const { version } = pkg;
 console.log(`%c 🎉 GI_SDK_VERSION:${version}`, 'color:#3e5dff');
@@ -86,7 +87,6 @@ declare global {
       default: typeof GISDK;
       extra: typeof extra;
       template: typeof template;
-      useContext: typeof useContext;
       utils: typeof utils;
       version: typeof version;
     };

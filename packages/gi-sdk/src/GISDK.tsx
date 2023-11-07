@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import Canvas from './Canvas';
 import Components from './Components';
+import { IdContext } from './Context';
 import Prepare from './Prepare';
 import './index.less';
 import type { GIAssets, GIConfig, GIService } from './typing';
-import { IdContext } from './useContext';
 
 export type SDKProps = {
   /**

@@ -9,8 +9,8 @@ const useCellSelect = (
   s2Instance: { nodeTable: SpreadSheet | null; edgeTable: SpreadSheet | null },
   isFullScreen: boolean,
 ) => {
-  const context = useContext();
-  const { data: graphData, graph, largeGraphData, updateContext } = context;
+  const { context, graph, updateContext } = useContext();
+  const { data: graphData, largeGraphData } = context;
   const { nodeTable, edgeTable } = s2Instance;
   React.useEffect(() => {
     if (nodeTable) {

@@ -30,9 +30,10 @@ const getDefaultSideWidth = () => {
 };
 const RichContainer = props => {
   const { children, resizable = true, isSheet } = props;
-  const context = useContext();
-  const { HAS_GRAPH, GISDK_ID } = context;
-  const Containers = useContainer(context);
+  const { context, assets } = useContext();
+  const { HAS_GRAPH, components, pageLayout } = context;
+
+  const Containers = useContainer(assets, components, pageLayout);
   const [state, setState] = React.useState<RichContainerState>({
     activeKey: utils.searchParamOf(URL_SEARCH_KEY) || 'LanguageQuery',
     viewMode: 'GISDK_CANVAS',

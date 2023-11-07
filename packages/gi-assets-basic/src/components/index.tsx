@@ -29,7 +29,7 @@ import Tooltip from './Tooltip';
 // import ContentContainer from './ContentContainer';
 import ChartAnalysis from './ChartAnalysis';
 import ForceSimulation from './ForceSimulation';
-import GroupBar from './GroupBar';
+
 import Initializer from './Initializer';
 import OperatorBar from './OperatorBar';
 import Overview from './OverView';
@@ -71,7 +71,6 @@ export {
   // FuseEditPanel,
   ForceSimulation,
   GrailLayout,
-  GroupBar,
   Initializer,
   LassoSelect,
   LayoutSwitch,

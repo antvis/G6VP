@@ -2,9 +2,9 @@ import { FileExcelOutlined, FilterOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { Button, Col, List, Popover, Row, Statistic, Tag, Tooltip } from 'antd';
 import * as React from 'react';
-import downloadCsv from '../common/downloadCsv';
-import { IFilterCriteria } from '../FilterPanel/type';
 import $i18n from '../../i18n';
+import { IFilterCriteria } from '../FilterPanel/type';
+import downloadCsv from '../common/downloadCsv';
 interface interpretationProps {
   filterLogic: 'and' | 'or';
   filterOptions: { [id: string]: IFilterCriteria };
@@ -12,7 +12,8 @@ interface interpretationProps {
 
 const interpretation: React.FunctionComponent<interpretationProps> = props => {
   const { filterOptions, filterLogic } = props;
-  const { data } = useContext();
+  const { context } = useContext();
+  const { data } = context;
   const { nodes, edges } = data;
   if (!nodes) {
     return null;
@@ -80,9 +81,15 @@ const interpretation: React.FunctionComponent<interpretationProps> = props => {
                 </Tooltip>
                 <Popover
                   content={content}
-                  title={$i18n.get({ id: 'basic.components.OverView.Interpretation.CurrentFilterLogic', dm: `当前筛选逻辑：${filterLogic.toUpperCase()}，筛选条件如下：` }, {
-                    filterLogic: filterLogic.toUpperCase()
-                  })}
+                  title={$i18n.get(
+                    {
+                      id: 'basic.components.OverView.Interpretation.CurrentFilterLogic',
+                      dm: `当前筛选逻辑：${filterLogic.toUpperCase()}，筛选条件如下：`,
+                    },
+                    {
+                      filterLogic: filterLogic.toUpperCase(),
+                    },
+                  )}
                   // title={`当前筛选逻辑：${filterLogic.toUpperCase()}，筛选条件如下：`}
                   trigger="hover"
                 >

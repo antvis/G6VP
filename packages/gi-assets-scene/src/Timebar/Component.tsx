@@ -38,7 +38,8 @@ const Timebar: React.FC<TimebarProps> = ({
   speed,
   playMode,
 }) => {
-  const { data: graphData } = useContext();
+  const { context } = useContext();
+  const { data: graphData } = context;
 
   if (!timeField || !yField)
     return (

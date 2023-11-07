@@ -21,7 +21,8 @@ export interface AnalysisHistoryProps {
 }
 
 const AnalysisHistory: React.FC<AnalysisHistoryProps> = props => {
-  const { GISDK_ID, history, graph, services } = useContext();
+  const { GISDK_ID, context, graph, services } = useContext<{ history: any }>();
+  const { history } = context;
   const {
     height,
     placement,

@@ -2,9 +2,9 @@ import type { GraphinData, IGraph } from '@antv/graphin';
 import Graphin from '@antv/graphin';
 import deepClone from 'lodash-es/cloneDeep';
 import React, { useMemo } from 'react';
+import { registerContext, useContext } from './Context';
 import { getMapperByCfg } from './process/getMapperByCfg';
 import type { GIEdgeConfig, GILayoutConfig, GINodeConfig } from './typing';
-import { registerContext, useContext } from './useContext';
 
 registerContext({
   graph: null,
@@ -15,6 +15,10 @@ registerContext({
     nodes: [],
     edges: [],
   },
+  source: {
+    nodes: [],
+    edges: [],
+  },
   schemaData: {
     nodes: [],
     edges: [],
@@ -22,6 +26,9 @@ registerContext({
   nodes: [],
   edges: [],
   layout: {},
+  isLoading: false,
+  largeGraphLimit: 1000,
+  largeGraphMode: false,
 });
 interface CanvasProps {}
 

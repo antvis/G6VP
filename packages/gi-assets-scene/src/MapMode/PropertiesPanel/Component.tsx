@@ -2,8 +2,8 @@ import { useContext, utils } from '@antv/gi-sdk';
 import { L7Plot } from '@antv/l7plot';
 import { Drawer, Skeleton } from 'antd';
 import React from 'react';
-import Properties from './Properties';
 import $i18n from '../../i18n';
+import Properties from './Properties';
 
 export interface PropertiesPanelProps {
   mapInstance: L7Plot;
@@ -16,15 +16,16 @@ export interface PropertiesPanelProps {
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
   const { mapInstance, geoData, updateState } = props;
-  const { config, services } = useContext();
+  const { context, services } = useContext();
+  const { components } = context;
   const serviceId = React.useMemo(() => {
     try {
       //@ts-ignore
-      return config.components.find(c => c.id === 'PropertiesPanel').props.serviceId;
+      return components.find(c => c.id === 'PropertiesPanel').props.serviceId;
     } catch (error) {
       return undefined;
     }
-  }, [config]);
+  }, [components]);
   if (!serviceId) {
     return null;
   }

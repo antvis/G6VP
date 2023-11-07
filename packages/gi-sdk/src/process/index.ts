@@ -49,3 +49,5 @@ export {
 } from './transGraphDataBySchemaMate';
 
 export { getSiteContext, setSiteContext } from './siteContext';
+
+export { getMapperByCfg } from './getMapperByCfg';

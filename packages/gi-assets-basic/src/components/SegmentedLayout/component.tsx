@@ -15,9 +15,10 @@ export interface UadLayoutProps {
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
-  const context = useContext();
-  const { HAS_GRAPH } = context;
-  const Containers = useContainer(context);
+  const { context, assets } = useContext();
+  const { HAS_GRAPH, components, pageLayout } = context;
+
+  const Containers = useContainer(assets, components, pageLayout);
   const [SideContent] = Containers;
   const { width = 360, padding = 12 } = SideContent;
   const items = useMemo(() => {

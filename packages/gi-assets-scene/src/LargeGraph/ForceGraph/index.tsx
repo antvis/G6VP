@@ -1,10 +1,9 @@
 import ForceGraph3D, { ForceGraph3DInstance } from '3d-force-graph';
-import { extra, IGIAC, useContext } from '@antv/gi-sdk';
-import * as React from 'react';
+import { extra, IGIAC, useContext, utils } from '@antv/gi-sdk';
+import React, { useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from 'three';
 import AnimateContainer from '../../CommonCmponents/AnimateContainer';
-import Toolbar from '../Toolbar';
 
 const { deepClone } = extra;
 
@@ -27,19 +26,13 @@ const updateHighlight = Graph => {
 };
 
 const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
-  const {
-    updateContext,
-    source,
-    largeGraphData,
-    largeGraphLimit,
-    data,
-    GISDK_ID,
-    apis,
-    config,
-    transform,
-    nodeMapper,
-    edgeMapper,
-  } = useContext();
+  const { updateContext, GISDK_ID, transform, assets, context } = useContext();
+  const { source, largeGraphData, data, nodes, edges } = context;
+  //@ts-ignore
+  const nodeMapper = useMemo(() => utils.getMapperByCfg(nodes, assets.elements), [nodes]);
+  //@ts-ignore
+  const edgeMapper = useMemo(() => utils.getMapperByCfg(edges, assets.elements), [edges]);
+
   const { GIAC, handleClick, maxSize, minSize, placement, offset, highlightColor, backgroundColor } = props;
   const GraphRef = React.useRef<ForceGraph3DInstance>();
   let DATA = source;
@@ -237,12 +230,12 @@ const LargeGraph: React.FunctionComponent<ILargeGraph> = props => {
 
   return ReactDOM.createPortal(
     <AnimateContainer toggle={toggle} maxSize={maxSize} minSize={minSize} placement={placement} offset={offset}>
-      <Toolbar
+      {/* <Toolbar
         GIAC={GIAC}
         config={config}
         handleSwitchMap={handleClick} // 切换渲染视图
         handleToggleMap={handleToggle} //大小视图
-      ></Toolbar>
+      ></Toolbar> */}
       <div
         id="gi-3d-graph"
         style={{

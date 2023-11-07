@@ -54,7 +54,8 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     expandStartId: '',
   });
 
-  const { data, updateContext, updateHistory, transform, graph, config, services } = useContext();
+  const { updateContext, updateHistory, transform, graph, services, context } = useContext();
+  const { data } = context;
 
   const service = utils.getService(services, serviceId);
   const menuService = utils.getService(services, menuServiceId);

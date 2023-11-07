@@ -153,7 +153,8 @@ const AjustLayout: React.FC<IGremlinQueryProps> = ({ visible, onClose, serviceId
   });
 
   // const { services, dispatch, GiState, setGiState } = GraphinContext as any;
-  const { graph, services, data, updateContext } = useContext();
+  const { graph, services, updateContext, context } = useContext();
+  const { data } = context;
 
   React.useEffect(() => {
     const onNodeSelectChange = e => {

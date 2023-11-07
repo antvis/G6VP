@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
+import { registerContext, useContext } from './Context';
 import type { GIConfig } from './typing';
-import { registerContext, useContext } from './useContext';
 
 interface PrepareProps {
   config: GIConfig;

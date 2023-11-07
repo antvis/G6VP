@@ -19,7 +19,8 @@ const EdgeMerge: React.FunctionComponent<{ GIAC: IGIAC }> = props => {
     mergedEdges: [],
   });
   const { edgeMerged, edgeComputed, mergedEdges } = state;
-  const { graph, data } = useContext();
+  const { graph, context } = useContext();
+  const { data } = context;
 
   useEffect(() => {
     if (edgeMerged) {
