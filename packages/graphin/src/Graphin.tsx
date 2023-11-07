@@ -13,6 +13,7 @@ interface GraphinProps extends Specification<{}, {}> {
   /** 兼容的props  */
   fitView?: boolean;
   onInit?: (graph: any) => void;
+  unMount?: (graph: any) => void;
   children?: React.ReactNode[];
   /** 是否兼容V2 */
   compatibility?: boolean;
@@ -31,6 +32,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     layout,
     container = `graphin-container-${Math.random()}`,
     onInit,
+    unMount,
     node = nodeStyleTransform,
     edge = edgeStyleTransform,
     renderer = 'canvas',
@@ -121,8 +123,9 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     const { clientWidth, clientHeight } = ContainerDOM as HTMLDivElement;
     width = Number(width) || clientWidth || 500;
     height = Number(height) || clientHeight || 500;
+    console.log('EFFECT>>>>>>>>');
 
-    const instance = new ExtendGraph({
+    let instance = new ExtendGraph({
       container,
       width,
       height,
@@ -211,6 +214,9 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     return () => {
       console.log('%c GRAPHIN DESTORY....', 'color:rgba(48,86,227,1)');
       instance.destroy();
+      //@ts-ignore
+      instance = null;
+      unMount && unMount(instance);
     };
   }, []);
 

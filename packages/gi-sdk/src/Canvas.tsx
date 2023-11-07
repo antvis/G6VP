@@ -6,11 +6,9 @@ import { registerContext, useContext } from './Context';
 import { getMapperByCfg } from './process/getMapperByCfg';
 import type { GIEdgeConfig, GILayoutConfig, GINodeConfig } from './typing';
 
-registerContext({
-  graph: null,
+const initialCanvasStore = {
   apis: {},
   HAS_GRAPH: false,
-
   data: {
     nodes: [],
     edges: [],
@@ -29,7 +27,8 @@ registerContext({
   isLoading: false,
   largeGraphLimit: 1000,
   largeGraphMode: false,
-});
+};
+registerContext(initialCanvasStore);
 interface CanvasProps {}
 
 export type ICanvas = {
@@ -54,9 +53,17 @@ const Canvas: React.FunctionComponent<CanvasProps> = props => {
     window.graph = graph;
     updateGraph(graph);
     updateContext(draft => {
-      // draft.graph = graph;
       draft.apis = apis;
       draft.HAS_GRAPH = true;
+    });
+  };
+  const handleUnMount = () => {
+    //@ts-ignore
+    updateGraph(null);
+    updateContext(draft => {
+      Object.keys(initialCanvasStore).forEach(key => {
+        draft[key] = initialCanvasStore[key];
+      });
     });
   };
   /**
@@ -90,6 +97,7 @@ const Canvas: React.FunctionComponent<CanvasProps> = props => {
       //@ts-ignore
       layout={runtime_layout}
       onInit={handleGraphInit}
+      unMount={handleUnMount}
     />
   );
 };

@@ -29,7 +29,6 @@ const deepClone = (obj: any) => {
 
 export type IContext<T> = T & {
   /** graph */
-  graph: IGraph;
   apis: any;
   HAS_GRAPH: boolean;
   GISDK_ID: string;
@@ -84,7 +83,10 @@ export function useContext<T>(): ContextType<T> {
   const prevStore = StoreMap.get(ContextId) as IContext<T>;
   const context = useSnapshot(prevStore);
   const graph = GraphMap.get(ContextId) || null;
-
+  //@ts-ignore
+  window.GraphMap = GraphMap;
+  //@ts-ignore
+  window.StoreMap = StoreMap;
   return {
     context,
     assets,
