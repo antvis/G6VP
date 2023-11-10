@@ -46,6 +46,7 @@ const extra = {
 const common = {
   createDownload,
 };
+export { proxy, useSnapshot } from 'valtio';
 
 // export { default as Icon } from './components/Icon';
 

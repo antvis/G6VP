@@ -30,6 +30,7 @@ const deepClone = (obj: any) => {
 export type IContext<T> = T & {
   /** graph */
   apis: any;
+  renderer: string;
   HAS_GRAPH: boolean;
   GISDK_ID: string;
   isLoading: boolean;

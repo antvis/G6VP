@@ -1,10 +1,8 @@
-import type { GraphinData, IGraph } from '@antv/graphin';
 import Graphin from '@antv/graphin';
 import deepClone from 'lodash-es/cloneDeep';
 import React, { useMemo } from 'react';
 import { registerContext, useContext } from './Context';
 import { getMapperByCfg } from './process/getMapperByCfg';
-import type { GIEdgeConfig, GILayoutConfig, GINodeConfig } from './typing';
 
 const initialCanvasStore = {
   apis: {},
@@ -27,23 +25,14 @@ const initialCanvasStore = {
   isLoading: false,
   largeGraphLimit: 1000,
   largeGraphMode: false,
+  renderer: 'canvas', //'webgl-3d',
 };
 registerContext(initialCanvasStore);
 interface CanvasProps {}
 
-export type ICanvas = {
-  graph: IGraph;
-  apis: any;
-  HAS_GRAPH: boolean;
-  data: GraphinData;
-  nodes: GINodeConfig[];
-  edges: GIEdgeConfig[];
-  layout: GILayoutConfig;
-};
-
 const Canvas: React.FunctionComponent<CanvasProps> = props => {
-  const { context, updateContext, assets, id, updateGraph } = useContext<ICanvas>();
-  const { data, nodes, edges, layout } = context;
+  const { context, updateContext, assets, id, updateGraph } = useContext<typeof initialCanvasStore>();
+  const { data, nodes, edges, layout, renderer } = context;
   const { elements: ElementAssets } = assets;
   /**
    *  响应 graph 的变化
@@ -77,14 +66,14 @@ const Canvas: React.FunctionComponent<CanvasProps> = props => {
    * 响应 config.nodes 变化，重新设置节点样式
    */
   //@ts-ignore
-  const nodeMapper = useMemo(() => getMapperByCfg(nodes, ElementAssets), [nodes]);
+  const nodeMapper = useMemo(() => getMapperByCfg(nodes, ElementAssets, { renderer, reset: true }), [nodes, renderer]);
   /**
    * 响应 config.edges 变化，重新设置节点样式
    */
   //@ts-ignore
-  const edgeMapper = useMemo(() => getMapperByCfg(edges, ElementAssets), [edges]);
+  const edgeMapper = useMemo(() => getMapperByCfg(edges, ElementAssets, { renderer, reset: true }), [edges, renderer]);
 
-  console.log('render...canvas...');
+  console.log('render...canvas...', renderer);
 
   return (
     <Graphin
@@ -94,6 +83,8 @@ const Canvas: React.FunctionComponent<CanvasProps> = props => {
       node={nodeMapper}
       edge={edgeMapper}
       data={data}
+      //@ts-ignore
+      renderer={renderer}
       //@ts-ignore
       layout={runtime_layout}
       onInit={handleGraphInit}

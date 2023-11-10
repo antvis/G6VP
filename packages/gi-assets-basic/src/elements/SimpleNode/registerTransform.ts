@@ -176,9 +176,10 @@ export const defaultConfig = {
 export type NodeConfig = typeof defaultConfig;
 
 /** 数据映射函数  需要根据配置自动生成*/
-const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
+const transform = (nodeConfig: GINodeConfig, options) => {
   try {
     /** 解构配置项 */
+    const { reset, renderer } = options;
 
     const { color, size, label: LABEL_KEYS, advanced } = merge(defaultConfig, nodeConfig.props || {}) as NodeConfig;
 
@@ -240,7 +241,7 @@ const transform = (nodeConfig: GINodeConfig, reset?: boolean) => {
       return {
         id: node.id,
         data: {
-          type: keyshape.type,
+          type: renderer === 'webgl-3d' ? 'sphere-node' : keyshape.type,
           x: x,
           y: y,
           labelShape,

@@ -41,6 +41,9 @@ export default extend(G6Graph, {
     'quadratic-edge': Extensions.QuadraticEdge,
     'loop-edge': Extensions.LoopEdge,
   },
+  nodes: {
+    'sphere-node': Extensions.SphereNode,
+  },
 
   layouts: {
     //@ts-ignore
@@ -60,6 +63,10 @@ export default extend(G6Graph, {
     'drag-node': Extensions.DragNode,
     'hover-activate': Extensions.HoverActivate,
     'brush-select': Extensions.BrushSelect,
+    //@ts-ignore
+    'orbit-canvas-3d': Extensions.OrbitCanvas3D,
+    //@ts-ignore
+    'zoom-canvas-3d': Extensions.ZoomCanvas3D,
   },
   plugins: {
     minimap: Extensions.Minimap,

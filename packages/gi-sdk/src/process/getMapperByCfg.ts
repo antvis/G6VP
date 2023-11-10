@@ -3,19 +3,19 @@ import { filterByTopRule } from './filterByRules';
 
 /**
  *
- * @param elementType 元素类型：node or edge
- * @param data 数据
- * @param config GISDK配置
+ 
+ * @param itemConfig 节点或者边的配置
  * @param ElementAssets 元素资产
- * @param reset 是否重置transform
+ * @param options 额外参数 {reset:boolean , renderer:string}  
  * @returns nodes or edges
  */
 
 export const getMapperByCfg = (
   config: Partial<GIConfig['edges']> | Partial<GIConfig['nodes']>,
   ElementAssets: GIAssets['elements'],
-  reset?: boolean,
+  options?: { reset: boolean; renderer: string },
 ) => {
+  const { reset, renderer } = options || { reset: true, renderer: 'webgl' };
   /** 默认的Mapper */
   const dumpMapper = item => item;
   if (!config) {
@@ -40,7 +40,7 @@ export const getMapperByCfg = (
 
       if (isMatch) {
         //@ts-ignore
-        const mapper = Element.registerTransform(cfg, reset);
+        const mapper = Element.registerTransform(cfg, { reset, renderer });
         //@ts-ignore
         const formateNode = mapper(item);
         // console.log(id, formateNode, 'isMatch', isMatch, expressions?.length, item);

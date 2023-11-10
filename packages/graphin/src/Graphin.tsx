@@ -123,7 +123,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
     const { clientWidth, clientHeight } = ContainerDOM as HTMLDivElement;
     width = Number(width) || clientWidth || 500;
     height = Number(height) || clientHeight || 500;
-    console.log('EFFECT>>>>>>>>');
+    console.log('EFFECT>>>>>>>>', renderer);
 
     let instance = new ExtendGraph({
       container,
@@ -218,7 +218,7 @@ const Graphin: React.FunctionComponent<GraphinProps> = forwardRef((props, ref) =
       instance = null;
       unMount && unMount(instance);
     };
-  }, []);
+  }, [renderer]);
 
   const containerStyle: React.CSSProperties = {
     height: '100%',

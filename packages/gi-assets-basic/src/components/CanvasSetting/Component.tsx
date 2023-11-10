@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import CanvasClick from './CanvasClick';
 import CanvasDoubleClick from './CanvasDoubleClick';
 
-const { DragCanvas, ZoomCanvas, BrushSelect, DragNode } = Behaviors;
+const { DragCanvas, ZoomCanvas, BrushSelect, DragNode, OrbitCanvas3D, ZoomCanvas3D } = Behaviors;
 
 export interface CanvasSettingProps {
   dragCanvas: {
@@ -29,7 +29,8 @@ export interface CanvasSettingProps {
 const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
   const { styleCanvas, dragCanvas, zoomCanvas, clearStatus, doubleClick } = props;
   const { backgroundColor, backgroundImage } = styleCanvas;
-  const { GISDK_ID } = useContext();
+  const { GISDK_ID, context } = useContext();
+  const { renderer } = context;
 
   React.useLayoutEffect(() => {
     const parent_container = document.getElementById(`${GISDK_ID}-graphin-container`) as HTMLElement;
@@ -39,6 +40,15 @@ const CanvasSetting: React.FunctionComponent<CanvasSettingProps> = props => {
       container.style.backgroundImage = `url(${backgroundImage})`;
     }
   }, [backgroundColor, backgroundImage]);
+
+  if (renderer === 'webgl-3d') {
+    return (
+      <>
+        <OrbitCanvas3D />
+        <ZoomCanvas3D />
+      </>
+    );
+  }
   return (
     <>
       <DragNode />
