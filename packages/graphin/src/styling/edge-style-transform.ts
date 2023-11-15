@@ -1,15 +1,52 @@
-const transGraphinStyle = style => {
-  const { keyshape = {}, halo = {}, icon = {}, label = {}, badges = [] } = style || {};
+import { merge } from 'lodash-es';
+import getEdgeStyleByTheme from '../theme/edge-style';
+const { style: defaultStyle } = getEdgeStyleByTheme({
+  primaryEdgeColor: '#ddd',
+  edgeSize: 1,
+  mode: 'light',
+});
+
+const transGraphinStyle = (style, otherStyles) => {
+  const { keyshape, halo, label } = merge({}, defaultStyle, style || {}) as typeof defaultStyle;
+  const { background } = label;
+  //@ts-ignore  用户指定的优先级最高
+  const { poly, loop } = keyshape;
+  //@ts-ignore
+  const { isMultiple, type } = otherStyles;
+  //@ts-ignore
+  const { loopCfg, curveOffset } = otherStyles.keyShape || {};
 
   return {
-    type: 'line-edge',
+    type: type || 'line-edge',
     keyShape: {
-      opacity: 0.6, // 边主图形的透明度
-      stroke: 'grey', // 边主图形描边颜色
+      opacity: keyshape.strokeOpacity, // 边主图形的透明度
+      stroke: keyshape.stroke, // 边主图形描边颜色
+      lineAppendWidth: keyshape.lineAppendWidth,
+      lineWidth: keyshape.lineWidth,
+      endArrow: {
+        path: '',
+      },
+      ...(curveOffset ? { curveOffset: (poly && poly.distance) || curveOffset } : {}),
+      ...(loopCfg ? { loopCfg: loop || loopCfg } : {}),
+
+      // ...(curveOffset ? { curveOffset } : {}),
+      // ...(loopCfg ? { loopCfg } : {}),
     },
     // 边上的标签文本配置
     labelShape: {
+      text: label.value,
+      position: label.position,
+      fill: label.fill,
+      fontSize: label.fontSize,
+      textAlign: label.textAlign,
       autoRotate: true, // 边上的标签文本根据边的方向旋转
+      maxLines: '400%',
+    },
+    labelBackgroundShape: {
+      radius: background.radius,
+      fill: background.fill,
+      stroke: background.stroke,
+      opacity: background.opacity,
     },
     // 边的动画配置
     // animates: {
@@ -29,18 +66,19 @@ const transGraphinStyle = style => {
 };
 
 export const edgeStyleTransform = edge => {
-  const { style, type, id, data, source, target } = edge;
-  const IS_GRAPHIN = (style && type === 'graphin-line') || !type;
-  // console.log('edge', edge);
+  const { id, source, target, data } = edge;
+  const { __type, style } = data;
+  const IS_GRAPHIN = (__type && __type === 'graphin-line') || !__type;
+
   if (IS_GRAPHIN) {
+    const { isMultiple, keyShape, type } = data;
+    const displayData = transGraphinStyle(style, { isMultiple, keyShape, type });
+    console.log('edge', edge, IS_GRAPHIN, displayData);
     return {
       source,
       target,
-      id: id || `${source}-${target}-${Math.random()}`,
-      data: {
-        ...data,
-        ...transGraphinStyle(style),
-      },
+      id: id,
+      data: displayData,
     };
   }
   return edge;

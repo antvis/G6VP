@@ -32,7 +32,7 @@
     "postpublish": "tnpm sync @antv/graphin"
   },
   "dependencies": {
-    "@antv/g6": "5.0.0-beta.5",
+    "@antv/g6": "5.0.0-beta.27",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {

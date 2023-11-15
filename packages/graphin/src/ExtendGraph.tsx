@@ -2,21 +2,32 @@ import { Extensions, Graph as G6Graph, extend } from '@antv/g6';
 
 const handler = (data, options = {}, graphCore) => {
   const { combos } = data;
+  console.log('node graphin....', data);
+
   const nodes = (data.nodes || []).map(item => {
-    const { id, data } = item;
+    const { id, data, type, ...others } = item;
+
     return {
       id: id,
-      data: data,
+      data: {
+        __type: type,
+        ...data,
+      },
+      ...others,
     };
   });
 
   const edges = (data.edges || []).map((item, index) => {
-    const { source, target, id, data } = item;
+    const { source, target, id, type, data, ...others } = item;
     return {
       id: id || `edge-${index}`,
       source,
       target,
-      data,
+      data: {
+        __type: type,
+        ...data,
+      },
+      ...others,
     };
   });
 
@@ -43,6 +54,7 @@ export default extend(G6Graph, {
   },
   nodes: {
     'sphere-node': Extensions.SphereNode,
+    'donut-node': Extensions.DonutNode,
   },
 
   layouts: {

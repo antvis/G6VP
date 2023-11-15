@@ -300,6 +300,29 @@ export class Mock {
       combos: this.combosData,
     };
   };
+  g6 = (): GraphinData => {
+    return {
+      // @ts-ignore
+      nodes: this.nodes.map(node => {
+        return {
+          ...node,
+          id: node.id,
+          type: 'circle-node',
+          comboId: node.comboId,
+          data: {},
+        };
+      }),
+      edges: this.edges.map((edge, index) => {
+        return {
+          id: `edge-${index}`,
+          source: edge.source,
+          target: edge.target,
+          data: {},
+        };
+      }),
+      combos: this.combosData,
+    };
+  };
 
   graphinTree = (): GraphinTreeData => {
     const tree = this.treeData.getRoot();
