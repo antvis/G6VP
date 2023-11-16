@@ -58,7 +58,9 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
   useEffect(() => {
     if (!enableInfoDetect) return;
     setSorttedProperties({
+      //@ts-ignore
       node: utils.getPropertyRanks(propertyGraphData, 'node'),
+      //@ts-ignore
       edge: utils.getPropertyRanks(propertyGraphData, 'edge'),
     });
   }, [propertyGraphData, enableInfoDetect]);
@@ -216,6 +218,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         const { propertyName } = item;
         const id = nanoid();
         const chartData = getChartData(source, propertyName, itemType);
+        //@ts-ignore
         const sorttedValues = utils.getPropertyValueRanks(propertyGraphData, itemType, propertyName);
         let hasOutlier = false;
         const selectOptions = [...chartData.keys()].map(key => {

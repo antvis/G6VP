@@ -1,5 +1,5 @@
 ---
-title: 画布占位符
+title: 筛选面板
 order: 0
 group:
   title: 基础资产
@@ -10,9 +10,13 @@ nav:
   order: 1
 ---
 
+## FilterPanel 筛选面板
+
 ```jsx
 import * as React from 'react';
+
 import { GISDK_TEST } from '@antv/gi-sdk';
+
 import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
