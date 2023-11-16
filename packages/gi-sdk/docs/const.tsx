@@ -862,3 +862,186 @@ export const layout = {
     preset: {},
   },
 };
+
+export const edgesCfg = [
+  {
+    id: 'SimpleEdge',
+    props: {
+      size: 1,
+      color: '#ddd',
+      label: [],
+    },
+    groupName: '默认样式',
+    expressions: [],
+    logic: true,
+  },
+  {
+    id: 'SimpleEdge',
+    props: {
+      size: 1,
+      color: '#3056E3',
+      label: ['ib_txn^^balance'],
+      advanced: {
+        keyshape: {
+          hasArrow: true,
+          customPoly: false,
+          lineDash: [],
+          opacity: 1,
+        },
+        label: {
+          visible: true,
+          fontSize: 12,
+          offset: [0, 0],
+          fill: '#3056E3',
+          backgroundEnable: true,
+          backgroundFill: '#fff',
+          backgroundStroke: '#fff',
+        },
+        animate: {
+          visible: false,
+        },
+      },
+    },
+    groupName: 'IB_TXN TYPE',
+    expressions: [
+      {
+        name: 'category',
+        operator: 'eql',
+        value: 'ib_txn',
+      },
+    ],
+    logic: true,
+  },
+  {
+    id: 'SimpleEdge',
+    props: {
+      size: 1,
+      color: '#faad14',
+      label: [],
+    },
+    groupName: 'OWNERSHIP TYPE',
+    expressions: [
+      {
+        name: 'category',
+        operator: 'eql',
+        value: 'ownership',
+      },
+    ],
+    logic: true,
+  },
+];
+
+export const nodesCfg = [
+  {
+    id: 'SimpleNode',
+    props: {
+      size: 26,
+      color: '#ddd',
+      label: [],
+      advanced: {
+        label: {
+          fill: '#000',
+        },
+      },
+    },
+    groupName: '默认样式',
+    expressions: [],
+    logic: true,
+  },
+  {
+    id: 'SimpleNode',
+    props: {
+      size: 26,
+      color: '#3056E3',
+      label: ['account_balance^^id'],
+      advanced: {
+        label: {
+          fill: '#000',
+          visible: true,
+          fontSize: 12,
+          position: 'bottom',
+        },
+        icon: {
+          type: 'font',
+          value: 'user',
+          fill: '#fff',
+          visible: true,
+        },
+        keyshape: {
+          fillOpacity: 0.8,
+        },
+        badge: {
+          visible: false,
+        },
+      },
+    },
+    groupName: 'ACCOUNT_BALANCE TYPE',
+    expressions: [
+      {
+        name: 'icon',
+        operator: 'eql',
+        value: 'account_balance',
+      },
+    ],
+    logic: true,
+  },
+  {
+    id: 'SimpleNode',
+    props: {
+      size: 26,
+      color: '#faad14',
+      label: ['account_box^^id'],
+      advanced: {
+        label: {
+          fill: '#000',
+          visible: true,
+          fontSize: 12,
+          position: 'bottom',
+        },
+        icon: {
+          type: 'font',
+          value: 'bank',
+          fill: '#fff',
+          visible: true,
+        },
+        keyshape: {
+          fillOpacity: 0.8,
+        },
+        badge: {
+          visible: false,
+        },
+      },
+    },
+    groupName: 'ACCOUNT_BOX TYPE',
+    expressions: [
+      {
+        name: 'icon',
+        operator: 'eql',
+        value: 'account_box',
+      },
+    ],
+    logic: true,
+  },
+  {
+    id: 'SimpleNode',
+    props: {
+      size: 26,
+      color: '#a0d911',
+      label: ['-^^id'],
+      advanced: {
+        label: {
+          fill: '#000',
+        },
+      },
+    },
+    groupName: '- TYPE',
+    expressions: [
+      {
+        name: 'icon',
+        operator: 'eql',
+        value: '-',
+      },
+    ],
+    logic: true,
+  },
+];

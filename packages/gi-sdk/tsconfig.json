@@ -16,5 +16,5 @@
     "isolatedModules": false,
     "rootDir": "."
   },
-  "include": ["src"]
+  "include": ["src", "docs"]
 }

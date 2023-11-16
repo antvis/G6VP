@@ -76,7 +76,6 @@ export function useContext<T>(): ContextType<T> {
 
     if (!prevStore) {
       /** 考虑SDK多实例的场景 */
-      console.log('prevStore not found....', prevStore);
       StoreMap.set(ContextId, proxy<IContext<T>>(deepClone(GlobalStore)));
     }
   }

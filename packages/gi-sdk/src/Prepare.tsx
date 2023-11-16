@@ -31,8 +31,6 @@ const Prepare: React.FunctionComponent<PrepareProps> = props => {
     });
   }, [config]);
 
-  console.log('Prepare....');
-
   return <>{prepare && children}</>;
 };
 

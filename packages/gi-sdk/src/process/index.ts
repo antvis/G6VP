@@ -32,6 +32,7 @@ export { generatorSchemaByGraphData, generatorStyleConfigBySchema, mergeStyleCon
 export { getServerEngineContext, setServerEngineContext } from './serverEngineContext';
 export { getCombineServer, getCombineServices, getServiceOptions, getServiceOptionsByEngineId } from './services';
 
+export { getComponentsByAssets } from './getComponentsByAssets';
 export { default as getCurrentLocales } from './getCurrentLocales';
 export {
   getNodePropertyImportance,
@@ -40,7 +41,6 @@ export {
   graphData2PropertyGraph,
 } from './propertyGraph';
 export { default as registerIconFonts } from './registerIconFonts';
-
 export {
   transDataBySchemaMeta,
   transNodeOrEdgeByFieldMapping,

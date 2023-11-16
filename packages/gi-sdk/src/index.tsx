@@ -28,6 +28,7 @@ export { common };
 import template from './constants/template';
 import { registerContext, useContext } from './Context';
 import GISDK from './GISDK';
+import GISDK_TEST from './GISDK_TEST';
 import * as utils from './process';
 import { createDownload } from './utils';
 const { version } = pkg;
@@ -80,7 +81,7 @@ export type {
   LayoutAsset,
   ServiceObject,
 } from './typing';
-export { extra, registerContext, template, useContext, utils, version };
+export { extra, GISDK_TEST, registerContext, template, useContext, utils, version };
 declare global {
   interface Window {
     GISDK: {

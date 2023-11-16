@@ -73,8 +73,6 @@ const Canvas: React.FunctionComponent<CanvasProps> = props => {
   //@ts-ignore
   const edgeMapper = useMemo(() => getMapperByCfg(edges, ElementAssets, { renderer, reset: true }), [edges, renderer]);
 
-  console.log('render...canvas...', renderer);
-
   return (
     <Graphin
       container={`${id}-graphin-container`}
