@@ -12,9 +12,9 @@ const transGraphinStyle = (style, otherStyles) => {
   //@ts-ignore  用户指定的优先级最高
   const { poly, loop } = keyshape;
   //@ts-ignore
-  const { isMultiple, type } = otherStyles;
+  const { isMultiple, type, keyShape } = otherStyles;
   //@ts-ignore
-  const { loopCfg, curveOffset } = otherStyles.keyShape || {};
+  const { loopCfg, curveOffset } = keyShape || {};
 
   return {
     type: type || 'line-edge',
@@ -27,7 +27,7 @@ const transGraphinStyle = (style, otherStyles) => {
         path: '',
       },
       ...(curveOffset ? { curveOffset: (poly && poly.distance) || curveOffset } : {}),
-      ...(loopCfg ? { loopCfg: loop || loopCfg } : {}),
+      ...(loopCfg ? { loopCfg: { dist: loop.distance || loopCfg.dist } } : {}),
 
       // ...(curveOffset ? { curveOffset } : {}),
       // ...(loopCfg ? { loopCfg } : {}),
@@ -66,20 +66,32 @@ const transGraphinStyle = (style, otherStyles) => {
 };
 
 export const edgeStyleTransform = edge => {
-  const { id, source, target, data } = edge;
-  const { __type, style } = data;
-  const IS_GRAPHIN = (__type && __type === 'graphin-line') || !__type;
+  const { id, source, target, data, style } = edge;
 
-  if (IS_GRAPHIN) {
-    const { isMultiple, keyShape, type } = data;
-    const displayData = transGraphinStyle(style, { isMultiple, keyShape, type });
-    console.log('edge', edge, IS_GRAPHIN, displayData);
+  if (style) {
+    const { type } = style;
+    const IS_GRAPHIN = type === 'graphin-line' || !type;
+    if (IS_GRAPHIN) {
+      const { isMultiple, keyShape } = data;
+      const displayData = transGraphinStyle(style, { isMultiple, keyShape, type: data.type });
+      console.log('edge', edge, IS_GRAPHIN, displayData);
+      return {
+        id,
+        source,
+        target,
+        data: displayData,
+      };
+    }
     return {
+      id,
       source,
       target,
-      id: id,
-      data: displayData,
+      data: {
+        ...data,
+        ...style,
+      },
     };
   }
+
   return edge;
 };
