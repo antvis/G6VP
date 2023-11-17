@@ -30,6 +30,10 @@ const Initializer: React.FunctionComponent<IProps> = props => {
       service: () => Promise.resolve(null),
     };
 
+    updateContext(draft => {
+      draft.isLoading = true;
+    });
+
     Promise.all([schemaService(), initialService()]).then(([schema, data = { nodes: [], edges: [] }]) => {
       updateContext(draft => {
         const { nodes, edges } = data;
@@ -38,6 +42,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           // 更新schemaData
           draft.schemaData = schema as any;
         }
+
 
         const position = isPosition(nodes);
         const style = isStyles(nodes);
@@ -69,6 +74,7 @@ const Initializer: React.FunctionComponent<IProps> = props => {
         }
         draft.initialized = true;
         draft.layoutCache = false;
+        draft.isLoading = false;
       });
     });
   }, [largeGraphLimit]);
