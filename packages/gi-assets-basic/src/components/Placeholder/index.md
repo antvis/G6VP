@@ -21,7 +21,7 @@ const { registerMeta, info } = Asset;
 const App = () => {
   return (
     <div>
-      <GISDK_TEST assets={Assets} activeAssets={[info]} />
+      <GISDK_TEST assets={Assets} activeAssets={[info, { id: 'ClearCanvas', type: 'GIAC' }]} />
     </div>
   );
 };

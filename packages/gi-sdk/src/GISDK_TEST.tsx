@@ -45,10 +45,11 @@ const appendAssets = assets => {
 const calcProps = props => {
   const {
     activeAssets: activeAssetsInfo,
-    services = defaultServices,
+
     nodes = defaultNodesCfg,
     edges = defaultEdgesCfg,
   } = props;
+  const services = [...(props.services || []), ...defaultServices];
   const activeAssetsKey = activeAssetsInfo.map(item => item.id);
   const assets = appendAssets(props.assets);
   /** 得到资产的运行时配置 */

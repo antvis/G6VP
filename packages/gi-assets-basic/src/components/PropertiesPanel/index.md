@@ -17,11 +17,21 @@ import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
 const { registerMeta, info } = Asset;
-
+const services = [
+  {
+    id: `GI/${info.id}`,
+    service: params => {
+      const { data } = params;
+      return new Promise(resolve => {
+        return resolve(data);
+      });
+    },
+  },
+];
 const App = () => {
   return (
     <div>
-      <GISDK_TEST assets={Assets} activeAssets={[info]} />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} services={services} />
     </div>
   );
 };
