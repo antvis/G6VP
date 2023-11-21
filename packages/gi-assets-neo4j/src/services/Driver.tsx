@@ -115,6 +115,8 @@ class Neo4JDriver {
           id,
           source,
           target,
+          sourceNodeType: nodes.find(node => node.id === source)?.nodeType,
+          targetNodeType: nodes.find(node => node.id === target)?.nodeType,
           label,
           edgeType: label,
           edgeTypeKeyFromProperties: 'GI_TYPE',
