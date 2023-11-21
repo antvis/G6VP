@@ -1,5 +1,5 @@
 ---
-title: 节点相似性
+title: 信息检测
 order: 0
 group:
   title: 算法资产

@@ -42,7 +42,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     exportPattern = content => common.createDownload(JSON.stringify(content), 'pattern.json'),
     exportButton,
   } = options;
-  const { graph, data, schemaData, updateHistory } = useContext();
+  const { graph, context, updateHistory } = useContext();
+  const { data, schemaData } = context;
 
   const [activeKey, setActiveKey] = useState('1');
   const [editorVisible, setEditorVisible] = useState(false);

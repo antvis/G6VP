@@ -14,11 +14,16 @@ export default {
   extraBabelIncludes: ['@antv/dumi-theme-antv'],
   resolve: {
     includes: [
-      'packages/graphin/docs/*.md',
-      'packages/graphin/docs/render/data/',
-      'packages/graphin/docs/render/element/',
-      'packages/graphin/docs/features/',
+      // 'packages/graphin/docs/*.md',
+      // 'packages/graphin/docs/render/data/',
+      // 'packages/graphin/docs/render/element/',
+      // 'packages/graphin/docs/features/',
+
+      'packages/gi-sdk/docs',
       'packages/gi-assets-basic/src/components/',
+      'packages/gi-assets-advance/src/components/',
+      'packages/gi-assets-algorithm/src/',
+      // 'packages/gi-assets-scene/src/',
 
       // 'packages/graphin-components/src/',
       // 'packages/graphin-graphscope/docs/',

@@ -1,9 +1,9 @@
-import { Graph, Item } from '@antv/g6';
+import { IGraph } from '@antv/g6';
 import { common } from '@antv/gi-sdk';
 import type { GraphinData } from '@antv/graphin';
 import { ext } from '@antv/matrix-util';
 import { isNumber } from 'lodash';
-
+type Item = any;
 const transform = ext.transform;
 
 const scaleNodes = (graphData: GraphinData, value: number = 600) => {
@@ -92,7 +92,7 @@ export const focusNodeY = (graph, focusNode, height, focusTo: 'center' | 'top' |
 };
 
 export const ADD_EDGE_ID = 'ADD_EDGE_ID';
-export const addEdge = (sourceId: string, graph: Graph) => {
+export const addEdge = (sourceId: string, graph: IGraph) => {
   const source = graph.findById(sourceId);
   const hasAddEdge = graph.findById(ADD_EDGE_ID);
   // 过滤已有添加边的情况
@@ -134,7 +134,7 @@ const exportGraphData = (data, fileName = 'graph-data') => {
   return jsonText;
 };
 
-export function clearItemStates(graph: Graph, graphItem: Item, states: string[]) {
+export function clearItemStates(graph: IGraph, graphItem: Item, states: string[]) {
   states.forEach(state => {
     if (graphItem?.hasState(state)) {
       graph.setItemState(graphItem, state, false);
@@ -143,7 +143,7 @@ export function clearItemStates(graph: Graph, graphItem: Item, states: string[])
   });
 }
 
-export const clearItemsStates = (graph: Graph, items: Item[], clearStates: string[]) => {
+export const clearItemsStates = (graph: IGraph, items: Item[], clearStates: string[]) => {
   items.forEach(graphItem => {
     try {
       clearItemStates(graph, graphItem, clearStates);

@@ -34,7 +34,8 @@ export interface CommunityDetectionProps {
 
 const CommunityDetection: React.FunctionComponent<CommunityDetectionProps> = props => {
   const { controlledValues, onOpen } = props;
-  const { data, graph, updateHistory } = useContext();
+  const { context, graph, updateHistory } = useContext();
+  const { data } = context;
   const [communityAlgo, setCommunityAlgo] = useState<CommunityDetectionAlgorithm>(CommunityDetectionAlgorithm.KCore);
   const [resData, setResData] = useState<any>(null);
   const [initData, setInitData] = useState<GraphinData>({

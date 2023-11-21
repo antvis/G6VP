@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons';
 import { IEdgeSchema, useContext } from '@antv/gi-sdk';
-import { Behaviors, GraphinData } from '@antv/graphin';
+import Graphin, { Behaviors, GraphinData } from '@antv/graphin';
 import { Dropdown, Empty, Menu, Tooltip, Upload, message } from 'antd';
 import React, { useEffect, useMemo, useRef } from 'react';
 import $i18n from '../i18n';
@@ -21,7 +21,9 @@ interface Props {
 }
 
 const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, extractPattern, importData }) => {
-  const { config } = useContext();
+  const { context } = useContext();
+  const { nodes, edges } = context;
+  const config = { nodes, edges };
   const graphRef = useRef();
 
   // 数据发生变化，fitView
@@ -125,17 +127,16 @@ const PatternPane: React.FC<Props> = ({ id, data, schemaEdgeMap, editPattern, ex
               <DownOutlined />
             </a>
           </Dropdown>
-          {/* <Graphin
+          <Graphin
             width={388}
             height={246}
             data={graphData}
+            //@ts-ignore
             ref={graphRef as any}
             // animate={false}
             minZoom={0.001}
             fitView={true}
-          >
-            <ClickSelect disabled />
-          </Graphin> */}
+          ></Graphin>
         </div>
       ) : (
         <Empty

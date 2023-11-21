@@ -1,5 +1,5 @@
 import { detectAllCycles } from '@antv/algorithm';
-import { INode } from '@antv/g6';
+
 import { useContext } from '@antv/gi-sdk';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
@@ -8,8 +8,11 @@ import $i18n from '../i18n';
 import DegreeScatter from './DegreeScatter';
 import './index.less';
 
+type INode = any;
+
 const InfoDetection = () => {
-  const { data, graph } = useContext();
+  const { context, graph } = useContext();
+  const { data } = context;
   console.log('InfoDetection HAS GRAPH', graph && !graph.destroyed);
 
   const [isolateNodes, setIsolateNodes] = useState<NodeConfig[]>([]);

@@ -1,45 +1,30 @@
-## MapMode 地图模式
-
-注意 ⚠️：启动该资产，数据结构有一个要求：数据中`latitude`和`longitude`属性必须存在，并且必须是数字。
+---
+title: 地图模式
+order: 0
+group:
+  title: 场景资产
+  path: /scene
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-import mockData from './mockData.json';
-const mockServices = () => {
-  return [
-    {
-      id: 'GI_SERVICE_INTIAL_GRAPH',
-      service: (params, localData) => {
-        return new Promise(resolve => {
-          return resolve(mockData);
-        });
-      },
-    },
-  ];
-};
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-const App = props => {
-  const services = mockServices();
-  const updateConfig = draft_config => {
-    draft_config.nodes = [
-      {
-        id: 'SimpleNode',
-        expression: [],
-        props: {
-          label: ['local_name'],
-          size: [20],
-          color: 'red',
-        },
-      },
-    ];
-  };
+Assets.components[id] = Asset;
 
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} type="GIAC" services={services} updateConfig={updateConfig} style={{ height: '700px' }} />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
     </div>
   );
 };
