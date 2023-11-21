@@ -1,5 +1,5 @@
 ---
-title: 样式设置
+title: 代码模式
 order: 0
 group:
   title: 高级资产

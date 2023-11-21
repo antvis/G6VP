@@ -1,5 +1,5 @@
 ---
-title: 样式设置
+title: Cypher 语句查询
 order: 0
 group:
   title: 高级资产
@@ -14,7 +14,7 @@ nav:
 import * as React from 'react';
 import { GISDK_TEST } from '@antv/gi-sdk';
 import * as Assets from '@antv/gi-assets-basic';
-import Asset from './index.tsx';
+import Asset from './index.ts';
 
 const { registerMeta, info } = Asset;
 const { id } = info;

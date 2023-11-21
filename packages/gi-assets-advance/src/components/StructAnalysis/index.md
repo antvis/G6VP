@@ -1,5 +1,5 @@
 ---
-title: 样式设置
+title: 路径结构分析
 order: 0
 group:
   title: 高级资产

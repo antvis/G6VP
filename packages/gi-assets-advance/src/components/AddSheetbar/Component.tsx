@@ -45,11 +45,7 @@ const AddSheetbar: React.FunctionComponent<AddSheetbarProps> = props => {
       });
   }, [graph, handleAddSheetbar, isRelayout]);
 
-  return (
-    <>
-      <GIAComponent GIAC={GIAC} onClick={handleClick} />
-    </>
-  );
+  return <GIAComponent GIAC={GIAC} onClick={handleClick} />;
 };
 
 export default memo(AddSheetbar);

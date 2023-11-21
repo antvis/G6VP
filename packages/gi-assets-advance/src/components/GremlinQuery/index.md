@@ -1,5 +1,5 @@
 ---
-title: 样式设置
+title: Gremlin 查询
 order: 0
 group:
   title: 高级资产

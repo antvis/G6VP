@@ -1,26 +1,30 @@
-## AjustLayout 子图布局
+---
+title: 子图布局
+order: 0
+group:
+  title: 高级资产
+  path: /advance
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
-import { Utils } from '@antv/graphin';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-const services = [
-  {
-    id: 'GI_SERVICE_INTIAL_GRAPH',
-    service: params => {
-      return new Promise(resolve => {
-        resolve(Utils.mock(20).tree().graphin());
-      });
-    },
-  },
-];
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-const App = props => {
+Assets.components[id] = Asset;
+
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} services={services} type="GIAC_CONTENT" />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
     </div>
   );
 };
