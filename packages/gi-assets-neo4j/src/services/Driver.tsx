@@ -178,7 +178,7 @@ class Neo4JDriver {
           const target = end.low.toString();
           const label = type;
           edges.push({
-            id: identity.low.toString(),
+            id: 'e' + identity.low.toString(),
             source,
             target,
             label,
@@ -236,7 +236,7 @@ class Neo4JDriver {
             const hasRelationship = edges.find(d => d.id === identity.low.toString());
             if (!hasRelationship) {
               edges.push({
-                id: identity.low.toString(),
+                id: 'e' + identity.low.toString(),
                 source: source.low.toString(),
                 target: target.low.toString(),
                 label: type,
