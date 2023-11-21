@@ -37,10 +37,20 @@ export default (graph: IGraph) => {
     },
     paint: () => {},
     getNodes: () => {
-      return graph.getAllNodesData();
+      return graph.getAllNodesData().map(item => {
+        return {
+          ...item,
+          getModel: () => item,
+        };
+      });
     },
     getEdges: () => {
-      return graph.getAllEdgesData();
+      return graph.getAllEdgesData().map(item => {
+        return {
+          ...item,
+          getModel: () => item,
+        };
+      });
     },
     clearItemStates: node => {
       const isString = typeof node === 'string';
@@ -51,7 +61,14 @@ export default (graph: IGraph) => {
       }
     },
     findById: id => {
-      return graph.getItemById(id);
+      const { graphCore } = graph.dataController;
+      return {
+        getNeighbors: () => {
+          return graphCore.getNeighbors(id);
+        },
+        getEdges: () => graphCore.bothEdgesMap.get(id),
+        ...graph.getItemById(id),
+      };
     },
   });
   return graph;
