@@ -21,7 +21,12 @@ const initialCanvasStore = {
   },
   nodes: [],
   edges: [],
-  layout: {},
+  layout: {
+    id: 'Force2',
+    props: {
+      type: 'force',
+    },
+  },
   isLoading: false,
   largeGraphLimit: 1000,
   largeGraphMode: false,
