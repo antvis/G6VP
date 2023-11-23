@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { data, edgesCfg as defaultEdgesCfg, nodesCfg as defaultNodesCfg, schemaData } from '../docs/const';
+import { data, edgesCfg as defaultEdgesCfg, nodesCfg as defaultNodesCfg, schemaData } from '../docs/demos/const';
 import GISDK from './GISDK';
 import MetaConfig from './components/MetaConfig';
 import { getComponentsByAssets } from './process/getComponentsByAssets';

@@ -22,7 +22,7 @@ export type SDKProps = {
   /** 注册的全局数据服务 */
   services: GIService[];
   style?: React.CSSProperties;
-  className?: string;
+
   children?: React.ReactNode[];
 };
 

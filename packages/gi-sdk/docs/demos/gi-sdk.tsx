@@ -194,7 +194,7 @@ const config: GIConfig = {
       type: 'INITIALIZER',
       name: '初始化器',
       props: {
-        serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH',
+        serviceId: 'GI/GI_SERVICE_INTIAL_GRAPH_1',
         schemaServiceId: 'GI/GI_SERVICE_SCHEMA',
         GI_INITIALIZER: true,
         aggregate: false,

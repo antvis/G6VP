@@ -90,11 +90,15 @@ export default {
     ['zh-CN', '中文'],
     ['en-US', 'English'],
   ],
-  links: ['https://gw.alipayobjects.com/os/lib/antd/4.6.6/dist/antd.css'],
+  links: [
+    'https://gw.alipayobjects.com/os/lib/antd/4.6.6/dist/antd.css',
+    'https://gw.alipayobjects.com/os/lib/antv/gi-assets-basic/2.4.36/dist/index.css',
+  ],
   scripts: [
     'https://gw.alipayobjects.com/os/lib/react/16.13.1/umd/react.development.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/16.13.1/umd/react-dom.development.js',
     'https://gw.alipayobjects.com/os/lib/antd/4.6.6/dist/antd-with-locales.js',
+
     /** G6 **/
     'http://127.0.0.1:9001/g6.min.js',
 
