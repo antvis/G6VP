@@ -4,7 +4,8 @@
     "pnpm": "^8"
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "npx only-allow pnpm && npm run check-gitmodules",
+    "check-gitmodules": "test -d packages/graphin/.git || git clone -b v3 https://github.com/antvis/Graphin.git packages/graphin",
     "build:all:es": "turbo run build:es",
     "build:all:umd": "turbo run build:umd --no-cache",
     "start": "cd packages/gi-site && npm run start",
