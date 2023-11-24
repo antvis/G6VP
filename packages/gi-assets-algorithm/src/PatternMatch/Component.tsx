@@ -8,7 +8,7 @@ import { common, useContext } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 import { useMemoizedFn } from 'ahooks';
 import { Button, Col, Dropdown, Menu, Modal, Row, Tabs, Tooltip, message } from 'antd';
-import { cloneDeep, set } from 'lodash';
+import { cloneDeep } from 'lodash';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Util from '../utils';
 import { TypeInfo } from './editDrawer';
