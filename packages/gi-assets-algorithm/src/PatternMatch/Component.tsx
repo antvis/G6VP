@@ -74,7 +74,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
 
   const importData = (data, patternId) => {
     const newPatternInfoMap = { ...patternInfoMap };
-    newPatternInfoMap[patternId].data = data;
+    newPatternInfoMap[patternId].data = createPatternData(data);
     setPatternInfoMap(newPatternInfoMap);
   };
 
@@ -281,51 +281,11 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     setCanvasDomStyle(false);
   };
 
-  const extractPattern = useMemoizedFn(() => {
-    if (!graph || graph.destroyed) {
-      quitExtractMode();
-      return;
-    }
-
-    if (!extracting) return;
-
-    const patternId = extracting;
-    const selectedNodeIds = (graph.findAllByState('node', ITEM_STATE.Active) || []).map(node => node.getID());
-    const selectedEdgeIds = (graph.findAllByState('edge', ITEM_STATE.Active) || []).map(node => node.getID());
-
-    if (!selectedNodeIds.length) return;
-
-    // 验证当前模式图是连通的
-    const patternGraphData: GraphinData = {
-      nodes: data.nodes.filter(node => selectedNodeIds.includes(node.id)),
-      edges: data.edges.filter(edge => selectedEdgeIds.includes(edge.id)),
-    };
-    const traversedTag = {};
-    breadthFirstSearch(
-      patternGraphData,
-      patternGraphData.nodes[0].id,
-      {
-        enter: ({ current }) => {
-          traversedTag[current] = true;
-        },
-      },
-      false,
-    );
-    if (Object.keys(traversedTag).length < patternGraphData.nodes.length) {
-      message.info(
-        $i18n.get({
-          id: 'gi-assets-algorithm.src.PatternMatch.Component.FailedToCreateTheSchema',
-          dm: '创建模式失败。模式必须是连通的',
-        }),
-      );
-      return;
-    }
-
-    const newPatternInfoMap = { ...patternInfoMap };
+  const createPatternData = (graphData: GraphinData) => {
     // 抽取成模式
     const newIdMap = {};
     const pattern: GraphinData = { nodes: [], edges: [] };
-    patternGraphData.nodes.forEach((node, i) => {
+    graphData.nodes.forEach((node, i) => {
       const { id: dataId, nodeType } = node;
       const id = createUuid();
       newIdMap[dataId] = { id, nodeType };
@@ -348,8 +308,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     // 抽取边的同时，验证当前模式图中所有边的端点都在 nodes 中
     let invalid = false;
 
-    for (let i = 0; i < patternGraphData.edges.length; i++) {
-      const edge = patternGraphData.edges[i];
+    for (let i = 0; i < graphData.edges.length; i++) {
+      const edge = graphData.edges[i];
       const { id: dataId, source: dataSource, target: dataTarget, edgeType } = edge;
       if (!newIdMap[dataSource] || !newIdMap[dataTarget]) {
         invalid = true;
@@ -392,7 +352,52 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       return;
     }
 
-    newPatternInfoMap[patternId].data = pattern;
+    return pattern;
+  };
+
+  const extractPattern = useMemoizedFn(() => {
+    if (!graph || graph.destroyed) {
+      quitExtractMode();
+      return;
+    }
+
+    if (!extracting) return;
+
+    const patternId = extracting;
+    const selectedNodeIds = (graph.findAllByState('node', ITEM_STATE.Active) || []).map(node => node.getID());
+    const selectedEdgeIds = (graph.findAllByState('edge', ITEM_STATE.Active) || []).map(node => node.getID());
+
+    if (!selectedNodeIds.length) return;
+
+    // 验证当前模式图是连通的
+    const patternGraphData: GraphinData = {
+      nodes: data.nodes.filter(node => selectedNodeIds.includes(node.id)),
+      edges: data.edges.filter(edge => selectedEdgeIds.includes(edge.id)),
+    };
+    const traversedTag = {};
+    breadthFirstSearch(
+      patternGraphData,
+      patternGraphData.nodes[0].id,
+      {
+        enter: ({ current }) => {
+          traversedTag[current] = true;
+        },
+      },
+      false,
+    );
+    if (Object.keys(traversedTag).length < patternGraphData.nodes.length) {
+      message.info(
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.PatternMatch.Component.FailedToCreateTheSchema',
+          dm: '创建模式失败。模式必须是连通的',
+        }),
+      );
+      return;
+    }
+
+    const newPatternInfoMap = { ...patternInfoMap };
+
+    newPatternInfoMap[patternId].data = createPatternData(patternGraphData);
     setPatternInfoMap(newPatternInfoMap); // 放入模式编辑器中
 
     quitExtractMode();
@@ -771,18 +776,20 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
       );
       return;
     }
-    const res = patternInfoMap[+activeKey].data;
+    const { nodes, edges } = patternInfoMap[+activeKey].data;
+
+    const nodesIdMap = Object.fromEntries(nodes.map(({ id, oriId }) => [id, oriId]));
+
     const pattern = {
-      nodes: res.nodes.map(node => {
-        set(node, 'data.label', node.nodeType);
-        set(node, 'data.rules', node.rules);
-        return node.data;
-      }),
-      edges: res.edges.map(edge => {
-        set(edge, 'data.label', edge.edgeType);
-        set(edge, 'data.rules', edge.rules);
-        return edge.data;
-      }),
+      nodes: nodes.map(({ oriId, nodeType, data }) => ({ id: oriId, nodeType, data: { ...data, id: oriId } })),
+      edges: edges.map(({ oriId, edgeType, label, source, target, data }) => ({
+        id: oriId,
+        edgeType,
+        label,
+        source: nodesIdMap[source],
+        target: nodesIdMap[target],
+        data,
+      })),
     };
     exportPattern?.(pattern);
   };
