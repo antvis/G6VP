@@ -54,7 +54,8 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     expandStartId: '',
   });
 
-  const { data, updateContext, updateHistory, transform, graph, config, services } = useContext();
+  const { updateContext, updateHistory, transform, graph, services, context } = useContext();
+  const { data } = context;
 
   const service = utils.getService(services, serviceId);
   const menuService = utils.getService(services, menuServiceId);
@@ -116,6 +117,7 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
     if (!service) {
       return null;
     }
+
     try {
       const result = await service({
         ids,
@@ -124,20 +126,19 @@ const QueryNeighbors: React.FunctionComponent<QueryNeighborsProps> = props => {
         limit,
       });
 
-      const newData = utils.handleExpand(data, result);
+      const res = utils.handleExpand(data, result);
       const expandIds = result.nodes?.map(n => n.id) || [];
       currentRef.current.expandIds = expandIds;
       currentRef.current.expandStartId = expandStartId;
-      console.log(data, result, newData);
 
       updateContext(draft => {
-        const res = newData;
         draft.data = res;
         draft.source = res;
         draft.isLoading = false;
       });
       handleUpateHistory(historyProps);
     } catch (error) {
+      console.log(error);
       handleUpateHistory(historyProps, false, String(error));
     }
   };

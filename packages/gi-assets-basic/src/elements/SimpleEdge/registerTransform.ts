@@ -187,7 +187,6 @@ const transform = (config: GIEdgeConfig, reset?: boolean) => {
       if (reset) {
         preStyle = {};
       }
-      console.log('edge>>>', _edge);
 
       return {
         source,

@@ -1,10 +1,12 @@
-import React from 'react';
 import type { ReactNode } from 'react';
-import type { IItemBase, Edge } from '@antv/g6';
+import React from 'react';
+
 import Util from '../utils';
 import { ADD_EDGE_ID } from '../utils/graph';
 import { createUuid } from '../utils/string';
 
+type IItemBase = any;
+type Edge = any;
 const { addEdge } = Util;
 
 type Props = {
@@ -12,14 +14,14 @@ type Props = {
   name: ReactNode;
   graph?: any;
   options?: {
-    onOk?: (item: { source: string, target: string }) => void;
+    onOk?: (item: { source: string; target: string }) => void;
   };
 };
 
 class AddRelation extends React.PureComponent<Props> {
   static defaultProps = {
     options: {
-      onOk: () => { },
+      onOk: () => {},
     },
   };
 
@@ -32,19 +34,19 @@ class AddRelation extends React.PureComponent<Props> {
     const model = this.dragging.get('model');
     const { source, target } = model;
     onOk?.({ source, target });
-  }
+  };
 
-  dragEdge = (e) => {
+  dragEdge = e => {
     const { item: edge, canvasX, canvasY } = e;
     if (edge.getID() !== ADD_EDGE_ID) return;
     const graph = this.props.graph || this.context.graph;
     graph.updateItem(edge, {
-      target: { x: canvasX, y: canvasY }
+      target: { x: canvasX, y: canvasY },
     });
     this.dragging = edge;
-  }
+  };
 
-  drop = (e) => {
+  drop = e => {
     if (!this.dragging) return;
     const { item } = e;
     if (!item || item.isCanvas?.() || item.getType?.() !== 'node') this.cancelAdding();
@@ -52,17 +54,17 @@ class AddRelation extends React.PureComponent<Props> {
     graph.updateItem(this.dragging, {
       id: `edge-${createUuid}`,
       target: item.getID(),
-      type: 'graphin-line'
+      type: 'graphin-line',
     });
     this.onOk();
     this.cancelAdding();
-  }
+  };
 
   cancelAdding = () => {
     const graph = this.props.graph || this.context.graph;
     this.dragging = null;
     graph.removeItem(ADD_EDGE_ID);
-  }
+  };
 
   componentDidMount() {
     const graph = this.props.graph || this.context.graph;
@@ -73,7 +75,7 @@ class AddRelation extends React.PureComponent<Props> {
 
   componentWillUnmount() {
     const graph = this.props.graph || this.context.graph;
-    graph.off('edge:drag', this.dragEdge)
+    graph.off('edge:drag', this.dragEdge);
     graph.off('drop', this.drop);
     graph.off('click', this.cancelAdding);
   }

@@ -1,11 +1,12 @@
+import { useContext } from '@antv/gi-sdk';
 import { Empty } from 'antd';
 import React from 'react';
-import { useContext } from '@antv/gi-sdk';
 import $i18n from '../../i18n';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets) => {
   return React.useMemo(() => {
-    const { HAS_GRAPH } = useContext();
+    const { context } = useContext();
+    const { HAS_GRAPH } = context;
 
     const assetKeys = [] as any[];
     GI_CONTAINER.forEach(item => {

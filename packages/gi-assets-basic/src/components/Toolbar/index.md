@@ -1,14 +1,43 @@
-## Toolbar 工具栏
+---
+title: 工具栏
+order: 0
+group:
+  title: 基础资产
+  path: /basic
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-const App = props => {
+const { registerMeta, info } = Asset;
+
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} type="GICC" />
+      <GISDK_TEST
+        assets={Assets}
+        activeAssets={[
+          {
+            id: 'Toolbar',
+            type: 'GICC',
+          },
+          {
+            id: 'ZoomIn',
+            type: 'GIAC',
+          },
+          {
+            id: 'ZoomOut',
+            type: 'GIAC',
+          },
+        ]}
+      />
     </div>
   );
 };

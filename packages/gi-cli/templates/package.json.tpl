@@ -51,7 +51,6 @@
     "mini-css-extract-plugin": "^2.7.6",
     "ts-jest": "^28.0.8",
     "ts-loader": "^9.4.2",
-    "typescript": "^5.1.6",
     "umi": "3.x",
     "webpack": "^5.88.0",
     "webpack-cli": "^5.0.0"

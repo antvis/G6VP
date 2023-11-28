@@ -1,8 +1,8 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { uniqueId } from '@antv/algorithm/lib/util';
-import { IItemBase } from '@antv/g6';
-import { extra, IEdgeSchema, INodeSchema, useContext } from '@antv/gi-sdk';
+
+import { extra, GIConfig, IEdgeSchema, INodeSchema, useContext } from '@antv/gi-sdk';
 import { Behaviors, GraphinData, Utils as GraphinUtils } from '@antv/graphin';
 import { Button, Col, Divider, Input, Layout, message, Row, Tabs } from 'antd';
 import deepmerge from 'deepmerge';
@@ -31,7 +31,7 @@ type ItemBriefInfo = {
 type ContextMenu = {
   type: 'node' | 'edge';
   visible: boolean;
-  item: IItemBase | null;
+  item: any | null;
   x: number;
   y: number;
 };
@@ -68,7 +68,9 @@ const PatternEditor: React.FC<Props> = ({
   setVisible,
   savePattern,
 }) => {
-  const { schemaData, data, config } = useContext();
+  const { context } = useContext();
+  const { schemaData, data, nodes, edges } = context;
+  const config = { nodes, edges } as GIConfig;
 
   const graphRef = useRef();
   const schemaGraphRef = useRef();

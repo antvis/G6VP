@@ -1,6 +1,6 @@
 import { extra, utils } from '@antv/gi-sdk';
-import info from './info';
 import $i18n from '../../i18n';
+import info from './info';
 
 const { deepClone, GIAC_CONTENT_METAS } = extra;
 const metas = deepClone(GIAC_CONTENT_METAS);
@@ -20,7 +20,7 @@ export default ({ services }) => {
       'x-component-props': {
         options: serviceOptions,
       },
-      default: serviceOptions[0].value,
+      default: serviceOptions[0] && serviceOptions[0].value,
     },
     ...metas,
   };

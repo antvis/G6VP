@@ -1,28 +1,27 @@
-## Placeholder 画布占位符
+---
+title: 画布占位符
+order: 0
+group:
+  title: 基础资产
+  path: /basic
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-const services = [
-  {
-    id: 'GI_SERVICE_INTIAL_GRAPH',
-    service: params => {
-      return new Promise(resolve => {
-        resolve({
-          nodes: [],
-          edges: [],
-        });
-      });
-    },
-  },
-];
+const { registerMeta, info } = Asset;
 
-const App = props => {
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} type="AUTO" services={services} />
+      <GISDK_TEST assets={Assets} activeAssets={[info, { id: 'ClearCanvas', type: 'GIAC' }]} />
     </div>
   );
 };

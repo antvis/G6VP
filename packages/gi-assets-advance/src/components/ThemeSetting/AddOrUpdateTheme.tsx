@@ -5,9 +5,9 @@ import { Alert, Button, Form, Input, List, message } from 'antd';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { Updater } from 'use-immer';
+import $i18n from '../../i18n';
 import mockServices from './mockServices';
 import { ICanvasConfig, ITheme, IThemeSettingState } from './typing';
-import $i18n from '../../i18n';
 
 const addMsg = $i18n.get({
   id: 'advance.components.ThemeSetting.AddOrUpdateTheme.ConfigureTheCanvasBackgroundStyle',
@@ -28,7 +28,15 @@ interface Props {
 
 const AddTheme: React.FC<Props> = props => {
   const { updateState, status, currentTheme } = props;
-  const { graph, config, GISDK_ID, services } = useContext();
+  const { graph, context, GISDK_ID, services } = useContext();
+  const { nodes, edges, components, pageLayout, layout } = context;
+  const config = {
+    nodes,
+    edges,
+    components,
+    pageLayout,
+    layout,
+  };
   const imgURL = graph.toDataURL('image/jpeg', '#fff');
   const [form] = Form.useForm();
 

@@ -1,5 +1,5 @@
 import { FireTwoTone, PlusOutlined } from '@ant-design/icons';
-import { GIGraphData, useContext, utils } from '@antv/gi-sdk';
+import { GIGraphData, IGraphData, registerContext, useContext, utils } from '@antv/gi-sdk';
 import { Button } from 'antd';
 import { nanoid } from 'nanoid';
 import React, { memo, useEffect, useMemo, useState } from 'react';
@@ -9,6 +9,13 @@ import RecommendFilter from './RecommendFilter';
 import './index.less';
 import { HistogramOpt, IFilterCriteria } from './type';
 import { filterGraphData, getChartData, highlightSubGraph } from './utils';
+
+registerContext({
+  propertyGraphData: {
+    nodes: [],
+    edges: [],
+  },
+});
 
 const { isStyles } = utils;
 
@@ -41,14 +48,19 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
     node: { propertyName: string; entropy: number }[];
     edge: { propertyName: string; entropy: number }[];
   }>({ node: [], edge: [] });
-  const { source, updateContext, updateHistory, transform, schemaData, graph, propertyGraphData, useIntl } =
-    useContext();
-  const { formatMessage } = useIntl();
+  const { updateContext, updateHistory, transform, graph, context } = useContext<{
+    propertyGraphData: IGraphData;
+  }>();
+
+  const { schemaData, propertyGraphData, source } = context;
+  console.log('context....', context);
 
   useEffect(() => {
     if (!enableInfoDetect) return;
     setSorttedProperties({
+      //@ts-ignore
       node: utils.getPropertyRanks(propertyGraphData, 'node'),
+      //@ts-ignore
       edge: utils.getPropertyRanks(propertyGraphData, 'edge'),
     });
   }, [propertyGraphData, enableInfoDetect]);
@@ -206,6 +218,7 @@ const FilterPanel: React.FunctionComponent<FilterPanelProps> = props => {
         const { propertyName } = item;
         const id = nanoid();
         const chartData = getChartData(source, propertyName, itemType);
+        //@ts-ignore
         const sorttedValues = utils.getPropertyValueRanks(propertyGraphData, itemType, propertyName);
         let hasOutlier = false;
         const selectOptions = [...chartData.keys()].map(key => {

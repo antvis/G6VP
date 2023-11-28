@@ -1,10 +1,14 @@
-import { useContext } from '@antv/gi-sdk';
+import { registerContext, useContext } from '@antv/gi-sdk';
 import { Behaviors } from '@antv/graphin';
 import React, { memo } from 'react';
 
 import ActiveEdge from './ActiveEdge';
 
 const { Hoverable, ActivateRelations } = Behaviors;
+
+registerContext({
+  persistentHighlight: false,
+});
 
 export interface CanvasSettingProps {
   enableNodeHover: boolean;
@@ -28,7 +32,10 @@ const ActivateRelationsAsset: React.FunctionComponent<CanvasSettingProps> = prop
     multiSelectEnabled,
     modifierKey,
   } = props;
-  const { persistentHighlight } = useContext();
+  const { context } = useContext<{
+    persistentHighlight: boolean;
+  }>();
+  const { persistentHighlight } = context;
 
   return (
     <>

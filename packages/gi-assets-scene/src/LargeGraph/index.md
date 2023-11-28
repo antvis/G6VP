@@ -1,28 +1,30 @@
-## LargeGraph 大图展示
+---
+title: 3D 大图
+order: 0
+group:
+  title: 场景资产
+  path: /scene
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-const services = [
-  {
-    id: 'My_Service',
-    service: params => {
-      return fetch('https://gw.alipayobjects.com/os/bmw-prod/9995f073-7869-4ae1-aa2a-386a92a3980f.json')
-        .then(res => res.json())
-        .then(res => {
-          console.log('res', res);
-          return res;
-        });
-    },
-  },
-];
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-const App = props => {
+Assets.components[id] = Asset;
+
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} services={services} />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
     </div>
   );
 };

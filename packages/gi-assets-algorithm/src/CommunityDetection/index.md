@@ -1,26 +1,30 @@
-## CommunityDetection 社区发现
+---
+title: 社区发现
+order: 0
+group:
+  title: 算法资产
+  path: /algorithm
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
-import graphData from '../../mockData/graphData.json';
 
-const services = [
-  {
-    id: 'GI_SERVICE_INTIAL_GRAPH',
-    service: params => {
-      return new Promise(resolve => {
-        resolve(graphData);
-      });
-    },
-  },
-];
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-const App = props => {
+Assets.components[id] = Asset;
+
+const App = () => {
   return (
     <div>
-      <TestSDK type="GIAC_CONTENT" asset={Asset} services={services} />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
     </div>
   );
 };

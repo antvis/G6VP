@@ -1,16 +1,16 @@
+import { CheckCircleFilled, PictureOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
 import { createUuid } from '@antv/gi-sdk/lib/process/common';
+import { Button, Empty, Form, Input, Modal, Popover, Timeline, Tooltip } from 'antd';
+import { original } from 'immer';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import { CheckCircleFilled, PictureOutlined } from '@ant-design/icons';
-import { Button, Empty, Form, Input, Modal, Popover, Timeline, Tooltip } from 'antd';
-import { ColorMap, LabelMap, circleNodeStyle, getHistoryNode } from './util';
+import $i18n from '../../i18n';
 import FlowGraph from './FlowGraph';
 import ParamterizePanel from './ParamterizePanel';
-import { original } from 'immer';
-import { TemplateData, TemplateNode } from './type';
 import './index.less';
-import $i18n from '../../i18n';
+import { TemplateData, TemplateNode } from './type';
+import { ColorMap, LabelMap, circleNodeStyle, getHistoryNode } from './util';
 
 export interface TemplateModalProps {
   // 沉淀历史弹窗是否打开
@@ -32,7 +32,8 @@ export interface TemplateModalProps {
  */
 const TemplateModal: React.FC<TemplateModalProps> = props => {
   const [form] = Form.useForm();
-  const { history } = useContext();
+  const { context } = useContext<{ history: any }>();
+  const { history } = context;
   const { open, urlMap, handleSave, handleClose } = props;
 
   const [state, updateState] = useImmer({

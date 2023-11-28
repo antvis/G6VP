@@ -1,10 +1,11 @@
 import React from 'react';
-import { useContext } from '../context';
+import { useContext } from '../Context';
 const FitCenterAfterMount = () => {
-  const { graph, layout } = useContext();
+  const { graph, context } = useContext();
+  const { layout } = context;
   let timer;
   React.useEffect(() => {
-    const { type } = layout;
+    const { type } = layout.props;
     if (type === 'graphin-force' || type === 'force') {
       return;
     }

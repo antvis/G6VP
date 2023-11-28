@@ -4,7 +4,8 @@ import React from 'react';
 
 // 生成点表的数据
 const useNodeDataCfg = (): S2DataConfig => {
-  const { schemaData, source: graphData, largeGraphData } = useContext();
+  const { context } = useContext();
+  const { schemaData, source: graphData, largeGraphData } = context;
 
   const nodeDataCfg: S2DataConfig = React.useMemo(() => {
     const nodeProperties = schemaData.nodes.reduce((acc, cur) => {

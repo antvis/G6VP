@@ -15,21 +15,20 @@ export { default as CollapseCard } from './components/CollapseCard';
 export type { IGIAC } from './components/const';
 export { default as EngineBanner } from './components/EngineBanner';
 export { default as EngineServer } from './components/EngineServer';
-/** default assets */
-export { default as Initializer } from './components/Initializer';
-export { default as SimpleEdge } from './components/SimpleEdge';
-export { default as SimpleNode } from './components/SimpleNode';
+
 /** default assets */
 export { default as Studio } from './components/Studio';
 export { Info } from './constants/info';
 export { useComponents } from './hooks/useComponents';
 export { default as useContainer } from './hooks/useContainer';
+export { default as useSourceDataMap } from './hooks/useSourceDataMap';
 export { Shortcuts, useShortcuts } from './utils';
 export { common };
 
 import template from './constants/template';
-import { useContext } from './context';
+import { registerContext, useContext } from './Context';
 import GISDK from './GISDK';
+import GISDK_TEST from './GISDK_TEST';
 import * as utils from './process';
 import { createDownload } from './utils';
 const { version } = pkg;
@@ -48,6 +47,7 @@ const extra = {
 const common = {
   createDownload,
 };
+export { proxy, useSnapshot } from 'valtio';
 
 // export { default as Icon } from './components/Icon';
 
@@ -81,7 +81,7 @@ export type {
   LayoutAsset,
   ServiceObject,
 } from './typing';
-export { extra, template, useContext, utils, version };
+export { extra, GISDK_TEST, registerContext, template, useContext, utils, version };
 declare global {
   interface Window {
     GISDK: {
@@ -89,7 +89,6 @@ declare global {
       default: typeof GISDK;
       extra: typeof extra;
       template: typeof template;
-      useContext: typeof useContext;
       utils: typeof utils;
       version: typeof version;
     };

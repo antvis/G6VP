@@ -45,7 +45,12 @@ const Assistant: React.FC<AssistantProps> = ({
   size,
   welcome,
 }) => {
-  const { services, schemaData, transform, updateContext, largeGraphLimit } = useContext();
+  const { services, context, transform, updateContext } = useContext<{
+    largeGraphLimit: number;
+    largeGraphMode: boolean;
+    largeGraphData: any;
+  }>();
+  const { schemaData, largeGraphLimit } = context;
   const service = utils.getService(services, serviceId);
   const controller = useController();
   const assistantRef = useRef<HTMLDivElement>(null);
@@ -187,6 +192,7 @@ const Assistant: React.FC<AssistantProps> = ({
 
   useEffect(() => {
     if (schemaData) {
+      //@ts-ignore
       setMessages(prev => [...prev.splice(2, prev.length), ...getWelcomeMessage(welcome, prompt, schemaData)]);
     }
   }, [schemaData, welcome, prompt]);

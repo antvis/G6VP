@@ -30,7 +30,8 @@ interface ResData {
 }
 const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
   const { controlledValues, style = {}, onOpen, nodeSelectionMode, nodeLabel } = props;
-  const { data, graph, updateHistory } = useContext();
+  const { context, graph, updateHistory } = useContext();
+  const { data } = context;
   const [communityAlgo, setCommunityAlgo] = useState(NodesSimilarityAlgorithm.nodesConsineSimilarity);
   const [initData, setInitData] = useState<GraphinData>({ nodes: [], edges: [] });
 

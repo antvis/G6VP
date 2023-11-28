@@ -28,7 +28,8 @@ export interface ISubGraphLayoutProps {
 }
 
 const SubGraphLayout: React.FC<ISubGraphLayoutProps> = props => {
-  const { graph, data } = useContext();
+  const { graph, context } = useContext();
+  const { data } = context;
   const { isDefaultSubGraph, sortKey, gap, direction } = props;
 
   const [state, updateState] = useImmer<IState>({

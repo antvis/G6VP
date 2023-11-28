@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
+import type { INTERNAL_Snapshot as Snapshot } from 'valtio';
 import type { IGIAC, TGIAC_CONTENT } from '../components/const';
 import { TYPE } from '../constants/info';
+import { GIAssets, GIComponentConfig } from '../typing';
 export interface AssetComponet {
   icon: string;
   id: string;
@@ -66,14 +68,19 @@ const compatibleContainers = containers => {
  * 获取根据容器资产配置，获取容器内资产实例
  *
  * @param context GISDK 上下文
- * @param containers 容器资产 props.containers
+ * @param componentsCfg 容器资产 containers
+ * @param pageLayout 布局容器资产 pageLayout
  * @returns
  */
-const useContainer = (context, _containers?: any): Container[] => {
-  const { assets, config } = context;
-  const { pageLayout } = config;
+
+const useContainer = (
+  assets: GIAssets,
+  componentsCfg: Snapshot<GIComponentConfig[]>,
+  pageLayout: any,
+  _containers?: any,
+): Container[] => {
   const containers = compatibleContainers(pageLayout.props.containers);
-  const ComponentCfgMap = config.components.reduce((acc, curr) => {
+  const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
     return {
       ...acc,
       [curr.id]: curr,
@@ -83,7 +90,7 @@ const useContainer = (context, _containers?: any): Container[] => {
     if (!componentId) {
       return null;
     }
-    const asset = assets.components[componentId];
+    const asset = assets.components && assets.components[componentId];
     const assetConfig = ComponentCfgMap[componentId];
     if (!asset || !assetConfig) {
       console.warn(`asset: ${componentId} not found`);
@@ -107,7 +114,7 @@ const useContainer = (context, _containers?: any): Container[] => {
         components,
       };
     });
-  }, [config.components]);
+  }, [componentsCfg]);
 };
 
 export default useContainer;

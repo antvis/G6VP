@@ -5,7 +5,8 @@ import $i18n from '../../i18n';
 
 const useComponents = (GI_CONTAINER, ComponentCfgMap, assets, visible) => {
   return React.useMemo(() => {
-    const { HAS_GRAPH } = useContext();
+    const { context } = useContext();
+    const { HAS_GRAPH } = context;
     const assetKeys = [] as any[];
     (GI_CONTAINER || []).forEach(item => {
       if (typeof item === 'string') assetKeys.push(item);

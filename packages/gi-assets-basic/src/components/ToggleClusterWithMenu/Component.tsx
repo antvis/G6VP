@@ -24,7 +24,8 @@ const nodeIdsCache = new Set<string>();
 
 const ToggleClusterWithMenu: React.FunctionComponent<IProps> = props => {
   const { contextmenu, isReLayout, degree, controlledValues } = props;
-  const { graph, updateContext, source, updateHistory } = useContext();
+  const { graph, updateContext, context, updateHistory } = useContext();
+  const { source } = context;
   const { item: targetNode, id: nodeId, onClose } = contextmenu;
 
   const handleUnfold = (node, leafNodeIds: string[] = []) => {

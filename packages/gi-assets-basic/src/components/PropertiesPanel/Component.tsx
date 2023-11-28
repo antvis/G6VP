@@ -20,8 +20,9 @@ export interface PropertiesPanelProps {
  * https://doc.linkurio.us/user-manual/latest/visualization-inspect/
  */
 const PropertiesPanel: React.FunctionComponent<PropertiesPanelProps> = props => {
-  const { serviceId, hasService, placement, width, title, height, offset, defaultiStatistic, enableInfoDetect } = props;
-  const { graph, services, GISDK_ID, propertyGraphData, data } = useContext();
+  const { serviceId, placement, width, title, height, offset, defaultiStatistic, enableInfoDetect } = props;
+  const { graph, services, context } = useContext<{ propertyGraphData: any }>();
+  const { propertyGraphData, data } = context;
   const service = utils.getService(services, serviceId);
   if (!service) {
     return null;

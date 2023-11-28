@@ -184,7 +184,10 @@ export interface ElementAsset {
     desc?: string;
     cover?: string;
   };
-  registerTransform: (metaConfig: GINodeConfig | GIEdgeConfig, reset?: boolean) => (item: any) => {};
+  registerTransform: (
+    metaConfig: GINodeConfig | GIEdgeConfig,
+    options?: { reset: boolean; renderer: string },
+  ) => (item: any) => {};
 }
 export interface LocaleAsset {
   language: LANGUAGE_KEY_NAME;

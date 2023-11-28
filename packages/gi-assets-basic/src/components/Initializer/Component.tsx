@@ -1,4 +1,4 @@
-import { GIConfig, useContext, utils } from '@antv/gi-sdk';
+import { GIConfig, registerContext, useContext, utils } from '@antv/gi-sdk';
 import { notification } from 'antd';
 import React, { memo } from 'react';
 import $i18n from '../../i18n';
@@ -41,17 +41,24 @@ const transform = data => {
   };
 };
 
+const initializerStore = {
+  largeGraphLimit: 600,
+  isLoading: true,
+  layoutCache: false,
+  source: { nodes: [], edges: [] },
+  data: { nodes: [], edges: [] },
+  largeGraphMode: false,
+  largeGraphData: { nodes: [], edges: [] },
+};
+registerContext(initializerStore);
+
 const Initializer: React.FunctionComponent<IProps> = props => {
-  const context = useContext();
+  const { context, services, updateContext } = useContext<typeof initializerStore>();
   const { serviceId, schemaServiceId, aggregate, transByFieldMapping } = props;
-  const { services, updateContext, largeGraphLimit } = context;
+
+  const { largeGraphLimit } = context;
 
   React.useEffect(() => {
-    // const { service: initialService } = services.find(s => s.id === serviceId) as GIService;
-    // const { service: schemaService } = (services.find(s => s.id === schemaServiceId) as GIService) || {
-    //   service: () => Promise.resolve(null),
-    // };
-
     let initialService = services.find(s => s.id === serviceId) as GIService;
     let schemaService = services.find(s => s.id === schemaServiceId) as GIService;
 
@@ -139,13 +146,14 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           }
           /** 只有当 config 中没有 nodes 和 edges 的时候，才会用 schema 生成一个默认样式 */
 
-          if (schema && (draft.config.nodes?.length === 0 || draft.config.edges?.length === 0)) {
+          if (schema && (draft.nodes?.length === 0 || draft.edges?.length === 0)) {
             const schemaStyle = utils.generatorStyleConfigBySchema(schema) as GIConfig;
-            draft.config.nodes = schemaStyle.nodes;
-            draft.config.edges = schemaStyle.edges;
+            draft.nodes = schemaStyle.nodes;
+            draft.edges = schemaStyle.edges;
           }
           /** 如果有布局信息 */
           if (position) {
+            //@ts-ignore
             draft.layout.type = 'preset';
           }
           /** 如果有样式数据 */
@@ -171,9 +179,9 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           /** 如果是聚合模式 */
           if (aggregate) {
             const newData = data;
-            draft.rawData = { ...data };
             draft.source = newData;
             draft.largeGraphMode = false;
+            //@ts-ignore
             draft.largeGraphData = undefined;
             draft.data = utils.aggregateEdges(data);
             draft.isLoading = false;
@@ -181,10 +189,11 @@ const Initializer: React.FunctionComponent<IProps> = props => {
           }
           /** 默认是普通模式 */
           const newData = transform(data);
-          draft.rawData = { ...data };
+
           draft.data = newData;
           draft.source = newData;
           draft.largeGraphMode = false;
+          //@ts-ignore
           draft.largeGraphData = undefined;
           draft.isLoading = false;
         });

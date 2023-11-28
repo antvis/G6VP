@@ -16,8 +16,9 @@ export interface IProps {
 
 const ForceSimulation: React.FunctionComponent<IProps> = props => {
   const GIAC = deepClone(props.GIAC);
-  const { graph, layout } = useContext();
-  const { type } = layout;
+  const { graph, context } = useContext();
+  const { layout } = context;
+  const { type } = layout.props;
   const isForce = type === 'graphin-force' || type === 'force' || type === 'd3force';
 
   const handleClick = () => {

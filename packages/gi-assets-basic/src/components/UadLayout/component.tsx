@@ -18,8 +18,8 @@ export interface UadLayoutProps {
 
 const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children, containers = [] } = props;
-  const { config, assets, data: graphData, HAS_GRAPH } = useContext();
-
+  const { assets, context } = useContext();
+  const { HAS_GRAPH, data: graphData, components: componentsCfg } = context;
   const { GI_CONTAINER: topItems = [], height = 251 } =
     containers.find(container => container.id === 'GI_CONTAINER_TOP') || {};
   const {
@@ -28,7 +28,7 @@ const UadLayout: React.FunctionComponent<UadLayoutProps> = props => {
     padding = '0px 0px',
   } = containers.find(container => container.id === 'GI_CONTAINER_SIDE') || {};
 
-  const ComponentCfgMap = config.components.reduce((acc, curr) => {
+  const ComponentCfgMap = componentsCfg.reduce((acc, curr) => {
     return {
       ...acc,
       [curr.id]: curr,

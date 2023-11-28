@@ -9,7 +9,8 @@ export interface Props {
 
 const Save: React.FunctionComponent<Props> = props => {
   const { serviceId } = props;
-  const { graph, GISDK_ID, config, services, schemaData } = useContext();
+  const { graph, GISDK_ID, services, context } = useContext();
+  const { schemaData, nodes, edges, layout, pageLayout, components } = context;
   const [form] = Form.useForm();
   const service = utils.getService(services, serviceId);
   if (!service) {
@@ -25,7 +26,13 @@ const Save: React.FunctionComponent<Props> = props => {
       name,
       description,
       data, //数据，带布局信息
-      config, //配置，可以还原画布状态
+      config: {
+        nodes,
+        edges,
+        layout,
+        pageLayout,
+        components,
+      }, //配置，可以还原画布状态
       services, //服务
       schemaData,
       cover: imgURL,

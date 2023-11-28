@@ -12,7 +12,10 @@ export interface LoadingProps {
 }
 
 const Placeholder: React.FunctionComponent<LoadingProps> = props => {
-  const context = useContext();
+  const { context } = useContext<{
+    largeGraphData: any;
+    largeGraphLimit: number;
+  }>();
   const {
     width = 200,
     img = 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*1BGfQ78mW4kAAAAAAAAAAAAADmJ7AQ/original',
@@ -22,6 +25,7 @@ const Placeholder: React.FunctionComponent<LoadingProps> = props => {
   } = props;
 
   const { data, largeGraphData, largeGraphLimit } = context;
+
   const hasNodes = data && data.nodes && data.nodes.length !== 0;
 
   if (hasNodes) {

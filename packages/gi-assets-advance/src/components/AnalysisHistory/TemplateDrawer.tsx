@@ -1,16 +1,16 @@
+import { CaretRightOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
 import { useContext } from '@antv/gi-sdk';
+import { useMemoizedFn } from 'ahooks';
+import { Button, Drawer, Form, Select, Tooltip } from 'antd';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
-import { CaretRightOutlined, PauseOutlined, RedoOutlined } from '@ant-design/icons';
-import { Button, Drawer, Form, Select, Tooltip } from 'antd';
-import FlowGraph from './FlowGraph';
 import ConfigurePanel from './ConfigurePanel';
+import FlowGraph from './FlowGraph';
 import { TemplateData, TemplateNode } from './type';
-import { useMemoizedFn } from 'ahooks';
 
+import $i18n from '../../i18n';
 import './index.less';
 import { updateObjWithPaths } from './util';
-import $i18n from '../../i18n';
 
 let stepTimer: any = 0;
 
@@ -32,7 +32,8 @@ type RunningStatus = 'none' | 'running' | 'success' | 'failed' | 'finish' | unde
  */
 const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
   const { open, templates, urlMap, handleClose, handleUpdateConfigure } = props;
-  const { updateContext, history } = useContext();
+  const { updateContext, context } = useContext<{ history: any }>();
+  const { history } = context;
 
   const [state, updateState] = useImmer({
     activeTemplateId: undefined as string | undefined,
@@ -217,7 +218,7 @@ const TemplateDrawer: React.FC<TemplateDrawerProps> = props => {
     });
     let foundComponent = false;
     updateContext(draft => {
-      draft.config.components.forEach(item => {
+      draft.components.forEach(item => {
         if (lastComponentId && item.id === lastComponentId) {
           item.props.controlledValues = undefined;
         }

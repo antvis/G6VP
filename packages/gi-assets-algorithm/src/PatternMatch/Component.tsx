@@ -42,7 +42,8 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     exportPattern = content => common.createDownload(JSON.stringify(content), 'pattern.json'),
     exportButton,
   } = options;
-  const { graph, data, schemaData, updateHistory } = useContext();
+  const { graph, context, updateHistory } = useContext();
+  const { data, schemaData } = context;
 
   const [activeKey, setActiveKey] = useState('1');
   const [editorVisible, setEditorVisible] = useState(false);
@@ -58,7 +59,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
   const [edgeTypes, setEdgeTypes] = useState([] as TypeInfo[]);
   const [schemaEdgeMap, setSchemaEdgeMap] = useState({});
   const [schemaNodeMap, setSchemaNodeMap] = useState({});
-  const graphModeCacheRef = useRef(graph?.getCurrentMode() || 'default');
+  const graphModeCacheRef = useRef(graph?.getMode() || 'default');
 
   const initialPatternInfoMap = useMemo(
     () => ({
@@ -107,7 +108,7 @@ const PatternMatch: React.FC<PatternMatchProps> = ({ style, controlledValues, on
     previousSize = { width: graph.getWidth(), height: graph.getHeight() };
 
     const handleClickEdge = e => {
-      const mode = graph.getCurrentMode();
+      const mode = graph.getMode();
       if (mode !== PATTERN_MATCH_MODE) return;
       // 选中边时，自动选中边的端点
       const edge = e.item;

@@ -1,56 +1,30 @@
-## StyleSetting 样式设置
+---
+title: 样式设置
+order: 0
+group:
+  title: 高级资产
+  path: /advance
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
 import * as React from 'react';
-import StyleSetting from './Component.tsx';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
 import Asset from './index.tsx';
 
-// <TestSDK asset={Asset} />
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-const nodes = {
-  uId: '112',
-  name: '',
-  pt: 'user',
-  age: 23,
-};
+Assets.components[id] = Asset;
 
-const data = {
-  nodes: [
-    {
-      id: 'node1',
-      nodeType: 'User',
-      // 默认ID
-      label: 'xxx',
-      data: {
-        id: 'node1',
-        nodeType: 'User',
-        // 默认ID
-        label: 'xxx',
-      },
-    },
-    {
-      id: 'node1',
-      label: 'Car',
-      data: {
-        id: 'node1',
-        label: 'Car',
-      },
-    },
-  ],
-  edges: [
-    {
-      source: 'node1',
-      target: 'node1',
-      edgeType: 'edge1',
-    },
-  ],
-};
-const App = props => {
-  //<StyleSetting data={data} shapeOptions={[]} />
+const App = () => {
   return (
     <div>
-      <TestSDK asset={Asset} type="GIAC_CONTENT" />
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
     </div>
   );
 };

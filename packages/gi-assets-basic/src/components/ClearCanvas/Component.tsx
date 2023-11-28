@@ -10,6 +10,7 @@ export interface IProps {
 const ClearCanvas: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
   const { graph, updateContext } = useContext();
+
   const handleClick = React.useCallback(() => {
     graph.clear();
     graph.fitCenter();

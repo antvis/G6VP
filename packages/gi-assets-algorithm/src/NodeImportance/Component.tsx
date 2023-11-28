@@ -1,4 +1,3 @@
-//@ts-nocheck
 /**
  * author:shiwu.wyy@antgroup.com
  */
@@ -44,7 +43,8 @@ let degreeMap = undefined;
 const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
   const { controlledValues, visible: controlledVisible = true, onOpen, onVisibleChange = () => {} } = props;
 
-  const { graph, data, updateHistory } = useContext();
+  const { graph, context, updateHistory } = useContext();
+  const { data } = context;
 
   const [visible, setVisible] = useState(false);
   const [currentAlgo, setCurrentAlgo] = useState('page-rank');
@@ -57,6 +57,161 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
 
   const [form] = Form.useForm();
   const { validateFields, resetFields } = form;
+  const onAnalyse = (algo = currentAlgo, params = {}) => {
+    if (!graph || graph.destroyed) {
+      handleUpdateHistory(
+        currentAlgo,
+        {},
+        false,
+        $i18n.get({
+          id: 'gi-assets-algorithm.src.NodeImportance.Component.TheGraphInstanceDoesNot',
+          dm: '图实例不存在',
+        }),
+      );
+      return;
+    }
+    validateFields().then(values => {
+      let res: {
+        nodes: any[];
+        edges: any[];
+      } = {
+        nodes: [],
+        edges: [],
+      };
+      const usingAlgo = algo;
+      switch (usingAlgo) {
+        case 'page-rank': {
+          const pageRankRes = pageRank(data);
+          Object.keys(pageRankRes).map(key => {
+            const node = graph.getNodeData(key);
+            if (node) {
+              res.nodes.push({
+                id: key,
+                name: node.id,
+                value: pageRankRes[key],
+                originProperties: node,
+              });
+            }
+          });
+          break;
+        }
+        case 'degree': {
+          const { degreeType: propsDegreeType } = params;
+          const usingDegreeType = propsDegreeType || degreeType;
+          const degree = usingDegreeType.length === 2 ? 'total' : usingDegreeType[0] || 'in';
+          degreeMap = getDegreeMap(data, degreeMap);
+          graph.getAllNodesData().forEach(node => {
+            if (degreeMap[node.id]) {
+              res.nodes.push({
+                id: node.id,
+                name: node.id,
+                value: degree !== 'total' ? degreeMap[node.id][degree] : degreeMap[node.id].in + degreeMap[node.id].out,
+                originProperties: node,
+              });
+            }
+          });
+          break;
+        }
+        case 'node-property': {
+          const selectedNodeProperty = values['node-property.property'];
+          if (!selectedNodeProperty) {
+            return;
+          }
+          data.nodes.forEach(node => {
+            const propertyValue = node.data?.[selectedNodeProperty];
+            const value = propertyValue === '' ? undefined : +propertyValue;
+            if (!isNaN(value) && graph.findById(node.id)) {
+              res.nodes.push({
+                id: node.id,
+                name: node.id,
+                value,
+                originProperties: node,
+              });
+            }
+          });
+          break;
+        }
+        case 'edge-property': {
+          const selectedEdgeProperty = values['edge-property.property'];
+          const calcWay = values['edge-property.calcway'];
+          if (!selectedEdgeProperty) {
+            return;
+          }
+          const nodeValueMap = {};
+          graph.getEdges().forEach(edgeItem => {
+            const edge = edgeItem.getModel();
+            const propertyValue = edge.data?.[selectedEdgeProperty];
+            if (propertyValue === undefined) return;
+
+            if (calcWay === 'sort') {
+              const value = propertyValue === '' ? undefined : +propertyValue;
+              if (!isNaN(value)) {
+                nodeValueMap[edge.source] = (nodeValueMap[edge.source] || 0) + value;
+                nodeValueMap[edge.target] = (nodeValueMap[edge.target] || 0) + value;
+                res.edges.push({
+                  id: edge.id,
+                  name: edge.id,
+                  value,
+                  originProperties: edge,
+                });
+              }
+            } else {
+              if (!nodeValueMap[edge.source]?.includes?.(propertyValue)) {
+                if (!nodeValueMap[edge.source]) {
+                  nodeValueMap[edge.source] = [];
+                }
+                nodeValueMap[edge.source].push(propertyValue);
+              }
+              if (!nodeValueMap[edge.target]?.includes?.(propertyValue)) {
+                if (!nodeValueMap[edge.target]) {
+                  nodeValueMap[edge.target] = [];
+                }
+                nodeValueMap[edge.target].push(propertyValue);
+              }
+              res.edges.push({
+                id: edge.id,
+                name: edge.id,
+                value: propertyValue,
+                originProperties: edge,
+              });
+            }
+          });
+
+          data.nodes.forEach(node => {
+            if (!graph.findById(node.id)) {
+              return;
+            }
+            if (calcWay === 'sort') {
+              if (nodeValueMap[node.id] === undefined || !isNaN(nodeValueMap[node.id])) {
+                res.nodes.push({
+                  id: node.id,
+                  name: node.id,
+                  value: nodeValueMap[node.id] || 0,
+                  originProperties: node,
+                });
+              }
+            } else {
+              res.nodes.push({
+                id: node.id,
+                name: node.id,
+                value: nodeValueMap[node.id]?.length || 0,
+                values: nodeValueMap[node.id],
+                originProperties: node,
+              });
+            }
+          });
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      showResult(res);
+
+      handleUpdateHistory(currentAlgo, values, true, '');
+    });
+    setResultPaneKey('table');
+  };
 
   useEffect(() => {
     // 当前有配置节点重要性, 则在数据变换(扩展邻居、展开合并点)时, 重新映射
@@ -220,28 +375,20 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     const mappedNodeIds = [];
     const positive = res.mappingWay !== MappingWay.Negative;
     res.node.data.forEach(node => {
-      const nodeItem = graph.findById(node.id);
-      if (nodeItem) {
-        let size = positive
-          ? ((node.value - minNode.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0]
-          : ((maxNode.value - node.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0];
-        // 所有的值都一样, 使所有节点使用默认大小
-        if (minNode.value === maxNode.value) {
-          size = undefined;
-        }
+      let size = positive
+        ? ((node.value - minNode.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0]
+        : ((maxNode.value - node.value) / nodeValueRange) * nodeVisualRange + NODE_VISUAL_RANGE[0];
+      // 所有的值都一样, 使所有节点使用默认大小
+      if (minNode.value === maxNode.value) {
+        size = undefined;
 
-        const { type: shapeType, style, size: modelSize } = nodeItem.getModel();
-        //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
-        graph.updateItem(nodeItem, {
-          size,
-          oriSize: modelSize || style?.keyshape?.size || 30,
-          // 兼容 graphin-circle
+        graph.updateData(node.id, {
           style: {
-            keyshape: {
-              size,
+            keyShape: {
+              r: size / 2,
             },
-            icon: {
-              size: size / 2,
+            iconShape: {
+              fontSize: size / 4,
             },
           },
         });
@@ -265,17 +412,17 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
             const { size: modelSize, style = {} } = edgeItem.getModel();
 
             //@TODO  Graphin类型的节点，需要和G6的规范保持一致，后续技术做改造
-            graph.updateItem(edgeItem, {
-              size: lineWidth,
-              oriSize: modelSize || style?.keyshape?.size || 1,
-              // 兼容 graphin-line 类型边
-              style: {
-                keyshape: {
-                  lineWidth: lineWidth,
-                  ...(style.keyshape || {}),
-                },
-              },
-            });
+            // graph.updateData('node',edgeItem, {
+            //   size: lineWidth,
+            //   oriSize: modelSize || style?.keyshape?.size || 1,
+            //   // 兼容 graphin-line 类型边
+            //   style: {
+            //     keyshape: {
+            //       lineWidth: lineWidth,
+            //       ...(style.keyshape || {}),
+            //     },
+            //   },
+            // });
           }
           mappedEdgeIds.push(edge.id);
         }
@@ -288,201 +435,42 @@ const NodeImportance: React.FunctionComponent<NodeImportanceProps> = props => {
     graph.getNodes().forEach(node => {
       const { id, oriSize } = node.getModel();
       if (oriSize && !mappedNodeIds?.includes(id)) {
-        graph.updateItem(node, {
-          size: oriSize || 30,
-          oriSize: undefined,
-          // 兼容 graphin-circle
-          style: {
-            keyshape: {
-              size: oriSize || 30,
-            },
-            icon: {
-              size: oriSize / 2,
-            },
-          },
-        });
+        // graph.updateItem(node, {
+        //   size: oriSize || 30,
+        //   oriSize: undefined,
+        //   // 兼容 graphin-circle
+        //   style: {
+        //     keyshape: {
+        //       size: oriSize || 30,
+        //     },
+        //     icon: {
+        //       size: oriSize / 2,
+        //     },
+        //   },
+        // });
       }
     });
     if (mappedEdgeIds) {
       graph.getEdges().forEach(edge => {
         const { id, oriSize, size, style = {} } = edge.getModel();
         if ((size !== 1 || style?.keyshape?.size !== 1) && !mappedEdgeIds?.includes(id)) {
-          graph.updateItem(edge, {
-            size: oriSize || 1,
-            oriSize: undefined,
-            // 兼容 graphin-line
-            style: {
-              keyshape: {
-                lineWidth: oriSize || 1,
-                ...(style.keyshape || {}),
-              },
-            },
-          });
+          // graph.updateItem(edge, {
+          //   size: oriSize || 1,
+          //   oriSize: undefined,
+          //   // 兼容 graphin-line
+          //   style: {
+          //     keyshape: {
+          //       lineWidth: oriSize || 1,
+          //       ...(style.keyshape || {}),
+          //     },
+          //   },
+          // });
         }
       });
     }
-    graph.getEdges().forEach(edge => {
-      edge.refresh();
-    });
-  };
-
-  const onAnalyse = (algo, params = {}) => {
-    if (!graph || graph.destroyed) {
-      handleUpdateHistory(
-        currentAlgo,
-        {},
-        false,
-        $i18n.get({
-          id: 'gi-assets-algorithm.src.NodeImportance.Component.TheGraphInstanceDoesNot',
-          dm: '图实例不存在',
-        }),
-      );
-      return;
-    }
-    validateFields().then(values => {
-      let res: {
-        nodes: any[];
-        edges: any[];
-      } = {
-        nodes: [],
-        edges: [],
-      };
-      const usingAlgo = algo || currentAlgo;
-      switch (usingAlgo) {
-        case 'page-rank': {
-          const pageRankRes = pageRank(data);
-          Object.keys(pageRankRes).map(key => {
-            const node = graph.findById(key);
-            const model = node.getModel();
-            if (node) {
-              res.nodes.push({
-                id: key,
-                name: model.id,
-                value: pageRankRes[key],
-                originProperties: model,
-              });
-            }
-          });
-          break;
-        }
-        case 'degree': {
-          const { degreeType: propsDegreeType } = params;
-          const usingDegreeType = propsDegreeType || degreeType;
-          const degree = usingDegreeType.length === 2 ? 'total' : usingDegreeType[0] || 'in';
-          degreeMap = getDegreeMap(data, degreeMap);
-          graph.getNodes().forEach(node => {
-            const model = node.getModel();
-            if (degreeMap[model.id]) {
-              res.nodes.push({
-                id: model.id,
-                name: model.id,
-                value:
-                  degree !== 'total' ? degreeMap[model.id][degree] : degreeMap[model.id].in + degreeMap[model.id].out,
-                originProperties: model,
-              });
-            }
-          });
-          break;
-        }
-        case 'node-property': {
-          const selectedNodeProperty = values['node-property.property'];
-          if (!selectedNodeProperty) {
-            return;
-          }
-          data.nodes.forEach(node => {
-            const propertyValue = node.data?.[selectedNodeProperty];
-            const value = propertyValue === '' ? undefined : +propertyValue;
-            if (!isNaN(value) && graph.findById(node.id)) {
-              res.nodes.push({
-                id: node.id,
-                name: node.id,
-                value,
-                originProperties: node,
-              });
-            }
-          });
-          break;
-        }
-        case 'edge-property': {
-          const selectedEdgeProperty = values['edge-property.property'];
-          const calcWay = values['edge-property.calcway'];
-          if (!selectedEdgeProperty) {
-            return;
-          }
-          const nodeValueMap = {};
-          graph.getEdges().forEach(edgeItem => {
-            const edge = edgeItem.getModel();
-            const propertyValue = edge.data?.[selectedEdgeProperty];
-            if (propertyValue === undefined) return;
-
-            if (calcWay === 'sort') {
-              const value = propertyValue === '' ? undefined : +propertyValue;
-              if (!isNaN(value)) {
-                nodeValueMap[edge.source] = (nodeValueMap[edge.source] || 0) + value;
-                nodeValueMap[edge.target] = (nodeValueMap[edge.target] || 0) + value;
-                res.edges.push({
-                  id: edge.id,
-                  name: edge.id,
-                  value,
-                  originProperties: edge,
-                });
-              }
-            } else {
-              if (!nodeValueMap[edge.source]?.includes?.(propertyValue)) {
-                if (!nodeValueMap[edge.source]) {
-                  nodeValueMap[edge.source] = [];
-                }
-                nodeValueMap[edge.source].push(propertyValue);
-              }
-              if (!nodeValueMap[edge.target]?.includes?.(propertyValue)) {
-                if (!nodeValueMap[edge.target]) {
-                  nodeValueMap[edge.target] = [];
-                }
-                nodeValueMap[edge.target].push(propertyValue);
-              }
-              res.edges.push({
-                id: edge.id,
-                name: edge.id,
-                value: propertyValue,
-                originProperties: edge,
-              });
-            }
-          });
-
-          data.nodes.forEach(node => {
-            if (!graph.findById(node.id)) {
-              return;
-            }
-            if (calcWay === 'sort') {
-              if (nodeValueMap[node.id] === undefined || !isNaN(nodeValueMap[node.id])) {
-                res.nodes.push({
-                  id: node.id,
-                  name: node.id,
-                  value: nodeValueMap[node.id] || 0,
-                  originProperties: node,
-                });
-              }
-            } else {
-              res.nodes.push({
-                id: node.id,
-                name: node.id,
-                value: nodeValueMap[node.id]?.length || 0,
-                values: nodeValueMap[node.id],
-                originProperties: node,
-              });
-            }
-          });
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-      showResult(res);
-
-      handleUpdateHistory(currentAlgo, values, true, '');
-    });
-    setResultPaneKey('table');
+    // graph.getEdges().forEach(edge => {
+    //   edge.refresh();
+    // });
   };
 
   const handleUpdateHistory = (algorithm, formValues, success, msg) => {

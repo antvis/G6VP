@@ -1,17 +1,18 @@
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext, useSourceDataMap, utils } from '@antv/gi-sdk';
 import Graphin, { GraphinData } from '@antv/graphin';
 import React, { memo, useEffect, useRef } from 'react';
 import { useImmer } from 'use-immer';
 import $i18n from '../../i18n';
 
 const StructAnalysis = () => {
-  const { data, sourceDataMap, config, schemaData } = useContext();
+  const { context } = useContext();
+  const { data, source, edges: edgesConfig, nodes: nodesConfig } = context;
+  const sourceDataMap = useSourceDataMap(source);
 
   const { nodesConfigMap, edgesConfigMap } = React.useMemo(() => {
     const nodesConfigMap = new Map();
     const edgesConfigMap = new Map();
 
-    const { nodes: nodesConfig, edges: edgesConfig } = config;
     nodesConfig!.forEach(c => {
       const key = JSON.stringify(c.expressions);
       nodesConfigMap.set(key, c);
@@ -25,7 +26,7 @@ const StructAnalysis = () => {
       nodesConfigMap,
       edgesConfigMap,
     };
-  }, [config]);
+  }, [edgesConfig, nodesConfig]);
 
   const [state, updateState] = useImmer<{
     graphStruct: GraphinData;

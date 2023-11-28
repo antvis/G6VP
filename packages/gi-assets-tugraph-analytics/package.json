@@ -31,6 +31,7 @@
     "@aligov/global-string-format": "^1.0.7",
     "@antv/gi-common-components": "workspace:*",
     "@antv/gi-sdk": "workspace:*",
+    "@antv/util": "^3.3.5",
     "ahooks": "^3.7.7"
   },
   "peerDependencies": {

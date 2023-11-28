@@ -19,10 +19,9 @@ const WrapTooltip = props => {
 export interface GIAComponentProps {
   GIAC: IGIAC;
   onClick?: () => void;
-
   className?: string;
 }
-const GIAComponent = (props: GIAComponentProps) => {
+const GIAComponent: React.FunctionComponent<GIAComponentProps> = props => {
   const { GIAC, onClick, className, ...others } = props;
   const {
     tooltip,

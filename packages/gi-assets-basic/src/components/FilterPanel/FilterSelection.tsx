@@ -3,21 +3,21 @@ import {
   DeleteOutlined,
   FieldStringOutlined,
   FieldTimeOutlined,
+  FireTwoTone,
   NumberOutlined,
   PieChartOutlined,
   SelectOutlined,
-  FireTwoTone,
 } from '@ant-design/icons';
 import { useContext, utils, type GIGraphData } from '@antv/gi-sdk';
-import { Button, Dropdown, Menu, Select, Row, Col } from 'antd';
+import { Button, Col, Dropdown, Menu, Row, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
+import $i18n from '../../i18n';
 import { ColumnChart, HistogramChart, PieChart, WordCloudChart } from './Charts';
 import HistogramOptions from './Charts/HistogramOptions';
 import LineChart from './Charts/LineChart';
 import './index.less';
 import { IFilterCriteria } from './type';
 import { getChartData, getHistogramData } from './utils';
-import $i18n from '../../i18n';
 
 export const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -48,7 +48,8 @@ interface FilterSelectionProps {
 }
 
 const FilterSelection: React.FC<FilterSelectionProps> = props => {
-  const { propertyGraphData, useIntl } = useContext();
+  const { context } = useContext<{ propertyGraphData: any }>();
+  const { propertyGraphData } = context;
   const {
     filterCriteria,
     nodeProperties,
@@ -59,8 +60,6 @@ const FilterSelection: React.FC<FilterSelectionProps> = props => {
     enableInfoDetect,
     sorttedProperties = { node: [], edge: [] },
   } = props;
-
-  const { formatMessage } = useIntl();
 
   // 对于离散类型的数据支持切换图表类型
   const [enableChangeChartType, setEnableChangeChartType] = useState<boolean>(false);

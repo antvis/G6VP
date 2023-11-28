@@ -1,53 +1,33 @@
-## NodeImportance
+---
+title: 节点重要性
+order: 0
+group:
+  title: 算法资产
+  path: /algorithm
+nav:
+  title: 资产包
+  path: /assets
+  order: 1
+---
 
 ```jsx
-import React from 'react';
-import Asset from './index';
-import TestSDK, { Mock } from '@antv/gi-assets-testing';
+import * as React from 'react';
+import { GISDK_TEST } from '@antv/gi-sdk';
+import * as Assets from '@antv/gi-assets-basic';
+import Asset from './index.tsx';
 
-const DEMO = () => {
-  const services = [
-    {
-      id: 'GI_SERVICE_INTIAL_GRAPH',
-      service: () => {
-        return new Promise(resolve => {
-          resolve({
-            nodes: [
-              { id: 'node-1' },
-              { id: 'node-2' },
-              { id: 'node-3' },
-              { id: 'node-4' },
-              { id: 'node-5' },
-              { id: 'node-6' },
-              { id: 'node-7' },
-              { id: 'node-8' },
-              { id: 'node-9' },
-              { id: 'node-10' },
-              { id: 'node-11' },
-            ],
-            edges: [
-              { source: 'node-1', target: 'node-2' },
-              { source: 'node-1', target: 'node-3' },
-              { source: 'node-1', target: 'node-4' },
-              { source: 'node-1', target: 'node-5' },
-              { source: 'node-5', target: 'node-6' },
-              { source: 'node-5', target: 'node-7' },
-              { source: 'node-5', target: 'node-8' },
-              { source: 'node-2', target: 'node-7' },
-              { source: 'node-2', target: 'node-8' },
-              { source: 'node-5', target: 'node-8' },
-              { source: 'node-7', target: 'node-9' },
-              { source: 'node-7', target: 'node-10' },
-              { source: 'node-8', target: 'node-11' },
-            ],
-          });
-        });
-      },
-    },
-  ];
+const { registerMeta, info } = Asset;
+const { id } = info;
 
-  return <TestSDK asset={Asset} services={services} type="GIAC_CONTENT" />;
+Assets.components[id] = Asset;
+
+const App = () => {
+  return (
+    <div>
+      <GISDK_TEST assets={Assets} activeAssets={[info]} />
+    </div>
+  );
 };
 
-export default DEMO;
+export default App;
 ```

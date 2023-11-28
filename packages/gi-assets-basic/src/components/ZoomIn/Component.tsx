@@ -8,7 +8,8 @@ export interface IProps {
 
 const ZoomIn: React.FunctionComponent<IProps> = props => {
   const { GIAC } = props;
-  const { apis, graph, HAS_GRAPH } = useContext();
+  const { graph, context } = useContext();
+  const { HAS_GRAPH, apis } = context;
   useShortcuts(['ctrl+=', 'command+='], () => {
     apis.handleZoomOut();
   });

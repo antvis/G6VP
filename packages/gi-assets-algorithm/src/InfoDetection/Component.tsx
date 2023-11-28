@@ -1,5 +1,5 @@
 import { detectAllCycles } from '@antv/algorithm';
-import { INode } from '@antv/g6';
+
 import { useContext } from '@antv/gi-sdk';
 import { NodeConfig } from '@antv/graphin';
 import { List } from 'antd';
@@ -8,8 +8,11 @@ import $i18n from '../i18n';
 import DegreeScatter from './DegreeScatter';
 import './index.less';
 
+type INode = any;
+
 const InfoDetection = () => {
-  const { data, graph } = useContext();
+  const { context, graph } = useContext();
+  const { data } = context;
   console.log('InfoDetection HAS GRAPH', graph && !graph.destroyed);
 
   const [isolateNodes, setIsolateNodes] = useState<NodeConfig[]>([]);
@@ -22,8 +25,8 @@ const InfoDetection = () => {
 
   React.useEffect(() => {
     const isolateNodes = data.nodes.filter(item => {
-      const node = graph.findById(item.id) as INode;
-      return node.getEdges().length === 0;
+      const edges = graph.getRelatedEdgesData(item.id, 'both');
+      return edges.length === 0;
     });
 
     const circles = detectAllCycles(data, false);
@@ -40,14 +43,13 @@ const InfoDetection = () => {
     const outDegreeCalc = new Map();
     const totalDegreeCalc = new Map();
     data.nodes.forEach(node => {
-      const nodeItem = graph.findById(node.id) as INode;
-      const edges = nodeItem.getEdges();
+      const edges = graph.getRelatedEdgesData(node.id);
       // 总度数为节点相连的边的数量
       const total = edges.length;
       let inD = 0;
       let outD = 0;
       edges.forEach(edge => {
-        const { source } = edge.getModel();
+        const { source } = edge;
         if (source === node.id) {
           outD++;
         } else {
@@ -68,16 +70,16 @@ const InfoDetection = () => {
 
   React.useEffect(() => {
     data.nodes.forEach(item => {
-      graph.findById(item.id) && graph.setItemState(item.id, 'active', false);
+      graph.getNodeData(item.id) && graph.setItemState(item.id, 'active', false);
     });
 
     data.edges.forEach(item => {
-      graph.findById(item.id) && graph.setItemState(item.id, 'active', false);
+      graph.getEdgeData(item.id) && graph.setItemState(item.id, 'active', false);
     });
 
     if (selectedIsolate) {
       isolateNodes.forEach(node => {
-        graph.findById(node.id) && graph.setItemState(node.id, 'active', true);
+        graph.getNodeData(node.id) && graph.setItemState(node.id, 'active', true);
       });
     }
 
@@ -89,12 +91,12 @@ const InfoDetection = () => {
         do {
           graph.setItemState(cur, 'active', true);
           const next = circle[cur].id;
-          const item = graph.findById(cur) as INode;
-          const edges = item.getEdges();
+
+          const edges = graph.getRelatedEdgesData(cur);
           edges.forEach(edge => {
-            const { source, target, id } = edge.getModel();
+            const { source, target, id } = edge;
             if ((source === cur && target == next) || (source == next && target === cur)) {
-              graph.setItemState(edge.getID(), 'active', true);
+              graph.setItemState(id, 'active', true);
             }
           });
           cur = next;

@@ -3,9 +3,9 @@ import { useContext } from '@antv/gi-sdk';
 import { Button, Collapse, Form, Radio, Select } from 'antd';
 import React from 'react';
 import { useImmer } from 'use-immer';
-import './index.less';
-import PatterGraph from './PatternGraph';
 import $i18n from '../i18n';
+import PatterGraph from './PatternGraph';
+import './index.less';
 const { GADDI } = Algorithm;
 const { Panel } = Collapse;
 
@@ -140,7 +140,8 @@ const PatternMatch: React.FC<IPatternMatch> = ({ visible, onClose, serviceId, st
     edgeKey: 'dataType',
   });
 
-  const { graph, services, data, updateContext } = useContext();
+  const { graph } = useContext();
+
   const { pattern } = state;
   const [form] = Form.useForm();
 

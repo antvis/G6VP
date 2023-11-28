@@ -4,7 +4,8 @@ import React from 'react';
 type IEdge = any;
 type INode = any;
 const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet | null, isFullScreen: boolean) => {
-  const { data: graphData, graph, largeGraphData, updateContext } = useContext();
+  const { graph, updateContext, context } = useContext();
+  const { data: graphData, largeGraphData } = context;
   React.useEffect(() => {
     s2Instance?.on(S2Event.GLOBAL_SELECTED, () => {
       // isSelectedActiv 为 false 或全屏时，不高亮选中元素

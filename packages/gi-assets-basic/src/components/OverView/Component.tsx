@@ -12,17 +12,19 @@ export interface LoadingProps {
 
 const Overview: React.FunctionComponent<LoadingProps> = props => {
   const { limit, filterLogic } = props;
-  const context = useContext();
+  const { context, updateContext } = useContext<{
+    largeGraphData: any;
+    largeGraphLimit: number;
+  }>();
   const [state, setState] = React.useState({
     visible: false,
   });
 
-  const { source, updateContext, largeGraphData } = context;
+  const { source, largeGraphData } = context;
 
   const { visible } = state;
   React.useEffect(() => {
     updateContext(draft => {
-      // @ts-ignore
       draft.largeGraphLimit = limit;
     });
   }, [limit]);

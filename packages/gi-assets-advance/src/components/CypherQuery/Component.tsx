@@ -27,7 +27,8 @@ const CypherEditorPanel: React.FC<CyperQueryProps> = ({
   controlledValues,
   onOpen,
 }) => {
-  const { updateContext, updateHistory, transform, services, largeGraphLimit } = useContext();
+  const { updateContext, updateHistory, transform, services, context } = useContext();
+  const { largeGraphLimit } = context;
   const service = utils.getService(services, serviceId);
 
   const [state, setState] = useImmer({

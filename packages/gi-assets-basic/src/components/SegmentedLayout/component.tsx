@@ -15,11 +15,12 @@ export interface UadLayoutProps {
 
 const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
   const { children } = props;
-  const context = useContext();
-  const { HAS_GRAPH } = context;
-  const Containers = useContainer(context);
+  const { context, assets } = useContext();
+  const { HAS_GRAPH, components, pageLayout } = context;
+
+  const Containers = useContainer(assets, components, pageLayout);
   const [SideContent] = Containers;
-  const { width = 360, padding = 12 } = SideContent;
+  let { width = 360, padding = 12 } = SideContent;
   const items = useMemo(() => {
     return SideContent.components.map(item => {
       return {
@@ -29,20 +30,27 @@ const SegmentedLayout: React.FunctionComponent<UadLayoutProps> = props => {
       };
     });
   }, [HAS_GRAPH, SideContent.components]);
+  const isEmptyItems = items.length === 0;
+  if (isEmptyItems) {
+    width = 0;
+    padding = 8;
+  }
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex' }}>
-      <div
-        style={{
-          width: `${width}px`,
-          marginRight: `${padding}px`,
-          background: 'var(--background-color-transparent)',
-          borderRadius: '8px',
-          overflow: 'auto',
-        }}
-      >
-        <SegmentedTabs items={items} />
-      </div>
+      {!isEmptyItems && (
+        <div
+          style={{
+            width: `${width}px`,
+            marginRight: `${padding}px`,
+            background: 'var(--background-color-transparent)',
+            borderRadius: '8px',
+            overflow: 'auto',
+          }}
+        >
+          <SegmentedTabs items={items} />
+        </div>
+      )}
       <div
         style={{
           width: `calc(100% - ${width + padding * 2}px)`,

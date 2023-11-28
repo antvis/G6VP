@@ -19,17 +19,21 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
   controlledValues,
   onOpen,
 }) => {
+  const { updateContext, updateHistory, context, assets } = useContext();
   const {
-    updateContext,
-    updateHistory,
     data,
-    config,
-    assets,
+    nodes,
+    edges,
     schemaData = {
       nodes: [],
       edges: [],
     },
-  } = useContext();
+  } = context;
+
+  const config = {
+    nodes,
+    edges,
+  };
 
   const elements = React.useMemo(() => {
     return utils.getElementsByAssets(assets.elements, data, schemaData);
@@ -51,8 +55,7 @@ const StyleSettingPanel: React.FunctionComponent<StyleSettingProps> = ({
     const clonedConfig = JSON.parse(JSON.stringify(elementConfig));
 
     updateContext(draft => {
-      draft.config[elementType] = clonedConfig;
-      draft.layoutCache = true;
+      draft[elementType] = clonedConfig;
     });
 
     updateHistory({

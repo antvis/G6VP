@@ -30,8 +30,9 @@ export interface NodesClusteringProps {
 
 const NodesClustering: React.FunctionComponent<NodesClusteringProps> = props => {
   const { controlledValues, onOpen } = props;
-  const context = useContext();
-  const { data, graph, layout, updateContext, updateHistory } = context;
+
+  const { graph, updateContext, updateHistory, context } = useContext();
+  const { data, layout } = context;
   const [nodeClusteringAlgo, setNodeClusteringAlgo] = useState<string>(NodesClusteringAlgorithm.KMeans);
   const [resData, setResData] = useState<any>(null);
   const [initData, setInitData] = useState<GIGraphData>({

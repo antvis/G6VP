@@ -15,8 +15,8 @@ export interface Props {
 
 const ThemeSetting: React.FC<Props> = props => {
   const { serviceId } = props;
-  const { graph, GISDK_ID, config, services, schema, updateContext } = useContext();
-  // const getThemeService = utils.getService(services, GET_THEMES);
+  const { GISDK_ID, updateContext } = useContext();
+
   const getThemeService = mockServices()[0].service;
   const removeThemeService = mockServices()[2].service;
 
@@ -83,11 +83,8 @@ const ThemeSetting: React.FC<Props> = props => {
     }
 
     updateContext(draft => {
-      draft.config = {
-        ...draft.config,
-        nodes: nodesConfig,
-        edges: edgesConfig,
-      };
+      draft.nodes = nodesConfig;
+      draft.edges = edgesConfig;
     });
 
     updateState(draft => {

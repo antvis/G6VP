@@ -4,7 +4,8 @@ import React from 'react';
 
 // 生成边表的数据
 const useEdgeDataCfg = (): S2DataConfig => {
-  const { schemaData, source: graphData, largeGraphData } = useContext();
+  const { context } = useContext();
+  const { schemaData, source: graphData, largeGraphData } = context;
   const edgeDataCfg: S2DataConfig = React.useMemo(() => {
     const edgeProperties = schemaData.edges.reduce((acc, cur) => {
       return {

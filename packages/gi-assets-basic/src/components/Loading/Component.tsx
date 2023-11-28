@@ -6,7 +6,7 @@ import './index.less';
 export interface LoadingProps {}
 
 const Loading: React.FunctionComponent<LoadingProps> = props => {
-  const context = useContext();
+  const { context } = useContext();
 
   const { isLoading } = context;
 

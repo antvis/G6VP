@@ -39,7 +39,8 @@ const INTIAL_NUMBER = 9527;
 
 const TableMode: React.FC<IProps> = props => {
   const { isSelectedActive, enableCopy, exportable, enableTabSplitScreen, targetWindowPath, style = {} } = props;
-  const { graph, schemaData, largeGraphData, data: graphData } = useContext();
+  const { graph, context } = useContext();
+  const { schemaData, largeGraphData, data: graphData } = context;
   const isFullScreen = useFullScreen();
   const targetWindowRef = useRef<null | Window>(null);
   const modalCallbackRef = useRef(e => {});
@@ -135,12 +136,14 @@ const TableMode: React.FC<IProps> = props => {
 
   const NODES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
     return {
+      //@ts-ignore
       columns: getColumns(schemaData, 'nodes'),
     };
   }, [schemaData]);
 
   const EDGES_FIELDS_COLUMNS_CONFIG = React.useMemo(() => {
     return {
+      //@ts-ignore
       columns: getColumns(schemaData, 'edges'),
     };
   }, [schemaData]);

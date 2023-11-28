@@ -3,11 +3,11 @@ import { useContext, utils } from '@antv/gi-sdk';
 import { Card, Select } from 'antd';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
+import $i18n from '../../../i18n';
+import '../index.less';
 import ColumnChart from './ColumnChart';
 import LineChart from './LineChart';
 const { highlightEdgeIds } = utils;
-import '../index.less';
-import $i18n from '../../../i18n';
 
 const iconMap = {
   boolean: <FieldStringOutlined style={{ color: 'rgb(39, 110, 241)', marginRight: '4px' }} />,
@@ -48,8 +48,8 @@ interface IState {
 }
 
 const ChartCard: React.FC<ChartCardProps> = props => {
-  const { schemaData, source, graph, updateContext, sourceDataMap, transform } = useContext();
-
+  const { graph, updateContext, context } = useContext();
+  const { schemaData, source, sourceDataMap, transform } = context;
   const [state, updateState] = useImmer<IState>({
     dataType: props.dataType || 'edges',
     xField: props.xField,

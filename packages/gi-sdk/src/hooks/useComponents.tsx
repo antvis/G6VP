@@ -1,5 +1,4 @@
 import React from 'react';
-import DefaultInitializer from '../components/Initializer';
 
 const DEFAULT_GICC_LAYOUT = {
   id: 'EmptyLayout',
@@ -47,7 +46,7 @@ export const getComponents = (components, pageLayout, ComponentAssets) => {
     };
   }, {});
 
-  const { component: InitializerComponent } = ComponentAssets[initializer.id] || DefaultInitializer;
+  const { component: InitializerComponent } = ComponentAssets[initializer.id];
 
   const { props: InitializerProps } = ComponentCfgMap[initializer.id];
 
@@ -120,11 +119,11 @@ export const getComponents = (components, pageLayout, ComponentAssets) => {
 /**
  *
  * @param container ['ZoomIn','ZoomOut']
- * @param config GI 配置文件
+ * @param config.components GI Components 配置文件
  * @param assets GI 资产
  */
-export const useComponents = (container, config, assets) => {
-  const componentsCfgMap = config.components.reduce((acc, curr) => {
+export const useComponents = (container, componentsCfg, assets) => {
+  const componentsCfgMap = componentsCfg.reduce((acc, curr) => {
     return {
       ...acc,
       [curr.id]: curr,
@@ -155,5 +154,5 @@ export const useComponents = (container, config, assets) => {
       components: container.map(getComponentById).filter(c => c),
       componentsCfgMap,
     };
-  }, [config.components, container]);
+  }, [componentsCfg, container]);
 };

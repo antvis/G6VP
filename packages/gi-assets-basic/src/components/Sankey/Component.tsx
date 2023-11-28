@@ -10,7 +10,8 @@ export interface IProps {
 
 const SankeyAnalysis: React.FunctionComponent<IProps> = props => {
   const { weightField } = props;
-  const { data } = useContext();
+  const { context } = useContext();
+  const { data } = context;
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
 

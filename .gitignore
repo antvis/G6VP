@@ -49,6 +49,8 @@ packages/gi-assets-tugraph-analytics/dist
 # do not ignore gi-portal dist
 packages/gi/dist
 packages/gi-common-components/dist
+
+packages/graphin
  
 build
 

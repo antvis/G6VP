@@ -19,9 +19,11 @@ interface ContextMenuState {
 
 const ContextMenuContainer = props => {
   const { GI_CONTAINER } = props;
-  const { config, assets } = useContext();
-  const { components } = useComponents(GI_CONTAINER, config, assets);
-  console.log(' components', components);
+  const { context, assets } = useContext();
+
+  const { components } = useComponents(GI_CONTAINER, context.components, assets);
+
+  console.log('components', components);
   return (
     //@ts-ignore
     <ContextMenu style={defaultStyle} setItem={item => setState({ item })}>

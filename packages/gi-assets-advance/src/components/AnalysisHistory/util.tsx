@@ -473,7 +473,7 @@ export const createFlowGraph = (container, tooltip, isConfigure) => {
     container,
     width,
     height,
-    animate: true,
+    animated: true,
     plugins: [tooltip],
     modes: {
       default: [

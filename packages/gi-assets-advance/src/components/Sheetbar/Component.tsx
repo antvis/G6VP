@@ -12,7 +12,16 @@ export interface SheetbarProps {
 }
 const Sheetbar: React.FunctionComponent<SheetbarProps> = props => {
   const { height, placement, position = [0, 0] } = props;
-  const { GISDK_ID, config, data, source, transform, services, updateContext, graph, assets } = useContext();
+  const { GISDK_ID, transform, services, updateContext, graph, assets, context } = useContext();
+  const { nodes, edges, layout, components, pageLayout, data, source } = context;
+
+  const config = {
+    nodes,
+    edges,
+    layout,
+    components,
+    pageLayout,
+  };
   const vars = React.useRef({
     tagContext: false,
   });
