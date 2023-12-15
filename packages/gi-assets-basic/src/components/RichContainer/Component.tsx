@@ -61,7 +61,7 @@ const RichContainer = props => {
     } else setWidth(0);
   }, [isExpanded]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (localStorage.getItem(URL_SEARCH_KEY)) {
       setState(preState => {
         return {
@@ -70,15 +70,25 @@ const RichContainer = props => {
         };
       });
     }
-  },[localStorage.getItem(URL_SEARCH_KEY)])
+  }, [localStorage.getItem(URL_SEARCH_KEY)]);
 
   const toggleClick = () => {
     setIsExpanded(prev => !prev);
   };
-  const [ NavbarLeftArea, NavbarRightArea, ViewArea, DataArea, FilterArea, StylingArea, CanvasArea, ConditionArea, TimeBarArea] = Containers;
+  const [
+    NavbarLeftArea,
+    NavbarRightArea,
+    ViewArea,
+    DataArea,
+    FilterArea,
+    StylingArea,
+    CanvasArea,
+    ConditionArea,
+    TimeBarArea,
+  ] = Containers;
 
   const handleChange = id => {
-    localStorage.setItem(URL_SEARCH_KEY, id)
+    localStorage.setItem(URL_SEARCH_KEY, id);
 
     setState(preState => {
       return {
@@ -113,7 +123,6 @@ const RichContainer = props => {
   });
   const HAS_QUERY_VIEW = DATA_QUERY_ID.indexOf(activeKey) !== -1;
   const HAS_FILTER_VIEW = DATA_FILTER_ID.indexOf(activeKey) !== -1;
-  
 
   const onResizeStart = () => {
     setIsResizing(true);
@@ -168,16 +177,13 @@ const RichContainer = props => {
             style={{ width: 120 }}
             onChange={handleChangeViewMode}
             options={ViewModeOptions}
-            suffixIcon={<Icon type='icon-shituxiala' />}
+            suffixIcon={<Icon type="icon-shituxiala" />}
           />
         </div>
 
-        {
-          viewMode === 'JSONMode' &&
-          <div className='operator-toolbar-overlay' />
-        }
+        {viewMode === 'JSONMode' && <div className="operator-toolbar-overlay" />}
 
-        <div className='toolbar-item' style={{ opacity: viewMode === 'JSONMode' ? 0.25 : 1 }}>
+        <div className="toolbar-item" style={{ opacity: viewMode === 'JSONMode' ? 0.25 : 1 }}>
           <div className="toolbar-item">
             <Divider type="vertical" />
             <span
@@ -192,7 +198,7 @@ const RichContainer = props => {
             <Button
               type={HAS_QUERY_VIEW ? 'primary' : 'text'}
               icon={<Icon type={DataArea.icon} />}
-              className='gi-richcontainer-query-button'
+              className="gi-richcontainer-query-button"
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -213,7 +219,7 @@ const RichContainer = props => {
             <Button
               type={HAS_FILTER_VIEW ? 'primary' : 'text'}
               icon={<Icon type={FilterArea.icon} />}
-              className='gi-richcontainer-filter-button'
+              className="gi-richcontainer-filter-button"
               style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -223,7 +229,7 @@ const RichContainer = props => {
               }}
               onClick={() => {
                 if (!HAS_FILTER_VIEW) {
-                  handleChange(DATA_FILTER_ID[0]);
+                  handleChange(localStorage.getItem(URL_SEARCH_KEY) || DATA_FILTER_ID[0]);
                 }
               }}
             >
@@ -267,7 +273,7 @@ const RichContainer = props => {
               enable={enable}
               onResizeStart={onResizeStart}
               onResizeStop={onResizeStop}
-              className='gi-richcontainer-side'
+              className="gi-richcontainer-side"
             >
               <div style={{ overflow: 'hidden' }}>
                 {HAS_QUERY_VIEW && (
@@ -278,7 +284,12 @@ const RichContainer = props => {
                   <Segmented block value={activeKey} options={DATA_FILTER_OPTIONS} onChange={handleChange} />
                 )}
 
-                {[...DataArea.components, ...FilterArea.components, ...StylingArea.components, ...ConditionArea.components].map(item => {
+                {[
+                  ...DataArea.components,
+                  ...FilterArea.components,
+                  ...StylingArea.components,
+                  ...ConditionArea.components,
+                ].map(item => {
                   const isActive = activeKey === item.id;
                   return (
                     <div key={item.id} style={{ display: isActive ? 'block' : 'none' }}>
@@ -293,7 +304,9 @@ const RichContainer = props => {
                 style={{
                   borderColor: 'transparent transparent transparent #f3f5f9',
                 }}
-                icon={<Icon type='icon-shituxiala' style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(-90deg)' }} />}
+                icon={
+                  <Icon type="icon-shituxiala" style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(-90deg)' }} />
+                }
               />
             </Resizable>
           </div>
@@ -305,11 +318,12 @@ const RichContainer = props => {
             }}
           >
             {children}
-            <div className='gi-rich-container-timebar' style={{ position: 'absolute', bottom: 0, width: `calc(100vw - ${width}px)` }}>  
+            <div
+              className="gi-rich-container-timebar"
+              style={{ position: 'absolute', bottom: 0, width: `calc(100vw - ${width}px)` }}
+            >
               {TimeBarArea.components.map(item => {
-                return (
-                  <item.component key={item.id} {...item.props} />
-                );
+                return <item.component key={item.id} {...item.props} />;
               })}
             </div>
           </div>
