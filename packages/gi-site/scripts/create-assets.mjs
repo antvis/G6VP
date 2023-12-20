@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import assets from './deps.json' assert { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
+export const FONT_3381398 = 'font_3381398_i824ocozt7';
 
 const __dirname = path.dirname(__filename);
 assets.forEach(item => {
@@ -40,7 +41,7 @@ assets.forEach(item => {
 });
 
 /** 生成 font 字体 */
-fetch('https://at.alicdn.com/t/a/font_3381398_hecr296g6n8.js')
+fetch(`https://at.alicdn.com/t/a/${FONT_3381398}.js`)
   .then(res => res.text())
   .then(res => {
     fs.writeFile(path.resolve(__dirname, '../public/libs/', `font.js`), res, error => {

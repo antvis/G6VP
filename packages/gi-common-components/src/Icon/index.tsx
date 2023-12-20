@@ -6,6 +6,7 @@ import React from 'react';
 import { loadFontJson, loadUnicodeFont, type FontJson } from './loader';
 
 export const fontFamily = 'iconfont';
+export const FONT_3381398 = 'font_3381398_i824ocozt7';
 
 // --- 注册 font icon ---
 
@@ -36,8 +37,7 @@ export { glyphs, icons };
 
 // --- 注册 antd iconfont ---
 const registeredIds = new Set<string>();
-const builtInIconFontId = 'font_3381398_i824ocozt7';
-const getIconfontScriptUrl = (id: string) => `//at.alicdn.com/t/a/${id}.js`;
+const getIconfontScriptUrl = (id: string) => `//at.alicdn.com/t/a/${FONT_3381398}.js`;
 
 async function loadUnicodeFonts(ids: string[]) {
   await Promise.all(ids.map(id => loadUnicodeFont(id)));
@@ -58,7 +58,7 @@ export async function registerIconFonts(ids: string[]) {
 }
 
 // 注册内置 iconfont
-registerIconFonts([builtInIconFontId]);
+registerIconFonts([FONT_3381398]);
 
 interface IconProps extends React.HTMLProps<HTMLSpanElement> {
   spin?: boolean;

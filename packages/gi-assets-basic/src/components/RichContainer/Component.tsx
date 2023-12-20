@@ -9,6 +9,7 @@ import Toolbar from './Toolbar';
 import './index.less';
 
 const URL_SEARCH_KEY = 'ActiveAssetID';
+const MIN_WIDTH = 336;
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
   width: '100%',
@@ -57,7 +58,7 @@ const RichContainer = props => {
   useEffect(() => {
     if (isExpanded) {
       const defaultWidth = getDefaultSideWidth();
-      setWidth(defaultWidth);
+      setWidth(defaultWidth >= MIN_WIDTH ? defaultWidth : MIN_WIDTH);
     } else setWidth(0);
   }, [isExpanded]);
 
@@ -129,8 +130,10 @@ const RichContainer = props => {
   };
   const onResizeStop = (e, direction, ref, d) => {
     setWidth(prev => {
-      localStorage.setItem('GI_RICH_CONTAINER_SIDE_WIDTH', prev + d.width);
-      return prev + d.width;
+      const currentWidth = prev + d.width;
+      const realWidth = currentWidth >= MIN_WIDTH ? currentWidth : MIN_WIDTH;
+      localStorage.setItem('GI_RICH_CONTAINER_SIDE_WIDTH', realWidth);
+      return realWidth;
     });
     setIsResizing(false);
   };
@@ -208,7 +211,12 @@ const RichContainer = props => {
               }}
               onClick={() => {
                 if (!HAS_QUERY_VIEW) {
-                  handleChange(DATA_QUERY_ID[0]);
+                  const localKey = localStorage.getItem(URL_SEARCH_KEY) || '';
+                  if (DATA_QUERY_ID.includes(localKey)) {
+                    handleChange(localKey);
+                  } else {
+                    handleChange(DATA_QUERY_ID[0]);
+                  }
                 }
               }}
             >
@@ -227,9 +235,14 @@ const RichContainer = props => {
                 fontSize: 12,
                 ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
               }}
-              onClick={() => {
+              onClick={e => {
                 if (!HAS_FILTER_VIEW) {
-                  handleChange(localStorage.getItem(URL_SEARCH_KEY) || DATA_FILTER_ID[0]);
+                  const localKey = localStorage.getItem(URL_SEARCH_KEY) || '';
+                  if (DATA_FILTER_ID.includes(localKey)) {
+                    handleChange(localKey);
+                  } else {
+                    handleChange(DATA_FILTER_ID[0]);
+                  }
                 }
               }}
             >
