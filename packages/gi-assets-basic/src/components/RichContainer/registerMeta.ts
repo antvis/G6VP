@@ -55,7 +55,7 @@ const registerMeta = context => {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: 'icon-deploymentunit1',
+          default: 'icon-tugraph-graph-view',
         },
       },
       {
@@ -78,7 +78,7 @@ const registerMeta = context => {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: 'icon-query',
+          default: 'icon-tugraph-query',
         },
       },
       {
@@ -101,7 +101,7 @@ const registerMeta = context => {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: 'icon-filter',
+          default: 'icon-tugraph-filter',
         },
       },
       {
@@ -138,7 +138,7 @@ const registerMeta = context => {
       },
       {
         id: 'condition-content',
-        name:'条件展示容器',
+        name: '条件展示容器',
         required: true,
         GI_CONTAINER: {
           title: $i18n.get({ id: 'basic.components.RichContainer.registerMeta.IntegratedComponents', dm: '集成组件' }),
