@@ -101,7 +101,7 @@ const registerMeta = context => {
           type: 'string',
           'x-decorator': 'FormItem',
           'x-component': 'Input',
-          default: 'icon-tugraph-query',
+          default: 'icon-tugraph-filter',
         },
       },
       {
