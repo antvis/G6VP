@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.14
+
+### Patch Changes
+
+- update icon address
+
 ## 1.3.13
 
 ### Patch Changes
