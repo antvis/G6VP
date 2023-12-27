@@ -1,5 +1,13 @@
 # @antv/gi-sdk
 
+## 2.4.20
+
+### Patch Changes
+
+- update graphin version
+- Updated dependencies
+  - @antv/gi-common-components@1.3.14
+
 ## 2.4.19
 
 ### Patch Changes
