@@ -91,3 +91,4 @@ packages/gi-httpservice-xxx
 release/gi-httpservice
 
 **/unprocessed-code.ts.txt
+pnpm-lock.yaml
