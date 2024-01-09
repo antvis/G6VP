@@ -41,10 +41,12 @@ export interface StudioProps {
   id: string;
   service: (id: string) => Promise<{ data: Project }>;
   loadingText?: string;
+  loadingComponent?: React.ReactElement;
 }
 
 const Studio: React.FunctionComponent<StudioProps> = props => {
-  const { id, service, loadingText = '正在加载图应用...' } = props;
+  // @ts-ignore
+  const { id, service, loadingText = '正在加载图应用...', loadingComponent } = props;
   const [state, setState] = React.useState({
     isReady: false,
     assets: null,
@@ -116,7 +118,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   }, []);
   const { assets, isReady, config, services, ThemeComponent, GISDK } = state;
   if (!isReady) {
-    return <Loading title={loadingText} />;
+     // 支持传入自定义loading组件
+    return loadingComponent ?? <Loading title={loadingText} />;
   }
 
   return (
