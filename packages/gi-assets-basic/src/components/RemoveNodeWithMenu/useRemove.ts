@@ -36,7 +36,7 @@ export default () => {
       if (edgeIds.length === 0) {
         return;
       }
-      const graphData = context.graph.save() as GraphData;
+      const graphData = graph.save() as GraphData;
       const edges = graphData.edges?.filter(edge => {
         return !edgeIds.includes(edge.id);
       });
@@ -48,7 +48,7 @@ export default () => {
         };
       });
     },
-    [context],
+    [graph],
   );
   return React.useMemo(() => {
     return {

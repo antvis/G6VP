@@ -35,6 +35,7 @@ const useListenEdgeSelect = (isSelectedActive: boolean, s2Instance: SpreadSheet 
         const rowData = s2Instance.dataSet.getMultiData();
         if (!rowData) return;
         const nodeID = rowData[rowIndex]?.id;
+        // @ts-ignore
         selectedEdges.add(nodeID);
       });
 

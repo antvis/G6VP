@@ -30,6 +30,7 @@ const useCellSelect = (
           const rowData = nodeTable.dataSet.getMultiData();
           if (!rowData) return;
           const nodeID = rowData[rowIndex]?.id;
+          // @ts-ignore
           selectedNodes.add(nodeID);
         });
         highlightBySelectedNodes(selectedNodes, { updateContext, largeGraphData, data: graphData, graph });
@@ -52,6 +53,7 @@ const useCellSelect = (
           if (!rowData) return;
           const rd = rowData[rowIndex];
           const { id: edgeID, GI_AGGREGATE_ID } = rd;
+          // @ts-ignore
           selectedEdges.add(GI_AGGREGATE_ID ? GI_AGGREGATE_ID : edgeID);
         });
 
