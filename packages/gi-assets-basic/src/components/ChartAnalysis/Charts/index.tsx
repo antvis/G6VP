@@ -1,5 +1,5 @@
 import { BarChartOutlined, FieldStringOutlined, LineChartOutlined, NumberOutlined } from '@ant-design/icons';
-import { useContext, utils } from '@antv/gi-sdk';
+import { useContext, useSourceDataMap, utils } from '@antv/gi-sdk';
 import { Card, Select } from 'antd';
 import React, { useMemo } from 'react';
 import { useImmer } from 'use-immer';
@@ -48,8 +48,9 @@ interface IState {
 }
 
 const ChartCard: React.FC<ChartCardProps> = props => {
-  const { graph, updateContext, context } = useContext();
-  const { schemaData, source, sourceDataMap, transform } = context;
+  const { graph, updateContext, context, transform } = useContext();
+  const { schemaData, source } = context;
+  const sourceDataMap = useSourceDataMap(source);
   const [state, updateState] = useImmer<IState>({
     dataType: props.dataType || 'edges',
     xField: props.xField,

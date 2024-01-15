@@ -2,6 +2,7 @@
  * author:shiwu.wyy@antgroup.com
  */
 
+//@ts-nocheck
 import { DeleteOutlined } from '@ant-design/icons';
 import Algorithm from '@antv/algorithm';
 import { useContext } from '@antv/gi-sdk';

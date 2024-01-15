@@ -11,6 +11,7 @@ export interface LayoutSwitchProps {
   GIAC: IGIAC;
   controlledValues?: LayoutConfig;
 }
+//@ts-ignore
 let timer: NodeJS.Timer;
 
 const LayoutSwitch: React.FunctionComponent<LayoutSwitchProps> = props => {
