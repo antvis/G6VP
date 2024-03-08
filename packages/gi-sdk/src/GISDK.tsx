@@ -20,7 +20,7 @@ let updateHistoryTimer: number;
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
-  const { children, assets, id, services, config, locales } = props;
+  const { children, assets, id, services, config, locales, grapinProps } = props;
   const { language = 'zh-CN', ...localeMessages } = locales || {};
 
   const GISDK_ID = React.useMemo(() => {
@@ -397,19 +397,17 @@ const GISDK = (props: Props) => {
         <GraphInsightContext.Provider value={ContextValue}>
           <GICC_LAYOUT_COMPONENT {...GICC_LAYOUT_PROPS}>
             <Graphin
+              containerStyle={{ transform: 'scale(1)' }}
+              style={{ borderRadius: '8px', overflow: 'hidden' }}
+              enabledStack={true}
               animate={true}
+              {...grapinProps}
               ref={graphinRef}
               containerId={`${GISDK_ID}-graphin-container`}
-              containerStyle={{ transform: 'scale(1)' }}
               data={graphData}
               layout={layout}
-              enabledStack={true}
               theme={theme}
               layoutCache={state.layoutCache}
-              style={{ borderRadius: '8px', overflow: 'hidden' }}
-              willUnmount={() => {
-                console.log('un mount....');
-              }}
             >
               <>
                 {HAS_GRAPH && <InitializerComponent {...InitializerProps} />}
