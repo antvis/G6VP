@@ -1,7 +1,7 @@
 import { VideoCameraOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Skeleton, Tag } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { useImmer } from 'use-immer';
 import { queryCaseList } from '../../../services/case';
 import { IProject } from '../../../services/typing';
@@ -10,7 +10,6 @@ import './index.less';
 interface CaseProps {}
 
 const Case: React.FunctionComponent<CaseProps> = props => {
-  const history = useHistory();
   const [state, updateState] = useImmer({
     lists: [] as IProject[],
     visible: false,

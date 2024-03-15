@@ -3,6 +3,7 @@ import { produce } from 'immer';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import DataSource from '../../../components/DataSource/index';
+import { useMatch } from 'umi';
 import BaseNavbar from '../../../components/Navbar/BaseNavbar';
 import { getSearchParams } from '../../../components/utils';
 import * as ProjectServices from '../../../services/project';
@@ -10,8 +11,7 @@ import $i18n from '../../../i18n';
 interface DataServicesProps {}
 
 const DataServices: React.FunctionComponent<DataServicesProps> = props => {
-  //@ts-ignore
-  const { match } = props;
+  const match = useMatch({ path: '/workspace/:projectId' })!;
   const { projectId } = match.params;
   const { searchParams } = getSearchParams(window.location);
 
@@ -23,7 +23,7 @@ const DataServices: React.FunctionComponent<DataServicesProps> = props => {
   });
 
   React.useEffect(() => {
-    ProjectServices.getById(projectId).then((res: any) => {
+    ProjectServices.getById(projectId!).then((res: any) => {
       const { data, serviceConfig } = res;
 
       updateState(draft => {

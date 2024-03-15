@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "declaration": true,
+    "target": "ES2016",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "lib": ["dom", "esnext"],
+    "module": "esnext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": false,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@@/*": ["src/.umi/*"]
+    }
+  },
+  "include": ["src"]
+}

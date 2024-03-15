@@ -13,6 +13,7 @@ export {
   mergeObjectByRule,
   time,
   uniqueElementsBy,
+  createUuid,
 } from './common';
 export { filterByRules } from './filterByRules';
 export { findAllPath, getNeighbors } from './findAllPath';

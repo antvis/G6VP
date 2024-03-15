@@ -10,7 +10,6 @@ import { GraphInsightContext } from './context';
 import getComponents from './hooks/useComponents';
 import './index.less';
 import * as utils from './process';
-import { createUuid } from './process/common';
 import { registerLayouts, registerShapes } from './register';
 import type { GIComponentConfig, GIGraphData, Props, State } from './typing';
 
@@ -339,7 +338,7 @@ const GISDK = (props: Props) => {
           // @ts-ignore
           draft.history = (draft.history || []).concat([
             {
-              id: createUuid(),
+              id: utils.createUuid(),
               timestamp: time,
               ...param,
             },

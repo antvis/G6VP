@@ -1,6 +1,6 @@
 import type { GILayoutConfig, IGIAC } from '@antv/gi-sdk';
 import { Icon, extra, useContext, utils } from '@antv/gi-sdk';
-import { LayoutConfig } from '@antv/gi-sdk/lib/typing';
+import type { LayoutConfig } from '@antv/gi-sdk';
 import { Card, Popover, Radio, Space } from 'antd';
 import React, { memo, useEffect, useMemo } from 'react';
 import $i18n from '../../i18n';

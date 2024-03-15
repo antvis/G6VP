@@ -1,5 +1,4 @@
-import { useContext } from '@antv/gi-sdk';
-import { createUuid } from '@antv/gi-sdk/lib/process/common';
+import { useContext, utils } from '@antv/gi-sdk';
 import * as React from 'react';
 import { useImmer } from 'use-immer';
 import { CheckCircleFilled, PictureOutlined } from '@ant-design/icons';
@@ -89,8 +88,8 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
       updateState(draft => {
         draft.configuring = undefined;
         draft.graphData = {
-          id: createUuid(),
-          name: createUuid(),
+          id: utils.createUuid(),
+          name: utils.createUuid(),
           nodes,
           edges: [
             {
@@ -125,8 +124,8 @@ const TemplateModal: React.FC<TemplateModalProps> = props => {
     updateState(draft => {
       draft.configuring = undefined;
       draft.graphData = {
-        id: createUuid(),
-        name: createUuid(),
+        id: utils.createUuid(),
+        name: utils.createUuid(),
         nodes,
         edges,
       };

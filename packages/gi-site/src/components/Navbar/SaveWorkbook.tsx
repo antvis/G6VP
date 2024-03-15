@@ -1,9 +1,9 @@
+import { history } from 'umi';
 import { SaveOutlined } from '@ant-design/icons';
 import { useShortcuts } from '@antv/gi-sdk';
 import { Graph } from '@antv/graphin';
 import { Button, notification, Tooltip } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
 import $i18n from '../../i18n';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import * as ProjectServices from '../../services/project';
@@ -26,7 +26,6 @@ const getCover = async (graph: Graph) => {
 
 const SaveWorkbook: React.FunctionComponent<SaveWorkbookProps> = props => {
   const { workbookId, context: projectContext = {} } = props;
-  const history = useHistory();
   const { context, updateContext } = useContext();
   const { config, activeAssetsKeys, name, graphRef } = context;
   const { name: projectName, datasetId } = projectContext;

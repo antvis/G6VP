@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import DataModeCard from '../DataModeCard';
 import Github from './Github';
 import Links from './Links';
@@ -30,7 +30,6 @@ const styles = {
 
 const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   const { active } = props;
-  const history = useHistory();
 
   return (
     <header style={styles.container} className="gi-navbar-container">

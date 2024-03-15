@@ -1,3 +1,4 @@
+import { history, useLocation, Outlet } from 'umi';
 import {
   AppstoreOutlined,
   BookOutlined,
@@ -121,8 +122,7 @@ const getItems = location => {
 };
 
 const SideNav: React.FunctionComponent<ILayoutProps> = props => {
-  //@ts-ignore
-  const { children, location, history } = props;
+  const location = useLocation();
   const [state, setState] = React.useState({
     active: location.pathname.split('/').splice(0, 3).join('/'),
   });
@@ -150,7 +150,7 @@ const SideNav: React.FunctionComponent<ILayoutProps> = props => {
           width: 'calc(100% - 160px)',
         }}
       >
-        {children}
+        <Outlet />
       </div>
     </div>
   );

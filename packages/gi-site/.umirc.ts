@@ -1,3 +1,5 @@
+import { defineConfig } from 'umi';
+import GI_SDK from '@antv/gi-sdk/package.json';
 import GI_THEME_ANTD from '@antv/gi-theme-antd/package.json';
 
 import deps_externals from './scripts/deps_externals.json';
@@ -21,6 +23,14 @@ export const externalScripts = deps_externals.map(c => {
   return { src: c.url };
 });
 console.log('externals', externals, BUILD_MODE);
+const BASE_CONFIG = {
+  links: [
+    {
+      href: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*7svFR6wkPMoAAAAAAAAAAAAADmJ7AQ/original',
+      rel: 'shortcut icon',
+    },
+  ],
+};
 const EXTRA_CONFIG = isDev
   ? {
       externals: {
@@ -59,15 +69,12 @@ export default {
   base: '/',
   publicPath: BUILD_MODE === 'docker' ? '/public/' : '/',
   hash: true,
-  favicon: 'https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg',
+  favicons: ['https://gw.alipayobjects.com/zos/bmw-prod/b9a0f537-3768-445d-aa39-ff49de82124a.svg'],
   history: {
     type: 'hash',
   },
   alias: {
     '@': './src',
-  },
-  nodeModulesTransform: {
-    type: 'none',
   },
   routes: [
     { exact: true, path: '/', redirect: '/home' },
@@ -202,17 +209,21 @@ export default {
   request: {
     dataField: '',
   },
-  // ...EXTRA_CONFIG,
-  analyze: {
-    analyzerMode: 'server',
-    analyzerPort: 8888,
-    openAnalyzer: true,
-    // generate stats file while ANALYZE_DUMP exist
-    generateStatsFile: false,
-    statsFilename: 'stats.json',
-    logLevel: 'info',
-    defaultSizes: 'parsed', // stat  // gzip
-  },
+  mfsu: false,
+  // monorepoRedirect: {
+  //   srcDir: ['.', 'src'],
+  //   exclude: [/^(?!@alipay|@antv).*/],
+  // },
+  // analyze: {
+  // analyzerMode: 'server',
+  // analyzerPort: 8888,
+  // openAnalyzer: true,
+  // // generate stats file while ANALYZE_DUMP exist
+  // generateStatsFile: false,
+  // statsFilename: 'stats.json',
+  // logLevel: 'info',
+  // defaultSizes: 'parsed', // stat  // gzip
+  // },
   chainWebpack(memo, { type }) {
     memo.module
       .rule('mjs$')

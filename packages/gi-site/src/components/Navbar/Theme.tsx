@@ -6,7 +6,7 @@ import $i18n from '../../i18n';
 import './index.less';
 
 interface ThemeProps {
-  changeTheme: (val: string) => void;
+  changeTheme?: (val: string) => void;
 }
 const options = [
   {

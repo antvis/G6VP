@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { GIAssets, GIConfig, GIService } from '@antv/gi-sdk/src/typing';
+import type { GIAssets, GIConfig, GIService } from '@antv/gi-sdk';
 import { GraphinData } from '@antv/graphin';
 export interface IActiveAssetsKeys {
   components: string[];

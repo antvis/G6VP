@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { useContext } from '../../pages/Analysis/hooks/useContext';
 import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
@@ -40,7 +40,6 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
   const { workbookId } = props;
   const { context, updateContext } = useContext();
   const { changeTheme } = useTheme(context, updateContext);
-  const history = useHistory();
   const { name } = context;
 
   return (

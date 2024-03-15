@@ -3,7 +3,7 @@ import { utils } from '@antv/gi-sdk';
 import { isNil } from '@antv/util';
 import { Button, Card, Col, Input, Menu, Popconfirm, Row, Skeleton, Tooltip } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { useImmer } from 'use-immer';
 import Empty from '../../components/Empty';
 import * as ProjectService from '../../services/project';
@@ -31,7 +31,6 @@ interface ProjectListState {
 
 const ProjectList: React.FunctionComponent<ProjectListProps> = props => {
   const { type, onCreate } = props;
-  const history = useHistory();
   const [state, updateState] = useImmer<ProjectListState>({
     lists: [],
     isLoading: true,

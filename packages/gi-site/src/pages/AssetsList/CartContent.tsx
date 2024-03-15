@@ -1,7 +1,7 @@
 import { AssetInfo, GIComponentAssets, Icon, template as TEMPLATE, utils } from '@antv/gi-sdk';
 import { Button, Divider, Drawer, Form, Input, Tag, notification } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { history } from 'umi';
 import { queryAssets } from '../../services/assets';
 import * as TemplateServices from '../../services/template';
 import getComponentsByAssets from '../Analysis/getAssets/getComponentsByAssets';
@@ -17,7 +17,6 @@ interface CartContentProps {
 const CartContent: React.FunctionComponent<CartContentProps> = props => {
   const { visible, setVisible } = props;
   const [form] = Form.useForm();
-  const history = useHistory();
   const res = JSON.parse(localStorage.getItem('GI_CART_LIST') || '{}');
   const list = Object.values(res).filter((c: any) => c.checked) as AssetInfo[];
   const keys = list.map(item => item.id);

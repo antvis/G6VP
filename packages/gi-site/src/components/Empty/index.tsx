@@ -1,7 +1,6 @@
 import { Button, Empty } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import $i18n from '../../i18n';
+import { history } from 'umi';
 interface EmptyDemoProps {
   url: string;
   title: string;
@@ -9,7 +8,6 @@ interface EmptyDemoProps {
 
 const EmptyDemo: React.FunctionComponent<EmptyDemoProps> = props => {
   const { url, title } = props;
-  const history = useHistory();
 
   return (
     <Empty

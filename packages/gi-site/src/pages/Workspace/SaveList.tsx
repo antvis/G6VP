@@ -2,7 +2,6 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import { Button, Col, Dropdown, Empty, Menu, message, Popconfirm, Row, Typography } from 'antd';
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
 import { useImmer } from 'use-immer';
 import ProjectCard from '../../components/ProjectCard';
 import { GI_SITE } from '../../services/const';
@@ -23,7 +22,6 @@ interface SaveListProps {
 
 const SaveList: React.FunctionComponent<SaveListProps> = props => {
   const { type } = props;
-  const history = useHistory();
   const [state, updateState] = useImmer<SaveListState>({
     lists: [],
     visible: false,
