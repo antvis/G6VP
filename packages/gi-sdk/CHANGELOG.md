@@ -1,5 +1,11 @@
 # @antv/gi-sdk
 
+## 2.4.21
+
+### Patch Changes
+
+- feat: [optimize component styles](https://github.com/antvis/G6VP/pull/576)
+
 ## 2.4.20
 
 ### Patch Changes
