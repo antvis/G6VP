@@ -25,7 +25,7 @@ const Toolbar = (props: ToolbarProps) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Divider type="vertical" />
-      <span style={{ fontSize: '14px', paddingRight: '8px', color: '#98989D' }}>{title}</span>
+      <span style={{ fontSize: 14, paddingRight: 8, color: '#98989D' }}>{title}</span>
 
       {options.map(item => {
         const isActive = value === item.id;
@@ -47,7 +47,7 @@ const Toolbar = (props: ToolbarProps) => {
           <Tooltip title={title} color={tooltipColor}>
             <Button
               type={buttonType}
-              icon={<Icon type={icon} style={{ fontSize: '18px' }} />}
+              icon={<Icon type={icon} style={{ fontSize: 18 }} />}
               key={id}
               className={info.className}
               style={{
@@ -55,15 +55,15 @@ const Toolbar = (props: ToolbarProps) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: 'auto',
-                margin: '0 4px',
-                padding: '0 8px',
+                margin: '0 4',
+                padding: '0 8',
                 ...(isActive ? ActiveButtonStyle : {}),
               }}
               onClick={() => {
                 onChange(id);
               }}
             >
-              {displayText ? <span style={{ fontSize: '14px' }}>{title}</span> : null}
+              {displayText ? <span style={{ fontSize: 14 }}>{title}</span> : null}
             </Button>
           </Tooltip>
         );

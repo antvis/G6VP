@@ -28,7 +28,7 @@ export interface RichContainerState {
   viewMode: string;
 }
 const getDefaultSideWidth = () => {
-  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || '350';
+  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || 350;
   return Number(defaultWidth);
 };
 const RichContainer = props => {
@@ -59,14 +59,17 @@ const RichContainer = props => {
   useEffect(() => {
     if (isExpanded) {
       const defaultWidth = getDefaultSideWidth();
-      const checkAreaWidth = defaultWidth <= MAX_WIDTH && defaultWidth >= MIN_WIDTH;
-      if (checkAreaWidth) {
-        setWidth(defaultWidth);
-      } else if (defaultWidth >= MAX_WIDTH) {
-        setWidth(MAX_WIDTH);
-      } else if (defaultWidth <= MIN_WIDTH) {
-        setWidth(MIN_WIDTH);
-      }
+      const isInRange = defaultWidth <= MAX_WIDTH && defaultWidth >= MIN_WIDTH;
+      const width = isInRange ? defaultWidth : defaultWidth >= MAX_WIDTH ? MAX_WIDTH : MIN_WIDTH;
+      setWidth(width);
+      // const checkAreaWidth = defaultWidth <= MAX_WIDTH && defaultWidth >= MIN_WIDTH;
+      // if (checkAreaWidth) {
+      //   setWidth(defaultWidth);
+      // } else if (defaultWidth >= MAX_WIDTH) {
+      //   setWidth(MAX_WIDTH);
+      // } else if (defaultWidth <= MIN_WIDTH) {
+      //   setWidth(MIN_WIDTH);
+      // }
     } else setWidth(0);
   }, [isExpanded]);
 
@@ -158,8 +161,8 @@ const RichContainer = props => {
       value: 'GISDK_CANVAS',
       label: (
         <Space>
-          <Icon type={ViewArea.icon} style={{ fontSize: '18px' }}></Icon>
-          <span style={{ fontSize: '14px' }}>
+          <Icon type={ViewArea.icon} style={{ fontSize: 18 }}></Icon>
+          <span style={{ fontSize: 14 }}>
             {$i18n.get({ id: 'basic.components.RichContainer.Component.GraphView', dm: '图谱视图' })}
           </span>
         </Space>
@@ -188,7 +191,7 @@ const RichContainer = props => {
   return (
     <div className="gi-rich-container">
       <Header leftArea={NavbarLeftArea} rightArea={NavbarRightArea} />
-      {isSheet && <div style={{ height: '40px', position: 'relative', display: 'block' }}></div>}
+      {isSheet && <div style={{ height: 40, position: 'relative', display: 'block' }}></div>}
       <div className="gi-rich-container-toolbar">
         <div className="toolbar-item">
           <Select
@@ -208,17 +211,17 @@ const RichContainer = props => {
             <Divider type="vertical" />
             <span
               style={{
-                margin: '0 4px',
+                margin: '0 4',
                 color: '#98989D',
-                fontSize: '14px',
-                paddingRight: '6px',
+                fontSize: 14,
+                paddingRight: 6,
               }}
             >
               查询过滤
             </span>
             <Button
               type={HAS_QUERY_VIEW ? 'primary' : 'text'}
-              icon={<Icon type={DataArea.icon} style={{ fontSize: '14px' }} />}
+              icon={<Icon type={DataArea.icon} style={{ fontSize: 14 }} />}
               className="gi-richcontainer-query-button"
               style={{
                 display: 'flex',
@@ -244,7 +247,7 @@ const RichContainer = props => {
           <div className="toolbar-item">
             <Button
               type={HAS_FILTER_VIEW ? 'primary' : 'text'}
-              icon={<Icon type={FilterArea.icon} style={{ fontSize: '14px' }} />}
+              icon={<Icon type={FilterArea.icon} style={{ fontSize: 14 }} />}
               className="gi-richcontainer-filter-button"
               style={{
                 display: 'flex',
@@ -297,7 +300,7 @@ const RichContainer = props => {
                 backgroundColor: '#f3f5f9',
                 // transition: 'width 5.3s ease 0s',
                 zIndex: 10,
-                padding: '12px',
+                padding: 12,
               }}
               // @ts-ignore
               size={{ width, height: '100%' }}
