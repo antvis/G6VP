@@ -142,14 +142,21 @@ const RichContainer = props => {
   const onResizeStop = (e, direction, ref, d) => {
     setWidth(prev => {
       const currentWidth = prev + d.width;
-      let realWidth = currentWidth;
-      if (currentWidth >= MAX_WIDTH) {
-        realWidth = MAX_WIDTH;
-      } else if (currentWidth <= MIN_WIDTH) {
-        realWidth = MIN_WIDTH;
-      } else if (currentWidth <= MAX_WIDTH && currentWidth >= MIN_WIDTH) {
-        realWidth = currentWidth;
-      }
+      let realWidth =
+        currentWidth >= MAX_WIDTH
+          ? MAX_WIDTH
+          : currentWidth <= MIN_WIDTH
+          ? MIN_WIDTH
+          : currentWidth <= MAX_WIDTH && currentWidth >= MIN_WIDTH
+          ? currentWidth
+          : MIN_WIDTH;
+      // if (currentWidth >= MAX_WIDTH) {
+      //   realWidth = MAX_WIDTH;
+      // } else if (currentWidth <= MIN_WIDTH) {
+      //   realWidth = MIN_WIDTH;
+      // } else if (currentWidth <= MAX_WIDTH && currentWidth >= MIN_WIDTH) {
+      //   realWidth = currentWidth;
+      // }
       localStorage.setItem('GI_RICH_CONTAINER_SIDE_WIDTH', realWidth);
       return realWidth;
     });
