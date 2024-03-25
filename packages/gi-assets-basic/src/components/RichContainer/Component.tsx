@@ -9,7 +9,8 @@ import Toolbar from './Toolbar';
 import './index.less';
 
 const URL_SEARCH_KEY = 'ActiveAssetID';
-const MIN_WIDTH = 336;
+const MIN_WIDTH = 350;
+const MAX_WIDTH = 720;
 const visibleStyle: React.CSSProperties = {
   visibility: 'visible',
   width: '100%',
@@ -27,7 +28,7 @@ export interface RichContainerState {
   viewMode: string;
 }
 const getDefaultSideWidth = () => {
-  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || '330';
+  const defaultWidth = localStorage.getItem('GI_RICH_CONTAINER_SIDE_WIDTH') || 350;
   return Number(defaultWidth);
 };
 const RichContainer = props => {
@@ -36,7 +37,7 @@ const RichContainer = props => {
   const { HAS_GRAPH, GISDK_ID } = context;
   const Containers = useContainer(context);
   const [state, setState] = React.useState<RichContainerState>({
-    activeKey: localStorage.getItem(URL_SEARCH_KEY) || 'LanguageQuery',
+    activeKey: localStorage.getItem(URL_SEARCH_KEY) || 'ConfigQuery',
     viewMode: 'GISDK_CANVAS',
   });
   const { activeKey, viewMode } = state;
@@ -58,7 +59,17 @@ const RichContainer = props => {
   useEffect(() => {
     if (isExpanded) {
       const defaultWidth = getDefaultSideWidth();
-      setWidth(defaultWidth >= MIN_WIDTH ? defaultWidth : MIN_WIDTH);
+      const isInRange = defaultWidth <= MAX_WIDTH && defaultWidth >= MIN_WIDTH;
+      const width = isInRange ? defaultWidth : defaultWidth >= MAX_WIDTH ? MAX_WIDTH : MIN_WIDTH;
+      setWidth(width);
+      // const checkAreaWidth = defaultWidth <= MAX_WIDTH && defaultWidth >= MIN_WIDTH;
+      // if (checkAreaWidth) {
+      //   setWidth(defaultWidth);
+      // } else if (defaultWidth >= MAX_WIDTH) {
+      //   setWidth(MAX_WIDTH);
+      // } else if (defaultWidth <= MIN_WIDTH) {
+      //   setWidth(MIN_WIDTH);
+      // }
     } else setWidth(0);
   }, [isExpanded]);
 
@@ -131,7 +142,14 @@ const RichContainer = props => {
   const onResizeStop = (e, direction, ref, d) => {
     setWidth(prev => {
       const currentWidth = prev + d.width;
-      const realWidth = currentWidth >= MIN_WIDTH ? currentWidth : MIN_WIDTH;
+      const realWidth = currentWidth >= MAX_WIDTH ? MAX_WIDTH : currentWidth <= MIN_WIDTH ? MIN_WIDTH : currentWidth;
+      // if (currentWidth >= MAX_WIDTH) {
+      //   realWidth = MAX_WIDTH;
+      // } else if (currentWidth <= MIN_WIDTH) {
+      //   realWidth = MIN_WIDTH;
+      // } else if (currentWidth <= MAX_WIDTH && currentWidth >= MIN_WIDTH) {
+      //   realWidth = currentWidth;
+      // }
       localStorage.setItem('GI_RICH_CONTAINER_SIDE_WIDTH', realWidth);
       return realWidth;
     });
@@ -143,8 +161,10 @@ const RichContainer = props => {
       value: 'GISDK_CANVAS',
       label: (
         <Space>
-          <Icon type={ViewArea.icon}></Icon>
-          {$i18n.get({ id: 'basic.components.RichContainer.Component.GraphView', dm: '图谱视图' })}
+          <Icon type={ViewArea.icon} style={{ fontSize: 18 }}></Icon>
+          <span style={{ fontSize: 14 }}>
+            {$i18n.get({ id: 'basic.components.RichContainer.Component.GraphView', dm: '图谱视图' })}
+          </span>
         </Space>
       ),
     },
@@ -171,13 +191,13 @@ const RichContainer = props => {
   return (
     <div className="gi-rich-container">
       <Header leftArea={NavbarLeftArea} rightArea={NavbarRightArea} />
-      {isSheet && <div style={{ height: '40px', position: 'relative', display: 'block' }}></div>}
+      {isSheet && <div style={{ height: 40, position: 'relative', display: 'block' }}></div>}
       <div className="gi-rich-container-toolbar">
         <div className="toolbar-item">
           <Select
             bordered={false}
             defaultValue="GISDK_CANVAS"
-            style={{ width: 120 }}
+            style={{ width: 'auto' }}
             onChange={handleChangeViewMode}
             options={ViewModeOptions}
             suffixIcon={<Icon type="icon-shituxiala" />}
@@ -191,22 +211,23 @@ const RichContainer = props => {
             <Divider type="vertical" />
             <span
               style={{
-                marginLeft: 6,
+                margin: '0 4',
                 color: '#98989D',
-                marginRight: 8,
+                fontSize: 14,
+                paddingRight: 6,
               }}
             >
               查询过滤
             </span>
             <Button
               type={HAS_QUERY_VIEW ? 'primary' : 'text'}
-              icon={<Icon type={DataArea.icon} />}
+              icon={<Icon type={DataArea.icon} style={{ fontSize: 14 }} />}
               className="gi-richcontainer-query-button"
               style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                fontSize: 12,
+                fontSize: 14,
                 ...(HAS_QUERY_VIEW ? ActiveButtonStyle : {}),
               }}
               onClick={() => {
@@ -226,13 +247,13 @@ const RichContainer = props => {
           <div className="toolbar-item">
             <Button
               type={HAS_FILTER_VIEW ? 'primary' : 'text'}
-              icon={<Icon type={FilterArea.icon} />}
+              icon={<Icon type={FilterArea.icon} style={{ fontSize: 14 }} />}
               className="gi-richcontainer-filter-button"
               style={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                fontSize: 12,
+                fontSize: 14,
                 ...(HAS_FILTER_VIEW ? ActiveButtonStyle : {}),
               }}
               onClick={e => {
@@ -279,7 +300,7 @@ const RichContainer = props => {
                 backgroundColor: '#f3f5f9',
                 // transition: 'width 5.3s ease 0s',
                 zIndex: 10,
-                padding: '12px',
+                padding: 12,
               }}
               // @ts-ignore
               size={{ width, height: '100%' }}

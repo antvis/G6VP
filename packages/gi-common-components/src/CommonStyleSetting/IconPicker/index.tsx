@@ -67,13 +67,10 @@ const IconPicker: React.FC<IColorInputProps> = props => {
               ref={container}
               className="icon-input-container-icon-tips"
               style={{
-                border: `1px solid #ddd`,
+                border: `1 solid #ddd`,
               }}
             >
-              <Icon
-                type={`icon-${activeIcon}`}
-                style={{ color: '#2f54e0', fontSize: '18px', cursor: 'pointer' }}
-              ></Icon>
+              <Icon type={`icon-${activeIcon}`} style={{ color: '#2f54e0', fontSize: 18, cursor: 'pointer' }}></Icon>
             </div>
           </Popover>
         }
