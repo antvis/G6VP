@@ -142,14 +142,7 @@ const RichContainer = props => {
   const onResizeStop = (e, direction, ref, d) => {
     setWidth(prev => {
       const currentWidth = prev + d.width;
-      let realWidth =
-        currentWidth >= MAX_WIDTH
-          ? MAX_WIDTH
-          : currentWidth <= MIN_WIDTH
-          ? MIN_WIDTH
-          : currentWidth <= MAX_WIDTH && currentWidth >= MIN_WIDTH
-          ? currentWidth
-          : MIN_WIDTH;
+      const realWidth = currentWidth >= MAX_WIDTH ? MAX_WIDTH : currentWidth <= MIN_WIDTH ? MIN_WIDTH : currentWidth;
       // if (currentWidth >= MAX_WIDTH) {
       //   realWidth = MAX_WIDTH;
       // } else if (currentWidth <= MIN_WIDTH) {
