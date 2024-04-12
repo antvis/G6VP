@@ -1,5 +1,5 @@
 import type { Combo } from '@antv/g6';
-import type { GraphinContextType, GraphinData, IUserEdge, IUserNode, Layout } from '@antv/graphin';
+import type { GraphinContextType, GraphinData, GraphinProps, IUserEdge, IUserNode, Layout } from '@antv/graphin';
 import type { LANGUAGE_KEY_NAME } from './process/locale';
 import type { GraphSchemaData, IGraphData } from './process/schema';
 export type { GraphSchemaData };
@@ -102,6 +102,7 @@ export interface Props {
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
+  grapinProps?: GraphinProps;
 }
 
 export type AssetType =
