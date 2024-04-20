@@ -21,11 +21,11 @@ const Links: React.FunctionComponent<LinksProps> = props => {
           {$i18n.get({ id: 'gi-site.components.Navbar.Links.Workbook', dm: '工作簿' })}
         </Link>
       </div>
-      <div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>
-        <Link to="/open/assets-manage">
-          {$i18n.get({ id: 'gi-site.components.Navbar.Links.OpenMarket', dm: '开放市场' })}
-        </Link>
-      </div>
+      {/*<div style={{ marginRight: '36px', cursor: 'pointer' }} className={active === 'open' ? 'active' : ''}>*/}
+      {/*  <Link to="/open/assets-manage">*/}
+      {/*    {$i18n.get({ id: 'gi-site.components.Navbar.Links.OpenMarket', dm: '开放市场' })}*/}
+      {/*  </Link>*/}
+      {/*</div>*/}
     </>
   );
 };

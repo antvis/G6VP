@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import DataModeCard from '../DataModeCard';
-import Github from './Github';
+// import Github from './Github';
 import Links from './Links';
-import Logo from './Logo';
+// import Logo from './Logo';
 
 import Theme from './Theme';
 import UserInfo from './UserInfo';
@@ -35,21 +35,21 @@ const SiteNav: React.FunctionComponent<WorkbookBarProps> = props => {
   return (
     <header style={styles.container} className="gi-navbar-container">
       <div style={styles.left}>
-        <SlotComponent name="SLOT_LAYOUT_LOGO">
-          <Logo
-            title="AntV Insight"
-            handleClick={() => {
-              history.push('/home');
-            }}
-            size={30}
-            style={{ padding: '0px 8px', cursor: 'pointer' }}
-          />
-        </SlotComponent>
+        {/*<SlotComponent name="SLOT_LAYOUT_LOGO">*/}
+        {/*  <Logo*/}
+        {/*    title="AntV Insight"*/}
+        {/*    handleClick={() => {*/}
+        {/*      history.push('/home');*/}
+        {/*    }}*/}
+        {/*    size={30}*/}
+        {/*    style={{ padding: '0px 8px', cursor: 'pointer' }}*/}
+        {/*  />*/}
+        {/*</SlotComponent>*/}
         <Links active={active} />
       </div>
       <div style={styles.right}>
         <DataModeCard />
-        <Github />
+        {/*<Github />*/}
         <Theme />
         <Language />
         <UserInfo />

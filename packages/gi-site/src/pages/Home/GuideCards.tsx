@@ -57,11 +57,11 @@ const ITEMS = [
         icon: <DeploymentUnitOutlined />,
         name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.GraphDatabase', dm: '图数据库' }),
       },
-      {
-        id: 'GEO',
-        icon: <EnvironmentOutlined />,
-        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.GeographicDatabase', dm: '地理数据库' }),
-      },
+      // {
+      //   id: 'GEO',
+      //   icon: <EnvironmentOutlined />,
+      //   name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.GeographicDatabase', dm: '地理数据库' }),
+      // },
     ],
   },
   {
@@ -89,31 +89,31 @@ const ITEMS = [
       },
     ],
   },
-  {
-    name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.StepDiscoverMorePossibilities', dm: 'Step 3：发现更多可能' }),
-    items: [
-      {
-        id: 'AVA',
-        icon: <RobotOutlined />,
-        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntelligentInterpretation', dm: '智能解读' }),
-      },
-      {
-        id: 'DEVELOPMENT',
-        icon: <CodeOutlined />,
-        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.CustomDevelopment', dm: '定制开发' }),
-      },
-      {
-        id: 'DEPLOY',
-        icon: <AliyunOutlined />,
-        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntegratedDeployment', dm: '集成部署' }),
-      },
-      {
-        id: 'VIP_ASSETS',
-        icon: <GiftOutlined />,
-        name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.VipAssets', dm: 'VIP 资产' }),
-      },
-    ],
-  },
+  // {
+  //   name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.StepDiscoverMorePossibilities', dm: 'Step 3：发现更多可能' }),
+  //   items: [
+  //     {
+  //       id: 'AVA',
+  //       icon: <RobotOutlined />,
+  //       name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntelligentInterpretation', dm: '智能解读' }),
+  //     },
+  //     {
+  //       id: 'DEVELOPMENT',
+  //       icon: <CodeOutlined />,
+  //       name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.CustomDevelopment', dm: '定制开发' }),
+  //     },
+  //     {
+  //       id: 'DEPLOY',
+  //       icon: <AliyunOutlined />,
+  //       name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.IntegratedDeployment', dm: '集成部署' }),
+  //     },
+  //     {
+  //       id: 'VIP_ASSETS',
+  //       icon: <GiftOutlined />,
+  //       name: $i18n.get({ id: 'gi-site.pages.Home.GuideCards.VipAssets', dm: 'VIP 资产' }),
+  //     },
+  //   ],
+  // },
 ];
 
 const GuideCards: React.FunctionComponent<IGuideCardsProps> = props => {

@@ -33,7 +33,7 @@ const SdkContent = () => {
         message={$i18n.get(
           {
             id: 'gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport',
-            dm: 'G6VP 支持 {counts} 种导出模式，点击即可体验，建议 UMD 模式',
+            dm: '支持 {counts} 种导出模式，点击即可体验，建议 UMD 模式',
           },
           { counts: counts },
         )}
