@@ -23,18 +23,18 @@ const Templates: React.FunctionComponent<TemplatesProps> = props => {
           label: $i18n.get({ id: 'gi-site.pages.Template.DiagramTemplate', dm: '关系图模版' }),
           children: <List type="graph" />,
         },
-        {
-          key: 'geo',
-          icon: <EnvironmentOutlined />,
-          label: $i18n.get({ id: 'gi-site.pages.Template.MapTemplate', dm: '地图模版' }),
-          children: <></>,
-        },
-        {
-          key: 'vip',
-          icon: <GiftOutlined />,
-          label: $i18n.get({ id: 'gi-site.pages.Template.VipTemplate', dm: 'VIP 模版' }),
-          children: <></>,
-        },
+        // {
+        //   key: 'geo',
+        //   icon: <EnvironmentOutlined />,
+        //   label: $i18n.get({ id: 'gi-site.pages.Template.MapTemplate', dm: '地图模版' }),
+        //   children: <></>,
+        // },
+        // {
+        //   key: 'vip',
+        //   icon: <GiftOutlined />,
+        //   label: $i18n.get({ id: 'gi-site.pages.Template.VipTemplate', dm: 'VIP 模版' }),
+        //   children: <></>,
+        // },
       ]}
     />
   );

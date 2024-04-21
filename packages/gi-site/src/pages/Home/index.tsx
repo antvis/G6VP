@@ -38,7 +38,7 @@ const Home = props => {
         <section className="greeting">
           {$i18n.get({
             id: 'gi-site.pages.Home.BringDataToLifeIn',
-            dm: '让数据栩栩如生，三步完成从「数据可视分析」到「数据产品构建」～',
+            dm: '欢迎您来到学员知识图谱分析端(v1.0.0)',
           })}
         </section>
         <div className="container">
@@ -55,21 +55,21 @@ const Home = props => {
               />
             </div>
           </section>
-          <section className="flex-right">
-            <Card
-              title={$i18n.get({ id: 'gi-site.pages.Home.AnnouncementNotice', dm: '公告通知' })}
-              style={{ borderRadius: '8px', marginTop: '8px' }}
-            >
-              <Notification items={NOTIFICATION_ITEMS} />
-              <img src={`${window['GI_PUBLIC_PATH']}image/QRCode.jpg`} width={'100%'} />
-            </Card>
-            <Card
-              title={$i18n.get({ id: 'gi-site.pages.Home.LearningZone', dm: '学习专区' })}
-              style={{ marginTop: '12px', borderRadius: '8px' }}
-            >
-              <Notification items={STUDY_ITEMS} />
-            </Card>
-          </section>
+          {/*<section className="flex-right">*/}
+          {/*  <Card*/}
+          {/*    title={$i18n.get({ id: 'gi-site.pages.Home.AnnouncementNotice', dm: '公告通知' })}*/}
+          {/*    style={{ borderRadius: '8px', marginTop: '8px' }}*/}
+          {/*  >*/}
+          {/*    <Notification items={NOTIFICATION_ITEMS} />*/}
+          {/*    <img src={`${window['GI_PUBLIC_PATH']}image/QRCode.jpg`} width={'100%'} />*/}
+          {/*  </Card>*/}
+          {/*  <Card*/}
+          {/*    title={$i18n.get({ id: 'gi-site.pages.Home.LearningZone', dm: '学习专区' })}*/}
+          {/*    style={{ marginTop: '12px', borderRadius: '8px' }}*/}
+          {/*  >*/}
+          {/*    <Notification items={STUDY_ITEMS} />*/}
+          {/*  </Card>*/}
+          {/*</section>*/}
         </div>
       </div>
     </SlotComponent>

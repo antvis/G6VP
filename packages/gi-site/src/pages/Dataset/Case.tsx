@@ -31,12 +31,12 @@ const Cases: React.FunctionComponent<CasesProps> = props => {
             label: $i18n.get({ id: 'gi-site.pages.Dataset.Case.RelationalData', dm: '关系数据' }),
             children: <DatasetTable data={lists} deletable={false} />,
           },
-          {
-            key: 'geo',
-            icon: <EnvironmentOutlined />,
-            label: $i18n.get({ id: 'gi-site.pages.Dataset.Case.GeographicData', dm: '地理数据' }),
-            children: <>{$i18n.get({ id: 'gi-site.pages.Dataset.Case.UnderConstruction', dm: '正在建设中...' })}</>,
-          },
+          // {
+          //   key: 'geo',
+          //   icon: <EnvironmentOutlined />,
+          //   label: $i18n.get({ id: 'gi-site.pages.Dataset.Case.GeographicData', dm: '地理数据' }),
+          //   children: <>{$i18n.get({ id: 'gi-site.pages.Dataset.Case.UnderConstruction', dm: '正在建设中...' })}</>,
+          // },
         ]}
       />
     </>

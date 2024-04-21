@@ -5,7 +5,7 @@ import ProjectTitle from '../ProjectTitle';
 import useTheme from '../ThemeVars/useTheme';
 import DatasetInfo from './DatasetInfo';
 import ExportSdk from './ExportSdk';
-import Github from './Github';
+// import Github from './Github';
 import Language from './Language';
 import Logo from './Logo';
 import Preview from './Preview';
@@ -46,13 +46,13 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
   return (
     <header style={styles.container}>
       <div style={styles.left}>
-        <Logo
-          handleClick={() => {
-            history.push('/workbook/project');
-          }}
-          size={30}
-          style={{ padding: '0px 8px', cursor: 'pointer' }}
-        />
+        {/*<Logo*/}
+        {/*  handleClick={() => {*/}
+        {/*    history.push('/workbook/project');*/}
+        {/*  }}*/}
+        {/*  size={30}*/}
+        {/*  style={{ padding: '0px 8px', cursor: 'pointer' }}*/}
+        {/*/>*/}
         <DatasetInfo context={context} history={history}></DatasetInfo>
       </div>
       <div style={styles.left}>
@@ -64,7 +64,7 @@ const WorkbookBar: React.FunctionComponent<WorkbookBarProps> = props => {
         <Preview context={context} />
         <ExportSdk />
         <SaveWorkbook workbookId={workbookId} context={context} />
-        <Github />
+        {/*<Github />*/}
         <Theme changeTheme={changeTheme} />
         <Language />
       </div>
