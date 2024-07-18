@@ -45,7 +45,7 @@ const DataService: React.FunctionComponent<DataServiceProps> = props => {
                 dm: '用户可在线自定义,点击查看',
               })}
 
-              <a href="https://www.yuque.com/antv/gi/iwiv6g" target="_black">
+              <a href="https://www.yuque.com/antv/gi/iwiv6g" target="_blank">
                 {$i18n.get({ id: 'gi-site.MetaPanel.DataPanel.DataService.Document', dm: '文档' })}
               </a>
             </>
