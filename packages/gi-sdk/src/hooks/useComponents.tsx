@@ -10,7 +10,7 @@ const DEFAULT_GICC_LAYOUT = {
   },
 };
 
-const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
+const useComponents = (state, propsComponentsCfg, ComponentAssets, componentExtraProps = {}) => {
   const { config, initializer, GICC_LAYOUT, components, GISDK_ID } = state;
   const { components: stateComponentsCfg } = config;
   const ComponentCfgMap = propsComponentsCfg.concat(stateComponentsCfg).reduce((acc, curr) => {
@@ -74,6 +74,9 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
         };
       }
 
+      // 传入的额外组件props
+      const extraProps = componentExtraProps?.[id] || {};
+
       return (
         <Component
           key={id}
@@ -82,6 +85,7 @@ const useComponents = (state, propsComponentsCfg, ComponentAssets) => {
           ComponentCfgMap={ComponentCfgMap}
           {...itemProps}
           {...GIProps}
+          {...extraProps}
         />
       );
     });
