@@ -1,7 +1,7 @@
 # Website for graphinsight
 
 ##################################### Builder ####################################
-from docker.io/library/node:16 AS builder
+from docker.io/library/node:18 AS builder
 
 COPY . /workspace/G6VP
 
@@ -28,7 +28,7 @@ RUN cd /workspace/G6VP/packages/gi-httpservice && rm -fr node_modules && npm ins
 
 
 ##################################### Runtime ####################################
-from docker.io/library/node:16-alpine
+from docker.io/library/node:18-alpine
 
 COPY --from=builder /workspace/G6VP/packages/gi-httpservice /workspace/graphinsight
 COPY --from=builder /workspace/G6VP/packages/gi-site/docker/docker-entrypoint.sh /workspace/docker-entrypoint.sh

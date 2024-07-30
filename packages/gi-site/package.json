@@ -10,7 +10,7 @@
   ],
   "main": "dist/app.js",
   "scripts": {
-    "build:docker": "node scripts/link.mjs &&  cd ../../ && npm run clean && npm run build:all:es && npm run build:all:umd && cd packages/gi-site/ &&  BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/copy-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS=--max_old_space_size=4096 umi build && node scripts/sync-to-httpservice.mjs",
+    "build:docker": "node scripts/link.mjs &&  cd ../../ && npm run clean && npm run build:all:es && npm run build:all:umd && cd packages/gi-site/ &&  BUILD_MODE=docker node scripts/pre-build.mjs  && node scripts/copy-assets.mjs && BUILD_MODE=docker  NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider' umi build && node scripts/sync-to-httpservice.mjs",
     "analyze": "ANALYZE=1 NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "build": "npm run prebuild && NODE_OPTIONS=--max_old_space_size=4096 umi build",
     "deploy": "node ./scripts/deploy.js",

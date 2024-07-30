@@ -17,6 +17,7 @@ export interface Project {
     id: string;
     name: string;
     projectConfig: {};
+    config: {};
     themes: {};
     theme?: string;
   };
@@ -53,8 +54,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     service,
     loadingText = '正在加载图应用...',
     loadingComponent,
-    GISDKExtraParams,
-    componentExtraParams,
+    GISDKExtraParams = {},
+    componentExtraParams = {},
   } = props;
   const [state, setState] = React.useState({
     isReady: false,
@@ -139,6 +140,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       <ThemeComponent style={{ visibility: 'hidden', position: 'absolute' }} />
       {/** @ts-ignore */}
       <GISDK
+       // @ts-ignore
         config={config}
         assets={assets}
         services={services}
