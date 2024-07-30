@@ -140,7 +140,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       <ThemeComponent style={{ visibility: 'hidden', position: 'absolute' }} />
       {/** @ts-ignore */}
       <GISDK
-       // @ts-ignore
+        // @ts-ignore
         config={config}
         assets={assets}
         services={services}
