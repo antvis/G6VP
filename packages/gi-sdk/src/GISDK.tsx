@@ -20,9 +20,8 @@ let updateHistoryTimer: number;
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
-  const { children, assets, id, services, config, locales } = props;
+  const { children, assets, id, services, config, locales, componentExtraParams = {}, GISDKExtraParams = {} } = props;
   const { language = 'zh-CN', ...localeMessages } = locales || {};
-
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
       const defaultId = `${Math.random().toString(36).substr(2)}`;
@@ -63,6 +62,7 @@ const GISDK = (props: Props) => {
     },
     //@ts-ignore
     GISDK_ID,
+    extraParams: {},
   });
 
   React.useEffect(() => {
@@ -70,6 +70,13 @@ const GISDK = (props: Props) => {
       draft.config = props.config;
     });
   }, [props.config]);
+
+  // 更新参数
+  React.useEffect(() => {
+    updateState(draft => {
+      draft.extraParams = GISDKExtraParams;
+    });
+  }, [GISDKExtraParams]);
 
   const {
     layout: layoutCfg,
@@ -362,7 +369,7 @@ const GISDK = (props: Props) => {
   }
 
   const { renderComponents, InitializerComponent, InitializerProps, GICC_LAYOUT_COMPONENT, GICC_LAYOUT_PROPS } =
-    getComponents({ ...state, HAS_GRAPH }, config.components, ComponentAssets);
+    getComponents({ ...state, HAS_GRAPH }, config.components, ComponentAssets, componentExtraParams);
 
   const graphData = useMemo(() => {
     const nodeMap = {};

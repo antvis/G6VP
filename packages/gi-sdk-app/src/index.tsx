@@ -17,6 +17,7 @@ export interface Project {
     id: string;
     name: string;
     projectConfig: {};
+    config: {};
     themes: {};
     theme?: string;
   };
@@ -42,11 +43,20 @@ export interface StudioProps {
   service: (id: string) => Promise<{ data: Project }>;
   loadingText?: string;
   loadingComponent?: React.ReactElement;
+  GISDKExtraParams?: Record<string, any>;
+  componentExtraParams?: Record<string, any>;
 }
 
 const Studio: React.FunctionComponent<StudioProps> = props => {
   // @ts-ignore
-  const { id, service, loadingText = '正在加载图应用...', loadingComponent } = props;
+  const {
+    id,
+    service,
+    loadingText = '正在加载图应用...',
+    loadingComponent,
+    GISDKExtraParams = {},
+    componentExtraParams = {},
+  } = props;
   const [state, setState] = React.useState({
     isReady: false,
     assets: null,
@@ -54,6 +64,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     services: [],
     ThemeComponent: () => null,
     GISDK: () => <></>,
+    GISDKExtraParams: {},
+    componentExtraParams: {},
   });
 
   const startStudio = async () => {
@@ -118,7 +130,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
   }, []);
   const { assets, isReady, config, services, ThemeComponent, GISDK } = state;
   if (!isReady) {
-     // 支持传入自定义loading组件
+    // 支持传入自定义loading组件
     return loadingComponent ?? <Loading title={loadingText} />;
   }
 
@@ -127,7 +139,15 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
       {/** @ts-ignore */}
       <ThemeComponent style={{ visibility: 'hidden', position: 'absolute' }} />
       {/** @ts-ignore */}
-      <GISDK config={config} assets={assets} services={services} id={`GI_STUDIO_${id}`} />
+      <GISDK
+        // @ts-ignore
+        config={config}
+        assets={assets}
+        services={services}
+        id={`GI_STUDIO_${id}`}
+        GISDKExtraParams={GISDKExtraParams}
+        componentExtraParams={componentExtraParams}
+      />
     </>
   );
 };

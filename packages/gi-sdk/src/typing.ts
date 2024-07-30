@@ -73,6 +73,8 @@ export interface State<
 
   /** 是否使用缓存的布局 */
   layoutCache: boolean;
+  /** 额外参数 */
+  extraParams: Record<string, any>;
 }
 
 export interface Props {
@@ -102,6 +104,10 @@ export interface Props {
   style?: React.CSSProperties;
   className?: string;
   children?: React.ReactChildren | JSX.Element | JSX.Element[];
+  /** 全局额外参数 */
+  GISDKExtraParams?: Record<string, any>;
+  /** 资产额外参数，以资产ID为 key, value 为传入对应资产的 props */
+  componentExtraParams?: Record<string, any>;
 }
 
 export type AssetType =

@@ -2,7 +2,7 @@
 
 import IconFont, { createFromIconfontCN } from '@ant-design/icons';
 import Graphin from '@antv/graphin';
-import React from 'react';
+import React, { ElementType } from 'react';
 import { loadFontJson, loadUnicodeFont, type FontJson } from './loader';
 
 export const fontFamily = 'iconfont';
@@ -69,7 +69,7 @@ interface IconProps extends React.HTMLProps<HTMLSpanElement> {
 /**
  * @reference https://github.com/ant-design/ant-design-icons/blob/master/packages/icons-react/src/components/IconFont.tsx
  */
-export const Icon = React.forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
+export const Icon: ElementType = React.forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
   const { type, children, ...restProps } = props;
   let content: React.ReactNode = null;
   if (props.type) {
