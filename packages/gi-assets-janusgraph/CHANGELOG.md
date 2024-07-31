@@ -1,5 +1,12 @@
 # @antv/gi-assets-janusgraph
 
+## 1.1.14
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.22
+
 ## 1.1.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @antv/gi-sdk-app
 
+## 1.2.9
+
+### Patch Changes
+
+- GISDK supports passing in extra props
+
 ## 1.2.6
 
 ### Patch Changes

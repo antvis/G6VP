@@ -1,5 +1,11 @@
 # @antv/gi-common-components
 
+## 1.3.16
+
+### Patch Changes
+
+- GISDK supports passing in extra props
+
 ## 1.3.14
 
 ### Patch Changes
