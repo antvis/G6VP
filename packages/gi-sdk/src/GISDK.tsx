@@ -20,7 +20,7 @@ let updateHistoryTimer: number;
 const GISDK = (props: Props) => {
   const graphinRef = React.useRef<null | Graphin>(null);
   // @ts-ignore
-  const { children, assets, id, services, config, locales, componentExtraParams = {}, GISDKExtraParams = {} } = props;
+  const { children, assets, id, services, config, locales, componentExtraParams, extraParams } = props;
   const { language = 'zh-CN', ...localeMessages } = locales || {};
   const GISDK_ID = React.useMemo(() => {
     if (!id) {
@@ -62,7 +62,7 @@ const GISDK = (props: Props) => {
     },
     //@ts-ignore
     GISDK_ID,
-    extraParams: {},
+    extraParams: undefined,
   });
 
   React.useEffect(() => {
@@ -74,9 +74,9 @@ const GISDK = (props: Props) => {
   // 更新参数
   React.useEffect(() => {
     updateState(draft => {
-      draft.extraParams = GISDKExtraParams;
+      draft.extraParams = extraParams;
     });
-  }, [GISDKExtraParams]);
+  }, [extraParams]);
 
   const {
     layout: layoutCfg,

@@ -43,7 +43,7 @@ export interface StudioProps {
   service: (id: string) => Promise<{ data: Project }>;
   loadingText?: string;
   loadingComponent?: React.ReactElement;
-  GISDKExtraParams?: Record<string, any>;
+  extraParams?: Record<string, any>;
   componentExtraParams?: Record<string, any>;
 }
 
@@ -54,8 +54,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     service,
     loadingText = '正在加载图应用...',
     loadingComponent,
-    GISDKExtraParams = {},
-    componentExtraParams = {},
+    extraParams,
+    componentExtraParams,
   } = props;
   const [state, setState] = React.useState({
     isReady: false,
@@ -64,8 +64,8 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
     services: [],
     ThemeComponent: () => null,
     GISDK: () => <></>,
-    GISDKExtraParams: {},
-    componentExtraParams: {},
+    extraParams: undefined,
+    componentExtraParams: undefined,
   });
 
   const startStudio = async () => {
@@ -145,7 +145,7 @@ const Studio: React.FunctionComponent<StudioProps> = props => {
         assets={assets}
         services={services}
         id={`GI_STUDIO_${id}`}
-        GISDKExtraParams={GISDKExtraParams}
+        extraParams={extraParams}
         componentExtraParams={componentExtraParams}
       />
     </>
