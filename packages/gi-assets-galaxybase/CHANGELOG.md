@@ -1,5 +1,12 @@
 # @antv/gi-assets-galaxybase
 
+## 1.2.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.23
+
 ## 1.2.14
 
 ### Patch Changes

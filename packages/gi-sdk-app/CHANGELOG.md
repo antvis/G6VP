@@ -1,5 +1,11 @@
 # @antv/gi-sdk-app
 
+## 1.2.10
+
+### Patch Changes
+
+- fix: fix GISDK keep render
+
 ## 1.2.9
 
 ### Patch Changes

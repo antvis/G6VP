@@ -1,5 +1,12 @@
 # @antv/gi-assets-algorithm
 
+## 2.3.19
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.23
+
 ## 2.3.18
 
 ### Patch Changes
