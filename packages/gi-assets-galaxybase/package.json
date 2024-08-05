@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-galaxybase",
-  "version": "1.2.13",
+  "version": "1.2.15",
   "description": "Galaxybase 团队的图分析资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

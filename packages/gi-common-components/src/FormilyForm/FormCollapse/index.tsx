@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Schema, SchemaKey } from '@formily/json-schema';
 import { RecursionField, observer, useField, useFieldSchema } from '@formily/react';

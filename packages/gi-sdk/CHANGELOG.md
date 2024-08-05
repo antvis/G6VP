@@ -1,5 +1,19 @@
 # @antv/gi-sdk
 
+## 2.4.23
+
+### Patch Changes
+
+- fix: fix GISDK keep render
+
+## 2.4.22
+
+### Patch Changes
+
+- GISDK supports passing in extra props
+- Updated dependencies
+  - @antv/gi-common-components@1.3.16
+
 ## 2.4.21
 
 ### Patch Changes

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
@@ -276,6 +277,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         <div>
           <Form form={form} layout={'vertical'}>
             <NodeSelectionWrap
+              // @ts-ignore
               graph={graph}
               form={form}
               items={[

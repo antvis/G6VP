@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-tugraph",
-  "version": "2.1.13",
+  "version": "2.1.15",
   "description": "TuGraph 团队的图分析资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

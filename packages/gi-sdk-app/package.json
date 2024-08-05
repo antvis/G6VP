@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-sdk-app",
-  "version": "1.2.8",
+  "version": "1.2.10",
   "description": "",
   "main": "index.js",
   "scripts": {

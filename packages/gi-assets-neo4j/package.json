@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-neo4j",
-  "version": "2.1.13",
+  "version": "2.1.15",
   "description": "Neo4j 资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -325,6 +325,7 @@ const PathAnalysis: React.FC<IPathAnalysisProps> = props => {
         </div>
         <Form form={form}>
           <NodeSelectionWrap
+            // @ts-ignore 
             graph={graph}
             form={form}
             items={items}

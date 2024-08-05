@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/env', '@babel/preset-react'],
-            plugins: [['@babel/plugin-proposal-class-properties', { loose: true }], ['react-hot-loader/babel']],
+            plugins: [['@babel/plugin-transform-class-properties', { loose: true }], ['react-hot-loader/babel']],
           },
         },
         {

@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-graphscope",
-  "version": "2.1.13",
+  "version": "2.1.15",
   "description": "GraphScope 单机版资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

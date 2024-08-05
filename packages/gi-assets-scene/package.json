@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-scene",
-  "version": "2.2.19",
+  "version": "2.2.21",
   "description": "G6VP 基础模版包",
   "main": "lib/index.js",
   "module": "es/index.js",

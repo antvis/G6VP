@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { BgColorsOutlined } from '@ant-design/icons';
 import { ArrayCollapse, ArrayItems, DatePicker, FormItem, Input, NumberPicker, Select, Switch } from '@formily/antd';
 import { createForm, onFormInputChange } from '@formily/core';

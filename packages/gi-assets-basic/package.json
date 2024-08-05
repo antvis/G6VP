@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-basic",
-  "version": "2.4.38",
+  "version": "2.4.40",
   "description": "G6VP 基础资产包",
   "main": "lib/index.js",
   "module": "es/index.js",

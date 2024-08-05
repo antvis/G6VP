@@ -1,5 +1,19 @@
 # @antv/gi-assets-scene
 
+## 2.2.21
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.23
+
+## 2.2.20
+
+### Patch Changes
+
+- Updated dependencies
+  - @antv/gi-sdk@2.4.22
+
 ## 2.2.19
 
 ### Patch Changes

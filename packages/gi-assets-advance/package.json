@@ -1,6 +1,6 @@
 {
   "name": "@antv/gi-assets-advance",
-  "version": "2.5.20",
+  "version": "2.5.22",
   "description": "G6VP 高级资产包",
   "main": "lib/index.js",
   "module": "es/index.js",
