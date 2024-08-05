@@ -163,10 +163,12 @@ const TableMode: React.FC<IProps> = props => {
 
   const nodeDataCfg: S2DataConfig = {
     fields: fields_NODES,
+    // @ts-ignore
     data: NODES_DATA,
   }; //useNodeDataCfg();
   const edgeDataCfg: S2DataConfig = {
     fields: fields_EDGES,
+    // @ts-ignore
     data: EDGES_DATA,
   }; //useEdgeDataCfg();
 

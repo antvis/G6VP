@@ -276,6 +276,7 @@ const CommunityDiscovery: React.FC<CommunityDiscoveryProps> = props => {
         <div>
           <Form form={form} layout={'vertical'}>
             <NodeSelectionWrap
+              // @ts-ignore
               graph={graph}
               form={form}
               items={[
