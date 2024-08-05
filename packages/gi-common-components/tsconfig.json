@@ -5,7 +5,7 @@
     "declaration": true,
     "target": "es2015",
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "strict": true,
     "noImplicitAny": false,

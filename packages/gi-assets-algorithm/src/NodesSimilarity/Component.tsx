@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ReloadOutlined } from '@ant-design/icons';
 import { nodesCosineSimilarity } from '@antv/algorithm';
 import { NodeSelectionWrap } from '@antv/gi-common-components';
