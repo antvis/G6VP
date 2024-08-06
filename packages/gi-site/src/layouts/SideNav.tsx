@@ -27,16 +27,16 @@ const DATASET_ITEMS = [
     key: '/dataset/create',
     icon: <PlusOutlined />,
   },
-  {
-    label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.CaseData', dm: '案例数据' }),
-    key: '/dataset/case',
-    icon: <AppstoreOutlined />,
-  },
-  {
-    label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.DirectSystemConnection', dm: '系统直连' }),
-    key: '/dataset/SYSTEM_DIRECT_CONNECT',
-    icon: <GlobalOutlined />,
-  },
+  // {
+  //   label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.CaseData', dm: '案例数据' }),
+  //   key: '/dataset/case',
+  //   icon: <AppstoreOutlined />,
+  // },
+  // {
+  //   label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.DirectSystemConnection', dm: '系统直连' }),
+  //   key: '/dataset/SYSTEM_DIRECT_CONNECT',
+  //   icon: <GlobalOutlined />,
+  // },
   {
     label: $i18n.get({ id: 'gi-site.src.layouts.SideNav.RecycleBin', dm: '回收站' }),
     key: '/dataset/delete',

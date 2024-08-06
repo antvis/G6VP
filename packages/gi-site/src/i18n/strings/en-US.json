@@ -83,7 +83,7 @@
   "gi-site.components.FileServerEngine.utils.EdgetypeEdgeType": "EdgeType (edge's schema type)",
   "gi-site.components.Navbar.DatasetInfo.UnnamedDataCollection": "Unnamed data collection",
   "gi-site.components.Navbar.DatasetInfo.UnknownType": "Unknown type",
-  "gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport": "G6VP supports {counts} export modes. Click to experience them. UMD mode is recommended.",
+  "gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport": "supports {counts} export modes. Click to experience them. UMD mode is recommended.",
   "gi-site.components.Navbar.ExportSdk.Open": "Open",
   "gi-site.components.Navbar.ExportSdk.OpenIntegrationCanvasSdkSource": "Open Integration: canvas SDK source code export",
   "gi-site.components.Navbar.Github.OpenSourceIsNotEasy": "Thanks for encouraging us with GitHub Star⭐",

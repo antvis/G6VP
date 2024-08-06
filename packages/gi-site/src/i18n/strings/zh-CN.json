@@ -83,7 +83,7 @@
   "gi-site.components.FileServerEngine.utils.EdgetypeEdgeType": "EdgeType (边的类型)",
   "gi-site.components.Navbar.DatasetInfo.UnnamedDataCollection": "未命名的数据集合",
   "gi-site.components.Navbar.DatasetInfo.UnknownType": "未知类型",
-  "gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport": "G6VP 支持 {counts} 种导出模式，点击即可体验，建议 UMD 模式",
+  "gi-site.components.Navbar.ExportSdk.GVpSupportsCountsExport": "支持 {counts} 种导出模式，点击即可体验，建议 UMD 模式",
   "gi-site.components.Navbar.ExportSdk.Open": "开放",
   "gi-site.components.Navbar.ExportSdk.OpenIntegrationCanvasSdkSource": "开放集成：画布 SDK 源码导出",
   "gi-site.components.Navbar.Github.OpenSourceIsNotEasy": "开源不易，给个鼓励，加个 ⭐️ 吧！",

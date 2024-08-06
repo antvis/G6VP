@@ -1,4 +1,10 @@
-import { ApiOutlined, DeploymentUnitOutlined, FileExcelOutlined, GlobalOutlined } from '@ant-design/icons';
+import {
+  ApiOutlined,
+  DatabaseOutlined,
+  DeploymentUnitOutlined,
+  FileExcelOutlined,
+  GlobalOutlined
+} from '@ant-design/icons';
 import { utils } from '@antv/gi-sdk';
 import type { EngineServer } from '@antv/gi-sdk/lib/typing';
 import { Spin, Tabs } from 'antd';
@@ -42,21 +48,21 @@ const ITEMS = [
     name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GraphDatabase', dm: '图数据库' }),
     icon: <DeploymentUnitOutlined />,
   },
-  {
-    id: 'GEO',
-    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GeographicDatabase', dm: '地理数据库' }),
-    icon: <GlobalOutlined />,
-  },
+  // {
+  //   id: 'GEO',
+  //   name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.GeographicDatabase', dm: '地理数据库' }),
+  //   icon: <GlobalOutlined />,
+  // },
   // {
   //   id: 'DB',
   //   name: '关系型数据库',
   //   icon: <DatabaseOutlined />,
   // },
-  {
-    id: 'API',
-    name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.ApiService', dm: 'API 服务' }),
-    icon: <ApiOutlined />,
-  },
+  // {
+  //   id: 'API',
+  //   name: $i18n.get({ id: 'gi-site.pages.Dataset.Create.ApiService', dm: 'API 服务' }),
+  //   icon: <ApiOutlined />,
+  // },
 ];
 
 const { TabPane } = Tabs;
