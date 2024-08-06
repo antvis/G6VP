@@ -320,7 +320,7 @@ const TableMode: React.FC<IProps> = props => {
     }
     const targetOrigin = window.location.origin + targetWindowPath;
 
-    const targetWindow = window.open(targetOrigin, '_black');
+    const targetWindow = window.open(targetOrigin, '_blank');
     targetWindowRef.current = targetWindow;
     const handleMessage = e => {
       if (e.data.type === 'GI_TABLEMODE_READY' && e.data.payload.isReady) {
